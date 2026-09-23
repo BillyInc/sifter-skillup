@@ -1,0 +1,31 @@
+{
+  "schema": "2026-09-23.targeted-residual-item-lane-pre-search.v1",
+  "generated_at": "2026-09-23",
+  "scope": "exact canonical contextual item rows whose link_state is review_required",
+  "status": "pre_search_checkpoint",
+  "counts": {
+    "canonical_contextual_item_rows": 121377,
+    "canonical_linked_rows": 5253,
+    "canonical_no_link_rows": 116116,
+    "canonical_review_required_rows": 8,
+    "canonical_missing_or_invalid_rows": 0,
+    "targeted_records": 8,
+    "targeted_records_searched": 0,
+    "targeted_records_promoted": 0,
+    "targeted_records_retained_review_required": 8
+  },
+  "inputs": [
+    "data/career-mapping/_audit/CONTEXTUAL_ITEM_LINK_STATE_AUDIT_2026-09-19.json",
+    "data/career-mapping/contextual_guidance_items.json.gz",
+    "data/career-mapping/_audit/REMAINING_BLOCKERS_RECONCILIATION_2026-09-23.md"
+  ],
+  "policy": {
+    "no_population_rerun": true,
+    "item_specific_and_context_specific_evidence_required": true,
+    "promote_only_with_authoritative_item_specific_https_source": true,
+    "preserve_url_locator_and_access_date": true,
+    "review_required_remains_internal_only": true,
+    "sql_live_db_browser_frontend_touched": false
+  },
+  "next_action": "Search only the eight canonical review_required rows and append decisions/checkpoints."
+}

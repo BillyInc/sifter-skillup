@@ -1,0 +1,17 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-report.v2",
+  "batch": "quality_remediation_lane_81_20260922",
+  "status": "complete",
+  "selection_count": 150,
+  "searched_count": 150,
+  "ledger_count": 150,
+  "unique_subject_ids": 150,
+  "omitted_count": 0,
+  "duplicate_count": 0,
+  "promoted_count": 16,
+  "review_required_count": 134,
+  "evidence_records": 150,
+  "exact_reconciliation": "150/150",
+  "scope_guard": "Items only; relationships, catalogue, SQL, seeds, UI and browser proof untouched.",
+  "note": "All selected item-specific searches are recorded in the append-only ledger; weak or generic evidence remains review_required unless exact item/type/context proof is established."
+}

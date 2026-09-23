@@ -1,0 +1,85 @@
+{
+  "schema": "2026-09-21.full-population-relationship-tranche-checkpoint.v1",
+  "tranche": "014",
+  "accessed_on": "2026-09-21",
+  "status": "searched",
+  "blocked": false,
+  "blocker": null,
+  "scope": {
+    "canonical_programmes": 237,
+    "canonical_jamb_identities": 420,
+    "catalogue_unresolved_relationships": 2305,
+    "prior_relationship_search_records": 68,
+    "current_tranche_rows_selected": 4,
+    "current_tranche_rows_searched": 4,
+    "current_tranche_linked": 0,
+    "current_tranche_review_required": 4,
+    "current_tranche_genuinely_unavailable": 0,
+    "current_tranche_remaining_selected_rows": 0
+  },
+  "selection": {
+    "basis": "next pending unresolved non-D078 relationship rows in deterministic catalogue order, excluding all prior relationship ledger row_ids",
+    "excluded_context_prefix": "D078",
+    "rows": [
+      {
+        "candidate_id": "role|D001|Information Technology Project Managers|tool|amazon-web-services-aws-software|||not_established",
+        "context_level": "role",
+        "context_key": "D001|Information Technology Project Managers",
+        "from": {"item_type": "tool", "item_key": "amazon-web-services-aws-software", "name": "Amazon Web Services AWS software"},
+        "to": {"item_type": null, "item_key": null, "name": null},
+        "relationship_type": "not_established",
+        "current_state": "not_established"
+      },
+      {
+        "candidate_id": "role|D001|Information Technology Project Managers|tool|atlassian-confluence|||not_established",
+        "context_level": "role",
+        "context_key": "D001|Information Technology Project Managers",
+        "from": {"item_type": "tool", "item_key": "atlassian-confluence", "name": "Atlassian Confluence"},
+        "to": {"item_type": null, "item_key": null, "name": null},
+        "relationship_type": "not_established",
+        "current_state": "not_established"
+      },
+      {
+        "candidate_id": "role|D001|Information Technology Project Managers|tool|atlassian-jira|||not_established",
+        "context_level": "role",
+        "context_key": "D001|Information Technology Project Managers",
+        "from": {"item_type": "tool", "item_key": "atlassian-jira", "name": "Atlassian JIRA"},
+        "to": {"item_type": null, "item_key": null, "name": null},
+        "relationship_type": "not_established",
+        "current_state": "not_established"
+      },
+      {
+        "candidate_id": "role|D001|Information Technology Project Managers|tool|microsoft-azure-software|||not_established",
+        "context_level": "role",
+        "context_key": "D001|Information Technology Project Managers",
+        "from": {"item_type": "tool", "item_key": "microsoft-azure-software", "name": "Microsoft Azure software"},
+        "to": {"item_type": null, "item_key": null, "name": null},
+        "relationship_type": "not_established",
+        "current_state": "not_established"
+      }
+    ]
+  },
+  "guardrails": {
+    "relationship_endpoints_must_not_be_inferred": true,
+    "candidate_relationship_type_is_not_established_until_source_proven": true,
+    "search_blocked": false,
+    "selection_checkpoint_saved_before_search": true,
+    "selection_ledger_parity": "4 selected / 4 searched / 4 ledger rows",
+    "post_search_queue_snapshot_before_merge": {
+      "review_required_external_search": 67,
+      "pending_external_search": 2238,
+      "unresolved_total": 2305
+    },
+    "expected_queue_after_append_only_merge": {
+      "review_required_external_search": 71,
+      "pending_external_search": 2234,
+      "unresolved_total": 2305
+    },
+    "sql_touched": false,
+    "generated_seed_transport_touched": false,
+    "catalogue_touched": false,
+    "app_code_touched": false,
+    "ui_touched": false,
+    "browser_proof_touched": false
+  }
+}

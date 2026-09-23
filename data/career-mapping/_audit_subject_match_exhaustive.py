@@ -46,7 +46,15 @@ def _load_catalog() -> dict[str, dict[str, str]]:
         text,
     ):
         code = match.group("code")
-        rows[code] = {"code": code, "name": _sql_unescape(match.group("name"))}
+        # The live matcher resolves selected subjects by catalogue id before
+        # reading option items.  The generated SQL uses UUID ids, but the
+        # executable audit only needs a stable non-null identity that is shared
+        # by the mocked catalogue and item rows.
+        rows[code] = {
+            "id": code,
+            "code": code,
+            "name": _sql_unescape(match.group("name")),
+        }
     if not rows:
         raise AssertionError("No subject catalogue rows were parsed")
     return rows
@@ -159,22 +167,40 @@ class _Result:
 
 class _Query:
     def __init__(self, data: list[dict[str, Any]]):
-        self.data = data
+        self.data = list(data)
 
     def select(self, *_args, **_kwargs):
         return self
 
-    def eq(self, *_args, **_kwargs):
+    def eq(self, column: str, value: Any):
+        self.data = [row for row in self.data if self._value(row, column) == value]
         return self
 
-    def in_(self, *_args, **_kwargs):
+    def in_(self, column: str, values: list[Any]):
+        allowed = {str(value) for value in values}
+        self.data = [
+            row for row in self.data if str(self._value(row, column)) in allowed
+        ]
         return self
 
-    def limit(self, *_args, **_kwargs):
+    def limit(self, count: int):
+        self.data = self.data[:count]
         return self
 
     def execute(self):
         return _Result(self.data)
+
+    @staticmethod
+    def _value(row: dict[str, Any], column: str) -> Any:
+        value = row.get(column)
+        if value is not None:
+            return value
+        # The audit fixture stores the nested catalogue object to model the
+        # PostgREST relationship selected by the production query.  Expose its
+        # id when the query asks for the real foreign-key column.
+        if column == "subject_id":
+            return (row.get("subject_catalog") or {}).get("id")
+        return None
 
 
 class _Service:
@@ -261,6 +287,40 @@ def _option_expected(
         if scope:
             related[scope].append((key, candidates, minimum))
         elif len(candidates & selected_codes) < minimum:
+            return False
+    # Mirror the production fail-closed gate for rows whose parsed items do
+    # not represent the declared credit-pass minimum. The oracle must not call
+    # an incomplete option valid merely because its named subjects are present.
+    if option["min_required"]:
+        represented_capacity = len(required) + sum(
+            int(group_items[0].get("min_from_group") or 1)
+            for group_items in groups.values()
+        )
+        if represented_capacity < option["min_required"]:
+            return False
+    if option["exam_type"] == "olevel":
+        broad_group = any(len(group_items) >= 20 for group_items in groups.values())
+        source_scope_text = re.split(
+            r"\s+(?:for|in)\s+(?:nbc|ntc|nabteb|tc\s*ii|technic(?:al)?\s+certificate)\s+"
+            r"(?:holders?|candidates?)?\b",
+            str(option.get("source_text") or "").lower(),
+            maxsplit=1,
+            flags=re.I,
+        )[0]
+        unresolved_scope = re.search(
+            r"\b(?:relevant|suitable|appropriate|related|cognate|pertinent)\b|"
+            r"\bshares?\s+(?:the\s+)?block\b",
+            source_scope_text,
+        )
+        explicit_open_scope = re.search(
+            r"\bany\s+(?:(?:other|remaining|additional)\s+)?"
+            r"(?:(?:one|two|three|four|five|six|several)\s+(?:\(\d+\)\s*)?)?subjects?\b|"
+            r"\b(?:one|two|three|four|five|six|several)\s+"
+            r"(?:other|remaining|additional)\s+(?:\(\d+\)\s*)?subjects?\b|"
+            r"\bany\s+subject\b",
+            source_scope_text,
+        )
+        if broad_group and (unresolved_scope or not explicit_open_scope):
             return False
     return all(_distinct_groups_satisfied(scope_groups, selected_codes) for scope_groups in related.values())
 
@@ -384,6 +444,7 @@ def main() -> int:
         "programme_subject_option_items": [
             {
                 **item,
+                "subject_id": catalog[item["code"]]["id"],
                 "subject_catalog": catalog[item["code"]],
             }
             for item in items
@@ -416,10 +477,13 @@ def main() -> int:
                     if option["exam_type"] == "olevel" and len(mutated) < 5:
                         # The endpoint rejects under-sized O-level input before
                         # the matcher. Keep enough unrelated subjects for a
-                        # meaningful rule mutation.
+                        # meaningful rule mutation, but never re-add the
+                        # subject deliberately removed by this case.
                         for filler in catalog:
                             if len(mutated) >= 5:
                                 break
+                            if filler == code:
+                                continue
                             mutated.add(filler)
                     cases[(option["exam_type"], frozenset(mutated))] = f"remove:{option['id']}:{code}"
 

@@ -87,7 +87,27 @@ const NEVER_STUDENT_BACKED = new Set<AdminEvidenceState>([
 ]);
 
 function hasSourceTrace(record: AdminGuidanceEvidenceRecord): boolean {
-  return Boolean(record.sourceUrl?.trim() || asText(record.sourceLocator));
+  return Boolean(
+    asText(record.sourceUrl)
+      || hasTraceValue(record.sourceLocator)
+      || record.sourceLocators?.some(hasTraceValue)
+      || record.sourceReferences?.some(hasTraceValue),
+  );
+}
+
+function hasTraceValue(value: unknown): boolean {
+  if (typeof value === "string") return Boolean(value.trim());
+  if (Array.isArray(value)) return value.some(hasTraceValue);
+  if (!value || typeof value !== "object") return false;
+  return Object.keys(value).length > 0;
+}
+
+function hasBlockedLinkState(record: AdminGuidanceEvidenceRecord): boolean {
+  const state = record.linkState?.trim().toLowerCase().replaceAll("-", "_");
+  return state === "review_required"
+    || state === "no_link"
+    || state === "not_established"
+    || state === "audit_only";
 }
 
 function hasStableContextIdentity(record: AdminGuidanceEvidenceRecord): boolean {
@@ -154,6 +174,12 @@ export function canApproveForStudent(
       reason: `${record.evidenceState} records cannot be approved as student-backed evidence.`,
     };
   }
+  if (hasBlockedLinkState(record)) {
+    return {
+      allowed: false,
+      reason: `${record.linkState} links must remain in the internal review queue.`,
+    };
+  }
   const identity = identityDecision(record);
   if (!identity.allowed) return identity;
   if (record.evidenceState !== "verified") {
@@ -191,6 +217,12 @@ export function canExposeToStudents(
       reason: `${record.evidenceState} records must remain admin/source-audit only.`,
     };
   }
+  if (hasBlockedLinkState(record)) {
+    return {
+      allowed: false,
+      reason: `${record.linkState} links must remain in the internal review queue.`,
+    };
+  }
   const identity = identityDecision(record);
   if (!identity.allowed) return identity;
   if (record.evidenceState !== "approved") {
@@ -220,7 +252,8 @@ function asText(value: unknown): string | null {
 
 function evidenceStateFrom(value: unknown): AdminEvidenceState {
   const state = String(value ?? "").trim().toLowerCase();
-  if (state === "approved" || state === "verified") return state;
+  if (state === "approved" || state === "approved_guidance_v1") return "approved";
+  if (state === "verified" || state === "confirmed") return "verified";
   if (state === "no_link" || state === "no-link") return "no_link";
   if (state === "not_established" || state === "not-established") return "not_established";
   if (state === "audit_only" || state === "audit-only") return "audit_only";
@@ -237,13 +270,25 @@ export function normaliseAdminGuidanceEvidence(
   fallback: Partial<AdminGuidanceEvidenceRecord> = {},
 ): AdminGuidanceEvidenceRecord {
   const evidenceState = evidenceStateFrom(
-    raw.evidenceState ?? raw.evidence_state ?? raw.reviewState ?? raw.review_state ?? raw.dataState,
+    raw.evidenceState
+      ?? raw.evidence_state
+      ?? raw.reviewState
+      ?? raw.review_state
+      ?? raw.reviewStatus
+      ?? raw.review_status
+      ?? raw.dataState,
   );
   const level = String(raw.level ?? raw.contextLevel ?? raw.context_level ?? fallback.level ?? "domain");
   const itemType = String(raw.itemType ?? raw.item_type ?? raw.kind ?? fallback.itemType ?? "resource");
+  const sourceReferences = Array.isArray(raw.sourceReferences ?? raw.source_references)
+    ? (raw.sourceReferences ?? raw.source_references) as unknown[]
+    : fallback.sourceReferences;
+  const firstSourceUrl = sourceReferences?.find((reference) => (
+    reference && typeof reference === "object" && typeof (reference as { url?: unknown }).url === "string"
+  )) as { url: string } | undefined;
   return {
     id: asText(raw.id ?? raw.itemId ?? raw.item_id) ?? fallback.id ?? "unidentified-guidance-item",
-    name: asText(raw.name ?? raw.title ?? raw.label) ?? fallback.name ?? "Unnamed guidance item",
+    name: asText(raw.name ?? raw.title ?? raw.label ?? raw.targetName ?? raw.target_name) ?? fallback.name ?? "Unnamed guidance item",
     level: (["programme", "domain", "subgroup", "role"].includes(level) ? level : "domain") as AdminGuidanceLevel,
     itemType: (["skill", "tool", "competency", "ability", "certification", "resource", "relationship"].includes(itemType) ? itemType : "resource") as AdminGuidanceItemType,
     contextKey: asText(raw.contextKey ?? raw.context_key ?? raw.contextId ?? raw.context_id) ?? fallback.contextKey ?? null,
@@ -251,13 +296,13 @@ export function normaliseAdminGuidanceEvidence(
     guidanceOwner: (asText(raw.guidanceOwner ?? raw.guidance_owner ?? raw.owner) ?? fallback.guidanceOwner ?? null) as AdminGuidanceOwner | null,
     programmeName: asText(raw.programmeName ?? raw.programme_name) ?? fallback.programmeName,
     contextName: asText(raw.contextName ?? raw.context_name ?? raw.scopeName ?? raw.scope_name) ?? fallback.contextName,
-    sourceUrl: asText(raw.sourceUrl ?? raw.source_url ?? raw.url) ?? fallback.sourceUrl ?? null,
+    sourceUrl: asText(raw.sourceUrl ?? raw.source_url) ?? firstSourceUrl?.url ?? fallback.sourceUrl ?? null,
     sourceLocator: raw.sourceLocator ?? raw.source_locator ?? raw.locator ?? fallback.sourceLocator ?? null,
-    sourceAccessedAt: asText(raw.sourceAccessedAt ?? raw.source_accessed_at ?? raw.accessedAt ?? raw.accessed_at ?? raw.observedAt ?? raw.observed_at) ?? fallback.sourceAccessedAt ?? null,
-    sourceReferences: Array.isArray(raw.sourceReferences ?? raw.source_references) ? (raw.sourceReferences ?? raw.source_references) as unknown[] : fallback.sourceReferences,
+    sourceAccessedAt: asText(raw.sourceAccessedAt ?? raw.source_accessed_at ?? raw.accessedAt ?? raw.accessed_at ?? raw.observedAt ?? raw.observed_at ?? raw.verifiedAt ?? raw.verified_at) ?? fallback.sourceAccessedAt ?? null,
+    sourceReferences,
     sourceLocators: Array.isArray(raw.sourceLocators ?? raw.source_locators) ? (raw.sourceLocators ?? raw.source_locators) as unknown[] : fallback.sourceLocators,
     linkState: asText(raw.linkState ?? raw.link_state) ?? fallback.linkState ?? null,
-    linkUrl: asText(raw.linkUrl ?? raw.link_url) ?? fallback.linkUrl ?? null,
+    linkUrl: asText(raw.linkUrl ?? raw.link_url ?? raw.url) ?? fallback.linkUrl ?? null,
     noLinkReason: asText(raw.noLinkReason ?? raw.no_link_reason) ?? fallback.noLinkReason ?? null,
     sourceIds: Array.isArray(raw.sourceIds ?? raw.source_ids) ? ((raw.sourceIds ?? raw.source_ids) as unknown[]).map(String) : fallback.sourceIds,
     relationshipType: asText(raw.relationshipType ?? raw.relationship_type) ?? fallback.relationshipType ?? null,
@@ -269,4 +314,21 @@ export function normaliseAdminGuidanceEvidence(
     evidenceState,
     evidenceNote: asText(raw.evidenceNote ?? raw.evidence_note ?? raw.reason) ?? fallback.evidenceNote ?? null,
   };
+}
+
+export interface AdminGuidanceEvidenceViews {
+  /** Rows that are safe for the accepted/student-facing evidence view. */
+  accepted: AdminGuidanceEvidenceRecord[];
+  /** Rows retained for staff review; none may be treated as student-backed. */
+  internal: AdminGuidanceEvidenceRecord[];
+}
+
+export function partitionAdminGuidanceEvidence(
+  records: AdminGuidanceEvidenceRecord[],
+): AdminGuidanceEvidenceViews {
+  return records.reduce<AdminGuidanceEvidenceViews>((views, record) => {
+    if (canExposeToStudents(record).allowed) views.accepted.push(record);
+    else views.internal.push(record);
+    return views;
+  }, { accepted: [], internal: [] });
 }

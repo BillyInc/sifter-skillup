@@ -1,0 +1,15 @@
+{
+  "schema": "2026-09-22.lane6-item-remediation-report.v1",
+  "lane": "lane6",
+  "date": "2026-09-22",
+  "source_audit": "data/career-mapping/_audit/external_enrichment_agent/item_ledger_quality_audit_2026-09-22.json",
+  "selection": "data/career-mapping/_audit/external_enrichment_agent/lane6_item_remediation_selection_2026-09-22.json",
+  "pre_search_checkpoint": "data/career-mapping/_audit/external_enrichment_agent/lane6_item_remediation_pre_search_checkpoint_2026-09-22.json",
+  "ledger": "data/career-mapping/_audit/external_enrichment_agent/lane6_item_remediation_search_ledger_2026-09-22.jsonl",
+  "searched_count": 100,
+  "linked_count": 0,
+  "review_required_count": 100,
+  "promoted_count": 0,
+  "scope_guard": "No relationships, catalogue, SQL, seeds, UI, browser proof, or promotion touched.",
+  "append_only": true
+}

@@ -1,0 +1,1727 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-selection.v1",
+  "batch": "quality_remediation_lane15_2026-09-22",
+  "source_audit": "item_ledger_quality_audit_2026-09-22.json",
+  "selection_method": "atomic shared-lock exclusion of every prior item-remediation selection, claim, ledger, and search ledger; stable source-audit order",
+  "claim": {
+    "claim_id": "6fe8de85efab08dd",
+    "lane": "lane15",
+    "claimed_at": "2026-09-22T12:09:46Z",
+    "count": 100,
+    "identities": [
+      "role|D016|predictive maintenance expert|skill|analyse-big-data",
+      "role|D016|predictive maintenance expert|skill|automotive-diagnostic-equipment",
+      "role|D016|predictive maintenance expert|skill|automotive-engineering",
+      "role|D016|predictive maintenance expert|skill|deliver-visual-presentation-of-data",
+      "role|D016|predictive maintenance expert|skill|use-automotive-diagnostic-equipment",
+      "role|D016|satellite engineer|skill|aerodynamics",
+      "role|D016|satellite engineer|skill|aerospace-engineering",
+      "role|D016|satellite engineer|skill|global-navigation-satellite-system-performance-parameters",
+      "role|D016|satellite engineer|skill|industrial-engineering",
+      "role|D016|satellite engineer|skill|launching-of-satellites-into-orbit",
+      "role|D016|satellite engineer|skill|types-of-satellites",
+      "role|D016|satellite engineer|skill|unmanned-air-systems",
+      "role|D016|smart home engineer|skill|alarm-systems",
+      "role|D016|smart home engineer|skill|building-automation",
+      "role|D016|smart home engineer|skill|c",
+      "role|D016|smart home engineer|skill|electricity-consumption",
+      "role|D016|substation engineer|skill|electricity-consumption",
+      "role|D016|substation engineer|skill|test-procedures-in-electricity-transmission",
+      "role|D016|substation engineer|skill|transmission-towers",
+      "role|D017|3D printing technician|skill|3d-modelling",
+      "role|D017|3D printing technician|skill|adjust-engineering-designs",
+      "role|D017|3D printing technician|skill|cadd-software",
+      "role|D017|3D printing technician|skill|digitization",
+      "role|D017|3D printing technician|skill|maintenance-of-printing-machines",
+      "role|D017|3D printing technician|skill|printing-materials",
+      "role|D017|3D printing technician|skill|printing-on-large-scale-machines",
+      "role|D017|aerodynamics engineer|skill|aerodynamics",
+      "role|D017|aerodynamics engineer|skill|aircraft-mechanics",
+      "role|D017|aerodynamics engineer|skill|bicycle-mechanics",
+      "role|D017|aerodynamics engineer|skill|mechanics-of-motor-vehicles",
+      "role|D017|aerodynamics engineer|skill|mechanics-of-vessels",
+      "role|D017|aerodynamics engineer|skill|operation-of-different-engines",
+      "role|D017|aerospace engineering drafter|skill|aircraft-mechanics",
+      "role|D017|aerospace engineering drafter|skill|cadd-software",
+      "role|D017|aerospace engineering drafter|skill|fluid-mechanics",
+      "role|D017|aerospace engineering drafter|skill|stealth-technology",
+      "role|D017|aerospace engineer|skill|aerodynamics",
+      "role|D017|aerospace engineer|skill|aerospace-engineering",
+      "role|D017|aerospace engineer|skill|aircraft-mechanics",
+      "role|D017|aerospace engineer|skill|industrial-engineering",
+      "role|D017|aerospace engineer|skill|stealth-technology",
+      "role|D017|architectural drafter|skill|architecture-regulations",
+      "role|D017|architectural drafter|skill|building-codes",
+      "role|D017|architectural drafter|skill|cadd-software",
+      "role|D017|architectural drafter|skill|cartography",
+      "role|D017|architectural drafter|skill|check-architectural-drawings-on-site",
+      "role|D017|architectural drafter|skill|civil-engineering",
+      "role|D017|architectural drafter|skill|construction-legal-systems",
+      "role|D017|architectural drafter|skill|construction-methods",
+      "role|D017|architectural drafter|skill|environmental-design",
+      "role|D017|architectural drafter|skill|integrated-design",
+      "role|D017|architectural drafter|skill|manual-draughting-techniques",
+      "role|D017|architectural drafter|skill|topography",
+      "role|D017|architectural drafter|skill|zoning-codes",
+      "role|D017|architectural drafter|tool|trimble-sketchup-pro",
+      "role|D017|automotive engineering drafter|skill|3d-modelling",
+      "role|D017|automotive engineering drafter|skill|green-automotive-technologies",
+      "role|D017|automotive engineering drafter|skill|hybrid-vehicle-architecture",
+      "role|D017|automotive engineering drafter|skill|manual-draughting-techniques",
+      "role|D017|automotive engineering drafter|skill|mechanics-of-motor-vehicles",
+      "role|D017|automotive engineering drafter|skill|use-computer-aided-engineering-systems",
+      "role|D017|automotive engineer|skill|adjust-engineering-designs",
+      "role|D017|automotive engineer|skill|automotive-engineering",
+      "role|D017|automotive engineer|skill|european-vehicle-type-approval-legislation",
+      "role|D017|automotive engineer|skill|green-automotive-technologies",
+      "role|D017|automotive engineer|skill|hybrid-vehicle-architecture",
+      "role|D017|automotive engineer|skill|industrial-engineering",
+      "role|D017|computer-aided design operator|skill|lisp",
+      "role|D017|computer-aided design operator|skill|openedge-advanced-business-language",
+      "role|D017|computer-aided design operator|skill|prolog-computer-programming",
+      "role|D017|computer-aided design operator|skill|woodworking-processes",
+      "role|D017|container equipment assembly supervisor|skill|analyse-the-need-for-technical-resources",
+      "role|D017|container equipment assembly supervisor|skill|ensure-finished-product-meet-requirements",
+      "role|D017|container equipment assembly supervisor|skill|evaluate-employees-work",
+      "role|D017|container equipment assembly supervisor|skill|manufacturing-of-metal-containers",
+      "role|D017|container equipment assembly supervisor|skill|operate-welding-equipment",
+      "role|D017|container equipment assembly supervisor|skill|oversee-assembly-operations",
+      "role|D017|container equipment assembly supervisor|skill|oversee-production-requirements",
+      "role|D017|container equipment assembly supervisor|skill|record-production-data-for-quality-control",
+      "role|D017|container equipment assembly supervisor|skill|types-of-containers",
+      "role|D017|container equipment assembly supervisor|skill|undertake-inspections",
+      "role|D017|container equipment design engineer|skill|3d-modelling",
+      "role|D017|container equipment design engineer|skill|industrial-engineering",
+      "role|D017|container equipment design engineer|skill|quality-and-cycle-time-optimisation",
+      "role|D017|container equipment design engineer|skill|reverse-engineering",
+      "role|D017|container equipment design engineer|skill|types-of-containers",
+      "role|D017|drafter|skill|3d-modelling",
+      "role|D017|drafter|skill|architectural-design",
+      "role|D017|drafter|skill|blueprints",
+      "role|D017|drafter|skill|cadd-software",
+      "role|D017|drafter|skill|cartography",
+      "role|D017|drafter|skill|civil-engineering",
+      "role|D017|electrical drafter|skill|design-electrical-systems",
+      "role|D017|engine designer|skill|calculate-design-costs",
+      "role|D017|engine designer|skill|calculate-materials-to-build-equipment",
+      "role|D017|engine designer|skill|conduct-research-on-trends-in-design",
+      "role|D017|engine designer|skill|define-part-requirements",
+      "role|D017|engine designer|skill|ecological-principles",
+      "role|D017|engine designer|skill|motor-vehicle-parts-drawings",
+      "role|D017|engine designer|skill|packaging-engineering"
+    ],
+    "excluded_prior_identities": 1714,
+    "lane5_excluded_by_prior_scan": true
+  },
+  "items": [
+    {
+      "subject_id": "item|role|D016|predictive maintenance expert|skill|analyse-big-data",
+      "context_level": "role",
+      "context_key": "D016|predictive maintenance expert",
+      "item_type": "skill",
+      "item_key": "analyse-big-data",
+      "item_name": "analyse big data",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D016|predictive maintenance expert|skill|automotive-diagnostic-equipment",
+      "context_level": "role",
+      "context_key": "D016|predictive maintenance expert",
+      "item_type": "skill",
+      "item_key": "automotive-diagnostic-equipment",
+      "item_name": "automotive diagnostic equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D016|predictive maintenance expert|skill|automotive-engineering",
+      "context_level": "role",
+      "context_key": "D016|predictive maintenance expert",
+      "item_type": "skill",
+      "item_key": "automotive-engineering",
+      "item_name": "automotive engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D016|predictive maintenance expert|skill|deliver-visual-presentation-of-data",
+      "context_level": "role",
+      "context_key": "D016|predictive maintenance expert",
+      "item_type": "skill",
+      "item_key": "deliver-visual-presentation-of-data",
+      "item_name": "deliver visual presentation of data",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D016|predictive maintenance expert|skill|use-automotive-diagnostic-equipment",
+      "context_level": "role",
+      "context_key": "D016|predictive maintenance expert",
+      "item_type": "skill",
+      "item_key": "use-automotive-diagnostic-equipment",
+      "item_name": "use automotive diagnostic equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D016|satellite engineer|skill|aerodynamics",
+      "context_level": "role",
+      "context_key": "D016|satellite engineer",
+      "item_type": "skill",
+      "item_key": "aerodynamics",
+      "item_name": "aerodynamics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D016|satellite engineer|skill|aerospace-engineering",
+      "context_level": "role",
+      "context_key": "D016|satellite engineer",
+      "item_type": "skill",
+      "item_key": "aerospace-engineering",
+      "item_name": "aerospace engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D016|satellite engineer|skill|global-navigation-satellite-system-performance-parameters",
+      "context_level": "role",
+      "context_key": "D016|satellite engineer",
+      "item_type": "skill",
+      "item_key": "global-navigation-satellite-system-performance-parameters",
+      "item_name": "global navigation satellite system performance parameters",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D016|satellite engineer|skill|industrial-engineering",
+      "context_level": "role",
+      "context_key": "D016|satellite engineer",
+      "item_type": "skill",
+      "item_key": "industrial-engineering",
+      "item_name": "industrial engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D016|satellite engineer|skill|launching-of-satellites-into-orbit",
+      "context_level": "role",
+      "context_key": "D016|satellite engineer",
+      "item_type": "skill",
+      "item_key": "launching-of-satellites-into-orbit",
+      "item_name": "launching of satellites into orbit",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D016|satellite engineer|skill|types-of-satellites",
+      "context_level": "role",
+      "context_key": "D016|satellite engineer",
+      "item_type": "skill",
+      "item_key": "types-of-satellites",
+      "item_name": "types of satellites",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D016|satellite engineer|skill|unmanned-air-systems",
+      "context_level": "role",
+      "context_key": "D016|satellite engineer",
+      "item_type": "skill",
+      "item_key": "unmanned-air-systems",
+      "item_name": "unmanned air systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D016|smart home engineer|skill|alarm-systems",
+      "context_level": "role",
+      "context_key": "D016|smart home engineer",
+      "item_type": "skill",
+      "item_key": "alarm-systems",
+      "item_name": "alarm systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D016|smart home engineer|skill|building-automation",
+      "context_level": "role",
+      "context_key": "D016|smart home engineer",
+      "item_type": "skill",
+      "item_key": "building-automation",
+      "item_name": "building automation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D016|smart home engineer|skill|c",
+      "context_level": "role",
+      "context_key": "D016|smart home engineer",
+      "item_type": "skill",
+      "item_key": "c",
+      "item_name": "C#",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://learn.microsoft.com/en-us/dotnet/csharp/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D016|smart home engineer|skill|electricity-consumption",
+      "context_level": "role",
+      "context_key": "D016|smart home engineer",
+      "item_type": "skill",
+      "item_key": "electricity-consumption",
+      "item_name": "electricity consumption",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D016|substation engineer|skill|electricity-consumption",
+      "context_level": "role",
+      "context_key": "D016|substation engineer",
+      "item_type": "skill",
+      "item_key": "electricity-consumption",
+      "item_name": "electricity consumption",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D016|substation engineer|skill|test-procedures-in-electricity-transmission",
+      "context_level": "role",
+      "context_key": "D016|substation engineer",
+      "item_type": "skill",
+      "item_key": "test-procedures-in-electricity-transmission",
+      "item_name": "test procedures in electricity transmission",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D016|substation engineer|skill|transmission-towers",
+      "context_level": "role",
+      "context_key": "D016|substation engineer",
+      "item_type": "skill",
+      "item_key": "transmission-towers",
+      "item_name": "transmission towers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|3D printing technician|skill|3d-modelling",
+      "context_level": "role",
+      "context_key": "D017|3D printing technician",
+      "item_type": "skill",
+      "item_key": "3d-modelling",
+      "item_name": "3D modelling",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|3D printing technician|skill|adjust-engineering-designs",
+      "context_level": "role",
+      "context_key": "D017|3D printing technician",
+      "item_type": "skill",
+      "item_key": "adjust-engineering-designs",
+      "item_name": "adjust engineering designs",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|3D printing technician|skill|cadd-software",
+      "context_level": "role",
+      "context_key": "D017|3D printing technician",
+      "item_type": "skill",
+      "item_key": "cadd-software",
+      "item_name": "CADD software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|3D printing technician|skill|digitization",
+      "context_level": "role",
+      "context_key": "D017|3D printing technician",
+      "item_type": "skill",
+      "item_key": "digitization",
+      "item_name": "digitization",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|3D printing technician|skill|maintenance-of-printing-machines",
+      "context_level": "role",
+      "context_key": "D017|3D printing technician",
+      "item_type": "skill",
+      "item_key": "maintenance-of-printing-machines",
+      "item_name": "maintenance of printing machines",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|3D printing technician|skill|printing-materials",
+      "context_level": "role",
+      "context_key": "D017|3D printing technician",
+      "item_type": "skill",
+      "item_key": "printing-materials",
+      "item_name": "printing materials",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|3D printing technician|skill|printing-on-large-scale-machines",
+      "context_level": "role",
+      "context_key": "D017|3D printing technician",
+      "item_type": "skill",
+      "item_key": "printing-on-large-scale-machines",
+      "item_name": "printing on large scale machines",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|aerodynamics engineer|skill|aerodynamics",
+      "context_level": "role",
+      "context_key": "D017|aerodynamics engineer",
+      "item_type": "skill",
+      "item_key": "aerodynamics",
+      "item_name": "aerodynamics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|aerodynamics engineer|skill|aircraft-mechanics",
+      "context_level": "role",
+      "context_key": "D017|aerodynamics engineer",
+      "item_type": "skill",
+      "item_key": "aircraft-mechanics",
+      "item_name": "aircraft mechanics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|aerodynamics engineer|skill|bicycle-mechanics",
+      "context_level": "role",
+      "context_key": "D017|aerodynamics engineer",
+      "item_type": "skill",
+      "item_key": "bicycle-mechanics",
+      "item_name": "bicycle mechanics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|aerodynamics engineer|skill|mechanics-of-motor-vehicles",
+      "context_level": "role",
+      "context_key": "D017|aerodynamics engineer",
+      "item_type": "skill",
+      "item_key": "mechanics-of-motor-vehicles",
+      "item_name": "mechanics of motor vehicles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|aerodynamics engineer|skill|mechanics-of-vessels",
+      "context_level": "role",
+      "context_key": "D017|aerodynamics engineer",
+      "item_type": "skill",
+      "item_key": "mechanics-of-vessels",
+      "item_name": "mechanics of vessels",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|aerodynamics engineer|skill|operation-of-different-engines",
+      "context_level": "role",
+      "context_key": "D017|aerodynamics engineer",
+      "item_type": "skill",
+      "item_key": "operation-of-different-engines",
+      "item_name": "operation of different engines",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|aerospace engineering drafter|skill|aircraft-mechanics",
+      "context_level": "role",
+      "context_key": "D017|aerospace engineering drafter",
+      "item_type": "skill",
+      "item_key": "aircraft-mechanics",
+      "item_name": "aircraft mechanics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|aerospace engineering drafter|skill|cadd-software",
+      "context_level": "role",
+      "context_key": "D017|aerospace engineering drafter",
+      "item_type": "skill",
+      "item_key": "cadd-software",
+      "item_name": "CADD software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|aerospace engineering drafter|skill|fluid-mechanics",
+      "context_level": "role",
+      "context_key": "D017|aerospace engineering drafter",
+      "item_type": "skill",
+      "item_key": "fluid-mechanics",
+      "item_name": "fluid mechanics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|aerospace engineering drafter|skill|stealth-technology",
+      "context_level": "role",
+      "context_key": "D017|aerospace engineering drafter",
+      "item_type": "skill",
+      "item_key": "stealth-technology",
+      "item_name": "stealth technology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|aerospace engineer|skill|aerodynamics",
+      "context_level": "role",
+      "context_key": "D017|aerospace engineer",
+      "item_type": "skill",
+      "item_key": "aerodynamics",
+      "item_name": "aerodynamics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|aerospace engineer|skill|aerospace-engineering",
+      "context_level": "role",
+      "context_key": "D017|aerospace engineer",
+      "item_type": "skill",
+      "item_key": "aerospace-engineering",
+      "item_name": "aerospace engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|aerospace engineer|skill|aircraft-mechanics",
+      "context_level": "role",
+      "context_key": "D017|aerospace engineer",
+      "item_type": "skill",
+      "item_key": "aircraft-mechanics",
+      "item_name": "aircraft mechanics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|aerospace engineer|skill|industrial-engineering",
+      "context_level": "role",
+      "context_key": "D017|aerospace engineer",
+      "item_type": "skill",
+      "item_key": "industrial-engineering",
+      "item_name": "industrial engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|aerospace engineer|skill|stealth-technology",
+      "context_level": "role",
+      "context_key": "D017|aerospace engineer",
+      "item_type": "skill",
+      "item_key": "stealth-technology",
+      "item_name": "stealth technology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|architectural drafter|skill|architecture-regulations",
+      "context_level": "role",
+      "context_key": "D017|architectural drafter",
+      "item_type": "skill",
+      "item_key": "architecture-regulations",
+      "item_name": "architecture regulations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|architectural drafter|skill|building-codes",
+      "context_level": "role",
+      "context_key": "D017|architectural drafter",
+      "item_type": "skill",
+      "item_key": "building-codes",
+      "item_name": "building codes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|architectural drafter|skill|cadd-software",
+      "context_level": "role",
+      "context_key": "D017|architectural drafter",
+      "item_type": "skill",
+      "item_key": "cadd-software",
+      "item_name": "CADD software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|architectural drafter|skill|cartography",
+      "context_level": "role",
+      "context_key": "D017|architectural drafter",
+      "item_type": "skill",
+      "item_key": "cartography",
+      "item_name": "cartography",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|architectural drafter|skill|check-architectural-drawings-on-site",
+      "context_level": "role",
+      "context_key": "D017|architectural drafter",
+      "item_type": "skill",
+      "item_key": "check-architectural-drawings-on-site",
+      "item_name": "check architectural drawings on site",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|architectural drafter|skill|civil-engineering",
+      "context_level": "role",
+      "context_key": "D017|architectural drafter",
+      "item_type": "skill",
+      "item_key": "civil-engineering",
+      "item_name": "civil engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|architectural drafter|skill|construction-legal-systems",
+      "context_level": "role",
+      "context_key": "D017|architectural drafter",
+      "item_type": "skill",
+      "item_key": "construction-legal-systems",
+      "item_name": "construction legal systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|architectural drafter|skill|construction-methods",
+      "context_level": "role",
+      "context_key": "D017|architectural drafter",
+      "item_type": "skill",
+      "item_key": "construction-methods",
+      "item_name": "construction methods",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|architectural drafter|skill|environmental-design",
+      "context_level": "role",
+      "context_key": "D017|architectural drafter",
+      "item_type": "skill",
+      "item_key": "environmental-design",
+      "item_name": "environmental design",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|architectural drafter|skill|integrated-design",
+      "context_level": "role",
+      "context_key": "D017|architectural drafter",
+      "item_type": "skill",
+      "item_key": "integrated-design",
+      "item_name": "integrated design",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|architectural drafter|skill|manual-draughting-techniques",
+      "context_level": "role",
+      "context_key": "D017|architectural drafter",
+      "item_type": "skill",
+      "item_key": "manual-draughting-techniques",
+      "item_name": "manual draughting techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|architectural drafter|skill|topography",
+      "context_level": "role",
+      "context_key": "D017|architectural drafter",
+      "item_type": "skill",
+      "item_key": "topography",
+      "item_name": "topography",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|architectural drafter|skill|zoning-codes",
+      "context_level": "role",
+      "context_key": "D017|architectural drafter",
+      "item_type": "skill",
+      "item_key": "zoning-codes",
+      "item_name": "zoning codes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|architectural drafter|tool|trimble-sketchup-pro",
+      "context_level": "role",
+      "context_key": "D017|architectural drafter",
+      "item_type": "tool",
+      "item_key": "trimble-sketchup-pro",
+      "item_name": "Trimble SketchUp Pro",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|automotive engineering drafter|skill|3d-modelling",
+      "context_level": "role",
+      "context_key": "D017|automotive engineering drafter",
+      "item_type": "skill",
+      "item_key": "3d-modelling",
+      "item_name": "3D modelling",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|automotive engineering drafter|skill|green-automotive-technologies",
+      "context_level": "role",
+      "context_key": "D017|automotive engineering drafter",
+      "item_type": "skill",
+      "item_key": "green-automotive-technologies",
+      "item_name": "green automotive technologies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|automotive engineering drafter|skill|hybrid-vehicle-architecture",
+      "context_level": "role",
+      "context_key": "D017|automotive engineering drafter",
+      "item_type": "skill",
+      "item_key": "hybrid-vehicle-architecture",
+      "item_name": "hybrid vehicle architecture",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|automotive engineering drafter|skill|manual-draughting-techniques",
+      "context_level": "role",
+      "context_key": "D017|automotive engineering drafter",
+      "item_type": "skill",
+      "item_key": "manual-draughting-techniques",
+      "item_name": "manual draughting techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|automotive engineering drafter|skill|mechanics-of-motor-vehicles",
+      "context_level": "role",
+      "context_key": "D017|automotive engineering drafter",
+      "item_type": "skill",
+      "item_key": "mechanics-of-motor-vehicles",
+      "item_name": "mechanics of motor vehicles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|automotive engineering drafter|skill|use-computer-aided-engineering-systems",
+      "context_level": "role",
+      "context_key": "D017|automotive engineering drafter",
+      "item_type": "skill",
+      "item_key": "use-computer-aided-engineering-systems",
+      "item_name": "use computer-aided engineering systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|automotive engineer|skill|adjust-engineering-designs",
+      "context_level": "role",
+      "context_key": "D017|automotive engineer",
+      "item_type": "skill",
+      "item_key": "adjust-engineering-designs",
+      "item_name": "adjust engineering designs",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|automotive engineer|skill|automotive-engineering",
+      "context_level": "role",
+      "context_key": "D017|automotive engineer",
+      "item_type": "skill",
+      "item_key": "automotive-engineering",
+      "item_name": "automotive engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|automotive engineer|skill|european-vehicle-type-approval-legislation",
+      "context_level": "role",
+      "context_key": "D017|automotive engineer",
+      "item_type": "skill",
+      "item_key": "european-vehicle-type-approval-legislation",
+      "item_name": "European vehicle type-approval legislation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|automotive engineer|skill|green-automotive-technologies",
+      "context_level": "role",
+      "context_key": "D017|automotive engineer",
+      "item_type": "skill",
+      "item_key": "green-automotive-technologies",
+      "item_name": "green automotive technologies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|automotive engineer|skill|hybrid-vehicle-architecture",
+      "context_level": "role",
+      "context_key": "D017|automotive engineer",
+      "item_type": "skill",
+      "item_key": "hybrid-vehicle-architecture",
+      "item_name": "hybrid vehicle architecture",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|automotive engineer|skill|industrial-engineering",
+      "context_level": "role",
+      "context_key": "D017|automotive engineer",
+      "item_type": "skill",
+      "item_key": "industrial-engineering",
+      "item_name": "industrial engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|computer-aided design operator|skill|lisp",
+      "context_level": "role",
+      "context_key": "D017|computer-aided design operator",
+      "item_type": "skill",
+      "item_key": "lisp",
+      "item_name": "Lisp",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|computer-aided design operator|skill|openedge-advanced-business-language",
+      "context_level": "role",
+      "context_key": "D017|computer-aided design operator",
+      "item_type": "skill",
+      "item_key": "openedge-advanced-business-language",
+      "item_name": "OpenEdge Advanced Business Language",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|computer-aided design operator|skill|prolog-computer-programming",
+      "context_level": "role",
+      "context_key": "D017|computer-aided design operator",
+      "item_type": "skill",
+      "item_key": "prolog-computer-programming",
+      "item_name": "Prolog (computer programming)",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|computer-aided design operator|skill|woodworking-processes",
+      "context_level": "role",
+      "context_key": "D017|computer-aided design operator",
+      "item_type": "skill",
+      "item_key": "woodworking-processes",
+      "item_name": "woodworking processes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|container equipment assembly supervisor|skill|analyse-the-need-for-technical-resources",
+      "context_level": "role",
+      "context_key": "D017|container equipment assembly supervisor",
+      "item_type": "skill",
+      "item_key": "analyse-the-need-for-technical-resources",
+      "item_name": "analyse the need for technical resources",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|container equipment assembly supervisor|skill|ensure-finished-product-meet-requirements",
+      "context_level": "role",
+      "context_key": "D017|container equipment assembly supervisor",
+      "item_type": "skill",
+      "item_key": "ensure-finished-product-meet-requirements",
+      "item_name": "ensure finished product meet requirements",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|container equipment assembly supervisor|skill|evaluate-employees-work",
+      "context_level": "role",
+      "context_key": "D017|container equipment assembly supervisor",
+      "item_type": "skill",
+      "item_key": "evaluate-employees-work",
+      "item_name": "evaluate employees work",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|container equipment assembly supervisor|skill|manufacturing-of-metal-containers",
+      "context_level": "role",
+      "context_key": "D017|container equipment assembly supervisor",
+      "item_type": "skill",
+      "item_key": "manufacturing-of-metal-containers",
+      "item_name": "manufacturing of metal containers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|container equipment assembly supervisor|skill|operate-welding-equipment",
+      "context_level": "role",
+      "context_key": "D017|container equipment assembly supervisor",
+      "item_type": "skill",
+      "item_key": "operate-welding-equipment",
+      "item_name": "operate welding equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|container equipment assembly supervisor|skill|oversee-assembly-operations",
+      "context_level": "role",
+      "context_key": "D017|container equipment assembly supervisor",
+      "item_type": "skill",
+      "item_key": "oversee-assembly-operations",
+      "item_name": "oversee assembly operations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|container equipment assembly supervisor|skill|oversee-production-requirements",
+      "context_level": "role",
+      "context_key": "D017|container equipment assembly supervisor",
+      "item_type": "skill",
+      "item_key": "oversee-production-requirements",
+      "item_name": "oversee production requirements",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|container equipment assembly supervisor|skill|record-production-data-for-quality-control",
+      "context_level": "role",
+      "context_key": "D017|container equipment assembly supervisor",
+      "item_type": "skill",
+      "item_key": "record-production-data-for-quality-control",
+      "item_name": "record production data for quality control",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|container equipment assembly supervisor|skill|types-of-containers",
+      "context_level": "role",
+      "context_key": "D017|container equipment assembly supervisor",
+      "item_type": "skill",
+      "item_key": "types-of-containers",
+      "item_name": "types of containers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|container equipment assembly supervisor|skill|undertake-inspections",
+      "context_level": "role",
+      "context_key": "D017|container equipment assembly supervisor",
+      "item_type": "skill",
+      "item_key": "undertake-inspections",
+      "item_name": "undertake inspections",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|container equipment design engineer|skill|3d-modelling",
+      "context_level": "role",
+      "context_key": "D017|container equipment design engineer",
+      "item_type": "skill",
+      "item_key": "3d-modelling",
+      "item_name": "3D modelling",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|container equipment design engineer|skill|industrial-engineering",
+      "context_level": "role",
+      "context_key": "D017|container equipment design engineer",
+      "item_type": "skill",
+      "item_key": "industrial-engineering",
+      "item_name": "industrial engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|container equipment design engineer|skill|quality-and-cycle-time-optimisation",
+      "context_level": "role",
+      "context_key": "D017|container equipment design engineer",
+      "item_type": "skill",
+      "item_key": "quality-and-cycle-time-optimisation",
+      "item_name": "quality and cycle time optimisation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|container equipment design engineer|skill|reverse-engineering",
+      "context_level": "role",
+      "context_key": "D017|container equipment design engineer",
+      "item_type": "skill",
+      "item_key": "reverse-engineering",
+      "item_name": "reverse engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|container equipment design engineer|skill|types-of-containers",
+      "context_level": "role",
+      "context_key": "D017|container equipment design engineer",
+      "item_type": "skill",
+      "item_key": "types-of-containers",
+      "item_name": "types of containers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|drafter|skill|3d-modelling",
+      "context_level": "role",
+      "context_key": "D017|drafter",
+      "item_type": "skill",
+      "item_key": "3d-modelling",
+      "item_name": "3D modelling",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|drafter|skill|architectural-design",
+      "context_level": "role",
+      "context_key": "D017|drafter",
+      "item_type": "skill",
+      "item_key": "architectural-design",
+      "item_name": "architectural design",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|drafter|skill|blueprints",
+      "context_level": "role",
+      "context_key": "D017|drafter",
+      "item_type": "skill",
+      "item_key": "blueprints",
+      "item_name": "blueprints",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|drafter|skill|cadd-software",
+      "context_level": "role",
+      "context_key": "D017|drafter",
+      "item_type": "skill",
+      "item_key": "cadd-software",
+      "item_name": "CADD software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|drafter|skill|cartography",
+      "context_level": "role",
+      "context_key": "D017|drafter",
+      "item_type": "skill",
+      "item_key": "cartography",
+      "item_name": "cartography",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|drafter|skill|civil-engineering",
+      "context_level": "role",
+      "context_key": "D017|drafter",
+      "item_type": "skill",
+      "item_key": "civil-engineering",
+      "item_name": "civil engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|electrical drafter|skill|design-electrical-systems",
+      "context_level": "role",
+      "context_key": "D017|electrical drafter",
+      "item_type": "skill",
+      "item_key": "design-electrical-systems",
+      "item_name": "design electrical systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|engine designer|skill|calculate-design-costs",
+      "context_level": "role",
+      "context_key": "D017|engine designer",
+      "item_type": "skill",
+      "item_key": "calculate-design-costs",
+      "item_name": "calculate design costs",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|engine designer|skill|calculate-materials-to-build-equipment",
+      "context_level": "role",
+      "context_key": "D017|engine designer",
+      "item_type": "skill",
+      "item_key": "calculate-materials-to-build-equipment",
+      "item_name": "calculate materials to build equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|engine designer|skill|conduct-research-on-trends-in-design",
+      "context_level": "role",
+      "context_key": "D017|engine designer",
+      "item_type": "skill",
+      "item_key": "conduct-research-on-trends-in-design",
+      "item_name": "conduct research on trends in design",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|engine designer|skill|define-part-requirements",
+      "context_level": "role",
+      "context_key": "D017|engine designer",
+      "item_type": "skill",
+      "item_key": "define-part-requirements",
+      "item_name": "define part requirements",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|engine designer|skill|ecological-principles",
+      "context_level": "role",
+      "context_key": "D017|engine designer",
+      "item_type": "skill",
+      "item_key": "ecological-principles",
+      "item_name": "ecological principles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|engine designer|skill|motor-vehicle-parts-drawings",
+      "context_level": "role",
+      "context_key": "D017|engine designer",
+      "item_type": "skill",
+      "item_key": "motor-vehicle-parts-drawings",
+      "item_name": "motor vehicle parts drawings",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|engine designer|skill|packaging-engineering",
+      "context_level": "role",
+      "context_key": "D017|engine designer",
+      "item_type": "skill",
+      "item_key": "packaging-engineering",
+      "item_name": "packaging engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    }
+  ],
+  "counts": {
+    "selected_records": 100,
+    "unique_identities": 100,
+    "excluded_prior_identities": 1714
+  },
+  "policy": {
+    "review_required_preserved_unless_exact_item_type_context_authority": true,
+    "no_relationship_inference": true,
+    "no_promotion": true
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "schema_version": "2026-09-23.role-work-profile-incremental-checkpoint.v1",
+  "generated_on": "2026-09-23",
+  "status": "saved_before_continuation",
+  "read_only": true,
+  "append_only": true,
+  "counts": {
+    "baseline_merged_role_records": 5209,
+    "baseline_existing_work_profile_rows": 5090,
+    "baseline_missing_work_profile_rows": 119,
+    "exact_onet_candidate_rows_saved": 20,
+    "exact_official_identity_matches": 20,
+    "candidate_rows_with_work_profile_fields": 20,
+    "canonical_work_profile_rows_added": 0,
+    "review_required_onet_candidates": 20,
+    "esco_only_roles_retained_review_only": 99,
+    "canonical_work_profile_rows_still_absent": 119,
+    "roles_without_source_backed_profile_candidate": 99,
+    "genuinely_unavailable": 0
+  },
+  "files_saved": [
+    "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_enrichment_tranche_007_2026-09-23.py",
+    "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_enrichment_tranche_007_2026-09-23.json",
+    "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_enrichment_append_only_2026-09-23.jsonl",
+    "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_enrichment_tranche_007_2026-09-23.md",
+    "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_enrichment_tranche_007_checkpoint_2026-09-23.json",
+    "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_enrichment_tranche_007_checkpoint_2026-09-23.md",
+    "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_enrichment_incremental_checkpoint_2026-09-23.json",
+    "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_enrichment_incremental_checkpoint_2026-09-23.md"
+  ],
+  "constraints": [
+    "no SQL",
+    "no live database",
+    "no frontend",
+    "no browser proof",
+    "no generated seed changes",
+    "retain source URLs, locators and access dates",
+    "do not invent Nigerian mappings"
+  ],
+  "next_action": "Run the local audit test, then independently review the 20 global/US candidates while retaining 99 ESCO-only roles as review-only."
+}

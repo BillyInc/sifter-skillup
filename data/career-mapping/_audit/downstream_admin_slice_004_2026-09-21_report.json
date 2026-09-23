@@ -1,0 +1,1112 @@
+{
+  "schema_version": "2026-09-21.downstream-admin-slice-report.v1",
+  "generated_on": "2026-09-21",
+  "read_only": true,
+  "selection_checkpoint": "data\\career-mapping\\_audit\\downstream_admin_slice_004_2026-09-21_checkpoint.json",
+  "scope": {
+    "programmes": 20,
+    "programme_keys": [
+      "Architecture::Naval Architecture",
+      "Arts::African Languages and Literature Yoruba",
+      "Arts::African Tradition Religion",
+      "Arts::Arabic",
+      "Arts::Archaeology",
+      "Arts::Chinese Studies",
+      "Arts::Christian Religious Studies",
+      "Arts::Christian Theology",
+      "Arts::Classics",
+      "Arts::Efik",
+      "Arts::English Language and Literature",
+      "Arts::Film Production",
+      "Arts::Folklore Studies",
+      "Arts::Hausa",
+      "Arts::History/History and Diplomatic Studies",
+      "Arts::Ibibio",
+      "Arts::Igbo",
+      "Arts::Islamic Studies",
+      "Arts::Linguistics",
+      "Arts::Modern European Languages (Russian)"
+    ],
+    "prior_overlap": [],
+    "canonical_programmes": 237,
+    "canonical_jamb_identities": 420
+  },
+  "programme_rows": [
+    {
+      "programme_key": "Architecture::Naval Architecture",
+      "discipline": "Architecture",
+      "programme": "Naval Architecture",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 23,
+        "outcome_count": 88
+      },
+      "downstream": {
+        "domain_routes": 9,
+        "subgroup_routes": 10,
+        "role_routes": 269,
+        "route_key_count": 290
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 8
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 26,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 11,
+        "notEstablishedRows": 11
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Arts::African Languages and Literature Yoruba",
+      "discipline": "Arts",
+      "programme": "African Languages and Literature Yoruba",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 26,
+        "outcome_count": 157
+      },
+      "downstream": {
+        "domain_routes": 6,
+        "subgroup_routes": 13,
+        "role_routes": 367,
+        "route_key_count": 388
+      },
+      "relationship_types": {
+        "functional": 5,
+        "direct": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 510,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 255,
+        "notEstablishedRows": 255
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Arts::African Tradition Religion",
+      "discipline": "Arts",
+      "programme": "African Tradition Religion",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 27,
+        "outcome_count": 103
+      },
+      "downstream": {
+        "domain_routes": 2,
+        "subgroup_routes": 4,
+        "role_routes": 129,
+        "route_key_count": 137
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 40,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 20,
+        "notEstablishedRows": 20
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Arts::Arabic",
+      "discipline": "Arts",
+      "programme": "Arabic",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 38,
+        "outcome_count": 186
+      },
+      "downstream": {
+        "domain_routes": 4,
+        "subgroup_routes": 12,
+        "role_routes": 211,
+        "route_key_count": 229
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 3
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 272,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 136,
+        "notEstablishedRows": 136
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Arts::Archaeology",
+      "discipline": "Arts",
+      "programme": "Archaeology",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 22,
+        "outcome_count": 98
+      },
+      "downstream": {
+        "domain_routes": 4,
+        "subgroup_routes": 13,
+        "role_routes": 104,
+        "route_key_count": 123
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 3
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 60,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 30,
+        "notEstablishedRows": 30
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Arts::Chinese Studies",
+      "discipline": "Arts",
+      "programme": "Chinese Studies",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 37,
+        "outcome_count": 133
+      },
+      "downstream": {
+        "domain_routes": 2,
+        "subgroup_routes": 4,
+        "role_routes": 73,
+        "route_key_count": 81
+      },
+      "relationship_types": {
+        "functional": 1,
+        "direct": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 212,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 106,
+        "notEstablishedRows": 106
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Arts::Christian Religious Studies",
+      "discipline": "Arts",
+      "programme": "Christian Religious Studies",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 28,
+        "outcome_count": 82
+      },
+      "downstream": {
+        "domain_routes": 2,
+        "subgroup_routes": 6,
+        "role_routes": 19,
+        "route_key_count": 29
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 40,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 20,
+        "notEstablishedRows": 20
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Arts::Christian Theology",
+      "discipline": "Arts",
+      "programme": "Christian Theology",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 34,
+        "outcome_count": 137
+      },
+      "downstream": {
+        "domain_routes": 6,
+        "subgroup_routes": 13,
+        "role_routes": 303,
+        "route_key_count": 324
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 4,
+        "adjacent": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 252,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 126,
+        "notEstablishedRows": 126
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Arts::Classics",
+      "discipline": "Arts",
+      "programme": "Classics",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 30,
+        "outcome_count": 46
+      },
+      "downstream": {
+        "domain_routes": 2,
+        "subgroup_routes": 6,
+        "role_routes": 132,
+        "route_key_count": 142
+      },
+      "relationship_types": {
+        "functional": 2
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "review_required",
+        "unresolved_relationships": 0,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 0,
+        "notEstablishedRows": 0
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Arts::Efik",
+      "discipline": "Arts",
+      "programme": "Efik",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 36,
+        "outcome_count": 254
+      },
+      "downstream": {
+        "domain_routes": 3,
+        "subgroup_routes": 6,
+        "role_routes": 194,
+        "route_key_count": 205
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 2
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 212,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 106,
+        "notEstablishedRows": 106
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Arts::English Language and Literature",
+      "discipline": "Arts",
+      "programme": "English Language and Literature",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 52,
+        "outcome_count": 249
+      },
+      "downstream": {
+        "domain_routes": 6,
+        "subgroup_routes": 19,
+        "role_routes": 332,
+        "route_key_count": 359
+      },
+      "relationship_types": {
+        "functional": 5,
+        "direct": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 570,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 285,
+        "notEstablishedRows": 285
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Arts::Film Production",
+      "discipline": "Arts",
+      "programme": "Film Production",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 37,
+        "outcome_count": 142
+      },
+      "downstream": {
+        "domain_routes": 6,
+        "subgroup_routes": 17,
+        "role_routes": 265,
+        "route_key_count": 290
+      },
+      "relationship_types": {
+        "functional": 5,
+        "direct": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 548,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 274,
+        "notEstablishedRows": 274
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Arts::Folklore Studies",
+      "discipline": "Arts",
+      "programme": "Folklore Studies",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 29,
+        "outcome_count": 113
+      },
+      "downstream": {
+        "domain_routes": 2,
+        "subgroup_routes": 10,
+        "role_routes": 141,
+        "route_key_count": 155
+      },
+      "relationship_types": {
+        "functional": 1,
+        "adjacent": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "review_required",
+        "unresolved_relationships": 0,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 0,
+        "notEstablishedRows": 0
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Arts::Hausa",
+      "discipline": "Arts",
+      "programme": "Hausa",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 40,
+        "outcome_count": 149
+      },
+      "downstream": {
+        "domain_routes": 2,
+        "subgroup_routes": 4,
+        "role_routes": 73,
+        "route_key_count": 81
+      },
+      "relationship_types": {
+        "functional": 1,
+        "direct": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 212,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 106,
+        "notEstablishedRows": 106
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Arts::History/History and Diplomatic Studies",
+      "discipline": "Arts",
+      "programme": "History/History and Diplomatic Studies",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 32,
+        "outcome_count": 123
+      },
+      "downstream": {
+        "domain_routes": 4,
+        "subgroup_routes": 15,
+        "role_routes": 179,
+        "route_key_count": 200
+      },
+      "relationship_types": {
+        "functional": 4
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 20,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 10,
+        "notEstablishedRows": 10
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Arts::Ibibio",
+      "discipline": "Arts",
+      "programme": "Ibibio",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 40,
+        "outcome_count": 270
+      },
+      "downstream": {
+        "domain_routes": 3,
+        "subgroup_routes": 6,
+        "role_routes": 194,
+        "route_key_count": 205
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 2
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 212,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 106,
+        "notEstablishedRows": 106
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Arts::Igbo",
+      "discipline": "Arts",
+      "programme": "Igbo",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 40,
+        "outcome_count": 116
+      },
+      "downstream": {
+        "domain_routes": 5,
+        "subgroup_routes": 13,
+        "role_routes": 321,
+        "route_key_count": 341
+      },
+      "relationship_types": {
+        "functional": 4,
+        "direct": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 510,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 255,
+        "notEstablishedRows": 255
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Arts::Islamic Studies",
+      "discipline": "Arts",
+      "programme": "Islamic Studies",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 41,
+        "outcome_count": 187
+      },
+      "downstream": {
+        "domain_routes": 3,
+        "subgroup_routes": 7,
+        "role_routes": 155,
+        "route_key_count": 167
+      },
+      "relationship_types": {
+        "functional": 2,
+        "direct": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 40,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 20,
+        "notEstablishedRows": 20
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Arts::Linguistics",
+      "discipline": "Arts",
+      "programme": "Linguistics",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 36,
+        "outcome_count": 76
+      },
+      "downstream": {
+        "domain_routes": 3,
+        "subgroup_routes": 7,
+        "role_routes": 88,
+        "route_key_count": 100
+      },
+      "relationship_types": {
+        "functional": 1,
+        "direct": 1,
+        "adjacent": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 212,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 106,
+        "notEstablishedRows": 106
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Arts::Modern European Languages (Russian)",
+      "discipline": "Arts",
+      "programme": "Modern European Languages (Russian)",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 51,
+        "outcome_count": 124
+      },
+      "downstream": {
+        "domain_routes": 2,
+        "subgroup_routes": 4,
+        "role_routes": 73,
+        "route_key_count": 81
+      },
+      "relationship_types": {
+        "functional": 1,
+        "direct": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 212,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 106,
+        "notEstablishedRows": 106
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    }
+  ],
+  "failures": [],
+  "aggregate": {
+    "domain_routes": 76,
+    "subgroup_routes": 189,
+    "role_routes": 3622,
+    "relationship_states": {
+      "not_established": 18,
+      "review_required": 2
+    },
+    "unresolved_relationships": 4160
+  },
+  "static_surface_checks": {
+    "student_language_boundary": {
+      "file": "src/screens/careerIntelligence/ProgrammeDetailRefinedScreen.tsx",
+      "passed": true,
+      "missing": []
+    },
+    "admin_language_boundary": {
+      "file": "src/screens/admin/AdminCareerDetailScreen.tsx",
+      "passed": true,
+      "missing": []
+    },
+    "admin_provenance_and_queue": {
+      "file": "src/screens/admin/adminGuidanceEvidence.ts",
+      "passed": true,
+      "missing": []
+    },
+    "student_fail_closed_boundary": {
+      "file": "src/lib/studentCareerBoundary.ts",
+      "passed": true,
+      "missing": []
+    },
+    "student_relationship_fail_closed_boundary": {
+      "file": "src/screens/admin/adminGuidanceEvidence.ts",
+      "passed": true,
+      "missing": []
+    },
+    "relationship_grouping": {
+      "file": "src/components/careerIntelligence/ToolGroupsBlock.tsx",
+      "passed": true,
+      "missing": []
+    }
+  },
+  "role_learning_reference": {
+    "allStudentRowsWithinCaps": true,
+    "maxStudentEssential": 12,
+    "maxStudentOptional": 5
+  },
+  "admin_reference": {
+    "localAdminBoundaryImplemented": true,
+    "fullAdminRenderAccepted": false,
+    "studentExposureAccepted": false
+  },
+  "decision": {
+    "bounded_contract_audit_complete": true,
+    "student_exposure_approved": false,
+    "browser_proof": false,
+    "live_sql_verification": false,
+    "reason": "This slice retains review/not-established/admin-pending states and does not claim browser or live SQL acceptance."
+  },
+  "inputs": [
+    "docs/GOAL_RESUME_STATUS_AND_AGENT_HANDOFF_2026-09-18.md",
+    "docs/user-facing-mockups/SOCIOLOGY_BOX_MOCKUP_IMPLEMENTATION_AUDIT_2026-09-17.md",
+    "docs/user-facing-mockups/SOCIOLOGY_TOP_DOWN_AUDIT_AND_CLOSURE_PLAN_2026-09-17.md",
+    "docs/LEVELUP_PRODUCT_WIDE_MOCKUP_SPEC.md",
+    "data/career-mapping/_audit/source_enrichment_batch_broad_2026-09-19.json",
+    "data/career-mapping/_audit/full_population_admin_agent_tranche_2026-09-21.json",
+    "data/career-mapping/_audit/downstream_admin_slice_002_2026-09-21_checkpoint.json",
+    "data/career-mapping/_audit/programme_scaling_contract_2026-09-19.json",
+    "data/career-mapping/_audit/DOWNSTREAM_PROGRAMME_ROUTE_AUDIT_2026-09-19.json",
+    "data/career-mapping/_audit/programme_curriculum_contract_2026-09-18.json",
+    "data/career-mapping/_audit/role_learning_core_audit_2026-09-21.json",
+    "data/career-mapping/_audit/ADMIN_DOWNSTREAM_ACCEPTANCE_2026-09-19.json"
+  ],
+  "product_files_changed": false,
+  "sql_or_browser_proof": false
+}

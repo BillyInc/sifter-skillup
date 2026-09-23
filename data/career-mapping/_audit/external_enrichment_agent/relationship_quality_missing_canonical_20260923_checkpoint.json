@@ -1,0 +1,9 @@
+{
+  "schema": "2026-09-23.relationship-quality-missing-canonical-checkpoint.v1",
+  "batch": "relationship_quality_missing_canonical_20260923",
+  "selection_count": 8,
+  "searched_count": 9,
+  "status": "incomplete",
+  "final_report": "relationship_quality_missing_canonical_20260923_report.json",
+  "scope_guard": "Relationship evidence only; prior ledgers and catalogue untouched."
+}

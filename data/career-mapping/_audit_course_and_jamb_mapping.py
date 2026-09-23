@@ -63,6 +63,44 @@ SOCIOLOGY_TARGETS = {
     "Supply Chain Management": "top-level domain; logistics/procurement/operations curriculum required",
 }
 
+# These terms occur in entrepreneurship, engineering, computing, marketing and
+# many other CCMAS curricula. They are not, by themselves, evidence of the
+# Product Management domain. D033 needs an explicit product-management
+# concept; otherwise a word such as ``product`` also matches ``production`` and
+# turns generic innovation coursework into a false domain connection.
+D033_GENERIC_OVERLAP = {
+    "product",
+    "production",
+    "venture",
+    "innovation",
+    "e-commerce",
+    "value proposition",
+    "business model",
+    "project management",
+    "strategic planning",
+}
+
+D033_SPECIFIC_ANCHORS = {
+    "product management",
+    "product strategy",
+    "product roadmap",
+    "product lifecycle",
+    "product life cycle",
+    "product requirements",
+    "product requirement",
+    "product owner",
+    "product manager",
+    "product portfolio",
+    "release planning",
+    "requirements engineering",
+    "user research",
+    "customer discovery",
+    "user requirements",
+    "market requirements",
+    "prioritise product",
+    "prioritize product",
+}
+
 
 def load(path: Path):
     return json.loads(path.read_text(encoding="utf-8"))
@@ -131,6 +169,15 @@ def course_evidence(programme: dict, domain_id: str, meta: dict, structure: dict
 
     distinct = sorted({anchor for row in matched_courses for anchor in row["matched_anchors"]})
     non_generic = [anchor for anchor in distinct if anchor not in GENERIC_ANCHORS]
+    if domain_id == "D033":
+        # Product Management is especially vulnerable to substring and
+        # entrepreneurship overlap. Only explicit product-management concepts
+        # count as domain-specific evidence for this domain.
+        non_generic = [
+            anchor for anchor in distinct
+            if anchor in D033_SPECIFIC_ANCHORS
+            and anchor not in D033_GENERIC_OVERLAP
+        ]
     transferable = evidence.transferable_evidence(programme)
     return {
         "matched_course_count": len(matched_courses),

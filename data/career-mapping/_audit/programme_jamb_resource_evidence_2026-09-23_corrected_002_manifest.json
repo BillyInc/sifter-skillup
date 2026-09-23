@@ -1,0 +1,150 @@
+{
+  "schema": "2026-09-23.jamb-resource-evidence-corrected-manifest.v1",
+  "generated_on": "2026-09-23",
+  "append_only": true,
+  "scope": {
+    "canonical_jamb_identities": 420,
+    "ccmas_packages_context_only": 237,
+    "rows_written": 420,
+    "ccmas_anchor_absent_rows": 11
+  },
+  "classifications": {
+    "available": 420,
+    "review_required": 0,
+    "genuinely_unavailable": 0
+  },
+  "anchor_absent_policy": "optional_ccmas_complement; never_unavailable_by_itself",
+  "batches": [
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_corrected_002_jamb_batch-001.jsonl",
+      "row_start": 0,
+      "row_count": 20,
+      "sha256": "f7051873930006498a84d14171a22c1812152c6d94b7558fea9f4b596289cae8"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_corrected_002_jamb_batch-002.jsonl",
+      "row_start": 20,
+      "row_count": 20,
+      "sha256": "18821f17756c3d480b82ae6c5dafbe47b7ca7157ba33fc23d12fbaddded410b1"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_corrected_002_jamb_batch-003.jsonl",
+      "row_start": 40,
+      "row_count": 20,
+      "sha256": "fcabf8892a7ccea165978799732f47e655160562ef0a098bc2dd7d1702c53eca"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_corrected_002_jamb_batch-004.jsonl",
+      "row_start": 60,
+      "row_count": 20,
+      "sha256": "8ada499d57597be84b1ba126a544f050d593fd244516c9058e5ebedd9f23c6c6"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_corrected_002_jamb_batch-005.jsonl",
+      "row_start": 80,
+      "row_count": 20,
+      "sha256": "67b182fc2605406f21fa5d291bf5e936c8a5cf739373d3872d6629b3eeaeac1d"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_corrected_002_jamb_batch-006.jsonl",
+      "row_start": 100,
+      "row_count": 20,
+      "sha256": "4e42cd774a9d8e14c43b656dbb6e7722ce967f5959a3a4f738bc47c6baaf31cf"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_corrected_002_jamb_batch-007.jsonl",
+      "row_start": 120,
+      "row_count": 20,
+      "sha256": "a1a0a3db520e487682aaaadad259195724afccb0d3351d125adf54bc48698b17"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_corrected_002_jamb_batch-008.jsonl",
+      "row_start": 140,
+      "row_count": 20,
+      "sha256": "e23af9ee692bf54d333afb0ee65d05f82d6da1e0d5e05290ac788a42a7ea842b"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_corrected_002_jamb_batch-009.jsonl",
+      "row_start": 160,
+      "row_count": 20,
+      "sha256": "dddc5dcc26ba0ad968618273b7186bf9e6cb687f8224edc8b1122b74fade48e8"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_corrected_002_jamb_batch-010.jsonl",
+      "row_start": 180,
+      "row_count": 20,
+      "sha256": "bb6cc7c9e78c5fb27b9c646122e8419bf3312e349fc577f863eab9f3757e8c0f"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_corrected_002_jamb_batch-011.jsonl",
+      "row_start": 200,
+      "row_count": 20,
+      "sha256": "eb83fa1dfb0e95eb47091ecad128bf74a2143a56a4e31eff5d10175d820ee859"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_corrected_002_jamb_batch-012.jsonl",
+      "row_start": 220,
+      "row_count": 20,
+      "sha256": "9dbfb51140d7ba3389878696e8608f69dc0d6432733b36fe5d6159b2d5adc902"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_corrected_002_jamb_batch-013.jsonl",
+      "row_start": 240,
+      "row_count": 20,
+      "sha256": "088615e7976b7243d4c55f1e2e655cd12f88021e73a354e80492dbd7590b4203"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_corrected_002_jamb_batch-014.jsonl",
+      "row_start": 260,
+      "row_count": 20,
+      "sha256": "06a58bdbf13c8d3000c9e5a8edfd056dff224d7cd1acaef4e36d41aa0cb0bd4d"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_corrected_002_jamb_batch-015.jsonl",
+      "row_start": 280,
+      "row_count": 20,
+      "sha256": "45880f457c0c431a87a9c56454d9e11e1f8afb5a980686e3f149194ef3ba4ddc"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_corrected_002_jamb_batch-016.jsonl",
+      "row_start": 300,
+      "row_count": 20,
+      "sha256": "3aa49d60acbf9f5e9e48650fd1d21add82fa8ffde572c9330456b604d3fcb706"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_corrected_002_jamb_batch-017.jsonl",
+      "row_start": 320,
+      "row_count": 20,
+      "sha256": "426ca50a8b51810611860fe3f2588bac7af746d26c8a1e714a35d67221c519db"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_corrected_002_jamb_batch-018.jsonl",
+      "row_start": 340,
+      "row_count": 20,
+      "sha256": "5cab3ace6579a76fa9e70a4a27ade342d5eba9974703aa1265ce7c409db95ef2"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_corrected_002_jamb_batch-019.jsonl",
+      "row_start": 360,
+      "row_count": 20,
+      "sha256": "612d1529c6e81f25af15ce7ff810c2cdd5073c953fc3c61bfe23b464782f19e7"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_corrected_002_jamb_batch-020.jsonl",
+      "row_start": 380,
+      "row_count": 20,
+      "sha256": "4f648921616ef3d184ed0dbc99f39a538cf390b69015a69e75d5f26bcf26700a"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_corrected_002_jamb_batch-021.jsonl",
+      "row_start": 400,
+      "row_count": 20,
+      "sha256": "a70faf84985600b9779dd5f7e517fd8d2f8345a26700b78710bf50e20c1ea9ec"
+    }
+  ],
+  "boundaries": {
+    "sql_applied": false,
+    "live_database_changed": false,
+    "browser_proof": false
+  }
+}

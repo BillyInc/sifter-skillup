@@ -1,0 +1,32 @@
+{
+  "schema": "2026-09-21.full-population-relationship-tranche-checkpoint.v1",
+  "tranche": "012",
+  "accessed_on": "2026-09-21",
+  "status": "searched",
+  "blocked": false,
+  "blocker": null,
+  "selection": "data/career-mapping/_audit/external_enrichment_agent/full_population_relationship_tranche_012_selection_2026-09-21.json",
+  "ledger": "data/career-mapping/_audit/external_enrichment_agent/full_population_relationship_tranche_012_search_ledger_2026-09-21.jsonl",
+  "report": "data/career-mapping/_audit/external_enrichment_agent/full_population_relationship_tranche_012_report_2026-09-21.json",
+  "scope": {
+    "prior_relationship_search_records": 60,
+    "current_tranche_rows_selected": 4,
+    "current_tranche_rows_searched": 4,
+    "current_tranche_linked": 0,
+    "current_tranche_review_required": 4,
+    "current_tranche_genuinely_unavailable": 0,
+    "current_tranche_remaining_selected_rows": 0,
+    "catalogue_unresolved_non_d078_before_selection": 2249,
+    "catalogue_unresolved_non_d078_after_selection": 2245
+  },
+  "search_blocked": false,
+  "search_status": "searched",
+  "guardrails": {
+    "sql_touched": false,
+    "generated_seed_transport_touched": false,
+    "catalogue_touched": false,
+    "app_code_touched": false,
+    "ui_touched": false,
+    "browser_proof_touched": false
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "schema": "2026-09-21.full-population-enrichment-tranche-report.v1",
+  "accessed_on": "2026-09-21",
+  "ledger": "data/career-mapping/_audit/external_enrichment_agent/full_population_tranche_001_search_ledger_2026-09-21.jsonl",
+  "scope": {
+    "excluded_context_prefix": "D078",
+    "selection": "highest-frequency unique non-D078 tools plus unresolved relationship endpoints",
+    "selected_rows": 32,
+    "item_rows": 28,
+    "relationship_rows": 4
+  },
+  "tranche_counts": {
+    "rows_searched": 32,
+    "linked": 24,
+    "review_required": 8,
+    "genuinely_unavailable": 0,
+    "no_link": 0,
+    "remaining_selected_tranche_rows": 0,
+    "linked_item_rows": 24,
+    "review_required_item_rows": 4,
+    "linked_relationship_rows": 0,
+    "review_required_relationship_rows": 4
+  },
+  "remaining_full_population_scope": {
+    "inventory_item_rows_requiring_canonical_search_evidence": 126414,
+    "inventory_relationship_rows_requiring_canonical_search_evidence": 422739,
+    "row_level_ledger_evidence_gap_after_this_tranche": 549121,
+    "raw_item_discovery_queue_unchanged_because_generated_state_was_not_modified": 125414,
+    "raw_item_verification_queue_unchanged_because_generated_state_was_not_modified": 1000,
+    "raw_relationship_discovery_queue_unchanged_because_generated_state_was_not_modified": 2305,
+    "raw_relationship_verification_queue_unchanged_because_generated_state_was_not_modified": 420434,
+    "canonical_global_search_ledger_rows_before_this_tranche": 0,
+    "tranche_ledger_rows_saved": 32
+  },
+  "relationship_policy": {
+    "exact_edge_promotions": 0,
+    "reason": "All four selected relationship rows had missing typed target endpoints. General vendor integration evidence was retained as review evidence only; no relationship was inferred."
+  },
+  "integrity": {
+    "duplicate_row_ids": 0,
+    "d078_rows": 0,
+    "rows_without_source_url_or_candidate_urls": 0,
+    "sql_touched": false,
+    "generated_seed_transport_touched": false,
+    "ui_touched": false,
+    "browser_proof_touched": false
+  }
+}

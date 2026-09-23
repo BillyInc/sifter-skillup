@@ -1,0 +1,58 @@
+{
+  "schema_version": "2026-09-21.downstream-admin-slice-checkpoint.v1",
+  "generated_on": "2026-09-21",
+  "read_only": true,
+  "status": "selection_saved_before_audit",
+  "selection": {
+    "policy": "next 20 canonical programme keys after excluding the prior first-20 admin tranche and any prior local slice selection",
+    "programme_count": 20,
+    "programme_keys": [
+      "Administration and Management::Securities and Investments Management",
+      "Administration and Management::Taxation",
+      "Administration and Management::Transport Management",
+      "Agricultural Science::Agribusiness",
+      "Agricultural Science::Agricultural Economics",
+      "Agricultural Science::Agricultural Extension",
+      "Agricultural Science::Animal Science",
+      "Agricultural Science::B. Agriculture",
+      "Agricultural Science::B.Sc./B.Tech Food Science and Technology",
+      "Agricultural Science::Crop Science",
+      "Agricultural Science::Family and Consumer Sciences",
+      "Agricultural Science::Fisheries and Aquaculture",
+      "Agricultural Science::Forest Resources and Wildlife Management",
+      "Agricultural Science::Horticulture and Landscape Management",
+      "Agricultural Science::Soil Science",
+      "Agricultural Science::Water Resources Management and Agro-Meteorology",
+      "Allied Health Sciences::Audiology",
+      "Allied Health Sciences::Complementary and Alternative Medicine",
+      "Allied Health Sciences::Dental Technology",
+      "Allied Health Sciences::Dental Therapy"
+    ],
+    "overlap_with_prior_admin_tranche": [],
+    "overlap_with_existing_local_slices": []
+  },
+  "scope_reference": {
+    "canonical_programmes": 237,
+    "canonical_jamb_identities": 420
+  },
+  "audit_contract": {
+    "student_admin_language_separation": "static contract markers plus per-programme queue state",
+    "category_ownership": "context ownership/state counters and student/admin boundary markers",
+    "bounded_role_learning": "role-learning caps and route-level role coverage",
+    "source_link_review_states": "per-programme provenance/link/review queue states",
+    "relationships": "active programme-domain types plus unresolved/not-established queues",
+    "provenance": "source reference/locator and ownership counters",
+    "fail_closed_student_exposure": "review-only/not-established states remain non-approved"
+  },
+  "inputs_read": [
+    "docs/GOAL_RESUME_STATUS_AND_AGENT_HANDOFF_2026-09-18.md",
+    "docs/user-facing-mockups/SOCIOLOGY_BOX_MOCKUP_IMPLEMENTATION_AUDIT_2026-09-17.md",
+    "docs/user-facing-mockups/SOCIOLOGY_TOP_DOWN_AUDIT_AND_CLOSURE_PLAN_2026-09-17.md",
+    "docs/LEVELUP_PRODUCT_WIDE_MOCKUP_SPEC.md",
+    "data/career-mapping/_audit/source_enrichment_batch_broad_2026-09-19.json",
+    "data/career-mapping/_audit/full_population_admin_agent_tranche_2026-09-21.json"
+  ],
+  "search_started": false,
+  "product_files_changed": false,
+  "sql_or_browser_proof": false
+}

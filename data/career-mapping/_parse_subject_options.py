@@ -1170,6 +1170,48 @@ def parse_olevel(text, context_codes=None):
     return n_min, parts
 
 
+def olevel_parts_are_matchable(text, parsed):
+    """Return whether parsed O-level parts are safe for exact matching.
+
+    A parser repair can represent an unspecified remainder as a catalogue-wide
+    group. That is only executable when the source explicitly says that the
+    remaining subjects are unrestricted (for example, ``any other two
+    subjects``). A sentence that merely says ``including English, Mathematics
+    and Economics`` does not identify the other credits, so it must remain
+    source evidence rather than become an exact matcher rule.
+    """
+    if not parsed or not isinstance(parsed, tuple) or len(parsed) != 2:
+        return False
+    _minimum, parts = parsed
+    broad_group = any(
+        part[0] == "one_of" and len(part[2]) >= 20
+        for part in parts
+    )
+    if not broad_group:
+        return True
+    source_scope_text = re.split(
+        r"\s+(?:for|in)\s+(?:nbc|ntc|nabteb|tc\s*ii|technic(?:al)?\s+certificate)\s+"
+        r"(?:holders?|candidates?)?\b",
+        str(text or "").lower(),
+        maxsplit=1,
+        flags=re.I,
+    )[0]
+    if re.search(
+        r"\b(?:relevant|suitable|appropriate|related|cognate|pertinent)\b|"
+        r"\bshares?\s+(?:the\s+)?block\b",
+        source_scope_text,
+    ):
+        return False
+    return bool(re.search(
+        r"\bany\s+(?:(?:other|remaining|additional)\s+)?"
+        r"(?:(?:one|two|three|four|five|six|several)\s+(?:\(\d+\)\s*)?)?subjects?\b|"
+        r"\b(?:one|two|three|four|five|six|several)\s+"
+        r"(?:other|remaining|additional)\s+(?:\(\d+\)\s*)?subjects?\b|"
+        r"\bany\s+subject\b",
+        source_scope_text,
+    ))
+
+
 def main():
     # collect programmes exactly like _gen_seed.py (offerings + enrich overlay)
     progs = {}
@@ -1229,7 +1271,9 @@ def main():
             elif r:
                 parsed[jname] = r
         if olevel_text[jname]:
-            olevel_rules[jname] = parse_olevel(olevel_text[jname])
+            candidate = parse_olevel(olevel_text[jname])
+            if candidate and olevel_parts_are_matchable(olevel_text[jname], candidate):
+                olevel_rules[jname] = candidate
             same_as = re.match(
                 r"^\s*same\s+as\s+(?:in|for)\s+([^(.]+?)(?:\s*\(|\s*$)",
                 olevel_text[jname],
@@ -1294,7 +1338,7 @@ def main():
             context = narrow_scope(parsed.get(jname), OLEVEL_CODES, UTME_CODES)
             if context:
                 candidate = parse_olevel(olevel_text[jname], context_codes=context)
-                if candidate:
+                if candidate and olevel_parts_are_matchable(olevel_text[jname], candidate):
                     olevel_rules[jname] = candidate
                     stats["olevel_context_resolved"] += 1
         if utme_text[jname] and not parsed.get(jname):

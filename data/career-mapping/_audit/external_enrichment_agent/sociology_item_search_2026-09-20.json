@@ -1,0 +1,80 @@
+{
+  "schema": "2026-09-20.item-specific-external-search.v1",
+  "accessedOn": "2026-09-20",
+  "scope": "Sociology/D078 domain tool tranche",
+  "policy": "A linked state is recorded only when the official destination names or directly documents the exact item. Broad provider homepages and generic taxonomy references are not promoted.",
+  "records": [
+    {
+      "itemType": "tool",
+      "itemName": "IBM SPSS Statistics",
+      "decision": "verified",
+      "url": "https://www.ibm.com/docs/en/spss-statistics/32.0.0?topic=spss-statistics-32-documentation",
+      "authority": "IBM",
+      "locator": "Getting Started section; the page identifies IBM SPSS Statistics and describes descriptive statistics, hypothesis testing, predictive analytics, data management and visualisation.",
+      "evidence": "The official IBM documentation names IBM SPSS Statistics and describes its statistical-analysis functions.",
+      "confidence": "high"
+    },
+    {
+      "itemType": "tool",
+      "itemName": "Microsoft Excel",
+      "decision": "verified",
+      "url": "https://support.microsoft.com/en-us/excel/",
+      "authority": "Microsoft Support",
+      "locator": "Excel help and learning: Get started, Import and analyse, Formulas and functions, and PivotTables.",
+      "evidence": "The official Microsoft Support destination is explicitly for Excel and provides item-specific learning and documentation sections.",
+      "confidence": "high"
+    },
+    {
+      "itemType": "tool",
+      "itemName": "Structured query language SQL",
+      "decision": "verified",
+      "url": "https://learn.microsoft.com/sql/",
+      "authority": "Microsoft Learn",
+      "locator": "Microsoft SQL documentation: Getting started, Connect and query, Write Transact-SQL, and SQL Database Engine documentation.",
+      "evidence": "The official Microsoft Learn destination is explicitly SQL documentation and provides query-writing and database-engine guidance.",
+      "confidence": "medium",
+      "limitation": "This is an official SQL implementation/documentation route, not a claim that Microsoft SQL Server is the only SQL implementation."
+    },
+    {
+      "itemType": "tool",
+      "itemName": "Tableau",
+      "decision": "verified",
+      "url": "https://help.tableau.com/current/guides/get-started-tutorial/en-us/get-started-tutorial-home.htm",
+      "authority": "Tableau",
+      "locator": "Get Started with Tableau Desktop: connect to data, create visualisations, present findings and share insights.",
+      "evidence": "The official Tableau tutorial names Tableau Desktop and documents its core workflow.",
+      "confidence": "high"
+    },
+    {
+      "itemType": "tool",
+      "itemName": "SAS",
+      "decision": "review_required",
+      "url": "https://documentation.sas.com/doc/en/statug/latest/statug_intro_sect001.htm",
+      "authority": "SAS",
+      "locator": "Overview of SAS/STAT Software; statistical analyses including regression, survey-data analysis and survival analysis.",
+      "evidence": "The source is authoritative and item-related, but the page is specifically for SAS/STAT rather than the broader tool label SAS.",
+      "confidence": "medium",
+      "limitation": "Do not promote the broad SAS label until the exact catalogue item is confirmed as SAS/STAT or a broader official SAS destination is found."
+    },
+    {
+      "itemType": "competency",
+      "itemName": "formulate research questions",
+      "decision": "verified",
+      "url": "https://owl.purdue.edu/owl/research_and_citation/conducting_research/research_overview/index.html",
+      "authority": "Purdue Online Writing Lab",
+      "locator": "Writing Your Research Question; Asking Productive Questions.",
+      "evidence": "The official Purdue research guidance explicitly explains that writing a topic as a question focuses the research and helps narrow the search.",
+      "confidence": "high"
+    },
+    {
+      "itemType": "competency",
+      "itemName": "evaluate evidence",
+      "decision": "verified",
+      "url": "https://www.nihlibrary.nih.gov/services/evidence-synthesis/start-here",
+      "authority": "National Institutes of Health Library",
+      "locator": "Assess the Need; Refine the Question; Select the Review Type; the page describes evidence-synthesis preparation and evidence assessment workflow.",
+      "evidence": "The official NIH Library page names evidence synthesis and gives a structured process for refining questions, selecting evidence and choosing review methods.",
+      "confidence": "high"
+    }
+  ]
+}

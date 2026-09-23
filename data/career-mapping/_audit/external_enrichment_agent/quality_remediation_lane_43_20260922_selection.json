@@ -1,0 +1,1620 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-selection.v2",
+  "batch": "quality_remediation_lane_43_20260922",
+  "selected_at": "2026-09-22",
+  "source_audit": "data/career-mapping/_audit/external_enrichment_agent/item_ledger_quality_audit_2026-09-22.json",
+  "source_sha256": "ce3fbdf1588a1ebac29122043ed805c74a891234ee3892d49775a8141d1ddb56",
+  "selection_method": "atomic shared lock; exclude all prior valid claims by contextual and typed identity",
+  "prior_claimed_contextual_ids": 3572,
+  "prior_claimed_typed_items": 2946,
+  "selection_count": 100,
+  "requested_count": 100,
+  "shortfall": 0,
+  "rows": [
+    {
+      "subject_id": "item|role|D027|biotechnical technician|skill|crop-production-principles",
+      "context_level": "role",
+      "context_key": "D027|biotechnical technician",
+      "item_type": "skill",
+      "item_key": "crop-production-principles",
+      "item_name": "crop production principles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|biotechnical technician|skill|run-laboratory-simulations",
+      "context_level": "role",
+      "context_key": "D027|biotechnical technician",
+      "item_type": "skill",
+      "item_key": "run-laboratory-simulations",
+      "item_name": "run laboratory simulations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|botanical technician|skill|aeroponics",
+      "context_level": "role",
+      "context_key": "D027|botanical technician",
+      "item_type": "skill",
+      "item_key": "aeroponics",
+      "item_name": "aeroponics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|botanical technician|skill|characteristics-of-plants",
+      "context_level": "role",
+      "context_key": "D027|botanical technician",
+      "item_type": "skill",
+      "item_key": "characteristics-of-plants",
+      "item_name": "characteristics of plants",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|botanical technician|skill|plant-care-products",
+      "context_level": "role",
+      "context_key": "D027|botanical technician",
+      "item_type": "skill",
+      "item_key": "plant-care-products",
+      "item_name": "plant care products",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|botanical technician|skill|variety-of-botanicals",
+      "context_level": "role",
+      "context_key": "D027|botanical technician",
+      "item_type": "skill",
+      "item_key": "variety-of-botanicals",
+      "item_name": "variety of botanicals",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|botanicals specialist|skill|analyse-samples-of-food-and-beverages",
+      "context_level": "role",
+      "context_key": "D027|botanicals specialist",
+      "item_type": "skill",
+      "item_key": "analyse-samples-of-food-and-beverages",
+      "item_name": "analyse samples of food and beverages",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|botanicals specialist|skill|apply-gmp",
+      "context_level": "role",
+      "context_key": "D027|botanicals specialist",
+      "item_type": "skill",
+      "item_key": "apply-gmp",
+      "item_name": "apply GMP",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|botanicals specialist|skill|apply-requirements-concerning-manufacturing-of-food-and-beverages",
+      "context_level": "role",
+      "context_key": "D027|botanicals specialist",
+      "item_type": "skill",
+      "item_key": "apply-requirements-concerning-manufacturing-of-food-and-beverages",
+      "item_name": "apply requirements concerning manufacturing of food and beverages",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|botanicals specialist|skill|conduct-extensive-international-travel",
+      "context_level": "role",
+      "context_key": "D027|botanicals specialist",
+      "item_type": "skill",
+      "item_key": "conduct-extensive-international-travel",
+      "item_name": "conduct extensive international travel",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|botanicals specialist|skill|create-beverage-recipes-with-botanicals",
+      "context_level": "role",
+      "context_key": "D027|botanicals specialist",
+      "item_type": "skill",
+      "item_key": "create-beverage-recipes-with-botanicals",
+      "item_name": "create beverage recipes with botanicals",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|botanicals specialist|skill|examine-production-samples",
+      "context_level": "role",
+      "context_key": "D027|botanicals specialist",
+      "item_type": "skill",
+      "item_key": "examine-production-samples",
+      "item_name": "examine production samples",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|botanicals specialist|skill|ingredient-threats",
+      "context_level": "role",
+      "context_key": "D027|botanicals specialist",
+      "item_type": "skill",
+      "item_key": "ingredient-threats",
+      "item_name": "ingredient threats",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|botanicals specialist|skill|perform-sensory-evaluation-of-food-products",
+      "context_level": "role",
+      "context_key": "D027|botanicals specialist",
+      "item_type": "skill",
+      "item_key": "perform-sensory-evaluation-of-food-products",
+      "item_name": "perform sensory evaluation of food products",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|botanicals specialist|skill|tend-botanical-milling-machines",
+      "context_level": "role",
+      "context_key": "D027|botanicals specialist",
+      "item_type": "skill",
+      "item_key": "tend-botanical-milling-machines",
+      "item_name": "tend botanical milling machines",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|botanicals specialist|skill|write-routine-reports",
+      "context_level": "role",
+      "context_key": "D027|botanicals specialist",
+      "item_type": "skill",
+      "item_key": "write-routine-reports",
+      "item_name": "write routine reports",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|botanist|skill|advise-on-acquisitions",
+      "context_level": "role",
+      "context_key": "D027|botanist",
+      "item_type": "skill",
+      "item_key": "advise-on-acquisitions",
+      "item_name": "advise on acquisitions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|botanist|skill|aquatic-ecology",
+      "context_level": "role",
+      "context_key": "D027|botanist",
+      "item_type": "skill",
+      "item_key": "aquatic-ecology",
+      "item_name": "aquatic ecology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|botanist|skill|conduct-ecological-surveys",
+      "context_level": "role",
+      "context_key": "D027|botanist",
+      "item_type": "skill",
+      "item_key": "conduct-ecological-surveys",
+      "item_name": "conduct ecological surveys",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|botanist|skill|educate-people-about-nature",
+      "context_level": "role",
+      "context_key": "D027|botanist",
+      "item_type": "skill",
+      "item_key": "educate-people-about-nature",
+      "item_name": "educate people about nature",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|botanist|skill|employ-habitat-survey-techniques",
+      "context_level": "role",
+      "context_key": "D027|botanist",
+      "item_type": "skill",
+      "item_key": "employ-habitat-survey-techniques",
+      "item_name": "employ habitat survey techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|botanist|skill|forest-ecology",
+      "context_level": "role",
+      "context_key": "D027|botanist",
+      "item_type": "skill",
+      "item_key": "forest-ecology",
+      "item_name": "forest ecology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|botanist|skill|recreation-activities",
+      "context_level": "role",
+      "context_key": "D027|botanist",
+      "item_type": "skill",
+      "item_key": "recreation-activities",
+      "item_name": "recreation activities",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|botanist|skill|represent-the-organisation",
+      "context_level": "role",
+      "context_key": "D027|botanist",
+      "item_type": "skill",
+      "item_key": "represent-the-organisation",
+      "item_name": "represent the organisation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|conservation scientist|skill|agroforestry",
+      "context_level": "role",
+      "context_key": "D027|conservation scientist",
+      "item_type": "skill",
+      "item_key": "agroforestry",
+      "item_name": "agroforestry",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|conservation scientist|skill|animal-species",
+      "context_level": "role",
+      "context_key": "D027|conservation scientist",
+      "item_type": "skill",
+      "item_key": "animal-species",
+      "item_name": "animal species",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|conservation scientist|skill|climate-smart-agriculture",
+      "context_level": "role",
+      "context_key": "D027|conservation scientist",
+      "item_type": "skill",
+      "item_key": "climate-smart-agriculture",
+      "item_name": "climate smart agriculture",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|conservation scientist|skill|forestry-regulations",
+      "context_level": "role",
+      "context_key": "D027|conservation scientist",
+      "item_type": "skill",
+      "item_key": "forestry-regulations",
+      "item_name": "forestry regulations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|conservation scientist|skill|reforestation",
+      "context_level": "role",
+      "context_key": "D027|conservation scientist",
+      "item_type": "skill",
+      "item_key": "reforestation",
+      "item_name": "reforestation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|conservation scientist|skill|sustainable-forest-management",
+      "context_level": "role",
+      "context_key": "D027|conservation scientist",
+      "item_type": "skill",
+      "item_key": "sustainable-forest-management",
+      "item_name": "sustainable forest management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|countryside officer|skill|build-garden-masonry",
+      "context_level": "role",
+      "context_key": "D027|countryside officer",
+      "item_type": "skill",
+      "item_key": "build-garden-masonry",
+      "item_name": "build garden masonry",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|countryside officer|skill|environmental-legislation-in-agriculture-and-forestry",
+      "context_level": "role",
+      "context_key": "D027|countryside officer",
+      "item_type": "skill",
+      "item_key": "environmental-legislation-in-agriculture-and-forestry",
+      "item_name": "environmental legislation in agriculture and forestry",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|countryside officer|skill|estimate-costs-in-farm",
+      "context_level": "role",
+      "context_key": "D027|countryside officer",
+      "item_type": "skill",
+      "item_key": "estimate-costs-in-farm",
+      "item_name": "estimate costs in farm",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|countryside officer|skill|manage-waste-rock",
+      "context_level": "role",
+      "context_key": "D027|countryside officer",
+      "item_type": "skill",
+      "item_key": "manage-waste-rock",
+      "item_name": "manage waste rock",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|countryside officer|skill|natural-areas-maintenance",
+      "context_level": "role",
+      "context_key": "D027|countryside officer",
+      "item_type": "skill",
+      "item_key": "natural-areas-maintenance",
+      "item_name": "natural areas maintenance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|countryside officer|skill|plant-harvest-methods",
+      "context_level": "role",
+      "context_key": "D027|countryside officer",
+      "item_type": "skill",
+      "item_key": "plant-harvest-methods",
+      "item_name": "plant harvest methods",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|countryside officer|tool|adobe-pagemaker",
+      "context_level": "role",
+      "context_key": "D027|countryside officer",
+      "item_type": "tool",
+      "item_key": "adobe-pagemaker",
+      "item_name": "Adobe PageMaker",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|curator of horticulture|skill|advise-on-tree-issues",
+      "context_level": "role",
+      "context_key": "D027|curator of horticulture",
+      "item_type": "skill",
+      "item_key": "advise-on-tree-issues",
+      "item_name": "advise on tree issues",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|curator of horticulture|skill|collection-management",
+      "context_level": "role",
+      "context_key": "D027|curator of horticulture",
+      "item_type": "skill",
+      "item_key": "collection-management",
+      "item_name": "collection management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|curator of horticulture|skill|collection-management-software",
+      "context_level": "role",
+      "context_key": "D027|curator of horticulture",
+      "item_type": "skill",
+      "item_key": "collection-management-software",
+      "item_name": "collection management software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|curator of horticulture|skill|horticultural-design",
+      "context_level": "role",
+      "context_key": "D027|curator of horticulture",
+      "item_type": "skill",
+      "item_key": "horticultural-design",
+      "item_name": "horticultural design",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|curator of horticulture|skill|horticulture-principles",
+      "context_level": "role",
+      "context_key": "D027|curator of horticulture",
+      "item_type": "skill",
+      "item_key": "horticulture-principles",
+      "item_name": "horticulture principles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|curator of horticulture|skill|respond-to-enquiries",
+      "context_level": "role",
+      "context_key": "D027|curator of horticulture",
+      "item_type": "skill",
+      "item_key": "respond-to-enquiries",
+      "item_name": "respond to enquiries",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|curator of horticulture|tool|ibm-notes",
+      "context_level": "role",
+      "context_key": "D027|curator of horticulture",
+      "item_type": "tool",
+      "item_key": "ibm-notes",
+      "item_name": "IBM Notes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|ecologist|skill|agroecology",
+      "context_level": "role",
+      "context_key": "D027|ecologist",
+      "item_type": "skill",
+      "item_key": "agroecology",
+      "item_name": "agroecology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|ecologist|skill|measure-trees",
+      "context_level": "role",
+      "context_key": "D027|ecologist",
+      "item_type": "skill",
+      "item_key": "measure-trees",
+      "item_name": "measure trees",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|ecologist|skill|organism-taxonomy",
+      "context_level": "role",
+      "context_key": "D027|ecologist",
+      "item_type": "skill",
+      "item_key": "organism-taxonomy",
+      "item_name": "organism taxonomy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|environmental scientist|skill|consumer-protection",
+      "context_level": "role",
+      "context_key": "D027|environmental scientist",
+      "item_type": "skill",
+      "item_key": "consumer-protection",
+      "item_name": "consumer protection",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|environmental scientist|skill|environmental-management-monitors",
+      "context_level": "role",
+      "context_key": "D027|environmental scientist",
+      "item_type": "skill",
+      "item_key": "environmental-management-monitors",
+      "item_name": "environmental management monitors",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|environmental technician|skill|virtual-reality",
+      "context_level": "role",
+      "context_key": "D027|environmental technician",
+      "item_type": "skill",
+      "item_key": "virtual-reality",
+      "item_name": "virtual reality",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|epidemiologist|skill|epidemiology",
+      "context_level": "role",
+      "context_key": "D027|epidemiologist",
+      "item_type": "skill",
+      "item_key": "epidemiology",
+      "item_name": "epidemiology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|epidemiologist|skill|preventive-medicine",
+      "context_level": "role",
+      "context_key": "D027|epidemiologist",
+      "item_type": "skill",
+      "item_key": "preventive-medicine",
+      "item_name": "preventive medicine",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|food biotechnologist|skill|bioethics",
+      "context_level": "role",
+      "context_key": "D027|food biotechnologist",
+      "item_type": "skill",
+      "item_key": "bioethics",
+      "item_name": "bioethics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|food biotechnologist|skill|develop-new-food-products",
+      "context_level": "role",
+      "context_key": "D027|food biotechnologist",
+      "item_type": "skill",
+      "item_key": "develop-new-food-products",
+      "item_name": "develop new food products",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|food biotechnologist|skill|enzymatic-processing",
+      "context_level": "role",
+      "context_key": "D027|food biotechnologist",
+      "item_type": "skill",
+      "item_key": "enzymatic-processing",
+      "item_name": "enzymatic processing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|food biotechnologist|skill|food-products-composition",
+      "context_level": "role",
+      "context_key": "D027|food biotechnologist",
+      "item_type": "skill",
+      "item_key": "food-products-composition",
+      "item_name": "food products composition",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|food biotechnologist|skill|food-safety-standards",
+      "context_level": "role",
+      "context_key": "D027|food biotechnologist",
+      "item_type": "skill",
+      "item_key": "food-safety-standards",
+      "item_name": "food safety standards",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|geneticist|skill|medical-genetics",
+      "context_level": "role",
+      "context_key": "D027|geneticist",
+      "item_type": "skill",
+      "item_key": "medical-genetics",
+      "item_name": "medical genetics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|immunologist|skill|clinical-immunology",
+      "context_level": "role",
+      "context_key": "D027|immunologist",
+      "item_type": "skill",
+      "item_key": "clinical-immunology",
+      "item_name": "clinical immunology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|immunologist|skill|diagnostic-immunology-techniques",
+      "context_level": "role",
+      "context_key": "D027|immunologist",
+      "item_type": "skill",
+      "item_key": "diagnostic-immunology-techniques",
+      "item_name": "diagnostic immunology techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|immunologist|skill|immunology",
+      "context_level": "role",
+      "context_key": "D027|immunologist",
+      "item_type": "skill",
+      "item_key": "immunology",
+      "item_name": "immunology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|immunologist|skill|medical-mycology",
+      "context_level": "role",
+      "context_key": "D027|immunologist",
+      "item_type": "skill",
+      "item_key": "medical-mycology",
+      "item_name": "medical mycology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|immunologist|skill|medical-parasitology",
+      "context_level": "role",
+      "context_key": "D027|immunologist",
+      "item_type": "skill",
+      "item_key": "medical-parasitology",
+      "item_name": "medical parasitology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|immunologist|skill|molecular-and-cellular-immunology",
+      "context_level": "role",
+      "context_key": "D027|immunologist",
+      "item_type": "skill",
+      "item_key": "molecular-and-cellular-immunology",
+      "item_name": "molecular and cellular immunology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|natural resources consultant|skill|analyse-ecological-data",
+      "context_level": "role",
+      "context_key": "D027|natural resources consultant",
+      "item_type": "skill",
+      "item_key": "analyse-ecological-data",
+      "item_name": "analyse ecological data",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|natural resources consultant|skill|conduct-ecological-research",
+      "context_level": "role",
+      "context_key": "D027|natural resources consultant",
+      "item_type": "skill",
+      "item_key": "conduct-ecological-research",
+      "item_name": "conduct ecological research",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|natural resources consultant|skill|conserve-natural-resources",
+      "context_level": "role",
+      "context_key": "D027|natural resources consultant",
+      "item_type": "skill",
+      "item_key": "conserve-natural-resources",
+      "item_name": "conserve natural resources",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|natural resources consultant|skill|fisheries-management",
+      "context_level": "role",
+      "context_key": "D027|natural resources consultant",
+      "item_type": "skill",
+      "item_key": "fisheries-management",
+      "item_name": "fisheries management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.fao.org/fishery/en"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|natural resources consultant|skill|monitor-nature-conservation",
+      "context_level": "role",
+      "context_key": "D027|natural resources consultant",
+      "item_type": "skill",
+      "item_key": "monitor-nature-conservation",
+      "item_name": "monitor nature conservation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|pharmacologist|skill|nuclear-medicine",
+      "context_level": "role",
+      "context_key": "D027|pharmacologist",
+      "item_type": "skill",
+      "item_key": "nuclear-medicine",
+      "item_name": "nuclear medicine",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|pharmacologist|skill|pharmacovigilance-legislation",
+      "context_level": "role",
+      "context_key": "D027|pharmacologist",
+      "item_type": "skill",
+      "item_key": "pharmacovigilance-legislation",
+      "item_name": "pharmacovigilance legislation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|physiologist|skill|exercise-physiology",
+      "context_level": "role",
+      "context_key": "D027|physiologist",
+      "item_type": "skill",
+      "item_key": "exercise-physiology",
+      "item_name": "exercise physiology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|physiologist|skill|histology",
+      "context_level": "role",
+      "context_key": "D027|physiologist",
+      "item_type": "skill",
+      "item_key": "histology",
+      "item_name": "histology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|pipeline environmental project manager|skill|combine-multiple-fields-of-knowledge",
+      "context_level": "role",
+      "context_key": "D027|pipeline environmental project manager",
+      "item_type": "skill",
+      "item_key": "combine-multiple-fields-of-knowledge",
+      "item_name": "combine multiple fields of knowledge",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|pipeline environmental project manager|skill|implement-environmental-action-plans",
+      "context_level": "role",
+      "context_key": "D027|pipeline environmental project manager",
+      "item_type": "skill",
+      "item_key": "implement-environmental-action-plans",
+      "item_name": "implement environmental action plans",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|pipeline environmental project manager|skill|mitigate-environmental-impact-of-pipeline-projects",
+      "context_level": "role",
+      "context_key": "D027|pipeline environmental project manager",
+      "item_type": "skill",
+      "item_key": "mitigate-environmental-impact-of-pipeline-projects",
+      "item_name": "mitigate environmental impact of pipeline projects",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|pipeline environmental project manager|skill|security-requirements-of-goods-transported-via-pipelines",
+      "context_level": "role",
+      "context_key": "D027|pipeline environmental project manager",
+      "item_type": "skill",
+      "item_key": "security-requirements-of-goods-transported-via-pipelines",
+      "item_name": "security requirements of goods transported via pipelines",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|pipeline environmental project manager|skill|use-software-tools-for-site-modelling",
+      "context_level": "role",
+      "context_key": "D027|pipeline environmental project manager",
+      "item_type": "skill",
+      "item_key": "use-software-tools-for-site-modelling",
+      "item_name": "use software tools for site modelling",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|scientific laboratory technician|skill|calibrate-laboratory-equipment",
+      "context_level": "role",
+      "context_key": "D027|scientific laboratory technician",
+      "item_type": "skill",
+      "item_key": "calibrate-laboratory-equipment",
+      "item_name": "calibrate laboratory equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|scientific laboratory technician|skill|test-chemical-samples",
+      "context_level": "role",
+      "context_key": "D027|scientific laboratory technician",
+      "item_type": "skill",
+      "item_key": "test-chemical-samples",
+      "item_name": "test chemical samples",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|soil scientist|skill|agronomical-production-principles",
+      "context_level": "role",
+      "context_key": "D027|soil scientist",
+      "item_type": "skill",
+      "item_key": "agronomical-production-principles",
+      "item_name": "agronomical production principles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|soil scientist|skill|european-pesticide-legislation",
+      "context_level": "role",
+      "context_key": "D027|soil scientist",
+      "item_type": "skill",
+      "item_key": "european-pesticide-legislation",
+      "item_name": "European pesticide legislation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|soil scientist|skill|government-policy",
+      "context_level": "role",
+      "context_key": "D027|soil scientist",
+      "item_type": "skill",
+      "item_key": "government-policy",
+      "item_name": "government policy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|soil scientist|skill|soil-mechanics",
+      "context_level": "role",
+      "context_key": "D027|soil scientist",
+      "item_type": "skill",
+      "item_key": "soil-mechanics",
+      "item_name": "soil mechanics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|viticulture adviser|skill|advise-on-fertiliser-and-herbicide",
+      "context_level": "role",
+      "context_key": "D027|viticulture adviser",
+      "item_type": "skill",
+      "item_key": "advise-on-fertiliser-and-herbicide",
+      "item_name": "advise on fertiliser and herbicide",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|viticulture adviser|skill|advise-on-grape-quality-improvement",
+      "context_level": "role",
+      "context_key": "D027|viticulture adviser",
+      "item_type": "skill",
+      "item_key": "advise-on-grape-quality-improvement",
+      "item_name": "advise on grape quality improvement",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|viticulture adviser|skill|advise-on-plant-mineral-nutrition",
+      "context_level": "role",
+      "context_key": "D027|viticulture adviser",
+      "item_type": "skill",
+      "item_key": "advise-on-plant-mineral-nutrition",
+      "item_name": "advise on plant mineral nutrition",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|viticulture adviser|skill|advise-on-wine-quality-improvement",
+      "context_level": "role",
+      "context_key": "D027|viticulture adviser",
+      "item_type": "skill",
+      "item_key": "advise-on-wine-quality-improvement",
+      "item_name": "advise on wine quality improvement",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|viticulture adviser|skill|agronomy",
+      "context_level": "role",
+      "context_key": "D027|viticulture adviser",
+      "item_type": "skill",
+      "item_key": "agronomy",
+      "item_name": "agronomy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|viticulture adviser|skill|control-grape-quality",
+      "context_level": "role",
+      "context_key": "D027|viticulture adviser",
+      "item_type": "skill",
+      "item_key": "control-grape-quality",
+      "item_name": "control grape quality",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|viticulture adviser|skill|e-agriculture",
+      "context_level": "role",
+      "context_key": "D027|viticulture adviser",
+      "item_type": "skill",
+      "item_key": "e-agriculture",
+      "item_name": "e-agriculture",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|viticulture adviser|skill|manage-nutrients",
+      "context_level": "role",
+      "context_key": "D027|viticulture adviser",
+      "item_type": "skill",
+      "item_key": "manage-nutrients",
+      "item_name": "manage nutrients",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|viticulture adviser|skill|organic-farming",
+      "context_level": "role",
+      "context_key": "D027|viticulture adviser",
+      "item_type": "skill",
+      "item_key": "organic-farming",
+      "item_name": "organic farming",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|viticulture adviser|skill|raisin-grapes",
+      "context_level": "role",
+      "context_key": "D027|viticulture adviser",
+      "item_type": "skill",
+      "item_key": "raisin-grapes",
+      "item_name": "raisin grapes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|viticulture adviser|skill|table-grapes-manipulation",
+      "context_level": "role",
+      "context_key": "D027|viticulture adviser",
+      "item_type": "skill",
+      "item_key": "table-grapes-manipulation",
+      "item_name": "table grapes manipulation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|viticulture adviser|skill|types-of-wine",
+      "context_level": "role",
+      "context_key": "D027|viticulture adviser",
+      "item_type": "skill",
+      "item_key": "types-of-wine",
+      "item_name": "types of wine",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|water quality analyst|skill|develop-water-purification-methods",
+      "context_level": "role",
+      "context_key": "D027|water quality analyst",
+      "item_type": "skill",
+      "item_key": "develop-water-purification-methods",
+      "item_name": "develop water purification methods",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|water quality analyst|skill|perform-water-chemistry-analysis",
+      "context_level": "role",
+      "context_key": "D027|water quality analyst",
+      "item_type": "skill",
+      "item_key": "perform-water-chemistry-analysis",
+      "item_name": "perform water chemistry analysis",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|zoology technician|skill|animal-behaviour",
+      "context_level": "role",
+      "context_key": "D027|zoology technician",
+      "item_type": "skill",
+      "item_key": "animal-behaviour",
+      "item_name": "animal behaviour",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|zoology technician|skill|animal-biology",
+      "context_level": "role",
+      "context_key": "D027|zoology technician",
+      "item_type": "skill",
+      "item_key": "animal-biology",
+      "item_name": "animal biology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    }
+  ],
+  "policy": {
+    "review_required_preserved_unless_exact_item_evidence_established": true,
+    "no_relationship_inference": true,
+    "no_promotion": true
+  }
+}

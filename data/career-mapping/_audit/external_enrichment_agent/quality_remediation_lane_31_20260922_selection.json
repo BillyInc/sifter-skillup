@@ -1,0 +1,1620 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-selection.v2",
+  "batch": "quality_remediation_lane_31_20260922",
+  "selected_at": "2026-09-22",
+  "source_audit": "data/career-mapping/_audit/external_enrichment_agent/item_ledger_quality_audit_2026-09-22.json",
+  "source_sha256": "27f68163bcf871181e3eec3af03606287b06780962aa2b8aece850e3094ce09e",
+  "selection_method": "atomic shared lock; exclude all prior valid claims by contextual and typed identity",
+  "prior_claimed_contextual_ids": 2372,
+  "prior_claimed_typed_items": 1746,
+  "selection_count": 100,
+  "requested_count": 100,
+  "shortfall": 0,
+  "rows": [
+    {
+      "subject_id": "item|role|D018|geological engineer|skill|soil-science",
+      "context_level": "role",
+      "context_key": "D018|geological engineer",
+      "item_type": "skill",
+      "item_key": "soil-science",
+      "item_name": "soil science",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|health and safety engineer|skill|adhere-to-health-well-being-and-safety",
+      "context_level": "role",
+      "context_key": "D018|health and safety engineer",
+      "item_type": "skill",
+      "item_key": "adhere-to-health-well-being-and-safety",
+      "item_name": "adhere to health well-being and safety",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|health and safety engineer|skill|approve-engineering-design",
+      "context_level": "role",
+      "context_key": "D018|health and safety engineer",
+      "item_type": "skill",
+      "item_key": "approve-engineering-design",
+      "item_name": "approve engineering design",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|health and safety engineer|skill|draw-up-risk-assessment",
+      "context_level": "role",
+      "context_key": "D018|health and safety engineer",
+      "item_type": "skill",
+      "item_key": "draw-up-risk-assessment",
+      "item_name": "draw up risk assessment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|health and safety engineer|skill|prevent-health-and-safety-problems",
+      "context_level": "role",
+      "context_key": "D018|health and safety engineer",
+      "item_type": "skill",
+      "item_key": "prevent-health-and-safety-problems",
+      "item_name": "prevent health and safety problems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|hydropower engineer|skill|automation-technology",
+      "context_level": "role",
+      "context_key": "D018|hydropower engineer",
+      "item_type": "skill",
+      "item_key": "automation-technology",
+      "item_name": "automation technology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|hydropower engineer|skill|research-ocean-energy-projects",
+      "context_level": "role",
+      "context_key": "D018|hydropower engineer",
+      "item_type": "skill",
+      "item_key": "research-ocean-energy-projects",
+      "item_name": "research ocean energy projects",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|hydropower engineer|tool|oracle-database",
+      "context_level": "role",
+      "context_key": "D018|hydropower engineer",
+      "item_type": "tool",
+      "item_key": "oracle-database",
+      "item_name": "Oracle Database",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|innovation engineer|skill|consult-with-industry-professionals",
+      "context_level": "role",
+      "context_key": "D018|innovation engineer",
+      "item_type": "skill",
+      "item_key": "consult-with-industry-professionals",
+      "item_name": "consult with industry professionals",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|innovation engineer|skill|describe-chemical-innovation-in-products",
+      "context_level": "role",
+      "context_key": "D018|innovation engineer",
+      "item_type": "skill",
+      "item_key": "describe-chemical-innovation-in-products",
+      "item_name": "describe chemical innovation in products",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|innovation engineer|skill|develop-new-products",
+      "context_level": "role",
+      "context_key": "D018|innovation engineer",
+      "item_type": "skill",
+      "item_key": "develop-new-products",
+      "item_name": "develop new products",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|innovation engineer|skill|identify-technological-needs",
+      "context_level": "role",
+      "context_key": "D018|innovation engineer",
+      "item_type": "skill",
+      "item_key": "identify-technological-needs",
+      "item_name": "identify technological needs",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|innovation engineer|skill|keep-updated-on-innovations-in-various-business-fields",
+      "context_level": "role",
+      "context_key": "D018|innovation engineer",
+      "item_type": "skill",
+      "item_key": "keep-updated-on-innovations-in-various-business-fields",
+      "item_name": "keep updated on innovations in various business fields",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|innovation engineer|skill|patents",
+      "context_level": "role",
+      "context_key": "D018|innovation engineer",
+      "item_type": "skill",
+      "item_key": "patents",
+      "item_name": "patents",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|innovation engineer|skill|plan-product-management",
+      "context_level": "role",
+      "context_key": "D018|innovation engineer",
+      "item_type": "skill",
+      "item_key": "plan-product-management",
+      "item_name": "plan product management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|innovation engineer|skill|promote-the-transfer-of-knowledge",
+      "context_level": "role",
+      "context_key": "D018|innovation engineer",
+      "item_type": "skill",
+      "item_key": "promote-the-transfer-of-knowledge",
+      "item_name": "promote the transfer of knowledge",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|innovation engineer|skill|social-innovation",
+      "context_level": "role",
+      "context_key": "D018|innovation engineer",
+      "item_type": "skill",
+      "item_key": "social-innovation",
+      "item_name": "social innovation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|landfill supervisor|skill|advise-on-waste-management-procedures",
+      "context_level": "role",
+      "context_key": "D018|landfill supervisor",
+      "item_type": "skill",
+      "item_key": "advise-on-waste-management-procedures",
+      "item_name": "advise on waste management procedures",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|landfill supervisor|skill|communicate-with-waste-collectors",
+      "context_level": "role",
+      "context_key": "D018|landfill supervisor",
+      "item_type": "skill",
+      "item_key": "communicate-with-waste-collectors",
+      "item_name": "communicate with waste collectors",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|landfill supervisor|skill|coordinate-waste-management-procedures",
+      "context_level": "role",
+      "context_key": "D018|landfill supervisor",
+      "item_type": "skill",
+      "item_key": "coordinate-waste-management-procedures",
+      "item_name": "coordinate waste management procedures",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|landfill supervisor|skill|ensure-compliance-with-waste-legislative-regulations",
+      "context_level": "role",
+      "context_key": "D018|landfill supervisor",
+      "item_type": "skill",
+      "item_key": "ensure-compliance-with-waste-legislative-regulations",
+      "item_name": "ensure compliance with waste legislative regulations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|landfill supervisor|skill|hazardous-waste-storage",
+      "context_level": "role",
+      "context_key": "D018|landfill supervisor",
+      "item_type": "skill",
+      "item_key": "hazardous-waste-storage",
+      "item_name": "hazardous waste storage",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|landfill supervisor|skill|manage-waste-treatment-facility",
+      "context_level": "role",
+      "context_key": "D018|landfill supervisor",
+      "item_type": "skill",
+      "item_key": "manage-waste-treatment-facility",
+      "item_name": "manage waste treatment facility",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|landfill supervisor|skill|monitor-waste-treatment-equipment",
+      "context_level": "role",
+      "context_key": "D018|landfill supervisor",
+      "item_type": "skill",
+      "item_key": "monitor-waste-treatment-equipment",
+      "item_name": "monitor waste treatment equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|landfill supervisor|skill|schedule-regular-machine-maintenance",
+      "context_level": "role",
+      "context_key": "D018|landfill supervisor",
+      "item_type": "skill",
+      "item_key": "schedule-regular-machine-maintenance",
+      "item_name": "schedule regular machine maintenance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|landfill supervisor|skill|waste-and-scrap-products",
+      "context_level": "role",
+      "context_key": "D018|landfill supervisor",
+      "item_type": "skill",
+      "item_key": "waste-and-scrap-products",
+      "item_name": "waste and scrap products",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|landfill supervisor|skill|waste-management",
+      "context_level": "role",
+      "context_key": "D018|landfill supervisor",
+      "item_type": "skill",
+      "item_key": "waste-management",
+      "item_name": "waste management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|landfill supervisor|skill|waste-transport-legislation",
+      "context_level": "role",
+      "context_key": "D018|landfill supervisor",
+      "item_type": "skill",
+      "item_key": "waste-transport-legislation",
+      "item_name": "waste transport legislation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|landfill supervisor|tool|operational-databases",
+      "context_level": "role",
+      "context_key": "D018|landfill supervisor",
+      "item_type": "tool",
+      "item_key": "operational-databases",
+      "item_name": "Operational databases",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|logistics engineer|skill|direct-logistical-functions",
+      "context_level": "role",
+      "context_key": "D018|logistics engineer",
+      "item_type": "skill",
+      "item_key": "direct-logistical-functions",
+      "item_name": "direct logistical functions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|logistics engineer|skill|product-packaging-requirements",
+      "context_level": "role",
+      "context_key": "D018|logistics engineer",
+      "item_type": "skill",
+      "item_key": "product-packaging-requirements",
+      "item_name": "product packaging requirements",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|logistics engineer|skill|transportation-engineering",
+      "context_level": "role",
+      "context_key": "D018|logistics engineer",
+      "item_type": "skill",
+      "item_key": "transportation-engineering",
+      "item_name": "transportation engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|materials engineer|skill|laboratory-techniques",
+      "context_level": "role",
+      "context_key": "D018|materials engineer",
+      "item_type": "skill",
+      "item_key": "laboratory-techniques",
+      "item_name": "laboratory techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|materials engineer|skill|sustainable-building-materials",
+      "context_level": "role",
+      "context_key": "D018|materials engineer",
+      "item_type": "skill",
+      "item_key": "sustainable-building-materials",
+      "item_name": "sustainable building materials",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|materials engineer|skill|thermoplastic-materials",
+      "context_level": "role",
+      "context_key": "D018|materials engineer",
+      "item_type": "skill",
+      "item_key": "thermoplastic-materials",
+      "item_name": "thermoplastic materials",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|mine shift manager|skill|deal-with-pressure-from-unexpected-circumstances",
+      "context_level": "role",
+      "context_key": "D018|mine shift manager",
+      "item_type": "skill",
+      "item_key": "deal-with-pressure-from-unexpected-circumstances",
+      "item_name": "deal with pressure from unexpected circumstances",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|mine shift manager|skill|health-and-safety-hazards-underground",
+      "context_level": "role",
+      "context_key": "D018|mine shift manager",
+      "item_type": "skill",
+      "item_key": "health-and-safety-hazards-underground",
+      "item_name": "health and safety hazards underground",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|mine shift manager|skill|investigate-mine-accidents",
+      "context_level": "role",
+      "context_key": "D018|mine shift manager",
+      "item_type": "skill",
+      "item_key": "investigate-mine-accidents",
+      "item_name": "investigate mine accidents",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|mine shift manager|skill|manage-heavy-equipment",
+      "context_level": "role",
+      "context_key": "D018|mine shift manager",
+      "item_type": "skill",
+      "item_key": "manage-heavy-equipment",
+      "item_name": "manage heavy equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|mine shift manager|skill|supervise-mine-construction-operations",
+      "context_level": "role",
+      "context_key": "D018|mine shift manager",
+      "item_type": "skill",
+      "item_key": "supervise-mine-construction-operations",
+      "item_name": "supervise mine construction operations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|mine supervisor|skill|communicate-mine-equipment-information",
+      "context_level": "role",
+      "context_key": "D018|mine supervisor",
+      "item_type": "skill",
+      "item_key": "communicate-mine-equipment-information",
+      "item_name": "communicate mine equipment information",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|mine supervisor|skill|evaluate-mine-development-projects",
+      "context_level": "role",
+      "context_key": "D018|mine supervisor",
+      "item_type": "skill",
+      "item_key": "evaluate-mine-development-projects",
+      "item_name": "evaluate mine development projects",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|mine supervisor|skill|inspect-mine-safety-conditions",
+      "context_level": "role",
+      "context_key": "D018|mine supervisor",
+      "item_type": "skill",
+      "item_key": "inspect-mine-safety-conditions",
+      "item_name": "inspect mine safety conditions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|mine supervisor|skill|maintain-plans-of-a-mining-site",
+      "context_level": "role",
+      "context_key": "D018|mine supervisor",
+      "item_type": "skill",
+      "item_key": "maintain-plans-of-a-mining-site",
+      "item_name": "maintain plans of a mining site",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|mine supervisor|skill|manage-mine-site-data",
+      "context_level": "role",
+      "context_key": "D018|mine supervisor",
+      "item_type": "skill",
+      "item_key": "manage-mine-site-data",
+      "item_name": "manage mine site data",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|mine supervisor|skill|minerals-laws",
+      "context_level": "role",
+      "context_key": "D018|mine supervisor",
+      "item_type": "skill",
+      "item_key": "minerals-laws",
+      "item_name": "minerals laws",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|mine supervisor|skill|oversee-mine-planning-activities",
+      "context_level": "role",
+      "context_key": "D018|mine supervisor",
+      "item_type": "skill",
+      "item_key": "oversee-mine-planning-activities",
+      "item_name": "oversee mine planning activities",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|mine supervisor|skill|use-mine-planning-software",
+      "context_level": "role",
+      "context_key": "D018|mine supervisor",
+      "item_type": "skill",
+      "item_key": "use-mine-planning-software",
+      "item_name": "use mine planning software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|mining geotechnical engineer|skill|advise-on-archaeological-sites",
+      "context_level": "role",
+      "context_key": "D018|mining geotechnical engineer",
+      "item_type": "skill",
+      "item_key": "advise-on-archaeological-sites",
+      "item_name": "advise on archaeological sites",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|mining geotechnical engineer|skill|advise-on-geology-for-mineral-extraction",
+      "context_level": "role",
+      "context_key": "D018|mining geotechnical engineer",
+      "item_type": "skill",
+      "item_key": "advise-on-geology-for-mineral-extraction",
+      "item_name": "advise on geology for mineral extraction",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|mining geotechnical engineer|skill|design-infrastructure-for-surface-mines",
+      "context_level": "role",
+      "context_key": "D018|mining geotechnical engineer",
+      "item_type": "skill",
+      "item_key": "design-infrastructure-for-surface-mines",
+      "item_name": "design infrastructure for surface mines",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|mining geotechnical engineer|skill|install-rock-movement-monitoring-devices",
+      "context_level": "role",
+      "context_key": "D018|mining geotechnical engineer",
+      "item_type": "skill",
+      "item_key": "install-rock-movement-monitoring-devices",
+      "item_name": "install rock movement monitoring devices",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|mining geotechnical engineer|skill|manage-geotechnical-staff",
+      "context_level": "role",
+      "context_key": "D018|mining geotechnical engineer",
+      "item_type": "skill",
+      "item_key": "manage-geotechnical-staff",
+      "item_name": "manage geotechnical staff",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|mining geotechnical engineer|skill|mine-dump-design",
+      "context_level": "role",
+      "context_key": "D018|mining geotechnical engineer",
+      "item_type": "skill",
+      "item_key": "mine-dump-design",
+      "item_name": "mine dump design",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|mining geotechnical engineer|skill|plan-geotechnical-investigations-in-the-field",
+      "context_level": "role",
+      "context_key": "D018|mining geotechnical engineer",
+      "item_type": "skill",
+      "item_key": "plan-geotechnical-investigations-in-the-field",
+      "item_name": "plan geotechnical investigations in the field",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|mining geotechnical engineer|skill|prepare-scientific-reports",
+      "context_level": "role",
+      "context_key": "D018|mining geotechnical engineer",
+      "item_type": "skill",
+      "item_key": "prepare-scientific-reports",
+      "item_name": "prepare scientific reports",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|mining geotechnical engineer|skill|test-raw-minerals",
+      "context_level": "role",
+      "context_key": "D018|mining geotechnical engineer",
+      "item_type": "skill",
+      "item_key": "test-raw-minerals",
+      "item_name": "test raw minerals",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|patent engineer|skill|advise-on-patents",
+      "context_level": "role",
+      "context_key": "D018|patent engineer",
+      "item_type": "skill",
+      "item_key": "advise-on-patents",
+      "item_name": "advise on patents",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|patent engineer|skill|create-patent-draft",
+      "context_level": "role",
+      "context_key": "D018|patent engineer",
+      "item_type": "skill",
+      "item_key": "create-patent-draft",
+      "item_name": "create patent draft",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|patent engineer|skill|legal-terminology",
+      "context_level": "role",
+      "context_key": "D018|patent engineer",
+      "item_type": "skill",
+      "item_key": "legal-terminology",
+      "item_name": "legal terminology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|patent engineer|skill|present-arguments-persuasively",
+      "context_level": "role",
+      "context_key": "D018|patent engineer",
+      "item_type": "skill",
+      "item_key": "present-arguments-persuasively",
+      "item_name": "present arguments persuasively",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|patent engineer|skill|provide-legal-advice",
+      "context_level": "role",
+      "context_key": "D018|patent engineer",
+      "item_type": "skill",
+      "item_key": "provide-legal-advice",
+      "item_name": "provide legal advice",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|patent engineer|skill|trademarks",
+      "context_level": "role",
+      "context_key": "D018|patent engineer",
+      "item_type": "skill",
+      "item_key": "trademarks",
+      "item_name": "trademarks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|pipeline engineer|skill|design-pipelines-with-different-coating-solutions",
+      "context_level": "role",
+      "context_key": "D018|pipeline engineer",
+      "item_type": "skill",
+      "item_key": "design-pipelines-with-different-coating-solutions",
+      "item_name": "design pipelines with different coating solutions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|pipeline engineer|skill|isometric-perspective",
+      "context_level": "role",
+      "context_key": "D018|pipeline engineer",
+      "item_type": "skill",
+      "item_key": "isometric-perspective",
+      "item_name": "isometric perspective",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|pipeline engineer|skill|measure-parts-of-manufactured-products",
+      "context_level": "role",
+      "context_key": "D018|pipeline engineer",
+      "item_type": "skill",
+      "item_key": "measure-parts-of-manufactured-products",
+      "item_name": "measure parts of manufactured products",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|pipeline engineer|skill|metal-bending-techniques",
+      "context_level": "role",
+      "context_key": "D018|pipeline engineer",
+      "item_type": "skill",
+      "item_key": "metal-bending-techniques",
+      "item_name": "metal bending techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|pipeline engineer|skill|perform-water-analysis",
+      "context_level": "role",
+      "context_key": "D018|pipeline engineer",
+      "item_type": "skill",
+      "item_key": "perform-water-analysis",
+      "item_name": "perform water analysis",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|pipeline engineer|skill|pipeline-coating-properties",
+      "context_level": "role",
+      "context_key": "D018|pipeline engineer",
+      "item_type": "skill",
+      "item_key": "pipeline-coating-properties",
+      "item_name": "pipeline coating properties",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|quality engineer|skill|define-quality-standards",
+      "context_level": "role",
+      "context_key": "D018|quality engineer",
+      "item_type": "skill",
+      "item_key": "define-quality-standards",
+      "item_name": "define quality standards",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|quantity surveyor|skill|building-construction-principles",
+      "context_level": "role",
+      "context_key": "D018|quantity surveyor",
+      "item_type": "skill",
+      "item_key": "building-construction-principles",
+      "item_name": "building construction principles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|quantity surveyor|skill|calculate-needs-for-construction-supplies",
+      "context_level": "role",
+      "context_key": "D018|quantity surveyor",
+      "item_type": "skill",
+      "item_key": "calculate-needs-for-construction-supplies",
+      "item_name": "calculate needs for construction supplies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|quantity surveyor|skill|identify-customer-objectives",
+      "context_level": "role",
+      "context_key": "D018|quantity surveyor",
+      "item_type": "skill",
+      "item_key": "identify-customer-objectives",
+      "item_name": "identify customer objectives",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|rail maintenance technician|skill|characteristics-of-wheel-rail-interface",
+      "context_level": "role",
+      "context_key": "D018|rail maintenance technician",
+      "item_type": "skill",
+      "item_key": "characteristics-of-wheel-rail-interface",
+      "item_name": "characteristics of wheel rail interface",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|rail maintenance technician|skill|electrical-systems-used-in-transportation",
+      "context_level": "role",
+      "context_key": "D018|rail maintenance technician",
+      "item_type": "skill",
+      "item_key": "electrical-systems-used-in-transportation",
+      "item_name": "electrical systems used in transportation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|rail maintenance technician|skill|maintain-sensor-equipment",
+      "context_level": "role",
+      "context_key": "D018|rail maintenance technician",
+      "item_type": "skill",
+      "item_key": "maintain-sensor-equipment",
+      "item_name": "maintain sensor equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|rail maintenance technician|skill|mechanics-of-trains",
+      "context_level": "role",
+      "context_key": "D018|rail maintenance technician",
+      "item_type": "skill",
+      "item_key": "mechanics-of-trains",
+      "item_name": "mechanics of trains",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|rail maintenance technician|skill|modern-power-signalling-systems",
+      "context_level": "role",
+      "context_key": "D018|rail maintenance technician",
+      "item_type": "skill",
+      "item_key": "modern-power-signalling-systems",
+      "item_name": "modern power signalling systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|rail maintenance technician|skill|test-sensors",
+      "context_level": "role",
+      "context_key": "D018|rail maintenance technician",
+      "item_type": "skill",
+      "item_key": "test-sensors",
+      "item_name": "test sensors",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|rail maintenance technician|skill|work-trains",
+      "context_level": "role",
+      "context_key": "D018|rail maintenance technician",
+      "item_type": "skill",
+      "item_key": "work-trains",
+      "item_name": "work trains",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|rail maintenance technician|skill|write-rail-defect-records",
+      "context_level": "role",
+      "context_key": "D018|rail maintenance technician",
+      "item_type": "skill",
+      "item_key": "write-rail-defect-records",
+      "item_name": "write rail defect records",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|rail maintenance technician|tool|electronic-train-management-system-software",
+      "context_level": "role",
+      "context_key": "D018|rail maintenance technician",
+      "item_type": "tool",
+      "item_key": "electronic-train-management-system-software",
+      "item_name": "Electronic train management system software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|rail maintenance technician|tool|electronic-train-management-systems-etms",
+      "context_level": "role",
+      "context_key": "D018|rail maintenance technician",
+      "item_type": "tool",
+      "item_key": "electronic-train-management-systems-etms",
+      "item_name": "Electronic train management systems ETMS",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|rail maintenance technician|tool|google-android",
+      "context_level": "role",
+      "context_key": "D018|rail maintenance technician",
+      "item_type": "tool",
+      "item_key": "google-android",
+      "item_name": "Google Android",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|rail maintenance technician|tool|maintenance-management-software",
+      "context_level": "role",
+      "context_key": "D018|rail maintenance technician",
+      "item_type": "tool",
+      "item_key": "maintenance-management-software",
+      "item_name": "Maintenance management software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|rail maintenance technician|tool|positive-train-control-ptc-systems",
+      "context_level": "role",
+      "context_key": "D018|rail maintenance technician",
+      "item_type": "tool",
+      "item_key": "positive-train-control-ptc-systems",
+      "item_name": "Positive train control PTC systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|rail project engineer|skill|assess-railway-operations",
+      "context_level": "role",
+      "context_key": "D018|rail project engineer",
+      "item_type": "skill",
+      "item_key": "assess-railway-operations",
+      "item_name": "assess railway operations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|rail project engineer|skill|audit-contractors",
+      "context_level": "role",
+      "context_key": "D018|rail project engineer",
+      "item_type": "skill",
+      "item_key": "audit-contractors",
+      "item_name": "audit contractors",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|rail project engineer|skill|carry-out-project-activities",
+      "context_level": "role",
+      "context_key": "D018|rail project engineer",
+      "item_type": "skill",
+      "item_key": "carry-out-project-activities",
+      "item_name": "carry out project activities",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|rail project engineer|skill|follow-ethical-code-of-conduct-in-transport-services",
+      "context_level": "role",
+      "context_key": "D018|rail project engineer",
+      "item_type": "skill",
+      "item_key": "follow-ethical-code-of-conduct-in-transport-services",
+      "item_name": "follow ethical code of conduct in transport services",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|rail project engineer|skill|give-instructions-to-staff",
+      "context_level": "role",
+      "context_key": "D018|rail project engineer",
+      "item_type": "skill",
+      "item_key": "give-instructions-to-staff",
+      "item_name": "give instructions to staff",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|rail project engineer|skill|maintain-a-central-project-repository",
+      "context_level": "role",
+      "context_key": "D018|rail project engineer",
+      "item_type": "skill",
+      "item_key": "maintain-a-central-project-repository",
+      "item_name": "maintain a central project repository",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|rail project engineer|skill|prepare-railway-technical-studies",
+      "context_level": "role",
+      "context_key": "D018|rail project engineer",
+      "item_type": "skill",
+      "item_key": "prepare-railway-technical-studies",
+      "item_name": "prepare railway technical studies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|rail project engineer|skill|rail-construction-engineering",
+      "context_level": "role",
+      "context_key": "D018|rail project engineer",
+      "item_type": "skill",
+      "item_key": "rail-construction-engineering",
+      "item_name": "rail construction engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|rail project engineer|skill|rail-design-engineering",
+      "context_level": "role",
+      "context_key": "D018|rail project engineer",
+      "item_type": "skill",
+      "item_key": "rail-design-engineering",
+      "item_name": "rail design engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|rail project engineer|skill|railway-framework-legislation",
+      "context_level": "role",
+      "context_key": "D018|rail project engineer",
+      "item_type": "skill",
+      "item_key": "railway-framework-legislation",
+      "item_name": "railway framework legislation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|rail project engineer|skill|work-in-a-rail-transport-team",
+      "context_level": "role",
+      "context_key": "D018|rail project engineer",
+      "item_type": "skill",
+      "item_key": "work-in-a-rail-transport-team",
+      "item_name": "work in a rail transport team",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|railway infrastructure inspector|skill|enforce-railway-safety-regulations",
+      "context_level": "role",
+      "context_key": "D018|railway infrastructure inspector",
+      "item_type": "skill",
+      "item_key": "enforce-railway-safety-regulations",
+      "item_name": "enforce railway safety regulations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|railway infrastructure inspector|skill|ensure-safe-operation-of-railway-during-repairs",
+      "context_level": "role",
+      "context_key": "D018|railway infrastructure inspector",
+      "item_type": "skill",
+      "item_key": "ensure-safe-operation-of-railway-during-repairs",
+      "item_name": "ensure safe operation of railway during repairs",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D018|railway infrastructure inspector|skill|health-and-safety-measures-in-transportation",
+      "context_level": "role",
+      "context_key": "D018|railway infrastructure inspector",
+      "item_type": "skill",
+      "item_key": "health-and-safety-measures-in-transportation",
+      "item_name": "health and safety measures in transportation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    }
+  ],
+  "policy": {
+    "review_required_preserved_unless_exact_item_evidence_established": true,
+    "no_relationship_inference": true,
+    "no_promotion": true
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "record_type": "relationship_tranche_report",
+  "tranche": "020",
+  "date": "2026-09-21",
+  "selected": 100,
+  "searched": 100,
+  "linked": 0,
+  "review_required": 100,
+  "unavailable": 0,
+  "promoted": 0,
+  "null_endpoints_preserved": 100,
+  "d078_rows": 0,
+  "normalized_prior_overlap": 0,
+  "duplicate_normalized_rows": 0,
+  "https_source_entries": 200,
+  "source_authorities": [
+    "ESCO / European Commission",
+    "O*NET OnLine / U.S. Department of Labor"
+  ],
+  "selection_file": "full_population_relationship_tranche_020_selection_2026-09-21.json",
+  "checkpoint_file": "full_population_relationship_tranche_020_checkpoint_2026-09-21.json",
+  "ledger_file": "full_population_relationship_tranche_020_search_ledger_2026-09-21.jsonl",
+  "promotion_rule": "Promote only when authoritative evidence explicitly names both typed endpoints and canonical builds_on/works_with; otherwise preserve null endpoints and review_required/not_established.",
+  "scope_guard": "No item rows, SQL, generated seeds, UI/application code or browser proof touched."
+}

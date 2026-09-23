@@ -1,0 +1,1620 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-selection.v2",
+  "batch": "quality_remediation_lane_73_20260922",
+  "selected_at": "2026-09-22",
+  "source_audit": "data/career-mapping/_audit/external_enrichment_agent/item_ledger_quality_audit_2026-09-22.json",
+  "source_sha256": "133bf28782e1b50abacca97438559242eb689f8fd38e69845dffdc0b9da18009",
+  "selection_method": "atomic shared lock; exclude all prior valid claims by contextual and typed identity",
+  "prior_claimed_contextual_ids": 6572,
+  "prior_claimed_typed_items": 5946,
+  "selection_count": 100,
+  "requested_count": 100,
+  "shortfall": 0,
+  "rows": [
+    {
+      "subject_id": "item|role|D075|embroiderer|tool|adobe-freehand-mx",
+      "context_level": "role",
+      "context_key": "D075|embroiderer",
+      "item_type": "tool",
+      "item_key": "adobe-freehand-mx",
+      "item_name": "Adobe FreeHand MX",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|embroidery machine operator|skill|make-made-to-measure-garments",
+      "context_level": "role",
+      "context_key": "D075|embroidery machine operator",
+      "item_type": "skill",
+      "item_key": "make-made-to-measure-garments",
+      "item_name": "make made-to-measure garments",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.cityandguilds.com/-/media/productdocuments/creative/creative_techniques/7161/7161_level_2/centre_documents/7161-02-12-22-level-2-textiles-v_3%2C-d-%2C3-pdf.pdf"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|finishing textile technician|skill|conduct-leather-finishing-operations",
+      "context_level": "role",
+      "context_key": "D075|finishing textile technician",
+      "item_type": "skill",
+      "item_key": "conduct-leather-finishing-operations",
+      "item_name": "conduct leather finishing operations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|finishing textile technician|skill|finish-processing-of-man-made-fibres",
+      "context_level": "role",
+      "context_key": "D075|finishing textile technician",
+      "item_type": "skill",
+      "item_key": "finish-processing-of-man-made-fibres",
+      "item_name": "finish processing of man-made fibres",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|finishing textile technician|skill|prepare-equipment-for-textile-printing",
+      "context_level": "role",
+      "context_key": "D075|finishing textile technician",
+      "item_type": "skill",
+      "item_key": "prepare-equipment-for-textile-printing",
+      "item_name": "prepare equipment for textile printing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|finishing textile technician|skill|tend-textile-dyeing-machines",
+      "context_level": "role",
+      "context_key": "D075|finishing textile technician",
+      "item_type": "skill",
+      "item_key": "tend-textile-dyeing-machines",
+      "item_name": "tend textile dyeing machines",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|finishing textile technician|tool|hewlett-packard-hp-openvms",
+      "context_level": "role",
+      "context_key": "D075|finishing textile technician",
+      "item_type": "tool",
+      "item_key": "hewlett-packard-hp-openvms",
+      "item_name": "Hewlett-Packard HP OpenVMS",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|glove maker|skill|manufacture-knitted-textiles",
+      "context_level": "role",
+      "context_key": "D075|glove maker",
+      "item_type": "skill",
+      "item_key": "manufacture-knitted-textiles",
+      "item_name": "manufacture knitted textiles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|glove maker|skill|set-up-weft-knitting-machines",
+      "context_level": "role",
+      "context_key": "D075|glove maker",
+      "item_type": "skill",
+      "item_key": "set-up-weft-knitting-machines",
+      "item_name": "set-up weft knitting machines",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|glove maker|skill|sew-protective-workwear",
+      "context_level": "role",
+      "context_key": "D075|glove maker",
+      "item_type": "skill",
+      "item_key": "sew-protective-workwear",
+      "item_name": "sew protective workwear",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|hand lasting operator|skill|apply-assembling-techniques-for-cemented-footwear-construction",
+      "context_level": "role",
+      "context_key": "D075|hand lasting operator",
+      "item_type": "skill",
+      "item_key": "apply-assembling-techniques-for-cemented-footwear-construction",
+      "item_name": "apply assembling techniques for cemented footwear construction",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|hand lasting operator|skill|assembling-processes-and-techniques-for-california-footwear-construction",
+      "context_level": "role",
+      "context_key": "D075|hand lasting operator",
+      "item_type": "skill",
+      "item_key": "assembling-processes-and-techniques-for-california-footwear-construction",
+      "item_name": "assembling processes and techniques for california footwear construction",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|hand lasting operator|skill|assembling-processes-and-techniques-for-cemented-footwear-construction",
+      "context_level": "role",
+      "context_key": "D075|hand lasting operator",
+      "item_type": "skill",
+      "item_key": "assembling-processes-and-techniques-for-cemented-footwear-construction",
+      "item_name": "assembling processes and techniques for cemented footwear construction",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|hand lasting operator|skill|assembling-processes-and-techniques-for-goodyear-footwear-construction",
+      "context_level": "role",
+      "context_key": "D075|hand lasting operator",
+      "item_type": "skill",
+      "item_key": "assembling-processes-and-techniques-for-goodyear-footwear-construction",
+      "item_name": "assembling processes and techniques for goodyear footwear construction",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|hand lasting operator|skill|footwear-bottoms-pre-assembly",
+      "context_level": "role",
+      "context_key": "D075|hand lasting operator",
+      "item_type": "skill",
+      "item_key": "footwear-bottoms-pre-assembly",
+      "item_name": "footwear bottoms pre-assembly",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|hand lasting operator|skill|footwear-uppers-pre-assembly",
+      "context_level": "role",
+      "context_key": "D075|hand lasting operator",
+      "item_type": "skill",
+      "item_key": "footwear-uppers-pre-assembly",
+      "item_name": "footwear uppers pre-assembly",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|hand lasting operator|skill|maintain-edged-hand-tools",
+      "context_level": "role",
+      "context_key": "D075|hand lasting operator",
+      "item_type": "skill",
+      "item_key": "maintain-edged-hand-tools",
+      "item_name": "maintain edged hand tools",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|hand lasting operator|skill|use-tools-for-shoe-repair",
+      "context_level": "role",
+      "context_key": "D075|hand lasting operator",
+      "item_type": "skill",
+      "item_key": "use-tools-for-shoe-repair",
+      "item_name": "use tools for shoe repair",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|hand lasting operator|tool|sale-processing-software",
+      "context_level": "role",
+      "context_key": "D075|hand lasting operator",
+      "item_type": "tool",
+      "item_key": "sale-processing-software",
+      "item_name": "Sale processing software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|hide grader|skill|identify-with-the-company-s-goals",
+      "context_level": "role",
+      "context_key": "D075|hide grader",
+      "item_type": "skill",
+      "item_key": "identify-with-the-company-s-goals",
+      "item_name": "identify with the company's goals",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|lasting machine operator|skill|apply-footwear-bottoms-pre-assembling-techniques",
+      "context_level": "role",
+      "context_key": "D075|lasting machine operator",
+      "item_type": "skill",
+      "item_key": "apply-footwear-bottoms-pre-assembling-techniques",
+      "item_name": "apply footwear bottoms pre-assembling techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|lasting machine operator|skill|apply-methods-for-footwear-and-leather-goods-manufacturing",
+      "context_level": "role",
+      "context_key": "D075|lasting machine operator",
+      "item_type": "skill",
+      "item_key": "apply-methods-for-footwear-and-leather-goods-manufacturing",
+      "item_name": "apply methods for footwear and leather goods manufacturing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|made-up textile articles manufacturer|skill|assemble-large-dimension-fabrics-for-outdoor-usage",
+      "context_level": "role",
+      "context_key": "D075|made-up textile articles manufacturer",
+      "item_type": "skill",
+      "item_key": "assemble-large-dimension-fabrics-for-outdoor-usage",
+      "item_name": "assemble large dimension fabrics for outdoor usage",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.theabr.org/get-certified/alternate-pathways-to-certification/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|made-up textile articles manufacturer|skill|manufacture-made-up-fabrics-for-indoor-usage",
+      "context_level": "role",
+      "context_key": "D075|made-up textile articles manufacturer",
+      "item_type": "skill",
+      "item_key": "manufacture-made-up-fabrics-for-indoor-usage",
+      "item_name": "manufacture made-up fabrics for indoor usage",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.theabr.org/get-certified/alternate-pathways-to-certification/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|made-up textile articles manufacturer|skill|sew-curtains",
+      "context_level": "role",
+      "context_key": "D075|made-up textile articles manufacturer",
+      "item_type": "skill",
+      "item_key": "sew-curtains",
+      "item_name": "sew curtains",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|pre-lasting operator|skill|create-lasts-for-footwear",
+      "context_level": "role",
+      "context_key": "D075|pre-lasting operator",
+      "item_type": "skill",
+      "item_key": "create-lasts-for-footwear",
+      "item_name": "create lasts for footwear",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|pre-stitching machine operator|skill|footwear-stitching-techniques",
+      "context_level": "role",
+      "context_key": "D075|pre-stitching machine operator",
+      "item_type": "skill",
+      "item_key": "footwear-stitching-techniques",
+      "item_name": "footwear stitching techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|pre-stitching machine operator|skill|tend-automatic-sewing-machines",
+      "context_level": "role",
+      "context_key": "D075|pre-stitching machine operator",
+      "item_type": "skill",
+      "item_key": "tend-automatic-sewing-machines",
+      "item_name": "tend automatic sewing machines",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|protective clothing apparel manufacturer|skill|conduct-textile-testing-operations",
+      "context_level": "role",
+      "context_key": "D075|protective clothing apparel manufacturer",
+      "item_type": "skill",
+      "item_key": "conduct-textile-testing-operations",
+      "item_name": "conduct textile testing operations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|shoe repairer|skill|apply-stitching-techniques",
+      "context_level": "role",
+      "context_key": "D075|shoe repairer",
+      "item_type": "skill",
+      "item_key": "apply-stitching-techniques",
+      "item_name": "apply stitching techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|shoe repairer|skill|cut-footwear-uppers",
+      "context_level": "role",
+      "context_key": "D075|shoe repairer",
+      "item_type": "skill",
+      "item_key": "cut-footwear-uppers",
+      "item_name": "cut footwear uppers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|shoe repairer|skill|repair-clocks",
+      "context_level": "role",
+      "context_key": "D075|shoe repairer",
+      "item_type": "skill",
+      "item_key": "repair-clocks",
+      "item_name": "repair clocks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|shoe repairer|skill|repair-shoes",
+      "context_level": "role",
+      "context_key": "D075|shoe repairer",
+      "item_type": "skill",
+      "item_key": "repair-shoes",
+      "item_name": "repair shoes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|shoemaker|skill|create-patterns-for-footwear",
+      "context_level": "role",
+      "context_key": "D075|shoemaker",
+      "item_type": "skill",
+      "item_key": "create-patterns-for-footwear",
+      "item_name": "create patterns for footwear",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|shoemaker|skill|innovate-in-footwear-and-leather-goods-industry",
+      "context_level": "role",
+      "context_key": "D075|shoemaker",
+      "item_type": "skill",
+      "item_key": "innovate-in-footwear-and-leather-goods-industry",
+      "item_name": "innovate in footwear and leather goods industry",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|shoemaker|skill|perform-pattern-grading",
+      "context_level": "role",
+      "context_key": "D075|shoemaker",
+      "item_type": "skill",
+      "item_key": "perform-pattern-grading",
+      "item_name": "perform pattern grading",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|sole and heel operator|skill|apply-footwear-uppers-pre-assembling-techniques",
+      "context_level": "role",
+      "context_key": "D075|sole and heel operator",
+      "item_type": "skill",
+      "item_key": "apply-footwear-uppers-pre-assembling-techniques",
+      "item_name": "apply footwear uppers pre-assembling techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D075|sole and heel operator|skill|apply-pre-stitching-techniques",
+      "context_level": "role",
+      "context_key": "D075|sole and heel operator",
+      "item_type": "skill",
+      "item_key": "apply-pre-stitching-techniques",
+      "item_name": "apply pre-stitching techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|officer of the watch|skill|coordinate-cargo-handling",
+      "context_level": "role",
+      "context_key": "D076|officer of the watch",
+      "item_type": "skill",
+      "item_key": "coordinate-cargo-handling",
+      "item_name": "coordinate cargo handling",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|officer of the watch|skill|ensure-smooth-on-board-operations",
+      "context_level": "role",
+      "context_key": "D076|officer of the watch",
+      "item_type": "skill",
+      "item_key": "ensure-smooth-on-board-operations",
+      "item_name": "ensure smooth on board operations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|officer of the watch|skill|maintain-safe-navigation-watches",
+      "context_level": "role",
+      "context_key": "D076|officer of the watch",
+      "item_type": "skill",
+      "item_key": "maintain-safe-navigation-watches",
+      "item_name": "maintain safe navigation watches",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|officer of the watch|skill|manage-cargo-handling",
+      "context_level": "role",
+      "context_key": "D076|officer of the watch",
+      "item_type": "skill",
+      "item_key": "manage-cargo-handling",
+      "item_name": "manage cargo handling",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|officer of the watch|skill|manage-vessel-cargo-activities",
+      "context_level": "role",
+      "context_key": "D076|officer of the watch",
+      "item_type": "skill",
+      "item_key": "manage-vessel-cargo-activities",
+      "item_name": "manage vessel cargo activities",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|officer of the watch|skill|monitor-the-discharge-of-cargo",
+      "context_level": "role",
+      "context_key": "D076|officer of the watch",
+      "item_type": "skill",
+      "item_key": "monitor-the-discharge-of-cargo",
+      "item_name": "monitor the discharge of cargo",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|officer of the watch|skill|stand-watch-on-vessel",
+      "context_level": "role",
+      "context_key": "D076|officer of the watch",
+      "item_type": "skill",
+      "item_key": "stand-watch-on-vessel",
+      "item_name": "stand watch on vessel",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|officer of the watch|skill|watch-for-maritime-navigation-aids",
+      "context_level": "role",
+      "context_key": "D076|officer of the watch",
+      "item_type": "skill",
+      "item_key": "watch-for-maritime-navigation-aids",
+      "item_name": "watch for maritime navigation aids",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|ordinary seaman|skill|clean-ships",
+      "context_level": "role",
+      "context_key": "D076|ordinary seaman",
+      "item_type": "skill",
+      "item_key": "clean-ships",
+      "item_name": "clean ships",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|ordinary seaman|skill|inspect-construction-of-ships",
+      "context_level": "role",
+      "context_key": "D076|ordinary seaman",
+      "item_type": "skill",
+      "item_key": "inspect-construction-of-ships",
+      "item_name": "inspect construction of ships",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|ordinary seaman|skill|load-cargo-onto-ships",
+      "context_level": "role",
+      "context_key": "D076|ordinary seaman",
+      "item_type": "skill",
+      "item_key": "load-cargo-onto-ships",
+      "item_name": "load cargo onto ships",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|ordinary seaman|skill|maintain-ship-brightwork",
+      "context_level": "role",
+      "context_key": "D076|ordinary seaman",
+      "item_type": "skill",
+      "item_key": "maintain-ship-brightwork",
+      "item_name": "maintain ship brightwork",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|rescue diver|skill|conduct-physical-examination-in-emergency",
+      "context_level": "role",
+      "context_key": "D076|rescue diver",
+      "item_type": "skill",
+      "item_key": "conduct-physical-examination-in-emergency",
+      "item_name": "conduct physical examination in emergency",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|rescue diver|skill|display-warnings-around-dive-site",
+      "context_level": "role",
+      "context_key": "D076|rescue diver",
+      "item_type": "skill",
+      "item_key": "display-warnings-around-dive-site",
+      "item_name": "display warnings around dive site",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|rescue diver|skill|dive-with-scuba-equipment",
+      "context_level": "role",
+      "context_key": "D076|rescue diver",
+      "item_type": "skill",
+      "item_key": "dive-with-scuba-equipment",
+      "item_name": "dive with scuba equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|sailor|skill|anchors-used-in-maritime-water-transport",
+      "context_level": "role",
+      "context_key": "D076|sailor",
+      "item_type": "skill",
+      "item_key": "anchors-used-in-maritime-water-transport",
+      "item_name": "anchors used in maritime water transport",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|sailor|skill|clean-parts-of-vessels",
+      "context_level": "role",
+      "context_key": "D076|sailor",
+      "item_type": "skill",
+      "item_key": "clean-parts-of-vessels",
+      "item_name": "clean parts of vessels",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|sailor|skill|conduct-on-board-safety-inspections",
+      "context_level": "role",
+      "context_key": "D076|sailor",
+      "item_type": "skill",
+      "item_key": "conduct-on-board-safety-inspections",
+      "item_name": "conduct on board safety inspections",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|sailor|skill|operate-traditional-water-depth-measurement-equipment",
+      "context_level": "role",
+      "context_key": "D076|sailor",
+      "item_type": "skill",
+      "item_key": "operate-traditional-water-depth-measurement-equipment",
+      "item_name": "operate traditional water depth measurement equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|sailor|skill|prepare-deck-equipment",
+      "context_level": "role",
+      "context_key": "D076|sailor",
+      "item_type": "skill",
+      "item_key": "prepare-deck-equipment",
+      "item_name": "prepare deck equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|sailor|skill|prepare-lifeboats",
+      "context_level": "role",
+      "context_key": "D076|sailor",
+      "item_type": "skill",
+      "item_key": "prepare-lifeboats",
+      "item_name": "prepare lifeboats",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|sailor|tool|echo-sounder-software",
+      "context_level": "role",
+      "context_key": "D076|sailor",
+      "item_type": "tool",
+      "item_key": "echo-sounder-software",
+      "item_name": "Echo sounder software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|ship assistant engineer|skill|advise-on-maritime-regulations",
+      "context_level": "role",
+      "context_key": "D076|ship assistant engineer",
+      "item_type": "skill",
+      "item_key": "advise-on-maritime-regulations",
+      "item_name": "advise on maritime regulations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|ship assistant engineer|skill|apply-vessel-engine-regulations",
+      "context_level": "role",
+      "context_key": "D076|ship assistant engineer",
+      "item_type": "skill",
+      "item_key": "apply-vessel-engine-regulations",
+      "item_name": "apply vessel engine regulations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|ship assistant engineer|skill|manage-vessel-engines-and-systems",
+      "context_level": "role",
+      "context_key": "D076|ship assistant engineer",
+      "item_type": "skill",
+      "item_key": "manage-vessel-engines-and-systems",
+      "item_name": "manage vessel engines and systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|ship assistant engineer|skill|operate-diesel-propulsion-plants",
+      "context_level": "role",
+      "context_key": "D076|ship assistant engineer",
+      "item_type": "skill",
+      "item_key": "operate-diesel-propulsion-plants",
+      "item_name": "operate diesel propulsion plants",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|ship assistant engineer|skill|operate-sewage-treatment-plans-on-ships",
+      "context_level": "role",
+      "context_key": "D076|ship assistant engineer",
+      "item_type": "skill",
+      "item_key": "operate-sewage-treatment-plans-on-ships",
+      "item_name": "operate sewage treatment plans on ships",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|ship assistant engineer|skill|regulation-on-the-discharge-of-raw-materials-into-the-sea",
+      "context_level": "role",
+      "context_key": "D076|ship assistant engineer",
+      "item_type": "skill",
+      "item_key": "regulation-on-the-discharge-of-raw-materials-into-the-sea",
+      "item_name": "regulation on the discharge of raw materials into the sea",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|ship captain|tool|groundwater-modeling-system-gms",
+      "context_level": "role",
+      "context_key": "D076|ship captain",
+      "item_type": "tool",
+      "item_key": "groundwater-modeling-system-gms",
+      "item_name": "Groundwater modeling system GMS",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|ship duty engineer|skill|manage-second-level-engines",
+      "context_level": "role",
+      "context_key": "D076|ship duty engineer",
+      "item_type": "skill",
+      "item_key": "manage-second-level-engines",
+      "item_name": "manage second level engines",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|ship duty engineer|skill|operate-maritime-communication-equipment",
+      "context_level": "role",
+      "context_key": "D076|ship duty engineer",
+      "item_type": "skill",
+      "item_key": "operate-maritime-communication-equipment",
+      "item_name": "operate maritime communication equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|ship duty engineer|skill|ship-hull-engineering",
+      "context_level": "role",
+      "context_key": "D076|ship duty engineer",
+      "item_type": "skill",
+      "item_key": "ship-hull-engineering",
+      "item_name": "ship hull engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|skipper|skill|create-a-work-atmosphere-of-continuous-improvement",
+      "context_level": "role",
+      "context_key": "D076|skipper",
+      "item_type": "skill",
+      "item_key": "create-a-work-atmosphere-of-continuous-improvement",
+      "item_name": "create a work atmosphere of continuous improvement",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D076|skipper|skill|verify-qualifications-of-water-transport-crew",
+      "context_level": "role",
+      "context_key": "D076|skipper",
+      "item_type": "skill",
+      "item_key": "verify-qualifications-of-water-transport-crew",
+      "item_name": "verify qualifications of water transport crew",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|aircraft marshaller|skill|aircraft-marshalling-signals",
+      "context_level": "role",
+      "context_key": "D077|aircraft marshaller",
+      "item_type": "skill",
+      "item_key": "aircraft-marshalling-signals",
+      "item_name": "aircraft marshalling signals",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|aircraft marshaller|skill|comply-with-air-traffic-control-operations",
+      "context_level": "role",
+      "context_key": "D077|aircraft marshaller",
+      "item_type": "skill",
+      "item_key": "comply-with-air-traffic-control-operations",
+      "item_name": "comply with air traffic control operations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|aircraft marshaller|skill|operate-follow-me-vehicles",
+      "context_level": "role",
+      "context_key": "D077|aircraft marshaller",
+      "item_type": "skill",
+      "item_key": "operate-follow-me-vehicles",
+      "item_name": "operate follow-me vehicles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|aircraft marshaller|skill|perform-necessary-checks-before-moving-aircraft-onto-stand",
+      "context_level": "role",
+      "context_key": "D077|aircraft marshaller",
+      "item_type": "skill",
+      "item_key": "perform-necessary-checks-before-moving-aircraft-onto-stand",
+      "item_name": "perform necessary checks before moving aircraft onto stand",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|airport security officer|skill|conduct-airport-safety-inspections",
+      "context_level": "role",
+      "context_key": "D077|airport security officer",
+      "item_type": "skill",
+      "item_key": "conduct-airport-safety-inspections",
+      "item_name": "conduct airport safety inspections",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|airport security officer|skill|manage-technical-security-systems",
+      "context_level": "role",
+      "context_key": "D077|airport security officer",
+      "item_type": "skill",
+      "item_key": "manage-technical-security-systems",
+      "item_name": "manage technical security systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|airport security officer|skill|use-x-ray-machines",
+      "context_level": "role",
+      "context_key": "D077|airport security officer",
+      "item_type": "skill",
+      "item_key": "use-x-ray-machines",
+      "item_name": "use X-ray machines",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|animal welfare inspector|skill|investigate-animal-related-incidents",
+      "context_level": "role",
+      "context_key": "D077|animal welfare inspector",
+      "item_type": "skill",
+      "item_key": "investigate-animal-related-incidents",
+      "item_name": "investigate animal related incidents",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|animal welfare inspector|skill|provide-an-enriching-environment-for-animals",
+      "context_level": "role",
+      "context_key": "D077|animal welfare inspector",
+      "item_type": "skill",
+      "item_key": "provide-an-enriching-environment-for-animals",
+      "item_name": "provide an enriching environment for animals",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|animal welfare inspector|skill|rescue-animals",
+      "context_level": "role",
+      "context_key": "D077|animal welfare inspector",
+      "item_type": "skill",
+      "item_key": "rescue-animals",
+      "item_name": "rescue animals",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|animal welfare inspector|skill|sociocultural-contexts-in-which-animals-are-kept",
+      "context_level": "role",
+      "context_key": "D077|animal welfare inspector",
+      "item_type": "skill",
+      "item_key": "sociocultural-contexts-in-which-animals-are-kept",
+      "item_name": "sociocultural contexts in which animals are kept",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|armoured car guard|skill|ensure-regulatory-compliance-concerning-distribution-activities",
+      "context_level": "role",
+      "context_key": "D077|armoured car guard",
+      "item_type": "skill",
+      "item_key": "ensure-regulatory-compliance-concerning-distribution-activities",
+      "item_name": "ensure regulatory compliance concerning distribution activities",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|armoured car guard|skill|handle-delivered-packages",
+      "context_level": "role",
+      "context_key": "D077|armoured car guard",
+      "item_type": "skill",
+      "item_key": "handle-delivered-packages",
+      "item_name": "handle delivered packages",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|armoured car guard|skill|maintain-vehicle-delivery-documentation",
+      "context_level": "role",
+      "context_key": "D077|armoured car guard",
+      "item_type": "skill",
+      "item_key": "maintain-vehicle-delivery-documentation",
+      "item_name": "maintain vehicle delivery documentation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|armoured car guard|skill|manage-theft-prevention",
+      "context_level": "role",
+      "context_key": "D077|armoured car guard",
+      "item_type": "skill",
+      "item_key": "manage-theft-prevention",
+      "item_name": "manage theft prevention",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|armoured car guard|skill|monitor-security-measures",
+      "context_level": "role",
+      "context_key": "D077|armoured car guard",
+      "item_type": "skill",
+      "item_key": "monitor-security-measures",
+      "item_name": "monitor security measures",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|armoured car guard|skill|provide-secured-transportation",
+      "context_level": "role",
+      "context_key": "D077|armoured car guard",
+      "item_type": "skill",
+      "item_key": "provide-secured-transportation",
+      "item_name": "provide secured transportation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|bodyguard|skill|european-firearms-control-legislation",
+      "context_level": "role",
+      "context_key": "D077|bodyguard",
+      "item_type": "skill",
+      "item_key": "european-firearms-control-legislation",
+      "item_name": "European firearms-control legislation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|bodyguard|skill|protect-important-clients",
+      "context_level": "role",
+      "context_key": "D077|bodyguard",
+      "item_type": "skill",
+      "item_key": "protect-important-clients",
+      "item_name": "protect important clients",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|civil enforcement officer|skill|assist-emergency-services",
+      "context_level": "role",
+      "context_key": "D077|civil enforcement officer",
+      "item_type": "skill",
+      "item_key": "assist-emergency-services",
+      "item_name": "assist emergency services",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|civil enforcement officer|skill|escort-pedestrians-across-streets",
+      "context_level": "role",
+      "context_key": "D077|civil enforcement officer",
+      "item_type": "skill",
+      "item_key": "escort-pedestrians-across-streets",
+      "item_name": "escort pedestrians across streets",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|civil enforcement officer|skill|monitor-traffic-flow",
+      "context_level": "role",
+      "context_key": "D077|civil enforcement officer",
+      "item_type": "skill",
+      "item_key": "monitor-traffic-flow",
+      "item_name": "monitor traffic flow",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|civil enforcement officer|skill|patrol-areas",
+      "context_level": "role",
+      "context_key": "D077|civil enforcement officer",
+      "item_type": "skill",
+      "item_key": "patrol-areas",
+      "item_name": "patrol areas",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|civil enforcement officer|tool|complus-data-innovations-fasttrack",
+      "context_level": "role",
+      "context_key": "D077|civil enforcement officer",
+      "item_type": "tool",
+      "item_key": "complus-data-innovations-fasttrack",
+      "item_name": "Complus Data Innovations FastTrack",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|coastguard watch officer|skill|analyse-weather-forecast",
+      "context_level": "role",
+      "context_key": "D077|coastguard watch officer",
+      "item_type": "skill",
+      "item_key": "analyse-weather-forecast",
+      "item_name": "analyse weather forecast",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|coastguard watch officer|skill|assist-in-maritime-rescue-operations",
+      "context_level": "role",
+      "context_key": "D077|coastguard watch officer",
+      "item_type": "skill",
+      "item_key": "assist-in-maritime-rescue-operations",
+      "item_name": "assist in maritime rescue operations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|coastguard watch officer|skill|coordinate-rescue-missions",
+      "context_level": "role",
+      "context_key": "D077|coastguard watch officer",
+      "item_type": "skill",
+      "item_key": "coordinate-rescue-missions",
+      "item_name": "coordinate rescue missions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|coastguard watch officer|tool|microsoft-publisher",
+      "context_level": "role",
+      "context_key": "D077|coastguard watch officer",
+      "item_type": "tool",
+      "item_key": "microsoft-publisher",
+      "item_name": "Microsoft Publisher",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    }
+  ],
+  "policy": {
+    "review_required_preserved_unless_exact_item_evidence_established": true,
+    "no_relationship_inference": true,
+    "no_promotion": true
+  }
+}

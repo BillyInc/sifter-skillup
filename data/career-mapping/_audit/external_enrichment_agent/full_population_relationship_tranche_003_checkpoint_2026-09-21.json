@@ -1,0 +1,27 @@
+{
+  "schema": "2026-09-21.full-population-relationship-tranche-checkpoint.v1",
+  "accessed_on": "2026-09-21",
+  "status": "active_incremental_search",
+  "selection": "data/career-mapping/_audit/external_enrichment_agent/full_population_relationship_tranche_003_selection_2026-09-21.json",
+  "scope": {
+    "selected_rows": 8,
+    "prior_ids_excluded": 64,
+    "unresolved_non_d078_candidates_seen": 8
+  },
+  "checkpoint_counts": {
+    "rows_selected": 8,
+    "rows_searched": 8,
+    "linked": 0,
+    "review_required": 8,
+    "genuinely_unavailable": 0,
+    "remaining_selected_rows": 0
+  },
+  "guardrails": {
+    "d078_rows": 0,
+    "prior_tranche_overlap": 0,
+    "sql_touched": false,
+    "generated_seed_transport_touched": false,
+    "ui_touched": false,
+    "browser_proof_touched": false
+  }
+}

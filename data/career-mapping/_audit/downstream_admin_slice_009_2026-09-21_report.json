@@ -1,0 +1,3310 @@
+{
+  "schema_version": "2026-09-21.downstream-admin-slice-report.v1",
+  "generated_on": "2026-09-21",
+  "read_only": true,
+  "selection_checkpoint": "data\\career-mapping\\_audit\\downstream_admin_slice_009_2026-09-21_checkpoint.json",
+  "scope": {
+    "programmes": 20,
+    "programme_keys": [
+      "Engineering::MATERIALS AND METALLURGICAL ENGINEERING",
+      "Engineering::MATERIALS ENGINEERING",
+      "Engineering::MECHANICAL ENGINEERING",
+      "Engineering::MECHATRONICS ENGINEERING",
+      "Engineering::METALLURGICAL ENGINEERING",
+      "Engineering::MINERAL PROCESSING AND CHEMICAL-METALLURGICAL ENGINEERING",
+      "Engineering::MINING ENGINEERING",
+      "Engineering::NATURAL GAS ENGINEERING",
+      "Engineering::NUCLEAR ENGINEERING",
+      "Engineering::PETROCHEMICAL ENGINEERING",
+      "Engineering::PETROLEUM AND GAS ENGINEERING",
+      "Engineering::PETROLEUM ENGINEERING",
+      "Engineering::RAILWAY ENGINEERING",
+      "Engineering::STRUCTURAL ENGINEERING",
+      "Engineering::SYSTEMS ENGINEERING",
+      "Engineering::TELECOMMUNICATIONS ENGINEERING",
+      "Engineering::WATER RESOURCES ENGINEERING",
+      "Engineering::WOOD PRODUCTS ENGINEERING",
+      "Environmental Sciences::Building",
+      "Environmental Sciences::Clothing and Textile Design"
+    ],
+    "prior_overlap": [],
+    "canonical_programmes": 237,
+    "canonical_jamb_identities": 420
+  },
+  "programme_rows": [
+    {
+      "programme_key": "Engineering::MATERIALS AND METALLURGICAL ENGINEERING",
+      "discipline": "Engineering",
+      "programme": "MATERIALS AND METALLURGICAL ENGINEERING",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 52,
+        "outcome_count": 334
+      },
+      "downstream": {
+        "domain_routes": 8,
+        "subgroup_routes": 15,
+        "role_routes": 248,
+        "route_key_count": 273
+      },
+      "relationship_types": {
+        "functional": 7,
+        "direct": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 222,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 109,
+        "notEstablishedRows": 109
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Engineering::MATERIALS ENGINEERING",
+      "discipline": "Engineering",
+      "programme": "MATERIALS ENGINEERING",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 49,
+        "outcome_count": 328
+      },
+      "downstream": {
+        "domain_routes": 8,
+        "subgroup_routes": 16,
+        "role_routes": 257,
+        "route_key_count": 283
+      },
+      "relationship_types": {
+        "functional": 6,
+        "adjacent": 1,
+        "direct": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 262,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 129,
+        "notEstablishedRows": 129
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Engineering::MECHANICAL ENGINEERING",
+      "discipline": "Engineering",
+      "programme": "MECHANICAL ENGINEERING",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 51,
+        "outcome_count": 324
+      },
+      "downstream": {
+        "domain_routes": 11,
+        "subgroup_routes": 34,
+        "role_routes": 336,
+        "route_key_count": 383
+      },
+      "relationship_types": {
+        "functional": 9,
+        "direct": 1,
+        "adjacent": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 192,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 92,
+        "notEstablishedRows": 92
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Engineering::MECHATRONICS ENGINEERING",
+      "discipline": "Engineering",
+      "programme": "MECHATRONICS ENGINEERING",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 49,
+        "outcome_count": 308
+      },
+      "downstream": {
+        "domain_routes": 6,
+        "subgroup_routes": 13,
+        "role_routes": 196,
+        "route_key_count": 217
+      },
+      "relationship_types": {
+        "functional": 3,
+        "direct": 2,
+        "adjacent": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 164,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 80,
+        "notEstablishedRows": 80
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Engineering::METALLURGICAL ENGINEERING",
+      "discipline": "Engineering",
+      "programme": "METALLURGICAL ENGINEERING",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 51,
+        "outcome_count": 295
+      },
+      "downstream": {
+        "domain_routes": 6,
+        "subgroup_routes": 10,
+        "role_routes": 227,
+        "route_key_count": 245
+      },
+      "relationship_types": {
+        "functional": 5,
+        "direct": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 330,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 163,
+        "notEstablishedRows": 163
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Engineering::MINERAL PROCESSING AND CHEMICAL-METALLURGICAL ENGINEERING",
+      "discipline": "Engineering",
+      "programme": "MINERAL PROCESSING AND CHEMICAL-METALLURGICAL ENGINEERING",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 48,
+        "outcome_count": 260
+      },
+      "downstream": {
+        "domain_routes": 6,
+        "subgroup_routes": 11,
+        "role_routes": 182,
+        "route_key_count": 201
+      },
+      "relationship_types": {
+        "functional": 5,
+        "direct": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 330,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 163,
+        "notEstablishedRows": 163
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Engineering::MINING ENGINEERING",
+      "discipline": "Engineering",
+      "programme": "MINING ENGINEERING",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 49,
+        "outcome_count": 398
+      },
+      "downstream": {
+        "domain_routes": 8,
+        "subgroup_routes": 14,
+        "role_routes": 259,
+        "route_key_count": 283
+      },
+      "relationship_types": {
+        "functional": 7,
+        "direct": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 404,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 202,
+        "notEstablishedRows": 202
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Engineering::NATURAL GAS ENGINEERING",
+      "discipline": "Engineering",
+      "programme": "NATURAL GAS ENGINEERING",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 50,
+        "outcome_count": 380
+      },
+      "downstream": {
+        "domain_routes": 6,
+        "subgroup_routes": 12,
+        "role_routes": 162,
+        "route_key_count": 182
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 4,
+        "adjacent": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 100,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 50,
+        "notEstablishedRows": 50
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Engineering::NUCLEAR ENGINEERING",
+      "discipline": "Engineering",
+      "programme": "NUCLEAR ENGINEERING",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 36,
+        "outcome_count": 249
+      },
+      "downstream": {
+        "domain_routes": 5,
+        "subgroup_routes": 7,
+        "role_routes": 124,
+        "route_key_count": 138
+      },
+      "relationship_types": {
+        "functional": 4,
+        "adjacent": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 106,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 51,
+        "notEstablishedRows": 51
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Engineering::PETROCHEMICAL ENGINEERING",
+      "discipline": "Engineering",
+      "programme": "PETROCHEMICAL ENGINEERING",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 56,
+        "outcome_count": 383
+      },
+      "downstream": {
+        "domain_routes": 6,
+        "subgroup_routes": 14,
+        "role_routes": 215,
+        "route_key_count": 237
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 5
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 86,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 41,
+        "notEstablishedRows": 41
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Engineering::PETROLEUM AND GAS ENGINEERING",
+      "discipline": "Engineering",
+      "programme": "PETROLEUM AND GAS ENGINEERING",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 51,
+        "outcome_count": 335
+      },
+      "downstream": {
+        "domain_routes": 4,
+        "subgroup_routes": 8,
+        "role_routes": 129,
+        "route_key_count": 143
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 3
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 172,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 84,
+        "notEstablishedRows": 84
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Engineering::PETROLEUM ENGINEERING",
+      "discipline": "Engineering",
+      "programme": "PETROLEUM ENGINEERING",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 49,
+        "outcome_count": 313
+      },
+      "downstream": {
+        "domain_routes": 5,
+        "subgroup_routes": 10,
+        "role_routes": 171,
+        "route_key_count": 188
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 4
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 232,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 114,
+        "notEstablishedRows": 114
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Engineering::RAILWAY ENGINEERING",
+      "discipline": "Engineering",
+      "programme": "RAILWAY ENGINEERING",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 42,
+        "outcome_count": 274
+      },
+      "downstream": {
+        "domain_routes": 6,
+        "subgroup_routes": 15,
+        "role_routes": 229,
+        "route_key_count": 252
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 4,
+        "adjacent": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 146,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 71,
+        "notEstablishedRows": 71
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Engineering::STRUCTURAL ENGINEERING",
+      "discipline": "Engineering",
+      "programme": "STRUCTURAL ENGINEERING",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 47,
+        "outcome_count": 397
+      },
+      "downstream": {
+        "domain_routes": 4,
+        "subgroup_routes": 5,
+        "role_routes": 122,
+        "route_key_count": 133
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 1,
+        "adjacent": 2
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 88,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 42,
+        "notEstablishedRows": 42
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Engineering::SYSTEMS ENGINEERING",
+      "discipline": "Engineering",
+      "programme": "SYSTEMS ENGINEERING",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 50,
+        "outcome_count": 368
+      },
+      "downstream": {
+        "domain_routes": 5,
+        "subgroup_routes": 15,
+        "role_routes": 164,
+        "route_key_count": 186
+      },
+      "relationship_types": {
+        "functional": 4,
+        "adjacent": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 138,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 69,
+        "notEstablishedRows": 69
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Engineering::TELECOMMUNICATIONS ENGINEERING",
+      "discipline": "Engineering",
+      "programme": "TELECOMMUNICATIONS ENGINEERING",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 52,
+        "outcome_count": 377
+      },
+      "downstream": {
+        "domain_routes": 3,
+        "subgroup_routes": 7,
+        "role_routes": 61,
+        "route_key_count": 73
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 1,
+        "adjacent": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 102,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 49,
+        "notEstablishedRows": 49
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Engineering::WATER RESOURCES ENGINEERING",
+      "discipline": "Engineering",
+      "programme": "WATER RESOURCES ENGINEERING",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 49,
+        "outcome_count": 319
+      },
+      "downstream": {
+        "domain_routes": 2,
+        "subgroup_routes": 0,
+        "role_routes": 87,
+        "route_key_count": 91
+      },
+      "relationship_types": {
+        "functional": 2
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "review_required",
+        "unresolved_relationships": 0,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 0,
+        "notEstablishedRows": 0
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Engineering::WOOD PRODUCTS ENGINEERING",
+      "discipline": "Engineering",
+      "programme": "WOOD PRODUCTS ENGINEERING",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 50,
+        "outcome_count": 291
+      },
+      "downstream": {
+        "domain_routes": 3,
+        "subgroup_routes": 13,
+        "role_routes": 87,
+        "route_key_count": 105
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 1,
+        "adjacent": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "review_required",
+        "unresolved_relationships": 0,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 0,
+        "notEstablishedRows": 0
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Environmental Sciences::Building",
+      "discipline": "Environmental Sciences",
+      "programme": "Building",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 70,
+        "outcome_count": 306
+      },
+      "downstream": {
+        "domain_routes": 5,
+        "subgroup_routes": 10,
+        "role_routes": 195,
+        "route_key_count": 212
+      },
+      "relationship_types": {
+        "functional": 4,
+        "direct": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 80,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 40,
+        "notEstablishedRows": 40
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Environmental Sciences::Clothing and Textile Design",
+      "discipline": "Environmental Sciences",
+      "programme": "Clothing and Textile Design",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 34,
+        "outcome_count": 165
+      },
+      "downstream": {
+        "domain_routes": 3,
+        "subgroup_routes": 13,
+        "role_routes": 135,
+        "route_key_count": 153
+      },
+      "relationship_types": {
+        "direct": 2,
+        "functional": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "review_required",
+        "unresolved_relationships": 0,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 0,
+        "notEstablishedRows": 0
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    }
+  ],
+  "failures": [],
+  "aggregate": {
+    "domain_routes": 110,
+    "subgroup_routes": 242,
+    "role_routes": 3586,
+    "relationship_states": {
+      "not_established": 17,
+      "review_required": 3
+    },
+    "unresolved_relationships": 3154
+  },
+  "static_surface_checks": {
+    "student_language_boundary": {
+      "file": "src/screens/careerIntelligence/ProgrammeDetailRefinedScreen.tsx",
+      "passed": true,
+      "missing": []
+    },
+    "admin_language_boundary": {
+      "file": "src/screens/admin/AdminCareerDetailScreen.tsx",
+      "passed": true,
+      "missing": []
+    },
+    "admin_provenance_and_queue": {
+      "file": "src/screens/admin/adminGuidanceEvidence.ts",
+      "passed": true,
+      "missing": []
+    },
+    "student_fail_closed_boundary": {
+      "file": "src/lib/studentCareerBoundary.ts",
+      "passed": true,
+      "missing": []
+    },
+    "student_relationship_fail_closed_boundary": {
+      "file": "src/screens/admin/adminGuidanceEvidence.ts",
+      "passed": true,
+      "missing": []
+    },
+    "relationship_grouping": {
+      "file": "src/components/careerIntelligence/ToolGroupsBlock.tsx",
+      "passed": true,
+      "missing": []
+    }
+  },
+  "role_learning_reference": {
+    "allStudentRowsWithinCaps": true,
+    "maxStudentEssential": 12,
+    "maxStudentOptional": 5
+  },
+  "admin_reference": {
+    "localAdminBoundaryImplemented": true,
+    "fullAdminRenderAccepted": false,
+    "studentExposureAccepted": false
+  },
+  "decision": {
+    "bounded_contract_audit_complete": false,
+    "student_exposure_approved": false,
+    "browser_proof": false,
+    "live_sql_verification": false,
+    "reason": "Slice 009 is fully audited locally, but these gates remain open: resource_review_queue_closed, relationship_review_queue_closed, admin_render_acceptance, full_admin_render_accepted, browser_proof, live_sql."
+  },
+  "inputs": [
+    "AGENTS.md",
+    "docs/GOAL_RESUME_STATUS_AND_AGENT_HANDOFF_2026-09-18.md",
+    "docs/LEVELUP_PRODUCT_WIDE_MOCKUP_SPEC.md",
+    "docs/user-facing-mockups/SOCIOLOGY_BOX_MOCKUP_IMPLEMENTATION_AUDIT_2026-09-17.md",
+    "docs/user-facing-mockups/SOCIOLOGY_TOP_DOWN_AUDIT_AND_CLOSURE_PLAN_2026-09-17.md",
+    "docs/user-facing-mockups/EXPLORE_ENTRY_DOORS_AND_PROGRAMME_UNIVERSITY_FLOW_2026-09-18.md",
+    "docs/user-facing-mockups/programme-domain-subgroup-role-guidance-corrections-2026-09-17.md",
+    "data/career-mapping/_audit/source_enrichment_batch_broad_2026-09-19.json",
+    "data/career-mapping/_audit/programme_scaling_contract_2026-09-19.json",
+    "data/career-mapping/_audit/DOWNSTREAM_PROGRAMME_ROUTE_AUDIT_2026-09-19.json",
+    "data/career-mapping/_audit/programme_curriculum_contract_2026-09-18.json",
+    "data/career-mapping/_audit/role_learning_core_audit_2026-09-21.json",
+    "data/career-mapping/_audit/CONTEXTUAL_ITEM_LINK_STATE_AUDIT_2026-09-19.json",
+    "data/career-mapping/_audit/RELATIONSHIP_RESOURCE_BACKLOG_AUDIT_2026-09-19.json",
+    "data/career-mapping/_audit/ADMIN_DOWNSTREAM_ACCEPTANCE_2026-09-19.json",
+    "data/career-mapping/_audit/programme_scaling_contract_2026-09-19.json",
+    "data/career-mapping/_audit/DOWNSTREAM_PROGRAMME_ROUTE_AUDIT_2026-09-19.json",
+    "data/career-mapping/_audit/programme_curriculum_contract_2026-09-18.json",
+    "data/career-mapping/_audit/role_learning_core_audit_2026-09-21.json",
+    "data/career-mapping/_audit/ADMIN_DOWNSTREAM_ACCEPTANCE_2026-09-19.json"
+  ],
+  "product_files_changed": false,
+  "sql_or_browser_proof": false,
+  "extended_programme_rows": [
+    {
+      "programme_key": "Engineering::MATERIALS AND METALLURGICAL ENGINEERING",
+      "curriculum": {
+        "source_file": "engineering.json",
+        "course_count": 52,
+        "outcome_count": 334,
+        "student_outcome_count": 334,
+        "review_outcome_count": 0,
+        "annotation_count": 0
+      },
+      "source_and_category_counters": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "invalidSourceReferenceUrls": 0,
+        "linkStateGaps": 0,
+        "unlabelledLinkState": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "unresolvedEndpointRows": 109,
+        "notEstablishedRows": 109
+      },
+      "states": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 222,
+        "admin": "pending_full_population_render"
+      },
+      "checks": {
+        "curriculum_course_evidence": true,
+        "source_ownership_and_urls": true,
+        "student_admin_language_and_summaries": true,
+        "thematic_category_boundary": true,
+        "role_learning_caps": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_provenance_and_acceptance_state": true,
+        "student_exposure_fail_closed": true,
+        "resource_review_queue_closed": false,
+        "relationship_review_queue_closed": false,
+        "admin_render_acceptance": false
+      },
+      "active_domain_mapping": {
+        "state": "mapped",
+        "link_count": 8,
+        "links": [
+          {
+            "domain_id": "D009",
+            "domain_name": "Data Science",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D016",
+            "domain_name": "Electrical",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D017",
+            "domain_name": "Mechanical",
+            "match_type": "functional",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D097",
+            "domain_name": "Welding, Fabrication, Blacksmithing",
+            "match_type": "functional",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D109",
+            "domain_name": "Metal Processing, Foundry",
+            "match_type": "functional",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D138",
+            "domain_name": "Biomedical Engineering",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D140",
+            "domain_name": "Robotics Engineering, Systems Design",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D155",
+            "domain_name": "Nanotechnology, Advanced Materials",
+            "match_type": "direct",
+            "source": "reconcile"
+          }
+        ]
+      }
+    },
+    {
+      "programme_key": "Engineering::MATERIALS ENGINEERING",
+      "curriculum": {
+        "source_file": "engineering.json",
+        "course_count": 49,
+        "outcome_count": 328,
+        "student_outcome_count": 328,
+        "review_outcome_count": 0,
+        "annotation_count": 0
+      },
+      "source_and_category_counters": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "invalidSourceReferenceUrls": 0,
+        "linkStateGaps": 0,
+        "unlabelledLinkState": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "unresolvedEndpointRows": 129,
+        "notEstablishedRows": 129
+      },
+      "states": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 262,
+        "admin": "pending_full_population_render"
+      },
+      "checks": {
+        "curriculum_course_evidence": true,
+        "source_ownership_and_urls": true,
+        "student_admin_language_and_summaries": true,
+        "thematic_category_boundary": true,
+        "role_learning_caps": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_provenance_and_acceptance_state": true,
+        "student_exposure_fail_closed": true,
+        "resource_review_queue_closed": false,
+        "relationship_review_queue_closed": false,
+        "admin_render_acceptance": false
+      },
+      "active_domain_mapping": {
+        "state": "mapped",
+        "link_count": 8,
+        "links": [
+          {
+            "domain_id": "D009",
+            "domain_name": "Data Science",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D016",
+            "domain_name": "Electrical",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D017",
+            "domain_name": "Mechanical",
+            "match_type": "functional",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D041",
+            "domain_name": "Scientific Research",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D055",
+            "domain_name": "Chemical Engineering",
+            "match_type": "adjacent",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D109",
+            "domain_name": "Metal Processing, Foundry",
+            "match_type": "functional",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D138",
+            "domain_name": "Biomedical Engineering",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D155",
+            "domain_name": "Nanotechnology, Advanced Materials",
+            "match_type": "direct",
+            "source": "reconcile"
+          }
+        ]
+      }
+    },
+    {
+      "programme_key": "Engineering::MECHANICAL ENGINEERING",
+      "curriculum": {
+        "source_file": "engineering.json",
+        "course_count": 51,
+        "outcome_count": 324,
+        "student_outcome_count": 324,
+        "review_outcome_count": 0,
+        "annotation_count": 0
+      },
+      "source_and_category_counters": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "invalidSourceReferenceUrls": 0,
+        "linkStateGaps": 0,
+        "unlabelledLinkState": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "unresolvedEndpointRows": 92,
+        "notEstablishedRows": 92
+      },
+      "states": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 192,
+        "admin": "pending_full_population_render"
+      },
+      "checks": {
+        "curriculum_course_evidence": true,
+        "source_ownership_and_urls": true,
+        "student_admin_language_and_summaries": true,
+        "thematic_category_boundary": true,
+        "role_learning_caps": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_provenance_and_acceptance_state": true,
+        "student_exposure_fail_closed": true,
+        "resource_review_queue_closed": false,
+        "relationship_review_queue_closed": false,
+        "admin_render_acceptance": false
+      },
+      "active_domain_mapping": {
+        "state": "mapped",
+        "link_count": 11,
+        "links": [
+          {
+            "domain_id": "D009",
+            "domain_name": "Data Science",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D016",
+            "domain_name": "Electrical",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D017",
+            "domain_name": "Mechanical",
+            "match_type": "direct",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D019",
+            "domain_name": "Renewable Energy Engineering",
+            "match_type": "functional",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D032",
+            "domain_name": "Project Management",
+            "match_type": "adjacent",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D049",
+            "domain_name": "Automotive Engineering",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D050",
+            "domain_name": "Industrial Automation",
+            "match_type": "functional",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D134",
+            "domain_name": "Naval Architecture, Marine Engineering",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D136",
+            "domain_name": "Aeronautical",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D140",
+            "domain_name": "Robotics Engineering, Systems Design",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D146",
+            "domain_name": "Building Services Engineering — Mechanical, Electrical",
+            "match_type": "functional",
+            "source": "audit_2026-08-17"
+          }
+        ]
+      }
+    },
+    {
+      "programme_key": "Engineering::MECHATRONICS ENGINEERING",
+      "curriculum": {
+        "source_file": "engineering.json",
+        "course_count": 49,
+        "outcome_count": 308,
+        "student_outcome_count": 308,
+        "review_outcome_count": 0,
+        "annotation_count": 0
+      },
+      "source_and_category_counters": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "invalidSourceReferenceUrls": 0,
+        "linkStateGaps": 0,
+        "unlabelledLinkState": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "unresolvedEndpointRows": 80,
+        "notEstablishedRows": 80
+      },
+      "states": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 164,
+        "admin": "pending_full_population_render"
+      },
+      "checks": {
+        "curriculum_course_evidence": true,
+        "source_ownership_and_urls": true,
+        "student_admin_language_and_summaries": true,
+        "thematic_category_boundary": true,
+        "role_learning_caps": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_provenance_and_acceptance_state": true,
+        "student_exposure_fail_closed": true,
+        "resource_review_queue_closed": false,
+        "relationship_review_queue_closed": false,
+        "admin_render_acceptance": false
+      },
+      "active_domain_mapping": {
+        "state": "mapped",
+        "link_count": 6,
+        "links": [
+          {
+            "domain_id": "D009",
+            "domain_name": "Data Science",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D016",
+            "domain_name": "Electrical",
+            "match_type": "functional",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D017",
+            "domain_name": "Mechanical",
+            "match_type": "functional",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D050",
+            "domain_name": "Industrial Automation",
+            "match_type": "direct",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D140",
+            "domain_name": "Robotics Engineering, Systems Design",
+            "match_type": "direct",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D166",
+            "domain_name": "Autonomous Vehicles, Self-Driving Systems",
+            "match_type": "adjacent",
+            "source": "reconcile"
+          }
+        ]
+      }
+    },
+    {
+      "programme_key": "Engineering::METALLURGICAL ENGINEERING",
+      "curriculum": {
+        "source_file": "engineering.json",
+        "course_count": 51,
+        "outcome_count": 295,
+        "student_outcome_count": 295,
+        "review_outcome_count": 0,
+        "annotation_count": 0
+      },
+      "source_and_category_counters": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "invalidSourceReferenceUrls": 0,
+        "linkStateGaps": 0,
+        "unlabelledLinkState": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "unresolvedEndpointRows": 163,
+        "notEstablishedRows": 163
+      },
+      "states": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 330,
+        "admin": "pending_full_population_render"
+      },
+      "checks": {
+        "curriculum_course_evidence": true,
+        "source_ownership_and_urls": true,
+        "student_admin_language_and_summaries": true,
+        "thematic_category_boundary": true,
+        "role_learning_caps": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_provenance_and_acceptance_state": true,
+        "student_exposure_fail_closed": true,
+        "resource_review_queue_closed": false,
+        "relationship_review_queue_closed": false,
+        "admin_render_acceptance": false
+      },
+      "active_domain_mapping": {
+        "state": "mapped",
+        "link_count": 6,
+        "links": [
+          {
+            "domain_id": "D009",
+            "domain_name": "Data Science",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D016",
+            "domain_name": "Electrical",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D022",
+            "domain_name": "Mining",
+            "match_type": "functional",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D097",
+            "domain_name": "Welding, Fabrication, Blacksmithing",
+            "match_type": "functional",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D109",
+            "domain_name": "Metal Processing, Foundry",
+            "match_type": "direct",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D155",
+            "domain_name": "Nanotechnology, Advanced Materials",
+            "match_type": "functional",
+            "source": "audit_sweep_2026-08-17"
+          }
+        ]
+      }
+    },
+    {
+      "programme_key": "Engineering::MINERAL PROCESSING AND CHEMICAL-METALLURGICAL ENGINEERING",
+      "curriculum": {
+        "source_file": "engineering.json",
+        "course_count": 48,
+        "outcome_count": 260,
+        "student_outcome_count": 260,
+        "review_outcome_count": 0,
+        "annotation_count": 0
+      },
+      "source_and_category_counters": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "invalidSourceReferenceUrls": 0,
+        "linkStateGaps": 0,
+        "unlabelledLinkState": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "unresolvedEndpointRows": 163,
+        "notEstablishedRows": 163
+      },
+      "states": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 330,
+        "admin": "pending_full_population_render"
+      },
+      "checks": {
+        "curriculum_course_evidence": true,
+        "source_ownership_and_urls": true,
+        "student_admin_language_and_summaries": true,
+        "thematic_category_boundary": true,
+        "role_learning_caps": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_provenance_and_acceptance_state": true,
+        "student_exposure_fail_closed": true,
+        "resource_review_queue_closed": false,
+        "relationship_review_queue_closed": false,
+        "admin_render_acceptance": false
+      },
+      "active_domain_mapping": {
+        "state": "mapped",
+        "link_count": 6,
+        "links": [
+          {
+            "domain_id": "D009",
+            "domain_name": "Data Science",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D016",
+            "domain_name": "Electrical",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D022",
+            "domain_name": "Mining",
+            "match_type": "functional",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D072",
+            "domain_name": "Geospatial Science",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D109",
+            "domain_name": "Metal Processing, Foundry",
+            "match_type": "direct",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D155",
+            "domain_name": "Nanotechnology, Advanced Materials",
+            "match_type": "functional",
+            "source": "scorer"
+          }
+        ]
+      }
+    },
+    {
+      "programme_key": "Engineering::MINING ENGINEERING",
+      "curriculum": {
+        "source_file": "engineering.json",
+        "course_count": 49,
+        "outcome_count": 398,
+        "student_outcome_count": 398,
+        "review_outcome_count": 0,
+        "annotation_count": 0
+      },
+      "source_and_category_counters": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "invalidSourceReferenceUrls": 0,
+        "linkStateGaps": 0,
+        "unlabelledLinkState": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "unresolvedEndpointRows": 202,
+        "notEstablishedRows": 202
+      },
+      "states": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 404,
+        "admin": "pending_full_population_render"
+      },
+      "checks": {
+        "curriculum_course_evidence": true,
+        "source_ownership_and_urls": true,
+        "student_admin_language_and_summaries": true,
+        "thematic_category_boundary": true,
+        "role_learning_caps": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_provenance_and_acceptance_state": true,
+        "student_exposure_fail_closed": true,
+        "resource_review_queue_closed": false,
+        "relationship_review_queue_closed": false,
+        "admin_render_acceptance": false
+      },
+      "active_domain_mapping": {
+        "state": "mapped",
+        "link_count": 8,
+        "links": [
+          {
+            "domain_id": "D009",
+            "domain_name": "Data Science",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D018",
+            "domain_name": "Civil",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D022",
+            "domain_name": "Mining",
+            "match_type": "direct",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D041",
+            "domain_name": "Scientific Research",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D072",
+            "domain_name": "Geospatial Science",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D116",
+            "domain_name": "Heavy Equipment, Earthmoving",
+            "match_type": "functional",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D144",
+            "domain_name": "Climate Science, Meteorology",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D156",
+            "domain_name": "Land Surveying, Cadastral Mapping",
+            "match_type": "functional",
+            "source": "reconcile"
+          }
+        ]
+      }
+    },
+    {
+      "programme_key": "Engineering::NATURAL GAS ENGINEERING",
+      "curriculum": {
+        "source_file": "engineering.json",
+        "course_count": 50,
+        "outcome_count": 380,
+        "student_outcome_count": 380,
+        "review_outcome_count": 0,
+        "annotation_count": 0
+      },
+      "source_and_category_counters": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "invalidSourceReferenceUrls": 0,
+        "linkStateGaps": 0,
+        "unlabelledLinkState": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "unresolvedEndpointRows": 50,
+        "notEstablishedRows": 50
+      },
+      "states": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 100,
+        "admin": "pending_full_population_render"
+      },
+      "checks": {
+        "curriculum_course_evidence": true,
+        "source_ownership_and_urls": true,
+        "student_admin_language_and_summaries": true,
+        "thematic_category_boundary": true,
+        "role_learning_caps": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_provenance_and_acceptance_state": true,
+        "student_exposure_fail_closed": true,
+        "resource_review_queue_closed": false,
+        "relationship_review_queue_closed": false,
+        "admin_render_acceptance": false
+      },
+      "active_domain_mapping": {
+        "state": "mapped",
+        "link_count": 6,
+        "links": [
+          {
+            "domain_id": "D054",
+            "domain_name": "Oil",
+            "match_type": "direct",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D020",
+            "domain_name": "Environmental Engineering",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D155",
+            "domain_name": "Nanotechnology, Advanced Materials",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D041",
+            "domain_name": "Scientific Research",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D055",
+            "domain_name": "Chemical Engineering",
+            "match_type": "functional",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D148",
+            "domain_name": "Offshore, Subsea",
+            "match_type": "adjacent",
+            "source": "reconcile"
+          }
+        ]
+      }
+    },
+    {
+      "programme_key": "Engineering::NUCLEAR ENGINEERING",
+      "curriculum": {
+        "source_file": "engineering.json",
+        "course_count": 36,
+        "outcome_count": 249,
+        "student_outcome_count": 249,
+        "review_outcome_count": 0,
+        "annotation_count": 0
+      },
+      "source_and_category_counters": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "invalidSourceReferenceUrls": 0,
+        "linkStateGaps": 0,
+        "unlabelledLinkState": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "unresolvedEndpointRows": 51,
+        "notEstablishedRows": 51
+      },
+      "states": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 106,
+        "admin": "pending_full_population_render"
+      },
+      "checks": {
+        "curriculum_course_evidence": true,
+        "source_ownership_and_urls": true,
+        "student_admin_language_and_summaries": true,
+        "thematic_category_boundary": true,
+        "role_learning_caps": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_provenance_and_acceptance_state": true,
+        "student_exposure_fail_closed": true,
+        "resource_review_queue_closed": false,
+        "relationship_review_queue_closed": false,
+        "admin_render_acceptance": false
+      },
+      "active_domain_mapping": {
+        "state": "mapped",
+        "link_count": 5,
+        "links": [
+          {
+            "domain_id": "D016",
+            "domain_name": "Electrical",
+            "match_type": "functional",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D019",
+            "domain_name": "Renewable Energy Engineering",
+            "match_type": "functional",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D017",
+            "domain_name": "Mechanical",
+            "match_type": "functional",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D155",
+            "domain_name": "Nanotechnology, Advanced Materials",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D137",
+            "domain_name": "Medical Physics, Radiation Therapy",
+            "match_type": "adjacent",
+            "source": "reconcile"
+          }
+        ]
+      }
+    },
+    {
+      "programme_key": "Engineering::PETROCHEMICAL ENGINEERING",
+      "curriculum": {
+        "source_file": "engineering.json",
+        "course_count": 56,
+        "outcome_count": 383,
+        "student_outcome_count": 383,
+        "review_outcome_count": 0,
+        "annotation_count": 0
+      },
+      "source_and_category_counters": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "invalidSourceReferenceUrls": 0,
+        "linkStateGaps": 0,
+        "unlabelledLinkState": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "unresolvedEndpointRows": 41,
+        "notEstablishedRows": 41
+      },
+      "states": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 86,
+        "admin": "pending_full_population_render"
+      },
+      "checks": {
+        "curriculum_course_evidence": true,
+        "source_ownership_and_urls": true,
+        "student_admin_language_and_summaries": true,
+        "thematic_category_boundary": true,
+        "role_learning_caps": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_provenance_and_acceptance_state": true,
+        "student_exposure_fail_closed": true,
+        "resource_review_queue_closed": false,
+        "relationship_review_queue_closed": false,
+        "admin_render_acceptance": false
+      },
+      "active_domain_mapping": {
+        "state": "mapped",
+        "link_count": 6,
+        "links": [
+          {
+            "domain_id": "D055",
+            "domain_name": "Chemical Engineering",
+            "match_type": "direct",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D041",
+            "domain_name": "Scientific Research",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D016",
+            "domain_name": "Electrical",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D054",
+            "domain_name": "Oil",
+            "match_type": "functional",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D110",
+            "domain_name": "Chemical, Rubber",
+            "match_type": "functional",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D147",
+            "domain_name": "Process Automation, SCADA, PLC",
+            "match_type": "functional",
+            "source": "reconcile"
+          }
+        ]
+      }
+    },
+    {
+      "programme_key": "Engineering::PETROLEUM AND GAS ENGINEERING",
+      "curriculum": {
+        "source_file": "engineering.json",
+        "course_count": 51,
+        "outcome_count": 335,
+        "student_outcome_count": 335,
+        "review_outcome_count": 0,
+        "annotation_count": 0
+      },
+      "source_and_category_counters": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "invalidSourceReferenceUrls": 0,
+        "linkStateGaps": 0,
+        "unlabelledLinkState": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "unresolvedEndpointRows": 84,
+        "notEstablishedRows": 84
+      },
+      "states": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 172,
+        "admin": "pending_full_population_render"
+      },
+      "checks": {
+        "curriculum_course_evidence": true,
+        "source_ownership_and_urls": true,
+        "student_admin_language_and_summaries": true,
+        "thematic_category_boundary": true,
+        "role_learning_caps": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_provenance_and_acceptance_state": true,
+        "student_exposure_fail_closed": true,
+        "resource_review_queue_closed": false,
+        "relationship_review_queue_closed": false,
+        "admin_render_acceptance": false
+      },
+      "active_domain_mapping": {
+        "state": "mapped",
+        "link_count": 4,
+        "links": [
+          {
+            "domain_id": "D054",
+            "domain_name": "Oil",
+            "match_type": "direct",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D016",
+            "domain_name": "Electrical",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D022",
+            "domain_name": "Mining",
+            "match_type": "functional",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D148",
+            "domain_name": "Offshore, Subsea",
+            "match_type": "functional",
+            "source": "reconcile"
+          }
+        ]
+      }
+    },
+    {
+      "programme_key": "Engineering::PETROLEUM ENGINEERING",
+      "curriculum": {
+        "source_file": "engineering.json",
+        "course_count": 49,
+        "outcome_count": 313,
+        "student_outcome_count": 313,
+        "review_outcome_count": 0,
+        "annotation_count": 0
+      },
+      "source_and_category_counters": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "invalidSourceReferenceUrls": 0,
+        "linkStateGaps": 0,
+        "unlabelledLinkState": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "unresolvedEndpointRows": 114,
+        "notEstablishedRows": 114
+      },
+      "states": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 232,
+        "admin": "pending_full_population_render"
+      },
+      "checks": {
+        "curriculum_course_evidence": true,
+        "source_ownership_and_urls": true,
+        "student_admin_language_and_summaries": true,
+        "thematic_category_boundary": true,
+        "role_learning_caps": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_provenance_and_acceptance_state": true,
+        "student_exposure_fail_closed": true,
+        "resource_review_queue_closed": false,
+        "relationship_review_queue_closed": false,
+        "admin_render_acceptance": false
+      },
+      "active_domain_mapping": {
+        "state": "mapped",
+        "link_count": 5,
+        "links": [
+          {
+            "domain_id": "D054",
+            "domain_name": "Oil",
+            "match_type": "direct",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D016",
+            "domain_name": "Electrical",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D022",
+            "domain_name": "Mining",
+            "match_type": "functional",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D041",
+            "domain_name": "Scientific Research",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D148",
+            "domain_name": "Offshore, Subsea",
+            "match_type": "functional",
+            "source": "reconcile"
+          }
+        ]
+      }
+    },
+    {
+      "programme_key": "Engineering::RAILWAY ENGINEERING",
+      "curriculum": {
+        "source_file": "engineering.json",
+        "course_count": 42,
+        "outcome_count": 274,
+        "student_outcome_count": 274,
+        "review_outcome_count": 0,
+        "annotation_count": 0
+      },
+      "source_and_category_counters": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "invalidSourceReferenceUrls": 0,
+        "linkStateGaps": 0,
+        "unlabelledLinkState": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "unresolvedEndpointRows": 71,
+        "notEstablishedRows": 71
+      },
+      "states": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 146,
+        "admin": "pending_full_population_render"
+      },
+      "checks": {
+        "curriculum_course_evidence": true,
+        "source_ownership_and_urls": true,
+        "student_admin_language_and_summaries": true,
+        "thematic_category_boundary": true,
+        "role_learning_caps": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_provenance_and_acceptance_state": true,
+        "student_exposure_fail_closed": true,
+        "resource_review_queue_closed": false,
+        "relationship_review_queue_closed": false,
+        "admin_render_acceptance": false
+      },
+      "active_domain_mapping": {
+        "state": "mapped",
+        "link_count": 6,
+        "links": [
+          {
+            "domain_id": "D117",
+            "domain_name": "Railway",
+            "match_type": "direct",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D016",
+            "domain_name": "Electrical",
+            "match_type": "functional",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D018",
+            "domain_name": "Civil",
+            "match_type": "functional",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D017",
+            "domain_name": "Mechanical",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D041",
+            "domain_name": "Scientific Research",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D164",
+            "domain_name": "Urban Mobility, Smart City Systems",
+            "match_type": "adjacent",
+            "source": "reconcile"
+          }
+        ]
+      }
+    },
+    {
+      "programme_key": "Engineering::STRUCTURAL ENGINEERING",
+      "curriculum": {
+        "source_file": "engineering.json",
+        "course_count": 47,
+        "outcome_count": 397,
+        "student_outcome_count": 397,
+        "review_outcome_count": 0,
+        "annotation_count": 0
+      },
+      "source_and_category_counters": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "invalidSourceReferenceUrls": 0,
+        "linkStateGaps": 0,
+        "unlabelledLinkState": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "unresolvedEndpointRows": 42,
+        "notEstablishedRows": 42
+      },
+      "states": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 88,
+        "admin": "pending_full_population_render"
+      },
+      "checks": {
+        "curriculum_course_evidence": true,
+        "source_ownership_and_urls": true,
+        "student_admin_language_and_summaries": true,
+        "thematic_category_boundary": true,
+        "role_learning_caps": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_provenance_and_acceptance_state": true,
+        "student_exposure_fail_closed": true,
+        "resource_review_queue_closed": false,
+        "relationship_review_queue_closed": false,
+        "admin_render_acceptance": false
+      },
+      "active_domain_mapping": {
+        "state": "mapped",
+        "link_count": 4,
+        "links": [
+          {
+            "domain_id": "D018",
+            "domain_name": "Civil",
+            "match_type": "direct",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D019",
+            "domain_name": "Renewable Energy Engineering",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D021",
+            "domain_name": "Architecture",
+            "match_type": "adjacent",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D146",
+            "domain_name": "Building Services Engineering — Mechanical, Electrical",
+            "match_type": "adjacent",
+            "source": "reconcile"
+          }
+        ]
+      }
+    },
+    {
+      "programme_key": "Engineering::SYSTEMS ENGINEERING",
+      "curriculum": {
+        "source_file": "engineering.json",
+        "course_count": 50,
+        "outcome_count": 368,
+        "student_outcome_count": 368,
+        "review_outcome_count": 0,
+        "annotation_count": 0
+      },
+      "source_and_category_counters": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "invalidSourceReferenceUrls": 0,
+        "linkStateGaps": 0,
+        "unlabelledLinkState": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "unresolvedEndpointRows": 69,
+        "notEstablishedRows": 69
+      },
+      "states": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 138,
+        "admin": "pending_full_population_render"
+      },
+      "checks": {
+        "curriculum_course_evidence": true,
+        "source_ownership_and_urls": true,
+        "student_admin_language_and_summaries": true,
+        "thematic_category_boundary": true,
+        "role_learning_caps": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_provenance_and_acceptance_state": true,
+        "student_exposure_fail_closed": true,
+        "resource_review_queue_closed": false,
+        "relationship_review_queue_closed": false,
+        "admin_render_acceptance": false
+      },
+      "active_domain_mapping": {
+        "state": "mapped",
+        "link_count": 5,
+        "links": [
+          {
+            "domain_id": "D009",
+            "domain_name": "Data Science",
+            "match_type": "functional",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D017",
+            "domain_name": "Mechanical",
+            "match_type": "functional",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D050",
+            "domain_name": "Industrial Automation",
+            "match_type": "functional",
+            "source": "audit_sweep_2026-08-17"
+          },
+          {
+            "domain_id": "D140",
+            "domain_name": "Robotics Engineering, Systems Design",
+            "match_type": "functional",
+            "source": "audit_sweep_2026-08-17"
+          },
+          {
+            "domain_id": "D147",
+            "domain_name": "Process Automation, SCADA, PLC",
+            "match_type": "adjacent",
+            "source": "reconcile"
+          }
+        ]
+      }
+    },
+    {
+      "programme_key": "Engineering::TELECOMMUNICATIONS ENGINEERING",
+      "curriculum": {
+        "source_file": "engineering.json",
+        "course_count": 52,
+        "outcome_count": 377,
+        "student_outcome_count": 377,
+        "review_outcome_count": 0,
+        "annotation_count": 0
+      },
+      "source_and_category_counters": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "invalidSourceReferenceUrls": 0,
+        "linkStateGaps": 0,
+        "unlabelledLinkState": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "unresolvedEndpointRows": 49,
+        "notEstablishedRows": 49
+      },
+      "states": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 102,
+        "admin": "pending_full_population_render"
+      },
+      "checks": {
+        "curriculum_course_evidence": true,
+        "source_ownership_and_urls": true,
+        "student_admin_language_and_summaries": true,
+        "thematic_category_boundary": true,
+        "role_learning_caps": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_provenance_and_acceptance_state": true,
+        "student_exposure_fail_closed": true,
+        "resource_review_queue_closed": false,
+        "relationship_review_queue_closed": false,
+        "admin_render_acceptance": false
+      },
+      "active_domain_mapping": {
+        "state": "mapped",
+        "link_count": 3,
+        "links": [
+          {
+            "domain_id": "D008",
+            "domain_name": "Telecommunications",
+            "match_type": "direct",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D016",
+            "domain_name": "Electrical",
+            "match_type": "functional",
+            "source": "audit_sweep_2026-08-17"
+          },
+          {
+            "domain_id": "D059",
+            "domain_name": "Space Technology",
+            "match_type": "adjacent",
+            "source": "reconcile"
+          }
+        ]
+      }
+    },
+    {
+      "programme_key": "Engineering::WATER RESOURCES ENGINEERING",
+      "curriculum": {
+        "source_file": "engineering.json",
+        "course_count": 49,
+        "outcome_count": 319,
+        "student_outcome_count": 319,
+        "review_outcome_count": 0,
+        "annotation_count": 0
+      },
+      "source_and_category_counters": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "invalidSourceReferenceUrls": 0,
+        "linkStateGaps": 0,
+        "unlabelledLinkState": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "unresolvedEndpointRows": 0,
+        "notEstablishedRows": 0
+      },
+      "states": {
+        "resource": "review_required",
+        "relationship": "review_required",
+        "unresolved_relationships": 0,
+        "admin": "pending_full_population_render"
+      },
+      "checks": {
+        "curriculum_course_evidence": true,
+        "source_ownership_and_urls": true,
+        "student_admin_language_and_summaries": true,
+        "thematic_category_boundary": true,
+        "role_learning_caps": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_provenance_and_acceptance_state": true,
+        "student_exposure_fail_closed": true,
+        "resource_review_queue_closed": false,
+        "relationship_review_queue_closed": false,
+        "admin_render_acceptance": false
+      },
+      "active_domain_mapping": {
+        "state": "mapped",
+        "link_count": 2,
+        "links": [
+          {
+            "domain_id": "D018",
+            "domain_name": "Civil",
+            "match_type": "functional",
+            "source": "audit_sweep_2026-08-17"
+          },
+          {
+            "domain_id": "D020",
+            "domain_name": "Environmental Engineering",
+            "match_type": "functional",
+            "source": "reconcile"
+          }
+        ]
+      }
+    },
+    {
+      "programme_key": "Engineering::WOOD PRODUCTS ENGINEERING",
+      "curriculum": {
+        "source_file": "engineering.json",
+        "course_count": 50,
+        "outcome_count": 291,
+        "student_outcome_count": 291,
+        "review_outcome_count": 0,
+        "annotation_count": 0
+      },
+      "source_and_category_counters": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "invalidSourceReferenceUrls": 0,
+        "linkStateGaps": 0,
+        "unlabelledLinkState": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "unresolvedEndpointRows": 0,
+        "notEstablishedRows": 0
+      },
+      "states": {
+        "resource": "review_required",
+        "relationship": "review_required",
+        "unresolved_relationships": 0,
+        "admin": "pending_full_population_render"
+      },
+      "checks": {
+        "curriculum_course_evidence": true,
+        "source_ownership_and_urls": true,
+        "student_admin_language_and_summaries": true,
+        "thematic_category_boundary": true,
+        "role_learning_caps": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_provenance_and_acceptance_state": true,
+        "student_exposure_fail_closed": true,
+        "resource_review_queue_closed": false,
+        "relationship_review_queue_closed": false,
+        "admin_render_acceptance": false
+      },
+      "active_domain_mapping": {
+        "state": "mapped",
+        "link_count": 3,
+        "links": [
+          {
+            "domain_id": "D112",
+            "domain_name": "Wood Processing, Pulp",
+            "match_type": "direct",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D017",
+            "domain_name": "Mechanical",
+            "match_type": "functional",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D121",
+            "domain_name": "Forestry, Wildlife Management",
+            "match_type": "adjacent",
+            "source": "reconcile"
+          }
+        ]
+      }
+    },
+    {
+      "programme_key": "Environmental Sciences::Building",
+      "curriculum": {
+        "source_file": "environmental_sciences.json",
+        "course_count": 70,
+        "outcome_count": 306,
+        "student_outcome_count": 306,
+        "review_outcome_count": 0,
+        "annotation_count": 0
+      },
+      "source_and_category_counters": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "invalidSourceReferenceUrls": 0,
+        "linkStateGaps": 0,
+        "unlabelledLinkState": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "unresolvedEndpointRows": 40,
+        "notEstablishedRows": 40
+      },
+      "states": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 80,
+        "admin": "pending_full_population_render"
+      },
+      "checks": {
+        "curriculum_course_evidence": true,
+        "source_ownership_and_urls": true,
+        "student_admin_language_and_summaries": true,
+        "thematic_category_boundary": true,
+        "role_learning_caps": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_provenance_and_acceptance_state": true,
+        "student_exposure_fail_closed": true,
+        "resource_review_queue_closed": false,
+        "relationship_review_queue_closed": false,
+        "admin_render_acceptance": false
+      },
+      "active_domain_mapping": {
+        "state": "mapped",
+        "link_count": 5,
+        "links": [
+          {
+            "domain_id": "D018",
+            "domain_name": "Civil",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D021",
+            "domain_name": "Architecture",
+            "match_type": "functional",
+            "source": "audit_2026-08-17"
+          },
+          {
+            "domain_id": "D052",
+            "domain_name": "Construction Management",
+            "match_type": "direct",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D063",
+            "domain_name": "Economics",
+            "match_type": "functional",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D156",
+            "domain_name": "Land Surveying, Cadastral Mapping",
+            "match_type": "functional",
+            "source": "reconcile"
+          }
+        ]
+      }
+    },
+    {
+      "programme_key": "Environmental Sciences::Clothing and Textile Design",
+      "curriculum": {
+        "source_file": "environmental_sciences.json",
+        "course_count": 34,
+        "outcome_count": 165,
+        "student_outcome_count": 165,
+        "review_outcome_count": 0,
+        "annotation_count": 0
+      },
+      "source_and_category_counters": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "invalidSourceReferenceUrls": 0,
+        "linkStateGaps": 0,
+        "unlabelledLinkState": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "unresolvedEndpointRows": 0,
+        "notEstablishedRows": 0
+      },
+      "states": {
+        "resource": "review_required",
+        "relationship": "review_required",
+        "unresolved_relationships": 0,
+        "admin": "pending_full_population_render"
+      },
+      "checks": {
+        "curriculum_course_evidence": true,
+        "source_ownership_and_urls": true,
+        "student_admin_language_and_summaries": true,
+        "thematic_category_boundary": true,
+        "role_learning_caps": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_provenance_and_acceptance_state": true,
+        "student_exposure_fail_closed": true,
+        "resource_review_queue_closed": false,
+        "relationship_review_queue_closed": false,
+        "admin_render_acceptance": false
+      },
+      "active_domain_mapping": {
+        "state": "mapped",
+        "link_count": 3,
+        "links": [
+          {
+            "domain_id": "D111",
+            "domain_name": "Textile, Garment",
+            "match_type": "direct",
+            "source": "scorer"
+          },
+          {
+            "domain_id": "D075",
+            "domain_name": "Fashion, Textiles",
+            "match_type": "direct",
+            "source": "reconcile"
+          },
+          {
+            "domain_id": "D030",
+            "domain_name": "Marketing, Brand",
+            "match_type": "functional",
+            "source": "scorer"
+          }
+        ]
+      }
+    }
+  ],
+  "extended_failures": [
+    {
+      "programme_key": "Engineering::MATERIALS AND METALLURGICAL ENGINEERING",
+      "gate": "resource_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 222,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::MATERIALS AND METALLURGICAL ENGINEERING",
+      "gate": "relationship_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 222,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::MATERIALS AND METALLURGICAL ENGINEERING",
+      "gate": "admin_render_acceptance",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 222,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::MATERIALS ENGINEERING",
+      "gate": "resource_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 262,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::MATERIALS ENGINEERING",
+      "gate": "relationship_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 262,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::MATERIALS ENGINEERING",
+      "gate": "admin_render_acceptance",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 262,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::MECHANICAL ENGINEERING",
+      "gate": "resource_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 192,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::MECHANICAL ENGINEERING",
+      "gate": "relationship_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 192,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::MECHANICAL ENGINEERING",
+      "gate": "admin_render_acceptance",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 192,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::MECHATRONICS ENGINEERING",
+      "gate": "resource_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 164,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::MECHATRONICS ENGINEERING",
+      "gate": "relationship_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 164,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::MECHATRONICS ENGINEERING",
+      "gate": "admin_render_acceptance",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 164,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::METALLURGICAL ENGINEERING",
+      "gate": "resource_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 330,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::METALLURGICAL ENGINEERING",
+      "gate": "relationship_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 330,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::METALLURGICAL ENGINEERING",
+      "gate": "admin_render_acceptance",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 330,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::MINERAL PROCESSING AND CHEMICAL-METALLURGICAL ENGINEERING",
+      "gate": "resource_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 330,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::MINERAL PROCESSING AND CHEMICAL-METALLURGICAL ENGINEERING",
+      "gate": "relationship_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 330,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::MINERAL PROCESSING AND CHEMICAL-METALLURGICAL ENGINEERING",
+      "gate": "admin_render_acceptance",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 330,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::MINING ENGINEERING",
+      "gate": "resource_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 404,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::MINING ENGINEERING",
+      "gate": "relationship_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 404,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::MINING ENGINEERING",
+      "gate": "admin_render_acceptance",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 404,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::NATURAL GAS ENGINEERING",
+      "gate": "resource_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 100,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::NATURAL GAS ENGINEERING",
+      "gate": "relationship_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 100,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::NATURAL GAS ENGINEERING",
+      "gate": "admin_render_acceptance",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 100,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::NUCLEAR ENGINEERING",
+      "gate": "resource_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 106,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::NUCLEAR ENGINEERING",
+      "gate": "relationship_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 106,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::NUCLEAR ENGINEERING",
+      "gate": "admin_render_acceptance",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 106,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::PETROCHEMICAL ENGINEERING",
+      "gate": "resource_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 86,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::PETROCHEMICAL ENGINEERING",
+      "gate": "relationship_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 86,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::PETROCHEMICAL ENGINEERING",
+      "gate": "admin_render_acceptance",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 86,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::PETROLEUM AND GAS ENGINEERING",
+      "gate": "resource_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 172,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::PETROLEUM AND GAS ENGINEERING",
+      "gate": "relationship_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 172,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::PETROLEUM AND GAS ENGINEERING",
+      "gate": "admin_render_acceptance",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 172,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::PETROLEUM ENGINEERING",
+      "gate": "resource_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 232,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::PETROLEUM ENGINEERING",
+      "gate": "relationship_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 232,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::PETROLEUM ENGINEERING",
+      "gate": "admin_render_acceptance",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 232,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::RAILWAY ENGINEERING",
+      "gate": "resource_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 146,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::RAILWAY ENGINEERING",
+      "gate": "relationship_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 146,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::RAILWAY ENGINEERING",
+      "gate": "admin_render_acceptance",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 146,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::STRUCTURAL ENGINEERING",
+      "gate": "resource_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 88,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::STRUCTURAL ENGINEERING",
+      "gate": "relationship_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 88,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::STRUCTURAL ENGINEERING",
+      "gate": "admin_render_acceptance",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 88,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::SYSTEMS ENGINEERING",
+      "gate": "resource_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 138,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::SYSTEMS ENGINEERING",
+      "gate": "relationship_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 138,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::SYSTEMS ENGINEERING",
+      "gate": "admin_render_acceptance",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 138,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::TELECOMMUNICATIONS ENGINEERING",
+      "gate": "resource_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 102,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::TELECOMMUNICATIONS ENGINEERING",
+      "gate": "relationship_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 102,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::TELECOMMUNICATIONS ENGINEERING",
+      "gate": "admin_render_acceptance",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 102,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::WATER RESOURCES ENGINEERING",
+      "gate": "resource_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "review_required",
+      "unresolved_relationships": 0,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::WATER RESOURCES ENGINEERING",
+      "gate": "relationship_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "review_required",
+      "unresolved_relationships": 0,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::WATER RESOURCES ENGINEERING",
+      "gate": "admin_render_acceptance",
+      "resource_state": "review_required",
+      "relationship_state": "review_required",
+      "unresolved_relationships": 0,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::WOOD PRODUCTS ENGINEERING",
+      "gate": "resource_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "review_required",
+      "unresolved_relationships": 0,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::WOOD PRODUCTS ENGINEERING",
+      "gate": "relationship_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "review_required",
+      "unresolved_relationships": 0,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Engineering::WOOD PRODUCTS ENGINEERING",
+      "gate": "admin_render_acceptance",
+      "resource_state": "review_required",
+      "relationship_state": "review_required",
+      "unresolved_relationships": 0,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Environmental Sciences::Building",
+      "gate": "resource_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 80,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Environmental Sciences::Building",
+      "gate": "relationship_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 80,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Environmental Sciences::Building",
+      "gate": "admin_render_acceptance",
+      "resource_state": "review_required",
+      "relationship_state": "not_established",
+      "unresolved_relationships": 80,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Environmental Sciences::Clothing and Textile Design",
+      "gate": "resource_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "review_required",
+      "unresolved_relationships": 0,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Environmental Sciences::Clothing and Textile Design",
+      "gate": "relationship_review_queue_closed",
+      "resource_state": "review_required",
+      "relationship_state": "review_required",
+      "unresolved_relationships": 0,
+      "admin_state": "pending_full_population_render"
+    },
+    {
+      "programme_key": "Environmental Sciences::Clothing and Textile Design",
+      "gate": "admin_render_acceptance",
+      "resource_state": "review_required",
+      "relationship_state": "review_required",
+      "unresolved_relationships": 0,
+      "admin_state": "pending_full_population_render"
+    }
+  ],
+  "extended_gate_summary": {
+    "curriculum_course_evidence": true,
+    "source_ownership_and_urls": true,
+    "student_admin_language_and_summaries": true,
+    "thematic_category_boundary": true,
+    "role_learning_caps": true,
+    "resource_state_handling": true,
+    "relationship_state_handling": true,
+    "student_exposure_fail_closed": true,
+    "relationship_grouping_static": true,
+    "resource_review_queue_closed": false,
+    "relationship_review_queue_closed": false,
+    "admin_render_acceptance": false,
+    "full_admin_render_accepted": false,
+    "browser_proof": false,
+    "live_sql": false
+  },
+  "extended_inventory_reference": {
+    "canonical_items": 121377,
+    "canonical_relationships": 408163,
+    "item_state_counts": {
+      "linked": 5253,
+      "no_link": 116116,
+      "review_required": 8
+    },
+    "relationship_state_counts": {
+      "source_backed": 405858,
+      "not_established": 2305
+    },
+    "selected_resource_states": {
+      "review_required": 20
+    },
+    "selected_relationship_states": {
+      "not_established": 17,
+      "review_required": 3
+    },
+    "selected_admin_states": {
+      "pending_full_population_render": 20
+    },
+    "roles_without_work_profile": 119,
+    "generic_category_rows_staff_review_only": 1571,
+    "repeated_domain_subgroup_rows_staff_review_only": 4089
+  },
+  "admin_acceptance_reference": {
+    "local_admin_boundary_implemented": true,
+    "full_admin_render_accepted": false,
+    "student_exposure_accepted": false,
+    "jamb_review_required": 86,
+    "programme_admin_render_states": {
+      "pending_full_population_render": 237
+    }
+  },
+  "blockers": [
+    "Resource review is still open for 20/20 selected programmes; no generic homepage is substituted.",
+    "Relationship review is still open for 20/20 selected programmes, representing 3154 unresolved/not-established rows.",
+    "Admin render acceptance is pending for 20/20 selected programmes.",
+    "Global role work-profile evidence remains absent for 119 roles; learnable-skill caps pass, but unsupported role preparation remains review-only.",
+    "Browser proof, live payload verification and manual SQL are deferred final gates by instruction."
+  ]
+}

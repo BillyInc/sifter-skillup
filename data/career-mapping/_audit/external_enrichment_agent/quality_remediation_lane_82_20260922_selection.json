@@ -1,0 +1,2420 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-selection.v2",
+  "batch": "quality_remediation_lane_82_20260922",
+  "selected_at": "2026-09-22",
+  "source_audit": "data/career-mapping/_audit/external_enrichment_agent/item_ledger_quality_audit_2026-09-22.json",
+  "source_sha256": "133bf28782e1b50abacca97438559242eb689f8fd38e69845dffdc0b9da18009",
+  "selection_method": "atomic shared lock; exclude all prior valid claims by contextual and typed identity",
+  "prior_claimed_contextual_ids": 7822,
+  "prior_claimed_typed_items": 7196,
+  "selection_count": 150,
+  "requested_count": 150,
+  "shortfall": 0,
+  "rows": [
+    {
+      "subject_id": "item|role|D055|coking furnace operator|skill|manage-time-in-furnace-operations",
+      "context_level": "role",
+      "context_key": "D055|coking furnace operator",
+      "item_type": "skill",
+      "item_key": "manage-time-in-furnace-operations",
+      "item_name": "manage time in furnace operations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|coking furnace operator|skill|monitor-coke-quenching",
+      "context_level": "role",
+      "context_key": "D055|coking furnace operator",
+      "item_type": "skill",
+      "item_key": "monitor-coke-quenching",
+      "item_name": "monitor coke quenching",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|coking furnace operator|skill|operate-heat-treatment-furnace",
+      "context_level": "role",
+      "context_key": "D055|coking furnace operator",
+      "item_type": "skill",
+      "item_key": "operate-heat-treatment-furnace",
+      "item_name": "operate heat treatment furnace",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|colour sampling technician|skill|identify-defects-on-raw-hides",
+      "context_level": "role",
+      "context_key": "D055|colour sampling technician",
+      "item_type": "skill",
+      "item_key": "identify-defects-on-raw-hides",
+      "item_name": "identify defects on raw hides",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|colour sampling technician|skill|leather-colour-chemistry",
+      "context_level": "role",
+      "context_key": "D055|colour sampling technician",
+      "item_type": "skill",
+      "item_key": "leather-colour-chemistry",
+      "item_name": "leather colour chemistry",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|colour sampling technician|skill|source-colour-chemicals",
+      "context_level": "role",
+      "context_key": "D055|colour sampling technician",
+      "item_type": "skill",
+      "item_key": "source-colour-chemicals",
+      "item_name": "source colour chemicals",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|colour sampling technician|skill|spray-finishing-technology",
+      "context_level": "role",
+      "context_key": "D055|colour sampling technician",
+      "item_type": "skill",
+      "item_key": "spray-finishing-technology",
+      "item_name": "spray finishing technology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|colour sampling technician|skill|test-leather-chemistry",
+      "context_level": "role",
+      "context_key": "D055|colour sampling technician",
+      "item_type": "skill",
+      "item_key": "test-leather-chemistry",
+      "item_name": "test leather chemistry",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|cosmetics production machine operator|skill|conform-with-production-requirements",
+      "context_level": "role",
+      "context_key": "D055|cosmetics production machine operator",
+      "item_type": "skill",
+      "item_key": "conform-with-production-requirements",
+      "item_name": "conform with production requirements",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|cosmetics production machine operator|skill|ensure-conformity-to-specifications",
+      "context_level": "role",
+      "context_key": "D055|cosmetics production machine operator",
+      "item_type": "skill",
+      "item_key": "ensure-conformity-to-specifications",
+      "item_name": "ensure conformity to specifications",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|cosmetics production machine operator|skill|manufacture-cosmetics",
+      "context_level": "role",
+      "context_key": "D055|cosmetics production machine operator",
+      "item_type": "skill",
+      "item_key": "manufacture-cosmetics",
+      "item_name": "manufacture cosmetics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|cosmetics production machine operator|skill|prepare-raw-materials",
+      "context_level": "role",
+      "context_key": "D055|cosmetics production machine operator",
+      "item_type": "skill",
+      "item_key": "prepare-raw-materials",
+      "item_name": "prepare raw materials",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|cosmetics production machine operator|skill|verify-product-specifications",
+      "context_level": "role",
+      "context_key": "D055|cosmetics production machine operator",
+      "item_type": "skill",
+      "item_key": "verify-product-specifications",
+      "item_name": "verify product specifications",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|distillation operator|skill|calculate-oil-deliveries",
+      "context_level": "role",
+      "context_key": "D055|distillation operator",
+      "item_type": "skill",
+      "item_key": "calculate-oil-deliveries",
+      "item_name": "calculate oil deliveries",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|distillation operator|skill|clean-oil-equipment",
+      "context_level": "role",
+      "context_key": "D055|distillation operator",
+      "item_type": "skill",
+      "item_key": "clean-oil-equipment",
+      "item_name": "clean oil equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|distillation operator|skill|measure-oil-tank-temperatures",
+      "context_level": "role",
+      "context_key": "D055|distillation operator",
+      "item_type": "skill",
+      "item_key": "measure-oil-tank-temperatures",
+      "item_name": "measure oil tank temperatures",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|distillation operator|skill|operate-distillation-equipment",
+      "context_level": "role",
+      "context_key": "D055|distillation operator",
+      "item_type": "skill",
+      "item_key": "operate-distillation-equipment",
+      "item_name": "operate distillation equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|distillation operator|skill|test-oil-samples",
+      "context_level": "role",
+      "context_key": "D055|distillation operator",
+      "item_type": "skill",
+      "item_key": "test-oil-samples",
+      "item_name": "test oil samples",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|fermenter operator|skill|adjust-fermentation-processes",
+      "context_level": "role",
+      "context_key": "D055|fermenter operator",
+      "item_type": "skill",
+      "item_key": "adjust-fermentation-processes",
+      "item_name": "adjust fermentation processes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|fermenter operator|skill|lab-scale-fermentation",
+      "context_level": "role",
+      "context_key": "D055|fermenter operator",
+      "item_type": "skill",
+      "item_key": "lab-scale-fermentation",
+      "item_name": "lab scale fermentation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|fermenter operator|skill|monitor-fermentation",
+      "context_level": "role",
+      "context_key": "D055|fermenter operator",
+      "item_type": "skill",
+      "item_key": "monitor-fermentation",
+      "item_name": "monitor fermentation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|fermenter operator|skill|production-scale-fermentation",
+      "context_level": "role",
+      "context_key": "D055|fermenter operator",
+      "item_type": "skill",
+      "item_key": "production-scale-fermentation",
+      "item_name": "production scale fermentation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|fertiliser mixer|skill|clean-mixer",
+      "context_level": "role",
+      "context_key": "D055|fertiliser mixer",
+      "item_type": "skill",
+      "item_key": "clean-mixer",
+      "item_name": "clean mixer",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|fertiliser mixer|skill|dump-batches",
+      "context_level": "role",
+      "context_key": "D055|fertiliser mixer",
+      "item_type": "skill",
+      "item_key": "dump-batches",
+      "item_name": "dump batches",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|fertiliser mixer|skill|feed-fertilizer-mixer",
+      "context_level": "role",
+      "context_key": "D055|fertiliser mixer",
+      "item_type": "skill",
+      "item_key": "feed-fertilizer-mixer",
+      "item_name": "feed fertilizer mixer",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|fertiliser mixer|skill|fertiliser-catalysts",
+      "context_level": "role",
+      "context_key": "D055|fertiliser mixer",
+      "item_type": "skill",
+      "item_key": "fertiliser-catalysts",
+      "item_name": "fertiliser catalysts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|fertiliser mixer|skill|mix-treating-materials",
+      "context_level": "role",
+      "context_key": "D055|fertiliser mixer",
+      "item_type": "skill",
+      "item_key": "mix-treating-materials",
+      "item_name": "mix treating materials",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|fertiliser mixer|skill|natural-fertilisers",
+      "context_level": "role",
+      "context_key": "D055|fertiliser mixer",
+      "item_type": "skill",
+      "item_key": "natural-fertilisers",
+      "item_name": "natural fertilisers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|fertiliser mixer|skill|synthetic-fertilisers",
+      "context_level": "role",
+      "context_key": "D055|fertiliser mixer",
+      "item_type": "skill",
+      "item_key": "synthetic-fertilisers",
+      "item_name": "synthetic fertilisers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|fertiliser mixer|skill|tend-fertiliser-mixer",
+      "context_level": "role",
+      "context_key": "D055|fertiliser mixer",
+      "item_type": "skill",
+      "item_key": "tend-fertiliser-mixer",
+      "item_name": "tend fertiliser mixer",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|gas distribution engineer|skill|develop-energy-saving-concepts",
+      "context_level": "role",
+      "context_key": "D055|gas distribution engineer",
+      "item_type": "skill",
+      "item_key": "develop-energy-saving-concepts",
+      "item_name": "develop energy saving concepts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|gas processing plant supervisor|skill|tend-compressor-engine",
+      "context_level": "role",
+      "context_key": "D055|gas processing plant supervisor",
+      "item_type": "skill",
+      "item_key": "tend-compressor-engine",
+      "item_name": "tend compressor engine",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|gas station operator|skill|record-production-data",
+      "context_level": "role",
+      "context_key": "D055|gas station operator",
+      "item_type": "skill",
+      "item_key": "record-production-data",
+      "item_name": "record production data",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|gauger|skill|clean-oil-processing-units",
+      "context_level": "role",
+      "context_key": "D055|gauger",
+      "item_type": "skill",
+      "item_key": "clean-oil-processing-units",
+      "item_name": "clean oil processing units",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|gauger|tool|data-logger-software",
+      "context_level": "role",
+      "context_key": "D055|gauger",
+      "item_type": "tool",
+      "item_key": "data-logger-software",
+      "item_name": "Data logger software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|granulator machine operator|skill|analyse-granulated-mixture",
+      "context_level": "role",
+      "context_key": "D055|granulator machine operator",
+      "item_type": "skill",
+      "item_key": "analyse-granulated-mixture",
+      "item_name": "analyse granulated mixture",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|granulator machine operator|skill|keep-time-accurately",
+      "context_level": "role",
+      "context_key": "D055|granulator machine operator",
+      "item_type": "skill",
+      "item_key": "keep-time-accurately",
+      "item_name": "keep time accurately",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|granulator machine operator|skill|oversee-granulation-operations",
+      "context_level": "role",
+      "context_key": "D055|granulator machine operator",
+      "item_type": "skill",
+      "item_key": "oversee-granulation-operations",
+      "item_name": "oversee granulation operations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|granulator machine operator|skill|perform-granulation-equipment-transfer",
+      "context_level": "role",
+      "context_key": "D055|granulator machine operator",
+      "item_type": "skill",
+      "item_key": "perform-granulation-equipment-transfer",
+      "item_name": "perform granulation equipment transfer",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|granulator machine operator|skill|tend-ion-exchange-equipment",
+      "context_level": "role",
+      "context_key": "D055|granulator machine operator",
+      "item_type": "skill",
+      "item_key": "tend-ion-exchange-equipment",
+      "item_name": "tend ion-exchange equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|granulator machine operator|skill|work-in-shifts",
+      "context_level": "role",
+      "context_key": "D055|granulator machine operator",
+      "item_type": "skill",
+      "item_key": "work-in-shifts",
+      "item_name": "work in shifts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|hazardous waste technician|skill|remove-contaminated-materials",
+      "context_level": "role",
+      "context_key": "D055|hazardous waste technician",
+      "item_type": "skill",
+      "item_key": "remove-contaminated-materials",
+      "item_name": "remove contaminated materials",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|lacquer maker|skill|heat-lacquer-mixture",
+      "context_level": "role",
+      "context_key": "D055|lacquer maker",
+      "item_type": "skill",
+      "item_key": "heat-lacquer-mixture",
+      "item_name": "heat lacquer mixture",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|lacquer maker|skill|operate-jar-mill",
+      "context_level": "role",
+      "context_key": "D055|lacquer maker",
+      "item_type": "skill",
+      "item_key": "operate-jar-mill",
+      "item_name": "operate jar mill",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|lacquer maker|skill|prepare-chemical-samples",
+      "context_level": "role",
+      "context_key": "D055|lacquer maker",
+      "item_type": "skill",
+      "item_key": "prepare-chemical-samples",
+      "item_name": "prepare chemical samples",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|lacquer maker|skill|select-lacquer-ingredients",
+      "context_level": "role",
+      "context_key": "D055|lacquer maker",
+      "item_type": "skill",
+      "item_key": "select-lacquer-ingredients",
+      "item_name": "select lacquer ingredients",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|lacquer maker|skill|supply-machine",
+      "context_level": "role",
+      "context_key": "D055|lacquer maker",
+      "item_type": "skill",
+      "item_key": "supply-machine",
+      "item_name": "supply machine",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|lime kiln operator|skill|control-limestone-flow",
+      "context_level": "role",
+      "context_key": "D055|lime kiln operator",
+      "item_type": "skill",
+      "item_key": "control-limestone-flow",
+      "item_name": "control limestone flow",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|lime kiln operator|skill|ensure-operability-of-protective-equipment",
+      "context_level": "role",
+      "context_key": "D055|lime kiln operator",
+      "item_type": "skill",
+      "item_key": "ensure-operability-of-protective-equipment",
+      "item_name": "ensure operability of protective equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|lime kiln operator|skill|handle-hot-limestone",
+      "context_level": "role",
+      "context_key": "D055|lime kiln operator",
+      "item_type": "skill",
+      "item_key": "handle-hot-limestone",
+      "item_name": "handle hot limestone",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|lime kiln operator|skill|manage-kiln-ventilation",
+      "context_level": "role",
+      "context_key": "D055|lime kiln operator",
+      "item_type": "skill",
+      "item_key": "manage-kiln-ventilation",
+      "item_name": "manage kiln ventilation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|lime kiln operator|skill|produce-slaked-lime",
+      "context_level": "role",
+      "context_key": "D055|lime kiln operator",
+      "item_type": "skill",
+      "item_key": "produce-slaked-lime",
+      "item_name": "produce slaked lime",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|lime kiln operator|skill|tend-drawing-kiln",
+      "context_level": "role",
+      "context_key": "D055|lime kiln operator",
+      "item_type": "skill",
+      "item_key": "tend-drawing-kiln",
+      "item_name": "tend drawing kiln",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|lime kiln operator|skill|tend-lime-kiln",
+      "context_level": "role",
+      "context_key": "D055|lime kiln operator",
+      "item_type": "skill",
+      "item_key": "tend-lime-kiln",
+      "item_name": "tend lime-kiln",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|lime kiln operator|skill|transfer-quicklime",
+      "context_level": "role",
+      "context_key": "D055|lime kiln operator",
+      "item_type": "skill",
+      "item_key": "transfer-quicklime",
+      "item_name": "transfer quicklime",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|nitrator operator|skill|feed-the-nitrator",
+      "context_level": "role",
+      "context_key": "D055|nitrator operator",
+      "item_type": "skill",
+      "item_key": "feed-the-nitrator",
+      "item_name": "feed the nitrator",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|nitrator operator|skill|operate-explosives-production-equipment",
+      "context_level": "role",
+      "context_key": "D055|nitrator operator",
+      "item_type": "skill",
+      "item_key": "operate-explosives-production-equipment",
+      "item_name": "operate explosives production equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|nitrator operator|skill|regulate-chemical-reaction",
+      "context_level": "role",
+      "context_key": "D055|nitrator operator",
+      "item_type": "skill",
+      "item_key": "regulate-chemical-reaction",
+      "item_name": "regulate chemical reaction",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|nitrator operator|skill|tend-agitation-machine",
+      "context_level": "role",
+      "context_key": "D055|nitrator operator",
+      "item_type": "skill",
+      "item_key": "tend-agitation-machine",
+      "item_name": "tend agitation machine",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|nitroglycerin neutraliser|skill|draw-off-wash-water",
+      "context_level": "role",
+      "context_key": "D055|nitroglycerin neutraliser",
+      "item_type": "skill",
+      "item_key": "draw-off-wash-water",
+      "item_name": "draw off wash water",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|nitroglycerin neutraliser|skill|fill-the-vat-with-specific-ingredients",
+      "context_level": "role",
+      "context_key": "D055|nitroglycerin neutraliser",
+      "item_type": "skill",
+      "item_key": "fill-the-vat-with-specific-ingredients",
+      "item_name": "fill the vat with specific ingredients",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|nitroglycerin neutraliser|skill|tend-vats-following-a-nitration-process",
+      "context_level": "role",
+      "context_key": "D055|nitroglycerin neutraliser",
+      "item_type": "skill",
+      "item_key": "tend-vats-following-a-nitration-process",
+      "item_name": "tend vats following a nitration process",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|nitroglycerin neutraliser|skill|test-nitroglycerin-mixture",
+      "context_level": "role",
+      "context_key": "D055|nitroglycerin neutraliser",
+      "item_type": "skill",
+      "item_key": "test-nitroglycerin-mixture",
+      "item_name": "test nitroglycerin mixture",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|nitroglycerin separator operator|skill|monitor-centrifugal-separators",
+      "context_level": "role",
+      "context_key": "D055|nitroglycerin separator operator",
+      "item_type": "skill",
+      "item_key": "monitor-centrifugal-separators",
+      "item_name": "monitor centrifugal separators",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|nitroglycerin separator operator|skill|monitor-nitroglycerin-flow",
+      "context_level": "role",
+      "context_key": "D055|nitroglycerin separator operator",
+      "item_type": "skill",
+      "item_key": "monitor-nitroglycerin-flow",
+      "item_name": "monitor nitroglycerin flow",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|nitroglycerin separator operator|skill|monitor-tank-thermometer",
+      "context_level": "role",
+      "context_key": "D055|nitroglycerin separator operator",
+      "item_type": "skill",
+      "item_key": "monitor-tank-thermometer",
+      "item_name": "monitor tank thermometer",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|nitroglycerin separator operator|skill|operate-raw-mineral-separation-equipment",
+      "context_level": "role",
+      "context_key": "D055|nitroglycerin separator operator",
+      "item_type": "skill",
+      "item_key": "operate-raw-mineral-separation-equipment",
+      "item_name": "operate raw mineral separation equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|nitroglycerin separator operator|skill|separate-nitroglycerin-from-acids",
+      "context_level": "role",
+      "context_key": "D055|nitroglycerin separator operator",
+      "item_type": "skill",
+      "item_key": "separate-nitroglycerin-from-acids",
+      "item_name": "separate nitroglycerin from acids",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|nitroglycerin separator operator|skill|store-spent-acids",
+      "context_level": "role",
+      "context_key": "D055|nitroglycerin separator operator",
+      "item_type": "skill",
+      "item_key": "store-spent-acids",
+      "item_name": "store spent acids",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|nonwoven filament machine operator|skill|control-textile-process",
+      "context_level": "role",
+      "context_key": "D055|nonwoven filament machine operator",
+      "item_type": "skill",
+      "item_key": "control-textile-process",
+      "item_name": "control textile process",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|nonwoven filament machine operator|skill|manufacture-non-woven-filament-products",
+      "context_level": "role",
+      "context_key": "D055|nonwoven filament machine operator",
+      "item_type": "skill",
+      "item_key": "manufacture-non-woven-filament-products",
+      "item_name": "manufacture non-woven filament products",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|nonwoven filament machine operator|skill|manufacture-textile-floor-coverings",
+      "context_level": "role",
+      "context_key": "D055|nonwoven filament machine operator",
+      "item_type": "skill",
+      "item_key": "manufacture-textile-floor-coverings",
+      "item_name": "manufacture textile floor coverings",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|nonwoven filament machine operator|skill|prepare-raw-materials-for-man-made-fibres-manufacturing",
+      "context_level": "role",
+      "context_key": "D055|nonwoven filament machine operator",
+      "item_type": "skill",
+      "item_key": "prepare-raw-materials-for-man-made-fibres-manufacturing",
+      "item_name": "prepare raw materials for man-made fibres manufacturing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|nonwoven filament machine operator|skill|textile-chemistry",
+      "context_level": "role",
+      "context_key": "D055|nonwoven filament machine operator",
+      "item_type": "skill",
+      "item_key": "textile-chemistry",
+      "item_name": "textile chemistry",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|nonwoven filament machine operator|skill|textile-industry",
+      "context_level": "role",
+      "context_key": "D055|nonwoven filament machine operator",
+      "item_type": "skill",
+      "item_key": "textile-industry",
+      "item_name": "textile industry",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|nonwoven filament machine operator|tool|apache-hadoop-yarn",
+      "context_level": "role",
+      "context_key": "D055|nonwoven filament machine operator",
+      "item_type": "tool",
+      "item_key": "apache-hadoop-yarn",
+      "item_name": "Apache Hadoop YARN",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|nonwoven filament machine operator|tool|camstar-manufacturing-execution-system-mes",
+      "context_level": "role",
+      "context_key": "D055|nonwoven filament machine operator",
+      "item_type": "tool",
+      "item_key": "camstar-manufacturing-execution-system-mes",
+      "item_name": "Camstar Manufacturing Execution System MES",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|nonwoven filament machine operator|tool|statistical-process-control-spc-software",
+      "context_level": "role",
+      "context_key": "D055|nonwoven filament machine operator",
+      "item_type": "tool",
+      "item_key": "statistical-process-control-spc-software",
+      "item_name": "Statistical process control SPC software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|paint mixer|skill|add-paint-hardeners",
+      "context_level": "role",
+      "context_key": "D055|paint mixer",
+      "item_type": "skill",
+      "item_key": "add-paint-hardeners",
+      "item_name": "add paint hardeners",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|paint mixer|skill|check-paint-consistency",
+      "context_level": "role",
+      "context_key": "D055|paint mixer",
+      "item_type": "skill",
+      "item_key": "check-paint-consistency",
+      "item_name": "check paint consistency",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|paint mixer|skill|industrial-paint",
+      "context_level": "role",
+      "context_key": "D055|paint mixer",
+      "item_type": "skill",
+      "item_key": "industrial-paint",
+      "item_name": "industrial paint",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|paint mixer|skill|inspect-paint-quality",
+      "context_level": "role",
+      "context_key": "D055|paint mixer",
+      "item_type": "skill",
+      "item_key": "inspect-paint-quality",
+      "item_name": "inspect paint quality",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|paint mixer|skill|lacquer-paint-applications",
+      "context_level": "role",
+      "context_key": "D055|paint mixer",
+      "item_type": "skill",
+      "item_key": "lacquer-paint-applications",
+      "item_name": "lacquer paint applications",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|paint mixer|skill|mix-paint",
+      "context_level": "role",
+      "context_key": "D055|paint mixer",
+      "item_type": "skill",
+      "item_key": "mix-paint",
+      "item_name": "mix paint",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|paint mixer|skill|prepare-colour-mixtures",
+      "context_level": "role",
+      "context_key": "D055|paint mixer",
+      "item_type": "skill",
+      "item_key": "prepare-colour-mixtures",
+      "item_name": "prepare colour mixtures",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|paint mixer|skill|tend-paint-mixer",
+      "context_level": "role",
+      "context_key": "D055|paint mixer",
+      "item_type": "skill",
+      "item_key": "tend-paint-mixer",
+      "item_name": "tend paint mixer",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|paper engineer|skill|paper-chemistry",
+      "context_level": "role",
+      "context_key": "D055|paper engineer",
+      "item_type": "skill",
+      "item_key": "paper-chemistry",
+      "item_name": "paper chemistry",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|paper engineer|skill|paper-production-processes",
+      "context_level": "role",
+      "context_key": "D055|paper engineer",
+      "item_type": "skill",
+      "item_key": "paper-production-processes",
+      "item_name": "paper production processes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|paper engineer|skill|sizes-of-paper",
+      "context_level": "role",
+      "context_key": "D055|paper engineer",
+      "item_type": "skill",
+      "item_key": "sizes-of-paper",
+      "item_name": "sizes of paper",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D058|business studies and economics teacher secondary school|skill|teach-economic-principles",
+      "context_level": "role",
+      "context_key": "D058|business studies and economics teacher secondary school",
+      "item_type": "skill",
+      "item_key": "teach-economic-principles",
+      "item_name": "teach economic principles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D058|business studies and economics teacher secondary school|skill|work-with-virtual-learning-environments",
+      "context_level": "role",
+      "context_key": "D058|business studies and economics teacher secondary school",
+      "item_type": "skill",
+      "item_key": "work-with-virtual-learning-environments",
+      "item_name": "work with virtual learning environments",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.gov.wales/revised-professional-standards-assisting-teaching-teaching-and-leadership-html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D059|aerospace engineering technician|skill|guidance-navigation-and-control",
+      "context_level": "role",
+      "context_key": "D059|aerospace engineering technician",
+      "item_type": "skill",
+      "item_key": "guidance-navigation-and-control",
+      "item_name": "guidance, navigation and control",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D059|astronaut|skill|conduct-research-on-climate-processes",
+      "context_level": "role",
+      "context_key": "D059|astronaut",
+      "item_type": "skill",
+      "item_key": "conduct-research-on-climate-processes",
+      "item_name": "conduct research on climate processes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D059|astronaut|skill|use-specialised-computer-models-for-weather-forecasting",
+      "context_level": "role",
+      "context_key": "D059|astronaut",
+      "item_type": "skill",
+      "item_key": "use-specialised-computer-models-for-weather-forecasting",
+      "item_name": "use specialised computer models for weather forecasting",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D059|astronaut|tool|aeroplanner",
+      "context_level": "role",
+      "context_key": "D059|astronaut",
+      "item_type": "tool",
+      "item_key": "aeroplanner",
+      "item_name": "AeroPlanner",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D059|astronaut|tool|airline-pilots-daily-aviation-log-ppc",
+      "context_level": "role",
+      "context_key": "D059|astronaut",
+      "item_type": "tool",
+      "item_key": "airline-pilots-daily-aviation-log-ppc",
+      "item_name": "Airline Pilots Daily Aviation Log PPC",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D059|astronaut|tool|airsmith-flightprompt",
+      "context_level": "role",
+      "context_key": "D059|astronaut",
+      "item_type": "tool",
+      "item_key": "airsmith-flightprompt",
+      "item_name": "AirSmith FlightPrompt",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D059|avionics inspector|skill|inspect-aircraft-for-airworthiness",
+      "context_level": "role",
+      "context_key": "D059|avionics inspector",
+      "item_type": "skill",
+      "item_key": "inspect-aircraft-for-airworthiness",
+      "item_name": "inspect aircraft for airworthiness",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|bank account manager|skill|create-banking-accounts",
+      "context_level": "role",
+      "context_key": "D060|bank account manager",
+      "item_type": "skill",
+      "item_key": "create-banking-accounts",
+      "item_name": "create banking accounts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|bank account manager|skill|solve-bank-account-problems",
+      "context_level": "role",
+      "context_key": "D060|bank account manager",
+      "item_type": "skill",
+      "item_key": "solve-bank-account-problems",
+      "item_name": "solve bank account problems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|bank account manager|tool|corporate-information-factory-cif",
+      "context_level": "role",
+      "context_key": "D060|bank account manager",
+      "item_type": "tool",
+      "item_key": "corporate-information-factory-cif",
+      "item_name": "Corporate Information Factory CIF",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|bank account manager|tool|dci-icore",
+      "context_level": "role",
+      "context_key": "D060|bank account manager",
+      "item_type": "tool",
+      "item_key": "dci-icore",
+      "item_name": "DCI iCore",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|bank account manager|tool|financial-needs-analysis-software",
+      "context_level": "role",
+      "context_key": "D060|bank account manager",
+      "item_type": "tool",
+      "item_key": "financial-needs-analysis-software",
+      "item_name": "Financial needs analysis software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|bank account manager|tool|fiserv-financial-services-software",
+      "context_level": "role",
+      "context_key": "D060|bank account manager",
+      "item_type": "tool",
+      "item_key": "fiserv-financial-services-software",
+      "item_name": "Fiserv financial services software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|bank teller|skill|convert-currency",
+      "context_level": "role",
+      "context_key": "D060|bank teller",
+      "item_type": "skill",
+      "item_key": "convert-currency",
+      "item_name": "convert currency",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|bank teller|skill|offer-financial-services",
+      "context_level": "role",
+      "context_key": "D060|bank teller",
+      "item_type": "skill",
+      "item_key": "offer-financial-services",
+      "item_name": "offer financial services",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|brokerage firm director|skill|financial-engineering",
+      "context_level": "role",
+      "context_key": "D060|brokerage firm director",
+      "item_type": "skill",
+      "item_key": "financial-engineering",
+      "item_name": "financial engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|brokerage firm director|skill|manage-a-team",
+      "context_level": "role",
+      "context_key": "D060|brokerage firm director",
+      "item_type": "skill",
+      "item_key": "manage-a-team",
+      "item_name": "manage a team",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|brokerage firm director|skill|manage-clients-money-matters",
+      "context_level": "role",
+      "context_key": "D060|brokerage firm director",
+      "item_type": "skill",
+      "item_key": "manage-clients-money-matters",
+      "item_name": "manage clients' money matters",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|brokerage firm director|skill|manage-securities-trading",
+      "context_level": "role",
+      "context_key": "D060|brokerage firm director",
+      "item_type": "skill",
+      "item_key": "manage-securities-trading",
+      "item_name": "manage securities trading",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|brokerage firm director|skill|trade-securities",
+      "context_level": "role",
+      "context_key": "D060|brokerage firm director",
+      "item_type": "skill",
+      "item_key": "trade-securities",
+      "item_name": "trade securities",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|credit analyst|skill|advise-on-credit-rating",
+      "context_level": "role",
+      "context_key": "D060|credit analyst",
+      "item_type": "skill",
+      "item_key": "advise-on-credit-rating",
+      "item_name": "advise on credit rating",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|credit union manager|skill|manage-credit-union-operations",
+      "context_level": "role",
+      "context_key": "D060|credit union manager",
+      "item_type": "skill",
+      "item_key": "manage-credit-union-operations",
+      "item_name": "manage credit union operations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|debt collector|tool|adp-drive-dms-for-accounting",
+      "context_level": "role",
+      "context_key": "D060|debt collector",
+      "item_type": "tool",
+      "item_key": "adp-drive-dms-for-accounting",
+      "item_name": "ADP Drive DMS for Accounting",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|debt collector|tool|ads-advantage",
+      "context_level": "role",
+      "context_key": "D060|debt collector",
+      "item_type": "tool",
+      "item_key": "ads-advantage",
+      "item_name": "ADS Advantage",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|debt collector|tool|adtec-agency-manager",
+      "context_level": "role",
+      "context_key": "D060|debt collector",
+      "item_type": "tool",
+      "item_key": "adtec-agency-manager",
+      "item_name": "Adtec Agency Manager",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|foreign exchange cashier|tool|afexdirect",
+      "context_level": "role",
+      "context_key": "D060|foreign exchange cashier",
+      "item_type": "tool",
+      "item_key": "afexdirect",
+      "item_name": "AFEXDirect",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|pawnbroker|skill|calculate-value-of-gems",
+      "context_level": "role",
+      "context_key": "D060|pawnbroker",
+      "item_type": "skill",
+      "item_key": "calculate-value-of-gems",
+      "item_name": "calculate value of gems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|pawnbroker|skill|collect-customer-data",
+      "context_level": "role",
+      "context_key": "D060|pawnbroker",
+      "item_type": "skill",
+      "item_key": "collect-customer-data",
+      "item_name": "collect customer data",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|pawnbroker|skill|enforce-customer-s-debt-repayment",
+      "context_level": "role",
+      "context_key": "D060|pawnbroker",
+      "item_type": "skill",
+      "item_key": "enforce-customer-s-debt-repayment",
+      "item_name": "enforce customer's debt repayment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|pawnbroker|skill|estimate-value-of-musical-instruments",
+      "context_level": "role",
+      "context_key": "D060|pawnbroker",
+      "item_type": "skill",
+      "item_key": "estimate-value-of-musical-instruments",
+      "item_name": "estimate value of musical instruments",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|pawnbroker|skill|estimate-value-of-used-goods",
+      "context_level": "role",
+      "context_key": "D060|pawnbroker",
+      "item_type": "skill",
+      "item_key": "estimate-value-of-used-goods",
+      "item_name": "estimate value of used goods",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|pawnbroker|skill|manage-pawnshop-inventory",
+      "context_level": "role",
+      "context_key": "D060|pawnbroker",
+      "item_type": "skill",
+      "item_key": "manage-pawnshop-inventory",
+      "item_name": "manage pawnshop inventory",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|pawnbroker|skill|negotiate-on-asset-value",
+      "context_level": "role",
+      "context_key": "D060|pawnbroker",
+      "item_type": "skill",
+      "item_key": "negotiate-on-asset-value",
+      "item_name": "negotiate on asset value",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|student financial support coordinator|skill|assist-in-loan-applications",
+      "context_level": "role",
+      "context_key": "D060|student financial support coordinator",
+      "item_type": "skill",
+      "item_key": "assist-in-loan-applications",
+      "item_name": "assist in loan applications",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|student financial support coordinator|skill|negotiate-loan-agreements",
+      "context_level": "role",
+      "context_key": "D060|student financial support coordinator",
+      "item_type": "skill",
+      "item_key": "negotiate-loan-agreements",
+      "item_name": "negotiate loan agreements",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D060|student financial support coordinator|skill|student-financial-aid-programmes",
+      "context_level": "role",
+      "context_key": "D060|student financial support coordinator",
+      "item_type": "skill",
+      "item_key": "student-financial-aid-programmes",
+      "item_name": "student financial aid programmes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D061|insurance agency manager|skill|produce-materials-for-decision-making",
+      "context_level": "role",
+      "context_key": "D061|insurance agency manager",
+      "item_type": "skill",
+      "item_key": "produce-materials-for-decision-making",
+      "item_name": "produce materials for decision making",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D061|insurance clerk|tool|account-management-software",
+      "context_level": "role",
+      "context_key": "D061|insurance clerk",
+      "item_type": "tool",
+      "item_key": "account-management-software",
+      "item_name": "Account management software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D061|insurance clerk|tool|alpha-software-alpha-five",
+      "context_level": "role",
+      "context_key": "D061|insurance clerk",
+      "item_type": "tool",
+      "item_key": "alpha-software-alpha-five",
+      "item_name": "Alpha Software Alpha Five",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D061|insurance clerk|tool|automated-information-system-software",
+      "context_level": "role",
+      "context_key": "D061|insurance clerk",
+      "item_type": "tool",
+      "item_key": "automated-information-system-software",
+      "item_name": "Automated information system software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D061|insurance collector|skill|create-cooperation-modalities",
+      "context_level": "role",
+      "context_key": "D061|insurance collector",
+      "item_type": "skill",
+      "item_key": "create-cooperation-modalities",
+      "item_name": "create cooperation modalities",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D061|personal property appraiser|skill|determine-resale-value-of-items",
+      "context_level": "role",
+      "context_key": "D061|personal property appraiser",
+      "item_type": "skill",
+      "item_key": "determine-resale-value-of-items",
+      "item_name": "determine resale value of items",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D061|personal property appraiser|skill|estimate-value-of-clocks",
+      "context_level": "role",
+      "context_key": "D061|personal property appraiser",
+      "item_type": "skill",
+      "item_key": "estimate-value-of-clocks",
+      "item_name": "estimate value of clocks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D061|personal property appraiser|tool|ascend-property-assessment",
+      "context_level": "role",
+      "context_key": "D061|personal property appraiser",
+      "item_type": "tool",
+      "item_key": "ascend-property-assessment",
+      "item_name": "Ascend Property Assessment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D061|personal property appraiser|tool|bruno-realty-eneighboorhoods",
+      "context_level": "role",
+      "context_key": "D061|personal property appraiser",
+      "item_type": "tool",
+      "item_key": "bruno-realty-eneighboorhoods",
+      "item_name": "Bruno Realty eNeighboorhoods",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D063|economic development coordinator|skill|consider-economic-criteria-in-decision-making",
+      "context_level": "role",
+      "context_key": "D063|economic development coordinator",
+      "item_type": "skill",
+      "item_key": "consider-economic-criteria-in-decision-making",
+      "item_name": "consider economic criteria in decision making",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D063|economic development coordinator|skill|develop-economic-policies",
+      "context_level": "role",
+      "context_key": "D063|economic development coordinator",
+      "item_type": "skill",
+      "item_key": "develop-economic-policies",
+      "item_name": "develop economic policies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D063|economic policy officer|skill|monitor-national-economy",
+      "context_level": "role",
+      "context_key": "D063|economic policy officer",
+      "item_type": "skill",
+      "item_key": "monitor-national-economy",
+      "item_name": "monitor national economy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D064|Mental Health Counselors|tool|client-information-database-systems",
+      "context_level": "role",
+      "context_key": "D064|Mental Health Counselors",
+      "item_type": "tool",
+      "item_key": "client-information-database-systems",
+      "item_name": "Client information database systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D064|assistant clinical psychologist|skill|apply-psychological-intervention-strategies",
+      "context_level": "role",
+      "context_key": "D064|assistant clinical psychologist",
+      "item_type": "skill",
+      "item_key": "apply-psychological-intervention-strategies",
+      "item_name": "apply psychological intervention strategies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D064|assistant clinical psychologist|skill|assist-psychologist",
+      "context_level": "role",
+      "context_key": "D064|assistant clinical psychologist",
+      "item_type": "skill",
+      "item_key": "assist-psychologist",
+      "item_name": "assist psychologist",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D064|assistant clinical psychologist|skill|conduct-psychological-research",
+      "context_level": "role",
+      "context_key": "D064|assistant clinical psychologist",
+      "item_type": "skill",
+      "item_key": "conduct-psychological-research",
+      "item_name": "conduct psychological research",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D064|assistant clinical psychologist|skill|evaluation-of-psychological-performance",
+      "context_level": "role",
+      "context_key": "D064|assistant clinical psychologist",
+      "item_type": "skill",
+      "item_key": "evaluation-of-psychological-performance",
+      "item_name": "evaluation of psychological performance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D064|assistant clinical psychologist|skill|psychiatry",
+      "context_level": "role",
+      "context_key": "D064|assistant clinical psychologist",
+      "item_type": "skill",
+      "item_key": "psychiatry",
+      "item_name": "psychiatry",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D065|language engineer|skill|computational-linguistics",
+      "context_level": "role",
+      "context_key": "D065|language engineer",
+      "item_type": "skill",
+      "item_key": "computational-linguistics",
+      "item_name": "computational linguistics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D065|language engineer|skill|machine-translation",
+      "context_level": "role",
+      "context_key": "D065|language engineer",
+      "item_type": "skill",
+      "item_key": "machine-translation",
+      "item_name": "machine translation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D065|language engineer|skill|natural-language-processing",
+      "context_level": "role",
+      "context_key": "D065|language engineer",
+      "item_type": "skill",
+      "item_key": "natural-language-processing",
+      "item_name": "natural language processing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D066|alternative animal therapist|skill|assess-the-animal-s-rehabilitation-requirements",
+      "context_level": "role",
+      "context_key": "D066|alternative animal therapist",
+      "item_type": "skill",
+      "item_key": "assess-the-animal-s-rehabilitation-requirements",
+      "item_name": "assess the animal’s rehabilitation requirements",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D066|alternative animal therapist|tool|american-data-systems-paws-veterinary-practice-management",
+      "context_level": "role",
+      "context_key": "D066|alternative animal therapist",
+      "item_type": "tool",
+      "item_key": "american-data-systems-paws-veterinary-practice-management",
+      "item_name": "American Data Systems PAWS Veterinary Practice Management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    }
+  ],
+  "policy": {
+    "review_required_preserved_unless_exact_item_evidence_established": true,
+    "no_relationship_inference": true,
+    "no_promotion": true
+  }
+}

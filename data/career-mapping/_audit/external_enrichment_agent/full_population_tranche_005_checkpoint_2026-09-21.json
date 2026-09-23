@@ -1,0 +1,30 @@
+{
+  "schema": "2026-09-21.full-population-enrichment-tranche-checkpoint.v2",
+  "accessed_on": "2026-09-21",
+  "status": "complete",
+  "selection": "data/career-mapping/_audit/external_enrichment_agent/full_population_tranche_005_selection_2026-09-21.json",
+  "scope": {
+    "selected_rows": 32,
+    "item_rows": 32,
+    "relationship_rows": 0,
+    "prior_ids_excluded": 128,
+    "non_d078_unresolved_candidates_seen": 2289
+  },
+  "checkpoint_counts": {
+    "rows_selected": 32,
+    "rows_searched": 32,
+    "linked": 27,
+    "review_required": 5,
+    "genuinely_unavailable": 0,
+    "no_link": 0,
+    "remaining_selected_rows": 0
+  },
+  "guardrails": {
+    "d078_rows": 0,
+    "prior_tranche_overlap": 0,
+    "sql_touched": false,
+    "generated_seed_transport_touched": false,
+    "ui_touched": false,
+    "browser_proof_touched": false
+  }
+}

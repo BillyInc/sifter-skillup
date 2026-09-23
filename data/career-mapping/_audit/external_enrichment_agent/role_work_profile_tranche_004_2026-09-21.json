@@ -1,0 +1,997 @@
+{
+  "schema_version": "2026-09-21.role-work-profile-tranche-004.v1",
+  "generated_on": "2026-09-21",
+  "read_only": true,
+  "scope": {
+    "source_audit": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json",
+    "missing_work_profile_population": 119,
+    "tranche_offset_zero_based": 60,
+    "tranche_number": 4,
+    "tranche_size": 20,
+    "queue_order": "source-trace roles with work_profile_status=not_available, original file order",
+    "previous_tranche": "role_work_profile_tranche_003_2026-09-21.json (roles 41-60)"
+  },
+  "counts": {
+    "roles_selected": 20,
+    "roles_individually_audited": 20,
+    "esco_roles": 15,
+    "onet_roles": 5,
+    "exact_title_matches": 0,
+    "exact_official_identity_matches": 5,
+    "bounded_local_only": 15,
+    "review_required": 20,
+    "unresolved": 0,
+    "repository_exact_records": 20,
+    "repository_exact_identity_matches": 20,
+    "internet_exact_identity_matches": 5,
+    "source_backed_candidates": 5,
+    "roles_corrected": 0,
+    "generated_profile_rows_added": 0,
+    "genuinely_unavailable": 0,
+    "remaining_missing_work_profile_roles": 39
+  },
+  "authority": {
+    "repository_source_esco": "European Commission ESCO occupation extract vendored at data/career-mapping/_tax_src/esco/occupations_en.csv",
+    "internet_source_esco": "https://ec.europa.eu/esco/api/resource/occupation",
+    "api_documentation_esco": "https://ec.europa.eu/esco/api/doc/esco_api_doc.html",
+    "internet_source_onet": "https://www.onetonline.org/link/summary/{SOC_CODE}",
+    "source_limit": "Occupational identity evidence is retained for review. No source in this tranche is used to fabricate the application's O*NET-style work-profile fields, Nigerian demand evidence, or student preparation content."
+  },
+  "records": [
+    {
+      "role_key": "D108|gravure press operator",
+      "domain_id": "D108",
+      "domain_name": "Printing Technology, Pre-press",
+      "role_name": "gravure press operator",
+      "existing_role_source": "esco",
+      "existing_esco_code": "7322.3",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "7322",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=1587",
+        "concept_uri": "http://data.europa.eu/esco/occupation/7fbe45c6-1914-43ba-9cfb-e0a4e051da92",
+        "preferred_label": "gravure press operator",
+        "alt_labels": "rotogravure technician\ngravure technician\nengraving press operator\ngravure press operative\ngravure printing press tender\nrotogravure press operator\ngravure press worker\nrotogravure printing machine tender\ngravure press technician\nrotogravure specialist\nrotogravure press specialist\ngravure press specialist\nrotogravure press technician\ngravure printing machine operator\nrotogravure printing press operator\nrotogravure press rolltender\ngravure press tender\ngravure press rolltender\ngravure printing machine tender\nrotogravure operator\ngravure operator\nengraving press tender\ngravure specialist",
+        "definition": "Gravure press operators work with gravure presses, where the image is engraved directly on a roll. They set up the press and monitor it during the operation, taking care of safety and resolving problems.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-25T14:17:28.789Z",
+        "occupation_skill_relation_count": 38,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/7fbe45c6-1914-43ba-9cfb-e0a4e051da92"
+      },
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/7fbe45c6-1914-43ba-9cfb-e0a4e051da92",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/7fbe45c6-1914-43ba-9cfb-e0a4e051da92' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies role identity, meaning and related skills, but this is not an O*NET-style work-profile row and does not establish Nigerian demand evidence. Retain the evidence for review; do not invent work activities, job zone, work context or local mapping.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D108|hot foil operator",
+      "domain_id": "D108",
+      "domain_name": "Printing Technology, Pre-press",
+      "role_name": "hot foil operator",
+      "existing_role_source": "esco",
+      "existing_esco_code": "7322.4",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "7322",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=2125",
+        "concept_uri": "http://data.europa.eu/esco/occupation/ad6589cb-ef1e-482d-863d-d80b2eb6b070",
+        "preferred_label": "hot foil operator",
+        "alt_labels": "hot stamp technician\nfoil printing machine technician\nfoil blocking specialist\nhot foil machine technician\nfoil printing machine operator\nfoil stamp machine operator\nfoil press technician\nhot foil machine specialist\nfoil press specialist\nhot press specialist\nhot foil stamping machine specialist\nfoil stamping technician\nhot stamp specialist\nhot foil stamping die cutter\nfoil stamping specialist\nhot foil stamping machine operator\nfoil blocking technician\nhot foil technician\nhot press operator\nhot foil blocker\nhot stamp operator\nhot foil specialist\nfoil press operator\nhot foil stamping machine technician\nhot press technician\nhot foil stamper\nfoil printing machine specialist\nfoil stamping operator\nhot foil machine operator\nfoil blocking operator",
+        "definition": "Hot foil operators tend machines which apply a metallic foil on other materials using pressure cylinders and heating. They also mix colors, set up the appropriate machinery equipment and monitor printing.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-25T14:17:32.335Z",
+        "occupation_skill_relation_count": 28,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/ad6589cb-ef1e-482d-863d-d80b2eb6b070"
+      },
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/ad6589cb-ef1e-482d-863d-d80b2eb6b070",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/ad6589cb-ef1e-482d-863d-d80b2eb6b070' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies role identity, meaning and related skills, but this is not an O*NET-style work-profile row and does not establish Nigerian demand evidence. Retain the evidence for review; do not invent work activities, job zone, work context or local mapping.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D108|imagesetter",
+      "domain_id": "D108",
+      "domain_name": "Printing Technology, Pre-press",
+      "role_name": "imagesetter",
+      "existing_role_source": "esco",
+      "existing_esco_code": "7321.1.1",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "7321",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=455",
+        "concept_uri": "http://data.europa.eu/esco/occupation/23e3a8a0-905a-45be-983f-4cf32e133e09",
+        "preferred_label": "imagesetter",
+        "alt_labels": "phototypesetter technician\nphototypesetter engineer\nphototypesetter operator\nphototypesetting machine technician\nimagesetter engineer\nimagesetter technician\nphototypesetting machine engineer\nphototypesetting machine operator",
+        "definition": "Imagesetters process images and graphic templates by using phototypesetting machines. They optimise the templates for the best possible result by determining the right arrangement of text and image on the print sheet. The product is then set onto photo paper or film.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-02-09T17:29:12.952Z",
+        "occupation_skill_relation_count": 52,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/23e3a8a0-905a-45be-983f-4cf32e133e09"
+      },
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/23e3a8a0-905a-45be-983f-4cf32e133e09",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/23e3a8a0-905a-45be-983f-4cf32e133e09' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies role identity, meaning and related skills, but this is not an O*NET-style work-profile row and does not establish Nigerian demand evidence. Retain the evidence for review; do not invent work activities, job zone, work context or local mapping.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D108|lithographer",
+      "domain_id": "D108",
+      "domain_name": "Printing Technology, Pre-press",
+      "role_name": "lithographer",
+      "existing_role_source": "esco",
+      "existing_esco_code": "7321.1.2",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "7321",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=2098",
+        "concept_uri": "http://data.europa.eu/esco/occupation/ab4086a0-0e2f-436e-80f8-a3291e594bd1",
+        "preferred_label": "lithographer",
+        "alt_labels": "metal lithographer\ncomputer-to-plate technician\nplatesetter specialist\nCT technician\nmaster printer/lithography\nCTP worker\nlithographic printer\nplatesetter technician\nlithographer and digital printer\ncomputer-to-plate operator\nCTP specialist\ncertified master lithographer\nlithographic operator\nplatesetter operator\nCTP operator\nplate worker\noffset lithographer\ncomputer-to-plate specialist",
+        "definition": "Lithographers make and prepare metal plates to be used as the original in various printing processes and media. Plates are usually laser-etched from digital sources with computer-to-plate technology, but can also be made by applying types of emulsions to the printing plate.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-16T15:53:04.477Z",
+        "occupation_skill_relation_count": 43,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/ab4086a0-0e2f-436e-80f8-a3291e594bd1"
+      },
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/ab4086a0-0e2f-436e-80f8-a3291e594bd1",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/ab4086a0-0e2f-436e-80f8-a3291e594bd1' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies role identity, meaning and related skills, but this is not an O*NET-style work-profile row and does not establish Nigerian demand evidence. Retain the evidence for review; do not invent work activities, job zone, work context or local mapping.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D108|offset printer",
+      "domain_id": "D108",
+      "domain_name": "Printing Technology, Pre-press",
+      "role_name": "offset printer",
+      "existing_role_source": "esco",
+      "existing_esco_code": "7322.5",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "7322",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=2814",
+        "concept_uri": "http://data.europa.eu/esco/occupation/ea4aff10-4d20-4a2b-886b-299c2bd349f1",
+        "preferred_label": "offset printer",
+        "alt_labels": "offset printer specialist\nnewspaper press operator\noffset lithography printer\nlithographic printing technician\npad printing machine operator\noffset printer operator\noffset press specialist\nnewspaper press technician\nnewspaper press specialist\noffset press assistant\noffset printer technician\noffset press technician\noffset pressman\nlithographic printing specialist\nnewspaper printer\noffset press operator\nlithographic printing operator",
+        "definition": "Offset printers handle an offset press in order to print an image. The offset press transfers an inked image from the plate to a rubber blanket before to print it onto the printing surface.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-25T14:17:36.189Z",
+        "occupation_skill_relation_count": 40,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/ea4aff10-4d20-4a2b-886b-299c2bd349f1"
+      },
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/ea4aff10-4d20-4a2b-886b-299c2bd349f1",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/ea4aff10-4d20-4a2b-886b-299c2bd349f1' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies role identity, meaning and related skills, but this is not an O*NET-style work-profile row and does not establish Nigerian demand evidence. Retain the evidence for review; do not invent work activities, job zone, work context or local mapping.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D108|paper embossing press operator",
+      "domain_id": "D108",
+      "domain_name": "Printing Technology, Pre-press",
+      "role_name": "paper embossing press operator",
+      "existing_role_source": "esco",
+      "existing_esco_code": "7322.6",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "7322",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=995",
+        "concept_uri": "http://data.europa.eu/esco/occupation/4f7e7482-39e7-4f3a-bf11-763620f4b8e0",
+        "preferred_label": "paper embossing press operator",
+        "alt_labels": "paper embossing press specialist\npaper embosser technician\npaper embosser\npaper embossing & debossing press operator\npaper embossing & debossing machine operator\npaper paper embossing press operator\npaper embosser worker\npaper embossing and debossing press operator\npaper embossing/debossing press operator\npaper embossing press worker\npaper embossing press technician\npaper embossing machine operator\npaper embossing machine tender\npaper embossing/debossing machine operator\npaper embosser operator\npaper embossing and debossing machine operator\npaper embossing press tender\npaper embosser specialist",
+        "definition": "Paper embossing press operators use a press to raise or recess certain areas of the medium, so as to create relief on the print. Two matching engraved dies are placed around the paper and pressure is applied to change the surface of the material.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-25T14:17:41.205Z",
+        "occupation_skill_relation_count": 32,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/4f7e7482-39e7-4f3a-bf11-763620f4b8e0"
+      },
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/4f7e7482-39e7-4f3a-bf11-763620f4b8e0",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/4f7e7482-39e7-4f3a-bf11-763620f4b8e0' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies role identity, meaning and related skills, but this is not an O*NET-style work-profile row and does not establish Nigerian demand evidence. Retain the evidence for review; do not invent work activities, job zone, work context or local mapping.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D108|prepress operator",
+      "domain_id": "D108",
+      "domain_name": "Printing Technology, Pre-press",
+      "role_name": "prepress operator",
+      "existing_role_source": "esco",
+      "existing_esco_code": "7321.1.3",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "7321",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=2535",
+        "concept_uri": "http://data.europa.eu/esco/occupation/cf578f1d-1832-4a4d-a3b2-e0a00517b51d",
+        "preferred_label": "prepress operator",
+        "alt_labels": "pre-press artworker\ndigital pre-press operator\nproof-press technician\nelectronic pre-press operator\nproof-press operator\nelectronic prepress operator\npre-press proofer\nproof-press specialist\nproofer\nprelim/prepress Operator",
+        "definition": "Prepress operators create a prepress proof or sample of what the finished product is expected to look like. They monitor printing quality, ensuring that graphics, colors and content meet the required quality and technical standards.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-16T15:52:58.955Z",
+        "occupation_skill_relation_count": 42,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/cf578f1d-1832-4a4d-a3b2-e0a00517b51d"
+      },
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/cf578f1d-1832-4a4d-a3b2-e0a00517b51d",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/cf578f1d-1832-4a4d-a3b2-e0a00517b51d' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies role identity, meaning and related skills, but this is not an O*NET-style work-profile row and does not establish Nigerian demand evidence. Retain the evidence for review; do not invent work activities, job zone, work context or local mapping.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D108|prepress technician",
+      "domain_id": "D108",
+      "domain_name": "Printing Technology, Pre-press",
+      "role_name": "prepress technician",
+      "existing_role_source": "esco",
+      "existing_esco_code": "7321.1",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "7321",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=1056",
+        "concept_uri": "http://data.europa.eu/esco/occupation/54ffd31f-ed90-4af4-b877-cd246351ad39",
+        "preferred_label": "prepress technician",
+        "alt_labels": "graphics technician\nprepress specialist\nprepress engineer\npress preparation engineer\npress preparation worker\nprepress technologist\npress preparation technologist\nprepress worker\npress preparation technician\npress preparation specialist",
+        "definition": "Prepress technicians prepare printing processes by formatting, setting and composing text and graphics into a suitable form. This includes the capture of text and image and processing it electronically. They also prepare, maintain and troubleshoot printing presses.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-16T17:13:55.279Z",
+        "occupation_skill_relation_count": 57,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/54ffd31f-ed90-4af4-b877-cd246351ad39"
+      },
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/54ffd31f-ed90-4af4-b877-cd246351ad39",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/54ffd31f-ed90-4af4-b877-cd246351ad39' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies role identity, meaning and related skills, but this is not an O*NET-style work-profile row and does not establish Nigerian demand evidence. Retain the evidence for review; do not invent work activities, job zone, work context or local mapping.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D108|print folding operator",
+      "domain_id": "D108",
+      "domain_name": "Printing Technology, Pre-press",
+      "role_name": "print folding operator",
+      "existing_role_source": "esco",
+      "existing_esco_code": "7323.4",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "7323",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=2373",
+        "concept_uri": "http://data.europa.eu/esco/occupation/c11e2b53-06f7-465f-9b5c-708016bc96f4",
+        "preferred_label": "print folding operator",
+        "alt_labels": "paper folding machinist\nprint folding technician\nminiture folding operator\ncomplex folder/gluer operator\nprint folding specialist\nprinting folding machine operator\nfolder machine tender\npaper folder machine worker\nfolder cutter operator\nminiture folding technician\nfolder/cutter operator\nfolder gluer specialist\nfolding machine technician\nfolder machine operator\nfolder/guillotine operator\nfolder/gluer specialist\nfolder guillotine operator\nminiture folding specialist\nfolding machine specialist",
+        "definition": "Print folding operators tend a machine that folds paper and bundles of paper.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-25T14:20:06.8Z",
+        "occupation_skill_relation_count": 33,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/c11e2b53-06f7-465f-9b5c-708016bc96f4"
+      },
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/c11e2b53-06f7-465f-9b5c-708016bc96f4",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/c11e2b53-06f7-465f-9b5c-708016bc96f4' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies role identity, meaning and related skills, but this is not an O*NET-style work-profile row and does not establish Nigerian demand evidence. Retain the evidence for review; do not invent work activities, job zone, work context or local mapping.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D108|print studio supervisor",
+      "domain_id": "D108",
+      "domain_name": "Printing Technology, Pre-press",
+      "role_name": "print studio supervisor",
+      "existing_role_source": "esco",
+      "existing_esco_code": "3122.4.15",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "3122",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=934",
+        "concept_uri": "http://data.europa.eu/esco/occupation/4b536ea7-ebac-4f75-8356-94eb639f1ecc",
+        "preferred_label": "print studio supervisor",
+        "alt_labels": "print senior technician\nmaster printer\nprint studio team leader\nprint shop supervisor\nprint senior specialist\nprint senior operator\nprint production supervisor\nsuperintendent in the printing industry\nprint studio teamleader\nproduction supervisor in the printing industry\nmaster bookbinder\nprint and production supervisor",
+        "definition": "Print studio supervisors organise the activity of one or more teams of machine operators in printing, binding of books and finishing of printed materials. They aim to optimise production processes.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-17T16:30:59.328Z",
+        "occupation_skill_relation_count": 58,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/4b536ea7-ebac-4f75-8356-94eb639f1ecc"
+      },
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/4b536ea7-ebac-4f75-8356-94eb639f1ecc",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/4b536ea7-ebac-4f75-8356-94eb639f1ecc' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies role identity, meaning and related skills, but this is not an O*NET-style work-profile row and does not establish Nigerian demand evidence. Retain the evidence for review; do not invent work activities, job zone, work context or local mapping.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D108|reprographics technician",
+      "domain_id": "D108",
+      "domain_name": "Printing Technology, Pre-press",
+      "role_name": "reprographics technician",
+      "existing_role_source": "esco",
+      "existing_esco_code": "7322.8",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "7322",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=1498",
+        "concept_uri": "http://data.europa.eu/esco/occupation/77de6c7d-27bf-4bc2-8c80-5d6f6d9811f4",
+        "preferred_label": "reprographics technician",
+        "alt_labels": "print room operator\nprint room technician\nreprography technician\nmailroom specialist\nreprographics administrator\nreprographics specialist\ncopy machine operator\nreprographics operator\nreprographic process technician\nmailroom technician\nreprographics assistant\nprint room specialist\nreprographics associate\nreprographic process specialist\nreprography operator\nreprography specialist",
+        "definition": "Reprographics technicians are responsible for the full or partial process of reproduction of graphical documents through mechanical-driven or digital means, such as photography, scanning or digital printing. These activities are commonly performed for purposes of maintaining archives or other structured catalogues.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-25T14:17:50.711Z",
+        "occupation_skill_relation_count": 36,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/77de6c7d-27bf-4bc2-8c80-5d6f6d9811f4"
+      },
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/77de6c7d-27bf-4bc2-8c80-5d6f6d9811f4",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/77de6c7d-27bf-4bc2-8c80-5d6f6d9811f4' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies role identity, meaning and related skills, but this is not an O*NET-style work-profile row and does not establish Nigerian demand evidence. Retain the evidence for review; do not invent work activities, job zone, work context or local mapping.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D108|scanning operator",
+      "domain_id": "D108",
+      "domain_name": "Printing Technology, Pre-press",
+      "role_name": "scanning operator",
+      "existing_role_source": "esco",
+      "existing_esco_code": "7321.1.4",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "7321",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=2527",
+        "concept_uri": "http://data.europa.eu/esco/occupation/cea4d5c9-7805-434a-8e6b-af5e9fa54c9e",
+        "preferred_label": "scanning operator",
+        "alt_labels": "scanning specialist\nscanning technician\nscanning machine operator\ndocument scanning operator\nscanner specialist\nscanning machine tender\nscanner technician\nscanner tender\nscanner operator\ndocument scanner\ndocument scanning specialist\nscanning clerk\nscanner worker",
+        "definition": "Scanning operators tend scanners. They feed print materials into the machine and set controls on the machine or on a controlling computer to obtain the highest resolution scan.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-25T14:10:22.029Z",
+        "occupation_skill_relation_count": 36,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/cea4d5c9-7805-434a-8e6b-af5e9fa54c9e"
+      },
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/cea4d5c9-7805-434a-8e6b-af5e9fa54c9e",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/cea4d5c9-7805-434a-8e6b-af5e9fa54c9e' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies role identity, meaning and related skills, but this is not an O*NET-style work-profile row and does not establish Nigerian demand evidence. Retain the evidence for review; do not invent work activities, job zone, work context or local mapping.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D108|screen making technician",
+      "domain_id": "D108",
+      "domain_name": "Printing Technology, Pre-press",
+      "role_name": "screen making technician",
+      "existing_role_source": "esco",
+      "existing_esco_code": "7321.1.5",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "7321",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=2922",
+        "concept_uri": "http://data.europa.eu/esco/occupation/f5596182-70b2-4c18-97ab-f9405bae0385",
+        "preferred_label": "screen making technician",
+        "alt_labels": "textile screen maker\ntextile engravers\netcher and engraver\nsilk screen etcher\ntextile engraver\nrotary engraver\nsilk screen engraver",
+        "definition": "Screen making technicians engrave or etch screens for textile printing.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-25T14:17:06.371Z",
+        "occupation_skill_relation_count": 21,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/f5596182-70b2-4c18-97ab-f9405bae0385"
+      },
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/f5596182-70b2-4c18-97ab-f9405bae0385",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/f5596182-70b2-4c18-97ab-f9405bae0385' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies role identity, meaning and related skills, but this is not an O*NET-style work-profile row and does not establish Nigerian demand evidence. Retain the evidence for review; do not invent work activities, job zone, work context or local mapping.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D108|screen printer",
+      "domain_id": "D108",
+      "domain_name": "Printing Technology, Pre-press",
+      "role_name": "screen printer",
+      "existing_role_source": "esco",
+      "existing_esco_code": "7322.9",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "7322",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=2074",
+        "concept_uri": "http://data.europa.eu/esco/occupation/a98f93a6-b1df-4759-88a9-3234f334afad",
+        "preferred_label": "screen printer",
+        "alt_labels": "screen print technician\nsilk-screen printing machine specialist\nsilk-screen printing machine oeprator\nsilk-screen printing machine technician\nscreen printing operator\nsilk-screen printing operator\nsilk-screen printer\nsilk-screen printing machine operator\nscreen printing machine technician\nscreen printing machine specialist\nscreen-printer\nsilk-screen printing machine worker\nscreen printing machine operator",
+        "definition": "Screen printers tend a press that presses ink through a screen. They are responsible for the setup, operation and maintenance of the screen printing machine.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-25T14:17:54.393Z",
+        "occupation_skill_relation_count": 41,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/a98f93a6-b1df-4759-88a9-3234f334afad"
+      },
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/a98f93a6-b1df-4759-88a9-3234f334afad",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/a98f93a6-b1df-4759-88a9-3234f334afad' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies role identity, meaning and related skills, but this is not an O*NET-style work-profile row and does not establish Nigerian demand evidence. Retain the evidence for review; do not invent work activities, job zone, work context or local mapping.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D108|typesetter",
+      "domain_id": "D108",
+      "domain_name": "Printing Technology, Pre-press",
+      "role_name": "typesetter",
+      "existing_role_source": "esco",
+      "existing_esco_code": "7321.1.6",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "7321",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=2160",
+        "concept_uri": "http://data.europa.eu/esco/occupation/b09ffdec-b04c-41a8-bacc-2c71d7a3e5ac",
+        "preferred_label": "typesetter",
+        "alt_labels": "typesetting machine worker\ndesigner and typesetter\ntypesetting operator\ntypesetting operative\ntypesetting machine operator\ngraphic designer and typesetter\ntypesetting machine specialist\ntypesetting specialist\ntypesetting machine operative\nproduction typesetter\ntypesetting worker\ndigital typesetter\ntypesetting machine technician\ntypesetting technician\ndesigner & typesetter\ngraphic designer & typesetter",
+        "definition": "Typesetters ensure that printed text is correctly set and visually pleasing. While typesetting was originally done manually and later employed techniques like linotype and phototypesetting, almost all typesetting is now done digitally using design programs or specialised typesetting programs.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-25T14:17:11.407Z",
+        "occupation_skill_relation_count": 48,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/b09ffdec-b04c-41a8-bacc-2c71d7a3e5ac"
+      },
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/b09ffdec-b04c-41a8-bacc-2c71d7a3e5ac",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/b09ffdec-b04c-41a8-bacc-2c71d7a3e5ac' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies role identity, meaning and related skills, but this is not an O*NET-style work-profile row and does not establish Nigerian demand evidence. Retain the evidence for review; do not invent work activities, job zone, work context or local mapping.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D113|Adhesive Bonding Machine Operators and Tenders",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "Adhesive Bonding Machine Operators and Tenders",
+      "existing_role_source": "onet",
+      "existing_esco_code": "",
+      "existing_onet_occupation_codes": [
+        "51-9191.00"
+      ],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "O*NET OnLine / U.S. Department of Labor",
+      "repository_evidence": {
+        "authority": "Existing source traceability record with O*NET title/code match",
+        "trace_locator": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json#role_key=D113|Adhesive Bonding Machine Operators and Tenders",
+        "soc_code": "51-9191.00",
+        "title": "Adhesive Bonding Machine Operators and Tenders",
+        "description": "Operate or tend bonding machines that use adhesives to join items for further processing or to form a completed product. Processes include joining veneer sheets into plywood; gluing paper; or joining rubber and rubberized fabric parts, plastic, simulated leather, or other materials.",
+        "identity_match": true
+      },
+      "internet_check": {
+        "status": "verified",
+        "http_status": 200,
+        "url": "https://www.onetonline.org/link/summary/51-9191.00",
+        "official_title_present": true,
+        "official_code_present": true,
+        "transport": "official O*NET page opened through web retrieval",
+        "retrieved_on": "2026-09-21",
+        "verification_note": "Official O*NET summary page was opened for the recorded SOC code and title during this tranche."
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": true,
+      "internet_title_alignment": "exact",
+      "identity_state": "exact_official_identity",
+      "audit_status": "source_backed_online_verified",
+      "profile_decision": "review_required",
+      "reason": "O*NET confirms the occupational identity, but this audit does not import its profile fields into the application or infer Nigerian demand, local requirements, or student preparation content.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D113|Biomass Plant Technicians",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "Biomass Plant Technicians",
+      "existing_role_source": "onet",
+      "existing_esco_code": "",
+      "existing_onet_occupation_codes": [
+        "51-8013.03"
+      ],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "O*NET OnLine / U.S. Department of Labor",
+      "repository_evidence": {
+        "authority": "Existing source traceability record with O*NET title/code match",
+        "trace_locator": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json#role_key=D113|Biomass Plant Technicians",
+        "soc_code": "51-8013.03",
+        "title": "Biomass Plant Technicians",
+        "description": "Control and monitor biomass plant activities and perform maintenance as needed.",
+        "identity_match": true
+      },
+      "internet_check": {
+        "status": "verified",
+        "http_status": 200,
+        "url": "https://www.onetonline.org/link/summary/51-8013.03",
+        "official_title_present": true,
+        "official_code_present": true,
+        "transport": "official O*NET page opened through web retrieval",
+        "retrieved_on": "2026-09-21",
+        "verification_note": "Official O*NET summary page was opened for the recorded SOC code and title during this tranche."
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": true,
+      "internet_title_alignment": "exact",
+      "identity_state": "exact_official_identity",
+      "audit_status": "source_backed_online_verified",
+      "profile_decision": "review_required",
+      "reason": "O*NET confirms the occupational identity, but this audit does not import its profile fields into the application or infer Nigerian demand, local requirements, or student preparation content.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D113|Cleaning, Washing, and Metal Pickling Equipment Operators and Tenders",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "Cleaning, Washing, and Metal Pickling Equipment Operators and Tenders",
+      "existing_role_source": "onet",
+      "existing_esco_code": "",
+      "existing_onet_occupation_codes": [
+        "51-9192.00"
+      ],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "O*NET OnLine / U.S. Department of Labor",
+      "repository_evidence": {
+        "authority": "Existing source traceability record with O*NET title/code match",
+        "trace_locator": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json#role_key=D113|Cleaning, Washing, and Metal Pickling Equipment Operators and Tenders",
+        "soc_code": "51-9192.00",
+        "title": "Cleaning, Washing, and Metal Pickling Equipment Operators and Tenders",
+        "description": "Operate or tend machines to wash or clean products, such as barrels or kegs, glass items, tin plate, food, pulp, coal, plastic, or rubber, to remove impurities.",
+        "identity_match": true
+      },
+      "internet_check": {
+        "status": "verified",
+        "http_status": 200,
+        "url": "https://www.onetonline.org/link/summary/51-9192.00",
+        "official_title_present": true,
+        "official_code_present": true,
+        "transport": "official O*NET page opened through web retrieval",
+        "retrieved_on": "2026-09-21",
+        "verification_note": "Official O*NET summary page was opened for the recorded SOC code and title during this tranche."
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": true,
+      "internet_title_alignment": "exact",
+      "identity_state": "exact_official_identity",
+      "audit_status": "source_backed_online_verified",
+      "profile_decision": "review_required",
+      "reason": "O*NET confirms the occupational identity, but this audit does not import its profile fields into the application or infer Nigerian demand, local requirements, or student preparation content.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D113|Computer Numerically Controlled Tool Operators",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "Computer Numerically Controlled Tool Operators",
+      "existing_role_source": "onet",
+      "existing_esco_code": "",
+      "existing_onet_occupation_codes": [
+        "51-9161.00"
+      ],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "O*NET OnLine / U.S. Department of Labor",
+      "repository_evidence": {
+        "authority": "Existing source traceability record with O*NET title/code match",
+        "trace_locator": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json#role_key=D113|Computer Numerically Controlled Tool Operators",
+        "soc_code": "51-9161.00",
+        "title": "Computer Numerically Controlled Tool Operators",
+        "description": "Operate computer-controlled tools, machines, or robots to machine or process parts, tools, or other work pieces made of metal, plastic, wood, stone, or other materials. May also set up and maintain equipment.",
+        "identity_match": true
+      },
+      "internet_check": {
+        "status": "verified",
+        "http_status": 200,
+        "url": "https://www.onetonline.org/link/summary/51-9161.00",
+        "official_title_present": true,
+        "official_code_present": true,
+        "transport": "official O*NET page opened through web retrieval",
+        "retrieved_on": "2026-09-21",
+        "verification_note": "Official O*NET summary page was opened for the recorded SOC code and title during this tranche."
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": true,
+      "internet_title_alignment": "exact",
+      "identity_state": "exact_official_identity",
+      "audit_status": "source_backed_online_verified",
+      "profile_decision": "review_required",
+      "reason": "O*NET confirms the occupational identity, but this audit does not import its profile fields into the application or infer Nigerian demand, local requirements, or student preparation content.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D113|Cooling and Freezing Equipment Operators and Tenders",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "Cooling and Freezing Equipment Operators and Tenders",
+      "existing_role_source": "onet",
+      "existing_esco_code": "",
+      "existing_onet_occupation_codes": [
+        "51-9193.00"
+      ],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "O*NET OnLine / U.S. Department of Labor",
+      "repository_evidence": {
+        "authority": "Existing source traceability record with O*NET title/code match",
+        "trace_locator": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json#role_key=D113|Cooling and Freezing Equipment Operators and Tenders",
+        "soc_code": "51-9193.00",
+        "title": "Cooling and Freezing Equipment Operators and Tenders",
+        "description": "Operate or tend equipment such as cooling and freezing units, refrigerators, batch freezers, and freezing tunnels, to cool or freeze products, food, blood plasma, and chemicals.",
+        "identity_match": true
+      },
+      "internet_check": {
+        "status": "verified",
+        "http_status": 200,
+        "url": "https://www.onetonline.org/link/summary/51-9193.00",
+        "official_title_present": true,
+        "official_code_present": true,
+        "transport": "official O*NET page opened through web retrieval",
+        "retrieved_on": "2026-09-21",
+        "verification_note": "Official O*NET summary page was opened for the recorded SOC code and title during this tranche."
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": true,
+      "internet_title_alignment": "exact",
+      "identity_state": "exact_official_identity",
+      "audit_status": "source_backed_online_verified",
+      "profile_decision": "review_required",
+      "reason": "O*NET confirms the occupational identity, but this audit does not import its profile fields into the application or infer Nigerian demand, local requirements, or student preparation content.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    }
+  ]
+}

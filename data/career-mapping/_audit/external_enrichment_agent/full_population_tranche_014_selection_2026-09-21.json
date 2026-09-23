@@ -1,0 +1,48 @@
+{
+  "schema": "2026-09-21.full-population-enrichment-tranche-selection.v1",
+  "accessed_on": "2026-09-21",
+  "tranche": "014",
+  "selection_order": "stable row_id ascending after excluding D078 and all prior item tranches",
+  "source_queue": "data/career-mapping/_audit/external_enrichment_queue_2026-09-20.json",
+  "excluded_context_prefix": "D078",
+  "disjoint_from": [
+    "full_population_tranche_001_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_002_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_003_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_004_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_005_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_006_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_007_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_008_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_009_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_010_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_011_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_012_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_013_search_ledger_2026-09-21.jsonl"
+  ],
+  "policy": {
+    "item_rows_are_unique_contextual_identities": true,
+    "source_links_are_not_promoted_without_item_specific_evidence": true,
+    "no_link_requires_an_actual_search": true,
+    "retired_or_uncertain_sources_remain_review_required": true
+  },
+  "items": [
+    {"record_type":"item","row_id":"item|domain|D034|competency|evaluate-suppliers","subject_id":"item|domain|D034|competency|evaluate-suppliers","context_level":"domain","context_key":"D034","domain_key":"D034","item_type":"competency","item_key":"evaluate-suppliers","item_name":"evaluate suppliers"},
+    {"record_type":"item","row_id":"item|domain|D034|competency|manage-commercial-risk","subject_id":"item|domain|D034|competency|manage-commercial-risk","context_level":"domain","context_key":"D034","domain_key":"D034","item_type":"competency","item_key":"manage-commercial-risk","item_name":"manage commercial risk"},
+    {"record_type":"item","row_id":"item|domain|D034|competency|run-fair-procurement-processes","subject_id":"item|domain|D034|competency|run-fair-procurement-processes","context_level":"domain","context_key":"D034","domain_key":"D034","item_type":"competency","item_key":"run-fair-procurement-processes","item_name":"run fair procurement processes"},
+    {"record_type":"item","row_id":"item|domain|D034|skill|procurement-planning","subject_id":"item|domain|D034|skill|procurement-planning","context_level":"domain","context_key":"D034","domain_key":"D034","item_type":"skill","item_key":"procurement-planning","item_name":"procurement planning"},
+    {"record_type":"item","row_id":"item|domain|D034|skill|sourcing","subject_id":"item|domain|D034|skill|sourcing","context_level":"domain","context_key":"D034","domain_key":"D034","item_type":"skill","item_key":"sourcing","item_name":"sourcing"},
+    {"record_type":"item","row_id":"item|domain|D034|skill|supplier-management","subject_id":"item|domain|D034|skill|supplier-management","context_level":"domain","context_key":"D034","domain_key":"D034","item_type":"skill","item_key":"supplier-management","item_name":"supplier management"},
+    {"record_type":"item","row_id":"item|domain|D035|competency|evaluate-suppliers","subject_id":"item|domain|D035|competency|evaluate-suppliers","context_level":"domain","context_key":"D035","domain_key":"D035","item_type":"competency","item_key":"evaluate-suppliers","item_name":"evaluate suppliers"},
+    {"record_type":"item","row_id":"item|domain|D035|competency|manage-commercial-risk","subject_id":"item|domain|D035|competency|manage-commercial-risk","context_level":"domain","context_key":"D035","domain_key":"D035","item_type":"competency","item_key":"manage-commercial-risk","item_name":"manage commercial risk"},
+    {"record_type":"item","row_id":"item|domain|D035|competency|run-fair-procurement-processes","subject_id":"item|domain|D035|competency|run-fair-procurement-processes","context_level":"domain","context_key":"D035","domain_key":"D035","item_type":"competency","item_key":"run-fair-procurement-processes","item_name":"run fair procurement processes"},
+    {"record_type":"item","row_id":"item|domain|D035|skill|procurement-planning","subject_id":"item|domain|D035|skill|procurement-planning","context_level":"domain","context_key":"D035","domain_key":"D035","item_type":"skill","item_key":"procurement-planning","item_name":"procurement planning"},
+    {"record_type":"item","row_id":"item|domain|D035|skill|sourcing","subject_id":"item|domain|D035|skill|sourcing","context_level":"domain","context_key":"D035","domain_key":"D035","item_type":"skill","item_key":"sourcing","item_name":"sourcing"},
+    {"record_type":"item","row_id":"item|domain|D035|skill|supplier-management","subject_id":"item|domain|D035|skill|supplier-management","context_level":"domain","context_key":"D035","domain_key":"D035","item_type":"skill","item_key":"supplier-management","item_name":"supplier management"},
+    {"record_type":"item","row_id":"item|domain|D036|competency|evaluate-suppliers","subject_id":"item|domain|D036|competency|evaluate-suppliers","context_level":"domain","context_key":"D036","domain_key":"D036","item_type":"competency","item_key":"evaluate-suppliers","item_name":"evaluate suppliers"},
+    {"record_type":"item","row_id":"item|domain|D036|competency|manage-commercial-risk","subject_id":"item|domain|D036|competency|manage-commercial-risk","context_level":"domain","context_key":"D036","domain_key":"D036","item_type":"competency","item_key":"manage-commercial-risk","item_name":"manage commercial risk"},
+    {"record_type":"item","row_id":"item|domain|D036|competency|run-fair-procurement-processes","subject_id":"item|domain|D036|competency|run-fair-procurement-processes","context_level":"domain","context_key":"D036","domain_key":"D036","item_type":"competency","item_key":"run-fair-procurement-processes","item_name":"run fair procurement processes"},
+    {"record_type":"item","row_id":"item|domain|D036|skill|procurement-planning","subject_id":"item|domain|D036|skill|procurement-planning","context_level":"domain","context_key":"D036","domain_key":"D036","item_type":"skill","item_key":"procurement-planning","item_name":"procurement planning"}
+  ],
+  "counts": {"selected_rows": 16, "item_rows": 16, "unique_item_names": 6, "d078_rows": 0, "prior_item_ledger_records": 336, "prior_item_ledger_unique_ids": 336, "prior_overlap": 0}
+}

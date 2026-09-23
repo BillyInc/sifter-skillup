@@ -9,7 +9,7 @@
  * are a separate signal and are not required for this comparison.
  */
 import React, { useEffect, useMemo, useState } from "react";
-import { Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import {
   CompassFonts,
   FontSize,
@@ -32,6 +32,7 @@ import type {
 import { AdminShell } from "./AdminShell";
 import { ComingSoonPanel } from "./ComingSoonPanel";
 import { AdminGuidanceEvidencePanel } from "@/components/admin/AdminGuidanceEvidencePanel";
+import { ExternalLinkGuard } from "@/components/careerIntelligence/ExternalLinkGuard";
 import { normaliseAdminGuidanceEvidence, type AdminGuidanceEvidenceRecord } from "./adminGuidanceEvidence";
 
 type MatchType = "direct" | "functional" | "adjacent" | string;
@@ -164,9 +165,13 @@ function ResourceRow({ resource }: { resource: ProgrammeResourceEvidence }) {
         ) : null}
       </View>
       {resource.url ? (
-        <TouchableOpacity accessibilityRole="link" onPress={() => void Linking.openURL(resource.url!).catch(() => undefined)}>
-          <Text style={[styles.openLink, { color: colors.accent }]}>Open source</Text>
-        </TouchableOpacity>
+        <ExternalLinkGuard
+          audience="admin"
+          url={resource.url}
+          label="Open source"
+          description="This opens the retained programme evidence source for staff review."
+          textStyle={[styles.openLink, { color: colors.accent }]}
+        />
       ) : null}
     </View>
   );

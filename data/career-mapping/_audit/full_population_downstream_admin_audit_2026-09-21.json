@@ -1,0 +1,170 @@
+{
+  "schema_version": "2026-09-21.full-population-downstream-admin-audit.v1",
+  "generated_on": "2026-09-23",
+  "mode": "read_only_local",
+  "population": {
+    "programmes": 237,
+    "generic_curriculum_contracts": 236,
+    "sociology_curriculum_contracts": 1,
+    "jamb_identities": 420,
+    "active_programme_domain_links": 1344
+  },
+  "gates": {
+    "programme_domain_subgroup_role_continuity": {
+      "passed": true,
+      "programme_records_covered": 237,
+      "full_downstream_coverage_programmes": 237,
+      "domain_routes": 1344,
+      "subgroup_routes": 3580,
+      "role_routes": 46941,
+      "unique_contexts": 5668,
+      "roles_without_work_profile": 119,
+      "roles_without_any_anchor": 0
+    },
+    "curriculum_card_summary_contract": {
+      "passed": true,
+      "programme_count": 237,
+      "student_outcome_rows": 81186,
+      "legacy_profile_rows_retained_as_audit": 131178
+    },
+    "friendly_titles_and_summaries_static_contract": {
+      "passed": true,
+      "checks": {
+        "programme_card_summaries": true,
+        "friendly_connection_titles": true,
+        "friendly_summary_helper": true
+      },
+      "browser_render_proof": false
+    },
+    "role_learning_needed_skills": {
+      "passed": true,
+      "canonical_roles": 5209,
+      "max_essential": 12,
+      "max_optional": 5,
+      "raw_over_cap": 3910,
+      "explicitly_reviewed": 2
+    },
+    "source_and_link_state": {
+      "passed": true,
+      "items": 121377,
+      "relationships": 408163,
+      "item_link_states": {
+        "no_link": 116116,
+        "linked": 5253,
+        "review_required": 8
+      },
+      "relationship_states": {
+        "source_backed": 405858,
+        "not_established": 2305
+      },
+      "missing_source_references": 0,
+      "missing_source_locators": 0,
+      "invalid_item_link_urls": 0,
+      "ownership_mismatches": 0
+    },
+    "relationship_grouping_and_student_edge_gate": {
+      "passed": true,
+      "active_programme_relationship_types": {
+        "functional": 1074,
+        "direct": 206,
+        "adjacent": 64
+      },
+      "not_established_or_unresolved": 2305,
+      "duplicate_edges": 0,
+      "student_exposure_policy": "not_established/review-only edges remain staff review evidence and are blocked from student guidance"
+    },
+    "admin_provenance_and_review_queues": {
+      "passed_locally": true,
+      "full_render_accepted": false,
+      "programme_resource_review_required": {
+        "review_required": 237
+      },
+      "programme_relationship_review_states": {
+        "not_established": 211,
+        "review_required": 26
+      },
+      "programme_admin_render_states": {
+        "pending_full_population_render": 237
+      },
+      "jamb_review_required": 86,
+      "browser_proof": false
+    },
+    "student_safe_filtering": {
+      "passed_static": true,
+      "passed_local_boundary": true,
+      "student_exposure_accepted": false,
+      "live_payload_proof": false
+    }
+  },
+  "tool_review_boundary": {
+    "aggregate_domain_tool_rows": 3866,
+    "aggregate_subgroup_tool_rows": 5186,
+    "generic_or_category_rows_staff_review_only": 1571,
+    "domain_subgroup_repeats_staff_review_only": 4089,
+    "d078_microsoft_office_aggregate_rows_staff_review_only": 3
+  },
+  "inventory_reconciliation": {
+    "canonical_manifest_items": 121377,
+    "canonical_manifest_relationships": 408163,
+    "broad_enrichment_manifest_items": 126414,
+    "broad_enrichment_manifest_relationships": 422739,
+    "difference_is_recorded": true,
+    "interpretation": "The canonical manifest/current compressed catalogue is authoritative for student scaling. The broad enrichment manifest is an older/broader queue inventory and must not be combined with canonical student counts."
+  },
+  "static_checks": {
+    "programme_card_summaries": {
+      "passed": true,
+      "file": "src/components/careerIntelligence/DegreeSkills.tsx",
+      "missing": []
+    },
+    "friendly_connection_titles": {
+      "passed": true,
+      "file": "src/screens/careerIntelligence/ProgrammeDetailRefinedScreen.tsx",
+      "missing": []
+    },
+    "friendly_summary_helper": {
+      "passed": true,
+      "file": "src/lib/careerLabels.ts",
+      "missing": []
+    },
+    "relationship_grouping": {
+      "passed": true,
+      "file": "src/components/careerIntelligence/ToolGroupsBlock.tsx",
+      "missing": []
+    },
+    "student_safe_boundary": {
+      "passed": true,
+      "file": "data/career-mapping/_audit/student_admin_agent_boundary_audit.py",
+      "missing": []
+    },
+    "admin_provenance_queue": {
+      "passed": true,
+      "file": "src/screens/admin/adminGuidanceEvidence.ts",
+      "missing": []
+    }
+  },
+  "decision": {
+    "local_contract_audit_complete": true,
+    "bounded_implementation_change": "Corrected the route-audit Nursing smoke fixture to the canonical Allied Health Sciences::Nursing Sciences programme key.",
+    "ui_changed": false,
+    "sql_changed": false,
+    "seed_transport_changed": false,
+    "external_ledger_changed": false,
+    "browser_proof": false,
+    "live_sql_verification": false,
+    "scaling_approval": false,
+    "reason": "Local continuity and fail-closed contract checks pass, but review queues, unresolved relationships, full rendered admin proof, browser proof and live SQL deployment remain open."
+  },
+  "inputs": [
+    "docs/GOAL_RESUME_STATUS_AND_AGENT_HANDOFF_2026-09-18.md",
+    "docs/user-facing-mockups/SOCIOLOGY_BOX_MOCKUP_IMPLEMENTATION_AUDIT_2026-09-17.md",
+    "docs/user-facing-mockups/SOCIOLOGY_TOP_DOWN_AUDIT_AND_CLOSURE_PLAN_2026-09-17.md",
+    "docs/LEVELUP_PRODUCT_WIDE_MOCKUP_SPEC.md",
+    "data/career-mapping/_audit/full_population_agent_audit_2026-09-20.json",
+    "data/career-mapping/_audit/DOWNSTREAM_PROGRAMME_ROUTE_AUDIT_2026-09-19.json",
+    "data/career-mapping/_audit/ADMIN_DOWNSTREAM_ACCEPTANCE_2026-09-19.json",
+    "data/career-mapping/_audit/role_learning_core_audit_2026-09-21.json",
+    "data/career-mapping/_audit/programme_scaling_contract_2026-09-19.json",
+    "data/career-mapping/CONTEXTUAL_GUIDANCE_ITEMS_MANIFEST.json"
+  ]
+}

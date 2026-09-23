@@ -1,5 +1,5 @@
 import type { CareerContextItem, CareerLearningResource } from "@/types/career";
-import { isLegacyOnetUrl, studentSafeUrl } from "@/lib/studentCareerBoundary";
+import { isLegacyOnetUrl, isStudentLearningResource, studentSafeUrl } from "@/lib/studentCareerBoundary";
 
 const RESOURCE_TYPES: Record<CareerContextItem["itemType"], CareerLearningResource["resourceType"][]> = {
   skill: ["skill_learning", "skill_reference"],
@@ -9,14 +9,12 @@ const RESOURCE_TYPES: Record<CareerContextItem["itemType"], CareerLearningResour
 };
 
 /** Student resources must be approved, source-backed and owned by a visible context. */
-export function isStudentResource(resource: CareerLearningResource): boolean {
-  return Boolean(studentSafeUrl(resource.url))
-    && !isLegacyOnetUrl(resource.sourceUrl)
-    && resource.reviewStatus !== "review_only"
-    && resource.reviewStatus !== "unverified"
-    && resource.ownershipScope !== "audit_only"
-    && resource.dataState !== "unsourced"
-    && resource.sourceConfidence !== "unsourced";
+export function isStudentResource(
+  resource: CareerLearningResource,
+  contextLevel?: CareerContextItem["contextLevel"],
+): boolean {
+  return isStudentLearningResource(resource, contextLevel)
+    && !isLegacyOnetUrl(resource.sourceUrl);
 }
 
 export { studentItemLinkUrl, studentSafeUrl } from "@/lib/studentCareerBoundary";

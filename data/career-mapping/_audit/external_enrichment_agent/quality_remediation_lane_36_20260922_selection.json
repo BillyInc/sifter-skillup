@@ -1,0 +1,1620 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-selection.v2",
+  "batch": "quality_remediation_lane_36_20260922",
+  "selected_at": "2026-09-22",
+  "source_audit": "data/career-mapping/_audit/external_enrichment_agent/item_ledger_quality_audit_2026-09-22.json",
+  "source_sha256": "918404eef5f87958e18fcbdcb5206c1b264d025b45e45c6f0d3292880d7456b3",
+  "selection_method": "atomic shared lock; exclude all prior valid claims by contextual and typed identity",
+  "prior_claimed_contextual_ids": 2872,
+  "prior_claimed_typed_items": 2246,
+  "selection_count": 100,
+  "requested_count": 100,
+  "shortfall": 0,
+  "rows": [
+    {
+      "subject_id": "item|role|D022|hydrologist|skill|microbiology-bacteriology",
+      "context_level": "role",
+      "context_key": "D022|hydrologist",
+      "item_type": "skill",
+      "item_key": "microbiology-bacteriology",
+      "item_name": "microbiology-bacteriology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|liquid fuel engineer|skill|alcohol-fuels",
+      "context_level": "role",
+      "context_key": "D022|liquid fuel engineer",
+      "item_type": "skill",
+      "item_key": "alcohol-fuels",
+      "item_name": "alcohol fuels",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|liquid fuel engineer|skill|biodiesel",
+      "context_level": "role",
+      "context_key": "D022|liquid fuel engineer",
+      "item_type": "skill",
+      "item_key": "biodiesel",
+      "item_name": "biodiesel",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|liquid fuel engineer|skill|fossil-fuel-power-plant-operations",
+      "context_level": "role",
+      "context_key": "D022|liquid fuel engineer",
+      "item_type": "skill",
+      "item_key": "fossil-fuel-power-plant-operations",
+      "item_name": "fossil-fuel power plant operations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|liquid fuel engineer|skill|petroleum",
+      "context_level": "role",
+      "context_key": "D022|liquid fuel engineer",
+      "item_type": "skill",
+      "item_key": "petroleum",
+      "item_name": "petroleum",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|liquid fuel engineer|skill|prepare-well-formation-evaluation-programmes",
+      "context_level": "role",
+      "context_key": "D022|liquid fuel engineer",
+      "item_type": "skill",
+      "item_key": "prepare-well-formation-evaluation-programmes",
+      "item_name": "prepare well formation evaluation programmes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|metallurgical technician|skill|maintain-laboratory-equipment",
+      "context_level": "role",
+      "context_key": "D022|metallurgical technician",
+      "item_type": "skill",
+      "item_key": "maintain-laboratory-equipment",
+      "item_name": "maintain laboratory equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|metallurgical technician|skill|metal-drawing-processes",
+      "context_level": "role",
+      "context_key": "D022|metallurgical technician",
+      "item_type": "skill",
+      "item_key": "metal-drawing-processes",
+      "item_name": "metal drawing processes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|metallurgist|skill|conduct-metallurgical-structural-analysis",
+      "context_level": "role",
+      "context_key": "D022|metallurgist",
+      "item_type": "skill",
+      "item_key": "conduct-metallurgical-structural-analysis",
+      "item_name": "conduct metallurgical structural analysis",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|metallurgist|skill|join-metals",
+      "context_level": "role",
+      "context_key": "D022|metallurgist",
+      "item_type": "skill",
+      "item_key": "join-metals",
+      "item_name": "join metals",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|mine development engineer|skill|computational-fluid-dynamics",
+      "context_level": "role",
+      "context_key": "D022|mine development engineer",
+      "item_type": "skill",
+      "item_key": "computational-fluid-dynamics",
+      "item_name": "computational fluid dynamics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|mine development engineer|skill|develop-alternative-mining-methods",
+      "context_level": "role",
+      "context_key": "D022|mine development engineer",
+      "item_type": "skill",
+      "item_key": "develop-alternative-mining-methods",
+      "item_name": "develop alternative mining methods",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|mine geologist|skill|advise-on-mine-development",
+      "context_level": "role",
+      "context_key": "D022|mine geologist",
+      "item_type": "skill",
+      "item_key": "advise-on-mine-development",
+      "item_name": "advise on mine development",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|mine geologist|skill|dimension-stone",
+      "context_level": "role",
+      "context_key": "D022|mine geologist",
+      "item_type": "skill",
+      "item_key": "dimension-stone",
+      "item_name": "dimension stone",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|mine geologist|skill|plan-mine-operations",
+      "context_level": "role",
+      "context_key": "D022|mine geologist",
+      "item_type": "skill",
+      "item_key": "plan-mine-operations",
+      "item_name": "plan mine operations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|mine geologist|skill|provide-information-on-geological-characteristics",
+      "context_level": "role",
+      "context_key": "D022|mine geologist",
+      "item_type": "skill",
+      "item_key": "provide-information-on-geological-characteristics",
+      "item_name": "provide information on geological characteristics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|mine health and safety engineer|skill|develop-health-and-safety-strategies-in-mining",
+      "context_level": "role",
+      "context_key": "D022|mine health and safety engineer",
+      "item_type": "skill",
+      "item_key": "develop-health-and-safety-strategies-in-mining",
+      "item_name": "develop health and safety strategies in mining",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|mine health and safety engineer|skill|train-employees-in-mine-safety",
+      "context_level": "role",
+      "context_key": "D022|mine health and safety engineer",
+      "item_type": "skill",
+      "item_key": "train-employees-in-mine-safety",
+      "item_name": "train employees in mine safety",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|mine manager|skill|forecast-organisational-risks",
+      "context_level": "role",
+      "context_key": "D022|mine manager",
+      "item_type": "skill",
+      "item_key": "forecast-organisational-risks",
+      "item_name": "forecast organisational risks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|mine manager|skill|manage-mining-plant-equipment",
+      "context_level": "role",
+      "context_key": "D022|mine manager",
+      "item_type": "skill",
+      "item_key": "manage-mining-plant-equipment",
+      "item_name": "manage mining plant equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|mine planning engineer|skill|advise-on-mine-equipment",
+      "context_level": "role",
+      "context_key": "D022|mine planning engineer",
+      "item_type": "skill",
+      "item_key": "advise-on-mine-equipment",
+      "item_name": "advise on mine equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|mine planning engineer|skill|generate-reconciliation-reports",
+      "context_level": "role",
+      "context_key": "D022|mine planning engineer",
+      "item_type": "skill",
+      "item_key": "generate-reconciliation-reports",
+      "item_name": "generate reconciliation reports",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|mine safety officer|skill|conduct-drug-abuse-tests",
+      "context_level": "role",
+      "context_key": "D022|mine safety officer",
+      "item_type": "skill",
+      "item_key": "conduct-drug-abuse-tests",
+      "item_name": "conduct drug abuse tests",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|mine surveying technician|skill|delineate-mine-area",
+      "context_level": "role",
+      "context_key": "D022|mine surveying technician",
+      "item_type": "skill",
+      "item_key": "delineate-mine-area",
+      "item_name": "delineate mine area",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|mine surveying technician|skill|monitor-equipment-condition",
+      "context_level": "role",
+      "context_key": "D022|mine surveying technician",
+      "item_type": "skill",
+      "item_key": "monitor-equipment-condition",
+      "item_name": "monitor equipment condition",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|mine surveying technician|skill|solve-location-and-navigation-problems-by-using-gps-tools",
+      "context_level": "role",
+      "context_key": "D022|mine surveying technician",
+      "item_type": "skill",
+      "item_key": "solve-location-and-navigation-problems-by-using-gps-tools",
+      "item_name": "solve location and navigation problems by using GPS tools",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|mine ventilation engineer|skill|design-ventilation-network",
+      "context_level": "role",
+      "context_key": "D022|mine ventilation engineer",
+      "item_type": "skill",
+      "item_key": "design-ventilation-network",
+      "item_name": "design ventilation network",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|mine ventilation engineer|skill|manage-mine-ventilation",
+      "context_level": "role",
+      "context_key": "D022|mine ventilation engineer",
+      "item_type": "skill",
+      "item_key": "manage-mine-ventilation",
+      "item_name": "manage mine ventilation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|mineral processing engineer|skill|apply-transportation-management-concepts",
+      "context_level": "role",
+      "context_key": "D022|mineral processing engineer",
+      "item_type": "skill",
+      "item_key": "apply-transportation-management-concepts",
+      "item_name": "apply transportation management concepts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|mineral processing engineer|skill|bioleaching",
+      "context_level": "role",
+      "context_key": "D022|mineral processing engineer",
+      "item_type": "skill",
+      "item_key": "bioleaching",
+      "item_name": "bioleaching",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|mineral processing engineer|skill|manage-mineral-processing-plant",
+      "context_level": "role",
+      "context_key": "D022|mineral processing engineer",
+      "item_type": "skill",
+      "item_key": "manage-mineral-processing-plant",
+      "item_name": "manage mineral processing plant",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|mineral processing engineer|skill|manage-mineral-testing-procedures",
+      "context_level": "role",
+      "context_key": "D022|mineral processing engineer",
+      "item_type": "skill",
+      "item_key": "manage-mineral-testing-procedures",
+      "item_name": "manage mineral testing procedures",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|mineral processing engineer|skill|organize-chemical-reagents",
+      "context_level": "role",
+      "context_key": "D022|mineral processing engineer",
+      "item_type": "skill",
+      "item_key": "organize-chemical-reagents",
+      "item_name": "organize chemical reagents",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|mud logger|skill|assess-risks-implied-in-rigging-operations",
+      "context_level": "role",
+      "context_key": "D022|mud logger",
+      "item_type": "skill",
+      "item_key": "assess-risks-implied-in-rigging-operations",
+      "item_name": "assess risks implied in rigging operations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|mud logger|skill|conduct-soil-sample-tests",
+      "context_level": "role",
+      "context_key": "D022|mud logger",
+      "item_type": "skill",
+      "item_key": "conduct-soil-sample-tests",
+      "item_name": "conduct soil sample tests",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|mud logger|skill|work-safely-with-chemicals",
+      "context_level": "role",
+      "context_key": "D022|mud logger",
+      "item_type": "skill",
+      "item_key": "work-safely-with-chemicals",
+      "item_name": "work safely with chemicals",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|oil and gas production manager|skill|inform-on-workplace-safety-standards",
+      "context_level": "role",
+      "context_key": "D022|oil and gas production manager",
+      "item_type": "skill",
+      "item_key": "inform-on-workplace-safety-standards",
+      "item_name": "inform on workplace safety standards",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|oil and gas production manager|skill|oil-rig-legislation",
+      "context_level": "role",
+      "context_key": "D022|oil and gas production manager",
+      "item_type": "skill",
+      "item_key": "oil-rig-legislation",
+      "item_name": "oil rig legislation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|oil rig motorhand|skill|direct-rigging-equipment-operators",
+      "context_level": "role",
+      "context_key": "D022|oil rig motorhand",
+      "item_type": "skill",
+      "item_key": "direct-rigging-equipment-operators",
+      "item_name": "direct rigging equipment operators",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|oil rig motorhand|skill|guide-cranes",
+      "context_level": "role",
+      "context_key": "D022|oil rig motorhand",
+      "item_type": "skill",
+      "item_key": "guide-cranes",
+      "item_name": "guide cranes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|oil rig motorhand|skill|lead-drilling-crews",
+      "context_level": "role",
+      "context_key": "D022|oil rig motorhand",
+      "item_type": "skill",
+      "item_key": "lead-drilling-crews",
+      "item_name": "lead drilling crews",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|oil rig motorhand|skill|lift-heavy-weights",
+      "context_level": "role",
+      "context_key": "D022|oil rig motorhand",
+      "item_type": "skill",
+      "item_key": "lift-heavy-weights",
+      "item_name": "lift heavy weights",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|oil rig motorhand|skill|move-rigging-equipment",
+      "context_level": "role",
+      "context_key": "D022|oil rig motorhand",
+      "item_type": "skill",
+      "item_key": "move-rigging-equipment",
+      "item_name": "move rigging equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|oil rig motorhand|skill|operate-rig-motors",
+      "context_level": "role",
+      "context_key": "D022|oil rig motorhand",
+      "item_type": "skill",
+      "item_key": "operate-rig-motors",
+      "item_name": "operate rig motors",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|oil rig motorhand|skill|train-crew-members",
+      "context_level": "role",
+      "context_key": "D022|oil rig motorhand",
+      "item_type": "skill",
+      "item_key": "train-crew-members",
+      "item_name": "train crew members",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|petroleum engineer|skill|design-well-for-petroleum-production",
+      "context_level": "role",
+      "context_key": "D022|petroleum engineer",
+      "item_type": "skill",
+      "item_key": "design-well-for-petroleum-production",
+      "item_name": "design well for petroleum production",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|petroleum engineer|skill|monitor-fuel-storage-tanks",
+      "context_level": "role",
+      "context_key": "D022|petroleum engineer",
+      "item_type": "skill",
+      "item_key": "monitor-fuel-storage-tanks",
+      "item_name": "monitor fuel storage tanks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|petroleum engineer|skill|supervise-well-operations",
+      "context_level": "role",
+      "context_key": "D022|petroleum engineer",
+      "item_type": "skill",
+      "item_key": "supervise-well-operations",
+      "item_name": "supervise well operations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|pipeline pump operator|skill|contribute-to-bilge-and-ballast-operations",
+      "context_level": "role",
+      "context_key": "D022|pipeline pump operator",
+      "item_type": "skill",
+      "item_key": "contribute-to-bilge-and-ballast-operations",
+      "item_name": "contribute to bilge and ballast operations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|pipeline pump operator|skill|manage-fuelling-system",
+      "context_level": "role",
+      "context_key": "D022|pipeline pump operator",
+      "item_type": "skill",
+      "item_key": "manage-fuelling-system",
+      "item_name": "manage fuelling system",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|pipeline pump operator|skill|transfer-liquid-goods",
+      "context_level": "role",
+      "context_key": "D022|pipeline pump operator",
+      "item_type": "skill",
+      "item_key": "transfer-liquid-goods",
+      "item_name": "transfer liquid goods",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|pipeline pump operator|skill|transfer-oil",
+      "context_level": "role",
+      "context_key": "D022|pipeline pump operator",
+      "item_type": "skill",
+      "item_key": "transfer-oil",
+      "item_name": "transfer oil",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|pipeline pump operator|tool|moxa-software",
+      "context_level": "role",
+      "context_key": "D022|pipeline pump operator",
+      "item_type": "tool",
+      "item_key": "moxa-software",
+      "item_name": "Moxa software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|process metallurgist|tool|accelrys-materials-studio",
+      "context_level": "role",
+      "context_key": "D022|process metallurgist",
+      "item_type": "tool",
+      "item_key": "accelrys-materials-studio",
+      "item_name": "Accelrys Materials Studio",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|quarry engineer|skill|procure-mechanical-machinery",
+      "context_level": "role",
+      "context_key": "D022|quarry engineer",
+      "item_type": "skill",
+      "item_key": "procure-mechanical-machinery",
+      "item_name": "procure mechanical machinery",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|quarry engineer|skill|write-technical-reports",
+      "context_level": "role",
+      "context_key": "D022|quarry engineer",
+      "item_type": "skill",
+      "item_key": "write-technical-reports",
+      "item_name": "write technical reports",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|quarry manager|skill|ensure-mining-records-are-maintained",
+      "context_level": "role",
+      "context_key": "D022|quarry manager",
+      "item_type": "skill",
+      "item_key": "ensure-mining-records-are-maintained",
+      "item_name": "ensure mining records are maintained",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|roughneck|skill|assemble-metal-parts",
+      "context_level": "role",
+      "context_key": "D022|roughneck",
+      "item_type": "skill",
+      "item_key": "assemble-metal-parts",
+      "item_name": "assemble metal parts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|roughneck|skill|connect-oil-well-heads",
+      "context_level": "role",
+      "context_key": "D022|roughneck",
+      "item_type": "skill",
+      "item_key": "connect-oil-well-heads",
+      "item_name": "connect oil well heads",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|roughneck|skill|maintain-oil-field-machinery",
+      "context_level": "role",
+      "context_key": "D022|roughneck",
+      "item_type": "skill",
+      "item_key": "maintain-oil-field-machinery",
+      "item_name": "maintain oil field machinery",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|roughneck|skill|train-employees",
+      "context_level": "role",
+      "context_key": "D022|roughneck",
+      "item_type": "skill",
+      "item_key": "train-employees",
+      "item_name": "train employees",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|roustabout|skill|adjust-tightness-of-engine-parts",
+      "context_level": "role",
+      "context_key": "D022|roustabout",
+      "item_type": "skill",
+      "item_key": "adjust-tightness-of-engine-parts",
+      "item_name": "adjust tightness of engine parts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|roustabout|skill|bolt-engine-parts",
+      "context_level": "role",
+      "context_key": "D022|roustabout",
+      "item_type": "skill",
+      "item_key": "bolt-engine-parts",
+      "item_name": "bolt engine parts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|roustabout|skill|clear-drill-sites",
+      "context_level": "role",
+      "context_key": "D022|roustabout",
+      "item_type": "skill",
+      "item_key": "clear-drill-sites",
+      "item_name": "clear drill sites",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|roustabout|skill|make-foundations-for-derricks",
+      "context_level": "role",
+      "context_key": "D022|roustabout",
+      "item_type": "skill",
+      "item_key": "make-foundations-for-derricks",
+      "item_name": "make foundations for derricks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|roustabout|skill|perform-drainage-work",
+      "context_level": "role",
+      "context_key": "D022|roustabout",
+      "item_type": "skill",
+      "item_key": "perform-drainage-work",
+      "item_name": "perform drainage work",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|roustabout|skill|supply-rigging-equipment",
+      "context_level": "role",
+      "context_key": "D022|roustabout",
+      "item_type": "skill",
+      "item_key": "supply-rigging-equipment",
+      "item_name": "supply rigging equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|roustabout|skill|transport-pipes",
+      "context_level": "role",
+      "context_key": "D022|roustabout",
+      "item_type": "skill",
+      "item_key": "transport-pipes",
+      "item_name": "transport pipes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|surface miner|skill|drive-vehicles",
+      "context_level": "role",
+      "context_key": "D022|surface miner",
+      "item_type": "skill",
+      "item_key": "drive-vehicles",
+      "item_name": "drive vehicles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|surface miner|skill|excavation-techniques",
+      "context_level": "role",
+      "context_key": "D022|surface miner",
+      "item_type": "skill",
+      "item_key": "excavation-techniques",
+      "item_name": "excavation techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|surface miner|skill|operate-front-loader",
+      "context_level": "role",
+      "context_key": "D022|surface miner",
+      "item_type": "skill",
+      "item_key": "operate-front-loader",
+      "item_name": "operate front loader",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|surface miner|skill|operate-mining-tools",
+      "context_level": "role",
+      "context_key": "D022|surface miner",
+      "item_type": "skill",
+      "item_key": "operate-mining-tools",
+      "item_name": "operate mining tools",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|surface miner|tool|fleet-monitoring-system-software",
+      "context_level": "role",
+      "context_key": "D022|surface miner",
+      "item_type": "tool",
+      "item_key": "fleet-monitoring-system-software",
+      "item_name": "Fleet monitoring system software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|surface miner|tool|google-gmail",
+      "context_level": "role",
+      "context_key": "D022|surface miner",
+      "item_type": "tool",
+      "item_key": "google-gmail",
+      "item_name": "Google Gmail",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|surface miner|tool|hitachi-zxlink",
+      "context_level": "role",
+      "context_key": "D022|surface miner",
+      "item_type": "tool",
+      "item_key": "hitachi-zxlink",
+      "item_name": "Hitachi ZXLink",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|tool pusher|skill|monitor-oil-rig-costs",
+      "context_level": "role",
+      "context_key": "D022|tool pusher",
+      "item_type": "skill",
+      "item_key": "monitor-oil-rig-costs",
+      "item_name": "monitor oil rig costs",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|tool pusher|skill|plan-rig-moves",
+      "context_level": "role",
+      "context_key": "D022|tool pusher",
+      "item_type": "skill",
+      "item_key": "plan-rig-moves",
+      "item_name": "plan rig moves",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|tool pusher|skill|plan-rig-operations",
+      "context_level": "role",
+      "context_key": "D022|tool pusher",
+      "item_type": "skill",
+      "item_key": "plan-rig-operations",
+      "item_name": "plan rig operations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|tool pusher|skill|select-well-equipment",
+      "context_level": "role",
+      "context_key": "D022|tool pusher",
+      "item_type": "skill",
+      "item_key": "select-well-equipment",
+      "item_name": "select well equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|tunnel boring machine operator|skill|drive-tunnel-boring-machine",
+      "context_level": "role",
+      "context_key": "D022|tunnel boring machine operator",
+      "item_type": "skill",
+      "item_key": "drive-tunnel-boring-machine",
+      "item_name": "drive tunnel boring machine",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|tunnel boring machine operator|skill|install-tunnel-segments",
+      "context_level": "role",
+      "context_key": "D022|tunnel boring machine operator",
+      "item_type": "skill",
+      "item_key": "install-tunnel-segments",
+      "item_name": "install tunnel segments",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|tunnel boring machine operator|skill|keep-heavy-construction-equipment-in-good-condition",
+      "context_level": "role",
+      "context_key": "D022|tunnel boring machine operator",
+      "item_type": "skill",
+      "item_key": "keep-heavy-construction-equipment-in-good-condition",
+      "item_name": "keep heavy construction equipment in good condition",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|tunnel boring machine operator|skill|machinery-load-capacity",
+      "context_level": "role",
+      "context_key": "D022|tunnel boring machine operator",
+      "item_type": "skill",
+      "item_key": "machinery-load-capacity",
+      "item_name": "machinery load capacity",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|tunnel boring machine operator|skill|monitor-excavated-material",
+      "context_level": "role",
+      "context_key": "D022|tunnel boring machine operator",
+      "item_type": "skill",
+      "item_key": "monitor-excavated-material",
+      "item_name": "monitor excavated material",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|tunnel boring machine operator|skill|operate-theodolite",
+      "context_level": "role",
+      "context_key": "D022|tunnel boring machine operator",
+      "item_type": "skill",
+      "item_key": "operate-theodolite",
+      "item_name": "operate theodolite",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|tunnel boring machine operator|skill|switch-tunnel-boring-machine-modes",
+      "context_level": "role",
+      "context_key": "D022|tunnel boring machine operator",
+      "item_type": "skill",
+      "item_key": "switch-tunnel-boring-machine-modes",
+      "item_name": "switch tunnel boring machine modes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|tunnel boring machine operator|skill|tend-boring-machine",
+      "context_level": "role",
+      "context_key": "D022|tunnel boring machine operator",
+      "item_type": "skill",
+      "item_key": "tend-boring-machine",
+      "item_name": "tend boring machine",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|tunnel boring machine operator|skill|tunnel-boring-machine-console",
+      "context_level": "role",
+      "context_key": "D022|tunnel boring machine operator",
+      "item_type": "skill",
+      "item_key": "tunnel-boring-machine-console",
+      "item_name": "tunnel boring machine console",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|tunnel boring machine operator|skill|work-in-a-construction-team",
+      "context_level": "role",
+      "context_key": "D022|tunnel boring machine operator",
+      "item_type": "skill",
+      "item_key": "work-in-a-construction-team",
+      "item_name": "work in a construction team",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|underground heavy equipment operator|skill|inspect-heavy-underground-mining-machinery",
+      "context_level": "role",
+      "context_key": "D022|underground heavy equipment operator",
+      "item_type": "skill",
+      "item_key": "inspect-heavy-underground-mining-machinery",
+      "item_name": "inspect heavy underground mining machinery",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|underground heavy equipment operator|skill|make-independent-operating-decisions",
+      "context_level": "role",
+      "context_key": "D022|underground heavy equipment operator",
+      "item_type": "skill",
+      "item_key": "make-independent-operating-decisions",
+      "item_name": "make independent operating decisions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|underground heavy equipment operator|skill|operate-lhd",
+      "context_level": "role",
+      "context_key": "D022|underground heavy equipment operator",
+      "item_type": "skill",
+      "item_key": "operate-lhd",
+      "item_name": "operate LHD",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|underground heavy equipment operator|skill|operate-longwall-mining-equipment",
+      "context_level": "role",
+      "context_key": "D022|underground heavy equipment operator",
+      "item_type": "skill",
+      "item_key": "operate-longwall-mining-equipment",
+      "item_name": "operate longwall mining equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|underground heavy equipment operator|skill|operate-powered-roof-support",
+      "context_level": "role",
+      "context_key": "D022|underground heavy equipment operator",
+      "item_type": "skill",
+      "item_key": "operate-powered-roof-support",
+      "item_name": "operate powered roof support",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|underground heavy equipment operator|skill|operate-production-drilling-machine",
+      "context_level": "role",
+      "context_key": "D022|underground heavy equipment operator",
+      "item_type": "skill",
+      "item_key": "operate-production-drilling-machine",
+      "item_name": "operate production drilling machine",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|underground miner|skill|operate-a-range-of-underground-mining-equipment",
+      "context_level": "role",
+      "context_key": "D022|underground miner",
+      "item_type": "skill",
+      "item_key": "operate-a-range-of-underground-mining-equipment",
+      "item_name": "operate a range of underground mining equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|well-digger|skill|coordinate-oil-well-operations",
+      "context_level": "role",
+      "context_key": "D022|well-digger",
+      "item_type": "skill",
+      "item_key": "coordinate-oil-well-operations",
+      "item_name": "coordinate oil well operations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|well-digger|skill|dig-wells",
+      "context_level": "role",
+      "context_key": "D022|well-digger",
+      "item_type": "skill",
+      "item_key": "dig-wells",
+      "item_name": "dig wells",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|well-digger|skill|liaise-with-managers",
+      "context_level": "role",
+      "context_key": "D022|well-digger",
+      "item_type": "skill",
+      "item_key": "liaise-with-managers",
+      "item_name": "liaise with managers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D022|well-digger|skill|repair-wells",
+      "context_level": "role",
+      "context_key": "D022|well-digger",
+      "item_type": "skill",
+      "item_key": "repair-wells",
+      "item_name": "repair wells",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    }
+  ],
+  "policy": {
+    "review_required_preserved_unless_exact_item_evidence_established": true,
+    "no_relationship_inference": true,
+    "no_promotion": true
+  }
+}

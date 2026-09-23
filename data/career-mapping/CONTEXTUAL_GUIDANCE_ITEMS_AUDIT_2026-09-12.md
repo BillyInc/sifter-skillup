@@ -2,11 +2,11 @@
 
 Generated: 2026-09-12
 
-- Rows: **126648**
+- Rows: **121377**
 - Domains with domain-owned rows: **160**
 - Subgroups with explicit subgroup rows: **472**
 - Roles with role-owned rows: **5036**
-- SQL parts: **30** compressed `.sql.gz` files; each raw SQL transaction is kept below 6,000,000 bytes before compression.
+- SQL parts: **35** compressed `.sql.gz` files; each raw SQL transaction is kept below 6,000,000 bytes before compression.
 
 ## Ownership checks
 
@@ -18,9 +18,9 @@ Generated: 2026-09-12
 
 ## Coverage counts
 
-- `domain:certification`: 454
+- `domain:certification`: 220
 - `domain:competency`: 480
 - `domain:skill`: 480
-- `role:skill`: 80348
+- `role:skill`: 75311
 - `role:tool`: 39751
 - `subgroup:skill`: 5135

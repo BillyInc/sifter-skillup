@@ -1,0 +1,1617 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-selection.v2",
+  "batch": "quality_remediation_lane_41_20260922",
+  "selected_at": "2026-09-22",
+  "source_audit": "data/career-mapping/_audit/external_enrichment_agent/item_ledger_quality_audit_2026-09-22.json",
+  "source_sha256": "a902aaa1fccb6c0de0b0ea645de92ed1a6c327a43ed1fda30626dc26d430936c",
+  "selection_method": "atomic shared lock; exclude all prior valid claims by contextual and typed identity",
+  "prior_claimed_contextual_ids": 3372,
+  "prior_claimed_typed_items": 2746,
+  "selection_count": 100,
+  "requested_count": 100,
+  "shortfall": 0,
+  "rows": [
+    {
+      "subject_id": "item|role|D025|pharmaceutical sales representative|tool|hubspot-software",
+      "context_level": "role",
+      "context_key": "D025|pharmaceutical sales representative",
+      "item_type": "tool",
+      "item_key": "hubspot-software",
+      "item_name": "HubSpot software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D025|pharmacist|skill|medical-statistics",
+      "context_level": "role",
+      "context_key": "D025|pharmacist",
+      "item_type": "skill",
+      "item_key": "medical-statistics",
+      "item_name": "medical statistics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D025|pharmacist|skill|nutrition",
+      "context_level": "role",
+      "context_key": "D025|pharmacist",
+      "item_type": "skill",
+      "item_key": "nutrition",
+      "item_name": "nutrition",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D025|pharmacist|tool|microsoft-edge",
+      "context_level": "role",
+      "context_key": "D025|pharmacist",
+      "item_type": "tool",
+      "item_key": "microsoft-edge",
+      "item_name": "Microsoft Edge",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D025|pharmacovigilance specialist|skill|adverse-event-reporting-signal-detection-regulatory-writing-risk-management-plans",
+      "context_level": "role",
+      "context_key": "D025|pharmacovigilance specialist",
+      "item_type": "skill",
+      "item_key": "adverse-event-reporting-signal-detection-regulatory-writing-risk-management-plans",
+      "item_name": "adverse event reporting; signal detection; regulatory writing; risk management plans",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D025|pharmacy assistant|skill|handle-the-logistics-of-medicinal-products",
+      "context_level": "role",
+      "context_key": "D025|pharmacy assistant",
+      "item_type": "skill",
+      "item_key": "handle-the-logistics-of-medicinal-products",
+      "item_name": "handle the logistics of medicinal products",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D025|pharmacy assistant|skill|homeopathy",
+      "context_level": "role",
+      "context_key": "D025|pharmacy assistant",
+      "item_type": "skill",
+      "item_key": "homeopathy",
+      "item_name": "homeopathy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D025|pharmacy assistant|skill|maintain-pharmaceutical-records",
+      "context_level": "role",
+      "context_key": "D025|pharmacy assistant",
+      "item_type": "skill",
+      "item_key": "maintain-pharmaceutical-records",
+      "item_name": "maintain pharmaceutical records",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D025|pharmacy assistant|skill|medicines-for-self-medication",
+      "context_level": "role",
+      "context_key": "D025|pharmacy assistant",
+      "item_type": "skill",
+      "item_key": "medicines-for-self-medication",
+      "item_name": "medicines for self-medication",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D025|pharmacy lecturer|skill|instructional-strategies",
+      "context_level": "role",
+      "context_key": "D025|pharmacy lecturer",
+      "item_type": "skill",
+      "item_key": "instructional-strategies",
+      "item_name": "instructional strategies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D025|pharmacy lecturer|skill|monitor-developments-in-field-of-expertise",
+      "context_level": "role",
+      "context_key": "D025|pharmacy lecturer",
+      "item_type": "skill",
+      "item_key": "monitor-developments-in-field-of-expertise",
+      "item_name": "monitor developments in field of expertise",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D025|pharmacy lecturer|skill|teach-pharmacy-principles",
+      "context_level": "role",
+      "context_key": "D025|pharmacy lecturer",
+      "item_type": "skill",
+      "item_key": "teach-pharmacy-principles",
+      "item_name": "teach pharmacy principles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D025|pharmacy lecturer|tool|learning-management-system-lms",
+      "context_level": "role",
+      "context_key": "D025|pharmacy lecturer",
+      "item_type": "tool",
+      "item_key": "learning-management-system-lms",
+      "item_name": "Learning management system LMS",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.gov.wales/revised-professional-standards-assisting-teaching-teaching-and-leadership-html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D025|pharmacy manager|skill|pharmacy-management-staff-supervision-inventory-control-regulatory-compliance",
+      "context_level": "role",
+      "context_key": "D025|pharmacy manager",
+      "item_type": "skill",
+      "item_key": "pharmacy-management-staff-supervision-inventory-control-regulatory-compliance",
+      "item_name": "pharmacy management; staff supervision; inventory control; regulatory compliance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D025|pharmacy technician|skill|operate-cash-register",
+      "context_level": "role",
+      "context_key": "D025|pharmacy technician",
+      "item_type": "skill",
+      "item_key": "operate-cash-register",
+      "item_name": "operate cash register",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D025|pharmacy technician|skill|prepare-intravenous-packs",
+      "context_level": "role",
+      "context_key": "D025|pharmacy technician",
+      "item_type": "skill",
+      "item_key": "prepare-intravenous-packs",
+      "item_name": "prepare intravenous packs",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D025|pharmacy technician|skill|provide-medication-information",
+      "context_level": "role",
+      "context_key": "D025|pharmacy technician",
+      "item_type": "skill",
+      "item_key": "provide-medication-information",
+      "item_name": "provide medication information",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D025|pharmacy technician|skill|transfer-medication",
+      "context_level": "role",
+      "context_key": "D025|pharmacy technician",
+      "item_type": "skill",
+      "item_key": "transfer-medication",
+      "item_name": "transfer medication",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D025|regulatory affairs pharmacist|skill|regulatory-submissions-dossier-preparation-pharmacovigilance-clinical-trial-regulations",
+      "context_level": "role",
+      "context_key": "D025|regulatory affairs pharmacist",
+      "item_type": "skill",
+      "item_key": "regulatory-submissions-dossier-preparation-pharmacovigilance-clinical-trial-regulations",
+      "item_name": "regulatory submissions; dossier preparation; pharmacovigilance; clinical trial regulations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D025|specialist pharmacist|skill|improve-safety-of-medicines",
+      "context_level": "role",
+      "context_key": "D025|specialist pharmacist",
+      "item_type": "skill",
+      "item_key": "improve-safety-of-medicines",
+      "item_name": "improve safety of medicines",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D025|specialist pharmacist|skill|medical-devices",
+      "context_level": "role",
+      "context_key": "D025|specialist pharmacist",
+      "item_type": "skill",
+      "item_key": "medical-devices",
+      "item_name": "medical devices",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D025|specialist pharmacist|skill|perform-diagnostic-testing-for-allergies",
+      "context_level": "role",
+      "context_key": "D025|specialist pharmacist",
+      "item_type": "skill",
+      "item_key": "perform-diagnostic-testing-for-allergies",
+      "item_name": "perform diagnostic testing for allergies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D025|specialist pharmacist|skill|prescribe-medication",
+      "context_level": "role",
+      "context_key": "D025|specialist pharmacist",
+      "item_type": "skill",
+      "item_key": "prescribe-medication",
+      "item_name": "prescribe medication",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D025|wholesale merchant in pharmaceutical goods|skill|assess-supplier-risks",
+      "context_level": "role",
+      "context_key": "D025|wholesale merchant in pharmaceutical goods",
+      "item_type": "skill",
+      "item_key": "assess-supplier-risks",
+      "item_name": "assess supplier risks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D025|wholesale merchant in pharmaceutical goods|skill|comprehend-financial-business-terminology",
+      "context_level": "role",
+      "context_key": "D025|wholesale merchant in pharmaceutical goods",
+      "item_type": "skill",
+      "item_key": "comprehend-financial-business-terminology",
+      "item_name": "comprehend financial business terminology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D025|wholesale merchant in pharmaceutical goods|skill|initiate-contact-with-buyers",
+      "context_level": "role",
+      "context_key": "D025|wholesale merchant in pharmaceutical goods",
+      "item_type": "skill",
+      "item_key": "initiate-contact-with-buyers",
+      "item_name": "initiate contact with buyers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D025|wholesale merchant in pharmaceutical goods|skill|initiate-contact-with-sellers",
+      "context_level": "role",
+      "context_key": "D025|wholesale merchant in pharmaceutical goods",
+      "item_type": "skill",
+      "item_key": "initiate-contact-with-sellers",
+      "item_name": "initiate contact with sellers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D025|wholesale merchant in pharmaceutical goods|skill|negotiate-sales-contracts",
+      "context_level": "role",
+      "context_key": "D025|wholesale merchant in pharmaceutical goods",
+      "item_type": "skill",
+      "item_key": "negotiate-sales-contracts",
+      "item_name": "negotiate sales contracts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|biostatistician|skill|statistical-analysis-clinical-trial-design-r-sas-epidemiological-methods",
+      "context_level": "role",
+      "context_key": "D026|biostatistician",
+      "item_type": "skill",
+      "item_key": "statistical-analysis-clinical-trial-design-r-sas-epidemiological-methods",
+      "item_name": "statistical analysis; clinical trial design; R/SAS; epidemiological methods",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://documentation.sas.com/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|disease surveillance officer|skill|surveillance-systems-data-reporting-outbreak-investigation-case-definition",
+      "context_level": "role",
+      "context_key": "D026|disease surveillance officer",
+      "item_type": "skill",
+      "item_key": "surveillance-systems-data-reporting-outbreak-investigation-case-definition",
+      "item_name": "surveillance systems; data reporting; outbreak investigation; case definition",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|emergency response coordinator|skill|advise-on-environmental-risk-management-systems",
+      "context_level": "role",
+      "context_key": "D026|emergency response coordinator",
+      "item_type": "skill",
+      "item_key": "advise-on-environmental-risk-management-systems",
+      "item_name": "advise on environmental risk management systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|emergency response coordinator|skill|educate-on-emergency-management",
+      "context_level": "role",
+      "context_key": "D026|emergency response coordinator",
+      "item_type": "skill",
+      "item_key": "educate-on-emergency-management",
+      "item_name": "educate on emergency management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|emergency response coordinator|skill|test-safety-strategies",
+      "context_level": "role",
+      "context_key": "D026|emergency response coordinator",
+      "item_type": "skill",
+      "item_key": "test-safety-strategies",
+      "item_name": "test safety strategies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|emergency response coordinator|tool|alert-technologies-opscenter",
+      "context_level": "role",
+      "context_key": "D026|emergency response coordinator",
+      "item_type": "tool",
+      "item_key": "alert-technologies-opscenter",
+      "item_name": "Alert Technologies OpsCenter",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|emergency response coordinator|tool|digital-engineering-corporation-e-maps",
+      "context_level": "role",
+      "context_key": "D026|emergency response coordinator",
+      "item_type": "tool",
+      "item_key": "digital-engineering-corporation-e-maps",
+      "item_name": "Digital Engineering Corporation E-MAPS",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|emergency response coordinator|tool|emergency-managers-weather-information-network-emwin",
+      "context_level": "role",
+      "context_key": "D026|emergency response coordinator",
+      "item_type": "tool",
+      "item_key": "emergency-managers-weather-information-network-emwin",
+      "item_name": "Emergency Managers Weather Information Network EMWIN",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|environmental health officer|skill|environmental-inspection-food-safety-law-risk-assessment-enforcement-procedures",
+      "context_level": "role",
+      "context_key": "D026|environmental health officer",
+      "item_type": "skill",
+      "item_key": "environmental-inspection-food-safety-law-risk-assessment-enforcement-procedures",
+      "item_name": "environmental inspection; food safety law; risk assessment; enforcement procedures",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|ergonomist|skill|determine-suitability-of-materials",
+      "context_level": "role",
+      "context_key": "D026|ergonomist",
+      "item_type": "skill",
+      "item_key": "determine-suitability-of-materials",
+      "item_name": "determine suitability of materials",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|ergonomist|skill|ergonomics",
+      "context_level": "role",
+      "context_key": "D026|ergonomist",
+      "item_type": "skill",
+      "item_key": "ergonomics",
+      "item_name": "ergonomics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|ergonomist|skill|occupational-physiology",
+      "context_level": "role",
+      "context_key": "D026|ergonomist",
+      "item_type": "skill",
+      "item_key": "occupational-physiology",
+      "item_name": "occupational physiology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food regulatory advisor|skill|cultural-customs-on-food-preparation",
+      "context_level": "role",
+      "context_key": "D026|food regulatory advisor",
+      "item_type": "skill",
+      "item_key": "cultural-customs-on-food-preparation",
+      "item_name": "cultural customs on food preparation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food regulatory advisor|skill|fermentation-processes-of-food",
+      "context_level": "role",
+      "context_key": "D026|food regulatory advisor",
+      "item_type": "skill",
+      "item_key": "fermentation-processes-of-food",
+      "item_name": "fermentation processes of food",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food regulatory advisor|skill|food-allergies",
+      "context_level": "role",
+      "context_key": "D026|food regulatory advisor",
+      "item_type": "skill",
+      "item_key": "food-allergies",
+      "item_name": "food allergies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food regulatory advisor|skill|food-engineering",
+      "context_level": "role",
+      "context_key": "D026|food regulatory advisor",
+      "item_type": "skill",
+      "item_key": "food-engineering",
+      "item_name": "food engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food regulatory advisor|skill|food-legislation",
+      "context_level": "role",
+      "context_key": "D026|food regulatory advisor",
+      "item_type": "skill",
+      "item_key": "food-legislation",
+      "item_name": "food legislation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food regulatory advisor|skill|food-materials",
+      "context_level": "role",
+      "context_key": "D026|food regulatory advisor",
+      "item_type": "skill",
+      "item_key": "food-materials",
+      "item_name": "food materials",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food regulatory advisor|skill|food-product-ingredients",
+      "context_level": "role",
+      "context_key": "D026|food regulatory advisor",
+      "item_type": "skill",
+      "item_key": "food-product-ingredients",
+      "item_name": "food product ingredients",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food regulatory advisor|skill|food-safety-principles",
+      "context_level": "role",
+      "context_key": "D026|food regulatory advisor",
+      "item_type": "skill",
+      "item_key": "food-safety-principles",
+      "item_name": "food safety principles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food regulatory advisor|skill|food-science",
+      "context_level": "role",
+      "context_key": "D026|food regulatory advisor",
+      "item_type": "skill",
+      "item_key": "food-science",
+      "item_name": "food science",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food regulatory advisor|skill|food-storage",
+      "context_level": "role",
+      "context_key": "D026|food regulatory advisor",
+      "item_type": "skill",
+      "item_key": "food-storage",
+      "item_name": "food storage",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food regulatory advisor|skill|food-waste-monitoring-systems",
+      "context_level": "role",
+      "context_key": "D026|food regulatory advisor",
+      "item_type": "skill",
+      "item_key": "food-waste-monitoring-systems",
+      "item_name": "food waste monitoring systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food regulatory advisor|skill|infections-in-food",
+      "context_level": "role",
+      "context_key": "D026|food regulatory advisor",
+      "item_type": "skill",
+      "item_key": "infections-in-food",
+      "item_name": "infections in food",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food regulatory advisor|skill|legislation-about-animal-origin-products",
+      "context_level": "role",
+      "context_key": "D026|food regulatory advisor",
+      "item_type": "skill",
+      "item_key": "legislation-about-animal-origin-products",
+      "item_name": "legislation about animal origin products",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food regulatory advisor|tool|image-processing-software",
+      "context_level": "role",
+      "context_key": "D026|food regulatory advisor",
+      "item_type": "tool",
+      "item_key": "image-processing-software",
+      "item_name": "Image processing software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food regulatory advisor|tool|microsoft-internet-explorer",
+      "context_level": "role",
+      "context_key": "D026|food regulatory advisor",
+      "item_type": "tool",
+      "item_key": "microsoft-internet-explorer",
+      "item_name": "Microsoft Internet Explorer",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food safety inspector|skill|check-bottles-for-packaging",
+      "context_level": "role",
+      "context_key": "D026|food safety inspector",
+      "item_type": "skill",
+      "item_key": "check-bottles-for-packaging",
+      "item_name": "check bottles for packaging",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food safety inspector|skill|cultural-practices-regarding-animal-parts-sorting",
+      "context_level": "role",
+      "context_key": "D026|food safety inspector",
+      "item_type": "skill",
+      "item_key": "cultural-practices-regarding-animal-parts-sorting",
+      "item_name": "cultural practices regarding animal parts sorting",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food safety inspector|skill|cultural-practices-regarding-animal-slaughter",
+      "context_level": "role",
+      "context_key": "D026|food safety inspector",
+      "item_type": "skill",
+      "item_key": "cultural-practices-regarding-animal-slaughter",
+      "item_name": "cultural practices regarding animal slaughter",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food safety inspector|skill|food-authentication-techniques",
+      "context_level": "role",
+      "context_key": "D026|food safety inspector",
+      "item_type": "skill",
+      "item_key": "food-authentication-techniques",
+      "item_name": "food authentication techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food safety inspector|skill|food-homogenisation",
+      "context_level": "role",
+      "context_key": "D026|food safety inspector",
+      "item_type": "skill",
+      "item_key": "food-homogenisation",
+      "item_name": "food homogenisation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food safety inspector|skill|food-policy",
+      "context_level": "role",
+      "context_key": "D026|food safety inspector",
+      "item_type": "skill",
+      "item_key": "food-policy",
+      "item_name": "food policy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food safety inspector|skill|food-toxicity",
+      "context_level": "role",
+      "context_key": "D026|food safety inspector",
+      "item_type": "skill",
+      "item_key": "food-toxicity",
+      "item_name": "food toxicity",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food safety inspector|skill|manage-challenging-work-conditions-during-food-processing-operations",
+      "context_level": "role",
+      "context_key": "D026|food safety inspector",
+      "item_type": "skill",
+      "item_key": "manage-challenging-work-conditions-during-food-processing-operations",
+      "item_name": "manage challenging work conditions during food processing operations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food safety specialist|skill|cold-chain",
+      "context_level": "role",
+      "context_key": "D026|food safety specialist",
+      "item_type": "skill",
+      "item_key": "cold-chain",
+      "item_name": "cold chain",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food safety specialist|skill|develop-food-safety-programmes",
+      "context_level": "role",
+      "context_key": "D026|food safety specialist",
+      "item_type": "skill",
+      "item_key": "develop-food-safety-programmes",
+      "item_name": "develop food safety programmes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food safety specialist|skill|food-fraud",
+      "context_level": "role",
+      "context_key": "D026|food safety specialist",
+      "item_type": "skill",
+      "item_key": "food-fraud",
+      "item_name": "food fraud",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food safety specialist|skill|general-principles-of-food-law",
+      "context_level": "role",
+      "context_key": "D026|food safety specialist",
+      "item_type": "skill",
+      "item_key": "general-principles-of-food-law",
+      "item_name": "general principles of food law",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food safety specialist|skill|maintain-personal-hygiene-standards",
+      "context_level": "role",
+      "context_key": "D026|food safety specialist",
+      "item_type": "skill",
+      "item_key": "maintain-personal-hygiene-standards",
+      "item_name": "maintain personal hygiene standards",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food safety specialist|skill|monitor-packaging-operations",
+      "context_level": "role",
+      "context_key": "D026|food safety specialist",
+      "item_type": "skill",
+      "item_key": "monitor-packaging-operations",
+      "item_name": "monitor packaging operations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food safety specialist|skill|plan-inspections-for-prevention-of-sanitation-violations",
+      "context_level": "role",
+      "context_key": "D026|food safety specialist",
+      "item_type": "skill",
+      "item_key": "plan-inspections-for-prevention-of-sanitation-violations",
+      "item_name": "plan inspections for prevention of sanitation violations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|food safety specialist|skill|prepare-reports-on-sanitation",
+      "context_level": "role",
+      "context_key": "D026|food safety specialist",
+      "item_type": "skill",
+      "item_key": "prepare-reports-on-sanitation",
+      "item_name": "prepare reports on sanitation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|health and safety inspector|skill|advise-on-government-policy-compliance",
+      "context_level": "role",
+      "context_key": "D026|health and safety inspector",
+      "item_type": "skill",
+      "item_key": "advise-on-government-policy-compliance",
+      "item_name": "advise on government policy compliance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|health and safety inspector|skill|gather-feedback-from-employees",
+      "context_level": "role",
+      "context_key": "D026|health and safety inspector",
+      "item_type": "skill",
+      "item_key": "gather-feedback-from-employees",
+      "item_name": "gather feedback from employees",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|health and safety inspector|skill|inspect-government-policy-compliance",
+      "context_level": "role",
+      "context_key": "D026|health and safety inspector",
+      "item_type": "skill",
+      "item_key": "inspect-government-policy-compliance",
+      "item_name": "inspect government policy compliance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|health and safety inspector|skill|maintain-relationships-with-government-agencies",
+      "context_level": "role",
+      "context_key": "D026|health and safety inspector",
+      "item_type": "skill",
+      "item_key": "maintain-relationships-with-government-agencies",
+      "item_name": "maintain relationships with government agencies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|health and safety inspector|skill|personnel-management",
+      "context_level": "role",
+      "context_key": "D026|health and safety inspector",
+      "item_type": "skill",
+      "item_key": "personnel-management",
+      "item_name": "personnel management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|health and safety inspector|skill|protect-employee-rights",
+      "context_level": "role",
+      "context_key": "D026|health and safety inspector",
+      "item_type": "skill",
+      "item_key": "protect-employee-rights",
+      "item_name": "protect employee rights",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|health and safety officer|skill|follow-standards-for-machinery-safety",
+      "context_level": "role",
+      "context_key": "D026|health and safety officer",
+      "item_type": "skill",
+      "item_key": "follow-standards-for-machinery-safety",
+      "item_name": "follow standards for machinery safety",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|health and safety officer|skill|personal-protective-equipment",
+      "context_level": "role",
+      "context_key": "D026|health and safety officer",
+      "item_type": "skill",
+      "item_key": "personal-protective-equipment",
+      "item_name": "personal protective equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|health communication specialist|skill|health-messaging-media-relations-social-marketing-behaviour-change-communication",
+      "context_level": "role",
+      "context_key": "D026|health communication specialist",
+      "item_type": "skill",
+      "item_key": "health-messaging-media-relations-social-marketing-behaviour-change-communication",
+      "item_name": "health messaging; media relations; social marketing; behaviour change communication",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|health economist|skill|health-economics-cost-effectiveness-analysis-health-technology-assessment-policy-analysis",
+      "context_level": "role",
+      "context_key": "D026|health economist",
+      "item_type": "skill",
+      "item_key": "health-economics-cost-effectiveness-analysis-health-technology-assessment-policy-analysis",
+      "item_name": "health economics; cost-effectiveness analysis; health technology assessment; policy analysis",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|health programme officer|skill|programme-planning-monitoring-and-evaluation-stakeholder-engagement-health-communication",
+      "context_level": "role",
+      "context_key": "D026|health programme officer",
+      "item_type": "skill",
+      "item_key": "programme-planning-monitoring-and-evaluation-stakeholder-engagement-health-communication",
+      "item_name": "programme planning; monitoring and evaluation; stakeholder engagement; health communication",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|healthcare inspector|skill|conduct-contact-tracing-interviews",
+      "context_level": "role",
+      "context_key": "D026|healthcare inspector",
+      "item_type": "skill",
+      "item_key": "conduct-contact-tracing-interviews",
+      "item_name": "conduct contact tracing interviews",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|healthcare inspector|skill|ensure-compliance-with-healthcare-regulations",
+      "context_level": "role",
+      "context_key": "D026|healthcare inspector",
+      "item_type": "skill",
+      "item_key": "ensure-compliance-with-healthcare-regulations",
+      "item_name": "ensure compliance with healthcare regulations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|healthcare inspector|skill|examine-healthcare-facility",
+      "context_level": "role",
+      "context_key": "D026|healthcare inspector",
+      "item_type": "skill",
+      "item_key": "examine-healthcare-facility",
+      "item_name": "examine healthcare facility",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|healthcare inspector|skill|inspect-staff",
+      "context_level": "role",
+      "context_key": "D026|healthcare inspector",
+      "item_type": "skill",
+      "item_key": "inspect-staff",
+      "item_name": "inspect staff",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|public health physician|skill|epidemiology-health-policy-disease-surveillance-public-health-programme-management",
+      "context_level": "role",
+      "context_key": "D026|public health physician",
+      "item_type": "skill",
+      "item_key": "epidemiology-health-policy-disease-surveillance-public-health-programme-management",
+      "item_name": "epidemiology; health policy; disease surveillance; public health programme management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|radiation protection officer|skill|advise-on-pollution-prevention",
+      "context_level": "role",
+      "context_key": "D026|radiation protection officer",
+      "item_type": "skill",
+      "item_key": "advise-on-pollution-prevention",
+      "item_name": "advise on pollution prevention",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|radiation protection officer|skill|apply-radiation-protection-procedures",
+      "context_level": "role",
+      "context_key": "D026|radiation protection officer",
+      "item_type": "skill",
+      "item_key": "apply-radiation-protection-procedures",
+      "item_name": "apply radiation protection procedures",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.hse.gov.uk/radiation/ionising/doses/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|radiation protection officer|skill|assess-contamination",
+      "context_level": "role",
+      "context_key": "D026|radiation protection officer",
+      "item_type": "skill",
+      "item_key": "assess-contamination",
+      "item_name": "assess contamination",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|radiation protection officer|skill|contamination-exposure-regulations",
+      "context_level": "role",
+      "context_key": "D026|radiation protection officer",
+      "item_type": "skill",
+      "item_key": "contamination-exposure-regulations",
+      "item_name": "contamination exposure regulations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|transport health and safety inspector|skill|adhere-to-ohsas-18001",
+      "context_level": "role",
+      "context_key": "D026|transport health and safety inspector",
+      "item_type": "skill",
+      "item_key": "adhere-to-ohsas-18001",
+      "item_name": "adhere to OHSAS 18001",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://documentation.sas.com/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|transport health and safety inspector|skill|assess-transport-risks",
+      "context_level": "role",
+      "context_key": "D026|transport health and safety inspector",
+      "item_type": "skill",
+      "item_key": "assess-transport-risks",
+      "item_name": "assess transport risks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|transport health and safety inspector|skill|consider-ergonomic-aspects-of-urban-transportation",
+      "context_level": "role",
+      "context_key": "D026|transport health and safety inspector",
+      "item_type": "skill",
+      "item_key": "consider-ergonomic-aspects-of-urban-transportation",
+      "item_name": "consider ergonomic aspects of urban transportation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|transport health and safety inspector|skill|develop-environmental-policy",
+      "context_level": "role",
+      "context_key": "D026|transport health and safety inspector",
+      "item_type": "skill",
+      "item_key": "develop-environmental-policy",
+      "item_name": "develop environmental policy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|transport health and safety inspector|skill|promote-the-use-of-sustainable-transport",
+      "context_level": "role",
+      "context_key": "D026|transport health and safety inspector",
+      "item_type": "skill",
+      "item_key": "promote-the-use-of-sustainable-transport",
+      "item_name": "promote the use of sustainable transport",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|transport health and safety inspector|skill|sa8000",
+      "context_level": "role",
+      "context_key": "D026|transport health and safety inspector",
+      "item_type": "skill",
+      "item_key": "sa8000",
+      "item_name": "SA8000",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D026|vector control officer|skill|vector-biology-insecticide-application-community-engagement-surveillance-methods",
+      "context_level": "role",
+      "context_key": "D026|vector control officer",
+      "item_type": "skill",
+      "item_key": "vector-biology-insecticide-application-community-engagement-surveillance-methods",
+      "item_name": "vector biology; insecticide application; community engagement; surveillance methods",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|agricultural technician|skill|agricultural-equipment",
+      "context_level": "role",
+      "context_key": "D027|agricultural technician",
+      "item_type": "skill",
+      "item_key": "agricultural-equipment",
+      "item_name": "agricultural equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D027|agricultural technician|skill|agricultural-raw-materials-seeds-and-animal-feed-products",
+      "context_level": "role",
+      "context_key": "D027|agricultural technician",
+      "item_type": "skill",
+      "item_key": "agricultural-raw-materials-seeds-and-animal-feed-products",
+      "item_name": "agricultural raw materials, seeds and animal feed products",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    }
+  ],
+  "policy": {
+    "review_required_preserved_unless_exact_item_evidence_established": true,
+    "no_relationship_inference": true,
+    "no_promotion": true
+  }
+}

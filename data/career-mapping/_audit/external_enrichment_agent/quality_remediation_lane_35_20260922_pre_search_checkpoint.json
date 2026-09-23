@@ -1,0 +1,15 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-checkpoint.v2",
+  "batch": "quality_remediation_lane_35_20260922",
+  "status": "completed",
+  "selection": "data/career-mapping/_audit/external_enrichment_agent/quality_remediation_lane_35_20260922_selection.json",
+  "source_audit": "data/career-mapping/_audit/external_enrichment_agent/item_ledger_quality_audit_2026-09-22.json",
+  "selection_count": 100,
+  "searched_count": 100,
+  "promotion_performed": false,
+  "scope_guard": "Items only; relationships, catalogue, SQL, seeds, UI and browser proof untouched.",
+  "review_required_count": 100,
+  "ledger": "quality_remediation_lane_35_20260922_append_only_ledger.jsonl",
+  "report": "quality_remediation_lane_35_20260922_report.json",
+  "completed_at": "2026-09-22T12:40:15Z"
+}

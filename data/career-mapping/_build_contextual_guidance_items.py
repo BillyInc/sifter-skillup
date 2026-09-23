@@ -24,6 +24,7 @@ from pathlib import Path
 from urllib.parse import quote_plus
 
 from _role_overlay_loader import load_overlay_roles
+from _role_learning_core import student_skill_lists
 
 
 HERE = Path(__file__).resolve().parent
@@ -31,7 +32,96 @@ ROOT = HERE.parent.parent
 OUT = ROOT / "backend" / "seed_career_context_items_v1_parts"
 MAX_SQL_BYTES = 6_000_000
 VERIFIED_AT = "2026-09-12"
+LINK_REVIEWED_AT = "2026-09-19"
 ITEM_KEYS: set[tuple[str, str, str, str]] = set()
+
+# These are a deliberately bounded, reviewed sample of item-specific links.
+# The URLs are official documentation destinations, not the broad occupation
+# or domain sources already carried in ``source_references``.  Every other
+# item remains ``no_link`` unless a future source review supplies an explicit
+# candidate; name similarity must never manufacture a destination.
+VERIFIED_ITEM_LINKS: dict[tuple[str, str], dict[str, object]] = {
+    ("tool", "python"): {
+        "title": "Python documentation",
+        "url": "https://docs.python.org/3/",
+        "source_id": "official_python_documentation",
+        "authority": "Python Software Foundation",
+        "locator": {"kind": "official_documentation", "section": "Python documentation"},
+    },
+    ("tool", "r"): {
+        "title": "The R Manuals",
+        "url": "https://cran.r-project.org/manuals.html",
+        "source_id": "official_r_manuals",
+        "authority": "R Core Team / CRAN",
+        "locator": {"kind": "official_documentation", "section": "The R Manuals"},
+    },
+    ("tool", "microsoft-power-bi"): {
+        "title": "Power BI get started documentation",
+        "url": "https://learn.microsoft.com/en-us/power-bi/fundamentals/",
+        "source_id": "official_power_bi_documentation",
+        "authority": "Microsoft Learn",
+        "locator": {"kind": "official_documentation", "section": "Power BI fundamentals"},
+    },
+    ("tool", "esri-arcgis-software"): {
+        "title": "Introduction to ArcGIS Pro",
+        "url": "https://pro.arcgis.com/en/pro-app/latest/get-started/get-started.htm",
+        "source_id": "official_arcgis_pro_documentation",
+        "authority": "Esri",
+        "locator": {"kind": "official_documentation", "section": "Introduction to ArcGIS Pro"},
+    },
+    ("tool", "ibm-spss-statistics"): {
+        "title": "IBM SPSS Statistics documentation",
+        "url": "https://www.ibm.com/docs/en/spss-statistics/32.0.0?topic=spss-statistics-32-documentation",
+        "source_id": "official_ibm_spss_documentation",
+        "authority": "IBM",
+        "locator": {"kind": "official_documentation", "section": "Getting Started; descriptive statistics, hypothesis testing, predictive analytics, data management and visualisation"},
+    },
+    ("tool", "microsoft-excel"): {
+        "title": "Excel help and learning",
+        "url": "https://support.microsoft.com/en-us/excel/",
+        "source_id": "official_microsoft_excel_help",
+        "authority": "Microsoft Support",
+        "locator": {"kind": "official_documentation", "section": "Get started; import and analyse; formulas and functions; PivotTables"},
+    },
+    ("tool", "structured-query-language-sql"): {
+        "title": "Microsoft SQL documentation",
+        "url": "https://learn.microsoft.com/sql/",
+        "source_id": "official_microsoft_sql_documentation",
+        "authority": "Microsoft Learn",
+        "locator": {"kind": "official_documentation", "section": "Getting started; connect and query; write Transact-SQL"},
+    },
+    ("tool", "tableau"): {
+        "title": "Get Started with Tableau Desktop",
+        "url": "https://help.tableau.com/current/guides/get-started-tutorial/en-us/get-started-tutorial-home.htm",
+        "source_id": "official_tableau_get_started",
+        "authority": "Tableau",
+        "locator": {"kind": "official_documentation", "section": "Connect to data; create visualisations; present and share findings"},
+    },
+    ("competency", "formulate-research-questions"): {
+        "title": "Where to Begin: Writing Your Research Question",
+        "url": "https://owl.purdue.edu/owl/research_and_citation/conducting_research/research_overview/index.html",
+        "source_id": "official_purdue_research_question_guidance",
+        "authority": "Purdue Online Writing Lab",
+        "locator": {"kind": "official_learning_guidance", "section": "Writing Your Research Question; Asking Productive Questions"},
+    },
+    ("competency", "evaluate-evidence"): {
+        "title": "Evidence Synthesis: Start Here",
+        "url": "https://www.nihlibrary.nih.gov/services/evidence-synthesis/start-here",
+        "source_id": "official_nih_evidence_synthesis_guidance",
+        "authority": "National Institutes of Health Library",
+        "locator": {"kind": "official_learning_guidance", "section": "Assess the Need; Refine the Question; Select the Review Type"},
+    },
+}
+
+# Context-scoped external search results are intentionally separate from the
+# small global registry above.  A source can support an item in one domain or
+# subgroup without being a safe destination for every same-named item in the
+# catalogue.  Only records explicitly marked ``linked`` or ``review_required``
+# are loaded; the ledger never turns an unsearched item into a claim.
+EXTERNAL_CONTEXT_LEDGER_DIR = HERE / "_audit" / "external_enrichment_agent"
+EXTERNAL_CONTEXT_LINKS: dict[tuple[str, str, str, str], dict[str, object]] = {}
+
+LINK_STATES = {"linked", "no_link", "review_required"}
 
 GENERIC_TOOL_NAMES = {
     "analytical or scientific software",
@@ -50,6 +140,51 @@ GENERIC_TOOL_NAMES = {
 
 def load(path: Path):
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def load_context_search_ledger() -> None:
+    ledger_paths = sorted(EXTERNAL_CONTEXT_LEDGER_DIR.glob("*_search_ledger_*.jsonl"))
+    for ledger_path in ledger_paths:
+        for line in ledger_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            try:
+                record = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            decision = clean(record.get("decision"))
+            if decision not in {"linked", "review_required"}:
+                continue
+            level = clean(record.get("context_level"))
+            context_key = clean(record.get("context_key"))
+            kind = clean(record.get("item_type"))
+            name = clean(record.get("name"))
+            if not level or not context_key or not kind or not name:
+                continue
+            sources = [source for source in (record.get("searched_sources") or []) if isinstance(source, dict)]
+            if not sources and clean(record.get("source_url")):
+                sources = [{
+                    "source_key": clean(record.get("source_reference")),
+                    "title": clean((record.get("searched_authorities") or ["External source"])[0]),
+                    "url": clean(record.get("source_url")),
+                    "authority": clean((record.get("searched_authorities") or ["External source"])[0]),
+                    "locator": clean(record.get("source_locator")),
+                    "exact_evidence": clean(record.get("evidence")),
+                    "accessed_on": clean(record.get("access_date")),
+                }]
+            sources = [source for source in sources if clean(source.get("url")).startswith("https://")]
+            if not sources:
+                continue
+            EXTERNAL_CONTEXT_LINKS[(level, context_key, kind, slug(name))] = {
+                "decision": decision,
+                "sources": sources,
+                "limitation": clean(record.get("limitation")),
+                "accessedAt": clean(record.get("accessed_on") or record.get("searched_at"))[:10],
+            }
+
+
+def external_context_link(level: str, context_key: str, kind: str, name: str) -> dict[str, object] | None:
+    return EXTERNAL_CONTEXT_LINKS.get((level, context_key, kind, slug(clean(name))))
 
 
 def clean(value: object) -> str:
@@ -162,10 +297,157 @@ def scope_for(refs: list[dict]) -> str:
     return "nigeria" if "nigeria" in regions else "global"
 
 
+def _normalise_link_candidates(candidates: list[dict] | None) -> list[dict]:
+    """Keep only explicit HTTPS candidates while preserving their provenance."""
+    normalised: list[dict] = []
+    for candidate in candidates or []:
+        if not isinstance(candidate, dict):
+            continue
+        url = clean(candidate.get("url"))
+        if not url.startswith("https://"):
+            continue
+        normalised.append({
+            "sourceId": clean(candidate.get("sourceId") or candidate.get("source_id")),
+            "title": clean(candidate.get("title")),
+            "url": url,
+            "locator": candidate.get("locator") if isinstance(candidate.get("locator"), dict) else {},
+            "accessedAt": clean(candidate.get("accessedAt") or candidate.get("accessed_at")),
+        })
+    return _unique_json_values(normalised)
+
+
+def item_link_contract(
+    kind: str,
+    name: str,
+    candidates: list[dict] | None = None,
+    context_link: dict[str, object] | None = None,
+) -> dict:
+    """Return the explicit item-level link state.
+
+    ``source_references`` describe evidence for an item and are not treated as
+    learning links.  A link is ``linked`` only when it is in the bounded
+    reviewed registry with an authoritative destination.  A supplied but not
+    reviewed candidate is retained for staff review and becomes
+    ``review_required``; with no candidate, the honest state is ``no_link``.
+    """
+    if context_link:
+        searched_sources = [source for source in (context_link.get("sources") or []) if isinstance(source, dict)]
+        source_references = [{
+            "id": clean(source.get("source_key") or source.get("url")),
+            "title": clean(source.get("title") or source.get("source_key") or "External source"),
+            "url": clean(source.get("url")),
+            "authority": clean(source.get("authority")),
+            "locator": source.get("locator") if isinstance(source.get("locator"), (dict, list)) else clean(source.get("locator")),
+            "evidence": clean(source.get("exact_evidence")),
+            "accessedAt": clean(source.get("accessed_on") or context_link.get("accessedAt")),
+        } for source in searched_sources if clean(source.get("url")).startswith("https://")]
+        if source_references:
+            decision = clean(context_link.get("decision"))
+            if decision == "linked":
+                primary = source_references[0]
+                return {
+                    "link_state": "linked",
+                    "link_url": primary["url"],
+                    "link_title": primary["title"],
+                    "link_source_reference": primary,
+                    "link_accessed_at": clean(context_link.get("accessedAt")) or None,
+                    "link_confidence": "medium",
+                    "link_evidence": {
+                        "status": "context_item_specific_external_verified",
+                        "sources": source_references,
+                        "reviewedAt": clean(context_link.get("accessedAt")) or LINK_REVIEWED_AT,
+                        "confidence": "medium",
+                        "limitation": clean(context_link.get("limitation")) or None,
+                    },
+                    "no_link_reason": None,
+                }
+            if decision == "review_required":
+                limitation = clean(context_link.get("limitation")) or "The searched source does not yet support the full item claim."
+                return {
+                    "link_state": "review_required",
+                    "link_url": None,
+                    "link_title": None,
+                    "link_source_reference": {"candidates": source_references},
+                    "link_accessed_at": None,
+                    "link_confidence": "low",
+                    "link_evidence": {
+                        "status": "context_candidate_review_required",
+                        "sources": source_references,
+                        "reviewedAt": clean(context_link.get("accessedAt")) or LINK_REVIEWED_AT,
+                        "confidence": "low",
+                        "limitation": limitation,
+                    },
+                    "no_link_reason": limitation,
+                }
+
+    key = (kind, slug(clean(name)))
+    reviewed = VERIFIED_ITEM_LINKS.get(key)
+    if reviewed:
+        source_reference = {
+            "id": reviewed["source_id"],
+            "title": reviewed["title"],
+            "url": reviewed["url"],
+            "authority": reviewed["authority"],
+            "locator": reviewed["locator"],
+            "accessedAt": LINK_REVIEWED_AT,
+        }
+        return {
+            "link_state": "linked",
+            "link_url": reviewed["url"],
+            "link_title": reviewed["title"],
+            "link_source_reference": source_reference,
+            "link_accessed_at": LINK_REVIEWED_AT,
+            "link_confidence": "high",
+            "link_evidence": {
+                "status": "item_specific_verified",
+                "sources": [source_reference],
+                "reviewedAt": LINK_REVIEWED_AT,
+                "confidence": "high",
+            },
+            "no_link_reason": None,
+        }
+
+    retained_candidates = _normalise_link_candidates(candidates)
+    if retained_candidates:
+        return {
+            "link_state": "review_required",
+            "link_url": None,
+            "link_title": None,
+            "link_source_reference": {"candidates": retained_candidates},
+            "link_accessed_at": None,
+            "link_confidence": "low",
+            "link_evidence": {
+                "status": "candidate_review_required",
+                "sources": retained_candidates,
+                "reviewedAt": LINK_REVIEWED_AT,
+                "confidence": "low",
+            },
+            "no_link_reason": "A candidate source link is retained, but it has not passed item-specific authority and destination review.",
+        }
+
+    return {
+        "link_state": "no_link",
+        "link_url": None,
+        "link_title": None,
+        "link_source_reference": {},
+        "link_accessed_at": None,
+        "link_confidence": "low",
+        "link_evidence": {
+            "status": "no_item_specific_source_verified",
+            "sources": [],
+            "reviewedAt": LINK_REVIEWED_AT,
+            "confidence": "low",
+        },
+        "no_link_reason": "No reviewed item-specific learning, documentation or official-information link is recorded for this item.",
+    }
+
+
 def add(rows: list[dict], *, level: str, key: str, domain: str, kind: str, name: str,
         meaning: str, use: str, output: str, priority: str, reason: str,
         prerequisites: list[str], related: list[str], source_ids: list[str],
-        refs: list[dict], locators: list[dict], limitations: list[str], confidence: str = "high") -> None:
+        refs: list[dict], locators: list[dict], limitations: list[str], confidence: str = "high",
+        link_candidates: list[dict] | None = None,
+        context_link: dict[str, object] | None = None) -> None:
     name = clean(name)
     if not name or not refs:
         return
@@ -174,6 +456,19 @@ def add(rows: list[dict], *, level: str, key: str, domain: str, kind: str, name:
     if identity in ITEM_KEYS:
         return
     ITEM_KEYS.add(identity)
+    link = item_link_contract(kind, name, link_candidates, context_link)
+    link_reference = link["link_source_reference"]
+    if link["link_state"] == "linked":
+        source_id = clean(link_reference.get("id"))
+        if source_id:
+            source_ids = list(dict.fromkeys([*source_ids, source_id]))
+        refs = unique_sources([*refs, source_ref(
+            source_id,
+            clean(link_reference.get("title")),
+            clean(link_reference.get("url")),
+            "global",
+            "item_specific_documentation",
+        )])
     rows.append({
         "context_level": level,
         "context_key": key,
@@ -196,7 +491,9 @@ def add(rows: list[dict], *, level: str, key: str, domain: str, kind: str, name:
         "evidence_type": "source_supported_synthesis",
         "source_confidence": confidence,
         "data_state": "source_backed",
+        "guidance_owner": level,
         "verified_at": VERIFIED_AT,
+        **link,
     })
 
 
@@ -211,6 +508,8 @@ def item_meaning(kind: str, name: str) -> str:
 
 def build() -> list[dict]:
     ITEM_KEYS.clear()
+    EXTERNAL_CONTEXT_LINKS.clear()
+    load_context_search_ledger()
     audit = load(HERE / "domain_skill_competency_certification_audit.json")
     structure = load(HERE / "domain_structure.json")
     # The canonical role layer is the cleaned library plus the source-backed
@@ -236,9 +535,15 @@ def build() -> list[dict]:
         web = row.get("nigerian_web_evidence") or {}
         skills = [clean(value) for value in web.get("skills") or [] if clean(value)]
         competencies = [clean(value) for value in web.get("competencies") or [] if clean(value)]
-        certifications = [clean(value) for value in (web.get("certifications") or []) if clean(value)]
-        cert_evidence = row.get("nigerian_certification_evidence") or {}
-        certifications += [clean(value) for value in cert_evidence.get("credential_signals") or [] if clean(value)]
+        # Only explicitly named credentials may become student-facing
+        # certification items.  ``nigerian_web_evidence.certifications`` and
+        # ``credential_signals`` can contain source-audit prose such as
+        # "academic and research qualifications"; those describe a pathway or
+        # sector context, not a credential with a market scope and credential
+        # type.  The reviewed current-domain list is the narrow named-
+        # credential authority.  Keep broader signals in the audit JSON, but
+        # never promote them into the contextual student contract.
+        certifications = [clean(value) for value in (row.get("current_domain_certifications") or []) if clean(value)]
         all_foundation = skills[:3] + competencies[:3]
         for index, name in enumerate(all_foundation):
             kind = "competency" if name in competencies else "skill"
@@ -248,20 +553,21 @@ def build() -> list[dict]:
                 use=f"At domain level, this helps a student understand the shared foundation of {clean(row.get('domain_name'))} before choosing a subgroup or role.",
                 output="A documented question, analysis, explanation or piece of work appropriate to the field.",
                 priority="start_here" if index < 2 else "build_next",
-                reason="Start with the domain-owned foundation before adding subgroup or role-specific preparation." if index < 2 else "Build this after the foundation because it is explicitly named in the checked domain evidence.",
-                prerequisites=previous[-2:], related=all_foundation[index + 1:index + 3], source_ids=ids, refs=refs,
-                locators=[{"domainId": domain_id, "evidenceKind": kind, "owner": "domain"}],
-                limitations=["This is domain context, not a universal requirement, demand ranking or proof of competence."])
+                 reason="Start with the domain-owned foundation before adding subgroup or role-specific preparation." if index < 2 else "Build this after the foundation because it is explicitly named in the checked domain evidence.",
+                 prerequisites=previous[-2:], related=all_foundation[index + 1:index + 3], source_ids=ids, refs=refs,
+                 locators=[{"domainId": domain_id, "evidenceKind": kind, "owner": "domain"}],
+                 context_link=external_context_link("domain", domain_id, kind, name),
+                 limitations=["This is domain context, not a universal requirement, demand ranking or proof of competence."])
         for name in list(dict.fromkeys(certifications))[:4]:
             add(rows, level="domain", key=domain_id, domain=domain_id, kind="certification", name=name,
                 meaning=item_meaning("certification", name),
                 use="Use this as a pointer to understand the qualification or professional context. Check the Nigerian issuer or regulator first when your intended work is local, then compare any global pathway.",
                 output="A qualification, training record or bounded professional membership where the issuer confirms eligibility.",
-                priority="useful_later", reason="Credentials come after the academic and domain foundation and only matter for routes that use them.",
-                prerequisites=all_foundation[:2], related=[], source_ids=ids, refs=refs,
-                locators=[{"domainId": domain_id, "evidenceKind": "certification", "owner": "domain"}],
-                limitations=["No domain row by itself proves that every Nigerian employer or role requires this credential."])
-
+                 priority="useful_later", reason="Credentials come after the academic and domain foundation and only matter for routes that use them.",
+                 prerequisites=all_foundation[:2], related=[], source_ids=ids, refs=refs,
+                 locators=[{"domainId": domain_id, "evidenceKind": "certification", "owner": "domain"}],
+                 context_link=external_context_link("domain", domain_id, "certification", name),
+                 limitations=["No domain row by itself proves that every Nigerian employer or role requires this credential."])
         # Explicit subgroup records, not a re-labelled role-frequency list.
         for subgroup in (structure.get(domain_id) or {}).get("subgroups") or []:
             subgroup_id = clean(subgroup.get("isco_submajor"))
@@ -275,10 +581,11 @@ def build() -> list[dict]:
                     use=f"This is an area-specific capability in {clean(subgroup.get('label'))}; it adds focus to the shared {clean(row.get('domain_name'))} foundation.",
                     output="An area-specific analysis, method, dataset, report or other work product.",
                     priority="start_here" if index < 3 else "build_next",
-                    reason="Start with the area foundation, then add more specialised capabilities as your direction becomes clearer.",
-                    prerequisites=skills[max(0, index - 2):index], related=skills[index + 1:index + 3], source_ids=source_ids, refs=subgroup_refs,
-                    locators=[{"domainId": domain_id, "subgroup": clean(subgroup.get("label")), "iscoSubmajor": subgroup_id, "owner": "subgroup"}],
-                    limitations=["This subgroup record describes an area of work; it is not a requirement to learn every listed capability."])
+                     reason="Start with the area foundation, then add more specialised capabilities as your direction becomes clearer.",
+                     prerequisites=skills[max(0, index - 2):index], related=skills[index + 1:index + 3], source_ids=source_ids, refs=subgroup_refs,
+                     locators=[{"domainId": domain_id, "subgroup": clean(subgroup.get("label")), "iscoSubmajor": subgroup_id, "owner": "subgroup"}],
+                     context_link=external_context_link("subgroup", subgroup_key, "skill", name),
+                     limitations=["This subgroup record describes an area of work; it is not a requirement to learn every listed capability."])
 
     # Role-owned skills and named tools. This is the only layer that consumes
     # role-library skill strings and role-tool parts.
@@ -293,8 +600,7 @@ def build() -> list[dict]:
             continue
         role_key = f"{domain_id}|{role_name}"
         ids, refs = role_refs(role)
-        essential = [clean(item) for item in clean(role.get("essential_skills")).split("|") if clean(item)]
-        optional = [clean(item) for item in clean(role.get("optional_skills")).split("|") if clean(item)]
+        essential, optional = student_skill_lists(role)
         all_skills = list(dict.fromkeys(essential + optional))
         for index, name in enumerate(all_skills):
             is_essential = name in essential
@@ -334,15 +640,208 @@ def row_sql(row: dict) -> str:
         sql(row["expected_output"]), sql(row["priority"]), sql(row["priority_reason"]), sql_json(row["prerequisites"]),
         sql_json(row["related_items"]), sql_text_array(row["source_ids"]), sql_json(row["source_references"]),
         sql_json(row["source_locators"]), sql(row["geographic_scope"]), sql_json(row["evidence_limitations"]),
-        sql(row["evidence_type"]), sql(row["source_confidence"]), sql(row["data_state"]), sql(row["verified_at"]),
+        sql(row["evidence_type"]), sql(row["source_confidence"]), sql(row["data_state"]),
+        sql(row["link_state"]), sql(row["link_url"]), sql(row["link_title"]),
+        sql_json(row["link_source_reference"]), sql(row["link_accessed_at"]), sql(row["link_confidence"]),
+        sql_json(row["link_evidence"]), sql(row["no_link_reason"]), sql(row["guidance_owner"]), sql(row["verified_at"]),
     ]) + ")"
 
 
-def render_sql(rows: list[dict], part: int) -> str:
-    columns = "(context_level, context_key, domain_key, item_type, item_key, name, plain_meaning, contextual_use, expected_output, priority, priority_reason, prerequisites, related_items, source_ids, source_references, source_locators, geographic_scope, evidence_limitations, evidence_type, source_confidence, data_state, verified_at)"
+def _unique_json_values(values: list[object]) -> list[object]:
+    """Deduplicate JSON-compatible evidence without changing its order."""
+    out: list[object] = []
+    seen: set[str] = set()
+    for value in values:
+        marker = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+        if marker in seen:
+            continue
+        seen.add(marker)
+        out.append(value)
+    return out
+
+
+def _relationship_source_evidence(*rows: dict, extra_limitations: list[str] | None = None) -> dict:
+    """Carry endpoint provenance onto an edge without making a new claim.
+
+    Relationship rows are stored in a table that predates ``source_locators``.
+    Keep the locators in the JSONB source-reference objects as well as on the
+    in-memory edge so the transport does not discard them before the additive
+    schema can be extended.  A locator remains explicitly an endpoint/context
+    locator; it is not presented as independent proof of the relationship.
+    """
+    source_ids: list[str] = []
+    references: list[dict] = []
+    locators: list[object] = []
+    limitations: list[str] = []
+    for row in rows:
+        source_ids.extend(str(value).strip() for value in (row.get("source_ids") or row.get("sourceIds") or []) if str(value).strip())
+        raw_references = row.get("source_references") or row.get("sourceReferences") or []
+        if isinstance(raw_references, list):
+            references.extend(value for value in raw_references if isinstance(value, dict))
+        raw_locators = row.get("source_locators") or row.get("sourceLocators") or []
+        if isinstance(raw_locators, list):
+            locators.extend(raw_locators)
+        if isinstance(raw_references, list):
+            for reference in raw_references:
+                if not isinstance(reference, dict):
+                    continue
+                source_ids.extend(
+                    str(value).strip()
+                    for value in ([reference.get("id")] + (reference.get("sourceIds") or []))
+                    if str(value).strip()
+                )
+                for key in ("locators", "sourceLocators"):
+                    if isinstance(reference.get(key), list):
+                        locators.extend(reference[key])
+                if isinstance(reference.get("evidenceLimitations"), list):
+                    limitations.extend(str(value).strip() for value in reference["evidenceLimitations"] if str(value).strip())
+        raw_limitations = row.get("evidence_limitations") or row.get("evidenceLimitations") or []
+        if isinstance(raw_limitations, list):
+            limitations.extend(str(value).strip() for value in raw_limitations if str(value).strip())
+    limitations.extend(str(value).strip() for value in (extra_limitations or []) if str(value).strip())
+
+    merged: list[dict] = []
+    reference_indexes: dict[tuple[str, str], int] = {}
+    for reference in references:
+        copy = dict(reference)
+        explicit_ids = [str(copy.get("id")).strip()] if str(copy.get("id") or "").strip() else []
+        explicit_ids.extend(str(value).strip() for value in (copy.get("sourceIds") or []) if str(value).strip())
+        if explicit_ids:
+            copy["sourceIds"] = list(dict.fromkeys(explicit_ids))
+        url = clean(copy.get("url"))
+        key = ("url", url) if url else ("", json.dumps(copy, ensure_ascii=False, sort_keys=True))
+        existing_index = reference_indexes.get(key)
+        if existing_index is None:
+            merged.append(copy)
+            reference_indexes[key] = len(merged) - 1
+            continue
+        existing = merged[existing_index]
+        for field in ("sourceIds", "locators", "sourceLocators", "evidenceLimitations"):
+            combined = [*(existing.get(field) or []), *(copy.get(field) or [])]
+            if combined:
+                existing[field] = _unique_json_values(combined)
+    locators = _unique_json_values(locators)
+    if locators:
+        for reference in merged:
+            reference["sourceLocators"] = _unique_json_values([*(reference.get("sourceLocators") or []), *locators])
+    return {
+        "source_ids": list(dict.fromkeys(source_ids)),
+        "source_references": merged,
+        "source_locators": locators,
+        "evidence_limitations": list(dict.fromkeys(limitations)),
+    }
+
+
+def _lower_confidence(*rows: dict) -> str:
+    order = {"low": 0, "medium": 1, "high": 2}
+    values = [str(row.get("source_confidence") or "high") for row in rows]
+    return min(values, key=lambda value: order.get(value, 0))
+
+
+def relationship_rows(rows: list[dict]) -> list[dict]:
+    """Normalize explicit edges and record honest coverage for tools/certs.
+
+    The JSON arrays remain useful for compatibility, but this table gives the
+    API a typed edge between a skill, competency, tool or certification. A
+    missing target is deliberately not turned into a source-backed edge. Each
+    contextual tool and certification still receives one ``not_established``
+    coverage row when no explicit edge exists, so an audit can distinguish
+    "reviewed and no relationship established" from "relationship data was
+    never generated". External source review can later replace that state.
+    """
+    by_context: dict[tuple[str, str, str], dict[str, dict]] = {}
+    for row in rows:
+        by_context.setdefault((row["context_level"], row["context_key"], row["domain_key"]), {})[
+            (row["item_type"], row["item_key"])
+        ] = row
+    edges: list[dict] = []
+    seen: set[tuple] = set()
+    for row in rows:
+        context = (row["context_level"], row["context_key"], row["domain_key"])
+        targets = by_context.get(context, {})
+        for relationship_type, names in (("builds_on", row.get("prerequisites") or []), ("works_with", row.get("related_items") or [])):
+            for name in names:
+                candidate_name = str(name).strip()
+                if not candidate_name:
+                    continue
+                exact = [candidate for candidate in targets.values() if candidate["name"].casefold() == candidate_name.casefold()]
+                target = next((candidate for candidate in exact if candidate["item_key"] != row["item_key"] and candidate["item_type"] == row["item_type"]), None)
+                target = target or next((candidate for candidate in exact if candidate["item_key"] != row["item_key"]), None)
+                if target:
+                    edge_key = (context, row["item_type"], row["item_key"], relationship_type, target["item_type"], target["item_key"])
+                    if edge_key in seen:
+                        continue
+                    seen.add(edge_key)
+                    evidence = _relationship_source_evidence(row, target, extra_limitations=[
+                        "Endpoint evidence is not proof that this relationship is universally required or exclusive."
+                    ])
+                    edges.append({
+                        "context_level": row["context_level"], "context_key": row["context_key"], "domain_key": row["domain_key"],
+                        "from_item_type": row["item_type"], "from_item_key": row["item_key"], "from_name": row["name"],
+                        "to_item_type": target["item_type"], "to_item_key": target["item_key"], "to_name": target["name"],
+                        "relationship_type": relationship_type, "relationship_status": "source_backed",
+                        **evidence, "source_confidence": _lower_confidence(row, target),
+                        "data_state": "source_backed", "guidance_owner": row["guidance_owner"], "verified_at": row["verified_at"],
+                    })
+                    continue
+
+                # Similar-but-not-identical names are deliberately not fuzzy-
+                # matched. Keep the explicit candidate as a non-student-facing
+                # backlog row so later source review can resolve it safely.
+                backlog_key = f"unresolved-{relationship_type}-{slug(candidate_name)}"
+                edge_key = (context, row["item_type"], row["item_key"], "not_established", "", backlog_key)
+                if edge_key in seen:
+                    continue
+                seen.add(edge_key)
+                evidence = _relationship_source_evidence(row, extra_limitations=[
+                    f"Explicit {relationship_type} candidate {candidate_name!r} did not resolve to an exact typed item; review before linking.",
+                    "This backlog row does not assert a relationship or establish a target item.",
+                ])
+                edges.append({
+                    "context_level": row["context_level"], "context_key": row["context_key"], "domain_key": row["domain_key"],
+                    "from_item_type": row["item_type"], "from_item_key": row["item_key"], "from_name": row["name"],
+                    "to_item_type": None, "to_item_key": backlog_key, "to_name": candidate_name,
+                    "relationship_type": "not_established", "relationship_status": "not_established",
+                    **evidence, "source_confidence": "low", "data_state": "not_established",
+                    "guidance_owner": row["guidance_owner"], "verified_at": row["verified_at"],
+                })
+    edge_sources = {(edge["context_level"], edge["context_key"], edge["from_item_type"], edge["from_item_key"]) for edge in edges}
+    for row in rows:
+        if row["item_type"] not in {"tool", "certification"}:
+            continue
+        key = (row["context_level"], row["context_key"], row["item_type"], row["item_key"])
+        if key in edge_sources:
+            continue
+        evidence = _relationship_source_evidence(row, extra_limitations=[
+            "No cross-type relationship is established in the reviewed source records."
+        ])
+        edges.append({
+            "context_level": row["context_level"], "context_key": row["context_key"], "domain_key": row["domain_key"],
+            "from_item_type": row["item_type"], "from_item_key": row["item_key"], "from_name": row["name"],
+            "to_item_type": None, "to_item_key": None, "to_name": None,
+            "relationship_type": "not_established", "relationship_status": "not_established",
+            **evidence, "source_confidence": row["source_confidence"], "data_state": "not_established",
+            "guidance_owner": row["guidance_owner"], "verified_at": row["verified_at"],
+        })
+    return edges
+
+
+def relationship_sql(edge: dict) -> str:
+    return "(" + ", ".join([
+        sql(edge["context_level"]), sql(edge["context_key"]), sql(edge["domain_key"]),
+        sql(edge["from_item_type"]), sql(edge["from_item_key"]), sql(edge["from_name"]),
+        sql(edge["to_item_type"]), sql(edge["to_item_key"]), sql(edge["to_name"]),
+        sql(edge["relationship_type"]), sql(edge["relationship_status"]), sql_text_array(edge["source_ids"]),
+        sql_json(edge["source_references"]), sql_json(edge["evidence_limitations"]), sql(edge["source_confidence"]),
+        sql(edge["data_state"]), sql(edge["guidance_owner"]), sql(edge["verified_at"]),
+    ]) + ")"
+
+
+def render_sql(rows: list[dict], edges: list[dict], part: int) -> str:
+    columns = "(context_level, context_key, domain_key, item_type, item_key, name, plain_meaning, contextual_use, expected_output, priority, priority_reason, prerequisites, related_items, source_ids, source_references, source_locators, geographic_scope, evidence_limitations, evidence_type, source_confidence, data_state, link_state, link_url, link_title, link_source_reference, link_accessed_at, link_confidence, link_evidence, no_link_reason, guidance_owner, verified_at)"
     lines = [
         "-- Generated source-backed contextual guidance rows.",
-        f"-- Part {part}; run after backend/migration_contextual_career_items.sql.",
+        f"-- Part {part}; run after backend/migration_contextual_career_items.sql and backend/migration_career_item_relationships_2026-09-17.sql.",
         "BEGIN;",
         "INSERT INTO skillup_dev.career_context_items",
         f"    {columns}",
@@ -357,15 +856,27 @@ def render_sql(rows: list[dict], part: int) -> str:
         "    source_ids = EXCLUDED.source_ids, source_references = EXCLUDED.source_references, source_locators = EXCLUDED.source_locators,",
         "    geographic_scope = EXCLUDED.geographic_scope, evidence_limitations = EXCLUDED.evidence_limitations,",
         "    evidence_type = EXCLUDED.evidence_type, source_confidence = EXCLUDED.source_confidence, data_state = EXCLUDED.data_state,",
+        "    link_state = EXCLUDED.link_state, link_url = EXCLUDED.link_url, link_title = EXCLUDED.link_title,",
+        "    link_source_reference = EXCLUDED.link_source_reference, link_accessed_at = EXCLUDED.link_accessed_at,",
+        "    link_confidence = EXCLUDED.link_confidence, link_evidence = EXCLUDED.link_evidence, no_link_reason = EXCLUDED.no_link_reason,",
         "    verified_at = EXCLUDED.verified_at;",
-        "COMMIT;",
-        "",
     ]
+    if edges:
+        edge_columns = "(context_level, context_key, domain_key, from_item_type, from_item_key, from_name, to_item_type, to_item_key, to_name, relationship_type, relationship_status, source_ids, source_references, evidence_limitations, source_confidence, data_state, guidance_owner, verified_at)"
+        lines += [
+            "INSERT INTO skillup_dev.career_item_relationships",
+            f"    {edge_columns}",
+            "VALUES",
+            ",\n".join(relationship_sql(edge) for edge in edges),
+            "ON CONFLICT DO NOTHING;",
+        ]
+    lines += ["COMMIT;", ""]
     return "\n".join(lines)
 
 
 def main() -> None:
     rows = build()
+    edges = relationship_rows(rows)
     OUT.mkdir(parents=True, exist_ok=True)
     for old in list(OUT.glob("part-*.sql")) + list(OUT.glob("part-*.sql.gz")):
         old.unlink()
@@ -373,11 +884,15 @@ def main() -> None:
     current: list[dict] = []
     current_bytes = 0
     part_number = 1
+    edges_by_context: dict[tuple[str, str], list[dict]] = {}
+    for edge in edges:
+        edges_by_context.setdefault((edge["context_level"], edge["context_key"]), []).append(edge)
     for row in rows:
         candidate = row_sql(row) + ",\n"
         size = len(candidate.encode("utf-8"))
         if current and current_bytes + size > MAX_SQL_BYTES:
-            content = render_sql(current, part_number)
+            current_edges = [edge for row in current for edge in edges_by_context.get((row["context_level"], row["context_key"]), []) if edge["from_item_key"] == row["item_key"] and edge["from_item_type"] == row["item_type"]]
+            content = render_sql(current, current_edges, part_number)
             path = OUT / f"part-{part_number:03d}.sql.gz"
             with gzip.open(path, "wt", encoding="utf-8", compresslevel=9) as handle:
                 handle.write(content)
@@ -388,14 +903,15 @@ def main() -> None:
         current.append(row)
         current_bytes += size
     if current:
-        content = render_sql(current, part_number)
+        current_edges = [edge for row in current for edge in edges_by_context.get((row["context_level"], row["context_key"]), []) if edge["from_item_key"] == row["item_key"] and edge["from_item_type"] == row["item_type"]]
+        content = render_sql(current, current_edges, part_number)
         path = OUT / f"part-{part_number:03d}.sql.gz"
         with gzip.open(path, "wt", encoding="utf-8", compresslevel=9) as handle:
             handle.write(content)
         parts.append({"file": path.relative_to(ROOT).as_posix(), "part": part_number, "row_count": len(current), "bytes": path.stat().st_size, "sha256": hashlib.sha256(path.read_bytes()).hexdigest()})
 
     with gzip.open(HERE / "contextual_guidance_items.json.gz", "wt", encoding="utf-8") as handle:
-        json.dump(rows, handle, ensure_ascii=False, separators=(",", ":"))
+        json.dump({"items": rows, "relationships": edges}, handle, ensure_ascii=False, separators=(",", ":"))
     counts = Counter((row["context_level"], row["item_type"]) for row in rows)
     domains = {row["context_key"] for row in rows if row["context_level"] == "domain"}
     subgroups = {row["context_key"] for row in rows if row["context_level"] == "subgroup"}
@@ -405,6 +921,7 @@ def main() -> None:
         "verified_at": VERIFIED_AT,
         "purpose": "Student-facing explanations whose ownership stays at programme, domain, subgroup or role level.",
         "row_count": len(rows),
+        "relationship_count": len(edges),
         "covered_domains": len(domains),
         "covered_subgroups": len(subgroups),
         "covered_roles": len(roles),
@@ -412,6 +929,7 @@ def main() -> None:
         "generic_tool_names_excluded": sorted(GENERIC_TOOL_NAMES),
         "parts": parts,
         "source_rule": "Domain rows never use role prevalence; role-derived evidence appears only at subgroup/role level.",
+        "relationship_rule": "Only same-context prerequisite and related-item names that resolve to another typed item become source-backed edges; every contextual tool/certification without an established edge receives an explicit not_established coverage row.",
     }
     (HERE / "CONTEXTUAL_GUIDANCE_ITEMS_MANIFEST.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     audit = [

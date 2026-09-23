@@ -1,0 +1,41 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-report.v1",
+  "batch": "quality_remediation_lane_42_20260922",
+  "status": "complete_review",
+  "source_audit": "data/career-mapping/_audit/external_enrichment_agent/item_ledger_quality_audit_2026-09-22.json",
+  "selection": "quality_remediation_lane_42_20260922_selection.json",
+  "pre_search_checkpoint": "quality_remediation_lane_42_20260922_pre_search_checkpoint.json",
+  "append_only_ledger": "quality_remediation_lane_42_20260922_append_only_ledger.jsonl",
+  "records_reviewed": 100,
+  "unique_records_reviewed": 100,
+  "selection_ids_reconciled": 100,
+  "ledger_ids_reconciled": 100,
+  "selection_ledger_reconciliation": {
+    "selection_count": 100,
+    "ledger_count": 100,
+    "missing_selection_ids": [],
+    "unexpected_ledger_ids": [],
+    "duplicate_selection_ids": [],
+    "exact_match": true
+  },
+  "decision_counts": {
+    "linked": 0,
+    "review_required": 100,
+    "genuinely_unavailable": 0
+  },
+  "evidence_records": 300,
+  "exact_item_type_context_gate_passed": 0,
+  "authority_checked": "Official first-party, standards, government, professional-body and vendor sources were searched where available, with O*NET OnLine item/role search endpoints and supplied candidates retained for exact-context review.",
+  "guardrails": {
+    "relationships_touched": false,
+    "catalogue_touched": false,
+    "sql_touched": false,
+    "seeds_touched": false,
+    "ui_touched": false,
+    "browser_proof_touched": false,
+    "promotion": false,
+    "prior_ledgers_modified": false,
+    "other_lanes_touched": false
+  },
+  "result": "100 individually reviewed; all retained review_required because the exact item/type/context promotion gate was not established."
+}

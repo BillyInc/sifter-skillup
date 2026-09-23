@@ -1,0 +1,35 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-report.v1",
+  "batch": "quality_remediation_lane_82_20260922",
+  "lane": 82,
+  "status": "completed",
+  "completed_at": "2026-09-22",
+  "selection_file": "data/career-mapping/_audit/external_enrichment_agent/quality_remediation_lane_82_20260922_selection.json",
+  "selection_sha256": "20A0EADA510E160D847E930CD23FF7AE765FF35297FD10B234BED311601F6995",
+  "pre_search_checkpoint": "data/career-mapping/_audit/external_enrichment_agent/quality_remediation_lane_82_20260922_pre_search_checkpoint.json",
+  "ledger": "data/career-mapping/_audit/external_enrichment_agent/quality_remediation_lane_82_20260922_append_only_ledger.jsonl",
+  "requested_records": 150,
+  "reviewed_records": 150,
+  "exact_item_specific_searches": 150,
+  "selection_ids_reconciled": 150,
+  "ledger_ids_unique": true,
+  "all_selection_ids_reconciled": true,
+  "decision_counts": {
+    "review_required": 150,
+    "promoted": 0
+  },
+  "evidence_records": 149,
+  "empty_evidence_records": 1,
+  "exact_gate_passes": 0,
+  "promotion_performed": false,
+  "relationships_touched": false,
+  "catalogue_touched": false,
+  "sql_touched": false,
+  "seeds_touched": false,
+  "ui_touched": false,
+  "browser_proof_touched": false,
+  "limitations": [
+    "The searches preserved item-specific queries, URLs, locators, dates, evidence and limitations, but broad or secondary results did not prove the exact selected item/type/context requirement.",
+    "Weak or non-authoritative evidence remains review_required; no item was promoted."
+  ]
+}

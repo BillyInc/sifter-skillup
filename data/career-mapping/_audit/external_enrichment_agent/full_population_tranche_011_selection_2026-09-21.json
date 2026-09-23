@@ -1,0 +1,213 @@
+{
+  "schema": "2026-09-21.full-population-enrichment-tranche-selection.v1",
+  "accessed_on": "2026-09-21",
+  "tranche": "011",
+  "selection_order": "stable row_id ascending after excluding D078 and all prior item tranches",
+  "source_queue": "data/career-mapping/_audit/external_enrichment_queue_2026-09-20.json",
+  "excluded_context_prefix": "D078",
+  "disjoint_from": [
+    "full_population_tranche_001_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_002_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_003_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_004_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_005_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_006_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_007_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_008_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_009_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_010_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_011_search_ledger_2026-09-21.jsonl"
+  ],
+  "policy": {
+    "item_rows_are_unique_contextual_identities": true,
+    "source_links_are_not_promoted_without_item_specific_evidence": true,
+    "no_link_requires_an_actual_search": true,
+    "retired_or_uncertain_sources_remain_review_required": true
+  },
+  "items": [
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D021|certification|registered-architect-arcon",
+      "subject_id": "item|domain|D021|certification|registered-architect-arcon",
+      "context_level": "domain",
+      "context_key": "D021",
+      "domain_key": "D021",
+      "item_type": "certification",
+      "item_key": "registered-architect-arcon",
+      "item_name": "Registered Architect (ARCON)"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D021|certification|riba-chartered-membership",
+      "subject_id": "item|domain|D021|certification|riba-chartered-membership",
+      "context_level": "domain",
+      "context_key": "D021",
+      "domain_key": "D021",
+      "item_type": "certification",
+      "item_key": "riba-chartered-membership",
+      "item_name": "RIBA Chartered Membership"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D021|competency|apply-safe-building-trade-methods",
+      "subject_id": "item|domain|D021|competency|apply-safe-building-trade-methods",
+      "context_level": "domain",
+      "context_key": "D021",
+      "domain_key": "D021",
+      "item_type": "competency",
+      "item_key": "apply-safe-building-trade-methods",
+      "item_name": "apply safe building-trade methods"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D021|competency|demonstrate-practical-trade-competence",
+      "subject_id": "item|domain|D021|competency|demonstrate-practical-trade-competence",
+      "context_level": "domain",
+      "context_key": "D021",
+      "domain_key": "D021",
+      "item_type": "competency",
+      "item_key": "demonstrate-practical-trade-competence",
+      "item_name": "demonstrate practical trade competence"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D021|competency|perform-construction-work-to-defined-occupational-standards",
+      "subject_id": "item|domain|D021|competency|perform-construction-work-to-defined-occupational-standards",
+      "context_level": "domain",
+      "context_key": "D021",
+      "domain_key": "D021",
+      "item_type": "competency",
+      "item_key": "perform-construction-work-to-defined-occupational-standards",
+      "item_name": "perform construction work to defined occupational standards"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D021|skill|carpentry-and-joinery",
+      "subject_id": "item|domain|D021|skill|carpentry-and-joinery",
+      "context_level": "domain",
+      "context_key": "D021",
+      "domain_key": "D021",
+      "item_type": "skill",
+      "item_key": "carpentry-and-joinery",
+      "item_name": "carpentry and joinery"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D021|skill|electrical-installation",
+      "subject_id": "item|domain|D021|skill|electrical-installation",
+      "context_level": "domain",
+      "context_key": "D021",
+      "domain_key": "D021",
+      "item_type": "skill",
+      "item_key": "electrical-installation",
+      "item_name": "electrical installation"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D021|skill|masonry",
+      "subject_id": "item|domain|D021|skill|masonry",
+      "context_level": "domain",
+      "context_key": "D021",
+      "domain_key": "D021",
+      "item_type": "skill",
+      "item_key": "masonry",
+      "item_name": "masonry"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D022|certification|comeg-registered-geoscientist",
+      "subject_id": "item|domain|D022|certification|comeg-registered-geoscientist",
+      "context_level": "domain",
+      "context_key": "D022",
+      "domain_key": "D022",
+      "item_type": "certification",
+      "item_key": "comeg-registered-geoscientist",
+      "item_name": "COMEG Registered Geoscientist"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D022|certification|coren-registered-engineer-mining",
+      "subject_id": "item|domain|D022|certification|coren-registered-engineer-mining",
+      "context_level": "domain",
+      "context_key": "D022",
+      "domain_key": "D022",
+      "item_type": "certification",
+      "item_key": "coren-registered-engineer-mining",
+      "item_name": "COREN Registered Engineer (Mining)"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D023|certification|mdcn-full-registration-medical-practitioner",
+      "subject_id": "item|domain|D023|certification|mdcn-full-registration-medical-practitioner",
+      "context_level": "domain",
+      "context_key": "D023",
+      "domain_key": "D023",
+      "item_type": "certification",
+      "item_key": "mdcn-full-registration-medical-practitioner",
+      "item_name": "MDCN Full Registration (Medical Practitioner)"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D023|competency|support-quality-and-patient-safety",
+      "subject_id": "item|domain|D023|competency|support-quality-and-patient-safety",
+      "context_level": "domain",
+      "context_key": "D023",
+      "domain_key": "D023",
+      "item_type": "competency",
+      "item_key": "support-quality-and-patient-safety",
+      "item_name": "support quality and patient safety"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D023|competency|understand-health-system-governance",
+      "subject_id": "item|domain|D023|competency|understand-health-system-governance",
+      "context_level": "domain",
+      "context_key": "D023",
+      "domain_key": "D023",
+      "item_type": "competency",
+      "item_key": "understand-health-system-governance",
+      "item_name": "understand health-system governance"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D023|competency|work-within-regulated-health-practice",
+      "subject_id": "item|domain|D023|competency|work-within-regulated-health-practice",
+      "context_level": "domain",
+      "context_key": "D023",
+      "domain_key": "D023",
+      "item_type": "competency",
+      "item_key": "work-within-regulated-health-practice",
+      "item_name": "work within regulated health practice"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D023|skill|health-policy",
+      "subject_id": "item|domain|D023|skill|health-policy",
+      "context_level": "domain",
+      "context_key": "D023",
+      "domain_key": "D023",
+      "item_type": "skill",
+      "item_key": "health-policy",
+      "item_name": "health policy"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D023|skill|health-security",
+      "subject_id": "item|domain|D023|skill|health-security",
+      "context_level": "domain",
+      "context_key": "D023",
+      "domain_key": "D023",
+      "item_type": "skill",
+      "item_key": "health-security",
+      "item_name": "health security"
+    }
+  ],
+  "counts": {
+    "canonical_contextual_identities_excluding_d078": 76009,
+    "prior_ids_excluded": 244,
+    "remaining_after_exclusion": 76009,
+    "selected_rows": 16,
+    "item_rows": 16,
+    "d078_rows": 0
+  }
+}

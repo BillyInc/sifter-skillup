@@ -1,0 +1,46 @@
+{
+  "schema_version": "2026-09-23.role-work-profile-tranche-009-post-test.v1",
+  "generated_on": "2026-09-23",
+  "status": "verified",
+  "read_only": true,
+  "append_only": true,
+  "counts": {
+    "baseline_missing_work_profile_rows": 119,
+    "prior_exact_onet_candidates": 20,
+    "prior_exact_esco_onet_profile_candidates": 17,
+    "remaining_missing_roles_before_selection": 82,
+    "roles_selected": 20,
+    "exact_onet_job_title_identity_matches": 20,
+    "candidate_rows_with_work_profile_fields": 19,
+    "incomplete_authoritative_profiles_retained_review_only": 1,
+    "canonical_work_profile_rows_added": 0,
+    "review_required_profile_candidates": 19,
+    "canonical_work_profile_rows_still_absent": 119,
+    "roles_without_source_backed_profile_candidate_after_pass": 63,
+    "genuinely_unavailable": 0
+  },
+  "verification": {
+    "command": "backend/.venv/Scripts/python.exe -m pytest data/career-mapping/_audit/external_enrichment_agent/test_role_work_profile_enrichment_tranche_009.py -q",
+    "result": "4 passed",
+    "warnings": "133 existing Python 3.14/pytest-asyncio deprecation warnings",
+    "compile_check": "backend/.venv/Scripts/python.exe -m py_compile role_work_profile_enrichment_tranche_009_2026-09-23.py test_role_work_profile_enrichment_tranche_009.py",
+    "sql_or_live_db": false,
+    "frontend_or_seed": false,
+    "browser_proof": false,
+    "item_or_relationship_enrichment": false
+  },
+  "artifacts": [
+    "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_enrichment_tranche_009_2026-09-23.py",
+    "data/career-mapping/_audit/external_enrichment_agent/test_role_work_profile_enrichment_tranche_009.py",
+    "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_enrichment_tranche_009_2026-09-23_selection.json",
+    "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_enrichment_tranche_009_pre_search_checkpoint_2026-09-23.json",
+    "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_enrichment_tranche_009_2026-09-23.json",
+    "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_enrichment_append_only_tranche_009_2026-09-23.jsonl",
+    "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_enrichment_tranche_009_2026-09-23.md",
+    "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_enrichment_tranche_009_checkpoint_2026-09-23.json",
+    "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_enrichment_tranche_009_checkpoint_2026-09-23.md",
+    "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_enrichment_tranche_009_post_test_checkpoint_2026-09-23.json",
+    "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_enrichment_tranche_009_post_test_checkpoint_2026-09-23.md"
+  ],
+  "next_action": "Keep all 19 profile candidates and the one incomplete identity case review-only; continue only with the remaining 63 roles lacking a source-backed profile candidate."
+}

@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "2026-09-23.downstream-admin-policy-checkpoint.v5",
+  "checkpoint": "005",
+  "generatedOn": "2026-09-23",
+  "appendOnly": true,
+  "mode": "read_only_local",
+  "policy": {
+    "studentLookupPopulation": "jamb_identities",
+    "jambIdentityCount": 420,
+    "ccmasSupportingProgrammeCount": 237,
+    "supportingOnlyPackageFindings": 83,
+    "missingCcmasAnchorDoesNotHideJambIdentity": true,
+    "unresolvedRelationshipsAreInternalNonBlockingCoverage": true
+  },
+  "validation": {
+    "jambIdentitiesAudited": 420,
+    "jambRoutesAvailable": 420,
+    "universityOfferingRoutesAvailable": 420,
+    "brokenJambRoutes": 0,
+    "ccmasPackagesAudited": 237,
+    "brokenDownstreamPackageRoutes": 0,
+    "canonicalUnresolvedOrNotEstablishedRelationships": 2305,
+    "projectedRepeatedRelationshipCoverage": 21235,
+    "acceptedInternalBoundaryPasses": true,
+    "routePolicyPasses": true,
+    "focusedTests": 13,
+    "focusedTestsPassed": true
+  },
+  "boundaries": {
+    "fullAdminRenderAccepted": false,
+    "studentExposureApproved": false,
+    "sqlApplied": false,
+    "liveDatabaseRead": false,
+    "browserProof": false
+  },
+  "additionalCoordinator": "data/career-mapping/_audit/audit_admin_downstream_acceptance_2026-09-19.py",
+  "next": "No further local scope correction is required; only intentional live deployment, browser proof, and approval boundaries remain."
+}

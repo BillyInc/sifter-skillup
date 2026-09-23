@@ -1,0 +1,1619 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-selection.v2",
+  "batch": "quality_remediation_lane_38_20260922",
+  "selected_at": "2026-09-22",
+  "source_audit": "data/career-mapping/_audit/external_enrichment_agent/item_ledger_quality_audit_2026-09-22.json",
+  "source_sha256": "083c02e7c67b1c1256a3036a0698f5b64cca61a79b72576a09f4dacf85e13717",
+  "selection_method": "atomic shared lock; exclude all prior valid claims by contextual and typed identity",
+  "prior_claimed_contextual_ids": 3072,
+  "prior_claimed_typed_items": 2446,
+  "selection_count": 100,
+  "requested_count": 100,
+  "shortfall": 0,
+  "rows": [
+    {
+      "subject_id": "item|role|D023|Surgical Assistants|tool|patient-scheduling-software",
+      "context_level": "role",
+      "context_key": "D023|Surgical Assistants",
+      "item_type": "tool",
+      "item_key": "patient-scheduling-software",
+      "item_name": "Patient scheduling software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|Surgical Assistants|tool|patient-tracking-software",
+      "context_level": "role",
+      "context_key": "D023|Surgical Assistants",
+      "item_type": "tool",
+      "item_key": "patient-tracking-software",
+      "item_name": "Patient tracking software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|Surgical Assistants|tool|supply-documentation-software",
+      "context_level": "role",
+      "context_key": "D023|Surgical Assistants",
+      "item_type": "tool",
+      "item_key": "supply-documentation-software",
+      "item_name": "Supply documentation software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|Surgical Assistants|tool|surgery-workflow-communication-software",
+      "context_level": "role",
+      "context_key": "D023|Surgical Assistants",
+      "item_type": "tool",
+      "item_key": "surgery-workflow-communication-software",
+      "item_name": "Surgery workflow communication software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|audiology technician|skill|advise-customers-on-hearing-aids",
+      "context_level": "role",
+      "context_key": "D023|audiology technician",
+      "item_type": "skill",
+      "item_key": "advise-customers-on-hearing-aids",
+      "item_name": "advise customers on hearing aids",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|audiology technician|skill|communication-related-to-hearing-impairment",
+      "context_level": "role",
+      "context_key": "D023|audiology technician",
+      "item_type": "skill",
+      "item_key": "communication-related-to-hearing-impairment",
+      "item_name": "communication related to hearing impairment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|audiology technician|skill|geriatrics",
+      "context_level": "role",
+      "context_key": "D023|audiology technician",
+      "item_type": "skill",
+      "item_key": "geriatrics",
+      "item_name": "geriatrics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|audiology technician|skill|hearing-loss",
+      "context_level": "role",
+      "context_key": "D023|audiology technician",
+      "item_type": "skill",
+      "item_key": "hearing-loss",
+      "item_name": "hearing loss",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|audiology technician|skill|hygiene-in-a-health-care-setting",
+      "context_level": "role",
+      "context_key": "D023|audiology technician",
+      "item_type": "skill",
+      "item_key": "hygiene-in-a-health-care-setting",
+      "item_name": "hygiene in a health care setting",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|audiology technician|skill|maintain-records-of-clients-prescriptions",
+      "context_level": "role",
+      "context_key": "D023|audiology technician",
+      "item_type": "skill",
+      "item_key": "maintain-records-of-clients-prescriptions",
+      "item_name": "maintain records of clients' prescriptions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|audiology technician|skill|order-supplies-for-audiology-services",
+      "context_level": "role",
+      "context_key": "D023|audiology technician",
+      "item_type": "skill",
+      "item_key": "order-supplies-for-audiology-services",
+      "item_name": "order supplies for audiology services",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|audiology technician|skill|perform-technical-tasks-with-great-care",
+      "context_level": "role",
+      "context_key": "D023|audiology technician",
+      "item_type": "skill",
+      "item_key": "perform-technical-tasks-with-great-care",
+      "item_name": "perform technical tasks with great care",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|audiology technician|skill|physiology-of-hearing",
+      "context_level": "role",
+      "context_key": "D023|audiology technician",
+      "item_type": "skill",
+      "item_key": "physiology-of-hearing",
+      "item_name": "physiology of hearing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|audiology technician|skill|produce-impressions-for-ear-moulds",
+      "context_level": "role",
+      "context_key": "D023|audiology technician",
+      "item_type": "skill",
+      "item_key": "produce-impressions-for-ear-moulds",
+      "item_name": "produce impressions for ear moulds",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|audiology technician|skill|repair-hearing-aids",
+      "context_level": "role",
+      "context_key": "D023|audiology technician",
+      "item_type": "skill",
+      "item_key": "repair-hearing-aids",
+      "item_name": "repair hearing aids",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|audiology technician|skill|types-of-audiological-equipment",
+      "context_level": "role",
+      "context_key": "D023|audiology technician",
+      "item_type": "skill",
+      "item_key": "types-of-audiological-equipment",
+      "item_name": "types of audiological equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|audiology technician|skill|use-of-specialised-instruments-in-otorhinolaryngology",
+      "context_level": "role",
+      "context_key": "D023|audiology technician",
+      "item_type": "skill",
+      "item_key": "use-of-specialised-instruments-in-otorhinolaryngology",
+      "item_name": "use of specialised instruments in otorhinolaryngology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|audiology technician|tool|bookkeeping-software",
+      "context_level": "role",
+      "context_key": "D023|audiology technician",
+      "item_type": "tool",
+      "item_key": "bookkeeping-software",
+      "item_name": "Bookkeeping software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|clinical informatics manager|skill|clinical-reports",
+      "context_level": "role",
+      "context_key": "D023|clinical informatics manager",
+      "item_type": "skill",
+      "item_key": "clinical-reports",
+      "item_name": "clinical reports",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|clinical informatics manager|skill|clinical-science",
+      "context_level": "role",
+      "context_key": "D023|clinical informatics manager",
+      "item_type": "skill",
+      "item_key": "clinical-science",
+      "item_name": "clinical science",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|clinical informatics manager|skill|conditions-for-professional-practice-of-clinical-psychology",
+      "context_level": "role",
+      "context_key": "D023|clinical informatics manager",
+      "item_type": "skill",
+      "item_key": "conditions-for-professional-practice-of-clinical-psychology",
+      "item_name": "conditions for professional practice of clinical psychology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|clinical informatics manager|skill|creation-of-clinical-psychological-opinions",
+      "context_level": "role",
+      "context_key": "D023|clinical informatics manager",
+      "item_type": "skill",
+      "item_key": "creation-of-clinical-psychological-opinions",
+      "item_name": "creation of clinical psychological opinions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|clinical informatics manager|skill|drug-interaction-management",
+      "context_level": "role",
+      "context_key": "D023|clinical informatics manager",
+      "item_type": "skill",
+      "item_key": "drug-interaction-management",
+      "item_name": "drug interaction management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|clinical informatics manager|skill|health-care-occupation-specific-ethics",
+      "context_level": "role",
+      "context_key": "D023|clinical informatics manager",
+      "item_type": "skill",
+      "item_key": "health-care-occupation-specific-ethics",
+      "item_name": "health care occupation-specific ethics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|clinical informatics manager|skill|medical-informatics",
+      "context_level": "role",
+      "context_key": "D023|clinical informatics manager",
+      "item_type": "skill",
+      "item_key": "medical-informatics",
+      "item_name": "medical informatics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|clinical informatics manager|skill|multi-professional-cooperation-in-health-care",
+      "context_level": "role",
+      "context_key": "D023|clinical informatics manager",
+      "item_type": "skill",
+      "item_key": "multi-professional-cooperation-in-health-care",
+      "item_name": "multi-professional cooperation in health care",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|clinical informatics manager|skill|nursing-science",
+      "context_level": "role",
+      "context_key": "D023|clinical informatics manager",
+      "item_type": "skill",
+      "item_key": "nursing-science",
+      "item_name": "nursing science",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|clinical perfusion scientist|skill|clinical-perfusion",
+      "context_level": "role",
+      "context_key": "D023|clinical perfusion scientist",
+      "item_type": "skill",
+      "item_key": "clinical-perfusion",
+      "item_name": "clinical perfusion",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|clinical perfusion scientist|skill|communicate-in-healthcare",
+      "context_level": "role",
+      "context_key": "D023|clinical perfusion scientist",
+      "item_type": "skill",
+      "item_key": "communicate-in-healthcare",
+      "item_name": "communicate in healthcare",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|clinical perfusion scientist|skill|conduct-routine-blood-testing",
+      "context_level": "role",
+      "context_key": "D023|clinical perfusion scientist",
+      "item_type": "skill",
+      "item_key": "conduct-routine-blood-testing",
+      "item_name": "conduct routine blood testing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|clinical perfusion scientist|skill|contribute-to-continuity-of-health-care",
+      "context_level": "role",
+      "context_key": "D023|clinical perfusion scientist",
+      "item_type": "skill",
+      "item_key": "contribute-to-continuity-of-health-care",
+      "item_name": "contribute to continuity of health care",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|clinical perfusion scientist|skill|electroencephalography",
+      "context_level": "role",
+      "context_key": "D023|clinical perfusion scientist",
+      "item_type": "skill",
+      "item_key": "electroencephalography",
+      "item_name": "electroencephalography",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|clinical perfusion scientist|skill|emergency-surgery",
+      "context_level": "role",
+      "context_key": "D023|clinical perfusion scientist",
+      "item_type": "skill",
+      "item_key": "emergency-surgery",
+      "item_name": "emergency surgery",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|clinical perfusion scientist|skill|health-care-legislation",
+      "context_level": "role",
+      "context_key": "D023|clinical perfusion scientist",
+      "item_type": "skill",
+      "item_key": "health-care-legislation",
+      "item_name": "health care legislation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|clinical perfusion scientist|skill|human-anatomy",
+      "context_level": "role",
+      "context_key": "D023|clinical perfusion scientist",
+      "item_type": "skill",
+      "item_key": "human-anatomy",
+      "item_name": "human anatomy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|clinical perfusion scientist|skill|medical-terminology",
+      "context_level": "role",
+      "context_key": "D023|clinical perfusion scientist",
+      "item_type": "skill",
+      "item_key": "medical-terminology",
+      "item_name": "medical terminology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|clinical perfusion scientist|skill|operate-breathing-equipment",
+      "context_level": "role",
+      "context_key": "D023|clinical perfusion scientist",
+      "item_type": "skill",
+      "item_key": "operate-breathing-equipment",
+      "item_name": "operate breathing equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|clinical perfusion scientist|skill|operate-heart-lung-machines",
+      "context_level": "role",
+      "context_key": "D023|clinical perfusion scientist",
+      "item_type": "skill",
+      "item_key": "operate-heart-lung-machines",
+      "item_name": "operate heart-lung machines",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|clinical perfusion scientist|skill|perform-transcranial-magnetic-stimulation",
+      "context_level": "role",
+      "context_key": "D023|clinical perfusion scientist",
+      "item_type": "skill",
+      "item_key": "perform-transcranial-magnetic-stimulation",
+      "item_name": "perform transcranial magnetic stimulation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|clinical perfusion scientist|skill|rehabilitation-of-all-organ-systems",
+      "context_level": "role",
+      "context_key": "D023|clinical perfusion scientist",
+      "item_type": "skill",
+      "item_key": "rehabilitation-of-all-organ-systems",
+      "item_name": "rehabilitation of all organ systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|clinical perfusion scientist|skill|resuscitation",
+      "context_level": "role",
+      "context_key": "D023|clinical perfusion scientist",
+      "item_type": "skill",
+      "item_key": "resuscitation",
+      "item_name": "resuscitation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|clinical perfusion scientist|skill|surgery",
+      "context_level": "role",
+      "context_key": "D023|clinical perfusion scientist",
+      "item_type": "skill",
+      "item_key": "surgery",
+      "item_name": "surgery",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|doctors|skill|administrative-tasks-in-a-medical-environment",
+      "context_level": "role",
+      "context_key": "D023|doctors",
+      "item_type": "skill",
+      "item_key": "administrative-tasks-in-a-medical-environment",
+      "item_name": "administrative tasks in a medical environment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|doctors|skill|anaesthetics",
+      "context_level": "role",
+      "context_key": "D023|doctors",
+      "item_type": "skill",
+      "item_key": "anaesthetics",
+      "item_name": "anaesthetics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|doctors|skill|e-procurement",
+      "context_level": "role",
+      "context_key": "D023|doctors",
+      "item_type": "skill",
+      "item_key": "e-procurement",
+      "item_name": "e-procurement",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|doctors|skill|health-care-system",
+      "context_level": "role",
+      "context_key": "D023|doctors",
+      "item_type": "skill",
+      "item_key": "health-care-system",
+      "item_name": "health care system",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|doctors|skill|professional-documentation-in-health-care",
+      "context_level": "role",
+      "context_key": "D023|doctors",
+      "item_type": "skill",
+      "item_key": "professional-documentation-in-health-care",
+      "item_name": "professional documentation in health care",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|doctors|skill|respond-to-changing-situations-in-health-care",
+      "context_level": "role",
+      "context_key": "D023|doctors",
+      "item_type": "skill",
+      "item_key": "respond-to-changing-situations-in-health-care",
+      "item_name": "respond to changing situations in health care",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|doctors|skill|spine-surgery",
+      "context_level": "role",
+      "context_key": "D023|doctors",
+      "item_type": "skill",
+      "item_key": "spine-surgery",
+      "item_name": "spine surgery",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|doctors|skill|surgical-asepsis",
+      "context_level": "role",
+      "context_key": "D023|doctors",
+      "item_type": "skill",
+      "item_key": "surgical-asepsis",
+      "item_name": "surgical asepsis",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|doctors|skill|techniques-of-blood-sampling",
+      "context_level": "role",
+      "context_key": "D023|doctors",
+      "item_type": "skill",
+      "item_key": "techniques-of-blood-sampling",
+      "item_name": "techniques of blood-sampling",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|doctors|skill|wound-closure-techniques",
+      "context_level": "role",
+      "context_key": "D023|doctors",
+      "item_type": "skill",
+      "item_key": "wound-closure-techniques",
+      "item_name": "wound closure techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|general practitioner|skill|assess-physical-conditions-of-clients",
+      "context_level": "role",
+      "context_key": "D023|general practitioner",
+      "item_type": "skill",
+      "item_key": "assess-physical-conditions-of-clients",
+      "item_name": "assess physical conditions of clients",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|general practitioner|skill|evaluate-data-information-and-digital-content",
+      "context_level": "role",
+      "context_key": "D023|general practitioner",
+      "item_type": "skill",
+      "item_key": "evaluate-data-information-and-digital-content",
+      "item_name": "evaluate data, information and digital content",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|general practitioner|skill|identify-digital-competence-gaps",
+      "context_level": "role",
+      "context_key": "D023|general practitioner",
+      "item_type": "skill",
+      "item_key": "identify-digital-competence-gaps",
+      "item_name": "identify digital competence gaps",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|general practitioner|skill|manage-a-healthcare-unit-budget",
+      "context_level": "role",
+      "context_key": "D023|general practitioner",
+      "item_type": "skill",
+      "item_key": "manage-a-healthcare-unit-budget",
+      "item_name": "manage a healthcare unit budget",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|general practitioner|skill|manage-a-multidisciplinary-team-involved-in-patient-care",
+      "context_level": "role",
+      "context_key": "D023|general practitioner",
+      "item_type": "skill",
+      "item_key": "manage-a-multidisciplinary-team-involved-in-patient-care",
+      "item_name": "manage a multidisciplinary team involved in patient care",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|general practitioner|skill|manage-personal-professional-development",
+      "context_level": "role",
+      "context_key": "D023|general practitioner",
+      "item_type": "skill",
+      "item_key": "manage-personal-professional-development",
+      "item_name": "manage personal professional development",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|general practitioner|skill|monitor-children-s-physical-development",
+      "context_level": "role",
+      "context_key": "D023|general practitioner",
+      "item_type": "skill",
+      "item_key": "monitor-children-s-physical-development",
+      "item_name": "monitor children's physical development",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|general practitioner|skill|provide-healthcare-services-to-patients-in-general-medical-practice",
+      "context_level": "role",
+      "context_key": "D023|general practitioner",
+      "item_type": "skill",
+      "item_key": "provide-healthcare-services-to-patients-in-general-medical-practice",
+      "item_name": "provide healthcare services to patients in general medical practice",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|general practitioner|skill|synthesise-information",
+      "context_level": "role",
+      "context_key": "D023|general practitioner",
+      "item_type": "skill",
+      "item_key": "synthesise-information",
+      "item_name": "synthesise information",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|general practitioner|skill|think-abstractly",
+      "context_level": "role",
+      "context_key": "D023|general practitioner",
+      "item_type": "skill",
+      "item_key": "think-abstractly",
+      "item_name": "think abstractly",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|healthcare institution manager|skill|advise-policy-makers-in-healthcare",
+      "context_level": "role",
+      "context_key": "D023|healthcare institution manager",
+      "item_type": "skill",
+      "item_key": "advise-policy-makers-in-healthcare",
+      "item_name": "advise policy makers in healthcare",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|healthcare institution manager|skill|delegate-emergency-care",
+      "context_level": "role",
+      "context_key": "D023|healthcare institution manager",
+      "item_type": "skill",
+      "item_key": "delegate-emergency-care",
+      "item_name": "delegate emergency care",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|healthcare institution manager|skill|healthcare-administration",
+      "context_level": "role",
+      "context_key": "D023|healthcare institution manager",
+      "item_type": "skill",
+      "item_key": "healthcare-administration",
+      "item_name": "healthcare administration",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|healthcare institution manager|skill|implement-policy-in-healthcare-practices",
+      "context_level": "role",
+      "context_key": "D023|healthcare institution manager",
+      "item_type": "skill",
+      "item_key": "implement-policy-in-healthcare-practices",
+      "item_name": "implement policy in healthcare practices",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|healthcare institution manager|skill|manage-healthcare-staff",
+      "context_level": "role",
+      "context_key": "D023|healthcare institution manager",
+      "item_type": "skill",
+      "item_key": "manage-healthcare-staff",
+      "item_name": "manage healthcare staff",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|healthcare institution manager|skill|medical-studies",
+      "context_level": "role",
+      "context_key": "D023|healthcare institution manager",
+      "item_type": "skill",
+      "item_key": "medical-studies",
+      "item_name": "medical studies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|medical laboratory assistant|skill|archive-healthcare-users-records",
+      "context_level": "role",
+      "context_key": "D023|medical laboratory assistant",
+      "item_type": "skill",
+      "item_key": "archive-healthcare-users-records",
+      "item_name": "archive healthcare users' records",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|medical laboratory assistant|skill|automated-analysers-in-the-medical-laboratory",
+      "context_level": "role",
+      "context_key": "D023|medical laboratory assistant",
+      "item_type": "skill",
+      "item_key": "automated-analysers-in-the-medical-laboratory",
+      "item_name": "automated analysers in the medical laboratory",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://mlscn.gov.ng/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|medical laboratory assistant|skill|biological-chemistry",
+      "context_level": "role",
+      "context_key": "D023|medical laboratory assistant",
+      "item_type": "skill",
+      "item_key": "biological-chemistry",
+      "item_name": "biological chemistry",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|medical laboratory assistant|skill|blood-donation",
+      "context_level": "role",
+      "context_key": "D023|medical laboratory assistant",
+      "item_type": "skill",
+      "item_key": "blood-donation",
+      "item_name": "blood donation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|medical laboratory assistant|skill|blood-transfusion",
+      "context_level": "role",
+      "context_key": "D023|medical laboratory assistant",
+      "item_type": "skill",
+      "item_key": "blood-transfusion",
+      "item_name": "blood transfusion",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|medical laboratory assistant|skill|blood-type-classification",
+      "context_level": "role",
+      "context_key": "D023|medical laboratory assistant",
+      "item_type": "skill",
+      "item_key": "blood-type-classification",
+      "item_name": "blood type classification",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|medical laboratory assistant|skill|clinical-biochemistry",
+      "context_level": "role",
+      "context_key": "D023|medical laboratory assistant",
+      "item_type": "skill",
+      "item_key": "clinical-biochemistry",
+      "item_name": "clinical biochemistry",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|medical laboratory assistant|skill|mix-chemicals",
+      "context_level": "role",
+      "context_key": "D023|medical laboratory assistant",
+      "item_type": "skill",
+      "item_key": "mix-chemicals",
+      "item_name": "mix chemicals",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|medical laboratory assistant|skill|transport-blood-samples",
+      "context_level": "role",
+      "context_key": "D023|medical laboratory assistant",
+      "item_type": "skill",
+      "item_key": "transport-blood-samples",
+      "item_name": "transport blood samples",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|prosthetist-orthotist|skill|answer-patients-questions",
+      "context_level": "role",
+      "context_key": "D023|prosthetist-orthotist",
+      "item_type": "skill",
+      "item_key": "answer-patients-questions",
+      "item_name": "answer patients' questions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|prosthetist-orthotist|skill|biomechanics",
+      "context_level": "role",
+      "context_key": "D023|prosthetist-orthotist",
+      "item_type": "skill",
+      "item_key": "biomechanics",
+      "item_name": "biomechanics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|prosthetist-orthotist|skill|collect-healthcare-user-s-general-data",
+      "context_level": "role",
+      "context_key": "D023|prosthetist-orthotist",
+      "item_type": "skill",
+      "item_key": "collect-healthcare-user-s-general-data",
+      "item_name": "collect healthcare user's general data",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|prosthetist-orthotist|skill|contribute-to-the-rehabilitation-process",
+      "context_level": "role",
+      "context_key": "D023|prosthetist-orthotist",
+      "item_type": "skill",
+      "item_key": "contribute-to-the-rehabilitation-process",
+      "item_name": "contribute to the rehabilitation process",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|prosthetist-orthotist|skill|human-physiology",
+      "context_level": "role",
+      "context_key": "D023|prosthetist-orthotist",
+      "item_type": "skill",
+      "item_key": "human-physiology",
+      "item_name": "human physiology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|prosthetist-orthotist|skill|kinetics",
+      "context_level": "role",
+      "context_key": "D023|prosthetist-orthotist",
+      "item_type": "skill",
+      "item_key": "kinetics",
+      "item_name": "kinetics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|prosthetist-orthotist|skill|orthopaedic-goods-industry",
+      "context_level": "role",
+      "context_key": "D023|prosthetist-orthotist",
+      "item_type": "skill",
+      "item_key": "orthopaedic-goods-industry",
+      "item_name": "orthopaedic goods industry",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|prosthetist-orthotist|skill|orthopaedics",
+      "context_level": "role",
+      "context_key": "D023|prosthetist-orthotist",
+      "item_type": "skill",
+      "item_key": "orthopaedics",
+      "item_name": "orthopaedics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|prosthetist-orthotist|skill|prosthetic-devices",
+      "context_level": "role",
+      "context_key": "D023|prosthetist-orthotist",
+      "item_type": "skill",
+      "item_key": "prosthetic-devices",
+      "item_name": "prosthetic devices",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|prosthetist-orthotist|skill|record-healthcare-users-progress-related-to-treatment",
+      "context_level": "role",
+      "context_key": "D023|prosthetist-orthotist",
+      "item_type": "skill",
+      "item_key": "record-healthcare-users-progress-related-to-treatment",
+      "item_name": "record healthcare users' progress related to treatment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|prosthetist-orthotist|skill|rehabilitation",
+      "context_level": "role",
+      "context_key": "D023|prosthetist-orthotist",
+      "item_type": "skill",
+      "item_key": "rehabilitation",
+      "item_name": "rehabilitation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|radiation therapist|skill|administer-contrast-media",
+      "context_level": "role",
+      "context_key": "D023|radiation therapist",
+      "item_type": "skill",
+      "item_key": "administer-contrast-media",
+      "item_name": "administer contrast media",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|radiation therapist|skill|biomarkers",
+      "context_level": "role",
+      "context_key": "D023|radiation therapist",
+      "item_type": "skill",
+      "item_key": "biomarkers",
+      "item_name": "biomarkers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|radiation therapist|skill|identify-progression-of-disease",
+      "context_level": "role",
+      "context_key": "D023|radiation therapist",
+      "item_type": "skill",
+      "item_key": "identify-progression-of-disease",
+      "item_name": "identify progression of disease",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|radiation therapist|skill|medical-contrast-agents",
+      "context_level": "role",
+      "context_key": "D023|radiation therapist",
+      "item_type": "skill",
+      "item_key": "medical-contrast-agents",
+      "item_name": "medical contrast agents",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|radiation therapist|skill|oncologic-hormone-therapy",
+      "context_level": "role",
+      "context_key": "D023|radiation therapist",
+      "item_type": "skill",
+      "item_key": "oncologic-hormone-therapy",
+      "item_name": "oncologic hormone therapy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|radiation therapist|skill|perform-venous-cannulation",
+      "context_level": "role",
+      "context_key": "D023|radiation therapist",
+      "item_type": "skill",
+      "item_key": "perform-venous-cannulation",
+      "item_name": "perform venous cannulation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|radiation therapist|skill|pharmaceutical-products",
+      "context_level": "role",
+      "context_key": "D023|radiation therapist",
+      "item_type": "skill",
+      "item_key": "pharmaceutical-products",
+      "item_name": "pharmaceutical products",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|radiation therapist|skill|radiobiology",
+      "context_level": "role",
+      "context_key": "D023|radiation therapist",
+      "item_type": "skill",
+      "item_key": "radiobiology",
+      "item_name": "radiobiology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|radiation therapist|skill|radiotherapy",
+      "context_level": "role",
+      "context_key": "D023|radiation therapist",
+      "item_type": "skill",
+      "item_key": "radiotherapy",
+      "item_name": "radiotherapy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|radiation therapist|skill|side-effects-of-radiotherapy-treatment",
+      "context_level": "role",
+      "context_key": "D023|radiation therapist",
+      "item_type": "skill",
+      "item_key": "side-effects-of-radiotherapy-treatment",
+      "item_name": "side effects of radiotherapy treatment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|specialised doctor|skill|cancer-risks",
+      "context_level": "role",
+      "context_key": "D023|specialised doctor",
+      "item_type": "skill",
+      "item_key": "cancer-risks",
+      "item_name": "cancer risks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D023|specialised doctor|skill|dermapathology",
+      "context_level": "role",
+      "context_key": "D023|specialised doctor",
+      "item_type": "skill",
+      "item_key": "dermapathology",
+      "item_name": "dermapathology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    }
+  ],
+  "policy": {
+    "review_required_preserved_unless_exact_item_evidence_established": true,
+    "no_relationship_inference": true,
+    "no_promotion": true
+  }
+}

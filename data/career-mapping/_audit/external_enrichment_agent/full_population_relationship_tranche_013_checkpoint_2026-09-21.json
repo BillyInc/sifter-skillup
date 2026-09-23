@@ -1,0 +1,73 @@
+{
+  "schema": "2026-09-21.full-population-relationship-tranche-checkpoint.v1",
+  "tranche": "013",
+  "accessed_on": "2026-09-21",
+  "status": "searched",
+  "blocked": false,
+  "blocker": null,
+  "scope": {
+    "canonical_programmes": 237,
+    "canonical_jamb_identities": 420,
+    "catalogue_unresolved_relationships": 2305,
+    "prior_relationship_search_records": 64,
+    "current_tranche_rows_selected": 4,
+    "current_tranche_rows_searched": 4,
+    "current_tranche_linked": 0,
+    "current_tranche_review_required": 4,
+    "current_tranche_genuinely_unavailable": 0,
+    "current_tranche_remaining_selected_rows": 0
+  },
+  "selection": {
+    "basis": "next unresolved non-D078 relationship rows in deterministic catalogue order, excluding all prior relationship ledger signatures",
+    "excluded_context_prefix": "D078",
+    "rows": [
+      {
+        "candidate_id": "role|D001|Blockchain Engineers|tool|amazon-web-services-aws-software|||not_established",
+        "context_level": "role",
+        "context_key": "D001|Blockchain Engineers",
+        "from": {"item_type": "tool", "item_key": "amazon-web-services-aws-software", "name": "Amazon Web Services AWS software"},
+        "to": {"item_type": null, "item_key": null, "name": null},
+        "relationship_type": "not_established",
+        "current_state": "not_established"
+      },
+      {
+        "candidate_id": "role|D001|Blockchain Engineers|tool|c|||not_established",
+        "context_level": "role",
+        "context_key": "D001|Blockchain Engineers",
+        "from": {"item_type": "tool", "item_key": "c", "name": "C#"},
+        "to": {"item_type": null, "item_key": null, "name": null},
+        "relationship_type": "not_established",
+        "current_state": "not_established"
+      },
+      {
+        "candidate_id": "role|D001|Blockchain Engineers|tool|docker|||not_established",
+        "context_level": "role",
+        "context_key": "D001|Blockchain Engineers",
+        "from": {"item_type": "tool", "item_key": "docker", "name": "Docker"},
+        "to": {"item_type": null, "item_key": null, "name": null},
+        "relationship_type": "not_established",
+        "current_state": "not_established"
+      },
+      {
+        "candidate_id": "role|D001|Blockchain Engineers|tool|git|||not_established",
+        "context_level": "role",
+        "context_key": "D001|Blockchain Engineers",
+        "from": {"item_type": "tool", "item_key": "git", "name": "Git"},
+        "to": {"item_type": null, "item_key": null, "name": null},
+        "relationship_type": "not_established",
+        "current_state": "not_established"
+      }
+    ]
+  },
+  "guardrails": {
+    "relationship_endpoints_must_not_be_inferred": true,
+    "candidate_relationship_type_is_not_established_until_source_proven": true,
+    "search_blocked": false,
+    "sql_touched": false,
+    "generated_seed_transport_touched": false,
+    "catalogue_touched": false,
+    "app_code_touched": false,
+    "ui_touched": false,
+    "browser_proof_touched": false
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "schema": "2026-09-21.full-population-relationship-tranche-report.v1",
+  "accessed_on": "2026-09-21",
+  "selection": "data/career-mapping/_audit/external_enrichment_agent/full_population_relationship_tranche_007_selection_2026-09-21.json",
+  "ledger": "data/career-mapping/_audit/external_enrichment_agent/full_population_relationship_tranche_007_search_ledger_2026-09-21.jsonl",
+  "scope": "Eight non-overlapping unresolved non-D078 relationship rows selected after full_population_relationship_tranche_006.",
+  "counts": {
+    "selected_rows": 8,
+    "searched_rows": 8,
+    "linked_promoted": 0,
+    "review_required": 8,
+    "genuinely_unavailable": 0,
+    "selection_ids_missing_from_ledger": 0,
+    "unexpected_ledger_ids": 0,
+    "duplicate_ledger_ids": 0,
+    "prior_tranche_overlap": 0,
+    "d078_rows": 0
+  },
+  "decision": "All eight rows remain review_required. The searches found authoritative occupation/tool associations and first-party item documentation, but no exact source that names both local typed endpoints and the approved relationship edge. No endpoint or relation type was inferred.",
+  "source_families": [
+    "O*NET OnLine",
+    "Python Software Foundation",
+    "Adobe",
+    "Atlassian",
+    "W3C",
+    "Git project",
+    "Amazon Web Services"
+  ],
+  "guardrails": {
+    "sql_touched": false,
+    "generated_seed_transport_touched": false,
+    "catalogue_touched": false,
+    "app_code_touched": false,
+    "ui_touched": false,
+    "browser_proof_touched": false
+  }
+}

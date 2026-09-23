@@ -241,7 +241,7 @@ Scientific research is the systematic study of the natural world through observa
 
 **D078 — Social Sciences** (22 roles)
 
-Social sciences study how people, societies and institutions behave and change over time. Researchers such as sociologists, historians, criminologists and archaeologists design studies, gather and analyse data, and write academic papers and policy reports, often using statistics. They commonly work in universities, research institutes and government agencies.
+Social Sciences helps you understand how people live together, how groups and institutions shape everyday life, and how societies change. It connects questions about culture, family, work, inequality, crime, policy and community life to evidence gathered through research.
 
 ## Electrical & Electronics Trades
 

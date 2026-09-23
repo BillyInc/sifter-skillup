@@ -177,7 +177,9 @@ INSERT INTO skillup_dev.career_learning_resources
      description, source_confidence, data_state, source_provenance)
 SELECT
     gen_random_uuid(), parent.id, NULL, NULL, NULL, 'programme', 'approved_guidance_v1', rows.resource_type,
-    rows.target_name, rows.provider, 'global', 'free', rows.delivery,
+    rows.target_name, rows.provider, 'global',
+    CASE WHEN rows.delivery LIKE 'publisher reference%' THEN 'paid' ELSE 'free' END,
+    rows.delivery,
     rows.url, rows.url, rows.description, 'high', 'source_backed',
     jsonb_build_object('review_status', 'approved_guidance_v1', 'ownership', 'programme_owned', 'programme', 'Sociology', 'guidance_layer', 'sociology_programme_v1')
 FROM parent
@@ -216,7 +218,13 @@ CROSS JOIN (VALUES
     ('skill_learning', 'Research ethics', 'The Open University', 'free course', 'https://www.open.edu/openlearn/education-development/becoming-ethical-researcher', 'Understand ethical decisions when research involves people.'),
     ('skill_learning', 'Social science research', 'University of Southern Queensland Pressbooks', 'free open textbook', 'https://usq.pressbooks.pub/socialscienceresearch/', 'Follow the research process from design through data collection and analysis.'),
     ('skill_learning', 'Research data management', 'University of Edinburgh MANTRA', 'free self-paced course', 'https://mantra.ed.ac.uk/', 'Learn to organise, document, protect and share research data.'),
-    ('skill_learning', 'OpenIntro Statistics', 'OpenIntro', 'free open textbook and activities', 'https://www.openintro.org/book/os/', 'Use an open statistics text, datasets and activities when quantitative work is appropriate.')
+    ('skill_learning', 'OpenIntro Statistics', 'OpenIntro', 'free open textbook and activities', 'https://www.openintro.org/book/os/', 'Use an open statistics text, datasets and activities when quantitative work is appropriate.'),
+    ('skill_learning', 'research design', 'University of Southern Queensland Pressbooks', 'free open textbook', 'https://usq.pressbooks.pub/socialscienceresearch/', 'Use this open research-methods text to understand how a social question becomes a study design.'),
+    ('skill_learning', 'evidence review', 'The Open University', 'free course', 'https://www.open.edu/openlearn/society-politics-law/sociology/reading-evidence', 'Learn how to read, organise and interpret evidence before drawing a conclusion.'),
+    ('skill_learning', 'scientific communication', 'The Open University', 'free course', 'https://www.open.edu/openlearn/society-politics-law/sociology/reading-evidence', 'Use this evidence-reading material as a starting point for explaining findings clearly.'),
+    ('skill_learning', 'formulate research questions', 'The Open University', 'free interactive course section', 'https://www.open.edu/openlearn/society-politics-law/you-and-your-world-introducing-the-social-sciences/content-section-4.2', 'Practise turning an interest in society into a clear, focused and researchable question.'),
+    ('skill_learning', 'evaluate evidence', 'The Open University', 'free course', 'https://www.open.edu/openlearn/society-politics-law/sociology/reading-evidence', 'Learn to examine evidence and consider what it can and cannot show.'),
+    ('skill_learning', 'document and communicate findings', 'The Open University', 'free course', 'https://www.open.edu/openlearn/society-politics-law/sociology/reading-evidence', 'Use this as a foundation for presenting evidence and findings with appropriate care.')
 ) AS rows(resource_type, target_name, provider, delivery, url, description);
 
 -- Computational Social Science subgroup resources. These are options, not a
@@ -304,14 +312,14 @@ INSERT INTO skillup_dev.career_context_items
      plain_meaning, contextual_use, expected_output, priority, priority_reason,
      prerequisites, related_items, source_ids, source_references, source_locators,
      geographic_scope, evidence_limitations, evidence_type, source_confidence,
-     data_state, verified_at)
+     data_state, guidance_owner, verified_at)
 SELECT
     'programme', parent.id::text, 'D078', rows.item_type, rows.item_key, rows.name,
     rows.plain_meaning, rows.contextual_use, rows.expected_output, rows.priority,
     rows.priority_reason, rows.prerequisites::jsonb, rows.related_items::jsonb,
     rows.source_ids::text[], rows.source_references::jsonb, rows.source_locators::jsonb,
     rows.geographic_scope, rows.evidence_limitations::jsonb, 'source_supported_synthesis',
-    'high', 'source_backed', '2026-09-12'
+    'high', 'source_backed', 'programme', '2026-09-12'
 FROM parent
 CROSS JOIN (VALUES
     ('skill', 'understand-people-groups-and-institutions', 'Understand people, groups and institutions',

@@ -1,0 +1,20 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-checkpoint.v3",
+  "batch": "quality_remediation_lane_104_20260922",
+  "status": "completed",
+  "selection": "data/career-mapping/_audit/external_enrichment_agent/quality_remediation_lane_104_20260922_selection.json",
+  "source_audit": "data/career-mapping/_audit/external_enrichment_agent/item_ledger_quality_audit_2026-09-22.json",
+  "selection_count": 100,
+  "searched_count": 100,
+  "processed_count": 100,
+  "promotion_performed": false,
+  "exact_identity": "casefold(item_type)|casefold(item_key)",
+  "scope_guard": "Items only; relationships, catalogue, SQL, seeds, UI and browser proof untouched.",
+  "lane97_lane98_lane99_lane100_lane101_lane102_lane103_disjointness_checked_under_lock": true,
+  "last_saved_ordinal": 100,
+  "last_saved_subject_id": "item|role|D044|furniture designer|skill|attend-design-meetings",
+  "last_saved_at": "2026-09-23T10:10:55Z",
+  "completed_count": 100,
+  "final_report": "quality_remediation_lane_104_20260922_report.json",
+  "exact_reconciliation": "100/100"
+}

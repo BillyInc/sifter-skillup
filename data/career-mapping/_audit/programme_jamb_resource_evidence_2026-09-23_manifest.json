@@ -1,0 +1,142 @@
+{
+  "schema": "2026-09-23.programme-jamb-resource-evidence-manifest.v1",
+  "generated_on": "2026-09-23",
+  "append_only": true,
+  "scope": {
+    "programme_reviews": 237,
+    "jamb_identities": 420,
+    "jamb_review_required_identities": 86,
+    "jamb_review_link_occurrences": 711
+  },
+  "authorities": [
+    {
+      "authority": "National Universities Commission",
+      "url": "https://www.nuc.edu.ng/ccmas/",
+      "locator": "CCMAS page discipline download links; programme and local PDF locators are retained per row.",
+      "accessed_on": "2026-09-23"
+    },
+    {
+      "authority": "Joint Admissions and Matriculation Board",
+      "url": "https://eligibility.jamb.gov.ng/",
+      "locator": "IBASS programme selector and eligibility checker.",
+      "accessed_on": "2026-09-23"
+    }
+  ],
+  "programme_batches": [
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_programme_batch-001.jsonl",
+      "row_start": 0,
+      "row_count": 20,
+      "sha256": "1f135c6c45fcd092c0c59e6d0a2698dec7cab74eaf7b1634b556d05fc8abc64e"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_programme_batch-002.jsonl",
+      "row_start": 20,
+      "row_count": 20,
+      "sha256": "40af3e8d38fdca255f76ddff24b9bb8942fe414ba89500967227a24afbb1acd6"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_programme_batch-003.jsonl",
+      "row_start": 40,
+      "row_count": 20,
+      "sha256": "597965b3a29a6c5ae27db16c15fa85e1696fa3dd3b68137b38df67ea170136f3"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_programme_batch-004.jsonl",
+      "row_start": 60,
+      "row_count": 20,
+      "sha256": "c9ade28fc407b5d4d5d58ea25ac894c12074e73159906b164ff10f4a892d9f88"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_programme_batch-005.jsonl",
+      "row_start": 80,
+      "row_count": 20,
+      "sha256": "abeb45bec21ac62db5b3b238a8a179aa75fa3e8b8f3f062efa26941645bb0735"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_programme_batch-006.jsonl",
+      "row_start": 100,
+      "row_count": 20,
+      "sha256": "e63d087f6539658b1d2b6808fca42242fde443de34a707a4308a109f45701554"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_programme_batch-007.jsonl",
+      "row_start": 120,
+      "row_count": 20,
+      "sha256": "ca2c409feaa0f2b8b5b78c9fc93f5dda527bcf0abc3410da1aa45eb4e1942479"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_programme_batch-008.jsonl",
+      "row_start": 140,
+      "row_count": 20,
+      "sha256": "c08b880c438d90bb41c9b1aea036f7d15463e4fd4aea5dcb6ae2aa11556daa98"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_programme_batch-009.jsonl",
+      "row_start": 160,
+      "row_count": 20,
+      "sha256": "12c66dbe85924e27857c489330dae34712e041af8f7cd985aad832c3b1bffa90"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_programme_batch-010.jsonl",
+      "row_start": 180,
+      "row_count": 20,
+      "sha256": "c40995ce527aa40504e256a03e7bada867c9dcbdd83b4b851cac3f4cce8cc1b9"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_programme_batch-011.jsonl",
+      "row_start": 200,
+      "row_count": 20,
+      "sha256": "791eba532936f46ed9e0d4a75e1ae04eb5179ab398c3e83395e56ff333c087c5"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_programme_batch-012.jsonl",
+      "row_start": 220,
+      "row_count": 17,
+      "sha256": "59fdcab2fbcee7fe217a67506d6938eb424adf7e7e646fa2b9610ec0d4966105"
+    }
+  ],
+  "jamb_batches": [
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_jamb_batch-001.jsonl",
+      "row_start": 0,
+      "row_count": 20,
+      "sha256": "37cd2983ebdb8c14e9c02f8c8c80d0fe7b48f24905a076737f693f052616d915"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_jamb_batch-002.jsonl",
+      "row_start": 20,
+      "row_count": 20,
+      "sha256": "87dd99926fd7c9b0ec0f146d45e0f2c9e2d9a0f6e30d07a1c7ed4be22ba523fe"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_jamb_batch-003.jsonl",
+      "row_start": 40,
+      "row_count": 20,
+      "sha256": "884ae59593fc40511dc01a7fcdf8e6166e18f228d10ae0217e82a7c899347408"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_jamb_batch-004.jsonl",
+      "row_start": 60,
+      "row_count": 20,
+      "sha256": "f9d44b38e1f4bc09ec13bb4440817da91da609e69739cffcb0f53617c013feff"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_jamb_batch-005.jsonl",
+      "row_start": 80,
+      "row_count": 6,
+      "sha256": "9be4cf458a791197bf66030d114388af578af0dc63b47d664bca7d734073f2c7"
+    }
+  ],
+  "decisions": {
+    "programme_review_required": 237,
+    "jamb_review_required": 86,
+    "promoted": 0,
+    "genuinely_unavailable": 0
+  },
+  "boundaries": {
+    "sql_applied": false,
+    "implementation_changed": false,
+    "live_deployment_claim": false
+  }
+}

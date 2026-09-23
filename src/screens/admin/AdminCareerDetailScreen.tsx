@@ -7,6 +7,8 @@ import type { DataState, DomainRoleV2, DomainV2, Programme } from "@/types/caree
 import { AdminShell } from "./AdminShell";
 import { CompassFonts, FontSize, Radius, Spacing, useTheme, webContainer } from "@/theme";
 import { ExternalLinkGuard } from "@/components/careerIntelligence/ExternalLinkGuard";
+import { AdminGuidanceEvidencePanel } from "@/components/admin/AdminGuidanceEvidencePanel";
+import { normaliseAdminGuidanceEvidence, type AdminGuidanceEvidenceRecord } from "./adminGuidanceEvidence";
 
 type Entity = "programme" | "domain" | "role";
 
@@ -30,6 +32,42 @@ type ReviewLike = {
   sourceConfidence?: string | null;
   reviewStatus?: string | null;
 };
+
+function evidenceRecordsForEntity(entity: Entity, value: Programme | DomainV2 | DomainRoleV2): AdminGuidanceEvidenceRecord[] {
+  const rows: unknown[] = [];
+  const entityKey = entity === "role"
+    ? (value as DomainRoleV2).key
+    : (value as Programme | DomainV2).id;
+  if (entity === "programme") {
+    const programme = value as Programme;
+    rows.push(...(programme.contextItems ?? []), ...(programme.resources ?? []));
+  } else if (entity === "domain") {
+    const domain = value as DomainV2;
+    rows.push(
+      ...(domain.contextItems ?? []),
+      ...(domain.resources ?? []),
+      ...(domain.tools.distinctive ?? []),
+      ...(domain.tools.common ?? []),
+      ...(domain.gatewayCertifications ?? []),
+      ...(domain.roleHintCertifications ?? []),
+      ...domain.subgroups.flatMap((subgroup) => [
+        ...(subgroup.contextItems ?? []),
+        ...(subgroup.resources ?? []),
+        ...(subgroup.tools.distinctive ?? []),
+        ...(subgroup.tools.common ?? []),
+        ...(subgroup.certifications ?? []),
+      ]),
+    );
+  } else {
+    const role = value as DomainRoleV2;
+    rows.push(...(role.contextItems ?? []), ...(role.resources ?? []), ...(role.tools ?? []), ...(role.certifications ?? []));
+  }
+  return rows.map((row, index) => normaliseAdminGuidanceEvidence(row as Record<string, unknown>, {
+    id: `${entity}-${entityKey}-evidence-${index}`,
+    level: entity === "role" ? "role" : entity,
+    contextName: value.name,
+  }));
+}
 
 function AdminIdentity({ label, id, value, rows = [] }: { label: string; id: string; value: unknown; rows?: ReviewLike[] }) {
   const { colors } = useTheme();
@@ -77,6 +115,7 @@ function AdminProgramme({ programme }: { programme: Programme }) {
       <Text style={[styles.title, CompassFonts.displayBold, { color: colors.textRole.primary }]}>{programme.name}</Text>
       <Text style={[styles.caption, { color: colors.textRole.secondary }]}>Canonical programme record used to connect university teaching outcomes to the career taxonomy.</Text>
       <AdminIdentity label="programme" id={programme.id} value={programme} />
+      <AdminGuidanceEvidencePanel records={evidenceRecordsForEntity("programme", programme)} />
       {/* No <Provenance /> here. Programme carries neither sourceConfidence nor
           dataState — /api/career/programmes/{id} does not emit them, unlike the
           domain and role payloads — so the call could only ever render null,
@@ -133,6 +172,7 @@ function AdminDomain({ domain }: { domain: DomainV2 }) {
       <Text style={[styles.caption, { color: colors.textRole.secondary }]}>{domain.description ?? "Domain record with source-backed foundation, subgroup and role data."}</Text>
       <Provenance value={domain} />
       <AdminIdentity label="domain" id={domain.id} value={domain} rows={[...(domain.contextItems ?? []), ...(domain.tools.distinctive ?? []), ...(domain.tools.common ?? []), ...(domain.gatewayCertifications ?? []), ...(domain.roleHintCertifications ?? [])]} />
+      <AdminGuidanceEvidencePanel records={evidenceRecordsForEntity("domain", domain)} />
       <View style={styles.card}>
         <Text style={[styles.cardTitle, CompassFonts.bodySemibold, { color: colors.textRole.primary }]}>Domain-level intelligence</Text>
         <Chips
@@ -187,6 +227,7 @@ function AdminRole({ role }: { role: DomainRoleV2 }) {
       <Text style={[styles.caption, { color: colors.textRole.secondary }]}>Role-level record. Skills, methods, tools and credentials below belong to this role; they are not inherited silently from the parent domain.</Text>
       <Provenance value={role} />
       <AdminIdentity label="role" id={role.key} value={role} rows={[...(role.contextItems ?? []), ...(role.tools ?? []), ...(role.certifications ?? [])]} />
+      <AdminGuidanceEvidencePanel records={evidenceRecordsForEntity("role", role)} />
       <View style={styles.card}>
         <Chips items={role.essentialSkills ?? []} label="Essential skills" />
         <Chips items={role.optionalSkills ?? []} label="Optional skills" />

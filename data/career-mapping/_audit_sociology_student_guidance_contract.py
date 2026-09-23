@@ -8,6 +8,7 @@ claims that an external page is live.
 from __future__ import annotations
 
 import gzip
+import hashlib
 import json
 import re
 from collections import Counter
@@ -22,6 +23,7 @@ ITEMS_PATH = HERE / "contextual_guidance_items.json.gz"
 DOMAIN_AUDIT_PATH = HERE / "domain_skill_competency_certification_audit.json"
 RESOURCE_MIGRATION = ROOT / "backend" / "migration_guidance_ownership_and_sociology_resources_2026-09-11.sql"
 RESOURCE_PARTS = HERE / "learning_resource_population_parts"
+CONTEXTUAL_SEED_PARTS = ROOT / "backend" / "seed_career_context_items_v1_parts"
 MANIFEST_PATH = HERE / "CONTEXTUAL_GUIDANCE_ITEMS_MANIFEST.json"
 
 D078 = "D078"
@@ -139,6 +141,111 @@ def broad_d078_resources() -> list[dict]:
             if row.get("domain_id") == D078_UUID:
                 rows.append(row)
     return rows
+
+
+def transport_integrity_report(parts_dir: Path, manifest: dict) -> dict:
+    """Verify compressed SQL parts against the generated checksum manifest."""
+
+    manifest_parts = manifest.get("parts") or []
+    expected_names = [Path(str(entry.get("file") or "")).name for entry in manifest_parts]
+    name_counts = Counter(expected_names)
+    duplicate_manifest_names = sorted(name for name, count in name_counts.items() if count > 1)
+    expected_sequence = list(range(1, len(manifest_parts) + 1))
+    manifest_numbers = [entry.get("part") for entry in manifest_parts]
+    manifest_order_valid = manifest_numbers == expected_sequence and not duplicate_manifest_names
+
+    actual_paths = sorted(parts_dir.glob("part-*.sql.gz"))
+    actual_names = [path.name for path in actual_paths]
+    expected_set = set(expected_names)
+    actual_set = set(actual_names)
+    missing_parts = sorted(expected_set - actual_set)
+    unexpected_parts = sorted(actual_set - expected_set)
+    entries_by_name = {
+        Path(str(entry.get("file") or "")).name: entry for entry in manifest_parts
+    }
+    byte_mismatches: list[dict] = []
+    sha256_mismatches: list[dict] = []
+    invalid_gzip_parts: list[str] = []
+    transaction_boundary_violations: list[dict] = []
+    for path in actual_paths:
+        entry = entries_by_name.get(path.name)
+        if entry is None:
+            continue
+        actual_bytes = path.stat().st_size
+        if entry.get("bytes") != actual_bytes:
+            byte_mismatches.append({"part": path.name, "expected": entry.get("bytes"), "actual": actual_bytes})
+        actual_sha256 = hashlib.sha256(path.read_bytes()).hexdigest()
+        if entry.get("sha256") != actual_sha256:
+            sha256_mismatches.append({"part": path.name, "expected": entry.get("sha256"), "actual": actual_sha256})
+        try:
+            with gzip.open(path, "rt", encoding="utf-8") as handle:
+                sql_text = handle.read()
+        except (OSError, EOFError, UnicodeError):
+            invalid_gzip_parts.append(path.name)
+            continue
+        begin_count = len(re.findall(r"(?m)^BEGIN;$", sql_text))
+        commit_count = len(re.findall(r"(?m)^COMMIT;$", sql_text))
+        if begin_count != 1 or commit_count != 1:
+            transaction_boundary_violations.append({"part": path.name, "begin_count": begin_count, "commit_count": commit_count})
+    actual_sequence = [
+        int(match.group(1))
+        for name in actual_names
+        if (match := re.fullmatch(r"part-(\d+)\.sql\.gz", name))
+    ]
+    actual_numbering_valid = actual_sequence == expected_sequence
+    integrity_ok = bool(
+        manifest_order_valid
+        and actual_names == expected_names
+        and not missing_parts
+        and not unexpected_parts
+        and actual_numbering_valid
+        and not byte_mismatches
+        and not sha256_mismatches
+        and not invalid_gzip_parts
+        and not transaction_boundary_violations
+    )
+    return {
+        "integrity_ok": integrity_ok,
+        "expected_part_count": len(manifest_parts),
+        "actual_part_count": len(actual_paths),
+        "manifest_order_valid": manifest_order_valid,
+        "actual_numbering_valid": actual_numbering_valid,
+        "missing_parts": missing_parts,
+        "unexpected_parts": unexpected_parts,
+        "duplicate_manifest_names": duplicate_manifest_names,
+        "byte_mismatches": byte_mismatches,
+        "sha256_mismatches": sha256_mismatches,
+        "invalid_gzip_parts": invalid_gzip_parts,
+        "transaction_boundary_violations": transaction_boundary_violations,
+    }
+
+
+def contextual_seed_transport_audit() -> dict:
+    """Check numbered SQL transport and manifest integrity locally."""
+
+    signal_names = (
+        "academic and research qualifications",
+        "institutional research training and professional association membership where applicable",
+    )
+    manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+    parts = sorted(CONTEXTUAL_SEED_PARTS.glob("part-*.sql.gz"))
+    integrity = transport_integrity_report(CONTEXTUAL_SEED_PARTS, manifest)
+    old_signal_hits = 0
+    relationship_table_mentions = 0
+    for path in parts:
+        with gzip.open(path, "rt", encoding="utf-8") as handle:
+            text = handle.read()
+        old_signal_hits += sum(text.count(name) for name in signal_names)
+        relationship_table_mentions += text.count("career_item_relationships")
+    return {
+        "part_count": len(parts),
+        "manifest_part_count": integrity["expected_part_count"],
+        "integrity_ok": integrity["integrity_ok"],
+        "integrity": integrity,
+        "old_d078_generic_certification_signal_hits": old_signal_hits,
+        "relationship_table_mentions": relationship_table_mentions,
+        "note": "Compressed SQL was decompressed for local inspection only; it was not applied to Supabase.",
+    }
 
 
 def audit() -> dict:
@@ -284,6 +391,17 @@ def audit() -> dict:
     cert_evidence = d078_audit.get("nigerian_certification_evidence") or {}
     programme_context_count = len(re.findall(r"^\s+\('(skill|competency)'", RESOURCE_MIGRATION.read_text(encoding="utf-8"), re.MULTILINE))
     manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+    transport = contextual_seed_transport_audit()
+    approval_reasons = []
+    if not transport["integrity_ok"]:
+        approval_reasons.append("The compressed contextual SQL transport does not match its manifest checksums, ordering, or transaction boundaries.")
+    if item_scope_type_gaps.get("missing_explicit_market_scope", 0):
+        approval_reasons.append("D078 contextual certification items have no explicit market scope or credential type in the API-facing item schema.")
+    if item_link_states.get("missing_item_specific_resource", 0):
+        approval_reasons.append("Some source-backed student items have no approved item-specific resource match; the UI must retain the honest no-link state.")
+    approval_reasons.extend([
+        "Live Supabase application and browser verification were not performed.",
+    ])
 
     result = {
         "schema": "2026-09-19.sociology-student-guidance-contract-audit.v1",
@@ -353,15 +471,13 @@ def audit() -> dict:
             "nigerian_certification_evidence_state": cert_evidence.get("evidence_state"),
             "nigerian_certification_source_count": len(cert_evidence.get("sources") or []),
         },
+        "contextual_seed_transport": transport,
         "item_rows": item_rows,
         "relationship_rows": relationship_rows,
         "approval_readiness": {
-            "ready_for_scaling": False,
-            "reasons": [
-                "D078 contextual certification items have no explicit market scope or credential type in the API-facing item schema.",
-                "Some source-backed student items have no approved item-specific resource match; the UI must retain the honest no-link state.",
-                "Live Supabase application and browser verification were not performed.",
-            ],
+            "scaling_phase_authorized": True,
+            "ready_for_live_exposure": False,
+            "reasons": approval_reasons,
         },
     }
     return result
@@ -373,6 +489,14 @@ def markdown_report(result: dict) -> str:
     reviewed = result["reviewed_resources_from_migration"]
     broad = result["broad_catalogue_d078_not_approval"]
     programme = result["sociology_programme_contract"]
+    transport = result["contextual_seed_transport"]
+    certification_count = items["by_type"].get("certification", 0)
+    decision_gap = "certification scope/type metadata, " if certification_count else ""
+    certification_note = (
+        "These rows are therefore a documented gap for approval, not a claim of a universal Nigerian licence or student-facing certification recommendation."
+        if certification_count
+        else "No contextual certification rows are emitted; generic credential signals remain in the source audit and are not student-facing credentials."
+    )
     lines = [
         "# Sociology/D078 Student Guidance Contract Audit (2026-09-19)",
         "",
@@ -397,13 +521,14 @@ def markdown_report(result: dict) -> str:
         f"- Reviewed migration rows: **{reviewed['total']}** by scope `{reviewed['by_scope']}` and type `{reviewed['by_type']}`.",
         f"- HTTPS syntax-valid reviewed URLs: **{reviewed['https_syntax_valid']}**; invalid rows: **{len(reviewed['invalid_url_rows'])}**.",
         f"- Imported broad D078 catalogue rows kept separate from approval: **{broad['total']}** ({broad['by_level']}; states `{broad['by_data_state']}`).",
+        f"- Numbered contextual SQL transport parts checked: **{transport['part_count']}**; manifest integrity: **{transport['integrity_ok']}**; old generic D078 certification signal hits: **{transport['old_d078_generic_certification_signal_hits']}**.",
         "- Only the reviewed migration rows count as approved student resources in this audit; broad imported references are not promoted by name overlap.",
         "",
         "## Certification scope",
         "",
         f"- Contextual certification rows: **{items['by_type'].get('certification', 0)}**; named credentials: **{items.get('certification_names_are_named_credentials', 0)}**; explicit market-scope fields: **0**; explicit credential-type fields: **0**.",
         f"- Domain certification audit records no current domain certification rows and reports `{programme['nigerian_certification_evidence_state']}` across {programme['nigerian_certification_source_count']} Nigerian-context source records.",
-        "- These rows are therefore a documented gap for approval, not a claim of a universal Nigerian licence or student-facing certification recommendation.",
+        f"- {certification_note}",
         "",
         "## Sociology programme layer",
         "",
@@ -412,7 +537,7 @@ def markdown_report(result: dict) -> str:
         "",
         "## Decision",
         "",
-        "**Not ready for scaling.** The local contract is structurally auditable and fails closed for unresolved/review-only states, but certification scope/type metadata, item-specific link coverage, live Supabase application, and browser verification remain open.",
+        f"**Scaling phase authorized locally; live exposure not approved.** The local contract is structurally auditable and fails closed for unresolved/review-only states, but {decision_gap}item-specific link coverage, live Supabase application, and browser verification remain open.",
         "",
         "Generated by `data/career-mapping/_audit_sociology_student_guidance_contract.py`.",
     ]
@@ -432,7 +557,8 @@ def main() -> None:
         "d078_items": result["d078_contextual_items"]["total"],
         "d078_relationships": result["d078_relationships"]["total"],
         "reviewed_resources": result["reviewed_resources_from_migration"]["total"],
-        "approval_ready": result["approval_readiness"]["ready_for_scaling"],
+        "scaling_phase_authorized": result["approval_readiness"]["scaling_phase_authorized"],
+        "ready_for_live_exposure": result["approval_readiness"]["ready_for_live_exposure"],
     }, indent=2))
 
 

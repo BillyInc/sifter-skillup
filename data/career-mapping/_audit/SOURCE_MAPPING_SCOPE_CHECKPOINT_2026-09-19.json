@@ -1,0 +1,65 @@
+{
+  "schema": "2026-09-19.source-mapping-scope-checkpoint.v1",
+  "generated_on": "2026-09-19",
+  "purpose": "Incremental checkpoint before external source review; this artifact does not alter canonical mapping or deployment data.",
+  "authoritative_inputs": {
+    "canonical_programme_domains": "data/career-mapping/programme_domain_final.json",
+    "jamb_inheritance": "data/career-mapping/_audit/jamb_ccmas_inheritance_canonical_2026-08-17.json",
+    "jamb_ccmas_coverage": "data/career-mapping/_audit/jamb_ccmas_curriculum_coverage_matrix_2026-09-19.json",
+    "local_ccmas_curriculum": "data/career-mapping/ccmas/sciences.json"
+  },
+  "inventory": {
+    "canonical_programmes": 237,
+    "canonical_programmes_without_active_domain_link_at_checkpoint": 1,
+    "unmapped_programme_at_checkpoint": "Sciences::Mathematics",
+    "jamb_rows_review_required": 86,
+    "jamb_rows_partial_curriculum_scope": 273,
+    "promotion_policy": "External evidence must establish the named programme/domain relationship and retain an item-specific URL and locator. Otherwise keep review_required or no_link."
+  },
+  "local_findings": [
+    {
+      "programme_ref": "Sciences::Mathematics",
+      "discipline": "Sciences",
+      "programme": "Mathematics",
+      "ccmas_code": "MTH",
+      "source_locator": "data/career-mapping/ccmas/sciences.json; programmes[name=Mathematics]",
+      "course_anchors": [
+        "STA 112 Probability I",
+        "MTH 209 Introduction to Numerical Analysis",
+        "MTH 308 Introduction to Mathematical Modelling",
+        "COS 201 Computer Programming I",
+        "MTH 407 Mathematical Methods",
+        "MTH 408 Entrepreneurship in Mathematics"
+      ],
+      "current_active_domain_links": [],
+      "candidate_domains_retained_for_review": [
+        "D009 Data Science",
+        "D014 Actuarial Science",
+        "D003 Artificial Intelligence",
+        "D002 Data Engineering"
+      ],
+      "decision": "external_source_review_required",
+      "reason": "The local CCMAS curriculum has quantitative, numerical, modelling and computing anchors, but the generated mapping intentionally exposes no domain until programme-specific external corroboration and the domain evidence gate are satisfied."
+    }
+  ],
+  "post_checkpoint_local_observation": {
+    "observed_on": "2026-09-19",
+    "canonical_programmes_without_active_domain_link": 0,
+    "programme_ref": "Sciences::Mathematics",
+    "new_local_link": {
+      "domain_id": "D009",
+      "domain": "Data Science",
+      "relationship_type": "functional",
+      "source_urls": [
+        "https://fos.nou.edu.ng/b-sc-mathematics/",
+        "https://physicalsciences.abu.edu.ng/department/mathematics/public/BScMathematics.php"
+      ],
+      "source_locators": [
+        "NOUN B.Sc. Mathematics page lines 122-143: Introduction to Statistics, Introduction to Programming Languages, Numerical Analysis I and Probability Distribution I.",
+        "ABU B.Sc. Mathematics page lines 60-82: Numerical Analysis I, discrete/continuous probability distributions, programming and Mathematical Modeling."
+      ]
+    },
+    "status": "local_only_not_live_deployed"
+  },
+  "next_step": "Continue authoritative source review for the remaining review_required/partial issue queue; record each decision without editing generated gzip or applying SQL."
+}

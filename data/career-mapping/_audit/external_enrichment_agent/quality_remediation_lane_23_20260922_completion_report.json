@@ -1,0 +1,438 @@
+{
+  "schema": "2026-09-22.quality-remediation-lane-completion-report.v1",
+  "lane": "quality_remediation_lane_23_20260922",
+  "accessed_on": "2026-09-22",
+  "selection": "data/career-mapping/_audit/external_enrichment_agent/quality_remediation_lane_23_20260922_selection.json",
+  "selection_sha256": "924d1128dbf3e005e6327cf97ad2d625480d6e477d9176d10b13cfa6398b6d67",
+  "ledger": "data/career-mapping/_audit/external_enrichment_agent/quality_remediation_lane_23_20260922_search_ledger.jsonl",
+  "counts": {
+    "selected_rows": 100,
+    "rows_reviewed_individually": 100,
+    "ledger_rows": 100,
+    "linked": 0,
+    "review_required": 100,
+    "genuinely_unavailable": 0,
+    "remaining_selected_rows": 0
+  },
+  "reconciliation": {
+    "selection_ids": 100,
+    "unique_selection_ids": 100,
+    "ledger_ids": 100,
+    "unique_ledger_ids": 100,
+    "one_to_one": true,
+    "mapping": [
+      {
+        "selection_id": "item|role|D010|logistics analyst|skill|logistics",
+        "ledger_id": "lane23-20260922-001"
+      },
+      {
+        "selection_id": "item|role|D010|logistics analyst|skill|maintain-logistics-databases",
+        "ledger_id": "lane23-20260922-002"
+      },
+      {
+        "selection_id": "item|role|D010|logistics analyst|skill|military-logistics",
+        "ledger_id": "lane23-20260922-003"
+      },
+      {
+        "selection_id": "item|role|D010|logistics analyst|skill|multimodal-transport-logistics",
+        "ledger_id": "lane23-20260922-004"
+      },
+      {
+        "selection_id": "item|role|D010|logistics analyst|skill|perform-system-analysis",
+        "ledger_id": "lane23-20260922-005"
+      },
+      {
+        "selection_id": "item|role|D010|logistics analyst|skill|support-development-of-annual-budget",
+        "ledger_id": "lane23-20260922-006"
+      },
+      {
+        "selection_id": "item|role|D010|logistics analyst|skill|theory-of-constraints",
+        "ledger_id": "lane23-20260922-007"
+      },
+      {
+        "selection_id": "item|role|D010|logistics analyst|skill|use-spreadsheets-software",
+        "ledger_id": "lane23-20260922-008"
+      },
+      {
+        "selection_id": "item|role|D010|logistics analyst|skill|warehouse-operations",
+        "ledger_id": "lane23-20260922-009"
+      },
+      {
+        "selection_id": "item|role|D010|process officer|skill|analyse-legal-evidence",
+        "ledger_id": "lane23-20260922-010"
+      },
+      {
+        "selection_id": "item|role|D010|process officer|skill|analyse-scientific-data",
+        "ledger_id": "lane23-20260922-011"
+      },
+      {
+        "selection_id": "item|role|D010|process officer|skill|assess-administrative-burden",
+        "ledger_id": "lane23-20260922-012"
+      },
+      {
+        "selection_id": "item|role|D010|process officer|skill|check-processing-parameters",
+        "ledger_id": "lane23-20260922-013"
+      },
+      {
+        "selection_id": "item|role|D010|process officer|skill|human-resources-department-processes",
+        "ledger_id": "lane23-20260922-014"
+      },
+      {
+        "selection_id": "item|role|D010|process officer|skill|identify-process-improvements",
+        "ledger_id": "lane23-20260922-015"
+      },
+      {
+        "selection_id": "item|role|D010|process officer|skill|manage-processes",
+        "ledger_id": "lane23-20260922-016"
+      },
+      {
+        "selection_id": "item|role|D010|process officer|skill|management-department-processes",
+        "ledger_id": "lane23-20260922-017"
+      },
+      {
+        "selection_id": "item|role|D010|process officer|skill|measure-effectiveness-of-the-service-provided",
+        "ledger_id": "lane23-20260922-018"
+      },
+      {
+        "selection_id": "item|role|D010|process officer|skill|negotiate-improvement-with-suppliers",
+        "ledger_id": "lane23-20260922-019"
+      },
+      {
+        "selection_id": "item|role|D010|process officer|skill|operations-department-processes",
+        "ledger_id": "lane23-20260922-020"
+      },
+      {
+        "selection_id": "item|role|D010|process officer|skill|process-based-management",
+        "ledger_id": "lane23-20260922-021"
+      },
+      {
+        "selection_id": "item|role|D010|process officer|skill|promote-evaluation-capacity-development",
+        "ledger_id": "lane23-20260922-022"
+      },
+      {
+        "selection_id": "item|role|D010|process officer|skill|provide-necessary-documents",
+        "ledger_id": "lane23-20260922-023"
+      },
+      {
+        "selection_id": "item|role|D010|process officer|skill|surveillance-methods",
+        "ledger_id": "lane23-20260922-024"
+      },
+      {
+        "selection_id": "item|role|D011|Credit Analysts|tool|microsoft-visual-basic",
+        "ledger_id": "lane23-20260922-025"
+      },
+      {
+        "selection_id": "item|role|D011|Credit Analysts|tool|microsoft-visual-basic-for-applications-vba",
+        "ledger_id": "lane23-20260922-026"
+      },
+      {
+        "selection_id": "item|role|D011|asset manager|skill|actuarial-science",
+        "ledger_id": "lane23-20260922-027"
+      },
+      {
+        "selection_id": "item|role|D011|asset manager|skill|advise-on-risk-management",
+        "ledger_id": "lane23-20260922-028"
+      },
+      {
+        "selection_id": "item|role|D011|asset manager|skill|analyse-market-financial-trends",
+        "ledger_id": "lane23-20260922-029"
+      },
+      {
+        "selection_id": "item|role|D011|asset manager|skill|apply-credit-risk-policy",
+        "ledger_id": "lane23-20260922-030"
+      },
+      {
+        "selection_id": "item|role|D011|asset manager|skill|asset-management",
+        "ledger_id": "lane23-20260922-031"
+      },
+      {
+        "selection_id": "item|role|D011|asset manager|skill|credit-control-processes",
+        "ledger_id": "lane23-20260922-032"
+      },
+      {
+        "selection_id": "item|role|D011|asset manager|skill|develop-investment-portfolio",
+        "ledger_id": "lane23-20260922-033"
+      },
+      {
+        "selection_id": "item|role|D011|asset manager|skill|enforce-financial-policies",
+        "ledger_id": "lane23-20260922-034"
+      },
+      {
+        "selection_id": "item|role|D011|asset manager|skill|financial-analysis",
+        "ledger_id": "lane23-20260922-035"
+      },
+      {
+        "selection_id": "item|role|D011|asset manager|skill|financial-management",
+        "ledger_id": "lane23-20260922-036"
+      },
+      {
+        "selection_id": "item|role|D011|asset manager|skill|financial-markets",
+        "ledger_id": "lane23-20260922-037"
+      },
+      {
+        "selection_id": "item|role|D011|asset manager|skill|funding-methods",
+        "ledger_id": "lane23-20260922-038"
+      },
+      {
+        "selection_id": "item|role|D011|asset manager|skill|modern-portfolio-theory",
+        "ledger_id": "lane23-20260922-039"
+      },
+      {
+        "selection_id": "item|role|D011|asset manager|skill|securities",
+        "ledger_id": "lane23-20260922-040"
+      },
+      {
+        "selection_id": "item|role|D011|asset manager|skill|strive-for-company-growth",
+        "ledger_id": "lane23-20260922-041"
+      },
+      {
+        "selection_id": "item|role|D011|energy trader|skill|analyse-energy-market-trends",
+        "ledger_id": "lane23-20260922-042"
+      },
+      {
+        "selection_id": "item|role|D011|energy trader|skill|create-a-financial-plan",
+        "ledger_id": "lane23-20260922-043"
+      },
+      {
+        "selection_id": "item|role|D011|energy trader|skill|electricity-market",
+        "ledger_id": "lane23-20260922-044"
+      },
+      {
+        "selection_id": "item|role|D011|energy trader|skill|energy-market",
+        "ledger_id": "lane23-20260922-045"
+      },
+      {
+        "selection_id": "item|role|D011|energy trader|skill|forecast-energy-prices",
+        "ledger_id": "lane23-20260922-046"
+      },
+      {
+        "selection_id": "item|role|D011|energy trader|skill|gas-market",
+        "ledger_id": "lane23-20260922-047"
+      },
+      {
+        "selection_id": "item|role|D011|energy trader|skill|investment-analysis",
+        "ledger_id": "lane23-20260922-048"
+      },
+      {
+        "selection_id": "item|role|D011|energy trader|skill|manage-financial-risk",
+        "ledger_id": "lane23-20260922-049"
+      },
+      {
+        "selection_id": "item|role|D011|energy trader|skill|market-analysis",
+        "ledger_id": "lane23-20260922-050"
+      },
+      {
+        "selection_id": "item|role|D011|energy trader|skill|obtain-financial-information",
+        "ledger_id": "lane23-20260922-051"
+      },
+      {
+        "selection_id": "item|role|D011|energy trader|skill|operate-financial-instruments",
+        "ledger_id": "lane23-20260922-052"
+      },
+      {
+        "selection_id": "item|role|D011|energy trader|skill|state-estimation",
+        "ledger_id": "lane23-20260922-053"
+      },
+      {
+        "selection_id": "item|role|D011|energy trader|skill|stock-market",
+        "ledger_id": "lane23-20260922-054"
+      },
+      {
+        "selection_id": "item|role|D011|financial analyst|skill|financial-forecasting",
+        "ledger_id": "lane23-20260922-055"
+      },
+      {
+        "selection_id": "item|role|D011|financial analyst|skill|fundamental-analysis",
+        "ledger_id": "lane23-20260922-056"
+      },
+      {
+        "selection_id": "item|role|D011|financial analyst|skill|investment-banking",
+        "ledger_id": "lane23-20260922-057"
+      },
+      {
+        "selection_id": "item|role|D011|financial analyst|skill|mergers-and-acquisitions",
+        "ledger_id": "lane23-20260922-058"
+      },
+      {
+        "selection_id": "item|role|D011|financial analyst|skill|sustainable-finance",
+        "ledger_id": "lane23-20260922-059"
+      },
+      {
+        "selection_id": "item|role|D011|financial analyst|skill|treasury-management-system",
+        "ledger_id": "lane23-20260922-060"
+      },
+      {
+        "selection_id": "item|role|D011|financial broker|skill|advise-on-financial-matters",
+        "ledger_id": "lane23-20260922-061"
+      },
+      {
+        "selection_id": "item|role|D011|financial broker|skill|financial-jurisdiction",
+        "ledger_id": "lane23-20260922-062"
+      },
+      {
+        "selection_id": "item|role|D011|financial broker|skill|optimise-financial-performance",
+        "ledger_id": "lane23-20260922-063"
+      },
+      {
+        "selection_id": "item|role|D011|financial broker|skill|protect-client-interests",
+        "ledger_id": "lane23-20260922-064"
+      },
+      {
+        "selection_id": "item|role|D011|financial broker|skill|synthesise-financial-information",
+        "ledger_id": "lane23-20260922-065"
+      },
+      {
+        "selection_id": "item|role|D011|financial broker|skill|trace-financial-transactions",
+        "ledger_id": "lane23-20260922-066"
+      },
+      {
+        "selection_id": "item|role|D011|financial trader|skill|analyse-economic-trends",
+        "ledger_id": "lane23-20260922-067"
+      },
+      {
+        "selection_id": "item|role|D011|financial trader|skill|maintain-records-of-financial-transactions",
+        "ledger_id": "lane23-20260922-068"
+      },
+      {
+        "selection_id": "item|role|D011|foreign exchange broker|skill|analyse-financial-risk",
+        "ledger_id": "lane23-20260922-069"
+      },
+      {
+        "selection_id": "item|role|D011|foreign exchange broker|skill|commercial-law",
+        "ledger_id": "lane23-20260922-070"
+      },
+      {
+        "selection_id": "item|role|D011|foreign exchange broker|skill|foreign-valuta",
+        "ledger_id": "lane23-20260922-071"
+      },
+      {
+        "selection_id": "item|role|D011|foreign exchange broker|skill|international-trade",
+        "ledger_id": "lane23-20260922-072"
+      },
+      {
+        "selection_id": "item|role|D011|foreign exchange broker|skill|perform-financial-risk-management-in-international-trade",
+        "ledger_id": "lane23-20260922-073"
+      },
+      {
+        "selection_id": "item|role|D011|foreign exchange broker|skill|trade-foreign-currencies",
+        "ledger_id": "lane23-20260922-074"
+      },
+      {
+        "selection_id": "item|role|D011|foreign exchange trader|skill|forecast-economic-trends",
+        "ledger_id": "lane23-20260922-075"
+      },
+      {
+        "selection_id": "item|role|D011|futures trader|skill|trade-future-commodities",
+        "ledger_id": "lane23-20260922-076"
+      },
+      {
+        "selection_id": "item|role|D011|insurance rating analyst|skill|analyse-loans",
+        "ledger_id": "lane23-20260922-077"
+      },
+      {
+        "selection_id": "item|role|D011|insurance rating analyst|skill|debt-systems",
+        "ledger_id": "lane23-20260922-078"
+      },
+      {
+        "selection_id": "item|role|D011|insurance rating analyst|skill|examine-credit-ratings",
+        "ledger_id": "lane23-20260922-079"
+      },
+      {
+        "selection_id": "item|role|D011|insurance rating analyst|skill|insurance-law",
+        "ledger_id": "lane23-20260922-080"
+      },
+      {
+        "selection_id": "item|role|D011|insurance rating analyst|skill|insurance-market",
+        "ledger_id": "lane23-20260922-081"
+      },
+      {
+        "selection_id": "item|role|D011|insurance rating analyst|skill|prepare-credit-reports",
+        "ledger_id": "lane23-20260922-082"
+      },
+      {
+        "selection_id": "item|role|D011|insurance rating analyst|skill|principles-of-insurance",
+        "ledger_id": "lane23-20260922-083"
+      },
+      {
+        "selection_id": "item|role|D011|insurance rating analyst|skill|types-of-insurance",
+        "ledger_id": "lane23-20260922-084"
+      },
+      {
+        "selection_id": "item|role|D011|investment analyst|skill|international-financial-reporting-standards",
+        "ledger_id": "lane23-20260922-085"
+      },
+      {
+        "selection_id": "item|role|D011|mergers and acquisitions analyst|skill|analyse-business-plans",
+        "ledger_id": "lane23-20260922-086"
+      },
+      {
+        "selection_id": "item|role|D011|mergers and acquisitions analyst|skill|analyse-financial-performance-of-a-company",
+        "ledger_id": "lane23-20260922-087"
+      },
+      {
+        "selection_id": "item|role|D011|mergers and acquisitions analyst|skill|business-loans",
+        "ledger_id": "lane23-20260922-088"
+      },
+      {
+        "selection_id": "item|role|D011|mergers and acquisitions analyst|skill|business-valuation-techniques",
+        "ledger_id": "lane23-20260922-089"
+      },
+      {
+        "selection_id": "item|role|D011|mergers and acquisitions analyst|skill|holding-company-activities",
+        "ledger_id": "lane23-20260922-090"
+      },
+      {
+        "selection_id": "item|role|D011|mergers and acquisitions analyst|skill|manage-contracts",
+        "ledger_id": "lane23-20260922-091"
+      },
+      {
+        "selection_id": "item|role|D011|mergers and acquisitions analyst|skill|provide-support-in-financial-calculation",
+        "ledger_id": "lane23-20260922-092"
+      },
+      {
+        "selection_id": "item|role|D011|mergers and acquisitions analyst|skill|review-investment-portfolios",
+        "ledger_id": "lane23-20260922-093"
+      },
+      {
+        "selection_id": "item|role|D011|middle office analyst|skill|handle-paperwork",
+        "ledger_id": "lane23-20260922-094"
+      },
+      {
+        "selection_id": "item|role|D011|middle office analyst|skill|office-administration",
+        "ledger_id": "lane23-20260922-095"
+      },
+      {
+        "selection_id": "item|role|D011|middle office analyst|skill|office-software",
+        "ledger_id": "lane23-20260922-096"
+      },
+      {
+        "selection_id": "item|role|D011|mutual fund broker|skill|implement-hedging-strategies-for-clients",
+        "ledger_id": "lane23-20260922-097"
+      },
+      {
+        "selection_id": "item|role|D011|mutual fund broker|skill|perform-stock-valuation",
+        "ledger_id": "lane23-20260922-098"
+      },
+      {
+        "selection_id": "item|role|D011|securities broker|skill|assess-risks-of-clients-assets",
+        "ledger_id": "lane23-20260922-099"
+      },
+      {
+        "selection_id": "item|role|D011|securities broker|skill|electronic-communication",
+        "ledger_id": "lane23-20260922-100"
+      }
+    ]
+  },
+  "decision_summary": "All 100 lane-23 records remain review_required. The inspected sources are authoritative institutions but generic or mismatched for the exact selected item/type/context; no exact evidence gate passed and nothing was promoted.",
+  "guardrails": {
+    "selection_created_or_changed": false,
+    "other_lane_touched": false,
+    "prior_ledgers_touched": false,
+    "relationships_touched": false,
+    "catalogue_touched": false,
+    "sql_touched": false,
+    "generated_seed_transport_touched": false,
+    "ui_touched": false,
+    "browser_proof_touched": false
+  }
+}

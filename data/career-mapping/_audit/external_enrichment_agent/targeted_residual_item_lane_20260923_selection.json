@@ -1,0 +1,1117 @@
+{
+  "count": 8,
+  "rows": [
+    {
+      "context_key": "D078",
+      "context_level": "domain",
+      "contextual_use": "At domain level, this helps a student understand the shared foundation of Social Sciences before choosing a subgroup or role.",
+      "data_state": "source_backed",
+      "domain_key": "D078",
+      "evidence_limitations": [
+        "This is domain context, not a universal requirement, demand ranking or proof of competence."
+      ],
+      "evidence_type": "source_supported_synthesis",
+      "expected_output": "A documented question, analysis, explanation or piece of work appropriate to the field.",
+      "geographic_scope": "nigeria_to_global",
+      "guidance_owner": "domain",
+      "item_key": "evaluate-evidence",
+      "item_type": "competency",
+      "link_accessed_at": null,
+      "link_confidence": "low",
+      "link_evidence": {
+        "confidence": "low",
+        "limitation": "The source establishes evidence-synthesis/search/screening workflow, but does not by itself establish every evaluation behavior implied by this competency label.",
+        "reviewedAt": "2026-09-20",
+        "sources": [
+          {
+            "accessedAt": "2026-09-20",
+            "authority": "National Institutes of Health Library",
+            "evidence": "The page says that the research question determines the review type, screening criteria, extraction and synthesis approach, and describes a protocol-to-search-to-synthesis workflow.",
+            "id": "nih_start_here",
+            "locator": "Refine the Question; Evidence Synthesis Methods; captured page sections corresponding to lines 45-62 and 79-87.",
+            "title": "Start Here: Evidence Synthesis",
+            "url": "https://www.nihlibrary.nih.gov/services/evidence-synthesis/start-here"
+          }
+        ],
+        "status": "context_candidate_review_required"
+      },
+      "link_source_reference": {
+        "candidates": [
+          {
+            "accessedAt": "2026-09-20",
+            "authority": "National Institutes of Health Library",
+            "evidence": "The page says that the research question determines the review type, screening criteria, extraction and synthesis approach, and describes a protocol-to-search-to-synthesis workflow.",
+            "id": "nih_start_here",
+            "locator": "Refine the Question; Evidence Synthesis Methods; captured page sections corresponding to lines 45-62 and 79-87.",
+            "title": "Start Here: Evidence Synthesis",
+            "url": "https://www.nihlibrary.nih.gov/services/evidence-synthesis/start-here"
+          }
+        ]
+      },
+      "link_state": "review_required",
+      "link_title": null,
+      "link_url": null,
+      "name": "evaluate evidence",
+      "no_link_reason": "The source establishes evidence-synthesis/search/screening workflow, but does not by itself establish every evaluation behavior implied by this competency label.",
+      "plain_meaning": "This capability is recorded as part of the source-backed preparation for evaluate evidence.",
+      "prerequisites": [
+        "scientific communication",
+        "formulate research questions"
+      ],
+      "priority": "build_next",
+      "priority_reason": "Build this after the foundation because it is explicitly named in the checked domain evidence.",
+      "related_items": [
+        "document and communicate findings"
+      ],
+      "source_confidence": "high",
+      "source_ids": [
+        "Nigerian Academy of Science",
+        "Nigerian Institute of Medical Research",
+        "Nigerian Institute of Social and Economic Research",
+        "global_esco",
+        "global_onet",
+        "global_isco",
+        "global_wef",
+        "global_unesco"
+      ],
+      "source_locators": [
+        {
+          "domainId": "D078",
+          "evidenceKind": "competency",
+          "owner": "domain"
+        }
+      ],
+      "source_references": [
+        {
+          "evidenceType": "nigerian_domain_context",
+          "id": "https://niser.gov.ng/",
+          "region": "nigeria",
+          "title": "Nigerian Institute of Social and Economic Research",
+          "url": "https://niser.gov.ng/"
+        },
+        {
+          "evidenceType": "nigerian_domain_context",
+          "id": "https://nas.org.ng/",
+          "region": "nigeria",
+          "title": "Nigerian Academy of Science",
+          "url": "https://nas.org.ng/"
+        },
+        {
+          "evidenceType": "nigerian_certification_context",
+          "id": "Nigerian Institute of Medical Research",
+          "region": "nigeria",
+          "title": "Nigerian Institute of Medical Research",
+          "url": "https://nimr.gov.ng/"
+        },
+        {
+          "evidenceType": "occupation_taxonomy",
+          "id": "global_esco",
+          "region": "global",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco"
+        },
+        {
+          "evidenceType": "occupation_taxonomy_and_job_titles",
+          "id": "global_onet",
+          "region": "global",
+          "title": "O*NET 31.0 Database",
+          "url": "https://www.onetcenter.org/database.html"
+        },
+        {
+          "evidenceType": "international_occupation_standard",
+          "id": "global_isco",
+          "region": "global",
+          "title": "ILO ISCO-08",
+          "url": "https://isco.ilo.org/en/isco-08/"
+        },
+        {
+          "evidenceType": "emerging_role_signal",
+          "id": "global_wef",
+          "region": "global",
+          "title": "World Economic Forum Future of Jobs 2025",
+          "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/"
+        },
+        {
+          "evidenceType": "sector_role_context",
+          "id": "global_unesco",
+          "region": "global",
+          "title": "UNESCO education, science and culture resources",
+          "url": "https://www.unesco.org/"
+        }
+      ],
+      "verified_at": "2026-09-12"
+    },
+    {
+      "context_key": "D078|sg:21",
+      "context_level": "subgroup",
+      "contextual_use": "This is an area-specific capability in Computational Social Science & Quantitative Methods; it adds focus to the shared Social Sciences foundation.",
+      "data_state": "source_backed",
+      "domain_key": "D078",
+      "evidence_limitations": [
+        "This subgroup record describes an area of work; it is not a requirement to learn every listed capability."
+      ],
+      "evidence_type": "source_supported_synthesis",
+      "expected_output": "An area-specific analysis, method, dataset, report or other work product.",
+      "geographic_scope": "nigeria_to_global",
+      "guidance_owner": "subgroup",
+      "item_key": "draft-scientific-or-academic-papers-and-technical-documentation",
+      "item_type": "skill",
+      "link_accessed_at": null,
+      "link_confidence": "low",
+      "link_evidence": {
+        "confidence": "low",
+        "limitation": "The source supports scientific/social-science paper structure, but does not establish the technical-documentation half of the label.",
+        "reviewedAt": "2026-09-20",
+        "sources": [
+          {
+            "accessedAt": "2026-09-20",
+            "authority": "Purdue Online Writing Lab",
+            "evidence": "The guide describes scientific and social-science reports using Introduction, Method, Results, Discussion and References sections.",
+            "id": "purdue_papers",
+            "locator": "Experimental report and scientific-method structure; captured page sections corresponding to lines 40-62.",
+            "title": "Types of APA Papers",
+            "url": "https://owl.purdue.edu/owl/research_and_citation/apa_style/apa_formatting_and_style_guide/types_of_apa_papers.html"
+          }
+        ],
+        "status": "context_candidate_review_required"
+      },
+      "link_source_reference": {
+        "candidates": [
+          {
+            "accessedAt": "2026-09-20",
+            "authority": "Purdue Online Writing Lab",
+            "evidence": "The guide describes scientific and social-science reports using Introduction, Method, Results, Discussion and References sections.",
+            "id": "purdue_papers",
+            "locator": "Experimental report and scientific-method structure; captured page sections corresponding to lines 40-62.",
+            "title": "Types of APA Papers",
+            "url": "https://owl.purdue.edu/owl/research_and_citation/apa_style/apa_formatting_and_style_guide/types_of_apa_papers.html"
+          }
+        ]
+      },
+      "link_state": "review_required",
+      "link_title": null,
+      "link_url": null,
+      "name": "draft scientific or academic papers and technical documentation",
+      "no_link_reason": "The source supports scientific/social-science paper structure, but does not establish the technical-documentation half of the label.",
+      "plain_meaning": "This capability is recorded as part of the source-backed preparation for draft scientific or academic papers and technical documentation.",
+      "prerequisites": [
+        "statistics",
+        "scientific research methodology"
+      ],
+      "priority": "build_next",
+      "priority_reason": "Start with the area foundation, then add more specialised capabilities as your direction becomes clearer.",
+      "related_items": [
+        "manage research data",
+        "interact professionally in research and professional environments"
+      ],
+      "source_confidence": "high",
+      "source_ids": [
+        "global_esco",
+        "global_onet",
+        "ng_nbs",
+        "ng_education",
+        "ng_creative"
+      ],
+      "source_locators": [
+        {
+          "domainId": "D078",
+          "iscoSubmajor": "21",
+          "owner": "subgroup",
+          "subgroup": "Computational Social Science & Quantitative Methods"
+        }
+      ],
+      "source_references": [
+        {
+          "evidenceType": "nigerian_domain_context",
+          "id": "https://niser.gov.ng/",
+          "region": "nigeria",
+          "title": "Nigerian Institute of Social and Economic Research",
+          "url": "https://niser.gov.ng/"
+        },
+        {
+          "evidenceType": "nigerian_domain_context",
+          "id": "https://nas.org.ng/",
+          "region": "nigeria",
+          "title": "Nigerian Academy of Science",
+          "url": "https://nas.org.ng/"
+        },
+        {
+          "evidenceType": "nigerian_certification_context",
+          "id": "Nigerian Institute of Medical Research",
+          "region": "nigeria",
+          "title": "Nigerian Institute of Medical Research",
+          "url": "https://nimr.gov.ng/"
+        },
+        {
+          "evidenceType": "occupation_taxonomy",
+          "id": "global_esco",
+          "region": "global",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco"
+        },
+        {
+          "evidenceType": "occupation_taxonomy_and_job_titles",
+          "id": "global_onet",
+          "region": "global",
+          "title": "O*NET 31.0 Database",
+          "url": "https://www.onetcenter.org/database.html"
+        },
+        {
+          "evidenceType": "international_occupation_standard",
+          "id": "global_isco",
+          "region": "global",
+          "title": "ILO ISCO-08",
+          "url": "https://isco.ilo.org/en/isco-08/"
+        },
+        {
+          "evidenceType": "emerging_role_signal",
+          "id": "global_wef",
+          "region": "global",
+          "title": "World Economic Forum Future of Jobs 2025",
+          "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/"
+        },
+        {
+          "evidenceType": "sector_role_context",
+          "id": "global_unesco",
+          "region": "global",
+          "title": "UNESCO education, science and culture resources",
+          "url": "https://www.unesco.org/"
+        }
+      ],
+      "verified_at": "2026-09-12"
+    },
+    {
+      "context_key": "D078|sg:21",
+      "context_level": "subgroup",
+      "contextual_use": "This is an area-specific capability in Computational Social Science & Quantitative Methods; it adds focus to the shared Social Sciences foundation.",
+      "data_state": "source_backed",
+      "domain_key": "D078",
+      "evidence_limitations": [
+        "This subgroup record describes an area of work; it is not a requirement to learn every listed capability."
+      ],
+      "evidence_type": "source_supported_synthesis",
+      "expected_output": "An area-specific analysis, method, dataset, report or other work product.",
+      "geographic_scope": "nigeria_to_global",
+      "guidance_owner": "subgroup",
+      "item_key": "execute-analytical-mathematical-calculations",
+      "item_type": "skill",
+      "link_accessed_at": null,
+      "link_confidence": "low",
+      "link_evidence": {
+        "confidence": "low",
+        "limitation": "NIST supports quantitative data investigation, but the page does not establish the full generic mathematical-calculation label.",
+        "reviewedAt": "2026-09-20",
+        "sources": [
+          {
+            "accessedAt": "2026-09-20",
+            "authority": "National Institute of Standards and Technology",
+            "evidence": "The NIST handbook defines exploratory data analysis and lists graphical and quantitative techniques for investigating data and discovering structure.",
+            "id": "nist_eda",
+            "locator": "EDA definition, goals and techniques; captured page sections corresponding to lines 5-23.",
+            "title": "Exploratory Data Analysis",
+            "url": "https://itl.nist.gov/div898/handbook/eda/section1/eda11.htm"
+          }
+        ],
+        "status": "context_candidate_review_required"
+      },
+      "link_source_reference": {
+        "candidates": [
+          {
+            "accessedAt": "2026-09-20",
+            "authority": "National Institute of Standards and Technology",
+            "evidence": "The NIST handbook defines exploratory data analysis and lists graphical and quantitative techniques for investigating data and discovering structure.",
+            "id": "nist_eda",
+            "locator": "EDA definition, goals and techniques; captured page sections corresponding to lines 5-23.",
+            "title": "Exploratory Data Analysis",
+            "url": "https://itl.nist.gov/div898/handbook/eda/section1/eda11.htm"
+          }
+        ]
+      },
+      "link_state": "review_required",
+      "link_title": null,
+      "link_url": null,
+      "name": "execute analytical mathematical calculations",
+      "no_link_reason": "NIST supports quantitative data investigation, but the page does not establish the full generic mathematical-calculation label.",
+      "plain_meaning": "This capability is recorded as part of the source-backed preparation for execute analytical mathematical calculations.",
+      "prerequisites": [
+        "operate open source software",
+        "speak different languages"
+      ],
+      "priority": "build_next",
+      "priority_reason": "Start with the area foundation, then add more specialised capabilities as your direction becomes clearer.",
+      "related_items": [
+        "social network analysis"
+      ],
+      "source_confidence": "high",
+      "source_ids": [
+        "global_esco",
+        "global_onet",
+        "ng_nbs",
+        "ng_education",
+        "ng_creative"
+      ],
+      "source_locators": [
+        {
+          "domainId": "D078",
+          "iscoSubmajor": "21",
+          "owner": "subgroup",
+          "subgroup": "Computational Social Science & Quantitative Methods"
+        }
+      ],
+      "source_references": [
+        {
+          "evidenceType": "nigerian_domain_context",
+          "id": "https://niser.gov.ng/",
+          "region": "nigeria",
+          "title": "Nigerian Institute of Social and Economic Research",
+          "url": "https://niser.gov.ng/"
+        },
+        {
+          "evidenceType": "nigerian_domain_context",
+          "id": "https://nas.org.ng/",
+          "region": "nigeria",
+          "title": "Nigerian Academy of Science",
+          "url": "https://nas.org.ng/"
+        },
+        {
+          "evidenceType": "nigerian_certification_context",
+          "id": "Nigerian Institute of Medical Research",
+          "region": "nigeria",
+          "title": "Nigerian Institute of Medical Research",
+          "url": "https://nimr.gov.ng/"
+        },
+        {
+          "evidenceType": "occupation_taxonomy",
+          "id": "global_esco",
+          "region": "global",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco"
+        },
+        {
+          "evidenceType": "occupation_taxonomy_and_job_titles",
+          "id": "global_onet",
+          "region": "global",
+          "title": "O*NET 31.0 Database",
+          "url": "https://www.onetcenter.org/database.html"
+        },
+        {
+          "evidenceType": "international_occupation_standard",
+          "id": "global_isco",
+          "region": "global",
+          "title": "ILO ISCO-08",
+          "url": "https://isco.ilo.org/en/isco-08/"
+        },
+        {
+          "evidenceType": "emerging_role_signal",
+          "id": "global_wef",
+          "region": "global",
+          "title": "World Economic Forum Future of Jobs 2025",
+          "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/"
+        },
+        {
+          "evidenceType": "sector_role_context",
+          "id": "global_unesco",
+          "region": "global",
+          "title": "UNESCO education, science and culture resources",
+          "url": "https://www.unesco.org/"
+        }
+      ],
+      "verified_at": "2026-09-12"
+    },
+    {
+      "context_key": "D078|sg:21",
+      "context_level": "subgroup",
+      "contextual_use": "This is an area-specific capability in Computational Social Science & Quantitative Methods; it adds focus to the shared Social Sciences foundation.",
+      "data_state": "source_backed",
+      "domain_key": "D078",
+      "evidence_limitations": [
+        "This subgroup record describes an area of work; it is not a requirement to learn every listed capability."
+      ],
+      "evidence_type": "source_supported_synthesis",
+      "expected_output": "An area-specific analysis, method, dataset, report or other work product.",
+      "geographic_scope": "nigeria_to_global",
+      "guidance_owner": "subgroup",
+      "item_key": "interact-professionally-in-research-and-professional-environments",
+      "item_type": "skill",
+      "link_accessed_at": null,
+      "link_confidence": "low",
+      "link_evidence": {
+        "confidence": "low",
+        "limitation": "ResearchComp is a strong researcher-competence candidate, but the captured evidence is broader than this exact contextual skill label and still needs human acceptance.",
+        "reviewedAt": "2026-09-20",
+        "sources": [
+          {
+            "accessedAt": "2026-09-20",
+            "authority": "European Commission / ResearchComp",
+            "evidence": "The official ResearchComp route is a researcher-competence framework; supporting material identifies teamwork with people from diverse backgrounds and clear communication as research-career skills.",
+            "id": "researchcomp",
+            "locator": "ResearchComp framework destination; the linked research-career material identifies the framework and describes working with people from diverse backgrounds and communication as researcher skills.",
+            "title": "ResearchComp: European Competence Framework for Researchers",
+            "url": "https://research-and-innovation.ec.europa.eu/jobs-research/researchcomp-european-competence-framework-researchers_en"
+          }
+        ],
+        "status": "context_candidate_review_required"
+      },
+      "link_source_reference": {
+        "candidates": [
+          {
+            "accessedAt": "2026-09-20",
+            "authority": "European Commission / ResearchComp",
+            "evidence": "The official ResearchComp route is a researcher-competence framework; supporting material identifies teamwork with people from diverse backgrounds and clear communication as research-career skills.",
+            "id": "researchcomp",
+            "locator": "ResearchComp framework destination; the linked research-career material identifies the framework and describes working with people from diverse backgrounds and communication as researcher skills.",
+            "title": "ResearchComp: European Competence Framework for Researchers",
+            "url": "https://research-and-innovation.ec.europa.eu/jobs-research/researchcomp-european-competence-framework-researchers_en"
+          }
+        ]
+      },
+      "link_state": "review_required",
+      "link_title": null,
+      "link_url": null,
+      "name": "interact professionally in research and professional environments",
+      "no_link_reason": "ResearchComp is a strong researcher-competence candidate, but the captured evidence is broader than this exact contextual skill label and still needs human acceptance.",
+      "plain_meaning": "This capability is recorded as part of the source-backed preparation for interact professionally in research and professional environments.",
+      "prerequisites": [
+        "draft scientific or academic papers and technical documentation",
+        "manage research data"
+      ],
+      "priority": "build_next",
+      "priority_reason": "Start with the area foundation, then add more specialised capabilities as your direction becomes clearer.",
+      "related_items": [
+        "disseminate results to the scientific community",
+        "operate open source software"
+      ],
+      "source_confidence": "high",
+      "source_ids": [
+        "global_esco",
+        "global_onet",
+        "ng_nbs",
+        "ng_education",
+        "ng_creative"
+      ],
+      "source_locators": [
+        {
+          "domainId": "D078",
+          "iscoSubmajor": "21",
+          "owner": "subgroup",
+          "subgroup": "Computational Social Science & Quantitative Methods"
+        }
+      ],
+      "source_references": [
+        {
+          "evidenceType": "nigerian_domain_context",
+          "id": "https://niser.gov.ng/",
+          "region": "nigeria",
+          "title": "Nigerian Institute of Social and Economic Research",
+          "url": "https://niser.gov.ng/"
+        },
+        {
+          "evidenceType": "nigerian_domain_context",
+          "id": "https://nas.org.ng/",
+          "region": "nigeria",
+          "title": "Nigerian Academy of Science",
+          "url": "https://nas.org.ng/"
+        },
+        {
+          "evidenceType": "nigerian_certification_context",
+          "id": "Nigerian Institute of Medical Research",
+          "region": "nigeria",
+          "title": "Nigerian Institute of Medical Research",
+          "url": "https://nimr.gov.ng/"
+        },
+        {
+          "evidenceType": "occupation_taxonomy",
+          "id": "global_esco",
+          "region": "global",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco"
+        },
+        {
+          "evidenceType": "occupation_taxonomy_and_job_titles",
+          "id": "global_onet",
+          "region": "global",
+          "title": "O*NET 31.0 Database",
+          "url": "https://www.onetcenter.org/database.html"
+        },
+        {
+          "evidenceType": "international_occupation_standard",
+          "id": "global_isco",
+          "region": "global",
+          "title": "ILO ISCO-08",
+          "url": "https://isco.ilo.org/en/isco-08/"
+        },
+        {
+          "evidenceType": "emerging_role_signal",
+          "id": "global_wef",
+          "region": "global",
+          "title": "World Economic Forum Future of Jobs 2025",
+          "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/"
+        },
+        {
+          "evidenceType": "sector_role_context",
+          "id": "global_unesco",
+          "region": "global",
+          "title": "UNESCO education, science and culture resources",
+          "url": "https://www.unesco.org/"
+        }
+      ],
+      "verified_at": "2026-09-12"
+    },
+    {
+      "context_key": "D078|sg:21",
+      "context_level": "subgroup",
+      "contextual_use": "This is an area-specific capability in Computational Social Science & Quantitative Methods; it adds focus to the shared Social Sciences foundation.",
+      "data_state": "source_backed",
+      "domain_key": "D078",
+      "evidence_limitations": [
+        "This subgroup record describes an area of work; it is not a requirement to learn every listed capability."
+      ],
+      "evidence_type": "source_supported_synthesis",
+      "expected_output": "An area-specific analysis, method, dataset, report or other work product.",
+      "geographic_scope": "nigeria_to_global",
+      "guidance_owner": "subgroup",
+      "item_key": "mathematics",
+      "item_type": "skill",
+      "link_accessed_at": null,
+      "link_confidence": "low",
+      "link_evidence": {
+        "confidence": "low",
+        "limitation": "The source is an authoritative item-specific mathematics course, but it is not Sociology/D078-specific.",
+        "reviewedAt": "2026-09-20",
+        "sources": [
+          {
+            "accessedAt": "2026-09-20",
+            "authority": "MIT OpenCourseWare",
+            "evidence": "The course page names mathematics and covers definitions, proofs, sets, relations, graphs and probability; it is a general mathematics course rather than a sociology-specific source.",
+            "id": "mit_math",
+            "locator": "Course description and topics; captured page sections corresponding to lines 83-96 and 117-121.",
+            "title": "Mathematics for Computer Science",
+            "url": "https://ocw.mit.edu/courses/6-042j-mathematics-for-computer-science-spring-2015/"
+          }
+        ],
+        "status": "context_candidate_review_required"
+      },
+      "link_source_reference": {
+        "candidates": [
+          {
+            "accessedAt": "2026-09-20",
+            "authority": "MIT OpenCourseWare",
+            "evidence": "The course page names mathematics and covers definitions, proofs, sets, relations, graphs and probability; it is a general mathematics course rather than a sociology-specific source.",
+            "id": "mit_math",
+            "locator": "Course description and topics; captured page sections corresponding to lines 83-96 and 117-121.",
+            "title": "Mathematics for Computer Science",
+            "url": "https://ocw.mit.edu/courses/6-042j-mathematics-for-computer-science-spring-2015/"
+          }
+        ]
+      },
+      "link_state": "review_required",
+      "link_title": null,
+      "link_url": null,
+      "name": "mathematics",
+      "no_link_reason": "The source is an authoritative item-specific mathematics course, but it is not Sociology/D078-specific.",
+      "plain_meaning": "This capability is recorded as part of the source-backed preparation for mathematics.",
+      "prerequisites": [],
+      "priority": "start_here",
+      "priority_reason": "Start with the area foundation, then add more specialised capabilities as your direction becomes clearer.",
+      "related_items": [
+        "statistics",
+        "scientific research methodology"
+      ],
+      "source_confidence": "high",
+      "source_ids": [
+        "global_esco",
+        "global_onet",
+        "ng_nbs",
+        "ng_education",
+        "ng_creative"
+      ],
+      "source_locators": [
+        {
+          "domainId": "D078",
+          "iscoSubmajor": "21",
+          "owner": "subgroup",
+          "subgroup": "Computational Social Science & Quantitative Methods"
+        }
+      ],
+      "source_references": [
+        {
+          "evidenceType": "nigerian_domain_context",
+          "id": "https://niser.gov.ng/",
+          "region": "nigeria",
+          "title": "Nigerian Institute of Social and Economic Research",
+          "url": "https://niser.gov.ng/"
+        },
+        {
+          "evidenceType": "nigerian_domain_context",
+          "id": "https://nas.org.ng/",
+          "region": "nigeria",
+          "title": "Nigerian Academy of Science",
+          "url": "https://nas.org.ng/"
+        },
+        {
+          "evidenceType": "nigerian_certification_context",
+          "id": "Nigerian Institute of Medical Research",
+          "region": "nigeria",
+          "title": "Nigerian Institute of Medical Research",
+          "url": "https://nimr.gov.ng/"
+        },
+        {
+          "evidenceType": "occupation_taxonomy",
+          "id": "global_esco",
+          "region": "global",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco"
+        },
+        {
+          "evidenceType": "occupation_taxonomy_and_job_titles",
+          "id": "global_onet",
+          "region": "global",
+          "title": "O*NET 31.0 Database",
+          "url": "https://www.onetcenter.org/database.html"
+        },
+        {
+          "evidenceType": "international_occupation_standard",
+          "id": "global_isco",
+          "region": "global",
+          "title": "ILO ISCO-08",
+          "url": "https://isco.ilo.org/en/isco-08/"
+        },
+        {
+          "evidenceType": "emerging_role_signal",
+          "id": "global_wef",
+          "region": "global",
+          "title": "World Economic Forum Future of Jobs 2025",
+          "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/"
+        },
+        {
+          "evidenceType": "sector_role_context",
+          "id": "global_unesco",
+          "region": "global",
+          "title": "UNESCO education, science and culture resources",
+          "url": "https://www.unesco.org/"
+        }
+      ],
+      "verified_at": "2026-09-12"
+    },
+    {
+      "context_key": "D078|sg:21",
+      "context_level": "subgroup",
+      "contextual_use": "This is an area-specific capability in Computational Social Science & Quantitative Methods; it adds focus to the shared Social Sciences foundation.",
+      "data_state": "source_backed",
+      "domain_key": "D078",
+      "evidence_limitations": [
+        "This subgroup record describes an area of work; it is not a requirement to learn every listed capability."
+      ],
+      "evidence_type": "source_supported_synthesis",
+      "expected_output": "An area-specific analysis, method, dataset, report or other work product.",
+      "geographic_scope": "nigeria_to_global",
+      "guidance_owner": "subgroup",
+      "item_key": "operate-open-source-software",
+      "item_type": "skill",
+      "link_accessed_at": null,
+      "link_confidence": "low",
+      "link_evidence": {
+        "confidence": "low",
+        "limitation": "The source establishes an authoritative open-source software item and its documented capabilities, not the generic ability to operate any open-source software.",
+        "reviewedAt": "2026-09-20",
+        "sources": [
+          {
+            "accessedAt": "2026-09-20",
+            "authority": "NetworkX project documentation",
+            "evidence": "The project page identifies NetworkX as open-source software for creating, manipulating and studying the structure, dynamics and functions of complex networks.",
+            "id": "networkx",
+            "locator": "Project description and capabilities; captured page sections corresponding to lines 4-12.",
+            "title": "NetworkX",
+            "url": "https://networkx.org/en/"
+          }
+        ],
+        "status": "context_candidate_review_required"
+      },
+      "link_source_reference": {
+        "candidates": [
+          {
+            "accessedAt": "2026-09-20",
+            "authority": "NetworkX project documentation",
+            "evidence": "The project page identifies NetworkX as open-source software for creating, manipulating and studying the structure, dynamics and functions of complex networks.",
+            "id": "networkx",
+            "locator": "Project description and capabilities; captured page sections corresponding to lines 4-12.",
+            "title": "NetworkX",
+            "url": "https://networkx.org/en/"
+          }
+        ]
+      },
+      "link_state": "review_required",
+      "link_title": null,
+      "link_url": null,
+      "name": "operate open source software",
+      "no_link_reason": "The source establishes an authoritative open-source software item and its documented capabilities, not the generic ability to operate any open-source software.",
+      "plain_meaning": "This capability is recorded as part of the source-backed preparation for operate open source software.",
+      "prerequisites": [
+        "interact professionally in research and professional environments",
+        "disseminate results to the scientific community"
+      ],
+      "priority": "build_next",
+      "priority_reason": "Start with the area foundation, then add more specialised capabilities as your direction becomes clearer.",
+      "related_items": [
+        "speak different languages",
+        "execute analytical mathematical calculations"
+      ],
+      "source_confidence": "high",
+      "source_ids": [
+        "global_esco",
+        "global_onet",
+        "ng_nbs",
+        "ng_education",
+        "ng_creative"
+      ],
+      "source_locators": [
+        {
+          "domainId": "D078",
+          "iscoSubmajor": "21",
+          "owner": "subgroup",
+          "subgroup": "Computational Social Science & Quantitative Methods"
+        }
+      ],
+      "source_references": [
+        {
+          "evidenceType": "nigerian_domain_context",
+          "id": "https://niser.gov.ng/",
+          "region": "nigeria",
+          "title": "Nigerian Institute of Social and Economic Research",
+          "url": "https://niser.gov.ng/"
+        },
+        {
+          "evidenceType": "nigerian_domain_context",
+          "id": "https://nas.org.ng/",
+          "region": "nigeria",
+          "title": "Nigerian Academy of Science",
+          "url": "https://nas.org.ng/"
+        },
+        {
+          "evidenceType": "nigerian_certification_context",
+          "id": "Nigerian Institute of Medical Research",
+          "region": "nigeria",
+          "title": "Nigerian Institute of Medical Research",
+          "url": "https://nimr.gov.ng/"
+        },
+        {
+          "evidenceType": "occupation_taxonomy",
+          "id": "global_esco",
+          "region": "global",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco"
+        },
+        {
+          "evidenceType": "occupation_taxonomy_and_job_titles",
+          "id": "global_onet",
+          "region": "global",
+          "title": "O*NET 31.0 Database",
+          "url": "https://www.onetcenter.org/database.html"
+        },
+        {
+          "evidenceType": "international_occupation_standard",
+          "id": "global_isco",
+          "region": "global",
+          "title": "ILO ISCO-08",
+          "url": "https://isco.ilo.org/en/isco-08/"
+        },
+        {
+          "evidenceType": "emerging_role_signal",
+          "id": "global_wef",
+          "region": "global",
+          "title": "World Economic Forum Future of Jobs 2025",
+          "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/"
+        },
+        {
+          "evidenceType": "sector_role_context",
+          "id": "global_unesco",
+          "region": "global",
+          "title": "UNESCO education, science and culture resources",
+          "url": "https://www.unesco.org/"
+        }
+      ],
+      "verified_at": "2026-09-12"
+    },
+    {
+      "context_key": "D078|sg:21",
+      "context_level": "subgroup",
+      "contextual_use": "This is an area-specific capability in Computational Social Science & Quantitative Methods; it adds focus to the shared Social Sciences foundation.",
+      "data_state": "source_backed",
+      "domain_key": "D078",
+      "evidence_limitations": [
+        "This subgroup record describes an area of work; it is not a requirement to learn every listed capability."
+      ],
+      "evidence_type": "source_supported_synthesis",
+      "expected_output": "An area-specific analysis, method, dataset, report or other work product.",
+      "geographic_scope": "nigeria_to_global",
+      "guidance_owner": "subgroup",
+      "item_key": "speak-different-languages",
+      "item_type": "skill",
+      "link_accessed_at": null,
+      "link_confidence": "low",
+      "link_evidence": {
+        "confidence": "low",
+        "limitation": "The EU/ESCO material names the exact generic skill, but this tranche does not establish that it is Sociology/D078-specific or appropriate as a student-facing foundation.",
+        "reviewedAt": "2026-09-20",
+        "sources": [
+          {
+            "accessedAt": "2026-09-20",
+            "authority": "European Commission ESCO materials",
+            "evidence": "The language-skills section explicitly lists the generic skill concept ‘Speak different languages’ alongside other language competence concepts.",
+            "id": "esco_languages",
+            "locator": "PDF page 6, Language skills and knowledge; captured PDF lines 67-82.",
+            "title": "Development of the ESCO Skills Hierarchy",
+            "url": "https://esco.ec.europa.eu/system/files/2021-07/00266efc-e358-4fa8-b8e3-877d99059efcESCO_Skills_Hierarchy_-_MAI_20190524.pdf"
+          }
+        ],
+        "status": "context_candidate_review_required"
+      },
+      "link_source_reference": {
+        "candidates": [
+          {
+            "accessedAt": "2026-09-20",
+            "authority": "European Commission ESCO materials",
+            "evidence": "The language-skills section explicitly lists the generic skill concept ‘Speak different languages’ alongside other language competence concepts.",
+            "id": "esco_languages",
+            "locator": "PDF page 6, Language skills and knowledge; captured PDF lines 67-82.",
+            "title": "Development of the ESCO Skills Hierarchy",
+            "url": "https://esco.ec.europa.eu/system/files/2021-07/00266efc-e358-4fa8-b8e3-877d99059efcESCO_Skills_Hierarchy_-_MAI_20190524.pdf"
+          }
+        ]
+      },
+      "link_state": "review_required",
+      "link_title": null,
+      "link_url": null,
+      "name": "speak different languages",
+      "no_link_reason": "The EU/ESCO material names the exact generic skill, but this tranche does not establish that it is Sociology/D078-specific or appropriate as a student-facing foundation.",
+      "plain_meaning": "This capability is recorded as part of the source-backed preparation for speak different languages.",
+      "prerequisites": [
+        "disseminate results to the scientific community",
+        "operate open source software"
+      ],
+      "priority": "build_next",
+      "priority_reason": "Start with the area foundation, then add more specialised capabilities as your direction becomes clearer.",
+      "related_items": [
+        "execute analytical mathematical calculations",
+        "social network analysis"
+      ],
+      "source_confidence": "high",
+      "source_ids": [
+        "global_esco",
+        "global_onet",
+        "ng_nbs",
+        "ng_education",
+        "ng_creative"
+      ],
+      "source_locators": [
+        {
+          "domainId": "D078",
+          "iscoSubmajor": "21",
+          "owner": "subgroup",
+          "subgroup": "Computational Social Science & Quantitative Methods"
+        }
+      ],
+      "source_references": [
+        {
+          "evidenceType": "nigerian_domain_context",
+          "id": "https://niser.gov.ng/",
+          "region": "nigeria",
+          "title": "Nigerian Institute of Social and Economic Research",
+          "url": "https://niser.gov.ng/"
+        },
+        {
+          "evidenceType": "nigerian_domain_context",
+          "id": "https://nas.org.ng/",
+          "region": "nigeria",
+          "title": "Nigerian Academy of Science",
+          "url": "https://nas.org.ng/"
+        },
+        {
+          "evidenceType": "nigerian_certification_context",
+          "id": "Nigerian Institute of Medical Research",
+          "region": "nigeria",
+          "title": "Nigerian Institute of Medical Research",
+          "url": "https://nimr.gov.ng/"
+        },
+        {
+          "evidenceType": "occupation_taxonomy",
+          "id": "global_esco",
+          "region": "global",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco"
+        },
+        {
+          "evidenceType": "occupation_taxonomy_and_job_titles",
+          "id": "global_onet",
+          "region": "global",
+          "title": "O*NET 31.0 Database",
+          "url": "https://www.onetcenter.org/database.html"
+        },
+        {
+          "evidenceType": "international_occupation_standard",
+          "id": "global_isco",
+          "region": "global",
+          "title": "ILO ISCO-08",
+          "url": "https://isco.ilo.org/en/isco-08/"
+        },
+        {
+          "evidenceType": "emerging_role_signal",
+          "id": "global_wef",
+          "region": "global",
+          "title": "World Economic Forum Future of Jobs 2025",
+          "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/"
+        },
+        {
+          "evidenceType": "sector_role_context",
+          "id": "global_unesco",
+          "region": "global",
+          "title": "UNESCO education, science and culture resources",
+          "url": "https://www.unesco.org/"
+        }
+      ],
+      "verified_at": "2026-09-12"
+    },
+    {
+      "context_key": "D078|sg:26",
+      "context_level": "subgroup",
+      "contextual_use": "This is an area-specific capability in Social & Economic Research; it adds focus to the shared Social Sciences foundation.",
+      "data_state": "source_backed",
+      "domain_key": "D078",
+      "evidence_limitations": [
+        "This subgroup record describes an area of work; it is not a requirement to learn every listed capability."
+      ],
+      "evidence_type": "source_supported_synthesis",
+      "expected_output": "An area-specific analysis, method, dataset, report or other work product.",
+      "geographic_scope": "nigeria_to_global",
+      "guidance_owner": "subgroup",
+      "item_key": "sociology",
+      "item_type": "skill",
+      "link_accessed_at": null,
+      "link_confidence": "low",
+      "link_evidence": {
+        "confidence": "low",
+        "limitation": "The source is a sociology methods page, but this search did not establish an authoritative item-specific definition for the broad skill label itself.",
+        "reviewedAt": "2026-09-20",
+        "sources": [
+          {
+            "accessedAt": "2026-09-20",
+            "authority": "Rutgers Department of Sociology",
+            "evidence": "The page describes experimental research design, quantitative statistical techniques, and social network analysis as a relational approach using networks, nodes, ties and edges.",
+            "id": "rutgers_methods",
+            "locator": "Experimental Research Design, qualitative/quantitative methods and Social Network Analysis sections; captured page sections corresponding to lines 24-49.",
+            "title": "Research Methods",
+            "url": "https://sociology.rutgers.edu/research/research-methods"
+          }
+        ],
+        "status": "context_candidate_review_required"
+      },
+      "link_source_reference": {
+        "candidates": [
+          {
+            "accessedAt": "2026-09-20",
+            "authority": "Rutgers Department of Sociology",
+            "evidence": "The page describes experimental research design, quantitative statistical techniques, and social network analysis as a relational approach using networks, nodes, ties and edges.",
+            "id": "rutgers_methods",
+            "locator": "Experimental Research Design, qualitative/quantitative methods and Social Network Analysis sections; captured page sections corresponding to lines 24-49.",
+            "title": "Research Methods",
+            "url": "https://sociology.rutgers.edu/research/research-methods"
+          }
+        ]
+      },
+      "link_state": "review_required",
+      "link_title": null,
+      "link_url": null,
+      "name": "sociology",
+      "no_link_reason": "The source is a sociology methods page, but this search did not establish an authoritative item-specific definition for the broad skill label itself.",
+      "plain_meaning": "This capability is recorded as part of the source-backed preparation for sociology.",
+      "prerequisites": [
+        "research design",
+        "statistics"
+      ],
+      "priority": "start_here",
+      "priority_reason": "Start with the area foundation, then add more specialised capabilities as your direction becomes clearer.",
+      "related_items": [
+        "empirical analysis",
+        "manage research data"
+      ],
+      "source_confidence": "high",
+      "source_ids": [
+        "global_esco",
+        "global_onet",
+        "ng_nbs",
+        "ng_education",
+        "ng_creative"
+      ],
+      "source_locators": [
+        {
+          "domainId": "D078",
+          "iscoSubmajor": "26",
+          "owner": "subgroup",
+          "subgroup": "Social & Economic Research"
+        }
+      ],
+      "source_references": [
+        {
+          "evidenceType": "nigerian_domain_context",
+          "id": "https://niser.gov.ng/",
+          "region": "nigeria",
+          "title": "Nigerian Institute of Social and Economic Research",
+          "url": "https://niser.gov.ng/"
+        },
+        {
+          "evidenceType": "nigerian_domain_context",
+          "id": "https://nas.org.ng/",
+          "region": "nigeria",
+          "title": "Nigerian Academy of Science",
+          "url": "https://nas.org.ng/"
+        },
+        {
+          "evidenceType": "nigerian_certification_context",
+          "id": "Nigerian Institute of Medical Research",
+          "region": "nigeria",
+          "title": "Nigerian Institute of Medical Research",
+          "url": "https://nimr.gov.ng/"
+        },
+        {
+          "evidenceType": "occupation_taxonomy",
+          "id": "global_esco",
+          "region": "global",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco"
+        },
+        {
+          "evidenceType": "occupation_taxonomy_and_job_titles",
+          "id": "global_onet",
+          "region": "global",
+          "title": "O*NET 31.0 Database",
+          "url": "https://www.onetcenter.org/database.html"
+        },
+        {
+          "evidenceType": "international_occupation_standard",
+          "id": "global_isco",
+          "region": "global",
+          "title": "ILO ISCO-08",
+          "url": "https://isco.ilo.org/en/isco-08/"
+        },
+        {
+          "evidenceType": "emerging_role_signal",
+          "id": "global_wef",
+          "region": "global",
+          "title": "World Economic Forum Future of Jobs 2025",
+          "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/"
+        },
+        {
+          "evidenceType": "sector_role_context",
+          "id": "global_unesco",
+          "region": "global",
+          "title": "UNESCO education, science and culture resources",
+          "url": "https://www.unesco.org/"
+        }
+      ],
+      "verified_at": "2026-09-12"
+    }
+  ],
+  "schema": "2026-09-23.targeted-residual-item-selection.v1",
+  "source": "data/career-mapping/contextual_guidance_items.json.gz",
+  "source_link_state": "review_required"
+}

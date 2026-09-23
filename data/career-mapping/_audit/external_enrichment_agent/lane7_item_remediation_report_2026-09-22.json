@@ -1,0 +1,15 @@
+{
+  "schema": "2026-09-22.lane7-item-remediation-report.v1",
+  "lane": "lane7",
+  "claim_id": "05be17cddfc0c9d7",
+  "selection": "lane7_item_remediation_selection_2026-09-22.json",
+  "checkpoint": "lane7_item_remediation_pre_search_checkpoint_2026-09-22.json",
+  "ledger": "lane7_item_remediation_search_ledger_2026-09-22.jsonl",
+  "searched_count": 100,
+  "linked_count": 0,
+  "review_required_count": 100,
+  "promoted_count": 0,
+  "result": "All records remain review_required; authoritative item references were retained but exact item/type/context evidence was not proven.",
+  "scope_guard": "No relationships, catalogue, SQL, seeds, UI, browser proof, or promotion touched.",
+  "append_only_ledger": true
+}

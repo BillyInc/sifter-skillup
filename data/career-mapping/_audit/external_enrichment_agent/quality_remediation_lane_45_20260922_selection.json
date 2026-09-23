@@ -1,0 +1,1619 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-selection.v2",
+  "batch": "quality_remediation_lane_45_20260922",
+  "selected_at": "2026-09-22",
+  "source_audit": "data/career-mapping/_audit/external_enrichment_agent/item_ledger_quality_audit_2026-09-22.json",
+  "source_sha256": "133e9d2024c233ad316c5e9712f0d57585a5154bd93f5a832518c1c6e5461bac",
+  "selection_method": "atomic shared lock; exclude all prior valid claims by contextual and typed identity",
+  "prior_claimed_contextual_ids": 3772,
+  "prior_claimed_typed_items": 3146,
+  "selection_count": 100,
+  "requested_count": 100,
+  "shortfall": 0,
+  "rows": [
+    {
+      "subject_id": "item|role|D028|social entrepreneur|skill|crowdfunding",
+      "context_level": "role",
+      "context_key": "D028|social entrepreneur",
+      "item_type": "skill",
+      "item_key": "crowdfunding",
+      "item_name": "crowdfunding",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|social entrepreneur|skill|design-thinking",
+      "context_level": "role",
+      "context_key": "D028|social entrepreneur",
+      "item_type": "skill",
+      "item_key": "design-thinking",
+      "item_name": "design thinking",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|social entrepreneur|skill|participatory-decision-making",
+      "context_level": "role",
+      "context_key": "D028|social entrepreneur",
+      "item_type": "skill",
+      "item_key": "participatory-decision-making",
+      "item_name": "participatory decision-making",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|social entrepreneur|skill|philanthropy",
+      "context_level": "role",
+      "context_key": "D028|social entrepreneur",
+      "item_type": "skill",
+      "item_key": "philanthropy",
+      "item_name": "philanthropy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|social entrepreneur|skill|results-based-management",
+      "context_level": "role",
+      "context_key": "D028|social entrepreneur",
+      "item_type": "skill",
+      "item_key": "results-based-management",
+      "item_name": "results-based management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|social entrepreneur|skill|social-alliances",
+      "context_level": "role",
+      "context_key": "D028|social entrepreneur",
+      "item_type": "skill",
+      "item_key": "social-alliances",
+      "item_name": "social alliances",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|social entrepreneur|skill|social-entrepreneurship",
+      "context_level": "role",
+      "context_key": "D028|social entrepreneur",
+      "item_type": "skill",
+      "item_key": "social-entrepreneurship",
+      "item_name": "social entrepreneurship",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|social security administrator|skill|advise-on-legislative-acts",
+      "context_level": "role",
+      "context_key": "D028|social security administrator",
+      "item_type": "skill",
+      "item_key": "advise-on-legislative-acts",
+      "item_name": "advise on legislative acts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|social security administrator|skill|develop-social-security-programmes",
+      "context_level": "role",
+      "context_key": "D028|social security administrator",
+      "item_type": "skill",
+      "item_key": "develop-social-security-programmes",
+      "item_name": "develop social security programmes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|social security administrator|skill|ensure-information-transparency",
+      "context_level": "role",
+      "context_key": "D028|social security administrator",
+      "item_type": "skill",
+      "item_key": "ensure-information-transparency",
+      "item_name": "ensure information transparency",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|social security administrator|skill|government-social-security-programmes",
+      "context_level": "role",
+      "context_key": "D028|social security administrator",
+      "item_type": "skill",
+      "item_key": "government-social-security-programmes",
+      "item_name": "government social security programmes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|social security administrator|skill|manage-government-policy-implementation",
+      "context_level": "role",
+      "context_key": "D028|social security administrator",
+      "item_type": "skill",
+      "item_key": "manage-government-policy-implementation",
+      "item_name": "manage government policy implementation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|social security administrator|skill|promote-social-security-programmes",
+      "context_level": "role",
+      "context_key": "D028|social security administrator",
+      "item_type": "skill",
+      "item_key": "promote-social-security-programmes",
+      "item_name": "promote social security programmes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|social security administrator|skill|provide-improvement-strategies",
+      "context_level": "role",
+      "context_key": "D028|social security administrator",
+      "item_type": "skill",
+      "item_key": "provide-improvement-strategies",
+      "item_name": "provide improvement strategies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|social security administrator|skill|public-housing-legislation",
+      "context_level": "role",
+      "context_key": "D028|social security administrator",
+      "item_type": "skill",
+      "item_key": "public-housing-legislation",
+      "item_name": "public housing legislation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|social security administrator|tool|workday-software",
+      "context_level": "role",
+      "context_key": "D028|social security administrator",
+      "item_type": "tool",
+      "item_key": "workday-software",
+      "item_name": "Workday software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|sustainability manager|skill|green-computing",
+      "context_level": "role",
+      "context_key": "D028|sustainability manager",
+      "item_type": "skill",
+      "item_key": "green-computing",
+      "item_name": "green computing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|sustainability manager|skill|sustainable-agricultural-production-principles",
+      "context_level": "role",
+      "context_key": "D028|sustainability manager",
+      "item_type": "skill",
+      "item_key": "sustainable-agricultural-production-principles",
+      "item_name": "sustainable agricultural production principles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|tourism policy director|skill|assess-an-area-as-a-tourism-destination",
+      "context_level": "role",
+      "context_key": "D028|tourism policy director",
+      "item_type": "skill",
+      "item_key": "assess-an-area-as-a-tourism-destination",
+      "item_name": "assess an area as a tourism destination",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|tourism policy director|skill|coordinate-public-private-partnerships-in-tourism",
+      "context_level": "role",
+      "context_key": "D028|tourism policy director",
+      "item_type": "skill",
+      "item_key": "coordinate-public-private-partnerships-in-tourism",
+      "item_name": "coordinate public-private partnerships in tourism",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|tourism policy director|skill|deliver-presentations-on-tourism",
+      "context_level": "role",
+      "context_key": "D028|tourism policy director",
+      "item_type": "skill",
+      "item_key": "deliver-presentations-on-tourism",
+      "item_name": "deliver presentations on tourism",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|tourism policy director|skill|develop-tourism-policies",
+      "context_level": "role",
+      "context_key": "D028|tourism policy director",
+      "item_type": "skill",
+      "item_key": "develop-tourism-policies",
+      "item_name": "develop tourism policies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|tourism policy director|skill|environmental-impact-of-tourism",
+      "context_level": "role",
+      "context_key": "D028|tourism policy director",
+      "item_type": "skill",
+      "item_key": "environmental-impact-of-tourism",
+      "item_name": "environmental impact of tourism",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|tourism policy director|skill|foreign-affairs",
+      "context_level": "role",
+      "context_key": "D028|tourism policy director",
+      "item_type": "skill",
+      "item_key": "foreign-affairs",
+      "item_name": "foreign affairs",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|tourism policy director|skill|foreign-affairs-policy-development",
+      "context_level": "role",
+      "context_key": "D028|tourism policy director",
+      "item_type": "skill",
+      "item_key": "foreign-affairs-policy-development",
+      "item_name": "foreign affairs policy development",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|tourism policy director|skill|measure-sustainability-of-tourism-activities",
+      "context_level": "role",
+      "context_key": "D028|tourism policy director",
+      "item_type": "skill",
+      "item_key": "measure-sustainability-of-tourism-activities",
+      "item_name": "measure sustainability of tourism activities",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|tourism policy director|skill|plan-measures-to-safeguard-cultural-heritage",
+      "context_level": "role",
+      "context_key": "D028|tourism policy director",
+      "item_type": "skill",
+      "item_key": "plan-measures-to-safeguard-cultural-heritage",
+      "item_name": "plan measures to safeguard cultural heritage",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|tourism policy director|skill|plan-measures-to-safeguard-natural-protected-areas",
+      "context_level": "role",
+      "context_key": "D028|tourism policy director",
+      "item_type": "skill",
+      "item_key": "plan-measures-to-safeguard-natural-protected-areas",
+      "item_name": "plan measures to safeguard natural protected areas",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|tourism policy director|skill|tourism-market",
+      "context_level": "role",
+      "context_key": "D028|tourism policy director",
+      "item_type": "skill",
+      "item_key": "tourism-market",
+      "item_name": "tourism market",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|tourism policy director|skill|tourist-resources-of-a-destination-for-further-development",
+      "context_level": "role",
+      "context_key": "D028|tourism policy director",
+      "item_type": "skill",
+      "item_key": "tourist-resources-of-a-destination-for-further-development",
+      "item_name": "tourist resources of a destination for further development",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|water treatment plant manager|skill|define-manufacturing-quality-criteria",
+      "context_level": "role",
+      "context_key": "D028|water treatment plant manager",
+      "item_type": "skill",
+      "item_key": "define-manufacturing-quality-criteria",
+      "item_name": "define manufacturing quality criteria",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|water treatment plant manager|skill|develop-manufacturing-policies",
+      "context_level": "role",
+      "context_key": "D028|water treatment plant manager",
+      "item_type": "skill",
+      "item_key": "develop-manufacturing-policies",
+      "item_name": "develop manufacturing policies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|water treatment plant manager|skill|manage-water-distribution-procedures",
+      "context_level": "role",
+      "context_key": "D028|water treatment plant manager",
+      "item_type": "skill",
+      "item_key": "manage-water-distribution-procedures",
+      "item_name": "manage water distribution procedures",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|water treatment plant manager|skill|manage-water-quality-testing",
+      "context_level": "role",
+      "context_key": "D028|water treatment plant manager",
+      "item_type": "skill",
+      "item_key": "manage-water-quality-testing",
+      "item_name": "manage water quality testing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|wood factory manager|skill|advise-customers-on-wood-products",
+      "context_level": "role",
+      "context_key": "D028|wood factory manager",
+      "item_type": "skill",
+      "item_key": "advise-customers-on-wood-products",
+      "item_name": "advise customers on wood products",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|wood factory manager|skill|construction-products",
+      "context_level": "role",
+      "context_key": "D028|wood factory manager",
+      "item_type": "skill",
+      "item_key": "construction-products",
+      "item_name": "construction products",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|wood factory manager|skill|sell-processed-timber-in-a-commercial-environment",
+      "context_level": "role",
+      "context_key": "D028|wood factory manager",
+      "item_type": "skill",
+      "item_key": "sell-processed-timber-in-a-commercial-environment",
+      "item_name": "sell processed timber in a commercial environment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|wood factory manager|skill|timber-products",
+      "context_level": "role",
+      "context_key": "D028|wood factory manager",
+      "item_type": "skill",
+      "item_key": "timber-products",
+      "item_name": "timber products",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D028|wood factory manager|skill|wood-products",
+      "context_level": "role",
+      "context_key": "D028|wood factory manager",
+      "item_type": "skill",
+      "item_key": "wood-products",
+      "item_name": "wood products",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|business coach|skill|advise-on-efficiency-improvements",
+      "context_level": "role",
+      "context_key": "D029|business coach",
+      "item_type": "skill",
+      "item_key": "advise-on-efficiency-improvements",
+      "item_name": "advise on efficiency improvements",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|business coach|skill|conduct-public-presentations",
+      "context_level": "role",
+      "context_key": "D029|business coach",
+      "item_type": "skill",
+      "item_key": "conduct-public-presentations",
+      "item_name": "conduct public presentations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|business coach|skill|develop-a-coaching-style",
+      "context_level": "role",
+      "context_key": "D029|business coach",
+      "item_type": "skill",
+      "item_key": "develop-a-coaching-style",
+      "item_name": "develop a coaching style",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|business coach|skill|evaluate-clients-progress",
+      "context_level": "role",
+      "context_key": "D029|business coach",
+      "item_type": "skill",
+      "item_key": "evaluate-clients-progress",
+      "item_name": "evaluate clients' progress",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|business coach|skill|evaluate-employees",
+      "context_level": "role",
+      "context_key": "D029|business coach",
+      "item_type": "skill",
+      "item_key": "evaluate-employees",
+      "item_name": "evaluate employees",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|business coach|skill|give-constructive-feedback",
+      "context_level": "role",
+      "context_key": "D029|business coach",
+      "item_type": "skill",
+      "item_key": "give-constructive-feedback",
+      "item_name": "give constructive feedback",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|business coach|skill|organisational-learning",
+      "context_level": "role",
+      "context_key": "D029|business coach",
+      "item_type": "skill",
+      "item_key": "organisational-learning",
+      "item_name": "organisational learning",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.gov.wales/revised-professional-standards-assisting-teaching-teaching-and-leadership-html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|business coach|skill|organise-projects-to-fill-education-needs",
+      "context_level": "role",
+      "context_key": "D029|business coach",
+      "item_type": "skill",
+      "item_key": "organise-projects-to-fill-education-needs",
+      "item_name": "organise projects to fill education needs",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|business coach|skill|provide-feedback-to-performers",
+      "context_level": "role",
+      "context_key": "D029|business coach",
+      "item_type": "skill",
+      "item_key": "provide-feedback-to-performers",
+      "item_name": "provide feedback to performers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|business coach|skill|work-in-an-organised-manner",
+      "context_level": "role",
+      "context_key": "D029|business coach",
+      "item_type": "skill",
+      "item_key": "work-in-an-organised-manner",
+      "item_name": "work in an organised manner",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|career guidance advisor|skill|application-process",
+      "context_level": "role",
+      "context_key": "D029|career guidance advisor",
+      "item_type": "skill",
+      "item_key": "application-process",
+      "item_name": "application process",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|career guidance advisor|skill|assess-candidates",
+      "context_level": "role",
+      "context_key": "D029|career guidance advisor",
+      "item_type": "skill",
+      "item_key": "assess-candidates",
+      "item_name": "assess candidates",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|career guidance advisor|skill|curriculum-standards",
+      "context_level": "role",
+      "context_key": "D029|career guidance advisor",
+      "item_type": "skill",
+      "item_key": "curriculum-standards",
+      "item_name": "curriculum standards",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|career guidance advisor|skill|education-law",
+      "context_level": "role",
+      "context_key": "D029|career guidance advisor",
+      "item_type": "skill",
+      "item_key": "education-law",
+      "item_name": "education law",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|career guidance advisor|skill|facilitate-job-market-access",
+      "context_level": "role",
+      "context_key": "D029|career guidance advisor",
+      "item_type": "skill",
+      "item_key": "facilitate-job-market-access",
+      "item_name": "facilitate job market access",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|career guidance advisor|skill|job-market-offers",
+      "context_level": "role",
+      "context_key": "D029|career guidance advisor",
+      "item_type": "skill",
+      "item_key": "job-market-offers",
+      "item_name": "job market offers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|career guidance advisor|skill|labour-market",
+      "context_level": "role",
+      "context_key": "D029|career guidance advisor",
+      "item_type": "skill",
+      "item_key": "labour-market",
+      "item_name": "labour market",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|career guidance advisor|skill|monitor-educational-developments",
+      "context_level": "role",
+      "context_key": "D029|career guidance advisor",
+      "item_type": "skill",
+      "item_key": "monitor-educational-developments",
+      "item_name": "monitor educational developments",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|career guidance advisor|skill|psychological-counselling-methods",
+      "context_level": "role",
+      "context_key": "D029|career guidance advisor",
+      "item_type": "skill",
+      "item_key": "psychological-counselling-methods",
+      "item_name": "psychological counselling methods",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|career guidance advisor|skill|work-with-different-target-groups",
+      "context_level": "role",
+      "context_key": "D029|career guidance advisor",
+      "item_type": "skill",
+      "item_key": "work-with-different-target-groups",
+      "item_name": "work with different target groups",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|corporate trainer|skill|adapt-teaching-to-target-group",
+      "context_level": "role",
+      "context_key": "D029|corporate trainer",
+      "item_type": "skill",
+      "item_key": "adapt-teaching-to-target-group",
+      "item_name": "adapt teaching to target group",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|corporate trainer|skill|adapt-training-to-labour-market",
+      "context_level": "role",
+      "context_key": "D029|corporate trainer",
+      "item_type": "skill",
+      "item_key": "adapt-training-to-labour-market",
+      "item_name": "adapt training to labour market",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|corporate trainer|skill|demonstrate-when-teaching",
+      "context_level": "role",
+      "context_key": "D029|corporate trainer",
+      "item_type": "skill",
+      "item_key": "demonstrate-when-teaching",
+      "item_name": "demonstrate when teaching",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|corporate trainer|skill|training-subject-expertise",
+      "context_level": "role",
+      "context_key": "D029|corporate trainer",
+      "item_type": "skill",
+      "item_key": "training-subject-expertise",
+      "item_name": "training subject expertise",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|corporate training manager|skill|consultation",
+      "context_level": "role",
+      "context_key": "D029|corporate training manager",
+      "item_type": "skill",
+      "item_key": "consultation",
+      "item_name": "consultation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|employee volunteering programme coordinator|skill|capacity-building",
+      "context_level": "role",
+      "context_key": "D029|employee volunteering programme coordinator",
+      "item_type": "skill",
+      "item_key": "capacity-building",
+      "item_name": "capacity building",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|employee volunteering programme coordinator|skill|evaluate-social-work-program-s-impact",
+      "context_level": "role",
+      "context_key": "D029|employee volunteering programme coordinator",
+      "item_type": "skill",
+      "item_key": "evaluate-social-work-program-s-impact",
+      "item_name": "evaluate social work program's impact",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|employee volunteering programme coordinator|skill|humanitarian-aid",
+      "context_level": "role",
+      "context_key": "D029|employee volunteering programme coordinator",
+      "item_type": "skill",
+      "item_key": "humanitarian-aid",
+      "item_name": "humanitarian aid",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|employee volunteering programme coordinator|skill|promote-social-change",
+      "context_level": "role",
+      "context_key": "D029|employee volunteering programme coordinator",
+      "item_type": "skill",
+      "item_key": "promote-social-change",
+      "item_name": "promote social change",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|employee volunteering programme coordinator|skill|recruit-personnel",
+      "context_level": "role",
+      "context_key": "D029|employee volunteering programme coordinator",
+      "item_type": "skill",
+      "item_key": "recruit-personnel",
+      "item_name": "recruit personnel",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|employee volunteering programme coordinator|skill|show-intercultural-awareness",
+      "context_level": "role",
+      "context_key": "D029|employee volunteering programme coordinator",
+      "item_type": "skill",
+      "item_key": "show-intercultural-awareness",
+      "item_name": "show intercultural awareness",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|employee volunteering programme coordinator|skill|validation-of-learning-acquired-through-volunteering",
+      "context_level": "role",
+      "context_key": "D029|employee volunteering programme coordinator",
+      "item_type": "skill",
+      "item_key": "validation-of-learning-acquired-through-volunteering",
+      "item_name": "validation of learning acquired through volunteering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.gov.wales/revised-professional-standards-assisting-teaching-teaching-and-leadership-html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|employee volunteering programme coordinator|skill|work-within-communities",
+      "context_level": "role",
+      "context_key": "D029|employee volunteering programme coordinator",
+      "item_type": "skill",
+      "item_key": "work-within-communities",
+      "item_name": "work within communities",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|employment and vocational integration consultant|skill|give-advice-on-personal-matters",
+      "context_level": "role",
+      "context_key": "D029|employment and vocational integration consultant",
+      "item_type": "skill",
+      "item_key": "give-advice-on-personal-matters",
+      "item_name": "give advice on personal matters",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|employment and vocational integration consultant|skill|implement-customer-follow-up",
+      "context_level": "role",
+      "context_key": "D029|employment and vocational integration consultant",
+      "item_type": "skill",
+      "item_key": "implement-customer-follow-up",
+      "item_name": "implement customer follow-up",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|employment and vocational integration consultant|skill|maintain-privacy-of-service-users",
+      "context_level": "role",
+      "context_key": "D029|employment and vocational integration consultant",
+      "item_type": "skill",
+      "item_key": "maintain-privacy-of-service-users",
+      "item_name": "maintain privacy of service users",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|employment and vocational integration consultant|skill|online-job-platforms",
+      "context_level": "role",
+      "context_key": "D029|employment and vocational integration consultant",
+      "item_type": "skill",
+      "item_key": "online-job-platforms",
+      "item_name": "online job platforms",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|employment and vocational integration consultant|skill|teach-writing",
+      "context_level": "role",
+      "context_key": "D029|employment and vocational integration consultant",
+      "item_type": "skill",
+      "item_key": "teach-writing",
+      "item_name": "teach writing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|employment and vocational integration consultant|skill|use-communication-techniques",
+      "context_level": "role",
+      "context_key": "D029|employment and vocational integration consultant",
+      "item_type": "skill",
+      "item_key": "use-communication-techniques",
+      "item_name": "use communication techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|employment and vocational integration consultant|tool|adobe-acrobat-reader",
+      "context_level": "role",
+      "context_key": "D029|employment and vocational integration consultant",
+      "item_type": "tool",
+      "item_key": "adobe-acrobat-reader",
+      "item_name": "Adobe Acrobat Reader",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|employment and vocational integration consultant|tool|budgeting-software",
+      "context_level": "role",
+      "context_key": "D029|employment and vocational integration consultant",
+      "item_type": "tool",
+      "item_key": "budgeting-software",
+      "item_name": "Budgeting software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|employment and vocational integration consultant|tool|client-information-database-software",
+      "context_level": "role",
+      "context_key": "D029|employment and vocational integration consultant",
+      "item_type": "tool",
+      "item_key": "client-information-database-software",
+      "item_name": "Client information database software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|employment and vocational integration consultant|tool|data-input-software",
+      "context_level": "role",
+      "context_key": "D029|employment and vocational integration consultant",
+      "item_type": "tool",
+      "item_key": "data-input-software",
+      "item_name": "Data input software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|equality and inclusion manager|skill|develop-training-programmes",
+      "context_level": "role",
+      "context_key": "D029|equality and inclusion manager",
+      "item_type": "skill",
+      "item_key": "develop-training-programmes",
+      "item_name": "develop training programmes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|equality and inclusion manager|tool|bashen-eeofedsoft",
+      "context_level": "role",
+      "context_key": "D029|equality and inclusion manager",
+      "item_type": "tool",
+      "item_key": "bashen-eeofedsoft",
+      "item_name": "Bashen EEOFedSoft",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|equality and inclusion manager|tool|bashen-eeosoft",
+      "context_level": "role",
+      "context_key": "D029|equality and inclusion manager",
+      "item_type": "tool",
+      "item_key": "bashen-eeosoft",
+      "item_name": "Bashen EEOSoft",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|equality and inclusion manager|tool|bashen-linkline",
+      "context_level": "role",
+      "context_key": "D029|equality and inclusion manager",
+      "item_type": "tool",
+      "item_key": "bashen-linkline",
+      "item_name": "Bashen LinkLine",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|human resources assistant|skill|assess-character",
+      "context_level": "role",
+      "context_key": "D029|human resources assistant",
+      "item_type": "skill",
+      "item_key": "assess-character",
+      "item_name": "assess character",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|human resources assistant|skill|fix-meetings",
+      "context_level": "role",
+      "context_key": "D029|human resources assistant",
+      "item_type": "skill",
+      "item_key": "fix-meetings",
+      "item_name": "fix meetings",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|human resources assistant|skill|hire-human-resources",
+      "context_level": "role",
+      "context_key": "D029|human resources assistant",
+      "item_type": "skill",
+      "item_key": "hire-human-resources",
+      "item_name": "hire human resources",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://cipmnigeria.org/membership/hr-practitioners-licence/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|human resources assistant|skill|manage-payroll-reports",
+      "context_level": "role",
+      "context_key": "D029|human resources assistant",
+      "item_type": "skill",
+      "item_key": "manage-payroll-reports",
+      "item_name": "manage payroll reports",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|human resources assistant|skill|support-managers",
+      "context_level": "role",
+      "context_key": "D029|human resources assistant",
+      "item_type": "skill",
+      "item_key": "support-managers",
+      "item_name": "support managers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|human resources manager|skill|labour-law",
+      "context_level": "role",
+      "context_key": "D029|human resources manager",
+      "item_type": "skill",
+      "item_key": "labour-law",
+      "item_name": "labour law",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|human resources manager|skill|outplacement",
+      "context_level": "role",
+      "context_key": "D029|human resources manager",
+      "item_type": "skill",
+      "item_key": "outplacement",
+      "item_name": "outplacement",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|human resources manager|skill|talent-management-strategies",
+      "context_level": "role",
+      "context_key": "D029|human resources manager",
+      "item_type": "skill",
+      "item_key": "talent-management-strategies",
+      "item_name": "talent management strategies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|human resources officer|skill|personal-reflection-techniques-based-on-feedback",
+      "context_level": "role",
+      "context_key": "D029|human resources officer",
+      "item_type": "skill",
+      "item_key": "personal-reflection-techniques-based-on-feedback",
+      "item_name": "personal reflection techniques based on feedback",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|labour relations officer|skill|advise-on-conflict-management",
+      "context_level": "role",
+      "context_key": "D029|labour relations officer",
+      "item_type": "skill",
+      "item_key": "advise-on-conflict-management",
+      "item_name": "advise on conflict management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|labour relations officer|skill|moderate-in-negotiations",
+      "context_level": "role",
+      "context_key": "D029|labour relations officer",
+      "item_type": "skill",
+      "item_key": "moderate-in-negotiations",
+      "item_name": "moderate in negotiations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|labour relations officer|skill|represent-union-members",
+      "context_level": "role",
+      "context_key": "D029|labour relations officer",
+      "item_type": "skill",
+      "item_key": "represent-union-members",
+      "item_name": "represent union members",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|occupational analyst|skill|carry-out-job-analysis",
+      "context_level": "role",
+      "context_key": "D029|occupational analyst",
+      "item_type": "skill",
+      "item_key": "carry-out-job-analysis",
+      "item_name": "carry out job analysis",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D029|occupational analyst|skill|design-job-analysis-tools",
+      "context_level": "role",
+      "context_key": "D029|occupational analyst",
+      "item_type": "skill",
+      "item_key": "design-job-analysis-tools",
+      "item_name": "design job analysis tools",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    }
+  ],
+  "policy": {
+    "review_required_preserved_unless_exact_item_evidence_established": true,
+    "no_relationship_inference": true,
+    "no_promotion": true
+  }
+}

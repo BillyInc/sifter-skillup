@@ -1,0 +1,16 @@
+{
+  "schema": "2026-09-23.external-item-quality-remediation-report.v1",
+  "batch": "quality_remediation_lane_99_20260922",
+  "status": "completed",
+  "selection_count": 100,
+  "searched_count": 100,
+  "unique_typed_keys": 100,
+  "omitted_count": 0,
+  "duplicate_count": 0,
+  "promoted_count": 0,
+  "review_required_count": 100,
+  "evidence_records": 100,
+  "exact_reconciliation": "100/100",
+  "scope_guard": "Items only; relationships, catalogue, SQL, seeds, UI and browser proof untouched.",
+  "completed_at": "2026-09-23T10:08:49Z"
+}

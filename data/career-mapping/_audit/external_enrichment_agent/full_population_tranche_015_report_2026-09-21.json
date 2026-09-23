@@ -1,0 +1,46 @@
+{
+  "schema": "2026-09-21.full-population-enrichment-tranche-report.v1",
+  "tranche": "015",
+  "accessed_on": "2026-09-21",
+  "selection": "data/career-mapping/_audit/external_enrichment_agent/full_population_tranche_015_selection_2026-09-21.json",
+  "checkpoint": "data/career-mapping/_audit/external_enrichment_agent/full_population_tranche_015_checkpoint_2026-09-21.json",
+  "ledger": "data/career-mapping/_audit/external_enrichment_agent/full_population_tranche_015_search_ledger_2026-09-21.jsonl",
+  "status": "completed",
+  "scope": {
+    "excluded_context_prefix": "D078",
+    "selected_rows": 16,
+    "item_rows": 16,
+    "relationship_rows": 0,
+    "unique_item_names_searched": 10
+  },
+  "decisions": {
+    "rows_searched": 16,
+    "linked": 14,
+    "review_required": 2,
+    "genuinely_unavailable": 0,
+    "no_link": 0,
+    "remaining_selected_rows": 0
+  },
+  "reconciliation": {
+    "selection_ids": 16,
+    "ledger_ids": 16,
+    "missing_from_ledger": 0,
+    "unexpected_ledger_ids": 0,
+    "duplicate_ledger_ids": 0,
+    "required_fields_missing": 0,
+    "invalid_https_urls": 0,
+    "d078_rows": 0,
+    "prior_ledger_overlap": 0
+  },
+  "result": "The next deterministic 16 pending non-D078 item rows were searched. Fourteen received item-specific authoritative evidence and two rows (the repeated apply-nigerian-law identity in D037 and D038) remain review_required because the official Nigerian source supports the local legal-training context but does not state the exact catalogue competency label. No relationship, role requirement, domain requirement, catalogue row, seed, SQL, UI or browser-proof artifact was touched.",
+  "search_blocked": false,
+  "guardrails": {
+    "selection_checkpoint_saved_before_search": true,
+    "catalogue_touched": false,
+    "generated_seed_transport_touched": false,
+    "sql_touched": false,
+    "ui_touched": false,
+    "browser_proof_touched": false,
+    "prior_ledgers_modified": false
+  }
+}

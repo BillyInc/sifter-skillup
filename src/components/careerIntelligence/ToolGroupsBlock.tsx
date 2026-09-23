@@ -18,6 +18,8 @@ export interface ToolGroupsBlockProps {
   distinctiveLabel?: string;
   style?: ViewStyle;
   contextItems?: CareerContextItem[];
+  /** Optional explicit ownership boundary for a domain/subgroup/role surface. */
+  contextLevel?: CareerContextItem["contextLevel"];
 }
 
 type ToolPurposeKey = "collect" | "organise" | "analyse" | "compute" | "map" | "communicate" | "other";
@@ -252,6 +254,7 @@ export function ToolGroupsBlock({
   distinctiveLabel,
   style,
   contextItems,
+  contextLevel,
 }: ToolGroupsBlockProps) {
   const isStudentVisible = (tool: ToolV2Enriched) =>
     Boolean(tool.tool?.trim())
@@ -259,6 +262,7 @@ export function ToolGroupsBlock({
     && tool.guidanceOwner !== "role_aggregated"
     && tool.guidanceOwner !== "review_only"
     && tool.guidanceOwner !== "audit_only"
+     && (!contextLevel || tool.guidanceOwner === contextLevel)
     && (!tool.dataState || tool.dataState === "source_backed")
     && tool.sourceConfidence !== "unsourced"
     && contextItemFor(contextItems, "tool", tool.tool)?.linkState !== "review_required"

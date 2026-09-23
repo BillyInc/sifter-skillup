@@ -1,0 +1,1065 @@
+{
+  "schema_version": "2026-09-21.role-work-profile-tranche-006.v1",
+  "generated_on": "2026-09-21",
+  "read_only": true,
+  "blocked": false,
+  "scope": {
+    "source_audit": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json",
+    "missing_work_profile_population": 119,
+    "tranche_offset_zero_based": 100,
+    "tranche_number": 6,
+    "tranche_size": 19,
+    "queue_positions": "101-119",
+    "queue_order": "source-trace roles with work_profile_status=not_available, original file order",
+    "previous_tranche": "role_work_profile_tranche_005_2026-09-21.json (roles 81-100)"
+  },
+  "counts": {
+    "roles_selected": 19,
+    "roles_individually_audited": 19,
+    "esco_roles": 19,
+    "onet_roles": 0,
+    "exact_title_matches": 0,
+    "repository_exact_title_matches": 19,
+    "internet_exact_title_matches": 0,
+    "exact_official_identity_matches": 0,
+    "bounded_local_only": 19,
+    "review_required": 19,
+    "unresolved": 0,
+    "repository_exact_records": 19,
+    "repository_exact_identity_matches": 19,
+    "internet_exact_identity_matches": 0,
+    "source_backed_candidates": 0,
+    "roles_corrected": 0,
+    "generated_profile_rows_added": 0,
+    "genuinely_unavailable": 0,
+    "remaining_unaudited_missing_work_profile_roles": 0,
+    "profile_rows_still_absent_across_population": 119
+  },
+  "authority": {
+    "repository_source_esco": "European Commission ESCO occupation extract vendored at data/career-mapping/_tax_src/esco/occupations_en.csv",
+    "internet_source_esco": "https://ec.europa.eu/esco/api/resource/occupation",
+    "api_documentation_esco": "https://ec.europa.eu/esco/api/doc/esco_api_doc.html",
+    "source_limit": "Occupational identity evidence is retained for review. No source is used to fabricate the application's O*NET-style work-profile fields, Nigerian demand evidence or student preparation content."
+  },
+  "records": [
+    {
+      "role_key": "D113|clay kiln burner",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "clay kiln burner",
+      "existing_role_source": "esco",
+      "existing_esco_code": "8181.3",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "8181",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=1302",
+        "concept_uri": "http://data.europa.eu/esco/occupation/6837611a-7093-40fb-9e7f-74947bf6f54f",
+        "preferred_label": "clay kiln burner",
+        "alt_labels": "dry kiln operator\nretort kiln operative\nfield kiln operator\nperiodic kiln burner\ndry kiln burner\nbrick kiln operative\nkilnman\nroofing tile burner\ngas kiln operative\nkilnwoman\ndry kiln operative\nfield kiln burner\nretort kiln operator\nfield kiln operative\nbrick kiln burner\ngas kiln operator\nroofing tile kiln operator\nbrick kiln operator\nretort kiln burner\nkiln burner\nroofing tile kiln operative",
+        "definition": "Clay kiln burners bake clay products such as brick, sewer pipe or tiles using periodic or tunnel kilns. They regulate valves, observe thermometers, watch for fluctuations, and maintain the kilns.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2025-07-29T11:30:01.295Z",
+        "occupation_skill_relation_count": 31,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/6837611a-7093-40fb-9e7f-74947bf6f54f"
+      },
+      "repository_exact_title_match": true,
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/6837611a-7093-40fb-9e7f-74947bf6f54f",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/6837611a-7093-40fb-9e7f-74947bf6f54f' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact_or_unavailable",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies occupational identity, definition and occupation-skill evidence, but it is not an O*NET-style work-profile row and does not establish Nigerian demand, local requirements or student preparation content. Retain the evidence for review without fabricating profile fields.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D113|clay products dry kiln operator",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "clay products dry kiln operator",
+      "existing_role_source": "esco",
+      "existing_esco_code": "8181.3.1",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "8181",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=1701",
+        "concept_uri": "http://data.europa.eu/esco/occupation/88c56310-14bc-4956-8450-ce0e178ae847",
+        "preferred_label": "clay products dry kiln operator",
+        "alt_labels": "dryer kiln operative\ndrying tunnel operator\ndryer kiln operator\nclay dryer kiln operator\ndrying tunnel kiln operative\nclay drying tunnel operator\nclay roaster\ndryer operator\nclay kiln operator\nclay dryer kiln operative\ndrying tunnel kiln operator\nkiln tender\ntunnel drier operator\nkiln worker",
+        "definition": "Clay products dry kiln operators manage drying tunnels that are meant for drying clay products prior to their treatment in kiln.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-24T09:23:34.036Z",
+        "occupation_skill_relation_count": 15,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/88c56310-14bc-4956-8450-ce0e178ae847"
+      },
+      "repository_exact_title_match": true,
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/88c56310-14bc-4956-8450-ce0e178ae847",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/88c56310-14bc-4956-8450-ce0e178ae847' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact_or_unavailable",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies occupational identity, definition and occupation-skill evidence, but it is not an O*NET-style work-profile row and does not establish Nigerian demand, local requirements or student preparation content. Retain the evidence for review without fabricating profile fields.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D113|cylinder filler",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "cylinder filler",
+      "existing_role_source": "esco",
+      "existing_esco_code": "8183.3",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "8183",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=1127",
+        "concept_uri": "http://data.europa.eu/esco/occupation/59ee6b71-a48d-4940-bdf1-e806ca60245c",
+        "preferred_label": "cylinder filler",
+        "alt_labels": "compressed gas filler\ngas filling plant operative\nyardhand filler\ngas cylinder operative\ncylinder refiller\ncylinder refill operator\nindustrial filling plant operative\ncompressed gas cylinder filler\ntechnician/fill operator\nindustrial filling operative\nfill operator\ncylinder operative\nyardhand/filler\ntechnician/fill operative\nliquefied gas filler\nfilling plant operative\ngas cylinder filler",
+        "definition": "Cylinder fillers operate and maintain the equipment and containers used to fill cylinders with gases in liquefied or compressed state.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-26T15:07:32.156Z",
+        "occupation_skill_relation_count": 23,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/59ee6b71-a48d-4940-bdf1-e806ca60245c"
+      },
+      "repository_exact_title_match": true,
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/59ee6b71-a48d-4940-bdf1-e806ca60245c",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/59ee6b71-a48d-4940-bdf1-e806ca60245c' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact_or_unavailable",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies occupational identity, definition and occupation-skill evidence, but it is not an O*NET-style work-profile row and does not establish Nigerian demand, local requirements or student preparation content. Retain the evidence for review without fabricating profile fields.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D113|drawing kiln operator",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "drawing kiln operator",
+      "existing_role_source": "esco",
+      "existing_esco_code": "8181.4",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "8181",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=913",
+        "concept_uri": "http://data.europa.eu/esco/occupation/49f1e9aa-189b-4417-afaa-373cc4ffeea1",
+        "preferred_label": "drawing kiln operator",
+        "alt_labels": "drawing kiln worker\nflat glass kiln operator\nglass production operative\ndrawing kiln operative\nglassmaker\nglass kiln operator\ndrawing machine operative\ndrawing machine worker\nglass operative",
+        "definition": "Drawing kiln operators are responsible for continuous sheet flat glass production by manipulating the drawing kiln that processes molten glass.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-16T09:36:54.026Z",
+        "occupation_skill_relation_count": 32,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/49f1e9aa-189b-4417-afaa-373cc4ffeea1"
+      },
+      "repository_exact_title_match": true,
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/49f1e9aa-189b-4417-afaa-373cc4ffeea1",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/49f1e9aa-189b-4417-afaa-373cc4ffeea1' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact_or_unavailable",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies occupational identity, definition and occupation-skill evidence, but it is not an O*NET-style work-profile row and does not establish Nigerian demand, local requirements or student preparation content. Retain the evidence for review without fabricating profile fields.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D113|dry press operator",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "dry press operator",
+      "existing_role_source": "esco",
+      "existing_esco_code": "8181.5",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "8181",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=2599",
+        "concept_uri": "http://data.europa.eu/esco/occupation/d4fdb8cb-8928-4047-8166-5feedc3c1a98",
+        "preferred_label": "dry press operator",
+        "alt_labels": "dry press tender\nbrick presser\ndry-press operator\ndry press worker\nbrick & tile dry press operator\nbrick and tile dry press operator\npresser",
+        "definition": "Dry press operators press dry tempered clay or silica into bricks and other shapes. They select and fix the pressing dies, using rule and wenches. Dry press operators remove the bricks from the press machine and stack them in a specified pattern on the kiln car.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-16T09:36:51.815Z",
+        "occupation_skill_relation_count": 17,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/d4fdb8cb-8928-4047-8166-5feedc3c1a98"
+      },
+      "repository_exact_title_match": true,
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/d4fdb8cb-8928-4047-8166-5feedc3c1a98",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/d4fdb8cb-8928-4047-8166-5feedc3c1a98' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact_or_unavailable",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies occupational identity, definition and occupation-skill evidence, but it is not an O*NET-style work-profile row and does not establish Nigerian demand, local requirements or student preparation content. Retain the evidence for review without fabricating profile fields.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D113|edge bander operator",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "edge bander operator",
+      "existing_role_source": "esco",
+      "existing_esco_code": "8189.1",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "8189",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=891",
+        "concept_uri": "http://data.europa.eu/esco/occupation/48318e0f-b54b-4654-b296-47c8e544da23",
+        "preferred_label": "edge bander operator",
+        "alt_labels": "banding machine operator\nadhesive bonding machine worker\nedge bander operative\nedgebander operative\nbanding machine worker\nbanding machine setter\nadhesive bonding machine setter\nedge bander worker\nadhesive bonding machine tender\nedgebander setter\nbanding machine operative\nedgebander worker\nedge bander tender\nadhesive bonding machine operative\nedgebander tender\nbanding machine tender\nedge bander setter\nadhesive bonding machine operator",
+        "definition": "Edge bander operators tend machines that veneer materials, mostly wood, to increase durability and make them aesthetically pleasing. They also regulate the speed of the belt, set temperature control to regulate heat, brush glue on edges of panels and start and regulate the machine.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-23T10:34:35.651Z",
+        "occupation_skill_relation_count": 29,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/48318e0f-b54b-4654-b296-47c8e544da23"
+      },
+      "repository_exact_title_match": true,
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/48318e0f-b54b-4654-b296-47c8e544da23",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/48318e0f-b54b-4654-b296-47c8e544da23' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact_or_unavailable",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies occupational identity, definition and occupation-skill evidence, but it is not an O*NET-style work-profile row and does not establish Nigerian demand, local requirements or student preparation content. Retain the evidence for review without fabricating profile fields.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D113|fibre machine tender",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "fibre machine tender",
+      "existing_role_source": "esco",
+      "existing_esco_code": "8181.6",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "8181",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=2111",
+        "concept_uri": "http://data.europa.eu/esco/occupation/ac401ec0-7ce0-423f-b8b5-167da9e046a7",
+        "preferred_label": "fibre machine tender",
+        "alt_labels": "forming machine setter\nfibre machine operator\nglass fibre machine operator\nextruding and forming machine setter\nstaple fibre machine tender\nfiber extruding machine operator\nfiber machine operative\nextruding machine setter\nfibre machine operative\nstaple fiber machine tender",
+        "definition": "Fibre machine tenders operate and maintain extrusion machines that form sliver from filaments. They work with synthetic materials such as fiberglass or liquid polymer or non-synthetic materials such as rayon.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-16T09:36:44.061Z",
+        "occupation_skill_relation_count": 32,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/ac401ec0-7ce0-423f-b8b5-167da9e046a7"
+      },
+      "repository_exact_title_match": true,
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/ac401ec0-7ce0-423f-b8b5-167da9e046a7",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/ac401ec0-7ce0-423f-b8b5-167da9e046a7' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact_or_unavailable",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies occupational identity, definition and occupation-skill evidence, but it is not an O*NET-style work-profile row and does not establish Nigerian demand, local requirements or student preparation content. Retain the evidence for review without fabricating profile fields.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D113|glass annealer",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "glass annealer",
+      "existing_role_source": "esco",
+      "existing_esco_code": "8181.7",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "8181",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=1901",
+        "concept_uri": "http://data.europa.eu/esco/occupation/9980a417-f990-495a-ae11-66a112737f3b",
+        "preferred_label": "glass annealer",
+        "alt_labels": "lehr kiln operative\nlehr kiln operator\nlehr operative\nglass annealing kiln operative\nglass annealing kiln worker\nglass annealing oven worker\npot annealer\nlehr tender\nglass annealing kiln operator\nlehr kiln tender\nlehr operator",
+        "definition": "Glass annealers operate electric or gas kilns used to strengthen the glass products by a heating-cooling process, making sure the temperature is set according to specifications. They inspect the glass products through the entire process to observe any flaws.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-16T09:36:41.431Z",
+        "occupation_skill_relation_count": 36,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/9980a417-f990-495a-ae11-66a112737f3b"
+      },
+      "repository_exact_title_match": true,
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/9980a417-f990-495a-ae11-66a112737f3b",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/9980a417-f990-495a-ae11-66a112737f3b' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact_or_unavailable",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies occupational identity, definition and occupation-skill evidence, but it is not an O*NET-style work-profile row and does not establish Nigerian demand, local requirements or student preparation content. Retain the evidence for review without fabricating profile fields.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D113|glass forming machine operator",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "glass forming machine operator",
+      "existing_role_source": "esco",
+      "existing_esco_code": "8181.8",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "8181",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=2726",
+        "concept_uri": "http://data.europa.eu/esco/occupation/e19a0f13-da49-42cb-8b3a-27da8ce44c8c",
+        "preferred_label": "glass forming machine operator",
+        "alt_labels": "glass forming machine operative\nglass production operator\nglass moulder\nglass forming and finishing machine operator\nglass forming machine worker\nglass product production worker\nproduction machine operator\nglass-blowing machine operator\nglass molder",
+        "definition": "Glass forming machine operators operate and maintain machines that press or blow molten glass in moulds to form or shape products, such as neons, bottles, jars and drinking glasses. They set up and adjust machines, and weigh, measure and check production samples to check conformity to the set specifications.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-16T09:36:49.266Z",
+        "occupation_skill_relation_count": 40,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/e19a0f13-da49-42cb-8b3a-27da8ce44c8c"
+      },
+      "repository_exact_title_match": true,
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/e19a0f13-da49-42cb-8b3a-27da8ce44c8c",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/e19a0f13-da49-42cb-8b3a-27da8ce44c8c' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact_or_unavailable",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies occupational identity, definition and occupation-skill evidence, but it is not an O*NET-style work-profile row and does not establish Nigerian demand, local requirements or student preparation content. Retain the evidence for review without fabricating profile fields.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D113|glass polisher",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "glass polisher",
+      "existing_role_source": "esco",
+      "existing_esco_code": "8181.9",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "8181",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=851",
+        "concept_uri": "http://data.europa.eu/esco/occupation/447cfc9c-c0bf-4553-8f47-91f7ce5e51bc",
+        "preferred_label": "glass polisher",
+        "alt_labels": "glass finisher\nglass edge grinder\nplate glass polisher\nglass production polisher\nglass grinder",
+        "definition": "Glass polishers finish plate glass to make a variety of glass products. They polish the edges of the glass using grinding and polishing wheels, and spray solutions on glass or operate vacuum coating machines to provide a mirrored surface.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-16T09:36:57.002Z",
+        "occupation_skill_relation_count": 34,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/447cfc9c-c0bf-4553-8f47-91f7ce5e51bc"
+      },
+      "repository_exact_title_match": true,
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/447cfc9c-c0bf-4553-8f47-91f7ce5e51bc",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/447cfc9c-c0bf-4553-8f47-91f7ce5e51bc' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact_or_unavailable",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies occupational identity, definition and occupation-skill evidence, but it is not an O*NET-style work-profile row and does not establish Nigerian demand, local requirements or student preparation content. Retain the evidence for review without fabricating profile fields.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D113|heat sealing machine operator",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "heat sealing machine operator",
+      "existing_role_source": "esco",
+      "existing_esco_code": "8183.5",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "8183",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=558",
+        "concept_uri": "http://data.europa.eu/esco/occupation/2be85651-c94a-4531-9df8-3cc56932960e",
+        "preferred_label": "heat sealing machine operator",
+        "alt_labels": "heat sealing machine worker\nheat seal operative\nhot bar sealer setter\nheat seal machine worker\ncontinuous heat sealer setter\ncontinuous heat sealer tender\nheat seal machine tender\nhot bar sealer tender\nheat sealing machine operative\nhot bar sealer operative\nheat sealing machine tender\nimpulse heat sealer setter\nheat seal machine setter\nhot bar sealer operator\nheat seal machine operator\nheat seal operator\nimpulse heat sealer operative\nheat sealing machine setter\nheat seal machine operative\nimpulse heat sealer operator\ncontinuous heat sealer operative\nimpulse heat sealer tender\ncontinuous heat sealer operator",
+        "definition": "Heat sealing machine operators operate sealing and gluing machines to join items together for further processing or to seal products or packages, using heat.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-29T09:06:58.043Z",
+        "occupation_skill_relation_count": 30,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/2be85651-c94a-4531-9df8-3cc56932960e"
+      },
+      "repository_exact_title_match": true,
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/2be85651-c94a-4531-9df8-3cc56932960e",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/2be85651-c94a-4531-9df8-3cc56932960e' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact_or_unavailable",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies occupational identity, definition and occupation-skill evidence, but it is not an O*NET-style work-profile row and does not establish Nigerian demand, local requirements or student preparation content. Retain the evidence for review without fabricating profile fields.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D113|kiln firer",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "kiln firer",
+      "existing_role_source": "esco",
+      "existing_esco_code": "8181.10",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "8181",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=1157",
+        "concept_uri": "http://data.europa.eu/esco/occupation/5c4ba833-da16-4bd0-a4b2-c08a2eaf5884",
+        "preferred_label": "kiln firer",
+        "alt_labels": "bisque kiln operator\nkiln hand\ndecorating-kiln operator\nglost kiln operator\nkiln woman\nkiln man\ndecorating-kiln firer\nglost kiln firer\nkiln fireman\nround kiln firer\nkiln filler\nbisque kiln firer\ntunnel kiln firer",
+        "definition": "Kiln firers operate kilns in order to fire decorations or glazes. They determine the level and uniformity of oven temperature, regulate the temperature, and give directions to a helper in preparing firebox and lighting fires.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-16T09:37:00.275Z",
+        "occupation_skill_relation_count": 16,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/5c4ba833-da16-4bd0-a4b2-c08a2eaf5884"
+      },
+      "repository_exact_title_match": true,
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/5c4ba833-da16-4bd0-a4b2-c08a2eaf5884",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/5c4ba833-da16-4bd0-a4b2-c08a2eaf5884' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact_or_unavailable",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies occupational identity, definition and occupation-skill evidence, but it is not an O*NET-style work-profile row and does not establish Nigerian demand, local requirements or student preparation content. Retain the evidence for review without fabricating profile fields.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D113|packaging and filling machine operator",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "packaging and filling machine operator",
+      "existing_role_source": "esco",
+      "existing_esco_code": "8183.7",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "8183",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=2165",
+        "concept_uri": "http://data.europa.eu/esco/occupation/b0fa69b4-998c-4e66-acd3-5f5d73cadb5c",
+        "preferred_label": "packaging and filling machine operator",
+        "alt_labels": "packaging and filling operator\npackaging and filling machine worker\npackaging and filling operative\npackaging and filling worker",
+        "definition": "Packaging and filling machine operators tend machines for preparing and packing food products in various packaging containers such as jars, cartons, cans, and others.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-29T09:09:23.988Z",
+        "occupation_skill_relation_count": 32,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/b0fa69b4-998c-4e66-acd3-5f5d73cadb5c"
+      },
+      "repository_exact_title_match": true,
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/b0fa69b4-998c-4e66-acd3-5f5d73cadb5c",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/b0fa69b4-998c-4e66-acd3-5f5d73cadb5c' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact_or_unavailable",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies occupational identity, definition and occupation-skill evidence, but it is not an O*NET-style work-profile row and does not establish Nigerian demand, local requirements or student preparation content. Retain the evidence for review without fabricating profile fields.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D113|slitter operator",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "slitter operator",
+      "existing_role_source": "esco",
+      "existing_esco_code": "8189.2",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "8189",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=1838",
+        "concept_uri": "http://data.europa.eu/esco/occupation/95a6ecd2-a140-4861-aad7-dcb8cfc1c9a3",
+        "preferred_label": "slitter operator",
+        "alt_labels": "slitting machinist\nsteel slitter operative\npaper slitter operator\npaper slitter operative\nslitting line setter\nshearer\nslitting machine setter\nslitting machine operator\nsteel slitter operator\nsplitter rewinder machine operator\nslitting machine operative\nslitting machine worker\nslitting machine tender\nslitting rewind machine operator\nslitter tender\nslitter operative\nslitter setter\naluminium bending operator",
+        "definition": "Slitter operators set up, operate, or tend machines, in order to cut, slit, bend, or straighten sheets of metal, paper, or other materials to specific widths. Slitter operators must also ensure quality, by examining various end-products and observing pre-defined tolerances.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-23T10:34:38.359Z",
+        "occupation_skill_relation_count": 31,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/95a6ecd2-a140-4861-aad7-dcb8cfc1c9a3"
+      },
+      "repository_exact_title_match": true,
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/95a6ecd2-a140-4861-aad7-dcb8cfc1c9a3",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/95a6ecd2-a140-4861-aad7-dcb8cfc1c9a3' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact_or_unavailable",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies occupational identity, definition and occupation-skill evidence, but it is not an O*NET-style work-profile row and does not establish Nigerian demand, local requirements or student preparation content. Retain the evidence for review without fabricating profile fields.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D113|steam plant operator",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "steam plant operator",
+      "existing_role_source": "esco",
+      "existing_esco_code": "8182.2",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "8182",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=1436",
+        "concept_uri": "http://data.europa.eu/esco/occupation/737c1795-844b-43ad-95b2-1bf0e8c14ddf",
+        "preferred_label": "steam plant operator",
+        "alt_labels": "steam boiler operator\nsteam heating operator\nsteam power plant maintenance operator\nsteam plant maintenance worker\nsteam plant safety operator\nsteam plant technician\nsteam plant maintenance operator\nsteam plant worker\nsteam plant operative\nsteam jet refrigeration operator\nsteam power plant operator\nsteam power heating plant operator\nsteam refrigeration operator",
+        "definition": "Steam plant operators operate and maintain mechanical equipment such as stationary engines and boilers to provide utilities for domestic or industrial use. They monitor proceedings to ensure compliance with safety regulations, and perform tests to ensure quality.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2023-12-19T10:44:54.726Z",
+        "occupation_skill_relation_count": 28,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/737c1795-844b-43ad-95b2-1bf0e8c14ddf"
+      },
+      "repository_exact_title_match": true,
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/737c1795-844b-43ad-95b2-1bf0e8c14ddf",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/737c1795-844b-43ad-95b2-1bf0e8c14ddf' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact_or_unavailable",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies occupational identity, definition and occupation-skill evidence, but it is not an O*NET-style work-profile row and does not establish Nigerian demand, local requirements or student preparation content. Retain the evidence for review without fabricating profile fields.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D113|tunnel kiln operator",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "tunnel kiln operator",
+      "existing_role_source": "esco",
+      "existing_esco_code": "8181.3.2",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {},
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "8181",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=593",
+        "concept_uri": "http://data.europa.eu/esco/occupation/2ecbed9c-0143-4cc9-b047-d1746aeec206",
+        "preferred_label": "tunnel kiln operator",
+        "alt_labels": "dryer kiln operative\ndrying tunnel operator\ntunnel kiln operative\ntunnel kiln worker\nclay tunnel kiln operator\ndryer kiln operator\nclay tunnel kiln operative",
+        "definition": "Tunnel kiln operators control preheating chambers and tunnel kilns to preheat and bake clay products, such as bricks, sewer popes, mosaic, ceramic or quarry tiles. They observe gauges and instruments and adjust by turning valves if necessary. They pull loaded kiln cars in and out of the heaters and move them to a sorting area.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-24T09:23:38.626Z",
+        "occupation_skill_relation_count": 15,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/2ecbed9c-0143-4cc9-b047-d1746aeec206"
+      },
+      "repository_exact_title_match": true,
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/2ecbed9c-0143-4cc9-b047-d1746aeec206",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/2ecbed9c-0143-4cc9-b047-d1746aeec206' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact_or_unavailable",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies occupational identity, definition and occupation-skill evidence, but it is not an O*NET-style work-profile row and does not establish Nigerian demand, local requirements or student preparation content. Retain the evidence for review without fabricating profile fields.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D134|marine firefighter",
+      "domain_id": "D134",
+      "domain_name": "Naval Architecture, Marine Engineering",
+      "role_name": "marine firefighter",
+      "existing_role_source": "esco",
+      "existing_esco_code": "5411.1.2",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {
+        "sources": [
+          "global_esco",
+          "global_onet",
+          "global_isco",
+          "global_wef",
+          "global_imo_imarest"
+        ],
+        "context_sources": [
+          "ng_jobberman",
+          "ng_myjobmag",
+          "ng_nbs",
+          "ng_engineering",
+          "ng_aviation_maritime",
+          "ng_transport"
+        ],
+        "evidence": "Exact ESCO occupation record; the domain placement is a documented cross-domain taxonomy mapping.",
+        "mapping_method": "curated_domain_source_family_title_anchor",
+        "matched_terms": [
+          "marine"
+        ],
+        "mapping_score": 17,
+        "region": "global"
+      },
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "5411",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=1932",
+        "concept_uri": "http://data.europa.eu/esco/occupation/9c3cdf9a-f62f-4d73-bb8d-4cfc85c2d271",
+        "preferred_label": "marine firefighter",
+        "alt_labels": "marine fire technician\nharbour firefighter\nship's firefighter\nshipboard firefighter\nvessel firefighter\nboatmaster firefighter",
+        "definition": "Marine firefighters are responsible for emergency response in case of a fire outbreak or other hazardous situations in marine environments. They actively respond to contain fires and the outbreak of other hazardous on vessels, docks and other marine facilities. They ensure the marine installation complies with health and safety regulations. They also regulate the clean-up of the scene and assess the damage.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-23T09:44:50.013Z",
+        "occupation_skill_relation_count": 36,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/9c3cdf9a-f62f-4d73-bb8d-4cfc85c2d271"
+      },
+      "repository_exact_title_match": true,
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/9c3cdf9a-f62f-4d73-bb8d-4cfc85c2d271",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/9c3cdf9a-f62f-4d73-bb8d-4cfc85c2d271' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact_or_unavailable",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies occupational identity, definition and occupation-skill evidence, but it is not an O*NET-style work-profile row and does not establish Nigerian demand, local requirements or student preparation content. Retain the evidence for review without fabricating profile fields.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D134|marine fitter",
+      "domain_id": "D134",
+      "domain_name": "Naval Architecture, Marine Engineering",
+      "role_name": "marine fitter",
+      "existing_role_source": "esco",
+      "existing_esco_code": "7233.9",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {
+        "sources": [
+          "global_esco",
+          "global_onet",
+          "global_isco",
+          "global_wef",
+          "global_imo_imarest"
+        ],
+        "context_sources": [
+          "ng_jobberman",
+          "ng_myjobmag",
+          "ng_nbs",
+          "ng_engineering",
+          "ng_aviation_maritime",
+          "ng_transport"
+        ],
+        "evidence": "Exact ESCO occupation record; the domain placement is a documented cross-domain taxonomy mapping.",
+        "mapping_method": "curated_domain_source_family_title_anchor",
+        "matched_terms": [
+          "marine"
+        ],
+        "mapping_score": 17,
+        "region": "global"
+      },
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "7233",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=1182",
+        "concept_uri": "http://data.europa.eu/esco/occupation/5e748def-5b90-41e2-aa8b-2ebcc7d25ab0",
+        "preferred_label": "marine fitter",
+        "alt_labels": "naval vessels fitter\nmaritime fitter\nshipfitter\nnaval fitter\nship fitter",
+        "definition": "Marine fitters work primarily in fabrication, subassembly, assembly and final assembly of all structural components on commercial and naval vessels, to include but not limited to hulls, superstructures, masts, pilot house, and engine rooms.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-02-23T08:39:24.487Z",
+        "occupation_skill_relation_count": 40,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/5e748def-5b90-41e2-aa8b-2ebcc7d25ab0"
+      },
+      "repository_exact_title_match": true,
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/5e748def-5b90-41e2-aa8b-2ebcc7d25ab0",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/5e748def-5b90-41e2-aa8b-2ebcc7d25ab0' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact_or_unavailable",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies occupational identity, definition and occupation-skill evidence, but it is not an O*NET-style work-profile row and does not establish Nigerian demand, local requirements or student preparation content. Retain the evidence for review without fabricating profile fields.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    },
+    {
+      "role_key": "D134|marine mechanic",
+      "domain_id": "D134",
+      "domain_name": "Naval Architecture, Marine Engineering",
+      "role_name": "marine mechanic",
+      "existing_role_source": "esco",
+      "existing_esco_code": "7233.10",
+      "existing_onet_occupation_codes": [],
+      "existing_source_provenance": {
+        "sources": [
+          "global_esco",
+          "global_onet",
+          "global_isco",
+          "global_wef",
+          "global_imo_imarest"
+        ],
+        "context_sources": [
+          "ng_jobberman",
+          "ng_myjobmag",
+          "ng_nbs",
+          "ng_engineering",
+          "ng_aviation_maritime",
+          "ng_transport"
+        ],
+        "evidence": "Exact ESCO occupation record; the domain placement is a documented cross-domain taxonomy mapping.",
+        "mapping_method": "curated_domain_source_family_title_anchor",
+        "matched_terms": [
+          "marine"
+        ],
+        "mapping_score": 17,
+        "region": "global"
+      },
+      "retrieved_on": "2026-09-21",
+      "occupational_authority": "European Commission ESCO occupation dataset",
+      "isco_group": "7233",
+      "subgroup_assignment": "subgroup",
+      "repository_evidence": {
+        "authority": "European Commission ESCO occupation dataset",
+        "csv_locator": "data/career-mapping/_tax_src/esco/occupations_en.csv#row=1692",
+        "concept_uri": "http://data.europa.eu/esco/occupation/88589d68-b870-440e-8444-32e9935cbbbc",
+        "preferred_label": "marine mechanic",
+        "alt_labels": "cargo ship mechanic\ncontainer ship mechanic\nmechanic on a ship\nship machinist\nmerchant ship mechanic\ncruise ship mechanic\npassenger ship mechanic",
+        "definition": "Marine mechanics are in charge of the engines and mechanical parts of the vessel and replace defective equipment and parts. They communicate with other crew members on the operational level. Marine mechanics maintain and repair the engines and other machinery of vessels such as boilers, generators and electrical equipment.",
+        "scope_note": "",
+        "status": "released",
+        "modified_date": "2024-01-25T10:13:14.273Z",
+        "occupation_skill_relation_count": 64,
+        "skill_relation_locator": "data/career-mapping/_tax_src/esco/occupationSkillRelations_en.csv#occupationUri=http://data.europa.eu/esco/occupation/88589d68-b870-440e-8444-32e9935cbbbc"
+      },
+      "repository_exact_title_match": true,
+      "internet_check": {
+        "status": "internet_check_failed",
+        "http_status": null,
+        "url": "https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/88589d68-b870-440e-8444-32e9935cbbbc",
+        "error": {
+          "urllib": "URLError: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>",
+          "powershell": "CalledProcessError: Command '['powershell.exe', '-NoProfile', '-Command', \"$ErrorActionPreference='Stop'; $r=Invoke-WebRequest -UseBasicParsing -Uri 'https://ec.europa.eu/esco/api/resource/occupation?uri=http://data.europa.eu/esco/occupation/88589d68-b870-440e-8444-32e9935cbbbc' -Headers @{Accept='application/json'} -TimeoutSec 30; Write-Output $r.Content\"]' returned non-zero exit status 1."
+        },
+        "retrieved_on": "2026-09-21"
+      },
+      "repository_exact_identity_match": true,
+      "internet_exact_identity_match": false,
+      "internet_title_alignment": "not_exact_or_unavailable",
+      "identity_state": "bounded_local_only",
+      "audit_status": "bounded_local_only",
+      "profile_decision": "review_required",
+      "reason": "ESCO supplies occupational identity, definition and occupation-skill evidence, but it is not an O*NET-style work-profile row and does not establish Nigerian demand, local requirements or student preparation content. Retain the evidence for review without fabricating profile fields.",
+      "correction": {
+        "role_record_changed": false,
+        "generated_profile_row_added": false,
+        "seed_or_sql_changed": false
+      }
+    }
+  ]
+}

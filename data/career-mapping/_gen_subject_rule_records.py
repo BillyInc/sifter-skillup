@@ -23,6 +23,7 @@ from _parse_subject_options import (
     SOURCE_URL,
     UTME_CODES,
     parse_olevel,
+    olevel_parts_are_matchable,
     parse_utme,
     source_variant_texts,
     uid,
@@ -223,6 +224,20 @@ def source_rule(text, exam_type, parsed_override=None):
     if parsed and not (isinstance(parsed, tuple) and parsed[0] == "ref"):
         if exam_type == "olevel":
             minimum, parts = parsed
+            if not olevel_parts_are_matchable(text, parsed):
+                return {
+                    "rule_status": "structured_source",
+                    "rule_kind": "source_rule",
+                    "rule_json": {
+                        "version": 1,
+                        "examType": exam_type,
+                        "raw": text,
+                        "explicitSubjectCodes": subject_codes_in_text(text, OLEVEL_CODES),
+                        "categoryHints": category_hints(text),
+                        "hasCondition": False,
+                        "reason": "unresolved_olevel_scope",
+                    },
+                }
             return {
                 "rule_status": "matchable",
                 "rule_kind": "subject_combination",

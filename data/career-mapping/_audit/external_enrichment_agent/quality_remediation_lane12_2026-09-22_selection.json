@@ -1,0 +1,1689 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-selection.v1",
+  "batch": "quality_remediation_lane12_2026-09-22",
+  "source_audit": "item_ledger_quality_audit_2026-09-22.json",
+  "selection_method": "atomic shared-lock exclusion of all prior item-remediation selections, claims, and ledgers; stable source-audit order",
+  "claim": {
+    "claim_id": "bf555c373a2dc9f5",
+    "lane": "lane12",
+    "claimed_at": "2026-09-22T12:05:19Z",
+    "count": 100,
+    "identities": [
+      "role|D001|cloud identity manager|skill|protect-ict-devices",
+      "role|D001|cloud software developer|skill|asp-net",
+      "role|D001|cloud software developer|skill|cloud-monitoring-and-reporting",
+      "role|D001|cloud software developer|skill|cloud-security-and-compliance",
+      "role|D001|cloud software developer|skill|cloud-technologies",
+      "role|D001|cloud software developer|skill|computer-engineering",
+      "role|D001|cloud software developer|skill|decentralized-application-frameworks",
+      "role|D001|cloud software developer|skill|design-cloud-architecture",
+      "role|D001|cloud software developer|skill|design-cloud-networks",
+      "role|D001|cloud software developer|skill|eclipse-integrated-development-environment-software",
+      "role|D001|cloud software developer|skill|ibm-websphere",
+      "role|D001|cloud software developer|skill|ict-system-programming",
+      "role|D001|cloud software developer|skill|integrated-development-environment-software",
+      "role|D001|cloud software developer|skill|java-computer-programming",
+      "role|D001|cloud software developer|skill|javascript",
+      "role|D001|cloud software developer|skill|javascript-framework",
+      "role|D001|cloud software developer|skill|service-oriented-modelling",
+      "role|D001|cloud software developer|skill|software-frameworks",
+      "role|D001|digital games developer|skill|3d-lighting",
+      "role|D001|digital games developer|skill|3d-texturing",
+      "role|D001|digital games developer|skill|apply-3d-imaging-techniques",
+      "role|D001|digital games developer|skill|common-lisp",
+      "role|D001|digital games developer|skill|computer-graphics",
+      "role|D001|digital games developer|skill|computer-programming",
+      "role|D001|digital games developer|skill|debug-software",
+      "role|D001|digital games developer|skill|digital-game-genres",
+      "role|D001|digital games developer|skill|haskell",
+      "role|D001|digital games developer|skill|ict-debugging-tools",
+      "role|D001|digital games developer|skill|integrated-development-environment-software",
+      "role|D001|digital games developer|skill|kdevelop",
+      "role|D001|digital games developer|skill|ruby-computer-programming",
+      "role|D001|digital games developer|skill|sas-language",
+      "role|D001|digital games developer|skill|tools-for-software-configuration-management",
+      "role|D001|digital games developer|skill|use-software-design-patterns",
+      "role|D001|digital games developer|skill|utilise-computer-aided-software-engineering-tools",
+      "role|D001|digital games developer|tool|apache-kafka",
+      "role|D001|digital games developer|tool|cascading-style-sheets-css",
+      "role|D001|digital games developer|tool|docker",
+      "role|D001|digital games developer|tool|github",
+      "role|D001|digital games developer|tool|go",
+      "role|D001|embedded systems software developer|skill|common-lisp",
+      "role|D001|embedded systems software developer|skill|computer-programming",
+      "role|D001|embedded systems software developer|skill|debug-software",
+      "role|D001|embedded systems software developer|skill|develop-ict-device-driver",
+      "role|D001|embedded systems software developer|skill|develop-software-prototype",
+      "role|D001|embedded systems software developer|skill|digital-systems",
+      "role|D001|embedded systems software developer|skill|embedded-systems",
+      "role|D001|embedded systems software developer|skill|haskell",
+      "role|D001|embedded systems software developer|skill|ict-debugging-tools",
+      "role|D001|embedded systems software developer|skill|integrated-development-environment-software",
+      "role|D001|embedded systems software developer|skill|internet-of-things",
+      "role|D001|embedded systems software developer|skill|kdevelop",
+      "role|D001|embedded systems software developer|skill|ruby-computer-programming",
+      "role|D001|embedded systems software developer|skill|sas-language",
+      "role|D001|embedded systems software developer|skill|tools-for-software-configuration-management",
+      "role|D001|embedded systems software developer|skill|use-software-design-patterns",
+      "role|D001|embedded systems software developer|skill|utilise-computer-aided-software-engineering-tools",
+      "role|D001|embedded systems software developer|tool|apache-kafka",
+      "role|D001|embedded systems software developer|tool|cascading-style-sheets-css",
+      "role|D001|embedded systems software developer|tool|docker",
+      "role|D001|embedded systems software developer|tool|github",
+      "role|D001|embedded systems software developer|tool|go",
+      "role|D001|industrial mobile devices software developer|skill|computer-programming",
+      "role|D001|industrial mobile devices software developer|skill|debug-software",
+      "role|D001|industrial mobile devices software developer|skill|embedded-systems",
+      "role|D001|industrial mobile devices software developer|skill|erlang",
+      "role|D001|industrial mobile devices software developer|skill|haskell",
+      "role|D001|industrial mobile devices software developer|skill|ict-debugging-tools",
+      "role|D001|industrial mobile devices software developer|skill|industrial-software",
+      "role|D001|industrial mobile devices software developer|skill|integrated-development-environment-software",
+      "role|D001|industrial mobile devices software developer|skill|internet-of-things",
+      "role|D001|industrial mobile devices software developer|skill|kdevelop",
+      "role|D001|industrial mobile devices software developer|skill|mobile-operating-systems",
+      "role|D001|industrial mobile devices software developer|skill|ruby-computer-programming",
+      "role|D001|industrial mobile devices software developer|skill|sas-language",
+      "role|D001|industrial mobile devices software developer|skill|tools-for-software-configuration-management",
+      "role|D001|industrial mobile devices software developer|skill|use-an-application-specific-interface",
+      "role|D001|industrial mobile devices software developer|skill|use-software-design-patterns",
+      "role|D001|industrial mobile devices software developer|skill|utilise-computer-aided-software-engineering-tools",
+      "role|D001|industrial mobile devices software developer|tool|apache-kafka",
+      "role|D001|industrial mobile devices software developer|tool|cascading-style-sheets-css",
+      "role|D001|industrial mobile devices software developer|tool|docker",
+      "role|D001|industrial mobile devices software developer|tool|github",
+      "role|D001|industrial mobile devices software developer|tool|go",
+      "role|D001|mobile application developer|skill|computer-programming",
+      "role|D001|mobile application developer|skill|debug-software",
+      "role|D001|mobile application developer|skill|develop-automated-migration-methods",
+      "role|D001|mobile application developer|skill|erlang",
+      "role|D001|mobile application developer|skill|haskell",
+      "role|D001|mobile application developer|skill|ict-debugging-tools",
+      "role|D001|mobile application developer|skill|integrated-development-environment-software",
+      "role|D001|mobile application developer|skill|internet-of-things",
+      "role|D002|ICT consultant|skill|provide-user-documentation",
+      "role|D002|ICT consultant|skill|software-components-libraries",
+      "role|D002|ICT research consultant|skill|conduct-literature-research",
+      "role|D002|ICT research consultant|skill|create-prototype-of-user-experience-solutions",
+      "role|D002|ICT research consultant|skill|web-analytics",
+      "role|D002|ICT system analyst|skill|ict-infrastructure",
+      "role|D002|ICT system analyst|skill|online-analytical-processing",
+      "role|D002|ICT system architect|skill|assess-ict-knowledge"
+    ],
+    "excluded_prior_identity_count": 814
+  },
+  "items": [
+    {
+      "subject_id": "item|role|D001|cloud identity manager|skill|protect-ict-devices",
+      "context_level": "role",
+      "context_key": "D001|cloud identity manager",
+      "item_type": "skill",
+      "item_key": "protect-ict-devices",
+      "item_name": "protect ICT devices",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud software developer|skill|asp-net",
+      "context_level": "role",
+      "context_key": "D001|cloud software developer",
+      "item_type": "skill",
+      "item_key": "asp-net",
+      "item_name": "ASP.NET",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://dotnet.microsoft.com/apps/aspnet"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud software developer|skill|cloud-monitoring-and-reporting",
+      "context_level": "role",
+      "context_key": "D001|cloud software developer",
+      "item_type": "skill",
+      "item_key": "cloud-monitoring-and-reporting",
+      "item_name": "cloud monitoring and reporting",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://aws.amazon.com/what-is-cloud-computing/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud software developer|skill|cloud-security-and-compliance",
+      "context_level": "role",
+      "context_key": "D001|cloud software developer",
+      "item_type": "skill",
+      "item_key": "cloud-security-and-compliance",
+      "item_name": "cloud security and compliance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://aws.amazon.com/what-is-cloud-computing/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud software developer|skill|cloud-technologies",
+      "context_level": "role",
+      "context_key": "D001|cloud software developer",
+      "item_type": "skill",
+      "item_key": "cloud-technologies",
+      "item_name": "cloud technologies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://aws.amazon.com/what-is-cloud-computing/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud software developer|skill|computer-engineering",
+      "context_level": "role",
+      "context_key": "D001|cloud software developer",
+      "item_type": "skill",
+      "item_key": "computer-engineering",
+      "item_name": "computer engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud software developer|skill|decentralized-application-frameworks",
+      "context_level": "role",
+      "context_key": "D001|cloud software developer",
+      "item_type": "skill",
+      "item_key": "decentralized-application-frameworks",
+      "item_name": "decentralized application frameworks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud software developer|skill|design-cloud-architecture",
+      "context_level": "role",
+      "context_key": "D001|cloud software developer",
+      "item_type": "skill",
+      "item_key": "design-cloud-architecture",
+      "item_name": "design cloud architecture",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://aws.amazon.com/what-is-cloud-computing/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud software developer|skill|design-cloud-networks",
+      "context_level": "role",
+      "context_key": "D001|cloud software developer",
+      "item_type": "skill",
+      "item_key": "design-cloud-networks",
+      "item_name": "design cloud networks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://aws.amazon.com/what-is-cloud-computing/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud software developer|skill|eclipse-integrated-development-environment-software",
+      "context_level": "role",
+      "context_key": "D001|cloud software developer",
+      "item_type": "skill",
+      "item_key": "eclipse-integrated-development-environment-software",
+      "item_name": "Eclipse (integrated development environment software)",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.eclipse.org/ide/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud software developer|skill|ibm-websphere",
+      "context_level": "role",
+      "context_key": "D001|cloud software developer",
+      "item_type": "skill",
+      "item_key": "ibm-websphere",
+      "item_name": "IBM WebSphere",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud software developer|skill|ict-system-programming",
+      "context_level": "role",
+      "context_key": "D001|cloud software developer",
+      "item_type": "skill",
+      "item_key": "ict-system-programming",
+      "item_name": "ICT system programming",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud software developer|skill|integrated-development-environment-software",
+      "context_level": "role",
+      "context_key": "D001|cloud software developer",
+      "item_type": "skill",
+      "item_key": "integrated-development-environment-software",
+      "item_name": "integrated development environment software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud software developer|skill|java-computer-programming",
+      "context_level": "role",
+      "context_key": "D001|cloud software developer",
+      "item_type": "skill",
+      "item_key": "java-computer-programming",
+      "item_name": "Java (computer programming)",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://dev.java/learn/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud software developer|skill|javascript",
+      "context_level": "role",
+      "context_key": "D001|cloud software developer",
+      "item_type": "skill",
+      "item_key": "javascript",
+      "item_name": "JavaScript",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud software developer|skill|javascript-framework",
+      "context_level": "role",
+      "context_key": "D001|cloud software developer",
+      "item_type": "skill",
+      "item_key": "javascript-framework",
+      "item_name": "JavaScript Framework",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud software developer|skill|service-oriented-modelling",
+      "context_level": "role",
+      "context_key": "D001|cloud software developer",
+      "item_type": "skill",
+      "item_key": "service-oriented-modelling",
+      "item_name": "service-oriented modelling",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud software developer|skill|software-frameworks",
+      "context_level": "role",
+      "context_key": "D001|cloud software developer",
+      "item_type": "skill",
+      "item_key": "software-frameworks",
+      "item_name": "software frameworks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|digital games developer|skill|3d-lighting",
+      "context_level": "role",
+      "context_key": "D001|digital games developer",
+      "item_type": "skill",
+      "item_key": "3d-lighting",
+      "item_name": "3D lighting",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|digital games developer|skill|3d-texturing",
+      "context_level": "role",
+      "context_key": "D001|digital games developer",
+      "item_type": "skill",
+      "item_key": "3d-texturing",
+      "item_name": "3D texturing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|digital games developer|skill|apply-3d-imaging-techniques",
+      "context_level": "role",
+      "context_key": "D001|digital games developer",
+      "item_type": "skill",
+      "item_key": "apply-3d-imaging-techniques",
+      "item_name": "apply 3D imaging techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|digital games developer|skill|common-lisp",
+      "context_level": "role",
+      "context_key": "D001|digital games developer",
+      "item_type": "skill",
+      "item_key": "common-lisp",
+      "item_name": "Common Lisp",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://common-lisp.net/documentation/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|digital games developer|skill|computer-graphics",
+      "context_level": "role",
+      "context_key": "D001|digital games developer",
+      "item_type": "skill",
+      "item_key": "computer-graphics",
+      "item_name": "computer graphics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|digital games developer|skill|computer-programming",
+      "context_level": "role",
+      "context_key": "D001|digital games developer",
+      "item_type": "skill",
+      "item_key": "computer-programming",
+      "item_name": "computer programming",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|digital games developer|skill|debug-software",
+      "context_level": "role",
+      "context_key": "D001|digital games developer",
+      "item_type": "skill",
+      "item_key": "debug-software",
+      "item_name": "debug software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|digital games developer|skill|digital-game-genres",
+      "context_level": "role",
+      "context_key": "D001|digital games developer",
+      "item_type": "skill",
+      "item_key": "digital-game-genres",
+      "item_name": "digital game genres",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|digital games developer|skill|haskell",
+      "context_level": "role",
+      "context_key": "D001|digital games developer",
+      "item_type": "skill",
+      "item_key": "haskell",
+      "item_name": "Haskell",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.haskell.org/documentation/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|digital games developer|skill|ict-debugging-tools",
+      "context_level": "role",
+      "context_key": "D001|digital games developer",
+      "item_type": "skill",
+      "item_key": "ict-debugging-tools",
+      "item_name": "ICT debugging tools",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|digital games developer|skill|integrated-development-environment-software",
+      "context_level": "role",
+      "context_key": "D001|digital games developer",
+      "item_type": "skill",
+      "item_key": "integrated-development-environment-software",
+      "item_name": "integrated development environment software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|digital games developer|skill|kdevelop",
+      "context_level": "role",
+      "context_key": "D001|digital games developer",
+      "item_type": "skill",
+      "item_key": "kdevelop",
+      "item_name": "KDevelop",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://kdevelop.org/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|digital games developer|skill|ruby-computer-programming",
+      "context_level": "role",
+      "context_key": "D001|digital games developer",
+      "item_type": "skill",
+      "item_key": "ruby-computer-programming",
+      "item_name": "Ruby (computer programming)",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.ruby-lang.org/en/documentation/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|digital games developer|skill|sas-language",
+      "context_level": "role",
+      "context_key": "D001|digital games developer",
+      "item_type": "skill",
+      "item_key": "sas-language",
+      "item_name": "SAS language",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://documentation.sas.com/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|digital games developer|skill|tools-for-software-configuration-management",
+      "context_level": "role",
+      "context_key": "D001|digital games developer",
+      "item_type": "skill",
+      "item_key": "tools-for-software-configuration-management",
+      "item_name": "tools for software configuration management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|digital games developer|skill|use-software-design-patterns",
+      "context_level": "role",
+      "context_key": "D001|digital games developer",
+      "item_type": "skill",
+      "item_key": "use-software-design-patterns",
+      "item_name": "use software design patterns",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|digital games developer|skill|utilise-computer-aided-software-engineering-tools",
+      "context_level": "role",
+      "context_key": "D001|digital games developer",
+      "item_type": "skill",
+      "item_key": "utilise-computer-aided-software-engineering-tools",
+      "item_name": "utilise computer-aided software engineering tools",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|digital games developer|tool|apache-kafka",
+      "context_level": "role",
+      "context_key": "D001|digital games developer",
+      "item_type": "tool",
+      "item_key": "apache-kafka",
+      "item_name": "Apache Kafka",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://kafka.apache.org/documentation/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|digital games developer|tool|cascading-style-sheets-css",
+      "context_level": "role",
+      "context_key": "D001|digital games developer",
+      "item_type": "tool",
+      "item_key": "cascading-style-sheets-css",
+      "item_name": "Cascading style sheets CSS",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://developer.mozilla.org/en-US/docs/Web/CSS"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|digital games developer|tool|docker",
+      "context_level": "role",
+      "context_key": "D001|digital games developer",
+      "item_type": "tool",
+      "item_key": "docker",
+      "item_name": "Docker",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://docs.docker.com/get-started/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|digital games developer|tool|github",
+      "context_level": "role",
+      "context_key": "D001|digital games developer",
+      "item_type": "tool",
+      "item_key": "github",
+      "item_name": "GitHub",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://docs.github.com/en/get-started"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|digital games developer|tool|go",
+      "context_level": "role",
+      "context_key": "D001|digital games developer",
+      "item_type": "tool",
+      "item_key": "go",
+      "item_name": "Go",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://go.dev/doc/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|embedded systems software developer|skill|common-lisp",
+      "context_level": "role",
+      "context_key": "D001|embedded systems software developer",
+      "item_type": "skill",
+      "item_key": "common-lisp",
+      "item_name": "Common Lisp",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://common-lisp.net/documentation/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|embedded systems software developer|skill|computer-programming",
+      "context_level": "role",
+      "context_key": "D001|embedded systems software developer",
+      "item_type": "skill",
+      "item_key": "computer-programming",
+      "item_name": "computer programming",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|embedded systems software developer|skill|debug-software",
+      "context_level": "role",
+      "context_key": "D001|embedded systems software developer",
+      "item_type": "skill",
+      "item_key": "debug-software",
+      "item_name": "debug software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|embedded systems software developer|skill|develop-ict-device-driver",
+      "context_level": "role",
+      "context_key": "D001|embedded systems software developer",
+      "item_type": "skill",
+      "item_key": "develop-ict-device-driver",
+      "item_name": "develop ICT device driver",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|embedded systems software developer|skill|develop-software-prototype",
+      "context_level": "role",
+      "context_key": "D001|embedded systems software developer",
+      "item_type": "skill",
+      "item_key": "develop-software-prototype",
+      "item_name": "develop software prototype",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|embedded systems software developer|skill|digital-systems",
+      "context_level": "role",
+      "context_key": "D001|embedded systems software developer",
+      "item_type": "skill",
+      "item_key": "digital-systems",
+      "item_name": "digital systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|embedded systems software developer|skill|embedded-systems",
+      "context_level": "role",
+      "context_key": "D001|embedded systems software developer",
+      "item_type": "skill",
+      "item_key": "embedded-systems",
+      "item_name": "embedded systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|embedded systems software developer|skill|haskell",
+      "context_level": "role",
+      "context_key": "D001|embedded systems software developer",
+      "item_type": "skill",
+      "item_key": "haskell",
+      "item_name": "Haskell",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.haskell.org/documentation/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|embedded systems software developer|skill|ict-debugging-tools",
+      "context_level": "role",
+      "context_key": "D001|embedded systems software developer",
+      "item_type": "skill",
+      "item_key": "ict-debugging-tools",
+      "item_name": "ICT debugging tools",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|embedded systems software developer|skill|integrated-development-environment-software",
+      "context_level": "role",
+      "context_key": "D001|embedded systems software developer",
+      "item_type": "skill",
+      "item_key": "integrated-development-environment-software",
+      "item_name": "integrated development environment software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|embedded systems software developer|skill|internet-of-things",
+      "context_level": "role",
+      "context_key": "D001|embedded systems software developer",
+      "item_type": "skill",
+      "item_key": "internet-of-things",
+      "item_name": "Internet of Things",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/programs-projects/internet-things-iot"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|embedded systems software developer|skill|kdevelop",
+      "context_level": "role",
+      "context_key": "D001|embedded systems software developer",
+      "item_type": "skill",
+      "item_key": "kdevelop",
+      "item_name": "KDevelop",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://kdevelop.org/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|embedded systems software developer|skill|ruby-computer-programming",
+      "context_level": "role",
+      "context_key": "D001|embedded systems software developer",
+      "item_type": "skill",
+      "item_key": "ruby-computer-programming",
+      "item_name": "Ruby (computer programming)",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.ruby-lang.org/en/documentation/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|embedded systems software developer|skill|sas-language",
+      "context_level": "role",
+      "context_key": "D001|embedded systems software developer",
+      "item_type": "skill",
+      "item_key": "sas-language",
+      "item_name": "SAS language",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://documentation.sas.com/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|embedded systems software developer|skill|tools-for-software-configuration-management",
+      "context_level": "role",
+      "context_key": "D001|embedded systems software developer",
+      "item_type": "skill",
+      "item_key": "tools-for-software-configuration-management",
+      "item_name": "tools for software configuration management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|embedded systems software developer|skill|use-software-design-patterns",
+      "context_level": "role",
+      "context_key": "D001|embedded systems software developer",
+      "item_type": "skill",
+      "item_key": "use-software-design-patterns",
+      "item_name": "use software design patterns",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|embedded systems software developer|skill|utilise-computer-aided-software-engineering-tools",
+      "context_level": "role",
+      "context_key": "D001|embedded systems software developer",
+      "item_type": "skill",
+      "item_key": "utilise-computer-aided-software-engineering-tools",
+      "item_name": "utilise computer-aided software engineering tools",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|embedded systems software developer|tool|apache-kafka",
+      "context_level": "role",
+      "context_key": "D001|embedded systems software developer",
+      "item_type": "tool",
+      "item_key": "apache-kafka",
+      "item_name": "Apache Kafka",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://kafka.apache.org/documentation/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|embedded systems software developer|tool|cascading-style-sheets-css",
+      "context_level": "role",
+      "context_key": "D001|embedded systems software developer",
+      "item_type": "tool",
+      "item_key": "cascading-style-sheets-css",
+      "item_name": "Cascading style sheets CSS",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://developer.mozilla.org/en-US/docs/Web/CSS"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|embedded systems software developer|tool|docker",
+      "context_level": "role",
+      "context_key": "D001|embedded systems software developer",
+      "item_type": "tool",
+      "item_key": "docker",
+      "item_name": "Docker",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://docs.docker.com/get-started/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|embedded systems software developer|tool|github",
+      "context_level": "role",
+      "context_key": "D001|embedded systems software developer",
+      "item_type": "tool",
+      "item_key": "github",
+      "item_name": "GitHub",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://docs.github.com/en/get-started"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|embedded systems software developer|tool|go",
+      "context_level": "role",
+      "context_key": "D001|embedded systems software developer",
+      "item_type": "tool",
+      "item_key": "go",
+      "item_name": "Go",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://go.dev/doc/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|industrial mobile devices software developer|skill|computer-programming",
+      "context_level": "role",
+      "context_key": "D001|industrial mobile devices software developer",
+      "item_type": "skill",
+      "item_key": "computer-programming",
+      "item_name": "computer programming",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|industrial mobile devices software developer|skill|debug-software",
+      "context_level": "role",
+      "context_key": "D001|industrial mobile devices software developer",
+      "item_type": "skill",
+      "item_key": "debug-software",
+      "item_name": "debug software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|industrial mobile devices software developer|skill|embedded-systems",
+      "context_level": "role",
+      "context_key": "D001|industrial mobile devices software developer",
+      "item_type": "skill",
+      "item_key": "embedded-systems",
+      "item_name": "embedded systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|industrial mobile devices software developer|skill|erlang",
+      "context_level": "role",
+      "context_key": "D001|industrial mobile devices software developer",
+      "item_type": "skill",
+      "item_key": "erlang",
+      "item_name": "Erlang",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|industrial mobile devices software developer|skill|haskell",
+      "context_level": "role",
+      "context_key": "D001|industrial mobile devices software developer",
+      "item_type": "skill",
+      "item_key": "haskell",
+      "item_name": "Haskell",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.haskell.org/documentation/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|industrial mobile devices software developer|skill|ict-debugging-tools",
+      "context_level": "role",
+      "context_key": "D001|industrial mobile devices software developer",
+      "item_type": "skill",
+      "item_key": "ict-debugging-tools",
+      "item_name": "ICT debugging tools",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|industrial mobile devices software developer|skill|industrial-software",
+      "context_level": "role",
+      "context_key": "D001|industrial mobile devices software developer",
+      "item_type": "skill",
+      "item_key": "industrial-software",
+      "item_name": "industrial software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|industrial mobile devices software developer|skill|integrated-development-environment-software",
+      "context_level": "role",
+      "context_key": "D001|industrial mobile devices software developer",
+      "item_type": "skill",
+      "item_key": "integrated-development-environment-software",
+      "item_name": "integrated development environment software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|industrial mobile devices software developer|skill|internet-of-things",
+      "context_level": "role",
+      "context_key": "D001|industrial mobile devices software developer",
+      "item_type": "skill",
+      "item_key": "internet-of-things",
+      "item_name": "Internet of Things",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/programs-projects/internet-things-iot"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|industrial mobile devices software developer|skill|kdevelop",
+      "context_level": "role",
+      "context_key": "D001|industrial mobile devices software developer",
+      "item_type": "skill",
+      "item_key": "kdevelop",
+      "item_name": "KDevelop",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://kdevelop.org/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|industrial mobile devices software developer|skill|mobile-operating-systems",
+      "context_level": "role",
+      "context_key": "D001|industrial mobile devices software developer",
+      "item_type": "skill",
+      "item_key": "mobile-operating-systems",
+      "item_name": "mobile operating systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|industrial mobile devices software developer|skill|ruby-computer-programming",
+      "context_level": "role",
+      "context_key": "D001|industrial mobile devices software developer",
+      "item_type": "skill",
+      "item_key": "ruby-computer-programming",
+      "item_name": "Ruby (computer programming)",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.ruby-lang.org/en/documentation/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|industrial mobile devices software developer|skill|sas-language",
+      "context_level": "role",
+      "context_key": "D001|industrial mobile devices software developer",
+      "item_type": "skill",
+      "item_key": "sas-language",
+      "item_name": "SAS language",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://documentation.sas.com/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|industrial mobile devices software developer|skill|tools-for-software-configuration-management",
+      "context_level": "role",
+      "context_key": "D001|industrial mobile devices software developer",
+      "item_type": "skill",
+      "item_key": "tools-for-software-configuration-management",
+      "item_name": "tools for software configuration management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|industrial mobile devices software developer|skill|use-an-application-specific-interface",
+      "context_level": "role",
+      "context_key": "D001|industrial mobile devices software developer",
+      "item_type": "skill",
+      "item_key": "use-an-application-specific-interface",
+      "item_name": "use an application-specific interface",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.acm.org/special-interest-groups/sigs/sigchi"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|industrial mobile devices software developer|skill|use-software-design-patterns",
+      "context_level": "role",
+      "context_key": "D001|industrial mobile devices software developer",
+      "item_type": "skill",
+      "item_key": "use-software-design-patterns",
+      "item_name": "use software design patterns",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|industrial mobile devices software developer|skill|utilise-computer-aided-software-engineering-tools",
+      "context_level": "role",
+      "context_key": "D001|industrial mobile devices software developer",
+      "item_type": "skill",
+      "item_key": "utilise-computer-aided-software-engineering-tools",
+      "item_name": "utilise computer-aided software engineering tools",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|industrial mobile devices software developer|tool|apache-kafka",
+      "context_level": "role",
+      "context_key": "D001|industrial mobile devices software developer",
+      "item_type": "tool",
+      "item_key": "apache-kafka",
+      "item_name": "Apache Kafka",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://kafka.apache.org/documentation/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|industrial mobile devices software developer|tool|cascading-style-sheets-css",
+      "context_level": "role",
+      "context_key": "D001|industrial mobile devices software developer",
+      "item_type": "tool",
+      "item_key": "cascading-style-sheets-css",
+      "item_name": "Cascading style sheets CSS",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://developer.mozilla.org/en-US/docs/Web/CSS"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|industrial mobile devices software developer|tool|docker",
+      "context_level": "role",
+      "context_key": "D001|industrial mobile devices software developer",
+      "item_type": "tool",
+      "item_key": "docker",
+      "item_name": "Docker",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://docs.docker.com/get-started/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|industrial mobile devices software developer|tool|github",
+      "context_level": "role",
+      "context_key": "D001|industrial mobile devices software developer",
+      "item_type": "tool",
+      "item_key": "github",
+      "item_name": "GitHub",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://docs.github.com/en/get-started"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|industrial mobile devices software developer|tool|go",
+      "context_level": "role",
+      "context_key": "D001|industrial mobile devices software developer",
+      "item_type": "tool",
+      "item_key": "go",
+      "item_name": "Go",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://go.dev/doc/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|mobile application developer|skill|computer-programming",
+      "context_level": "role",
+      "context_key": "D001|mobile application developer",
+      "item_type": "skill",
+      "item_key": "computer-programming",
+      "item_name": "computer programming",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|mobile application developer|skill|debug-software",
+      "context_level": "role",
+      "context_key": "D001|mobile application developer",
+      "item_type": "skill",
+      "item_key": "debug-software",
+      "item_name": "debug software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|mobile application developer|skill|develop-automated-migration-methods",
+      "context_level": "role",
+      "context_key": "D001|mobile application developer",
+      "item_type": "skill",
+      "item_key": "develop-automated-migration-methods",
+      "item_name": "develop automated migration methods",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|mobile application developer|skill|erlang",
+      "context_level": "role",
+      "context_key": "D001|mobile application developer",
+      "item_type": "skill",
+      "item_key": "erlang",
+      "item_name": "Erlang",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|mobile application developer|skill|haskell",
+      "context_level": "role",
+      "context_key": "D001|mobile application developer",
+      "item_type": "skill",
+      "item_key": "haskell",
+      "item_name": "Haskell",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.haskell.org/documentation/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|mobile application developer|skill|ict-debugging-tools",
+      "context_level": "role",
+      "context_key": "D001|mobile application developer",
+      "item_type": "skill",
+      "item_key": "ict-debugging-tools",
+      "item_name": "ICT debugging tools",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|mobile application developer|skill|integrated-development-environment-software",
+      "context_level": "role",
+      "context_key": "D001|mobile application developer",
+      "item_type": "skill",
+      "item_key": "integrated-development-environment-software",
+      "item_name": "integrated development environment software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|mobile application developer|skill|internet-of-things",
+      "context_level": "role",
+      "context_key": "D001|mobile application developer",
+      "item_type": "skill",
+      "item_key": "internet-of-things",
+      "item_name": "Internet of Things",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/programs-projects/internet-things-iot"
+      ]
+    },
+    {
+      "subject_id": "item|role|D002|ICT consultant|skill|provide-user-documentation",
+      "context_level": "role",
+      "context_key": "D002|ICT consultant",
+      "item_type": "skill",
+      "item_key": "provide-user-documentation",
+      "item_name": "provide user documentation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D002|ICT consultant|skill|software-components-libraries",
+      "context_level": "role",
+      "context_key": "D002|ICT consultant",
+      "item_type": "skill",
+      "item_key": "software-components-libraries",
+      "item_name": "software components libraries",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D002|ICT research consultant|skill|conduct-literature-research",
+      "context_level": "role",
+      "context_key": "D002|ICT research consultant",
+      "item_type": "skill",
+      "item_key": "conduct-literature-research",
+      "item_name": "conduct literature research",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D002|ICT research consultant|skill|create-prototype-of-user-experience-solutions",
+      "context_level": "role",
+      "context_key": "D002|ICT research consultant",
+      "item_type": "skill",
+      "item_key": "create-prototype-of-user-experience-solutions",
+      "item_name": "create prototype of user experience solutions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D002|ICT research consultant|skill|web-analytics",
+      "context_level": "role",
+      "context_key": "D002|ICT research consultant",
+      "item_type": "skill",
+      "item_key": "web-analytics",
+      "item_name": "web analytics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D002|ICT system analyst|skill|ict-infrastructure",
+      "context_level": "role",
+      "context_key": "D002|ICT system analyst",
+      "item_type": "skill",
+      "item_key": "ict-infrastructure",
+      "item_name": "ICT infrastructure",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D002|ICT system analyst|skill|online-analytical-processing",
+      "context_level": "role",
+      "context_key": "D002|ICT system analyst",
+      "item_type": "skill",
+      "item_key": "online-analytical-processing",
+      "item_name": "online analytical processing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D002|ICT system architect|skill|assess-ict-knowledge",
+      "context_level": "role",
+      "context_key": "D002|ICT system architect",
+      "item_type": "skill",
+      "item_key": "assess-ict-knowledge",
+      "item_name": "assess ICT knowledge",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    }
+  ],
+  "counts": {
+    "selected_records": 100,
+    "unique_identities": 100,
+    "excluded_prior_identities": 814
+  },
+  "policy": {
+    "review_required_preserved_unless_exact_item_type_context_evidence": true,
+    "no_relationship_inference": true,
+    "no_promotion": true
+  }
+}

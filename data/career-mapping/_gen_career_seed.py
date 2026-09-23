@@ -12,6 +12,7 @@ from collections import Counter, defaultdict
 
 from _role_overlay_loader import load_overlay_roles
 from _role_tools_loader import load_role_tools
+from _role_learning_core import student_skill_lists, selection_metadata
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SEED_OUTPUT_PATH = os.environ.get("CAREER_SEED_OUTPUT_PATH") or os.path.join(HERE, "..", "..", "backend", "seed_career_v2.sql")
@@ -103,11 +104,6 @@ role_count_by_subgroup = Counter(
     for role in roles
     if role.get("domain_id") and role.get("isco_group") is not None
 )
-
-def skill_values(value):
-    if isinstance(value, list):
-        return [str(item).strip() for item in value if str(item).strip()]
-    return [part.strip() for part in str(value or "").split("|") if part.strip()]
 
 def alias_values(value):
     if isinstance(value, list):
@@ -300,7 +296,7 @@ for r in roles:
         q(rk), q(r["role_name"]), q(r.get("description")), arr(aka), q(r.get("tier")),
         q(str(r.get("isco_group") or "")), q(r.get("esco_code")),
         q(r.get("elite_status") or "deferred"),
-        jsonb(r.get("essential_skills", [])), jsonb(r.get("optional_skills", [])),
+        jsonb(student_skill_lists(r)[0]), jsonb(student_skill_lists(r)[1]),
         arr(esco_entry.get("occupation_uris", [])), q(role_source_confidence),
         q(role_data_state), arr(onet_entry.get("occupation_codes", [])),
         jsonb(onet_entry.get("essential_skills", [])), jsonb({
@@ -308,6 +304,7 @@ for r in roles:
             "esco_occupation_uris": esco_entry.get("occupation_uris", []),
             "onet_occupation_codes": onet_entry.get("occupation_codes", []),
             "framework": source_entry.get("source_provenance") or {},
+            "student_skill_selection": selection_metadata(r),
             "nigerian_context": source_entry.get("nigerian_context") or {},
             "sources": [source for source in (
                 "esco" if esco_entry.get("occupation_uris") else None,
@@ -482,7 +479,7 @@ dom_skills = defaultdict(set)
 for r in roles:
     dk = r["domain_id"]
     if dk in HIDDEN or dk not in meta: continue
-    for s in skill_values(r.get("essential_skills", [])):
+    for s in student_skill_lists(r)[0]:
         dom_skills[dk].add(s.strip().lower())
 # down-weight ubiquitous skills (in >40% of domains) so overlap reflects DISTINCTIVE transfer
 ND = len(dom_skills) or 1

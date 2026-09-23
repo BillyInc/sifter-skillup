@@ -1,0 +1,3465 @@
+{
+  "schema_version": "2026-09-23.role-work-profile-enrichment.v1",
+  "generated_on": "2026-09-23",
+  "read_only": true,
+  "append_only": true,
+  "scope": {
+    "source_audit": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json",
+    "queue": "119 roles with work_profile_status=not_available",
+    "selection": "exact O*NET source rows with one recorded SOC code"
+  },
+  "authorities": {
+    "onet_database": {
+      "id": "global_onet",
+      "name": "O*NET 31.0 Database",
+      "release_url": "https://www.onetcenter.org/database.html",
+      "archive_url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+      "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9",
+      "local_archive": "data/career-mapping/_source_downloads/taxonomy/onet_31_0_database.zip",
+      "accessed_on": "2026-09-23",
+      "limitation": "Global/US occupational evidence only; not Nigerian demand evidence."
+    },
+    "official_identity_checks": {
+      "source": "prior role-work-profile tranches",
+      "accessed_on": "2026-09-21",
+      "limitation": "Identity verification does not itself establish a canonical row or Nigerian requirements."
+    }
+  },
+  "counts": {
+    "baseline_merged_role_records": 5209,
+    "baseline_existing_work_profile_rows": 5090,
+    "baseline_missing_work_profile_rows": 119,
+    "roles_selected": 20,
+    "exact_official_identity_matches": 20,
+    "source_backed_profile_candidates": 20,
+    "candidate_rows_with_work_profile_fields": 20,
+    "canonical_work_profile_rows_added": 0,
+    "review_required_candidates": 20,
+    "esco_only_roles_retained_review_only": 99,
+    "remaining_canonical_work_profile_rows_absent": 119,
+    "remaining_roles_without_source_backed_profile_candidate": 99,
+    "genuinely_unavailable": 0
+  },
+  "records": [
+    {
+      "role_key": "D113|Adhesive Bonding Machine Operators and Tenders",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "Adhesive Bonding Machine Operators and Tenders",
+      "existing_source": "onet",
+      "resolution": "source_backed_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "soc_code": "51-9191.00",
+        "title": "Adhesive Bonding Machine Operators and Tenders",
+        "exact_title_match": true,
+        "description": "Operate or tend bonding machines that use adhesives to join items for further processing or to form a completed product. Processes include joining veneer sheets into plywood; gluing paper; or joining rubber and rubberized fabric parts, plastic, simulated leather, or other materials.",
+        "trace_locator": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json#role_key=D113|Adhesive Bonding Machine Operators and Tenders"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Align and position materials being joined to ensure accurate application of adhesive or heat sealing.",
+          "Adjust machine components according to specifications such as widths, lengths, and thickness of materials and amounts of glue, cement, or adhesive required.",
+          "Monitor machine operations to detect malfunctions and report or resolve problems.",
+          "Start machines, and turn valves or move controls to feed, admit, apply, or transfer materials and adhesives, and to adjust temperature, pressure, and time settings.",
+          "Fill machines with glue, cement, or adhesives.",
+          "Perform test production runs and make adjustments as necessary to ensure that completed products meet standards and specifications.",
+          "Examine and measure completed materials or products to verify conformance to specifications, using measuring devices such as tape measures, gauges, or calipers.",
+          "Read work orders and communicate with coworkers to determine machine and equipment settings and adjustments and supply and product specifications."
+        ],
+        "work_activities": [
+          {
+            "name": "Controlling Machines and Processes",
+            "importance": 4.6
+          },
+          {
+            "name": "Handling and Moving Objects",
+            "importance": 4.44
+          },
+          {
+            "name": "Inspecting Equipment, Structures, or Materials",
+            "importance": 4.36
+          },
+          {
+            "name": "Getting Information",
+            "importance": 4.2
+          },
+          {
+            "name": "Performing General Physical Activities",
+            "importance": 4.17
+          },
+          {
+            "name": "Identifying Objects, Actions, and Events",
+            "importance": 4.11
+          },
+          {
+            "name": "Monitoring Processes, Materials, or Surroundings",
+            "importance": 4.04
+          },
+          {
+            "name": "Judging the Qualities of Objects, Services, or People",
+            "importance": 4.0
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 2,
+            "name": "Job Zone 1-2: Very Little to Some Preparation Needed",
+            "experience": "Some occupations may need little or no previous experience; others require several months to a year of experience. For example, landscaping and groundskeeping workers might require very little training or previous experience, while agricultural equipment operators can benefit from on-the job training.",
+            "education": "Usually requires a high school diploma or GED, though some occupations may not.",
+            "job_training": "Ranges from a few days to one year of on-the-job training."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "High School Diploma or the equivalent (such as a GED)",
+            "share": 72.61
+          },
+          {
+            "label": "Post-Secondary Certificate",
+            "share": 16.74
+          },
+          {
+            "label": "Less than a High School Diploma",
+            "share": 10.21
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Once a week or more but not every day",
+            "share": 26.52
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Extremely serious",
+            "share": 47.91
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Constant contact with others",
+            "share": 83.29
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Extremely important",
+            "share": 32.4
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Not important at all",
+            "share": 55.78
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Every day",
+            "share": 27.77
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Never",
+            "share": 42.86
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Moderately automated",
+            "share": 41.75
+          }
+        ],
+        "related_occupations": [
+          "Paper Goods Machine Setters, Operators, and Tenders",
+          "Cutting and Slicing Machine Setters, Operators, and Tenders",
+          "Machine Feeders and Offbearers",
+          "Extruding, Forming, Pressing, and Compacting Machine Setters, Operators, and Tenders",
+          "Rolling Machine Setters, Operators, and Tenders, Metal and Plastic",
+          "Packaging and Filling Machine Operators and Tenders"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/51-9191.00",
+          "locator": "O*NET-SOC Code=51-9191.00",
+          "accessed_on": "2026-09-21",
+          "status": "verified",
+          "source_audit_locator": "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_tranche_004_2026-09-21.json#role_key=D113|Adhesive Bonding Machine Operators and Tenders"
+        },
+        {
+          "label": "O*NET 31.0 database archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9191.00",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "O*NET work-profile evidence is a global/US occupational proxy, not Nigerian demand evidence.",
+        "The candidate does not establish Nigerian hiring, licensing, education, wages, or local preparation requirements.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ],
+      "audit_evidence": {
+        "local_archive": "data/career-mapping/_source_downloads/taxonomy/onet_31_0_database.zip",
+        "local_archive_locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9191.00",
+        "accessed_on": "2026-09-23",
+        "prior_identity_verification": "role_work_profile_tranche_004_2026-09-21.json"
+      }
+    },
+    {
+      "role_key": "D113|Biomass Plant Technicians",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "Biomass Plant Technicians",
+      "existing_source": "onet",
+      "resolution": "source_backed_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "soc_code": "51-8013.03",
+        "title": "Biomass Plant Technicians",
+        "exact_title_match": true,
+        "description": "Control and monitor biomass plant activities and perform maintenance as needed.",
+        "trace_locator": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json#role_key=D113|Biomass Plant Technicians"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Operate biomass fuel-burning boiler or biomass fuel gasification system equipment in accordance with specifications or instructions.",
+          "Perform tests of water chemistry in boilers.",
+          "Operate high-pressure steam boiler or water chiller equipment for electrical cogeneration operations.",
+          "Operate equipment to heat biomass, using knowledge of controls, combustion, and firing mechanisms.",
+          "Operate equipment to start, stop, or regulate biomass-fueled generators, generator units, boilers, engines, or auxiliary systems.",
+          "Inspect biomass power plant or processing equipment, recording or reporting damage and mechanical problems.",
+          "Record or report operational data, such as readings on meters, instruments, and gauges.",
+          "Operate valves, pumps, engines, or generators to control and adjust production of biofuels or biomass-fueled power."
+        ],
+        "work_activities": [
+          {
+            "name": "Controlling Machines and Processes",
+            "importance": 4.31
+          },
+          {
+            "name": "Monitoring Processes, Materials, or Surroundings",
+            "importance": 4.23
+          },
+          {
+            "name": "Inspecting Equipment, Structures, or Materials",
+            "importance": 4.23
+          },
+          {
+            "name": "Documenting/Recording Information",
+            "importance": 4.09
+          },
+          {
+            "name": "Making Decisions and Solving Problems",
+            "importance": 4.04
+          },
+          {
+            "name": "Communicating with Supervisors, Peers, or Subordinates",
+            "importance": 4.03
+          },
+          {
+            "name": "Getting Information",
+            "importance": 4.01
+          },
+          {
+            "name": "Identifying Objects, Actions, and Events",
+            "importance": 3.98
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 2,
+            "name": "Job Zone 1-2: Very Little to Some Preparation Needed",
+            "experience": "Some occupations may need little or no previous experience; others require several months to a year of experience. For example, landscaping and groundskeeping workers might require very little training or previous experience, while agricultural equipment operators can benefit from on-the job training.",
+            "education": "Usually requires a high school diploma or GED, though some occupations may not.",
+            "job_training": "Ranges from a few days to one year of on-the-job training."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "High School Diploma or the equivalent (such as a GED)",
+            "share": 46.51
+          },
+          {
+            "label": "Post-Secondary Certificate",
+            "share": 21.85
+          },
+          {
+            "label": "Bachelor's Degree",
+            "share": 9.72
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Once a year or more but not every month",
+            "share": 51.06
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Extremely serious",
+            "share": 63.47
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Constant contact with others",
+            "share": 61.46
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Extremely important",
+            "share": 45.82
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Not important at all",
+            "share": 32.74
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Once a year or more but not every month",
+            "share": 45.72
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Never",
+            "share": 94.7
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Moderately automated",
+            "share": 61.12
+          }
+        ],
+        "related_occupations": [
+          "Biomass Power Plant Managers",
+          "Biofuels Processing Technicians",
+          "Power Plant Operators",
+          "Stationary Engineers and Boiler Operators",
+          "Water and Wastewater Treatment Plant and System Operators",
+          "Gas Plant Operators"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/51-8013.03",
+          "locator": "O*NET-SOC Code=51-8013.03",
+          "accessed_on": "2026-09-21",
+          "status": "verified",
+          "source_audit_locator": "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_tranche_004_2026-09-21.json#role_key=D113|Biomass Plant Technicians"
+        },
+        {
+          "label": "O*NET 31.0 database archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-8013.03",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "O*NET work-profile evidence is a global/US occupational proxy, not Nigerian demand evidence.",
+        "The candidate does not establish Nigerian hiring, licensing, education, wages, or local preparation requirements.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ],
+      "audit_evidence": {
+        "local_archive": "data/career-mapping/_source_downloads/taxonomy/onet_31_0_database.zip",
+        "local_archive_locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-8013.03",
+        "accessed_on": "2026-09-23",
+        "prior_identity_verification": "role_work_profile_tranche_004_2026-09-21.json"
+      }
+    },
+    {
+      "role_key": "D113|Cleaning, Washing, and Metal Pickling Equipment Operators and Tenders",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "Cleaning, Washing, and Metal Pickling Equipment Operators and Tenders",
+      "existing_source": "onet",
+      "resolution": "source_backed_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "soc_code": "51-9192.00",
+        "title": "Cleaning, Washing, and Metal Pickling Equipment Operators and Tenders",
+        "exact_title_match": true,
+        "description": "Operate or tend machines to wash or clean products, such as barrels or kegs, glass items, tin plate, food, pulp, coal, plastic, or rubber, to remove impurities.",
+        "trace_locator": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json#role_key=D113|Cleaning, Washing, and Metal Pickling Equipment Operators and Tenders"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Add specified amounts of chemicals to equipment at required times to maintain solution levels and concentrations.",
+          "Observe machine operations, gauges, or thermometers, and adjust controls to maintain specified conditions.",
+          "Set controls to regulate temperature and length of cycles, and start conveyors, pumps, agitators, and machines.",
+          "Drain, clean, and refill machines or tanks at designated intervals, using cleaning solutions or water.",
+          "Operate or tend machines to wash and remove impurities from items such as barrels or kegs, glass products, tin plate surfaces, dried fruit, pulp, animal stock, coal, manufactured articles, plastic, or rubber.",
+          "Record gauge readings, materials used, processing times, or test results in production logs.",
+          "Examine and inspect machines to detect malfunctions.",
+          "Measure, weigh, or mix cleaning solutions, using measuring tanks, calibrated rods or suction tubes."
+        ],
+        "work_activities": [
+          {
+            "name": "Inspecting Equipment, Structures, or Materials",
+            "importance": 4.41
+          },
+          {
+            "name": "Documenting/Recording Information",
+            "importance": 4.36
+          },
+          {
+            "name": "Communicating with Supervisors, Peers, or Subordinates",
+            "importance": 4.24
+          },
+          {
+            "name": "Monitoring Processes, Materials, or Surroundings",
+            "importance": 4.23
+          },
+          {
+            "name": "Getting Information",
+            "importance": 4.23
+          },
+          {
+            "name": "Making Decisions and Solving Problems",
+            "importance": 4.13
+          },
+          {
+            "name": "Handling and Moving Objects",
+            "importance": 4.13
+          },
+          {
+            "name": "Controlling Machines and Processes",
+            "importance": 4.05
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 2,
+            "name": "Job Zone 1-2: Very Little to Some Preparation Needed",
+            "experience": "Some occupations may need little or no previous experience; others require several months to a year of experience. For example, landscaping and groundskeeping workers might require very little training or previous experience, while agricultural equipment operators can benefit from on-the job training.",
+            "education": "Usually requires a high school diploma or GED, though some occupations may not.",
+            "job_training": "Ranges from a few days to one year of on-the-job training."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "High School Diploma or the equivalent (such as a GED)",
+            "share": 59.82
+          },
+          {
+            "label": "Less than a High School Diploma",
+            "share": 31.68
+          },
+          {
+            "label": "Some College Courses",
+            "share": 3.89
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Never",
+            "share": 30.2
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Very serious",
+            "share": 31.09
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Constant contact with others",
+            "share": 48.99
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Not important at all",
+            "share": 23.97
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Not important at all",
+            "share": 92.32
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Once a month or more but not every week",
+            "share": 29.14
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Never",
+            "share": 95.49
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Slightly automated",
+            "share": 35.2
+          }
+        ],
+        "related_occupations": [
+          "Separating, Filtering, Clarifying, Precipitating, and Still Machine Setters, Operators, and Tenders",
+          "Mixing and Blending Machine Setters, Operators, and Tenders",
+          "Furnace, Kiln, Oven, Drier, and Kettle Operators and Tenders",
+          "Textile Bleaching and Dyeing Machine Operators and Tenders",
+          "Laundry and Dry-Cleaning Workers",
+          "Cleaners of Vehicles and Equipment"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/51-9192.00",
+          "locator": "O*NET-SOC Code=51-9192.00",
+          "accessed_on": "2026-09-21",
+          "status": "verified",
+          "source_audit_locator": "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_tranche_004_2026-09-21.json#role_key=D113|Cleaning, Washing, and Metal Pickling Equipment Operators and Tenders"
+        },
+        {
+          "label": "O*NET 31.0 database archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9192.00",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "O*NET work-profile evidence is a global/US occupational proxy, not Nigerian demand evidence.",
+        "The candidate does not establish Nigerian hiring, licensing, education, wages, or local preparation requirements.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ],
+      "audit_evidence": {
+        "local_archive": "data/career-mapping/_source_downloads/taxonomy/onet_31_0_database.zip",
+        "local_archive_locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9192.00",
+        "accessed_on": "2026-09-23",
+        "prior_identity_verification": "role_work_profile_tranche_004_2026-09-21.json"
+      }
+    },
+    {
+      "role_key": "D113|Computer Numerically Controlled Tool Operators",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "Computer Numerically Controlled Tool Operators",
+      "existing_source": "onet",
+      "resolution": "source_backed_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "soc_code": "51-9161.00",
+        "title": "Computer Numerically Controlled Tool Operators",
+        "exact_title_match": true,
+        "description": "Operate computer-controlled tools, machines, or robots to machine or process parts, tools, or other work pieces made of metal, plastic, wood, stone, or other materials. May also set up and maintain equipment.",
+        "trace_locator": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json#role_key=D113|Computer Numerically Controlled Tool Operators"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Measure dimensions of finished workpieces to ensure conformance to specifications, using precision measuring instruments, templates, and fixtures.",
+          "Set up and operate computer-controlled machines or robots to perform one or more machine functions on metal or plastic workpieces.",
+          "Mount, install, align, and secure tools, attachments, fixtures, and workpieces on machines, using hand tools and precision measuring instruments.",
+          "Review program specifications or blueprints to determine and set machine operations and sequencing, finished workpiece dimensions, or numerical control sequences.",
+          "Stop machines to remove finished workpieces or to change tooling, setup, or workpiece placement, according to required machining sequences.",
+          "Listen to machines during operation to detect sounds such as those made by dull cutting tools or excessive vibration, and adjust machines to compensate for problems.",
+          "Implement changes to machine programs, and enter new specifications, using computers.",
+          "Calculate machine speed and feed ratios and the size and position of cuts."
+        ],
+        "work_activities": [
+          {
+            "name": "Controlling Machines and Processes",
+            "importance": 4.6
+          },
+          {
+            "name": "Inspecting Equipment, Structures, or Materials",
+            "importance": 4.29
+          },
+          {
+            "name": "Monitoring Processes, Materials, or Surroundings",
+            "importance": 4.07
+          },
+          {
+            "name": "Identifying Objects, Actions, and Events",
+            "importance": 4.01
+          },
+          {
+            "name": "Communicating with Supervisors, Peers, or Subordinates",
+            "importance": 3.85
+          },
+          {
+            "name": "Making Decisions and Solving Problems",
+            "importance": 3.84
+          },
+          {
+            "name": "Handling and Moving Objects",
+            "importance": 3.83
+          },
+          {
+            "name": "Getting Information",
+            "importance": 3.83
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 2,
+            "name": "Job Zone 1-2: Very Little to Some Preparation Needed",
+            "experience": "Some occupations may need little or no previous experience; others require several months to a year of experience. For example, landscaping and groundskeeping workers might require very little training or previous experience, while agricultural equipment operators can benefit from on-the job training.",
+            "education": "Usually requires a high school diploma or GED, though some occupations may not.",
+            "job_training": "Ranges from a few days to one year of on-the-job training."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "High School Diploma or the equivalent (such as a GED)",
+            "share": 48.24
+          },
+          {
+            "label": "Post-Secondary Certificate",
+            "share": 21.16
+          },
+          {
+            "label": "Some College Courses",
+            "share": 16.8
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Once a year or more but not every month",
+            "share": 40.73
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Extremely serious",
+            "share": 36.29
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Constant contact with others",
+            "share": 50.99
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Extremely important",
+            "share": 38.79
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Not important at all",
+            "share": 40.96
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Once a year or more but not every month",
+            "share": 33.87
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Never",
+            "share": 83.35
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Moderately automated",
+            "share": 34.54
+          }
+        ],
+        "related_occupations": [
+          "Milling and Planing Machine Setters, Operators, and Tenders, Metal and Plastic",
+          "Machinists",
+          "Lathe and Turning Machine Tool Setters, Operators, and Tenders, Metal and Plastic",
+          "Multiple Machine Tool Setters, Operators, and Tenders, Metal and Plastic",
+          "Computer Numerically Controlled Tool Programmers",
+          "Grinding, Lapping, Polishing, and Buffing Machine Tool Setters, Operators, and Tenders, Metal and Plastic"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/51-9161.00",
+          "locator": "O*NET-SOC Code=51-9161.00",
+          "accessed_on": "2026-09-21",
+          "status": "verified",
+          "source_audit_locator": "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_tranche_004_2026-09-21.json#role_key=D113|Computer Numerically Controlled Tool Operators"
+        },
+        {
+          "label": "O*NET 31.0 database archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9161.00",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "O*NET work-profile evidence is a global/US occupational proxy, not Nigerian demand evidence.",
+        "The candidate does not establish Nigerian hiring, licensing, education, wages, or local preparation requirements.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ],
+      "audit_evidence": {
+        "local_archive": "data/career-mapping/_source_downloads/taxonomy/onet_31_0_database.zip",
+        "local_archive_locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9161.00",
+        "accessed_on": "2026-09-23",
+        "prior_identity_verification": "role_work_profile_tranche_004_2026-09-21.json"
+      }
+    },
+    {
+      "role_key": "D113|Cooling and Freezing Equipment Operators and Tenders",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "Cooling and Freezing Equipment Operators and Tenders",
+      "existing_source": "onet",
+      "resolution": "source_backed_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "soc_code": "51-9193.00",
+        "title": "Cooling and Freezing Equipment Operators and Tenders",
+        "exact_title_match": true,
+        "description": "Operate or tend equipment such as cooling and freezing units, refrigerators, batch freezers, and freezing tunnels, to cool or freeze products, food, blood plasma, and chemicals.",
+        "trace_locator": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json#role_key=D113|Cooling and Freezing Equipment Operators and Tenders"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Record temperatures, amounts of materials processed, or test results on report forms.",
+          "Monitor pressure gauges, ammeters, flowmeters, thermometers, or products, and adjust controls to maintain specified conditions, such as feed rate, product consistency, temperature, air pressure, and machine speed.",
+          "Read dials and gauges on panel control boards to ascertain temperatures, alkalinities, and densities of mixtures, and turn valves to obtain specified mixtures.",
+          "Start machinery, such as pumps, feeders, or conveyors, and turn valves to heat, admit, or transfer products, refrigerants, or mixes.",
+          "Correct machinery malfunctions by performing actions such as removing jams, and inform supervisors of malfunctions as necessary.",
+          "Assemble equipment, and attach pipes, fittings, or valves, using hand tools.",
+          "Measure or weigh specified amounts of ingredients or materials, and load them into tanks, vats, hoppers, or other equipment.",
+          "Adjust machine or freezer speed and air intake to obtain desired consistency and amount of product."
+        ],
+        "work_activities": [
+          {
+            "name": "Controlling Machines and Processes",
+            "importance": 4.5
+          },
+          {
+            "name": "Inspecting Equipment, Structures, or Materials",
+            "importance": 4.21
+          },
+          {
+            "name": "Monitoring Processes, Materials, or Surroundings",
+            "importance": 4.19
+          },
+          {
+            "name": "Getting Information",
+            "importance": 4.18
+          },
+          {
+            "name": "Documenting/Recording Information",
+            "importance": 4.06
+          },
+          {
+            "name": "Communicating with Supervisors, Peers, or Subordinates",
+            "importance": 3.99
+          },
+          {
+            "name": "Making Decisions and Solving Problems",
+            "importance": 3.93
+          },
+          {
+            "name": "Evaluating Information to Determine Compliance with Standards",
+            "importance": 3.93
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 2,
+            "name": "Job Zone 1-2: Very Little to Some Preparation Needed",
+            "experience": "Some occupations may need little or no previous experience; others require several months to a year of experience. For example, landscaping and groundskeeping workers might require very little training or previous experience, while agricultural equipment operators can benefit from on-the job training.",
+            "education": "Usually requires a high school diploma or GED, though some occupations may not.",
+            "job_training": "Ranges from a few days to one year of on-the-job training."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "Less than a High School Diploma",
+            "share": 51.44
+          },
+          {
+            "label": "Post-Secondary Certificate",
+            "share": 40.77
+          },
+          {
+            "label": "High School Diploma or the equivalent (such as a GED)",
+            "share": 7.31
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Never",
+            "share": 40.22
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Fairly serious",
+            "share": 29.84
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Contact with others most of the time",
+            "share": 40.13
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Extremely important",
+            "share": 40.38
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Not important at all",
+            "share": 52.42
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Once a year or more but not every month",
+            "share": 34.65
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Never",
+            "share": 97.65
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Moderately automated",
+            "share": 63.69
+          }
+        ],
+        "related_occupations": [
+          "Cleaning, Washing, and Metal Pickling Equipment Operators and Tenders",
+          "Separating, Filtering, Clarifying, Precipitating, and Still Machine Setters, Operators, and Tenders",
+          "Furnace, Kiln, Oven, Drier, and Kettle Operators and Tenders",
+          "Heat Treating Equipment Setters, Operators, and Tenders, Metal and Plastic",
+          "Food and Tobacco Roasting, Baking, and Drying Machine Operators and Tenders",
+          "Food Cooking Machine Operators and Tenders"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/51-9193.00",
+          "locator": "O*NET-SOC Code=51-9193.00",
+          "accessed_on": "2026-09-21",
+          "status": "verified",
+          "source_audit_locator": "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_tranche_004_2026-09-21.json#role_key=D113|Cooling and Freezing Equipment Operators and Tenders"
+        },
+        {
+          "label": "O*NET 31.0 database archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9193.00",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "O*NET work-profile evidence is a global/US occupational proxy, not Nigerian demand evidence.",
+        "The candidate does not establish Nigerian hiring, licensing, education, wages, or local preparation requirements.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ],
+      "audit_evidence": {
+        "local_archive": "data/career-mapping/_source_downloads/taxonomy/onet_31_0_database.zip",
+        "local_archive_locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9193.00",
+        "accessed_on": "2026-09-23",
+        "prior_identity_verification": "role_work_profile_tranche_004_2026-09-21.json"
+      }
+    },
+    {
+      "role_key": "D113|Crushing, Grinding, and Polishing Machine Setters, Operators, and Tenders",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "Crushing, Grinding, and Polishing Machine Setters, Operators, and Tenders",
+      "existing_source": "onet",
+      "resolution": "source_backed_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "soc_code": "51-9021.00",
+        "title": "Crushing, Grinding, and Polishing Machine Setters, Operators, and Tenders",
+        "exact_title_match": true,
+        "description": "Set up, operate, or tend machines to crush, grind, or polish materials, such as coal, glass, grain, stone, food, or rubber.",
+        "trace_locator": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json#role_key=D113|Crushing, Grinding, and Polishing Machine Setters, Operators, and Tenders"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Observe operation of equipment to ensure continuity of flow, safety, and efficient operation, and to detect malfunctions.",
+          "Clean, adjust, and maintain equipment, using hand tools.",
+          "Tend accessory equipment, such as pumps and conveyors, to move materials or ingredients through production processes.",
+          "Move controls to start, stop, or adjust machinery and equipment that crushes, grinds, polishes, or blends materials.",
+          "Notify supervisors of needed repairs.",
+          "Weigh or measure materials, ingredients, or products at specified intervals to ensure conformance to requirements.",
+          "Record data from operations, testing, and production on specified forms.",
+          "Reject defective products and readjust equipment to eliminate problems."
+        ],
+        "work_activities": [
+          {
+            "name": "Monitoring Processes, Materials, or Surroundings",
+            "importance": 3.97
+          },
+          {
+            "name": "Communicating with Supervisors, Peers, or Subordinates",
+            "importance": 3.81
+          },
+          {
+            "name": "Getting Information",
+            "importance": 3.77
+          },
+          {
+            "name": "Controlling Machines and Processes",
+            "importance": 3.73
+          },
+          {
+            "name": "Handling and Moving Objects",
+            "importance": 3.63
+          },
+          {
+            "name": "Inspecting Equipment, Structures, or Materials",
+            "importance": 3.57
+          },
+          {
+            "name": "Documenting/Recording Information",
+            "importance": 3.48
+          },
+          {
+            "name": "Making Decisions and Solving Problems",
+            "importance": 3.38
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 2,
+            "name": "Job Zone 1-2: Very Little to Some Preparation Needed",
+            "experience": "Some occupations may need little or no previous experience; others require several months to a year of experience. For example, landscaping and groundskeeping workers might require very little training or previous experience, while agricultural equipment operators can benefit from on-the job training.",
+            "education": "Usually requires a high school diploma or GED, though some occupations may not.",
+            "job_training": "Ranges from a few days to one year of on-the-job training."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "High School Diploma or the equivalent (such as a GED)",
+            "share": 61.72
+          },
+          {
+            "label": "Less than a High School Diploma",
+            "share": 19.39
+          },
+          {
+            "label": "Some College Courses",
+            "share": 17.66
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Never",
+            "share": 52.7
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Extremely serious",
+            "share": 47.56
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Constant contact with others",
+            "share": 35.94
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Very important",
+            "share": 39.67
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Not important at all",
+            "share": 46.56
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Never",
+            "share": 58.67
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Never",
+            "share": 95.73
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Moderately automated",
+            "share": 36.36
+          }
+        ],
+        "related_occupations": [
+          "Grinding, Lapping, Polishing, and Buffing Machine Tool Setters, Operators, and Tenders, Metal and Plastic",
+          "Grinding and Polishing Workers, Hand",
+          "Machine Feeders and Offbearers",
+          "Cutting and Slicing Machine Setters, Operators, and Tenders",
+          "Tool Grinders, Filers, and Sharpeners",
+          "Extruding, Forming, Pressing, and Compacting Machine Setters, Operators, and Tenders"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/51-9021.00",
+          "locator": "O*NET-SOC Code=51-9021.00",
+          "accessed_on": "2026-09-21",
+          "status": "verified",
+          "source_audit_locator": "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_tranche_005_2026-09-21.json#role_key=D113|Crushing, Grinding, and Polishing Machine Setters, Operators, and Tenders"
+        },
+        {
+          "label": "O*NET 31.0 database archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9021.00",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "O*NET work-profile evidence is a global/US occupational proxy, not Nigerian demand evidence.",
+        "The candidate does not establish Nigerian hiring, licensing, education, wages, or local preparation requirements.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ],
+      "audit_evidence": {
+        "local_archive": "data/career-mapping/_source_downloads/taxonomy/onet_31_0_database.zip",
+        "local_archive_locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9021.00",
+        "accessed_on": "2026-09-23",
+        "prior_identity_verification": "role_work_profile_tranche_005_2026-09-21.json"
+      }
+    },
+    {
+      "role_key": "D113|Cutters and Trimmers, Hand",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "Cutters and Trimmers, Hand",
+      "existing_source": "onet",
+      "resolution": "source_backed_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "soc_code": "51-9031.00",
+        "title": "Cutters and Trimmers, Hand",
+        "exact_title_match": true,
+        "description": "Use hand tools or hand-held power tools to cut and trim a variety of manufactured items, such as carpet, fabric, stone, glass, or rubber.",
+        "trace_locator": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json#role_key=D113|Cutters and Trimmers, Hand"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Mark or discard items with defects such as spots, stains, scars, snags, chips, scratches, or unacceptable shapes or finishes.",
+          "Trim excess material or cut threads off finished products, such as cutting loose ends of plastic off a manufactured toy for a smoother finish.",
+          "Cut, shape, and trim materials, such as textiles, food, glass, stone, and metal, using knives, scissors, and other hand tools, portable power tools, or bench-mounted tools.",
+          "Position templates or measure materials to locate specified points of cuts or to obtain maximum yields, using rules, scales, or patterns.",
+          "Read work orders to determine dimensions, cutting locations, and quantities to cut.",
+          "Mark cutting lines around patterns or templates, or follow layout points, using squares, rules, and straightedges, and chalk, pencils, or scribes.",
+          "Mark identification numbers, trademarks, grades, marketing data, sizes, or model numbers on products.",
+          "Unroll, lay out, attach, or mount materials or items on cutting tables or machines."
+        ],
+        "work_activities": [
+          {
+            "name": "Handling and Moving Objects",
+            "importance": 3.67
+          },
+          {
+            "name": "Estimating the Quantifiable Characteristics of Products, Events, or Information",
+            "importance": 3.6
+          },
+          {
+            "name": "Performing General Physical Activities",
+            "importance": 3.53
+          },
+          {
+            "name": "Communicating with Supervisors, Peers, or Subordinates",
+            "importance": 3.43
+          },
+          {
+            "name": "Getting Information",
+            "importance": 3.33
+          },
+          {
+            "name": "Establishing and Maintaining Interpersonal Relationships",
+            "importance": 3.24
+          },
+          {
+            "name": "Judging the Qualities of Objects, Services, or People",
+            "importance": 3.22
+          },
+          {
+            "name": "Identifying Objects, Actions, and Events",
+            "importance": 3.17
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 2,
+            "name": "Job Zone 1-2: Very Little to Some Preparation Needed",
+            "experience": "Some occupations may need little or no previous experience; others require several months to a year of experience. For example, landscaping and groundskeeping workers might require very little training or previous experience, while agricultural equipment operators can benefit from on-the job training.",
+            "education": "Usually requires a high school diploma or GED, though some occupations may not.",
+            "job_training": "Ranges from a few days to one year of on-the-job training."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "Less than a High School Diploma",
+            "share": 72.8
+          },
+          {
+            "label": "High School Diploma or the equivalent (such as a GED)",
+            "share": 16.38
+          },
+          {
+            "label": "Some College Courses",
+            "share": 5.67
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Never",
+            "share": 62.42
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Not serious at all",
+            "share": 53.67
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Constant contact with others",
+            "share": 56.31
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Not important at all",
+            "share": 42.94
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Not important at all",
+            "share": 95.35
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Never",
+            "share": 79.6
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Never",
+            "share": 99.48
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Not at all automated",
+            "share": 40.39
+          }
+        ],
+        "related_occupations": [
+          "Cutting and Slicing Machine Setters, Operators, and Tenders",
+          "Grinding and Polishing Workers, Hand",
+          "Sewing Machine Operators",
+          "Sawing Machine Setters, Operators, and Tenders, Wood",
+          "Woodworking Machine Setters, Operators, and Tenders, Except Sawing",
+          "Textile Cutting Machine Setters, Operators, and Tenders"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/51-9031.00",
+          "locator": "O*NET-SOC Code=51-9031.00",
+          "accessed_on": "2026-09-21",
+          "status": "verified",
+          "source_audit_locator": "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_tranche_005_2026-09-21.json#role_key=D113|Cutters and Trimmers, Hand"
+        },
+        {
+          "label": "O*NET 31.0 database archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9031.00",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "O*NET work-profile evidence is a global/US occupational proxy, not Nigerian demand evidence.",
+        "The candidate does not establish Nigerian hiring, licensing, education, wages, or local preparation requirements.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ],
+      "audit_evidence": {
+        "local_archive": "data/career-mapping/_source_downloads/taxonomy/onet_31_0_database.zip",
+        "local_archive_locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9031.00",
+        "accessed_on": "2026-09-23",
+        "prior_identity_verification": "role_work_profile_tranche_005_2026-09-21.json"
+      }
+    },
+    {
+      "role_key": "D113|Cutting and Slicing Machine Setters, Operators, and Tenders",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "Cutting and Slicing Machine Setters, Operators, and Tenders",
+      "existing_source": "onet",
+      "resolution": "source_backed_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "soc_code": "51-9032.00",
+        "title": "Cutting and Slicing Machine Setters, Operators, and Tenders",
+        "exact_title_match": true,
+        "description": "Set up, operate, or tend machines that cut or slice materials, such as glass, stone, cork, rubber, tobacco, food, paper, or insulating material.",
+        "trace_locator": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json#role_key=D113|Cutting and Slicing Machine Setters, Operators, and Tenders"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Remove defective or substandard materials from machines, and readjust machine components so that products meet standards.",
+          "Maintain production records, such as quantities, types, and dimensions of materials produced.",
+          "Start machines to verify setups, and make any necessary adjustments.",
+          "Press buttons, pull levers, or depress pedals to start and operate cutting and slicing machines.",
+          "Review work orders, blueprints, specifications, or job samples to determine components, settings, and adjustments for cutting and slicing machines.",
+          "Adjust machine controls to alter position, alignment, speed, or pressure.",
+          "Examine, measure, and weigh materials or products to verify conformance to specifications, using measuring devices, such as rulers, micrometers, or scales.",
+          "Remove completed materials or products from cutting or slicing machines, and stack or store them for additional processing."
+        ],
+        "work_activities": [
+          {
+            "name": "Monitoring Processes, Materials, or Surroundings",
+            "importance": 4.24
+          },
+          {
+            "name": "Handling and Moving Objects",
+            "importance": 4.19
+          },
+          {
+            "name": "Getting Information",
+            "importance": 4.16
+          },
+          {
+            "name": "Working with Computers",
+            "importance": 4.15
+          },
+          {
+            "name": "Making Decisions and Solving Problems",
+            "importance": 4.15
+          },
+          {
+            "name": "Communicating with Supervisors, Peers, or Subordinates",
+            "importance": 4.12
+          },
+          {
+            "name": "Controlling Machines and Processes",
+            "importance": 4.09
+          },
+          {
+            "name": "Performing General Physical Activities",
+            "importance": 4.04
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 2,
+            "name": "Job Zone 1-2: Very Little to Some Preparation Needed",
+            "experience": "Some occupations may need little or no previous experience; others require several months to a year of experience. For example, landscaping and groundskeeping workers might require very little training or previous experience, while agricultural equipment operators can benefit from on-the job training.",
+            "education": "Usually requires a high school diploma or GED, though some occupations may not.",
+            "job_training": "Ranges from a few days to one year of on-the-job training."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "High School Diploma or the equivalent (such as a GED)",
+            "share": 91.95
+          },
+          {
+            "label": "Some College Courses",
+            "share": 5.18
+          },
+          {
+            "label": "Less than a High School Diploma",
+            "share": 1.91
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Never",
+            "share": 32.04
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Extremely serious",
+            "share": 45.28
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Constant contact with others",
+            "share": 68.43
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Extremely important",
+            "share": 44.07
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Extremely important",
+            "share": 37.7
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Never",
+            "share": 32.91
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Never",
+            "share": 95.91
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Moderately automated",
+            "share": 50.12
+          }
+        ],
+        "related_occupations": [
+          "Woodworking Machine Setters, Operators, and Tenders, Except Sawing",
+          "Grinding, Lapping, Polishing, and Buffing Machine Tool Setters, Operators, and Tenders, Metal and Plastic",
+          "Textile Cutting Machine Setters, Operators, and Tenders",
+          "Cutting, Punching, and Press Machine Setters, Operators, and Tenders, Metal and Plastic",
+          "Sawing Machine Setters, Operators, and Tenders, Wood",
+          "Paper Goods Machine Setters, Operators, and Tenders"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/51-9032.00",
+          "locator": "O*NET-SOC Code=51-9032.00",
+          "accessed_on": "2026-09-21",
+          "status": "verified",
+          "source_audit_locator": "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_tranche_005_2026-09-21.json#role_key=D113|Cutting and Slicing Machine Setters, Operators, and Tenders"
+        },
+        {
+          "label": "O*NET 31.0 database archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9032.00",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "O*NET work-profile evidence is a global/US occupational proxy, not Nigerian demand evidence.",
+        "The candidate does not establish Nigerian hiring, licensing, education, wages, or local preparation requirements.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ],
+      "audit_evidence": {
+        "local_archive": "data/career-mapping/_source_downloads/taxonomy/onet_31_0_database.zip",
+        "local_archive_locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9032.00",
+        "accessed_on": "2026-09-23",
+        "prior_identity_verification": "role_work_profile_tranche_005_2026-09-21.json"
+      }
+    },
+    {
+      "role_key": "D113|Dental Laboratory Technicians",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "Dental Laboratory Technicians",
+      "existing_source": "onet",
+      "resolution": "source_backed_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "soc_code": "51-9081.00",
+        "title": "Dental Laboratory Technicians",
+        "exact_title_match": true,
+        "description": "Construct and repair full or partial dentures or dental appliances.",
+        "trace_locator": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json#role_key=D113|Dental Laboratory Technicians"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Read prescriptions or specifications and examine models or impressions to determine the design of dental products to be constructed.",
+          "Test appliances for conformance to specifications and accuracy of occlusion, using articulators and micrometers.",
+          "Fabricate, alter, or repair dental devices, such as dentures, crowns, bridges, inlays, or appliances for straightening teeth.",
+          "Place tooth models on an apparatus that mimics bite and movement of patient's jaw to evaluate functionality of model.",
+          "Remove excess metal or porcelain and polish surfaces of prostheses or frameworks, using polishing machines.",
+          "Train or supervise other dental technicians or dental laboratory bench workers.",
+          "Melt metals or mix plaster, porcelain, or acrylic pastes and pour materials into molds or over frameworks to form dental prostheses or apparatuses.",
+          "Prepare metal surfaces for bonding with porcelain to create artificial teeth, using small hand tools."
+        ],
+        "work_activities": [
+          {
+            "name": "Thinking Creatively",
+            "importance": 4.34
+          },
+          {
+            "name": "Getting Information",
+            "importance": 4.24
+          },
+          {
+            "name": "Making Decisions and Solving Problems",
+            "importance": 4.1
+          },
+          {
+            "name": "Processing Information",
+            "importance": 4.04
+          },
+          {
+            "name": "Updating and Using Relevant Knowledge",
+            "importance": 4.02
+          },
+          {
+            "name": "Organizing, Planning, and Prioritizing Work",
+            "importance": 3.99
+          },
+          {
+            "name": "Judging the Qualities of Objects, Services, or People",
+            "importance": 3.96
+          },
+          {
+            "name": "Monitoring Processes, Materials, or Surroundings",
+            "importance": 3.94
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 2,
+            "name": "Job Zone 1-2: Very Little to Some Preparation Needed",
+            "experience": "Some occupations may need little or no previous experience; others require several months to a year of experience. For example, landscaping and groundskeeping workers might require very little training or previous experience, while agricultural equipment operators can benefit from on-the job training.",
+            "education": "Usually requires a high school diploma or GED, though some occupations may not.",
+            "job_training": "Ranges from a few days to one year of on-the-job training."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "High School Diploma or the equivalent (such as a GED)",
+            "share": 51.74
+          },
+          {
+            "label": "Post-Secondary Certificate",
+            "share": 18.16
+          },
+          {
+            "label": "Less than a High School Diploma",
+            "share": 13.23
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Once a year or more but not every month",
+            "share": 34.13
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Fairly serious",
+            "share": 39.44
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Constant contact with others",
+            "share": 24.34
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Important",
+            "share": 39.65
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Not important at all",
+            "share": 49.54
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Never",
+            "share": 33.01
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Never",
+            "share": 100.0
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Not at all automated",
+            "share": 36.38
+          }
+        ],
+        "related_occupations": [
+          "Medical Appliance Technicians",
+          "Dental Assistants",
+          "Ophthalmic Laboratory Technicians",
+          "Medical Equipment Repairers",
+          "Molders, Shapers, and Casters, Except Metal and Plastic",
+          "Calibration Technologists and Technicians"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/51-9081.00",
+          "locator": "O*NET-SOC Code=51-9081.00",
+          "accessed_on": "2026-09-21",
+          "status": "verified",
+          "source_audit_locator": "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_tranche_005_2026-09-21.json#role_key=D113|Dental Laboratory Technicians"
+        },
+        {
+          "label": "O*NET 31.0 database archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9081.00",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "O*NET work-profile evidence is a global/US occupational proxy, not Nigerian demand evidence.",
+        "The candidate does not establish Nigerian hiring, licensing, education, wages, or local preparation requirements.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ],
+      "audit_evidence": {
+        "local_archive": "data/career-mapping/_source_downloads/taxonomy/onet_31_0_database.zip",
+        "local_archive_locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9081.00",
+        "accessed_on": "2026-09-23",
+        "prior_identity_verification": "role_work_profile_tranche_005_2026-09-21.json"
+      }
+    },
+    {
+      "role_key": "D113|Etchers and Engravers",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "Etchers and Engravers",
+      "existing_source": "onet",
+      "resolution": "source_backed_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "soc_code": "51-9194.00",
+        "title": "Etchers and Engravers",
+        "exact_title_match": true,
+        "description": "Engrave or etch metal, wood, rubber, or other materials. Includes such workers as etcher-circuit processors, pantograph engravers, and silk screen etchers.",
+        "trace_locator": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json#role_key=D113|Etchers and Engravers"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Inspect etched work for depth of etching, uniformity, and defects, using calibrated microscopes, gauges, fingers, or magnifying lenses.",
+          "Examine sketches, diagrams, samples, blueprints, or photographs to decide how designs are to be etched, cut, or engraved onto workpieces.",
+          "Clean and polish engraved areas.",
+          "Prepare workpieces for etching or engraving by cutting, sanding, cleaning, polishing, or treating them with wax, acid resist, lime, etching powder, or light-sensitive enamel.",
+          "Engrave and print patterns, designs, etchings, trademarks, or lettering onto flat or curved surfaces of a wide variety of metal, glass, plastic, or paper items, using hand tools or hand-held power tools.",
+          "Prepare etching chemicals according to formulas, diluting acid with water to obtain solutions of specified concentration.",
+          "Use computer software to design patterns for engraving.",
+          "Expose workpieces to acid to develop etch patterns such as designs, lettering, or figures."
+        ],
+        "work_activities": [
+          {
+            "name": "Getting Information",
+            "importance": 4.14
+          },
+          {
+            "name": "Controlling Machines and Processes",
+            "importance": 3.94
+          },
+          {
+            "name": "Organizing, Planning, and Prioritizing Work",
+            "importance": 3.71
+          },
+          {
+            "name": "Identifying Objects, Actions, and Events",
+            "importance": 3.69
+          },
+          {
+            "name": "Handling and Moving Objects",
+            "importance": 3.65
+          },
+          {
+            "name": "Repairing and Maintaining Mechanical Equipment",
+            "importance": 3.62
+          },
+          {
+            "name": "Judging the Qualities of Objects, Services, or People",
+            "importance": 3.61
+          },
+          {
+            "name": "Monitoring Processes, Materials, or Surroundings",
+            "importance": 3.57
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 2,
+            "name": "Job Zone 1-2: Very Little to Some Preparation Needed",
+            "experience": "Some occupations may need little or no previous experience; others require several months to a year of experience. For example, landscaping and groundskeeping workers might require very little training or previous experience, while agricultural equipment operators can benefit from on-the job training.",
+            "education": "Usually requires a high school diploma or GED, though some occupations may not.",
+            "job_training": "Ranges from a few days to one year of on-the-job training."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "High School Diploma or the equivalent (such as a GED)",
+            "share": 53.86
+          },
+          {
+            "label": "Less than a High School Diploma",
+            "share": 32.66
+          },
+          {
+            "label": "Associate's Degree or other 2-year degree",
+            "share": 12.72
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Once a year or more but not every month",
+            "share": 68.62
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Serious",
+            "share": 59.15
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Occasional contact with others",
+            "share": 42.67
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Very important",
+            "share": 21.52
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Not important at all",
+            "share": 33.17
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Once a year or more but not every month",
+            "share": 73.76
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Never",
+            "share": 85.79
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Slightly automated",
+            "share": 36.15
+          }
+        ],
+        "related_occupations": [
+          "Painting, Coating, and Decorating Workers",
+          "Patternmakers, Metal and Plastic",
+          "Grinding and Polishing Workers, Hand",
+          "Tool and Die Makers",
+          "Molders, Shapers, and Casters, Except Metal and Plastic",
+          "Stone Cutters and Carvers, Manufacturing"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/51-9194.00",
+          "locator": "O*NET-SOC Code=51-9194.00",
+          "accessed_on": "2026-09-21",
+          "status": "verified",
+          "source_audit_locator": "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_tranche_005_2026-09-21.json#role_key=D113|Etchers and Engravers"
+        },
+        {
+          "label": "O*NET 31.0 database archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9194.00",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "O*NET work-profile evidence is a global/US occupational proxy, not Nigerian demand evidence.",
+        "The candidate does not establish Nigerian hiring, licensing, education, wages, or local preparation requirements.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ],
+      "audit_evidence": {
+        "local_archive": "data/career-mapping/_source_downloads/taxonomy/onet_31_0_database.zip",
+        "local_archive_locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9194.00",
+        "accessed_on": "2026-09-23",
+        "prior_identity_verification": "role_work_profile_tranche_005_2026-09-21.json"
+      }
+    },
+    {
+      "role_key": "D113|Helpers--Production Workers",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "Helpers--Production Workers",
+      "existing_source": "onet",
+      "resolution": "source_backed_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "soc_code": "51-9198.00",
+        "title": "Helpers--Production Workers",
+        "exact_title_match": true,
+        "description": "Help production workers by performing duties requiring less skill. Duties include supplying or holding materials or tools, and cleaning work area and equipment.",
+        "trace_locator": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json#role_key=D113|Helpers--Production Workers"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Lift raw materials, finished products, and packed items, manually or using hoists.",
+          "Mark or tag identification on parts.",
+          "Observe equipment operations so that malfunctions can be detected, and notify operators of any malfunctions.",
+          "Count finished products to determine if product orders are complete.",
+          "Examine products to verify conformance to quality standards.",
+          "Operate machinery used in the production process, or assist machine operators.",
+          "Load and unload items from machines, conveyors, and conveyances.",
+          "Remove products, machine attachments, or waste material from machines."
+        ],
+        "work_activities": [
+          {
+            "name": "Handling and Moving Objects",
+            "importance": 4.49
+          },
+          {
+            "name": "Performing General Physical Activities",
+            "importance": 4.35
+          },
+          {
+            "name": "Identifying Objects, Actions, and Events",
+            "importance": 3.88
+          },
+          {
+            "name": "Judging the Qualities of Objects, Services, or People",
+            "importance": 3.84
+          },
+          {
+            "name": "Evaluating Information to Determine Compliance with Standards",
+            "importance": 3.84
+          },
+          {
+            "name": "Monitoring Processes, Materials, or Surroundings",
+            "importance": 3.83
+          },
+          {
+            "name": "Documenting/Recording Information",
+            "importance": 3.81
+          },
+          {
+            "name": "Organizing, Planning, and Prioritizing Work",
+            "importance": 3.74
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 2,
+            "name": "Job Zone 1-2: Very Little to Some Preparation Needed",
+            "experience": "Some occupations may need little or no previous experience; others require several months to a year of experience. For example, landscaping and groundskeeping workers might require very little training or previous experience, while agricultural equipment operators can benefit from on-the job training.",
+            "education": "Usually requires a high school diploma or GED, though some occupations may not.",
+            "job_training": "Ranges from a few days to one year of on-the-job training."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "Less than a High School Diploma",
+            "share": 34.56
+          },
+          {
+            "label": "High School Diploma or the equivalent (such as a GED)",
+            "share": 31.86
+          },
+          {
+            "label": "Post-Secondary Certificate",
+            "share": 19.94
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Never",
+            "share": 29.49
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Very serious",
+            "share": 27.82
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Constant contact with others",
+            "share": 46.99
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Very important",
+            "share": 27.67
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Not important at all",
+            "share": 39.27
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Once a week or more but not every day",
+            "share": 40.32
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Never",
+            "share": 79.45
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Moderately automated",
+            "share": 38.06
+          }
+        ],
+        "related_occupations": [
+          "Helpers--Installation, Maintenance, and Repair Workers",
+          "Helpers--Extraction Workers",
+          "Machine Feeders and Offbearers",
+          "Helpers--Carpenters",
+          "Helpers--Brickmasons, Blockmasons, Stonemasons, and Tile and Marble Setters",
+          "Helpers--Painters, Paperhangers, Plasterers, and Stucco Masons"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/51-9198.00",
+          "locator": "O*NET-SOC Code=51-9198.00",
+          "accessed_on": "2026-09-21",
+          "status": "verified",
+          "source_audit_locator": "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_tranche_005_2026-09-21.json#role_key=D113|Helpers--Production Workers"
+        },
+        {
+          "label": "O*NET 31.0 database archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9198.00",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "O*NET work-profile evidence is a global/US occupational proxy, not Nigerian demand evidence.",
+        "The candidate does not establish Nigerian hiring, licensing, education, wages, or local preparation requirements.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ],
+      "audit_evidence": {
+        "local_archive": "data/career-mapping/_source_downloads/taxonomy/onet_31_0_database.zip",
+        "local_archive_locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9198.00",
+        "accessed_on": "2026-09-23",
+        "prior_identity_verification": "role_work_profile_tranche_005_2026-09-21.json"
+      }
+    },
+    {
+      "role_key": "D113|Hydroelectric Plant Technicians",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "Hydroelectric Plant Technicians",
+      "existing_source": "onet",
+      "resolution": "source_backed_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "soc_code": "51-8013.04",
+        "title": "Hydroelectric Plant Technicians",
+        "exact_title_match": true,
+        "description": "Monitor and control activities associated with hydropower generation. Operate plant equipment, such as turbines, pumps, valves, gates, fans, electric control boards, and battery banks. Monitor equipment operation and performance and make necessary adjustments to ensure optimal performance. Perform equipment maintenance and repair as necessary.",
+        "trace_locator": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json#role_key=D113|Hydroelectric Plant Technicians"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Monitor hydroelectric power plant equipment operation and performance, adjusting to performance specifications, as necessary.",
+          "Identify or address malfunctions of hydroelectric plant operational equipment, such as generators, transformers, or turbines.",
+          "Start, adjust, or stop generating units, operating valves, gates, or auxiliary equipment in hydroelectric power generating plants.",
+          "Perform preventive or corrective containment or cleanup measures in hydroelectric plants to prevent environmental contamination.",
+          "Inspect water-powered electric generators or auxiliary equipment in hydroelectric plants to verify proper operation or to determine maintenance or repair needs.",
+          "Communicate status of hydroelectric operating equipment to dispatchers or supervisors.",
+          "Operate high voltage switches or related devices in hydropower stations.",
+          "Operate hydroelectric plant equipment, such as turbines, pumps, valves, gates, fans, electric control boards, or battery banks."
+        ],
+        "work_activities": [
+          {
+            "name": "Controlling Machines and Processes",
+            "importance": 4.31
+          },
+          {
+            "name": "Identifying Objects, Actions, and Events",
+            "importance": 4.21
+          },
+          {
+            "name": "Monitoring Processes, Materials, or Surroundings",
+            "importance": 4.14
+          },
+          {
+            "name": "Inspecting Equipment, Structures, or Materials",
+            "importance": 4.14
+          },
+          {
+            "name": "Making Decisions and Solving Problems",
+            "importance": 4.13
+          },
+          {
+            "name": "Getting Information",
+            "importance": 4.05
+          },
+          {
+            "name": "Repairing and Maintaining Mechanical Equipment",
+            "importance": 3.92
+          },
+          {
+            "name": "Performing General Physical Activities",
+            "importance": 3.82
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 3,
+            "name": "Job Zone Three: Medium Preparation Needed",
+            "experience": "Previous work-related skill, knowledge, or experience is required for these occupations. For example, an electrician must have completed three or four years of apprenticeship or several years of vocational training, and often must have passed a licensing exam, in order to perform the job.",
+            "education": "Most occupations in this zone require training in vocational schools, related on-the-job experience, or an associate's degree.",
+            "job_training": "Employees in these occupations usually need one or two years of training involving both on-the-job experience and informal training with experienced workers. A recognized apprenticeship program may be associated with these occupations."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "Associate's Degree or other 2-year degree",
+            "share": 34.02
+          },
+          {
+            "label": "Post-Secondary Certificate",
+            "share": 33.97
+          },
+          {
+            "label": "Some College Courses",
+            "share": 22.39
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Once a month or more but not every week",
+            "share": 34.07
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Extremely serious",
+            "share": 36.04
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Constant contact with others",
+            "share": 54.42
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Extremely important",
+            "share": 33.9
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Important",
+            "share": 33.99
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Once a week or more but not every day",
+            "share": 35.16
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Never",
+            "share": 61.93
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Not at all automated",
+            "share": 43.1
+          }
+        ],
+        "related_occupations": [
+          "Hydroelectric Production Managers",
+          "Power Plant Operators",
+          "Geothermal Technicians",
+          "Wind Turbine Service Technicians",
+          "Biomass Plant Technicians",
+          "Stationary Engineers and Boiler Operators"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/51-8013.04",
+          "locator": "O*NET-SOC Code=51-8013.04",
+          "accessed_on": "2026-09-21",
+          "status": "verified",
+          "source_audit_locator": "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_tranche_005_2026-09-21.json#role_key=D113|Hydroelectric Plant Technicians"
+        },
+        {
+          "label": "O*NET 31.0 database archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-8013.04",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "O*NET work-profile evidence is a global/US occupational proxy, not Nigerian demand evidence.",
+        "The candidate does not establish Nigerian hiring, licensing, education, wages, or local preparation requirements.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ],
+      "audit_evidence": {
+        "local_archive": "data/career-mapping/_source_downloads/taxonomy/onet_31_0_database.zip",
+        "local_archive_locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-8013.04",
+        "accessed_on": "2026-09-23",
+        "prior_identity_verification": "role_work_profile_tranche_005_2026-09-21.json"
+      }
+    },
+    {
+      "role_key": "D113|Mixing and Blending Machine Setters, Operators, and Tenders",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "Mixing and Blending Machine Setters, Operators, and Tenders",
+      "existing_source": "onet",
+      "resolution": "source_backed_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "soc_code": "51-9023.00",
+        "title": "Mixing and Blending Machine Setters, Operators, and Tenders",
+        "exact_title_match": true,
+        "description": "Set up, operate, or tend machines to mix or blend materials, such as chemicals, tobacco, liquids, color pigments, or explosive ingredients.",
+        "trace_locator": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json#role_key=D113|Mixing and Blending Machine Setters, Operators, and Tenders"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Weigh or measure materials, ingredients, or products to ensure conformance to requirements.",
+          "Read work orders to determine production specifications or information.",
+          "Observe production or monitor equipment to ensure safe and efficient operation.",
+          "Mix or blend ingredients by starting machines and mixing for specified times.",
+          "Stop mixing or blending machines when specified product qualities are obtained and open valves and start pumps to transfer mixtures.",
+          "Compound or process ingredients or dyes, according to formulas.",
+          "Examine materials, ingredients, or products visually or with hands to ensure conformance to established standards.",
+          "Operate or tend machines to mix or blend any of a wide variety of materials, such as spices, dough batter, tobacco, fruit juices, chemicals, livestock feed, food products, color pigments, or explosive ingredients."
+        ],
+        "work_activities": [
+          {
+            "name": "Getting Information",
+            "importance": 4.41
+          },
+          {
+            "name": "Controlling Machines and Processes",
+            "importance": 4.31
+          },
+          {
+            "name": "Performing General Physical Activities",
+            "importance": 4.22
+          },
+          {
+            "name": "Monitoring Processes, Materials, or Surroundings",
+            "importance": 4.14
+          },
+          {
+            "name": "Handling and Moving Objects",
+            "importance": 4.14
+          },
+          {
+            "name": "Communicating with Supervisors, Peers, or Subordinates",
+            "importance": 4.06
+          },
+          {
+            "name": "Operating Vehicles, Mechanized Devices, or Equipment",
+            "importance": 3.96
+          },
+          {
+            "name": "Documenting/Recording Information",
+            "importance": 3.89
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 2,
+            "name": "Job Zone 1-2: Very Little to Some Preparation Needed",
+            "experience": "Some occupations may need little or no previous experience; others require several months to a year of experience. For example, landscaping and groundskeeping workers might require very little training or previous experience, while agricultural equipment operators can benefit from on-the job training.",
+            "education": "Usually requires a high school diploma or GED, though some occupations may not.",
+            "job_training": "Ranges from a few days to one year of on-the-job training."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "High School Diploma or the equivalent (such as a GED)",
+            "share": 80.32
+          },
+          {
+            "label": "Post-Secondary Certificate",
+            "share": 11.87
+          },
+          {
+            "label": "Some College Courses",
+            "share": 6.3
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Once a week or more but not every day",
+            "share": 42.45
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Extremely serious",
+            "share": 37.76
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Constant contact with others",
+            "share": 50.2
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Extremely important",
+            "share": 54.52
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Not important at all",
+            "share": 75.22
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Once a year or more but not every month",
+            "share": 46.58
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Never",
+            "share": 93.21
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Moderately automated",
+            "share": 58.3
+          }
+        ],
+        "related_occupations": [
+          "Separating, Filtering, Clarifying, Precipitating, and Still Machine Setters, Operators, and Tenders",
+          "Food Batchmakers",
+          "Cleaning, Washing, and Metal Pickling Equipment Operators and Tenders",
+          "Crushing, Grinding, and Polishing Machine Setters, Operators, and Tenders",
+          "Extruding, Forming, Pressing, and Compacting Machine Setters, Operators, and Tenders",
+          "Machine Feeders and Offbearers"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/51-9023.00",
+          "locator": "O*NET-SOC Code=51-9023.00",
+          "accessed_on": "2026-09-21",
+          "status": "verified",
+          "source_audit_locator": "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_tranche_005_2026-09-21.json#role_key=D113|Mixing and Blending Machine Setters, Operators, and Tenders"
+        },
+        {
+          "label": "O*NET 31.0 database archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9023.00",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "O*NET work-profile evidence is a global/US occupational proxy, not Nigerian demand evidence.",
+        "The candidate does not establish Nigerian hiring, licensing, education, wages, or local preparation requirements.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ],
+      "audit_evidence": {
+        "local_archive": "data/career-mapping/_source_downloads/taxonomy/onet_31_0_database.zip",
+        "local_archive_locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9023.00",
+        "accessed_on": "2026-09-23",
+        "prior_identity_verification": "role_work_profile_tranche_005_2026-09-21.json"
+      }
+    },
+    {
+      "role_key": "D113|Nuclear Power Reactor Operators",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "Nuclear Power Reactor Operators",
+      "existing_source": "onet",
+      "resolution": "source_backed_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "soc_code": "51-8011.00",
+        "title": "Nuclear Power Reactor Operators",
+        "exact_title_match": true,
+        "description": "Operate or control nuclear reactors. Move control rods, start and stop equipment, monitor and adjust controls, and record data in logs. Implement emergency procedures when needed. May respond to abnormalities, determine cause, and recommend corrective action.",
+        "trace_locator": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json#role_key=D113|Nuclear Power Reactor Operators"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Operate nuclear power reactors in accordance with policies and procedures to protect workers from radiation and to ensure environmental safety.",
+          "Adjust controls to position rod and to regulate flux level, reactor period, coolant temperature, or rate of power flow, following standard procedures.",
+          "Develop or implement actions such as lockouts, tagouts, or clearances to allow equipment to be safely repaired.",
+          "Respond to system or unit abnormalities, diagnosing the cause, and recommending or taking corrective action.",
+          "Monitor all systems for normal running conditions, performing activities such as checking gauges to assess output or the effects of generator loading on other equipment.",
+          "Monitor or operate boilers, turbines, wells, or auxiliary power plant equipment.",
+          "Record operating data, such as the results of surveillance tests.",
+          "Implement operational procedures, such as those controlling start-up or shut-down activities."
+        ],
+        "work_activities": [
+          {
+            "name": "Evaluating Information to Determine Compliance with Standards",
+            "importance": 4.73
+          },
+          {
+            "name": "Monitoring Processes, Materials, or Surroundings",
+            "importance": 4.52
+          },
+          {
+            "name": "Getting Information",
+            "importance": 4.52
+          },
+          {
+            "name": "Identifying Objects, Actions, and Events",
+            "importance": 4.51
+          },
+          {
+            "name": "Documenting/Recording Information",
+            "importance": 4.39
+          },
+          {
+            "name": "Communicating with Supervisors, Peers, or Subordinates",
+            "importance": 4.33
+          },
+          {
+            "name": "Processing Information",
+            "importance": 4.29
+          },
+          {
+            "name": "Updating and Using Relevant Knowledge",
+            "importance": 4.26
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 3,
+            "name": "Job Zone Three: Medium Preparation Needed",
+            "experience": "Previous work-related skill, knowledge, or experience is required for these occupations. For example, an electrician must have completed three or four years of apprenticeship or several years of vocational training, and often must have passed a licensing exam, in order to perform the job.",
+            "education": "Most occupations in this zone require training in vocational schools, related on-the-job experience, or an associate's degree.",
+            "job_training": "Employees in these occupations usually need one or two years of training involving both on-the-job experience and informal training with experienced workers. A recognized apprenticeship program may be associated with these occupations."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "High School Diploma or the equivalent (such as a GED)",
+            "share": 50.09
+          },
+          {
+            "label": "Post-Secondary Certificate",
+            "share": 15.73
+          },
+          {
+            "label": "Bachelor's Degree",
+            "share": 15.32
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Once a week or more but not every day",
+            "share": 38.29
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Extremely serious",
+            "share": 81.74
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Constant contact with others",
+            "share": 68.88
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Extremely important",
+            "share": 52.72
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Not important at all",
+            "share": 53.01
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Once a year or more but not every month",
+            "share": 42.26
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Never",
+            "share": 90.2
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Moderately automated",
+            "share": 48.22
+          }
+        ],
+        "related_occupations": [
+          "Nuclear Technicians",
+          "Power Plant Operators",
+          "Hydroelectric Plant Technicians",
+          "Nuclear Monitoring Technicians",
+          "Stationary Engineers and Boiler Operators",
+          "Chemical Plant and System Operators"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/51-8011.00",
+          "locator": "O*NET-SOC Code=51-8011.00",
+          "accessed_on": "2026-09-21",
+          "status": "verified",
+          "source_audit_locator": "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_tranche_005_2026-09-21.json#role_key=D113|Nuclear Power Reactor Operators"
+        },
+        {
+          "label": "O*NET 31.0 database archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-8011.00",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "O*NET work-profile evidence is a global/US occupational proxy, not Nigerian demand evidence.",
+        "The candidate does not establish Nigerian hiring, licensing, education, wages, or local preparation requirements.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ],
+      "audit_evidence": {
+        "local_archive": "data/career-mapping/_source_downloads/taxonomy/onet_31_0_database.zip",
+        "local_archive_locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-8011.00",
+        "accessed_on": "2026-09-23",
+        "prior_identity_verification": "role_work_profile_tranche_005_2026-09-21.json"
+      }
+    },
+    {
+      "role_key": "D113|Packaging and Filling Machine Operators and Tenders",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "Packaging and Filling Machine Operators and Tenders",
+      "existing_source": "onet",
+      "resolution": "source_backed_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "soc_code": "51-9111.00",
+        "title": "Packaging and Filling Machine Operators and Tenders",
+        "exact_title_match": true,
+        "description": "Operate or tend machines to prepare industrial or consumer products for storage or shipment. Includes cannery workers who pack food products.",
+        "trace_locator": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json#role_key=D113|Packaging and Filling Machine Operators and Tenders"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Attach identification labels to finished packaged items, or cut stencils and stencil information on containers, such as lot numbers or shipping destinations.",
+          "Sort, grade, weigh, and inspect products, verifying and adjusting product weight or measurement to meet specifications.",
+          "Stop or reset machines when malfunctions occur, clear machine jams, and report malfunctions to a supervisor.",
+          "Observe machine operations to ensure quality and conformity of filled or packaged products to standards.",
+          "Remove finished packaged items from machine and separate rejected items.",
+          "Monitor the production line, watching for problems such as pile-ups, jams, or glue that isn't sticking properly.",
+          "Inspect and remove defective products and packaging material.",
+          "Start machine by engaging controls."
+        ],
+        "work_activities": [
+          {
+            "name": "Monitoring Processes, Materials, or Surroundings",
+            "importance": 3.96
+          },
+          {
+            "name": "Inspecting Equipment, Structures, or Materials",
+            "importance": 3.82
+          },
+          {
+            "name": "Identifying Objects, Actions, and Events",
+            "importance": 3.79
+          },
+          {
+            "name": "Handling and Moving Objects",
+            "importance": 3.79
+          },
+          {
+            "name": "Getting Information",
+            "importance": 3.7
+          },
+          {
+            "name": "Evaluating Information to Determine Compliance with Standards",
+            "importance": 3.65
+          },
+          {
+            "name": "Making Decisions and Solving Problems",
+            "importance": 3.64
+          },
+          {
+            "name": "Communicating with Supervisors, Peers, or Subordinates",
+            "importance": 3.63
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 2,
+            "name": "Job Zone 1-2: Very Little to Some Preparation Needed",
+            "experience": "Some occupations may need little or no previous experience; others require several months to a year of experience. For example, landscaping and groundskeeping workers might require very little training or previous experience, while agricultural equipment operators can benefit from on-the job training.",
+            "education": "Usually requires a high school diploma or GED, though some occupations may not.",
+            "job_training": "Ranges from a few days to one year of on-the-job training."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "High School Diploma or the equivalent (such as a GED)",
+            "share": 79.69
+          },
+          {
+            "label": "Less than a High School Diploma",
+            "share": 17.27
+          },
+          {
+            "label": "Associate's Degree or other 2-year degree",
+            "share": 2.22
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Once a year or more but not every month",
+            "share": 34.27
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Very serious",
+            "share": 29.35
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Constant contact with others",
+            "share": 57.03
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Very important",
+            "share": 42.18
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Not important at all",
+            "share": 54.28
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Once a year or more but not every month",
+            "share": 25.18
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Never",
+            "share": 74.78
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Moderately automated",
+            "share": 39.63
+          }
+        ],
+        "related_occupations": [
+          "Packers and Packagers, Hand",
+          "Machine Feeders and Offbearers",
+          "Adhesive Bonding Machine Operators and Tenders",
+          "Extruding, Forming, Pressing, and Compacting Machine Setters, Operators, and Tenders",
+          "Paper Goods Machine Setters, Operators, and Tenders",
+          "Cutting and Slicing Machine Setters, Operators, and Tenders"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/51-9111.00",
+          "locator": "O*NET-SOC Code=51-9111.00",
+          "accessed_on": "2026-09-21",
+          "status": "verified",
+          "source_audit_locator": "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_tranche_005_2026-09-21.json#role_key=D113|Packaging and Filling Machine Operators and Tenders"
+        },
+        {
+          "label": "O*NET 31.0 database archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9111.00",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "O*NET work-profile evidence is a global/US occupational proxy, not Nigerian demand evidence.",
+        "The candidate does not establish Nigerian hiring, licensing, education, wages, or local preparation requirements.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ],
+      "audit_evidence": {
+        "local_archive": "data/career-mapping/_source_downloads/taxonomy/onet_31_0_database.zip",
+        "local_archive_locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9111.00",
+        "accessed_on": "2026-09-23",
+        "prior_identity_verification": "role_work_profile_tranche_005_2026-09-21.json"
+      }
+    },
+    {
+      "role_key": "D113|Power Distributors and Dispatchers",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "Power Distributors and Dispatchers",
+      "existing_source": "onet",
+      "resolution": "source_backed_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "soc_code": "51-8012.00",
+        "title": "Power Distributors and Dispatchers",
+        "exact_title_match": true,
+        "description": "Coordinate, regulate, or distribute electricity or steam.",
+        "trace_locator": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json#role_key=D113|Power Distributors and Dispatchers"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Coordinate with engineers, planners, field personnel, or other utility workers to provide information such as clearances, switching orders, or distribution process changes.",
+          "Respond to emergencies, such as transformer or transmission line failures, and route current around affected areas.",
+          "Control, monitor, or operate equipment that regulates or distributes electricity or steam, using data obtained from instruments or computers.",
+          "Direct personnel engaged in controlling or operating distribution equipment or machinery, such as instructing control room operators to start boilers or generators.",
+          "Distribute or regulate the flow of power between entities, such as generating stations, substations, distribution lines, or users, keeping track of the status of circuits or connections.",
+          "Manipulate controls to adjust or activate power distribution equipment or machines.",
+          "Prepare switching orders that will isolate work areas without causing power outages, referring to drawings of power systems.",
+          "Monitor and record switchboard or control board readings to ensure that electrical or steam distribution equipment is operating properly."
+        ],
+        "work_activities": [
+          {
+            "name": "Making Decisions and Solving Problems",
+            "importance": 4.73
+          },
+          {
+            "name": "Getting Information",
+            "importance": 4.72
+          },
+          {
+            "name": "Identifying Objects, Actions, and Events",
+            "importance": 4.59
+          },
+          {
+            "name": "Monitoring Processes, Materials, or Surroundings",
+            "importance": 4.5
+          },
+          {
+            "name": "Evaluating Information to Determine Compliance with Standards",
+            "importance": 4.48
+          },
+          {
+            "name": "Working with Computers",
+            "importance": 4.47
+          },
+          {
+            "name": "Communicating with Supervisors, Peers, or Subordinates",
+            "importance": 4.34
+          },
+          {
+            "name": "Analyzing Data or Information",
+            "importance": 4.31
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 3,
+            "name": "Job Zone Three: Medium Preparation Needed",
+            "experience": "Previous work-related skill, knowledge, or experience is required for these occupations. For example, an electrician must have completed three or four years of apprenticeship or several years of vocational training, and often must have passed a licensing exam, in order to perform the job.",
+            "education": "Most occupations in this zone require training in vocational schools, related on-the-job experience, or an associate's degree.",
+            "job_training": "Employees in these occupations usually need one or two years of training involving both on-the-job experience and informal training with experienced workers. A recognized apprenticeship program may be associated with these occupations."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "Post-Secondary Certificate",
+            "share": 40.32
+          },
+          {
+            "label": "Associate's Degree or other 2-year degree",
+            "share": 24.05
+          },
+          {
+            "label": "High School Diploma or the equivalent (such as a GED)",
+            "share": 21.55
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Once a month or more but not every week",
+            "share": 39.15
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Extremely serious",
+            "share": 80.36
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Constant contact with others",
+            "share": 72.75
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Very important",
+            "share": 45.39
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Extremely important",
+            "share": 33.59
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Once a year or more but not every month",
+            "share": 44.1
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Never",
+            "share": 62.33
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Moderately automated",
+            "share": 42.35
+          }
+        ],
+        "related_occupations": [
+          "Power Plant Operators",
+          "Electrical and Electronics Repairers, Powerhouse, Substation, and Relay",
+          "Stationary Engineers and Boiler Operators",
+          "Hydroelectric Plant Technicians",
+          "Electrical and Electronics Repairers, Commercial and Industrial Equipment",
+          "Gas Plant Operators"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/51-8012.00",
+          "locator": "O*NET-SOC Code=51-8012.00",
+          "accessed_on": "2026-09-21",
+          "status": "verified",
+          "source_audit_locator": "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_tranche_005_2026-09-21.json#role_key=D113|Power Distributors and Dispatchers"
+        },
+        {
+          "label": "O*NET 31.0 database archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-8012.00",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "O*NET work-profile evidence is a global/US occupational proxy, not Nigerian demand evidence.",
+        "The candidate does not establish Nigerian hiring, licensing, education, wages, or local preparation requirements.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ],
+      "audit_evidence": {
+        "local_archive": "data/career-mapping/_source_downloads/taxonomy/onet_31_0_database.zip",
+        "local_archive_locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-8012.00",
+        "accessed_on": "2026-09-23",
+        "prior_identity_verification": "role_work_profile_tranche_005_2026-09-21.json"
+      }
+    },
+    {
+      "role_key": "D113|Power Plant Operators",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "Power Plant Operators",
+      "existing_source": "onet",
+      "resolution": "source_backed_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "soc_code": "51-8013.00",
+        "title": "Power Plant Operators",
+        "exact_title_match": true,
+        "description": "Control, operate, or maintain machinery to generate electric power. Includes auxiliary equipment operators.",
+        "trace_locator": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json#role_key=D113|Power Plant Operators"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Control generator output to match the phase, frequency, or voltage of electricity supplied to panels.",
+          "Take regulatory action, based on readings from charts, meters and gauges, at established intervals.",
+          "Control power generating equipment, including boilers, turbines, generators, or reactors, using control boards or semi-automatic equipment.",
+          "Start or stop generators, auxiliary pumping equipment, turbines, or other power plant equipment as necessary.",
+          "Monitor power plant equipment and indicators to detect evidence of operating problems.",
+          "Operate or maintain distributed power generation equipment, including fuel cells or microturbines, to produce energy on-site for manufacturing or other commercial purposes.",
+          "Open and close valves and switches in sequence to start or shut down auxiliary units.",
+          "Control or maintain auxiliary equipment, such as pumps, fans, compressors, condensers, feedwater heaters, filters, or chlorinators, to supply water, fuel, lubricants, air, or auxiliary power."
+        ],
+        "work_activities": [
+          {
+            "name": "Controlling Machines and Processes",
+            "importance": 4.13
+          },
+          {
+            "name": "Repairing and Maintaining Mechanical Equipment",
+            "importance": 4.02
+          },
+          {
+            "name": "Getting Information",
+            "importance": 3.89
+          },
+          {
+            "name": "Monitoring Processes, Materials, or Surroundings",
+            "importance": 3.87
+          },
+          {
+            "name": "Making Decisions and Solving Problems",
+            "importance": 3.81
+          },
+          {
+            "name": "Communicating with Supervisors, Peers, or Subordinates",
+            "importance": 3.79
+          },
+          {
+            "name": "Identifying Objects, Actions, and Events",
+            "importance": 3.58
+          },
+          {
+            "name": "Operating Vehicles, Mechanized Devices, or Equipment",
+            "importance": 3.57
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 2,
+            "name": "Job Zone 1-2: Very Little to Some Preparation Needed",
+            "experience": "Some occupations may need little or no previous experience; others require several months to a year of experience. For example, landscaping and groundskeeping workers might require very little training or previous experience, while agricultural equipment operators can benefit from on-the job training.",
+            "education": "Usually requires a high school diploma or GED, though some occupations may not.",
+            "job_training": "Ranges from a few days to one year of on-the-job training."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "High School Diploma or the equivalent (such as a GED)",
+            "share": 59.81
+          },
+          {
+            "label": "Associate's Degree or other 2-year degree",
+            "share": 14.29
+          },
+          {
+            "label": "Bachelor's Degree",
+            "share": 12.54
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Once a year or more but not every month",
+            "share": 38.59
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Extremely serious",
+            "share": 69.58
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Constant contact with others",
+            "share": 61.27
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Very important",
+            "share": 31.72
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Fairly important",
+            "share": 50.6
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Once a year or more but not every month",
+            "share": 43.76
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Never",
+            "share": 85.41
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Moderately automated",
+            "share": 52.22
+          }
+        ],
+        "related_occupations": [
+          "Hydroelectric Plant Technicians",
+          "Biomass Plant Technicians",
+          "Gas Plant Operators",
+          "Geothermal Technicians",
+          "Stationary Engineers and Boiler Operators",
+          "Petroleum Pump System Operators, Refinery Operators, and Gaugers"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/51-8013.00",
+          "locator": "O*NET-SOC Code=51-8013.00",
+          "accessed_on": "2026-09-21",
+          "status": "verified",
+          "source_audit_locator": "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_tranche_005_2026-09-21.json#role_key=D113|Power Plant Operators"
+        },
+        {
+          "label": "O*NET 31.0 database archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-8013.00",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "O*NET work-profile evidence is a global/US occupational proxy, not Nigerian demand evidence.",
+        "The candidate does not establish Nigerian hiring, licensing, education, wages, or local preparation requirements.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ],
+      "audit_evidence": {
+        "local_archive": "data/career-mapping/_source_downloads/taxonomy/onet_31_0_database.zip",
+        "local_archive_locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-8013.00",
+        "accessed_on": "2026-09-23",
+        "prior_identity_verification": "role_work_profile_tranche_005_2026-09-21.json"
+      }
+    },
+    {
+      "role_key": "D113|Refractory Materials Repairers, Except Brickmasons",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "Refractory Materials Repairers, Except Brickmasons",
+      "existing_source": "onet",
+      "resolution": "source_backed_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "soc_code": "49-9045.00",
+        "title": "Refractory Materials Repairers, Except Brickmasons",
+        "exact_title_match": true,
+        "description": "Build or repair equipment such as furnaces, kilns, cupolas, boilers, converters, ladles, soaking pits, and ovens, using refractory materials.",
+        "trace_locator": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json#role_key=D113|Refractory Materials Repairers, Except Brickmasons"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Reline or repair ladles and pouring spouts with refractory clay, using trowels.",
+          "Chip slag from linings of ladles or remove linings when beyond repair, using hammers and chisels.",
+          "Mix specified amounts of sand, clay, mortar powder, and water to form refractory clay or mortar, using shovels or mixing machines.",
+          "Measure furnace walls to determine dimensions and cut required number of sheets from plastic block, using saws.",
+          "Dry and bake new linings by placing inverted linings over burners, building fires in ladles, or by using blowtorches.",
+          "Remove worn or damaged plastic block refractory linings of furnaces, using hand tools.",
+          "Climb scaffolding, carrying hoses, and spray surfaces of cupolas with refractory mixtures, using spray equipment.",
+          "Spread mortar on stopper heads and rods, using trowels, and slide brick sleeves over rods to form refractory jackets."
+        ],
+        "work_activities": [
+          {
+            "name": "Handling and Moving Objects",
+            "importance": 4.26
+          },
+          {
+            "name": "Performing General Physical Activities",
+            "importance": 4.03
+          },
+          {
+            "name": "Identifying Objects, Actions, and Events",
+            "importance": 3.8
+          },
+          {
+            "name": "Making Decisions and Solving Problems",
+            "importance": 3.73
+          },
+          {
+            "name": "Operating Vehicles, Mechanized Devices, or Equipment",
+            "importance": 3.68
+          },
+          {
+            "name": "Getting Information",
+            "importance": 3.66
+          },
+          {
+            "name": "Inspecting Equipment, Structures, or Materials",
+            "importance": 3.58
+          },
+          {
+            "name": "Communicating with Supervisors, Peers, or Subordinates",
+            "importance": 3.55
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 2,
+            "name": "Job Zone 1-2: Very Little to Some Preparation Needed",
+            "experience": "Some occupations may need little or no previous experience; others require several months to a year of experience. For example, landscaping and groundskeeping workers might require very little training or previous experience, while agricultural equipment operators can benefit from on-the job training.",
+            "education": "Usually requires a high school diploma or GED, though some occupations may not.",
+            "job_training": "Ranges from a few days to one year of on-the-job training."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "High School Diploma or the equivalent (such as a GED)",
+            "share": 74.85
+          },
+          {
+            "label": "Post-Secondary Certificate",
+            "share": 17.27
+          },
+          {
+            "label": "Some College Courses",
+            "share": 7.08
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Once a year or more but not every month",
+            "share": 52.97
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Not serious at all",
+            "share": 36.66
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Contact with others most of the time",
+            "share": 43.73
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Important",
+            "share": 33.18
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Not important at all",
+            "share": 67.1
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Once a week or more but not every day",
+            "share": 36.48
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Never",
+            "share": 47.52
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Slightly automated",
+            "share": 44.87
+          }
+        ],
+        "related_occupations": [
+          "Brickmasons and Blockmasons",
+          "Molders, Shapers, and Casters, Except Metal and Plastic",
+          "Helpers--Brickmasons, Blockmasons, Stonemasons, and Tile and Marble Setters",
+          "Foundry Mold and Coremakers",
+          "Terrazzo Workers and Finishers",
+          "Heat Treating Equipment Setters, Operators, and Tenders, Metal and Plastic"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/49-9045.00",
+          "locator": "O*NET-SOC Code=49-9045.00",
+          "accessed_on": "2026-09-21",
+          "status": "verified",
+          "source_audit_locator": "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_tranche_005_2026-09-21.json#role_key=D113|Refractory Materials Repairers, Except Brickmasons"
+        },
+        {
+          "label": "O*NET 31.0 database archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=49-9045.00",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "O*NET work-profile evidence is a global/US occupational proxy, not Nigerian demand evidence.",
+        "The candidate does not establish Nigerian hiring, licensing, education, wages, or local preparation requirements.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ],
+      "audit_evidence": {
+        "local_archive": "data/career-mapping/_source_downloads/taxonomy/onet_31_0_database.zip",
+        "local_archive_locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=49-9045.00",
+        "accessed_on": "2026-09-23",
+        "prior_identity_verification": "role_work_profile_tranche_005_2026-09-21.json"
+      }
+    },
+    {
+      "role_key": "D113|Stationary Engineers and Boiler Operators",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "Stationary Engineers and Boiler Operators",
+      "existing_source": "onet",
+      "resolution": "source_backed_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "soc_code": "51-8021.00",
+        "title": "Stationary Engineers and Boiler Operators",
+        "exact_title_match": true,
+        "description": "Operate or maintain stationary engines, boilers, or other mechanical equipment to provide utilities for buildings or industrial processes. Operate equipment such as steam engines, generators, motors, turbines, and steam boilers.",
+        "trace_locator": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json#role_key=D113|Stationary Engineers and Boiler Operators"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Operate or tend stationary engines, boilers, and auxiliary equipment, such as pumps, compressors, or air-conditioning equipment, to supply and maintain steam or heat for buildings, marine vessels, or pneumatic tools.",
+          "Activate valves to maintain required amounts of water in boilers, to adjust supplies of combustion air, and to control the flow of fuel into burners.",
+          "Monitor boiler water, chemical, and fuel levels, and make adjustments to maintain required levels.",
+          "Analyze problems and take appropriate action to ensure continuous and reliable operation of equipment and systems.",
+          "Observe and interpret readings on gauges, meters, and charts registering various aspects of boiler operation to ensure that boilers are operating properly.",
+          "Maintain daily logs of operation, maintenance, and safety activities, including test results, instrument readings, and details of equipment malfunctions and maintenance work.",
+          "Test boiler water quality or arrange for testing and take necessary corrective action, such as adding chemicals to prevent corrosion and harmful deposits.",
+          "Monitor and inspect equipment, computer terminals, switches, valves, gauges, alarms, safety devices, and meters to detect leaks or malfunctions and to ensure that equipment is operating efficiently and safely."
+        ],
+        "work_activities": [
+          {
+            "name": "Inspecting Equipment, Structures, or Materials",
+            "importance": 4.45
+          },
+          {
+            "name": "Repairing and Maintaining Mechanical Equipment",
+            "importance": 4.41
+          },
+          {
+            "name": "Making Decisions and Solving Problems",
+            "importance": 4.28
+          },
+          {
+            "name": "Controlling Machines and Processes",
+            "importance": 4.18
+          },
+          {
+            "name": "Monitoring Processes, Materials, or Surroundings",
+            "importance": 4.07
+          },
+          {
+            "name": "Getting Information",
+            "importance": 4.05
+          },
+          {
+            "name": "Identifying Objects, Actions, and Events",
+            "importance": 4.04
+          },
+          {
+            "name": "Communicating with Supervisors, Peers, or Subordinates",
+            "importance": 4.02
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 3,
+            "name": "Job Zone Three: Medium Preparation Needed",
+            "experience": "Previous work-related skill, knowledge, or experience is required for these occupations. For example, an electrician must have completed three or four years of apprenticeship or several years of vocational training, and often must have passed a licensing exam, in order to perform the job.",
+            "education": "Most occupations in this zone require training in vocational schools, related on-the-job experience, or an associate's degree.",
+            "job_training": "Employees in these occupations usually need one or two years of training involving both on-the-job experience and informal training with experienced workers. A recognized apprenticeship program may be associated with these occupations."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "Post-Secondary Certificate",
+            "share": 47.15
+          },
+          {
+            "label": "High School Diploma or the equivalent (such as a GED)",
+            "share": 37.8
+          },
+          {
+            "label": "Associate's Degree or other 2-year degree",
+            "share": 10.52
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Once a week or more but not every day",
+            "share": 31.74
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Extremely serious",
+            "share": 40.1
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Constant contact with others",
+            "share": 74.52
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Extremely important",
+            "share": 45.6
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Extremely important",
+            "share": 37.45
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Every day",
+            "share": 28.88
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Never",
+            "share": 41.48
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Moderately automated",
+            "share": 54.07
+          }
+        ],
+        "related_occupations": [
+          "Power Plant Operators",
+          "Biomass Plant Technicians",
+          "Control and Valve Installers and Repairers, Except Mechanical Door",
+          "Gas Compressor and Gas Pumping Station Operators",
+          "Mechanical Engineers",
+          "Geothermal Technicians"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/51-8021.00",
+          "locator": "O*NET-SOC Code=51-8021.00",
+          "accessed_on": "2026-09-21",
+          "status": "verified",
+          "source_audit_locator": "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_tranche_005_2026-09-21.json#role_key=D113|Stationary Engineers and Boiler Operators"
+        },
+        {
+          "label": "O*NET 31.0 database archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-8021.00",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "O*NET work-profile evidence is a global/US occupational proxy, not Nigerian demand evidence.",
+        "The candidate does not establish Nigerian hiring, licensing, education, wages, or local preparation requirements.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ],
+      "audit_evidence": {
+        "local_archive": "data/career-mapping/_source_downloads/taxonomy/onet_31_0_database.zip",
+        "local_archive_locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-8021.00",
+        "accessed_on": "2026-09-23",
+        "prior_identity_verification": "role_work_profile_tranche_005_2026-09-21.json"
+      }
+    },
+    {
+      "role_key": "D113|Tire Builders",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "Tire Builders",
+      "existing_source": "onet",
+      "resolution": "source_backed_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "soc_code": "51-9197.00",
+        "title": "Tire Builders",
+        "exact_title_match": true,
+        "description": "Operate machines to build tires.",
+        "trace_locator": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json#role_key=D113|Tire Builders"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Build semi-raw rubber treads onto buffed tire casings to prepare tires for vulcanization in recapping or retreading processes.",
+          "Trim excess rubber and imperfections during retreading processes.",
+          "Fill cuts and holes in tires, using hot rubber.",
+          "Place tires into molds for new tread.",
+          "Fit inner tubes and final layers of rubber onto tires.",
+          "Buff tires according to specifications for width and undertread depth.",
+          "Brush or spray solvents onto plies to ensure adhesion, and repeat process as specified, alternating direction of each ply to strengthen tires.",
+          "Start rollers that bond tread and plies as drums revolve."
+        ],
+        "work_activities": [
+          {
+            "name": "Inspecting Equipment, Structures, or Materials",
+            "importance": 4.37
+          },
+          {
+            "name": "Handling and Moving Objects",
+            "importance": 4.34
+          },
+          {
+            "name": "Controlling Machines and Processes",
+            "importance": 4.19
+          },
+          {
+            "name": "Getting Information",
+            "importance": 4.17
+          },
+          {
+            "name": "Performing General Physical Activities",
+            "importance": 4.1
+          },
+          {
+            "name": "Monitoring Processes, Materials, or Surroundings",
+            "importance": 4.04
+          },
+          {
+            "name": "Identifying Objects, Actions, and Events",
+            "importance": 4.0
+          },
+          {
+            "name": "Organizing, Planning, and Prioritizing Work",
+            "importance": 3.81
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 2,
+            "name": "Job Zone 1-2: Very Little to Some Preparation Needed",
+            "experience": "Some occupations may need little or no previous experience; others require several months to a year of experience. For example, landscaping and groundskeeping workers might require very little training or previous experience, while agricultural equipment operators can benefit from on-the job training.",
+            "education": "Usually requires a high school diploma or GED, though some occupations may not.",
+            "job_training": "Ranges from a few days to one year of on-the-job training."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "High School Diploma or the equivalent (such as a GED)",
+            "share": 66.45
+          },
+          {
+            "label": "Less than a High School Diploma",
+            "share": 26.13
+          },
+          {
+            "label": "Post-Secondary Certificate",
+            "share": 6.89
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Never",
+            "share": 29.06
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Fairly serious",
+            "share": 41.07
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Constant contact with others",
+            "share": 41.54
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Not important at all",
+            "share": 41.46
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Not important at all",
+            "share": 45.32
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Once a month or more but not every week",
+            "share": 38.42
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Once a year or more but not every month",
+            "share": 60.34
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Slightly automated",
+            "share": 55.2
+          }
+        ],
+        "related_occupations": [
+          "Tire Repairers and Changers",
+          "Molders, Shapers, and Casters, Except Metal and Plastic",
+          "Molding, Coremaking, and Casting Machine Setters, Operators, and Tenders, Metal and Plastic",
+          "Fiberglass Laminators and Fabricators",
+          "Engine and Other Machine Assemblers",
+          "Foundry Mold and Coremakers"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/51-9197.00",
+          "locator": "O*NET-SOC Code=51-9197.00",
+          "accessed_on": "2026-09-21",
+          "status": "verified",
+          "source_audit_locator": "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_tranche_005_2026-09-21.json#role_key=D113|Tire Builders"
+        },
+        {
+          "label": "O*NET 31.0 database archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9197.00",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "O*NET work-profile evidence is a global/US occupational proxy, not Nigerian demand evidence.",
+        "The candidate does not establish Nigerian hiring, licensing, education, wages, or local preparation requirements.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ],
+      "audit_evidence": {
+        "local_archive": "data/career-mapping/_source_downloads/taxonomy/onet_31_0_database.zip",
+        "local_archive_locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9197.00",
+        "accessed_on": "2026-09-23",
+        "prior_identity_verification": "role_work_profile_tranche_005_2026-09-21.json"
+      }
+    }
+  ]
+}

@@ -1,0 +1,1925 @@
+{
+  "schema_version": "2026-09-23.role-work-profile-enrichment.v3",
+  "generated_on": "2026-09-23",
+  "read_only": true,
+  "append_only": true,
+  "scope": {
+    "source_audit": "data/career-mapping/_audit/subgroup_role_source_traceability_2026-08-31.json",
+    "queue": "remaining missing role work profiles after tranches 007, 008 and 009",
+    "selection": "exact unique O*NET 31.0 Job Titles label; no title similarity, ISCO inference, or Nigerian mapping"
+  },
+  "authority": {
+    "onet_identity_and_profile": "O*NET 31.0 Database / U.S. Department of Labor",
+    "archive": "data/career-mapping/_source_downloads/taxonomy/onet_31_0_database.zip",
+    "archive_url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+    "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9",
+    "accessed_on": "2026-09-23",
+    "limitation": "Global/US occupational evidence only; not Nigerian demand or local preparation evidence."
+  },
+  "counts": {
+    "baseline_missing_work_profile_rows": 119,
+    "prior_exact_onet_candidates": 20,
+    "prior_exact_esco_onet_profile_candidates": 36,
+    "remaining_missing_roles_before_selection": 62,
+    "roles_selected": 9,
+    "exact_onet_job_title_identity_matches": 9,
+    "candidate_rows_with_work_profile_fields": 9,
+    "incomplete_authoritative_profiles_retained_review_only": 0,
+    "canonical_work_profile_rows_added": 0,
+    "review_required_profile_candidates": 9,
+    "canonical_work_profile_rows_still_absent": 119,
+    "roles_without_source_backed_profile_candidate_after_pass": 53,
+    "genuinely_unavailable": 0
+  },
+  "excluded_review_only": {
+    "no_unique_identity": [
+      {
+        "role_key": "D086|bingo caller",
+        "role_name": "bingo caller",
+        "codes": [
+          "39-3012.00",
+          "39-3019.00"
+        ],
+        "reason": "ambiguous O*NET Job Titles label"
+      },
+      {
+        "role_key": "D086|casino pit boss",
+        "role_name": "casino pit boss",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D086|director of compliance and information security in gambling",
+        "role_name": "director of compliance and information security in gambling",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D086|gambling games developer",
+        "role_name": "gambling games developer",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D086|gambling quality assurance engineer",
+        "role_name": "gambling quality assurance engineer",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D086|lottery operator",
+        "role_name": "lottery operator",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D086|odds compiler",
+        "role_name": "odds compiler",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D086|race track operator",
+        "role_name": "race track operator",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D087|hair stylist",
+        "role_name": "hair stylist",
+        "codes": [
+          "39-5011.00",
+          "39-5012.00"
+        ],
+        "reason": "ambiguous O*NET Job Titles label"
+      },
+      {
+        "role_key": "D087|performance hairdresser",
+        "role_name": "performance hairdresser",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D088|beauty salon attendant",
+        "role_name": "beauty salon attendant",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D088|hair removal technician",
+        "role_name": "hair removal technician",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D088|make-up and hair designer",
+        "role_name": "make-up and hair designer",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D088|masseur/masseuse",
+        "role_name": "masseur/masseuse",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D088|personal stylist",
+        "role_name": "personal stylist",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D088|tanning consultant",
+        "role_name": "tanning consultant",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D088|weight loss consultant",
+        "role_name": "weight loss consultant",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D089|cemetery attendant",
+        "role_name": "cemetery attendant",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D100|drain technician",
+        "role_name": "drain technician",
+        "codes": [
+          "47-2152.00",
+          "47-4071.00"
+        ],
+        "reason": "ambiguous O*NET Job Titles label"
+      },
+      {
+        "role_key": "D100|gas service technician",
+        "role_name": "gas service technician",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D100|pipeline maintenance worker",
+        "role_name": "pipeline maintenance worker",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D100|septic tank servicer",
+        "role_name": "septic tank servicer",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D100|sewer construction worker",
+        "role_name": "sewer construction worker",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D100|sewerage network operative",
+        "role_name": "sewerage network operative",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D100|water conservation technician",
+        "role_name": "water conservation technician",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D100|water network operative",
+        "role_name": "water network operative",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D101|lacquer spray gun operator",
+        "role_name": "lacquer spray gun operator",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D101|marine painter",
+        "role_name": "marine painter",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D101|surface treatment operator",
+        "role_name": "surface treatment operator",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D101|transport equipment painter",
+        "role_name": "transport equipment painter",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D108|bindery operator",
+        "role_name": "bindery operator",
+        "codes": [
+          "51-5113.00",
+          "51-9191.00"
+        ],
+        "reason": "ambiguous O*NET Job Titles label"
+      },
+      {
+        "role_key": "D108|book restorer",
+        "role_name": "book restorer",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D108|digital printer",
+        "role_name": "digital printer",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D108|flexographic press operator",
+        "role_name": "flexographic press operator",
+        "codes": [
+          "51-5112.00",
+          "51-9199.00"
+        ],
+        "reason": "ambiguous O*NET Job Titles label"
+      },
+      {
+        "role_key": "D108|hot foil operator",
+        "role_name": "hot foil operator",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D108|imagesetter",
+        "role_name": "imagesetter",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D108|paper embossing press operator",
+        "role_name": "paper embossing press operator",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D108|print folding operator",
+        "role_name": "print folding operator",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D108|print studio supervisor",
+        "role_name": "print studio supervisor",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D108|screen making technician",
+        "role_name": "screen making technician",
+        "codes": [
+          "51-5112.00",
+          "51-9194.00"
+        ],
+        "reason": "ambiguous O*NET Job Titles label"
+      },
+      {
+        "role_key": "D108|screen printer",
+        "role_name": "screen printer",
+        "codes": [
+          "51-5112.00",
+          "51-9123.00",
+          "51-9199.00"
+        ],
+        "reason": "ambiguous O*NET Job Titles label"
+      },
+      {
+        "role_key": "D108|typesetter",
+        "role_name": "typesetter",
+        "codes": [
+          "43-9081.00",
+          "51-5111.00",
+          "51-5112.00"
+        ],
+        "reason": "ambiguous O*NET Job Titles label"
+      },
+      {
+        "role_key": "D113|brick and tile caster",
+        "role_name": "brick and tile caster",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D113|canning and bottling line operator",
+        "role_name": "canning and bottling line operator",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D113|clay kiln burner",
+        "role_name": "clay kiln burner",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D113|clay products dry kiln operator",
+        "role_name": "clay products dry kiln operator",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D113|edge bander operator",
+        "role_name": "edge bander operator",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D113|glass annealer",
+        "role_name": "glass annealer",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D113|glass forming machine operator",
+        "role_name": "glass forming machine operator",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D113|kiln firer",
+        "role_name": "kiln firer",
+        "codes": [
+          "51-3091.00",
+          "51-4051.00",
+          "51-9051.00"
+        ],
+        "reason": "ambiguous O*NET Job Titles label"
+      },
+      {
+        "role_key": "D113|packaging and filling machine operator",
+        "role_name": "packaging and filling machine operator",
+        "codes": [],
+        "reason": "no exact O*NET Job Titles label"
+      },
+      {
+        "role_key": "D113|slitter operator",
+        "role_name": "slitter operator",
+        "codes": [
+          "51-4031.00",
+          "51-9032.00"
+        ],
+        "reason": "ambiguous O*NET Job Titles label"
+      },
+      {
+        "role_key": "D113|steam plant operator",
+        "role_name": "steam plant operator",
+        "codes": [
+          "51-8013.03",
+          "51-8021.00"
+        ],
+        "reason": "ambiguous O*NET Job Titles label"
+      }
+    ],
+    "incomplete_authoritative_profile": []
+  },
+  "records": [
+    {
+      "role_key": "D113|cigar brander",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "cigar brander",
+      "existing_source": "esco",
+      "resolution": "exact_onet_job_title_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "onet_code": "51-9111.00",
+        "onet_title": "Packaging and Filling Machine Operators and Tenders",
+        "exact_job_titles_identity_match": true,
+        "exact_profile_title_match": false,
+        "identity_cross_reference": "O*NET 31.0 Job Titles.txt"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Attach identification labels to finished packaged items, or cut stencils and stencil information on containers, such as lot numbers or shipping destinations.",
+          "Sort, grade, weigh, and inspect products, verifying and adjusting product weight or measurement to meet specifications.",
+          "Stop or reset machines when malfunctions occur, clear machine jams, and report malfunctions to a supervisor.",
+          "Observe machine operations to ensure quality and conformity of filled or packaged products to standards.",
+          "Remove finished packaged items from machine and separate rejected items.",
+          "Monitor the production line, watching for problems such as pile-ups, jams, or glue that isn't sticking properly.",
+          "Inspect and remove defective products and packaging material.",
+          "Start machine by engaging controls."
+        ],
+        "work_activities": [
+          {
+            "name": "Monitoring Processes, Materials, or Surroundings",
+            "importance": 3.96
+          },
+          {
+            "name": "Inspecting Equipment, Structures, or Materials",
+            "importance": 3.82
+          },
+          {
+            "name": "Identifying Objects, Actions, and Events",
+            "importance": 3.79
+          },
+          {
+            "name": "Handling and Moving Objects",
+            "importance": 3.79
+          },
+          {
+            "name": "Getting Information",
+            "importance": 3.7
+          },
+          {
+            "name": "Evaluating Information to Determine Compliance with Standards",
+            "importance": 3.65
+          },
+          {
+            "name": "Making Decisions and Solving Problems",
+            "importance": 3.64
+          },
+          {
+            "name": "Communicating with Supervisors, Peers, or Subordinates",
+            "importance": 3.63
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 2,
+            "name": "Job Zone 1-2: Very Little to Some Preparation Needed",
+            "experience": "Some occupations may need little or no previous experience; others require several months to a year of experience. For example, landscaping and groundskeeping workers might require very little training or previous experience, while agricultural equipment operators can benefit from on-the job training.",
+            "education": "Usually requires a high school diploma or GED, though some occupations may not.",
+            "job_training": "Ranges from a few days to one year of on-the-job training."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "High School Diploma or the equivalent (such as a GED)",
+            "share": 79.69
+          },
+          {
+            "label": "Less than a High School Diploma",
+            "share": 17.27
+          },
+          {
+            "label": "Associate's Degree or other 2-year degree",
+            "share": 2.22
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Once a year or more but not every month",
+            "share": 34.27
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Very serious",
+            "share": 29.35
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Constant contact with others",
+            "share": 57.03
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Very important",
+            "share": 42.18
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Not important at all",
+            "share": 54.28
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Once a year or more but not every month",
+            "share": 25.18
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Never",
+            "share": 74.78
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Moderately automated",
+            "share": 39.63
+          }
+        ],
+        "related_occupations": [
+          "Packers and Packagers, Hand",
+          "Machine Feeders and Offbearers",
+          "Adhesive Bonding Machine Operators and Tenders",
+          "Extruding, Forming, Pressing, and Compacting Machine Setters, Operators, and Tenders",
+          "Paper Goods Machine Setters, Operators, and Tenders",
+          "Cutting and Slicing Machine Setters, Operators, and Tenders"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET 31.0 exact job-title identity record",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Job Titles.txt#O*NET-SOC Code=51-9111.00&Title=cigar brander",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/51-9111.00",
+          "locator": "O*NET-SOC Code=51-9111.00",
+          "accessed_on": "2026-09-23"
+        },
+        {
+          "label": "O*NET 31.0 occupation profile archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9111.00",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "The exact O*NET title identity establishes an occupational cross-reference; it does not establish Nigerian demand or local licensing, education, wages, or hiring requirements.",
+        "O*NET work-profile fields are global/US occupational evidence and remain review-required.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ]
+    },
+    {
+      "role_key": "D113|cylinder filler",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "cylinder filler",
+      "existing_source": "esco",
+      "resolution": "exact_onet_job_title_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "onet_code": "51-9111.00",
+        "onet_title": "Packaging and Filling Machine Operators and Tenders",
+        "exact_job_titles_identity_match": true,
+        "exact_profile_title_match": false,
+        "identity_cross_reference": "O*NET 31.0 Job Titles.txt"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Attach identification labels to finished packaged items, or cut stencils and stencil information on containers, such as lot numbers or shipping destinations.",
+          "Sort, grade, weigh, and inspect products, verifying and adjusting product weight or measurement to meet specifications.",
+          "Stop or reset machines when malfunctions occur, clear machine jams, and report malfunctions to a supervisor.",
+          "Observe machine operations to ensure quality and conformity of filled or packaged products to standards.",
+          "Remove finished packaged items from machine and separate rejected items.",
+          "Monitor the production line, watching for problems such as pile-ups, jams, or glue that isn't sticking properly.",
+          "Inspect and remove defective products and packaging material.",
+          "Start machine by engaging controls."
+        ],
+        "work_activities": [
+          {
+            "name": "Monitoring Processes, Materials, or Surroundings",
+            "importance": 3.96
+          },
+          {
+            "name": "Inspecting Equipment, Structures, or Materials",
+            "importance": 3.82
+          },
+          {
+            "name": "Identifying Objects, Actions, and Events",
+            "importance": 3.79
+          },
+          {
+            "name": "Handling and Moving Objects",
+            "importance": 3.79
+          },
+          {
+            "name": "Getting Information",
+            "importance": 3.7
+          },
+          {
+            "name": "Evaluating Information to Determine Compliance with Standards",
+            "importance": 3.65
+          },
+          {
+            "name": "Making Decisions and Solving Problems",
+            "importance": 3.64
+          },
+          {
+            "name": "Communicating with Supervisors, Peers, or Subordinates",
+            "importance": 3.63
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 2,
+            "name": "Job Zone 1-2: Very Little to Some Preparation Needed",
+            "experience": "Some occupations may need little or no previous experience; others require several months to a year of experience. For example, landscaping and groundskeeping workers might require very little training or previous experience, while agricultural equipment operators can benefit from on-the job training.",
+            "education": "Usually requires a high school diploma or GED, though some occupations may not.",
+            "job_training": "Ranges from a few days to one year of on-the-job training."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "High School Diploma or the equivalent (such as a GED)",
+            "share": 79.69
+          },
+          {
+            "label": "Less than a High School Diploma",
+            "share": 17.27
+          },
+          {
+            "label": "Associate's Degree or other 2-year degree",
+            "share": 2.22
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Once a year or more but not every month",
+            "share": 34.27
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Very serious",
+            "share": 29.35
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Constant contact with others",
+            "share": 57.03
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Very important",
+            "share": 42.18
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Not important at all",
+            "share": 54.28
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Once a year or more but not every month",
+            "share": 25.18
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Never",
+            "share": 74.78
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Moderately automated",
+            "share": 39.63
+          }
+        ],
+        "related_occupations": [
+          "Packers and Packagers, Hand",
+          "Machine Feeders and Offbearers",
+          "Adhesive Bonding Machine Operators and Tenders",
+          "Extruding, Forming, Pressing, and Compacting Machine Setters, Operators, and Tenders",
+          "Paper Goods Machine Setters, Operators, and Tenders",
+          "Cutting and Slicing Machine Setters, Operators, and Tenders"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET 31.0 exact job-title identity record",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Job Titles.txt#O*NET-SOC Code=51-9111.00&Title=cylinder filler",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/51-9111.00",
+          "locator": "O*NET-SOC Code=51-9111.00",
+          "accessed_on": "2026-09-23"
+        },
+        {
+          "label": "O*NET 31.0 occupation profile archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9111.00",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "The exact O*NET title identity establishes an occupational cross-reference; it does not establish Nigerian demand or local licensing, education, wages, or hiring requirements.",
+        "O*NET work-profile fields are global/US occupational evidence and remain review-required.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ]
+    },
+    {
+      "role_key": "D113|drawing kiln operator",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "drawing kiln operator",
+      "existing_source": "esco",
+      "resolution": "exact_onet_job_title_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "onet_code": "51-9041.00",
+        "onet_title": "Extruding, Forming, Pressing, and Compacting Machine Setters, Operators, and Tenders",
+        "exact_job_titles_identity_match": true,
+        "exact_profile_title_match": false,
+        "identity_cross_reference": "O*NET 31.0 Job Titles.txt"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Adjust machine components to regulate speeds, pressures, and temperatures, and amounts, dimensions, and flow of materials or ingredients.",
+          "Press control buttons to activate machinery and equipment.",
+          "Examine, measure, and weigh materials or products to verify conformance to standards, using measuring devices such as templates, micrometers, or scales.",
+          "Monitor machine operations and observe lights and gauges to detect malfunctions.",
+          "Clear jams, and remove defective or substandard materials or products.",
+          "Notify supervisors when extruded filaments fail to meet standards.",
+          "Record and maintain production data, such as meter readings, and quantities, types, and dimensions of materials produced.",
+          "Review work orders, specifications, or instructions to determine materials, ingredients, procedures, components, settings, and adjustments for extruding, forming, pressing, or compacting machines."
+        ],
+        "work_activities": [
+          {
+            "name": "Controlling Machines and Processes",
+            "importance": 4.42
+          },
+          {
+            "name": "Monitoring Processes, Materials, or Surroundings",
+            "importance": 4.09
+          },
+          {
+            "name": "Getting Information",
+            "importance": 4.09
+          },
+          {
+            "name": "Inspecting Equipment, Structures, or Materials",
+            "importance": 4.08
+          },
+          {
+            "name": "Communicating with Supervisors, Peers, or Subordinates",
+            "importance": 3.99
+          },
+          {
+            "name": "Identifying Objects, Actions, and Events",
+            "importance": 3.93
+          },
+          {
+            "name": "Making Decisions and Solving Problems",
+            "importance": 3.92
+          },
+          {
+            "name": "Documenting/Recording Information",
+            "importance": 3.87
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 2,
+            "name": "Job Zone 1-2: Very Little to Some Preparation Needed",
+            "experience": "Some occupations may need little or no previous experience; others require several months to a year of experience. For example, landscaping and groundskeeping workers might require very little training or previous experience, while agricultural equipment operators can benefit from on-the job training.",
+            "education": "Usually requires a high school diploma or GED, though some occupations may not.",
+            "job_training": "Ranges from a few days to one year of on-the-job training."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "High School Diploma or the equivalent (such as a GED)",
+            "share": 78.21
+          },
+          {
+            "label": "Post-Secondary Certificate",
+            "share": 9.07
+          },
+          {
+            "label": "Some College Courses",
+            "share": 7.77
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Once a week or more but not every day",
+            "share": 26.7
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Extremely serious",
+            "share": 25.65
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Constant contact with others",
+            "share": 47.33
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Important",
+            "share": 35.07
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Not important at all",
+            "share": 57.75
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Once a week or more but not every day",
+            "share": 29.78
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Never",
+            "share": 82.66
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Moderately automated",
+            "share": 57.57
+          }
+        ],
+        "related_occupations": [
+          "Extruding and Forming Machine Setters, Operators, and Tenders, Synthetic and Glass Fibers",
+          "Machine Feeders and Offbearers",
+          "Cutting and Slicing Machine Setters, Operators, and Tenders",
+          "Paper Goods Machine Setters, Operators, and Tenders",
+          "Adhesive Bonding Machine Operators and Tenders",
+          "Rolling Machine Setters, Operators, and Tenders, Metal and Plastic"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET 31.0 exact job-title identity record",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Job Titles.txt#O*NET-SOC Code=51-9041.00&Title=drawing kiln operator",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/51-9041.00",
+          "locator": "O*NET-SOC Code=51-9041.00",
+          "accessed_on": "2026-09-23"
+        },
+        {
+          "label": "O*NET 31.0 occupation profile archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9041.00",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "The exact O*NET title identity establishes an occupational cross-reference; it does not establish Nigerian demand or local licensing, education, wages, or hiring requirements.",
+        "O*NET work-profile fields are global/US occupational evidence and remain review-required.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ]
+    },
+    {
+      "role_key": "D113|dry press operator",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "dry press operator",
+      "existing_source": "esco",
+      "resolution": "exact_onet_job_title_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "onet_code": "51-9041.00",
+        "onet_title": "Extruding, Forming, Pressing, and Compacting Machine Setters, Operators, and Tenders",
+        "exact_job_titles_identity_match": true,
+        "exact_profile_title_match": false,
+        "identity_cross_reference": "O*NET 31.0 Job Titles.txt"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Adjust machine components to regulate speeds, pressures, and temperatures, and amounts, dimensions, and flow of materials or ingredients.",
+          "Press control buttons to activate machinery and equipment.",
+          "Examine, measure, and weigh materials or products to verify conformance to standards, using measuring devices such as templates, micrometers, or scales.",
+          "Monitor machine operations and observe lights and gauges to detect malfunctions.",
+          "Clear jams, and remove defective or substandard materials or products.",
+          "Notify supervisors when extruded filaments fail to meet standards.",
+          "Record and maintain production data, such as meter readings, and quantities, types, and dimensions of materials produced.",
+          "Review work orders, specifications, or instructions to determine materials, ingredients, procedures, components, settings, and adjustments for extruding, forming, pressing, or compacting machines."
+        ],
+        "work_activities": [
+          {
+            "name": "Controlling Machines and Processes",
+            "importance": 4.42
+          },
+          {
+            "name": "Monitoring Processes, Materials, or Surroundings",
+            "importance": 4.09
+          },
+          {
+            "name": "Getting Information",
+            "importance": 4.09
+          },
+          {
+            "name": "Inspecting Equipment, Structures, or Materials",
+            "importance": 4.08
+          },
+          {
+            "name": "Communicating with Supervisors, Peers, or Subordinates",
+            "importance": 3.99
+          },
+          {
+            "name": "Identifying Objects, Actions, and Events",
+            "importance": 3.93
+          },
+          {
+            "name": "Making Decisions and Solving Problems",
+            "importance": 3.92
+          },
+          {
+            "name": "Documenting/Recording Information",
+            "importance": 3.87
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 2,
+            "name": "Job Zone 1-2: Very Little to Some Preparation Needed",
+            "experience": "Some occupations may need little or no previous experience; others require several months to a year of experience. For example, landscaping and groundskeeping workers might require very little training or previous experience, while agricultural equipment operators can benefit from on-the job training.",
+            "education": "Usually requires a high school diploma or GED, though some occupations may not.",
+            "job_training": "Ranges from a few days to one year of on-the-job training."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "High School Diploma or the equivalent (such as a GED)",
+            "share": 78.21
+          },
+          {
+            "label": "Post-Secondary Certificate",
+            "share": 9.07
+          },
+          {
+            "label": "Some College Courses",
+            "share": 7.77
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Once a week or more but not every day",
+            "share": 26.7
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Extremely serious",
+            "share": 25.65
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Constant contact with others",
+            "share": 47.33
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Important",
+            "share": 35.07
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Not important at all",
+            "share": 57.75
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Once a week or more but not every day",
+            "share": 29.78
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Never",
+            "share": 82.66
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Moderately automated",
+            "share": 57.57
+          }
+        ],
+        "related_occupations": [
+          "Extruding and Forming Machine Setters, Operators, and Tenders, Synthetic and Glass Fibers",
+          "Machine Feeders and Offbearers",
+          "Cutting and Slicing Machine Setters, Operators, and Tenders",
+          "Paper Goods Machine Setters, Operators, and Tenders",
+          "Adhesive Bonding Machine Operators and Tenders",
+          "Rolling Machine Setters, Operators, and Tenders, Metal and Plastic"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET 31.0 exact job-title identity record",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Job Titles.txt#O*NET-SOC Code=51-9041.00&Title=dry press operator",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/51-9041.00",
+          "locator": "O*NET-SOC Code=51-9041.00",
+          "accessed_on": "2026-09-23"
+        },
+        {
+          "label": "O*NET 31.0 occupation profile archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9041.00",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "The exact O*NET title identity establishes an occupational cross-reference; it does not establish Nigerian demand or local licensing, education, wages, or hiring requirements.",
+        "O*NET work-profile fields are global/US occupational evidence and remain review-required.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ]
+    },
+    {
+      "role_key": "D113|glass polisher",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "glass polisher",
+      "existing_source": "esco",
+      "resolution": "exact_onet_job_title_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "onet_code": "51-9022.00",
+        "onet_title": "Grinding and Polishing Workers, Hand",
+        "exact_job_titles_identity_match": true,
+        "exact_profile_title_match": false,
+        "identity_cross_reference": "O*NET 31.0 Job Titles.txt"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Verify quality of finished workpieces by inspecting them, comparing them to templates, measuring their dimensions, or testing them in working machinery.",
+          "Grind, sand, clean, or polish objects or parts to correct defects or to prepare surfaces for further finishing, using hand tools and power tools.",
+          "Measure and mark equipment, objects, or parts to ensure grinding and polishing standards are met.",
+          "Trim, scrape, or deburr objects or parts, using chisels, scrapers, and other hand tools and equipment.",
+          "Mark defects, such as knotholes, cracks, and splits, for repair.",
+          "Study blueprints or layouts to determine how to lay out workpieces or saw out templates.",
+          "Move controls to adjust, start, or stop equipment during grinding and polishing processes.",
+          "Load and adjust workpieces onto equipment or work tables, using hand tools."
+        ],
+        "work_activities": [
+          {
+            "name": "Performing General Physical Activities",
+            "importance": 4.9
+          },
+          {
+            "name": "Handling and Moving Objects",
+            "importance": 4.88
+          },
+          {
+            "name": "Controlling Machines and Processes",
+            "importance": 4.87
+          },
+          {
+            "name": "Thinking Creatively",
+            "importance": 4.8
+          },
+          {
+            "name": "Making Decisions and Solving Problems",
+            "importance": 4.8
+          },
+          {
+            "name": "Inspecting Equipment, Structures, or Materials",
+            "importance": 4.63
+          },
+          {
+            "name": "Monitoring Processes, Materials, or Surroundings",
+            "importance": 4.54
+          },
+          {
+            "name": "Repairing and Maintaining Mechanical Equipment",
+            "importance": 4.46
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 2,
+            "name": "Job Zone 1-2: Very Little to Some Preparation Needed",
+            "experience": "Some occupations may need little or no previous experience; others require several months to a year of experience. For example, landscaping and groundskeeping workers might require very little training or previous experience, while agricultural equipment operators can benefit from on-the job training.",
+            "education": "Usually requires a high school diploma or GED, though some occupations may not.",
+            "job_training": "Ranges from a few days to one year of on-the-job training."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "High School Diploma or the equivalent (such as a GED)",
+            "share": 37.33
+          },
+          {
+            "label": "Less than a High School Diploma",
+            "share": 26.74
+          },
+          {
+            "label": "Post-Secondary Certificate",
+            "share": 24.03
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Once a month or more but not every week",
+            "share": 33.69
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Extremely serious",
+            "share": 39.26
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Constant contact with others",
+            "share": 42.45
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Fairly important",
+            "share": 34.14
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Not important at all",
+            "share": 47.82
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Never",
+            "share": 43.21
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Never",
+            "share": 82.72
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Moderately automated",
+            "share": 58.93
+          }
+        ],
+        "related_occupations": [
+          "Grinding, Lapping, Polishing, and Buffing Machine Tool Setters, Operators, and Tenders, Metal and Plastic",
+          "Tool Grinders, Filers, and Sharpeners",
+          "Woodworking Machine Setters, Operators, and Tenders, Except Sawing",
+          "Cutting and Slicing Machine Setters, Operators, and Tenders",
+          "Molders, Shapers, and Casters, Except Metal and Plastic",
+          "Cutting, Punching, and Press Machine Setters, Operators, and Tenders, Metal and Plastic"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET 31.0 exact job-title identity record",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Job Titles.txt#O*NET-SOC Code=51-9022.00&Title=glass polisher",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/51-9022.00",
+          "locator": "O*NET-SOC Code=51-9022.00",
+          "accessed_on": "2026-09-23"
+        },
+        {
+          "label": "O*NET 31.0 occupation profile archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9022.00",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "The exact O*NET title identity establishes an occupational cross-reference; it does not establish Nigerian demand or local licensing, education, wages, or hiring requirements.",
+        "O*NET work-profile fields are global/US occupational evidence and remain review-required.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ]
+    },
+    {
+      "role_key": "D113|heat sealing machine operator",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "heat sealing machine operator",
+      "existing_source": "esco",
+      "resolution": "exact_onet_job_title_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "onet_code": "51-9191.00",
+        "onet_title": "Adhesive Bonding Machine Operators and Tenders",
+        "exact_job_titles_identity_match": true,
+        "exact_profile_title_match": false,
+        "identity_cross_reference": "O*NET 31.0 Job Titles.txt"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Align and position materials being joined to ensure accurate application of adhesive or heat sealing.",
+          "Adjust machine components according to specifications such as widths, lengths, and thickness of materials and amounts of glue, cement, or adhesive required.",
+          "Monitor machine operations to detect malfunctions and report or resolve problems.",
+          "Start machines, and turn valves or move controls to feed, admit, apply, or transfer materials and adhesives, and to adjust temperature, pressure, and time settings.",
+          "Fill machines with glue, cement, or adhesives.",
+          "Perform test production runs and make adjustments as necessary to ensure that completed products meet standards and specifications.",
+          "Examine and measure completed materials or products to verify conformance to specifications, using measuring devices such as tape measures, gauges, or calipers.",
+          "Read work orders and communicate with coworkers to determine machine and equipment settings and adjustments and supply and product specifications."
+        ],
+        "work_activities": [
+          {
+            "name": "Controlling Machines and Processes",
+            "importance": 4.6
+          },
+          {
+            "name": "Handling and Moving Objects",
+            "importance": 4.44
+          },
+          {
+            "name": "Inspecting Equipment, Structures, or Materials",
+            "importance": 4.36
+          },
+          {
+            "name": "Getting Information",
+            "importance": 4.2
+          },
+          {
+            "name": "Performing General Physical Activities",
+            "importance": 4.17
+          },
+          {
+            "name": "Identifying Objects, Actions, and Events",
+            "importance": 4.11
+          },
+          {
+            "name": "Monitoring Processes, Materials, or Surroundings",
+            "importance": 4.04
+          },
+          {
+            "name": "Judging the Qualities of Objects, Services, or People",
+            "importance": 4.0
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 2,
+            "name": "Job Zone 1-2: Very Little to Some Preparation Needed",
+            "experience": "Some occupations may need little or no previous experience; others require several months to a year of experience. For example, landscaping and groundskeeping workers might require very little training or previous experience, while agricultural equipment operators can benefit from on-the job training.",
+            "education": "Usually requires a high school diploma or GED, though some occupations may not.",
+            "job_training": "Ranges from a few days to one year of on-the-job training."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "High School Diploma or the equivalent (such as a GED)",
+            "share": 72.61
+          },
+          {
+            "label": "Post-Secondary Certificate",
+            "share": 16.74
+          },
+          {
+            "label": "Less than a High School Diploma",
+            "share": 10.21
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Once a week or more but not every day",
+            "share": 26.52
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Extremely serious",
+            "share": 47.91
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Constant contact with others",
+            "share": 83.29
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Extremely important",
+            "share": 32.4
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Not important at all",
+            "share": 55.78
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Every day",
+            "share": 27.77
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Never",
+            "share": 42.86
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Moderately automated",
+            "share": 41.75
+          }
+        ],
+        "related_occupations": [
+          "Paper Goods Machine Setters, Operators, and Tenders",
+          "Cutting and Slicing Machine Setters, Operators, and Tenders",
+          "Machine Feeders and Offbearers",
+          "Extruding, Forming, Pressing, and Compacting Machine Setters, Operators, and Tenders",
+          "Rolling Machine Setters, Operators, and Tenders, Metal and Plastic",
+          "Packaging and Filling Machine Operators and Tenders"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET 31.0 exact job-title identity record",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Job Titles.txt#O*NET-SOC Code=51-9191.00&Title=heat sealing machine operator",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/51-9191.00",
+          "locator": "O*NET-SOC Code=51-9191.00",
+          "accessed_on": "2026-09-23"
+        },
+        {
+          "label": "O*NET 31.0 occupation profile archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9191.00",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "The exact O*NET title identity establishes an occupational cross-reference; it does not establish Nigerian demand or local licensing, education, wages, or hiring requirements.",
+        "O*NET work-profile fields are global/US occupational evidence and remain review-required.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ]
+    },
+    {
+      "role_key": "D113|tunnel kiln operator",
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "role_name": "tunnel kiln operator",
+      "existing_source": "esco",
+      "resolution": "exact_onet_job_title_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "onet_code": "51-9051.00",
+        "onet_title": "Furnace, Kiln, Oven, Drier, and Kettle Operators and Tenders",
+        "exact_job_titles_identity_match": true,
+        "exact_profile_title_match": false,
+        "identity_cross_reference": "O*NET 31.0 Job Titles.txt"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Monitor equipment operation, gauges, and panel lights to detect deviations from standards.",
+          "Confer with supervisors or other equipment operators to report equipment malfunctions or to resolve production problems.",
+          "Press and adjust controls to activate, set, and regulate equipment according to specifications.",
+          "Record gauge readings, test results, and shift production in log books.",
+          "Read and interpret work orders and instructions to determine work assignments, process specifications, and production schedules.",
+          "Examine or test samples of processed substances, or collect samples for laboratory testing, to ensure conformance to specifications.",
+          "Transport materials and products to and from work areas, manually or using carts, handtrucks, or hoists.",
+          "Stop equipment and clear blockages or jams, using fingers, wire, or hand tools."
+        ],
+        "work_activities": [
+          {
+            "name": "Controlling Machines and Processes",
+            "importance": 4.34
+          },
+          {
+            "name": "Inspecting Equipment, Structures, or Materials",
+            "importance": 4.28
+          },
+          {
+            "name": "Identifying Objects, Actions, and Events",
+            "importance": 4.26
+          },
+          {
+            "name": "Handling and Moving Objects",
+            "importance": 4.19
+          },
+          {
+            "name": "Monitoring Processes, Materials, or Surroundings",
+            "importance": 4.17
+          },
+          {
+            "name": "Getting Information",
+            "importance": 4.13
+          },
+          {
+            "name": "Making Decisions and Solving Problems",
+            "importance": 4.08
+          },
+          {
+            "name": "Communicating with Supervisors, Peers, or Subordinates",
+            "importance": 4.06
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 2,
+            "name": "Job Zone 1-2: Very Little to Some Preparation Needed",
+            "experience": "Some occupations may need little or no previous experience; others require several months to a year of experience. For example, landscaping and groundskeeping workers might require very little training or previous experience, while agricultural equipment operators can benefit from on-the job training.",
+            "education": "Usually requires a high school diploma or GED, though some occupations may not.",
+            "job_training": "Ranges from a few days to one year of on-the-job training."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "High School Diploma or the equivalent (such as a GED)",
+            "share": 55.94
+          },
+          {
+            "label": "Less than a High School Diploma",
+            "share": 21.43
+          },
+          {
+            "label": "Post-Secondary Certificate",
+            "share": 15.92
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Never",
+            "share": 50.36
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Extremely serious",
+            "share": 60.26
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Constant contact with others",
+            "share": 40.75
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Important",
+            "share": 31.33
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Not important at all",
+            "share": 78.27
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Never",
+            "share": 30.08
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Never",
+            "share": 96.82
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Not at all automated",
+            "share": 38.11
+          }
+        ],
+        "related_occupations": [
+          "Separating, Filtering, Clarifying, Precipitating, and Still Machine Setters, Operators, and Tenders",
+          "Extruding, Forming, Pressing, and Compacting Machine Setters, Operators, and Tenders",
+          "Metal-Refining Furnace Operators and Tenders",
+          "Heat Treating Equipment Setters, Operators, and Tenders, Metal and Plastic",
+          "Cleaning, Washing, and Metal Pickling Equipment Operators and Tenders",
+          "Machine Feeders and Offbearers"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET 31.0 exact job-title identity record",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Job Titles.txt#O*NET-SOC Code=51-9051.00&Title=tunnel kiln operator",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/51-9051.00",
+          "locator": "O*NET-SOC Code=51-9051.00",
+          "accessed_on": "2026-09-23"
+        },
+        {
+          "label": "O*NET 31.0 occupation profile archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-9051.00",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "The exact O*NET title identity establishes an occupational cross-reference; it does not establish Nigerian demand or local licensing, education, wages, or hiring requirements.",
+        "O*NET work-profile fields are global/US occupational evidence and remain review-required.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ]
+    },
+    {
+      "role_key": "D134|marine firefighter",
+      "domain_id": "D134",
+      "domain_name": "Naval Architecture, Marine Engineering",
+      "role_name": "marine firefighter",
+      "existing_source": "esco",
+      "resolution": "exact_onet_job_title_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "onet_code": "33-2011.00",
+        "onet_title": "Firefighters",
+        "exact_job_titles_identity_match": true,
+        "exact_profile_title_match": false,
+        "identity_cross_reference": "O*NET 31.0 Job Titles.txt"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Rescue survivors from burning buildings, accident sites, and water hazards.",
+          "Administer first aid and cardiopulmonary resuscitation to injured persons or provide emergency medical care such as basic or advanced life support.",
+          "Dress with equipment such as fire-resistant clothing and breathing apparatus.",
+          "Move toward the source of a fire, using knowledge of types of fires, construction design, building materials, and physical layout of properties.",
+          "Drive and operate fire fighting vehicles and equipment.",
+          "Respond to fire alarms and other calls for assistance, such as automobile and industrial accidents.",
+          "Search to locate fire survivors.",
+          "Operate pumps connected to high-pressure hoses."
+        ],
+        "work_activities": [
+          {
+            "name": "Operating Vehicles, Mechanized Devices, or Equipment",
+            "importance": 4.35
+          },
+          {
+            "name": "Making Decisions and Solving Problems",
+            "importance": 4.26
+          },
+          {
+            "name": "Updating and Using Relevant Knowledge",
+            "importance": 4.17
+          },
+          {
+            "name": "Inspecting Equipment, Structures, or Materials",
+            "importance": 4.12
+          },
+          {
+            "name": "Identifying Objects, Actions, and Events",
+            "importance": 4.06
+          },
+          {
+            "name": "Getting Information",
+            "importance": 4.05
+          },
+          {
+            "name": "Monitoring Processes, Materials, or Surroundings",
+            "importance": 3.98
+          },
+          {
+            "name": "Performing General Physical Activities",
+            "importance": 3.97
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 2,
+            "name": "Job Zone 1-2: Very Little to Some Preparation Needed",
+            "experience": "Some occupations may need little or no previous experience; others require several months to a year of experience. For example, landscaping and groundskeeping workers might require very little training or previous experience, while agricultural equipment operators can benefit from on-the job training.",
+            "education": "Usually requires a high school diploma or GED, though some occupations may not.",
+            "job_training": "Ranges from a few days to one year of on-the-job training."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "High School Diploma or the equivalent (such as a GED)",
+            "share": 69.53
+          },
+          {
+            "label": "Post-Secondary Certificate",
+            "share": 11.57
+          },
+          {
+            "label": "Less than a High School Diploma",
+            "share": 11.12
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Once a month or more but not every week",
+            "share": 33.83
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Extremely serious",
+            "share": 48.62
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Constant contact with others",
+            "share": 38.32
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Extremely important",
+            "share": 49.07
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Extremely important",
+            "share": 51.73
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Once a year or more but not every month",
+            "share": 47.88
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Once a year or more but not every month",
+            "share": 51.4
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Not at all automated",
+            "share": 32.4
+          }
+        ],
+        "related_occupations": [
+          "First-Line Supervisors of Firefighting and Prevention Workers",
+          "Forest Fire Inspectors and Prevention Specialists",
+          "Fire Inspectors and Investigators",
+          "Fire-Prevention and Protection Engineers",
+          "Lifeguards, Ski Patrol, and Other Recreational Protective Service Workers",
+          "Emergency Medical Technicians"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET 31.0 exact job-title identity record",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Job Titles.txt#O*NET-SOC Code=33-2011.00&Title=marine firefighter",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/33-2011.00",
+          "locator": "O*NET-SOC Code=33-2011.00",
+          "accessed_on": "2026-09-23"
+        },
+        {
+          "label": "O*NET 31.0 occupation profile archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=33-2011.00",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "The exact O*NET title identity establishes an occupational cross-reference; it does not establish Nigerian demand or local licensing, education, wages, or hiring requirements.",
+        "O*NET work-profile fields are global/US occupational evidence and remain review-required.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ]
+    },
+    {
+      "role_key": "D134|marine fitter",
+      "domain_id": "D134",
+      "domain_name": "Naval Architecture, Marine Engineering",
+      "role_name": "marine fitter",
+      "existing_source": "esco",
+      "resolution": "exact_onet_job_title_profile_candidate",
+      "review_state": "review_required",
+      "canonical_work_profile_row_status": "absent_audit_only",
+      "identity": {
+        "authority": "O*NET OnLine / U.S. Department of Labor",
+        "onet_code": "51-4192.00",
+        "onet_title": "Layout Workers, Metal and Plastic",
+        "exact_job_titles_identity_match": true,
+        "exact_profile_title_match": false,
+        "identity_cross_reference": "O*NET 31.0 Job Titles.txt"
+      },
+      "work_profile_fields": {
+        "activities": [
+          "Mark curves, lines, holes, dimensions, and welding symbols onto workpieces, using scribes, soapstones, punches, and hand drills.",
+          "Plan locations and sequences of cutting, drilling, bending, rolling, punching, and welding operations, using compasses, protractors, dividers, and rules.",
+          "Fit and align fabricated parts to be welded or assembled.",
+          "Locate center lines and verify template positions, using measuring instruments such as gauge blocks, height gauges, and dial indicators.",
+          "Plan and develop layouts from blueprints and templates, applying knowledge of trigonometry, design, effects of heat, and properties of metals.",
+          "Lay out and fabricate metal structural parts such as plates, bulkheads, and frames.",
+          "Compute layout dimensions, and determine and mark reference points on metal stock or workpieces for further processing, such as welding and assembly.",
+          "Lift and position workpieces in relation to surface plates, manually or with hoists, and using parallel blocks and angle plates."
+        ],
+        "work_activities": [
+          {
+            "name": "Getting Information",
+            "importance": 4.31
+          },
+          {
+            "name": "Handling and Moving Objects",
+            "importance": 4.18
+          },
+          {
+            "name": "Inspecting Equipment, Structures, or Materials",
+            "importance": 4.16
+          },
+          {
+            "name": "Communicating with Supervisors, Peers, or Subordinates",
+            "importance": 4.03
+          },
+          {
+            "name": "Controlling Machines and Processes",
+            "importance": 4.02
+          },
+          {
+            "name": "Identifying Objects, Actions, and Events",
+            "importance": 3.85
+          },
+          {
+            "name": "Performing General Physical Activities",
+            "importance": 3.72
+          },
+          {
+            "name": "Making Decisions and Solving Problems",
+            "importance": 3.66
+          }
+        ],
+        "job_zones": [
+          {
+            "zone": 2,
+            "name": "Job Zone 1-2: Very Little to Some Preparation Needed",
+            "experience": "Some occupations may need little or no previous experience; others require several months to a year of experience. For example, landscaping and groundskeeping workers might require very little training or previous experience, while agricultural equipment operators can benefit from on-the job training.",
+            "education": "Usually requires a high school diploma or GED, though some occupations may not.",
+            "job_training": "Ranges from a few days to one year of on-the-job training."
+          }
+        ],
+        "education_signals": [
+          {
+            "label": "High School Diploma or the equivalent (such as a GED)",
+            "share": 60.01
+          },
+          {
+            "label": "Some College Courses",
+            "share": 14.54
+          },
+          {
+            "label": "Post-Secondary Certificate",
+            "share": 11.59
+          }
+        ],
+        "work_context": [
+          {
+            "name": "Conflict Situations",
+            "frequency": "Once a year or more but not every month",
+            "share": 26.17
+          },
+          {
+            "name": "Consequence of Error",
+            "frequency": "Very serious",
+            "share": 45.46
+          },
+          {
+            "name": "Contact With Others",
+            "frequency": "Constant contact with others",
+            "share": 45.13
+          },
+          {
+            "name": "Coordinate or Lead Others in Accomplishing Work Activities",
+            "frequency": "Very important",
+            "share": 34.48
+          },
+          {
+            "name": "Deal With External Customers or the Public in General",
+            "frequency": "Not important at all",
+            "share": 42.25
+          },
+          {
+            "name": "Dealing With Unpleasant, Angry, or Discourteous People",
+            "frequency": "Once a year or more but not every month",
+            "share": 30.22
+          },
+          {
+            "name": "Dealing with Violent or Physically Aggressive People",
+            "frequency": "Never",
+            "share": 84.56
+          },
+          {
+            "name": "Degree of Automation",
+            "frequency": "Not at all automated",
+            "share": 40.01
+          }
+        ],
+        "related_occupations": [
+          "Structural Metal Fabricators and Fitters",
+          "Aircraft Structure, Surfaces, Rigging, and Systems Assemblers",
+          "Patternmakers, Metal and Plastic",
+          "Model Makers, Metal and Plastic",
+          "Sheet Metal Workers",
+          "Tool and Die Makers"
+        ]
+      },
+      "source_links": [
+        {
+          "label": "O*NET 31.0 exact job-title identity record",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Job Titles.txt#O*NET-SOC Code=51-4192.00&Title=marine fitter",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET OnLine official occupation summary",
+          "url": "https://www.onetonline.org/link/summary/51-4192.00",
+          "locator": "O*NET-SOC Code=51-4192.00",
+          "accessed_on": "2026-09-23"
+        },
+        {
+          "label": "O*NET 31.0 occupation profile archive",
+          "url": "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip",
+          "locator": "db_31_0_text/Occupation Data.txt#O*NET-SOC Code=51-4192.00",
+          "accessed_on": "2026-09-23",
+          "archive_sha256": "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+        },
+        {
+          "label": "O*NET database release page",
+          "url": "https://www.onetcenter.org/database.html",
+          "locator": "O*NET 31.0 database release",
+          "accessed_on": "2026-09-23"
+        }
+      ],
+      "limitations": [
+        "The exact O*NET title identity establishes an occupational cross-reference; it does not establish Nigerian demand or local licensing, education, wages, or hiring requirements.",
+        "O*NET work-profile fields are global/US occupational evidence and remain review-required.",
+        "No candidate is promoted to a canonical role_work_profiles row by this audit-only pass."
+      ]
+    }
+  ]
+}

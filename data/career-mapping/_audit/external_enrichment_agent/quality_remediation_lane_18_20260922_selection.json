@@ -1,0 +1,1620 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-selection.v2",
+  "batch": "quality_remediation_lane_18_20260922",
+  "selected_at": "2026-09-22",
+  "source_audit": "data/career-mapping/_audit/external_enrichment_agent/item_ledger_quality_audit_2026-09-22.json",
+  "source_sha256": "0cfb6dea25de3bd7914195b1749cc524bc8b030e8c6fa41d0cf0d95ca586e972",
+  "selection_method": "atomic shared lock; exclude all prior valid claims by contextual and typed identity",
+  "prior_claimed_contextual_ids": 13081,
+  "prior_claimed_typed_items": 9705,
+  "selection_count": 100,
+  "requested_count": 100,
+  "shortfall": 0,
+  "rows": [
+    {
+      "subject_id": "item|role|D039|academic support officer|skill|school-psychology",
+      "context_level": "role",
+      "context_key": "D039|academic support officer",
+      "item_type": "skill",
+      "item_key": "school-psychology",
+      "item_name": "school psychology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|academic support officer|skill|show-consideration-for-student-s-situation",
+      "context_level": "role",
+      "context_key": "D039|academic support officer",
+      "item_type": "skill",
+      "item_key": "show-consideration-for-student-s-situation",
+      "item_name": "show consideration for student's situation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|academic support officer|skill|tutor-students",
+      "context_level": "role",
+      "context_key": "D039|academic support officer",
+      "item_type": "skill",
+      "item_key": "tutor-students",
+      "item_name": "tutor students",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|admissions coordinator|skill|assist-students-with-their-enrolment",
+      "context_level": "role",
+      "context_key": "D039|admissions coordinator",
+      "item_type": "skill",
+      "item_key": "assist-students-with-their-enrolment",
+      "item_name": "assist students with their enrolment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|admissions coordinator|skill|manage-student-admissions",
+      "context_level": "role",
+      "context_key": "D039|admissions coordinator",
+      "item_type": "skill",
+      "item_key": "manage-student-admissions",
+      "item_name": "manage student admissions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|admissions coordinator|skill|provide-education-management-support",
+      "context_level": "role",
+      "context_key": "D039|admissions coordinator",
+      "item_type": "skill",
+      "item_key": "provide-education-management-support",
+      "item_name": "provide education management support",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|admissions coordinator|skill|provide-information-on-education-financing",
+      "context_level": "role",
+      "context_key": "D039|admissions coordinator",
+      "item_type": "skill",
+      "item_key": "provide-information-on-education-financing",
+      "item_name": "provide information on education financing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|adult literacy teacher|skill|computer-assisted-language-learning",
+      "context_level": "role",
+      "context_key": "D039|adult literacy teacher",
+      "item_type": "skill",
+      "item_key": "computer-assisted-language-learning",
+      "item_name": "Computer Assisted Language Learning",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.gov.wales/revised-professional-standards-assisting-teaching-teaching-and-leadership-html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|adult literacy teacher|skill|consult-students-on-learning-content",
+      "context_level": "role",
+      "context_key": "D039|adult literacy teacher",
+      "item_type": "skill",
+      "item_key": "consult-students-on-learning-content",
+      "item_name": "consult students on learning content",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.gov.wales/revised-professional-standards-assisting-teaching-teaching-and-leadership-html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|adult literacy teacher|skill|teach-basic-numeracy-skills",
+      "context_level": "role",
+      "context_key": "D039|adult literacy teacher",
+      "item_type": "skill",
+      "item_key": "teach-basic-numeracy-skills",
+      "item_name": "teach basic numeracy skills",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.gov.wales/revised-professional-standards-assisting-teaching-teaching-and-leadership-html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|adult literacy teacher|skill|teach-reading-strategies",
+      "context_level": "role",
+      "context_key": "D039|adult literacy teacher",
+      "item_type": "skill",
+      "item_key": "teach-reading-strategies",
+      "item_name": "teach reading strategies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|agriculture, forestry and fishery vocational teacher|skill|adapt-teaching-to-student-s-capabilities",
+      "context_level": "role",
+      "context_key": "D039|agriculture, forestry and fishery vocational teacher",
+      "item_type": "skill",
+      "item_key": "adapt-teaching-to-student-s-capabilities",
+      "item_name": "adapt teaching to student's capabilities",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|agriculture, forestry and fishery vocational teacher|skill|agricultural-business-management",
+      "context_level": "role",
+      "context_key": "D039|agriculture, forestry and fishery vocational teacher",
+      "item_type": "skill",
+      "item_key": "agricultural-business-management",
+      "item_name": "agricultural business management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|agriculture, forestry and fishery vocational teacher|skill|manage-student-relationships",
+      "context_level": "role",
+      "context_key": "D039|agriculture, forestry and fishery vocational teacher",
+      "item_type": "skill",
+      "item_key": "manage-student-relationships",
+      "item_name": "manage student relationships",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|agriculture, forestry and fishery vocational teacher|tool|blackboard-learn",
+      "context_level": "role",
+      "context_key": "D039|agriculture, forestry and fishery vocational teacher",
+      "item_type": "tool",
+      "item_key": "blackboard-learn",
+      "item_name": "Blackboard Learn",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|agriculture, forestry and fishery vocational teacher|tool|collaborative-editing-software",
+      "context_level": "role",
+      "context_key": "D039|agriculture, forestry and fishery vocational teacher",
+      "item_type": "tool",
+      "item_key": "collaborative-editing-software",
+      "item_name": "Collaborative editing software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|agriculture, forestry and fishery vocational teacher|tool|course-management-system-software",
+      "context_level": "role",
+      "context_key": "D039|agriculture, forestry and fishery vocational teacher",
+      "item_type": "tool",
+      "item_key": "course-management-system-software",
+      "item_name": "Course management system software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|air traffic instructor|skill|deal-with-air-traffic-issues",
+      "context_level": "role",
+      "context_key": "D039|air traffic instructor",
+      "item_type": "skill",
+      "item_key": "deal-with-air-traffic-issues",
+      "item_name": "deal with air traffic issues",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|air traffic instructor|skill|meteorology",
+      "context_level": "role",
+      "context_key": "D039|air traffic instructor",
+      "item_type": "skill",
+      "item_key": "meteorology",
+      "item_name": "meteorology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|air traffic instructor|skill|operate-airport-control-tower",
+      "context_level": "role",
+      "context_key": "D039|air traffic instructor",
+      "item_type": "skill",
+      "item_key": "operate-airport-control-tower",
+      "item_name": "operate airport control tower",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|air traffic instructor|skill|procedures-associated-with-different-air-navigation-areas",
+      "context_level": "role",
+      "context_key": "D039|air traffic instructor",
+      "item_type": "skill",
+      "item_key": "procedures-associated-with-different-air-navigation-areas",
+      "item_name": "procedures associated with different air navigation areas",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|air traffic instructor|skill|surveillance-radars",
+      "context_level": "role",
+      "context_key": "D039|air traffic instructor",
+      "item_type": "skill",
+      "item_key": "surveillance-radars",
+      "item_name": "surveillance radars",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|air traffic instructor|tool|blackboard-software",
+      "context_level": "role",
+      "context_key": "D039|air traffic instructor",
+      "item_type": "tool",
+      "item_key": "blackboard-software",
+      "item_name": "Blackboard software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|air traffic instructor|tool|career-management-systems-cms",
+      "context_level": "role",
+      "context_key": "D039|air traffic instructor",
+      "item_type": "tool",
+      "item_key": "career-management-systems-cms",
+      "item_name": "Career management systems CMS",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|anthropology lecturer|skill|anthropology",
+      "context_level": "role",
+      "context_key": "D039|anthropology lecturer",
+      "item_type": "skill",
+      "item_key": "anthropology",
+      "item_name": "anthropology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|anthropology lecturer|skill|cultural-history",
+      "context_level": "role",
+      "context_key": "D039|anthropology lecturer",
+      "item_type": "skill",
+      "item_key": "cultural-history",
+      "item_name": "cultural history",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|anthropology lecturer|skill|economic-anthropology",
+      "context_level": "role",
+      "context_key": "D039|anthropology lecturer",
+      "item_type": "skill",
+      "item_key": "economic-anthropology",
+      "item_name": "economic anthropology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|anthropology lecturer|skill|history",
+      "context_level": "role",
+      "context_key": "D039|anthropology lecturer",
+      "item_type": "skill",
+      "item_key": "history",
+      "item_name": "history",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|anthropology lecturer|skill|liaise-with-educational-support-staff",
+      "context_level": "role",
+      "context_key": "D039|anthropology lecturer",
+      "item_type": "skill",
+      "item_key": "liaise-with-educational-support-staff",
+      "item_name": "liaise with educational support staff",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|anthropology lecturer|skill|religious-studies",
+      "context_level": "role",
+      "context_key": "D039|anthropology lecturer",
+      "item_type": "skill",
+      "item_key": "religious-studies",
+      "item_name": "religious studies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|anthropology lecturer|skill|teach-in-academic-or-vocational-contexts",
+      "context_level": "role",
+      "context_key": "D039|anthropology lecturer",
+      "item_type": "skill",
+      "item_key": "teach-in-academic-or-vocational-contexts",
+      "item_name": "teach in academic or vocational contexts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|archaeology lecturer|skill|conservation-techniques",
+      "context_level": "role",
+      "context_key": "D039|archaeology lecturer",
+      "item_type": "skill",
+      "item_key": "conservation-techniques",
+      "item_name": "conservation techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|archaeology lecturer|skill|teach-archaeology",
+      "context_level": "role",
+      "context_key": "D039|archaeology lecturer",
+      "item_type": "skill",
+      "item_key": "teach-archaeology",
+      "item_name": "teach archaeology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|armed forces training and education officer|skill|ensure-student-welfare",
+      "context_level": "role",
+      "context_key": "D039|armed forces training and education officer",
+      "item_type": "skill",
+      "item_key": "ensure-student-welfare",
+      "item_name": "ensure student welfare",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|drama teacher|skill|develop-drama-production-process",
+      "context_level": "role",
+      "context_key": "D039|drama teacher",
+      "item_type": "skill",
+      "item_key": "develop-drama-production-process",
+      "item_name": "develop drama production process",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|e-learning architect|skill|absorb-learning-management-systems",
+      "context_level": "role",
+      "context_key": "D039|e-learning architect",
+      "item_type": "skill",
+      "item_key": "absorb-learning-management-systems",
+      "item_name": "Absorb (learning management systems)",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.gov.wales/revised-professional-standards-assisting-teaching-teaching-and-leadership-html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|e-learning architect|skill|e-learning-software-infrastructure",
+      "context_level": "role",
+      "context_key": "D039|e-learning architect",
+      "item_type": "skill",
+      "item_key": "e-learning-software-infrastructure",
+      "item_name": "e-learning software infrastructure",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|e-learning architect|skill|edmodo",
+      "context_level": "role",
+      "context_key": "D039|e-learning architect",
+      "item_type": "skill",
+      "item_key": "edmodo",
+      "item_name": "Edmodo",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|e-learning architect|skill|engrade",
+      "context_level": "role",
+      "context_key": "D039|e-learning architect",
+      "item_type": "skill",
+      "item_key": "engrade",
+      "item_name": "Engrade",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|e-learning architect|skill|instructional-design-models",
+      "context_level": "role",
+      "context_key": "D039|e-learning architect",
+      "item_type": "skill",
+      "item_key": "instructional-design-models",
+      "item_name": "instructional design models",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|e-learning architect|skill|learning-management-systems",
+      "context_level": "role",
+      "context_key": "D039|e-learning architect",
+      "item_type": "skill",
+      "item_key": "learning-management-systems",
+      "item_name": "learning management systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.gov.wales/revised-professional-standards-assisting-teaching-teaching-and-leadership-html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|e-learning architect|skill|standards-for-web-based-e-learning",
+      "context_level": "role",
+      "context_key": "D039|e-learning architect",
+      "item_type": "skill",
+      "item_key": "standards-for-web-based-e-learning",
+      "item_name": "standards for web-based e-learning",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.gov.wales/revised-professional-standards-assisting-teaching-teaching-and-leadership-html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|e-learning architect|skill|wiziq",
+      "context_level": "role",
+      "context_key": "D039|e-learning architect",
+      "item_type": "skill",
+      "item_key": "wiziq",
+      "item_name": "WizIQ",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|e-learning developer|skill|create-scorm-packages",
+      "context_level": "role",
+      "context_key": "D039|e-learning developer",
+      "item_type": "skill",
+      "item_key": "create-scorm-packages",
+      "item_name": "create SCORM packages",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|e-learning developer|skill|design-web-based-courses",
+      "context_level": "role",
+      "context_key": "D039|e-learning developer",
+      "item_type": "skill",
+      "item_key": "design-web-based-courses",
+      "item_name": "design web-based courses",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|early years special educational needs teacher|skill|hearing-disability",
+      "context_level": "role",
+      "context_key": "D039|early years special educational needs teacher",
+      "item_type": "skill",
+      "item_key": "hearing-disability",
+      "item_name": "hearing disability",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|early years special educational needs teacher|skill|kindergarten-school-procedures",
+      "context_level": "role",
+      "context_key": "D039|early years special educational needs teacher",
+      "item_type": "skill",
+      "item_key": "kindergarten-school-procedures",
+      "item_name": "kindergarten school procedures",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|early years special educational needs teacher|skill|visual-disability",
+      "context_level": "role",
+      "context_key": "D039|early years special educational needs teacher",
+      "item_type": "skill",
+      "item_key": "visual-disability",
+      "item_name": "visual disability",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|early years special educational needs teacher|tool|american-sign-language-browser",
+      "context_level": "role",
+      "context_key": "D039|early years special educational needs teacher",
+      "item_type": "tool",
+      "item_key": "american-sign-language-browser",
+      "item_name": "American Sign Language Browser",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|early years special educational needs teacher|tool|drawing-software",
+      "context_level": "role",
+      "context_key": "D039|early years special educational needs teacher",
+      "item_type": "tool",
+      "item_key": "drawing-software",
+      "item_name": "Drawing software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|earth science lecturer|skill|astronomy",
+      "context_level": "role",
+      "context_key": "D039|earth science lecturer",
+      "item_type": "skill",
+      "item_key": "astronomy",
+      "item_name": "astronomy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|earth science lecturer|skill|earth-science",
+      "context_level": "role",
+      "context_key": "D039|earth science lecturer",
+      "item_type": "skill",
+      "item_key": "earth-science",
+      "item_name": "Earth science",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|economics lecturer|skill|mathematical-economics",
+      "context_level": "role",
+      "context_key": "D039|economics lecturer",
+      "item_type": "skill",
+      "item_key": "mathematical-economics",
+      "item_name": "mathematical economics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|economics lecturer|skill|political-economy",
+      "context_level": "role",
+      "context_key": "D039|economics lecturer",
+      "item_type": "skill",
+      "item_key": "political-economy",
+      "item_name": "political economy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|education inspector|skill|ensure-curriculum-adherence",
+      "context_level": "role",
+      "context_key": "D039|education inspector",
+      "item_type": "skill",
+      "item_key": "ensure-curriculum-adherence",
+      "item_name": "ensure curriculum adherence",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|education inspector|skill|inspect-education-institutions",
+      "context_level": "role",
+      "context_key": "D039|education inspector",
+      "item_type": "skill",
+      "item_key": "inspect-education-institutions",
+      "item_name": "inspect education institutions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|education inspector|skill|observe-teaching-activities",
+      "context_level": "role",
+      "context_key": "D039|education inspector",
+      "item_type": "skill",
+      "item_key": "observe-teaching-activities",
+      "item_name": "observe teaching activities",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|education inspector|skill|perform-quality-audits",
+      "context_level": "role",
+      "context_key": "D039|education inspector",
+      "item_type": "skill",
+      "item_key": "perform-quality-audits",
+      "item_name": "perform quality audits",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|education inspector|skill|prepare-training-events-for-teachers",
+      "context_level": "role",
+      "context_key": "D039|education inspector",
+      "item_type": "skill",
+      "item_key": "prepare-training-events-for-teachers",
+      "item_name": "prepare training events for teachers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|education inspector|skill|provide-feedback-to-teachers",
+      "context_level": "role",
+      "context_key": "D039|education inspector",
+      "item_type": "skill",
+      "item_key": "provide-feedback-to-teachers",
+      "item_name": "provide feedback to teachers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|education programme coordinator|skill|develop-a-pedagogical-concept",
+      "context_level": "role",
+      "context_key": "D039|education programme coordinator",
+      "item_type": "skill",
+      "item_key": "develop-a-pedagogical-concept",
+      "item_name": "develop a pedagogical concept",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|education studies lecturer|skill|ecopedagogy",
+      "context_level": "role",
+      "context_key": "D039|education studies lecturer",
+      "item_type": "skill",
+      "item_key": "ecopedagogy",
+      "item_name": "ecopedagogy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.gov.wales/revised-professional-standards-assisting-teaching-teaching-and-leadership-html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|education studies lecturer|skill|teach-teaching-principles",
+      "context_level": "role",
+      "context_key": "D039|education studies lecturer",
+      "item_type": "skill",
+      "item_key": "teach-teaching-principles",
+      "item_name": "teach teaching principles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|educational counsellor|skill|adolescent-psychological-development",
+      "context_level": "role",
+      "context_key": "D039|educational counsellor",
+      "item_type": "skill",
+      "item_key": "adolescent-psychological-development",
+      "item_name": "adolescent psychological development",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|educational counsellor|skill|client-centred-counselling",
+      "context_level": "role",
+      "context_key": "D039|educational counsellor",
+      "item_type": "skill",
+      "item_key": "client-centred-counselling",
+      "item_name": "client-centred counselling",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|educational counsellor|skill|communicate-about-youth-s-well-being",
+      "context_level": "role",
+      "context_key": "D039|educational counsellor",
+      "item_type": "skill",
+      "item_key": "communicate-about-youth-s-well-being",
+      "item_name": "communicate about youth's well-being",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|educational counsellor|skill|consult-student-s-support-system",
+      "context_level": "role",
+      "context_key": "D039|educational counsellor",
+      "item_type": "skill",
+      "item_key": "consult-student-s-support-system",
+      "item_name": "consult student's support system",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|educational counsellor|skill|crisis-intervention",
+      "context_level": "role",
+      "context_key": "D039|educational counsellor",
+      "item_type": "skill",
+      "item_key": "crisis-intervention",
+      "item_name": "crisis intervention",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|educational counsellor|skill|monitor-student-s-behaviour",
+      "context_level": "role",
+      "context_key": "D039|educational counsellor",
+      "item_type": "skill",
+      "item_key": "monitor-student-s-behaviour",
+      "item_name": "monitor student's behaviour",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|educational counsellor|skill|perform-educational-testing",
+      "context_level": "role",
+      "context_key": "D039|educational counsellor",
+      "item_type": "skill",
+      "item_key": "perform-educational-testing",
+      "item_name": "perform educational testing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|electricity and energy vocational teacher|skill|automatic-meter-reading",
+      "context_level": "role",
+      "context_key": "D039|electricity and energy vocational teacher",
+      "item_type": "skill",
+      "item_key": "automatic-meter-reading",
+      "item_name": "automatic meter reading",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|electronics and automation vocational teacher|skill|printed-circuit-boards-testing-methods",
+      "context_level": "role",
+      "context_key": "D039|electronics and automation vocational teacher",
+      "item_type": "skill",
+      "item_key": "printed-circuit-boards-testing-methods",
+      "item_name": "printed circuit boards testing methods",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|fine arts instructor|skill|teach-arts-principles",
+      "context_level": "role",
+      "context_key": "D039|fine arts instructor",
+      "item_type": "skill",
+      "item_key": "teach-arts-principles",
+      "item_name": "teach arts principles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|fine arts instructor|skill|types-of-paint",
+      "context_level": "role",
+      "context_key": "D039|fine arts instructor",
+      "item_type": "skill",
+      "item_key": "types-of-paint",
+      "item_name": "types of paint",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|fine arts instructor|skill|types-of-pottery-material",
+      "context_level": "role",
+      "context_key": "D039|fine arts instructor",
+      "item_type": "skill",
+      "item_key": "types-of-pottery-material",
+      "item_name": "types of pottery material",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|firefighter instructor|skill|evacuate-people-from-buildings",
+      "context_level": "role",
+      "context_key": "D039|firefighter instructor",
+      "item_type": "skill",
+      "item_key": "evacuate-people-from-buildings",
+      "item_name": "evacuate people from buildings",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|firefighter instructor|skill|manage-major-incidents",
+      "context_level": "role",
+      "context_key": "D039|firefighter instructor",
+      "item_type": "skill",
+      "item_key": "manage-major-incidents",
+      "item_name": "manage major incidents",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|firefighter instructor|skill|work-as-a-team-in-a-hazardous-environment",
+      "context_level": "role",
+      "context_key": "D039|firefighter instructor",
+      "item_type": "skill",
+      "item_key": "work-as-a-team-in-a-hazardous-environment",
+      "item_name": "work as a team in a hazardous environment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|food science lecturer|skill|cardiovascular-system",
+      "context_level": "role",
+      "context_key": "D039|food science lecturer",
+      "item_type": "skill",
+      "item_key": "cardiovascular-system",
+      "item_name": "cardiovascular system",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|food science lecturer|skill|molecular-gastronomy",
+      "context_level": "role",
+      "context_key": "D039|food science lecturer",
+      "item_type": "skill",
+      "item_key": "molecular-gastronomy",
+      "item_name": "molecular gastronomy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D039|food science lecturer|skill|neurology",
+      "context_level": "role",
+      "context_key": "D039|food science lecturer",
+      "item_type": "skill",
+      "item_key": "neurology",
+      "item_name": "neurology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D043|sculptor|skill|design-objects-to-be-crafted",
+      "context_level": "role",
+      "context_key": "D043|sculptor",
+      "item_type": "skill",
+      "item_key": "design-objects-to-be-crafted",
+      "item_name": "design objects to be crafted",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D043|sculptor|skill|research-sculpture-trends",
+      "context_level": "role",
+      "context_key": "D043|sculptor",
+      "item_type": "skill",
+      "item_key": "research-sculpture-trends",
+      "item_name": "research sculpture trends",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D043|sculptor|skill|study-artworks",
+      "context_level": "role",
+      "context_key": "D043|sculptor",
+      "item_type": "skill",
+      "item_key": "study-artworks",
+      "item_name": "study artworks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D043|sculptor|skill|submit-preliminary-artwork",
+      "context_level": "role",
+      "context_key": "D043|sculptor",
+      "item_type": "skill",
+      "item_key": "submit-preliminary-artwork",
+      "item_name": "submit preliminary artwork",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D043|sign language interpreter|skill|fingerspelling",
+      "context_level": "role",
+      "context_key": "D043|sign language interpreter",
+      "item_type": "skill",
+      "item_key": "fingerspelling",
+      "item_name": "fingerspelling",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D043|sign language interpreter|skill|lipspeaking",
+      "context_level": "role",
+      "context_key": "D043|sign language interpreter",
+      "item_type": "skill",
+      "item_key": "lipspeaking",
+      "item_name": "lipspeaking",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D043|sign language interpreter|skill|translate-spoken-language",
+      "context_level": "role",
+      "context_key": "D043|sign language interpreter",
+      "item_type": "skill",
+      "item_key": "translate-spoken-language",
+      "item_name": "translate spoken language",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D043|sign language interpreter|skill|translate-spoken-language-simultaneously",
+      "context_level": "role",
+      "context_key": "D043|sign language interpreter",
+      "item_type": "skill",
+      "item_key": "translate-spoken-language-simultaneously",
+      "item_name": "translate spoken language simultaneously",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D043|sign language interpreter|skill|voice-interpreting",
+      "context_level": "role",
+      "context_key": "D043|sign language interpreter",
+      "item_type": "skill",
+      "item_key": "voice-interpreting",
+      "item_name": "voice interpreting",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D043|speechwriter|skill|prepare-speeches",
+      "context_level": "role",
+      "context_key": "D043|speechwriter",
+      "item_type": "skill",
+      "item_key": "prepare-speeches",
+      "item_name": "prepare speeches",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D043|speechwriter|skill|use-specific-writing-techniques",
+      "context_level": "role",
+      "context_key": "D043|speechwriter",
+      "item_type": "skill",
+      "item_key": "use-specific-writing-techniques",
+      "item_name": "use specific writing techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D043|sports journalist|skill|sport-history",
+      "context_level": "role",
+      "context_key": "D043|sports journalist",
+      "item_type": "skill",
+      "item_key": "sport-history",
+      "item_name": "sport history",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D043|sports journalist|skill|sporting-events",
+      "context_level": "role",
+      "context_key": "D043|sports journalist",
+      "item_type": "skill",
+      "item_key": "sporting-events",
+      "item_name": "sporting events",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D043|storyboard artist|skill|cameras",
+      "context_level": "role",
+      "context_key": "D043|storyboard artist",
+      "item_type": "skill",
+      "item_key": "cameras",
+      "item_name": "cameras",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D043|storyboard artist|skill|present-storyboard",
+      "context_level": "role",
+      "context_key": "D043|storyboard artist",
+      "item_type": "skill",
+      "item_key": "present-storyboard",
+      "item_name": "present storyboard",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D043|subtitler|skill|captioning-software",
+      "context_level": "role",
+      "context_key": "D043|subtitler",
+      "item_type": "skill",
+      "item_key": "captioning-software",
+      "item_name": "captioning software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D043|subtitler|skill|condense-information",
+      "context_level": "role",
+      "context_key": "D043|subtitler",
+      "item_type": "skill",
+      "item_key": "condense-information",
+      "item_name": "condense information",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D043|subtitler|skill|describe-scenes",
+      "context_level": "role",
+      "context_key": "D043|subtitler",
+      "item_type": "skill",
+      "item_key": "describe-scenes",
+      "item_name": "describe scenes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D043|subtitler|skill|speech-recognition",
+      "context_level": "role",
+      "context_key": "D043|subtitler",
+      "item_type": "skill",
+      "item_key": "speech-recognition",
+      "item_name": "speech recognition",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    }
+  ],
+  "policy": {
+    "review_required_preserved_unless_exact_item_evidence_established": true,
+    "no_relationship_inference": true,
+    "no_promotion": true
+  }
+}

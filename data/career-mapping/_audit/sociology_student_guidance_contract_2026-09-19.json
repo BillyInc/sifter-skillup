@@ -9,25 +9,23 @@
     "contextual_manifest": "data\\career-mapping\\CONTEXTUAL_GUIDANCE_ITEMS_MANIFEST.json"
   },
   "manifest": {
-    "row_count": 126648,
-    "relationship_count": 423199
+    "row_count": 126414,
+    "relationship_count": 422731
   },
   "d078_contextual_items": {
-    "total": 727,
+    "total": 725,
     "by_level": {
-      "domain": 8,
+      "domain": 6,
       "subgroup": 20,
       "role": 699
     },
     "by_type": {
       "skill": 503,
       "competency": 3,
-      "certification": 2,
       "tool": 219
     },
     "states": {
       "source_backed_owned": 725,
-      "source_backed_owned_missing_certification_scope": 2,
       "review_only": 0,
       "audit_only": 0,
       "role_aggregated": 0,
@@ -35,57 +33,36 @@
       "other_or_missing_approval": 0
     },
     "source_url_counts": {
-      "with_source_reference": 727,
-      "with_source_locator": 727,
+      "with_source_reference": 725,
+      "with_source_locator": 725,
       "invalid_source_url": 0
     },
     "link_states": {
       "matched_approved_resource": 27,
-      "missing_item_specific_resource": 700
+      "missing_item_specific_resource": 698
     },
     "certification_scope_type_gaps": {
-      "missing_explicit_market_scope": 2,
-      "missing_explicit_credential_type": 2
+      "missing_explicit_market_scope": 0,
+      "missing_explicit_credential_type": 0
     },
     "certification_names_are_named_credentials": 0,
     "invalid_source_url_rows": [],
-    "certification_items": [
-      {
-        "context_level": "domain",
-        "context_key": "D078",
-        "item_type": "certification",
-        "name": "academic and research qualifications",
-        "item_state": "source_backed_owned_missing_certification_scope",
-        "source_reference_count": 8,
-        "source_locator_count": 1,
-        "link_state": "missing_item_specific_resource"
-      },
-      {
-        "context_level": "domain",
-        "context_key": "D078",
-        "item_type": "certification",
-        "name": "institutional research training and professional association membership where applicable",
-        "item_state": "source_backed_owned_missing_certification_scope",
-        "source_reference_count": 8,
-        "source_locator_count": 1,
-        "link_state": "missing_item_specific_resource"
-      }
-    ]
+    "certification_items": []
   },
   "d078_relationships": {
-    "total": 2523,
+    "total": 2519,
     "status_type_counts": {
-      "status:source_backed": 2523,
-      "data_state:source_backed": 2523,
+      "status:source_backed": 2519,
+      "data_state:source_backed": 2519,
       "type:works_with": 931,
-      "type:builds_on": 1592
+      "type:builds_on": 1588
     },
     "integrity": {
-      "from_resolved": 2523,
-      "to_resolved": 2523,
+      "from_resolved": 2519,
+      "to_resolved": 2519,
       "duplicate_edge_rows": 0
     },
-    "student_visible_source_backed_edges": 2523
+    "student_visible_source_backed_edges": 2519
   },
   "reviewed_resources_from_migration": {
     "total": 51,
@@ -134,6 +111,28 @@
     "domain_certification_audit_current_domain_certifications": 0,
     "nigerian_certification_evidence_state": "sector_context_no_general_individual_licence_found",
     "nigerian_certification_source_count": 3
+  },
+  "contextual_seed_transport": {
+    "part_count": 30,
+    "manifest_part_count": 30,
+    "integrity_ok": true,
+    "integrity": {
+      "integrity_ok": true,
+      "expected_part_count": 30,
+      "actual_part_count": 30,
+      "manifest_order_valid": true,
+      "actual_numbering_valid": true,
+      "missing_parts": [],
+      "unexpected_parts": [],
+      "duplicate_manifest_names": [],
+      "byte_mismatches": [],
+      "sha256_mismatches": [],
+      "invalid_gzip_parts": [],
+      "transaction_boundary_violations": []
+    },
+    "old_d078_generic_certification_signal_hits": 0,
+    "relationship_table_mentions": 60,
+    "note": "Compressed SQL was decompressed for local inspection only; it was not applied to Supabase."
   },
   "item_rows": [
     {
@@ -192,26 +191,6 @@
       "item_type": "competency",
       "name": "document and communicate findings",
       "item_state": "source_backed_owned",
-      "source_reference_count": 8,
-      "source_locator_count": 1,
-      "link_state": "missing_item_specific_resource"
-    },
-    {
-      "context_level": "domain",
-      "context_key": "D078",
-      "item_type": "certification",
-      "name": "academic and research qualifications",
-      "item_state": "source_backed_owned_missing_certification_scope",
-      "source_reference_count": 8,
-      "source_locator_count": 1,
-      "link_state": "missing_item_specific_resource"
-    },
-    {
-      "context_level": "domain",
-      "context_key": "D078",
-      "item_type": "certification",
-      "name": "institutional research training and professional association membership where applicable",
-      "item_state": "source_backed_owned_missing_certification_scope",
       "source_reference_count": 8,
       "source_locator_count": 1,
       "link_state": "missing_item_specific_resource"
@@ -7547,38 +7526,6 @@
     {
       "from": "document and communicate findings",
       "to": "evaluate evidence",
-      "type": "builds_on",
-      "status": "source_backed",
-      "from_resolved": true,
-      "to_resolved": true
-    },
-    {
-      "from": "academic and research qualifications",
-      "to": "research design",
-      "type": "builds_on",
-      "status": "source_backed",
-      "from_resolved": true,
-      "to_resolved": true
-    },
-    {
-      "from": "academic and research qualifications",
-      "to": "evidence review",
-      "type": "builds_on",
-      "status": "source_backed",
-      "from_resolved": true,
-      "to_resolved": true
-    },
-    {
-      "from": "institutional research training and professional association membership where applicable",
-      "to": "research design",
-      "type": "builds_on",
-      "status": "source_backed",
-      "from_resolved": true,
-      "to_resolved": true
-    },
-    {
-      "from": "institutional research training and professional association membership where applicable",
-      "to": "evidence review",
       "type": "builds_on",
       "status": "source_backed",
       "from_resolved": true,
@@ -27594,9 +27541,9 @@
     }
   ],
   "approval_readiness": {
-    "ready_for_scaling": false,
+    "scaling_phase_authorized": true,
+    "ready_for_live_exposure": false,
     "reasons": [
-      "D078 contextual certification items have no explicit market scope or credential type in the API-facing item schema.",
       "Some source-backed student items have no approved item-specific resource match; the UI must retain the honest no-link state.",
       "Live Supabase application and browser verification were not performed."
     ]

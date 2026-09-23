@@ -25,7 +25,7 @@ import { type GuidanceRouteContext } from "@/lib/guidanceRouteContext";
 import { provisioningData } from "@/lib/provisioningData";
 import { awardLine } from "@/lib/programmeAward";
 import { studentSummary } from "@/lib/careerLabels";
-import { requirementFallbackText, sanitizeRequirementText, type RequirementField } from "@/lib/sanitizeRequirementText";
+import { sanitizeRequirementText, type RequirementField } from "@/lib/sanitizeRequirementText";
 import { comingSoon, pending, real, type DataState, type DomainLink, type Programme } from "@/types/career";
 import { CompassFonts, FontSize, Radius, Spacing, useTheme, type ColorPalette } from "@/theme";
 import { useResponsive } from "@/hooks/useResponsive";
@@ -49,7 +49,10 @@ type ProgrammeTab = "overview" | "requirements" | "schools";
 
 function displayRequirement(field: RequirementField, value?: string | null): string {
   const result = sanitizeRequirementText(value ?? null);
-  return result.displayable ? result.cleaned : requirementFallbackText(field);
+  if (result.displayable) return result.cleaned;
+  if (field === "utme_subjects") return "No verified UTME subject requirement is recorded for this programme yet.";
+  if (field === "olevel_requirement") return "No verified O-Level requirement is recorded for this programme yet.";
+  return "No verified Direct Entry requirement is recorded for this programme yet.";
 }
 
 function universityRequirementText(school: JambProgrammeSchool, field: RequirementField): string {
@@ -113,6 +116,29 @@ function institutionLabel(school: JambProgrammeSchool): string {
 
 function institutionLocation(school: JambProgrammeSchool): string | null {
   return school.address?.trim() || [school.city, school.state, school.country].filter(Boolean).join(", ").trim() || null;
+}
+
+function curriculumCourseTitles(data: Programme): string[] {
+  const seen = new Set<string>();
+  return (data.curriculumContract?.outcomes ?? [])
+    .filter((outcome) => outcome.dataState === "source_backed")
+    .map((outcome) => outcome.courseTitle?.trim())
+    .filter((title): title is string => Boolean(title))
+    .filter((title) => {
+      const key = title.toLowerCase();
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
+    .slice(0, 4);
+}
+
+function programmePreviewExplanation(data: Programme): string | null {
+  const overview = data.overview?.trim();
+  if (overview) return overview;
+  const courseTitles = curriculumCourseTitles(data);
+  if (!courseTitles.length) return null;
+  return `The checked curriculum records learning areas including ${courseTitles.join(", ")}.`;
 }
 
 function relationshipLabel(matchType: DomainLink["matchType"]): string {
@@ -660,24 +686,38 @@ function ProgrammeDetailBody({
             <View style={[styles.context, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
               <Text style={[styles.contextLabel, { color: colors.textRole.muted }]}>Programme at this university</Text>
               <Text style={[styles.contextName, { color: colors.textRole.primary }]}>{institutionLabel(selectedSchool)}</Text>
-              {selectedSchool.address ? <Text style={[styles.contextAddress, { color: colors.textRole.secondary }]}>{selectedSchool.address}</Text> : null}
+              {institutionLocation(selectedSchool) ? <Text style={[styles.contextAddress, { color: colors.textRole.secondary }]}>{institutionLocation(selectedSchool)}</Text> : null}
               <View style={styles.contextActions}>
                  <TouchableOpacity accessibilityRole="button" onPress={onChooseSchool} style={styles.inlineAction}>
                   <Text style={[styles.link, { color: colors.textRole.muted }]}>Change university</Text>
                 </TouchableOpacity>
+                <TouchableOpacity
+                  accessibilityRole="checkbox"
+                  accessibilityState={{ checked: comparisonSchoolIds.includes(selectedSchool.schoolId) }}
+                  onPress={() => onToggleComparison(selectedSchool.schoolId)}
+                  style={styles.inlineAction}
+                >
+                  <Text style={[styles.link, { color: colors.accentRole.action }]}>{comparisonSchoolIds.includes(selectedSchool.schoolId) ? "Selected for comparison" : "Select for comparison"}</Text>
+                </TouchableOpacity>
+                {comparisonSchoolIds.length > 1 ? <TouchableOpacity accessibilityRole="button" onPress={onOpenComparison} style={styles.inlineAction}>
+                  <Text style={[styles.link, { color: colors.accentRole.action }]}>Compare selected universities</Text>
+                </TouchableOpacity> : null}
               </View>
             </View>
           ) : null}
           {!selectedSchool ? (
             <>
-              {earlySecondary && data.overview ? (
+              {earlySecondary && programmePreviewExplanation(data) ? (
                 <View style={styles.block}>
                   <SectionLabel>What this programme is about</SectionLabel>
-                  <Text style={[styles.body, { color: colors.textRole.secondary }]}>{data.overview}</Text>
+                  <Text style={[styles.body, { color: colors.textRole.secondary }]}>{programmePreviewExplanation(data)}</Text>
                 </View>
               ) : null}
-              {earlySecondary ? (
-                <DegreeSkills curriculumContract={data.curriculumContract} resources={data.resources} variant="teaser" />
+              {earlySecondary && !programmePreviewExplanation(data) ? (
+                <View style={[styles.context, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+                  <SectionLabel>Programme learning preview unavailable</SectionLabel>
+                  <Text style={[styles.body, { color: colors.textRole.muted }]}>A checked programme explanation is not recorded yet. Choose a university to review the available offering details.</Text>
+                </View>
               ) : null}
               <View style={[styles.context, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
                 <SectionLabel>{earlySecondary ? "Choose a university when you are ready" : "Choose a university to continue"}</SectionLabel>
@@ -720,10 +760,10 @@ function ProgrammeDetailBody({
                   </View>
                 </View>
               ) : null}
-               {data.overview ? (
+               {programmePreviewExplanation(data) ? (
                 <View style={styles.block}>
                   <SectionLabel>What this programme is about</SectionLabel>
-                  <Text style={[styles.body, { color: colors.textRole.secondary }]}>{data.overview}</Text>
+                  <Text style={[styles.body, { color: colors.textRole.secondary }]}>{programmePreviewExplanation(data)}</Text>
                 </View>
               ) : null}
               <DegreeSkills curriculumContract={data.curriculumContract} resources={data.resources} />
@@ -915,31 +955,32 @@ function ProgrammeDetailBody({
               <Text style={styles.primaryText}>Compare selected universities ({comparisonSchoolIds.length})</Text>
             </TouchableOpacity>
           ) : null}
-          {comparisonOpen && comparisonSchools.length > 1 ? (
-            <Modal transparent visible animationType="slide" onRequestClose={onCloseComparison}>
-              <View style={styles.compareModalBackdrop}>
-                <View style={[styles.compareModal, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-                  <View style={styles.compareModalHeader}>
-                    <SectionLabel>Compare selected universities</SectionLabel>
-                    <TouchableOpacity accessibilityRole="button" accessibilityLabel="Close comparison" onPress={onCloseComparison} style={styles.closeButton}>
-                      <Feather name="x" size={18} color={colors.textRole.primary} />
-                    </TouchableOpacity>
-                  </View>
-                  <UniversityComparisonPanel
-                    schools={comparisonSchools}
-                    onSelect={(school) => { onCloseComparison(); onSelectSchool(school); }}
-                    selectedSchoolId={selectedSchoolId}
-                    colors={colors}
-                    awardLineText={awardLine(programmeName, data.qualification, data.durationYears)}
-                    onClose={onCloseComparison}
-                  />
-                </View>
-              </View>
-            </Modal>
-          ) : null}
           {!schools.length ? <Text style={[styles.body, { color: colors.textRole.muted }]}>No university is recorded for this programme yet.</Text> : null}
           {notice ? <Text style={[styles.notice, { color: colors.textRole.secondary }]}>{notice}</Text> : null}
         </View>
+      ) : null}
+
+      {comparisonOpen && comparisonSchools.length > 1 ? (
+        <Modal transparent visible animationType="slide" onRequestClose={onCloseComparison}>
+          <View style={styles.compareModalBackdrop}>
+            <View style={[styles.compareModal, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+              <View style={styles.compareModalHeader}>
+                <SectionLabel>Compare selected universities</SectionLabel>
+                <TouchableOpacity accessibilityRole="button" accessibilityLabel="Close comparison" onPress={onCloseComparison} style={styles.closeButton}>
+                  <Feather name="x" size={18} color={colors.textRole.primary} />
+                </TouchableOpacity>
+              </View>
+              <UniversityComparisonPanel
+                schools={comparisonSchools}
+                onSelect={(school) => { onCloseComparison(); onSelectSchool(school); }}
+                selectedSchoolId={selectedSchoolId}
+                colors={colors}
+                awardLineText={awardLine(programmeName, data.qualification, data.durationYears)}
+                onClose={onCloseComparison}
+              />
+            </View>
+          </View>
+        </Modal>
       ) : null}
 
     </View>

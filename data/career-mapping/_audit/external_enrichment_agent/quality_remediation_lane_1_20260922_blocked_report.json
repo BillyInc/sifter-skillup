@@ -1,0 +1,21 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-report.v1",
+  "batch": "quality_remediation_lane_1_20260922",
+  "status": "blocked",
+  "requested_records": 100,
+  "eligible_records": 34,
+  "candidate_route_records": 40,
+  "selection_written": false,
+  "pre_search_checkpoint": "data/career-mapping/_audit/external_enrichment_agent/quality_remediation_lane_1_20260922_blocked_checkpoint.json",
+  "ledger_written": false,
+  "result": "Fewer than 100 eligible records remain: the only 40 audit records with at least two candidate routes overlap the existing lane-2 claim set; no lane-1 selection was written and no evidence was fabricated or promoted.",
+  "guardrails": {
+    "relationships_touched": false,
+    "catalogue_touched": false,
+    "sql_touched": false,
+    "seeds_touched": false,
+    "ui_touched": false,
+    "browser_proof_touched": false,
+    "promotion": false
+  }
+}

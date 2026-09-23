@@ -86,16 +86,27 @@ def add_skill_evidence(bucket, skill, source):
     item["sources"][source] += 1
 
 
-def finalize_skill_map(bucket):
+def finalize_skill_map(bucket, *, owned_keys=None, ownership=None):
+    """Finalize a layer while preserving ownership of every skill.
+
+    Role evidence may support a layer's audit record, but it is not ownership
+    of a domain/subgroup foundation.  Only skills explicitly supplied by the
+    reviewed layer overlay are student-eligible; the rest stay visible to
+    staff as role-aggregated evidence.
+    """
+    owned_keys = set(owned_keys or ())
     output = {}
     for key, item in bucket.items():
         sources = sorted(item["sources"])
+        is_owned = key in owned_keys and ownership in {"domain", "subgroup"}
         output[key] = {
             "label": item["label"],
             "role_count": item["role_count"],
             "sources": sources,
             "source_confidence": confidence(sources),
             "data_state": "source_backed" if sources else "unsourced",
+            "ownership": ownership if is_owned else "role_aggregated",
+            "student_visibility": "approved" if is_owned else "review_only",
         }
     return output
 
@@ -134,7 +145,7 @@ def main():
             if value not in onet_categories[name]:
                 onet_categories[name].append(value)
 
-    def annotate(tool, domain_id):
+    def annotate(tool, domain_id, scope=None, subgroup=None):
         output = dict(tool)
         tool_key = norm(tool.get("tool"))
         categories = onet_categories.get(tool_key, [])
@@ -166,6 +177,23 @@ def main():
             output["source_confidence"] = "unsourced"
             output["data_state"] = "unsourced"
             output["provenance"] = {}
+        # D078 domain/subgroup software is a role-derived audit inventory, not
+        # an owned student foundation. Keep the rows and their O*NET evidence,
+        # but make that boundary explicit for the seed/API layers. The reviewed
+        # purpose-first domain overlay is an additive contract and must not be
+        # inferred from these rows.
+        if domain_id == "D078" and scope in {"domain", "subgroup"}:
+            provenance = dict(output.get("provenance") or {})
+            provenance.update({
+                "ownership": "role_aggregated",
+                "student_visibility": "review_only",
+                "context_level": scope,
+                "guidance_layer": "legacy_role_software_inventory_v1",
+                "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation.",
+            })
+            if subgroup:
+                provenance["isco_submajor"] = str(subgroup)
+            output["provenance"] = provenance
         return output
 
     removed = []
@@ -185,7 +213,7 @@ def main():
             values = []
             for tool in domain.get(group_name, []):
                 if keep(tool, "domain"):
-                    values.append(annotate(tool, domain_id))
+                    values.append(annotate(tool, domain_id, "domain"))
                     annotated_count += 1
             domain[group_name] = values
         for subgroup, subgroup_tools in (domain.get("subgroup_tools") or {}).items():
@@ -193,9 +221,33 @@ def main():
                 values = []
                 for tool in subgroup_tools.get(group_name, []):
                     if keep(tool, "subgroup", str(subgroup)):
-                        values.append(annotate(tool, domain_id))
+                        values.append(annotate(tool, domain_id, "subgroup", str(subgroup)))
                         annotated_count += 1
                 subgroup_tools[group_name] = values
+
+        # Preserve the duplicate source observations, but label subgroup
+        # copies of a domain-scope tool as inherited/review-only. The student
+        # route must not show the same role-derived tool as both a domain
+        # foundation and a subgroup addition.
+        if domain_id == "D078":
+            domain_names = {
+                norm(item.get("tool"))
+                for group_name in ("distinctive_tools", "common_tools")
+                for item in domain.get(group_name, [])
+                if norm(item.get("tool"))
+            }
+            for subgroup, subgroup_tools in (domain.get("subgroup_tools") or {}).items():
+                for group_name in ("distinctive", "common"):
+                    for item in subgroup_tools.get(group_name, []):
+                        if norm(item.get("tool")) not in domain_names:
+                            continue
+                        provenance = dict(item.get("provenance") or {})
+                        provenance.update({
+                            "student_visibility": "review_only",
+                            "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
+                            "inherited_from_domain_scope": True,
+                        })
+                        item["provenance"] = provenance
 
     with open(DOMAIN_TOOLS, "w", encoding="utf-8") as handle:
         json.dump(tools, handle, ensure_ascii=False, indent=1)
@@ -278,11 +330,18 @@ def main():
                     add_skill_evidence(subgroup_buckets[subgroup], skill, "onet")
 
         direct_domain_layer = (group_layers.get("domains") or {}).get(domain_id) or {}
+        direct_domain_skill_keys = {
+            norm(skill) for skill in (direct_domain_layer.get("skills") or []) if norm(skill)
+        }
         for skill in direct_domain_layer.get("skills") or []:
             add_skill_evidence(domain_skill_bucket, skill, direct_domain_layer.get("source") or "framework")
+        direct_subgroup_skill_keys = {}
         for subgroup_id, layer in group_layers_by_key.items():
             if subgroup_id[0] != domain_id:
                 continue
+            direct_subgroup_skill_keys[subgroup_id[1]] = {
+                norm(skill) for skill in (layer.get("skills") or []) if norm(skill)
+            }
             for skill in layer.get("skills") or []:
                 add_skill_evidence(subgroup_buckets[subgroup_id[1]], skill, layer.get("source") or "framework")
         domain_structure = structure.get(domain_id, {})
@@ -293,7 +352,11 @@ def main():
             subgroup_label = subgroup.get("label")
             subgroup_rows[subgroup_id] = {
                 "label": subgroup.get("label"),
-                "skills": finalize_skill_map(subgroup_buckets.get(subgroup_id, {})),
+                "skills": finalize_skill_map(
+                    subgroup_buckets.get(subgroup_id, {}),
+                    owned_keys=direct_subgroup_skill_keys.get(subgroup_id, set()),
+                    ownership="subgroup",
+                ),
                 "data_state": "source_backed" if subgroup_buckets.get(subgroup_id) else "partial",
                 "source_confidence": confidence({source for value in subgroup_buckets.get(subgroup_id, {}).values() for source in value["sources"]}),
                 "nigerian_context": resolved_nigerian_context(
@@ -315,7 +378,11 @@ def main():
             "roles_with_any_source_signal": counts["roles_with_any_source_signal"],
             "source_confidence": confidence(layer_sources),
             "data_state": "source_backed" if layer_sources else "partial",
-            "foundation_skills": finalize_skill_map(domain_skill_bucket),
+            "foundation_skills": finalize_skill_map(
+                domain_skill_bucket,
+                owned_keys=direct_domain_skill_keys,
+                ownership="domain",
+            ),
             "nigerian_context": nigerian_context,
             "subgroups": subgroup_rows,
         }

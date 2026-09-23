@@ -1,0 +1,31 @@
+{
+  "schema": "2026-09-21.full-population-enrichment-tranche-checkpoint.v2",
+  "accessed_on": "2026-09-21",
+  "status": "completed",
+  "selection": "data/career-mapping/_audit/external_enrichment_agent/full_population_tranche_004_selection_2026-09-21.json",
+  "scope": {
+    "selected_rows": 32,
+    "item_rows": 28,
+    "relationship_rows": 4,
+    "prior_ids_excluded": 96,
+    "non_d078_unresolved_candidates_seen": 2293
+  },
+  "checkpoint_counts": {
+    "rows_selected": 32,
+    "rows_searched": 32,
+    "linked": 11,
+    "review_required": 21,
+    "genuinely_unavailable": 0,
+    "no_link": 0,
+    "remaining_selected_rows": 0
+  },
+  "checkpoint_note": "Batches 001-006 appended all 28 item and 4 relationship records; tranche reconciliation is complete.",
+  "guardrails": {
+    "d078_rows": 0,
+    "prior_tranche_overlap": 0,
+    "sql_touched": false,
+    "generated_seed_transport_touched": false,
+    "ui_touched": false,
+    "browser_proof_touched": false
+  }
+}

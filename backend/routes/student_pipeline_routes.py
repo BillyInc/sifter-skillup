@@ -1084,10 +1084,34 @@ async def get_jamb_programme(jamb_programme_id: str):
         if not detail_row:
             return ResponseModel(data=_real(None, "JAMB programme not found."))
         out = _jamb_detail_out(detail_row, full=True)
+        # The legacy JAMB skills arrays flatten curriculum and career data.
+        # They are retained for internal compatibility on list endpoints, but
+        # must never be sent as the full student programme profile. The clean
+        # course contract below is the only student learning source.
+        for legacy_key in (
+            "skillsTechnical",
+            "skillsTransferable",
+            "skillsTechnicalCount",
+            "skillsTransferableCount",
+            "skillsCount",
+            "skillsTruncated",
+        ):
+            out.pop(legacy_key, None)
+        out["curriculumContract"] = _programme_curriculum_contract_for_student(
+            svc, out.get("programmeId")
+        )
         # Keep the exact JAMB name as the student-facing identity while
         # attaching the reviewed, canonical programme explanations underneath.
         out["contextItems"] = _programme_context_items_for_student(svc, out.get("programmeId"))
+        # CCMAS-owned complements and identity-specific JAMB resources are
+        # separate evidence layers.  The latter also covers JAMB identities
+        # without a CCMAS anchor.  Both helpers fail closed, so an unapplied
+        # migration or review-only row cannot become student-facing data.
         out["resources"] = _programme_resources_for_student(svc, out.get("programmeId"))
+        out["resources"] = _merge_student_resources(
+            out["resources"],
+            _jamb_programme_resources_for_student(svc, out.get("jambProgrammeId")),
+        )
         # Requirements block: general brochure text + parse status. Programmes whose
         # requirement is institution-variant prose (parse_status = needs_review)
         # surface it as "requirements vary by institution" info, not a gap.
@@ -1216,6 +1240,11 @@ def _jamb_detail_out(r: dict, *, full: bool = False) -> dict:
         "studentName": _student_programme_name(r.get("jamb_name")),
         "jambFaculty": r.get("jamb_faculty"),
         "degreeType": r.get("degree_type"),
+        # These fields come from the canonical programme registry joined by
+        # the read view. If that optional enrichment is unavailable, leave
+        # them absent rather than guessing an award or duration.
+        "qualification": r.get("qualification"),
+        "durationYears": r.get("duration_years"),
         "isBlend": bool(r.get("is_blend")),
         # Kept: the id is needed to fetch schools/domains/requirements, and
         # institutionType drives which registry a result belongs to. Neither is
@@ -1230,6 +1259,7 @@ def _programme_context_items_for_student(svc: Any, programme_id: Any) -> list[di
     """Read programme-owned explanations for a JAMB identity's canonical row."""
     if not programme_id:
         return []
+
     try:
         rows = (
             svc.table("career_context_items")
@@ -1266,6 +1296,14 @@ def _programme_context_items_for_student(svc: Any, programme_id: Any) -> list[di
                 "evidenceType": row.get("evidence_type") or "source_supported_synthesis",
                 "sourceConfidence": row.get("source_confidence"),
                 "dataState": row.get("data_state") or "source_backed",
+                "linkState": row.get("link_state") or "review_required",
+                "linkUrl": row.get("link_url"),
+                "linkTitle": row.get("link_title"),
+                "linkSourceReference": row.get("link_source_reference") or {},
+                "linkAccessedAt": row.get("link_accessed_at"),
+                "linkConfidence": row.get("link_confidence") or "low",
+                "linkEvidence": row.get("link_evidence") or {},
+                "noLinkReason": row.get("no_link_reason"),
                 "guidanceOwner": row.get("guidance_owner"),
                 "verifiedAt": row.get("verified_at"),
             }
@@ -1278,10 +1316,96 @@ def _programme_context_items_for_student(svc: Any, programme_id: Any) -> list[di
             if row.get("name")
             and row.get("guidance_owner") == "programme"
             and row.get("data_state") == "source_backed"
+            and row.get("link_state") in {"linked", "no_link"}
         ]
     except Exception as exc:  # noqa: BLE001
         log.debug("programme context lookup unavailable for JAMB detail", error=str(exc))
         return []
+
+
+def _programme_curriculum_contract_for_student(svc: Any, programme_id: Any) -> dict:
+    """Return the explicit course/ability contract for a JAMB identity.
+
+    A JAMB name may point at a canonical CCMAS programme. The legacy
+    ``skills_*`` JSONB fields are not a safe substitute because they can mix
+    course outcomes with downstream role records. Missing contract tables or
+    rows therefore produce ``not_seeded`` rather than a fabricated profile.
+    """
+    result = {
+        "status": "unavailable",
+        "outcomes": [],
+        "abilities": [],
+        "sourceAuthority": None,
+    }
+    if not programme_id:
+        result["status"] = "not_seeded"
+        return result
+    try:
+        outcomes = (
+            svc.table("programme_curriculum_outcomes")
+            .select(
+                "outcome_id, course_code, course_title, course_level, outcome_index, "
+                "display_group, "
+                "source_text, student_text, source_locator, student_display, data_state"
+            )
+            .eq("programme_id", str(programme_id))
+            .eq("student_display", True)
+            .eq("data_state", "source_backed")
+            .order("course_level")
+            .order("course_code")
+            .order("outcome_index")
+            .execute()
+        ).data or []
+    except Exception as exc:  # noqa: BLE001
+        log.debug("clean JAMB curriculum contract unavailable", error=str(exc))
+        return result
+    try:
+        abilities = (
+            svc.table("programme_abilities")
+            .select("ability_id, display_title, source_text, student_text, source_locator, student_display, data_state")
+            .eq("programme_id", str(programme_id))
+            .eq("student_display", True)
+            .eq("data_state", "source_backed")
+            .order("ability_id")
+            .execute()
+        ).data or []
+    except Exception as exc:  # noqa: BLE001
+        log.debug("clean JAMB programme abilities unavailable", error=str(exc))
+        abilities = []
+    result["outcomes"] = [
+        {
+            "outcomeId": row.get("outcome_id"),
+            "courseCode": row.get("course_code"),
+            "courseTitle": row.get("course_title"),
+            "courseLevel": row.get("course_level"),
+            "displayGroup": row.get("display_group") or "programme_core",
+            "outcomeIndex": row.get("outcome_index"),
+            "sourceText": row.get("source_text"),
+            "studentText": row.get("student_text"),
+            "sourceLocator": row.get("source_locator") or {},
+            "dataState": row.get("data_state"),
+        }
+        for row in outcomes
+    ]
+    result["abilities"] = [
+        {
+            "abilityId": row.get("ability_id"),
+            "displayTitle": row.get("display_title") or "Use what you learn",
+            "sourceText": row.get("source_text"),
+            "studentText": row.get("student_text"),
+            "sourceLocator": row.get("source_locator") or {},
+            "dataState": row.get("data_state"),
+        }
+        for row in abilities
+    ]
+    result["status"] = "available" if result["outcomes"] or result["abilities"] else "not_seeded"
+    if result["outcomes"]:
+        locator = result["outcomes"][0].get("sourceLocator") or {}
+        result["sourceAuthority"] = {
+            "parsedSource": locator.get("parsedSource"),
+            "originalPdf": locator.get("originalPdf"),
+        }
+    return result
 
 
 def _programme_resources_for_student(svc: Any, programme_id: Any) -> list[dict]:
@@ -1337,6 +1461,78 @@ def _programme_resources_for_student(svc: Any, programme_id: Any) -> list[dict]:
     except Exception as exc:  # noqa: BLE001
         log.debug("programme resource lookup unavailable for JAMB detail", error=str(exc))
         return []
+
+
+def _jamb_programme_resources_for_student(svc: Any, jamb_programme_id: Any) -> list[dict]:
+    """Read identity-specific JAMB resources only after guidance approval.
+
+    This table is intentionally separate from ``career_learning_resources``:
+    the student population is the 420-name JAMB registry, including identities
+    without a CCMAS anchor.  ``review_only`` and ``unverified`` evidence stays
+    available to staff/audit but is never silently promoted into the student
+    payload.
+    """
+    if not jamb_programme_id:
+        return []
+    try:
+        rows = (
+            svc.table("jamb_programme_learning_resources")
+            .select("*")
+            .eq("jamb_programme_id", str(jamb_programme_id))
+            .eq("review_status", "approved_guidance_v1")
+            .eq("resource_classification", "available")
+            .eq("decision", "resource_available")
+            .order("resource_type")
+            .order("target_name")
+            .execute()
+            .data
+            or []
+        )
+        return [
+            {
+                "id": row.get("id"),
+                "jambProgrammeId": row.get("jamb_programme_id"),
+                "resourceType": row.get("resource_type"),
+                "targetName": row.get("target_name"),
+                "provider": row.get("provider"),
+                "region": row.get("region"),
+                "accessType": row.get("access_type"),
+                "url": row.get("url"),
+                "sourceUrl": row.get("source_url"),
+                "authority": row.get("authority"),
+                "resourceRole": row.get("resource_role"),
+                "sourceStatus": row.get("source_status"),
+                "sourceLocator": row.get("source_locator"),
+                "accessedOn": row.get("accessed_on"),
+                "resourceClassification": row.get("resource_classification"),
+                "decision": row.get("decision"),
+                "mappingStatus": row.get("mapping_status"),
+                "studentExposure": row.get("student_exposure"),
+                "reviewStatus": row.get("review_status"),
+                "sourceProvenance": row.get("source_provenance") or {},
+            }
+            for row in rows
+        ]
+    except Exception as exc:  # noqa: BLE001
+        # The additive migration may not yet be live.  A missing table is an
+        # empty evidence layer, not a reason to hide the JAMB programme.
+        log.debug("JAMB programme resource lookup unavailable", error=str(exc))
+        return []
+
+
+def _merge_student_resources(*groups: list[dict]) -> list[dict]:
+    """Merge evidence layers without duplicate source identities."""
+    merged: list[dict] = []
+    seen: set[str] = set()
+    for group in groups:
+        for resource in group:
+            key = str(resource.get("id") or "")
+            if key and key in seen:
+                continue
+            if key:
+                seen.add(key)
+            merged.append(resource)
+    return merged
 
 
 @router.get("/jamb-programmes/{jamb_programme_id}/domains", response_model=ResponseModel)
@@ -2070,6 +2266,22 @@ def _attach_school_details(
                 "text": option.get("source_text"),
                 "minimumRequired": option.get("min_required"),
                 "conditionText": option.get("condition_text"),
+                "subjectPool": list(dict.fromkeys(
+                    str((row.get("subject_catalog") or {}).get("name"))
+                    for row in local_items_by_option.get(str(option.get("id")), [])
+                    if (row.get("subject_catalog") or {}).get("name")
+                )),
+                "subjectItems": [
+                    {
+                        "name": (row.get("subject_catalog") or {}).get("name"),
+                        "code": (row.get("subject_catalog") or {}).get("code"),
+                        "requirementRole": row.get("requirement_role"),
+                        "groupKey": row.get("group_key"),
+                        "minimumFromGroup": row.get("min_from_group"),
+                    }
+                    for row in local_items_by_option.get(str(option.get("id")), [])
+                    if (row.get("subject_catalog") or {}).get("name")
+                ],
             }
             for option in local_options
         ]
@@ -2432,49 +2644,21 @@ def _match_structured_subject_options(
         for row in catalog_rows
         if row.get("id") and _normalise_subject(row.get("name") or "")
     ]
-    selected_catalog_ids = [
-        subject["id"]
-        for subject in catalog_subjects
-        if subject["norm"] in selected_norm
-    ]
-    if not selected_catalog_ids:
+    if not any(subject["norm"] in selected_norm for subject in catalog_subjects):
         _SUBJECT_MATCH_AUTHORITY_STATE = "ready"
         return []
 
-    try:
-        candidate_item_rows = (
-            svc.table("programme_subject_option_items")
-            .select("option_id")
-            .in_("subject_id", selected_catalog_ids)
-            .limit(MAX_SUBJECT_MATCH_CANDIDATE_ITEMS + 1)
-            .execute()
-        ).data or []
-    except Exception as exc:  # noqa: BLE001
-        log.warning("subject option candidate query unavailable; refusing national matches", error=str(exc))
-        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
-        return []
-    if len(candidate_item_rows) > MAX_SUBJECT_MATCH_CANDIDATE_ITEMS:
-        log.warning("subject option candidate set exceeded safety bound")
-        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
-        return []
-    candidate_option_ids = list(dict.fromkeys(
-        str(row.get("option_id"))
-        for row in candidate_item_rows
-        if row.get("option_id")
-    ))
-    if not candidate_option_ids:
-        _SUBJECT_MATCH_AUTHORITY_STATE = "ready"
-        return []
-    if len(candidate_option_ids) > MAX_SUBJECT_MATCH_OPTIONS:
-        log.warning("subject option candidate options exceeded safety bound")
-        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
-        return []
-
+    # Do not use a limited item scan to discover candidate options. Common
+    # subjects such as English Language and Mathematics can have more than the
+    # item safety bound; truncating that scan silently drops valid programmes
+    # before their complete rules are evaluated. The option table is the
+    # bounded authority: load every option for the requested exam type, fail
+    # closed if that bounded set grows too large, then evaluate each option
+    # from its complete item set below.
     options = (
         svc.table("programme_subject_options")
         .select("id, jamb_programme_id, requirement_id, exam_type, option_label, min_required, source_text")
         .eq("exam_type", exam_type)
-        .in_("id", candidate_option_ids)
         .limit(MAX_SUBJECT_MATCH_OPTIONS + 1)
         .execute()
     )
@@ -2662,8 +2846,10 @@ def _match_structured_subject_options(
             source_scope_text,
         )
         explicit_open_scope = re.search(
-            r"\b(?:any|one|two|three|four|five|six|several)\s+"
-            r"(?:other|remaining|additional)\s+subjects?\b|"
+            r"\bany\s+(?:(?:other|remaining|additional)\s+)?"
+            r"(?:(?:one|two|three|four|five|six|several)\s+(?:\(\d+\)\s*)?)?subjects?\b|"
+            r"\b(?:one|two|three|four|five|six|several)\s+"
+            r"(?:other|remaining|additional)\s+(?:\(\d+\)\s*)?subjects?\b|"
             r"\bany\s+subject\b",
             source_scope_text,
         )

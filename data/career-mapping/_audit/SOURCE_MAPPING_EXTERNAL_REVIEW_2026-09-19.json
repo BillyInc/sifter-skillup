@@ -1,0 +1,276 @@
+{
+  "schema": "2026-09-19.source-mapping-external-review.v1",
+  "accessed_on": "2026-09-19",
+  "scope": {
+    "canonical_programme_registry": 237,
+    "canonical_programmes_without_active_domain_link": 0,
+    "canonical_unmapped_programme_at_scope_start": "Sciences::Mathematics",
+    "jamb_review_required_rows": 86,
+    "jamb_partial_curriculum_rows": 273,
+    "coverage_matrix": "data/career-mapping/_audit/jamb_ccmas_curriculum_coverage_matrix_2026-09-19.json",
+    "policy": "This is source evidence, not a live deployment. A candidate remains review_required unless the programme-specific curriculum and external source establish the relationship at the required scope."
+  },
+  "records": [
+    {
+      "issue_class": "canonical_unmapped_full_programme",
+      "programme_ref": "Sciences::Mathematics",
+      "jamb_name": "Mathematics",
+      "domain_id": "D009",
+      "domain": "Data Science",
+      "relationship_type": "functional",
+      "prior_state": "review_required",
+      "decision": "candidate_supported",
+      "promotion": "locally_recorded_not_live_deployed",
+      "confidence": "medium",
+      "local_evidence": {
+        "source": "data/career-mapping/ccmas/sciences.json",
+        "locator": "programmes[name=Mathematics]; STA 112, COS 201, MTH 209, MTH 308, MTH 407 and MTH 408",
+        "summary": "The CCMAS Mathematics programme includes probability, computer programming, numerical analysis, mathematical modelling and mathematical methods."
+      },
+      "sources": [
+        {
+          "title": "University of Jos Department of Mathematics",
+          "url": "https://www.unijos.edu.ng/department-mathematics",
+          "locator": "Lines 19-23 identify undergraduate Mathematics and list computational mathematics, mathematical modelling, statistical modelling and Data Science among the department's research interests; lines 42-49 describe applied mathematical/statistical and data-analysis preparation.",
+          "evidence": "Authoritative Nigerian university context corroborates a Mathematics-to-Data-Science pathway, but the page describes department research and programme objectives rather than a named undergraduate Data Science track."
+        },
+        {
+          "title": "University of Ibadan Department of Mathematics course list",
+          "url": "https://sci.ui.edu.ng/courses-department-mathematics",
+          "locator": "Lines 126-137 list Probability I, Introduction to Computer Sciences and optional Statistical Inference; lines 148-181 list Computer Programming, Numerical Analysis, Statistical Inference, Programming and Algorithms and Scientific Programming.",
+          "evidence": "A second official Nigerian Mathematics curriculum corroborates the quantitative and computational anchors used by the local CCMAS row."
+        },
+        {
+          "title": "Skyline University Nigeria B.Sc. Data Science",
+          "url": "https://sun.edu.ng/b-sc-data-science/",
+          "locator": "Lines 127-142 define the target programme through mathematics, statistics, programming, optimization and data-analytics workflows.",
+          "evidence": "Target-domain definition only; it is not used to claim that every Mathematics graduate is a Data Scientist."
+        }
+      ],
+      "limitation": "The local CCMAS outcomes do not explicitly name Data Science, so this remains a source-backed candidate for review rather than an active student-facing link."
+    },
+    {
+      "issue_class": "partial_ccmas_fanout",
+      "programme_ref": "Sciences::Mathematics",
+      "jamb_name": "Pure and Applied Mathematics",
+      "domain_id": "D009",
+      "domain": "Data Science",
+      "relationship_type": "functional",
+      "prior_state": "ready_partial",
+      "decision": "partial_scope_corroborated",
+      "promotion": "retain_partial_review_required_for_domain",
+      "confidence": "medium",
+      "local_evidence": {
+        "source": "data/career-mapping/_audit/jamb_ccmas_inheritance_canonical_2026-08-17.json",
+        "locator": "rows[jamb_name=Pure and Applied Mathematics]; selected course codes MTH 101, MTH 102, MTH 103, MTH 201, MTH 203, MTH 209, MTH 308, MTH 310, MTH 407 and MTH 408",
+        "summary": "The row is a reviewed partial CCMAS slice, not permission to inherit the full Mathematics curriculum."
+      },
+      "sources": [
+        {
+          "title": "University of Jos Department of Mathematics",
+          "url": "https://www.unijos.edu.ng/department-mathematics",
+          "locator": "Lines 19-23 and 42-49.",
+          "evidence": "Supports the mathematical modelling, computational and data-analysis context, but does not validate the exact JAMB fan-out row as a complete Data Science curriculum."
+        }
+      ],
+      "limitation": "Partial scope is retained; no unscoped courses or downstream domain claims are inherited."
+    },
+    {
+      "issue_class": "partial_ccmas_fanout",
+      "programme_ref": "Sciences::Mathematics",
+      "jamb_name": "MATHEMATICAL SCIENCES",
+      "domain_id": "D009",
+      "domain": "Data Science",
+      "relationship_type": "functional",
+      "prior_state": "ready_partial",
+      "decision": "partial_scope_corroborated",
+      "promotion": "retain_partial_review_required_for_domain",
+      "confidence": "medium",
+      "local_evidence": {
+        "source": "data/career-mapping/_audit/jamb_ccmas_inheritance_canonical_2026-08-17.json",
+        "locator": "rows[jamb_name=MATHEMATICAL SCIENCES]; selected course codes COS 101, MTH 101, MTH 201, MTH 308, MTH 310 and MTH 407",
+        "summary": "The row is a reviewed partial scope containing computing, modelling and mathematical-method anchors."
+      },
+      "sources": [
+        {
+          "title": "University of Ibadan Department of Mathematics course list",
+          "url": "https://sci.ui.edu.ng/courses-department-mathematics",
+          "locator": "Lines 126-137 and 148-181.",
+          "evidence": "Corroborates the combination of probability, computing, programming, numerical analysis and statistical options in a Nigerian Mathematics curriculum."
+        }
+      ],
+      "limitation": "The named JAMB row is not a separate full CCMAS programme; it remains partial and must not be presented as a complete Data Science curriculum."
+    },
+    {
+      "issue_class": "full_ccmas_review_required",
+      "programme_ref": "Sciences::Mathematics",
+      "jamb_name": "Mathematics",
+      "domain_id": "D014",
+      "domain": "Actuarial Science",
+      "relationship_type": "functional",
+      "prior_state": "review_required",
+      "decision": "review_required",
+      "promotion": "not_promoted",
+      "confidence": "low",
+      "local_evidence": {
+        "source": "data/career-mapping/ccmas/sciences.json",
+        "locator": "programmes[name=Mathematics]; STA 112 Probability I and the general MTH sequence",
+        "summary": "The local full Mathematics row supplies probability and quantitative foundations but does not contain the actuarial sequence present in an Actuarial Science curriculum."
+      },
+      "sources": [
+        {
+          "title": "University of Ibadan Department of Mathematics course list",
+          "url": "https://sci.ui.edu.ng/courses-department-mathematics",
+          "locator": "Lines 126-137 list Introduction to Actuarial Mathematics as an elective, alongside Probability I and Statistical Inference.",
+          "evidence": "This is an elective signal, not proof of an actuarial programme relationship."
+        },
+        {
+          "title": "Ahmadu Bello University Actuarial Science undergraduate programme",
+          "url": "https://managementsciences.abu.edu.ng/departments/acturial%20science/programmes/ug/",
+          "locator": "Lines 103-116 list Numerical Analysis, Actuarial Mathematics and Theory of Interest, Mathematical Statistics, Probability Theory and Operations Research; lines 131-147 list Life Contingencies, Actuarial Statistics and Mortality Analysis, Risk Theory and Management and related insurance courses.",
+          "evidence": "Defines the target domain's distinct actuarial curriculum and shows why the Mathematics row alone is insufficient."
+        }
+      ],
+      "limitation": "Retain review_required; do not infer Actuarial Science from general probability or one elective course."
+    },
+    {
+      "issue_class": "full_ccmas_review_required",
+      "programme_ref": "Sciences::Industrial Mathematics",
+      "jamb_name": "Industrial Mathematics",
+      "domain_id": "D014",
+      "domain": "Actuarial Science",
+      "relationship_type": "functional",
+      "prior_state": "review_required",
+      "decision": "candidate_corroborated",
+      "promotion": "not_promoted_pending_row_level_regeneration",
+      "confidence": "high",
+      "local_evidence": {
+        "source": "data/career-mapping/ccmas/sciences.json",
+        "locator": "programmes[name=Industrial Mathematics]; IMT 301 Financial Mathematics and the programme's actuarial/statistics/mortality content summary",
+        "summary": "Industrial Mathematics contains a named Financial Mathematics course and actuarial/statistical/mortality analysis content, which is materially more specific than the general Mathematics row."
+      },
+      "sources": [
+        {
+          "title": "Ahmadu Bello University Actuarial Science undergraduate programme",
+          "url": "https://managementsciences.abu.edu.ng/departments/acturial%20science/programmes/ug/",
+          "locator": "Lines 103-116 and 131-147.",
+          "evidence": "The official Actuarial Science curriculum names the matching numerical, probability, actuarial mathematics, mortality, investment and risk subjects."
+        }
+      ],
+      "limitation": "The component-level evidence is strong, but the JAMB row remains review_required in the canonical inheritance artifact; no generated row is rewritten here."
+    },
+    {
+      "issue_class": "split_ccmas_component_review",
+      "programme_ref": "Sciences::Industrial Mathematics",
+      "jamb_name": "OPERATIONS RESEARCH",
+      "component_scope": "Sciences::Industrial Mathematics",
+      "prior_state": "review_required",
+      "decision": "component_corroborated",
+      "promotion": "not_promoted",
+      "confidence": "medium",
+      "local_evidence": {
+        "source": "data/career-mapping/ccmas/sciences.json",
+        "locator": "programmes[name=Industrial Mathematics]; IMT 306 Introduction to Operations Research",
+        "summary": "The local Industrial Mathematics CCMAS programme contains a named Operations Research course."
+      },
+      "sources": [
+        {
+          "title": "Ahmadu Bello University BSc Mathematics curriculum",
+          "url": "https://physicalsciences.abu.edu.ng/department/mathematics/public/BScMathematics.php",
+          "locator": "Lines 104-105 list Operations Research under the advanced Mathematics/Statistics curriculum.",
+          "evidence": "Independent Nigerian university evidence corroborates Operations Research as a mathematical application area."
+        }
+      ],
+      "limitation": "This is a split/fan-out component review, not proof that the JAMB label has a complete standalone CCMAS curriculum; retain review_required."
+    },
+    {
+      "issue_class": "full_ccmas_review_required",
+      "programme_ref": "Sciences::Statistics",
+      "jamb_name": "Statistics",
+      "domain_id": "D009",
+      "domain": "Data Science",
+      "relationship_type": "functional",
+      "prior_state": "review_required",
+      "decision": "candidate_corroborated",
+      "promotion": "not_promoted_pending_row_level_regeneration",
+      "confidence": "high",
+      "local_evidence": {
+        "source": "data/career-mapping/ccmas/sciences.json",
+        "locator": "programmes[name=Statistics]; programme-level statistics, probability, modelling and computing courses",
+        "summary": "The local Statistics CCMAS programme is already a quantitative/computational curriculum; this record closes the external evidence gap for the JAMB row without changing the generated seed."
+      },
+      "sources": [
+        {
+          "title": "Olabisi Onabanjo University B.Sc. Statistics",
+          "url": "https://main.oouagoiwoye.edu.ng/colleges/faculties/science/statistics/b-sc-statistics/",
+          "locator": "Lines 346-362 describe data analysis, modelling, computational techniques and NUC CCMAS alignment; lines 364-420 list programming, statistical computing, modelling and preparation for data-science work.",
+          "evidence": "The official Nigerian Statistics programme explicitly connects statistical training and computing to data-science practice."
+        }
+      ],
+      "limitation": "This evidence supports the candidate and preserves source provenance; active row-level exposure still requires the normal regeneration/audit gate."
+    },
+    {
+      "issue_class": "full_ccmas_review_required",
+      "programme_ref": "Social Sciences::Social Work",
+      "jamb_name": "Social Work",
+      "domain_id": "D046",
+      "domain": "Social Work",
+      "relationship_type": "direct",
+      "prior_state": "review_required",
+      "decision": "candidate_corroborated",
+      "promotion": "not_promoted_pending_row_level_regeneration",
+      "confidence": "high",
+      "local_evidence": {
+        "source": "data/career-mapping/ccmas/social_sciences.json",
+        "locator": "programme/component for Social Work; direct D046 candidate in programme_domain_final.json",
+        "summary": "The programme identity and domain name are exact; external sources verify that the Nigerian undergraduate curriculum is professional Social Work training rather than a generic social-science fallback."
+      },
+      "sources": [
+        {
+          "title": "University of Ibadan Social Work course structure",
+          "url": "https://educ.ui.edu.ng/courses-7",
+          "locator": "Lines 140-160 identify Social Works and list Introduction to Social Work, Indigenous Social Welfare and Social Work Practice ICT; lines 167-188 list theory, case work, research methods, community development and social policy; lines 193-201 list field practicum and intervention courses.",
+          "evidence": "The official Nigerian curriculum directly names the Social Work programme and its professional practice sequence."
+        },
+        {
+          "title": "University of Nigeria Nsukka Social Work",
+          "url": "https://www.unn.edu.ng/academics/faculties/social-sciences/social-work/",
+          "locator": "Lines 307-349 describe professional Social Work objectives, direct practice, community development and the four-year B.Sc. Social Work and Community Development programme.",
+          "evidence": "Independent official Nigerian university evidence corroborates the direct programme-to-Social-Work relationship."
+        }
+      ],
+      "limitation": "The source resolves the programme/domain identity but does not authorize copying any institution-specific curriculum into the canonical row."
+    },
+    {
+      "issue_class": "full_ccmas_review_required",
+      "programme_ref": "Administration and Management::Business Administration",
+      "jamb_name": "Business Administration",
+      "domain_id": "D028",
+      "domain": "General Management",
+      "relationship_type": "direct",
+      "prior_state": "review_required",
+      "decision": "candidate_corroborated",
+      "promotion": "not_promoted_pending_row_level_regeneration",
+      "confidence": "high",
+      "local_evidence": {
+        "source": "data/career-mapping/ccmas/administration_management.json",
+        "locator": "programme/component for Business Administration; direct D028 candidate in programme_domain_final.json",
+        "summary": "The exact programme name and the local management curriculum align with a General Management domain, while subareas remain separately represented."
+      },
+      "sources": [
+        {
+          "title": "Caleb University B.Sc. Business Administration",
+          "url": "https://calebuniversity.edu.ng/programmes/bsc-business-administration",
+          "locator": "Lines 54-73 identify the accredited B.Sc. Business Administration programme and describe its broad management scope; lines 82-119 list business, management, finance, statistics, analytics and quantitative-management courses; lines 155-182 list strategy, operations and organisational-management outcomes.",
+          "evidence": "The official Nigerian university curriculum directly supports the general management programme relationship without collapsing marketing, HR or finance into the parent domain."
+        }
+      ],
+      "limitation": "The evidence supports the direct parent-domain candidate only; specialist downstream domains retain their own evidence gates."
+    }
+  ],
+  "unresolved_queue_policy": {
+    "remaining_review_required_rows": 86,
+    "remaining_partial_rows": 273,
+    "action": "Keep all unreviewed rows review_required; do not fill missing curriculum, relationship, URL or locator fields with inference."
+  }
+}

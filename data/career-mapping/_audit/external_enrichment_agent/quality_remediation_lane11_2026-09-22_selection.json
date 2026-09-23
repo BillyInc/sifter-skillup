@@ -1,0 +1,1693 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-selection.v1",
+  "batch": "quality_remediation_lane11_2026-09-22",
+  "source_audit": "item_ledger_quality_audit_2026-09-22.json",
+  "selection_method": "atomic shared-lock exclusion of all prior quality-remediation selections/claims/ledgers; stable source-audit order",
+  "claim": {
+    "claim_id": "baeab8a6d1b5ca65",
+    "lane": "lane11",
+    "claimed_at": "2026-09-22T12:04:32Z",
+    "count": 100,
+    "identities": [
+      "role|D001|IoT developer|skill|computer-technology",
+      "role|D001|IoT developer|skill|digital-data-processing",
+      "role|D001|IoT developer|skill|establish-data-processes",
+      "role|D001|IoT developer|skill|hardware-testing-methods",
+      "role|D001|IoT developer|skill|ict-architectural-frameworks",
+      "role|D001|IoT developer|skill|ict-software-specifications",
+      "role|D001|IoT developer|skill|ict-system-programming",
+      "role|D001|IoT developer|skill|internet-of-things",
+      "role|D001|IoT developer|skill|machine-learning",
+      "role|D001|IoT developer|skill|mechatronics",
+      "role|D001|IoT developer|skill|mobile-device-software-frameworks",
+      "role|D001|IoT developer|skill|perform-online-data-analysis",
+      "role|D001|IoT developer|skill|principles-of-artificial-intelligence",
+      "role|D001|IoT developer|skill|task-algorithmisation",
+      "role|D001|Software Quality Assurance Analysts and Testers|tool|c",
+      "role|D001|Software Quality Assurance Analysts and Testers|tool|github",
+      "role|D001|Software Quality Assurance Analysts and Testers|tool|javascript",
+      "role|D001|Software Quality Assurance Analysts and Testers|tool|jenkins-ci",
+      "role|D001|Software and Applications Developers|skill|computer-programming",
+      "role|D001|Software and Applications Developers|skill|create-software-design",
+      "role|D001|Software and Applications Developers|skill|debug-software",
+      "role|D001|Software and Applications Developers|skill|develop-software-prototype",
+      "role|D001|Software and Applications Developers|skill|embedded-systems",
+      "role|D001|Software and Applications Developers|skill|ict-debugging-tools",
+      "role|D001|Software and Applications Developers|skill|integrated-development-environment-software",
+      "role|D001|Software and Applications Developers|skill|internet-of-things",
+      "role|D001|Software and Applications Developers|skill|software-architecture-models",
+      "role|D001|Software and Applications Developers|skill|tools-for-software-configuration-management",
+      "role|D001|Software and Applications Developers|skill|use-an-application-specific-interface",
+      "role|D001|Software and Applications Developers|skill|utilise-computer-aided-software-engineering-tools",
+      "role|D001|Video Game Designers|tool|c",
+      "role|D001|Web and Digital Interface Designers|tool|cascading-style-sheets-css",
+      "role|D001|Web and Digital Interface Designers|tool|figma",
+      "role|D001|Web and Digital Interface Designers|tool|google-angular",
+      "role|D001|Web and Digital Interface Designers|tool|javascript",
+      "role|D001|Web and Digital Interface Designers|tool|react",
+      "role|D001|cloud DevOps engineer|skill|application-usability",
+      "role|D001|cloud DevOps engineer|skill|asp-net",
+      "role|D001|cloud DevOps engineer|skill|cloud-monitoring-and-reporting",
+      "role|D001|cloud DevOps engineer|skill|cloud-security-and-compliance",
+      "role|D001|cloud DevOps engineer|skill|cloud-technologies",
+      "role|D001|cloud DevOps engineer|skill|computer-engineering",
+      "role|D001|cloud DevOps engineer|skill|devops",
+      "role|D001|cloud DevOps engineer|skill|eclipse-integrated-development-environment-software",
+      "role|D001|cloud DevOps engineer|skill|ict-project-management-methodologies",
+      "role|D001|cloud DevOps engineer|skill|ict-system-programming",
+      "role|D001|cloud DevOps engineer|skill|integrated-development-environment-software",
+      "role|D001|cloud DevOps engineer|skill|javascript",
+      "role|D001|cloud DevOps engineer|skill|jenkins-tools-for-software-configuration-management",
+      "role|D001|cloud DevOps engineer|skill|kdevelop",
+      "role|D001|cloud DevOps engineer|skill|plan-migration-to-cloud",
+      "role|D001|cloud DevOps engineer|skill|software-frameworks",
+      "role|D001|cloud DevOps engineer|skill|system-backup-best-practice",
+      "role|D001|cloud architect|skill|agile-development",
+      "role|D001|cloud architect|skill|agile-project-management",
+      "role|D001|cloud architect|skill|cloud-security-and-compliance",
+      "role|D001|cloud architect|skill|cloud-technologies",
+      "role|D001|cloud architect|skill|collaborate-with-engineers",
+      "role|D001|cloud architect|skill|deploy-cloud-resource",
+      "role|D001|cloud architect|skill|design-cloud-architecture",
+      "role|D001|cloud architect|skill|design-cloud-networks",
+      "role|D001|cloud architect|skill|devops",
+      "role|D001|cloud architect|skill|ict-architectural-frameworks",
+      "role|D001|cloud architect|skill|plan-migration-to-cloud",
+      "role|D001|cloud engineer|skill|cloud-monitoring-and-reporting",
+      "role|D001|cloud engineer|skill|cloud-security-and-compliance",
+      "role|D001|cloud engineer|skill|cloud-technologies",
+      "role|D001|cloud engineer|skill|computer-programming",
+      "role|D001|cloud engineer|skill|cyber-security",
+      "role|D001|cloud engineer|skill|data-engineering",
+      "role|D001|cloud engineer|skill|database-development-tools",
+      "role|D001|cloud engineer|skill|ict-security-standards",
+      "role|D001|cloud engineer|skill|ict-system-integration",
+      "role|D001|cloud engineer|skill|ict-system-programming",
+      "role|D001|cloud engineer|skill|java-computer-programming",
+      "role|D001|cloud engineer|skill|ruby-computer-programming",
+      "role|D001|cloud engineer|skill|security-engineering",
+      "role|D001|cloud engineer|skill|service-oriented-modelling",
+      "role|D001|cloud engineer|skill|systems-development-life-cycle",
+      "role|D001|cloud engineer|skill|systems-theory",
+      "role|D001|cloud engineer|skill|web-services",
+      "role|D001|cloud engineer|tool|amazon-web-services-aws-cloudformation",
+      "role|D001|cloud engineer|tool|ansible-software",
+      "role|D001|cloud engineer|tool|bash",
+      "role|D001|cloud engineer|tool|docker",
+      "role|D001|cloud engineer|tool|github",
+      "role|D001|cloud engineer|tool|go",
+      "role|D001|cloud engineer|tool|ibm-terraform",
+      "role|D001|cloud identity manager|skill|adhere-to-organisational-guidelines",
+      "role|D001|cloud identity manager|skill|automate-cloud-tasks",
+      "role|D001|cloud identity manager|skill|cloud-monitoring-and-reporting",
+      "role|D001|cloud identity manager|skill|cloud-security-and-compliance",
+      "role|D001|cloud identity manager|skill|cloud-technologies",
+      "role|D001|cloud identity manager|skill|db2",
+      "role|D001|cloud identity manager|skill|deploy-cloud-resource",
+      "role|D001|cloud identity manager|skill|follow-work-procedures",
+      "role|D001|ICT application configurator|skill|integrate-ict-data",
+      "role|D001|ICT application configurator|skill|migrate-existing-data",
+      "role|D001|ICT application developer|skill|identify-customer-requirements",
+      "role|D001|ICT application developer|skill|manage-business-knowledge"
+    ],
+    "excluded_prior_identity_count": 614
+  },
+  "items": [
+    {
+      "subject_id": "item|role|D001|IoT developer|skill|computer-technology",
+      "context_level": "role",
+      "context_key": "D001|IoT developer",
+      "item_type": "skill",
+      "item_key": "computer-technology",
+      "item_name": "computer technology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|IoT developer|skill|digital-data-processing",
+      "context_level": "role",
+      "context_key": "D001|IoT developer",
+      "item_type": "skill",
+      "item_key": "digital-data-processing",
+      "item_name": "digital data processing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|IoT developer|skill|establish-data-processes",
+      "context_level": "role",
+      "context_key": "D001|IoT developer",
+      "item_type": "skill",
+      "item_key": "establish-data-processes",
+      "item_name": "establish data processes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|IoT developer|skill|hardware-testing-methods",
+      "context_level": "role",
+      "context_key": "D001|IoT developer",
+      "item_type": "skill",
+      "item_key": "hardware-testing-methods",
+      "item_name": "hardware testing methods",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|IoT developer|skill|ict-architectural-frameworks",
+      "context_level": "role",
+      "context_key": "D001|IoT developer",
+      "item_type": "skill",
+      "item_key": "ict-architectural-frameworks",
+      "item_name": "ICT architectural frameworks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|IoT developer|skill|ict-software-specifications",
+      "context_level": "role",
+      "context_key": "D001|IoT developer",
+      "item_type": "skill",
+      "item_key": "ict-software-specifications",
+      "item_name": "ICT software specifications",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|IoT developer|skill|ict-system-programming",
+      "context_level": "role",
+      "context_key": "D001|IoT developer",
+      "item_type": "skill",
+      "item_key": "ict-system-programming",
+      "item_name": "ICT system programming",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|IoT developer|skill|internet-of-things",
+      "context_level": "role",
+      "context_key": "D001|IoT developer",
+      "item_type": "skill",
+      "item_key": "internet-of-things",
+      "item_name": "Internet of Things",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/programs-projects/internet-things-iot"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|IoT developer|skill|machine-learning",
+      "context_level": "role",
+      "context_key": "D001|IoT developer",
+      "item_type": "skill",
+      "item_key": "machine-learning",
+      "item_name": "machine learning",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/artificial-intelligence"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|IoT developer|skill|mechatronics",
+      "context_level": "role",
+      "context_key": "D001|IoT developer",
+      "item_type": "skill",
+      "item_key": "mechatronics",
+      "item_name": "mechatronics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|IoT developer|skill|mobile-device-software-frameworks",
+      "context_level": "role",
+      "context_key": "D001|IoT developer",
+      "item_type": "skill",
+      "item_key": "mobile-device-software-frameworks",
+      "item_name": "mobile device software frameworks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|IoT developer|skill|perform-online-data-analysis",
+      "context_level": "role",
+      "context_key": "D001|IoT developer",
+      "item_type": "skill",
+      "item_key": "perform-online-data-analysis",
+      "item_name": "perform online data analysis",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|IoT developer|skill|principles-of-artificial-intelligence",
+      "context_level": "role",
+      "context_key": "D001|IoT developer",
+      "item_type": "skill",
+      "item_key": "principles-of-artificial-intelligence",
+      "item_name": "principles of artificial intelligence",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/artificial-intelligence"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|IoT developer|skill|task-algorithmisation",
+      "context_level": "role",
+      "context_key": "D001|IoT developer",
+      "item_type": "skill",
+      "item_key": "task-algorithmisation",
+      "item_name": "task algorithmisation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|Software Quality Assurance Analysts and Testers|tool|c",
+      "context_level": "role",
+      "context_key": "D001|Software Quality Assurance Analysts and Testers",
+      "item_type": "tool",
+      "item_key": "c",
+      "item_name": "C#",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://learn.microsoft.com/en-us/dotnet/csharp/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|Software Quality Assurance Analysts and Testers|tool|github",
+      "context_level": "role",
+      "context_key": "D001|Software Quality Assurance Analysts and Testers",
+      "item_type": "tool",
+      "item_key": "github",
+      "item_name": "GitHub",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://docs.github.com/en/get-started"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|Software Quality Assurance Analysts and Testers|tool|javascript",
+      "context_level": "role",
+      "context_key": "D001|Software Quality Assurance Analysts and Testers",
+      "item_type": "tool",
+      "item_key": "javascript",
+      "item_name": "JavaScript",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|Software Quality Assurance Analysts and Testers|tool|jenkins-ci",
+      "context_level": "role",
+      "context_key": "D001|Software Quality Assurance Analysts and Testers",
+      "item_type": "tool",
+      "item_key": "jenkins-ci",
+      "item_name": "Jenkins CI",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.jenkins.io/doc/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|Software and Applications Developers|skill|computer-programming",
+      "context_level": "role",
+      "context_key": "D001|Software and Applications Developers",
+      "item_type": "skill",
+      "item_key": "computer-programming",
+      "item_name": "computer programming",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|Software and Applications Developers|skill|create-software-design",
+      "context_level": "role",
+      "context_key": "D001|Software and Applications Developers",
+      "item_type": "skill",
+      "item_key": "create-software-design",
+      "item_name": "create software design",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|Software and Applications Developers|skill|debug-software",
+      "context_level": "role",
+      "context_key": "D001|Software and Applications Developers",
+      "item_type": "skill",
+      "item_key": "debug-software",
+      "item_name": "debug software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|Software and Applications Developers|skill|develop-software-prototype",
+      "context_level": "role",
+      "context_key": "D001|Software and Applications Developers",
+      "item_type": "skill",
+      "item_key": "develop-software-prototype",
+      "item_name": "develop software prototype",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|Software and Applications Developers|skill|embedded-systems",
+      "context_level": "role",
+      "context_key": "D001|Software and Applications Developers",
+      "item_type": "skill",
+      "item_key": "embedded-systems",
+      "item_name": "embedded systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|Software and Applications Developers|skill|ict-debugging-tools",
+      "context_level": "role",
+      "context_key": "D001|Software and Applications Developers",
+      "item_type": "skill",
+      "item_key": "ict-debugging-tools",
+      "item_name": "ICT debugging tools",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|Software and Applications Developers|skill|integrated-development-environment-software",
+      "context_level": "role",
+      "context_key": "D001|Software and Applications Developers",
+      "item_type": "skill",
+      "item_key": "integrated-development-environment-software",
+      "item_name": "integrated development environment software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|Software and Applications Developers|skill|internet-of-things",
+      "context_level": "role",
+      "context_key": "D001|Software and Applications Developers",
+      "item_type": "skill",
+      "item_key": "internet-of-things",
+      "item_name": "Internet of Things",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/programs-projects/internet-things-iot"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|Software and Applications Developers|skill|software-architecture-models",
+      "context_level": "role",
+      "context_key": "D001|Software and Applications Developers",
+      "item_type": "skill",
+      "item_key": "software-architecture-models",
+      "item_name": "software architecture models",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|Software and Applications Developers|skill|tools-for-software-configuration-management",
+      "context_level": "role",
+      "context_key": "D001|Software and Applications Developers",
+      "item_type": "skill",
+      "item_key": "tools-for-software-configuration-management",
+      "item_name": "tools for software configuration management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|Software and Applications Developers|skill|use-an-application-specific-interface",
+      "context_level": "role",
+      "context_key": "D001|Software and Applications Developers",
+      "item_type": "skill",
+      "item_key": "use-an-application-specific-interface",
+      "item_name": "use an application-specific interface",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.acm.org/special-interest-groups/sigs/sigchi"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|Software and Applications Developers|skill|utilise-computer-aided-software-engineering-tools",
+      "context_level": "role",
+      "context_key": "D001|Software and Applications Developers",
+      "item_type": "skill",
+      "item_key": "utilise-computer-aided-software-engineering-tools",
+      "item_name": "utilise computer-aided software engineering tools",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|Video Game Designers|tool|c",
+      "context_level": "role",
+      "context_key": "D001|Video Game Designers",
+      "item_type": "tool",
+      "item_key": "c",
+      "item_name": "C#",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://learn.microsoft.com/en-us/dotnet/csharp/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|Web and Digital Interface Designers|tool|cascading-style-sheets-css",
+      "context_level": "role",
+      "context_key": "D001|Web and Digital Interface Designers",
+      "item_type": "tool",
+      "item_key": "cascading-style-sheets-css",
+      "item_name": "Cascading style sheets CSS",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://developer.mozilla.org/en-US/docs/Web/CSS"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|Web and Digital Interface Designers|tool|figma",
+      "context_level": "role",
+      "context_key": "D001|Web and Digital Interface Designers",
+      "item_type": "tool",
+      "item_key": "figma",
+      "item_name": "Figma",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://help.figma.com/hc/en-us"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|Web and Digital Interface Designers|tool|google-angular",
+      "context_level": "role",
+      "context_key": "D001|Web and Digital Interface Designers",
+      "item_type": "tool",
+      "item_key": "google-angular",
+      "item_name": "Google Angular",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://angular.dev/overview"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|Web and Digital Interface Designers|tool|javascript",
+      "context_level": "role",
+      "context_key": "D001|Web and Digital Interface Designers",
+      "item_type": "tool",
+      "item_key": "javascript",
+      "item_name": "JavaScript",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|Web and Digital Interface Designers|tool|react",
+      "context_level": "role",
+      "context_key": "D001|Web and Digital Interface Designers",
+      "item_type": "tool",
+      "item_key": "react",
+      "item_name": "React",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://react.dev/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud DevOps engineer|skill|application-usability",
+      "context_level": "role",
+      "context_key": "D001|cloud DevOps engineer",
+      "item_type": "skill",
+      "item_key": "application-usability",
+      "item_name": "application usability",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nngroup.com/articles/usability-101-introduction-to-usability/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud DevOps engineer|skill|asp-net",
+      "context_level": "role",
+      "context_key": "D001|cloud DevOps engineer",
+      "item_type": "skill",
+      "item_key": "asp-net",
+      "item_name": "ASP.NET",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://dotnet.microsoft.com/apps/aspnet"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud DevOps engineer|skill|cloud-monitoring-and-reporting",
+      "context_level": "role",
+      "context_key": "D001|cloud DevOps engineer",
+      "item_type": "skill",
+      "item_key": "cloud-monitoring-and-reporting",
+      "item_name": "cloud monitoring and reporting",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://aws.amazon.com/what-is-cloud-computing/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud DevOps engineer|skill|cloud-security-and-compliance",
+      "context_level": "role",
+      "context_key": "D001|cloud DevOps engineer",
+      "item_type": "skill",
+      "item_key": "cloud-security-and-compliance",
+      "item_name": "cloud security and compliance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://aws.amazon.com/what-is-cloud-computing/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud DevOps engineer|skill|cloud-technologies",
+      "context_level": "role",
+      "context_key": "D001|cloud DevOps engineer",
+      "item_type": "skill",
+      "item_key": "cloud-technologies",
+      "item_name": "cloud technologies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://aws.amazon.com/what-is-cloud-computing/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud DevOps engineer|skill|computer-engineering",
+      "context_level": "role",
+      "context_key": "D001|cloud DevOps engineer",
+      "item_type": "skill",
+      "item_key": "computer-engineering",
+      "item_name": "computer engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud DevOps engineer|skill|devops",
+      "context_level": "role",
+      "context_key": "D001|cloud DevOps engineer",
+      "item_type": "skill",
+      "item_key": "devops",
+      "item_name": "DevOps",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud DevOps engineer|skill|eclipse-integrated-development-environment-software",
+      "context_level": "role",
+      "context_key": "D001|cloud DevOps engineer",
+      "item_type": "skill",
+      "item_key": "eclipse-integrated-development-environment-software",
+      "item_name": "Eclipse (integrated development environment software)",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.eclipse.org/ide/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud DevOps engineer|skill|ict-project-management-methodologies",
+      "context_level": "role",
+      "context_key": "D001|cloud DevOps engineer",
+      "item_type": "skill",
+      "item_key": "ict-project-management-methodologies",
+      "item_name": "ICT project management methodologies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.atlassian.com/agile"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud DevOps engineer|skill|ict-system-programming",
+      "context_level": "role",
+      "context_key": "D001|cloud DevOps engineer",
+      "item_type": "skill",
+      "item_key": "ict-system-programming",
+      "item_name": "ICT system programming",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud DevOps engineer|skill|integrated-development-environment-software",
+      "context_level": "role",
+      "context_key": "D001|cloud DevOps engineer",
+      "item_type": "skill",
+      "item_key": "integrated-development-environment-software",
+      "item_name": "integrated development environment software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud DevOps engineer|skill|javascript",
+      "context_level": "role",
+      "context_key": "D001|cloud DevOps engineer",
+      "item_type": "skill",
+      "item_key": "javascript",
+      "item_name": "JavaScript",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud DevOps engineer|skill|jenkins-tools-for-software-configuration-management",
+      "context_level": "role",
+      "context_key": "D001|cloud DevOps engineer",
+      "item_type": "skill",
+      "item_key": "jenkins-tools-for-software-configuration-management",
+      "item_name": "Jenkins (tools for software configuration management)",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.jenkins.io/doc/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud DevOps engineer|skill|kdevelop",
+      "context_level": "role",
+      "context_key": "D001|cloud DevOps engineer",
+      "item_type": "skill",
+      "item_key": "kdevelop",
+      "item_name": "KDevelop",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://kdevelop.org/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud DevOps engineer|skill|plan-migration-to-cloud",
+      "context_level": "role",
+      "context_key": "D001|cloud DevOps engineer",
+      "item_type": "skill",
+      "item_key": "plan-migration-to-cloud",
+      "item_name": "plan migration to cloud",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://aws.amazon.com/what-is-cloud-computing/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud DevOps engineer|skill|software-frameworks",
+      "context_level": "role",
+      "context_key": "D001|cloud DevOps engineer",
+      "item_type": "skill",
+      "item_key": "software-frameworks",
+      "item_name": "software frameworks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud DevOps engineer|skill|system-backup-best-practice",
+      "context_level": "role",
+      "context_key": "D001|cloud DevOps engineer",
+      "item_type": "skill",
+      "item_key": "system-backup-best-practice",
+      "item_name": "system backup best practice",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud architect|skill|agile-development",
+      "context_level": "role",
+      "context_key": "D001|cloud architect",
+      "item_type": "skill",
+      "item_key": "agile-development",
+      "item_name": "Agile development",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.atlassian.com/agile"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud architect|skill|agile-project-management",
+      "context_level": "role",
+      "context_key": "D001|cloud architect",
+      "item_type": "skill",
+      "item_key": "agile-project-management",
+      "item_name": "Agile project management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.atlassian.com/agile"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud architect|skill|cloud-security-and-compliance",
+      "context_level": "role",
+      "context_key": "D001|cloud architect",
+      "item_type": "skill",
+      "item_key": "cloud-security-and-compliance",
+      "item_name": "cloud security and compliance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://aws.amazon.com/what-is-cloud-computing/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud architect|skill|cloud-technologies",
+      "context_level": "role",
+      "context_key": "D001|cloud architect",
+      "item_type": "skill",
+      "item_key": "cloud-technologies",
+      "item_name": "cloud technologies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://aws.amazon.com/what-is-cloud-computing/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud architect|skill|collaborate-with-engineers",
+      "context_level": "role",
+      "context_key": "D001|cloud architect",
+      "item_type": "skill",
+      "item_key": "collaborate-with-engineers",
+      "item_name": "collaborate with engineers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud architect|skill|deploy-cloud-resource",
+      "context_level": "role",
+      "context_key": "D001|cloud architect",
+      "item_type": "skill",
+      "item_key": "deploy-cloud-resource",
+      "item_name": "deploy cloud resource",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://aws.amazon.com/what-is-cloud-computing/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud architect|skill|design-cloud-architecture",
+      "context_level": "role",
+      "context_key": "D001|cloud architect",
+      "item_type": "skill",
+      "item_key": "design-cloud-architecture",
+      "item_name": "design cloud architecture",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://aws.amazon.com/what-is-cloud-computing/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud architect|skill|design-cloud-networks",
+      "context_level": "role",
+      "context_key": "D001|cloud architect",
+      "item_type": "skill",
+      "item_key": "design-cloud-networks",
+      "item_name": "design cloud networks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://aws.amazon.com/what-is-cloud-computing/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud architect|skill|devops",
+      "context_level": "role",
+      "context_key": "D001|cloud architect",
+      "item_type": "skill",
+      "item_key": "devops",
+      "item_name": "DevOps",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud architect|skill|ict-architectural-frameworks",
+      "context_level": "role",
+      "context_key": "D001|cloud architect",
+      "item_type": "skill",
+      "item_key": "ict-architectural-frameworks",
+      "item_name": "ICT architectural frameworks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud architect|skill|plan-migration-to-cloud",
+      "context_level": "role",
+      "context_key": "D001|cloud architect",
+      "item_type": "skill",
+      "item_key": "plan-migration-to-cloud",
+      "item_name": "plan migration to cloud",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://aws.amazon.com/what-is-cloud-computing/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud engineer|skill|cloud-monitoring-and-reporting",
+      "context_level": "role",
+      "context_key": "D001|cloud engineer",
+      "item_type": "skill",
+      "item_key": "cloud-monitoring-and-reporting",
+      "item_name": "cloud monitoring and reporting",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://aws.amazon.com/what-is-cloud-computing/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud engineer|skill|cloud-security-and-compliance",
+      "context_level": "role",
+      "context_key": "D001|cloud engineer",
+      "item_type": "skill",
+      "item_key": "cloud-security-and-compliance",
+      "item_name": "cloud security and compliance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://aws.amazon.com/what-is-cloud-computing/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud engineer|skill|cloud-technologies",
+      "context_level": "role",
+      "context_key": "D001|cloud engineer",
+      "item_type": "skill",
+      "item_key": "cloud-technologies",
+      "item_name": "cloud technologies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://aws.amazon.com/what-is-cloud-computing/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud engineer|skill|computer-programming",
+      "context_level": "role",
+      "context_key": "D001|cloud engineer",
+      "item_type": "skill",
+      "item_key": "computer-programming",
+      "item_name": "computer programming",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud engineer|skill|cyber-security",
+      "context_level": "role",
+      "context_key": "D001|cloud engineer",
+      "item_type": "skill",
+      "item_key": "cyber-security",
+      "item_name": "cyber security",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud engineer|skill|data-engineering",
+      "context_level": "role",
+      "context_key": "D001|cloud engineer",
+      "item_type": "skill",
+      "item_key": "data-engineering",
+      "item_name": "data engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud engineer|skill|database-development-tools",
+      "context_level": "role",
+      "context_key": "D001|cloud engineer",
+      "item_type": "skill",
+      "item_key": "database-development-tools",
+      "item_name": "database development tools",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud engineer|skill|ict-security-standards",
+      "context_level": "role",
+      "context_key": "D001|cloud engineer",
+      "item_type": "skill",
+      "item_key": "ict-security-standards",
+      "item_name": "ICT security standards",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud engineer|skill|ict-system-integration",
+      "context_level": "role",
+      "context_key": "D001|cloud engineer",
+      "item_type": "skill",
+      "item_key": "ict-system-integration",
+      "item_name": "ICT system integration",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud engineer|skill|ict-system-programming",
+      "context_level": "role",
+      "context_key": "D001|cloud engineer",
+      "item_type": "skill",
+      "item_key": "ict-system-programming",
+      "item_name": "ICT system programming",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud engineer|skill|java-computer-programming",
+      "context_level": "role",
+      "context_key": "D001|cloud engineer",
+      "item_type": "skill",
+      "item_key": "java-computer-programming",
+      "item_name": "Java (computer programming)",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://dev.java/learn/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud engineer|skill|ruby-computer-programming",
+      "context_level": "role",
+      "context_key": "D001|cloud engineer",
+      "item_type": "skill",
+      "item_key": "ruby-computer-programming",
+      "item_name": "Ruby (computer programming)",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.ruby-lang.org/en/documentation/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud engineer|skill|security-engineering",
+      "context_level": "role",
+      "context_key": "D001|cloud engineer",
+      "item_type": "skill",
+      "item_key": "security-engineering",
+      "item_name": "security engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud engineer|skill|service-oriented-modelling",
+      "context_level": "role",
+      "context_key": "D001|cloud engineer",
+      "item_type": "skill",
+      "item_key": "service-oriented-modelling",
+      "item_name": "service-oriented modelling",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud engineer|skill|systems-development-life-cycle",
+      "context_level": "role",
+      "context_key": "D001|cloud engineer",
+      "item_type": "skill",
+      "item_key": "systems-development-life-cycle",
+      "item_name": "systems development life-cycle",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud engineer|skill|systems-theory",
+      "context_level": "role",
+      "context_key": "D001|cloud engineer",
+      "item_type": "skill",
+      "item_key": "systems-theory",
+      "item_name": "systems theory",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud engineer|skill|web-services",
+      "context_level": "role",
+      "context_key": "D001|cloud engineer",
+      "item_type": "skill",
+      "item_key": "web-services",
+      "item_name": "web services",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud engineer|tool|amazon-web-services-aws-cloudformation",
+      "context_level": "role",
+      "context_key": "D001|cloud engineer",
+      "item_type": "tool",
+      "item_key": "amazon-web-services-aws-cloudformation",
+      "item_name": "Amazon Web Services AWS CloudFormation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud engineer|tool|ansible-software",
+      "context_level": "role",
+      "context_key": "D001|cloud engineer",
+      "item_type": "tool",
+      "item_key": "ansible-software",
+      "item_name": "Ansible software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://docs.ansible.com/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud engineer|tool|bash",
+      "context_level": "role",
+      "context_key": "D001|cloud engineer",
+      "item_type": "tool",
+      "item_key": "bash",
+      "item_name": "Bash",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud engineer|tool|docker",
+      "context_level": "role",
+      "context_key": "D001|cloud engineer",
+      "item_type": "tool",
+      "item_key": "docker",
+      "item_name": "Docker",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://docs.docker.com/get-started/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud engineer|tool|github",
+      "context_level": "role",
+      "context_key": "D001|cloud engineer",
+      "item_type": "tool",
+      "item_key": "github",
+      "item_name": "GitHub",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://docs.github.com/en/get-started"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud engineer|tool|go",
+      "context_level": "role",
+      "context_key": "D001|cloud engineer",
+      "item_type": "tool",
+      "item_key": "go",
+      "item_name": "Go",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://go.dev/doc/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud engineer|tool|ibm-terraform",
+      "context_level": "role",
+      "context_key": "D001|cloud engineer",
+      "item_type": "tool",
+      "item_key": "ibm-terraform",
+      "item_name": "IBM Terraform",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://developer.hashicorp.com/terraform/docs"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud identity manager|skill|adhere-to-organisational-guidelines",
+      "context_level": "role",
+      "context_key": "D001|cloud identity manager",
+      "item_type": "skill",
+      "item_key": "adhere-to-organisational-guidelines",
+      "item_name": "adhere to organisational guidelines",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud identity manager|skill|automate-cloud-tasks",
+      "context_level": "role",
+      "context_key": "D001|cloud identity manager",
+      "item_type": "skill",
+      "item_key": "automate-cloud-tasks",
+      "item_name": "automate cloud tasks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://aws.amazon.com/what-is-cloud-computing/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud identity manager|skill|cloud-monitoring-and-reporting",
+      "context_level": "role",
+      "context_key": "D001|cloud identity manager",
+      "item_type": "skill",
+      "item_key": "cloud-monitoring-and-reporting",
+      "item_name": "cloud monitoring and reporting",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://aws.amazon.com/what-is-cloud-computing/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud identity manager|skill|cloud-security-and-compliance",
+      "context_level": "role",
+      "context_key": "D001|cloud identity manager",
+      "item_type": "skill",
+      "item_key": "cloud-security-and-compliance",
+      "item_name": "cloud security and compliance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://aws.amazon.com/what-is-cloud-computing/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud identity manager|skill|cloud-technologies",
+      "context_level": "role",
+      "context_key": "D001|cloud identity manager",
+      "item_type": "skill",
+      "item_key": "cloud-technologies",
+      "item_name": "cloud technologies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://aws.amazon.com/what-is-cloud-computing/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud identity manager|skill|db2",
+      "context_level": "role",
+      "context_key": "D001|cloud identity manager",
+      "item_type": "skill",
+      "item_key": "db2",
+      "item_name": "DB2",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.ibm.com/docs/en/db2"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud identity manager|skill|deploy-cloud-resource",
+      "context_level": "role",
+      "context_key": "D001|cloud identity manager",
+      "item_type": "skill",
+      "item_key": "deploy-cloud-resource",
+      "item_name": "deploy cloud resource",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://aws.amazon.com/what-is-cloud-computing/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|cloud identity manager|skill|follow-work-procedures",
+      "context_level": "role",
+      "context_key": "D001|cloud identity manager",
+      "item_type": "skill",
+      "item_key": "follow-work-procedures",
+      "item_name": "follow work procedures",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT application configurator|skill|integrate-ict-data",
+      "context_level": "role",
+      "context_key": "D001|ICT application configurator",
+      "item_type": "skill",
+      "item_key": "integrate-ict-data",
+      "item_name": "integrate ICT data",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/72018.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT application configurator|skill|migrate-existing-data",
+      "context_level": "role",
+      "context_key": "D001|ICT application configurator",
+      "item_type": "skill",
+      "item_key": "migrate-existing-data",
+      "item_name": "migrate existing data",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/72018.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT application developer|skill|identify-customer-requirements",
+      "context_level": "role",
+      "context_key": "D001|ICT application developer",
+      "item_type": "skill",
+      "item_key": "identify-customer-requirements",
+      "item_name": "identify customer requirements",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/72018.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT application developer|skill|manage-business-knowledge",
+      "context_level": "role",
+      "context_key": "D001|ICT application developer",
+      "item_type": "skill",
+      "item_key": "manage-business-knowledge",
+      "item_name": "manage business knowledge",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/27001.html"
+      ]
+    }
+  ],
+  "counts": {
+    "selected_records": 100,
+    "unique_identities": 100,
+    "excluded_prior_identities": 614
+  },
+  "policy": {
+    "review_required_preserved_unless_exact_item_type_context_evidence": true,
+    "no_relationship_inference": true,
+    "no_promotion": true
+  }
+}

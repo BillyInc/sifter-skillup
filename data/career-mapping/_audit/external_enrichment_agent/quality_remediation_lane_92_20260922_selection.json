@@ -1,0 +1,3219 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-selection.v2",
+  "batch": "quality_remediation_lane_92_20260922",
+  "selected_at": "2026-09-22",
+  "source_audit": "data/career-mapping/_audit/external_enrichment_agent/item_ledger_quality_audit_2026-09-22.json",
+  "source_sha256": "133bf28782e1b50abacca97438559242eb689f8fd38e69845dffdc0b9da18009",
+  "selection_method": "atomic shared lock; exclude all prior valid claims by contextual and typed identity",
+  "prior_claimed_contextual_ids": 9572,
+  "prior_claimed_typed_items": 8946,
+  "selection_count": 200,
+  "requested_count": 200,
+  "shortfall": 0,
+  "rows": [
+    {
+      "subject_id": "item|role|D139|level designer|tool|game-engine-level-editors",
+      "context_level": "role",
+      "context_key": "D139|level designer",
+      "item_type": "tool",
+      "item_key": "game-engine-level-editors",
+      "item_name": "game-engine level editors",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D139|level designer|tool|level-blockout-and-mapping-tools",
+      "context_level": "role",
+      "context_key": "D139|level designer",
+      "item_type": "tool",
+      "item_key": "level-blockout-and-mapping-tools",
+      "item_name": "level blockout and mapping tools",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D139|technical artist|skill|3d-content-pipelines",
+      "context_level": "role",
+      "context_key": "D139|technical artist",
+      "item_type": "skill",
+      "item_key": "3d-content-pipelines",
+      "item_name": "3D content pipelines",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D139|technical artist|skill|art-tool-support",
+      "context_level": "role",
+      "context_key": "D139|technical artist",
+      "item_type": "skill",
+      "item_key": "art-tool-support",
+      "item_name": "art-tool support",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D139|technical artist|skill|artist-programmer-collaboration",
+      "context_level": "role",
+      "context_key": "D139|technical artist",
+      "item_type": "skill",
+      "item_key": "artist-programmer-collaboration",
+      "item_name": "artist-programmer collaboration",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D139|technical artist|skill|asset-optimisation",
+      "context_level": "role",
+      "context_key": "D139|technical artist",
+      "item_type": "skill",
+      "item_key": "asset-optimisation",
+      "item_name": "asset optimisation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D139|technical artist|skill|python",
+      "context_level": "role",
+      "context_key": "D139|technical artist",
+      "item_type": "skill",
+      "item_key": "python",
+      "item_name": "Python",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D139|technical artist|skill|rendering-optimisation",
+      "context_level": "role",
+      "context_key": "D139|technical artist",
+      "item_type": "skill",
+      "item_key": "rendering-optimisation",
+      "item_name": "rendering optimisation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D139|technical artist|skill|shader-and-material-basics",
+      "context_level": "role",
+      "context_key": "D139|technical artist",
+      "item_type": "skill",
+      "item_key": "shader-and-material-basics",
+      "item_name": "shader and material basics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D139|technical artist|tool|dcc-and-game-engine-pipeline-tools",
+      "context_level": "role",
+      "context_key": "D139|technical artist",
+      "item_type": "tool",
+      "item_key": "dcc-and-game-engine-pipeline-tools",
+      "item_name": "DCC and game-engine pipeline tools",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D139|technical artist|tool|shader-profiling-and-version-control-tools",
+      "context_level": "role",
+      "context_key": "D139|technical artist",
+      "item_type": "tool",
+      "item_key": "shader-profiling-and-version-control-tools",
+      "item_name": "shader, profiling and version-control tools",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D139|technical game designer|skill|debugging",
+      "context_level": "role",
+      "context_key": "D139|technical game designer",
+      "item_type": "skill",
+      "item_key": "debugging",
+      "item_name": "debugging",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D139|technical game designer|skill|designer-programmer-collaboration",
+      "context_level": "role",
+      "context_key": "D139|technical game designer",
+      "item_type": "skill",
+      "item_key": "designer-programmer-collaboration",
+      "item_name": "designer-programmer collaboration",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D139|technical game designer|skill|gameplay-scripting",
+      "context_level": "role",
+      "context_key": "D139|technical game designer",
+      "item_type": "skill",
+      "item_key": "gameplay-scripting",
+      "item_name": "gameplay scripting",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D139|technical game designer|skill|rapid-prototyping",
+      "context_level": "role",
+      "context_key": "D139|technical game designer",
+      "item_type": "skill",
+      "item_key": "rapid-prototyping",
+      "item_name": "rapid prototyping",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D139|technical game designer|skill|systems-design",
+      "context_level": "role",
+      "context_key": "D139|technical game designer",
+      "item_type": "skill",
+      "item_key": "systems-design",
+      "item_name": "systems design",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D139|technical game designer|skill|technical-design-documentation",
+      "context_level": "role",
+      "context_key": "D139|technical game designer",
+      "item_type": "skill",
+      "item_key": "technical-design-documentation",
+      "item_name": "technical design documentation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D139|technical game designer|skill|tools-development",
+      "context_level": "role",
+      "context_key": "D139|technical game designer",
+      "item_type": "skill",
+      "item_key": "tools-development",
+      "item_name": "tools development",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D139|technical game designer|skill|visual-scripting",
+      "context_level": "role",
+      "context_key": "D139|technical game designer",
+      "item_type": "skill",
+      "item_key": "visual-scripting",
+      "item_name": "visual scripting",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D139|technical game designer|tool|version-control-and-issue-tracking",
+      "context_level": "role",
+      "context_key": "D139|technical game designer",
+      "item_type": "tool",
+      "item_key": "version-control-and-issue-tracking",
+      "item_name": "version control and issue tracking",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D139|technical game designer|tool|visual-scripting-and-game-engine-editor-tools",
+      "context_level": "role",
+      "context_key": "D139|technical game designer",
+      "item_type": "tool",
+      "item_key": "visual-scripting-and-game-engine-editor-tools",
+      "item_name": "visual scripting and game-engine editor tools",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|advanced robotics engineer|skill|advanced-robotics-engineering",
+      "context_level": "role",
+      "context_key": "D140|advanced robotics engineer",
+      "item_type": "skill",
+      "item_key": "advanced-robotics-engineering",
+      "item_name": "advanced robotics engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|advanced robotics engineer|skill|algorithm-development",
+      "context_level": "role",
+      "context_key": "D140|advanced robotics engineer",
+      "item_type": "skill",
+      "item_key": "algorithm-development",
+      "item_name": "algorithm development",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|advanced robotics engineer|skill|computer-vision",
+      "context_level": "role",
+      "context_key": "D140|advanced robotics engineer",
+      "item_type": "skill",
+      "item_key": "computer-vision",
+      "item_name": "computer vision",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|advanced robotics engineer|skill|mechanical-framework-testing",
+      "context_level": "role",
+      "context_key": "D140|advanced robotics engineer",
+      "item_type": "skill",
+      "item_key": "mechanical-framework-testing",
+      "item_name": "mechanical framework testing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|advanced robotics engineer|skill|multi-robot-systems",
+      "context_level": "role",
+      "context_key": "D140|advanced robotics engineer",
+      "item_type": "skill",
+      "item_key": "multi-robot-systems",
+      "item_name": "multi-robot systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|advanced robotics engineer|skill|prototype-design",
+      "context_level": "role",
+      "context_key": "D140|advanced robotics engineer",
+      "item_type": "skill",
+      "item_key": "prototype-design",
+      "item_name": "prototype design",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|advanced robotics engineer|skill|robotics-research",
+      "context_level": "role",
+      "context_key": "D140|advanced robotics engineer",
+      "item_type": "skill",
+      "item_key": "robotics-research",
+      "item_name": "robotics research",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|advanced robotics engineer|skill|safe-and-sustainable-system-design",
+      "context_level": "role",
+      "context_key": "D140|advanced robotics engineer",
+      "item_type": "skill",
+      "item_key": "safe-and-sustainable-system-design",
+      "item_name": "safe and sustainable system design",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|advanced robotics engineer|skill|technical-leadership",
+      "context_level": "role",
+      "context_key": "D140|advanced robotics engineer",
+      "item_type": "skill",
+      "item_key": "technical-leadership",
+      "item_name": "technical leadership",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|advanced robotics engineer|tool|robot-control-system-development-tools",
+      "context_level": "role",
+      "context_key": "D140|advanced robotics engineer",
+      "item_type": "tool",
+      "item_key": "robot-control-system-development-tools",
+      "item_name": "robot control system development tools",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|advanced robotics engineer|tool|robotics-prototyping-tools",
+      "context_level": "role",
+      "context_key": "D140|advanced robotics engineer",
+      "item_type": "tool",
+      "item_key": "robotics-prototyping-tools",
+      "item_name": "robotics prototyping tools",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics engineer|skill|electronic-engineering",
+      "context_level": "role",
+      "context_key": "D140|robotics engineer",
+      "item_type": "skill",
+      "item_key": "electronic-engineering",
+      "item_name": "electronic engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics engineer|skill|engineering-mathematics",
+      "context_level": "role",
+      "context_key": "D140|robotics engineer",
+      "item_type": "skill",
+      "item_key": "engineering-mathematics",
+      "item_name": "engineering mathematics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics engineer|skill|machine-vision",
+      "context_level": "role",
+      "context_key": "D140|robotics engineer",
+      "item_type": "skill",
+      "item_key": "machine-vision",
+      "item_name": "machine vision",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics engineer|skill|maintenance-planning",
+      "context_level": "role",
+      "context_key": "D140|robotics engineer",
+      "item_type": "skill",
+      "item_key": "maintenance-planning",
+      "item_name": "maintenance planning",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics engineer|skill|robot-deployment",
+      "context_level": "role",
+      "context_key": "D140|robotics engineer",
+      "item_type": "skill",
+      "item_key": "robot-deployment",
+      "item_name": "robot deployment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics engineer|skill|robot-programming",
+      "context_level": "role",
+      "context_key": "D140|robotics engineer",
+      "item_type": "skill",
+      "item_key": "robot-programming",
+      "item_name": "robot programming",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics engineer|skill|robotic-system-design",
+      "context_level": "role",
+      "context_key": "D140|robotics engineer",
+      "item_type": "skill",
+      "item_key": "robotic-system-design",
+      "item_name": "robotic system design",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics engineer|skill|robotics-control",
+      "context_level": "role",
+      "context_key": "D140|robotics engineer",
+      "item_type": "skill",
+      "item_key": "robotics-control",
+      "item_name": "robotics control",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics engineer|skill|safety-and-ethics",
+      "context_level": "role",
+      "context_key": "D140|robotics engineer",
+      "item_type": "skill",
+      "item_key": "safety-and-ethics",
+      "item_name": "safety and ethics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics engineer|skill|system-testing",
+      "context_level": "role",
+      "context_key": "D140|robotics engineer",
+      "item_type": "skill",
+      "item_key": "system-testing",
+      "item_name": "system testing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics integrator|skill|automation-design",
+      "context_level": "role",
+      "context_key": "D140|robotics integrator",
+      "item_type": "skill",
+      "item_key": "automation-design",
+      "item_name": "automation design",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics integrator|skill|commissioning",
+      "context_level": "role",
+      "context_key": "D140|robotics integrator",
+      "item_type": "skill",
+      "item_key": "commissioning",
+      "item_name": "commissioning",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics integrator|skill|implementation-planning",
+      "context_level": "role",
+      "context_key": "D140|robotics integrator",
+      "item_type": "skill",
+      "item_key": "implementation-planning",
+      "item_name": "implementation planning",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics integrator|skill|industrial-network-integration",
+      "context_level": "role",
+      "context_key": "D140|robotics integrator",
+      "item_type": "skill",
+      "item_key": "industrial-network-integration",
+      "item_name": "industrial network integration",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics integrator|skill|manufacturing-process-analysis",
+      "context_level": "role",
+      "context_key": "D140|robotics integrator",
+      "item_type": "skill",
+      "item_key": "manufacturing-process-analysis",
+      "item_name": "manufacturing process analysis",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics integrator|skill|robotic-system-integration",
+      "context_level": "role",
+      "context_key": "D140|robotics integrator",
+      "item_type": "skill",
+      "item_key": "robotic-system-integration",
+      "item_name": "robotic system integration",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics integrator|skill|systems-evaluation",
+      "context_level": "role",
+      "context_key": "D140|robotics integrator",
+      "item_type": "skill",
+      "item_key": "systems-evaluation",
+      "item_name": "systems evaluation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics integrator|tool|industrial-automation-software",
+      "context_level": "role",
+      "context_key": "D140|robotics integrator",
+      "item_type": "tool",
+      "item_key": "industrial-automation-software",
+      "item_name": "industrial automation software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics integrator|tool|robotic-system-integration-tools",
+      "context_level": "role",
+      "context_key": "D140|robotics integrator",
+      "item_type": "tool",
+      "item_key": "robotic-system-integration-tools",
+      "item_name": "robotic system integration tools",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics specialist|skill|automation-analysis",
+      "context_level": "role",
+      "context_key": "D140|robotics specialist",
+      "item_type": "skill",
+      "item_key": "automation-analysis",
+      "item_name": "automation analysis",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics specialist|skill|performance-improvement",
+      "context_level": "role",
+      "context_key": "D140|robotics specialist",
+      "item_type": "skill",
+      "item_key": "performance-improvement",
+      "item_name": "performance improvement",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics specialist|skill|production-data-analysis",
+      "context_level": "role",
+      "context_key": "D140|robotics specialist",
+      "item_type": "skill",
+      "item_key": "production-data-analysis",
+      "item_name": "production data analysis",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics specialist|skill|robotic-systems",
+      "context_level": "role",
+      "context_key": "D140|robotics specialist",
+      "item_type": "skill",
+      "item_key": "robotic-systems",
+      "item_name": "robotic systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics specialist|skill|systems-troubleshooting",
+      "context_level": "role",
+      "context_key": "D140|robotics specialist",
+      "item_type": "skill",
+      "item_key": "systems-troubleshooting",
+      "item_name": "systems troubleshooting",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics specialist|skill|technical-recommendations",
+      "context_level": "role",
+      "context_key": "D140|robotics specialist",
+      "item_type": "skill",
+      "item_key": "technical-recommendations",
+      "item_name": "technical recommendations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics specialist|tool|robotics-diagnostics",
+      "context_level": "role",
+      "context_key": "D140|robotics specialist",
+      "item_type": "tool",
+      "item_key": "robotics-diagnostics",
+      "item_name": "robotics diagnostics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics technician|skill|equipment-troubleshooting",
+      "context_level": "role",
+      "context_key": "D140|robotics technician",
+      "item_type": "skill",
+      "item_key": "equipment-troubleshooting",
+      "item_name": "equipment troubleshooting",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics technician|skill|manufacturing-operations",
+      "context_level": "role",
+      "context_key": "D140|robotics technician",
+      "item_type": "skill",
+      "item_key": "manufacturing-operations",
+      "item_name": "manufacturing operations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics technician|skill|preventive-maintenance",
+      "context_level": "role",
+      "context_key": "D140|robotics technician",
+      "item_type": "skill",
+      "item_key": "preventive-maintenance",
+      "item_name": "preventive maintenance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics technician|skill|robot-maintenance",
+      "context_level": "role",
+      "context_key": "D140|robotics technician",
+      "item_type": "skill",
+      "item_key": "robot-maintenance",
+      "item_name": "robot maintenance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics technician|skill|safe-work-practices",
+      "context_level": "role",
+      "context_key": "D140|robotics technician",
+      "item_type": "skill",
+      "item_key": "safe-work-practices",
+      "item_name": "safe work practices",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D140|robotics technician|skill|technical-documentation",
+      "context_level": "role",
+      "context_key": "D140|robotics technician",
+      "item_type": "skill",
+      "item_key": "technical-documentation",
+      "item_name": "technical documentation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum algorithm developer|skill|quantum-algorithm-design-complexity-theory-quantum-error-mitigation-mathematical-optimisation",
+      "context_level": "role",
+      "context_key": "D141|quantum algorithm developer",
+      "item_type": "skill",
+      "item_key": "quantum-algorithm-design-complexity-theory-quantum-error-mitigation-mathematical-optimisation",
+      "item_name": "quantum algorithm design; complexity theory; quantum error mitigation; mathematical optimisation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum algorithm developer|tool|quantum-computing-subroutines",
+      "context_level": "role",
+      "context_key": "D141|quantum algorithm developer",
+      "item_type": "tool",
+      "item_key": "quantum-computing-subroutines",
+      "item_name": "quantum computing subroutines",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum algorithm developer|tool|quantum-programming-tools-and-software-stack",
+      "context_level": "role",
+      "context_key": "D141|quantum algorithm developer",
+      "item_type": "tool",
+      "item_key": "quantum-programming-tools-and-software-stack",
+      "item_name": "quantum programming tools and software stack",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum algorithm developer|tool|quantum-simulators",
+      "context_level": "role",
+      "context_key": "D141|quantum algorithm developer",
+      "item_type": "tool",
+      "item_key": "quantum-simulators",
+      "item_name": "quantum simulators",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum applications engineer|skill|use-case-analysis-quantum-optimisation-quantum-chemistry-applications-stakeholder-communication",
+      "context_level": "role",
+      "context_key": "D141|quantum applications engineer",
+      "item_type": "skill",
+      "item_key": "use-case-analysis-quantum-optimisation-quantum-chemistry-applications-stakeholder-communication",
+      "item_name": "use case analysis; quantum optimisation; quantum chemistry applications; stakeholder communication",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum applications engineer|tool|quantum-computing-and-simulation-applications",
+      "context_level": "role",
+      "context_key": "D141|quantum applications engineer",
+      "item_type": "tool",
+      "item_key": "quantum-computing-and-simulation-applications",
+      "item_name": "quantum computing and simulation applications",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum cryptography engineer|skill|quantum-key-distribution-cryptographic-protocol-design-network-security-quantum-channel-engineering",
+      "context_level": "role",
+      "context_key": "D141|quantum cryptography engineer",
+      "item_type": "skill",
+      "item_key": "quantum-key-distribution-cryptographic-protocol-design-network-security-quantum-channel-engineering",
+      "item_name": "quantum key distribution; cryptographic protocol design; network security; quantum channel engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum cryptography engineer|tool|quantum-communication-networks",
+      "context_level": "role",
+      "context_key": "D141|quantum cryptography engineer",
+      "item_type": "tool",
+      "item_key": "quantum-communication-networks",
+      "item_name": "quantum communication networks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum cryptography engineer|tool|quantum-key-distribution-systems",
+      "context_level": "role",
+      "context_key": "D141|quantum cryptography engineer",
+      "item_type": "tool",
+      "item_key": "quantum-key-distribution-systems",
+      "item_name": "quantum key distribution systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum cryptography engineer|tool|quantum-random-number-generators",
+      "context_level": "role",
+      "context_key": "D141|quantum cryptography engineer",
+      "item_type": "tool",
+      "item_key": "quantum-random-number-generators",
+      "item_name": "quantum random number generators",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum error correction specialist|skill|quantum-error-correction-codes-fault-tolerant-computing-stabiliser-codes-noise-analysis",
+      "context_level": "role",
+      "context_key": "D141|quantum error correction specialist",
+      "item_type": "skill",
+      "item_key": "quantum-error-correction-codes-fault-tolerant-computing-stabiliser-codes-noise-analysis",
+      "item_name": "quantum error correction codes; fault-tolerant computing; stabiliser codes; noise analysis",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum hardware engineer|skill|qubit-fabrication-cryogenic-systems-quantum-device-characterisation-control-electronics",
+      "context_level": "role",
+      "context_key": "D141|quantum hardware engineer",
+      "item_type": "skill",
+      "item_key": "qubit-fabrication-cryogenic-systems-quantum-device-characterisation-control-electronics",
+      "item_name": "qubit fabrication; cryogenic systems; quantum device characterisation; control electronics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.theabr.org/get-certified/alternate-pathways-to-certification/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum hardware engineer|tool|control-technologies",
+      "context_level": "role",
+      "context_key": "D141|quantum hardware engineer",
+      "item_type": "tool",
+      "item_key": "control-technologies",
+      "item_name": "control technologies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum hardware engineer|tool|cryogenic-vacuum-and-cleanroom-technologies",
+      "context_level": "role",
+      "context_key": "D141|quantum hardware engineer",
+      "item_type": "tool",
+      "item_key": "cryogenic-vacuum-and-cleanroom-technologies",
+      "item_name": "cryogenic, vacuum and cleanroom technologies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum hardware engineer|tool|quantum-state-control-technologies",
+      "context_level": "role",
+      "context_key": "D141|quantum hardware engineer",
+      "item_type": "tool",
+      "item_key": "quantum-state-control-technologies",
+      "item_name": "quantum state control technologies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum machine learning specialist|skill|quantum-machine-learning-algorithms-classical-ml-frameworks-quantum-data-encoding-hybrid-optimisation",
+      "context_level": "role",
+      "context_key": "D141|quantum machine learning specialist",
+      "item_type": "skill",
+      "item_key": "quantum-machine-learning-algorithms-classical-ml-frameworks-quantum-data-encoding-hybrid-optimisation",
+      "item_name": "quantum machine learning algorithms; classical ML frameworks; quantum data encoding; hybrid optimisation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/artificial-intelligence"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum policy and standards specialist|skill|policy-analysis-technical-standardisation-regulatory-writing-stakeholder-engagement",
+      "context_level": "role",
+      "context_key": "D141|quantum policy and standards specialist",
+      "item_type": "skill",
+      "item_key": "policy-analysis-technical-standardisation-regulatory-writing-stakeholder-engagement",
+      "item_name": "policy analysis; technical standardisation; regulatory writing; stakeholder engagement",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum sensing specialist|skill|quantum-metrology-sensor-design-signal-processing-precision-measurement",
+      "context_level": "role",
+      "context_key": "D141|quantum sensing specialist",
+      "item_type": "skill",
+      "item_key": "quantum-metrology-sensor-design-signal-processing-precision-measurement",
+      "item_name": "quantum metrology; sensor design; signal processing; precision measurement",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum sensing specialist|tool|atomic-clocks",
+      "context_level": "role",
+      "context_key": "D141|quantum sensing specialist",
+      "item_type": "tool",
+      "item_key": "atomic-clocks",
+      "item_name": "atomic clocks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum sensing specialist|tool|quantum-sensors-and-imaging-systems",
+      "context_level": "role",
+      "context_key": "D141|quantum sensing specialist",
+      "item_type": "tool",
+      "item_key": "quantum-sensors-and-imaging-systems",
+      "item_name": "quantum sensors and imaging systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum simulation scientist|skill|quantum-simulation-algorithms-quantum-chemistry-many-body-physics-computational-modelling",
+      "context_level": "role",
+      "context_key": "D141|quantum simulation scientist",
+      "item_type": "skill",
+      "item_key": "quantum-simulation-algorithms-quantum-chemistry-many-body-physics-computational-modelling",
+      "item_name": "quantum simulation algorithms; quantum chemistry; many-body physics; computational modelling",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum software engineer|skill|quantum-programming-languages-quantum-circuit-design-hybrid-algorithm-development-software-testing",
+      "context_level": "role",
+      "context_key": "D141|quantum software engineer",
+      "item_type": "skill",
+      "item_key": "quantum-programming-languages-quantum-circuit-design-hybrid-algorithm-development-software-testing",
+      "item_name": "quantum programming languages; quantum circuit design; hybrid algorithm development; software testing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum systems architect|skill|system-architecture-quantum-classical-integration-requirements-engineering-technology-roadmapping",
+      "context_level": "role",
+      "context_key": "D141|quantum systems architect",
+      "item_type": "skill",
+      "item_key": "system-architecture-quantum-classical-integration-requirements-engineering-technology-roadmapping",
+      "item_name": "system architecture; quantum-classical integration; requirements engineering; technology roadmapping",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum systems architect|tool|hybrid-quantum-classical-systems",
+      "context_level": "role",
+      "context_key": "D141|quantum systems architect",
+      "item_type": "tool",
+      "item_key": "hybrid-quantum-classical-systems",
+      "item_name": "hybrid quantum-classical systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technician|skill|laboratory-safety-equipment-calibration-cryogenic-handling-data-logging",
+      "context_level": "role",
+      "context_key": "D141|quantum technician",
+      "item_type": "skill",
+      "item_key": "laboratory-safety-equipment-calibration-cryogenic-handling-data-logging",
+      "item_name": "laboratory safety; equipment calibration; cryogenic handling; data logging",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology business analyst|skill|quantum-technology-literacy",
+      "context_level": "role",
+      "context_key": "D141|quantum technology business analyst",
+      "item_type": "skill",
+      "item_key": "quantum-technology-literacy",
+      "item_name": "quantum technology literacy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.gov.wales/revised-professional-standards-assisting-teaching-teaching-and-leadership-html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology business analyst|skill|requirements-analysis",
+      "context_level": "role",
+      "context_key": "D141|quantum technology business analyst",
+      "item_type": "skill",
+      "item_key": "requirements-analysis",
+      "item_name": "requirements analysis",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology business analyst|skill|technology-strategy",
+      "context_level": "role",
+      "context_key": "D141|quantum technology business analyst",
+      "item_type": "skill",
+      "item_key": "technology-strategy",
+      "item_name": "technology strategy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology business analyst|skill|use-case-analysis",
+      "context_level": "role",
+      "context_key": "D141|quantum technology business analyst",
+      "item_type": "skill",
+      "item_key": "use-case-analysis",
+      "item_name": "use-case analysis",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology core innovator|skill|innovation",
+      "context_level": "role",
+      "context_key": "D141|quantum technology core innovator",
+      "item_type": "skill",
+      "item_key": "innovation",
+      "item_name": "innovation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology core innovator|skill|quantum-algorithms",
+      "context_level": "role",
+      "context_key": "D141|quantum technology core innovator",
+      "item_type": "skill",
+      "item_key": "quantum-algorithms",
+      "item_name": "quantum algorithms",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology core innovator|skill|quantum-sensing",
+      "context_level": "role",
+      "context_key": "D141|quantum technology core innovator",
+      "item_type": "skill",
+      "item_key": "quantum-sensing",
+      "item_name": "quantum sensing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology engineering professional|skill|hardware-software-integration",
+      "context_level": "role",
+      "context_key": "D141|quantum technology engineering professional",
+      "item_type": "skill",
+      "item_key": "hardware-software-integration",
+      "item_name": "hardware-software integration",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology engineering professional|skill|laboratory-methods",
+      "context_level": "role",
+      "context_key": "D141|quantum technology engineering professional",
+      "item_type": "skill",
+      "item_key": "laboratory-methods",
+      "item_name": "laboratory methods",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology engineering professional|skill|systems-engineering",
+      "context_level": "role",
+      "context_key": "D141|quantum technology engineering professional",
+      "item_type": "skill",
+      "item_key": "systems-engineering",
+      "item_name": "systems engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology engineering professional|skill|testing-and-validation",
+      "context_level": "role",
+      "context_key": "D141|quantum technology engineering professional",
+      "item_type": "skill",
+      "item_key": "testing-and-validation",
+      "item_name": "testing and validation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology hardware and software specialist|skill|hardware-integration",
+      "context_level": "role",
+      "context_key": "D141|quantum technology hardware and software specialist",
+      "item_type": "skill",
+      "item_key": "hardware-integration",
+      "item_name": "hardware integration",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology hardware and software specialist|skill|instrumentation",
+      "context_level": "role",
+      "context_key": "D141|quantum technology hardware and software specialist",
+      "item_type": "skill",
+      "item_key": "instrumentation",
+      "item_name": "instrumentation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology hardware and software specialist|skill|quantum-programming",
+      "context_level": "role",
+      "context_key": "D141|quantum technology hardware and software specialist",
+      "item_type": "skill",
+      "item_key": "quantum-programming",
+      "item_name": "quantum programming",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology hardware and software specialist|skill|software-development",
+      "context_level": "role",
+      "context_key": "D141|quantum technology hardware and software specialist",
+      "item_type": "skill",
+      "item_key": "software-development",
+      "item_name": "software development",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology practitioner|skill|experimentation",
+      "context_level": "role",
+      "context_key": "D141|quantum technology practitioner",
+      "item_type": "skill",
+      "item_key": "experimentation",
+      "item_name": "experimentation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology practitioner|skill|quantum-hardware",
+      "context_level": "role",
+      "context_key": "D141|quantum technology practitioner",
+      "item_type": "skill",
+      "item_key": "quantum-hardware",
+      "item_name": "quantum hardware",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology practitioner|skill|quantum-software",
+      "context_level": "role",
+      "context_key": "D141|quantum technology practitioner",
+      "item_type": "skill",
+      "item_key": "quantum-software",
+      "item_name": "quantum software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology practitioner|skill|responsible-technology-use",
+      "context_level": "role",
+      "context_key": "D141|quantum technology practitioner",
+      "item_type": "skill",
+      "item_key": "responsible-technology-use",
+      "item_name": "responsible technology use",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology practitioner|skill|technical-problem-solving",
+      "context_level": "role",
+      "context_key": "D141|quantum technology practitioner",
+      "item_type": "skill",
+      "item_key": "technical-problem-solving",
+      "item_name": "technical problem solving",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology product strategist|skill|business-development",
+      "context_level": "role",
+      "context_key": "D141|quantum technology product strategist",
+      "item_type": "skill",
+      "item_key": "business-development",
+      "item_name": "business development",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology product strategist|skill|product-strategy",
+      "context_level": "role",
+      "context_key": "D141|quantum technology product strategist",
+      "item_type": "skill",
+      "item_key": "product-strategy",
+      "item_name": "product strategy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology product strategist|skill|responsible-innovation",
+      "context_level": "role",
+      "context_key": "D141|quantum technology product strategist",
+      "item_type": "skill",
+      "item_key": "responsible-innovation",
+      "item_name": "responsible innovation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology product strategist|skill|technology-roadmapping",
+      "context_level": "role",
+      "context_key": "D141|quantum technology product strategist",
+      "item_type": "skill",
+      "item_key": "technology-roadmapping",
+      "item_name": "technology roadmapping",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology training specialist|skill|curriculum-mapping",
+      "context_level": "role",
+      "context_key": "D141|quantum technology training specialist",
+      "item_type": "skill",
+      "item_key": "curriculum-mapping",
+      "item_name": "curriculum mapping",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology training specialist|skill|instructional-design",
+      "context_level": "role",
+      "context_key": "D141|quantum technology training specialist",
+      "item_type": "skill",
+      "item_key": "instructional-design",
+      "item_name": "instructional design",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology training specialist|skill|learning-assessment",
+      "context_level": "role",
+      "context_key": "D141|quantum technology training specialist",
+      "item_type": "skill",
+      "item_key": "learning-assessment",
+      "item_name": "learning assessment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.gov.wales/revised-professional-standards-assisting-teaching-teaching-and-leadership-html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology training specialist|skill|technical-explanation",
+      "context_level": "role",
+      "context_key": "D141|quantum technology training specialist",
+      "item_type": "skill",
+      "item_key": "technical-explanation",
+      "item_name": "technical explanation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D141|quantum technology training specialist|skill|workshop-facilitation",
+      "context_level": "role",
+      "context_key": "D141|quantum technology training specialist",
+      "item_type": "skill",
+      "item_key": "workshop-facilitation",
+      "item_name": "workshop facilitation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D144|aviation meteorologist|skill|advise-aircraft-in-hazardous-conditions",
+      "context_level": "role",
+      "context_key": "D144|aviation meteorologist",
+      "item_type": "skill",
+      "item_key": "advise-aircraft-in-hazardous-conditions",
+      "item_name": "advise aircraft in hazardous conditions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D144|aviation meteorologist|skill|collect-weather-related-data",
+      "context_level": "role",
+      "context_key": "D144|aviation meteorologist",
+      "item_type": "skill",
+      "item_key": "collect-weather-related-data",
+      "item_name": "collect weather-related data",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D144|aviation meteorologist|skill|prepare-forecasts-for-take-off-and-landing",
+      "context_level": "role",
+      "context_key": "D144|aviation meteorologist",
+      "item_type": "skill",
+      "item_key": "prepare-forecasts-for-take-off-and-landing",
+      "item_name": "prepare forecasts for take-off and landing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D144|aviation meteorologist|skill|provide-reports-on-routine-meteorological-observations",
+      "context_level": "role",
+      "context_key": "D144|aviation meteorologist",
+      "item_type": "skill",
+      "item_key": "provide-reports-on-routine-meteorological-observations",
+      "item_name": "provide reports on routine meteorological observations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D144|aviation meteorologist|skill|review-meteorological-forecast-data",
+      "context_level": "role",
+      "context_key": "D144|aviation meteorologist",
+      "item_type": "skill",
+      "item_key": "review-meteorological-forecast-data",
+      "item_name": "review meteorological forecast data",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D144|aviation meteorologist|skill|use-meteorological-tools-to-forecast-meteorological-conditions",
+      "context_level": "role",
+      "context_key": "D144|aviation meteorologist",
+      "item_type": "skill",
+      "item_key": "use-meteorological-tools-to-forecast-meteorological-conditions",
+      "item_name": "use meteorological tools to forecast meteorological conditions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D144|climatologist|skill|advise-on-weather-related-issues",
+      "context_level": "role",
+      "context_key": "D144|climatologist",
+      "item_type": "skill",
+      "item_key": "advise-on-weather-related-issues",
+      "item_name": "advise on weather-related issues",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D144|climatologist|skill|carry-out-meteorological-research",
+      "context_level": "role",
+      "context_key": "D144|climatologist",
+      "item_type": "skill",
+      "item_key": "carry-out-meteorological-research",
+      "item_name": "carry out meteorological research",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D144|climatologist|skill|climatology",
+      "context_level": "role",
+      "context_key": "D144|climatologist",
+      "item_type": "skill",
+      "item_key": "climatology",
+      "item_name": "climatology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D144|climatologist|skill|conduct-research-across-disciplines",
+      "context_level": "role",
+      "context_key": "D144|climatologist",
+      "item_type": "skill",
+      "item_key": "conduct-research-across-disciplines",
+      "item_name": "conduct research across disciplines",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D144|climatologist|skill|palaeoclimatology",
+      "context_level": "role",
+      "context_key": "D144|climatologist",
+      "item_type": "skill",
+      "item_key": "palaeoclimatology",
+      "item_name": "palaeoclimatology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D144|weather forecaster|skill|present-during-live-broadcasts",
+      "context_level": "role",
+      "context_key": "D144|weather forecaster",
+      "item_type": "skill",
+      "item_key": "present-during-live-broadcasts",
+      "item_name": "present during live broadcasts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D144|weather forecaster|skill|read-pre-drafted-texts",
+      "context_level": "role",
+      "context_key": "D144|weather forecaster",
+      "item_type": "skill",
+      "item_key": "read-pre-drafted-texts",
+      "item_name": "read pre-drafted texts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D146|heating technician|skill|distribution-of-heating-cooling-and-hot-water",
+      "context_level": "role",
+      "context_key": "D146|heating technician",
+      "item_type": "skill",
+      "item_key": "distribution-of-heating-cooling-and-hot-water",
+      "item_name": "distribution of heating cooling and hot water",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D146|heating technician|skill|install-radiators",
+      "context_level": "role",
+      "context_key": "D146|heating technician",
+      "item_type": "skill",
+      "item_key": "install-radiators",
+      "item_name": "install radiators",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D148|surface engineer|skill|surface-engineering",
+      "context_level": "role",
+      "context_key": "D148|surface engineer",
+      "item_type": "skill",
+      "item_key": "surface-engineering",
+      "item_name": "surface engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D151|First-Line Supervisors of Correctional Officers|tool|guardian-rfid",
+      "context_level": "role",
+      "context_key": "D151|First-Line Supervisors of Correctional Officers",
+      "item_type": "tool",
+      "item_key": "guardian-rfid",
+      "item_name": "Guardian RFID",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D151|First-Line Supervisors of Correctional Officers|tool|jail-management-software",
+      "context_level": "role",
+      "context_key": "D151|First-Line Supervisors of Correctional Officers",
+      "item_type": "tool",
+      "item_key": "jail-management-software",
+      "item_name": "Jail management software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D151|correctional services manager|skill|contribute-to-the-formulation-of-correctional-procedures",
+      "context_level": "role",
+      "context_key": "D151|correctional services manager",
+      "item_type": "skill",
+      "item_key": "contribute-to-the-formulation-of-correctional-procedures",
+      "item_name": "contribute to the formulation of correctional procedures",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D151|correctional services manager|skill|supervise-correctional-procedures",
+      "context_level": "role",
+      "context_key": "D151|correctional services manager",
+      "item_type": "skill",
+      "item_key": "supervise-correctional-procedures",
+      "item_name": "supervise correctional procedures",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D152|museum director|skill|maintain-catalogue-collection",
+      "context_level": "role",
+      "context_key": "D152|museum director",
+      "item_type": "skill",
+      "item_key": "maintain-catalogue-collection",
+      "item_name": "maintain catalogue collection",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D152|museum director|skill|monitor-museum-environment",
+      "context_level": "role",
+      "context_key": "D152|museum director",
+      "item_type": "skill",
+      "item_key": "monitor-museum-environment",
+      "item_name": "monitor museum environment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D152|museum director|skill|paleontology",
+      "context_level": "role",
+      "context_key": "D152|museum director",
+      "item_type": "skill",
+      "item_key": "paleontology",
+      "item_name": "paleontology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D152|zoo curator|skill|animal-acquisition",
+      "context_level": "role",
+      "context_key": "D152|zoo curator",
+      "item_type": "skill",
+      "item_key": "animal-acquisition",
+      "item_name": "animal acquisition",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D152|zoo curator|skill|animal-breeding-programmes",
+      "context_level": "role",
+      "context_key": "D152|zoo curator",
+      "item_type": "skill",
+      "item_key": "animal-breeding-programmes",
+      "item_name": "animal breeding programmes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D155|Nanotechnology Engineering Technologists and Technicians|tool|image-analysis-software",
+      "context_level": "role",
+      "context_key": "D155|Nanotechnology Engineering Technologists and Technicians",
+      "item_type": "tool",
+      "item_key": "image-analysis-software",
+      "item_name": "Image analysis software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D155|Nanotechnology Engineering Technologists and Technicians|tool|optical-imaging-systems",
+      "context_level": "role",
+      "context_key": "D155|Nanotechnology Engineering Technologists and Technicians",
+      "item_type": "tool",
+      "item_key": "optical-imaging-systems",
+      "item_name": "Optical imaging systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D155|Nanotechnology Engineering Technologists and Technicians|tool|simulation-software",
+      "context_level": "role",
+      "context_key": "D155|Nanotechnology Engineering Technologists and Technicians",
+      "item_type": "tool",
+      "item_key": "simulation-software",
+      "item_name": "Simulation software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D155|Nanotechnology Engineering Technologists and Technicians|tool|spmlab",
+      "context_level": "role",
+      "context_key": "D155|Nanotechnology Engineering Technologists and Technicians",
+      "item_type": "tool",
+      "item_key": "spmlab",
+      "item_name": "SPMLab",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D155|advanced materials scientist|skill|materials-characterisation-xrd-sem-tem-materials-modelling-research-publication",
+      "context_level": "role",
+      "context_key": "D155|advanced materials scientist",
+      "item_type": "skill",
+      "item_key": "materials-characterisation-xrd-sem-tem-materials-modelling-research-publication",
+      "item_name": "materials characterisation; XRD/SEM/TEM; materials modelling; research publication",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D155|nanoelectronics specialist|skill|semiconductor-fabrication-device-physics-thin-film-deposition-electron-microscopy",
+      "context_level": "role",
+      "context_key": "D155|nanoelectronics specialist",
+      "item_type": "skill",
+      "item_key": "semiconductor-fabrication-device-physics-thin-film-deposition-electron-microscopy",
+      "item_name": "semiconductor fabrication; device physics; thin film deposition; electron microscopy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.theabr.org/get-certified/alternate-pathways-to-certification/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D155|nanofabrication technician|skill|cleanroom-protocols-photolithography-deposition-equipment-metrology-tools",
+      "context_level": "role",
+      "context_key": "D155|nanofabrication technician",
+      "item_type": "skill",
+      "item_key": "cleanroom-protocols-photolithography-deposition-equipment-metrology-tools",
+      "item_name": "cleanroom protocols; photolithography; deposition equipment; metrology tools",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D155|nanomaterials engineer|skill|nanomaterial-synthesis-characterisation-techniques-materials-science-safety-handling",
+      "context_level": "role",
+      "context_key": "D155|nanomaterials engineer",
+      "item_type": "skill",
+      "item_key": "nanomaterial-synthesis-characterisation-techniques-materials-science-safety-handling",
+      "item_name": "nanomaterial synthesis; characterisation techniques; materials science; safety handling",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D155|surface science engineer|skill|surface-analysis-thin-film-deposition-tribology-contact-angle-measurement",
+      "context_level": "role",
+      "context_key": "D155|surface science engineer",
+      "item_type": "skill",
+      "item_key": "surface-analysis-thin-film-deposition-tribology-contact-angle-measurement",
+      "item_name": "surface analysis; thin film deposition; tribology; contact angle measurement",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D160|beauty salon attendant|skill|clean-toilet-facilities",
+      "context_level": "role",
+      "context_key": "D160|beauty salon attendant",
+      "item_type": "skill",
+      "item_key": "clean-toilet-facilities",
+      "item_name": "clean toilet facilities",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D160|beauty salon attendant|skill|offer-free-samples-of-cosmetics",
+      "context_level": "role",
+      "context_key": "D160|beauty salon attendant",
+      "item_type": "skill",
+      "item_key": "offer-free-samples-of-cosmetics",
+      "item_name": "offer free samples of cosmetics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D160|fashion model|skill|attend-castings",
+      "context_level": "role",
+      "context_key": "D160|fashion model",
+      "item_type": "skill",
+      "item_key": "attend-castings",
+      "item_name": "attend castings",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D160|fashion model|skill|collaborate-on-costume-and-make-up-for-performances",
+      "context_level": "role",
+      "context_key": "D160|fashion model",
+      "item_type": "skill",
+      "item_key": "collaborate-on-costume-and-make-up-for-performances",
+      "item_name": "collaborate on costume and make-up for performances",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D160|fashion model|skill|participate-in-fashion-shows",
+      "context_level": "role",
+      "context_key": "D160|fashion model",
+      "item_type": "skill",
+      "item_key": "participate-in-fashion-shows",
+      "item_name": "participate in fashion shows",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.cityandguilds.com/-/media/productdocuments/creative/creative_techniques/7161/7161_level_2/centre_documents/7161-02-12-22-level-2-textiles-v_3%2C-d-%2C3-pdf.pdf"
+      ]
+    },
+    {
+      "subject_id": "item|role|D160|fashion model|skill|pose-in-front-of-a-camera",
+      "context_level": "role",
+      "context_key": "D160|fashion model",
+      "item_type": "skill",
+      "item_key": "pose-in-front-of-a-camera",
+      "item_name": "pose in front of a camera",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D160|fashion model|skill|promote-products-in-advertisements",
+      "context_level": "role",
+      "context_key": "D160|fashion model",
+      "item_type": "skill",
+      "item_key": "promote-products-in-advertisements",
+      "item_name": "promote products in advertisements",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D160|fashion model|tool|instagram",
+      "context_level": "role",
+      "context_key": "D160|fashion model",
+      "item_type": "tool",
+      "item_key": "instagram",
+      "item_name": "Instagram",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D160|fashion model|tool|tumblr",
+      "context_level": "role",
+      "context_key": "D160|fashion model",
+      "item_type": "tool",
+      "item_key": "tumblr",
+      "item_name": "Tumblr",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D160|hair stylist|skill|apply-hair-cutting-techniques",
+      "context_level": "role",
+      "context_key": "D160|hair stylist",
+      "item_type": "skill",
+      "item_key": "apply-hair-cutting-techniques",
+      "item_name": "apply hair cutting techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D160|hair stylist|skill|history-of-hair-styles",
+      "context_level": "role",
+      "context_key": "D160|hair stylist",
+      "item_type": "skill",
+      "item_key": "history-of-hair-styles",
+      "item_name": "history of hair styles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D160|hair stylist|skill|perform-quick-hair-changeovers",
+      "context_level": "role",
+      "context_key": "D160|hair stylist",
+      "item_type": "skill",
+      "item_key": "perform-quick-hair-changeovers",
+      "item_name": "perform quick hair changeovers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D160|hair stylist|skill|style-hair",
+      "context_level": "role",
+      "context_key": "D160|hair stylist",
+      "item_type": "skill",
+      "item_key": "style-hair",
+      "item_name": "style hair",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D160|hair stylist|tool|point-of-sale-pos-payment-software",
+      "context_level": "role",
+      "context_key": "D160|hair stylist",
+      "item_type": "tool",
+      "item_key": "point-of-sale-pos-payment-software",
+      "item_name": "Point of sale POS payment software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D160|hairdresser assistant|skill|dye-hair",
+      "context_level": "role",
+      "context_key": "D160|hairdresser assistant",
+      "item_type": "skill",
+      "item_key": "dye-hair",
+      "item_name": "dye hair",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D160|hairdresser assistant|skill|hair-products",
+      "context_level": "role",
+      "context_key": "D160|hairdresser assistant",
+      "item_type": "skill",
+      "item_key": "hair-products",
+      "item_name": "hair products",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D160|hairdresser assistant|skill|sell-hair-products",
+      "context_level": "role",
+      "context_key": "D160|hairdresser assistant",
+      "item_type": "skill",
+      "item_key": "sell-hair-products",
+      "item_name": "sell hair products",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D160|hairdresser assistant|skill|treat-scalp-conditions",
+      "context_level": "role",
+      "context_key": "D160|hairdresser assistant",
+      "item_type": "skill",
+      "item_key": "treat-scalp-conditions",
+      "item_name": "treat scalp conditions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D160|hairdresser assistant|skill|use-equipment-for-hair-care",
+      "context_level": "role",
+      "context_key": "D160|hairdresser assistant",
+      "item_type": "skill",
+      "item_key": "use-equipment-for-hair-care",
+      "item_name": "use equipment for hair care",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D160|hairdresser assistant|skill|wash-hair",
+      "context_level": "role",
+      "context_key": "D160|hairdresser assistant",
+      "item_type": "skill",
+      "item_key": "wash-hair",
+      "item_name": "wash hair",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D160|hairdresser|skill|advise-on-hair-style",
+      "context_level": "role",
+      "context_key": "D160|hairdresser",
+      "item_type": "skill",
+      "item_key": "advise-on-hair-style",
+      "item_name": "advise on hair style",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D160|make-up and hair designer|skill|decide-on-make-up-process",
+      "context_level": "role",
+      "context_key": "D160|make-up and hair designer",
+      "item_type": "skill",
+      "item_key": "decide-on-make-up-process",
+      "item_name": "decide on make-up process",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D160|make-up artist|skill|make-up-performing-artists",
+      "context_level": "role",
+      "context_key": "D160|make-up artist",
+      "item_type": "skill",
+      "item_key": "make-up-performing-artists",
+      "item_name": "make up performing artists",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D160|make-up artist|skill|perform-quick-make-up-changeovers",
+      "context_level": "role",
+      "context_key": "D160|make-up artist",
+      "item_type": "skill",
+      "item_key": "perform-quick-make-up-changeovers",
+      "item_name": "perform quick make-up changeovers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D160|make-up artist|skill|test-make-up",
+      "context_level": "role",
+      "context_key": "D160|make-up artist",
+      "item_type": "skill",
+      "item_key": "test-make-up",
+      "item_name": "test make-up",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D160|personal stylist|skill|advise-customers-on-usage-of-cosmetics",
+      "context_level": "role",
+      "context_key": "D160|personal stylist",
+      "item_type": "skill",
+      "item_key": "advise-customers-on-usage-of-cosmetics",
+      "item_name": "advise customers on usage of cosmetics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D161|Emergency Medical Technicians|tool|medical-wizards-er-icu-toolbox",
+      "context_level": "role",
+      "context_key": "D161|Emergency Medical Technicians",
+      "item_type": "tool",
+      "item_key": "medical-wizards-er-icu-toolbox",
+      "item_name": "Medical Wizards ER & ICU ToolBox",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D165|prepared meals nutritionist|skill|develop-policies-for-nutritional-programs",
+      "context_level": "role",
+      "context_key": "D165|prepared meals nutritionist",
+      "item_type": "skill",
+      "item_key": "develop-policies-for-nutritional-programs",
+      "item_name": "develop policies for nutritional programs",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D165|prepared meals nutritionist|skill|supervise-food-in-healthcare",
+      "context_level": "role",
+      "context_key": "D165|prepared meals nutritionist",
+      "item_type": "skill",
+      "item_key": "supervise-food-in-healthcare",
+      "item_name": "supervise food in healthcare",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D165|weight loss consultant|skill|assist-in-performing-physical-exercises",
+      "context_level": "role",
+      "context_key": "D165|weight loss consultant",
+      "item_type": "skill",
+      "item_key": "assist-in-performing-physical-exercises",
+      "item_name": "assist in performing physical exercises",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D165|weight loss consultant|skill|develop-weight-loss-schedule",
+      "context_level": "role",
+      "context_key": "D165|weight loss consultant",
+      "item_type": "skill",
+      "item_key": "develop-weight-loss-schedule",
+      "item_name": "develop weight loss schedule",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D165|weight loss consultant|skill|discuss-weight-loss-plan",
+      "context_level": "role",
+      "context_key": "D165|weight loss consultant",
+      "item_type": "skill",
+      "item_key": "discuss-weight-loss-plan",
+      "item_name": "discuss weight loss plan",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D165|weight loss consultant|skill|identify-the-health-benefits-of-nutritional-changes",
+      "context_level": "role",
+      "context_key": "D165|weight loss consultant",
+      "item_type": "skill",
+      "item_key": "identify-the-health-benefits-of-nutritional-changes",
+      "item_name": "identify the health benefits of nutritional changes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D165|weight loss consultant|skill|nutritional-adequacy-of-food-intake",
+      "context_level": "role",
+      "context_key": "D165|weight loss consultant",
+      "item_type": "skill",
+      "item_key": "nutritional-adequacy-of-food-intake",
+      "item_name": "nutritional adequacy of food intake",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D165|weight loss consultant|skill|offer-advice-on-diet-related-concerns",
+      "context_level": "role",
+      "context_key": "D165|weight loss consultant",
+      "item_type": "skill",
+      "item_key": "offer-advice-on-diet-related-concerns",
+      "item_name": "offer advice on diet-related concerns",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D165|weight loss consultant|skill|perform-nutrition-analysis",
+      "context_level": "role",
+      "context_key": "D165|weight loss consultant",
+      "item_type": "skill",
+      "item_key": "perform-nutrition-analysis",
+      "item_name": "perform nutrition analysis",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D165|weight loss consultant|skill|support-individuals-on-nutrition-changes",
+      "context_level": "role",
+      "context_key": "D165|weight loss consultant",
+      "item_type": "skill",
+      "item_key": "support-individuals-on-nutrition-changes",
+      "item_name": "support individuals on nutrition changes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D166|automotive test driver|skill|maintain-records-related-to-vehicle-operation",
+      "context_level": "role",
+      "context_key": "D166|automotive test driver",
+      "item_type": "skill",
+      "item_key": "maintain-records-related-to-vehicle-operation",
+      "item_name": "maintain records related to vehicle operation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D166|homologation engineer|skill|provide-homologation-management-services",
+      "context_level": "role",
+      "context_key": "D166|homologation engineer",
+      "item_type": "skill",
+      "item_key": "provide-homologation-management-services",
+      "item_name": "provide homologation management services",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D167|XR developer|skill|3d-programming",
+      "context_level": "role",
+      "context_key": "D167|XR developer",
+      "item_type": "skill",
+      "item_key": "3d-programming",
+      "item_name": "3D programming",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D167|XR developer|skill|device-integration",
+      "context_level": "role",
+      "context_key": "D167|XR developer",
+      "item_type": "skill",
+      "item_key": "device-integration",
+      "item_name": "device integration",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D167|XR developer|skill|interactive-systems",
+      "context_level": "role",
+      "context_key": "D167|XR developer",
+      "item_type": "skill",
+      "item_key": "interactive-systems",
+      "item_name": "interactive systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D167|XR developer|skill|testing-and-debugging",
+      "context_level": "role",
+      "context_key": "D167|XR developer",
+      "item_type": "skill",
+      "item_key": "testing-and-debugging",
+      "item_name": "testing and debugging",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D167|XR developer|skill|xr-application-development",
+      "context_level": "role",
+      "context_key": "D167|XR developer",
+      "item_type": "skill",
+      "item_key": "xr-application-development",
+      "item_name": "XR application development",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D167|XR developer|tool|real-time-development-environments",
+      "context_level": "role",
+      "context_key": "D167|XR developer",
+      "item_type": "tool",
+      "item_key": "real-time-development-environments",
+      "item_name": "real-time development environments",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D167|XR developer|tool|xr-software-development-kits",
+      "context_level": "role",
+      "context_key": "D167|XR developer",
+      "item_type": "tool",
+      "item_key": "xr-software-development-kits",
+      "item_name": "XR software development kits",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D167|XR experience builder|skill|3d-content-development",
+      "context_level": "role",
+      "context_key": "D167|XR experience builder",
+      "item_type": "skill",
+      "item_key": "3d-content-development",
+      "item_name": "3D content development",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D167|XR experience builder|skill|immersive-experience-design",
+      "context_level": "role",
+      "context_key": "D167|XR experience builder",
+      "item_type": "skill",
+      "item_key": "immersive-experience-design",
+      "item_name": "immersive experience design",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    }
+  ],
+  "policy": {
+    "review_required_preserved_unless_exact_item_evidence_established": true,
+    "no_relationship_inference": true,
+    "no_promotion": true
+  }
+}

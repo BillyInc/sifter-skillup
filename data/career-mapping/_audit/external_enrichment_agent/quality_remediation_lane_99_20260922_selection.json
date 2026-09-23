@@ -1,0 +1,1722 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-selection.v3",
+  "batch": "quality_remediation_lane_99_20260922",
+  "selected_at": "2026-09-23T10:01:40.832595+00:00",
+  "source_audit": "data/career-mapping/_audit/external_enrichment_agent/item_ledger_quality_audit_2026-09-22.json",
+  "source_sha256": "d9c09d7cf614cd509e45fa30b8f1e63af52e2c9fcc21e4474a4f1bdaa71a3d3d",
+  "selection_method": "atomic shared .residual_quality_remediation_claim.lock; source-order selection of distinct casefold(item_type)|casefold(item_key) keys; existing append-only ledgers are processed; lane97/98/99 selections and ledgers are disjointness claims; legacy selection-only claims are not processed",
+  "claim_lock": ".residual_quality_remediation_claim.lock",
+  "existing_append_only_ledger_files": [
+    "quality_remediation_lane_22_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_24_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_26_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_27_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_28_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_29_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_30_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_31_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_32_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_33_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_34_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_35_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_36_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_37_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_38_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_39_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_40_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_41_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_42_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_43_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_44_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_45_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_46_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_47_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_48_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_49_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_50_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_51_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_52_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_53_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_54_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_55_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_56_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_57_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_58_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_59_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_60_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_61_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_62_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_63_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_64_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_65_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_66_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_67_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_68_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_69_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_70_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_71_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_72_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_73_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_74_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_75_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_76_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_77_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_78_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_79_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_80_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_81_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_82_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_83_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_84_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_85_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_86_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_87_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_88_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_89_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_90_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_91_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_92_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_93_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_94_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_95_20260922_append_only_ledger.jsonl"
+  ],
+  "existing_append_only_ledger_rows": 8644,
+  "existing_processed_distinct_typed_items": 8619,
+  "lane_97_98_99_selection_files_read": [
+    "quality_remediation_lane_97_20260922_selection.json",
+    "quality_remediation_lane_98_20260922_selection.json"
+  ],
+  "lane_97_98_99_selection_typed_items_read": 200,
+  "selection_count": 100,
+  "requested_count": 100,
+  "shortfall": 0,
+  "distinct_typed_keys": [
+    "competency|communicate-professionally",
+    "competency|plan-and-deliver-learning",
+    "skill|literacy",
+    "skill|numeracy",
+    "skill|pedagogy",
+    "competency|protect-critical-infrastructure",
+    "competency|respond-to-emergencies",
+    "competency|support-public-safety",
+    "skill|civil-protection",
+    "skill|crisis-management",
+    "skill|security-operations",
+    "certification|associate-full-member-acipm-mcipm",
+    "certification|cipd-associate-membership",
+    "certification|professional-in-human-resources-international-phri",
+    "certification|shrm-certified-professional-shrm-cp",
+    "certification|chartered-engineer-ceng-via-imeche",
+    "certification|chartered-marine-engineer-cmareng-imarest",
+    "certification|stcw-certificate-of-competency-marine-engineer-officer",
+    "competency|complete-sea-time-and-approved-training",
+    "competency|demonstrate-stcw-competencies",
+    "competency|pass-coc-cop-examinations",
+    "skill|basic-safety",
+    "skill|fire-prevention-and-firefighting",
+    "skill|navigation-and-marine-engineering",
+    "certification|abr-medical-physics-certification",
+    "certification|certified-health-physicist-chp",
+    "competency|control-exposure",
+    "competency|interpret-licence-conditions",
+    "competency|maintain-safety-records",
+    "skill|dose-monitoring",
+    "skill|radiation-protection",
+    "skill|radiological-surveys",
+    "certification|chartered-engineer-ceng-via-raes",
+    "competency|demonstrate-aviation-competence",
+    "competency|follow-icao-aligned-safety-and-operating-standards",
+    "competency|meet-personnel-licensing-requirements",
+    "skill|air-traffic-control",
+    "skill|aircraft-maintenance",
+    "skill|flight-operations",
+    "certification|radiographer-registration-licence",
+    "skill|software-anomalies",
+    "skill|system-backup-best-practice",
+    "tool|atlassian-confluence",
+    "tool|servicenow",
+    "skill|address-problems-critically",
+    "skill|agile-project-management",
+    "skill|execute-integration-testing",
+    "skill|execute-software-tests",
+    "skill|integrate-system-components",
+    "skill|inter-organisational-middleware-system",
+    "skill|levels-of-software-testing",
+    "skill|manage-system-testing",
+    "skill|mdx",
+    "skill|provide-software-testing-documentation",
+    "skill|replicate-customer-software-issues",
+    "skill|report-test-findings",
+    "skill|sparql",
+    "skill|use-an-application-specific-interface",
+    "skill|xquery",
+    "tool|github",
+    "tool|javascript",
+    "tool|jenkins-ci",
+    "skill|attend-to-detail-in-preparation-for-audits",
+    "skill|comply-with-legal-regulations",
+    "skill|database-quality-standards",
+    "skill|ict-process-quality-models",
+    "skill|ict-quality-policy",
+    "skill|ict-security-legislation",
+    "skill|internal-risk-management-policy",
+    "skill|oversee-quality-control",
+    "skill|quality-assurance-methodologies",
+    "skill|set-quality-assurance-objectives",
+    "skill|systems-development-life-cycle",
+    "skill|usability-engineering",
+    "skill|apply-ict-systems-theory",
+    "skill|attack-vectors",
+    "skill|identify-ict-system-weaknesses",
+    "skill|perform-ict-security-testing",
+    "skill|systems-theory",
+    "skill|decision-support-systems",
+    "skill|develop-ict-test-suite",
+    "skill|plan-software-testing",
+    "skill|visual-presentation-techniques",
+    "skill|application-usability",
+    "skill|assess-users-interaction-with-ict-applications",
+    "skill|behavioural-science",
+    "skill|cognitive-psychology",
+    "skill|conduct-research-interview",
+    "skill|human-computer-interaction",
+    "skill|javascript",
+    "skill|test-for-behavioural-patterns",
+    "skill|test-for-emotional-patterns",
+    "skill|use-experience-map",
+    "skill|kdevelop",
+    "skill|migrate-existing-data",
+    "skill|mobile-operating-systems",
+    "skill|ruby-computer-programming",
+    "skill|sas-language",
+    "skill|tools-for-software-configuration-management",
+    "skill|use-software-design-patterns"
+  ],
+  "rows": [
+    {
+      "subject_id": "item|domain|D127|competency|communicate-professionally",
+      "context_level": "domain",
+      "context_key": "D127",
+      "item_type": "competency",
+      "item_key": "communicate-professionally",
+      "item_name": "communicate professionally",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.gov.wales/revised-professional-standards-assisting-teaching-teaching-and-leadership-html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D127|competency|plan-and-deliver-learning",
+      "context_level": "domain",
+      "context_key": "D127",
+      "item_type": "competency",
+      "item_key": "plan-and-deliver-learning",
+      "item_name": "plan and deliver learning",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.gov.wales/revised-professional-standards-assisting-teaching-teaching-and-leadership-html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D127|skill|literacy",
+      "context_level": "domain",
+      "context_key": "D127",
+      "item_type": "skill",
+      "item_key": "literacy",
+      "item_name": "literacy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.gov.wales/revised-professional-standards-assisting-teaching-teaching-and-leadership-html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D127|skill|numeracy",
+      "context_level": "domain",
+      "context_key": "D127",
+      "item_type": "skill",
+      "item_key": "numeracy",
+      "item_name": "numeracy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.gov.wales/revised-professional-standards-assisting-teaching-teaching-and-leadership-html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D127|skill|pedagogy",
+      "context_level": "domain",
+      "context_key": "D127",
+      "item_type": "skill",
+      "item_key": "pedagogy",
+      "item_name": "pedagogy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.gov.wales/revised-professional-standards-assisting-teaching-teaching-and-leadership-html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D129|competency|protect-critical-infrastructure",
+      "context_level": "domain",
+      "context_key": "D129",
+      "item_type": "competency",
+      "item_key": "protect-critical-infrastructure",
+      "item_name": "protect critical infrastructure",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.cisa.gov/news-events/directives/homeland-security-presidential-directive-7"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D129|competency|respond-to-emergencies",
+      "context_level": "domain",
+      "context_key": "D129",
+      "item_type": "competency",
+      "item_key": "respond-to-emergencies",
+      "item_name": "respond to emergencies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.cisa.gov/news-events/directives/homeland-security-presidential-directive-7"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D129|competency|support-public-safety",
+      "context_level": "domain",
+      "context_key": "D129",
+      "item_type": "competency",
+      "item_key": "support-public-safety",
+      "item_name": "support public safety",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.cisa.gov/news-events/directives/homeland-security-presidential-directive-7"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D129|skill|civil-protection",
+      "context_level": "domain",
+      "context_key": "D129",
+      "item_type": "skill",
+      "item_key": "civil-protection",
+      "item_name": "civil protection",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.cisa.gov/news-events/directives/homeland-security-presidential-directive-7"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D129|skill|crisis-management",
+      "context_level": "domain",
+      "context_key": "D129",
+      "item_type": "skill",
+      "item_key": "crisis-management",
+      "item_name": "crisis management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.cisa.gov/news-events/directives/homeland-security-presidential-directive-7"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D129|skill|security-operations",
+      "context_level": "domain",
+      "context_key": "D129",
+      "item_type": "skill",
+      "item_key": "security-operations",
+      "item_name": "security operations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.cisa.gov/news-events/directives/homeland-security-presidential-directive-7"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D130|certification|associate-full-member-acipm-mcipm",
+      "context_level": "domain",
+      "context_key": "D130",
+      "item_type": "certification",
+      "item_key": "associate-full-member-acipm-mcipm",
+      "item_name": "Associate/Full Member (ACIPM/MCIPM)",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://cipmnigeria.org/membership/hr-practitioners-licence/"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D130|certification|cipd-associate-membership",
+      "context_level": "domain",
+      "context_key": "D130",
+      "item_type": "certification",
+      "item_key": "cipd-associate-membership",
+      "item_name": "CIPD Associate Membership",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://prod.cipd.org/en/membership/levels/"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D130|certification|professional-in-human-resources-international-phri",
+      "context_level": "domain",
+      "context_key": "D130",
+      "item_type": "certification",
+      "item_key": "professional-in-human-resources-international-phri",
+      "item_name": "Professional in Human Resources – International (PHRi)",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.hrci.org/certifications/individual-certifications/phri"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D130|certification|shrm-certified-professional-shrm-cp",
+      "context_level": "domain",
+      "context_key": "D130",
+      "item_type": "certification",
+      "item_key": "shrm-certified-professional-shrm-cp",
+      "item_name": "SHRM Certified Professional (SHRM-CP)",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.shrm.org/credentials/certification/shrm-cp"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D131|certification|chartered-engineer-ceng-via-imeche",
+      "context_level": "domain",
+      "context_key": "D131",
+      "item_type": "certification",
+      "item_key": "chartered-engineer-ceng-via-imeche",
+      "item_name": "Chartered Engineer (CEng via IMechE)",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D134|certification|chartered-marine-engineer-cmareng-imarest",
+      "context_level": "domain",
+      "context_key": "D134",
+      "item_type": "certification",
+      "item_key": "chartered-marine-engineer-cmareng-imarest",
+      "item_name": "Chartered Marine Engineer (CMarEng, IMarEST)",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.imarest.org/membership/professional-registration/engineering/chartered-engineer.html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D134|certification|stcw-certificate-of-competency-marine-engineer-officer",
+      "context_level": "domain",
+      "context_key": "D134",
+      "item_type": "certification",
+      "item_key": "stcw-certificate-of-competency-marine-engineer-officer",
+      "item_name": "STCW Certificate of Competency (Marine Engineer Officer)",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.imarest.org/membership/professional-registration/engineering/chartered-engineer.html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D134|competency|complete-sea-time-and-approved-training",
+      "context_level": "domain",
+      "context_key": "D134",
+      "item_type": "competency",
+      "item_key": "complete-sea-time-and-approved-training",
+      "item_name": "complete sea time and approved training",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.gov.uk/guidance/apply-for-a-uk-seafarer-coc-deck-and-engineer-officers"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D134|competency|demonstrate-stcw-competencies",
+      "context_level": "domain",
+      "context_key": "D134",
+      "item_type": "competency",
+      "item_key": "demonstrate-stcw-competencies",
+      "item_name": "demonstrate STCW competencies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.gov.uk/guidance/apply-for-a-uk-seafarer-coc-deck-and-engineer-officers"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D134|competency|pass-coc-cop-examinations",
+      "context_level": "domain",
+      "context_key": "D134",
+      "item_type": "competency",
+      "item_key": "pass-coc-cop-examinations",
+      "item_name": "pass COC/COP examinations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.gov.uk/guidance/apply-for-a-uk-seafarer-coc-deck-and-engineer-officers"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D134|skill|basic-safety",
+      "context_level": "domain",
+      "context_key": "D134",
+      "item_type": "skill",
+      "item_key": "basic-safety",
+      "item_name": "basic safety",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.gov.uk/guidance/apply-for-a-uk-seafarer-coc-deck-and-engineer-officers"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D134|skill|fire-prevention-and-firefighting",
+      "context_level": "domain",
+      "context_key": "D134",
+      "item_type": "skill",
+      "item_key": "fire-prevention-and-firefighting",
+      "item_name": "fire prevention and firefighting",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.gov.uk/guidance/apply-for-a-uk-seafarer-coc-deck-and-engineer-officers"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D134|skill|navigation-and-marine-engineering",
+      "context_level": "domain",
+      "context_key": "D134",
+      "item_type": "skill",
+      "item_key": "navigation-and-marine-engineering",
+      "item_name": "navigation and marine engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.imarest.org/membership/professional-registration/engineering/chartered-engineer.html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D135|certification|abr-medical-physics-certification",
+      "context_level": "domain",
+      "context_key": "D135",
+      "item_type": "certification",
+      "item_key": "abr-medical-physics-certification",
+      "item_name": "ABR Medical Physics Certification",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.theabr.org/get-certified/alternate-pathways-to-certification/"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D135|certification|certified-health-physicist-chp",
+      "context_level": "domain",
+      "context_key": "D135",
+      "item_type": "certification",
+      "item_key": "certified-health-physicist-chp",
+      "item_name": "Certified Health Physicist (CHP)",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.aahp-abhp.org/certification/"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D135|competency|control-exposure",
+      "context_level": "domain",
+      "context_key": "D135",
+      "item_type": "competency",
+      "item_key": "control-exposure",
+      "item_name": "control exposure",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.hse.gov.uk/radiation/ionising/doses/"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D135|competency|interpret-licence-conditions",
+      "context_level": "domain",
+      "context_key": "D135",
+      "item_type": "competency",
+      "item_key": "interpret-licence-conditions",
+      "item_name": "interpret licence conditions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.hse.gov.uk/radiation/ionising/doses/"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D135|competency|maintain-safety-records",
+      "context_level": "domain",
+      "context_key": "D135",
+      "item_type": "competency",
+      "item_key": "maintain-safety-records",
+      "item_name": "maintain safety records",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.hse.gov.uk/radiation/ionising/doses/"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D135|skill|dose-monitoring",
+      "context_level": "domain",
+      "context_key": "D135",
+      "item_type": "skill",
+      "item_key": "dose-monitoring",
+      "item_name": "dose monitoring",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.hse.gov.uk/radiation/ionising/doses/"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D135|skill|radiation-protection",
+      "context_level": "domain",
+      "context_key": "D135",
+      "item_type": "skill",
+      "item_key": "radiation-protection",
+      "item_name": "radiation protection",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.hse.gov.uk/radiation/ionising/doses/"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D135|skill|radiological-surveys",
+      "context_level": "domain",
+      "context_key": "D135",
+      "item_type": "skill",
+      "item_key": "radiological-surveys",
+      "item_name": "radiological surveys",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.hse.gov.uk/radiation/ionising/doses/"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D136|certification|chartered-engineer-ceng-via-raes",
+      "context_level": "domain",
+      "context_key": "D136",
+      "item_type": "certification",
+      "item_key": "chartered-engineer-ceng-via-raes",
+      "item_name": "Chartered Engineer (CEng via RAeS)",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D136|competency|demonstrate-aviation-competence",
+      "context_level": "domain",
+      "context_key": "D136",
+      "item_type": "competency",
+      "item_key": "demonstrate-aviation-competence",
+      "item_name": "demonstrate aviation competence",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D136|competency|follow-icao-aligned-safety-and-operating-standards",
+      "context_level": "domain",
+      "context_key": "D136",
+      "item_type": "competency",
+      "item_key": "follow-icao-aligned-safety-and-operating-standards",
+      "item_name": "follow ICAO-aligned safety and operating standards",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D136|competency|meet-personnel-licensing-requirements",
+      "context_level": "domain",
+      "context_key": "D136",
+      "item_type": "competency",
+      "item_key": "meet-personnel-licensing-requirements",
+      "item_name": "meet personnel licensing requirements",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D136|skill|air-traffic-control",
+      "context_level": "domain",
+      "context_key": "D136",
+      "item_type": "skill",
+      "item_key": "air-traffic-control",
+      "item_name": "air-traffic control",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D136|skill|aircraft-maintenance",
+      "context_level": "domain",
+      "context_key": "D136",
+      "item_type": "skill",
+      "item_key": "aircraft-maintenance",
+      "item_name": "aircraft maintenance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://ncaa.gov.ng/documents/advisory-circulars/aircraft-maintenance-engineering-mechanic/"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D136|skill|flight-operations",
+      "context_level": "domain",
+      "context_key": "D136",
+      "item_type": "skill",
+      "item_key": "flight-operations",
+      "item_name": "flight operations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D137|certification|radiographer-registration-licence",
+      "context_level": "domain",
+      "context_key": "D137",
+      "item_type": "certification",
+      "item_key": "radiographer-registration-licence",
+      "item_name": "Radiographer Registration / Licence",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://portal.rrbn.gov.ng/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT disaster recovery analyst|skill|software-anomalies",
+      "context_level": "role",
+      "context_key": "D001|ICT disaster recovery analyst",
+      "item_type": "skill",
+      "item_key": "software-anomalies",
+      "item_name": "software anomalies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT disaster recovery analyst|skill|system-backup-best-practice",
+      "context_level": "role",
+      "context_key": "D001|ICT disaster recovery analyst",
+      "item_type": "skill",
+      "item_key": "system-backup-best-practice",
+      "item_name": "system backup best practice",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://csrc.nist.gov/publications/detail/sp/800-34/rev-1/final"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT disaster recovery analyst|tool|atlassian-confluence",
+      "context_level": "role",
+      "context_key": "D001|ICT disaster recovery analyst",
+      "item_type": "tool",
+      "item_key": "atlassian-confluence",
+      "item_name": "Atlassian Confluence",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.atlassian.com/software/confluence"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT disaster recovery analyst|tool|servicenow",
+      "context_level": "role",
+      "context_key": "D001|ICT disaster recovery analyst",
+      "item_type": "tool",
+      "item_key": "servicenow",
+      "item_name": "ServiceNow",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.servicenow.com/products/itsm.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT integration tester|skill|address-problems-critically",
+      "context_level": "role",
+      "context_key": "D001|ICT integration tester",
+      "item_type": "skill",
+      "item_key": "address-problems-critically",
+      "item_name": "address problems critically",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nationalacademies.org/our-work/the-responsible-conduct-of-research"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT integration tester|skill|agile-project-management",
+      "context_level": "role",
+      "context_key": "D001|ICT integration tester",
+      "item_type": "skill",
+      "item_key": "agile-project-management",
+      "item_name": "Agile project management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.atlassian.com/agile"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT integration tester|skill|execute-integration-testing",
+      "context_level": "role",
+      "context_key": "D001|ICT integration tester",
+      "item_type": "skill",
+      "item_key": "execute-integration-testing",
+      "item_name": "execute integration testing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT integration tester|skill|execute-software-tests",
+      "context_level": "role",
+      "context_key": "D001|ICT integration tester",
+      "item_type": "skill",
+      "item_key": "execute-software-tests",
+      "item_name": "execute software tests",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT integration tester|skill|integrate-system-components",
+      "context_level": "role",
+      "context_key": "D001|ICT integration tester",
+      "item_type": "skill",
+      "item_key": "integrate-system-components",
+      "item_name": "integrate system components",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.incose.org/communities/what-is-systems-engineering"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT integration tester|skill|inter-organisational-middleware-system",
+      "context_level": "role",
+      "context_key": "D001|ICT integration tester",
+      "item_type": "skill",
+      "item_key": "inter-organisational-middleware-system",
+      "item_name": "inter-organisational middleware system",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.incose.org/communities/what-is-systems-engineering"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT integration tester|skill|levels-of-software-testing",
+      "context_level": "role",
+      "context_key": "D001|ICT integration tester",
+      "item_type": "skill",
+      "item_key": "levels-of-software-testing",
+      "item_name": "levels of software testing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT integration tester|skill|manage-system-testing",
+      "context_level": "role",
+      "context_key": "D001|ICT integration tester",
+      "item_type": "skill",
+      "item_key": "manage-system-testing",
+      "item_name": "manage system testing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT integration tester|skill|mdx",
+      "context_level": "role",
+      "context_key": "D001|ICT integration tester",
+      "item_type": "skill",
+      "item_key": "mdx",
+      "item_name": "MDX",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://learn.microsoft.com/en-us/analysis-services/mdx/mdx-reference"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT integration tester|skill|provide-software-testing-documentation",
+      "context_level": "role",
+      "context_key": "D001|ICT integration tester",
+      "item_type": "skill",
+      "item_key": "provide-software-testing-documentation",
+      "item_name": "provide software testing documentation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT integration tester|skill|replicate-customer-software-issues",
+      "context_level": "role",
+      "context_key": "D001|ICT integration tester",
+      "item_type": "skill",
+      "item_key": "replicate-customer-software-issues",
+      "item_name": "replicate customer software issues",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT integration tester|skill|report-test-findings",
+      "context_level": "role",
+      "context_key": "D001|ICT integration tester",
+      "item_type": "skill",
+      "item_key": "report-test-findings",
+      "item_name": "report test findings",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT integration tester|skill|sparql",
+      "context_level": "role",
+      "context_key": "D001|ICT integration tester",
+      "item_type": "skill",
+      "item_key": "sparql",
+      "item_name": "SPARQL",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.w3.org/TR/sparql12-query/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT integration tester|skill|use-an-application-specific-interface",
+      "context_level": "role",
+      "context_key": "D001|ICT integration tester",
+      "item_type": "skill",
+      "item_key": "use-an-application-specific-interface",
+      "item_name": "use an application-specific interface",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.incose.org/communities/what-is-systems-engineering"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT integration tester|skill|xquery",
+      "context_level": "role",
+      "context_key": "D001|ICT integration tester",
+      "item_type": "skill",
+      "item_key": "xquery",
+      "item_name": "XQuery",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.w3.org/XML/Query/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT integration tester|tool|github",
+      "context_level": "role",
+      "context_key": "D001|ICT integration tester",
+      "item_type": "tool",
+      "item_key": "github",
+      "item_name": "GitHub",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://github.com/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT integration tester|tool|javascript",
+      "context_level": "role",
+      "context_key": "D001|ICT integration tester",
+      "item_type": "tool",
+      "item_key": "javascript",
+      "item_name": "JavaScript",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT integration tester|tool|jenkins-ci",
+      "context_level": "role",
+      "context_key": "D001|ICT integration tester",
+      "item_type": "tool",
+      "item_key": "jenkins-ci",
+      "item_name": "Jenkins CI",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.jenkins.io/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT quality assurance manager|skill|attend-to-detail-in-preparation-for-audits",
+      "context_level": "role",
+      "context_key": "D001|ICT quality assurance manager",
+      "item_type": "skill",
+      "item_key": "attend-to-detail-in-preparation-for-audits",
+      "item_name": "attend to detail in preparation for audits",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT quality assurance manager|skill|comply-with-legal-regulations",
+      "context_level": "role",
+      "context_key": "D001|ICT quality assurance manager",
+      "item_type": "skill",
+      "item_key": "comply-with-legal-regulations",
+      "item_name": "comply with legal regulations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/iso-9001-quality-management.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT quality assurance manager|skill|database-quality-standards",
+      "context_level": "role",
+      "context_key": "D001|ICT quality assurance manager",
+      "item_type": "skill",
+      "item_key": "database-quality-standards",
+      "item_name": "database quality standards",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/iso-9001-quality-management.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT quality assurance manager|skill|ict-process-quality-models",
+      "context_level": "role",
+      "context_key": "D001|ICT quality assurance manager",
+      "item_type": "skill",
+      "item_key": "ict-process-quality-models",
+      "item_name": "ICT process quality models",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/iso-9001-quality-management.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT quality assurance manager|skill|ict-quality-policy",
+      "context_level": "role",
+      "context_key": "D001|ICT quality assurance manager",
+      "item_type": "skill",
+      "item_key": "ict-quality-policy",
+      "item_name": "ICT quality policy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/iso-9001-quality-management.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT quality assurance manager|skill|ict-security-legislation",
+      "context_level": "role",
+      "context_key": "D001|ICT quality assurance manager",
+      "item_type": "skill",
+      "item_key": "ict-security-legislation",
+      "item_name": "ICT security legislation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://owasp.org/www-project-web-security-testing-guide/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT quality assurance manager|skill|internal-risk-management-policy",
+      "context_level": "role",
+      "context_key": "D001|ICT quality assurance manager",
+      "item_type": "skill",
+      "item_key": "internal-risk-management-policy",
+      "item_name": "internal risk management policy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/iso-9001-quality-management.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT quality assurance manager|skill|oversee-quality-control",
+      "context_level": "role",
+      "context_key": "D001|ICT quality assurance manager",
+      "item_type": "skill",
+      "item_key": "oversee-quality-control",
+      "item_name": "oversee quality control",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/iso-9001-quality-management.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT quality assurance manager|skill|quality-assurance-methodologies",
+      "context_level": "role",
+      "context_key": "D001|ICT quality assurance manager",
+      "item_type": "skill",
+      "item_key": "quality-assurance-methodologies",
+      "item_name": "quality assurance methodologies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT quality assurance manager|skill|set-quality-assurance-objectives",
+      "context_level": "role",
+      "context_key": "D001|ICT quality assurance manager",
+      "item_type": "skill",
+      "item_key": "set-quality-assurance-objectives",
+      "item_name": "set quality assurance objectives",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT quality assurance manager|skill|systems-development-life-cycle",
+      "context_level": "role",
+      "context_key": "D001|ICT quality assurance manager",
+      "item_type": "skill",
+      "item_key": "systems-development-life-cycle",
+      "item_name": "systems development life-cycle",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.incose.org/communities/what-is-systems-engineering"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT quality assurance manager|skill|usability-engineering",
+      "context_level": "role",
+      "context_key": "D001|ICT quality assurance manager",
+      "item_type": "skill",
+      "item_key": "usability-engineering",
+      "item_name": "usability engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nngroup.com/articles/definition-user-experience/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT system tester|skill|apply-ict-systems-theory",
+      "context_level": "role",
+      "context_key": "D001|ICT system tester",
+      "item_type": "skill",
+      "item_key": "apply-ict-systems-theory",
+      "item_name": "apply ICT systems theory",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.incose.org/communities/what-is-systems-engineering"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT system tester|skill|attack-vectors",
+      "context_level": "role",
+      "context_key": "D001|ICT system tester",
+      "item_type": "skill",
+      "item_key": "attack-vectors",
+      "item_name": "attack vectors",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://owasp.org/www-project-web-security-testing-guide/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT system tester|skill|identify-ict-system-weaknesses",
+      "context_level": "role",
+      "context_key": "D001|ICT system tester",
+      "item_type": "skill",
+      "item_key": "identify-ict-system-weaknesses",
+      "item_name": "identify ICT system weaknesses",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT system tester|skill|perform-ict-security-testing",
+      "context_level": "role",
+      "context_key": "D001|ICT system tester",
+      "item_type": "skill",
+      "item_key": "perform-ict-security-testing",
+      "item_name": "perform ICT security testing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT system tester|skill|systems-theory",
+      "context_level": "role",
+      "context_key": "D001|ICT system tester",
+      "item_type": "skill",
+      "item_key": "systems-theory",
+      "item_name": "systems theory",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.incose.org/communities/what-is-systems-engineering"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT test analyst|skill|decision-support-systems",
+      "context_level": "role",
+      "context_key": "D001|ICT test analyst",
+      "item_type": "skill",
+      "item_key": "decision-support-systems",
+      "item_name": "decision support systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.ibm.com/topics/decision-support-systems"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT test analyst|skill|develop-ict-test-suite",
+      "context_level": "role",
+      "context_key": "D001|ICT test analyst",
+      "item_type": "skill",
+      "item_key": "develop-ict-test-suite",
+      "item_name": "develop ICT test suite",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT test analyst|skill|plan-software-testing",
+      "context_level": "role",
+      "context_key": "D001|ICT test analyst",
+      "item_type": "skill",
+      "item_key": "plan-software-testing",
+      "item_name": "plan software testing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT test analyst|skill|visual-presentation-techniques",
+      "context_level": "role",
+      "context_key": "D001|ICT test analyst",
+      "item_type": "skill",
+      "item_key": "visual-presentation-techniques",
+      "item_name": "visual presentation techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nationalacademies.org/our-work/the-responsible-conduct-of-research"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT usability tester|skill|application-usability",
+      "context_level": "role",
+      "context_key": "D001|ICT usability tester",
+      "item_type": "skill",
+      "item_key": "application-usability",
+      "item_name": "application usability",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nngroup.com/articles/definition-user-experience/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT usability tester|skill|assess-users-interaction-with-ict-applications",
+      "context_level": "role",
+      "context_key": "D001|ICT usability tester",
+      "item_type": "skill",
+      "item_key": "assess-users-interaction-with-ict-applications",
+      "item_name": "assess users' interaction with ICT applications",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nngroup.com/articles/definition-user-experience/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT usability tester|skill|behavioural-science",
+      "context_level": "role",
+      "context_key": "D001|ICT usability tester",
+      "item_type": "skill",
+      "item_key": "behavioural-science",
+      "item_name": "behavioural science",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nngroup.com/articles/definition-user-experience/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT usability tester|skill|cognitive-psychology",
+      "context_level": "role",
+      "context_key": "D001|ICT usability tester",
+      "item_type": "skill",
+      "item_key": "cognitive-psychology",
+      "item_name": "cognitive psychology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nngroup.com/articles/definition-user-experience/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT usability tester|skill|conduct-research-interview",
+      "context_level": "role",
+      "context_key": "D001|ICT usability tester",
+      "item_type": "skill",
+      "item_key": "conduct-research-interview",
+      "item_name": "conduct research interview",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nationalacademies.org/our-work/the-responsible-conduct-of-research"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT usability tester|skill|human-computer-interaction",
+      "context_level": "role",
+      "context_key": "D001|ICT usability tester",
+      "item_type": "skill",
+      "item_key": "human-computer-interaction",
+      "item_name": "human-computer interaction",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nngroup.com/articles/definition-user-experience/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT usability tester|skill|javascript",
+      "context_level": "role",
+      "context_key": "D001|ICT usability tester",
+      "item_type": "skill",
+      "item_key": "javascript",
+      "item_name": "JavaScript",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT usability tester|skill|test-for-behavioural-patterns",
+      "context_level": "role",
+      "context_key": "D001|ICT usability tester",
+      "item_type": "skill",
+      "item_key": "test-for-behavioural-patterns",
+      "item_name": "test for behavioural patterns",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT usability tester|skill|test-for-emotional-patterns",
+      "context_level": "role",
+      "context_key": "D001|ICT usability tester",
+      "item_type": "skill",
+      "item_key": "test-for-emotional-patterns",
+      "item_name": "test for emotional patterns",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|ICT usability tester|skill|use-experience-map",
+      "context_level": "role",
+      "context_key": "D001|ICT usability tester",
+      "item_type": "skill",
+      "item_key": "use-experience-map",
+      "item_name": "use experience map",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nngroup.com/articles/definition-user-experience/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|mobile application developer|skill|kdevelop",
+      "context_level": "role",
+      "context_key": "D001|mobile application developer",
+      "item_type": "skill",
+      "item_key": "kdevelop",
+      "item_name": "KDevelop",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://kdevelop.org/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|mobile application developer|skill|migrate-existing-data",
+      "context_level": "role",
+      "context_key": "D001|mobile application developer",
+      "item_type": "skill",
+      "item_key": "migrate-existing-data",
+      "item_name": "migrate existing data",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/72018.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|mobile application developer|skill|mobile-operating-systems",
+      "context_level": "role",
+      "context_key": "D001|mobile application developer",
+      "item_type": "skill",
+      "item_key": "mobile-operating-systems",
+      "item_name": "mobile operating systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/72018.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|mobile application developer|skill|ruby-computer-programming",
+      "context_level": "role",
+      "context_key": "D001|mobile application developer",
+      "item_type": "skill",
+      "item_key": "ruby-computer-programming",
+      "item_name": "Ruby (computer programming)",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.ruby-lang.org/en/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|mobile application developer|skill|sas-language",
+      "context_level": "role",
+      "context_key": "D001|mobile application developer",
+      "item_type": "skill",
+      "item_key": "sas-language",
+      "item_name": "SAS language",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.sas.com/en_us/software/viya.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|mobile application developer|skill|tools-for-software-configuration-management",
+      "context_level": "role",
+      "context_key": "D001|mobile application developer",
+      "item_type": "skill",
+      "item_key": "tools-for-software-configuration-management",
+      "item_name": "tools for software configuration management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/72018.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D001|mobile application developer|skill|use-software-design-patterns",
+      "context_level": "role",
+      "context_key": "D001|mobile application developer",
+      "item_type": "skill",
+      "item_key": "use-software-design-patterns",
+      "item_name": "use software design patterns",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.sei.cmu.edu/our-work/software-architecture/"
+      ]
+    }
+  ],
+  "policy": {
+    "identity": "casefold(item_type)|casefold(item_key)",
+    "review_required_preserved_unless_exact_item_type_context_ownership_proven": true,
+    "no_relationship_inference": true,
+    "no_promotion": true,
+    "items_only": true
+  }
+}

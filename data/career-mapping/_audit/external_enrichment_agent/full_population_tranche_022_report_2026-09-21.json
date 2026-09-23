@@ -1,0 +1,40 @@
+{
+  "schema": "2026-09-21.full-population-item-enrichment-tranche-report.v2",
+  "tranche": "022",
+  "accessed_on": "2026-09-21",
+  "selection": "data/career-mapping/_audit/external_enrichment_agent/full_population_tranche_022_selection_2026-09-21.json",
+  "checkpoint": "data/career-mapping/_audit/external_enrichment_agent/full_population_tranche_022_checkpoint_2026-09-21.json",
+  "ledger": "data/career-mapping/_audit/external_enrichment_agent/full_population_tranche_022_search_ledger_2026-09-21.jsonl",
+  "status": "completed",
+  "scope": {
+    "selected_contextual_item_rows": 100,
+    "unique_typed_items_searched_once": 63,
+    "item_rows_written": 100,
+    "relationship_rows": 0,
+    "d078_rows": 0
+  },
+  "decision_counts": {
+    "rows_searched": 100,
+    "linked": 46,
+    "review_required": 54,
+    "genuinely_unavailable": 0
+  },
+  "reconciliation": {
+    "selection_ids": 100,
+    "ledger_ids": 100,
+    "missing_from_ledger": 0,
+    "duplicate_ledger_ids": 0,
+    "invalid_https_urls": 0,
+    "d078_rows": 0
+  },
+  "guardrails": {
+    "selection_checkpoint_saved_before_search": true,
+    "relationships_touched": false,
+    "sql_touched": false,
+    "seeds_touched": false,
+    "ui_or_application_touched": false,
+    "browser_proof_touched": false,
+    "prior_item_ledgers_overlapped": false
+  },
+  "result": "Exactly 100 deterministic pending non-D078 item rows were searched; one evidence row was written per contextual identity and no relationship or requirement was inferred."
+}

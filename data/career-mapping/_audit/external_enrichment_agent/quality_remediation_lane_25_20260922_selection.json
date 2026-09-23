@@ -1,0 +1,1618 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-selection.v2",
+  "batch": "quality_remediation_lane_25_20260922",
+  "selected_at": "2026-09-22",
+  "source_audit": "data/career-mapping/_audit/external_enrichment_agent/item_ledger_quality_audit_2026-09-22.json",
+  "source_sha256": "fd66ba82e6b6580327ff0ca1a5b1988026e2397d175c06b14031d87f061e1c66",
+  "selection_method": "atomic shared lock; exclude all prior valid claims by contextual and typed identity",
+  "prior_claimed_contextual_ids": 1772,
+  "prior_claimed_typed_items": 1146,
+  "selection_count": 100,
+  "requested_count": 100,
+  "shortfall": 0,
+  "rows": [
+    {
+      "subject_id": "item|role|D015|accountant|skill|depreciation",
+      "context_level": "role",
+      "context_key": "D015|accountant",
+      "item_type": "skill",
+      "item_key": "depreciation",
+      "item_name": "depreciation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|accountant|skill|film-production-process",
+      "context_level": "role",
+      "context_key": "D015|accountant",
+      "item_type": "skill",
+      "item_key": "film-production-process",
+      "item_name": "film production process",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|accountant|skill|liquidity-management",
+      "context_level": "role",
+      "context_key": "D015|accountant",
+      "item_type": "skill",
+      "item_key": "liquidity-management",
+      "item_name": "liquidity management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|accounting analyst|skill|check-accounting-records",
+      "context_level": "role",
+      "context_key": "D015|accounting analyst",
+      "item_type": "skill",
+      "item_key": "check-accounting-records",
+      "item_name": "check accounting records",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|accounting analyst|skill|global-standards-for-sustainability-reporting",
+      "context_level": "role",
+      "context_key": "D015|accounting analyst",
+      "item_type": "skill",
+      "item_key": "global-standards-for-sustainability-reporting",
+      "item_name": "global standards for sustainability reporting",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|accounting analyst|skill|monitor-financial-accounts",
+      "context_level": "role",
+      "context_key": "D015|accounting analyst",
+      "item_type": "skill",
+      "item_key": "monitor-financial-accounts",
+      "item_name": "monitor financial accounts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|accounting analyst|skill|national-generally-accepted-accounting-principles",
+      "context_level": "role",
+      "context_key": "D015|accounting analyst",
+      "item_type": "skill",
+      "item_key": "national-generally-accepted-accounting-principles",
+      "item_name": "national generally accepted accounting principles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|accounting assistant|skill|allocate-bills",
+      "context_level": "role",
+      "context_key": "D015|accounting assistant",
+      "item_type": "skill",
+      "item_key": "allocate-bills",
+      "item_name": "allocate bills",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|accounting assistant|skill|follow-up-accounts-receivables",
+      "context_level": "role",
+      "context_key": "D015|accounting assistant",
+      "item_type": "skill",
+      "item_key": "follow-up-accounts-receivables",
+      "item_name": "follow up accounts receivables",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|accounting assistant|skill|manage-corporate-bank-accounts",
+      "context_level": "role",
+      "context_key": "D015|accounting assistant",
+      "item_type": "skill",
+      "item_key": "manage-corporate-bank-accounts",
+      "item_name": "manage corporate bank accounts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|accounting assistant|skill|perform-business-research",
+      "context_level": "role",
+      "context_key": "D015|accounting assistant",
+      "item_type": "skill",
+      "item_key": "perform-business-research",
+      "item_name": "perform business research",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|accounting assistant|skill|use-office-systems",
+      "context_level": "role",
+      "context_key": "D015|accounting assistant",
+      "item_type": "skill",
+      "item_key": "use-office-systems",
+      "item_name": "use office systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|audit supervisor|skill|corporate-law",
+      "context_level": "role",
+      "context_key": "D015|audit supervisor",
+      "item_type": "skill",
+      "item_key": "corporate-law",
+      "item_name": "corporate law",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|audit supervisor|skill|employment-law",
+      "context_level": "role",
+      "context_key": "D015|audit supervisor",
+      "item_type": "skill",
+      "item_key": "employment-law",
+      "item_name": "employment law",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|audit supervisor|skill|prepare-audit-activities",
+      "context_level": "role",
+      "context_key": "D015|audit supervisor",
+      "item_type": "skill",
+      "item_key": "prepare-audit-activities",
+      "item_name": "prepare audit activities",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|auditing clerk|skill|communicate-problems-to-senior-colleagues",
+      "context_level": "role",
+      "context_key": "D015|auditing clerk",
+      "item_type": "skill",
+      "item_key": "communicate-problems-to-senior-colleagues",
+      "item_name": "communicate problems to senior colleagues",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|auditing clerk|skill|fill-out-forms",
+      "context_level": "role",
+      "context_key": "D015|auditing clerk",
+      "item_type": "skill",
+      "item_key": "fill-out-forms",
+      "item_name": "fill out forms",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|auditing clerk|skill|follow-written-instructions",
+      "context_level": "role",
+      "context_key": "D015|auditing clerk",
+      "item_type": "skill",
+      "item_key": "follow-written-instructions",
+      "item_name": "follow written instructions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|auditing clerk|skill|identify-accounting-errors",
+      "context_level": "role",
+      "context_key": "D015|auditing clerk",
+      "item_type": "skill",
+      "item_key": "identify-accounting-errors",
+      "item_name": "identify accounting errors",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|auditing clerk|skill|inventory-management-rules",
+      "context_level": "role",
+      "context_key": "D015|auditing clerk",
+      "item_type": "skill",
+      "item_key": "inventory-management-rules",
+      "item_name": "inventory management rules",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|auditing clerk|skill|observe-confidentiality",
+      "context_level": "role",
+      "context_key": "D015|auditing clerk",
+      "item_type": "skill",
+      "item_key": "observe-confidentiality",
+      "item_name": "observe confidentiality",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|auditing clerk|skill|pose-questions-referring-to-documents",
+      "context_level": "role",
+      "context_key": "D015|auditing clerk",
+      "item_type": "skill",
+      "item_key": "pose-questions-referring-to-documents",
+      "item_name": "pose questions referring to documents",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|auditing clerk|skill|process-commissioned-instructions",
+      "context_level": "role",
+      "context_key": "D015|auditing clerk",
+      "item_type": "skill",
+      "item_key": "process-commissioned-instructions",
+      "item_name": "process commissioned instructions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|back office specialist|skill|monitor-company-policy",
+      "context_level": "role",
+      "context_key": "D015|back office specialist",
+      "item_type": "skill",
+      "item_key": "monitor-company-policy",
+      "item_name": "monitor company policy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|bankruptcy trustee|skill|advise-on-bankruptcy-proceedings",
+      "context_level": "role",
+      "context_key": "D015|bankruptcy trustee",
+      "item_type": "skill",
+      "item_key": "advise-on-bankruptcy-proceedings",
+      "item_name": "advise on bankruptcy proceedings",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|bankruptcy trustee|skill|debt-classification",
+      "context_level": "role",
+      "context_key": "D015|bankruptcy trustee",
+      "item_type": "skill",
+      "item_key": "debt-classification",
+      "item_name": "debt classification",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|bankruptcy trustee|skill|perform-debt-investigation",
+      "context_level": "role",
+      "context_key": "D015|bankruptcy trustee",
+      "item_type": "skill",
+      "item_key": "perform-debt-investigation",
+      "item_name": "perform debt investigation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|bankruptcy trustee|skill|revise-legal-documents",
+      "context_level": "role",
+      "context_key": "D015|bankruptcy trustee",
+      "item_type": "skill",
+      "item_key": "revise-legal-documents",
+      "item_name": "revise legal documents",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|billing clerk|skill|assess-debtor-s-financial-situation",
+      "context_level": "role",
+      "context_key": "D015|billing clerk",
+      "item_type": "skill",
+      "item_key": "assess-debtor-s-financial-situation",
+      "item_name": "assess debtor's financial situation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|billing clerk|skill|count-money",
+      "context_level": "role",
+      "context_key": "D015|billing clerk",
+      "item_type": "skill",
+      "item_key": "count-money",
+      "item_name": "count money",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|billing clerk|skill|file-documents",
+      "context_level": "role",
+      "context_key": "D015|billing clerk",
+      "item_type": "skill",
+      "item_key": "file-documents",
+      "item_name": "file documents",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|billing clerk|skill|financial-capability",
+      "context_level": "role",
+      "context_key": "D015|billing clerk",
+      "item_type": "skill",
+      "item_key": "financial-capability",
+      "item_name": "financial capability",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|billing clerk|skill|handle-financial-transactions",
+      "context_level": "role",
+      "context_key": "D015|billing clerk",
+      "item_type": "skill",
+      "item_key": "handle-financial-transactions",
+      "item_name": "handle financial transactions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|billing clerk|skill|interview-bank-loanees",
+      "context_level": "role",
+      "context_key": "D015|billing clerk",
+      "item_type": "skill",
+      "item_key": "interview-bank-loanees",
+      "item_name": "interview bank loanees",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|billing clerk|skill|maintain-credit-history-of-clients",
+      "context_level": "role",
+      "context_key": "D015|billing clerk",
+      "item_type": "skill",
+      "item_key": "maintain-credit-history-of-clients",
+      "item_name": "maintain credit history of clients",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|billing clerk|skill|maintain-customer-records",
+      "context_level": "role",
+      "context_key": "D015|billing clerk",
+      "item_type": "skill",
+      "item_key": "maintain-customer-records",
+      "item_name": "maintain customer records",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|billing clerk|skill|maintain-financial-records",
+      "context_level": "role",
+      "context_key": "D015|billing clerk",
+      "item_type": "skill",
+      "item_key": "maintain-financial-records",
+      "item_name": "maintain financial records",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|billing clerk|skill|organise-business-documents",
+      "context_level": "role",
+      "context_key": "D015|billing clerk",
+      "item_type": "skill",
+      "item_key": "organise-business-documents",
+      "item_name": "organise business documents",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|bookkeeper|skill|follow-the-statutory-obligations",
+      "context_level": "role",
+      "context_key": "D015|bookkeeper",
+      "item_type": "skill",
+      "item_key": "follow-the-statutory-obligations",
+      "item_name": "follow the statutory obligations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|bookkeeper|skill|perform-balance-sheet-operations",
+      "context_level": "role",
+      "context_key": "D015|bookkeeper",
+      "item_type": "skill",
+      "item_key": "perform-balance-sheet-operations",
+      "item_name": "perform balance sheet operations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|budget analyst|skill|assess-financial-viability",
+      "context_level": "role",
+      "context_key": "D015|budget analyst",
+      "item_type": "skill",
+      "item_key": "assess-financial-viability",
+      "item_name": "assess financial viability",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|budget analyst|skill|evaluate-budgets",
+      "context_level": "role",
+      "context_key": "D015|budget analyst",
+      "item_type": "skill",
+      "item_key": "evaluate-budgets",
+      "item_name": "evaluate budgets",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|budget analyst|skill|exert-expenditure-control",
+      "context_level": "role",
+      "context_key": "D015|budget analyst",
+      "item_type": "skill",
+      "item_key": "exert-expenditure-control",
+      "item_name": "exert expenditure control",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|budget analyst|skill|inspect-government-expenditures",
+      "context_level": "role",
+      "context_key": "D015|budget analyst",
+      "item_type": "skill",
+      "item_key": "inspect-government-expenditures",
+      "item_name": "inspect government expenditures",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|budget analyst|skill|public-finance",
+      "context_level": "role",
+      "context_key": "D015|budget analyst",
+      "item_type": "skill",
+      "item_key": "public-finance",
+      "item_name": "public finance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|cost analyst|skill|advise-on-tax-planning",
+      "context_level": "role",
+      "context_key": "D015|cost analyst",
+      "item_type": "skill",
+      "item_key": "advise-on-tax-planning",
+      "item_name": "advise on tax planning",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|cost analyst|skill|control-of-expenses",
+      "context_level": "role",
+      "context_key": "D015|cost analyst",
+      "item_type": "skill",
+      "item_key": "control-of-expenses",
+      "item_name": "control of expenses",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|cost analyst|skill|perform-cost-accounting-activities",
+      "context_level": "role",
+      "context_key": "D015|cost analyst",
+      "item_type": "skill",
+      "item_key": "perform-cost-accounting-activities",
+      "item_name": "perform cost accounting activities",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|cost analyst|skill|prepare-cost-plus-pricing-models",
+      "context_level": "role",
+      "context_key": "D015|cost analyst",
+      "item_type": "skill",
+      "item_key": "prepare-cost-plus-pricing-models",
+      "item_name": "prepare cost-plus pricing models",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|dividend analyst|skill|calculate-dividends",
+      "context_level": "role",
+      "context_key": "D015|dividend analyst",
+      "item_type": "skill",
+      "item_key": "calculate-dividends",
+      "item_name": "calculate dividends",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|dividend analyst|skill|forecast-dividend-trends",
+      "context_level": "role",
+      "context_key": "D015|dividend analyst",
+      "item_type": "skill",
+      "item_key": "forecast-dividend-trends",
+      "item_name": "forecast dividend trends",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|dividend analyst|skill|liaise-with-shareholders",
+      "context_level": "role",
+      "context_key": "D015|dividend analyst",
+      "item_type": "skill",
+      "item_key": "liaise-with-shareholders",
+      "item_name": "liaise with shareholders",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|financial auditor|skill|accounting",
+      "context_level": "role",
+      "context_key": "D015|financial auditor",
+      "item_type": "skill",
+      "item_key": "accounting",
+      "item_name": "accounting",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|financial auditor|skill|control-financial-resources",
+      "context_level": "role",
+      "context_key": "D015|financial auditor",
+      "item_type": "skill",
+      "item_key": "control-financial-resources",
+      "item_name": "control financial resources",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|financial auditor|skill|inspect-tax-returns",
+      "context_level": "role",
+      "context_key": "D015|financial auditor",
+      "item_type": "skill",
+      "item_key": "inspect-tax-returns",
+      "item_name": "inspect tax returns",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|financial auditor|skill|international-tariffs",
+      "context_level": "role",
+      "context_key": "D015|financial auditor",
+      "item_type": "skill",
+      "item_key": "international-tariffs",
+      "item_name": "international tariffs",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|financial fraud examiner|skill|anti-dumping-law",
+      "context_level": "role",
+      "context_key": "D015|financial fraud examiner",
+      "item_type": "skill",
+      "item_key": "anti-dumping-law",
+      "item_name": "anti-dumping law",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|financial fraud examiner|skill|criminal-law",
+      "context_level": "role",
+      "context_key": "D015|financial fraud examiner",
+      "item_type": "skill",
+      "item_key": "criminal-law",
+      "item_name": "criminal law",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|financial fraud examiner|skill|forensic-intelligence",
+      "context_level": "role",
+      "context_key": "D015|financial fraud examiner",
+      "item_type": "skill",
+      "item_key": "forensic-intelligence",
+      "item_name": "forensic intelligence",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|financial fraud examiner|skill|international-law",
+      "context_level": "role",
+      "context_key": "D015|financial fraud examiner",
+      "item_type": "skill",
+      "item_key": "international-law",
+      "item_name": "international law",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|financial fraud examiner|skill|interpret-law",
+      "context_level": "role",
+      "context_key": "D015|financial fraud examiner",
+      "item_type": "skill",
+      "item_key": "interpret-law",
+      "item_name": "interpret law",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|financial fraud examiner|skill|perform-forensic-accounting",
+      "context_level": "role",
+      "context_key": "D015|financial fraud examiner",
+      "item_type": "skill",
+      "item_key": "perform-forensic-accounting",
+      "item_name": "perform forensic accounting",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|grants administrator|skill|advise-on-grants-application",
+      "context_level": "role",
+      "context_key": "D015|grants administrator",
+      "item_type": "skill",
+      "item_key": "advise-on-grants-application",
+      "item_name": "advise on grants application",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|grants administrator|skill|complete-administration",
+      "context_level": "role",
+      "context_key": "D015|grants administrator",
+      "item_type": "skill",
+      "item_key": "complete-administration",
+      "item_name": "complete administration",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|grants administrator|skill|follow-up-the-issued-grants",
+      "context_level": "role",
+      "context_key": "D015|grants administrator",
+      "item_type": "skill",
+      "item_key": "follow-up-the-issued-grants",
+      "item_name": "follow up the issued grants",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|grants administrator|skill|give-out-grants",
+      "context_level": "role",
+      "context_key": "D015|grants administrator",
+      "item_type": "skill",
+      "item_key": "give-out-grants",
+      "item_name": "give out grants",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|grants administrator|skill|grant-concessions",
+      "context_level": "role",
+      "context_key": "D015|grants administrator",
+      "item_type": "skill",
+      "item_key": "grant-concessions",
+      "item_name": "grant concessions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|grants administrator|skill|instruct-grant-recipient",
+      "context_level": "role",
+      "context_key": "D015|grants administrator",
+      "item_type": "skill",
+      "item_key": "instruct-grant-recipient",
+      "item_name": "instruct grant recipient",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|grants management officer|skill|check-grant-applications",
+      "context_level": "role",
+      "context_key": "D015|grants management officer",
+      "item_type": "skill",
+      "item_key": "check-grant-applications",
+      "item_name": "check grant applications",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|grants management officer|skill|develop-professional-network",
+      "context_level": "role",
+      "context_key": "D015|grants management officer",
+      "item_type": "skill",
+      "item_key": "develop-professional-network",
+      "item_name": "develop professional network",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|grants management officer|skill|guide-staff",
+      "context_level": "role",
+      "context_key": "D015|grants management officer",
+      "item_type": "skill",
+      "item_key": "guide-staff",
+      "item_name": "guide staff",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|grants management officer|skill|keep-grant-applicant-informed",
+      "context_level": "role",
+      "context_key": "D015|grants management officer",
+      "item_type": "skill",
+      "item_key": "keep-grant-applicant-informed",
+      "item_name": "keep grant applicant informed",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|grants management officer|skill|perform-project-management",
+      "context_level": "role",
+      "context_key": "D015|grants management officer",
+      "item_type": "skill",
+      "item_key": "perform-project-management",
+      "item_name": "perform project management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.atlassian.com/agile"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|grants management officer|skill|report-on-grants",
+      "context_level": "role",
+      "context_key": "D015|grants management officer",
+      "item_type": "skill",
+      "item_key": "report-on-grants",
+      "item_name": "report on grants",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|grants management officer|skill|work-in-an-international-environment",
+      "context_level": "role",
+      "context_key": "D015|grants management officer",
+      "item_type": "skill",
+      "item_key": "work-in-an-international-environment",
+      "item_name": "work in an international environment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|investment clerk|skill|handle-mail",
+      "context_level": "role",
+      "context_key": "D015|investment clerk",
+      "item_type": "skill",
+      "item_key": "handle-mail",
+      "item_name": "handle mail",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|investment clerk|skill|perform-office-routine-activities",
+      "context_level": "role",
+      "context_key": "D015|investment clerk",
+      "item_type": "skill",
+      "item_key": "perform-office-routine-activities",
+      "item_name": "perform office routine activities",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|public finance accountant|skill|civil-law",
+      "context_level": "role",
+      "context_key": "D015|public finance accountant",
+      "item_type": "skill",
+      "item_key": "civil-law",
+      "item_name": "civil law",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|public finance accountant|skill|create-a-financial-report",
+      "context_level": "role",
+      "context_key": "D015|public finance accountant",
+      "item_type": "skill",
+      "item_key": "create-a-financial-report",
+      "item_name": "create a financial report",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|public finance accountant|skill|develop-account-strategy",
+      "context_level": "role",
+      "context_key": "D015|public finance accountant",
+      "item_type": "skill",
+      "item_key": "develop-account-strategy",
+      "item_name": "develop account strategy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|public finance accountant|skill|inspect-government-incomes",
+      "context_level": "role",
+      "context_key": "D015|public finance accountant",
+      "item_type": "skill",
+      "item_key": "inspect-government-incomes",
+      "item_name": "inspect government incomes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|public finance accountant|skill|public-administration",
+      "context_level": "role",
+      "context_key": "D015|public finance accountant",
+      "item_type": "skill",
+      "item_key": "public-administration",
+      "item_name": "public administration",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|tax advisor|skill|cadastral-taxation",
+      "context_level": "role",
+      "context_key": "D015|tax advisor",
+      "item_type": "skill",
+      "item_key": "cadastral-taxation",
+      "item_name": "cadastral taxation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|tax advisor|skill|calculate-tax",
+      "context_level": "role",
+      "context_key": "D015|tax advisor",
+      "item_type": "skill",
+      "item_key": "calculate-tax",
+      "item_name": "calculate tax",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|tax advisor|skill|inform-on-fiscal-duties",
+      "context_level": "role",
+      "context_key": "D015|tax advisor",
+      "item_type": "skill",
+      "item_key": "inform-on-fiscal-duties",
+      "item_name": "inform on fiscal duties",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|tax advisor|skill|international-taxation-of-transfer-prices",
+      "context_level": "role",
+      "context_key": "D015|tax advisor",
+      "item_type": "skill",
+      "item_key": "international-taxation-of-transfer-prices",
+      "item_name": "international taxation of transfer prices",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|tax advisor|skill|manage-personal-finances",
+      "context_level": "role",
+      "context_key": "D015|tax advisor",
+      "item_type": "skill",
+      "item_key": "manage-personal-finances",
+      "item_name": "manage personal finances",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|tax advisor|skill|research-taxation-procedures",
+      "context_level": "role",
+      "context_key": "D015|tax advisor",
+      "item_type": "skill",
+      "item_key": "research-taxation-procedures",
+      "item_name": "research taxation procedures",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|tax advisor|tool|aci-tasktracker",
+      "context_level": "role",
+      "context_key": "D015|tax advisor",
+      "item_type": "tool",
+      "item_key": "aci-tasktracker",
+      "item_name": "ACI TaskTracker",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|tax advisor|tool|intuit-turbotax",
+      "context_level": "role",
+      "context_key": "D015|tax advisor",
+      "item_type": "tool",
+      "item_key": "intuit-turbotax",
+      "item_name": "Intuit TurboTax",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|tax advisor|tool|tax-compliance-property-tax-management-software",
+      "context_level": "role",
+      "context_key": "D015|tax advisor",
+      "item_type": "tool",
+      "item_key": "tax-compliance-property-tax-management-software",
+      "item_name": "Tax compliance property tax management software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|tax advisor|tool|tax-software",
+      "context_level": "role",
+      "context_key": "D015|tax advisor",
+      "item_type": "tool",
+      "item_key": "tax-software",
+      "item_name": "Tax software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D015|tax clerk|skill|calculate-debt-costs",
+      "context_level": "role",
+      "context_key": "D015|tax clerk",
+      "item_type": "skill",
+      "item_key": "calculate-debt-costs",
+      "item_name": "calculate debt costs",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D016|System Engineers|skill|battery-design",
+      "context_level": "role",
+      "context_key": "D016|System Engineers",
+      "item_type": "skill",
+      "item_key": "battery-design",
+      "item_name": "battery design",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D016|System Engineers|skill|battery-management-systems",
+      "context_level": "role",
+      "context_key": "D016|System Engineers",
+      "item_type": "skill",
+      "item_key": "battery-management-systems",
+      "item_name": "battery management systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D016|System Engineers|skill|control-systems",
+      "context_level": "role",
+      "context_key": "D016|System Engineers",
+      "item_type": "skill",
+      "item_key": "control-systems",
+      "item_name": "control systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D016|System Engineers|skill|project-management-principles",
+      "context_level": "role",
+      "context_key": "D016|System Engineers",
+      "item_type": "skill",
+      "item_key": "project-management-principles",
+      "item_name": "project management principles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.atlassian.com/agile"
+      ]
+    },
+    {
+      "subject_id": "item|role|D016|System Engineers|skill|vehicle-electrical-systems",
+      "context_level": "role",
+      "context_key": "D016|System Engineers",
+      "item_type": "skill",
+      "item_key": "vehicle-electrical-systems",
+      "item_name": "vehicle electrical systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D016|battery maintenance technician|skill|conduct-workplace-audits",
+      "context_level": "role",
+      "context_key": "D016|battery maintenance technician",
+      "item_type": "skill",
+      "item_key": "conduct-workplace-audits",
+      "item_name": "conduct workplace audits",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D016|battery maintenance technician|skill|ensure-equipment-maintenance",
+      "context_level": "role",
+      "context_key": "D016|battery maintenance technician",
+      "item_type": "skill",
+      "item_key": "ensure-equipment-maintenance",
+      "item_name": "ensure equipment maintenance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    }
+  ],
+  "policy": {
+    "review_required_preserved_unless_exact_item_evidence_established": true,
+    "no_relationship_inference": true,
+    "no_promotion": true
+  }
+}

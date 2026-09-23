@@ -1,0 +1,1618 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-selection.v2",
+  "batch": "quality_remediation_lane_69_20260922",
+  "selected_at": "2026-09-22",
+  "source_audit": "data/career-mapping/_audit/external_enrichment_agent/item_ledger_quality_audit_2026-09-22.json",
+  "source_sha256": "d37c76cedfb8d16a59579924eaf84135b528a570ac73e095f273f9abb9f70456",
+  "selection_method": "atomic shared lock; exclude all prior valid claims by contextual and typed identity",
+  "prior_claimed_contextual_ids": 6172,
+  "prior_claimed_typed_items": 5546,
+  "selection_count": 100,
+  "requested_count": 100,
+  "shortfall": 0,
+  "rows": [
+    {
+      "subject_id": "item|role|D055|soap chipper|skill|store-soap-flakes",
+      "context_level": "role",
+      "context_key": "D055|soap chipper",
+      "item_type": "skill",
+      "item_key": "store-soap-flakes",
+      "item_name": "store soap flakes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|soap chipper|skill|tend-soap-flake-machinery",
+      "context_level": "role",
+      "context_key": "D055|soap chipper",
+      "item_type": "skill",
+      "item_key": "tend-soap-flake-machinery",
+      "item_name": "tend soap flake machinery",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|soap chipper|skill|transfer-soap",
+      "context_level": "role",
+      "context_key": "D055|soap chipper",
+      "item_type": "skill",
+      "item_key": "transfer-soap",
+      "item_name": "transfer soap",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|soap chipper|skill|transfer-soap-chips",
+      "context_level": "role",
+      "context_key": "D055|soap chipper",
+      "item_type": "skill",
+      "item_key": "transfer-soap-chips",
+      "item_name": "transfer soap chips",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|soap chipper|skill|use-moulding-techniques",
+      "context_level": "role",
+      "context_key": "D055|soap chipper",
+      "item_type": "skill",
+      "item_key": "use-moulding-techniques",
+      "item_name": "use moulding techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|soap drier operator|skill|press-soap-into-sheets",
+      "context_level": "role",
+      "context_key": "D055|soap drier operator",
+      "item_type": "skill",
+      "item_key": "press-soap-into-sheets",
+      "item_name": "press soap into sheets",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|soap drier operator|skill|tend-insecticide-mixer",
+      "context_level": "role",
+      "context_key": "D055|soap drier operator",
+      "item_type": "skill",
+      "item_key": "tend-insecticide-mixer",
+      "item_name": "tend insecticide mixer",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|soap drier operator|skill|test-moisture-content",
+      "context_level": "role",
+      "context_key": "D055|soap drier operator",
+      "item_type": "skill",
+      "item_key": "test-moisture-content",
+      "item_name": "test moisture content",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|soap maker|skill|alkylation",
+      "context_level": "role",
+      "context_key": "D055|soap maker",
+      "item_type": "skill",
+      "item_key": "alkylation",
+      "item_name": "alkylation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|soap maker|skill|collect-industrial-waste",
+      "context_level": "role",
+      "context_key": "D055|soap maker",
+      "item_type": "skill",
+      "item_key": "collect-industrial-waste",
+      "item_name": "collect industrial waste",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|soap maker|skill|fill-kettle",
+      "context_level": "role",
+      "context_key": "D055|soap maker",
+      "item_type": "skill",
+      "item_key": "fill-kettle",
+      "item_name": "fill kettle",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|soap maker|skill|observe-mixture-characteristics",
+      "context_level": "role",
+      "context_key": "D055|soap maker",
+      "item_type": "skill",
+      "item_key": "observe-mixture-characteristics",
+      "item_name": "observe mixture characteristics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|soap maker|skill|test-alkalinity",
+      "context_level": "role",
+      "context_key": "D055|soap maker",
+      "item_type": "skill",
+      "item_key": "test-alkalinity",
+      "item_name": "test alkalinity",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|soap tower operator|skill|inspect-batches-of-mixed-products",
+      "context_level": "role",
+      "context_key": "D055|soap tower operator",
+      "item_type": "skill",
+      "item_key": "inspect-batches-of-mixed-products",
+      "item_name": "inspect batches of mixed products",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|soap tower operator|skill|operate-liquid-soap-pumps",
+      "context_level": "role",
+      "context_key": "D055|soap tower operator",
+      "item_type": "skill",
+      "item_key": "operate-liquid-soap-pumps",
+      "item_name": "operate liquid soap pumps",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|soap tower operator|skill|tend-heated-air-tower",
+      "context_level": "role",
+      "context_key": "D055|soap tower operator",
+      "item_type": "skill",
+      "item_key": "tend-heated-air-tower",
+      "item_name": "tend heated-air tower",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|synthetic materials engineer|skill|injection-moulding-machine-parts",
+      "context_level": "role",
+      "context_key": "D055|synthetic materials engineer",
+      "item_type": "skill",
+      "item_key": "injection-moulding-machine-parts",
+      "item_name": "injection moulding machine parts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|synthetic materials engineer|skill|types-of-plastic",
+      "context_level": "role",
+      "context_key": "D055|synthetic materials engineer",
+      "item_type": "skill",
+      "item_key": "types-of-plastic",
+      "item_name": "types of plastic",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|textile chemist|skill|develop-specifications-of-technical-textiles",
+      "context_level": "role",
+      "context_key": "D055|textile chemist",
+      "item_type": "skill",
+      "item_key": "develop-specifications-of-technical-textiles",
+      "item_name": "develop specifications of technical textiles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|textile chemist|skill|develop-textile-colouring-recipes",
+      "context_level": "role",
+      "context_key": "D055|textile chemist",
+      "item_type": "skill",
+      "item_key": "develop-textile-colouring-recipes",
+      "item_name": "develop textile colouring recipes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|textile chemist|skill|health-and-safety-in-the-textile-industry",
+      "context_level": "role",
+      "context_key": "D055|textile chemist",
+      "item_type": "skill",
+      "item_key": "health-and-safety-in-the-textile-industry",
+      "item_name": "health and safety in the textile industry",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|textile chemist|skill|maintain-work-standards",
+      "context_level": "role",
+      "context_key": "D055|textile chemist",
+      "item_type": "skill",
+      "item_key": "maintain-work-standards",
+      "item_name": "maintain work standards",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|textile chemist|skill|manufacture-man-made-fibres",
+      "context_level": "role",
+      "context_key": "D055|textile chemist",
+      "item_type": "skill",
+      "item_key": "manufacture-man-made-fibres",
+      "item_name": "manufacture man-made fibres",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|textile chemist|skill|textile-finishing-technology",
+      "context_level": "role",
+      "context_key": "D055|textile chemist",
+      "item_type": "skill",
+      "item_key": "textile-finishing-technology",
+      "item_name": "textile finishing technology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|textile chemist|skill|use-textile-finishing-machine-technologies",
+      "context_level": "role",
+      "context_key": "D055|textile chemist",
+      "item_type": "skill",
+      "item_key": "use-textile-finishing-machine-technologies",
+      "item_name": "use textile finishing machine technologies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|tracer powder blender|skill|brush-the-equipment",
+      "context_level": "role",
+      "context_key": "D055|tracer powder blender",
+      "item_type": "skill",
+      "item_key": "brush-the-equipment",
+      "item_name": "brush the equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|tracer powder blender|skill|flammable-fluids",
+      "context_level": "role",
+      "context_key": "D055|tracer powder blender",
+      "item_type": "skill",
+      "item_key": "flammable-fluids",
+      "item_name": "flammable fluids",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|tracer powder blender|skill|measure-materials",
+      "context_level": "role",
+      "context_key": "D055|tracer powder blender",
+      "item_type": "skill",
+      "item_key": "measure-materials",
+      "item_name": "measure materials",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|tracer powder blender|skill|pour-mix-into-rubber-pouches",
+      "context_level": "role",
+      "context_key": "D055|tracer powder blender",
+      "item_type": "skill",
+      "item_key": "pour-mix-into-rubber-pouches",
+      "item_name": "pour mix into rubber pouches",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|tracer powder blender|skill|sift-powder",
+      "context_level": "role",
+      "context_key": "D055|tracer powder blender",
+      "item_type": "skill",
+      "item_key": "sift-powder",
+      "item_name": "sift powder",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|tracer powder blender|skill|tend-ball-mill",
+      "context_level": "role",
+      "context_key": "D055|tracer powder blender",
+      "item_type": "skill",
+      "item_key": "tend-ball-mill",
+      "item_name": "tend ball mill",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|tracer powder blender|skill|tend-flammable-mixture-machines",
+      "context_level": "role",
+      "context_key": "D055|tracer powder blender",
+      "item_type": "skill",
+      "item_key": "tend-flammable-mixture-machines",
+      "item_name": "tend flammable mixture machines",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|tracer powder blender|skill|tend-tumbling-barrels",
+      "context_level": "role",
+      "context_key": "D055|tracer powder blender",
+      "item_type": "skill",
+      "item_key": "tend-tumbling-barrels",
+      "item_name": "tend tumbling barrels",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|varnish maker|skill|adjust-burner-controls",
+      "context_level": "role",
+      "context_key": "D055|varnish maker",
+      "item_type": "skill",
+      "item_key": "adjust-burner-controls",
+      "item_name": "adjust burner controls",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|varnish maker|skill|adjust-the-varnish-mixture",
+      "context_level": "role",
+      "context_key": "D055|varnish maker",
+      "item_type": "skill",
+      "item_key": "adjust-the-varnish-mixture",
+      "item_name": "adjust the varnish mixture",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|varnish maker|skill|operate-varnish-production-equipment",
+      "context_level": "role",
+      "context_key": "D055|varnish maker",
+      "item_type": "skill",
+      "item_key": "operate-varnish-production-equipment",
+      "item_name": "operate varnish production equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|varnish maker|skill|remove-sediment-from-varnish",
+      "context_level": "role",
+      "context_key": "D055|varnish maker",
+      "item_type": "skill",
+      "item_key": "remove-sediment-from-varnish",
+      "item_name": "remove sediment from varnish",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|varnish maker|skill|synthetic-resins",
+      "context_level": "role",
+      "context_key": "D055|varnish maker",
+      "item_type": "skill",
+      "item_key": "synthetic-resins",
+      "item_name": "synthetic resins",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|varnish maker|skill|transfer-varnish",
+      "context_level": "role",
+      "context_key": "D055|varnish maker",
+      "item_type": "skill",
+      "item_key": "transfer-varnish",
+      "item_name": "transfer varnish",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|wax bleacher|skill|adjust-liquefaction-temperature",
+      "context_level": "role",
+      "context_key": "D055|wax bleacher",
+      "item_type": "skill",
+      "item_key": "adjust-liquefaction-temperature",
+      "item_name": "adjust liquefaction temperature",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|wax bleacher|skill|beeswax",
+      "context_level": "role",
+      "context_key": "D055|wax bleacher",
+      "item_type": "skill",
+      "item_key": "beeswax",
+      "item_name": "beeswax",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|wax bleacher|skill|candle-making-techniques",
+      "context_level": "role",
+      "context_key": "D055|wax bleacher",
+      "item_type": "skill",
+      "item_key": "candle-making-techniques",
+      "item_name": "candle making techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|wax bleacher|skill|dye-candles",
+      "context_level": "role",
+      "context_key": "D055|wax bleacher",
+      "item_type": "skill",
+      "item_key": "dye-candles",
+      "item_name": "dye candles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|wax bleacher|skill|melt-wax",
+      "context_level": "role",
+      "context_key": "D055|wax bleacher",
+      "item_type": "skill",
+      "item_key": "melt-wax",
+      "item_name": "melt wax",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|wax bleacher|skill|pack-charcoal",
+      "context_level": "role",
+      "context_key": "D055|wax bleacher",
+      "item_type": "skill",
+      "item_key": "pack-charcoal",
+      "item_name": "pack charcoal",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|wax bleacher|skill|pump-wax",
+      "context_level": "role",
+      "context_key": "D055|wax bleacher",
+      "item_type": "skill",
+      "item_key": "pump-wax",
+      "item_name": "pump wax",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|wax bleacher|skill|shape-candles",
+      "context_level": "role",
+      "context_key": "D055|wax bleacher",
+      "item_type": "skill",
+      "item_key": "shape-candles",
+      "item_name": "shape candles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|wax bleacher|skill|tend-wax-bleaching-machinery",
+      "context_level": "role",
+      "context_key": "D055|wax bleacher",
+      "item_type": "skill",
+      "item_key": "tend-wax-bleaching-machinery",
+      "item_name": "tend wax bleaching machinery",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D055|wax bleacher|skill|transfer-wax",
+      "context_level": "role",
+      "context_key": "D055|wax bleacher",
+      "item_type": "skill",
+      "item_key": "transfer-wax",
+      "item_name": "transfer wax",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D057|digital health product manager|skill|product-management-agile-methodology-clinical-requirements-regulatory-strategy",
+      "context_level": "role",
+      "context_key": "D057|digital health product manager",
+      "item_type": "skill",
+      "item_key": "product-management-agile-methodology-clinical-requirements-regulatory-strategy",
+      "item_name": "product management; agile methodology; clinical requirements; regulatory strategy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.atlassian.com/agile"
+      ]
+    },
+    {
+      "subject_id": "item|role|D057|electronic health records specialist|skill|ehr-systems-data-migration-clinical-workflow-mapping-user-training",
+      "context_level": "role",
+      "context_key": "D057|electronic health records specialist",
+      "item_type": "skill",
+      "item_key": "ehr-systems-data-migration-clinical-workflow-mapping-user-training",
+      "item_name": "EHR systems; data migration; clinical workflow mapping; user training",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D057|health informatics specialist|skill|health-information-systems-hl7-fhir-clinical-workflows-data-governance",
+      "context_level": "role",
+      "context_key": "D057|health informatics specialist",
+      "item_type": "skill",
+      "item_key": "health-information-systems-hl7-fhir-clinical-workflows-data-governance",
+      "item_name": "health information systems; HL7/FHIR; clinical workflows; data governance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.who.int/publications/i/item/9789241595940"
+      ]
+    },
+    {
+      "subject_id": "item|role|D057|mHealth developer|skill|mobile-app-development-health-data-apis-hipaa-compliance-ui-ux-for-health",
+      "context_level": "role",
+      "context_key": "D057|mHealth developer",
+      "item_type": "skill",
+      "item_key": "mobile-app-development-health-data-apis-hipaa-compliance-ui-ux-for-health",
+      "item_name": "mobile app development; health data APIs; HIPAA compliance; UI/UX for health",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D057|telemedicine coordinator|skill|telehealth-platforms-patient-scheduling-clinical-coordination-digital-health-regulations",
+      "context_level": "role",
+      "context_key": "D057|telemedicine coordinator",
+      "item_type": "skill",
+      "item_key": "telehealth-platforms-patient-scheduling-clinical-coordination-digital-health-regulations",
+      "item_name": "telehealth platforms; patient scheduling; clinical coordination; digital health regulations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D058|animal trainer|skill|breed-specific-behaviour-of-horses",
+      "context_level": "role",
+      "context_key": "D058|animal trainer",
+      "item_type": "skill",
+      "item_key": "breed-specific-behaviour-of-horses",
+      "item_name": "breed-specific behaviour of horses",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D058|animal trainer|skill|dog-behaviour",
+      "context_level": "role",
+      "context_key": "D058|animal trainer",
+      "item_type": "skill",
+      "item_key": "dog-behaviour",
+      "item_name": "dog behaviour",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D058|animal trainer|skill|horse-anatomy",
+      "context_level": "role",
+      "context_key": "D058|animal trainer",
+      "item_type": "skill",
+      "item_key": "horse-anatomy",
+      "item_name": "horse anatomy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D066|animal osteopath|skill|provide-osteopathic-treatment-to-animals",
+      "context_level": "role",
+      "context_key": "D066|animal osteopath",
+      "item_type": "skill",
+      "item_key": "provide-osteopathic-treatment-to-animals",
+      "item_name": "provide osteopathic treatment to animals",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D066|aquatic animal health professional|skill|biotechnology-in-aquaculture",
+      "context_level": "role",
+      "context_key": "D066|aquatic animal health professional",
+      "item_type": "skill",
+      "item_key": "biotechnology-in-aquaculture",
+      "item_name": "biotechnology in aquaculture",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.fao.org/fishery/en"
+      ]
+    },
+    {
+      "subject_id": "item|role|D066|equine dental technician|skill|apply-safe-work-practices-in-a-veterinary-setting",
+      "context_level": "role",
+      "context_key": "D066|equine dental technician",
+      "item_type": "skill",
+      "item_key": "apply-safe-work-practices-in-a-veterinary-setting",
+      "item_name": "apply safe work practices in a veterinary setting",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D066|equine dental technician|skill|carry-out-equine-dental-procedures",
+      "context_level": "role",
+      "context_key": "D066|equine dental technician",
+      "item_type": "skill",
+      "item_key": "carry-out-equine-dental-procedures",
+      "item_name": "carry out equine dental procedures",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D066|equine dental technician|skill|communicate-specialised-veterinary-information",
+      "context_level": "role",
+      "context_key": "D066|equine dental technician",
+      "item_type": "skill",
+      "item_key": "communicate-specialised-veterinary-information",
+      "item_name": "communicate specialised veterinary information",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D066|equine dental technician|skill|conduct-veterinary-consultation",
+      "context_level": "role",
+      "context_key": "D066|equine dental technician",
+      "item_type": "skill",
+      "item_key": "conduct-veterinary-consultation",
+      "item_name": "conduct veterinary consultation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D066|equine dental technician|skill|handle-horses-during-dental-procedures",
+      "context_level": "role",
+      "context_key": "D066|equine dental technician",
+      "item_type": "skill",
+      "item_key": "handle-horses-during-dental-procedures",
+      "item_name": "handle horses during dental procedures",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D066|equine dental technician|skill|maintain-veterinary-clinical-records",
+      "context_level": "role",
+      "context_key": "D066|equine dental technician",
+      "item_type": "skill",
+      "item_key": "maintain-veterinary-clinical-records",
+      "item_name": "maintain veterinary clinical records",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D066|equine dental technician|skill|use-equine-dental-equipment",
+      "context_level": "role",
+      "context_key": "D066|equine dental technician",
+      "item_type": "skill",
+      "item_key": "use-equine-dental-equipment",
+      "item_name": "use equine dental equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D066|official veterinarian|skill|certify-the-performance-of-veterinary-procedures",
+      "context_level": "role",
+      "context_key": "D066|official veterinarian",
+      "item_type": "skill",
+      "item_key": "certify-the-performance-of-veterinary-procedures",
+      "item_name": "certify the performance of veterinary procedures",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D066|veterinary nurse|skill|animal-recovery-procedures",
+      "context_level": "role",
+      "context_key": "D066|veterinary nurse",
+      "item_type": "skill",
+      "item_key": "animal-recovery-procedures",
+      "item_name": "animal recovery procedures",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D066|veterinary nurse|tool|animal-intelligence-software-animal-intelligence",
+      "context_level": "role",
+      "context_key": "D066|veterinary nurse",
+      "item_type": "tool",
+      "item_key": "animal-intelligence-software-animal-intelligence",
+      "item_name": "Animal Intelligence Software Animal Intelligence",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D066|veterinary nurse|tool|idexx-laboratories-idexx-cornerstone",
+      "context_level": "role",
+      "context_key": "D066|veterinary nurse",
+      "item_type": "tool",
+      "item_key": "idexx-laboratories-idexx-cornerstone",
+      "item_name": "IDEXX Laboratories IDEXX Cornerstone",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D066|veterinary nurse|tool|labeling-software",
+      "context_level": "role",
+      "context_key": "D066|veterinary nurse",
+      "item_type": "tool",
+      "item_key": "labeling-software",
+      "item_name": "Labeling software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D066|veterinary scientist|skill|perform-laboratory-testing-on-samples-of-animals",
+      "context_level": "role",
+      "context_key": "D066|veterinary scientist",
+      "item_type": "skill",
+      "item_key": "perform-laboratory-testing-on-samples-of-animals",
+      "item_name": "perform laboratory testing on samples of animals",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D066|veterinary technician|skill|assist-in-administering-veterinary-anaesthetics",
+      "context_level": "role",
+      "context_key": "D066|veterinary technician",
+      "item_type": "skill",
+      "item_key": "assist-in-administering-veterinary-anaesthetics",
+      "item_name": "assist in administering veterinary anaesthetics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D066|veterinary technician|tool|mcallister-software-systems-avimark",
+      "context_level": "role",
+      "context_key": "D066|veterinary technician",
+      "item_type": "tool",
+      "item_key": "mcallister-software-systems-avimark",
+      "item_name": "McAllister Software Systems AVImark",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D067|Dental Assistants|tool|kodak-dental-systems-kodak-softdent-practice-management-software-pms",
+      "context_level": "role",
+      "context_key": "D067|Dental Assistants",
+      "item_type": "tool",
+      "item_key": "kodak-dental-systems-kodak-softdent-practice-management-software-pms",
+      "item_name": "Kodak Dental Systems Kodak SOFTDENT Practice management software PMS",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D067|Dental Assistants|tool|open-dental",
+      "context_level": "role",
+      "context_key": "D067|Dental Assistants",
+      "item_type": "tool",
+      "item_key": "open-dental",
+      "item_name": "Open Dental",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D067|Dental Assistants|tool|patterson-dental-supply-patterson-eaglesoft",
+      "context_level": "role",
+      "context_key": "D067|Dental Assistants",
+      "item_type": "tool",
+      "item_key": "patterson-dental-supply-patterson-eaglesoft",
+      "item_name": "Patterson Dental Supply Patterson EagleSoft",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D067|Dental Assistants|tool|quicken",
+      "context_level": "role",
+      "context_key": "D067|Dental Assistants",
+      "item_type": "tool",
+      "item_key": "quicken",
+      "item_name": "Quicken",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D067|Dental Assistants|tool|the-systems-workplace-tdocs",
+      "context_level": "role",
+      "context_key": "D067|Dental Assistants",
+      "item_type": "tool",
+      "item_key": "the-systems-workplace-tdocs",
+      "item_name": "The Systems Workplace TDOCS",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D067|Dental Hygienists|tool|dental-billing-software",
+      "context_level": "role",
+      "context_key": "D067|Dental Hygienists",
+      "item_type": "tool",
+      "item_key": "dental-billing-software",
+      "item_name": "Dental billing software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D067|Dental Hygienists|tool|dental-charting-software",
+      "context_level": "role",
+      "context_key": "D067|Dental Hygienists",
+      "item_type": "tool",
+      "item_key": "dental-charting-software",
+      "item_name": "Dental charting software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D067|Dental Hygienists|tool|dental-clinical-records-software",
+      "context_level": "role",
+      "context_key": "D067|Dental Hygienists",
+      "item_type": "tool",
+      "item_key": "dental-clinical-records-software",
+      "item_name": "Dental clinical records software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D067|Dental Hygienists|tool|dental-digital-radiology-software",
+      "context_level": "role",
+      "context_key": "D067|Dental Hygienists",
+      "item_type": "tool",
+      "item_key": "dental-digital-radiology-software",
+      "item_name": "Dental digital radiology software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D067|Dental Hygienists|tool|dental-imaging-software",
+      "context_level": "role",
+      "context_key": "D067|Dental Hygienists",
+      "item_type": "tool",
+      "item_key": "dental-imaging-software",
+      "item_name": "Dental imaging software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D067|Dental Hygienists|tool|dental-intra-oral-imaging-software",
+      "context_level": "role",
+      "context_key": "D067|Dental Hygienists",
+      "item_type": "tool",
+      "item_key": "dental-intra-oral-imaging-software",
+      "item_name": "Dental intra-oral imaging software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D067|dental chairside assistant|skill|observe-patient-throughout-dental-treatment",
+      "context_level": "role",
+      "context_key": "D067|dental chairside assistant",
+      "item_type": "skill",
+      "item_key": "observe-patient-throughout-dental-treatment",
+      "item_name": "observe patient throughout dental treatment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D067|dental chairside assistant|skill|prepare-dental-instruments-for-sterilization",
+      "context_level": "role",
+      "context_key": "D067|dental chairside assistant",
+      "item_type": "skill",
+      "item_key": "prepare-dental-instruments-for-sterilization",
+      "item_name": "prepare dental instruments for sterilization",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D067|dental chairside assistant|skill|prepare-materials-for-dental-procedures",
+      "context_level": "role",
+      "context_key": "D067|dental chairside assistant",
+      "item_type": "skill",
+      "item_key": "prepare-materials-for-dental-procedures",
+      "item_name": "prepare materials for dental procedures",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D067|dental chairside assistant|skill|provide-dental-administrative-post-treatment-patient-services",
+      "context_level": "role",
+      "context_key": "D067|dental chairside assistant",
+      "item_type": "skill",
+      "item_key": "provide-dental-administrative-post-treatment-patient-services",
+      "item_name": "provide dental administrative post-treatment patient services",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D067|dental chairside assistant|skill|record-healthcare-users-billing-information",
+      "context_level": "role",
+      "context_key": "D067|dental chairside assistant",
+      "item_type": "skill",
+      "item_key": "record-healthcare-users-billing-information",
+      "item_name": "record healthcare users' billing information",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D067|dental chairside assistant|skill|use-technical-equipment-for-sterilisation",
+      "context_level": "role",
+      "context_key": "D067|dental chairside assistant",
+      "item_type": "skill",
+      "item_key": "use-technical-equipment-for-sterilisation",
+      "item_name": "use technical equipment for sterilisation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D067|dental hygienist|skill|apply-antibacterial-substance-to-teeth",
+      "context_level": "role",
+      "context_key": "D067|dental hygienist",
+      "item_type": "skill",
+      "item_key": "apply-antibacterial-substance-to-teeth",
+      "item_name": "apply antibacterial substance to teeth",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D067|dental hygienist|skill|deal-with-patients-anxiety",
+      "context_level": "role",
+      "context_key": "D067|dental hygienist",
+      "item_type": "skill",
+      "item_key": "deal-with-patients-anxiety",
+      "item_name": "deal with patients' anxiety",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D067|dental hygienist|skill|keep-records-for-dental-prostheses",
+      "context_level": "role",
+      "context_key": "D067|dental hygienist",
+      "item_type": "skill",
+      "item_key": "keep-records-for-dental-prostheses",
+      "item_name": "keep records for dental prostheses",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D067|dental hygienist|skill|polish-dental-restorations",
+      "context_level": "role",
+      "context_key": "D067|dental hygienist",
+      "item_type": "skill",
+      "item_key": "polish-dental-restorations",
+      "item_name": "polish dental restorations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D067|dental hygienist|skill|remove-calculus-plaque-and-stains",
+      "context_level": "role",
+      "context_key": "D067|dental hygienist",
+      "item_type": "skill",
+      "item_key": "remove-calculus-plaque-and-stains",
+      "item_name": "remove calculus, plaque and stains",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D067|dental hygienist|skill|use-foreign-languages-in-patient-care",
+      "context_level": "role",
+      "context_key": "D067|dental hygienist",
+      "item_type": "skill",
+      "item_key": "use-foreign-languages-in-patient-care",
+      "item_name": "use foreign languages in patient care",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D067|dental instrument assembler|skill|dental-instrument-components",
+      "context_level": "role",
+      "context_key": "D067|dental instrument assembler",
+      "item_type": "skill",
+      "item_key": "dental-instrument-components",
+      "item_name": "dental instrument components",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D067|dental instrument assembler|skill|manipulate-dental-material",
+      "context_level": "role",
+      "context_key": "D067|dental instrument assembler",
+      "item_type": "skill",
+      "item_key": "manipulate-dental-material",
+      "item_name": "manipulate dental material",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D067|dental instrument assembler|skill|manufacture-dental-instruments",
+      "context_level": "role",
+      "context_key": "D067|dental instrument assembler",
+      "item_type": "skill",
+      "item_key": "manufacture-dental-instruments",
+      "item_name": "manufacture dental instruments",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    }
+  ],
+  "policy": {
+    "review_required_preserved_unless_exact_item_evidence_established": true,
+    "no_relationship_inference": true,
+    "no_promotion": true
+  }
+}
