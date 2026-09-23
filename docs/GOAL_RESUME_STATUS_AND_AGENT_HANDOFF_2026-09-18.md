@@ -34,7 +34,7 @@ and update the controlling mockup document in the same pass.
 ### Data and mapping safeguards
 
 - The programme-to-domain audit was regenerated with course/outcome evidence.
-- The local mapping audit reports 1,343 active programme-domain evidence rows,
+- The local mapping audit reports 1,344 active programme-domain evidence rows,
   zero active numeric-gate failures and zero active semantic-review rows.
 - Review-only and weakly supported mappings were removed from active guidance
   and retained in the source audit/unverified records.
@@ -672,9 +672,11 @@ component evidence; unresolved source cases remain `review_required`.
 
 The remaining data backlog includes **2,305** unresolved or
 `not_established` relationship rows with retained source references/locators,
-and one parsed programme without an active domain mapping:
-`Sciences::Mathematics`. Admin provenance, review-state, student-leak and
-report-gate coverage remains part of this pre-browser/pre-SQL phase.
+while all 237 parsed programmes now have active domain mappings. The previously
+unmapped `Sciences::Mathematics` programme now has a source-backed functional
+`D009 Data Science` link; weaker Mathematics-to-Actuarial and partial JAMB
+cases remain `review_required`. Admin provenance, review-state, student-leak
+and report-gate coverage remains part of this pre-browser/pre-SQL phase.
 
 ### 2026-09-19 broad source-enrichment checkpoint
 
@@ -702,11 +704,723 @@ guidance owner before a verified row can enter approval or student exposure.
 It exposes explicit queue states for review-required, no-link,
 not-established, audit-only, unavailable, identity-incomplete and
 provenance-incomplete rows. The local checkpoint covers all 237 programmes
-and 420 JAMB identities and records `Sciences::Mathematics` as the one
-unmapped programme rather than assigning an inferred domain.
+and 420 JAMB identities; all parsed programmes now have an active mapping,
+including the source-backed Mathematics → Data Science candidate.
 
 Verification passed: the 4-test admin acceptance gate, 10 combined
 population/JAMB coverage tests, `node scripts/adminGuidanceAuditSmoke.cjs`,
 `node scripts/sociologyReportSmoke.cjs`, TypeScript and `git diff --check`.
 Full admin rendering, live institution payloads, browser proof and SQL remain
 deferred; student exposure is not approved.
+
+### 2026-09-21 active scaling checkpoint
+
+The regenerated local catalogue currently contains **121,377 contextual items**
+across **5,668 contexts** and **408,163 relationships**. All **237 parsed
+programmes** have active domain mappings (**1,344** links), and the local
+scaling audit reports zero ownership, source-reference, locator, data-state, or
+item-link-state gaps. The unresolved relationship backlog is **2,305** rows;
+they remain `not_established` and fail closed.
+
+The external-search queue now records all three append-only ledgers:
+`d078_domain_subgroup_search_ledger_2026-09-20.jsonl`,
+`full_population_tranche_001_search_ledger_2026-09-21.jsonl`, and
+`full_population_tranche_002_search_ledger_2026-09-21.jsonl`. Their evidence is
+carried separately until reviewed into the generated catalogue; no unsupported
+relationship was promoted. Three new agents are active for tranche 003 item
+search, relationship search, and student/admin language-card review. Their
+checkpoints must be saved under
+`data/career-mapping/_audit/external_enrichment_agent/` or the relevant audit
+directory so work can resume without losing progress.
+
+The local audit suite is green (**47 tests**). SQL application, live payload
+verification, browser proof, and full-population admin render acceptance remain
+end-of-scaling gates.
+
+### 2026-09-21 external tranche 003 checkpoint
+
+The next disjoint item tranche is now searched and saved incrementally:
+**32 rows**, with **14 `linked`** and **18 `review_required`** decisions. The
+next relationship tranche is also complete: **8 rows**, all
+`review_required`, with **0 promotions** because no source established the
+missing same-context typed endpoints. The merged queue now reports **110 item
+search records** and **20 relationship search records** across the append-only
+ledgers. No SQL, seed transport, browser-proof, or unsupported relationship
+promotion occurred.
+
+The current local queue totals are **10,009 unique items** and **2,305
+unresolved relationships**: 62 item identities are externally linked, 38 are
+explicitly review-required, 20 relationship candidates have retained search
+evidence, and the rest remain pending. This is incremental progress toward the
+full external-source requirement, not a claim that all records have been
+searched.
+
+The UI/admin audit is saved at
+`data/career-mapping/_audit/ui_admin_guidance_audit_2026-09-21.md`. The role
+hero summary and verified-link accessibility-label follow-ups are closed;
+TypeScript, admin guidance smoke, report smoke and the local audit suite pass.
+Student-facing titles remain presentation-formatted while canonical IDs and
+admin raw titles are preserved. Full browser rendering and live payload proof
+remain open.
+
+## 2026-09-21 full-population downstream/admin audit checkpoint
+
+The local audit is complete for the requested 237-programme/420-JAMB boundary.
+It records 237/237 downstream route coverage: 1,344 domain routes, 3,580
+subgroup routes and 46,941 role routes across 5,668 contexts. Curriculum/card
+summary, friendly-title, bounded role-learning, source/link-state,
+relationship-grouping, admin provenance/review queue and student-safe filtering
+checks pass locally. The canonical catalogue is 121,377 items and 408,163
+relationships; 2,305 unresolved/not-established edges and programme review
+queues remain explicitly fail-closed. The broad enrichment inventory's
+126,414/422,739 totals are kept separate and are not student-scaling counts.
+
+The only bounded implementation change in this pass corrected the route-audit
+Nursing smoke fixture to `Allied Health Sciences::Nursing Sciences`. No UI,
+SQL, seed transport, external ledger or browser proof was changed. Scaling,
+browser, live payload and manual Supabase gates remain open. Full report:
+`data/career-mapping/_audit/full_population_downstream_admin_audit_2026-09-21.md`.
+
+## 2026-09-21 tranche 004 enrichment checkpoint
+
+Tranche 004 searched **32 item/relationship rows**: **11 linked item
+records**, **21 review-required records**, and **0 relationship promotions**.
+All 8 relationship candidates remained `review_required` because their local
+target endpoint or exact typed edge was not established. The merged queue now
+contains **138 item search records** and **32 relationship search records**.
+
+The local audit suite remains green at **47 tests**. Completed agents were
+closed after their artifacts were verified; SQL, seed transport, catalogue and
+browser-proof artifacts were not changed by tranche 004.
+
+## 2026-09-21 tranche 005 continuation checkpoint
+
+The next item and relationship selections were saved before searching so the
+work remains resumable. The three attempted agent sessions then terminated:
+two reached the account usage limit and one lost its access token. No failed
+agent result was promoted. The role-profile continuation did complete its
+local audit: 20 additional roles are explicitly bounded/local-only and
+`review_required`, leaving 79 missing work-profile records; no generated role
+profile was invented.
+
+The local pass recorded authoritative evidence for eight tranche-005
+certifications. AWS Certified Solutions Architect – Associate, Certified
+Kubernetes Administrator, ISTQB Certified Tester Foundation Level, AWS Data
+Engineer Associate, Databricks Certified Data Engineer Associate and Google
+Cloud Professional Data Engineer are `linked` to official item-specific
+pages. The Azure Developer and Azure Data Engineer entries are
+`review_required`: Microsoft retains the historical identities but its current
+pages mark those certification/renewal paths retired. The queue now reports
+**146 searched item records** (**79 linked**, **57 review-required**) and **32
+searched relationship records** (**24 review-required**, no promotions), with
+**9,873 item identities** and **2,281 relationships** still pending external
+search. The overall unresolved relationship count remains **2,305**.
+
+The 47-test local audit suite passes after queue regeneration. SQL, generated
+seed transport, browser proof and live admin/student payload verification
+remain deferred end-of-scaling gates.
+
+## 2026-09-21 tranche 005 agent checkpoint
+
+Agent tranche 005 completed the saved **32-item** selection: **27 linked** and
+**5 review-required**, with zero unavailable results and zero relationship
+promotions. The relationship agent completed its saved **8-row** selection:
+all **8 remain review-required**, because authoritative role/tool pages did not
+establish the missing typed target endpoints or edge type. The role-profile
+agent audited 20 more roles without inventing profiles; **59 missing
+work-profile roles remain**.
+
+After merging the append-only ledgers and rebuilding the queue, the canonical
+queue reports **170 searched item records** (**88 linked**, **59
+review-required**, **9,862 pending**) and **40 searched relationship records**
+(**32 review-required**, **2,273 pending**). The catalogue still contains
+**2,305 unresolved relationships** in total. The local audit suite remains
+green at **47 tests**. The full relationship-resource audit parser was also
+corrected to consume the validated gzip JSON document, rather than failing on
+the final bytes of the large relationship array.
+
+The rerun now scans all **121,377 items** and **408,163 relationships** across
+**237 programmes** and **420 JAMB identities**, reporting **405,858
+source-backed** edges and **2,305 not-established** edges without parser
+failure.
+
+## 2026-09-21 role work-profile tranche 003 checkpoint
+
+The read-only role work-profile continuation audited the next non-overlapping
+20 roles (queue positions 41-60) after `role_work_profile_tranche_002`. All 20
+have exact records in the vendored European Commission ESCO occupation extract,
+including CSV row locators, concept URIs, definitions and occupation-skill
+relation locators. The public ESCO API transport was attempted for every row
+but was unavailable in this local run, so none was counted as an online exact
+identity match. All 20 remain `bounded_local_only` and `review_required`.
+
+No role record, work-profile row, Nigerian mapping, seed, SQL, UI or previous
+tranche artifact was changed. The three tranche ledgers are disjoint (60
+unique role keys); 59 missing work-profile roles remain. Evidence and report:
+`data/career-mapping/_audit/external_enrichment_agent/role_work_profile_tranche_003_2026-09-21.json`.
+Checkpoint:
+`data/career-mapping/_audit/external_enrichment_agent/role_work_profile_tranche_003_checkpoint_2026-09-21.json`.
+
+## 2026-09-21 tranche 006 agent checkpoint
+
+The next disjoint item tranche searched **32** identities: **19 linked** and
+**13 review-required**, with no unavailable results. The next relationship
+tranche searched **8** rows: **0 promoted** and **8 review-required** because
+the source evidence did not establish the missing typed target endpoints or
+edge types. The role-profile agent audited queue positions 61-80: all **20
+remain bounded/local-only and review-required**, leaving **39 missing role
+profiles**. No profile, mapping, SQL, seed, catalogue or UI row was invented
+or changed.
+
+After queue regeneration, the append-only ledgers contain **202 searched item
+records** (**99 linked**, **63 review-required**, **9,847 pending**) and **48
+searched relationship records** (**40 review-required**, **2,265 pending**).
+The catalogue-level relationship totals remain **405,858 source-backed** and
+**2,305 not-established**. The local audit suite is green at **47 tests**;
+admin and Sociology report smoke checks pass. All three agents were closed
+after their artifacts were verified, leaving the agent slots available for the
+next cycle.
+
+## 2026-09-21 role work-profile tranche 005 checkpoint
+
+The read-only role work-profile continuation audited the next non-overlapping
+20 missing roles, queue positions **81-100** after tranche 004. Fifteen O*NET
+identities were verified against their official item-specific summary URLs;
+five ESCO identities retain exact vendored occupation records, definitions,
+concept URIs and occupation-skill locators. All 20 remain `review_required`.
+
+No role record, work-profile row, Nigerian mapping, application code, seed,
+SQL, UI or previous tranche artifact was changed. The tranche is disjoint from
+the earlier role ledgers, and **19 missing work-profile roles remain**. Evidence,
+report and checkpoint:
+`data/career-mapping/_audit/external_enrichment_agent/role_work_profile_tranche_005_2026-09-21.json`.
+
+The pass changed no user-facing behaviour. Local parity/non-overlap validation
+passed; live SQL, browser proof and live-payload verification remain deferred.
+
+## 2026-09-21 full-population item-enrichment tranche 007 checkpoint
+
+The next canonical, non-overlapping item tranche searched **32 contextual
+identities** after excluding D078 and tranches 001-006. **21** were linked to
+authoritative item-specific evidence and **11** remain `review_required` because
+the sources support a broad, combined or context-ambiguous label rather than
+the exact catalogue item. Every ledger row retains HTTPS URLs, authorities,
+locators, evidence summaries and access dates. No relationship row was searched
+or promoted in this item-only pass.
+
+Selection/ledger parity is **32/32**, with zero duplicate IDs, zero overlap with
+prior item ledgers, zero D078 rows and zero missing required evidence fields.
+The tranche artifacts are under
+`data/career-mapping/_audit/external_enrichment_agent/` using the
+`full_population_tranche_007_*_2026-09-21` names. No catalogue, generated seed,
+SQL, UI, app code or browser-proof artifact changed. The local search scripts
+compile successfully; live SQL, browser proof, live-payload verification and
+the remaining item/relationship/role queues remain deferred/open.
+
+## 2026-09-21 relationship tranche 007 and merged queue checkpoint
+
+The next disjoint relationship tranche searched **8** rows. All **8 remain
+`review_required`**: O*NET and first-party tool documentation confirmed
+occupation/tool associations but did not establish complete typed source-target
+edges, so no endpoint or relationship type was inferred. The relationship
+ledger now contains **56 searched rows** with **48 review-required** results.
+
+The merged external queue now reports **234 searched item records** (**112
+linked**, **70 review-required**, **9,827 pending**) and **56 searched
+relationship records** (**48 review-required**, **2,257 pending**). The
+catalogue still has **405,858 source-backed** and **2,305 not-established**
+relationships. The full local audit suite remains green at **47 tests**; all
+tranche-007 agents were closed after verification.
+
+## 2026-09-21 full-population item-enrichment tranche 008 checkpoint
+
+The next canonical item tranche selected and searched **32** new contextual
+identities after excluding D078 and all prior item tranches. **21** carry
+authoritative item-specific evidence and **11** remain `review_required` because
+the source is retired, broad, combined or context-ambiguous. Every searched row
+retains the URL, authority, locator, evidence summary and access date. No
+relationship rows were searched or promoted.
+
+Selection/ledger parity is **32/32**, with zero missing rows, duplicate IDs,
+D078 rows or non-HTTPS evidence. The merged audit queue now includes **266
+searched item records** and **56 searched relationship records**; its current
+item states are **121 linked**, **73 review-required** and **9,815 pending**
+across 10,009 unique identities. The catalogue remains **405,858
+source-backed** and **2,305 not-established** relationships. Tranche artifacts
+are saved under
+`data/career-mapping/_audit/external_enrichment_agent/full_population_tranche_008_*_2026-09-21`.
+
+No catalogue, generated seed transport, SQL, UI, app code or browser-proof
+artifact changed. The tranche is **not blocked**; live SQL, browser proof,
+live-payload verification and the remaining enrichment queues remain open.
+
+## 2026-09-21 faster-cycle checkpoint
+
+The larger agent attempt was stopped by the account usage limit before it
+produced usable tranche-009 evidence. Three smaller, checkpoint-first agents
+then completed successfully. The item agent searched **16 contextual rows**
+representing **10 deduplicated item names**: **14 linked** and **2
+review-required**. The relationship agent searched **4** rows: **0 promoted**
+and **4 review-required**, with no inferred endpoints or edge types. A separate
+read-only downstream/admin slice covered **20 non-overlapping programmes** and
+passed curriculum, ownership, provenance, category, language, bounded-role-
+learning, relationship-state and fail-closed checks.
+
+After merging the append-only ledgers, the queue reports **282 searched item
+records** (**125 linked**, **72 review-required**, **9,812 pending**) and **68
+searched relationship records** (**59 review-required**, **2,246 pending**).
+The full catalogue relationship total remains **2,305 unresolved**. The
+deduplicated search manifest shows **10,006 typed item groups** from **10,009
+queue identities**, so larger parallel batches can be used safely without
+duplicating most web searches. All three agents were closed after verification;
+47 local audit tests pass. SQL, browser proof and live deployment remain
+deferred.
+
+## 2026-09-21 short-cycle tranche 011 checkpoint
+
+The next checkpoint-first cycle completed all three assignments. Item tranche
+011 searched **16** non-overlapping rows; **14 linked** and **2
+review-required**. Relationship tranche 011 searched **4** rows; **0
+promoted** and **4 review-required**, with no inferred endpoints or typed
+edges. The downstream/admin slice audited **20 non-overlapping programmes**
+covering **76 domains, 189 subgroups and 3,622 roles**; all programme gates and
+the six static student/admin boundary checks passed. Student approval remains
+false because review-required, unresolved and admin-pending states remain.
+
+After merging the append-only ledgers, the queue reports **314 searched item
+records** (**139 linked**, **76 review-required**, **9,794 pending**) and **76
+searched relationship records** (**63 review-required**, **2,242 pending**).
+The full catalogue relationship total remains **2,305 unresolved**. The local
+audit suite remains green at **47 tests**; all three tranche-011 agents were
+closed after artifact verification. SQL, browser proof and live deployment
+remain deferred.
+
+## 2026-09-21 relationship tranche 010 checkpoint
+
+The relationship agent completed the next checkpoint-first batch of **4
+unresolved rows**. All **4 remain `review_required`** after checking O*NET and
+official Ansible, Jira, Bash and Docker documentation; no missing endpoint or
+typed edge was inferred.
+
+The merged queue now records **298 searched item records** (**127 linked**, **72
+review-required**, **9,810 pending**) and **72 searched relationship records**
+(**63 review-required**, **2,242 pending**). The full relationship backlog
+remains **2,305 unresolved**. The local audit suite remains green at **47
+tests**; the relationship agent was closed after verification. SQL, browser
+proof and live deployment remain deferred.
+
+## 2026-09-21 short-cycle tranche 010 checkpoint
+
+The checkpoint-first cycle completed an item tranche of **16 contextual rows**
+covering **10 deduplicated item names**: **14 linked**, **2 review-required**,
+and zero unavailable. It also completed a read-only downstream/admin slice of
+**20 non-overlapping programmes** covering **92 domains, 224 subgroups and
+2,510 roles**. All curriculum, ownership, provenance, category, language,
+bounded-role-learning, resource/relationship state and fail-closed gates passed
+for the slice; student approval remains false because review, unresolved and
+admin-pending states remain.
+
+After queue regeneration, the current ledger totals are **298 searched item
+records** (**127 linked**, **72 review-required**, **9,810 pending**) and **68
+searched relationship records** (**59 review-required**, **2,246 pending**).
+The catalogue relationship total remains **2,305 unresolved**. The item and
+downstream agents were closed after verification. The relationship agent's
+tranche-010 search had not yet produced a report at this checkpoint and remains
+active; no relationship result was assumed or promoted. The deduplicated search
+manifest and 47-test local audit suite remain green.
+
+## 2026-09-21 external item-evidence checkpoint: tranche 010
+
+The next stable-row, non-overlapping item batch after tranche 009 selected and
+searched **16 contextual identities** outside D078. The append-only ledger
+contains **14 linked** records and **2 `review_required`** records. The latter
+is the combined engineering safety-and-reliability competency: NASA evidence
+supports its safety and reliability components, but does not establish the
+exact combined catalogue item as one source-backed destination.
+
+Selection/ledger parity is **16/16**, with zero duplicate IDs, zero overlap,
+zero D078 rows and zero missing required evidence fields. Each row retains an
+authoritative HTTPS URL, authority, locator, evidence summary and access date.
+No relationship rows were searched or promoted. The queue was regenerated and
+now records **298 searched item rows** (**127 linked**, **72 review-required**)
+and **68 searched relationship rows**; the canonical 2,305 unresolved
+relationships remain unchanged. No catalogue, generated seed transport, SQL,
+UI, app code or browser-proof file was changed. Browser proof, live-payload
+verification and manual SQL remain deferred.
+
+## 2026-09-21 short-cycle tranche 012 checkpoint
+
+The checkpoint-first cycle completed all three assignments. Item tranche 012
+searched **16** new non-D078 contextual identities: **12 linked with
+authoritative item-specific evidence**, **4 `review_required`**, and zero
+unavailable. Relationship tranche 012 searched **4** unresolved rows; all **4
+remain `review_required`**, with no inferred endpoints or relationship types.
+The downstream/admin slice audited **20 non-overlapping programmes** covering
+**81 domains, 221 subgroups and 3,290 roles**; all programme gates, six static
+student/admin boundary checks, and role-learning caps passed.
+
+After merging the append-only ledgers, the queue contains **330 searched item
+records** and **80 searched relationship records**. Across the 10,009 unique
+item identities, the current states are **149 linked**, **80 review-required**,
+and **9,780 pending**. The relationship queue has **67 review-required** and
+**2,238 pending** rows. The catalogue still has **405,858 source-backed** and
+**2,305 not-established** relationships. The deduplicated manifest contains
+**10,006 typed item groups**, preserving all programme/JAMB contexts while
+avoiding repeated searches for the same typed item.
+
+All tranche-012 artifacts were checkpointed before search, validated for
+ledger parity and HTTPS evidence, and the full local audit suite remains green
+at **47 tests**. No catalogue, generated seed, SQL, UI, app or browser-proof
+artifact was changed. SQL, browser proof, live-payload verification and final
+student approval remain deferred.
+
+## 2026-09-21 short-cycle tranche 013 and downstream slice 006 checkpoint
+
+The next checkpoint-first item tranche searched **16** non-D078 contextual
+identities, representing **13 deduplicated item names**. **3** received exact
+authoritative item-specific links and **13** remain `review_required`; none
+were marked unavailable. The relationship tranche searched **4** additional
+non-overlapping unresolved rows; all **4 remain `review_required`** after
+checking O*NET plus first-party AWS, Microsoft, Docker and Git documentation.
+No endpoint or typed edge was inferred.
+
+The merged queue now records **346 searched item rows** and **84 searched
+relationship rows**. Current item states are **152 linked**, **90
+review-required**, and **9,767 pending** across **10,009** unique identities.
+The relationship backlog remains **67 review-required** and **2,238 pending**
+within the canonical **2,305 unresolved** rows. The deduplicated search
+manifest reports **10,006 typed item groups** and **9,767 groups searchable
+now**.
+
+Read-only downstream/admin slice 006 covered **20 non-overlapping programmes**,
+with **113 domain routes, 288 subgroup routes and 4,762 role routes**. Its
+programme, student/admin boundary, provenance, category, bounded-role-learning
+and fail-closed checks passed. It correctly leaves resource review, unresolved
+relationships, full admin rendering, browser proof and live SQL open; it does
+not authorize student exposure.
+
+The complete local audit suite remains green at **47 tests**. All evidence was
+saved in tranche/slice checkpoints before completion, with no catalogue, seed,
+SQL, UI, app or browser-proof mutation. A subsequent slice-007 agent was
+started from its existing checkpoint; if the account limit interrupts it, its
+partial checkpoint must not be treated as an audit result.
+
+## 2026-09-21 downstream/admin slice 007 checkpoint and static-contract repair
+
+Slice 007 completed a read-only audit of **20 additional non-overlapping
+programmes**, covering **73 domains, 197 subgroups and 3,948 roles**. Curriculum
+evidence, source ownership/URLs, student/admin language, thematic category
+boundaries, bounded role-learning, explicit review states and student fail-closed
+handling passed for the slice.
+
+The audit exposed and the local implementation now fixes one static-contract
+gap: `ToolGroupsBlock` already rendered the canonical singular `alternative`
+edge as the student-facing “Alternatives” group, but the full downstream audit
+could not discover the plural UI-group marker. An explicit label constant was
+added without changing stored relationship semantics, and the full
+237-programme static relationship-grouping gate now passes.
+
+The slice still correctly remains unapproved for student exposure: all 20
+resource reviews, 1,430 unresolved/not-established relationships, and 20 admin
+render acceptances remain open; 119 role work-profile identities remain
+review-only. Browser proof and live SQL remain deferred by instruction. The
+slice audit and the full local audit suite remain available for rerun after any
+further enrichment merge.
+
+## 2026-09-21 tranche 014 checkpoint
+
+The next item lane selected **16** disjoint non-D078 identities (**6 unique
+names**) and saved its pre-search checkpoint, but the delegated account limit
+interrupted it before any external search. Its empty ledger is intentionally
+not counted as searched evidence; those 16 rows remain pending.
+
+The relationship lane completed **4** additional disjoint unresolved rows for
+`D001|Information Technology Project Managers`. All **4 remain
+`review_required`** after O*NET and first-party AWS, Atlassian and Microsoft
+documentation checks; 12 HTTPS evidence URLs were retained, and no endpoint or
+typed relationship was inferred.
+
+After the append-only merge, the queue records **346 searched item rows** and
+**88 searched relationship rows**. Item states are **152 linked**, **90
+review-required**, and **9,767 pending**. Relationship states are **71
+review-required** and **2,234 pending** within the unchanged **2,305
+unresolved** catalogue rows. The search-group manifest remains **10,006 typed
+item groups**, with **9,767 groups searchable now**.
+
+The local audit suite remains green at **47 tests**. No catalogue, seed, SQL,
+app, UI or browser-proof artifact was changed. SQL, browser proof, full admin
+render acceptance and final student approval remain deferred.
+
+## 2026-09-21 tranche 014 completion and source-only push checkpoint
+
+Because delegated external-search agents repeatedly hit the account usage
+limit, tranche 014 was completed locally from its saved deterministic
+checkpoint. All **16 selected item identities** across D034-D036 received
+append-only evidence rows for **6 unique procurement names**. OECD and UNOPS
+authoritative sources were used; all 16 decisions are `linked`, with no
+relationship endpoint or domain/role requirement inferred.
+
+The merged queue now records **158 linked**, **90 review-required** and
+**9,761 pending** item identities. Relationship coverage remains **71
+review-required** and **2,234 pending** within the unchanged **2,305
+unresolved** rows. The tranche report, completed markdown checkpoint and
+ledger are saved under `data/career-mapping/_audit/external_enrichment_agent/`.
+
+The source-only application push is complete at remote `very-new` commit
+`644620a`. Its diff intentionally excludes JSON, SQL, gzip, audit and handoff
+files. The newly updated enrichment queue, ledger, report and this handoff
+remain local and unpushed for the protected-data review.
+
+The local gates remain green: **47 audit tests**, full 237-programme
+downstream/admin audit, admin guidance smoke, Sociology report smoke and
+TypeScript check. Scaling approval remains closed because enrichment,
+resources/relationship review, full admin render acceptance, browser proof and
+live SQL are still deferred/open.
+
+## 2026-09-21 slice 009 and three-agent scaling continuation
+
+The downstream/admin audit agent completed the next **20 non-overlapping
+programmes**, covering **110 domains, 242 subgroups and 3,586 roles**. The
+Sociology-derived checks passed: curriculum evidence, ownership and source
+URLs, student/admin language separation, thematic category boundaries,
+role-level learnable-skill caps, relationship grouping, fail-closed review
+states and admin provenance queues. Open gates are **20/20 resource reviews**,
+**20/20 relationship reviews** with **3,154 unresolved/not-established rows**,
+**20/20 admin render acceptances**, plus deferred browser proof and live SQL.
+
+Three agents are now active in disjoint lanes: item external enrichment,
+relationship external enrichment, and role work-profile/certification/resource
+evidence. All three must read the handoff and mockup/spec documents before
+acting, save checkpoints and retain HTTPS source URLs/locators. A local fix
+also normalizes historical relationship ledger aliases (`missing`,
+`unresolved`, and `review_only`) to the current `not_established` identity so
+future tranches cannot duplicate earlier searches.
+
+SQL, generated seed transport, browser proof and live deployment remain
+explicitly deferred until the end of scaling. No scaling approval is claimed
+from the slice result alone.
+
+## 2026-09-21 tranche 015 continuation
+
+Item tranche 015 completed from a pre-search checkpoint with **16 selected
+and 16 searched non-D078 identities**, representing **10 unique item names**.
+The ledger records **14 linked**, **2 review_required** and **0 genuinely
+unavailable** decisions. The two review-required rows are repeated
+`apply Nigerian law` competency identities whose official Nigerian sources
+support the legal-training context but do not name the exact catalogue
+competency. Selection/ledger parity, HTTPS evidence, zero overlap and the
+47-test audit suite passed; relationships, SQL, seeds, UI and browser proof
+were untouched.
+
+The current queue is **167 linked**, **91 review-required** and **9,751
+pending** item identities. Relationship coverage is **71 review-required** and
+**2,234 pending** within the unchanged **2,305 unresolved** rows.
+
+After closing the completed slice-009 agent, three disjoint agents were
+redeployed for the next downstream/admin slice, the next item-enrichment
+tranche and the next relationship-enrichment tranche. SQL, generated
+transport, browser proof and live deployment remain end-of-scaling gates.
+
+## 2026-09-21 continuous item and relationship lanes
+
+The item lane completed tranche 016 as an append-only checkpoint: **100/100
+rows searched**, representing **94 unique typed items**, with **43 linked**,
+**57 review_required**, **0 unavailable**, and **0 D078** rows. The merged item
+queue is now **210 linked**, **142 review_required** and **9,657 pending**.
+
+The relationship lane completed the entire remaining **2,305-row** unresolved
+non-D078 backlog in **22 saved batches** (21x100 plus a 72-row remainder).
+All rows remain `review_required`/`not_established` with null endpoints preserved;
+no unsupported edge was promoted. The merged relationship queue now records
+**2,305/2,305 searched** and **0 pending**. Each batch has a selection,
+pre-search checkpoint, ledger and report. The three item agents continue in
+disjoint 100-row item lanes, saving after each batch and immediately claiming
+the next pending rows.
+
+The next three item tranches also completed with saved ledgers and reports:
+tranche 017 searched **100/100** rows (**23 linked**, **77 review_required**),
+tranche 018 searched **100/100** (**44 linked**, **56 review_required**), and
+tranche 019 searched **100/100** (**36 linked**, **64 review_required**). All
+excluded D078, preserved HTTPS evidence, and touched no relationships, SQL,
+seeds, UI or browser proof. The item-selection template now serializes shared
+claims with a lock so concurrent item lanes cannot claim the same row at the
+same time.
+
+After those checkpoints, the merged queue reports **309 linked**,
+**400 review_required** and **9,300 pending** unique item identities. The
+relationship queue remains **2,305/2,305 searched**, all
+`review_required`/`not_established` with no promoted unsupported edge. The full
+237-programme downstream/admin audit still covers **237/237** routes with
+scaling approval correctly closed. The audit suite remains **47 passed**.
+
+## 2026-09-22 continuous item-lane continuation
+
+The item-only lane resumed from tranche 065 and completed tranches **066–071**
+as disjoint 100-row batches. Each tranche saved its selection, pre-search
+checkpoint, append-only ledger and report before advancing. The six tranches
+added **600 searched contextual item rows** and **491 unique typed-item
+searches** in total; all selected rows excluded D078 and remain
+`review_required` where the evidence was not exact. No relationship ledger,
+catalogue, seed transport, SQL, UI or browser-proof file was touched.
+
+After queue reconciliation, the item queue reports **344 linked**,
+**4,476 review_required** and **5,189 pending** unique item identities out of
+10,009. This continuation preserves the source URLs, locators and access dates
+for each saved row; SQL, browser proof and remaining downstream/admin work
+remain deferred.
+
+The lane then completed tranches **072–073**, adding another **200 searched
+contextual rows** (**187 unique typed items**), again with zero D078 rows and
+zero relationship, SQL, seed, UI or browser-proof changes. The queue above is
+reconciled through tranche 073.
+
+The lane then recovered a concurrent tranche-075 selection overwrite by
+preserving its **56** already-written valid ledger rows and processing the final
+100-row claim as recovery tranche **075b**. Tranches **076–078** then completed
+normally: **400 additional rows** searched, all `review_required`, with no D078
+or relationship rows. The reconciled item queue is now **344 linked**,
+**5,164 review_required** and **4,501 pending** unique identities. SQL, seeds,
+UI and browser proof remain untouched.
+
+## 2026-09-22 item queue closure
+
+The local item-enrichment queue is now fully searched: **10,009/10,009**
+unique item identities, with **344 linked_external_verified**, **9,665
+review_required_external_search**, and **0 pending_external_search**. The
+remaining stale selection-only claims were recovered in uniquely named,
+lock-protected batches. The final D078 remainder was processed separately as
+`recovery_20260922_d078_final6`: **6/6** rows searched, all retained
+`review_required`.
+
+The final report verifies selection/ledger parity (**6/6**), zero missing
+rows, zero duplicates, zero prior-ledger overlap, valid HTTPS evidence and
+zero relationship rows. Relationships, SQL, seeds, UI, browser proof,
+catalogue promotion and prior ledgers were untouched.
+
+## 2026-09-23 corrected JAMB scope and downstream checkpoint
+
+The corrected JAMB resource lane now uses the actual student-facing population:
+**420 canonical JAMB identities**, with **237 CCMAS packages** treated as
+supporting curriculum evidence only. The append-only `corrected_004` ledger
+contains **420/420 unique identities**, **420 available resource packages**,
+**0 review-required resource packages**, and **0 genuinely unavailable
+packages**. All **11** CCMAS-anchor-absent occurrences are retained as
+available when external learning evidence exists; missing CCMAS is not an
+unavailable decision. Four case-distinct source-name key collisions were
+repaired with stable identity-qualified subject IDs, and broad unavailable
+foundation endpoints were replaced with item-specific open-textbook sources.
+
+The downstream route audit now distinguishes **154 CCMAS packages represented
+by a JAMB identity** from **83 CCMAS-only supporting packages** without a JAMB
+identity/offering. The 83 remain explicit admin findings and do not block the
+420-identity JAMB route. The student-facing reachability gate passes locally;
+student exposure, browser proof and live payload proof remain unapproved.
+
+The role-profile continuation audited tranche 008: all **119** missing work
+profiles remain explicitly absent/review-only, with no invented O*NET/ESCO
+profile rows and three focused tests passing. The active agent pool is capped
+at three lanes: downstream/admin reconciliation, item enrichment and
+relationship enrichment. Every lane must preserve append-only checkpoints;
+relationships remain internal non-blocking coverage, and SQL/seed generation
+and browser proof stay at the end of scaling.
+
+### 2026-09-23 bounded enrichment continuation
+
+The next item lane checkpoint searched **100 distinct item identities** with
+selection/ledger parity, HTTPS URL/locator/access-date validation and **0
+promotions**; all remain `review_required`. The relationship lane searched the
+next **100 unresolved candidates**, retained evidence for **100/100**, promoted
+**0**, and preserved all as `review_required`/`not_established` because typed
+endpoints or edge semantics were not established. Neither lane changed the
+catalogue, SQL, seed transport, UI, live database or browser proof.
+
+## 2026-09-23 SQL execution documentation-order checkpoint
+
+This documentation-only checkpoint audited the handoff, `CLAUDE.md`,
+`AGENTS.md`, `backend/COMPLETE_DATA_MIGRATION_2026-08-17.md`,
+`backend/MIGRATION_RUNBOOK.md`, and the Sociology/product mockup
+specifications. The current execution rule is now explicit and consistent:
+
+1. complete local subject/JAMB audits;
+2. complete and inspect the corrected all-420 JAMB resource/downstream checks;
+3. complete local scaling and browser-proof gates; and
+4. only then enter the manual SQL phase, using the documented dependency order.
+
+The SQL phase is documented as: canonical base/schema prerequisites and seeds,
+programme/domain evidence migration plus seed, contextual schema and
+relationship schema, Sociology and generic curriculum migrations/seeds,
+programme-reading/ownership/orientation/tool-path/all-programmes/global
+migrations, then the 35 compressed contextual seed parts in numeric order.
+The contextual relationship schema precedes those parts. The destructive
+`migration_career_v2.sql` is explicitly staging-only and is excluded from the
+additive Sociology path. Manual-only SQL constraints remain in force.
+
+Current local status: the corrected resource ledger covers **420/420 JAMB
+identities**, including **11 anchor-absent** occurrences, with **420 available**
+and **0 review-required or genuinely unavailable resource packages**. The
+all-programme downstream route audit covers the **420-JAMB/237-CCMAS** boundary
+locally; the 83 CCMAS-only packages remain supporting/admin findings. Role
+work-profile coverage still has **119 absent canonical profiles** after tranche
+009. Items and relationships remain closed as student-facing gates: item search
+is **10,009/10,009**, and the **2,305** unresolved relationships are searched,
+retained as internal `not_established`/review-only coverage, and have no
+unsupported promoted edge.
+
+The earlier three-lane agent statement is historical. The item and relationship
+lanes were stopped after the bounded audit; this documentation-only pass did
+not redeploy them. The role-profile tranche 009 result is recorded above as
+local evidence and remains review-only where a canonical profile is absent.
+
+No SQL was applied, no implementation or item/relationship ledger was changed
+by this checkpoint, and no live deployment claim is made. The corrected order
+was text/order-validated after the documentation patches.
+
+## 2026-09-23 role-profile blocker classification correction
+
+The 119 canonical roles without complete work-profile rows are no longer a
+scaling blocker. The missing-profile queue was fully audited against the
+available authoritative identity/profile extracts; none met the promotion
+criteria, so no profile was invented or promoted. They remain explicitly
+absent/review-only and must stay out of student guidance until stronger
+criteria-satisfying evidence appears. This is a closed evidence decision, not
+an unfinished scaling lane.
+
+The 83 CCMAS-only findings are a different kind of state: they are supporting
+CCMAS curriculum packages that have no matching canonical JAMB identity or
+university offering. They remain visible to staff as supporting evidence, but
+they cannot reduce or invalidate the 420 JAMB student lookup population.
+
+## 2026-09-23 current three-lane scaling checkpoint
+
+Three fresh agents were deployed with disjoint scopes and then closed after
+their artifacts were reviewed. The JAMB resource lane completed the corrected
+all-420 transport: **420/420 unique names**, **11 anchor-absent identities**,
+**1,273 source rows**, zero missing URL/locator fields, zero invalid URLs or
+access dates, zero canonical-name mismatches, and **1,273 unique SQL tuples**.
+The regenerated transport classifies **844 Nigerian** and **429 global** source
+rows. Five OpenLearn endpoints returned 403 during reachability probing; those
+records remain available with an access-verification caveat and were not
+falsely marked unavailable.
+
+The downstream/admin lane reports **420/420 JAMB identities**, **237/237 CCMAS
+packages**, and zero broken domain/subgroup/role routes. The strict local admin
+boundary has zero accepted rows and **529,540 internal/review rows**; source
+presence alone does not promote a row into the dashboard-approved set. The 83
+CCMAS-only packages, 86 mapping-review identities, 2,305 not-established
+relationships, and review-only role profiles remain intentionally internal and
+are not scaling blockers under the agreed policy.
+
+The browser lane confirmed the shell render and local route/admin contract
+smokes, but genuine browser proof remains open: the isolated guest session
+redirected all four student deep links and both admin links to login, so the
+accepted count is **0/4 student** and **0/2 admin** routes. The CUA surface
+reported no available browser/app surface. No live SQL or Supabase payload
+proof is claimed.
+
+The identity-specific JAMB resource migration and seed are now generated and
+documented in `AGENTS.md`, `CLAUDE.md`, `backend/MIGRATION_RUNBOOK.md`, and
+this runbook. The student API reads that table only for rows explicitly marked
+`approved_guidance_v1`, `available`, and `resource_available`; missing or
+review-only tables/rows fail closed. Focused visibility tests pass (**3/3**).
+The generated SQL remains unapplied pending the final browser/live gate and
+the user's manual SQL deployment step.

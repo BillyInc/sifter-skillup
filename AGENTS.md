@@ -16,6 +16,24 @@ string. The complete explanation and verification queries are in
 `backend/COMPLETE_DATA_MIGRATION_2026-08-17.md` and
 `backend/MIGRATION_RUNBOOK.md`.
 
+### Current goal execution gate (2026-09-23)
+
+For the current scaling goal, local evidence comes before every SQL action:
+
+1. Run the canonical local subject/JAMB audits and the corrected all-420 JAMB
+   resource audit (`*_corrected_004_*`), including the 11 identities without a
+   CCMAS anchor.
+2. Run the all-programme downstream/admin route checks against the 420 JAMB
+   identities and 237 CCMAS supporting packages, including the student-safe and
+   admin/provenance gates.
+3. Complete the remaining local scaling and browser-proof gates. Only then
+   enter the manual SQL phase below, using the dependency order exactly as
+   written.
+
+No local generator, audit, REST read, or browser result is a live deployment
+claim. Do not apply SQL during the local scaling phase. In manual-only mode,
+prepare and validate the files, then stop for the user to apply them manually.
+
 ### Canonical 2026-09-11 order
 
 When the task concerns the current JAMB/offering/subject refresh, use the
@@ -54,6 +72,7 @@ missing files, one transaction at a time, in this order:
 backend/migration_career_base_registry.sql
 backend/migration_subject_catalog.sql
 backend/migration_career_pilot.sql
+backend/migration_jamb_programme_learning_resources_2026-09-23.sql
 backend/migration_subject_rule_records.sql
 backend/migration_student_pipeline_live.sql
 backend/migration_school_faculty_filter_2026-09-09.sql
@@ -71,6 +90,7 @@ Keep each transaction intact and stop at the first error:
 ```text
 backend/seed_subject_catalog.sql
 backend/seed_career_pilot.sql
+backend/seed_jamb_programme_learning_resources_2026-09-23.sql
 backend/seed_subject_rule_records.sql
 backend/seed_subject_options.sql
 ```
@@ -87,18 +107,48 @@ When applying the source-grounded guidance framework, apply this additive
 migration only after the career resource schema and source-backed career
 layers exist:
 
+This list starts after the canonical career base/schema and career seed have
+been applied. `migration_career_v2.sql` is not part of this additive path; it
+is a destructive empty/staging taxonomy rebuild and requires explicit staging
+approval.
+
 ```text
-backend/migration_career_v2.sql
 backend/migration_role_tools.sql
 backend/migration_source_backed_career_layers.sql
 backend/migration_career_resources_v1.sql
+backend/migration_jamb_programme_learning_resources_2026-09-23.sql
+backend/migration_programme_domain_evidence_2026-09-17.sql
+backend/migration_programme_domain_review_corrections_2026-09-18.sql
 backend/migration_contextual_career_items.sql
+backend/migration_career_item_relationships_2026-09-17.sql
+backend/migration_sociology_curriculum_contract_2026-09-17.sql
+backend/migration_programme_curriculum_contract_general_2026-09-18.sql
 backend/migration_guidance_programme_reading_and_market_scope_2026-09-12.sql
 backend/migration_guidance_ownership_and_sociology_resources_2026-09-11.sql
+backend/migration_domain_student_orientation_2026-09-18.sql
+backend/migration_sociology_domain_tool_path_2026-09-18.sql
 backend/migration_guidance_all_programmes_2026-09-12.sql
 backend/migration_guidance_global_2026-09-11.sql
-backend/seed_career_context_items_v1_parts/part-001.sql.gz ... part-030.sql.gz
 ```
+
+### JAMB resource scope (corrected 2026-09-23)
+
+The student-facing population is all **420 canonical JAMB identities**. The
+237 CCMAS packages provide supporting curriculum evidence; they do not filter
+JAMB availability. A missing CCMAS anchor is optional provenance and must not
+produce `genuinely_unavailable`. Enrich all 420, including the 11 anchor-absent
+occurrences, with external learning resources and retain each URL, locator and
+access date. Keep resource availability separate from downstream mapping
+review. The append-only local correction is produced by
+`data/career-mapping/_audit/audit_programme_jamb_resource_evidence_2026-09-23_003.py`;
+it is not live SQL, browser proof or student approval.
+
+The corrected 420-row resource ledger is currently an append-only local audit
+artifact. The existing all-programmes guidance migration/seed persists the
+237 CCMAS supporting packages; it does not silently persist the 420-row JAMB
+resource ledger. Do not describe the corrected ledger as live or SQL-loaded
+until a dedicated persistence migration/seed is generated and manually
+applied.
 
 Run the files in this exact order. The contextual table must exist before the
 Sociology migration because it now includes programme-level context cards. The
@@ -108,9 +158,19 @@ locators, context cards and discipline-specific open foundation references for
 all 237 parsed programmes. It does not label those references as prescribed
 books; the original PDF filename is retained in each source locator. The
 global guidance migration must follow the reviewed Sociology slice so it
-cannot overwrite D078. Finally load the 30 compressed contextual seed parts
+cannot overwrite D078. Finally load the 35 compressed contextual seed parts
 in numeric order. The generated manifest is
 `data/career-mapping/CONTEXTUAL_GUIDANCE_ITEMS_MANIFEST.json`.
+
+The contextual seed parts also contain the normalized rows for
+`career_item_relationships`. Apply
+`backend/migration_career_item_relationships_2026-09-17.sql` before loading
+those parts. The generator stores only same-context source-backed
+`builds_on`/`works_with` edges whose targets resolve to another typed item.
+Every contextual tool and certification without an established edge receives
+a `not_established` coverage row. This state is for audit and source review;
+it is not a student-facing relationship and must not be used to infer a tool,
+skill or certification requirement.
 
 The Sociology migration is the canonical data fix for the reviewed D078 slice:
 it records ownership for programme, domain, subgroup and role resources,
@@ -120,6 +180,80 @@ links. The global migration applies the same ownership rule to the other
 visible domains without using role-frequency aggregates as domain foundations.
 The API ownership filter is a safety net, not a replacement for these
 migrations.
+
+After the canonical career seed has created the programme and domain registry,
+apply `backend/migration_programme_domain_evidence_2026-09-17.sql`, then
+`backend/migration_programme_domain_review_corrections_2026-09-18.sql`, then
+`backend/seed_programme_domain_evidence_2026-09-17.sql`. The seed is generated
+from the cleaned programme-to-domain audit at
+`data/career-mapping/_audit/programme_domain_evidence_2026-08-17.json` and
+contains 1,343 active resolved programme-domain evidence rows. It supplies the actual
+course anchors and transferable evidence used to explain a relationship for a
+specific programme; it does not change the direct/functional/adjacent mapping
+labels. The current audit has zero active numeric-gate failures and zero active
+semantic-review rows. The 715 correction targets cover all gate-failing or
+explicitly retained-unverified rows that must remain unverified in the source audit; they are
+removed from active database guidance by the idempotent correction migration.
+If the table is absent or a row is absent, the API may show the stored
+relationship label but must not invent course evidence.
+
+After the schema files and canonical career seed have succeeded, load the
+programme/domain evidence and Sociology curriculum data before loading the
+large contextual seed:
+
+```text
+backend/migration_programme_domain_review_corrections_2026-09-18.sql
+backend/seed_programme_domain_evidence_2026-09-17.sql
+backend/seed_sociology_curriculum_contract_2026-09-17.sql
+backend/seed_programme_curriculum_contract_2026-09-18_parts_gz/part-001.sql.gz ... part-004.sql.gz
+backend/seed_career_context_items_v1_parts/part-001.sql.gz ... part-035.sql.gz
+```
+
+The programme-domain and Sociology seeds are ordinary SQL transactions. The
+generic programme curriculum and contextual parts are transport artifacts and
+must be decompressed and executed in numeric order; Supabase cannot execute
+gzip bytes directly. The generic curriculum parts contain the source-backed
+course/outcome contract for the 236 non-Sociology parsed programmes. Do not
+rebuild student curriculum from legacy skills arrays or role aggregates.
+
+The clean Sociology programme contract is a prerequisite for exposing
+programme learning to students. After `seed_career_pilot.sql` has created the
+canonical Sociology programme row, apply
+`backend/migration_sociology_curriculum_contract_2026-09-17.sql`, then run
+`backend/seed_sociology_curriculum_contract_2026-09-17.sql`. This seed contains
+only the 243 Sociology CCMAS course-outcome rows that passed the local quality
+gate and the seven separately stored programme abilities. It strips appended
+source annotations from student text while retaining their locators for staff
+audit. It does not rewrite legacy `skills_*` JSONB arrays and it does not seed
+domains, subgroups or roles. The API must return `not_seeded` or
+`unavailable`, never those legacy arrays, until this contract is present.
+
+The contract also stores `display_group` as a presentation-only
+classification: `sociology_programme`, `supporting_social_sciences`, or
+`shared_university`. It is derived from the checked-in CCMAS course code and
+does not remove, relabel, or reassign the source curriculum.
+Programme abilities also carry a source-derived `display_title` and a faithful
+student rewording; the original `source_text` remains available for staff
+audit. Do not render the raw ability prose as the student heading.
+
+`career_context_items.guidance_owner` is required for every contextual row.
+Rows without explicit ownership default to `review_only`; only a row whose
+owner matches its context level (`programme`, `domain`, `subgroup` or `role`)
+may be returned to students. Role-aggregated foundation/tool rows remain
+staff-audit-only. The source audit and contract builder are:
+
+```powershell
+python data/career-mapping/_audit_programme_curriculum_contract.py
+python data/career-mapping/_audit_original_ccmas_review.py --original-source-dir "C:\tmp\sifter-ccmas-original\ccmas original documents"
+python data/career-mapping/_build_programme_curriculum_contract.py --out backend\seed_programme_curriculum_contract_2026-09-18.sql
+python data/career-mapping/_build_sociology_curriculum_contract.py
+python data/career-mapping/_gen_sociology_curriculum_seed.py
+python data/career-mapping/split_large_artifacts.py split-sql backend\seed_programme_curriculum_contract_2026-09-18.sql backend\seed_programme_curriculum_contract_2026-09-18_parts_gz --max-bytes 40000000 --gzip
+```
+
+Do not treat the local contract or seed generation as proof of a live
+deployment. The user must apply the SQL manually and confirm the post-apply
+counts before the student view is considered populated.
 
 ### MANDATORY APPLY BEHAVIOUR
 
@@ -171,7 +305,10 @@ populated database. For the current student/admin test goal, the required
 missing surfaces are commonly these:
 
 1. `backend/migration_school_identity.sql` — `schools.address`, `city`,
-   `state`, `country`, and unique school affiliation codes.
+   `state`, `country`, source-backed `official_name`/`short_name` display
+   fields, and unique school affiliation codes. Long names and abbreviations
+   must be populated from an authoritative institution source; never infer a
+   university's full name from its acronym in application code.
 2. `backend/migration_guidance_report_paths.sql` — durable student/admin
    guidance checkpoints used by report generation.
 3. `backend/migration_goal_apply_now.sql` and, if still absent, the current
@@ -192,6 +329,14 @@ backend/seed_career_pilot.sql
 backend/seed_subject_rule_records.sql
 backend/seed_subject_options.sql
 ```
+
+After `backend/seed_career_pilot.sql` creates the canonical JAMB registry,
+apply `backend/seed_jamb_programme_learning_resources_2026-09-23.sql` after
+its migration. This identity-specific seed covers all 420 JAMB names,
+including the 11 without a CCMAS anchor, and retains each URL, source locator
+and access date. It is generated from the corrected local ledger and remains
+review-only until the separate admin/student approval gate is passed; a local
+generation or manual file preparation is not live deployment proof.
 
 `seed_subject_options.sql` is a replacement seed for the national matcher
 tables; back up the affected tables first. The API intentionally fails closed
@@ -219,7 +364,8 @@ first error. The faculty-filter migration must follow
 `migration_student_pipeline_live.sql` because it appends `jamb_faculty` to an
 existing view without reordering its columns.
 
-The latest local `seed_career_pilot.sql` contains 243 CCMAS programmes, 861
+The latest local `seed_career_pilot.sql` contains 243 CCMAS/custom programme
+rows (237 CCMAS packages plus 6 custom/external rows), 861
 institutions, 420 JAMB identities, 9,130 university offerings, 2,706
 requirement-source rows, 3,884 university exception rows, 1,998 structured
 university option rows, and 12,813 structured option items. Confirm those
