@@ -1,0 +1,15 @@
+{
+  "schema": "2026-09-23.relationship-external-evidence-validation.v1",
+  "batch": "relationship_external_evidence_lane_20260923",
+  "status": "completed",
+  "selection_count": 100,
+  "searched_count": 100,
+  "remaining_count": 0,
+  "review_required": 100,
+  "promoted": 0,
+  "records_with_evidence": 100,
+  "unique_canonical_ids": 100,
+  "exact_reconciliation": "100/100",
+  "errors": [],
+  "scope_guard": "Relationship evidence only; no catalogue, SQL, seed, frontend, live DB, or browser-proof writes."
+}

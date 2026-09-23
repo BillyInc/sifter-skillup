@@ -1,0 +1,31 @@
+{
+  "record_type": "relationship_pre_search_checkpoint",
+  "tranche": "016",
+  "date": "2026-09-21",
+  "selection_file": "full_population_relationship_tranche_016_selection_2026-09-21.json",
+  "selected_count": 100,
+  "searched_count": 0,
+  "linked_count": 0,
+  "review_required_count": 0,
+  "unavailable_count": 0,
+  "promoted_count": 0,
+  "overlap_count_after_normalization": 0,
+  "d078_rows": 0,
+  "endpoint_policy": "retain null endpoints unless both typed endpoints and canonical builds_on/works_with are explicitly sourced",
+  "write_policy": "append-only relationship artifacts; no item rows, SQL, seeds, UI or browser proof",
+  "historical_normalized_id_count": 69,
+  "historical_ledger_files": [
+    "full_population_relationship_tranche_003_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_004_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_005_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_006_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_007_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_008_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_009_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_010_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_011_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_012_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_013_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_014_search_ledger_2026-09-21.jsonl"
+  ]
+}

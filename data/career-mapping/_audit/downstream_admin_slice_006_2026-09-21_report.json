@@ -1,0 +1,1136 @@
+{
+  "schema_version": "2026-09-21.downstream-admin-slice-report.v1",
+  "generated_on": "2026-09-21",
+  "read_only": true,
+  "selection_checkpoint": "data\\career-mapping\\_audit\\downstream_admin_slice_006_2026-09-21_checkpoint.json",
+  "scope": {
+    "programmes": 20,
+    "programme_keys": [
+      "Computing::Data Science",
+      "Computing::Information and Communication Technology",
+      "Computing::Information Systems",
+      "Computing::Information Technology",
+      "Computing::Software Engineering",
+      "Education::Adult and Continuing Education",
+      "Education::Agricultural Education",
+      "Education::Arabic",
+      "Education::Biology",
+      "Education::Business Education",
+      "Education::Chemistry",
+      "Education::Christian Religious Studies",
+      "Education::Computer Science",
+      "Education::Creative Arts Education",
+      "Education::Early Childhood Education",
+      "Education::Educational Management",
+      "Education::Educational Technology",
+      "Education::Efik-Ibibio Education",
+      "Education::English Language/Literature-in-English",
+      "Education::Entrepreneurship Education"
+    ],
+    "prior_overlap": [],
+    "canonical_programmes": 237,
+    "canonical_jamb_identities": 420
+  },
+  "programme_rows": [
+    {
+      "programme_key": "Computing::Data Science",
+      "discipline": "Computing",
+      "programme": "Data Science",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 37,
+        "outcome_count": 295
+      },
+      "downstream": {
+        "domain_routes": 5,
+        "subgroup_routes": 7,
+        "role_routes": 129,
+        "route_key_count": 143
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 4
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 256,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 128,
+        "notEstablishedRows": 128
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Computing::Information and Communication Technology",
+      "discipline": "Computing",
+      "programme": "Information and Communication Technology",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 38,
+        "outcome_count": 306
+      },
+      "downstream": {
+        "domain_routes": 7,
+        "subgroup_routes": 16,
+        "role_routes": 134,
+        "route_key_count": 159
+      },
+      "relationship_types": {
+        "functional": 7
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 314,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 157,
+        "notEstablishedRows": 157
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Computing::Information Systems",
+      "discipline": "Computing",
+      "programme": "Information Systems",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 38,
+        "outcome_count": 329
+      },
+      "downstream": {
+        "domain_routes": 8,
+        "subgroup_routes": 17,
+        "role_routes": 220,
+        "route_key_count": 247
+      },
+      "relationship_types": {
+        "functional": 8
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 394,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 197,
+        "notEstablishedRows": 197
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Computing::Information Technology",
+      "discipline": "Computing",
+      "programme": "Information Technology",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 39,
+        "outcome_count": 379
+      },
+      "downstream": {
+        "domain_routes": 8,
+        "subgroup_routes": 18,
+        "role_routes": 159,
+        "route_key_count": 187
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 7
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 314,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 157,
+        "notEstablishedRows": 157
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Computing::Software Engineering",
+      "discipline": "Computing",
+      "programme": "Software Engineering",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 38,
+        "outcome_count": 267
+      },
+      "downstream": {
+        "domain_routes": 9,
+        "subgroup_routes": 26,
+        "role_routes": 187,
+        "route_key_count": 224
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 7,
+        "adjacent": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 356,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 182,
+        "notEstablishedRows": 182
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Education::Adult and Continuing Education",
+      "discipline": "Education",
+      "programme": "Adult and Continuing Education",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 86,
+        "outcome_count": 1191
+      },
+      "downstream": {
+        "domain_routes": 5,
+        "subgroup_routes": 16,
+        "role_routes": 220,
+        "route_key_count": 243
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 4
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "review_required",
+        "unresolved_relationships": 0,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 0,
+        "notEstablishedRows": 0
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Education::Agricultural Education",
+      "discipline": "Education",
+      "programme": "Agricultural Education",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 39,
+        "outcome_count": 754
+      },
+      "downstream": {
+        "domain_routes": 6,
+        "subgroup_routes": 15,
+        "role_routes": 289,
+        "route_key_count": 312
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 5
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 58,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 29,
+        "notEstablishedRows": 29
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Education::Arabic",
+      "discipline": "Education",
+      "programme": "Arabic",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 39,
+        "outcome_count": 771
+      },
+      "downstream": {
+        "domain_routes": 3,
+        "subgroup_routes": 9,
+        "role_routes": 167,
+        "route_key_count": 181
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 2
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "review_required",
+        "unresolved_relationships": 0,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 0,
+        "notEstablishedRows": 0
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Education::Biology",
+      "discipline": "Education",
+      "programme": "Biology",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 44,
+        "outcome_count": 786
+      },
+      "downstream": {
+        "domain_routes": 7,
+        "subgroup_routes": 19,
+        "role_routes": 314,
+        "route_key_count": 342
+      },
+      "relationship_types": {
+        "adjacent": 1,
+        "functional": 6
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 198,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 99,
+        "notEstablishedRows": 99
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Education::Business Education",
+      "discipline": "Education",
+      "programme": "Business Education",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 49,
+        "outcome_count": 896
+      },
+      "downstream": {
+        "domain_routes": 9,
+        "subgroup_routes": 27,
+        "role_routes": 340,
+        "route_key_count": 378
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 8
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 20,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 10,
+        "notEstablishedRows": 10
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Education::Chemistry",
+      "discipline": "Education",
+      "programme": "Chemistry",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 37,
+        "outcome_count": 799
+      },
+      "downstream": {
+        "domain_routes": 7,
+        "subgroup_routes": 19,
+        "role_routes": 306,
+        "route_key_count": 334
+      },
+      "relationship_types": {
+        "functional": 7
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 60,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 30,
+        "notEstablishedRows": 30
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Education::Christian Religious Studies",
+      "discipline": "Education",
+      "programme": "Christian Religious Studies",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 32,
+        "outcome_count": 772
+      },
+      "downstream": {
+        "domain_routes": 4,
+        "subgroup_routes": 11,
+        "role_routes": 175,
+        "route_key_count": 192
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 3
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 40,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 20,
+        "notEstablishedRows": 20
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Education::Computer Science",
+      "discipline": "Education",
+      "programme": "Computer Science",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 21,
+        "outcome_count": 334
+      },
+      "downstream": {
+        "domain_routes": 4,
+        "subgroup_routes": 5,
+        "role_routes": 188,
+        "route_key_count": 199
+      },
+      "relationship_types": {
+        "functional": 3,
+        "direct": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 138,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 69,
+        "notEstablishedRows": 69
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Education::Creative Arts Education",
+      "discipline": "Education",
+      "programme": "Creative Arts Education",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 35,
+        "outcome_count": 579
+      },
+      "downstream": {
+        "domain_routes": 6,
+        "subgroup_routes": 16,
+        "role_routes": 344,
+        "route_key_count": 368
+      },
+      "relationship_types": {
+        "direct": 2,
+        "adjacent": 1,
+        "functional": 3
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 298,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 149,
+        "notEstablishedRows": 149
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Education::Early Childhood Education",
+      "discipline": "Education",
+      "programme": "Early Childhood Education",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 58,
+        "outcome_count": 922
+      },
+      "downstream": {
+        "domain_routes": 2,
+        "subgroup_routes": 5,
+        "role_routes": 198,
+        "route_key_count": 207
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "review_required",
+        "unresolved_relationships": 0,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 0,
+        "notEstablishedRows": 0
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Education::Educational Management",
+      "discipline": "Education",
+      "programme": "Educational Management",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 31,
+        "outcome_count": 691
+      },
+      "downstream": {
+        "domain_routes": 6,
+        "subgroup_routes": 17,
+        "role_routes": 329,
+        "route_key_count": 354
+      },
+      "relationship_types": {
+        "functional": 5,
+        "direct": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 60,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 30,
+        "notEstablishedRows": 30
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Education::Educational Technology",
+      "discipline": "Education",
+      "programme": "Educational Technology",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 30,
+        "outcome_count": 832
+      },
+      "downstream": {
+        "domain_routes": 3,
+        "subgroup_routes": 9,
+        "role_routes": 262,
+        "route_key_count": 276
+      },
+      "relationship_types": {
+        "functional": 3
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 298,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 149,
+        "notEstablishedRows": 149
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Education::Efik-Ibibio Education",
+      "discipline": "Education",
+      "programme": "Efik-Ibibio Education",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 39,
+        "outcome_count": 980
+      },
+      "downstream": {
+        "domain_routes": 3,
+        "subgroup_routes": 9,
+        "role_routes": 167,
+        "route_key_count": 181
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 2
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "review_required",
+        "unresolved_relationships": 0,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 0,
+        "notEstablishedRows": 0
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Education::English Language/Literature-in-English",
+      "discipline": "Education",
+      "programme": "English Language/Literature-in-English",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 33,
+        "outcome_count": 593
+      },
+      "downstream": {
+        "domain_routes": 4,
+        "subgroup_routes": 9,
+        "role_routes": 229,
+        "route_key_count": 244
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 3
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 212,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 106,
+        "notEstablishedRows": 106
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Education::Entrepreneurship Education",
+      "discipline": "Education",
+      "programme": "Entrepreneurship Education",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 34,
+        "outcome_count": 840
+      },
+      "downstream": {
+        "domain_routes": 7,
+        "subgroup_routes": 18,
+        "role_routes": 405,
+        "route_key_count": 432
+      },
+      "relationship_types": {
+        "functional": 6,
+        "direct": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 20,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 10,
+        "notEstablishedRows": 10
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    }
+  ],
+  "failures": [],
+  "aggregate": {
+    "domain_routes": 113,
+    "subgroup_routes": 288,
+    "role_routes": 4762,
+    "relationship_states": {
+      "not_established": 16,
+      "review_required": 4
+    },
+    "unresolved_relationships": 3036
+  },
+  "static_surface_checks": {
+    "student_language_boundary": {
+      "file": "src/screens/careerIntelligence/ProgrammeDetailRefinedScreen.tsx",
+      "passed": true,
+      "missing": []
+    },
+    "admin_language_boundary": {
+      "file": "src/screens/admin/AdminCareerDetailScreen.tsx",
+      "passed": true,
+      "missing": []
+    },
+    "admin_provenance_and_queue": {
+      "file": "src/screens/admin/adminGuidanceEvidence.ts",
+      "passed": true,
+      "missing": []
+    },
+    "student_fail_closed_boundary": {
+      "file": "src/lib/studentCareerBoundary.ts",
+      "passed": true,
+      "missing": []
+    },
+    "student_relationship_fail_closed_boundary": {
+      "file": "src/screens/admin/adminGuidanceEvidence.ts",
+      "passed": true,
+      "missing": []
+    },
+    "relationship_grouping": {
+      "file": "src/components/careerIntelligence/ToolGroupsBlock.tsx",
+      "passed": true,
+      "missing": []
+    }
+  },
+  "role_learning_reference": {
+    "allStudentRowsWithinCaps": true,
+    "maxStudentEssential": 12,
+    "maxStudentOptional": 5
+  },
+  "admin_reference": {
+    "localAdminBoundaryImplemented": true,
+    "fullAdminRenderAccepted": false,
+    "studentExposureAccepted": false
+  },
+  "decision": {
+    "bounded_contract_audit_complete": true,
+    "student_exposure_approved": false,
+    "browser_proof": false,
+    "live_sql_verification": false,
+    "reason": "This slice retains review/not-established/admin-pending states and does not claim browser or live SQL acceptance."
+  },
+  "inputs": [
+    "docs/GOAL_RESUME_STATUS_AND_AGENT_HANDOFF_2026-09-18.md",
+    "docs/user-facing-mockups/SOCIOLOGY_BOX_MOCKUP_IMPLEMENTATION_AUDIT_2026-09-17.md",
+    "docs/user-facing-mockups/SOCIOLOGY_TOP_DOWN_AUDIT_AND_CLOSURE_PLAN_2026-09-17.md",
+    "docs/LEVELUP_PRODUCT_WIDE_MOCKUP_SPEC.md",
+    "data/career-mapping/_audit/source_enrichment_batch_broad_2026-09-19.json",
+    "data/career-mapping/_audit/full_population_admin_agent_tranche_2026-09-21.json",
+    "data/career-mapping/_audit/downstream_admin_slice_005_2026-09-21_checkpoint.json",
+    "data/career-mapping/_audit/downstream_admin_slice_005_2026-09-21_report.json",
+    "data/career-mapping/_audit/programme_scaling_contract_2026-09-19.json",
+    "data/career-mapping/_audit/DOWNSTREAM_PROGRAMME_ROUTE_AUDIT_2026-09-19.json",
+    "data/career-mapping/_audit/programme_curriculum_contract_2026-09-18.json",
+    "data/career-mapping/_audit/role_learning_core_audit_2026-09-21.json",
+    "data/career-mapping/_audit/ADMIN_DOWNSTREAM_ACCEPTANCE_2026-09-19.json"
+  ],
+  "product_files_changed": false,
+  "sql_or_browser_proof": false,
+  "concrete_blockers": [
+    {
+      "gate": "programme_resource_review",
+      "count": 20,
+      "detail": "Every selected programme still has resource review-required state; no student resource approval is inferred."
+    },
+    {
+      "gate": "relationship_review",
+      "counts": {
+        "not_established": 16,
+        "review_required": 4
+      },
+      "unresolved_relationships": 3036,
+      "detail": "not_established and review_required relationship states remain staff-review-only and fail closed."
+    },
+    {
+      "gate": "admin_render_acceptance",
+      "count": 20,
+      "detail": "The contract/admin boundary passes locally, but full rendered admin acceptance is still pending."
+    },
+    {
+      "gate": "browser_and_live_sql",
+      "detail": "Browser proof and live Supabase SQL verification were intentionally not performed."
+    }
+  ]
+}

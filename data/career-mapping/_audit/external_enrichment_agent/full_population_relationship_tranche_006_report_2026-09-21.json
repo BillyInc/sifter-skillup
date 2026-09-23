@@ -1,0 +1,34 @@
+{
+  "schema": "2026-09-21.full-population-relationship-tranche-report.v1",
+  "generated_on": "2026-09-21",
+  "selection": "data/career-mapping/_audit/external_enrichment_agent/full_population_relationship_tranche_006_selection_2026-09-21.json",
+  "ledger": "data/career-mapping/_audit/external_enrichment_agent/full_population_relationship_tranche_006_search_ledger_2026-09-21.jsonl",
+  "scope": {
+    "selected_rows": 8,
+    "searched_rows": 8,
+    "linked": 0,
+    "review_required": 8,
+    "genuinely_unavailable": 0,
+    "d078_rows": 0,
+    "prior_tranche_overlap": 0,
+    "source_urls": 32
+  },
+  "coverage": [
+    {"context": "D001|Web and Digital Interface Designers", "rows": 6, "items": ["Cascading style sheets CSS", "Figma", "Google Angular", "Hypertext markup language HTML", "JavaScript", "React"]},
+    {"context": "D001|Video Game Designers", "rows": 2, "items": ["Adobe Photoshop", "C"]}
+  ],
+  "decision": "All eight rows remain review_required. The authoritative sources confirm the named role/tool associations and tool identities, but the local rows have null target endpoints and null candidate relationship types. No source established both typed endpoints in the same context and an exact approved builds_on, works_with, supports, alternative, complements or qualifies_for edge.",
+  "guardrails": {
+    "selection_ids_missing_from_ledger": 0,
+    "unexpected_ledger_ids": 0,
+    "duplicate_ledger_ids": 0,
+    "endpoints_inferred": false,
+    "relationships_promoted": false,
+    "sql_touched": false,
+    "generated_seed_transport_touched": false,
+    "catalogue_touched": false,
+    "ui_touched": false,
+    "browser_proof_touched": false
+  },
+  "evidence_boundary": "O*NET occupation/tool co-occurrence, official tool documentation and general workflow material are retained as audit evidence. They do not become student-facing relationship proof. Missing endpoints remain unresolved for later review."
+}

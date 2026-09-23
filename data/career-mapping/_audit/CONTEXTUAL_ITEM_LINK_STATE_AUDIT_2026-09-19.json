@@ -1,0 +1,7990 @@
+{
+  "catalogueSha256": "5aa515d1f8036eb75f57337cc48c642d5fbc9c34ac315c92fbfdcc3a036c28c2",
+  "decision": {
+    "linkStateAuditComplete": true,
+    "reason": "Item-level link state is explicit in local transport; student exposure remains deferred pending live SQL, payload and browser verification.",
+    "studentExposureApproved": false
+  },
+  "domains": {
+    "D001": {
+      "catalogueRows": 774,
+      "contextCount": 39,
+      "levels": {
+        "domain": 10,
+        "role": 759,
+        "subgroup": 5
+      },
+      "states": {
+        "linked": 16,
+        "no_link": 758
+      }
+    },
+    "D002": {
+      "catalogueRows": 606,
+      "contextCount": 27,
+      "levels": {
+        "domain": 10,
+        "role": 590,
+        "subgroup": 6
+      },
+      "states": {
+        "linked": 23,
+        "no_link": 583
+      }
+    },
+    "D003": {
+      "catalogueRows": 136,
+      "contextCount": 7,
+      "levels": {
+        "domain": 10,
+        "role": 120,
+        "subgroup": 6
+      },
+      "states": {
+        "linked": 11,
+        "no_link": 125
+      }
+    },
+    "D004": {
+      "catalogueRows": 353,
+      "contextCount": 19,
+      "levels": {
+        "domain": 10,
+        "role": 332,
+        "subgroup": 11
+      },
+      "states": {
+        "linked": 16,
+        "no_link": 337
+      }
+    },
+    "D005": {
+      "catalogueRows": 367,
+      "contextCount": 21,
+      "levels": {
+        "domain": 10,
+        "role": 326,
+        "subgroup": 31
+      },
+      "states": {
+        "linked": 9,
+        "no_link": 358
+      }
+    },
+    "D006": {
+      "catalogueRows": 318,
+      "contextCount": 21,
+      "levels": {
+        "domain": 10,
+        "role": 268,
+        "subgroup": 40
+      },
+      "states": {
+        "linked": 15,
+        "no_link": 303
+      }
+    },
+    "D007": {
+      "catalogueRows": 645,
+      "contextCount": 28,
+      "levels": {
+        "domain": 6,
+        "role": 619,
+        "subgroup": 20
+      },
+      "states": {
+        "linked": 18,
+        "no_link": 627
+      }
+    },
+    "D008": {
+      "catalogueRows": 423,
+      "contextCount": 20,
+      "levels": {
+        "domain": 7,
+        "role": 357,
+        "subgroup": 59
+      },
+      "states": {
+        "linked": 13,
+        "no_link": 410
+      }
+    },
+    "D009": {
+      "catalogueRows": 859,
+      "contextCount": 41,
+      "levels": {
+        "domain": 7,
+        "role": 813,
+        "subgroup": 39
+      },
+      "states": {
+        "linked": 78,
+        "no_link": 781
+      }
+    },
+    "D010": {
+      "catalogueRows": 913,
+      "contextCount": 42,
+      "levels": {
+        "domain": 7,
+        "role": 845,
+        "subgroup": 61
+      },
+      "states": {
+        "linked": 57,
+        "no_link": 856
+      }
+    },
+    "D011": {
+      "catalogueRows": 639,
+      "contextCount": 27,
+      "levels": {
+        "domain": 6,
+        "role": 591,
+        "subgroup": 42
+      },
+      "states": {
+        "linked": 54,
+        "no_link": 585
+      }
+    },
+    "D012": {
+      "catalogueRows": 362,
+      "contextCount": 19,
+      "levels": {
+        "domain": 10,
+        "role": 306,
+        "subgroup": 46
+      },
+      "states": {
+        "linked": 19,
+        "no_link": 343
+      }
+    },
+    "D013": {
+      "catalogueRows": 936,
+      "contextCount": 39,
+      "levels": {
+        "domain": 6,
+        "role": 906,
+        "subgroup": 24
+      },
+      "states": {
+        "linked": 69,
+        "no_link": 867
+      }
+    },
+    "D014": {
+      "catalogueRows": 436,
+      "contextCount": 20,
+      "levels": {
+        "domain": 9,
+        "role": 380,
+        "subgroup": 47
+      },
+      "states": {
+        "linked": 52,
+        "no_link": 384
+      }
+    },
+    "D015": {
+      "catalogueRows": 594,
+      "contextCount": 26,
+      "levels": {
+        "domain": 10,
+        "role": 548,
+        "subgroup": 36
+      },
+      "states": {
+        "linked": 20,
+        "no_link": 574
+      }
+    },
+    "D016": {
+      "catalogueRows": 818,
+      "contextCount": 36,
+      "levels": {
+        "domain": 9,
+        "role": 809
+      },
+      "states": {
+        "linked": 46,
+        "no_link": 772
+      }
+    },
+    "D017": {
+      "catalogueRows": 1090,
+      "contextCount": 46,
+      "levels": {
+        "domain": 8,
+        "role": 1082
+      },
+      "states": {
+        "linked": 41,
+        "no_link": 1049
+      }
+    },
+    "D018": {
+      "catalogueRows": 1623,
+      "contextCount": 68,
+      "levels": {
+        "domain": 10,
+        "role": 1613
+      },
+      "states": {
+        "linked": 81,
+        "no_link": 1542
+      }
+    },
+    "D019": {
+      "catalogueRows": 512,
+      "contextCount": 21,
+      "levels": {
+        "domain": 7,
+        "role": 505
+      },
+      "states": {
+        "linked": 24,
+        "no_link": 488
+      }
+    },
+    "D020": {
+      "catalogueRows": 516,
+      "contextCount": 21,
+      "levels": {
+        "domain": 7,
+        "role": 509
+      },
+      "states": {
+        "linked": 22,
+        "no_link": 494
+      }
+    },
+    "D021": {
+      "catalogueRows": 513,
+      "contextCount": 23,
+      "levels": {
+        "domain": 8,
+        "role": 505
+      },
+      "states": {
+        "linked": 33,
+        "no_link": 480
+      }
+    },
+    "D022": {
+      "catalogueRows": 1297,
+      "contextCount": 63,
+      "levels": {
+        "domain": 8,
+        "role": 1241,
+        "subgroup": 48
+      },
+      "states": {
+        "linked": 81,
+        "no_link": 1216
+      }
+    },
+    "D023": {
+      "catalogueRows": 637,
+      "contextCount": 49,
+      "levels": {
+        "domain": 7,
+        "role": 630
+      },
+      "states": {
+        "linked": 48,
+        "no_link": 589
+      }
+    },
+    "D024": {
+      "catalogueRows": 696,
+      "contextCount": 39,
+      "levels": {
+        "domain": 9,
+        "role": 687
+      },
+      "states": {
+        "linked": 35,
+        "no_link": 661
+      }
+    },
+    "D025": {
+      "catalogueRows": 425,
+      "contextCount": 27,
+      "levels": {
+        "domain": 7,
+        "role": 352,
+        "subgroup": 66
+      },
+      "states": {
+        "linked": 16,
+        "no_link": 409
+      }
+    },
+    "D026": {
+      "catalogueRows": 482,
+      "contextCount": 32,
+      "levels": {
+        "domain": 7,
+        "role": 454,
+        "subgroup": 21
+      },
+      "states": {
+        "linked": 22,
+        "no_link": 460
+      }
+    },
+    "D027": {
+      "catalogueRows": 1214,
+      "contextCount": 50,
+      "levels": {
+        "domain": 8,
+        "role": 1174,
+        "subgroup": 32
+      },
+      "states": {
+        "linked": 82,
+        "no_link": 1132
+      }
+    },
+    "D028": {
+      "catalogueRows": 1113,
+      "contextCount": 49,
+      "levels": {
+        "domain": 8,
+        "role": 1077,
+        "subgroup": 28
+      },
+      "states": {
+        "linked": 48,
+        "no_link": 1065
+      }
+    },
+    "D029": {
+      "catalogueRows": 425,
+      "contextCount": 20,
+      "levels": {
+        "domain": 6,
+        "role": 389,
+        "subgroup": 30
+      },
+      "states": {
+        "linked": 15,
+        "no_link": 410
+      }
+    },
+    "D030": {
+      "catalogueRows": 1084,
+      "contextCount": 47,
+      "levels": {
+        "domain": 6,
+        "role": 1078
+      },
+      "states": {
+        "linked": 41,
+        "no_link": 1043
+      }
+    },
+    "D031": {
+      "catalogueRows": 2872,
+      "contextCount": 127,
+      "levels": {
+        "domain": 6,
+        "role": 2821,
+        "subgroup": 45
+      },
+      "states": {
+        "linked": 106,
+        "no_link": 2766
+      }
+    },
+    "D032": {
+      "catalogueRows": 927,
+      "contextCount": 42,
+      "levels": {
+        "domain": 6,
+        "role": 891,
+        "subgroup": 30
+      },
+      "states": {
+        "linked": 37,
+        "no_link": 890
+      }
+    },
+    "D033": {
+      "catalogueRows": 1220,
+      "contextCount": 55,
+      "levels": {
+        "domain": 6,
+        "role": 1182,
+        "subgroup": 32
+      },
+      "states": {
+        "linked": 60,
+        "no_link": 1160
+      }
+    },
+    "D034": {
+      "catalogueRows": 3649,
+      "contextCount": 162,
+      "levels": {
+        "domain": 7,
+        "role": 3598,
+        "subgroup": 44
+      },
+      "states": {
+        "linked": 160,
+        "no_link": 3489
+      }
+    },
+    "D035": {
+      "catalogueRows": 3360,
+      "contextCount": 148,
+      "levels": {
+        "domain": 6,
+        "role": 3306,
+        "subgroup": 48
+      },
+      "states": {
+        "linked": 139,
+        "no_link": 3221
+      }
+    },
+    "D036": {
+      "catalogueRows": 3903,
+      "contextCount": 174,
+      "levels": {
+        "domain": 6,
+        "role": 3865,
+        "subgroup": 32
+      },
+      "states": {
+        "linked": 173,
+        "no_link": 3730
+      }
+    },
+    "D037": {
+      "catalogueRows": 625,
+      "contextCount": 30,
+      "levels": {
+        "domain": 7,
+        "role": 582,
+        "subgroup": 36
+      },
+      "states": {
+        "linked": 16,
+        "no_link": 609
+      }
+    },
+    "D038": {
+      "catalogueRows": 1844,
+      "contextCount": 83,
+      "levels": {
+        "domain": 6,
+        "role": 1790,
+        "subgroup": 48
+      },
+      "states": {
+        "linked": 84,
+        "no_link": 1760
+      }
+    },
+    "D039": {
+      "catalogueRows": 3025,
+      "contextCount": 124,
+      "levels": {
+        "domain": 7,
+        "role": 2994,
+        "subgroup": 24
+      },
+      "states": {
+        "linked": 133,
+        "no_link": 2892
+      }
+    },
+    "D040": {
+      "catalogueRows": 886,
+      "contextCount": 39,
+      "levels": {
+        "domain": 7,
+        "role": 843,
+        "subgroup": 36
+      },
+      "states": {
+        "linked": 25,
+        "no_link": 861
+      }
+    },
+    "D041": {
+      "catalogueRows": 1056,
+      "contextCount": 45,
+      "levels": {
+        "domain": 6,
+        "role": 1030,
+        "subgroup": 20
+      },
+      "states": {
+        "linked": 72,
+        "no_link": 984
+      }
+    },
+    "D042": {
+      "catalogueRows": 2430,
+      "contextCount": 111,
+      "levels": {
+        "domain": 6,
+        "role": 2376,
+        "subgroup": 48
+      },
+      "states": {
+        "linked": 63,
+        "no_link": 2367
+      }
+    },
+    "D043": {
+      "catalogueRows": 1385,
+      "contextCount": 63,
+      "levels": {
+        "domain": 10,
+        "role": 1375
+      },
+      "states": {
+        "linked": 52,
+        "no_link": 1333
+      }
+    },
+    "D044": {
+      "catalogueRows": 970,
+      "contextCount": 42,
+      "levels": {
+        "domain": 6,
+        "role": 928,
+        "subgroup": 36
+      },
+      "states": {
+        "linked": 23,
+        "no_link": 947
+      }
+    },
+    "D045": {
+      "catalogueRows": 1750,
+      "contextCount": 78,
+      "levels": {
+        "domain": 7,
+        "role": 1707,
+        "subgroup": 36
+      },
+      "states": {
+        "linked": 82,
+        "no_link": 1668
+      }
+    },
+    "D046": {
+      "catalogueRows": 1774,
+      "contextCount": 81,
+      "levels": {
+        "domain": 9,
+        "role": 1730,
+        "subgroup": 35
+      },
+      "states": {
+        "linked": 71,
+        "no_link": 1703
+      }
+    },
+    "D047": {
+      "catalogueRows": 1354,
+      "contextCount": 56,
+      "levels": {
+        "domain": 7,
+        "role": 1299,
+        "subgroup": 48
+      },
+      "states": {
+        "linked": 65,
+        "no_link": 1289
+      }
+    },
+    "D048": {
+      "catalogueRows": 2147,
+      "contextCount": 97,
+      "levels": {
+        "domain": 7,
+        "role": 2092,
+        "subgroup": 48
+      },
+      "states": {
+        "linked": 77,
+        "no_link": 2070
+      }
+    },
+    "D049": {
+      "catalogueRows": 1044,
+      "contextCount": 45,
+      "levels": {
+        "domain": 8,
+        "role": 1000,
+        "subgroup": 36
+      },
+      "states": {
+        "linked": 46,
+        "no_link": 998
+      }
+    },
+    "D050": {
+      "catalogueRows": 1229,
+      "contextCount": 52,
+      "levels": {
+        "domain": 7,
+        "role": 1179,
+        "subgroup": 43
+      },
+      "states": {
+        "linked": 51,
+        "no_link": 1178
+      }
+    },
+    "D051": {
+      "catalogueRows": 584,
+      "contextCount": 25,
+      "levels": {
+        "domain": 9,
+        "role": 529,
+        "subgroup": 46
+      },
+      "states": {
+        "linked": 22,
+        "no_link": 562
+      }
+    },
+    "D052": {
+      "catalogueRows": 2112,
+      "contextCount": 88,
+      "levels": {
+        "domain": 10,
+        "role": 2054,
+        "subgroup": 48
+      },
+      "states": {
+        "linked": 94,
+        "no_link": 2018
+      }
+    },
+    "D053": {
+      "catalogueRows": 1080,
+      "contextCount": 46,
+      "levels": {
+        "domain": 7,
+        "role": 1037,
+        "subgroup": 36
+      },
+      "states": {
+        "linked": 37,
+        "no_link": 1043
+      }
+    },
+    "D054": {
+      "catalogueRows": 511,
+      "contextCount": 23,
+      "levels": {
+        "domain": 8,
+        "role": 458,
+        "subgroup": 45
+      },
+      "states": {
+        "linked": 22,
+        "no_link": 489
+      }
+    },
+    "D055": {
+      "catalogueRows": 1150,
+      "contextCount": 53,
+      "levels": {
+        "domain": 8,
+        "role": 1106,
+        "subgroup": 36
+      },
+      "states": {
+        "linked": 46,
+        "no_link": 1104
+      }
+    },
+    "D056": {
+      "catalogueRows": 648,
+      "contextCount": 27,
+      "levels": {
+        "domain": 9,
+        "role": 632,
+        "subgroup": 7
+      },
+      "states": {
+        "linked": 28,
+        "no_link": 620
+      }
+    },
+    "D057": {
+      "catalogueRows": 242,
+      "contextCount": 19,
+      "levels": {
+        "domain": 6,
+        "role": 204,
+        "subgroup": 32
+      },
+      "states": {
+        "linked": 21,
+        "no_link": 221
+      }
+    },
+    "D058": {
+      "catalogueRows": 568,
+      "contextCount": 25,
+      "levels": {
+        "domain": 9,
+        "role": 520,
+        "subgroup": 39
+      },
+      "states": {
+        "linked": 24,
+        "no_link": 544
+      }
+    },
+    "D059": {
+      "catalogueRows": 269,
+      "contextCount": 15,
+      "levels": {
+        "domain": 9,
+        "role": 225,
+        "subgroup": 35
+      },
+      "states": {
+        "linked": 13,
+        "no_link": 256
+      }
+    },
+    "D060": {
+      "catalogueRows": 598,
+      "contextCount": 26,
+      "levels": {
+        "domain": 6,
+        "role": 544,
+        "subgroup": 48
+      },
+      "states": {
+        "linked": 26,
+        "no_link": 572
+      }
+    },
+    "D061": {
+      "catalogueRows": 573,
+      "contextCount": 27,
+      "levels": {
+        "domain": 8,
+        "role": 505,
+        "subgroup": 60
+      },
+      "states": {
+        "linked": 30,
+        "no_link": 543
+      }
+    },
+    "D062": {
+      "catalogueRows": 781,
+      "contextCount": 32,
+      "levels": {
+        "domain": 6,
+        "role": 751,
+        "subgroup": 24
+      },
+      "states": {
+        "linked": 59,
+        "no_link": 722
+      }
+    },
+    "D063": {
+      "catalogueRows": 382,
+      "contextCount": 18,
+      "levels": {
+        "domain": 8,
+        "role": 330,
+        "subgroup": 44
+      },
+      "states": {
+        "linked": 53,
+        "no_link": 329
+      }
+    },
+    "D064": {
+      "catalogueRows": 507,
+      "contextCount": 25,
+      "levels": {
+        "domain": 7,
+        "role": 457,
+        "subgroup": 43
+      },
+      "states": {
+        "linked": 21,
+        "no_link": 486
+      }
+    },
+    "D065": {
+      "catalogueRows": 305,
+      "contextCount": 16,
+      "levels": {
+        "domain": 10,
+        "role": 256,
+        "subgroup": 39
+      },
+      "states": {
+        "linked": 7,
+        "no_link": 298
+      }
+    },
+    "D066": {
+      "catalogueRows": 537,
+      "contextCount": 25,
+      "levels": {
+        "domain": 8,
+        "role": 509,
+        "subgroup": 20
+      },
+      "states": {
+        "linked": 25,
+        "no_link": 512
+      }
+    },
+    "D067": {
+      "catalogueRows": 223,
+      "contextCount": 14,
+      "levels": {
+        "domain": 8,
+        "role": 188,
+        "subgroup": 27
+      },
+      "states": {
+        "linked": 8,
+        "no_link": 215
+      }
+    },
+    "D068": {
+      "catalogueRows": 1011,
+      "contextCount": 39,
+      "levels": {
+        "domain": 6,
+        "role": 1005
+      },
+      "states": {
+        "linked": 51,
+        "no_link": 960
+      }
+    },
+    "D069": {
+      "catalogueRows": 701,
+      "contextCount": 31,
+      "levels": {
+        "domain": 6,
+        "role": 659,
+        "subgroup": 36
+      },
+      "states": {
+        "linked": 31,
+        "no_link": 670
+      }
+    },
+    "D070": {
+      "catalogueRows": 232,
+      "contextCount": 20,
+      "levels": {
+        "domain": 6,
+        "role": 186,
+        "subgroup": 40
+      },
+      "states": {
+        "linked": 4,
+        "no_link": 228
+      }
+    },
+    "D071": {
+      "catalogueRows": 784,
+      "contextCount": 36,
+      "levels": {
+        "domain": 6,
+        "role": 730,
+        "subgroup": 48
+      },
+      "states": {
+        "linked": 24,
+        "no_link": 760
+      }
+    },
+    "D072": {
+      "catalogueRows": 488,
+      "contextCount": 20,
+      "levels": {
+        "domain": 10,
+        "role": 468,
+        "subgroup": 10
+      },
+      "states": {
+        "linked": 42,
+        "no_link": 446
+      }
+    },
+    "D073": {
+      "catalogueRows": 418,
+      "contextCount": 19,
+      "levels": {
+        "domain": 7,
+        "role": 378,
+        "subgroup": 33
+      },
+      "states": {
+        "linked": 13,
+        "no_link": 405
+      }
+    },
+    "D074": {
+      "catalogueRows": 479,
+      "contextCount": 24,
+      "levels": {
+        "domain": 10,
+        "role": 433,
+        "subgroup": 36
+      },
+      "states": {
+        "linked": 18,
+        "no_link": 461
+      }
+    },
+    "D075": {
+      "catalogueRows": 1137,
+      "contextCount": 54,
+      "levels": {
+        "domain": 6,
+        "role": 1051,
+        "subgroup": 80
+      },
+      "states": {
+        "linked": 39,
+        "no_link": 1098
+      }
+    },
+    "D076": {
+      "catalogueRows": 631,
+      "contextCount": 28,
+      "levels": {
+        "domain": 7,
+        "role": 576,
+        "subgroup": 48
+      },
+      "states": {
+        "linked": 19,
+        "no_link": 612
+      }
+    },
+    "D077": {
+      "catalogueRows": 760,
+      "contextCount": 34,
+      "levels": {
+        "domain": 6,
+        "role": 730,
+        "subgroup": 24
+      },
+      "states": {
+        "linked": 22,
+        "no_link": 738
+      }
+    },
+    "D078": {
+      "catalogueRows": 653,
+      "contextCount": 27,
+      "levels": {
+        "domain": 6,
+        "role": 627,
+        "subgroup": 20
+      },
+      "states": {
+        "linked": 95,
+        "no_link": 550,
+        "review_required": 8
+      }
+    },
+    "D079": {
+      "catalogueRows": 3138,
+      "contextCount": 140,
+      "levels": {
+        "domain": 7,
+        "role": 3107,
+        "subgroup": 24
+      },
+      "states": {
+        "linked": 134,
+        "no_link": 3004
+      }
+    },
+    "D080": {
+      "catalogueRows": 561,
+      "contextCount": 24,
+      "levels": {
+        "domain": 6,
+        "role": 555
+      },
+      "states": {
+        "linked": 16,
+        "no_link": 545
+      }
+    },
+    "D081": {
+      "catalogueRows": 544,
+      "contextCount": 25,
+      "levels": {
+        "domain": 6,
+        "role": 486,
+        "subgroup": 52
+      },
+      "states": {
+        "linked": 17,
+        "no_link": 527
+      }
+    },
+    "D082": {
+      "catalogueRows": 454,
+      "contextCount": 18,
+      "levels": {
+        "domain": 6,
+        "role": 448
+      },
+      "states": {
+        "linked": 20,
+        "no_link": 434
+      }
+    },
+    "D083": {
+      "catalogueRows": 539,
+      "contextCount": 23,
+      "levels": {
+        "domain": 6,
+        "role": 533
+      },
+      "states": {
+        "linked": 21,
+        "no_link": 518
+      }
+    },
+    "D084": {
+      "catalogueRows": 328,
+      "contextCount": 15,
+      "levels": {
+        "domain": 10,
+        "role": 318
+      },
+      "states": {
+        "linked": 14,
+        "no_link": 314
+      }
+    },
+    "D085": {
+      "catalogueRows": 1592,
+      "contextCount": 71,
+      "levels": {
+        "domain": 10,
+        "role": 1582
+      },
+      "states": {
+        "linked": 29,
+        "no_link": 1563
+      }
+    },
+    "D090": {
+      "catalogueRows": 382,
+      "contextCount": 16,
+      "levels": {
+        "domain": 7,
+        "role": 375
+      },
+      "states": {
+        "linked": 13,
+        "no_link": 369
+      }
+    },
+    "D091": {
+      "catalogueRows": 126,
+      "contextCount": 8,
+      "levels": {
+        "domain": 7,
+        "role": 119
+      },
+      "states": {
+        "no_link": 126
+      }
+    },
+    "D092": {
+      "catalogueRows": 546,
+      "contextCount": 25,
+      "levels": {
+        "domain": 6,
+        "role": 504,
+        "subgroup": 36
+      },
+      "states": {
+        "linked": 14,
+        "no_link": 532
+      }
+    },
+    "D093": {
+      "catalogueRows": 536,
+      "contextCount": 22,
+      "levels": {
+        "domain": 8,
+        "role": 528
+      },
+      "states": {
+        "linked": 21,
+        "no_link": 515
+      }
+    },
+    "D094": {
+      "catalogueRows": 662,
+      "contextCount": 27,
+      "levels": {
+        "domain": 6,
+        "role": 656
+      },
+      "states": {
+        "linked": 28,
+        "no_link": 634
+      }
+    },
+    "D095": {
+      "catalogueRows": 558,
+      "contextCount": 26,
+      "levels": {
+        "domain": 8,
+        "role": 500,
+        "subgroup": 50
+      },
+      "states": {
+        "linked": 19,
+        "no_link": 539
+      }
+    },
+    "D096": {
+      "catalogueRows": 335,
+      "contextCount": 17,
+      "levels": {
+        "domain": 6,
+        "role": 296,
+        "subgroup": 33
+      },
+      "states": {
+        "linked": 13,
+        "no_link": 322
+      }
+    },
+    "D097": {
+      "catalogueRows": 1568,
+      "contextCount": 64,
+      "levels": {
+        "domain": 10,
+        "role": 1558
+      },
+      "states": {
+        "linked": 52,
+        "no_link": 1516
+      }
+    },
+    "D098": {
+      "catalogueRows": 575,
+      "contextCount": 27,
+      "levels": {
+        "domain": 6,
+        "role": 533,
+        "subgroup": 36
+      },
+      "states": {
+        "linked": 15,
+        "no_link": 560
+      }
+    },
+    "D099": {
+      "catalogueRows": 481,
+      "contextCount": 21,
+      "levels": {
+        "domain": 8,
+        "role": 453,
+        "subgroup": 20
+      },
+      "states": {
+        "linked": 17,
+        "no_link": 464
+      }
+    },
+    "D102": {
+      "catalogueRows": 816,
+      "contextCount": 39,
+      "levels": {
+        "domain": 6,
+        "role": 778,
+        "subgroup": 32
+      },
+      "states": {
+        "linked": 25,
+        "no_link": 791
+      }
+    },
+    "D103": {
+      "catalogueRows": 536,
+      "contextCount": 28,
+      "levels": {
+        "domain": 8,
+        "role": 464,
+        "subgroup": 64
+      },
+      "states": {
+        "linked": 15,
+        "no_link": 521
+      }
+    },
+    "D104": {
+      "catalogueRows": 413,
+      "contextCount": 24,
+      "levels": {
+        "domain": 6,
+        "role": 407
+      },
+      "states": {
+        "linked": 16,
+        "no_link": 397
+      }
+    },
+    "D105": {
+      "catalogueRows": 295,
+      "contextCount": 15,
+      "levels": {
+        "domain": 6,
+        "role": 289
+      },
+      "states": {
+        "linked": 7,
+        "no_link": 288
+      }
+    },
+    "D106": {
+      "catalogueRows": 560,
+      "contextCount": 29,
+      "levels": {
+        "domain": 6,
+        "role": 554
+      },
+      "states": {
+        "linked": 23,
+        "no_link": 537
+      }
+    },
+    "D107": {
+      "catalogueRows": 1668,
+      "contextCount": 80,
+      "levels": {
+        "domain": 6,
+        "role": 1542,
+        "subgroup": 120
+      },
+      "states": {
+        "linked": 57,
+        "no_link": 1611
+      }
+    },
+    "D109": {
+      "catalogueRows": 471,
+      "contextCount": 20,
+      "levels": {
+        "domain": 6,
+        "role": 465
+      },
+      "states": {
+        "linked": 16,
+        "no_link": 455
+      }
+    },
+    "D110": {
+      "catalogueRows": 1160,
+      "contextCount": 57,
+      "levels": {
+        "domain": 9,
+        "role": 1151
+      },
+      "states": {
+        "linked": 38,
+        "no_link": 1122
+      }
+    },
+    "D111": {
+      "catalogueRows": 954,
+      "contextCount": 50,
+      "levels": {
+        "domain": 7,
+        "role": 883,
+        "subgroup": 64
+      },
+      "states": {
+        "linked": 33,
+        "no_link": 921
+      }
+    },
+    "D112": {
+      "catalogueRows": 519,
+      "contextCount": 23,
+      "levels": {
+        "domain": 6,
+        "role": 513
+      },
+      "states": {
+        "linked": 18,
+        "no_link": 501
+      }
+    },
+    "D114": {
+      "catalogueRows": 905,
+      "contextCount": 44,
+      "levels": {
+        "domain": 6,
+        "role": 899
+      },
+      "states": {
+        "linked": 34,
+        "no_link": 871
+      }
+    },
+    "D115": {
+      "catalogueRows": 581,
+      "contextCount": 29,
+      "levels": {
+        "domain": 8,
+        "role": 573
+      },
+      "states": {
+        "linked": 22,
+        "no_link": 559
+      }
+    },
+    "D116": {
+      "catalogueRows": 432,
+      "contextCount": 21,
+      "levels": {
+        "domain": 9,
+        "role": 423
+      },
+      "states": {
+        "linked": 18,
+        "no_link": 414
+      }
+    },
+    "D117": {
+      "catalogueRows": 549,
+      "contextCount": 29,
+      "levels": {
+        "domain": 7,
+        "role": 468,
+        "subgroup": 74
+      },
+      "states": {
+        "linked": 18,
+        "no_link": 531
+      }
+    },
+    "D118": {
+      "catalogueRows": 556,
+      "contextCount": 24,
+      "levels": {
+        "domain": 6,
+        "role": 550
+      },
+      "states": {
+        "linked": 23,
+        "no_link": 533
+      }
+    },
+    "D119": {
+      "catalogueRows": 549,
+      "contextCount": 27,
+      "levels": {
+        "domain": 7,
+        "role": 484,
+        "subgroup": 58
+      },
+      "states": {
+        "linked": 17,
+        "no_link": 532
+      }
+    },
+    "D120": {
+      "catalogueRows": 530,
+      "contextCount": 24,
+      "levels": {
+        "domain": 7,
+        "role": 494,
+        "subgroup": 29
+      },
+      "states": {
+        "linked": 17,
+        "no_link": 513
+      }
+    },
+    "D121": {
+      "catalogueRows": 655,
+      "contextCount": 34,
+      "levels": {
+        "domain": 7,
+        "role": 518,
+        "subgroup": 130
+      },
+      "states": {
+        "linked": 28,
+        "no_link": 627
+      }
+    },
+    "D122": {
+      "catalogueRows": 337,
+      "contextCount": 24,
+      "levels": {
+        "domain": 9,
+        "role": 289,
+        "subgroup": 39
+      },
+      "states": {
+        "linked": 13,
+        "no_link": 324
+      }
+    },
+    "D123": {
+      "catalogueRows": 133,
+      "contextCount": 13,
+      "levels": {
+        "domain": 8,
+        "role": 125
+      },
+      "states": {
+        "linked": 8,
+        "no_link": 125
+      }
+    },
+    "D124": {
+      "catalogueRows": 320,
+      "contextCount": 17,
+      "levels": {
+        "domain": 7,
+        "role": 313
+      },
+      "states": {
+        "linked": 15,
+        "no_link": 305
+      }
+    },
+    "D125": {
+      "catalogueRows": 278,
+      "contextCount": 14,
+      "levels": {
+        "domain": 6,
+        "role": 236,
+        "subgroup": 36
+      },
+      "states": {
+        "linked": 14,
+        "no_link": 264
+      }
+    },
+    "D126": {
+      "catalogueRows": 243,
+      "contextCount": 11,
+      "levels": {
+        "domain": 7,
+        "role": 236
+      },
+      "states": {
+        "linked": 9,
+        "no_link": 234
+      }
+    },
+    "D127": {
+      "catalogueRows": 452,
+      "contextCount": 26,
+      "levels": {
+        "domain": 7,
+        "role": 394,
+        "subgroup": 51
+      },
+      "states": {
+        "linked": 18,
+        "no_link": 434
+      }
+    },
+    "D128": {
+      "catalogueRows": 551,
+      "contextCount": 26,
+      "levels": {
+        "domain": 6,
+        "role": 485,
+        "subgroup": 60
+      },
+      "states": {
+        "linked": 18,
+        "no_link": 533
+      }
+    },
+    "D129": {
+      "catalogueRows": 409,
+      "contextCount": 25,
+      "levels": {
+        "domain": 6,
+        "role": 367,
+        "subgroup": 36
+      },
+      "states": {
+        "linked": 4,
+        "no_link": 405
+      }
+    },
+    "D130": {
+      "catalogueRows": 322,
+      "contextCount": 24,
+      "levels": {
+        "domain": 10,
+        "role": 260,
+        "subgroup": 52
+      },
+      "states": {
+        "linked": 13,
+        "no_link": 309
+      }
+    },
+    "D131": {
+      "catalogueRows": 699,
+      "contextCount": 30,
+      "levels": {
+        "domain": 8,
+        "role": 658,
+        "subgroup": 33
+      },
+      "states": {
+        "linked": 33,
+        "no_link": 666
+      }
+    },
+    "D132": {
+      "catalogueRows": 176,
+      "contextCount": 9,
+      "levels": {
+        "domain": 6,
+        "role": 170
+      },
+      "states": {
+        "linked": 11,
+        "no_link": 165
+      }
+    },
+    "D133": {
+      "catalogueRows": 881,
+      "contextCount": 38,
+      "levels": {
+        "domain": 6,
+        "role": 827,
+        "subgroup": 48
+      },
+      "states": {
+        "linked": 26,
+        "no_link": 855
+      }
+    },
+    "D134": {
+      "catalogueRows": 587,
+      "contextCount": 27,
+      "levels": {
+        "domain": 8,
+        "role": 516,
+        "subgroup": 63
+      },
+      "states": {
+        "linked": 23,
+        "no_link": 564
+      }
+    },
+    "D135": {
+      "catalogueRows": 348,
+      "contextCount": 20,
+      "levels": {
+        "domain": 9,
+        "role": 292,
+        "subgroup": 47
+      },
+      "states": {
+        "linked": 24,
+        "no_link": 324
+      }
+    },
+    "D136": {
+      "catalogueRows": 581,
+      "contextCount": 28,
+      "levels": {
+        "domain": 8,
+        "role": 505,
+        "subgroup": 68
+      },
+      "states": {
+        "linked": 26,
+        "no_link": 555
+      }
+    },
+    "D137": {
+      "catalogueRows": 233,
+      "contextCount": 14,
+      "levels": {
+        "domain": 7,
+        "role": 189,
+        "subgroup": 37
+      },
+      "states": {
+        "linked": 10,
+        "no_link": 223
+      }
+    },
+    "D138": {
+      "catalogueRows": 431,
+      "contextCount": 21,
+      "levels": {
+        "domain": 8,
+        "role": 363,
+        "subgroup": 60
+      },
+      "states": {
+        "linked": 29,
+        "no_link": 402
+      }
+    },
+    "D139": {
+      "catalogueRows": 877,
+      "contextCount": 45,
+      "levels": {
+        "domain": 6,
+        "role": 819,
+        "subgroup": 52
+      },
+      "states": {
+        "linked": 17,
+        "no_link": 860
+      }
+    },
+    "D140": {
+      "catalogueRows": 457,
+      "contextCount": 24,
+      "levels": {
+        "domain": 8,
+        "role": 400,
+        "subgroup": 49
+      },
+      "states": {
+        "linked": 23,
+        "no_link": 434
+      }
+    },
+    "D141": {
+      "catalogueRows": 130,
+      "contextCount": 25,
+      "levels": {
+        "domain": 6,
+        "role": 83,
+        "subgroup": 41
+      },
+      "states": {
+        "no_link": 130
+      }
+    },
+    "D142": {
+      "catalogueRows": 932,
+      "contextCount": 38,
+      "levels": {
+        "domain": 8,
+        "role": 917,
+        "subgroup": 7
+      },
+      "states": {
+        "linked": 70,
+        "no_link": 862
+      }
+    },
+    "D143": {
+      "catalogueRows": 665,
+      "contextCount": 29,
+      "levels": {
+        "domain": 6,
+        "role": 601,
+        "subgroup": 58
+      },
+      "states": {
+        "linked": 40,
+        "no_link": 625
+      }
+    },
+    "D144": {
+      "catalogueRows": 180,
+      "contextCount": 10,
+      "levels": {
+        "domain": 8,
+        "role": 166,
+        "subgroup": 6
+      },
+      "states": {
+        "linked": 12,
+        "no_link": 168
+      }
+    },
+    "D145": {
+      "catalogueRows": 275,
+      "contextCount": 13,
+      "levels": {
+        "domain": 6,
+        "role": 233,
+        "subgroup": 36
+      },
+      "states": {
+        "linked": 16,
+        "no_link": 259
+      }
+    },
+    "D146": {
+      "catalogueRows": 346,
+      "contextCount": 19,
+      "levels": {
+        "domain": 9,
+        "role": 277,
+        "subgroup": 60
+      },
+      "states": {
+        "linked": 12,
+        "no_link": 334
+      }
+    },
+    "D147": {
+      "catalogueRows": 439,
+      "contextCount": 21,
+      "levels": {
+        "domain": 7,
+        "role": 363,
+        "subgroup": 69
+      },
+      "states": {
+        "linked": 16,
+        "no_link": 423
+      }
+    },
+    "D148": {
+      "catalogueRows": 446,
+      "contextCount": 19,
+      "levels": {
+        "domain": 8,
+        "role": 438
+      },
+      "states": {
+        "linked": 20,
+        "no_link": 426
+      }
+    },
+    "D149": {
+      "catalogueRows": 308,
+      "contextCount": 17,
+      "levels": {
+        "domain": 6,
+        "role": 275,
+        "subgroup": 27
+      },
+      "states": {
+        "linked": 13,
+        "no_link": 295
+      }
+    },
+    "D150": {
+      "catalogueRows": 187,
+      "contextCount": 11,
+      "levels": {
+        "domain": 6,
+        "role": 157,
+        "subgroup": 24
+      },
+      "states": {
+        "linked": 6,
+        "no_link": 181
+      }
+    },
+    "D151": {
+      "catalogueRows": 450,
+      "contextCount": 26,
+      "levels": {
+        "domain": 6,
+        "role": 393,
+        "subgroup": 51
+      },
+      "states": {
+        "linked": 18,
+        "no_link": 432
+      }
+    },
+    "D152": {
+      "catalogueRows": 598,
+      "contextCount": 29,
+      "levels": {
+        "domain": 7,
+        "role": 499,
+        "subgroup": 92
+      },
+      "states": {
+        "linked": 23,
+        "no_link": 575
+      }
+    },
+    "D153": {
+      "catalogueRows": 588,
+      "contextCount": 25,
+      "levels": {
+        "domain": 6,
+        "role": 546,
+        "subgroup": 36
+      },
+      "states": {
+        "linked": 13,
+        "no_link": 575
+      }
+    },
+    "D154": {
+      "catalogueRows": 382,
+      "contextCount": 21,
+      "levels": {
+        "domain": 6,
+        "role": 341,
+        "subgroup": 35
+      },
+      "states": {
+        "linked": 17,
+        "no_link": 365
+      }
+    },
+    "D155": {
+      "catalogueRows": 240,
+      "contextCount": 19,
+      "levels": {
+        "domain": 7,
+        "role": 208,
+        "subgroup": 25
+      },
+      "states": {
+        "linked": 11,
+        "no_link": 229
+      }
+    },
+    "D156": {
+      "catalogueRows": 286,
+      "contextCount": 13,
+      "levels": {
+        "domain": 10,
+        "role": 240,
+        "subgroup": 36
+      },
+      "states": {
+        "linked": 14,
+        "no_link": 272
+      }
+    },
+    "D157": {
+      "catalogueRows": 425,
+      "contextCount": 18,
+      "levels": {
+        "domain": 10,
+        "role": 415
+      },
+      "states": {
+        "linked": 22,
+        "no_link": 403
+      }
+    },
+    "D158": {
+      "catalogueRows": 532,
+      "contextCount": 23,
+      "levels": {
+        "domain": 10,
+        "role": 498,
+        "subgroup": 24
+      },
+      "states": {
+        "linked": 33,
+        "no_link": 499
+      }
+    },
+    "D159": {
+      "catalogueRows": 693,
+      "contextCount": 28,
+      "levels": {
+        "domain": 8,
+        "role": 685
+      },
+      "states": {
+        "linked": 42,
+        "no_link": 651
+      }
+    },
+    "D160": {
+      "catalogueRows": 460,
+      "contextCount": 23,
+      "levels": {
+        "domain": 6,
+        "role": 386,
+        "subgroup": 68
+      },
+      "states": {
+        "linked": 13,
+        "no_link": 447
+      }
+    },
+    "D161": {
+      "catalogueRows": 485,
+      "contextCount": 28,
+      "levels": {
+        "domain": 8,
+        "role": 363,
+        "subgroup": 114
+      },
+      "states": {
+        "linked": 17,
+        "no_link": 468
+      }
+    },
+    "D162": {
+      "catalogueRows": 302,
+      "contextCount": 18,
+      "levels": {
+        "domain": 7,
+        "role": 251,
+        "subgroup": 44
+      },
+      "states": {
+        "linked": 8,
+        "no_link": 294
+      }
+    },
+    "D163": {
+      "catalogueRows": 219,
+      "contextCount": 13,
+      "levels": {
+        "domain": 7,
+        "role": 169,
+        "subgroup": 43
+      },
+      "states": {
+        "linked": 5,
+        "no_link": 214
+      }
+    },
+    "D164": {
+      "catalogueRows": 545,
+      "contextCount": 26,
+      "levels": {
+        "domain": 10,
+        "role": 474,
+        "subgroup": 61
+      },
+      "states": {
+        "linked": 35,
+        "no_link": 510
+      }
+    },
+    "D165": {
+      "catalogueRows": 366,
+      "contextCount": 18,
+      "levels": {
+        "domain": 6,
+        "role": 341,
+        "subgroup": 19
+      },
+      "states": {
+        "linked": 16,
+        "no_link": 350
+      }
+    },
+    "D166": {
+      "catalogueRows": 326,
+      "contextCount": 16,
+      "levels": {
+        "domain": 6,
+        "role": 283,
+        "subgroup": 37
+      },
+      "states": {
+        "linked": 14,
+        "no_link": 312
+      }
+    },
+    "D167": {
+      "catalogueRows": 295,
+      "contextCount": 21,
+      "levels": {
+        "domain": 6,
+        "role": 218,
+        "subgroup": 71
+      },
+      "states": {
+        "linked": 4,
+        "no_link": 291
+      }
+    },
+    "D168": {
+      "catalogueRows": 268,
+      "contextCount": 22,
+      "levels": {
+        "domain": 6,
+        "role": 191,
+        "subgroup": 71
+      },
+      "states": {
+        "linked": 7,
+        "no_link": 261
+      }
+    }
+  },
+  "inputs": {
+    "catalogue": "data/career-mapping/contextual_guidance_items.json.gz",
+    "ccmasDirectory": "data/career-mapping/ccmas",
+    "programmeDomainMap": "data/career-mapping/programme_domain_final.json"
+  },
+  "programmes": [
+    {
+      "activeDomainCount": 11,
+      "activeDomainIds": [
+        "D013",
+        "D015",
+        "D028",
+        "D045",
+        "D060",
+        "D061",
+        "D062",
+        "D063",
+        "D157",
+        "D158",
+        "D159"
+      ],
+      "inheritedCatalogueRows": 8377,
+      "inheritedContextCount": 364,
+      "levels": {
+        "domain": 87,
+        "role": 7966,
+        "subgroup": 324
+      },
+      "linkStateCounts": {
+        "linked": 484,
+        "no_link": 7893
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Administration and Management::Accounting",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 11,
+      "activeDomainIds": [
+        "D009",
+        "D011",
+        "D013",
+        "D014",
+        "D028",
+        "D060",
+        "D061",
+        "D062",
+        "D063",
+        "D158",
+        "D159"
+      ],
+      "inheritedCatalogueRows": 7542,
+      "inheritedContextCount": 330,
+      "levels": {
+        "domain": 82,
+        "role": 7080,
+        "subgroup": 380
+      },
+      "linkStateCounts": {
+        "linked": 544,
+        "no_link": 6998
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Administration and Management::Actuarial Science",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 9,
+      "activeDomainIds": [
+        "D013",
+        "D028",
+        "D030",
+        "D061",
+        "D062",
+        "D063",
+        "D069",
+        "D158",
+        "D159"
+      ],
+      "inheritedCatalogueRows": 6795,
+      "inheritedContextCount": 294,
+      "levels": {
+        "domain": 66,
+        "role": 6489,
+        "subgroup": 240
+      },
+      "linkStateCounts": {
+        "linked": 406,
+        "no_link": 6389
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Administration and Management::Aviation Management",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 14,
+      "activeDomainIds": [
+        "D013",
+        "D014",
+        "D028",
+        "D029",
+        "D030",
+        "D032",
+        "D045",
+        "D060",
+        "D061",
+        "D062",
+        "D063",
+        "D130",
+        "D158",
+        "D159"
+      ],
+      "inheritedCatalogueRows": 10552,
+      "inheritedContextCount": 473,
+      "levels": {
+        "domain": 104,
+        "role": 10001,
+        "subgroup": 447
+      },
+      "linkStateCounts": {
+        "linked": 600,
+        "no_link": 9952
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Administration and Management::Business Administration",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 8,
+      "activeDomainIds": [
+        "D002",
+        "D004",
+        "D005",
+        "D008",
+        "D013",
+        "D030",
+        "D062",
+        "D063"
+      ],
+      "inheritedCatalogueRows": 4932,
+      "inheritedContextCount": 223,
+      "levels": {
+        "domain": 63,
+        "role": 4670,
+        "subgroup": 199
+      },
+      "linkStateCounts": {
+        "linked": 283,
+        "no_link": 4649
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Administration and Management::Business Information Technology",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 13,
+      "activeDomainIds": [
+        "D013",
+        "D014",
+        "D015",
+        "D028",
+        "D030",
+        "D047",
+        "D061",
+        "D062",
+        "D063",
+        "D078",
+        "D128",
+        "D158",
+        "D159"
+      ],
+      "inheritedCatalogueRows": 9682,
+      "inheritedContextCount": 418,
+      "levels": {
+        "domain": 98,
+        "role": 9169,
+        "subgroup": 415
+      },
+      "linkStateCounts": {
+        "linked": 625,
+        "no_link": 9049,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Administration and Management::Co-operative and Rural Development",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D028",
+        "D029",
+        "D030",
+        "D045",
+        "D063",
+        "D130"
+      ],
+      "inheritedCatalogueRows": 5076,
+      "inheritedContextCount": 236,
+      "levels": {
+        "domain": 45,
+        "role": 4841,
+        "subgroup": 190
+      },
+      "linkStateCounts": {
+        "linked": 252,
+        "no_link": 4824
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Administration and Management::Employment and Human Resource Management",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 8,
+      "activeDomainIds": [
+        "D028",
+        "D030",
+        "D061",
+        "D063",
+        "D078",
+        "D130",
+        "D158",
+        "D159"
+      ],
+      "inheritedCatalogueRows": 5352,
+      "inheritedContextCount": 243,
+      "levels": {
+        "domain": 64,
+        "role": 5060,
+        "subgroup": 228
+      },
+      "linkStateCounts": {
+        "linked": 355,
+        "no_link": 4989,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Administration and Management::Entrepreneurship",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 16,
+      "activeDomainIds": [
+        "D009",
+        "D011",
+        "D012",
+        "D013",
+        "D014",
+        "D015",
+        "D028",
+        "D030",
+        "D051",
+        "D060",
+        "D061",
+        "D062",
+        "D063",
+        "D157",
+        "D158",
+        "D159"
+      ],
+      "inheritedCatalogueRows": 10591,
+      "inheritedContextCount": 465,
+      "levels": {
+        "domain": 127,
+        "role": 9956,
+        "subgroup": 508
+      },
+      "linkStateCounts": {
+        "linked": 668,
+        "no_link": 9923
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Administration and Management::Finance / Banking and Finance",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D028",
+        "D030",
+        "D053",
+        "D062",
+        "D063",
+        "D083"
+      ],
+      "inheritedCatalogueRows": 4979,
+      "inheritedContextCount": 215,
+      "levels": {
+        "domain": 41,
+        "role": 4806,
+        "subgroup": 132
+      },
+      "linkStateCounts": {
+        "linked": 259,
+        "no_link": 4720
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Administration and Management::Hospitality and Tourism Management",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D011",
+        "D013",
+        "D014",
+        "D061",
+        "D062",
+        "D063",
+        "D073"
+      ],
+      "inheritedCatalogueRows": 4165,
+      "inheritedContextCount": 182,
+      "levels": {
+        "domain": 50,
+        "role": 3841,
+        "subgroup": 274
+      },
+      "linkStateCounts": {
+        "linked": 330,
+        "no_link": 3835
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Administration and Management::Information Resource Management",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 10,
+      "activeDomainIds": [
+        "D013",
+        "D014",
+        "D015",
+        "D028",
+        "D037",
+        "D061",
+        "D062",
+        "D063",
+        "D158",
+        "D159"
+      ],
+      "inheritedCatalogueRows": 6665,
+      "inheritedContextCount": 292,
+      "levels": {
+        "domain": 80,
+        "role": 6262,
+        "subgroup": 323
+      },
+      "linkStateCounts": {
+        "linked": 422,
+        "no_link": 6243
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Administration and Management::Insurance",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 12,
+      "activeDomainIds": [
+        "D013",
+        "D015",
+        "D028",
+        "D037",
+        "D045",
+        "D061",
+        "D062",
+        "D063",
+        "D078",
+        "D128",
+        "D158",
+        "D159"
+      ],
+      "inheritedCatalogueRows": 9183,
+      "inheritedContextCount": 403,
+      "levels": {
+        "domain": 90,
+        "role": 8701,
+        "subgroup": 392
+      },
+      "linkStateCounts": {
+        "linked": 565,
+        "no_link": 8610,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Administration and Management::Local Government and Development Studies",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 9,
+      "activeDomainIds": [
+        "D009",
+        "D028",
+        "D030",
+        "D034",
+        "D035",
+        "D036",
+        "D062",
+        "D063",
+        "D079"
+      ],
+      "inheritedCatalogueRows": 18269,
+      "inheritedContextCount": 811,
+      "levels": {
+        "domain": 61,
+        "role": 17925,
+        "subgroup": 283
+      },
+      "linkStateCounts": {
+        "linked": 885,
+        "no_link": 17384
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Administration and Management::Logistics and Supply Chain Management",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 9,
+      "activeDomainIds": [
+        "D009",
+        "D028",
+        "D030",
+        "D031",
+        "D033",
+        "D060",
+        "D061",
+        "D063",
+        "D158"
+      ],
+      "inheritedCatalogueRows": 9233,
+      "inheritedContextCount": 413,
+      "levels": {
+        "domain": 65,
+        "role": 8848,
+        "subgroup": 320
+      },
+      "linkStateCounts": {
+        "linked": 475,
+        "no_link": 8758
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Administration and Management::Marketing",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D060",
+        "D073",
+        "D081",
+        "D084"
+      ],
+      "inheritedCatalogueRows": 1888,
+      "inheritedContextCount": 85,
+      "levels": {
+        "domain": 29,
+        "role": 1726,
+        "subgroup": 133
+      },
+      "linkStateCounts": {
+        "linked": 70,
+        "no_link": 1818
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Administration and Management::Office and Information Management",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 11,
+      "activeDomainIds": [
+        "D002",
+        "D004",
+        "D008",
+        "D009",
+        "D010",
+        "D013",
+        "D030",
+        "D054",
+        "D062",
+        "D063",
+        "D073"
+      ],
+      "inheritedCatalogueRows": 7266,
+      "inheritedContextCount": 327,
+      "levels": {
+        "domain": 82,
+        "role": 6838,
+        "subgroup": 346
+      },
+      "linkStateCounts": {
+        "linked": 444,
+        "no_link": 6822
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Administration and Management::Petroleum Information Management",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D028",
+        "D032",
+        "D034",
+        "D036",
+        "D037",
+        "D130"
+      ],
+      "inheritedCatalogueRows": 10539,
+      "inheritedContextCount": 481,
+      "levels": {
+        "domain": 44,
+        "role": 10273,
+        "subgroup": 222
+      },
+      "linkStateCounts": {
+        "linked": 447,
+        "no_link": 10092
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Administration and Management::Procurement Management",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D028",
+        "D032",
+        "D063"
+      ],
+      "inheritedCatalogueRows": 2422,
+      "inheritedContextCount": 109,
+      "levels": {
+        "domain": 22,
+        "role": 2298,
+        "subgroup": 102
+      },
+      "linkStateCounts": {
+        "linked": 138,
+        "no_link": 2284
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Administration and Management::Project Management",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D029",
+        "D045",
+        "D063",
+        "D128"
+      ],
+      "inheritedCatalogueRows": 3108,
+      "inheritedContextCount": 142,
+      "levels": {
+        "domain": 27,
+        "role": 2911,
+        "subgroup": 170
+      },
+      "linkStateCounts": {
+        "linked": 168,
+        "no_link": 2940
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Administration and Management::Public Administration",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 11,
+      "activeDomainIds": [
+        "D011",
+        "D013",
+        "D015",
+        "D028",
+        "D030",
+        "D060",
+        "D062",
+        "D063",
+        "D157",
+        "D158",
+        "D159"
+      ],
+      "inheritedCatalogueRows": 7777,
+      "inheritedContextCount": 333,
+      "levels": {
+        "domain": 84,
+        "role": 7423,
+        "subgroup": 270
+      },
+      "linkStateCounts": {
+        "linked": 467,
+        "no_link": 7310
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Administration and Management::Securities and Investments Management",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D015",
+        "D037",
+        "D061",
+        "D063",
+        "D130",
+        "D149",
+        "D159"
+      ],
+      "inheritedCatalogueRows": 3497,
+      "inheritedContextCount": 170,
+      "levels": {
+        "domain": 57,
+        "role": 3185,
+        "subgroup": 255
+      },
+      "linkStateCounts": {
+        "linked": 187,
+        "no_link": 3310
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Administration and Management::Taxation",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D028",
+        "D034",
+        "D035",
+        "D061",
+        "D063",
+        "D083",
+        "D158"
+      ],
+      "inheritedCatalogueRows": 10148,
+      "inheritedContextCount": 450,
+      "levels": {
+        "domain": 53,
+        "role": 9847,
+        "subgroup": 248
+      },
+      "linkStateCounts": {
+        "linked": 484,
+        "no_link": 9664
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Administration and Management::Transport Management",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D028",
+        "D030",
+        "D047",
+        "D063",
+        "D118",
+        "D119"
+      ],
+      "inheritedCatalogueRows": 5038,
+      "inheritedContextCount": 221,
+      "levels": {
+        "domain": 42,
+        "role": 4818,
+        "subgroup": 178
+      },
+      "linkStateCounts": {
+        "linked": 247,
+        "no_link": 4791
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Agricultural Science::Agribusiness",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D028",
+        "D030",
+        "D045",
+        "D047",
+        "D063",
+        "D118",
+        "D119"
+      ],
+      "inheritedCatalogueRows": 6788,
+      "inheritedContextCount": 299,
+      "levels": {
+        "domain": 49,
+        "role": 6525,
+        "subgroup": 214
+      },
+      "linkStateCounts": {
+        "linked": 329,
+        "no_link": 6459
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Agricultural Science::Agricultural Economics",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 5,
+      "activeDomainIds": [
+        "D041",
+        "D047",
+        "D063",
+        "D078",
+        "D118"
+      ],
+      "inheritedCatalogueRows": 4001,
+      "inheritedContextCount": 170,
+      "levels": {
+        "domain": 33,
+        "role": 3836,
+        "subgroup": 132
+      },
+      "linkStateCounts": {
+        "linked": 308,
+        "no_link": 3685,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Agricultural Science::Agricultural Extension",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D027",
+        "D030",
+        "D041",
+        "D047",
+        "D063",
+        "D119",
+        "D121"
+      ],
+      "inheritedCatalogueRows": 6294,
+      "inheritedContextCount": 277,
+      "levels": {
+        "domain": 49,
+        "role": 5913,
+        "subgroup": 332
+      },
+      "linkStateCounts": {
+        "linked": 358,
+        "no_link": 5936
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Agricultural Science::Animal Science",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 8,
+      "activeDomainIds": [
+        "D030",
+        "D041",
+        "D047",
+        "D063",
+        "D096",
+        "D118",
+        "D119",
+        "D121"
+      ],
+      "inheritedCatalogueRows": 5971,
+      "inheritedContextCount": 268,
+      "levels": {
+        "domain": 53,
+        "role": 5585,
+        "subgroup": 333
+      },
+      "linkStateCounts": {
+        "linked": 312,
+        "no_link": 5659
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Agricultural Science::B. Agriculture",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D027",
+        "D041",
+        "D047",
+        "D048",
+        "D055",
+        "D063",
+        "D119"
+      ],
+      "inheritedCatalogueRows": 7852,
+      "inheritedContextCount": 346,
+      "levels": {
+        "domain": 51,
+        "role": 7515,
+        "subgroup": 286
+      },
+      "linkStateCounts": {
+        "linked": 412,
+        "no_link": 7440
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Agricultural Science::B.Sc./B.Tech Food Science and Technology",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 9,
+      "activeDomainIds": [
+        "D030",
+        "D041",
+        "D047",
+        "D063",
+        "D096",
+        "D118",
+        "D119",
+        "D121",
+        "D144"
+      ],
+      "inheritedCatalogueRows": 6151,
+      "inheritedContextCount": 278,
+      "levels": {
+        "domain": 61,
+        "role": 5751,
+        "subgroup": 339
+      },
+      "linkStateCounts": {
+        "linked": 324,
+        "no_link": 5827
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Agricultural Science::Crop Science",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 5,
+      "activeDomainIds": [
+        "D030",
+        "D047",
+        "D063",
+        "D075",
+        "D078"
+      ],
+      "inheritedCatalogueRows": 4610,
+      "inheritedContextCount": 202,
+      "levels": {
+        "domain": 33,
+        "role": 4385,
+        "subgroup": 192
+      },
+      "linkStateCounts": {
+        "linked": 293,
+        "no_link": 4309,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Agricultural Science::Family and Consumer Sciences",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 8,
+      "activeDomainIds": [
+        "D027",
+        "D030",
+        "D041",
+        "D047",
+        "D048",
+        "D063",
+        "D119",
+        "D120"
+      ],
+      "inheritedCatalogueRows": 8316,
+      "inheritedContextCount": 364,
+      "levels": {
+        "domain": 56,
+        "role": 7981,
+        "subgroup": 279
+      },
+      "linkStateCounts": {
+        "linked": 424,
+        "no_link": 7892
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Agricultural Science::Fisheries and Aquaculture",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D030",
+        "D041",
+        "D047",
+        "D063",
+        "D118",
+        "D119",
+        "D121"
+      ],
+      "inheritedCatalogueRows": 5636,
+      "inheritedContextCount": 251,
+      "levels": {
+        "domain": 47,
+        "role": 5289,
+        "subgroup": 300
+      },
+      "linkStateCounts": {
+        "linked": 299,
+        "no_link": 5337
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Agricultural Science::Forest Resources and Wildlife Management",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D030",
+        "D041",
+        "D047",
+        "D063",
+        "D096",
+        "D118",
+        "D121"
+      ],
+      "inheritedCatalogueRows": 5422,
+      "inheritedContextCount": 241,
+      "levels": {
+        "domain": 46,
+        "role": 5101,
+        "subgroup": 275
+      },
+      "linkStateCounts": {
+        "linked": 295,
+        "no_link": 5127
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Agricultural Science::Horticulture and Landscape Management",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 9,
+      "activeDomainIds": [
+        "D020",
+        "D041",
+        "D047",
+        "D063",
+        "D072",
+        "D096",
+        "D118",
+        "D121",
+        "D144"
+      ],
+      "inheritedCatalogueRows": 5522,
+      "inheritedContextCount": 245,
+      "levels": {
+        "domain": 65,
+        "role": 5166,
+        "subgroup": 291
+      },
+      "linkStateCounts": {
+        "linked": 330,
+        "no_link": 5192
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Agricultural Science::Soil Science",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D020",
+        "D041",
+        "D047",
+        "D063",
+        "D072",
+        "D118",
+        "D144"
+      ],
+      "inheritedCatalogueRows": 4532,
+      "inheritedContextCount": 194,
+      "levels": {
+        "domain": 52,
+        "role": 4352,
+        "subgroup": 128
+      },
+      "linkStateCounts": {
+        "linked": 289,
+        "no_link": 4243
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Agricultural Science::Water Resources Management and Agro-Meteorology",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 5,
+      "activeDomainIds": [
+        "D026",
+        "D046",
+        "D065",
+        "D068",
+        "D145"
+      ],
+      "inheritedCatalogueRows": 3847,
+      "inheritedContextCount": 181,
+      "levels": {
+        "domain": 38,
+        "role": 3678,
+        "subgroup": 131
+      },
+      "linkStateCounts": {
+        "linked": 167,
+        "no_link": 3680
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Allied Health Sciences::Audiology",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D025",
+        "D068",
+        "D126"
+      ],
+      "inheritedCatalogueRows": 1679,
+      "inheritedContextCount": 77,
+      "levels": {
+        "domain": 20,
+        "role": 1593,
+        "subgroup": 66
+      },
+      "linkStateCounts": {
+        "linked": 76,
+        "no_link": 1603
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Allied Health Sciences::Complementary and Alternative Medicine",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 5,
+      "activeDomainIds": [
+        "D067",
+        "D068",
+        "D109",
+        "D122",
+        "D155"
+      ],
+      "inheritedCatalogueRows": 2282,
+      "inheritedContextCount": 116,
+      "levels": {
+        "domain": 36,
+        "role": 2155,
+        "subgroup": 91
+      },
+      "linkStateCounts": {
+        "linked": 99,
+        "no_link": 2183
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Allied Health Sciences::Dental Technology",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D024",
+        "D064",
+        "D067",
+        "D068",
+        "D124",
+        "D145"
+      ],
+      "inheritedCatalogueRows": 3032,
+      "inheritedContextCount": 147,
+      "levels": {
+        "domain": 43,
+        "role": 2883,
+        "subgroup": 106
+      },
+      "linkStateCounts": {
+        "linked": 146,
+        "no_link": 2886
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Allied Health Sciences::Dental Therapy",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 8,
+      "activeDomainIds": [
+        "D020",
+        "D026",
+        "D027",
+        "D041",
+        "D064",
+        "D074",
+        "D078",
+        "D138"
+      ],
+      "inheritedCatalogueRows": 5338,
+      "inheritedContextCount": 245,
+      "levels": {
+        "domain": 59,
+        "role": 5047,
+        "subgroup": 232
+      },
+      "linkStateCounts": {
+        "linked": 361,
+        "no_link": 4969,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Allied Health Sciences::Environmental Health Science",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 5,
+      "activeDomainIds": [
+        "D028",
+        "D029",
+        "D037",
+        "D045",
+        "D063"
+      ],
+      "inheritedCatalogueRows": 4295,
+      "inheritedContextCount": 195,
+      "levels": {
+        "domain": 36,
+        "role": 4085,
+        "subgroup": 174
+      },
+      "linkStateCounts": {
+        "linked": 214,
+        "no_link": 4081
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Allied Health Sciences::Health Care Administration and Hospital Management",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D002",
+        "D008",
+        "D057",
+        "D125"
+      ],
+      "inheritedCatalogueRows": 1549,
+      "inheritedContextCount": 80,
+      "levels": {
+        "domain": 29,
+        "role": 1387,
+        "subgroup": 133
+      },
+      "linkStateCounts": {
+        "linked": 71,
+        "no_link": 1478
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Allied Health Sciences::Health Information Management",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 5,
+      "activeDomainIds": [
+        "D026",
+        "D027",
+        "D041",
+        "D068",
+        "D142"
+      ],
+      "inheritedCatalogueRows": 4695,
+      "inheritedContextCount": 204,
+      "levels": {
+        "domain": 35,
+        "role": 4580,
+        "subgroup": 80
+      },
+      "linkStateCounts": {
+        "linked": 297,
+        "no_link": 4398
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Allied Health Sciences::Human Nutrition and Dietetics",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D002",
+        "D009",
+        "D023",
+        "D024",
+        "D057",
+        "D073",
+        "D125"
+      ],
+      "inheritedCatalogueRows": 3736,
+      "inheritedContextCount": 208,
+      "levels": {
+        "domain": 52,
+        "role": 3538,
+        "subgroup": 146
+      },
+      "linkStateCounts": {
+        "linked": 232,
+        "no_link": 3504
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Allied Health Sciences::Information Technology and Health Informatics",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 5,
+      "activeDomainIds": [
+        "D026",
+        "D027",
+        "D041",
+        "D142",
+        "D143"
+      ],
+      "inheritedCatalogueRows": 4349,
+      "inheritedContextCount": 194,
+      "levels": {
+        "domain": 35,
+        "role": 4176,
+        "subgroup": 138
+      },
+      "linkStateCounts": {
+        "linked": 286,
+        "no_link": 4063
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Allied Health Sciences::Medical Laboratory Science",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D024",
+        "D026",
+        "D064",
+        "D068",
+        "D145",
+        "D165"
+      ],
+      "inheritedCatalogueRows": 3337,
+      "inheritedContextCount": 166,
+      "levels": {
+        "domain": 41,
+        "role": 3177,
+        "subgroup": 119
+      },
+      "linkStateCounts": {
+        "linked": 161,
+        "no_link": 3176
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Allied Health Sciences::Nursing Sciences",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D064",
+        "D068",
+        "D145",
+        "D165"
+      ],
+      "inheritedCatalogueRows": 2159,
+      "inheritedContextCount": 95,
+      "levels": {
+        "domain": 25,
+        "role": 2036,
+        "subgroup": 98
+      },
+      "linkStateCounts": {
+        "linked": 104,
+        "no_link": 2055
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Allied Health Sciences::Occupational Therapy",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D023",
+        "D024",
+        "D025",
+        "D068",
+        "D124",
+        "D138"
+      ],
+      "inheritedCatalogueRows": 3520,
+      "inheritedContextCount": 192,
+      "levels": {
+        "domain": 44,
+        "role": 3350,
+        "subgroup": 126
+      },
+      "linkStateCounts": {
+        "linked": 194,
+        "no_link": 3326
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Allied Health Sciences::Optometry",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 8,
+      "activeDomainIds": [
+        "D023",
+        "D025",
+        "D027",
+        "D041",
+        "D068",
+        "D138",
+        "D142",
+        "D145"
+      ],
+      "inheritedCatalogueRows": 5981,
+      "inheritedContextCount": 282,
+      "levels": {
+        "domain": 56,
+        "role": 5704,
+        "subgroup": 221
+      },
+      "linkStateCounts": {
+        "linked": 384,
+        "no_link": 5597
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Allied Health Sciences::Pharmacology",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D068",
+        "D137",
+        "D145",
+        "D165"
+      ],
+      "inheritedCatalogueRows": 1885,
+      "inheritedContextCount": 84,
+      "levels": {
+        "domain": 25,
+        "role": 1768,
+        "subgroup": 92
+      },
+      "linkStateCounts": {
+        "linked": 93,
+        "no_link": 1792
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Allied Health Sciences::Physiotherapy",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 2,
+      "activeDomainIds": [
+        "D068",
+        "D138"
+      ],
+      "inheritedCatalogueRows": 1442,
+      "inheritedContextCount": 60,
+      "levels": {
+        "domain": 14,
+        "role": 1368,
+        "subgroup": 60
+      },
+      "linkStateCounts": {
+        "linked": 80,
+        "no_link": 1362
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Allied Health Sciences::Prosthetics and Orthotics",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D026",
+        "D045",
+        "D063",
+        "D078"
+      ],
+      "inheritedCatalogueRows": 3267,
+      "inheritedContextCount": 155,
+      "levels": {
+        "domain": 28,
+        "role": 3118,
+        "subgroup": 121
+      },
+      "linkStateCounts": {
+        "linked": 252,
+        "no_link": 3007,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Allied Health Sciences::Public Health",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D003",
+        "D023",
+        "D025",
+        "D026",
+        "D135",
+        "D137",
+        "D145"
+      ],
+      "inheritedCatalogueRows": 2536,
+      "inheritedContextCount": 162,
+      "levels": {
+        "domain": 53,
+        "role": 2270,
+        "subgroup": 213
+      },
+      "linkStateCounts": {
+        "linked": 147,
+        "no_link": 2389
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Allied Health Sciences::Radiography",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 1,
+      "activeDomainIds": [
+        "D068"
+      ],
+      "inheritedCatalogueRows": 1011,
+      "inheritedContextCount": 39,
+      "levels": {
+        "domain": 6,
+        "role": 1005
+      },
+      "linkStateCounts": {
+        "linked": 51,
+        "no_link": 960
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Allied Health Sciences::Speech-Language Therapy",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 5,
+      "activeDomainIds": [
+        "D016",
+        "D018",
+        "D020",
+        "D021",
+        "D164"
+      ],
+      "inheritedCatalogueRows": 4015,
+      "inheritedContextCount": 174,
+      "levels": {
+        "domain": 44,
+        "role": 3910,
+        "subgroup": 61
+      },
+      "linkStateCounts": {
+        "linked": 217,
+        "no_link": 3798
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Architecture::Architectural Technology",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D021",
+        "D099",
+        "D102",
+        "D164"
+      ],
+      "inheritedCatalogueRows": 2355,
+      "inheritedContextCount": 109,
+      "levels": {
+        "domain": 32,
+        "role": 2210,
+        "subgroup": 113
+      },
+      "linkStateCounts": {
+        "linked": 110,
+        "no_link": 2245
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Architecture::Architecture",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 2,
+      "activeDomainIds": [
+        "D021",
+        "D102"
+      ],
+      "inheritedCatalogueRows": 1329,
+      "inheritedContextCount": 62,
+      "levels": {
+        "domain": 14,
+        "role": 1283,
+        "subgroup": 32
+      },
+      "linkStateCounts": {
+        "linked": 58,
+        "no_link": 1271
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Architecture::Furniture Design",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 2,
+      "activeDomainIds": [
+        "D021",
+        "D080"
+      ],
+      "inheritedCatalogueRows": 1074,
+      "inheritedContextCount": 47,
+      "levels": {
+        "domain": 14,
+        "role": 1060
+      },
+      "linkStateCounts": {
+        "linked": 49,
+        "no_link": 1025
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Architecture::Interior Architecture and Design",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D021",
+        "D118",
+        "D164"
+      ],
+      "inheritedCatalogueRows": 1614,
+      "inheritedContextCount": 73,
+      "levels": {
+        "domain": 24,
+        "role": 1529,
+        "subgroup": 61
+      },
+      "linkStateCounts": {
+        "linked": 91,
+        "no_link": 1523
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Architecture::Landscape Architecture",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 9,
+      "activeDomainIds": [
+        "D016",
+        "D017",
+        "D018",
+        "D019",
+        "D020",
+        "D076",
+        "D093",
+        "D134",
+        "D148"
+      ],
+      "inheritedCatalogueRows": 6759,
+      "inheritedContextCount": 288,
+      "levels": {
+        "domain": 72,
+        "role": 6576,
+        "subgroup": 111
+      },
+      "linkStateCounts": {
+        "linked": 297,
+        "no_link": 6462
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Architecture::Naval Architecture",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D030",
+        "D039",
+        "D042",
+        "D043",
+        "D065",
+        "D153"
+      ],
+      "inheritedCatalogueRows": 8817,
+      "inheritedContextCount": 386,
+      "levels": {
+        "domain": 45,
+        "role": 8625,
+        "subgroup": 147
+      },
+      "linkStateCounts": {
+        "linked": 309,
+        "no_link": 8508
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Arts::African Languages and Literature Yoruba",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 2,
+      "activeDomainIds": [
+        "D039",
+        "D150"
+      ],
+      "inheritedCatalogueRows": 3212,
+      "inheritedContextCount": 135,
+      "levels": {
+        "domain": 13,
+        "role": 3151,
+        "subgroup": 48
+      },
+      "linkStateCounts": {
+        "linked": 139,
+        "no_link": 3073
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Arts::African Tradition Religion",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D039",
+        "D043",
+        "D065",
+        "D130"
+      ],
+      "inheritedCatalogueRows": 5037,
+      "inheritedContextCount": 227,
+      "levels": {
+        "domain": 37,
+        "role": 4885,
+        "subgroup": 115
+      },
+      "linkStateCounts": {
+        "linked": 205,
+        "no_link": 4832
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Arts::Arabic",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D041",
+        "D072",
+        "D078",
+        "D152"
+      ],
+      "inheritedCatalogueRows": 2795,
+      "inheritedContextCount": 121,
+      "levels": {
+        "domain": 29,
+        "role": 2624,
+        "subgroup": 142
+      },
+      "linkStateCounts": {
+        "linked": 232,
+        "no_link": 2555,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Arts::Archaeology",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 2,
+      "activeDomainIds": [
+        "D043",
+        "D065"
+      ],
+      "inheritedCatalogueRows": 1690,
+      "inheritedContextCount": 79,
+      "levels": {
+        "domain": 20,
+        "role": 1631,
+        "subgroup": 39
+      },
+      "linkStateCounts": {
+        "linked": 59,
+        "no_link": 1631
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Arts::Chinese Studies",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 2,
+      "activeDomainIds": [
+        "D065",
+        "D150"
+      ],
+      "inheritedCatalogueRows": 492,
+      "inheritedContextCount": 27,
+      "levels": {
+        "domain": 16,
+        "role": 413,
+        "subgroup": 63
+      },
+      "linkStateCounts": {
+        "linked": 13,
+        "no_link": 479
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Arts::Christian Religious Studies",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D039",
+        "D043",
+        "D046",
+        "D065",
+        "D078",
+        "D150"
+      ],
+      "inheritedCatalogueRows": 7329,
+      "inheritedContextCount": 322,
+      "levels": {
+        "domain": 48,
+        "role": 7139,
+        "subgroup": 142
+      },
+      "linkStateCounts": {
+        "linked": 364,
+        "no_link": 6957,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Arts::Christian Theology",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 2,
+      "activeDomainIds": [
+        "D039",
+        "D065"
+      ],
+      "inheritedCatalogueRows": 3330,
+      "inheritedContextCount": 140,
+      "levels": {
+        "domain": 17,
+        "role": 3250,
+        "subgroup": 63
+      },
+      "linkStateCounts": {
+        "linked": 140,
+        "no_link": 3190
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Arts::Classics",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D039",
+        "D043",
+        "D065"
+      ],
+      "inheritedCatalogueRows": 4715,
+      "inheritedContextCount": 203,
+      "levels": {
+        "domain": 27,
+        "role": 4625,
+        "subgroup": 63
+      },
+      "linkStateCounts": {
+        "linked": 192,
+        "no_link": 4523
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Arts::Efik",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D039",
+        "D042",
+        "D043",
+        "D065",
+        "D073",
+        "D130"
+      ],
+      "inheritedCatalogueRows": 7885,
+      "inheritedContextCount": 357,
+      "levels": {
+        "domain": 50,
+        "role": 7639,
+        "subgroup": 196
+      },
+      "linkStateCounts": {
+        "linked": 281,
+        "no_link": 7604
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Arts::English Language and Literature",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D030",
+        "D042",
+        "D043",
+        "D070",
+        "D153",
+        "D168"
+      ],
+      "inheritedCatalogueRows": 5987,
+      "inheritedContextCount": 288,
+      "levels": {
+        "domain": 40,
+        "role": 5752,
+        "subgroup": 195
+      },
+      "linkStateCounts": {
+        "linked": 180,
+        "no_link": 5807
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Arts::Film Production",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 2,
+      "activeDomainIds": [
+        "D039",
+        "D152"
+      ],
+      "inheritedCatalogueRows": 3623,
+      "inheritedContextCount": 153,
+      "levels": {
+        "domain": 14,
+        "role": 3493,
+        "subgroup": 116
+      },
+      "linkStateCounts": {
+        "linked": 156,
+        "no_link": 3467
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Arts::Folklore Studies",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 2,
+      "activeDomainIds": [
+        "D043",
+        "D065"
+      ],
+      "inheritedCatalogueRows": 1690,
+      "inheritedContextCount": 79,
+      "levels": {
+        "domain": 20,
+        "role": 1631,
+        "subgroup": 39
+      },
+      "linkStateCounts": {
+        "linked": 59,
+        "no_link": 1631
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Arts::Hausa",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D039",
+        "D063",
+        "D078",
+        "D152"
+      ],
+      "inheritedCatalogueRows": 4658,
+      "inheritedContextCount": 198,
+      "levels": {
+        "domain": 28,
+        "role": 4450,
+        "subgroup": 180
+      },
+      "linkStateCounts": {
+        "linked": 304,
+        "no_link": 4346,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Arts::History/History and Diplomatic Studies",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D039",
+        "D043",
+        "D065"
+      ],
+      "inheritedCatalogueRows": 4715,
+      "inheritedContextCount": 203,
+      "levels": {
+        "domain": 27,
+        "role": 4625,
+        "subgroup": 63
+      },
+      "linkStateCounts": {
+        "linked": 192,
+        "no_link": 4523
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Arts::Ibibio",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 5,
+      "activeDomainIds": [
+        "D039",
+        "D042",
+        "D043",
+        "D065",
+        "D153"
+      ],
+      "inheritedCatalogueRows": 7733,
+      "inheritedContextCount": 339,
+      "levels": {
+        "domain": 39,
+        "role": 7547,
+        "subgroup": 147
+      },
+      "linkStateCounts": {
+        "linked": 268,
+        "no_link": 7465
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Arts::Igbo",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D037",
+        "D039",
+        "D150"
+      ],
+      "inheritedCatalogueRows": 3837,
+      "inheritedContextCount": 165,
+      "levels": {
+        "domain": 20,
+        "role": 3733,
+        "subgroup": 84
+      },
+      "linkStateCounts": {
+        "linked": 155,
+        "no_link": 3682
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Arts::Islamic Studies",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D043",
+        "D065",
+        "D073"
+      ],
+      "inheritedCatalogueRows": 2108,
+      "inheritedContextCount": 98,
+      "levels": {
+        "domain": 27,
+        "role": 2009,
+        "subgroup": 72
+      },
+      "linkStateCounts": {
+        "linked": 72,
+        "no_link": 2036
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Arts::Linguistics",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 2,
+      "activeDomainIds": [
+        "D043",
+        "D065"
+      ],
+      "inheritedCatalogueRows": 1690,
+      "inheritedContextCount": 79,
+      "levels": {
+        "domain": 20,
+        "role": 1631,
+        "subgroup": 39
+      },
+      "linkStateCounts": {
+        "linked": 59,
+        "no_link": 1631
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Arts::Modern European Languages (Russian)",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 1,
+      "activeDomainIds": [
+        "D065"
+      ],
+      "inheritedCatalogueRows": 305,
+      "inheritedContextCount": 16,
+      "levels": {
+        "domain": 10,
+        "role": 256,
+        "subgroup": 39
+      },
+      "linkStateCounts": {
+        "linked": 7,
+        "no_link": 298
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Arts::Modern European Languages B.A (French)",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D043",
+        "D065",
+        "D078"
+      ],
+      "inheritedCatalogueRows": 2343,
+      "inheritedContextCount": 106,
+      "levels": {
+        "domain": 26,
+        "role": 2258,
+        "subgroup": 59
+      },
+      "linkStateCounts": {
+        "linked": 154,
+        "no_link": 2181,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Arts::Modern European Languages B.A (German)",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D039",
+        "D130",
+        "D153"
+      ],
+      "inheritedCatalogueRows": 3935,
+      "inheritedContextCount": 173,
+      "levels": {
+        "domain": 23,
+        "role": 3800,
+        "subgroup": 112
+      },
+      "linkStateCounts": {
+        "linked": 159,
+        "no_link": 3776
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Arts::Music",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 2,
+      "activeDomainIds": [
+        "D037",
+        "D078"
+      ],
+      "inheritedCatalogueRows": 1278,
+      "inheritedContextCount": 57,
+      "levels": {
+        "domain": 13,
+        "role": 1209,
+        "subgroup": 56
+      },
+      "linkStateCounts": {
+        "linked": 111,
+        "no_link": 1159,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Arts::Philosophy",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D039",
+        "D043",
+        "D064",
+        "D065",
+        "D078",
+        "D150"
+      ],
+      "inheritedCatalogueRows": 6062,
+      "inheritedContextCount": 266,
+      "levels": {
+        "domain": 46,
+        "role": 5866,
+        "subgroup": 150
+      },
+      "linkStateCounts": {
+        "linked": 314,
+        "no_link": 5740,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Arts::Religious Studies",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D037",
+        "D063",
+        "D065",
+        "D150"
+      ],
+      "inheritedCatalogueRows": 1499,
+      "inheritedContextCount": 75,
+      "levels": {
+        "domain": 31,
+        "role": 1325,
+        "subgroup": 143
+      },
+      "linkStateCounts": {
+        "linked": 82,
+        "no_link": 1417
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Arts::Sharcah",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D030",
+        "D042",
+        "D043",
+        "D070",
+        "D153",
+        "D168"
+      ],
+      "inheritedCatalogueRows": 5987,
+      "inheritedContextCount": 288,
+      "levels": {
+        "domain": 40,
+        "role": 5752,
+        "subgroup": 195
+      },
+      "linkStateCounts": {
+        "linked": 180,
+        "no_link": 5807
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Arts::Theatre Arts",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D027",
+        "D039",
+        "D041",
+        "D138",
+        "D142",
+        "D143",
+        "D145"
+      ],
+      "inheritedCatalogueRows": 7598,
+      "inheritedContextCount": 320,
+      "levels": {
+        "domain": 49,
+        "role": 7312,
+        "subgroup": 237
+      },
+      "linkStateCounts": {
+        "linked": 442,
+        "no_link": 7156
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Basic Medical Sciences::Human Anatomy",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 5,
+      "activeDomainIds": [
+        "D027",
+        "D041",
+        "D138",
+        "D142",
+        "D143"
+      ],
+      "inheritedCatalogueRows": 4298,
+      "inheritedContextCount": 183,
+      "levels": {
+        "domain": 36,
+        "role": 4085,
+        "subgroup": 177
+      },
+      "linkStateCounts": {
+        "linked": 293,
+        "no_link": 4005
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Basic Medical Sciences::Physiology",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D030",
+        "D042",
+        "D168"
+      ],
+      "inheritedCatalogueRows": 3782,
+      "inheritedContextCount": 180,
+      "levels": {
+        "domain": 18,
+        "role": 3645,
+        "subgroup": 119
+      },
+      "linkStateCounts": {
+        "linked": 111,
+        "no_link": 3671
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Communication and Media Studies::ADVERTISING — P12, P13, P14",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 5,
+      "activeDomainIds": [
+        "D030",
+        "D042",
+        "D043",
+        "D153",
+        "D168"
+      ],
+      "inheritedCatalogueRows": 5755,
+      "inheritedContextCount": 268,
+      "levels": {
+        "domain": 34,
+        "role": 5566,
+        "subgroup": 155
+      },
+      "linkStateCounts": {
+        "linked": 176,
+        "no_link": 5579
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Communication and Media Studies::BROADCASTING — P12, P13, P14",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D030",
+        "D042",
+        "D128"
+      ],
+      "inheritedCatalogueRows": 4065,
+      "inheritedContextCount": 184,
+      "levels": {
+        "domain": 18,
+        "role": 3939,
+        "subgroup": 108
+      },
+      "linkStateCounts": {
+        "linked": 122,
+        "no_link": 3943
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Communication and Media Studies::DEVELOPMENT COMMUNICATION STUDIES — P12, P13, P14",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D030",
+        "D042",
+        "D168"
+      ],
+      "inheritedCatalogueRows": 3782,
+      "inheritedContextCount": 180,
+      "levels": {
+        "domain": 18,
+        "role": 3645,
+        "subgroup": 119
+      },
+      "linkStateCounts": {
+        "linked": 111,
+        "no_link": 3671
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Communication and Media Studies::FILM & MULTIMEDIA — P12, P13, P14",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D030",
+        "D042",
+        "D043",
+        "D168"
+      ],
+      "inheritedCatalogueRows": 5167,
+      "inheritedContextCount": 243,
+      "levels": {
+        "domain": 28,
+        "role": 5020,
+        "subgroup": 119
+      },
+      "linkStateCounts": {
+        "linked": 163,
+        "no_link": 5004
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Communication and Media Studies::INFORMATION AND MEDIA STUDIES — P12, P13, P14",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D030",
+        "D042",
+        "D043",
+        "D168"
+      ],
+      "inheritedCatalogueRows": 5167,
+      "inheritedContextCount": 243,
+      "levels": {
+        "domain": 28,
+        "role": 5020,
+        "subgroup": 119
+      },
+      "linkStateCounts": {
+        "linked": 163,
+        "no_link": 5004
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Communication and Media Studies::JOURNALISM AND MEDIA STUDIES — P12, P13, P14",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D030",
+        "D042",
+        "D043",
+        "D168"
+      ],
+      "inheritedCatalogueRows": 5167,
+      "inheritedContextCount": 243,
+      "levels": {
+        "domain": 28,
+        "role": 5020,
+        "subgroup": 119
+      },
+      "linkStateCounts": {
+        "linked": 163,
+        "no_link": 5004
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Communication and Media Studies::MASS COMMUNICATION — P12, P13, P14",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 2,
+      "activeDomainIds": [
+        "D030",
+        "D168"
+      ],
+      "inheritedCatalogueRows": 1352,
+      "inheritedContextCount": 69,
+      "levels": {
+        "domain": 12,
+        "role": 1269,
+        "subgroup": 71
+      },
+      "linkStateCounts": {
+        "linked": 48,
+        "no_link": 1304
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Communication and Media Studies::PUBLIC RELATIONS — P12, P13, P14",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D030",
+        "D042",
+        "D168"
+      ],
+      "inheritedCatalogueRows": 3782,
+      "inheritedContextCount": 180,
+      "levels": {
+        "domain": 18,
+        "role": 3645,
+        "subgroup": 119
+      },
+      "linkStateCounts": {
+        "linked": 111,
+        "no_link": 3671
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Communication and Media Studies::STRATEGIC COMMUNICATION — P12, P13, P14",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 5,
+      "activeDomainIds": [
+        "D001",
+        "D003",
+        "D005",
+        "D056",
+        "D140"
+      ],
+      "inheritedCatalogueRows": 2382,
+      "inheritedContextCount": 118,
+      "levels": {
+        "domain": 47,
+        "role": 2237,
+        "subgroup": 98
+      },
+      "linkStateCounts": {
+        "linked": 87,
+        "no_link": 2295
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Computing::Computer Science",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 8,
+      "activeDomainIds": [
+        "D001",
+        "D002",
+        "D003",
+        "D004",
+        "D005",
+        "D056",
+        "D077",
+        "D151"
+      ],
+      "inheritedCatalogueRows": 4094,
+      "inheritedContextCount": 200,
+      "levels": {
+        "domain": 71,
+        "role": 3882,
+        "subgroup": 141
+      },
+      "linkStateCounts": {
+        "linked": 143,
+        "no_link": 3951
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Computing::Cybersecurity",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 5,
+      "activeDomainIds": [
+        "D001",
+        "D002",
+        "D003",
+        "D009",
+        "D056"
+      ],
+      "inheritedCatalogueRows": 3023,
+      "inheritedContextCount": 141,
+      "levels": {
+        "domain": 46,
+        "role": 2914,
+        "subgroup": 63
+      },
+      "linkStateCounts": {
+        "linked": 156,
+        "no_link": 2867
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Computing::Data Science",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 8,
+      "activeDomainIds": [
+        "D001",
+        "D002",
+        "D003",
+        "D004",
+        "D007",
+        "D009",
+        "D010",
+        "D032"
+      ],
+      "inheritedCatalogueRows": 5213,
+      "inheritedContextCount": 245,
+      "levels": {
+        "domain": 66,
+        "role": 4969,
+        "subgroup": 178
+      },
+      "linkStateCounts": {
+        "linked": 256,
+        "no_link": 4957
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Computing::Information Systems",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 8,
+      "activeDomainIds": [
+        "D001",
+        "D003",
+        "D004",
+        "D005",
+        "D007",
+        "D008",
+        "D056",
+        "D140"
+      ],
+      "inheritedCatalogueRows": 3803,
+      "inheritedContextCount": 185,
+      "levels": {
+        "domain": 70,
+        "role": 3545,
+        "subgroup": 188
+      },
+      "linkStateCounts": {
+        "linked": 134,
+        "no_link": 3669
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Computing::Information Technology",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D001",
+        "D003",
+        "D004",
+        "D005",
+        "D008",
+        "D056",
+        "D140"
+      ],
+      "inheritedCatalogueRows": 3158,
+      "inheritedContextCount": 157,
+      "levels": {
+        "domain": 64,
+        "role": 2926,
+        "subgroup": 168
+      },
+      "linkStateCounts": {
+        "linked": 116,
+        "no_link": 3042
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Computing::Information and Communication Technology",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 9,
+      "activeDomainIds": [
+        "D001",
+        "D003",
+        "D004",
+        "D005",
+        "D012",
+        "D056",
+        "D139",
+        "D140",
+        "D167"
+      ],
+      "inheritedCatalogueRows": 4269,
+      "inheritedContextCount": 222,
+      "levels": {
+        "domain": 79,
+        "role": 3912,
+        "subgroup": 278
+      },
+      "linkStateCounts": {
+        "linked": 143,
+        "no_link": 4126
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Computing::Software Engineering",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 5,
+      "activeDomainIds": [
+        "D039",
+        "D040",
+        "D058",
+        "D078",
+        "D128"
+      ],
+      "inheritedCatalogueRows": 5683,
+      "inheritedContextCount": 241,
+      "levels": {
+        "domain": 35,
+        "role": 5469,
+        "subgroup": 179
+      },
+      "linkStateCounts": {
+        "linked": 295,
+        "no_link": 5380,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Adult and Continuing Education",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D028",
+        "D039",
+        "D040",
+        "D047",
+        "D063",
+        "D118"
+      ],
+      "inheritedCatalogueRows": 7316,
+      "inheritedContextCount": 310,
+      "levels": {
+        "domain": 43,
+        "role": 7093,
+        "subgroup": 180
+      },
+      "linkStateCounts": {
+        "linked": 347,
+        "no_link": 6969
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Agricultural Education",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D039",
+        "D040",
+        "D065"
+      ],
+      "inheritedCatalogueRows": 4216,
+      "inheritedContextCount": 179,
+      "levels": {
+        "domain": 24,
+        "role": 4093,
+        "subgroup": 99
+      },
+      "linkStateCounts": {
+        "linked": 165,
+        "no_link": 4051
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Arabic",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D009",
+        "D027",
+        "D028",
+        "D039",
+        "D041",
+        "D063",
+        "D145"
+      ],
+      "inheritedCatalogueRows": 7924,
+      "inheritedContextCount": 340,
+      "levels": {
+        "domain": 50,
+        "role": 7651,
+        "subgroup": 223
+      },
+      "linkStateCounts": {
+        "linked": 482,
+        "no_link": 7442
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Biology",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 9,
+      "activeDomainIds": [
+        "D015",
+        "D028",
+        "D029",
+        "D030",
+        "D039",
+        "D040",
+        "D060",
+        "D061",
+        "D063"
+      ],
+      "inheritedCatalogueRows": 8680,
+      "inheritedContextCount": 376,
+      "levels": {
+        "domain": 66,
+        "role": 8308,
+        "subgroup": 306
+      },
+      "linkStateCounts": {
+        "linked": 391,
+        "no_link": 8289
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Business Education",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D020",
+        "D025",
+        "D028",
+        "D039",
+        "D041",
+        "D055",
+        "D145"
+      ],
+      "inheritedCatalogueRows": 7560,
+      "inheritedContextCount": 332,
+      "levels": {
+        "domain": 49,
+        "role": 7301,
+        "subgroup": 210
+      },
+      "linkStateCounts": {
+        "linked": 353,
+        "no_link": 7207
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Chemistry",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D039",
+        "D040",
+        "D065",
+        "D150"
+      ],
+      "inheritedCatalogueRows": 4403,
+      "inheritedContextCount": 190,
+      "levels": {
+        "domain": 30,
+        "role": 4250,
+        "subgroup": 123
+      },
+      "linkStateCounts": {
+        "linked": 171,
+        "no_link": 4232
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Christian Religious Studies",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D001",
+        "D003",
+        "D039",
+        "D056"
+      ],
+      "inheritedCatalogueRows": 4583,
+      "inheritedContextCount": 197,
+      "levels": {
+        "domain": 36,
+        "role": 4505,
+        "subgroup": 42
+      },
+      "linkStateCounts": {
+        "linked": 188,
+        "no_link": 4395
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Computer Science",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D030",
+        "D039",
+        "D040",
+        "D042",
+        "D070",
+        "D153"
+      ],
+      "inheritedCatalogueRows": 8245,
+      "inheritedContextCount": 366,
+      "levels": {
+        "domain": 38,
+        "role": 8023,
+        "subgroup": 184
+      },
+      "linkStateCounts": {
+        "linked": 279,
+        "no_link": 7966
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Creative Arts Education",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 2,
+      "activeDomainIds": [
+        "D039",
+        "D046"
+      ],
+      "inheritedCatalogueRows": 4799,
+      "inheritedContextCount": 205,
+      "levels": {
+        "domain": 16,
+        "role": 4724,
+        "subgroup": 59
+      },
+      "linkStateCounts": {
+        "linked": 204,
+        "no_link": 4595
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Early Childhood Education",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D028",
+        "D029",
+        "D032",
+        "D039",
+        "D040",
+        "D045"
+      ],
+      "inheritedCatalogueRows": 8126,
+      "inheritedContextCount": 352,
+      "levels": {
+        "domain": 41,
+        "role": 7901,
+        "subgroup": 184
+      },
+      "linkStateCounts": {
+        "linked": 340,
+        "no_link": 7786
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Educational Management",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D039",
+        "D040",
+        "D042"
+      ],
+      "inheritedCatalogueRows": 6341,
+      "inheritedContextCount": 274,
+      "levels": {
+        "domain": 20,
+        "role": 6213,
+        "subgroup": 108
+      },
+      "linkStateCounts": {
+        "linked": 221,
+        "no_link": 6120
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Educational Technology",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D039",
+        "D040",
+        "D065"
+      ],
+      "inheritedCatalogueRows": 4216,
+      "inheritedContextCount": 179,
+      "levels": {
+        "domain": 24,
+        "role": 4093,
+        "subgroup": 99
+      },
+      "linkStateCounts": {
+        "linked": 165,
+        "no_link": 4051
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Efik-Ibibio Education",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D039",
+        "D040",
+        "D043",
+        "D065"
+      ],
+      "inheritedCatalogueRows": 5601,
+      "inheritedContextCount": 242,
+      "levels": {
+        "domain": 34,
+        "role": 5468,
+        "subgroup": 99
+      },
+      "linkStateCounts": {
+        "linked": 217,
+        "no_link": 5384
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::English Language/Literature-in-English",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D015",
+        "D028",
+        "D030",
+        "D031",
+        "D039",
+        "D040",
+        "D063"
+      ],
+      "inheritedCatalogueRows": 9956,
+      "inheritedContextCount": 430,
+      "levels": {
+        "domain": 52,
+        "role": 9691,
+        "subgroup": 213
+      },
+      "linkStateCounts": {
+        "linked": 426,
+        "no_link": 9530
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Entrepreneurship Education",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D020",
+        "D039",
+        "D041"
+      ],
+      "inheritedCatalogueRows": 4597,
+      "inheritedContextCount": 190,
+      "levels": {
+        "domain": 20,
+        "role": 4533,
+        "subgroup": 44
+      },
+      "linkStateCounts": {
+        "linked": 227,
+        "no_link": 4370
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Environmental Education",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D039",
+        "D040",
+        "D065"
+      ],
+      "inheritedCatalogueRows": 4216,
+      "inheritedContextCount": 179,
+      "levels": {
+        "domain": 24,
+        "role": 4093,
+        "subgroup": 99
+      },
+      "linkStateCounts": {
+        "linked": 165,
+        "no_link": 4051
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::French",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D009",
+        "D028",
+        "D039",
+        "D045",
+        "D058",
+        "D072",
+        "D156"
+      ],
+      "inheritedCatalogueRows": 8089,
+      "inheritedContextCount": 350,
+      "levels": {
+        "domain": 58,
+        "role": 7819,
+        "subgroup": 212
+      },
+      "linkStateCounts": {
+        "linked": 421,
+        "no_link": 7668
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Geography",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 5,
+      "activeDomainIds": [
+        "D028",
+        "D039",
+        "D040",
+        "D046",
+        "D064"
+      ],
+      "inheritedCatalogueRows": 7305,
+      "inheritedContextCount": 318,
+      "levels": {
+        "domain": 38,
+        "role": 7101,
+        "subgroup": 166
+      },
+      "linkStateCounts": {
+        "linked": 298,
+        "no_link": 7007
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Guidance and Counselling",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D039",
+        "D040",
+        "D065"
+      ],
+      "inheritedCatalogueRows": 4216,
+      "inheritedContextCount": 179,
+      "levels": {
+        "domain": 24,
+        "role": 4093,
+        "subgroup": 99
+      },
+      "linkStateCounts": {
+        "linked": 165,
+        "no_link": 4051
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Hausa",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D024",
+        "D026",
+        "D039",
+        "D040",
+        "D046",
+        "D128"
+      ],
+      "inheritedCatalogueRows": 7414,
+      "inheritedContextCount": 341,
+      "levels": {
+        "domain": 45,
+        "role": 7193,
+        "subgroup": 176
+      },
+      "linkStateCounts": {
+        "linked": 304,
+        "no_link": 7110
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Health Education",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D039",
+        "D040",
+        "D078",
+        "D152"
+      ],
+      "inheritedCatalogueRows": 5162,
+      "inheritedContextCount": 219,
+      "levels": {
+        "domain": 27,
+        "role": 4963,
+        "subgroup": 172
+      },
+      "linkStateCounts": {
+        "linked": 276,
+        "no_link": 4878,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::History",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D039",
+        "D040",
+        "D064",
+        "D075"
+      ],
+      "inheritedCatalogueRows": 5555,
+      "inheritedContextCount": 242,
+      "levels": {
+        "domain": 27,
+        "role": 5345,
+        "subgroup": 183
+      },
+      "linkStateCounts": {
+        "linked": 218,
+        "no_link": 5337
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Home Economics",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 2,
+      "activeDomainIds": [
+        "D039",
+        "D040"
+      ],
+      "inheritedCatalogueRows": 3911,
+      "inheritedContextCount": 163,
+      "levels": {
+        "domain": 14,
+        "role": 3837,
+        "subgroup": 60
+      },
+      "linkStateCounts": {
+        "linked": 158,
+        "no_link": 3753
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Human Kinetics/Physical Education",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D039",
+        "D040",
+        "D065"
+      ],
+      "inheritedCatalogueRows": 4216,
+      "inheritedContextCount": 179,
+      "levels": {
+        "domain": 24,
+        "role": 4093,
+        "subgroup": 99
+      },
+      "linkStateCounts": {
+        "linked": 165,
+        "no_link": 4051
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Igbo",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D039",
+        "D040",
+        "D041"
+      ],
+      "inheritedCatalogueRows": 4967,
+      "inheritedContextCount": 208,
+      "levels": {
+        "domain": 20,
+        "role": 4867,
+        "subgroup": 80
+      },
+      "linkStateCounts": {
+        "linked": 230,
+        "no_link": 4737
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Integrated Science",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D039",
+        "D040",
+        "D150"
+      ],
+      "inheritedCatalogueRows": 4098,
+      "inheritedContextCount": 174,
+      "levels": {
+        "domain": 20,
+        "role": 3994,
+        "subgroup": 84
+      },
+      "linkStateCounts": {
+        "linked": 164,
+        "no_link": 3934
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Islamic Studies",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D039",
+        "D043",
+        "D065"
+      ],
+      "inheritedCatalogueRows": 4715,
+      "inheritedContextCount": 203,
+      "levels": {
+        "domain": 27,
+        "role": 4625,
+        "subgroup": 63
+      },
+      "linkStateCounts": {
+        "linked": 192,
+        "no_link": 4523
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Language Arts and Communication",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 2,
+      "activeDomainIds": [
+        "D043",
+        "D073"
+      ],
+      "inheritedCatalogueRows": 1803,
+      "inheritedContextCount": 82,
+      "levels": {
+        "domain": 17,
+        "role": 1753,
+        "subgroup": 33
+      },
+      "linkStateCounts": {
+        "linked": 65,
+        "no_link": 1738
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Library and Information Science",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 2,
+      "activeDomainIds": [
+        "D003",
+        "D028"
+      ],
+      "inheritedCatalogueRows": 1249,
+      "inheritedContextCount": 56,
+      "levels": {
+        "domain": 18,
+        "role": 1197,
+        "subgroup": 34
+      },
+      "linkStateCounts": {
+        "linked": 59,
+        "no_link": 1190
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Mathematics",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D039",
+        "D040",
+        "D153"
+      ],
+      "inheritedCatalogueRows": 4499,
+      "inheritedContextCount": 188,
+      "levels": {
+        "domain": 20,
+        "role": 4383,
+        "subgroup": 96
+      },
+      "linkStateCounts": {
+        "linked": 171,
+        "no_link": 4328
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Music",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D008",
+        "D016",
+        "D028",
+        "D039",
+        "D041",
+        "D059",
+        "D155"
+      ],
+      "inheritedCatalogueRows": 6944,
+      "inheritedContextCount": 308,
+      "levels": {
+        "domain": 53,
+        "role": 6700,
+        "subgroup": 191
+      },
+      "linkStateCounts": {
+        "linked": 336,
+        "no_link": 6608
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Physics",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 5,
+      "activeDomainIds": [
+        "D028",
+        "D039",
+        "D063",
+        "D078",
+        "D149"
+      ],
+      "inheritedCatalogueRows": 5481,
+      "inheritedContextCount": 235,
+      "levels": {
+        "domain": 35,
+        "role": 5303,
+        "subgroup": 143
+      },
+      "linkStateCounts": {
+        "linked": 342,
+        "no_link": 5131,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Political Science",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 2,
+      "activeDomainIds": [
+        "D039",
+        "D040"
+      ],
+      "inheritedCatalogueRows": 3911,
+      "inheritedContextCount": 163,
+      "levels": {
+        "domain": 14,
+        "role": 3837,
+        "subgroup": 60
+      },
+      "linkStateCounts": {
+        "linked": 158,
+        "no_link": 3753
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Primary Education",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D039",
+        "D040",
+        "D045"
+      ],
+      "inheritedCatalogueRows": 5661,
+      "inheritedContextCount": 241,
+      "levels": {
+        "domain": 21,
+        "role": 5544,
+        "subgroup": 96
+      },
+      "linkStateCounts": {
+        "linked": 240,
+        "no_link": 5421
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Social Studies and Civic Education",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D039",
+        "D040",
+        "D064"
+      ],
+      "inheritedCatalogueRows": 4418,
+      "inheritedContextCount": 188,
+      "levels": {
+        "domain": 21,
+        "role": 4294,
+        "subgroup": 103
+      },
+      "linkStateCounts": {
+        "linked": 179,
+        "no_link": 4239
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Special Needs Education",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 5,
+      "activeDomainIds": [
+        "D020",
+        "D039",
+        "D040",
+        "D041",
+        "D063"
+      ],
+      "inheritedCatalogueRows": 5865,
+      "inheritedContextCount": 247,
+      "levels": {
+        "domain": 35,
+        "role": 5706,
+        "subgroup": 124
+      },
+      "linkStateCounts": {
+        "linked": 305,
+        "no_link": 5560
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Sustainable Development Studies",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 8,
+      "activeDomainIds": [
+        "D008",
+        "D016",
+        "D017",
+        "D039",
+        "D040",
+        "D095",
+        "D097",
+        "D102"
+      ],
+      "inheritedCatalogueRows": 9184,
+      "inheritedContextCount": 394,
+      "levels": {
+        "domain": 62,
+        "role": 8921,
+        "subgroup": 201
+      },
+      "linkStateCounts": {
+        "linked": 354,
+        "no_link": 8830
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Technology Education",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D039",
+        "D040",
+        "D065"
+      ],
+      "inheritedCatalogueRows": 4216,
+      "inheritedContextCount": 179,
+      "levels": {
+        "domain": 24,
+        "role": 4093,
+        "subgroup": 99
+      },
+      "linkStateCounts": {
+        "linked": 165,
+        "no_link": 4051
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Education::Yoruba",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 11,
+      "activeDomainIds": [
+        "D001",
+        "D009",
+        "D017",
+        "D020",
+        "D041",
+        "D059",
+        "D069",
+        "D132",
+        "D136",
+        "D140",
+        "D155"
+      ],
+      "inheritedCatalogueRows": 6719,
+      "inheritedContextCount": 318,
+      "levels": {
+        "domain": 82,
+        "role": 6360,
+        "subgroup": 277
+      },
+      "linkStateCounts": {
+        "linked": 344,
+        "no_link": 6375
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::AEROSPACE ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D019",
+        "D020",
+        "D041",
+        "D047",
+        "D050",
+        "D096",
+        "D140"
+      ],
+      "inheritedCatalogueRows": 5459,
+      "inheritedContextCount": 236,
+      "levels": {
+        "domain": 48,
+        "role": 5218,
+        "subgroup": 193
+      },
+      "linkStateCounts": {
+        "linked": 270,
+        "no_link": 5189
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::AGRICULTURAL AND BIOSYSTEMS ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 10,
+      "activeDomainIds": [
+        "D016",
+        "D017",
+        "D049",
+        "D050",
+        "D095",
+        "D131",
+        "D136",
+        "D140",
+        "D155",
+        "D166"
+      ],
+      "inheritedCatalogueRows": 7042,
+      "inheritedContextCount": 322,
+      "levels": {
+        "domain": 77,
+        "role": 6624,
+        "subgroup": 341
+      },
+      "linkStateCounts": {
+        "linked": 310,
+        "no_link": 6732
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::AUTOMOTIVE ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 10,
+      "activeDomainIds": [
+        "D009",
+        "D016",
+        "D027",
+        "D041",
+        "D057",
+        "D123",
+        "D137",
+        "D138",
+        "D140",
+        "D142"
+      ],
+      "inheritedCatalogueRows": 6375,
+      "inheritedContextCount": 301,
+      "levels": {
+        "domain": 75,
+        "role": 6024,
+        "subgroup": 276
+      },
+      "linkStateCounts": {
+        "linked": 439,
+        "no_link": 5936
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::BIOMEDICAL ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 8,
+      "activeDomainIds": [
+        "D009",
+        "D020",
+        "D041",
+        "D054",
+        "D055",
+        "D110",
+        "D147",
+        "D155"
+      ],
+      "inheritedCatalogueRows": 5931,
+      "inheritedContextCount": 280,
+      "levels": {
+        "domain": 59,
+        "role": 5638,
+        "subgroup": 234
+      },
+      "linkStateCounts": {
+        "linked": 305,
+        "no_link": 5626
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::CHEMICAL ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 8,
+      "activeDomainIds": [
+        "D009",
+        "D018",
+        "D021",
+        "D032",
+        "D072",
+        "D140",
+        "D146",
+        "D156"
+      ],
+      "inheritedCatalogueRows": 5499,
+      "inheritedContextCount": 250,
+      "levels": {
+        "domain": 68,
+        "role": 5207,
+        "subgroup": 224
+      },
+      "linkStateCounts": {
+        "linked": 320,
+        "no_link": 5179
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::CIVIL ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D001",
+        "D003",
+        "D009",
+        "D016",
+        "D017",
+        "D140"
+      ],
+      "inheritedCatalogueRows": 4134,
+      "inheritedContextCount": 193,
+      "levels": {
+        "domain": 52,
+        "role": 3983,
+        "subgroup": 99
+      },
+      "linkStateCounts": {
+        "linked": 215,
+        "no_link": 3919
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::COMPUTER ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D009",
+        "D016",
+        "D019",
+        "D050",
+        "D140",
+        "D146"
+      ],
+      "inheritedCatalogueRows": 4221,
+      "inheritedContextCount": 193,
+      "levels": {
+        "domain": 47,
+        "role": 3983,
+        "subgroup": 191
+      },
+      "linkStateCounts": {
+        "linked": 234,
+        "no_link": 3987
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::ELECTRICAL AND ELECTRONIC ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 9,
+      "activeDomainIds": [
+        "D009",
+        "D016",
+        "D019",
+        "D050",
+        "D093",
+        "D094",
+        "D140",
+        "D146",
+        "D147"
+      ],
+      "inheritedCatalogueRows": 5858,
+      "inheritedContextCount": 263,
+      "levels": {
+        "domain": 68,
+        "role": 5530,
+        "subgroup": 260
+      },
+      "linkStateCounts": {
+        "linked": 299,
+        "no_link": 5559
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::ELECTRICAL ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D008",
+        "D009",
+        "D016",
+        "D019",
+        "D050",
+        "D094",
+        "D140"
+      ],
+      "inheritedCatalogueRows": 4960,
+      "inheritedContextCount": 221,
+      "levels": {
+        "domain": 51,
+        "role": 4719,
+        "subgroup": 190
+      },
+      "linkStateCounts": {
+        "linked": 263,
+        "no_link": 4697
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::ELECTRONIC ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D018",
+        "D020",
+        "D026",
+        "D041",
+        "D054",
+        "D072",
+        "D144"
+      ],
+      "inheritedCatalogueRows": 4856,
+      "inheritedContextCount": 219,
+      "levels": {
+        "domain": 56,
+        "role": 4698,
+        "subgroup": 102
+      },
+      "linkStateCounts": {
+        "linked": 273,
+        "no_link": 4583
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::ENVIRONMENTAL ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 8,
+      "activeDomainIds": [
+        "D009",
+        "D016",
+        "D017",
+        "D020",
+        "D041",
+        "D047",
+        "D048",
+        "D055"
+      ],
+      "inheritedCatalogueRows": 8990,
+      "inheritedContextCount": 395,
+      "levels": {
+        "domain": 59,
+        "role": 8740,
+        "subgroup": 191
+      },
+      "linkStateCounts": {
+        "linked": 447,
+        "no_link": 8543
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::FOOD ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D009",
+        "D020",
+        "D027",
+        "D041",
+        "D047",
+        "D048"
+      ],
+      "inheritedCatalogueRows": 7146,
+      "inheritedContextCount": 310,
+      "levels": {
+        "domain": 42,
+        "role": 6917,
+        "subgroup": 187
+      },
+      "linkStateCounts": {
+        "linked": 396,
+        "no_link": 6750
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::FOOD SCIENCE AND TECHNOLOGY",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D001",
+        "D009",
+        "D017",
+        "D028",
+        "D050",
+        "D114",
+        "D140"
+      ],
+      "inheritedCatalogueRows": 6427,
+      "inheritedContextCount": 295,
+      "levels": {
+        "domain": 54,
+        "role": 6209,
+        "subgroup": 164
+      },
+      "linkStateCounts": {
+        "linked": 291,
+        "no_link": 6136
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::INDUSTRIAL AND PRODUCTION ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D001",
+        "D005",
+        "D008",
+        "D009",
+        "D016",
+        "D140"
+      ],
+      "inheritedCatalogueRows": 3698,
+      "inheritedContextCount": 181,
+      "levels": {
+        "domain": 51,
+        "role": 3464,
+        "subgroup": 183
+      },
+      "linkStateCounts": {
+        "linked": 185,
+        "no_link": 3513
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::INFORMATION AND COMMUNICATION ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D017",
+        "D018",
+        "D019",
+        "D054",
+        "D076",
+        "D134",
+        "D148"
+      ],
+      "inheritedCatalogueRows": 5400,
+      "inheritedContextCount": 232,
+      "levels": {
+        "domain": 56,
+        "role": 5188,
+        "subgroup": 156
+      },
+      "linkStateCounts": {
+        "linked": 230,
+        "no_link": 5170
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::MARINE AND OFFSHORE ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 8,
+      "activeDomainIds": [
+        "D009",
+        "D016",
+        "D017",
+        "D097",
+        "D109",
+        "D138",
+        "D140",
+        "D155"
+      ],
+      "inheritedCatalogueRows": 5934,
+      "inheritedContextCount": 271,
+      "levels": {
+        "domain": 63,
+        "role": 5698,
+        "subgroup": 173
+      },
+      "linkStateCounts": {
+        "linked": 296,
+        "no_link": 5638
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::MATERIALS AND METALLURGICAL ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 8,
+      "activeDomainIds": [
+        "D009",
+        "D016",
+        "D017",
+        "D041",
+        "D055",
+        "D109",
+        "D138",
+        "D155"
+      ],
+      "inheritedCatalogueRows": 6115,
+      "inheritedContextCount": 281,
+      "levels": {
+        "domain": 59,
+        "role": 5876,
+        "subgroup": 180
+      },
+      "linkStateCounts": {
+        "linked": 339,
+        "no_link": 5776
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::MATERIALS ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 11,
+      "activeDomainIds": [
+        "D009",
+        "D016",
+        "D017",
+        "D019",
+        "D032",
+        "D049",
+        "D050",
+        "D134",
+        "D136",
+        "D140",
+        "D146"
+      ],
+      "inheritedCatalogueRows": 8450,
+      "inheritedContextCount": 381,
+      "levels": {
+        "domain": 85,
+        "role": 7977,
+        "subgroup": 388
+      },
+      "linkStateCounts": {
+        "linked": 407,
+        "no_link": 8043
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::MECHANICAL ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D009",
+        "D016",
+        "D017",
+        "D050",
+        "D140",
+        "D166"
+      ],
+      "inheritedCatalogueRows": 4779,
+      "inheritedContextCount": 215,
+      "levels": {
+        "domain": 45,
+        "role": 4566,
+        "subgroup": 168
+      },
+      "linkStateCounts": {
+        "linked": 253,
+        "no_link": 4526
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::MECHATRONICS ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D009",
+        "D016",
+        "D022",
+        "D097",
+        "D109",
+        "D155"
+      ],
+      "inheritedCatalogueRows": 5253,
+      "inheritedContextCount": 243,
+      "levels": {
+        "domain": 47,
+        "role": 5094,
+        "subgroup": 112
+      },
+      "linkStateCounts": {
+        "linked": 284,
+        "no_link": 4969
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::METALLURGICAL ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D009",
+        "D016",
+        "D022",
+        "D072",
+        "D109",
+        "D155"
+      ],
+      "inheritedCatalogueRows": 4173,
+      "inheritedContextCount": 199,
+      "levels": {
+        "domain": 47,
+        "role": 4004,
+        "subgroup": 122
+      },
+      "linkStateCounts": {
+        "linked": 274,
+        "no_link": 3899
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::MINERAL PROCESSING AND CHEMICAL-METALLURGICAL ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 8,
+      "activeDomainIds": [
+        "D009",
+        "D018",
+        "D022",
+        "D041",
+        "D072",
+        "D116",
+        "D144",
+        "D156"
+      ],
+      "inheritedCatalogueRows": 6221,
+      "inheritedContextCount": 281,
+      "levels": {
+        "domain": 68,
+        "role": 5994,
+        "subgroup": 159
+      },
+      "linkStateCounts": {
+        "linked": 398,
+        "no_link": 5823
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::MINING ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D020",
+        "D041",
+        "D054",
+        "D055",
+        "D148",
+        "D155"
+      ],
+      "inheritedCatalogueRows": 3919,
+      "inheritedContextCount": 180,
+      "levels": {
+        "domain": 44,
+        "role": 3749,
+        "subgroup": 126
+      },
+      "linkStateCounts": {
+        "linked": 193,
+        "no_link": 3726
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::NATURAL GAS ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 5,
+      "activeDomainIds": [
+        "D016",
+        "D017",
+        "D019",
+        "D137",
+        "D155"
+      ],
+      "inheritedCatalogueRows": 2893,
+      "inheritedContextCount": 136,
+      "levels": {
+        "domain": 38,
+        "role": 2793,
+        "subgroup": 62
+      },
+      "linkStateCounts": {
+        "linked": 132,
+        "no_link": 2761
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::NUCLEAR ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D016",
+        "D041",
+        "D054",
+        "D055",
+        "D110",
+        "D147"
+      ],
+      "inheritedCatalogueRows": 5134,
+      "inheritedContextCount": 235,
+      "levels": {
+        "domain": 47,
+        "role": 4917,
+        "subgroup": 170
+      },
+      "linkStateCounts": {
+        "linked": 240,
+        "no_link": 4894
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::PETROCHEMICAL ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D016",
+        "D022",
+        "D054",
+        "D148"
+      ],
+      "inheritedCatalogueRows": 3072,
+      "inheritedContextCount": 141,
+      "levels": {
+        "domain": 33,
+        "role": 2946,
+        "subgroup": 93
+      },
+      "linkStateCounts": {
+        "linked": 169,
+        "no_link": 2903
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::PETROLEUM AND GAS ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 5,
+      "activeDomainIds": [
+        "D016",
+        "D022",
+        "D041",
+        "D054",
+        "D148"
+      ],
+      "inheritedCatalogueRows": 4128,
+      "inheritedContextCount": 186,
+      "levels": {
+        "domain": 39,
+        "role": 3976,
+        "subgroup": 113
+      },
+      "linkStateCounts": {
+        "linked": 241,
+        "no_link": 3887
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::PETROLEUM ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D016",
+        "D017",
+        "D018",
+        "D041",
+        "D117",
+        "D164"
+      ],
+      "inheritedCatalogueRows": 5681,
+      "inheritedContextCount": 250,
+      "levels": {
+        "domain": 50,
+        "role": 5476,
+        "subgroup": 155
+      },
+      "linkStateCounts": {
+        "linked": 293,
+        "no_link": 5388
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::RAILWAY ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D018",
+        "D019",
+        "D021",
+        "D146"
+      ],
+      "inheritedCatalogueRows": 2994,
+      "inheritedContextCount": 131,
+      "levels": {
+        "domain": 34,
+        "role": 2900,
+        "subgroup": 60
+      },
+      "linkStateCounts": {
+        "linked": 150,
+        "no_link": 2844
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::STRUCTURAL ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 5,
+      "activeDomainIds": [
+        "D009",
+        "D017",
+        "D050",
+        "D140",
+        "D147"
+      ],
+      "inheritedCatalogueRows": 4074,
+      "inheritedContextCount": 184,
+      "levels": {
+        "domain": 37,
+        "role": 3837,
+        "subgroup": 200
+      },
+      "linkStateCounts": {
+        "linked": 209,
+        "no_link": 3865
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::SYSTEMS ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D008",
+        "D016",
+        "D059"
+      ],
+      "inheritedCatalogueRows": 1510,
+      "inheritedContextCount": 71,
+      "levels": {
+        "domain": 25,
+        "role": 1391,
+        "subgroup": 94
+      },
+      "linkStateCounts": {
+        "linked": 72,
+        "no_link": 1438
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::TELECOMMUNICATIONS ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 2,
+      "activeDomainIds": [
+        "D018",
+        "D020"
+      ],
+      "inheritedCatalogueRows": 2139,
+      "inheritedContextCount": 89,
+      "levels": {
+        "domain": 17,
+        "role": 2122
+      },
+      "linkStateCounts": {
+        "linked": 103,
+        "no_link": 2036
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::WATER RESOURCES ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D017",
+        "D112",
+        "D121"
+      ],
+      "inheritedCatalogueRows": 2264,
+      "inheritedContextCount": 103,
+      "levels": {
+        "domain": 21,
+        "role": 2113,
+        "subgroup": 130
+      },
+      "linkStateCounts": {
+        "linked": 87,
+        "no_link": 2177
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Engineering::WOOD PRODUCTS ENGINEERING",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 5,
+      "activeDomainIds": [
+        "D018",
+        "D021",
+        "D052",
+        "D063",
+        "D156"
+      ],
+      "inheritedCatalogueRows": 4916,
+      "inheritedContextCount": 210,
+      "levels": {
+        "domain": 46,
+        "role": 4742,
+        "subgroup": 128
+      },
+      "linkStateCounts": {
+        "linked": 275,
+        "no_link": 4641
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Environmental Sciences::Building",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D030",
+        "D075",
+        "D111"
+      ],
+      "inheritedCatalogueRows": 3175,
+      "inheritedContextCount": 151,
+      "levels": {
+        "domain": 19,
+        "role": 3012,
+        "subgroup": 144
+      },
+      "linkStateCounts": {
+        "linked": 113,
+        "no_link": 3062
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Environmental Sciences::Clothing and Textile Design",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 9,
+      "activeDomainIds": [
+        "D020",
+        "D028",
+        "D041",
+        "D045",
+        "D063",
+        "D072",
+        "D078",
+        "D121",
+        "D144"
+      ],
+      "inheritedCatalogueRows": 6793,
+      "inheritedContextCount": 302,
+      "levels": {
+        "domain": 67,
+        "role": 6432,
+        "subgroup": 294
+      },
+      "linkStateCounts": {
+        "linked": 454,
+        "no_link": 6331,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Environmental Sciences::ENVIRONMENTAL STANDARDS",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D020",
+        "D041",
+        "D063",
+        "D144"
+      ],
+      "inheritedCatalogueRows": 2134,
+      "inheritedContextCount": 94,
+      "levels": {
+        "domain": 29,
+        "role": 2035,
+        "subgroup": 70
+      },
+      "linkStateCounts": {
+        "linked": 159,
+        "no_link": 1975
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Environmental Sciences::Environmental Management",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D030",
+        "D037",
+        "D045",
+        "D051",
+        "D063",
+        "D072",
+        "D156"
+      ],
+      "inheritedCatalogueRows": 5199,
+      "inheritedContextCount": 231,
+      "levels": {
+        "domain": 57,
+        "role": 4934,
+        "subgroup": 208
+      },
+      "linkStateCounts": {
+        "linked": 270,
+        "no_link": 4929
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Environmental Sciences::Estate management",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D030",
+        "D044",
+        "D075",
+        "D111"
+      ],
+      "inheritedCatalogueRows": 4145,
+      "inheritedContextCount": 193,
+      "levels": {
+        "domain": 25,
+        "role": 3940,
+        "subgroup": 180
+      },
+      "linkStateCounts": {
+        "linked": 136,
+        "no_link": 4009
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Environmental Sciences::Fashion design",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 1,
+      "activeDomainIds": [
+        "D044"
+      ],
+      "inheritedCatalogueRows": 970,
+      "inheritedContextCount": 42,
+      "levels": {
+        "domain": 6,
+        "role": 928,
+        "subgroup": 36
+      },
+      "linkStateCounts": {
+        "linked": 23,
+        "no_link": 947
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Environmental Sciences::Fine and Applied Arts",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 8,
+      "activeDomainIds": [
+        "D009",
+        "D020",
+        "D041",
+        "D045",
+        "D063",
+        "D072",
+        "D144",
+        "D156"
+      ],
+      "inheritedCatalogueRows": 5517,
+      "inheritedContextCount": 246,
+      "levels": {
+        "domain": 63,
+        "role": 5263,
+        "subgroup": 191
+      },
+      "linkStateCounts": {
+        "linked": 375,
+        "no_link": 5142
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Environmental Sciences::Geography",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 1,
+      "activeDomainIds": [
+        "D075"
+      ],
+      "inheritedCatalogueRows": 1137,
+      "inheritedContextCount": 54,
+      "levels": {
+        "domain": 6,
+        "role": 1051,
+        "subgroup": 80
+      },
+      "linkStateCounts": {
+        "linked": 39,
+        "no_link": 1098
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Environmental Sciences::Industrial Design",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 5,
+      "activeDomainIds": [
+        "D018",
+        "D021",
+        "D032",
+        "D036",
+        "D063"
+      ],
+      "inheritedCatalogueRows": 7348,
+      "inheritedContextCount": 325,
+      "levels": {
+        "domain": 38,
+        "role": 7204,
+        "subgroup": 106
+      },
+      "linkStateCounts": {
+        "linked": 377,
+        "no_link": 6971
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Environmental Sciences::Quantity Surveying",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 1,
+      "activeDomainIds": [
+        "D156"
+      ],
+      "inheritedCatalogueRows": 286,
+      "inheritedContextCount": 13,
+      "levels": {
+        "domain": 10,
+        "role": 240,
+        "subgroup": 36
+      },
+      "linkStateCounts": {
+        "linked": 14,
+        "no_link": 272
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Environmental Sciences::Surveying and Geoinformatics",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D021",
+        "D063",
+        "D078"
+      ],
+      "inheritedCatalogueRows": 1548,
+      "inheritedContextCount": 68,
+      "levels": {
+        "domain": 22,
+        "role": 1462,
+        "subgroup": 64
+      },
+      "linkStateCounts": {
+        "linked": 181,
+        "no_link": 1359,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Environmental Sciences::Urban and Regional Planning",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D037",
+        "D078",
+        "D150",
+        "D151"
+      ],
+      "inheritedCatalogueRows": 1915,
+      "inheritedContextCount": 94,
+      "levels": {
+        "domain": 25,
+        "role": 1759,
+        "subgroup": 131
+      },
+      "linkStateCounts": {
+        "linked": 135,
+        "no_link": 1772,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Law::Common and Islamic Law",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D037",
+        "D045",
+        "D078",
+        "D151"
+      ],
+      "inheritedCatalogueRows": 3478,
+      "inheritedContextCount": 161,
+      "levels": {
+        "domain": 26,
+        "role": 3309,
+        "subgroup": 143
+      },
+      "linkStateCounts": {
+        "linked": 211,
+        "no_link": 3259,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Law::Law",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 11,
+      "activeDomainIds": [
+        "D023",
+        "D024",
+        "D026",
+        "D027",
+        "D041",
+        "D067",
+        "D124",
+        "D138",
+        "D142",
+        "D143",
+        "D145"
+      ],
+      "inheritedCatalogueRows": 6931,
+      "inheritedContextCount": 347,
+      "levels": {
+        "domain": 80,
+        "role": 6590,
+        "subgroup": 261
+      },
+      "linkStateCounts": {
+        "linked": 437,
+        "no_link": 6494
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Medicine and Dentistry::Bachelor of Dental Surgery (BDS/BChD)",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 8,
+      "activeDomainIds": [
+        "D023",
+        "D026",
+        "D027",
+        "D041",
+        "D138",
+        "D142",
+        "D143",
+        "D145"
+      ],
+      "inheritedCatalogueRows": 5692,
+      "inheritedContextCount": 277,
+      "levels": {
+        "domain": 56,
+        "role": 5402,
+        "subgroup": 234
+      },
+      "linkStateCounts": {
+        "linked": 379,
+        "no_link": 5313
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Medicine and Dentistry::Bachelor of Medicine and Bachelor of Surgery (MBBS/MBChB)",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D023",
+        "D025",
+        "D027",
+        "D041",
+        "D138",
+        "D142"
+      ],
+      "inheritedCatalogueRows": 4695,
+      "inheritedContextCount": 230,
+      "levels": {
+        "domain": 44,
+        "role": 4466,
+        "subgroup": 185
+      },
+      "linkStateCounts": {
+        "linked": 317,
+        "no_link": 4378
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Pharmacy and Pharmaceutical Sciences::Bachelor of Pharmacy",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D023",
+        "D025",
+        "D026",
+        "D027",
+        "D041",
+        "D138",
+        "D142"
+      ],
+      "inheritedCatalogueRows": 5177,
+      "inheritedContextCount": 262,
+      "levels": {
+        "domain": 51,
+        "role": 4920,
+        "subgroup": 206
+      },
+      "linkStateCounts": {
+        "linked": 339,
+        "no_link": 4838
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Pharmacy and Pharmaceutical Sciences::Doctor of Pharmacy",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 8,
+      "activeDomainIds": [
+        "D020",
+        "D022",
+        "D041",
+        "D054",
+        "D059",
+        "D072",
+        "D144",
+        "D156"
+      ],
+      "inheritedCatalogueRows": 4603,
+      "inheritedContextCount": 210,
+      "levels": {
+        "domain": 66,
+        "role": 4337,
+        "subgroup": 200
+      },
+      "linkStateCounts": {
+        "linked": 278,
+        "no_link": 4325
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Sciences::Applied Geophysics",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 9,
+      "activeDomainIds": [
+        "D009",
+        "D025",
+        "D027",
+        "D041",
+        "D047",
+        "D055",
+        "D138",
+        "D142",
+        "D143"
+      ],
+      "inheritedCatalogueRows": 8086,
+      "inheritedContextCount": 360,
+      "levels": {
+        "domain": 65,
+        "role": 7655,
+        "subgroup": 366
+      },
+      "linkStateCounts": {
+        "linked": 498,
+        "no_link": 7588
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Sciences::Biochemistry",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 9,
+      "activeDomainIds": [
+        "D009",
+        "D027",
+        "D041",
+        "D047",
+        "D118",
+        "D119",
+        "D121",
+        "D142",
+        "D152"
+      ],
+      "inheritedCatalogueRows": 7773,
+      "inheritedContextCount": 344,
+      "levels": {
+        "domain": 63,
+        "role": 7284,
+        "subgroup": 426
+      },
+      "linkStateCounts": {
+        "linked": 458,
+        "no_link": 7315
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Sciences::Biology",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D025",
+        "D027",
+        "D041",
+        "D047",
+        "D138",
+        "D142",
+        "D143"
+      ],
+      "inheritedCatalogueRows": 6077,
+      "inheritedContextCount": 266,
+      "levels": {
+        "domain": 50,
+        "role": 5736,
+        "subgroup": 291
+      },
+      "linkStateCounts": {
+        "linked": 374,
+        "no_link": 5703
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Sciences::Biotechnology",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D027",
+        "D041",
+        "D047",
+        "D118",
+        "D121",
+        "D142",
+        "D152"
+      ],
+      "inheritedCatalogueRows": 6365,
+      "inheritedContextCount": 276,
+      "levels": {
+        "domain": 49,
+        "role": 5987,
+        "subgroup": 329
+      },
+      "linkStateCounts": {
+        "linked": 363,
+        "no_link": 6002
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Sciences::Botany",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D027",
+        "D041",
+        "D048",
+        "D055"
+      ],
+      "inheritedCatalogueRows": 5567,
+      "inheritedContextCount": 245,
+      "levels": {
+        "domain": 29,
+        "role": 5402,
+        "subgroup": 136
+      },
+      "linkStateCounts": {
+        "linked": 277,
+        "no_link": 5290
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Sciences::Brewing Science and Technology",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 8,
+      "activeDomainIds": [
+        "D020",
+        "D025",
+        "D027",
+        "D041",
+        "D055",
+        "D122",
+        "D141",
+        "D155"
+      ],
+      "inheritedCatalogueRows": 5068,
+      "inheritedContextCount": 264,
+      "levels": {
+        "domain": 58,
+        "role": 4751,
+        "subgroup": 259
+      },
+      "linkStateCounts": {
+        "linked": 262,
+        "no_link": 4806
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Sciences::Chemistry",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D020",
+        "D027",
+        "D041",
+        "D072",
+        "D121",
+        "D143"
+      ],
+      "inheritedCatalogueRows": 4594,
+      "inheritedContextCount": 199,
+      "levels": {
+        "domain": 44,
+        "role": 4300,
+        "subgroup": 250
+      },
+      "linkStateCounts": {
+        "linked": 286,
+        "no_link": 4308
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Sciences::Environmental Management and Toxicology",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D004",
+        "D037",
+        "D064",
+        "D151"
+      ],
+      "inheritedCatalogueRows": 1935,
+      "inheritedContextCount": 100,
+      "levels": {
+        "domain": 30,
+        "role": 1764,
+        "subgroup": 141
+      },
+      "linkStateCounts": {
+        "linked": 71,
+        "no_link": 1864
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Sciences::Forensic Science",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 5,
+      "activeDomainIds": [
+        "D022",
+        "D041",
+        "D054",
+        "D072",
+        "D156"
+      ],
+      "inheritedCatalogueRows": 3638,
+      "inheritedContextCount": 164,
+      "levels": {
+        "domain": 42,
+        "role": 3437,
+        "subgroup": 159
+      },
+      "linkStateCounts": {
+        "linked": 231,
+        "no_link": 3407
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Sciences::Geology",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 8,
+      "activeDomainIds": [
+        "D016",
+        "D017",
+        "D019",
+        "D041",
+        "D055",
+        "D093",
+        "D110",
+        "D155"
+      ],
+      "inheritedCatalogueRows": 6562,
+      "inheritedContextCount": 299,
+      "levels": {
+        "domain": 62,
+        "role": 6419,
+        "subgroup": 81
+      },
+      "linkStateCounts": {
+        "linked": 299,
+        "no_link": 6263
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Sciences::Industrial Chemistry",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 2,
+      "activeDomainIds": [
+        "D003",
+        "D014"
+      ],
+      "inheritedCatalogueRows": 572,
+      "inheritedContextCount": 27,
+      "levels": {
+        "domain": 19,
+        "role": 500,
+        "subgroup": 53
+      },
+      "linkStateCounts": {
+        "linked": 63,
+        "no_link": 509
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Sciences::Industrial Mathematics",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 9,
+      "activeDomainIds": [
+        "D008",
+        "D016",
+        "D019",
+        "D050",
+        "D059",
+        "D093",
+        "D132",
+        "D140",
+        "D155"
+      ],
+      "inheritedCatalogueRows": 4660,
+      "inheritedContextCount": 218,
+      "levels": {
+        "domain": 68,
+        "role": 4381,
+        "subgroup": 211
+      },
+      "linkStateCounts": {
+        "linked": 213,
+        "no_link": 4447
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Sciences::Industrial Physics",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D020",
+        "D041",
+        "D072",
+        "D120",
+        "D134",
+        "D142"
+      ],
+      "inheritedCatalogueRows": 4109,
+      "inheritedContextCount": 175,
+      "levels": {
+        "domain": 46,
+        "role": 3934,
+        "subgroup": 129
+      },
+      "linkStateCounts": {
+        "linked": 246,
+        "no_link": 3863
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Sciences::Marine Science",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 5,
+      "activeDomainIds": [
+        "D020",
+        "D041",
+        "D076",
+        "D134",
+        "D144"
+      ],
+      "inheritedCatalogueRows": 2970,
+      "inheritedContextCount": 131,
+      "levels": {
+        "domain": 36,
+        "role": 2797,
+        "subgroup": 137
+      },
+      "linkStateCounts": {
+        "linked": 148,
+        "no_link": 2822
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Sciences::Maritime Science",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 1,
+      "activeDomainIds": [
+        "D009"
+      ],
+      "inheritedCatalogueRows": 859,
+      "inheritedContextCount": 41,
+      "levels": {
+        "domain": 7,
+        "role": 813,
+        "subgroup": 39
+      },
+      "linkStateCounts": {
+        "linked": 78,
+        "no_link": 781
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Sciences::Mathematics",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 3,
+      "activeDomainIds": [
+        "D019",
+        "D132",
+        "D138"
+      ],
+      "inheritedCatalogueRows": 1119,
+      "inheritedContextCount": 51,
+      "levels": {
+        "domain": 21,
+        "role": 1038,
+        "subgroup": 60
+      },
+      "linkStateCounts": {
+        "linked": 64,
+        "no_link": 1055
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Sciences::Medical Physics",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D025",
+        "D027",
+        "D041",
+        "D055",
+        "D138",
+        "D142",
+        "D155"
+      ],
+      "inheritedCatalogueRows": 5448,
+      "inheritedContextCount": 253,
+      "levels": {
+        "domain": 52,
+        "role": 5150,
+        "subgroup": 246
+      },
+      "linkStateCounts": {
+        "linked": 326,
+        "no_link": 5122
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Sciences::Medicinal Chemistry",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D041",
+        "D047",
+        "D059",
+        "D144"
+      ],
+      "inheritedCatalogueRows": 2859,
+      "inheritedContextCount": 126,
+      "levels": {
+        "domain": 30,
+        "role": 2720,
+        "subgroup": 109
+      },
+      "linkStateCounts": {
+        "linked": 162,
+        "no_link": 2697
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Sciences::Meteorology",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D020",
+        "D025",
+        "D027",
+        "D041",
+        "D047",
+        "D048",
+        "D142"
+      ],
+      "inheritedCatalogueRows": 7644,
+      "inheritedContextCount": 334,
+      "levels": {
+        "domain": 50,
+        "role": 7373,
+        "subgroup": 221
+      },
+      "linkStateCounts": {
+        "linked": 404,
+        "no_link": 7240
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Sciences::Microbiology",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D020",
+        "D022",
+        "D041",
+        "D054",
+        "D055",
+        "D110",
+        "D155"
+      ],
+      "inheritedCatalogueRows": 5930,
+      "inheritedContextCount": 281,
+      "levels": {
+        "domain": 53,
+        "role": 5703,
+        "subgroup": 174
+      },
+      "linkStateCounts": {
+        "linked": 292,
+        "no_link": 5638
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Sciences::Petroleum Chemistry",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D016",
+        "D017",
+        "D019",
+        "D041",
+        "D059",
+        "D093",
+        "D155"
+      ],
+      "inheritedCatalogueRows": 4521,
+      "inheritedContextCount": 204,
+      "levels": {
+        "domain": 54,
+        "role": 4387,
+        "subgroup": 80
+      },
+      "linkStateCounts": {
+        "linked": 228,
+        "no_link": 4293
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Sciences::Physics",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D016",
+        "D017",
+        "D019",
+        "D050",
+        "D059",
+        "D093",
+        "D140"
+      ],
+      "inheritedCatalogueRows": 4911,
+      "inheritedContextCount": 216,
+      "levels": {
+        "domain": 56,
+        "role": 4728,
+        "subgroup": 127
+      },
+      "linkStateCounts": {
+        "linked": 219,
+        "no_link": 4692
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Sciences::Physics with Electronics",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 5,
+      "activeDomainIds": [
+        "D020",
+        "D027",
+        "D041",
+        "D093",
+        "D122"
+      ],
+      "inheritedCatalogueRows": 3659,
+      "inheritedContextCount": 162,
+      "levels": {
+        "domain": 38,
+        "role": 3530,
+        "subgroup": 91
+      },
+      "linkStateCounts": {
+        "linked": 210,
+        "no_link": 3449
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Sciences::Science Laboratory Technology",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 2,
+      "activeDomainIds": [
+        "D003",
+        "D009"
+      ],
+      "inheritedCatalogueRows": 995,
+      "inheritedContextCount": 48,
+      "levels": {
+        "domain": 17,
+        "role": 933,
+        "subgroup": 45
+      },
+      "linkStateCounts": {
+        "linked": 89,
+        "no_link": 906
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Sciences::Statistics",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D027",
+        "D041",
+        "D047",
+        "D119",
+        "D121",
+        "D142"
+      ],
+      "inheritedCatalogueRows": 5760,
+      "inheritedContextCount": 250,
+      "levels": {
+        "domain": 43,
+        "role": 5422,
+        "subgroup": 295
+      },
+      "linkStateCounts": {
+        "linked": 334,
+        "no_link": 5426
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Sciences::Zoology",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D028",
+        "D037",
+        "D063",
+        "D077",
+        "D078",
+        "D130",
+        "D151"
+      ],
+      "inheritedCatalogueRows": 4305,
+      "inheritedContextCount": 208,
+      "levels": {
+        "domain": 51,
+        "role": 3999,
+        "subgroup": 255
+      },
+      "linkStateCounts": {
+        "linked": 265,
+        "no_link": 4032,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Social Sciences::Criminology and Security Studies",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 5,
+      "activeDomainIds": [
+        "D009",
+        "D063",
+        "D072",
+        "D078",
+        "D130"
+      ],
+      "inheritedCatalogueRows": 2704,
+      "inheritedContextCount": 130,
+      "levels": {
+        "domain": 41,
+        "role": 2498,
+        "subgroup": 165
+      },
+      "linkStateCounts": {
+        "linked": 281,
+        "no_link": 2415,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Social Sciences::Demography and Social Statistics",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D028",
+        "D032",
+        "D060",
+        "D063",
+        "D078",
+        "D128",
+        "D130"
+      ],
+      "inheritedCatalogueRows": 4546,
+      "inheritedContextCount": 212,
+      "levels": {
+        "domain": 50,
+        "role": 4214,
+        "subgroup": 282
+      },
+      "linkStateCounts": {
+        "linked": 290,
+        "no_link": 4248,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Social Sciences::Development Studies",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 8,
+      "activeDomainIds": [
+        "D009",
+        "D015",
+        "D030",
+        "D045",
+        "D063",
+        "D078",
+        "D158",
+        "D159"
+      ],
+      "inheritedCatalogueRows": 6547,
+      "inheritedContextCount": 288,
+      "levels": {
+        "domain": 62,
+        "role": 6286,
+        "subgroup": 199
+      },
+      "linkStateCounts": {
+        "linked": 444,
+        "no_link": 6095,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Social Sciences::Economics",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D028",
+        "D037",
+        "D045",
+        "D063",
+        "D065",
+        "D078",
+        "D149"
+      ],
+      "inheritedCatalogueRows": 5136,
+      "inheritedContextCount": 235,
+      "levels": {
+        "domain": 52,
+        "role": 4854,
+        "subgroup": 230
+      },
+      "linkStateCounts": {
+        "linked": 314,
+        "no_link": 4814,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Social Sciences::International Relations",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 4,
+      "activeDomainIds": [
+        "D043",
+        "D063",
+        "D073",
+        "D152"
+      ],
+      "inheritedCatalogueRows": 2783,
+      "inheritedContextCount": 129,
+      "levels": {
+        "domain": 32,
+        "role": 2582,
+        "subgroup": 169
+      },
+      "linkStateCounts": {
+        "linked": 141,
+        "no_link": 2642
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Social Sciences::Library and Information Science",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 6,
+      "activeDomainIds": [
+        "D037",
+        "D045",
+        "D064",
+        "D078",
+        "D130",
+        "D149"
+      ],
+      "inheritedCatalogueRows": 4165,
+      "inheritedContextCount": 201,
+      "levels": {
+        "domain": 43,
+        "role": 3908,
+        "subgroup": 214
+      },
+      "linkStateCounts": {
+        "linked": 240,
+        "no_link": 3917,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Social Sciences::Peace Studies and Conflict Resolution",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 12,
+      "activeDomainIds": [
+        "D011",
+        "D013",
+        "D015",
+        "D020",
+        "D028",
+        "D030",
+        "D045",
+        "D054",
+        "D062",
+        "D063",
+        "D078",
+        "D158"
+      ],
+      "inheritedCatalogueRows": 9491,
+      "inheritedContextCount": 410,
+      "levels": {
+        "domain": 88,
+        "role": 9080,
+        "subgroup": 323
+      },
+      "linkStateCounts": {
+        "linked": 598,
+        "no_link": 8885,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Social Sciences::Petroleum Economics and Policy Studies",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D028",
+        "D037",
+        "D045",
+        "D063",
+        "D078",
+        "D130",
+        "D149"
+      ],
+      "inheritedCatalogueRows": 5153,
+      "inheritedContextCount": 243,
+      "levels": {
+        "domain": 52,
+        "role": 4858,
+        "subgroup": 243
+      },
+      "linkStateCounts": {
+        "linked": 320,
+        "no_link": 4825,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Social Sciences::Political Science",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D037",
+        "D045",
+        "D063",
+        "D078",
+        "D130",
+        "D149",
+        "D158"
+      ],
+      "inheritedCatalogueRows": 4572,
+      "inheritedContextCount": 217,
+      "levels": {
+        "domain": 54,
+        "role": 4279,
+        "subgroup": 239
+      },
+      "linkStateCounts": {
+        "linked": 305,
+        "no_link": 4259,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Social Sciences::Politics, Philosophy and Economics (PPE)",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 8,
+      "activeDomainIds": [
+        "D009",
+        "D037",
+        "D064",
+        "D078",
+        "D130",
+        "D145",
+        "D151",
+        "D154"
+      ],
+      "inheritedCatalogueRows": 4073,
+      "inheritedContextCount": 207,
+      "levels": {
+        "domain": 55,
+        "role": 3706,
+        "subgroup": 312
+      },
+      "linkStateCounts": {
+        "linked": 274,
+        "no_link": 3791,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Social Sciences::Psychology",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 7,
+      "activeDomainIds": [
+        "D037",
+        "D063",
+        "D064",
+        "D078",
+        "D128",
+        "D130",
+        "D151"
+      ],
+      "inheritedCatalogueRows": 3490,
+      "inheritedContextCount": 176,
+      "levels": {
+        "domain": 50,
+        "role": 3134,
+        "subgroup": 306
+      },
+      "linkStateCounts": {
+        "linked": 234,
+        "no_link": 3248,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Social Sciences::Social Standards",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 8,
+      "activeDomainIds": [
+        "D037",
+        "D045",
+        "D046",
+        "D063",
+        "D064",
+        "D078",
+        "D128",
+        "D130"
+      ],
+      "inheritedCatalogueRows": 6564,
+      "inheritedContextCount": 309,
+      "levels": {
+        "domain": 60,
+        "role": 6178,
+        "subgroup": 326
+      },
+      "linkStateCounts": {
+        "linked": 369,
+        "no_link": 6187,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Social Sciences::Social Work",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 5,
+      "activeDomainIds": [
+        "D037",
+        "D046",
+        "D063",
+        "D064",
+        "D078"
+      ],
+      "inheritedCatalogueRows": 3941,
+      "inheritedContextCount": 181,
+      "levels": {
+        "domain": 37,
+        "role": 3726,
+        "subgroup": 178
+      },
+      "linkStateCounts": {
+        "linked": 256,
+        "no_link": 3677,
+        "review_required": 8
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Social Sciences::Sociology",
+      "status": "labelled"
+    },
+    {
+      "activeDomainCount": 10,
+      "activeDomainIds": [
+        "D023",
+        "D026",
+        "D027",
+        "D041",
+        "D047",
+        "D066",
+        "D090",
+        "D119",
+        "D138",
+        "D142"
+      ],
+      "inheritedCatalogueRows": 7574,
+      "inheritedContextCount": 359,
+      "levels": {
+        "domain": 73,
+        "role": 7235,
+        "subgroup": 266
+      },
+      "linkStateCounts": {
+        "linked": 443,
+        "no_link": 7131
+      },
+      "missingLinkStateRows": 0,
+      "programmeKey": "Veterinary Medicine::Veterinary Medicine",
+      "status": "labelled"
+    }
+  ],
+  "schemaVersion": "2026-09-19.contextual-item-link-state-audit.v1",
+  "scope": "local checked-in artefacts only",
+  "sourceContractReadiness": {
+    "builderRowFields": {
+      "link_accessed_at": true,
+      "link_confidence": true,
+      "link_evidence": true,
+      "link_source_reference": true,
+      "link_state": true,
+      "link_title": true,
+      "link_url": true,
+      "no_link_reason": true
+    },
+    "builderRowFieldsPresent": true,
+    "missingFromSeedRendererColumns": [],
+    "schemaColumns": {
+      "link_accessed_at": true,
+      "link_confidence": true,
+      "link_evidence": true,
+      "link_source_reference": true,
+      "link_state": true,
+      "link_title": true,
+      "link_url": true,
+      "no_link_reason": true
+    },
+    "schemaColumnsPresent": true,
+    "seedRendererColumnsPresent": true
+  },
+  "stateDefinitions": {
+    "incomplete": "state exists but its required evidence fields are missing",
+    "invalid": "state is outside the allowed contract",
+    "linked": "verified item-specific HTTPS destination plus link evidence",
+    "missing": "the checked-in row has no explicit item-level link state",
+    "no_link": "reviewed item-specific destination was not established; reason required",
+    "review_required": "candidate/evidence retained for review but not student-approved"
+  },
+  "summary": {
+    "activeDomainCount": 139,
+    "activeMappedProgrammeCount": 237,
+    "catalogueContextCount": 121377,
+    "catalogueRows": 121377,
+    "duplicateTypedItemRows": 0,
+    "missingSourceLocatorRows": 0,
+    "programmeCount": 237,
+    "programmeInheritedMissingLinkStateRows": 0,
+    "programmeInheritedRows": 1153039,
+    "programmesWithInheritedItems": 237,
+    "programmesWithMissingLinkState": 0,
+    "stateCounts": {
+      "linked": 5253,
+      "no_link": 116116,
+      "review_required": 8
+    },
+    "unmappedProgrammeCount": 0
+  }
+}

@@ -1,0 +1,950 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-selection.v3",
+  "batch": "quality_remediation_lane_107_20260922",
+  "selected_at": "2026-09-23T10:13:17.257470+00:00",
+  "source_audit": "data/career-mapping/_audit/external_enrichment_agent/item_ledger_quality_audit_2026-09-22.json",
+  "source_sha256": "d9c09d7cf614cd509e45fa30b8f1e63af52e2c9fcc21e4474a4f1bdaa71a3d3d",
+  "selection_method": "atomic repo-root .residual_quality_remediation_claim.lock; source-order selection of distinct casefold(item_type)|casefold(item_key) keys; all append-only ledger keys are processed; lane97-106 selections and append-only ledgers are disjoint reservations",
+  "claim_lock": ".residual_quality_remediation_claim.lock",
+  "processed_append_only_ledger_files": [
+    "quality_remediation_lane_100_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_101_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_102_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_103_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_104_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_105_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_106_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_22_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_24_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_26_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_27_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_28_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_29_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_30_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_31_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_32_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_33_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_34_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_35_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_36_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_37_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_38_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_39_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_40_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_41_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_42_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_43_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_44_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_45_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_46_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_47_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_48_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_49_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_50_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_51_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_52_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_53_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_54_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_55_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_56_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_57_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_58_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_59_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_60_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_61_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_62_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_63_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_64_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_65_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_66_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_67_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_68_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_69_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_70_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_71_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_72_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_73_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_74_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_75_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_76_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_77_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_78_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_79_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_80_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_81_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_82_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_83_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_84_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_85_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_86_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_87_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_88_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_89_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_90_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_91_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_92_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_93_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_94_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_95_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_97_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_98_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_99_20260922_append_only_ledger.jsonl"
+  ],
+  "processed_append_only_ledger_rows": 9645,
+  "processed_distinct_typed_items": 9620,
+  "lane_97_106_disjoint_append_only_ledger_files": [
+    "quality_remediation_lane_100_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_101_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_102_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_103_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_104_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_105_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_106_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_97_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_98_20260922_append_only_ledger.jsonl",
+    "quality_remediation_lane_99_20260922_append_only_ledger.jsonl"
+  ],
+  "lane_97_106_disjoint_append_only_ledger_rows": 1000,
+  "lane_97_106_selection_files_read": [
+    "quality_remediation_lane_97_20260922_selection.json",
+    "quality_remediation_lane_98_20260922_selection.json",
+    "quality_remediation_lane_99_20260922_selection.json",
+    "quality_remediation_lane_100_20260922_selection.json",
+    "quality_remediation_lane_101_20260922_selection.json",
+    "quality_remediation_lane_102_20260922_selection.json",
+    "quality_remediation_lane_103_20260922_selection.json",
+    "quality_remediation_lane_104_20260922_selection.json",
+    "quality_remediation_lane_105_20260922_selection.json",
+    "quality_remediation_lane_106_20260922_selection.json"
+  ],
+  "lane_97_106_selection_typed_items_read": 1000,
+  "selection_count": 48,
+  "requested_count": 100,
+  "shortfall": 52,
+  "distinct_typed_keys": [
+    "skill|vehicle-electrical-systems",
+    "skill|conduct-workplace-audits",
+    "skill|ensure-equipment-maintenance",
+    "skill|design-original-furniture",
+    "skill|monitor-exhibition-designs",
+    "skill|transfer-designs",
+    "skill|ceramic-ware",
+    "skill|cast-jewellery-metal",
+    "skill|create-jewellery",
+    "skill|ensure-conformance-to-jewel-design-specifications",
+    "skill|heat-jewellery-metals",
+    "skill|mark-designs-on-metal-pieces",
+    "skill|select-gems-for-jewellery",
+    "skill|smoothen-rough-jewel-parts",
+    "skill|use-jewellery-equipment",
+    "tool|computer-assisted-jewelry-design-cad-software",
+    "tool|jewelry-store-point-of-sale-pos-software",
+    "skill|align-components",
+    "skill|build-a-product-s-physical-model",
+    "skill|read-engineering-drawings",
+    "skill|use-digital-illustration-techniques",
+    "tool|cnc-software-mastercam",
+    "tool|ptc-creo-parametric",
+    "skill|maintain-photographic-equipment",
+    "skill|select-auxiliary-equipment-for-photographic-work",
+    "skill|select-photographic-equipment",
+    "skill|wildlife",
+    "skill|direct-photographic-workers",
+    "skill|develop-animations",
+    "skill|set-up-animation-elements",
+    "skill|coordinate-government-activities-in-foreign-institutions",
+    "skill|monitor-credit-institutes",
+    "skill|write-meeting-reports",
+    "skill|advise-on-public-finance",
+    "skill|offer-assistance-to-national-citizens",
+    "skill|perform-maintenance-on-fire-alarm-systems",
+    "skill|apply-crisis-management",
+    "skill|make-legislative-decisions",
+    "skill|prepare-legislation-proposition",
+    "skill|present-legislation-proposition",
+    "skill|engage-in-debates",
+    "skill|perform-government-ceremonies",
+    "skill|manage-security-clearance",
+    "skill|represent-national-interests",
+    "skill|cooperate-with-professionals",
+    "tool|microsoft-mappoint",
+    "skill|automated-optical-inspection",
+    "skill|cross-functional-collaboration"
+  ],
+  "rows": [
+    {
+      "subject_id": "item|role|D016|System Engineers|skill|vehicle-electrical-systems",
+      "context_level": "role",
+      "context_key": "D016|System Engineers",
+      "item_type": "skill",
+      "item_key": "vehicle-electrical-systems",
+      "item_name": "vehicle electrical systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D016|battery maintenance technician|skill|conduct-workplace-audits",
+      "context_level": "role",
+      "context_key": "D016|battery maintenance technician",
+      "item_type": "skill",
+      "item_key": "conduct-workplace-audits",
+      "item_name": "conduct workplace audits",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D016|battery maintenance technician|skill|ensure-equipment-maintenance",
+      "context_level": "role",
+      "context_key": "D016|battery maintenance technician",
+      "item_type": "skill",
+      "item_key": "ensure-equipment-maintenance",
+      "item_name": "ensure equipment maintenance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D044|furniture designer|skill|design-original-furniture",
+      "context_level": "role",
+      "context_key": "D044|furniture designer",
+      "item_type": "skill",
+      "item_key": "design-original-furniture",
+      "item_name": "design original furniture",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D044|furniture designer|skill|monitor-exhibition-designs",
+      "context_level": "role",
+      "context_key": "D044|furniture designer",
+      "item_type": "skill",
+      "item_key": "monitor-exhibition-designs",
+      "item_name": "monitor exhibition designs",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D044|furniture designer|skill|transfer-designs",
+      "context_level": "role",
+      "context_key": "D044|furniture designer",
+      "item_type": "skill",
+      "item_key": "transfer-designs",
+      "item_name": "transfer designs",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D044|industrial designer|skill|ceramic-ware",
+      "context_level": "role",
+      "context_key": "D044|industrial designer",
+      "item_type": "skill",
+      "item_key": "ceramic-ware",
+      "item_name": "ceramic ware",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D044|jewellery designer|skill|cast-jewellery-metal",
+      "context_level": "role",
+      "context_key": "D044|jewellery designer",
+      "item_type": "skill",
+      "item_key": "cast-jewellery-metal",
+      "item_name": "cast jewellery metal",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D044|jewellery designer|skill|create-jewellery",
+      "context_level": "role",
+      "context_key": "D044|jewellery designer",
+      "item_type": "skill",
+      "item_key": "create-jewellery",
+      "item_name": "create jewellery",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D044|jewellery designer|skill|ensure-conformance-to-jewel-design-specifications",
+      "context_level": "role",
+      "context_key": "D044|jewellery designer",
+      "item_type": "skill",
+      "item_key": "ensure-conformance-to-jewel-design-specifications",
+      "item_name": "ensure conformance to jewel design specifications",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D044|jewellery designer|skill|heat-jewellery-metals",
+      "context_level": "role",
+      "context_key": "D044|jewellery designer",
+      "item_type": "skill",
+      "item_key": "heat-jewellery-metals",
+      "item_name": "heat jewellery metals",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D044|jewellery designer|skill|mark-designs-on-metal-pieces",
+      "context_level": "role",
+      "context_key": "D044|jewellery designer",
+      "item_type": "skill",
+      "item_key": "mark-designs-on-metal-pieces",
+      "item_name": "mark designs on metal pieces",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D044|jewellery designer|skill|select-gems-for-jewellery",
+      "context_level": "role",
+      "context_key": "D044|jewellery designer",
+      "item_type": "skill",
+      "item_key": "select-gems-for-jewellery",
+      "item_name": "select gems for jewellery",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D044|jewellery designer|skill|smoothen-rough-jewel-parts",
+      "context_level": "role",
+      "context_key": "D044|jewellery designer",
+      "item_type": "skill",
+      "item_key": "smoothen-rough-jewel-parts",
+      "item_name": "smoothen rough jewel parts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D044|jewellery designer|skill|use-jewellery-equipment",
+      "context_level": "role",
+      "context_key": "D044|jewellery designer",
+      "item_type": "skill",
+      "item_key": "use-jewellery-equipment",
+      "item_name": "use jewellery equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D044|jewellery designer|tool|computer-assisted-jewelry-design-cad-software",
+      "context_level": "role",
+      "context_key": "D044|jewellery designer",
+      "item_type": "tool",
+      "item_key": "computer-assisted-jewelry-design-cad-software",
+      "item_name": "Computer assisted jewelry design CAD software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D044|jewellery designer|tool|jewelry-store-point-of-sale-pos-software",
+      "context_level": "role",
+      "context_key": "D044|jewellery designer",
+      "item_type": "tool",
+      "item_key": "jewelry-store-point-of-sale-pos-software",
+      "item_name": "Jewelry store point of sale POS software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D044|model maker|skill|align-components",
+      "context_level": "role",
+      "context_key": "D044|model maker",
+      "item_type": "skill",
+      "item_key": "align-components",
+      "item_name": "align components",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D044|model maker|skill|build-a-product-s-physical-model",
+      "context_level": "role",
+      "context_key": "D044|model maker",
+      "item_type": "skill",
+      "item_key": "build-a-product-s-physical-model",
+      "item_name": "build a product's physical model",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D044|model maker|skill|read-engineering-drawings",
+      "context_level": "role",
+      "context_key": "D044|model maker",
+      "item_type": "skill",
+      "item_key": "read-engineering-drawings",
+      "item_name": "read engineering drawings",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D044|model maker|skill|use-digital-illustration-techniques",
+      "context_level": "role",
+      "context_key": "D044|model maker",
+      "item_type": "skill",
+      "item_key": "use-digital-illustration-techniques",
+      "item_name": "use digital illustration techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D044|model maker|tool|cnc-software-mastercam",
+      "context_level": "role",
+      "context_key": "D044|model maker",
+      "item_type": "tool",
+      "item_key": "cnc-software-mastercam",
+      "item_name": "CNC Software Mastercam",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D044|model maker|tool|ptc-creo-parametric",
+      "context_level": "role",
+      "context_key": "D044|model maker",
+      "item_type": "tool",
+      "item_key": "ptc-creo-parametric",
+      "item_name": "PTC Creo Parametric",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D044|photographer|skill|maintain-photographic-equipment",
+      "context_level": "role",
+      "context_key": "D044|photographer",
+      "item_type": "skill",
+      "item_key": "maintain-photographic-equipment",
+      "item_name": "maintain photographic equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D044|photographer|skill|select-auxiliary-equipment-for-photographic-work",
+      "context_level": "role",
+      "context_key": "D044|photographer",
+      "item_type": "skill",
+      "item_key": "select-auxiliary-equipment-for-photographic-work",
+      "item_name": "select auxiliary equipment for photographic work",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D044|photographer|skill|select-photographic-equipment",
+      "context_level": "role",
+      "context_key": "D044|photographer",
+      "item_type": "skill",
+      "item_key": "select-photographic-equipment",
+      "item_name": "select photographic equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D044|photographer|skill|wildlife",
+      "context_level": "role",
+      "context_key": "D044|photographer",
+      "item_type": "skill",
+      "item_key": "wildlife",
+      "item_name": "wildlife",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D044|photojournalist|skill|direct-photographic-workers",
+      "context_level": "role",
+      "context_key": "D044|photojournalist",
+      "item_type": "skill",
+      "item_key": "direct-photographic-workers",
+      "item_name": "direct photographic workers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D044|stop-motion animator|skill|develop-animations",
+      "context_level": "role",
+      "context_key": "D044|stop-motion animator",
+      "item_type": "skill",
+      "item_key": "develop-animations",
+      "item_name": "develop animations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D044|stop-motion animator|skill|set-up-animation-elements",
+      "context_level": "role",
+      "context_key": "D044|stop-motion animator",
+      "item_type": "skill",
+      "item_key": "set-up-animation-elements",
+      "item_name": "set up animation elements",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D045|ambassador|skill|coordinate-government-activities-in-foreign-institutions",
+      "context_level": "role",
+      "context_key": "D045|ambassador",
+      "item_type": "skill",
+      "item_key": "coordinate-government-activities-in-foreign-institutions",
+      "item_name": "coordinate government activities in foreign institutions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D045|central bank governor|skill|monitor-credit-institutes",
+      "context_level": "role",
+      "context_key": "D045|central bank governor",
+      "item_type": "skill",
+      "item_key": "monitor-credit-institutes",
+      "item_name": "monitor credit institutes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D045|city councillor|skill|write-meeting-reports",
+      "context_level": "role",
+      "context_key": "D045|city councillor",
+      "item_type": "skill",
+      "item_key": "write-meeting-reports",
+      "item_name": "write meeting reports",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D045|consul|skill|advise-on-public-finance",
+      "context_level": "role",
+      "context_key": "D045|consul",
+      "item_type": "skill",
+      "item_key": "advise-on-public-finance",
+      "item_name": "advise on public finance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D045|consul|skill|offer-assistance-to-national-citizens",
+      "context_level": "role",
+      "context_key": "D045|consul",
+      "item_type": "skill",
+      "item_key": "offer-assistance-to-national-citizens",
+      "item_name": "offer assistance to national citizens",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D045|fire commissioner|skill|perform-maintenance-on-fire-alarm-systems",
+      "context_level": "role",
+      "context_key": "D045|fire commissioner",
+      "item_type": "skill",
+      "item_key": "perform-maintenance-on-fire-alarm-systems",
+      "item_name": "perform maintenance on fire alarm systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D045|government minister|skill|apply-crisis-management",
+      "context_level": "role",
+      "context_key": "D045|government minister",
+      "item_type": "skill",
+      "item_key": "apply-crisis-management",
+      "item_name": "apply crisis management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.cisa.gov/news-events/directives/homeland-security-presidential-directive-7"
+      ]
+    },
+    {
+      "subject_id": "item|role|D045|government minister|skill|make-legislative-decisions",
+      "context_level": "role",
+      "context_key": "D045|government minister",
+      "item_type": "skill",
+      "item_key": "make-legislative-decisions",
+      "item_name": "make legislative decisions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D045|government minister|skill|prepare-legislation-proposition",
+      "context_level": "role",
+      "context_key": "D045|government minister",
+      "item_type": "skill",
+      "item_key": "prepare-legislation-proposition",
+      "item_name": "prepare legislation proposition",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D045|government minister|skill|present-legislation-proposition",
+      "context_level": "role",
+      "context_key": "D045|government minister",
+      "item_type": "skill",
+      "item_key": "present-legislation-proposition",
+      "item_name": "present legislation proposition",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D045|governor|skill|engage-in-debates",
+      "context_level": "role",
+      "context_key": "D045|governor",
+      "item_type": "skill",
+      "item_key": "engage-in-debates",
+      "item_name": "engage in debates",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D045|governor|skill|perform-government-ceremonies",
+      "context_level": "role",
+      "context_key": "D045|governor",
+      "item_type": "skill",
+      "item_key": "perform-government-ceremonies",
+      "item_name": "perform government ceremonies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D045|police commissioner|skill|manage-security-clearance",
+      "context_level": "role",
+      "context_key": "D045|police commissioner",
+      "item_type": "skill",
+      "item_key": "manage-security-clearance",
+      "item_name": "manage security clearance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D045|secretary general|skill|represent-national-interests",
+      "context_level": "role",
+      "context_key": "D045|secretary general",
+      "item_type": "skill",
+      "item_key": "represent-national-interests",
+      "item_name": "represent national interests",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|residential home young people care worker|skill|cooperate-with-professionals",
+      "context_level": "role",
+      "context_key": "D046|residential home young people care worker",
+      "item_type": "skill",
+      "item_key": "cooperate-with-professionals",
+      "item_name": "cooperate with professionals",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|school bus attendant|tool|microsoft-mappoint",
+      "context_level": "role",
+      "context_key": "D046|school bus attendant",
+      "item_type": "tool",
+      "item_key": "microsoft-mappoint",
+      "item_name": "Microsoft MapPoint",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D098|automated optical inspection operator|skill|automated-optical-inspection",
+      "context_level": "role",
+      "context_key": "D098|automated optical inspection operator",
+      "item_type": "skill",
+      "item_key": "automated-optical-inspection",
+      "item_name": "automated optical inspection",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D167|XR/IL innovation facilitator|skill|cross-functional-collaboration",
+      "context_level": "role",
+      "context_key": "D167|XR/IL innovation facilitator",
+      "item_type": "skill",
+      "item_key": "cross-functional-collaboration",
+      "item_name": "cross-functional collaboration",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    }
+  ],
+  "policy": {
+    "identity": "casefold(item_type)|casefold(item_key)",
+    "review_required_preserved_unless_exact_item_type_context_ownership_proven": true,
+    "no_relationship_inference": true,
+    "no_promotion": true,
+    "items_only": true
+  }
+}

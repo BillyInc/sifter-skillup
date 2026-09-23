@@ -33,7 +33,7 @@ class IntegrationGapMatrixTest(unittest.TestCase):
         self.assertEqual(summary["sociologyProgrammeCount"], 1)
         self.assertEqual(len(programmes), 237)
         self.assertEqual(len({row["programmeKey"] for row in programmes}), 237)
-        self.assertEqual(summary["activeDomainLinks"], 1343)
+        self.assertEqual(summary["activeDomainLinks"], 1344)
         self.assertIn("Sociology", self.matrix)
         self.assertIn("Nursing", self.matrix)
         self.assertIn("Accounting", self.matrix)
@@ -70,9 +70,9 @@ class IntegrationGapMatrixTest(unittest.TestCase):
     def test_deferred_sql_browser_and_admin_gates_are_explicit(self) -> None:
         policy = self.scaling["policy"]
         self.assertEqual(policy["sql"], "not applied")
-        self.assertEqual(self.scaling["contextualAudit"]["issues"]["unlabelledLinkState"], 126414)
+        self.assertEqual(self.scaling["contextualAudit"]["issues"]["unlabelledLinkState"], 0)
         self.assertEqual(self.scaling["relationshipAudit"]["notEstablishedRows"], 2305)
-        self.assertEqual(self.scaling["programmeContextTotals"]["unresolvedEndpointRows"], 21238)
+        self.assertEqual(self.scaling["programmeContextTotals"]["unresolvedEndpointRows"], 21235)
         for phrase in (
             "PARTIAL",
             "DEFERRED",

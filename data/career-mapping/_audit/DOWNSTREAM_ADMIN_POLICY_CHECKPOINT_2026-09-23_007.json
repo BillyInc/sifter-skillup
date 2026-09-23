@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "2026-09-23.downstream-admin-policy-checkpoint.v7",
+  "checkpoint": "007",
+  "generatedOn": "2026-09-23",
+  "appendOnly": true,
+  "mode": "read_only_local",
+  "scope": {
+    "studentLookupPopulation": "jamb_identities",
+    "jambIdentityCount": 420,
+    "ccmasSupportingProgrammeCount": 237,
+    "mappingReviewIdentityCount": 86,
+    "ccmasAnchorAbsentJambOccurrences": 11
+  },
+  "verifiedPolicy": {
+    "all420JambIdentitiesPresent": true,
+    "all420JambResourcePackagesAvailable": true,
+    "jambResourceReviewRequired": 0,
+    "jambResourceUnavailable": 0,
+    "ccmasPackagesAreSupportingEvidenceOnly": true,
+    "missingCcmasAnchorDoesNotHideJambIdentity": true,
+    "mappingReviewIsSeparateFromResourceAvailability": true,
+    "mappingReviewQueueRemainsAdminOnly": true,
+    "mappingReviewRowsPromoted": 0,
+    "studentExposureApproved": false
+  },
+  "routeValidation": {
+    "jambRoutesAvailable": 420,
+    "universityOfferingRoutesAvailable": 420,
+    "brokenJambRoutes": 0,
+    "ccmasPackagesWithStudentRouteProjection": 154,
+    "supportingOnlyPackageFindings": 83,
+    "brokenDownstreamPackageRoutes": 0,
+    "universityOfferings": 9130,
+    "activeProgrammeDomainLinks": 1344
+  },
+  "adminAcceptance": {
+    "scanCompleted": true,
+    "acceptedRows": 0,
+    "internalRows": 529540,
+    "acceptedInternalBoundaryPasses": true,
+    "fullRenderedAdminAccepted": false
+  },
+  "ownershipAndFailClosed": {
+    "ownershipAndSourceBoundary": true,
+    "reviewOnlyFailClosed": true,
+    "studentVisibleReviewOnlyRows": 0,
+    "reviewOnlyJambIdentitiesBlocked": 86,
+    "reviewRequiredContextualRows": 8,
+    "ownershipOrStateIssues": 0,
+    "unresolvedRelationshipsRemainInternalNonBlocking": true,
+    "itemAndRelationshipLedgersSearchedOrModifiedThisPass": false
+  },
+  "verification": {
+    "jambMappingReconciliation": "passed",
+    "allProgrammeStudentRouteAudit": "passed",
+    "adminAcceptanceScan": "passed",
+    "sqlApplied": false,
+    "liveDatabaseRead": false,
+    "browserProof": false,
+    "fullAdminRenderAccepted": false
+  },
+  "remainingGates": [
+    "full rendered admin acceptance",
+    "browser/render proof",
+    "live payload/database verification",
+    "manual SQL application and post-apply verification",
+    "explicit student-exposure approval"
+  ]
+}

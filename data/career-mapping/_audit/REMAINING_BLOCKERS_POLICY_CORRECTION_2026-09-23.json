@@ -1,0 +1,45 @@
+{
+  "schema": "2026-09-23.remaining-blockers-policy-correction.v1",
+  "recorded_on": "2026-09-23",
+  "append_only": true,
+  "supersedes_interpretation_in": "data/career-mapping/_audit/REMAINING_BLOCKERS_RECONCILIATION_2026-09-23.md",
+  "scope": "JAMB identity and CCMAS complement blocker classification only",
+  "authoritative_counts": {
+    "student_facing_jamb_identity_scope": 420,
+    "review_required_jamb_identities_in_ledger": 86,
+    "affected_jamb_domain_link_occurrences": 711,
+    "affected_component_domain_pairs": 559,
+    "nigerian_ccmas_sufficient_for_link_gate_occurrences": 547,
+    "nigerian_ccmas_present_but_insufficient_occurrences": 153,
+    "nigerian_ccmas_anchor_missing_occurrences": 11,
+    "review_occurrences_after_optional_no_anchor_exclusion": 700
+  },
+  "correction": {
+    "no_ccmas_anchor_occurrences_are_blockers": false,
+    "no_ccmas_anchor_occurrences_are_automatically_unavailable": false,
+    "ccmas_complement_is_required_for_jamb_identity_scope": false,
+    "ccmas_complement_is_optional": true,
+    "student_scope_is_identity_based": true,
+    "identity_scope_is_complete": true,
+    "identity_count_remains": 420,
+    "occurrence_level_blockers_removed": 11
+  },
+  "interpretation": {
+    "review_queue": "The 86 review-required identities remain an internal evidence/review queue for domain-link certification; the 11 missing-anchor occurrences must not be described as blockers or unavailable solely for lacking a CCMAS anchor.",
+    "student_facing_rule": "A valid JAMB identity is within the 420-row student-facing scope even when an optional CCMAS complement is absent. Other independent route, identity, or source gates still apply.",
+    "relationship_between_levels": "The 11 count is occurrence-level and must not be subtracted from the 420 identity population. Do not convert an optional complement gap into an identity-level unavailable state."
+  },
+  "inputs": [
+    "data/career-mapping/_audit/REMAINING_BLOCKERS_RECONCILIATION_2026-09-23.md",
+    "data/career-mapping/_audit/programme_jamb_resource_evidence_2026-09-23_manifest.json",
+    "data/career-mapping/_audit/ccmas_external_domain_complements_2026-09-01.json",
+    "data/career-mapping/_audit/JAMB_CCMAS_CURRICULUM_COVERAGE_MATRIX_2026-09-19.md"
+  ],
+  "boundaries": {
+    "sql_applied": false,
+    "live_database_read_or_write": false,
+    "browser_proof_run": false,
+    "frontend_changed": false,
+    "catalogue_seed_changed": false
+  }
+}

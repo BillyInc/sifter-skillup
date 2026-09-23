@@ -36,6 +36,8 @@ export interface CertPlacementListProps {
   /** Explicit cross-item edges for this same context, when the API supplies them. */
   contextItems?: CareerContextItem[];
   resources?: CareerLearningResource[];
+  /** Optional explicit ownership boundary for a domain/subgroup/role surface. */
+  contextLevel?: CareerContextItem["contextLevel"];
 }
 
 const LEVEL_VARIANT: Record<
@@ -128,7 +130,11 @@ function marketScopeLabel(scope?: CertificationV2Enriched["marketScope"]): strin
   }
 }
 
-function isStudentCertification(cert: CertificationV2Enriched): boolean {
+function isStudentCertification(
+  cert: CertificationV2Enriched,
+  contextLevel?: CareerContextItem["contextLevel"],
+  contextItems?: CareerContextItem[],
+): boolean {
   return cert.marketScope !== "not_established"
     && (!cert.dataState || cert.dataState === "source_backed")
     && cert.sourceConfidence !== "unsourced"
@@ -137,7 +143,9 @@ function isStudentCertification(cert: CertificationV2Enriched): boolean {
     && cert.guidanceOwner !== "audit_only"
     && cert.reviewStatus !== "review_only"
     && cert.reviewStatus !== "unverified"
-    && cert.ownershipScope !== "audit_only";
+    && cert.ownershipScope !== "audit_only"
+    && (!contextLevel || cert.guidanceOwner === contextLevel)
+    && Boolean(contextItemFor(contextItems, "certification", cert.name));
 }
 
 function studentRelationshipTargets(item: CareerContextItem | undefined, type: "builds_on" | "works_with", contextItems?: CareerContextItem[]) {
@@ -310,10 +318,11 @@ export function CertPlacementList({
   contextItems,
   resources,
   emptyMessage,
+  contextLevel,
 }: CertPlacementListProps) {
   const { colors } = useTheme();
   const seen = new Set<string>();
-  const selectStudentCerts = (certs?: CertificationV2Enriched[]) => (certs ?? []).filter(isStudentCertification).filter((cert) => {
+  const selectStudentCerts = (certs?: CertificationV2Enriched[]) => (certs ?? []).filter((cert) => isStudentCertification(cert, contextLevel, contextItems)).filter((cert) => {
     const key = cert.name.trim().toLowerCase();
     if (!key || seen.has(key)) return false;
     seen.add(key);

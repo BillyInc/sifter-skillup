@@ -1,0 +1,76 @@
+{
+  "schemaVersion": "2026-09-23.downstream-admin-policy-checkpoint.v6",
+  "checkpoint": "006",
+  "generatedOn": "2026-09-23",
+  "appendOnly": true,
+  "mode": "read_only_local",
+  "scope": {
+    "studentLookupPopulation": "jamb_identities",
+    "jambIdentityCount": 420,
+    "ccmasSupportingProgrammeCount": 237,
+    "mappingReviewIdentityCount": 86,
+    "ccmasAnchorAbsentJambOccurrences": 11
+  },
+  "verifiedPolicy": {
+    "all420JambIdentitiesPresent": true,
+    "all420JambResourcePackagesAvailable": true,
+    "jambResourceReviewRequired": 0,
+    "jambResourceUnavailable": 0,
+    "ccmasPackagesAreSupportingEvidenceOnly": true,
+    "missingCcmasAnchorDoesNotHideJambIdentity": true,
+    "mappingReviewIsSeparateFromResourceAvailability": true,
+    "mappingReviewQueueRemainsAdminOnly": true,
+    "mappingReviewRowsPromoted": 0,
+    "studentExposureApproved": false
+  },
+  "routeValidation": {
+    "jambRoutesAvailable": 420,
+    "universityOfferingRoutesAvailable": 420,
+    "brokenJambRoutes": 0,
+    "ccmasPackagesWithStudentRouteProjection": 154,
+    "supportingOnlyPackageFindings": 83,
+    "brokenDownstreamPackageRoutes": 0,
+    "universityOfferings": 9130,
+    "activeProgrammeDomainLinks": 1344
+  },
+  "ownershipAndFailClosed": {
+    "ownershipAndSourceBoundary": true,
+    "reviewOnlyFailClosed": true,
+    "studentVisibleReviewOnlyRows": 0,
+    "reviewOnlyJambIdentitiesBlocked": 86,
+    "reviewRequiredContextualRows": 8,
+    "ownershipOrStateIssues": 0,
+    "unresolvedRelationshipsRemainInternalNonBlocking": true,
+    "itemAndRelationshipLedgersSearchedOrModifiedThisPass": false
+  },
+  "verification": {
+    "jambMappingReconciliation": "passed",
+    "allProgrammeStudentRouteAudit": "passed",
+    "adminAcceptanceScan": "still_running",
+    "sqlApplied": false,
+    "liveDatabaseRead": false,
+    "browserProof": false,
+    "fullAdminRenderAccepted": false
+  },
+  "remainingGates": [
+    "complete the currently running local admin acceptance scan",
+    "full rendered admin acceptance",
+    "browser/render proof",
+    "live payload/database verification",
+    "manual SQL application and post-apply verification",
+    "explicit student-exposure approval"
+  ],
+  "artifacts": [
+    "data/career-mapping/_audit/JAMB_MAPPING_REVIEW_RECONCILIATION_2026-09-23_001.json",
+    "data/career-mapping/_audit/JAMB_MAPPING_REVIEW_RECONCILIATION_2026-09-23_001.md",
+    "data/career-mapping/_audit/ALL_PROGRAMME_STUDENT_ROUTE_CONTRACT_AUDIT_2026-09-23.json",
+    "data/career-mapping/_audit/ALL_PROGRAMME_STUDENT_ROUTE_CONTRACT_AUDIT_2026-09-23.md",
+    "data/career-mapping/_audit/ADMIN_ACCEPTANCE_SCALE_AUDIT_2026-09-23.json",
+    "data/career-mapping/_audit/ADMIN_ACCEPTANCE_SCALE_AUDIT_2026-09-23.md"
+  ],
+  "notes": [
+    "This checkpoint records local audit evidence only; it is not a browser, live SQL, or deployment claim.",
+    "The 83 supporting-only CCMAS findings do not reduce the 420-identity JAMB student lookup population.",
+    "The 86 mapping-review identities remain internal even when resource evidence exists because resource availability does not establish the downstream mapping."
+  ]
+}

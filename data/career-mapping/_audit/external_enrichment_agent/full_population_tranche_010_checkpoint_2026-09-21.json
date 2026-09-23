@@ -1,0 +1,88 @@
+{
+  "schema": "2026-09-21.full-population-enrichment-tranche-checkpoint.v1",
+  "tranche": "010",
+  "accessed_on": "2026-09-21",
+  "status": "completed",
+  "blocked": false,
+  "blocker": null,
+  "selection": "data/career-mapping/_audit/external_enrichment_agent/full_population_tranche_010_selection_2026-09-21.json",
+  "ledger": "data/career-mapping/_audit/external_enrichment_agent/full_population_tranche_010_search_ledger_2026-09-21.jsonl",
+  "report": "data/career-mapping/_audit/external_enrichment_agent/full_population_tranche_010_report_2026-09-21.md",
+  "source_queue": "data/career-mapping/_audit/external_enrichment_queue_2026-09-20.json",
+  "progress": {
+    "selected_rows": 16,
+    "searched_rows": 16,
+    "linked": 14,
+    "review_required": 2,
+    "genuinely_unavailable": 0,
+    "unique_item_names_searched": 10
+  },
+  "guardrails": {
+    "prior_tranches_overwritten": false,
+    "catalogue_touched": false,
+    "generated_seed_transport_touched": false,
+    "sql_touched": false,
+    "ui_touched": false,
+    "browser_proof_touched": false
+  },
+  "next_action": "Regenerate the external-enrichment queue, then select the next stable-row-id, non-overlapping, non-D078 item identities.",
+  "counts": {
+    "canonical_contextual_identities_excluding_d078": 120724,
+    "prior_ids_excluded": 228,
+    "remaining_after_exclusion": 120496,
+    "selected_rows": 16,
+    "item_rows": 16,
+    "d078_rows": 0
+  },
+  "selection_ids": [
+    "item|domain|D017|skill|blockchain",
+    "item|domain|D018|certification|chartered-engineer-ceng",
+    "item|domain|D018|certification|coren-registered-engineer",
+    "item|domain|D018|certification|corporate-member-nigerian-society-of-engineers-mnse",
+    "item|domain|D018|certification|project-management-professional-pmp",
+    "item|domain|D018|competency|engineering-safety-and-reliability",
+    "item|domain|D018|competency|interoperability",
+    "item|domain|D018|competency|standards-based-engineering-practice",
+    "item|domain|D018|skill|ai",
+    "item|domain|D018|skill|big-data",
+    "item|domain|D018|skill|blockchain",
+    "item|domain|D019|certification|coren-registered-engineer",
+    "item|domain|D019|competency|engineering-safety-and-reliability",
+    "item|domain|D019|competency|interoperability",
+    "item|domain|D019|competency|standards-based-engineering-practice",
+    "item|domain|D019|skill|ai"
+  ],
+  "searched_ids": [
+    "item|domain|D017|skill|blockchain",
+    "item|domain|D018|certification|chartered-engineer-ceng",
+    "item|domain|D018|certification|coren-registered-engineer",
+    "item|domain|D018|certification|corporate-member-nigerian-society-of-engineers-mnse",
+    "item|domain|D018|certification|project-management-professional-pmp",
+    "item|domain|D018|competency|engineering-safety-and-reliability",
+    "item|domain|D018|competency|interoperability",
+    "item|domain|D018|competency|standards-based-engineering-practice",
+    "item|domain|D018|skill|ai",
+    "item|domain|D018|skill|big-data",
+    "item|domain|D018|skill|blockchain",
+    "item|domain|D019|certification|coren-registered-engineer",
+    "item|domain|D019|competency|engineering-safety-and-reliability",
+    "item|domain|D019|competency|interoperability",
+    "item|domain|D019|competency|standards-based-engineering-practice",
+    "item|domain|D019|skill|ai"
+  ],
+  "missing_selection_ids": [],
+  "search_policy": "Search each selected item against an authoritative item-specific source. Preserve exact URL, locator, evidence and access date. Use review_required for uncertainty; never promote a generic source or inferred match.",
+  "decisions": {
+    "linked": 14,
+    "review_required": 2
+  },
+  "reconciliation": {
+    "selection_ids": 16,
+    "ledger_ids": 16,
+    "missing_from_ledger": 0,
+    "unexpected_ledger_ids": 0,
+    "duplicate_ledger_ids": 0,
+    "required_fields_missing": 0,
+    "d078_rows": 0
+  }
+}

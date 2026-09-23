@@ -1,0 +1,30 @@
+{
+  "schema_version": "2026-09-23.role-work-profile-tranche-008-checkpoint.v1",
+  "generated_on": "2026-09-23",
+  "status": "complete",
+  "read_only": true,
+  "append_only": true,
+  "counts": {
+    "baseline_missing_work_profile_rows": 119,
+    "prior_exact_onet_candidates": 20,
+    "esco_only_roles_in_scope": 99,
+    "exact_crosswalk_profile_candidates": 17,
+    "candidate_rows_with_work_profile_fields": 17,
+    "ambiguous_exact_crosswalk_rows_retained_review_only": 0,
+    "no_exact_crosswalk_rows_retained_review_only": 82,
+    "canonical_work_profile_rows_added": 0,
+    "review_required_profile_candidates": 17,
+    "canonical_work_profile_rows_still_absent": 119,
+    "roles_without_source_backed_profile_candidate_after_pass": 82,
+    "genuinely_unavailable": 0
+  },
+  "artifacts": [
+    "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_enrichment_tranche_008_2026-09-23.json",
+    "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_enrichment_append_only_tranche_008_2026-09-23.jsonl",
+    "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_enrichment_tranche_008_2026-09-23.md",
+    "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_enrichment_tranche_008_checkpoint_2026-09-23.json",
+    "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_enrichment_tranche_008_checkpoint_2026-09-23.md",
+    "data/career-mapping/_audit/external_enrichment_agent/role_work_profile_enrichment_tranche_008_2026-09-23.py"
+  ],
+  "next_action": "Independently review exact ESCO–O*NET candidates for Nigerian/local evidence; retain excluded ESCO-only roles as review-only and do not infer from ISCO major groups."
+}

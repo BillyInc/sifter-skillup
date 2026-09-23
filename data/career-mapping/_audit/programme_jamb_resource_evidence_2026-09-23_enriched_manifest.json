@@ -1,0 +1,426 @@
+{
+  "schema": "2026-09-23.programme-jamb-resource-evidence-enriched-manifest.v1",
+  "generated_on": "2026-09-23",
+  "append_only": true,
+  "scope": {
+    "canonical_programmes": 237,
+    "programme_review_records": 237,
+    "canonical_jamb_identities": 420,
+    "jamb_review_required_identities": 86,
+    "jamb_review_link_occurrences": 711,
+    "jamb_component_domain_pairs": 559
+  },
+  "programme_classifications": {
+    "confirmed": 1,
+    "review_only": 236,
+    "genuinely_unavailable": 0
+  },
+  "jamb_identity_classifications": {
+    "confirmed": 0,
+    "review_only": 75,
+    "genuinely_unavailable": 11
+  },
+  "jamb_link_classifications": {
+    "confirmed": 547,
+    "review_only": 153,
+    "genuinely_unavailable": 11
+  },
+  "source_preservation": {
+    "unique_prior_external_urls_retained": 618,
+    "source_access_dates_missing_in_prior_artifact_preserved_as_state": true,
+    "new_access_dates_written_only_for_checked_authority_catalog": true
+  },
+  "authorities": [
+    {
+      "authority": "National Universities Commission",
+      "url": "https://www.nuc.edu.ng/ccmas/",
+      "locator": "CCMAS hub and direct 17-discipline PDF routes; programme section and local parsed course locator retained per row.",
+      "accessed_on": "2026-09-23"
+    },
+    {
+      "authority": "Joint Admissions and Matriculation Board",
+      "url": "https://eligibility.jamb.gov.ng/",
+      "locator": "IBASS programme selector and eligibility checker.",
+      "accessed_on": "2026-09-23"
+    }
+  ],
+  "external_source_checks": [
+    {
+      "url": "https://collins.co.uk/products/9780007498826",
+      "status": "confirmed",
+      "authority": "Collins / HarperCollins",
+      "locator": "ISBN 978-0-00-749882-6 product page",
+      "basis": "Publisher page identifies Sociology Themes and Perspectives, eighth edition.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://eligibility.jamb.gov.ng/",
+      "status": "confirmed",
+      "authority": "Joint Admissions and Matriculation Board",
+      "locator": "IBASS entry mode, institution and programme selector",
+      "basis": "Official eligibility checker exposes the exact programme selection context.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://eng.libretexts.org/",
+      "status": "confirmed",
+      "authority": "Engineering LibreTexts",
+      "locator": "Engineering LibreTexts home and bookshelves",
+      "basis": "Open engineering reference collection is available with bookshelves and learning objects.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://esco.ec.europa.eu/en/use-esco",
+      "status": "confirmed",
+      "authority": "European Commission ESCO",
+      "locator": "Use ESCO / classification and API overview",
+      "basis": "European Commission page identifies ESCO occupations, skills and qualifications classification.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://greenteapress.com/wp/think-python-2e/",
+      "status": "confirmed",
+      "authority": "Green Tea Press",
+      "locator": "Think Python, 2nd edition landing page",
+      "basis": "Publisher/author page identifies the open programming book.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://isco.ilo.org/en/isco-08/",
+      "status": "confirmed",
+      "authority": "International Labour Organization",
+      "locator": "ISCO-08 classification overview",
+      "basis": "ILO page identifies the occupational classification and hierarchy.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://mantra.ed.ac.uk/",
+      "status": "confirmed",
+      "authority": "University of Edinburgh MANTRA",
+      "locator": "MANTRA research data management course landing page",
+      "basis": "University course landing page is available.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://mdcn.gov.ng/",
+      "status": "confirmed",
+      "authority": "Medical and Dental Council of Nigeria",
+      "locator": "Council home page",
+      "basis": "Official council site is available.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://naicom.gov.ng/",
+      "status": "confirmed",
+      "authority": "National Insurance Commission",
+      "locator": "Commission home page",
+      "basis": "Official commission site is available.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://nmcn.gov.ng/",
+      "status": "confirmed",
+      "authority": "Nursing and Midwifery Council of Nigeria",
+      "locator": "Council home page",
+      "basis": "Official council site is available.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://open.oregonstate.education/",
+      "status": "genuinely_unavailable",
+      "authority": "Oregon State University Open Textbooks",
+      "locator": "Open textbook collection landing page",
+      "basis": "Endpoint returned 403 during the external-source check; no item-specific page was retrieved.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://open.umn.edu/opentextbooks/subjects/communication",
+      "status": "genuinely_unavailable",
+      "authority": "Open Textbook Library / University of Minnesota",
+      "locator": "Communication subject collection",
+      "basis": "Endpoint returned an internal fetch error during the external-source check.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://open.umn.edu/opentextbooks/subjects/education",
+      "status": "confirmed",
+      "authority": "Open Textbook Library / University of Minnesota",
+      "locator": "Education subject collection",
+      "basis": "Open textbook subject collection is available.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://open.umn.edu/opentextbooks/subjects/humanities",
+      "status": "confirmed",
+      "authority": "Open Textbook Library / University of Minnesota",
+      "locator": "Humanities subject collection",
+      "basis": "Open textbook subject collection is available.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://open.umn.edu/opentextbooks/textbooks/business-law-and-the-legal-environment",
+      "status": "confirmed",
+      "authority": "Open Textbook Library / University of Minnesota",
+      "locator": "Business Law and the Legal Environment title page",
+      "basis": "Open textbook title page is available.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/1-introduction",
+      "status": "confirmed",
+      "authority": "OpenStax / Rice University",
+      "locator": "Anatomy and Physiology 2e, Chapter 1 Introduction",
+      "basis": "Publisher page identifies the open textbook and anatomy/physiology foundations.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://openstax.org/books/introduction-sociology-3e/pages/1-introduction",
+      "status": "confirmed",
+      "authority": "OpenStax / Rice University",
+      "locator": "Introduction to Sociology 3e, Chapter 1 Introduction",
+      "basis": "Publisher page identifies the open Sociology textbook.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://openstax.org/books/principles-management/pages/1-introduction",
+      "status": "confirmed",
+      "authority": "OpenStax / Rice University",
+      "locator": "Principles of Management, Chapter 1 Introduction",
+      "basis": "Publisher page identifies the open textbook and management learning outcomes.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://openstax.org/subjects/science",
+      "status": "confirmed",
+      "authority": "OpenStax / Rice University",
+      "locator": "OpenStax science subject collection",
+      "basis": "OpenStax science subject route is available; individual title choice remains programme-specific review.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://sec.gov.ng/about/resources/checklists/individual-registration-requirements-for-each-cmo/investment-adviser-individual-registration-requirements/",
+      "status": "confirmed",
+      "authority": "Securities and Exchange Commission Nigeria",
+      "locator": "Investment adviser individual registration requirements",
+      "basis": "Official SEC Nigeria requirements page is available.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://usq.pressbooks.pub/socialscienceresearch/",
+      "status": "confirmed",
+      "authority": "University of Southern Queensland Open Textbooks",
+      "locator": "Social Science Research: Principles, Methods and Practices landing page",
+      "basis": "Open textbook landing page is available.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://www.cfainstitute.org/programs/cfa-program/curriculum",
+      "status": "confirmed",
+      "authority": "CFA Institute",
+      "locator": "CFA Program curriculum overview",
+      "basis": "Official professional-body curriculum page is available.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://www.cpn.gov.ng/download/2021_CPN_Examination_Syllabus%28Reviewed%29.pdf",
+      "status": "confirmed",
+      "authority": "Computer Professionals Registration Council of Nigeria",
+      "locator": "2021 reviewed examination syllabus PDF",
+      "basis": "Official CPN PDF is available.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://www.digitalnbte.nbte.gov.ng/Public/PUCNOS",
+      "status": "confirmed",
+      "authority": "National Board for Technical Education",
+      "locator": "Digital NBTE public NOS route",
+      "basis": "Official NBTE public route is available.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://www.khanacademy.org/statistics-probability",
+      "status": "confirmed",
+      "authority": "Khan Academy",
+      "locator": "Statistics and probability course route",
+      "basis": "Course route is available; it is a supporting practice resource, not a Nigerian curriculum source.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://www.nuc.edu.ng/ccmas/",
+      "status": "confirmed",
+      "authority": "National Universities Commission",
+      "locator": "CCMAS hub; 17 discipline download routes",
+      "basis": "Official CCMAS page exposes the discipline download routes.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://www.onetcenter.org/database.html",
+      "status": "confirmed",
+      "authority": "O*NET Resource Center / U.S. Department of Labor programme",
+      "locator": "O*NET 31.0 database overview",
+      "basis": "O*NET page identifies the current occupational database and its data categories.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://www.open.edu/openlearn/education-development/becoming-ethical-researcher",
+      "status": "confirmed",
+      "authority": "The Open University",
+      "locator": "OpenLearn: Becoming an ethical researcher",
+      "basis": "Open University course page is available.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://www.open.edu/openlearn/society-politics-law/sociology/reading-evidence",
+      "status": "confirmed",
+      "authority": "The Open University",
+      "locator": "OpenLearn: Reading evidence",
+      "basis": "Open University course page is available.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://www.open.edu/openlearn/society-politics-law/you-and-your-world-introducing-the-social-sciences/content-section-0",
+      "status": "confirmed",
+      "authority": "The Open University",
+      "locator": "OpenLearn: You and your world — Introducing the social sciences",
+      "basis": "Open University course page is available.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://www.pmi.org/standards",
+      "status": "confirmed",
+      "authority": "Project Management Institute",
+      "locator": "Standards and publications page",
+      "basis": "Official professional-body standards page is available.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/",
+      "status": "confirmed",
+      "authority": "World Economic Forum",
+      "locator": "Future of Jobs Report 2025 publication page",
+      "basis": "Publisher publication page is available; it remains a global signal, not Nigerian programme-fit proof.",
+      "checked_on": "2026-09-23"
+    },
+    {
+      "url": "https://www.wiley-vch.de/en/areas-interest/humanities-social-sciences/sociology-12so/general-sociology-12so0/sociology-978-1-5095-3922-2",
+      "status": "confirmed",
+      "authority": "Wiley-VCH / John Wiley & Sons",
+      "locator": "ISBN 978-1-5095-3922-2 product page",
+      "basis": "Publisher page identifies Sociology, ninth edition, by Giddens and Sutton.",
+      "checked_on": "2026-09-23"
+    }
+  ],
+  "programme_batches": [
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_enriched_programme_batch-001.jsonl",
+      "row_start": 0,
+      "row_count": 20,
+      "sha256": "8335c471fe2f5ec850bffdc36082468c2bee6cbce4655f39fc6d80a9b68f7e9f"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_enriched_programme_batch-002.jsonl",
+      "row_start": 20,
+      "row_count": 20,
+      "sha256": "38ac1fede21f1bf71784ec3f54b6a22881ac9f88d4cbcf514376b63f6a9f18fb"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_enriched_programme_batch-003.jsonl",
+      "row_start": 40,
+      "row_count": 20,
+      "sha256": "dc0886489234d013967e829c98f12cbf251f9c6509f0bc88ee7e05f206e2035d"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_enriched_programme_batch-004.jsonl",
+      "row_start": 60,
+      "row_count": 20,
+      "sha256": "c217c39ff5a82212e614fa87e16efd20b609fc35b27b9632d9228b806c572ea3"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_enriched_programme_batch-005.jsonl",
+      "row_start": 80,
+      "row_count": 20,
+      "sha256": "f20fe527081c7a61be46f7fee61b3f320353bc7d69ec5922371c19571727faea"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_enriched_programme_batch-006.jsonl",
+      "row_start": 100,
+      "row_count": 20,
+      "sha256": "9c7e393178985cdcb9e6848c30f8b4bce4f13d355b851b672347c80018d2bec9"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_enriched_programme_batch-007.jsonl",
+      "row_start": 120,
+      "row_count": 20,
+      "sha256": "e72a97f843645932d9309f4340bf752d0e655e6db9dfb0438d34e8b5353e903e"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_enriched_programme_batch-008.jsonl",
+      "row_start": 140,
+      "row_count": 20,
+      "sha256": "f2c928593e2c1956770c6e7d68a169c475524ad1f0f6c23b4ce50e6e2f61e792"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_enriched_programme_batch-009.jsonl",
+      "row_start": 160,
+      "row_count": 20,
+      "sha256": "732d91e4e34ec7be7c415d09a1199edf4f04d7001370b5cf5a332a098dac6eec"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_enriched_programme_batch-010.jsonl",
+      "row_start": 180,
+      "row_count": 20,
+      "sha256": "bb334af0ec7b45004eb3559c833b42c1423275d1f71bb7564c27c587c77456bc"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_enriched_programme_batch-011.jsonl",
+      "row_start": 200,
+      "row_count": 20,
+      "sha256": "8b6839a75955aead96df601beecb91963b554a5cf766885ca928bca3aaef79ee"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_enriched_programme_batch-012.jsonl",
+      "row_start": 220,
+      "row_count": 17,
+      "sha256": "79fdf5c8f9e1c38720e5ee063cec6c50ff8f7c8b0e75eb997caeb69eb18a40b8"
+    }
+  ],
+  "jamb_batches": [
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_enriched_jamb_batch-001.jsonl",
+      "row_start": 0,
+      "row_count": 20,
+      "sha256": "3754c59f9efb5983410ecdae1e933b66bcf0fa036487c846557ff875dac933a2"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_enriched_jamb_batch-002.jsonl",
+      "row_start": 20,
+      "row_count": 20,
+      "sha256": "ecd3a63cbdfda9b1c7aeb529d1b1d63a1aa6486648a09a44b8996cf5d7e2a222"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_enriched_jamb_batch-003.jsonl",
+      "row_start": 40,
+      "row_count": 20,
+      "sha256": "6684c1702860ecb0f86c19354958420320b0a0bacb8b8ac0d65e24852e480761"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_enriched_jamb_batch-004.jsonl",
+      "row_start": 60,
+      "row_count": 20,
+      "sha256": "a73d64b2ddb43d17861c9ce41baedabfc82ef53c32b8582a806d3bd16c07718c"
+    },
+    {
+      "file": "programme_jamb_resource_evidence_2026-09-23_enriched_jamb_batch-005.jsonl",
+      "row_start": 80,
+      "row_count": 6,
+      "sha256": "aa6010bffa5f85ae688434af61cadd5de4b9c2d560295b0f94dc73bf400ccdd1"
+    }
+  ],
+  "decisions": {
+    "programme_decision_review_required": 237,
+    "jamb_decision_review_required": 86,
+    "student_promotions": 0,
+    "live_database_changes": 0,
+    "browser_proof": 0
+  }
+}

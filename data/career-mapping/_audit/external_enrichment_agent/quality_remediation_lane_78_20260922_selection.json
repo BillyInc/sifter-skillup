@@ -1,0 +1,2420 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-selection.v2",
+  "batch": "quality_remediation_lane_78_20260922",
+  "selected_at": "2026-09-22",
+  "source_audit": "data/career-mapping/_audit/external_enrichment_agent/item_ledger_quality_audit_2026-09-22.json",
+  "source_sha256": "133bf28782e1b50abacca97438559242eb689f8fd38e69845dffdc0b9da18009",
+  "selection_method": "atomic shared lock; exclude all prior valid claims by contextual and typed identity",
+  "prior_claimed_contextual_ids": 7072,
+  "prior_claimed_typed_items": 6446,
+  "selection_count": 150,
+  "requested_count": 150,
+  "shortfall": 0,
+  "rows": [
+    {
+      "subject_id": "item|role|D107|footwear 3D developer|skill|footwear-creation-process",
+      "context_level": "role",
+      "context_key": "D107|footwear 3D developer",
+      "item_type": "skill",
+      "item_key": "footwear-creation-process",
+      "item_name": "footwear creation process",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D107|footwear 3D developer|skill|last-types",
+      "context_level": "role",
+      "context_key": "D107|footwear 3D developer",
+      "item_type": "skill",
+      "item_key": "last-types",
+      "item_name": "last types",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D107|footwear 3D developer|skill|plan-footwear-manufacture",
+      "context_level": "role",
+      "context_key": "D107|footwear 3D developer",
+      "item_type": "skill",
+      "item_key": "plan-footwear-manufacture",
+      "item_name": "plan footwear manufacture",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D107|footwear 3D developer|skill|sustainable-footwear-materials-and-components",
+      "context_level": "role",
+      "context_key": "D107|footwear 3D developer",
+      "item_type": "skill",
+      "item_key": "sustainable-footwear-materials-and-components",
+      "item_name": "sustainable footwear materials and components",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D107|footwear 3D developer|skill|types-of-moulding",
+      "context_level": "role",
+      "context_key": "D107|footwear 3D developer",
+      "item_type": "skill",
+      "item_key": "types-of-moulding",
+      "item_name": "types of moulding",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D107|footwear CAD patternmaker|skill|analyse-types-of-footwear",
+      "context_level": "role",
+      "context_key": "D107|footwear CAD patternmaker",
+      "item_type": "skill",
+      "item_key": "analyse-types-of-footwear",
+      "item_name": "analyse types of footwear",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D107|footwear CAD patternmaker|skill|operate-2d-cad-for-footwear",
+      "context_level": "role",
+      "context_key": "D107|footwear CAD patternmaker",
+      "item_type": "skill",
+      "item_key": "operate-2d-cad-for-footwear",
+      "item_name": "operate 2D CAD for footwear",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D107|footwear designer|skill|use-cad-for-heels",
+      "context_level": "role",
+      "context_key": "D107|footwear designer",
+      "item_type": "skill",
+      "item_key": "use-cad-for-heels",
+      "item_name": "use CAD for heels",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D107|footwear designer|skill|use-cad-for-soles",
+      "context_level": "role",
+      "context_key": "D107|footwear designer",
+      "item_type": "skill",
+      "item_key": "use-cad-for-soles",
+      "item_name": "use CAD for soles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D107|footwear factory warehouse operator|skill|coordinate-assembling-room-in-footwear-manufacturing",
+      "context_level": "role",
+      "context_key": "D107|footwear factory warehouse operator",
+      "item_type": "skill",
+      "item_key": "coordinate-assembling-room-in-footwear-manufacturing",
+      "item_name": "coordinate assembling room in footwear manufacturing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D107|footwear factory warehouse operator|skill|coordinate-closing-room-in-footwear-manufacturing",
+      "context_level": "role",
+      "context_key": "D107|footwear factory warehouse operator",
+      "item_type": "skill",
+      "item_key": "coordinate-closing-room-in-footwear-manufacturing",
+      "item_name": "coordinate closing room in footwear manufacturing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D107|footwear factory warehouse operator|skill|determine-footwear-warehouse-layout",
+      "context_level": "role",
+      "context_key": "D107|footwear factory warehouse operator",
+      "item_type": "skill",
+      "item_key": "determine-footwear-warehouse-layout",
+      "item_name": "determine footwear warehouse layout",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D107|footwear factory warehouse operator|skill|maintain-footwear-assembling-equipment",
+      "context_level": "role",
+      "context_key": "D107|footwear factory warehouse operator",
+      "item_type": "skill",
+      "item_key": "maintain-footwear-assembling-equipment",
+      "item_name": "maintain footwear assembling equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D107|footwear factory warehouse operator|skill|manage-warehouse-operations",
+      "context_level": "role",
+      "context_key": "D107|footwear factory warehouse operator",
+      "item_type": "skill",
+      "item_key": "manage-warehouse-operations",
+      "item_name": "manage warehouse operations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D107|footwear finishing and packing operator|skill|apply-footwear-finishing-techniques",
+      "context_level": "role",
+      "context_key": "D107|footwear finishing and packing operator",
+      "item_type": "skill",
+      "item_key": "apply-footwear-finishing-techniques",
+      "item_name": "apply footwear finishing techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D107|footwear finishing and packing operator|skill|footwear-finishing-techniques",
+      "context_level": "role",
+      "context_key": "D107|footwear finishing and packing operator",
+      "item_type": "skill",
+      "item_key": "footwear-finishing-techniques",
+      "item_name": "footwear finishing techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D107|footwear maintenance technician|skill|maintenance-of-footwear-manufacturing-machines",
+      "context_level": "role",
+      "context_key": "D107|footwear maintenance technician",
+      "item_type": "skill",
+      "item_key": "maintenance-of-footwear-manufacturing-machines",
+      "item_name": "maintenance of footwear manufacturing machines",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D107|footwear product developer|skill|create-3d-cad-footwear-prototypes",
+      "context_level": "role",
+      "context_key": "D107|footwear product developer",
+      "item_type": "skill",
+      "item_key": "create-3d-cad-footwear-prototypes",
+      "item_name": "create 3D CAD footwear prototypes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D107|footwear production machine operator|skill|prepare-footwear-samples",
+      "context_level": "role",
+      "context_key": "D107|footwear production machine operator",
+      "item_type": "skill",
+      "item_key": "prepare-footwear-samples",
+      "item_name": "prepare footwear samples",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D107|footwear quality control laboratory technician|skill|perform-laboratory-tests-on-footwear-or-leather-goods",
+      "context_level": "role",
+      "context_key": "D107|footwear quality control laboratory technician",
+      "item_type": "skill",
+      "item_key": "perform-laboratory-tests-on-footwear-or-leather-goods",
+      "item_name": "perform laboratory tests on footwear or leather goods",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D107|footwear quality controller|skill|manage-footwear-quality-systems",
+      "context_level": "role",
+      "context_key": "D107|footwear quality controller",
+      "item_type": "skill",
+      "item_key": "manage-footwear-quality-systems",
+      "item_name": "manage footwear quality systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D107|footwear quality manager|skill|plan-supply-chain-logistics-for-footwear-and-leather-goods",
+      "context_level": "role",
+      "context_key": "D107|footwear quality manager",
+      "item_type": "skill",
+      "item_key": "plan-supply-chain-logistics-for-footwear-and-leather-goods",
+      "item_name": "plan supply chain logistics for footwear and leather goods",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|artistic director|skill|museum-databases",
+      "context_level": "role",
+      "context_key": "D042|artistic director",
+      "item_type": "skill",
+      "item_key": "museum-databases",
+      "item_name": "museum databases",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|artistic director|skill|represent-company-in-exhibitions",
+      "context_level": "role",
+      "context_key": "D042|artistic director",
+      "item_type": "skill",
+      "item_key": "represent-company-in-exhibitions",
+      "item_name": "represent company in exhibitions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|assistant stage director|skill|assemble-an-artistic-team",
+      "context_level": "role",
+      "context_key": "D042|assistant stage director",
+      "item_type": "skill",
+      "item_key": "assemble-an-artistic-team",
+      "item_name": "assemble an artistic team",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|assistant stage director|skill|liaise-between-theatre-direction-and-design-team",
+      "context_level": "role",
+      "context_key": "D042|assistant stage director",
+      "item_type": "skill",
+      "item_key": "liaise-between-theatre-direction-and-design-team",
+      "item_name": "liaise between theatre direction and design team",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|assistant stage director|skill|maintain-a-production-book",
+      "context_level": "role",
+      "context_key": "D042|assistant stage director",
+      "item_type": "skill",
+      "item_key": "maintain-a-production-book",
+      "item_name": "maintain a production book",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|assistant stage director|skill|maintain-blocking-notes",
+      "context_level": "role",
+      "context_key": "D042|assistant stage director",
+      "item_type": "skill",
+      "item_key": "maintain-blocking-notes",
+      "item_name": "maintain blocking notes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|assistant stage director|skill|supervise-script-preparation",
+      "context_level": "role",
+      "context_key": "D042|assistant stage director",
+      "item_type": "skill",
+      "item_key": "supervise-script-preparation",
+      "item_name": "supervise script preparation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|assistant video and motion picture director|skill|analyse-goal-progress",
+      "context_level": "role",
+      "context_key": "D042|assistant video and motion picture director",
+      "item_type": "skill",
+      "item_key": "analyse-goal-progress",
+      "item_name": "analyse goal progress",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|assistant video and motion picture director|skill|apply-organisational-techniques",
+      "context_level": "role",
+      "context_key": "D042|assistant video and motion picture director",
+      "item_type": "skill",
+      "item_key": "apply-organisational-techniques",
+      "item_name": "apply organisational techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|assistant video and motion picture director|skill|audiovisual-equipment",
+      "context_level": "role",
+      "context_key": "D042|assistant video and motion picture director",
+      "item_type": "skill",
+      "item_key": "audiovisual-equipment",
+      "item_name": "audiovisual equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|assistant video and motion picture director|skill|collaborate-with-a-technical-staff-in-artistic-productions",
+      "context_level": "role",
+      "context_key": "D042|assistant video and motion picture director",
+      "item_type": "skill",
+      "item_key": "collaborate-with-a-technical-staff-in-artistic-productions",
+      "item_name": "collaborate with a technical staff in artistic productions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|assistant video and motion picture director|skill|coordinate-rehearsals",
+      "context_level": "role",
+      "context_key": "D042|assistant video and motion picture director",
+      "item_type": "skill",
+      "item_key": "coordinate-rehearsals",
+      "item_name": "coordinate rehearsals",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|assistant video and motion picture director|skill|coordinate-transportation",
+      "context_level": "role",
+      "context_key": "D042|assistant video and motion picture director",
+      "item_type": "skill",
+      "item_key": "coordinate-transportation",
+      "item_name": "coordinate transportation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|assistant video and motion picture director|skill|develop-project-schedule",
+      "context_level": "role",
+      "context_key": "D042|assistant video and motion picture director",
+      "item_type": "skill",
+      "item_key": "develop-project-schedule",
+      "item_name": "develop project schedule",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|audio describer|skill|audiovisual-products",
+      "context_level": "role",
+      "context_key": "D042|audio describer",
+      "item_type": "skill",
+      "item_key": "audiovisual-products",
+      "item_name": "audiovisual products",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|audio describer|skill|record-audio-materials",
+      "context_level": "role",
+      "context_key": "D042|audio describer",
+      "item_type": "skill",
+      "item_key": "record-audio-materials",
+      "item_name": "record audio materials",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|audio describer|skill|report-live-online",
+      "context_level": "role",
+      "context_key": "D042|audio describer",
+      "item_type": "skill",
+      "item_key": "report-live-online",
+      "item_name": "report live online",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|audio describer|skill|support-people-with-hearing-impairment",
+      "context_level": "role",
+      "context_key": "D042|audio describer",
+      "item_type": "skill",
+      "item_key": "support-people-with-hearing-impairment",
+      "item_name": "support people with hearing impairment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|audio describer|skill|synchronise-with-mouth-movements",
+      "context_level": "role",
+      "context_key": "D042|audio describer",
+      "item_type": "skill",
+      "item_key": "synchronise-with-mouth-movements",
+      "item_name": "synchronise with mouth movements",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|audio describer|skill|write-in-conversational-tone",
+      "context_level": "role",
+      "context_key": "D042|audio describer",
+      "item_type": "skill",
+      "item_key": "write-in-conversational-tone",
+      "item_name": "write in conversational tone",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|audio describer|skill|write-voice-overs",
+      "context_level": "role",
+      "context_key": "D042|audio describer",
+      "item_type": "skill",
+      "item_key": "write-voice-overs",
+      "item_name": "write voice-overs",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|audio production technician|skill|coordinate-audio-system-programmes",
+      "context_level": "role",
+      "context_key": "D042|audio production technician",
+      "item_type": "skill",
+      "item_key": "coordinate-audio-system-programmes",
+      "item_name": "coordinate audio system programmes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|audio production technician|skill|ensure-safety-of-mobile-electrical-systems",
+      "context_level": "role",
+      "context_key": "D042|audio production technician",
+      "item_type": "skill",
+      "item_key": "ensure-safety-of-mobile-electrical-systems",
+      "item_name": "ensure safety of mobile electrical systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|audio production technician|skill|pack-electronic-equipment",
+      "context_level": "role",
+      "context_key": "D042|audio production technician",
+      "item_type": "skill",
+      "item_key": "pack-electronic-equipment",
+      "item_name": "pack electronic equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|audio production technician|skill|prepare-sound-equipment-on-stage",
+      "context_level": "role",
+      "context_key": "D042|audio production technician",
+      "item_type": "skill",
+      "item_key": "prepare-sound-equipment-on-stage",
+      "item_name": "prepare sound equipment on stage",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|audio production technician|skill|support-audio-system-installation",
+      "context_level": "role",
+      "context_key": "D042|audio production technician",
+      "item_type": "skill",
+      "item_key": "support-audio-system-installation",
+      "item_name": "support audio system installation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|audio production technician|skill|work-safely-with-machines",
+      "context_level": "role",
+      "context_key": "D042|audio production technician",
+      "item_type": "skill",
+      "item_key": "work-safely-with-machines",
+      "item_name": "work safely with machines",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|audio-visual technician|skill|operate-audio-equipment",
+      "context_level": "role",
+      "context_key": "D042|audio-visual technician",
+      "item_type": "skill",
+      "item_key": "operate-audio-equipment",
+      "item_name": "operate audio equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|audio-visual technician|skill|operate-broadcast-equipment",
+      "context_level": "role",
+      "context_key": "D042|audio-visual technician",
+      "item_type": "skill",
+      "item_key": "operate-broadcast-equipment",
+      "item_name": "operate broadcast equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|audio-visual technician|skill|operate-video-equipment",
+      "context_level": "role",
+      "context_key": "D042|audio-visual technician",
+      "item_type": "skill",
+      "item_key": "operate-video-equipment",
+      "item_name": "operate video equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|audio-visual technician|skill|transfer-uncut-audiovisual-material-to-computer",
+      "context_level": "role",
+      "context_key": "D042|audio-visual technician",
+      "item_type": "skill",
+      "item_key": "transfer-uncut-audiovisual-material-to-computer",
+      "item_name": "transfer uncut audiovisual material to computer",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|automated fly bar operator|skill|adapt-artistic-plan-to-location",
+      "context_level": "role",
+      "context_key": "D042|automated fly bar operator",
+      "item_type": "skill",
+      "item_key": "adapt-artistic-plan-to-location",
+      "item_name": "adapt artistic plan to location",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|automated fly bar operator|skill|maintain-moving-constructions-on-stage",
+      "context_level": "role",
+      "context_key": "D042|automated fly bar operator",
+      "item_type": "skill",
+      "item_key": "maintain-moving-constructions-on-stage",
+      "item_name": "maintain moving constructions on stage",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|automated fly bar operator|skill|perform-first-fire-intervention",
+      "context_level": "role",
+      "context_key": "D042|automated fly bar operator",
+      "item_type": "skill",
+      "item_key": "perform-first-fire-intervention",
+      "item_name": "perform first fire intervention",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|automated fly bar operator|skill|set-up-technical-stage-equipment",
+      "context_level": "role",
+      "context_key": "D042|automated fly bar operator",
+      "item_type": "skill",
+      "item_key": "set-up-technical-stage-equipment",
+      "item_name": "set up technical stage equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|automated fly bar operator|skill|write-risk-assessment-on-performing-arts-production",
+      "context_level": "role",
+      "context_key": "D042|automated fly bar operator",
+      "item_type": "skill",
+      "item_key": "write-risk-assessment-on-performing-arts-production",
+      "item_name": "write risk assessment on performing arts production",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|body artist|skill|advise-customers-on-body-adornment",
+      "context_level": "role",
+      "context_key": "D042|body artist",
+      "item_type": "skill",
+      "item_key": "advise-customers-on-body-adornment",
+      "item_name": "advise customers on body adornment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|body artist|skill|carry-out-wound-care",
+      "context_level": "role",
+      "context_key": "D042|body artist",
+      "item_type": "skill",
+      "item_key": "carry-out-wound-care",
+      "item_name": "carry out wound care",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|body artist|skill|hair-removal-techniques",
+      "context_level": "role",
+      "context_key": "D042|body artist",
+      "item_type": "skill",
+      "item_key": "hair-removal-techniques",
+      "item_name": "hair removal techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|body artist|skill|inform-customers-about-body-modifications",
+      "context_level": "role",
+      "context_key": "D042|body artist",
+      "item_type": "skill",
+      "item_key": "inform-customers-about-body-modifications",
+      "item_name": "inform customers about body modifications",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|body artist|skill|manage-a-small-to-medium-business",
+      "context_level": "role",
+      "context_key": "D042|body artist",
+      "item_type": "skill",
+      "item_key": "manage-a-small-to-medium-business",
+      "item_name": "manage a small-to-medium business",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|body artist|skill|provide-customised-products",
+      "context_level": "role",
+      "context_key": "D042|body artist",
+      "item_type": "skill",
+      "item_key": "provide-customised-products",
+      "item_name": "provide customised products",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|body artist|skill|sterilise-working-environment",
+      "context_level": "role",
+      "context_key": "D042|body artist",
+      "item_type": "skill",
+      "item_key": "sterilise-working-environment",
+      "item_name": "sterilise working environment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|body artist|skill|trade-in-jewellery",
+      "context_level": "role",
+      "context_key": "D042|body artist",
+      "item_type": "skill",
+      "item_key": "trade-in-jewellery",
+      "item_name": "trade in jewellery",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|body artist|skill|use-body-adornment-equipment",
+      "context_level": "role",
+      "context_key": "D042|body artist",
+      "item_type": "skill",
+      "item_key": "use-body-adornment-equipment",
+      "item_name": "use body adornment equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|body artist|tool|autodesk-maya",
+      "context_level": "role",
+      "context_key": "D042|body artist",
+      "item_type": "tool",
+      "item_key": "autodesk-maya",
+      "item_name": "Autodesk Maya",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|body artist|tool|autodesk-mudbox",
+      "context_level": "role",
+      "context_key": "D042|body artist",
+      "item_type": "tool",
+      "item_key": "autodesk-mudbox",
+      "item_name": "Autodesk Mudbox",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|body artist|tool|blogging-software",
+      "context_level": "role",
+      "context_key": "D042|body artist",
+      "item_type": "tool",
+      "item_key": "blogging-software",
+      "item_name": "Blogging software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|boom operator|skill|consult-with-sound-editor",
+      "context_level": "role",
+      "context_key": "D042|boom operator",
+      "item_type": "skill",
+      "item_key": "consult-with-sound-editor",
+      "item_name": "consult with sound editor",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|boom operator|skill|follow-directions-of-the-artistic-director",
+      "context_level": "role",
+      "context_key": "D042|boom operator",
+      "item_type": "skill",
+      "item_key": "follow-directions-of-the-artistic-director",
+      "item_name": "follow directions of the artistic director",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|boom operator|skill|manage-sound-quality",
+      "context_level": "role",
+      "context_key": "D042|boom operator",
+      "item_type": "skill",
+      "item_key": "manage-sound-quality",
+      "item_name": "manage sound quality",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|boom operator|skill|perform-soundchecks",
+      "context_level": "role",
+      "context_key": "D042|boom operator",
+      "item_type": "skill",
+      "item_key": "perform-soundchecks",
+      "item_name": "perform soundchecks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|boom operator|skill|program-sound-cues",
+      "context_level": "role",
+      "context_key": "D042|boom operator",
+      "item_type": "skill",
+      "item_key": "program-sound-cues",
+      "item_name": "program sound cues",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|boom operator|skill|set-up-sound-equipment",
+      "context_level": "role",
+      "context_key": "D042|boom operator",
+      "item_type": "skill",
+      "item_key": "set-up-sound-equipment",
+      "item_name": "set up sound equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|boom operator|skill|technically-design-a-sound-system",
+      "context_level": "role",
+      "context_key": "D042|boom operator",
+      "item_type": "skill",
+      "item_key": "technically-design-a-sound-system",
+      "item_name": "technically design a sound system",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|broadcast technician|skill|audio-technology",
+      "context_level": "role",
+      "context_key": "D042|broadcast technician",
+      "item_type": "skill",
+      "item_key": "audio-technology",
+      "item_name": "audio technology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|broadcast technician|skill|broadcast-equipment",
+      "context_level": "role",
+      "context_key": "D042|broadcast technician",
+      "item_type": "skill",
+      "item_key": "broadcast-equipment",
+      "item_name": "broadcast equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|broadcast technician|skill|calibrate-electronic-instruments",
+      "context_level": "role",
+      "context_key": "D042|broadcast technician",
+      "item_type": "skill",
+      "item_key": "calibrate-electronic-instruments",
+      "item_name": "calibrate electronic instruments",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|broadcast technician|skill|monitor-quality-of-broadcasts",
+      "context_level": "role",
+      "context_key": "D042|broadcast technician",
+      "item_type": "skill",
+      "item_key": "monitor-quality-of-broadcasts",
+      "item_name": "monitor quality of broadcasts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|broadcast technician|skill|select-recording-source",
+      "context_level": "role",
+      "context_key": "D042|broadcast technician",
+      "item_type": "skill",
+      "item_key": "select-recording-source",
+      "item_name": "select recording source",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|broadcasting programme director|skill|develop-programming-schedule",
+      "context_level": "role",
+      "context_key": "D042|broadcasting programme director",
+      "item_type": "skill",
+      "item_key": "develop-programming-schedule",
+      "item_name": "develop programming schedule",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|broadcasting programme director|skill|monitor-broadcast-programming",
+      "context_level": "role",
+      "context_key": "D042|broadcasting programme director",
+      "item_type": "skill",
+      "item_key": "monitor-broadcast-programming",
+      "item_name": "monitor broadcast programming",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|broadcasting programme director|skill|perform-video-editing",
+      "context_level": "role",
+      "context_key": "D042|broadcasting programme director",
+      "item_type": "skill",
+      "item_key": "perform-video-editing",
+      "item_name": "perform video editing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|broadcasting programme director|skill|prepare-casting-budget",
+      "context_level": "role",
+      "context_key": "D042|broadcasting programme director",
+      "item_type": "skill",
+      "item_key": "prepare-casting-budget",
+      "item_name": "prepare casting budget",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|camera operator|skill|file-based-workflow",
+      "context_level": "role",
+      "context_key": "D042|camera operator",
+      "item_type": "skill",
+      "item_key": "file-based-workflow",
+      "item_name": "file-based workflow",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|camera operator|skill|select-camera-apertures",
+      "context_level": "role",
+      "context_key": "D042|camera operator",
+      "item_type": "skill",
+      "item_key": "select-camera-apertures",
+      "item_name": "select camera apertures",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|camera operator|skill|set-up-audiovisual-peripheral-equipment",
+      "context_level": "role",
+      "context_key": "D042|camera operator",
+      "item_type": "skill",
+      "item_key": "set-up-audiovisual-peripheral-equipment",
+      "item_name": "set up audiovisual peripheral equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|camera operator|skill|set-up-cameras",
+      "context_level": "role",
+      "context_key": "D042|camera operator",
+      "item_type": "skill",
+      "item_key": "set-up-cameras",
+      "item_name": "set up cameras",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|casting director|skill|carry-out-auditions",
+      "context_level": "role",
+      "context_key": "D042|casting director",
+      "item_type": "skill",
+      "item_key": "carry-out-auditions",
+      "item_name": "carry out auditions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|casting director|skill|contact-talent-agents",
+      "context_level": "role",
+      "context_key": "D042|casting director",
+      "item_type": "skill",
+      "item_key": "contact-talent-agents",
+      "item_name": "contact talent agents",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|casting director|skill|discover-acting-talent",
+      "context_level": "role",
+      "context_key": "D042|casting director",
+      "item_type": "skill",
+      "item_key": "discover-acting-talent",
+      "item_name": "discover acting talent",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|casting director|skill|match-actors-to-roles",
+      "context_level": "role",
+      "context_key": "D042|casting director",
+      "item_type": "skill",
+      "item_key": "match-actors-to-roles",
+      "item_name": "match actors to roles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|casting director|skill|provide-chaperone-for-children-on-set",
+      "context_level": "role",
+      "context_key": "D042|casting director",
+      "item_type": "skill",
+      "item_key": "provide-chaperone-for-children-on-set",
+      "item_name": "provide chaperone for children on set",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|casting director|skill|study-relationships-between-characters",
+      "context_level": "role",
+      "context_key": "D042|casting director",
+      "item_type": "skill",
+      "item_key": "study-relationships-between-characters",
+      "item_name": "study relationships between characters",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|choirmaster/choirmistress|skill|coordinate-performance-tours",
+      "context_level": "role",
+      "context_key": "D042|choirmaster/choirmistress",
+      "item_type": "skill",
+      "item_key": "coordinate-performance-tours",
+      "item_name": "coordinate performance tours",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|choirmaster/choirmistress|skill|develop-cultural-activities",
+      "context_level": "role",
+      "context_key": "D042|choirmaster/choirmistress",
+      "item_type": "skill",
+      "item_key": "develop-cultural-activities",
+      "item_name": "develop cultural activities",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|choirmaster/choirmistress|skill|develop-musical-ideas",
+      "context_level": "role",
+      "context_key": "D042|choirmaster/choirmistress",
+      "item_type": "skill",
+      "item_key": "develop-musical-ideas",
+      "item_name": "develop musical ideas",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|choirmaster/choirmistress|skill|engage-composers",
+      "context_level": "role",
+      "context_key": "D042|choirmaster/choirmistress",
+      "item_type": "skill",
+      "item_key": "engage-composers",
+      "item_name": "engage composers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|choirmaster/choirmistress|skill|manage-musical-staff",
+      "context_level": "role",
+      "context_key": "D042|choirmaster/choirmistress",
+      "item_type": "skill",
+      "item_key": "manage-musical-staff",
+      "item_name": "manage musical staff",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|choirmaster/choirmistress|skill|participate-as-a-performer-in-the-creative-process",
+      "context_level": "role",
+      "context_key": "D042|choirmaster/choirmistress",
+      "item_type": "skill",
+      "item_key": "participate-as-a-performer-in-the-creative-process",
+      "item_name": "participate as a performer in the creative process",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|choirmaster/choirmistress|skill|study-musical-scores",
+      "context_level": "role",
+      "context_key": "D042|choirmaster/choirmistress",
+      "item_type": "skill",
+      "item_key": "study-musical-scores",
+      "item_name": "study musical scores",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|choirmaster/choirmistress|skill|supervise-music-groups",
+      "context_level": "role",
+      "context_key": "D042|choirmaster/choirmistress",
+      "item_type": "skill",
+      "item_key": "supervise-music-groups",
+      "item_name": "supervise music groups",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|composer|skill|select-elements-for-a-composition",
+      "context_level": "role",
+      "context_key": "D042|composer",
+      "item_type": "skill",
+      "item_key": "select-elements-for-a-composition",
+      "item_name": "select elements for a composition",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|composer|skill|transpose-music",
+      "context_level": "role",
+      "context_key": "D042|composer",
+      "item_type": "skill",
+      "item_key": "transpose-music",
+      "item_name": "transpose music",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|composer|skill|work-out-orchestral-sketches",
+      "context_level": "role",
+      "context_key": "D042|composer",
+      "item_type": "skill",
+      "item_key": "work-out-orchestral-sketches",
+      "item_name": "work out orchestral sketches",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|composer|skill|write-musical-scores",
+      "context_level": "role",
+      "context_key": "D042|composer",
+      "item_type": "skill",
+      "item_key": "write-musical-scores",
+      "item_name": "write musical scores",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|costume attendant|skill|assist-with-dressing",
+      "context_level": "role",
+      "context_key": "D042|costume attendant",
+      "item_type": "skill",
+      "item_key": "assist-with-dressing",
+      "item_name": "assist with dressing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|costume attendant|skill|document-costume-stock",
+      "context_level": "role",
+      "context_key": "D042|costume attendant",
+      "item_type": "skill",
+      "item_key": "document-costume-stock",
+      "item_name": "document costume stock",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|costume attendant|skill|dress-actors",
+      "context_level": "role",
+      "context_key": "D042|costume attendant",
+      "item_type": "skill",
+      "item_key": "dress-actors",
+      "item_name": "dress actors",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|costume attendant|skill|ensure-continuous-styling-of-artists",
+      "context_level": "role",
+      "context_key": "D042|costume attendant",
+      "item_type": "skill",
+      "item_key": "ensure-continuous-styling-of-artists",
+      "item_name": "ensure continuous styling of artists",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.cityandguilds.com/-/media/productdocuments/creative/creative_techniques/7161/7161_level_2/centre_documents/7161-02-12-22-level-2-textiles-v_3%2C-d-%2C3-pdf.pdf"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|costume attendant|skill|maintain-costumes",
+      "context_level": "role",
+      "context_key": "D042|costume attendant",
+      "item_type": "skill",
+      "item_key": "maintain-costumes",
+      "item_name": "maintain costumes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|costume attendant|skill|perform-costume-changeovers",
+      "context_level": "role",
+      "context_key": "D042|costume attendant",
+      "item_type": "skill",
+      "item_key": "perform-costume-changeovers",
+      "item_name": "perform costume changeovers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|costume attendant|skill|preset-costumes",
+      "context_level": "role",
+      "context_key": "D042|costume attendant",
+      "item_type": "skill",
+      "item_key": "preset-costumes",
+      "item_name": "preset costumes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|costume attendant|skill|select-costumes",
+      "context_level": "role",
+      "context_key": "D042|costume attendant",
+      "item_type": "skill",
+      "item_key": "select-costumes",
+      "item_name": "select costumes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|costume attendant|skill|wash-costumes",
+      "context_level": "role",
+      "context_key": "D042|costume attendant",
+      "item_type": "skill",
+      "item_key": "wash-costumes",
+      "item_name": "wash costumes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|costume attendant|skill|work-with-the-camera-crew",
+      "context_level": "role",
+      "context_key": "D042|costume attendant",
+      "item_type": "skill",
+      "item_key": "work-with-the-camera-crew",
+      "item_name": "work with the camera crew",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|costume attendant|tool|garment-tracking-software",
+      "context_level": "role",
+      "context_key": "D042|costume attendant",
+      "item_type": "tool",
+      "item_key": "garment-tracking-software",
+      "item_name": "Garment tracking software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|dance répétiteur|skill|help-set-rehearsal-schedule",
+      "context_level": "role",
+      "context_key": "D042|dance répétiteur",
+      "item_type": "skill",
+      "item_key": "help-set-rehearsal-schedule",
+      "item_name": "help set rehearsal schedule",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|dancer|skill|evaluate-own-dance-abilities",
+      "context_level": "role",
+      "context_key": "D042|dancer",
+      "item_type": "skill",
+      "item_key": "evaluate-own-dance-abilities",
+      "item_name": "evaluate own dance abilities",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|dancer|skill|perform-dances",
+      "context_level": "role",
+      "context_key": "D042|dancer",
+      "item_type": "skill",
+      "item_key": "perform-dances",
+      "item_name": "perform dances",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|director of photography|skill|translate-artistic-concepts-to-technical-designs",
+      "context_level": "role",
+      "context_key": "D042|director of photography",
+      "item_type": "skill",
+      "item_key": "translate-artistic-concepts-to-technical-designs",
+      "item_name": "translate artistic concepts to technical designs",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|director of photography|skill|watch-scenes",
+      "context_level": "role",
+      "context_key": "D042|director of photography",
+      "item_type": "skill",
+      "item_key": "watch-scenes",
+      "item_name": "watch scenes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|director of photography|skill|work-with-motion-picture-editing-team",
+      "context_level": "role",
+      "context_key": "D042|director of photography",
+      "item_type": "skill",
+      "item_key": "work-with-motion-picture-editing-team",
+      "item_name": "work with motion picture editing team",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|disc jockey|skill|assess-sound-quality",
+      "context_level": "role",
+      "context_key": "D042|disc jockey",
+      "item_type": "skill",
+      "item_key": "assess-sound-quality",
+      "item_name": "assess sound quality",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|disc jockey|skill|connect-music-fragments",
+      "context_level": "role",
+      "context_key": "D042|disc jockey",
+      "item_type": "skill",
+      "item_key": "connect-music-fragments",
+      "item_name": "connect music fragments",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|disc jockey|skill|mix-multi-track-recordings",
+      "context_level": "role",
+      "context_key": "D042|disc jockey",
+      "item_type": "skill",
+      "item_key": "mix-multi-track-recordings",
+      "item_name": "mix multi-track recordings",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|disc jockey|skill|operate-an-audio-mixing-console",
+      "context_level": "role",
+      "context_key": "D042|disc jockey",
+      "item_type": "skill",
+      "item_key": "operate-an-audio-mixing-console",
+      "item_name": "operate an audio mixing console",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|disc jockey|skill|select-music-for-training",
+      "context_level": "role",
+      "context_key": "D042|disc jockey",
+      "item_type": "skill",
+      "item_key": "select-music-for-training",
+      "item_name": "select music for training",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|disc jockey|skill|set-up-a-multi-track-recording",
+      "context_level": "role",
+      "context_key": "D042|disc jockey",
+      "item_type": "skill",
+      "item_key": "set-up-a-multi-track-recording",
+      "item_name": "set up a multi-track recording",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|dresser|skill|advise-client-on-technical-possibilities",
+      "context_level": "role",
+      "context_key": "D042|dresser",
+      "item_type": "skill",
+      "item_key": "advise-client-on-technical-possibilities",
+      "item_name": "advise client on technical possibilities",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|dresser|skill|prepare-personal-work-environment",
+      "context_level": "role",
+      "context_key": "D042|dresser",
+      "item_type": "skill",
+      "item_key": "prepare-personal-work-environment",
+      "item_name": "prepare personal work environment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|dresser|skill|work-with-respect-for-own-safety",
+      "context_level": "role",
+      "context_key": "D042|dresser",
+      "item_type": "skill",
+      "item_key": "work-with-respect-for-own-safety",
+      "item_name": "work with respect for own safety",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|extra|skill|express-yourself-physically",
+      "context_level": "role",
+      "context_key": "D042|extra",
+      "item_type": "skill",
+      "item_key": "express-yourself-physically",
+      "item_name": "express yourself physically",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|extra|skill|harmonise-body-movements",
+      "context_level": "role",
+      "context_key": "D042|extra",
+      "item_type": "skill",
+      "item_key": "harmonise-body-movements",
+      "item_name": "harmonise body movements",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|extra|skill|perform-scenes-for-filming",
+      "context_level": "role",
+      "context_key": "D042|extra",
+      "item_type": "skill",
+      "item_key": "perform-scenes-for-filming",
+      "item_name": "perform scenes for filming",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|extra|skill|rehearse-role",
+      "context_level": "role",
+      "context_key": "D042|extra",
+      "item_type": "skill",
+      "item_key": "rehearse-role",
+      "item_name": "rehearse role",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|extra|skill|use-firearms",
+      "context_level": "role",
+      "context_key": "D042|extra",
+      "item_type": "skill",
+      "item_key": "use-firearms",
+      "item_name": "use firearms",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|fight director|skill|adapt-fighting-techniques-for-performance",
+      "context_level": "role",
+      "context_key": "D042|fight director",
+      "item_type": "skill",
+      "item_key": "adapt-fighting-techniques-for-performance",
+      "item_name": "adapt fighting techniques for performance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|fight director|skill|coach-performers-in-your-fight-discipline",
+      "context_level": "role",
+      "context_key": "D042|fight director",
+      "item_type": "skill",
+      "item_key": "coach-performers-in-your-fight-discipline",
+      "item_name": "coach performers in your fight discipline",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|fight director|skill|communicate-expectations-of-fight-actions",
+      "context_level": "role",
+      "context_key": "D042|fight director",
+      "item_type": "skill",
+      "item_key": "communicate-expectations-of-fight-actions",
+      "item_name": "communicate expectations of fight actions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|fight director|skill|define-an-approach-to-your-fight-dicipline",
+      "context_level": "role",
+      "context_key": "D042|fight director",
+      "item_type": "skill",
+      "item_key": "define-an-approach-to-your-fight-dicipline",
+      "item_name": "define an approach to your fight dicipline",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|fight director|skill|ensure-the-longevity-of-the-fight-actions",
+      "context_level": "role",
+      "context_key": "D042|fight director",
+      "item_type": "skill",
+      "item_key": "ensure-the-longevity-of-the-fight-actions",
+      "item_name": "ensure the longevity of the fight actions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|fight director|skill|performing-arts-fights-legal-regulations",
+      "context_level": "role",
+      "context_key": "D042|fight director",
+      "item_type": "skill",
+      "item_key": "performing-arts-fights-legal-regulations",
+      "item_name": "performing arts fights legal regulations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|fight director|skill|read-dance-scores",
+      "context_level": "role",
+      "context_key": "D042|fight director",
+      "item_type": "skill",
+      "item_key": "read-dance-scores",
+      "item_name": "read dance scores",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|fight director|skill|supervise-performers-fights",
+      "context_level": "role",
+      "context_key": "D042|fight director",
+      "item_type": "skill",
+      "item_key": "supervise-performers-fights",
+      "item_name": "supervise performers' fights",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|followspot operator|skill|adapt-designers-work-to-the-performance-venue",
+      "context_level": "role",
+      "context_key": "D042|followspot operator",
+      "item_type": "skill",
+      "item_key": "adapt-designers-work-to-the-performance-venue",
+      "item_name": "adapt designers’ work to the performance venue",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|followspot operator|skill|assemble-performance-equipment",
+      "context_level": "role",
+      "context_key": "D042|followspot operator",
+      "item_type": "skill",
+      "item_key": "assemble-performance-equipment",
+      "item_name": "assemble performance equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D042|followspot operator|skill|de-rig-electronic-equipment",
+      "context_level": "role",
+      "context_key": "D042|followspot operator",
+      "item_type": "skill",
+      "item_key": "de-rig-electronic-equipment",
+      "item_name": "de-rig electronic equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    }
+  ],
+  "policy": {
+    "review_required_preserved_unless_exact_item_evidence_established": true,
+    "no_relationship_inference": true,
+    "no_promotion": true
+  }
+}

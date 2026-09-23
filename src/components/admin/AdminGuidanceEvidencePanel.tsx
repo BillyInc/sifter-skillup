@@ -1,11 +1,13 @@
 import React from "react";
-import { Linking, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { CompassFonts, FontSize, Radius, Spacing, useTheme } from "@/theme";
 import { Badge } from "@/components/ui";
+import { ExternalLinkGuard } from "@/components/careerIntelligence/ExternalLinkGuard";
 import {
   canApproveForStudent,
   canExposeToStudents,
   adminEvidenceQueueState,
+  partitionAdminGuidanceEvidence,
   type AdminGuidanceEvidenceRecord,
   type AdminEvidenceState,
 } from "@/screens/admin/adminGuidanceEvidence";
@@ -63,7 +65,7 @@ function SourceField({ label, value }: { label: string; value?: unknown }) {
   );
 }
 
-function EvidenceRow({ record, onApprove }: { record: AdminGuidanceEvidenceRecord; onApprove?: AdminGuidanceEvidencePanelProps["onApprove"] }) {
+function EvidenceRow({ record, onApprove, acceptedView = false }: { record: AdminGuidanceEvidenceRecord; onApprove?: AdminGuidanceEvidencePanelProps["onApprove"]; acceptedView?: boolean }) {
   const { colors } = useTheme();
   const approval = canApproveForStudent(record);
   const exposure = canExposeToStudents(record);
@@ -101,17 +103,35 @@ function EvidenceRow({ record, onApprove }: { record: AdminGuidanceEvidenceRecor
       </View>
       {record.evidenceNote ? <Text style={[styles.meta, { color: colors.textMuted }]}>Reviewer note: {record.evidenceNote}</Text> : null}
       {record.sourceUrl ? (
-        <TouchableOpacity accessibilityRole="link" onPress={() => void Linking.openURL(record.sourceUrl!).catch(() => undefined)}>
-          <Text style={[styles.link, { color: colors.accent }]}>Open source URL</Text>
-        </TouchableOpacity>
+        <ExternalLinkGuard
+          audience="admin"
+          url={record.sourceUrl}
+          label="Open source URL"
+          description="This opens the retained evidence source for staff review."
+          textStyle={[styles.link, { color: colors.accent }]}
+        />
       ) : null}
-      {onApprove && approval.allowed ? (
+      {record.linkUrl && record.linkUrl !== record.sourceUrl ? (
+        <ExternalLinkGuard
+          audience="admin"
+          url={record.linkUrl}
+          label="Open retained item link"
+          description="This opens the retained item-specific link for staff review."
+          textStyle={[styles.link, { color: colors.accent }]}
+        />
+      ) : null}
+      {acceptedView ? (
+        <Text style={[styles.meta, { color: colors.green }]}>Accepted for student exposure: approved evidence and provenance checks passed.</Text>
+      ) : (
+        <Text style={[styles.meta, { color: colors.textSoft }]}>Internal review only: this row is not student-backed.</Text>
+      )}
+      {!acceptedView && onApprove && approval.allowed ? (
         <TouchableOpacity accessibilityRole="button" onPress={() => onApprove(record)} style={[styles.approveButton, { borderColor: colors.accent }]}>
           <Text style={[styles.link, CompassFonts.bodyBold, { color: colors.accent }]}>Approve for student review</Text>
         </TouchableOpacity>
-      ) : (
+      ) : !acceptedView ? (
         <Text style={[styles.meta, { color: colors.textSoft }]}>Approval unavailable: {approval.reason}</Text>
-      )}
+      ) : null}
     </View>
   );
 }
@@ -119,13 +139,22 @@ function EvidenceRow({ record, onApprove }: { record: AdminGuidanceEvidenceRecor
 /** Admin evidence ledger for all four guidance levels and relationship rows. */
 export function AdminGuidanceEvidencePanel({ records, onApprove }: AdminGuidanceEvidencePanelProps) {
   const { colors } = useTheme();
-  const blocked = records.filter((record) => !canExposeToStudents(record)).length;
+  const views = partitionAdminGuidanceEvidence(records);
   return (
     <View style={[styles.panel, { backgroundColor: colors.card, borderColor: colors.border }]}>
       <Text style={[styles.title, CompassFonts.bodyBold, { color: colors.text }]}>Evidence review and student-exposure gate</Text>
       <Text style={[styles.description, { color: colors.textMuted }]}>Admins can inspect programme, domain, subgroup, role and relationship evidence here. Student guidance accepts only explicitly approved rows with a retained source URL or locator and source access date. Review-required, no-link, not-established and audit-only rows remain blocked.</Text>
-      <Text style={[styles.summary, CompassFonts.bodySemibold, { color: colors.text }]}>{records.length} records · {blocked} blocked from student exposure</Text>
-      {records.length ? records.map((record) => <EvidenceRow key={record.id} record={record} onApprove={onApprove} />) : <Text style={[styles.meta, { color: colors.textMuted }]}>No evidence rows are available. The admin review is unavailable rather than empty.</Text>}
+      <Text style={[styles.summary, CompassFonts.bodySemibold, { color: colors.text }]}>{views.accepted.length} accepted for student exposure · {views.internal.length} internal review rows</Text>
+      <View style={styles.section}>
+        <Text style={[styles.sectionTitle, CompassFonts.bodySemibold, { color: colors.text }]}>Accepted / student-facing evidence</Text>
+        <Text style={[styles.meta, { color: colors.textMuted }]}>Only approved rows with stable ownership and traceable provenance appear here.</Text>
+        {views.accepted.length ? views.accepted.map((record) => <EvidenceRow key={`accepted-${record.id}`} record={record} acceptedView />) : <Text style={[styles.meta, { color: colors.textMuted }]}>No approved evidence is accepted for student exposure yet.</Text>}
+      </View>
+      <View style={styles.section}>
+        <Text style={[styles.sectionTitle, CompassFonts.bodySemibold, { color: colors.text }]}>Internal review queue</Text>
+        <Text style={[styles.meta, { color: colors.textMuted }]}>Review-required, no-link, not-established, audit-only, unavailable, identity-incomplete and provenance-incomplete rows stay internal and cannot be exposed to students.</Text>
+        {views.internal.length ? views.internal.map((record) => <EvidenceRow key={`internal-${record.id}`} record={record} onApprove={onApprove} />) : <Text style={[styles.meta, { color: colors.textMuted }]}>No internal review rows are available.</Text>}
+      </View>
     </View>
   );
 }
@@ -135,6 +164,8 @@ const styles = StyleSheet.create({
   title: { fontSize: FontSize.md },
   description: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.55 },
   summary: { fontSize: FontSize.xs },
+  section: { gap: Spacing.sm },
+  sectionTitle: { fontSize: FontSize.sm },
   row: { borderWidth: 1, borderRadius: Radius.sm, padding: Spacing.md, gap: Spacing.sm },
   headingRow: { flexDirection: "row", alignItems: "flex-start", gap: Spacing.sm },
   copy: { flex: 1, gap: 3 },

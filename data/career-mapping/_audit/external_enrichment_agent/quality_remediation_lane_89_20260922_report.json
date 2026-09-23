@@ -1,0 +1,41 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-report.v2",
+  "batch": "quality_remediation_lane_89_20260922",
+  "status": "complete",
+  "source_audit": "item_ledger_quality_audit_2026-09-22.json",
+  "selection": "quality_remediation_lane_89_20260922_selection.json",
+  "pre_search_checkpoint": "quality_remediation_lane_89_20260922_pre_search_checkpoint.json",
+  "append_only_ledger": "quality_remediation_lane_89_20260922_append_only_ledger.jsonl",
+  "selection_source_sha256": "65b788fb8aff075d011739b5d904870c2681be6d1d93eddd973f4c4877889cf1",
+  "selection_count": 200,
+  "searched_count": 200,
+  "ledger_count": 200,
+  "unique_subject_ids": 200,
+  "omitted_count": 0,
+  "duplicate_count": 0,
+  "decision_counts": {
+    "promoted": 3,
+    "review_required": 197
+  },
+  "promoted_count": 3,
+  "review_required_count": 197,
+  "evidence_records": 424,
+  "access_date_records": 200,
+  "query_records": 430,
+  "candidate_urls": 539,
+  "unique_candidate_urls": 341,
+  "https_candidate_urls": 539,
+  "exact_reconciliation": "200/200",
+  "untouched_scope_flags": {
+    "relationships_touched": false,
+    "catalogue_touched": false,
+    "sql_touched": false,
+    "seeds_touched": false,
+    "ui_touched": false,
+    "browser_proof_touched": false,
+    "promotion_performed": false,
+    "prior_ledgers_modified": false
+  },
+  "scope_guard": "Items only; relationships, catalogue, SQL, seeds, UI and browser proof untouched.",
+  "result": "All 200 existing selected items were searched and appended in selection order. Three exact item/type/context matches were promoted; the remaining 197 remain review_required."
+}

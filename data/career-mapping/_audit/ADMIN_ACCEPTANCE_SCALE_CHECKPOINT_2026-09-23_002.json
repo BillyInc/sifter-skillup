@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "2026-09-23.admin-acceptance-scale-checkpoint.v2",
+  "checkpoint": "002",
+  "generatedOn": "2026-09-23",
+  "appendOnly": true,
+  "mode": "read_only_local",
+  "status": "catalogue_boundary_complete_ledger_crosscheck_pending",
+  "scope": {
+    "programmeCount": 237,
+    "jambIdentityCount": 420,
+    "activeProgrammeDomainLinks": 1344,
+    "contextualItemRows": 121377,
+    "contextualRelationshipRows": 408163,
+    "contextualRowsTotal": 529540
+  },
+  "catalogueAcceptance": {
+    "acceptedRows": 0,
+    "internalRows": 529540,
+    "blockedStatesRemainInternal": [
+      "review_required",
+      "no_link",
+      "not_established",
+      "audit_only"
+    ],
+    "blockedStateNegativeChecks": "pass",
+    "explicitApprovalRequired": true,
+    "matchingOwnershipRequired": true,
+    "traceableSourceAndAccessDateRequired": true
+  },
+  "appendOnlyResourceLedgerObserved": {
+    "programmeReviewRows": 237,
+    "programmeReviewState": "review_required",
+    "detailedJambReviewRows": 86,
+    "detailedJambReviewState": "review_required",
+    "canonicalJambResourceRows": 420,
+    "canonicalJambResourceState": "review_required",
+    "promotionsObserved": 0,
+    "hashIntegrityChecked": false
+  },
+  "boundaries": {
+    "sqlApplied": false,
+    "liveDatabaseRead": false,
+    "browserProof": false,
+    "studentExposureApproved": false,
+    "implementationChanged": false
+  },
+  "previousCheckpoint": "data/career-mapping/_audit/ADMIN_ACCEPTANCE_SCALE_CHECKPOINT_2026-09-23.json",
+  "nextPass": "Complete deterministic manifest/hash and ledger-row cross-check; do not promote review_required or source-backed rows."
+}

@@ -1,0 +1,188 @@
+{
+  "schema": "2026-09-19.external-source-enrichment.batch.v1",
+  "created_at": "2026-09-19T20:30:00+00:00",
+  "kind": "item",
+  "review_method": "The first deterministic item batch was searched against item-specific official documentation or certification pages. Generic capability labels were not assigned generic homepages; they remain review_required until a specific authoritative destination is found.",
+  "records": [
+    {
+      "subject_id": "domain|D001|skill|computer-systems-and-programming",
+      "subject_kind": "item",
+      "search_queries": ["official computer systems and programming skill documentation", "D001 computer systems and programming authoritative learning resource"],
+      "search_urls": ["https://www.acm.org/education/curricula-recommendations", "https://www.iso.org/standard/74528.html"],
+      "decision": "review_required",
+      "evidence": [],
+      "review_note": "Searches found curriculum/framework sources rather than an item-specific learning destination for this broad catalogue label. No generic homepage is substituted."
+    },
+    {
+      "subject_id": "domain|D001|skill|software-packages",
+      "subject_kind": "item",
+      "search_queries": ["official software packages skill documentation", "software packages computer science authoritative learning resource"],
+      "search_urls": ["https://packaging.python.org/en/latest/", "https://www.iso.org/standard/74528.html"],
+      "decision": "review_required",
+      "evidence": [],
+      "review_note": "The Python Packaging User Guide is authoritative for Python packaging but is not an item-specific destination for the broad label software packages."
+    },
+    {
+      "subject_id": "domain|D001|skill|multimedia-document-production",
+      "subject_kind": "item",
+      "search_queries": ["official multimedia document production skill documentation", "multimedia document production authoritative standard"],
+      "search_urls": ["https://www.w3.org/TR/WCAG22/", "https://www.iso.org/standard/74528.html"],
+      "decision": "review_required",
+      "evidence": [],
+      "review_note": "The results cover accessibility and curriculum standards, not a specific destination for this broad skill label."
+    },
+    {
+      "subject_id": "domain|D001|competency|develop-and-document-software",
+      "subject_kind": "item",
+      "search_queries": ["official develop and document software competency", "software development documentation official guide"],
+      "search_urls": ["https://www.iso.org/standard/43447.html", "https://docs.github.com/en/get-started/writing-on-github"],
+      "decision": "review_required",
+      "evidence": [],
+      "review_note": "Official software lifecycle/documentation materials were found, but no single item-specific destination establishes the full catalogue competency as written."
+    },
+    {
+      "subject_id": "domain|D001|competency|design-and-query-databases",
+      "subject_kind": "item",
+      "search_queries": ["official design and query databases competency", "official SQL database query documentation"],
+      "search_urls": ["https://www.iso.org/standard/63555.html", "https://www.postgresql.org/docs/current/sql.html"],
+      "decision": "review_required",
+      "evidence": [],
+      "review_note": "PostgreSQL SQL documentation is tool/dialect-specific and does not by itself validate the broad competency label across this context."
+    },
+    {
+      "subject_id": "domain|D001|competency|configure-and-secure-networks",
+      "subject_kind": "item",
+      "search_queries": ["official configure and secure networks competency", "official network security standards documentation"],
+      "search_urls": ["https://www.nist.gov/cyberframework", "https://www.iso.org/standard/27001.html"],
+      "decision": "review_required",
+      "evidence": [],
+      "review_note": "NIST and ISO/IEC 27001 are authoritative frameworks, but they are not item-specific learning links for this broad competency record."
+    },
+    {
+      "subject_id": "domain|D001|certification|aws-certified-solutions-architect-associate",
+      "subject_kind": "item",
+      "search_queries": ["site:aws.amazon.com AWS Certified Solutions Architect Associate official"],
+      "search_urls": ["https://aws.amazon.com/certification/certified-solutions-architect-associate/", "https://docs.aws.amazon.com/aws-certification/latest/solutions-architect-associate-03.html"],
+      "decision": "source_backed",
+      "evidence": [{"url": "https://aws.amazon.com/certification/certified-solutions-architect-associate/", "authority": "Amazon Web Services", "locator": "Certification page heading and Exam overview; item title appears as AWS Certified Solutions Architect - Associate.", "accessed_on": "2026-09-19", "link_role": "official_information", "confidence": "high"}, {"url": "https://docs.aws.amazon.com/aws-certification/latest/solutions-architect-associate-03.html", "authority": "Amazon Web Services", "locator": "Exam Guide SAA-C03 introduction and content domains; exact certification exam guide.", "accessed_on": "2026-09-19", "link_role": "official_evidence", "confidence": "high"}],
+      "review_note": "Item-specific official certification and exam-guide destinations verified."
+    },
+    {
+      "subject_id": "domain|D001|certification|microsoft-certified-azure-developer-associate",
+      "subject_kind": "item",
+      "search_queries": ["site:learn.microsoft.com/en-us/credentials/certifications/azure-developer Microsoft Certified Azure Developer Associate"],
+      "search_urls": ["https://learn.microsoft.com/en-us/credentials/certifications/azure-developer/", "https://learn.microsoft.com/en-us/credentials/certifications/posts/level-up-with-microsoft-certified-azure-developer-associate"],
+      "decision": "source_backed",
+      "evidence": [{"url": "https://learn.microsoft.com/en-us/credentials/certifications/azure-developer/", "authority": "Microsoft Learn", "locator": "Page heading and overview lines 12-15, updated 2026-01-14; page explicitly warns that the certification and renewal assessment are retired at lines 57-63.", "accessed_on": "2026-09-19", "link_role": "official_information", "confidence": "high"}],
+      "review_note": "The exact official item page is verified, but its retired status must remain visible to staff/admin and must not be presented as a current recommended route without a separate current-credential review."
+    },
+    {
+      "subject_id": "domain|D001|certification|certified-kubernetes-administrator-cka",
+      "subject_kind": "item",
+      "search_queries": ["site:training.linuxfoundation.org/certification certified kubernetes administrator CKA"],
+      "search_urls": ["https://training.linuxfoundation.org/certification/certified-kubernetes-administrator-cka/", "https://training.linuxfoundation.org/learning-paths/"],
+      "decision": "source_backed",
+      "evidence": [{"url": "https://training.linuxfoundation.org/certification/certified-kubernetes-administrator-cka/", "authority": "The Linux Foundation and CNCF", "locator": "Certification page heading and About the CKA section; page identifies the CKA as a performance-based certification and lists domains/competencies.", "accessed_on": "2026-09-19", "link_role": "official_information", "confidence": "high"}],
+      "review_note": "Item-specific official certification destination verified."
+    },
+    {
+      "subject_id": "domain|D001|certification|istqb-certified-tester-foundation-level",
+      "subject_kind": "item",
+      "search_queries": ["site:istqb.org/certifications CTFL Certified Tester Foundation Level"],
+      "search_urls": ["https://istqb.org/certifications/certified-tester-foundation-level-ctfl-v4-0/", "https://istqb.org/certifications/"],
+      "decision": "source_backed",
+      "evidence": [{"url": "https://istqb.org/certifications/certified-tester-foundation-level-ctfl-v4-0/", "authority": "International Software Testing Qualifications Board", "locator": "CTFL v4.0 page heading and Overview; page describes the exact certification and its testing-domain scope.", "accessed_on": "2026-09-19", "link_role": "official_information", "confidence": "high"}],
+      "review_note": "Item-specific official certification destination verified."
+    },
+    {
+      "subject_id": "subgroup|D001|sg:25|skill|computer-programming",
+      "subject_kind": "item",
+      "search_queries": ["official computer programming skill documentation", "D001 subgroup computer programming authoritative learning resource"],
+      "search_urls": ["https://www.acm.org/education/curricula-recommendations", "https://docs.python.org/3/tutorial/index.html"],
+      "decision": "review_required",
+      "evidence": [],
+      "review_note": "The search found authoritative curriculum and language-specific material, but not an item-specific destination for the broad skill label without selecting a language."
+    },
+    {
+      "subject_id": "subgroup|D001|sg:25|skill|create-software-design",
+      "subject_kind": "item",
+      "search_queries": ["official software design skill documentation", "software design authoritative standard"],
+      "search_urls": ["https://www.iso.org/standard/43447.html", "https://www.omg.org/spec/UML/2.5.1/"],
+      "decision": "review_required",
+      "evidence": [],
+      "review_note": "The sources are standards/framework destinations, not a sufficiently item-specific learning link for this broad catalogue skill."
+    },
+    {
+      "subject_id": "subgroup|D001|sg:25|skill|execute-software-tests",
+      "subject_kind": "item",
+      "search_queries": ["official execute software tests skill documentation", "official software testing foundation documentation"],
+      "search_urls": ["https://www.istqb.org/certifications/certified-tester-foundation-level-ctfl-v4-0/", "https://www.iso.org/standard/63555.html"],
+      "decision": "review_required",
+      "evidence": [],
+      "review_note": "ISTQB is an official certification destination, but the broad skill needs a learning/documentation target specific to this record before linking."
+    },
+    {
+      "subject_id": "subgroup|D001|sg:25|skill|systems-development-life-cycle",
+      "subject_kind": "item",
+      "search_queries": ["official systems development life cycle documentation", "software lifecycle standard official"],
+      "search_urls": ["https://www.iso.org/standard/43447.html", "https://www.nasa.gov/reference/"],
+      "decision": "review_required",
+      "evidence": [],
+      "review_note": "Lifecycle references were found, but no item-specific destination was verified for this exact contextual record."
+    },
+    {
+      "subject_id": "subgroup|D001|sg:25|skill|data-models",
+      "subject_kind": "item",
+      "search_queries": ["official data models documentation", "data modelling authoritative standard"],
+      "search_urls": ["https://www.iso.org/standard/63555.html", "https://www.postgresql.org/docs/current/ddl.html"],
+      "decision": "review_required",
+      "evidence": [],
+      "review_note": "Database-specific documentation is not sufficient to establish an item-specific link for the broad data models skill."
+    },
+    {
+      "subject_id": "domain|D002|skill|computer-systems-and-programming",
+      "subject_kind": "item",
+      "search_queries": ["official computer systems and programming skill documentation", "D002 computer systems and programming authoritative learning resource"],
+      "search_urls": ["https://www.acm.org/education/curricula-recommendations", "https://www.iso.org/standard/74528.html"],
+      "decision": "review_required",
+      "evidence": [],
+      "review_note": "No item-specific destination was verified for the broad skill label; the same-name item in another domain is not evidence for this context."
+    },
+    {
+      "subject_id": "domain|D002|skill|software-packages",
+      "subject_kind": "item",
+      "search_queries": ["official software packages skill documentation", "software packages computer science authoritative learning resource"],
+      "search_urls": ["https://packaging.python.org/en/latest/", "https://www.iso.org/standard/74528.html"],
+      "decision": "review_required",
+      "evidence": [],
+      "review_note": "No item-specific destination verified for this context."
+    },
+    {
+      "subject_id": "domain|D002|skill|multimedia-document-production",
+      "subject_kind": "item",
+      "search_queries": ["official multimedia document production skill documentation", "multimedia document production authoritative standard"],
+      "search_urls": ["https://www.w3.org/TR/WCAG22/", "https://www.iso.org/standard/74528.html"],
+      "decision": "review_required",
+      "evidence": [],
+      "review_note": "No item-specific destination verified for this context."
+    },
+    {
+      "subject_id": "domain|D002|competency|develop-and-document-software",
+      "subject_kind": "item",
+      "search_queries": ["official develop and document software competency", "software development documentation official guide"],
+      "search_urls": ["https://www.iso.org/standard/43447.html", "https://docs.github.com/en/get-started/writing-on-github"],
+      "decision": "review_required",
+      "evidence": [],
+      "review_note": "No item-specific destination verified for this context."
+    },
+    {
+      "subject_id": "domain|D002|competency|design-and-query-databases",
+      "subject_kind": "item",
+      "search_queries": ["official design and query databases competency", "official SQL database query documentation"],
+      "search_urls": ["https://www.iso.org/standard/63555.html", "https://www.postgresql.org/docs/current/sql.html"],
+      "decision": "review_required",
+      "evidence": [],
+      "review_note": "No item-specific destination verified for this context."
+    }
+  ]
+}

@@ -1,0 +1,3573 @@
+{
+  "schemaVersion": 1,
+  "generatedOn": "2026-09-18",
+  "sourcePolicy": "Original CCMAS PDF is checked before a flagged row is promoted into the generic student contract. Clear source variants are corrected at contract-build time; missing or materially conflicting records remain review_only.",
+  "sourceDocuments": {
+    "administration_management.json": "Administration-and-Management.pdf",
+    "agricultural_science.json": "Agriculture-2023.pdf",
+    "allied_health.json": "Allied-Health-Sciences-2023.pdf",
+    "architecture.json": "Architecture-CCMAS-2023-FINAL.pdf",
+    "arts.json": "Arts-CCMAS-2023-FINAL.pdf",
+    "basic_medical.json": "Basic-Medical-Sciences-CCMAS-FINAL-December-26-2022.pdf",
+    "communication_media.json": "Communication-and-Media-Studies-CCMAS-2023-FINAL.pdf",
+    "computing.json": "Computing-CCMAS-2023-FINAL.pdf",
+    "education.json": "Education-CCMAS-2023-New.pdf",
+    "engineering.json": "Engineering-Technology-CCMAS-2023-FINAL.pdf",
+    "environmental_sciences.json": "Environmental-Sciences-CCMAS-2023-FINAL.pdf",
+    "law.json": "Law-ALL.pdf",
+    "medicine_dentistry.json": "Medicine-and-Dentistry-CCMAS-2023-FINAL.pdf",
+    "pharmacy.json": "Pharmacy-and-Pharmaceutical-Sciences-CCMAS-2023-FINAL.pdf",
+    "sciences.json": "Sciences-CCMAS-2023-FINAL.pdf",
+    "social_sciences.json": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+    "veterinary.json": "Veterinary-Medicine-CCMAS-2023-FINAL.pdf"
+  },
+  "courseRows": [
+    {
+      "rowKey": "Administration and Management::Aviation Management::AVM 210::Elements of Marketing",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Aviation Management",
+      "courseCode": "AVM 210",
+      "courseTitle": "Elements of Marketing",
+      "flags": [
+        "Code discrepancy: AVM 209 appears in LO section for 'Elements of Marketing' but table shows AVM 210."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        79,
+        383,
+        386
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Finance / Banking and Finance::FIN 102::[Title not shown in LO section]",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Finance / Banking and Finance",
+      "courseCode": "FIN 102",
+      "courseTitle": "[Title not shown in LO section]",
+      "flags": [
+        "FIN 102 learning outcomes and contents NOT FOUND in source document; title not shown."
+      ],
+      "dataState": "review_only",
+      "studentDisplay": false,
+      "resolution": "The original document does not provide a complete course-table and learning-content record for this row. Keep it staff-review-only until the source is corrected or institution-specific evidence is supplied. No matching page text was extracted; retain the source review state until a human confirms the PDF page.",
+      "decision": "source_content_missing_or_course_identity_unresolved",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [],
+      "originalChecked": false
+    },
+    {
+      "rowKey": "Administration and Management::Finance / Banking and Finance::FIN 202::Principles of Insurance",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Finance / Banking and Finance",
+      "courseCode": "FIN 202",
+      "courseTitle": "Principles of Insurance",
+      "flags": [
+        "Table codes FIN 201-205 do not match LO section codes; codes reproduced from LO section as found."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        68,
+        100,
+        234,
+        240,
+        313,
+        317
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Business Administration::BUA 200::Introduction to Financing",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Business Administration",
+      "courseCode": "BUA 200",
+      "courseTitle": "Introduction to Financing",
+      "flags": [
+        "Marked BUA 200* in source: present in LO section but absent from course table per source note."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF provides a learning-outcome/course-content record even though the course is missing from the programme structure table. Keep the source content visible in the programme contract, but preserve the structural anomaly in the source locator for staff review.",
+      "decision": "source_backed_course_contents_only",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        140
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Business Information Technology::BIT 423(I)::Research Project (On-going) I",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Business Information Technology",
+      "courseCode": "BIT 423(I)",
+      "courseTitle": "Research Project (On-going) I",
+      "flags": [
+        "BIT 423 used twice in source (Research Project I and II) — code duplication."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        109
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Business Information Technology::BIT 423(II)::Research Project II",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Business Information Technology",
+      "courseCode": "BIT 423(II)",
+      "courseTitle": "Research Project II",
+      "flags": [
+        "BIT 423 used twice in source (Research Project I and II) — code duplication."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        109,
+        187,
+        206,
+        429
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Co-operative and Rural Development::CRD 408::Organization Theory",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Co-operative and Rural Development",
+      "courseCode": "CRD 408",
+      "courseTitle": "Organization Theory",
+      "flags": [
+        "CRD 408 appears in LO section but may be absent from course table per source note."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF provides a learning-outcome/course-content record even though the course is missing from the programme structure table. Keep the source content visible in the programme contract, but preserve the structural anomaly in the source locator for staff review.",
+      "decision": "source_backed_course_contents_only",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        159,
+        180
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Hospitality and Tourism Management::HTM 401::Culinary Cultures",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Hospitality and Tourism Management",
+      "courseCode": "HTM 401",
+      "courseTitle": "Culinary Cultures",
+      "flags": [
+        "Pathway A: Hospitality Management Option"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "This is a source-defined pathway or option course. Keep it attached to the programme and label the pathway where the source provides one; it is not a parser error.",
+      "decision": "source_defined_pathway_or_option",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        260,
+        275
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Hospitality and Tourism Management::HTM 402::Catering and Hotel Business Mgt.",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Hospitality and Tourism Management",
+      "courseCode": "HTM 402",
+      "courseTitle": "Catering and Hotel Business Mgt.",
+      "flags": [
+        "Pathway A: Hospitality Management Option"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "This is a source-defined pathway or option course. Keep it attached to the programme and label the pathway where the source provides one; it is not a parser error.",
+      "decision": "source_defined_pathway_or_option",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        260,
+        275
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Hospitality and Tourism Management::HTM 403::Tourism and Foodservice Management",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Hospitality and Tourism Management",
+      "courseCode": "HTM 403",
+      "courseTitle": "Tourism and Foodservice Management",
+      "flags": [
+        "Pathway A: Hospitality Management Option"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "This is a source-defined pathway or option course. Keep it attached to the programme and label the pathway where the source provides one; it is not a parser error.",
+      "decision": "source_defined_pathway_or_option",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        260,
+        276
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Hospitality and Tourism Management::HTM 405::Recipe Development & Sensory Eval.",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Hospitality and Tourism Management",
+      "courseCode": "HTM 405",
+      "courseTitle": "Recipe Development & Sensory Eval.",
+      "flags": [
+        "Pathway A: Hospitality Management Option"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "This is a source-defined pathway or option course. Keep it attached to the programme and label the pathway where the source provides one; it is not a parser error.",
+      "decision": "source_defined_pathway_or_option",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        260,
+        276
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Hospitality and Tourism Management::HTM 406::Catering and Hotel Service Laws",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Hospitality and Tourism Management",
+      "courseCode": "HTM 406",
+      "courseTitle": "Catering and Hotel Service Laws",
+      "flags": [
+        "Pathway A: Hospitality Management Option"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "This is a source-defined pathway or option course. Keep it attached to the programme and label the pathway where the source provides one; it is not a parser error.",
+      "decision": "source_defined_pathway_or_option",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        260,
+        277
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Hospitality and Tourism Management::TRM 408::Tourism Economics, trade & Marketing",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Hospitality and Tourism Management",
+      "courseCode": "TRM 408",
+      "courseTitle": "Tourism Economics, trade & Marketing",
+      "flags": [
+        "Pathway A: Hospitality Management Option"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "This is a source-defined pathway or option course. Keep it attached to the programme and label the pathway where the source provides one; it is not a parser error.",
+      "decision": "source_defined_pathway_or_option",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        260,
+        279
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Hospitality and Tourism Management::HTM 410::Tourism and Hospitality Administration",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Hospitality and Tourism Management",
+      "courseCode": "HTM 410",
+      "courseTitle": "Tourism and Hospitality Administration",
+      "flags": [
+        "Pathway A: Hospitality Management Option"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "This is a source-defined pathway or option course. Keep it attached to the programme and label the pathway where the source provides one; it is not a parser error.",
+      "decision": "source_defined_pathway_or_option",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        260,
+        277
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Hospitality and Tourism Management::HTM 499::Project",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Hospitality and Tourism Management",
+      "courseCode": "HTM 499",
+      "courseTitle": "Project",
+      "flags": [
+        "Pathway A: Hospitality Management Option"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "This is a source-defined pathway or option course. Keep it attached to the programme and label the pathway where the source provides one; it is not a parser error.",
+      "decision": "source_defined_pathway_or_option",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        6,
+        7,
+        16,
+        20,
+        23,
+        31,
+        32,
+        35,
+        39,
+        49,
+        50,
+        54,
+        58,
+        59,
+        64,
+        68,
+        72,
+        73,
+        75,
+        78,
+        79,
+        80,
+        83,
+        93,
+        94,
+        99,
+        100,
+        102,
+        103,
+        106,
+        107,
+        108,
+        109,
+        112,
+        125,
+        126,
+        127,
+        129,
+        133,
+        134,
+        137,
+        146,
+        147,
+        148,
+        150,
+        151,
+        152,
+        153,
+        154,
+        158,
+        159,
+        162,
+        164,
+        173,
+        174,
+        176,
+        178,
+        179,
+        180,
+        181,
+        182,
+        186,
+        187,
+        190,
+        206,
+        207,
+        208,
+        212,
+        216,
+        217,
+        225,
+        226,
+        229,
+        231,
+        234,
+        235,
+        238,
+        241,
+        247,
+        249,
+        250,
+        254,
+        255,
+        258,
+        260,
+        263,
+        264,
+        277,
+        278,
+        279,
+        280,
+        285,
+        286,
+        289,
+        290,
+        293,
+        301,
+        304,
+        305,
+        306,
+        310,
+        313,
+        328,
+        330,
+        332,
+        334,
+        335,
+        337,
+        338,
+        348,
+        349,
+        350,
+        351,
+        353,
+        357,
+        358,
+        361,
+        362,
+        372,
+        374,
+        375,
+        377,
+        378,
+        379,
+        383,
+        385,
+        388,
+        389,
+        397,
+        400,
+        401,
+        406,
+        409,
+        411,
+        413,
+        414,
+        425,
+        429,
+        430,
+        432,
+        437,
+        449,
+        452,
+        453,
+        454,
+        455,
+        457,
+        458,
+        462,
+        463,
+        464,
+        467,
+        470,
+        478,
+        480,
+        481,
+        483,
+        484,
+        485,
+        486,
+        487,
+        488,
+        491,
+        492,
+        493,
+        494,
+        495,
+        496,
+        497,
+        498,
+        499,
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        510,
+        511,
+        514,
+        522,
+        525,
+        526,
+        527,
+        530,
+        535,
+        536,
+        539,
+        540,
+        546,
+        555,
+        557,
+        561,
+        562,
+        565,
+        566,
+        575,
+        576,
+        577,
+        580,
+        581,
+        585,
+        586,
+        591,
+        594,
+        599,
+        600,
+        607,
+        609,
+        610,
+        613
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Hospitality and Tourism Management::HTM 403::Foodservice and Tourism Management",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Hospitality and Tourism Management",
+      "courseCode": "HTM 403",
+      "courseTitle": "Foodservice and Tourism Management",
+      "flags": [
+        "Pathway B: Tourism Management Option"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "This is a source-defined pathway or option course. Keep it attached to the programme and label the pathway where the source provides one; it is not a parser error.",
+      "decision": "source_defined_pathway_or_option",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        260,
+        276
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Hospitality and Tourism Management::TRM 401::Tourism Planning and Environment",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Hospitality and Tourism Management",
+      "courseCode": "TRM 401",
+      "courseTitle": "Tourism Planning and Environment",
+      "flags": [
+        "Pathway B: Tourism Management Option"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "This is a source-defined pathway or option course. Keep it attached to the programme and label the pathway where the source provides one; it is not a parser error.",
+      "decision": "source_defined_pathway_or_option",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        260,
+        278
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Hospitality and Tourism Management::TRM 403::Tourism and Globalization",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Hospitality and Tourism Management",
+      "courseCode": "TRM 403",
+      "courseTitle": "Tourism and Globalization",
+      "flags": [
+        "Pathway B: Tourism Management Option"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "This is a source-defined pathway or option course. Keep it attached to the programme and label the pathway where the source provides one; it is not a parser error.",
+      "decision": "source_defined_pathway_or_option",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        260,
+        278
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Hospitality and Tourism Management::TRM 407::Tourism Laws, Policy and Legislation",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Hospitality and Tourism Management",
+      "courseCode": "TRM 407",
+      "courseTitle": "Tourism Laws, Policy and Legislation",
+      "flags": [
+        "Pathway B: Tourism Management Option"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "This is a source-defined pathway or option course. Keep it attached to the programme and label the pathway where the source provides one; it is not a parser error.",
+      "decision": "source_defined_pathway_or_option",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        260,
+        278
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Hospitality and Tourism Management::TRM 408::Tourism Economics, trade & Marketing",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Hospitality and Tourism Management",
+      "courseCode": "TRM 408",
+      "courseTitle": "Tourism Economics, trade & Marketing",
+      "flags": [
+        "Pathway B: Tourism Management Option"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "This is a source-defined pathway or option course. Keep it attached to the programme and label the pathway where the source provides one; it is not a parser error.",
+      "decision": "source_defined_pathway_or_option",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        260,
+        279
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Hospitality and Tourism Management::HTM 410::Tourism and Hospitality Administration",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Hospitality and Tourism Management",
+      "courseCode": "HTM 410",
+      "courseTitle": "Tourism and Hospitality Administration",
+      "flags": [
+        "Pathway B: Tourism Management Option"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "This is a source-defined pathway or option course. Keep it attached to the programme and label the pathway where the source provides one; it is not a parser error.",
+      "decision": "source_defined_pathway_or_option",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        260,
+        277
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Hospitality and Tourism Management::TRM 412::Coastal zone Tourism Management",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Hospitality and Tourism Management",
+      "courseCode": "TRM 412",
+      "courseTitle": "Coastal zone Tourism Management",
+      "flags": [
+        "Pathway B: Tourism Management Option"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "This is a source-defined pathway or option course. Keep it attached to the programme and label the pathway where the source provides one; it is not a parser error.",
+      "decision": "source_defined_pathway_or_option",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        260,
+        279
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Hospitality and Tourism Management::TRM 499::Project",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Hospitality and Tourism Management",
+      "courseCode": "TRM 499",
+      "courseTitle": "Project",
+      "flags": [
+        "Pathway B: Tourism Management Option"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "This is a source-defined pathway or option course. Keep it attached to the programme and label the pathway where the source provides one; it is not a parser error.",
+      "decision": "source_defined_pathway_or_option",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        6,
+        7,
+        16,
+        20,
+        23,
+        31,
+        32,
+        35,
+        39,
+        49,
+        50,
+        54,
+        58,
+        59,
+        64,
+        68,
+        72,
+        73,
+        75,
+        78,
+        79,
+        80,
+        83,
+        93,
+        94,
+        99,
+        100,
+        102,
+        103,
+        106,
+        107,
+        108,
+        109,
+        112,
+        125,
+        126,
+        127,
+        129,
+        133,
+        134,
+        137,
+        146,
+        147,
+        148,
+        150,
+        151,
+        152,
+        153,
+        154,
+        158,
+        159,
+        162,
+        164,
+        173,
+        174,
+        176,
+        178,
+        179,
+        180,
+        181,
+        182,
+        186,
+        187,
+        190,
+        206,
+        207,
+        208,
+        212,
+        216,
+        217,
+        225,
+        226,
+        229,
+        231,
+        234,
+        235,
+        238,
+        241,
+        247,
+        249,
+        250,
+        254,
+        255,
+        258,
+        260,
+        263,
+        264,
+        277,
+        278,
+        279,
+        280,
+        285,
+        286,
+        289,
+        290,
+        293,
+        301,
+        304,
+        305,
+        306,
+        310,
+        313,
+        328,
+        330,
+        332,
+        334,
+        335,
+        337,
+        338,
+        348,
+        349,
+        350,
+        351,
+        353,
+        357,
+        358,
+        361,
+        362,
+        372,
+        374,
+        375,
+        377,
+        378,
+        379,
+        383,
+        385,
+        388,
+        389,
+        397,
+        400,
+        401,
+        406,
+        409,
+        411,
+        413,
+        414,
+        425,
+        429,
+        430,
+        432,
+        437,
+        449,
+        452,
+        453,
+        454,
+        455,
+        457,
+        458,
+        462,
+        463,
+        464,
+        467,
+        470,
+        478,
+        480,
+        481,
+        483,
+        484,
+        485,
+        486,
+        487,
+        488,
+        491,
+        492,
+        493,
+        494,
+        495,
+        496,
+        497,
+        498,
+        499,
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        510,
+        511,
+        514,
+        522,
+        525,
+        526,
+        527,
+        530,
+        535,
+        536,
+        539,
+        540,
+        546,
+        555,
+        557,
+        561,
+        562,
+        565,
+        566,
+        575,
+        576,
+        577,
+        580,
+        581,
+        585,
+        586,
+        591,
+        594,
+        599,
+        600,
+        607,
+        609,
+        610,
+        613
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Information Resource Management::IRM 202::Information System Analysis, Design, Eval",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Information Resource Management",
+      "courseCode": "IRM 202",
+      "courseTitle": "Information System Analysis, Design, Eval",
+      "flags": [
+        "IRM 202 code reused from 200L; LO section uses IRM 401"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        290,
+        297
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Marketing::MKT 220::Food and Agricultural Marketing",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Marketing",
+      "courseCode": "MKT 220",
+      "courseTitle": "Food and Agricultural Marketing",
+      "flags": [
+        "LO section uses MKT 224 for this course"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        384,
+        393
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Marketing::MKT 416::Marketing of Industrial Products",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Marketing",
+      "courseCode": "MKT 416",
+      "courseTitle": "Marketing of Industrial Products",
+      "flags": [
+        "LO section uses typo MTK 416"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        385
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Office and Information Management::OIM 215::Desktop Publishing & Web-designing",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Office and Information Management",
+      "courseCode": "OIM 215",
+      "courseTitle": "Desktop Publishing & Web-designing",
+      "flags": [
+        "LO section title: Desktop Publishing and Spreadsheet Applications"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        410,
+        418
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Office and Information Management::OIM 414::Corporate Ethics",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Office and Information Management",
+      "courseCode": "OIM 414",
+      "courseTitle": "Corporate Ethics",
+      "flags": [
+        "LO section uses OIM 409"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        407,
+        408,
+        411,
+        428,
+        429
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Petroleum Information Management::PIM 202::Management and Organisation of Information II",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Petroleum Information Management",
+      "courseCode": "PIM 202",
+      "courseTitle": "Management and Organisation of Information II",
+      "flags": [
+        "code variant ENT 202 in source"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        436,
+        443
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Petroleum Information Management::PIM 310::Management Information Systems",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Petroleum Information Management",
+      "courseCode": "PIM 310",
+      "courseTitle": "Management Information Systems",
+      "flags": [
+        "in LO section only, not in course table"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF provides a learning-outcome/course-content record even though the course is missing from the programme structure table. Keep the source content visible in the programme contract, but preserve the structural anomaly in the source locator for staff review.",
+      "decision": "source_backed_course_contents_only",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        118,
+        151,
+        179,
+        248,
+        300,
+        366,
+        451,
+        471,
+        545,
+        573
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Petroleum Information Management::PIM 312::Globalisation, the Knowledge Economy, Publishing & Information Trade",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Petroleum Information Management",
+      "courseCode": "PIM 312",
+      "courseTitle": "Globalisation, the Knowledge Economy, Publishing & Information Trade",
+      "flags": [
+        "in LO section only, not in course table"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF provides a learning-outcome/course-content record even though the course is missing from the programme structure table. Keep the source content visible in the programme contract, but preserve the structural anomaly in the source locator for staff review.",
+      "decision": "source_backed_course_contents_only",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        452
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Petroleum Information Management::PIM 412::Planning and Financing Information Technology",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Petroleum Information Management",
+      "courseCode": "PIM 412",
+      "courseTitle": "Planning and Financing Information Technology",
+      "flags": [
+        "in LO section only, not in course table"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF provides a learning-outcome/course-content record even though the course is missing from the programme structure table. Keep the source content visible in the programme contract, but preserve the structural anomaly in the source locator for staff review.",
+      "decision": "source_backed_course_contents_only",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        456
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Petroleum Information Management::PIM 413::The Future of the Digital Economy",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Petroleum Information Management",
+      "courseCode": "PIM 413",
+      "courseTitle": "The Future of the Digital Economy",
+      "flags": [
+        "in LO section only, not in course table"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF provides a learning-outcome/course-content record even though the course is missing from the programme structure table. Keep the source content visible in the programme contract, but preserve the structural anomaly in the source locator for staff review.",
+      "decision": "source_backed_course_contents_only",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        457
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Petroleum Information Management::PIM 414::Business Data Analytics",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Petroleum Information Management",
+      "courseCode": "PIM 414",
+      "courseTitle": "Business Data Analytics",
+      "flags": [
+        "in LO section only, not in course table"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF provides a learning-outcome/course-content record even though the course is missing from the programme structure table. Keep the source content visible in the programme contract, but preserve the structural anomaly in the source locator for staff review.",
+      "decision": "source_backed_course_contents_only",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        457
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Procurement Management::PRM 408::",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Procurement Management",
+      "courseCode": "PRM 408",
+      "courseTitle": null,
+      "flags": [
+        "no title in source",
+        "no learning outcomes or course contents in source"
+      ],
+      "dataState": "review_only",
+      "studentDisplay": false,
+      "resolution": "The original document does not provide a complete course-table and learning-content record for this row. Keep it staff-review-only until the source is corrected or institution-specific evidence is supplied.",
+      "decision": "source_content_missing_or_course_identity_unresolved",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        464
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Project Management::PMG 111::Business Analysis",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Project Management",
+      "courseCode": "PMG 111",
+      "courseTitle": "Business Analysis",
+      "flags": [
+        "code variant PGM in LO section"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        487,
+        491
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Project Management::PMG 122::Requirement Engineering",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Project Management",
+      "courseCode": "PMG 122",
+      "courseTitle": "Requirement Engineering",
+      "flags": [
+        "code variant PGM in LO section"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        487,
+        492,
+        493
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Project Management::PMG 424::Final Year Project (Semester 1 & 2)",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Project Management",
+      "courseCode": "PMG 424",
+      "courseTitle": "Final Year Project (Semester 1 & 2)",
+      "flags": [
+        "units 4 in P12 table; LO heading states 6 Units"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        488,
+        505
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Public Administration::PAD 302::Administrative Behaviour",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Public Administration",
+      "courseCode": "PAD 302",
+      "courseTitle": "Administrative Behaviour",
+      "flags": [
+        "P12 lists 3 units; LO heading states 2 Units C: LH 30"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        511,
+        520
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Public Administration::PAD 305::Public Personnel Administration",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Public Administration",
+      "courseCode": "PAD 305",
+      "courseTitle": "Public Personnel Administration",
+      "flags": [
+        "P12 lists 2 units; LO heading states 3 Units C: LH 45"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        511,
+        521
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Public Administration::PAD 306::Development Administration",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Public Administration",
+      "courseCode": "PAD 306",
+      "courseTitle": "Development Administration",
+      "flags": [
+        "P12 lists 3 units; LO heading states 2 Units C: LH 30"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        340,
+        511,
+        521,
+        522
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Public Administration::PAD 307::Research Methods",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Public Administration",
+      "courseCode": "PAD 307",
+      "courseTitle": "Research Methods",
+      "flags": [
+        "P12 lists 2 units; LO heading states 3 Units C: LH 45"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        79,
+        93,
+        108,
+        124,
+        213,
+        226,
+        288,
+        290,
+        304,
+        358,
+        374,
+        392,
+        436,
+        450,
+        477,
+        478,
+        505,
+        511,
+        522,
+        536,
+        552,
+        561,
+        575,
+        604
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Public Administration::PAD 308::E-Governance",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Public Administration",
+      "courseCode": "PAD 308",
+      "courseTitle": "E-Governance",
+      "flags": [
+        "P12 lists 3 units; LO heading states 2 Units C: LH 30"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        31,
+        38,
+        48,
+        73,
+        106,
+        123,
+        140,
+        142,
+        243,
+        249,
+        321,
+        342,
+        475,
+        511,
+        522,
+        551,
+        574
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Public Administration::PAD 309::Comparative Local Government",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Public Administration",
+      "courseCode": "PAD 309",
+      "courseTitle": "Comparative Local Government",
+      "flags": [
+        "P12 lists 3 units; LO heading states 2 Units C: LH 30"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        334,
+        338,
+        345,
+        511,
+        523
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Public Administration::PAD 312::Traditional Administrative System in Nigeria",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Public Administration",
+      "courseCode": "PAD 312",
+      "courseTitle": "Traditional Administrative System in Nigeria",
+      "flags": [
+        "P12 lists 3 units; LO heading states 2 Units C: LH 30"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        511,
+        524
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Public Administration::PAD 402::Public Project Management",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Public Administration",
+      "courseCode": "PAD 402",
+      "courseTitle": "Public Project Management",
+      "flags": [
+        "P12 lists 2 units; LO heading states 3 Units C: LH 45"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        511,
+        525
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Public Administration::PAD 403::Public Policy Making and Analysis",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Public Administration",
+      "courseCode": "PAD 403",
+      "courseTitle": "Public Policy Making and Analysis",
+      "flags": [
+        "P12 lists 2 units; LO heading states 3 Units C: LH 45"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        511,
+        526
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Public Administration::PAD 406::Research Project",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Public Administration",
+      "courseCode": "PAD 406",
+      "courseTitle": "Research Project",
+      "flags": [
+        "P12 lists 2 units; LO heading states 6 Units C: PH 270"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        93,
+        109,
+        127,
+        134,
+        150,
+        159,
+        180,
+        187,
+        206,
+        235,
+        249,
+        290,
+        304,
+        335,
+        349,
+        358,
+        374,
+        375,
+        385,
+        425,
+        429,
+        437,
+        454,
+        455,
+        464,
+        478,
+        480,
+        511,
+        522,
+        527,
+        536,
+        555,
+        562,
+        575,
+        576
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Public Administration::PAD 408::Comparative Public Administration",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Public Administration",
+      "courseCode": "PAD 408",
+      "courseTitle": "Comparative Public Administration",
+      "flags": [
+        "P12 lists 3 units; LO heading states 2 Units C: LH 30"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        511,
+        528
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Public Administration::PAD 409::Public Service Ethics and Accountability",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Public Administration",
+      "courseCode": "PAD 409",
+      "courseTitle": "Public Service Ethics and Accountability",
+      "flags": [
+        "P12 token PAD409-Project(6) labels this 6-unit Project; LO section gives PAD 409 as Public Service Ethics and Accountability 2 Units C: LH 30, while the 6-unit Research Project is PAD 406 in the LO section - code/units discrepancy between P12 table and LO contents"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        511,
+        528
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Securities and Investments Management::SIM 311::Risk Management",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Securities and Investments Management",
+      "courseCode": "SIM 311",
+      "courseTitle": "Risk Management",
+      "flags": [
+        "table 3 units; LO section states 2 units"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        52,
+        55,
+        63,
+        64,
+        65,
+        73,
+        80,
+        91,
+        98,
+        101,
+        102,
+        213,
+        228,
+        240,
+        247,
+        248,
+        249,
+        251,
+        252,
+        254,
+        277,
+        287,
+        288,
+        290,
+        300,
+        307,
+        308,
+        309,
+        310,
+        318,
+        320,
+        321,
+        322,
+        327,
+        445,
+        453,
+        464,
+        470,
+        476,
+        477,
+        495,
+        499,
+        535,
+        549,
+        550
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Securities and Investments Management::SIM 312::Alternative Investments",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Securities and Investments Management",
+      "courseCode": "SIM 312",
+      "courseTitle": "Alternative Investments",
+      "flags": [
+        "units 3 but LH 30 in source (inconsistent)"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        535,
+        549,
+        550
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Securities and Investments Management::SIM 321::Ethics and Professional Standards",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Securities and Investments Management",
+      "courseCode": "SIM 321",
+      "courseTitle": "Ethics and Professional Standards",
+      "flags": [
+        "table 3 units; LO section states 2 units"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        536,
+        551
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Securities and Investments Management::SIM 322::Investment of Pensions funds in Nigeria",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Securities and Investments Management",
+      "courseCode": "SIM 322",
+      "courseTitle": "Investment of Pensions funds in Nigeria",
+      "flags": [
+        "units 3 but LH 30 in source (inconsistent)"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        536,
+        551
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Securities and Investments Management::SIM 323::Fixed Income Securities",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Securities and Investments Management",
+      "courseCode": "SIM 323",
+      "courseTitle": "Fixed Income Securities",
+      "flags": [
+        "units 3 but LH 30 in source (inconsistent)"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        247,
+        536,
+        542,
+        552
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Securities and Investments Management::SIM 324::Research Methods",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Securities and Investments Management",
+      "courseCode": "SIM 324",
+      "courseTitle": "Research Methods",
+      "flags": [
+        "units 3 but LH 30 in source (inconsistent)"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        79,
+        93,
+        108,
+        124,
+        213,
+        226,
+        288,
+        290,
+        304,
+        358,
+        374,
+        392,
+        436,
+        450,
+        477,
+        478,
+        505,
+        511,
+        522,
+        536,
+        552,
+        561,
+        575,
+        604
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Securities and Investments Management::SIM 412::Financial Derivatives",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Securities and Investments Management",
+      "courseCode": "SIM 412",
+      "courseTitle": "Financial Derivatives",
+      "flags": [
+        "table 3 units vs 2 units in LO section"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        48,
+        536,
+        549,
+        553
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Securities and Investments Management::SIM 422::Global Securities Analysis",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Securities and Investments Management",
+      "courseCode": "SIM 422",
+      "courseTitle": "Global Securities Analysis",
+      "flags": [
+        "table 3 units vs 2 units in LO section"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        536,
+        554
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Taxation::ACC 101::Financial Accounting I",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Taxation",
+      "courseCode": "ACC 101",
+      "courseTitle": "Financial Accounting I",
+      "flags": [
+        "title and P13/P14 content cross-referenced from the Accounting programme",
+        "100L duplicate table variant exists in source"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        31,
+        35,
+        37,
+        38,
+        561
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Taxation::ACC 102::Financial Accounting II",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Taxation",
+      "courseCode": "ACC 102",
+      "courseTitle": "Financial Accounting II",
+      "flags": [
+        "title and P13/P14 content cross-referenced from the Accounting programme",
+        "100L duplicate table variant exists in source"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        31,
+        35,
+        38,
+        561
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Taxation::TAX 311::Revenue Law and practice",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Taxation",
+      "courseCode": "TAX 311",
+      "courseTitle": "Revenue Law and practice",
+      "flags": [
+        "TAX 311 code used for two different courses in source"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        561,
+        572,
+        573
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Taxation::TAX 311::Entrepreneurship in Taxation",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Taxation",
+      "courseCode": "TAX 311",
+      "courseTitle": "Entrepreneurship in Taxation",
+      "flags": [
+        "TAX 311 code used for two different courses in source"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        561,
+        572,
+        573
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Taxation::TAX 411::Taxation Research Project I & II",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Taxation",
+      "courseCode": "TAX 411",
+      "courseTitle": "Taxation Research Project I & II",
+      "flags": [
+        "title combined for TAX 411/421 in source (6 Units C: PH 270)"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        576
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Taxation::TAX 421::Taxation Research Project I & II",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Taxation",
+      "courseCode": "TAX 421",
+      "courseTitle": "Taxation Research Project I & II",
+      "flags": [
+        "title combined for TAX 411/421 in source (6 Units C: PH 270)"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        562,
+        576
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Transport Management::GST 111::Communication in English",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Transport Management",
+      "courseCode": "GST 111",
+      "courseTitle": "Communication in English",
+      "flags": [
+        "GST 111 LH/PH reversed (45/15) in source 100L table"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        19,
+        31,
+        32,
+        54,
+        56,
+        79,
+        80,
+        107,
+        109,
+        133,
+        134,
+        158,
+        159,
+        186,
+        188,
+        212,
+        214,
+        234,
+        235,
+        258,
+        260,
+        289,
+        290,
+        309,
+        311,
+        334,
+        335,
+        357,
+        359,
+        383,
+        385,
+        409,
+        411,
+        417,
+        435,
+        437,
+        463,
+        464,
+        487,
+        488,
+        510,
+        512,
+        535,
+        536,
+        560,
+        561,
+        562,
+        584,
+        586
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Transport Management::GST 312::Peace and Conflict Resolution",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Transport Management",
+      "courseCode": "GST 312",
+      "courseTitle": "Peace and Conflict Resolution",
+      "flags": [
+        "GST 312 appears twice in 300L LO section"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        19,
+        31,
+        40,
+        55,
+        65,
+        79,
+        91,
+        108,
+        119,
+        134,
+        143,
+        159,
+        171,
+        187,
+        196,
+        213,
+        223,
+        235,
+        243,
+        259,
+        270,
+        290,
+        298,
+        310,
+        319,
+        334,
+        343,
+        358,
+        368,
+        384,
+        394,
+        410,
+        419,
+        436,
+        445,
+        463,
+        473,
+        487,
+        497,
+        511,
+        518,
+        535,
+        548,
+        561,
+        571,
+        585,
+        595,
+        603
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Administration and Management::Transport Management::TPM 400/401::Research Methods in Transport",
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "programme": "Transport Management",
+      "courseCode": "TPM 400/401",
+      "courseTitle": "Research Methods in Transport",
+      "flags": [
+        "combined code TPM 400/401; LO section covers only TPM 400"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Administration-and-Management.pdf",
+      "originalPages": [
+        604
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Computing::Data Science::DTS 322::Data Science Innovation and Entrepreneurship",
+      "sourceFile": "computing.json",
+      "discipline": "Computing",
+      "programme": "Data Science",
+      "courseCode": "DTS 322",
+      "courseTitle": "Data Science Innovation and Entrepreneurship",
+      "flags": [
+        "Course code appears as \"DST 322\" in the document heading but \"DTS 322\" in the table. Extracted as DTS 322 to match the table."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Computing-CCMAS-2023-FINAL.pdf",
+      "originalPages": [
+        96,
+        112
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Computing::Information and Communication Technology::ICT 398::SIWES II",
+      "sourceFile": "computing.json",
+      "discipline": "Computing",
+      "programme": "Information and Communication Technology",
+      "courseCode": "ICT 398",
+      "courseTitle": "SIWES II",
+      "flags": [
+        "Document uses ICT 398 in the table header but ICT 399 inline. Table figure used. Flagged for manual verification."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Computing-CCMAS-2023-FINAL.pdf",
+      "originalPages": [
+        30,
+        46,
+        59,
+        77,
+        96,
+        113,
+        123,
+        151,
+        177,
+        193,
+        205
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Computing::Information Systems::MTH 101::Elementary Mathematics I",
+      "sourceFile": "computing.json",
+      "discipline": "Computing",
+      "programme": "Information Systems",
+      "courseCode": "MTH 101",
+      "courseTitle": "Elementary Mathematics I",
+      "flags": [
+        "PHY 101 listed as 3 units and MTH 101/102 listed as LH 45 in IS section, differing slightly from other programmes. Extracted verbatim as stated in the IS course structure."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Computing-CCMAS-2023-FINAL.pdf",
+      "originalPages": [
+        29,
+        32,
+        58,
+        61,
+        62,
+        95,
+        98,
+        122,
+        126,
+        127,
+        150,
+        153,
+        176,
+        179,
+        204,
+        207
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Computing::Information Systems::MTH 102::Elementary Mathematics II",
+      "sourceFile": "computing.json",
+      "discipline": "Computing",
+      "programme": "Information Systems",
+      "courseCode": "MTH 102",
+      "courseTitle": "Elementary Mathematics II",
+      "flags": [
+        "PHY 101 listed as 3 units and MTH 101/102 listed as LH 45 in IS section, differing slightly from other programmes. Extracted verbatim as stated in the IS course structure."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Computing-CCMAS-2023-FINAL.pdf",
+      "originalPages": [
+        24,
+        29,
+        32,
+        58,
+        62,
+        95,
+        98,
+        122,
+        127,
+        150,
+        153,
+        176,
+        179,
+        204,
+        207
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Computing::Information Systems::PHY 101::General Physics I",
+      "sourceFile": "computing.json",
+      "discipline": "Computing",
+      "programme": "Information Systems",
+      "courseCode": "PHY 101",
+      "courseTitle": "General Physics I",
+      "flags": [
+        "PHY 101 listed as 3 units and MTH 101/102 listed as LH 45 in IS section, differing slightly from other programmes. Extracted verbatim as stated in the IS course structure."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Computing-CCMAS-2023-FINAL.pdf",
+      "originalPages": [
+        24,
+        29,
+        33,
+        34,
+        58,
+        62,
+        63,
+        64,
+        95,
+        99,
+        100,
+        101,
+        122,
+        127,
+        128,
+        150,
+        153,
+        154,
+        155,
+        176,
+        179,
+        180,
+        181,
+        204,
+        207,
+        208,
+        209
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Computing::Software Engineering::COS 102::Introduction to Problem Solving",
+      "sourceFile": "computing.json",
+      "discipline": "Computing",
+      "programme": "Software Engineering",
+      "courseCode": "COS 102",
+      "courseTitle": "Introduction to Problem Solving",
+      "flags": [
+        "COS 102 is titled \"Introduction to Problem Solving\" in SE (other programmes title it \"Problem Solving\") and is listed as 3 units with LH 30; PH 45 (other programmes show 2 units, LH 30; PH 0). Extracted verbatim as it appears in the SE table."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Computing-CCMAS-2023-FINAL.pdf",
+      "originalPages": [
+        25,
+        29,
+        36,
+        58,
+        65,
+        95,
+        102,
+        122,
+        126,
+        150,
+        156,
+        176,
+        182,
+        204,
+        210
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Computing::Software Engineering::COS 409::Research Methodology and Technical Report Writing",
+      "sourceFile": "computing.json",
+      "discipline": "Computing",
+      "programme": "Software Engineering",
+      "courseCode": "COS 409",
+      "courseTitle": "Research Methodology and Technical Report Writing",
+      "flags": [
+        "COS 409 is listed as 3 units in SE (2 units in all other programmes). Extracted verbatim."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Computing-CCMAS-2023-FINAL.pdf",
+      "originalPages": [
+        25,
+        30,
+        49,
+        60,
+        79,
+        96,
+        114,
+        123,
+        141,
+        151,
+        167,
+        177,
+        195,
+        205,
+        222
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Law::Law::PHL 105::Introduction to Social and Political Philosophy",
+      "sourceFile": "law.json",
+      "discipline": "Law",
+      "programme": "Law",
+      "courseCode": "PHL 105",
+      "courseTitle": "Introduction to Social and Political Philosophy",
+      "flags": [
+        "FLAG-A"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Law-ALL.pdf",
+      "originalPages": [
+        15,
+        28,
+        31
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Law::Law::ENT 211::Entrepreneurship and Innovation",
+      "sourceFile": "law.json",
+      "discipline": "Law",
+      "programme": "Law",
+      "courseCode": "ENT 211",
+      "courseTitle": "Entrepreneurship and Innovation",
+      "flags": [
+        "FLAG-F"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Law-ALL.pdf",
+      "originalPages": [
+        9,
+        14,
+        15,
+        28,
+        34,
+        57,
+        65
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Law::Common and Islamic Law::ICL 101::Introduction to General Principle of Islamic Law",
+      "sourceFile": "law.json",
+      "discipline": "Law",
+      "programme": "Common and Islamic Law",
+      "courseCode": "ICL 101",
+      "courseTitle": "Introduction to General Principle of Islamic Law",
+      "flags": [
+        "FLAG-B"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Law-ALL.pdf",
+      "originalPages": [
+        57,
+        63
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Law::Common and Islamic Law::ENT 211::Entrepreneurship and Innovation",
+      "sourceFile": "law.json",
+      "discipline": "Law",
+      "programme": "Common and Islamic Law",
+      "courseCode": "ENT 211",
+      "courseTitle": "Entrepreneurship and Innovation",
+      "flags": [
+        "FLAG-F"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Law-ALL.pdf",
+      "originalPages": [
+        9,
+        14,
+        15,
+        28,
+        34,
+        57,
+        65
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Law::Common and Islamic Law::ICL 301::Muamalat (Islamic Law of Transaction)",
+      "sourceFile": "law.json",
+      "discipline": "Law",
+      "programme": "Common and Islamic Law",
+      "courseCode": "ICL 301",
+      "courseTitle": "Muamalat (Islamic Law of Transaction)",
+      "flags": [
+        "FLAG-G"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Law-ALL.pdf",
+      "originalPages": [
+        58
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Law::Common and Islamic Law::ICL 304::Enterprise Appreciation",
+      "sourceFile": "law.json",
+      "discipline": "Law",
+      "programme": "Common and Islamic Law",
+      "courseCode": "ICL 304",
+      "courseTitle": "Enterprise Appreciation",
+      "flags": [
+        "FLAG-C"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Law-ALL.pdf",
+      "originalPages": [
+        58,
+        74
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Law::Common and Islamic Law::JIL 501::Jurisprudence and Legal Theory I",
+      "sourceFile": "law.json",
+      "discipline": "Law",
+      "programme": "Common and Islamic Law",
+      "courseCode": "JIL 501",
+      "courseTitle": "Jurisprudence and Legal Theory I",
+      "flags": [
+        "FLAG-D"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Law-ALL.pdf",
+      "originalPages": [
+        29,
+        45,
+        59,
+        79
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Law::Common and Islamic Law::JIL 502::Jurisprudence and Legal Theory II",
+      "sourceFile": "law.json",
+      "discipline": "Law",
+      "programme": "Common and Islamic Law",
+      "courseCode": "JIL 502",
+      "courseTitle": "Jurisprudence and Legal Theory II",
+      "flags": [
+        "FLAG-D"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Law-ALL.pdf",
+      "originalPages": [
+        29,
+        45,
+        59,
+        79
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Law::Common and Islamic Law::PPL 501::Company Law I",
+      "sourceFile": "law.json",
+      "discipline": "Law",
+      "programme": "Common and Islamic Law",
+      "courseCode": "PPL 501",
+      "courseTitle": "Company Law I",
+      "flags": [
+        "FLAG-D"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Law-ALL.pdf",
+      "originalPages": [
+        29,
+        46,
+        59,
+        80
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Law::Common and Islamic Law::PPL 502::Company Law II",
+      "sourceFile": "law.json",
+      "discipline": "Law",
+      "programme": "Common and Islamic Law",
+      "courseCode": "PPL 502",
+      "courseTitle": "Company Law II",
+      "flags": [
+        "FLAG-D"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Law-ALL.pdf",
+      "originalPages": [
+        29,
+        46,
+        59,
+        80
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Law::Common and Islamic Law::LAW 599::Long Essay",
+      "sourceFile": "law.json",
+      "discipline": "Law",
+      "programme": "Common and Islamic Law",
+      "courseCode": "LAW 599",
+      "courseTitle": "Long Essay",
+      "flags": [
+        "FLAG-E"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Law-ALL.pdf",
+      "originalPages": [
+        29,
+        47,
+        59,
+        81
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Criminology and Security Studies::CSS 204::Applied Statistics in Criminology and Security Studies",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Criminology and Security Studies",
+      "courseCode": "CSS 204",
+      "courseTitle": "Applied Statistics in Criminology and Security Studies",
+      "flags": [
+        "table title 'Applied Statistics' vs content 'Applied Statistical Methods'"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        27,
+        34
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Criminology and Security Studies::CSS 303::Research Methods in Criminology and Security Studies",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Criminology and Security Studies",
+      "courseCode": "CSS 303",
+      "courseTitle": "Research Methods in Criminology and Security Studies",
+      "flags": [
+        "table 3u/LH45 vs content 2u/LH30"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        27,
+        39
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Criminology and Security Studies::CSS 306::Internship",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Criminology and Security Studies",
+      "courseCode": "CSS 306",
+      "courseTitle": "Internship",
+      "flags": [
+        "content title 'Internship or Organisational Visits'"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        27,
+        40,
+        71,
+        164,
+        178,
+        230,
+        292
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::International Relations::IRS 101::Ancestors of the Contemporary International System",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "International Relations",
+      "courseCode": "IRS 101",
+      "courseTitle": "Ancestors of the Contemporary International System",
+      "flags": [
+        "table LH 60 (content LH 30)"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        118,
+        120
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::International Relations::IRS 104::The Rise of Nation States",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "International Relations",
+      "courseCode": "IRS 104",
+      "courseTitle": "The Rise of Nation States",
+      "flags": [
+        "table LH 60"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        117,
+        122
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::International Relations::IRS 407::Research Project",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "International Relations",
+      "courseCode": "IRS 407",
+      "courseTitle": "Research Project",
+      "flags": [
+        "course contents section mislabels this as 'SSC 401: Research Project'"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        27,
+        41,
+        50,
+        67,
+        73,
+        88,
+        97,
+        113,
+        119,
+        135,
+        141,
+        158,
+        165,
+        181,
+        200,
+        205,
+        221,
+        247,
+        252,
+        272,
+        280,
+        295,
+        303,
+        315,
+        316,
+        323,
+        339
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Library and Information Science::LIS 111::Introduction to Library and Information Science",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Library and Information Science",
+      "courseCode": "LIS 111",
+      "courseTitle": "Introduction to Library and Information Science",
+      "flags": [
+        "table 2u/LH30 vs content 3u/LH30"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        140,
+        143
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Library and Information Science::GST 212::Philosophy, Environment and Sustainable Development",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Library and Information Science",
+      "courseCode": "GST 212",
+      "courseTitle": "Philosophy, Environment and Sustainable Development",
+      "flags": [
+        "LIS-specific GST 212 version, differs from standard 'Philosophy, Logic and Human Existence'"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        27,
+        31,
+        49,
+        54,
+        72,
+        78,
+        96,
+        100,
+        118,
+        123,
+        140,
+        145,
+        163,
+        168,
+        186,
+        190,
+        204,
+        208,
+        226,
+        233,
+        251,
+        256,
+        279,
+        283,
+        302,
+        306,
+        322,
+        328
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Library and Information Science::LIS 211::Introduction to ICT in LIS",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Library and Information Science",
+      "courseCode": "LIS 211",
+      "courseTitle": "Introduction to ICT in LIS",
+      "flags": [
+        "code/title mismatch with course contents (LIS 211/212)"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        141,
+        146
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Library and Information Science::LIS 212::Philosophy of Library and Information Science",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Library and Information Science",
+      "courseCode": "LIS 212",
+      "courseTitle": "Philosophy of Library and Information Science",
+      "flags": [
+        "code/title mismatch with course contents (LIS 211/212)"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        141,
+        146
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Library and Information Science::LIS 228::Information Literacy",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Library and Information Science",
+      "courseCode": "LIS 228",
+      "courseTitle": "Information Literacy",
+      "flags": [
+        "no corresponding course contents entry"
+      ],
+      "dataState": "review_only",
+      "studentDisplay": false,
+      "resolution": "The original document does not provide a complete course-table and learning-content record for this row. Keep it staff-review-only until the source is corrected or institution-specific evidence is supplied.",
+      "decision": "source_content_missing_or_course_identity_unresolved",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        140
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Library and Information Science::LIS 317::Library Systems and Services",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Library and Information Science",
+      "courseCode": "LIS 317",
+      "courseTitle": "Library Systems and Services",
+      "flags": [
+        "only elective course in the entire Social Sciences CCMAS"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        141,
+        154,
+        156
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Library and Information Science::LIS 322::Hardware and Software Technologies",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Library and Information Science",
+      "courseCode": "LIS 322",
+      "courseTitle": "Hardware and Software Technologies",
+      "flags": [
+        "course contents shows LIS 225 for this title"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        141,
+        150
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Library and Information Science::LIS 418::Preservation, Conservation and Security of Library and Information Resources",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Library and Information Science",
+      "courseCode": "LIS 418",
+      "courseTitle": "Preservation, Conservation and Security of Library and Information Resources",
+      "flags": [
+        "course contents shows LIS 321 for this title"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        141,
+        154,
+        155
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Library and Information Science::LIS 424::Research Project",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Library and Information Science",
+      "courseCode": "LIS 424",
+      "courseTitle": "Research Project",
+      "flags": [
+        "course contents shows LIS 419 for this title"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        27,
+        41,
+        50,
+        67,
+        73,
+        88,
+        97,
+        113,
+        119,
+        135,
+        141,
+        158,
+        159,
+        165,
+        181,
+        200,
+        205,
+        221,
+        247,
+        252,
+        272,
+        280,
+        295,
+        303,
+        315,
+        316,
+        323,
+        339
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Peace Studies and Conflict Resolution::PCR 204::Social Alternatives",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Peace Studies and Conflict Resolution",
+      "courseCode": "PCR 204",
+      "courseTitle": "Social Alternatives",
+      "flags": [
+        "table LH '3' (likely truncation of 30)"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        164,
+        171
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Petroleum Economics and Policy Studies::PEP 123::Introduction to the Nigerian Energy Sector",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Petroleum Economics and Policy Studies",
+      "courseCode": "PEP 123",
+      "courseTitle": "Introduction to the Nigerian Energy Sector",
+      "flags": [
+        "Contents header reads '3 Units C: LH 45'; table value (2 Units) used."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        185,
+        190
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Petroleum Economics and Policy Studies::PEP 212::Introduction to Petroleum Economics I",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Petroleum Economics and Policy Studies",
+      "courseCode": "PEP 212",
+      "courseTitle": "Introduction to Petroleum Economics I",
+      "flags": [
+        "Contents section header reads 'PET 212' (likely typo for 'PEP 212')."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        186,
+        192,
+        193
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Petroleum Economics and Policy Studies::PEP 412::Petroleum Economics II",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Petroleum Economics and Policy Studies",
+      "courseCode": "PEP 412",
+      "courseTitle": "Petroleum Economics II",
+      "flags": [
+        "Contents section header reads '(2 Units C: LH 30)'; table value (3 Units, LH 45) used as primary."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        186,
+        189,
+        193,
+        199
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Political Science::POL 312::Theory and Practice of Marxism",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Political Science",
+      "courseCode": "POL 312",
+      "courseTitle": "Theory and Practice of Marxism",
+      "flags": [
+        "Course contents section labels this course POL 311; both numbers noted."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        205,
+        218
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Politics, Philosophy and Economics (PPE)::ECO 103::Introduction to Mathematics for Economists",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Politics, Philosophy and Economics (PPE)",
+      "courseCode": "ECO 103",
+      "courseTitle": "Introduction to Mathematics for Economists",
+      "flags": [
+        "Contents section labels this ECO 107 'Introductory Mathematics for Economics'."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        96,
+        99,
+        226
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Politics, Philosophy and Economics (PPE)::PHL 301::Early Modern Philosophy",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Politics, Philosophy and Economics (PPE)",
+      "courseCode": "PHL 301",
+      "courseTitle": "Early Modern Philosophy",
+      "flags": [
+        "PPE P12 course has no corresponding P13/P14 content entry in the source"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        227,
+        240
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Politics, Philosophy and Economics (PPE)::PHL 302::Epistemology",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Politics, Philosophy and Economics (PPE)",
+      "courseCode": "PHL 302",
+      "courseTitle": "Epistemology",
+      "flags": [
+        "PPE P12 course has no corresponding P13/P14 content entry in the source"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        146,
+        227,
+        241
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Politics, Philosophy and Economics (PPE)::PHL 305::Professional Ethics",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Politics, Philosophy and Economics (PPE)",
+      "courseCode": "PHL 305",
+      "courseTitle": "Professional Ethics",
+      "flags": [
+        "PPE P12 course has no corresponding P13/P14 content entry in the source"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        227,
+        241,
+        315
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Politics, Philosophy and Economics (PPE)::PHL 306::Metaphysics",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Politics, Philosophy and Economics (PPE)",
+      "courseCode": "PHL 306",
+      "courseTitle": "Metaphysics",
+      "flags": [
+        "PPE P12 course has no corresponding P13/P14 content entry in the source"
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        227
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Politics, Philosophy and Economics (PPE)::ECO 111::Nigerian Economy",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Politics, Philosophy and Economics (PPE)",
+      "courseCode": "ECO 111",
+      "courseTitle": "Nigerian Economy",
+      "flags": [
+        "Contents section labels this ECON 311 'Nigerian Economy'."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        81,
+        88,
+        103,
+        183,
+        186,
+        196,
+        219,
+        227,
+        243
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Politics, Philosophy and Economics (PPE)::POL 406::Nigerian Local Government System",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Politics, Philosophy and Economics (PPE)",
+      "courseCode": "POL 406",
+      "courseTitle": "Nigerian Local Government System",
+      "flags": [
+        "Political Science's own table calls this course POL 404."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        205,
+        220,
+        221,
+        227,
+        244
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Politics, Philosophy and Economics (PPE)::PPE 499::Long Essay",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Politics, Philosophy and Economics (PPE)",
+      "courseCode": "PPE 499",
+      "courseTitle": "Long Essay",
+      "flags": [
+        "Source renders title as 'Long Easy' — appears to be a typographical error for 'Long Essay'."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        67,
+        113,
+        227,
+        247,
+        339
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Psychology::PSY 103::Learning Processes",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Psychology",
+      "courseCode": "PSY 103",
+      "courseTitle": "Learning Processes",
+      "flags": [
+        "Contents section titles this course 'Learning Processes I'."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        251,
+        255
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Social Work::SWK 122::Social Deviance and Social Organisation",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Social Work",
+      "courseCode": "SWK 122",
+      "courseTitle": "Social Deviance and Social Organisation",
+      "flags": [
+        "Contents section titles this course 'Social Deviance and Systems Organisation'."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        302,
+        306
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Social Work::SWK 214::Social Casework Principles, Ethics and Values",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Social Work",
+      "courseCode": "SWK 214",
+      "courseTitle": "Social Casework Principles, Ethics and Values",
+      "flags": [
+        "Contents header reads 2 Units; table value (3 Units) used."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        302,
+        309
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Social Work::SWK 213::Forensic Social Work",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Social Work",
+      "courseCode": "SWK 213",
+      "courseTitle": "Forensic Social Work",
+      "flags": [
+        "Contents header reads 2 Units; table value (3 Units) used."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        302,
+        309
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Social Work::SWK 312::Community Development",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Social Work",
+      "courseCode": "SWK 312",
+      "courseTitle": "Community Development",
+      "flags": [
+        "Contents header reads 2 Units; table value (3 Units) used."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        37,
+        59,
+        71,
+        84,
+        87,
+        91,
+        109,
+        110,
+        132,
+        174,
+        195,
+        196,
+        214,
+        215,
+        264,
+        288,
+        290,
+        300,
+        302,
+        311,
+        312,
+        335
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Sociology::SOC 102::Introduction to Anthropology",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Sociology",
+      "courseCode": "SOC 102",
+      "courseTitle": "Introduction to Anthropology",
+      "flags": [
+        "Contents section titles this course 'Introduction to African Social Anthropology'."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        322,
+        325
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Sociology::SOC 103::Introduction to African Societies and Culture",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Sociology",
+      "courseCode": "SOC 103",
+      "courseTitle": "Introduction to African Societies and Culture",
+      "flags": [
+        "Contents section titles this course 'Introduction to African Societies and Cultures'."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        322,
+        325
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Sociology::SOC 201::History of Social Thought",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Sociology",
+      "courseCode": "SOC 201",
+      "courseTitle": "History of Social Thought",
+      "flags": [
+        "Contents header reads 4 Units, LH 60; table value (3 Units, LH 45) used."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        322,
+        329
+      ],
+      "originalChecked": true
+    },
+    {
+      "rowKey": "Social Sciences::Sociology::PSY 204::Introduction to Social Psychology",
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "programme": "Sociology",
+      "courseCode": "PSY 204",
+      "courseTitle": "Introduction to Social Psychology",
+      "flags": [
+        "Contents header shows LH 30; table value (LH 45) used."
+      ],
+      "dataState": "source_backed",
+      "studentDisplay": true,
+      "resolution": "The original PDF contains the course and learning content. Use the course-structure table for the canonical course identity/load and retain the content heading as a source note when it differs. The discrepancy must not be rendered as student copy.",
+      "decision": "source_backed_with_table_primary_identity",
+      "originalPdf": "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+      "originalPages": [
+        251,
+        260,
+        322,
+        331
+      ],
+      "originalChecked": true
+    }
+  ],
+  "documentFlags": [
+    {
+      "sourceFile": "administration_management.json",
+      "discipline": "Administration and Management",
+      "sourceFlags": [
+        "All courses in programmes 17-23 carry Status C (Core); the source defines no E-status elective courses for these programmes.",
+        "P9b (UTME subject combinations) marked NOT FOUND for these programmes in the source metadata.",
+        "Course titles were taken from each programme's P13/P14 Learning Outcomes/Course Contents headings; units/LH/PH from the '(N Units C: LH x; PH y)' annotations. Where an annotation gives only LH, PH is recorded as null.",
+        "PIM (17): AMS 101-104 are absent from the PIM 100L table (unique among all programmes); PIM 310, 312, 412, 413, 414 appear in the LO section only, not in the course table; PIM 202 carries an ENT 202 prefix error in source.",
+        "PRM (18): PRM 408 has no learning outcomes/course contents/title in source.",
+        "PMG (19): source uses 'PGM' prefix in some LO headings vs 'PMG' in the table; PMG 424 listed as 4 units in P12 table but 6 Units in the LO heading.",
+        "PAD (20): the P12 token 'PAD409-Project(6)' conflicts with the LO section, where PAD 406 is the 6-unit Research Project and PAD 409 is a 2-unit course; several PAD courses show unit/LH discrepancies between the P12 table and LO headings (flagged per course).",
+        "SIM (21): SIM 312/322/323/324 shown as 3 units but LH 30 (inconsistent); SIM 311/321/412/422 show table-vs-LO unit conflicts (flagged per course).",
+        "TAX (22): 100L has a duplicate table variant in source (12 units, no ACC); TAX 311 code is used for two different courses; ACC 101/ACC 102 have no LO entry within the Taxation section (titles null); TAX 411/421 share a combined 6-unit project title in source.",
+        "TPM (23): GST 111 LH/PH reversed (45/15) in source 100L table; GST 312 appears twice in the 300L LO section; TPM 400/401 is a combined code with the LO section covering only TPM 400."
+      ],
+      "studentContractEffect": "A document-level flag is not automatically a course-row exclusion. The builder applies row-level reconciliation and keeps missing/contradictory records review-only."
+    },
+    {
+      "sourceFile": "computing.json",
+      "discipline": "Computing",
+      "sourceFlags": [
+        "All 228 pages were scanned for elective-status courses. Every course in every programme's Global Course Structure table carries Status: C (Core). There are no E-status elective courses in this document. No elective clusters or specialisation pathways exist in this CCMAS — the document acknowledges electives in graduation language (\"passed all core courses and electives\") but does not define or list any elective courses within the CCMAS itself. This is flagged for manual follow-up: institutions likely define electives locally.",
+        "D5 (Discipline Learning Outcomes) — section does not exist in document.",
+        "P9b (UTME subject combinations) — NOT FOUND for all 7 programmes. The document specifies O'Level subject requirements at discipline level and repeats them per programme, but never specifies the UTME sitting subject combination for any Computing programme.",
+        "P7 (Employability Skills): CS, Data Science, ICT, IS, IT, and SE present these as narrative paragraphs rather than numbered lists. Only Cybersecurity presents Employability Skills as a structured numbered list.",
+        "P8 (21st Century Skills): Data Science (items 1/7, 2/13, 5/10, 4/12), ICT (items 1/6, 2/7, 5/11), and Software Engineering (items 5/7) contain apparent duplicate list items in the source document — all extracted verbatim.",
+        "ICT P12: SIWES II is listed as ICT 398 in the table header but ICT 399 inline. Manual verification needed.",
+        "DTS 304 learning outcomes differ between IS (4 outcomes) and CS/Data Science (7 outcomes) — extracted verbatim per programme as they appear.",
+        "IFT 212 learning outcomes differ between SE (8 outcomes, different framing) and CS/IT versions — extracted verbatim per programme.",
+        "SE COS 102: listed as 3 units with PH 45 (other programmes: 2 units, PH 0). Extracted verbatim.",
+        "SE COS 409: listed as 3 units (other programmes: 2 units). Extracted verbatim.",
+        "employability_skills populated from each programme's P8 21st Century Skills numbered list (verbatim), since P7 Employability Skills is a narrative paragraph for all programmes except Cybersecurity."
+      ],
+      "studentContractEffect": "A document-level flag is not automatically a course-row exclusion. The builder applies row-level reconciliation and keeps missing/contradictory records review-only."
+    },
+    {
+      "sourceFile": "law.json",
+      "discipline": "Law",
+      "sourceFlags": [
+        "FLAG-A: Glossary (p.15) lists course code \"PHY 105\" for Introduction to Social and Political Philosophy. Course tables and course content throughout the document consistently use \"PHL 105\". The PHL 105 rendering is used throughout this extraction as it is the majority usage. [FLAG FOR MANUAL REVIEW]",
+        "FLAG-B: ICL 101 (LL.B Common and Islamic Law, 100-level): Table (p.57) shows 2 units / LH 30. Course content section (p.63) shows 3 Units C: LH 45. Discrepancy in both units and contact hours. Both versions are recorded verbatim at P12 and P13 respectively. [FLAG FOR MANUAL REVIEW]",
+        "FLAG-C: ICL 304 (LL.B Common and Islamic Law, 300-level): Table (p.57–58) lists this course as \"Enterprise Appreciation\" / 2 units / LH 30 / C. Course content section (p.73–74) presents \"ICL 304: Islamic Family Law\" with 3 units / LH 45. Title, unit load, and contact hours all conflict. This is a major discrepancy in the source document. Both versions are recorded verbatim. [FLAG FOR MANUAL REVIEW — CRITICAL]",
+        "FLAG-D: LL.B Common and Islamic Law 500-level table (p.59): JIL 501, JIL 502, PPL 501, PPL 502 are listed with LH 60 and no PH column. Course content sections for all four courses show LH 45 / PH 45. The table also omits a PH column header for this level entirely. [FLAG FOR MANUAL REVIEW]",
+        "FLAG-E: LAW 599 in LL.B Common and Islamic Law 500-level table (p.59) shows LH 270 with no PH. The same course in the LL.B table shows LH 45 / PH 45. Course content text for both programmes is identical and does not specify LH/PH breakdown. [FLAG FOR MANUAL REVIEW]",
+        "FLAG-F: ENT 211 in LL.B Common and Islamic Law 200-level table (p.57): PH column appears blank. The same course in the LL.B table shows PH 15. [FLAG FOR MANUAL REVIEW]",
+        "FLAG-G: ICL 301 in course content section (p.73) is presented without the \"ICL\" prefix in the section heading, reading only \"301: Mu'amalat (Islamic Law of Transactions)\". The course code ICL 301 is used in this extraction as it appears in the 300-level table. [FLAG FOR MANUAL REVIEW]"
+      ],
+      "studentContractEffect": "A document-level flag is not automatically a course-row exclusion. The builder applies row-level reconciliation and keeps missing/contradictory records review-only."
+    },
+    {
+      "sourceFile": "social_sciences.json",
+      "discipline": "Social Sciences",
+      "sourceFlags": [
+        "BSc Library and Information Science appears as a full programme section (pages 136-158) between International Relations and Peace Studies but is NOT listed in Table 1.1 (D2). The Glossary of Course Codes (page 16) does not include an LIS code entry either, though 'LIS' is used as the course prefix throughout the section. Extracted as Programme 6 here using the [UNLISTED IN TABLE 1.1] label. Requires human review.",
+        "Only one elective course exists in the entire Social Sciences CCMAS: LIS 317 (Library Systems and Services, E status, 300 Level, LIS programme). All other courses across all programmes are C (Core/Compulsory).",
+        "Table 1.1 lists Programme 7 as 'Peace and Conflict Resolution' (S/N 6) but the programme section heading reads 'B.Sc. Peace Studies and Conflict Resolution'. Both noted.",
+        "LIS numbering discrepancies (FLAG FOR HUMAN REVIEW): course code mismatches between LIS course structure tables and course contents section (LIS 211/212, LIS 322/225, LIS 418/321, LIS 424/419); LIS 228 in table has no course contents entry; LIS 316 and LIS 321 appear in contents but not in the table. Reproduced verbatim from table.",
+        "IRS 101 and IRS 104 show LH 60 in the 100-level table (other courses use 30) — reproduced verbatim from the source table.",
+        "PCR 204 LH shown as '3' in the 200-level table (likely truncation of '30') — reproduced verbatim from the source table.",
+        "IRS 400 Level: the Course Contents section contains TWO entries both labelled 'SSC 401' — one is the Research Project (IRS 407 in the table, mislabelled), the other the standard SSC 401 Research Method II. Noted in document.",
+        "PEP 212: course contents section header reads 'PET 212' (not 'PEP 212') — likely a typographical error; reproduced verbatim and flagged.",
+        "PEP 123: course header in contents section reads '3 Units C: LH 45' but course structure table shows 2 Units; table value (2) used.",
+        "PEP 412 (Programme 8): shown as 3 Units in course structure table but course contents header reads '(2 Units C: LH 30)'; table value (3 Units) used as primary; flagged for human review.",
+        "POL 312 (Programme 9): table lists this course as POL 312; course contents section labels it POL 311; both numbers noted; flagged.",
+        "PPE numbering discrepancies (Programme 10): Table ECO 103 'Introduction to Mathematics for Economists' vs Contents ECO 107 'Introductory Mathematics for Economics'; Table ECO 111 'Nigerian Economy' (300-level) vs Contents ECON 311 'Nigerian Economy'; Table POL 406 'Nigerian Local Government System' (400-level) which Political Science's own table calls POL 404; PPE 499 titled 'Long Easy' in source appears to be a typographical error for 'Long Essay'. All reproduced verbatim/as table; flagged.",
+        "SSC 202 does not appear in the PPE (Programme 10) 200-level course structure table, unlike all other Social Sciences programmes; SSC 301, SSC 302 and SSC 401 also do not appear in the PPE course structure table.",
+        "SWK 213 (Programme 13) table: 3 Units; contents header: 2 Units. SWK 214 table: 3 Units; contents header: 2 Units. SWK 312 table: 3 Units; contents header: 2 Units. Table values used; discrepancies flagged.",
+        "SOC 201 (Programme 14) table: 3 Units, LH 45; contents header: 4 Units, LH 60 — table value used; flagged. PSY 204 (Programme 14) LH: table shows 45; contents header shows 30 — flagged.",
+        "Social Work (Programme 13) degree notation: section header reads 'B. Sc. Social Work' (with a space before 'Sc.') while Table 1.1 lists it as 'Social Work' with degree 'B.Sc.'; both versions flagged for human review."
+      ],
+      "studentContractEffect": "A document-level flag is not automatically a course-row exclusion. The builder applies row-level reconciliation and keeps missing/contradictory records review-only."
+    }
+  ],
+  "summary": {
+    "flaggedCourseRows": 122,
+    "sourceBackedRows": 119,
+    "reviewOnlyRows": 3,
+    "originalCheckedRows": 121,
+    "rowsWithoutExtractedPage": 1
+  }
+}

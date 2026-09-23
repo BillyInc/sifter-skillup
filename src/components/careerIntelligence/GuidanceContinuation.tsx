@@ -23,12 +23,12 @@ function names(items?: CareerContextItem[]): string[] {
     .filter(Boolean))].slice(0, 4);
 }
 
-function Stage({ title, text, items }: { title: string; text: string; items?: string[] }) {
+function Stage({ title, text, items }: { title: string; text?: string; items?: string[] }) {
   const { colors } = useTheme();
   return (
     <View style={[styles.stage, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
       <Text style={[styles.stageTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{title}</Text>
-      <Text style={[styles.stageText, { color: colors.textRole.secondary }]}>{text}</Text>
+      {text ? <Text style={[styles.stageText, { color: colors.textRole.secondary }]}>{text}</Text> : null}
       {items?.length ? <Text style={[styles.items, { color: colors.textRole.muted }]}>{items.join(" · ")}</Text> : null}
     </View>
   );
@@ -42,17 +42,21 @@ export function GuidanceContinuation({ programmeName, connection, domainName, su
   const foundationNames = [...new Set((domainFoundation ?? []).map((item) => item.skill).filter(Boolean))].slice(0, 4);
   const subgroupNames = names(subgroupItems);
   const roleNames = names(roleItems);
-  const hasAny = Boolean(programmeName || connection || domainNames.length || foundationNames.length || subgroupNames.length || roleNames.length);
+  const hasProgrammeStage = Boolean(programmeName && (connection?.explanation?.trim() || programmeEvidence?.length));
+  const hasDomainStage = Boolean(domainNames.length || foundationNames.length);
+  const hasSubgroupStage = Boolean(subgroupName && subgroupNames.length);
+  const hasRoleStage = Boolean(roleName && roleNames.length);
+  const hasAny = hasProgrammeStage || hasDomainStage || hasSubgroupStage || hasRoleStage;
   if (!hasAny) return null;
   return (
     <View style={styles.container}>
       <SectionLabel>How this path builds</SectionLabel>
-      <Text style={[styles.intro, { color: colors.textRole.secondary }]}>Each step keeps what came before and adds a more focused way to use it. The names below come from the programme and field information.</Text>
+      <Text style={[styles.intro, { color: colors.textRole.secondary }]}>Only the stages supported by the selected programme, field, subgroup and role records are shown.</Text>
       <View style={styles.grid}>
-        {programmeName ? <Stage title={`From ${programmeName}`} text={connection?.explanation || "The programme is the starting point for this route."} items={programmeEvidence} /> : null}
-        <Stage title={`Shared foundation in ${domainName}`} text="Start with the foundation shared across this field." items={foundationNames.length ? foundationNames : domainNames} />
-        {subgroupName ? <Stage title={`${subgroupName} adds`} text="This focused area adds methods and capabilities for a narrower kind of work." items={subgroupNames} /> : null}
-        {roleName ? <Stage title={`${roleName} focuses`} text="This role applies the path to a particular kind of work and output." items={roleNames} /> : null}
+        {hasProgrammeStage ? <Stage title={`From ${programmeName}`} text={connection?.explanation?.trim()} items={programmeEvidence} /> : null}
+        {hasDomainStage ? <Stage title={`Shared foundation in ${domainName}`} text="The wider field adds the foundation you need before choosing a more focused area." items={foundationNames.length ? foundationNames : domainNames} /> : null}
+        {hasSubgroupStage ? <Stage title={`${subgroupName} adds`} text="This focused area adds capabilities for a narrower kind of work." items={subgroupNames} /> : null}
+        {hasRoleStage ? <Stage title={`${roleName} focuses`} text="This role applies the path to particular work, decisions and outputs." items={roleNames} /> : null}
       </View>
     </View>
   );

@@ -1,0 +1,1632 @@
+{
+  "schema": "2026-09-22.external-item-remediation-selection.v1",
+  "claim": {
+    "claim_id": "83e82cbfc71cfac5",
+    "lane": 2,
+    "claimed_at": "2026-09-22T11:41:29Z",
+    "count": 100,
+    "subject_ids": [
+      "domain|D008|skill|broadband-services",
+      "domain|D009|skill|cybersecurity",
+      "domain|D010|skill|cybersecurity",
+      "domain|D012|certification|certified-kubernetes-administrator-cka",
+      "domain|D012|competency|apply-ethics-and-professionalism",
+      "domain|D012|competency|meet-banking-knowledge-and-skill-standards",
+      "domain|D012|competency|process-and-document-loans",
+      "domain|D012|skill|banking",
+      "domain|D012|skill|credit-and-loan-processing",
+      "domain|D013|competency|apply-ethics-and-professionalism",
+      "domain|D013|competency|meet-banking-knowledge-and-skill-standards",
+      "domain|D013|competency|process-and-document-loans",
+      "domain|D013|skill|banking",
+      "domain|D013|skill|credit-and-loan-processing",
+      "domain|D014|certification|fellow-of-the-institute-and-faculty-of-actuaries-fia",
+      "domain|D014|competency|analyse-complex-business-cases",
+      "domain|D014|competency|communicate-solutions",
+      "domain|D014|competency|exercise-professional-judgement",
+      "domain|D014|skill|audit-and-assurance",
+      "domain|D015|competency|analyse-complex-business-cases",
+      "domain|D015|competency|communicate-solutions",
+      "domain|D015|competency|exercise-professional-judgement",
+      "domain|D015|skill|audit-and-assurance",
+      "domain|D016|certification|certified-energy-manager-cem",
+      "domain|D016|certification|chartered-engineer-ceng",
+      "domain|D016|competency|engineering-safety-and-reliability",
+      "domain|D016|competency|interoperability",
+      "domain|D016|skill|ai",
+      "domain|D016|skill|big-data",
+      "domain|D017|competency|engineering-safety-and-reliability",
+      "domain|D017|competency|interoperability",
+      "domain|D017|skill|ai",
+      "domain|D017|skill|big-data",
+      "domain|D018|certification|chartered-engineer-ceng",
+      "domain|D018|certification|coren-registered-engineer",
+      "domain|D018|certification|corporate-member-nigerian-society-of-engineers-mnse",
+      "domain|D018|certification|project-management-professional-pmp",
+      "domain|D018|competency|engineering-safety-and-reliability",
+      "domain|D018|competency|interoperability",
+      "domain|D018|skill|ai",
+      "domain|D018|skill|big-data",
+      "domain|D019|certification|coren-registered-engineer",
+      "domain|D019|competency|engineering-safety-and-reliability",
+      "domain|D019|competency|interoperability",
+      "domain|D019|skill|ai",
+      "domain|D021|certification|riba-chartered-membership",
+      "domain|D021|competency|demonstrate-practical-trade-competence",
+      "domain|D021|competency|perform-construction-work-to-defined-occupational-standards",
+      "domain|D021|skill|carpentry-and-joinery",
+      "domain|D021|skill|electrical-installation",
+      "domain|D021|skill|masonry",
+      "domain|D022|certification|comeg-registered-geoscientist",
+      "domain|D023|competency|support-quality-and-patient-safety",
+      "domain|D023|competency|understand-health-system-governance",
+      "domain|D023|skill|health-policy",
+      "domain|D026|certification|haccp-certification",
+      "domain|D026|competency|coordinate-community-health-programmes",
+      "domain|D026|skill|health-promotion",
+      "domain|D026|skill|population-health",
+      "domain|D027|certification|nebosh-international-general-certificate",
+      "domain|D028|certification|lean-six-sigma-green-belt",
+      "domain|D028|competency|apply-management-standards",
+      "domain|D028|competency|lead-teams-and-organisations",
+      "domain|D028|skill|entrepreneurship-and-business-development",
+      "domain|D028|skill|leadership",
+      "domain|D028|skill|management",
+      "domain|D029|competency|advise-on-policy-and-compliance",
+      "domain|D029|competency|apply-hr-knowledge-and-competence",
+      "domain|D029|competency|maintain-professional-practice-through-re-certification",
+      "domain|D029|skill|human-resource-management",
+      "domain|D029|skill|labour-law-advisory",
+      "domain|D029|skill|strategic-hr-processes",
+      "domain|D030|competency|act-ethically",
+      "domain|D030|competency|apply-management-standards",
+      "domain|D030|competency|lead-teams-and-organisations",
+      "domain|D034|competency|evaluate-suppliers",
+      "domain|D034|competency|manage-commercial-risk",
+      "domain|D034|competency|run-fair-procurement-processes",
+      "domain|D034|skill|procurement-planning",
+      "domain|D034|skill|sourcing",
+      "domain|D034|skill|supplier-management",
+      "domain|D035|competency|evaluate-suppliers",
+      "domain|D035|competency|manage-commercial-risk",
+      "domain|D035|competency|run-fair-procurement-processes",
+      "domain|D035|skill|procurement-planning",
+      "domain|D035|skill|sourcing",
+      "domain|D035|skill|supplier-management",
+      "domain|D036|competency|evaluate-suppliers",
+      "domain|D036|competency|manage-commercial-risk",
+      "domain|D036|competency|run-fair-procurement-processes",
+      "domain|D036|skill|procurement-planning",
+      "domain|D037|competency|analyse-and-communicate-legal-issues",
+      "domain|D037|skill|legal-research",
+      "domain|D038|competency|analyse-and-communicate-legal-issues",
+      "domain|D038|skill|legal-research",
+      "domain|D040|competency|demonstrate-practical-competence-against-nos",
+      "domain|D103|skill|styling-and-image-work",
+      "domain|D106|competency|build-a-professional-portfolio-and-business",
+      "domain|D106|competency|develop-and-present-designs",
+      "domain|D106|competency|work-with-fashion-production-processes"
+    ]
+  },
+  "source_audit": "item_ledger_quality_audit_2026-09-22.json",
+  "records": [
+    {
+      "subject_id": "item|domain|D008|skill|broadband-services",
+      "context_level": "domain",
+      "context_key": "D008",
+      "item_type": "skill",
+      "item_key": "broadband-services",
+      "item_name": "broadband services",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://ncc.gov.ng/sites/default/files/2024-10/Legal-Guidelines_Deployment_Broadband_Service_Guidlines.pdf"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D009|skill|cybersecurity",
+      "context_level": "domain",
+      "context_key": "D009",
+      "item_type": "skill",
+      "item_key": "cybersecurity",
+      "item_name": "cybersecurity",
+      "decision": "linked",
+      "flags": [
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework",
+        "https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D010|skill|cybersecurity",
+      "context_level": "domain",
+      "context_key": "D010",
+      "item_type": "skill",
+      "item_key": "cybersecurity",
+      "item_name": "cybersecurity",
+      "decision": "linked",
+      "flags": [
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework",
+        "https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D012|certification|certified-kubernetes-administrator-cka",
+      "context_level": "domain",
+      "context_key": "D012",
+      "item_type": "certification",
+      "item_key": "certified-kubernetes-administrator-cka",
+      "item_name": "Certified Kubernetes Administrator (CKA)",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://training.linuxfoundation.org/certification/certified-kubernetes-administrator-cka/"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D012|competency|apply-ethics-and-professionalism",
+      "context_level": "domain",
+      "context_key": "D012",
+      "item_type": "competency",
+      "item_key": "apply-ethics-and-professionalism",
+      "item_name": "apply ethics and professionalism",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.cbn.gov.ng/OUT/PUBLICATIONS/REPORTS/BSD/2002/BSDAR01.PDF"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D012|competency|meet-banking-knowledge-and-skill-standards",
+      "context_level": "domain",
+      "context_key": "D012",
+      "item_type": "competency",
+      "item_key": "meet-banking-knowledge-and-skill-standards",
+      "item_name": "meet banking knowledge and skill standards",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.cbn.gov.ng/out/2020/fmd/cbn%20rule%20book%20volume%202.pdf"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D012|competency|process-and-document-loans",
+      "context_level": "domain",
+      "context_key": "D012",
+      "item_type": "competency",
+      "item_key": "process-and-document-loans",
+      "item_name": "process and document loans",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.cbn.gov.ng/supervision/crms.html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D012|skill|banking",
+      "context_level": "domain",
+      "context_key": "D012",
+      "item_type": "skill",
+      "item_key": "banking",
+      "item_name": "banking",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.cbn.gov.ng/Out/2020/FMD/CBN%20Rule%20Book%20Volume%202.pdf"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D012|skill|credit-and-loan-processing",
+      "context_level": "domain",
+      "context_key": "D012",
+      "item_type": "skill",
+      "item_key": "credit-and-loan-processing",
+      "item_name": "credit and loan processing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.cbn.gov.ng/supervision/crms.html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D013|competency|apply-ethics-and-professionalism",
+      "context_level": "domain",
+      "context_key": "D013",
+      "item_type": "competency",
+      "item_key": "apply-ethics-and-professionalism",
+      "item_name": "apply ethics and professionalism",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.cbn.gov.ng/OUT/PUBLICATIONS/REPORTS/BSD/2002/BSDAR01.PDF"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D013|competency|meet-banking-knowledge-and-skill-standards",
+      "context_level": "domain",
+      "context_key": "D013",
+      "item_type": "competency",
+      "item_key": "meet-banking-knowledge-and-skill-standards",
+      "item_name": "meet banking knowledge and skill standards",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.cbn.gov.ng/out/2020/fmd/cbn%20rule%20book%20volume%202.pdf"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D013|competency|process-and-document-loans",
+      "context_level": "domain",
+      "context_key": "D013",
+      "item_type": "competency",
+      "item_key": "process-and-document-loans",
+      "item_name": "process and document loans",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.cbn.gov.ng/supervision/crms.html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D013|skill|banking",
+      "context_level": "domain",
+      "context_key": "D013",
+      "item_type": "skill",
+      "item_key": "banking",
+      "item_name": "banking",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.cbn.gov.ng/Out/2020/FMD/CBN%20Rule%20Book%20Volume%202.pdf"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D013|skill|credit-and-loan-processing",
+      "context_level": "domain",
+      "context_key": "D013",
+      "item_type": "skill",
+      "item_key": "credit-and-loan-processing",
+      "item_name": "credit and loan processing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.cbn.gov.ng/supervision/crms.html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D014|certification|fellow-of-the-institute-and-faculty-of-actuaries-fia",
+      "context_level": "domain",
+      "context_key": "D014",
+      "item_type": "certification",
+      "item_key": "fellow-of-the-institute-and-faculty-of-actuaries-fia",
+      "item_name": "Fellow of the Institute and Faculty of Actuaries (FIA)",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://actuaries.org.uk/membership/types-of-membership/fellowship/"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D014|competency|analyse-complex-business-cases",
+      "context_level": "domain",
+      "context_key": "D014",
+      "item_type": "competency",
+      "item_key": "analyse-complex-business-cases",
+      "item_name": "analyse complex business cases",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.accaglobal.com/us/en/student/exam-support-resources/professional-exams-study-resources/p7/technical-articles/examiner-approach-to-paper-p7---updated-march-2013.html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D014|competency|communicate-solutions",
+      "context_level": "domain",
+      "context_key": "D014",
+      "item_type": "competency",
+      "item_key": "communicate-solutions",
+      "item_name": "communicate solutions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.accaglobal.com/us/en/student/exam-support-resources/professional-exams-study-resources/p7/technical-articles/examiner-approach-to-paper-p7---updated-march-2013.html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D014|competency|exercise-professional-judgement",
+      "context_level": "domain",
+      "context_key": "D014",
+      "item_type": "competency",
+      "item_key": "exercise-professional-judgement",
+      "item_name": "exercise professional judgement",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.accaglobal.com/content/dam/ACCA_Global/Students/resourceFinder/AAA%20Exam_ESSENTIALS.pdf"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D014|skill|audit-and-assurance",
+      "context_level": "domain",
+      "context_key": "D014",
+      "item_type": "skill",
+      "item_key": "audit-and-assurance",
+      "item_name": "audit and assurance",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.accaglobal.com/us/en/student/exam-support-resources/professional-exams-study-resources/p7/technical-articles/examiner-approach-to-paper-p7---updated-march-2013.html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D015|competency|analyse-complex-business-cases",
+      "context_level": "domain",
+      "context_key": "D015",
+      "item_type": "competency",
+      "item_key": "analyse-complex-business-cases",
+      "item_name": "analyse complex business cases",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.accaglobal.com/us/en/student/exam-support-resources/professional-exams-study-resources/p7/technical-articles/examiner-approach-to-paper-p7---updated-march-2013.html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D015|competency|communicate-solutions",
+      "context_level": "domain",
+      "context_key": "D015",
+      "item_type": "competency",
+      "item_key": "communicate-solutions",
+      "item_name": "communicate solutions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.accaglobal.com/us/en/student/exam-support-resources/professional-exams-study-resources/p7/technical-articles/examiner-approach-to-paper-p7---updated-march-2013.html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D015|competency|exercise-professional-judgement",
+      "context_level": "domain",
+      "context_key": "D015",
+      "item_type": "competency",
+      "item_key": "exercise-professional-judgement",
+      "item_name": "exercise professional judgement",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.accaglobal.com/content/dam/ACCA_Global/Students/resourceFinder/AAA%20Exam_ESSENTIALS.pdf"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D015|skill|audit-and-assurance",
+      "context_level": "domain",
+      "context_key": "D015",
+      "item_type": "skill",
+      "item_key": "audit-and-assurance",
+      "item_name": "audit and assurance",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.accaglobal.com/us/en/student/exam-support-resources/professional-exams-study-resources/p7/technical-articles/examiner-approach-to-paper-p7---updated-march-2013.html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D016|certification|certified-energy-manager-cem",
+      "context_level": "domain",
+      "context_key": "D016",
+      "item_type": "certification",
+      "item_key": "certified-energy-manager-cem",
+      "item_name": "Certified Energy Manager (CEM)",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.aeecenter.org/wp-content/uploads/2022/05/CERT-CEM-Overview_Flyer-2026_03.pdf"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D016|certification|chartered-engineer-ceng",
+      "context_level": "domain",
+      "context_key": "D016",
+      "item_type": "certification",
+      "item_key": "chartered-engineer-ceng",
+      "item_name": "Chartered Engineer (CEng)",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.engc.org.uk/professional-registration/our-professional-titles/chartered-engineer-ceng"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D016|competency|engineering-safety-and-reliability",
+      "context_level": "domain",
+      "context_key": "D016",
+      "item_type": "competency",
+      "item_key": "engineering-safety-and-reliability",
+      "item_name": "engineering safety and reliability",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nasa.gov/reference/system-engineering-handbook-appendix/"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D016|competency|interoperability",
+      "context_level": "domain",
+      "context_key": "D016",
+      "item_type": "competency",
+      "item_key": "interoperability",
+      "item_name": "interoperability",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://csrc.nist.gov/glossary/term/interoperability"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D016|skill|ai",
+      "context_level": "domain",
+      "context_key": "D016",
+      "item_type": "skill",
+      "item_key": "ai",
+      "item_name": "AI",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/itl/ai-risk-management-framework"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D016|skill|big-data",
+      "context_level": "domain",
+      "context_key": "D016",
+      "item_type": "skill",
+      "item_key": "big-data",
+      "item_name": "big data",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/publications/nist-big-data-interoperability-framework-volume-6-big-data-reference-architecture"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D017|competency|engineering-safety-and-reliability",
+      "context_level": "domain",
+      "context_key": "D017",
+      "item_type": "competency",
+      "item_key": "engineering-safety-and-reliability",
+      "item_name": "engineering safety and reliability",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nasa.gov/reference/system-engineering-handbook-appendix/"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D017|competency|interoperability",
+      "context_level": "domain",
+      "context_key": "D017",
+      "item_type": "competency",
+      "item_key": "interoperability",
+      "item_name": "interoperability",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://csrc.nist.gov/glossary/term/interoperability"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D017|skill|ai",
+      "context_level": "domain",
+      "context_key": "D017",
+      "item_type": "skill",
+      "item_key": "ai",
+      "item_name": "AI",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/itl/ai-risk-management-framework"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D017|skill|big-data",
+      "context_level": "domain",
+      "context_key": "D017",
+      "item_type": "skill",
+      "item_key": "big-data",
+      "item_name": "big data",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/publications/nist-big-data-interoperability-framework-volume-6-big-data-reference-architecture"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D018|certification|chartered-engineer-ceng",
+      "context_level": "domain",
+      "context_key": "D018",
+      "item_type": "certification",
+      "item_key": "chartered-engineer-ceng",
+      "item_name": "Chartered Engineer (CEng)",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.engc.org.uk/professional-registration/our-professional-titles/chartered-engineer-ceng"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D018|certification|coren-registered-engineer",
+      "context_level": "domain",
+      "context_key": "D018",
+      "item_type": "certification",
+      "item_key": "coren-registered-engineer",
+      "item_name": "COREN Registered Engineer",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://portal.coren.gov.ng/verification"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D018|certification|corporate-member-nigerian-society-of-engineers-mnse",
+      "context_level": "domain",
+      "context_key": "D018",
+      "item_type": "certification",
+      "item_key": "corporate-member-nigerian-society-of-engineers-mnse",
+      "item_name": "Corporate Member, Nigerian Society of Engineers (MNSE)",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://nse.org.ng/membership/membership-requirements-criteria/"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D018|certification|project-management-professional-pmp",
+      "context_level": "domain",
+      "context_key": "D018",
+      "item_type": "certification",
+      "item_key": "project-management-professional-pmp",
+      "item_name": "Project Management Professional (PMP)",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.pmi.org/certifications/project-management-pmp"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D018|competency|engineering-safety-and-reliability",
+      "context_level": "domain",
+      "context_key": "D018",
+      "item_type": "competency",
+      "item_key": "engineering-safety-and-reliability",
+      "item_name": "engineering safety and reliability",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nasa.gov/wp-content/uploads/2018/09/nasa_systems_engineering_handbook_0.pdf"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D018|competency|interoperability",
+      "context_level": "domain",
+      "context_key": "D018",
+      "item_type": "competency",
+      "item_key": "interoperability",
+      "item_name": "interoperability",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://csrc.nist.gov/glossary/term/interoperability"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D018|skill|ai",
+      "context_level": "domain",
+      "context_key": "D018",
+      "item_type": "skill",
+      "item_key": "ai",
+      "item_name": "AI",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/itl/ai-risk-management-framework"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D018|skill|big-data",
+      "context_level": "domain",
+      "context_key": "D018",
+      "item_type": "skill",
+      "item_key": "big-data",
+      "item_name": "big data",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/publications/nist-big-data-interoperability-framework-volume-6-big-data-reference-architecture"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D019|certification|coren-registered-engineer",
+      "context_level": "domain",
+      "context_key": "D019",
+      "item_type": "certification",
+      "item_key": "coren-registered-engineer",
+      "item_name": "COREN Registered Engineer",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://portal.coren.gov.ng/verification"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D019|competency|engineering-safety-and-reliability",
+      "context_level": "domain",
+      "context_key": "D019",
+      "item_type": "competency",
+      "item_key": "engineering-safety-and-reliability",
+      "item_name": "engineering safety and reliability",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nasa.gov/wp-content/uploads/2018/09/nasa_systems_engineering_handbook_0.pdf"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D019|competency|interoperability",
+      "context_level": "domain",
+      "context_key": "D019",
+      "item_type": "competency",
+      "item_key": "interoperability",
+      "item_name": "interoperability",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://csrc.nist.gov/glossary/term/interoperability"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D019|skill|ai",
+      "context_level": "domain",
+      "context_key": "D019",
+      "item_type": "skill",
+      "item_key": "ai",
+      "item_name": "AI",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/itl/ai-risk-management-framework"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D021|certification|riba-chartered-membership",
+      "context_level": "domain",
+      "context_key": "D021",
+      "item_type": "certification",
+      "item_key": "riba-chartered-membership",
+      "item_name": "RIBA Chartered Membership",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.riba.org/work/join-us/riba-chartered-membership/"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D021|competency|demonstrate-practical-trade-competence",
+      "context_level": "domain",
+      "context_key": "D021",
+      "item_type": "competency",
+      "item_key": "demonstrate-practical-trade-competence",
+      "item_name": "demonstrate practical trade competence",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://skillsengland.education.gov.uk/qualifications/finder/OCC0264-v1-4"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D021|competency|perform-construction-work-to-defined-occupational-standards",
+      "context_level": "domain",
+      "context_key": "D021",
+      "item_type": "competency",
+      "item_key": "perform-construction-work-to-defined-occupational-standards",
+      "item_name": "perform construction work to defined occupational standards",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://skillsengland.education.gov.uk/qualifications/finder/OCC0264-v1-4"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D021|skill|carpentry-and-joinery",
+      "context_level": "domain",
+      "context_key": "D021",
+      "item_type": "skill",
+      "item_key": "carpentry-and-joinery",
+      "item_name": "carpentry and joinery",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://skillsengland.education.gov.uk/qualifications/finder/OCC0264-v1-4"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D021|skill|electrical-installation",
+      "context_level": "domain",
+      "context_key": "D021",
+      "item_type": "skill",
+      "item_key": "electrical-installation",
+      "item_name": "electrical installation",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://skillsengland.education.gov.uk/occupations/OCC0152-v1-0"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D021|skill|masonry",
+      "context_level": "domain",
+      "context_key": "D021",
+      "item_type": "skill",
+      "item_key": "masonry",
+      "item_name": "masonry",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://skillsengland.education.gov.uk/occupations/OCC0095"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D022|certification|comeg-registered-geoscientist",
+      "context_level": "domain",
+      "context_key": "D022",
+      "item_type": "certification",
+      "item_key": "comeg-registered-geoscientist",
+      "item_name": "COMEG Registered Geoscientist",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://msmd.gov.ng/agencies/council-of-nigerian-mining-engineers-and-geoscientists/"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D023|competency|support-quality-and-patient-safety",
+      "context_level": "domain",
+      "context_key": "D023",
+      "item_type": "competency",
+      "item_key": "support-quality-and-patient-safety",
+      "item_name": "support quality and patient safety",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.who.int/teams/integrated-health-services/patient-safety/policy/global-patient-safety-action-plan"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D023|competency|understand-health-system-governance",
+      "context_level": "domain",
+      "context_key": "D023",
+      "item_type": "competency",
+      "item_key": "understand-health-system-governance",
+      "item_name": "understand health-system governance",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.who.int/health-topics/health-systems-governance"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D023|skill|health-policy",
+      "context_level": "domain",
+      "context_key": "D023",
+      "item_type": "skill",
+      "item_key": "health-policy",
+      "item_name": "health policy",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.afro.who.int/sites/default/files/2017-06/dsdAFR-DHS-0301_0.pdf"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D026|certification|haccp-certification",
+      "context_level": "domain",
+      "context_key": "D026",
+      "item_type": "certification",
+      "item_key": "haccp-certification",
+      "item_name": "HACCP Certification",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.fda.gov/food/hazard-analysis-critical-control-point-haccp/haccp-principles-application-guidelines"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D026|competency|coordinate-community-health-programmes",
+      "context_level": "domain",
+      "context_key": "D026",
+      "item_type": "competency",
+      "item_key": "coordinate-community-health-programmes",
+      "item_name": "coordinate community health programmes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.who.int/publications/i/item/9789241550369"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D026|skill|health-promotion",
+      "context_level": "domain",
+      "context_key": "D026",
+      "item_type": "skill",
+      "item_key": "health-promotion",
+      "item_name": "health promotion",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.who.int/health-topics/health-promotion"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D026|skill|population-health",
+      "context_level": "domain",
+      "context_key": "D026",
+      "item_type": "skill",
+      "item_key": "population-health",
+      "item_name": "population health",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.who.int/docs/default-source/primary-health/operational-framework-for-primary-health-care-wha73.pdf"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D027|certification|nebosh-international-general-certificate",
+      "context_level": "domain",
+      "context_key": "D027",
+      "item_type": "certification",
+      "item_key": "nebosh-international-general-certificate",
+      "item_name": "NEBOSH International General Certificate",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.nebosh.org.uk/qualifications/international-general-certificate/"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D028|certification|lean-six-sigma-green-belt",
+      "context_level": "domain",
+      "context_key": "D028",
+      "item_type": "certification",
+      "item_key": "lean-six-sigma-green-belt",
+      "item_name": "Lean Six Sigma Green Belt",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.asq.org/cert/six-sigma-green-belt"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D028|competency|apply-management-standards",
+      "context_level": "domain",
+      "context_key": "D028",
+      "item_type": "competency",
+      "item_key": "apply-management-standards",
+      "item_name": "apply management standards",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/management-system-standards.html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D028|competency|lead-teams-and-organisations",
+      "context_level": "domain",
+      "context_key": "D028",
+      "item_type": "competency",
+      "item_key": "lead-teams-and-organisations",
+      "item_name": "lead teams and organisations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "missing_accessed_on"
+      ],
+      "candidate_urls": [
+        "https://www.cipd.org/en/the-people-profession/the-profession-map/how-it-works/for-my-team/"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D028|skill|entrepreneurship-and-business-development",
+      "context_level": "domain",
+      "context_key": "D028",
+      "item_type": "skill",
+      "item_key": "entrepreneurship-and-business-development",
+      "item_name": "entrepreneurship and business development",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.ilo.org/resource/enterprise-development"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D028|skill|leadership",
+      "context_level": "domain",
+      "context_key": "D028",
+      "item_type": "skill",
+      "item_key": "leadership",
+      "item_name": "leadership",
+      "decision": "review_required",
+      "flags": [
+        "missing_accessed_on"
+      ],
+      "candidate_urls": [
+        "https://www.cipd.org/en/the-people-profession/the-profession-map/",
+        "https://www.cipd.org/uk/about/blogs/future-focused-leadership-building-trust-empowering-employees/"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D028|skill|management",
+      "context_level": "domain",
+      "context_key": "D028",
+      "item_type": "skill",
+      "item_key": "management",
+      "item_name": "management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "missing_accessed_on"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/management-system-standards.html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D029|competency|advise-on-policy-and-compliance",
+      "context_level": "domain",
+      "context_key": "D029",
+      "item_type": "competency",
+      "item_key": "advise-on-policy-and-compliance",
+      "item_name": "advise on policy and compliance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "missing_accessed_on"
+      ],
+      "candidate_urls": [
+        "https://www.ilo.org/topics-and-sectors/labour-law-reforms"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D029|competency|apply-hr-knowledge-and-competence",
+      "context_level": "domain",
+      "context_key": "D029",
+      "item_type": "competency",
+      "item_key": "apply-hr-knowledge-and-competence",
+      "item_name": "apply HR knowledge and competence",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "missing_accessed_on"
+      ],
+      "candidate_urls": [
+        "https://www.cipd.org/en/the-people-profession/the-profession-map/"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D029|competency|maintain-professional-practice-through-re-certification",
+      "context_level": "domain",
+      "context_key": "D029",
+      "item_type": "competency",
+      "item_key": "maintain-professional-practice-through-re-certification",
+      "item_name": "maintain professional practice through re-certification",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "missing_accessed_on"
+      ],
+      "candidate_urls": [
+        "https://www.cipd.org/en/learning/cpd/policy/"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D029|skill|human-resource-management",
+      "context_level": "domain",
+      "context_key": "D029",
+      "item_type": "skill",
+      "item_key": "human-resource-management",
+      "item_name": "human resource management",
+      "decision": "review_required",
+      "flags": [
+        "missing_accessed_on"
+      ],
+      "candidate_urls": [
+        "https://www.cipd.org/en/organisations/advisory-services-organisations/",
+        "https://www.cipd.org/en/the-people-profession/the-profession-map/"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D029|skill|labour-law-advisory",
+      "context_level": "domain",
+      "context_key": "D029",
+      "item_type": "skill",
+      "item_key": "labour-law-advisory",
+      "item_name": "labour-law advisory",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "missing_accessed_on"
+      ],
+      "candidate_urls": [
+        "https://www.ilo.org/topics-and-sectors/labour-law-reforms"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D029|skill|strategic-hr-processes",
+      "context_level": "domain",
+      "context_key": "D029",
+      "item_type": "skill",
+      "item_key": "strategic-hr-processes",
+      "item_name": "strategic HR processes",
+      "decision": "review_required",
+      "flags": [
+        "missing_accessed_on"
+      ],
+      "candidate_urls": [
+        "https://www.shrm.org/enterprise-solutions/enterprise-bask/people/hr-strategy",
+        "https://www.shrm.org/topics-tools/tools/toolkits/business-strategy-of-hr"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D030|competency|act-ethically",
+      "context_level": "domain",
+      "context_key": "D030",
+      "item_type": "competency",
+      "item_key": "act-ethically",
+      "item_name": "act ethically",
+      "decision": "review_required",
+      "flags": [
+        "missing_accessed_on"
+      ],
+      "candidate_urls": [
+        "https://www.cipd.org/en/knowledge/factsheets/ethics-role-hr-factsheet/",
+        "https://www.cipd.org/en/knowledge/guides/ethics-work-guide/"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D030|competency|apply-management-standards",
+      "context_level": "domain",
+      "context_key": "D030",
+      "item_type": "competency",
+      "item_key": "apply-management-standards",
+      "item_name": "apply management standards",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "missing_accessed_on"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/management-system-standards.html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D030|competency|lead-teams-and-organisations",
+      "context_level": "domain",
+      "context_key": "D030",
+      "item_type": "competency",
+      "item_key": "lead-teams-and-organisations",
+      "item_name": "lead teams and organisations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "missing_accessed_on"
+      ],
+      "candidate_urls": [
+        "https://www.cipd.org/en/the-people-profession/the-profession-map/how-it-works/for-my-team/"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D034|competency|evaluate-suppliers",
+      "context_level": "domain",
+      "context_key": "D034",
+      "item_type": "competency",
+      "item_key": "evaluate-suppliers",
+      "item_name": "Evaluate suppliers",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.oecd.org/en/publications/implementing-the-oecd-recommendation-on-public-procurement-in-member-and-partner-countries_02a46a58-en/full-report/implementation-of-the-oecd-recommendation-in-member-and-partner-countries_2305bb1b.html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D034|competency|manage-commercial-risk",
+      "context_level": "domain",
+      "context_key": "D034",
+      "item_type": "competency",
+      "item_key": "manage-commercial-risk",
+      "item_name": "Manage commercial risk",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.oecd.org/en/publications/managing-risks-in-the-public-procurement-of-goods-services-and-infrastructure_45667d2f-en.html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D034|competency|run-fair-procurement-processes",
+      "context_level": "domain",
+      "context_key": "D034",
+      "item_type": "competency",
+      "item_key": "run-fair-procurement-processes",
+      "item_name": "Run fair procurement processes",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://legalinstruments.oecd.org/public/doc/320/body-text.en.html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D034|skill|procurement-planning",
+      "context_level": "domain",
+      "context_key": "D034",
+      "item_type": "skill",
+      "item_key": "procurement-planning",
+      "item_name": "Procurement planning",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://content.unops.org/service-Line-Documents/Procurement/UNOPS-Procurement-Manual-2021_EN.pdf"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D034|skill|sourcing",
+      "context_level": "domain",
+      "context_key": "D034",
+      "item_type": "skill",
+      "item_key": "sourcing",
+      "item_name": "Sourcing",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.unops.org/solutions/procurement/procurement-agent-services"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D034|skill|supplier-management",
+      "context_level": "domain",
+      "context_key": "D034",
+      "item_type": "skill",
+      "item_key": "supplier-management",
+      "item_name": "Supplier management",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://content.unops.org/service-Line-Documents/Procurement/UNOPS-Procurement-Manual-2021_EN.pdf"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D035|competency|evaluate-suppliers",
+      "context_level": "domain",
+      "context_key": "D035",
+      "item_type": "competency",
+      "item_key": "evaluate-suppliers",
+      "item_name": "Evaluate suppliers",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.oecd.org/en/publications/implementing-the-oecd-recommendation-on-public-procurement-in-member-and-partner-countries_02a46a58-en/full-report/implementation-of-the-oecd-recommendation-in-member-and-partner-countries_2305bb1b.html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D035|competency|manage-commercial-risk",
+      "context_level": "domain",
+      "context_key": "D035",
+      "item_type": "competency",
+      "item_key": "manage-commercial-risk",
+      "item_name": "Manage commercial risk",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.oecd.org/en/publications/managing-risks-in-the-public-procurement-of-goods-services-and-infrastructure_45667d2f-en.html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D035|competency|run-fair-procurement-processes",
+      "context_level": "domain",
+      "context_key": "D035",
+      "item_type": "competency",
+      "item_key": "run-fair-procurement-processes",
+      "item_name": "Run fair procurement processes",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://legalinstruments.oecd.org/public/doc/320/body-text.en.html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D035|skill|procurement-planning",
+      "context_level": "domain",
+      "context_key": "D035",
+      "item_type": "skill",
+      "item_key": "procurement-planning",
+      "item_name": "Procurement planning",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://content.unops.org/service-Line-Documents/Procurement/UNOPS-Procurement-Manual-2021_EN.pdf"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D035|skill|sourcing",
+      "context_level": "domain",
+      "context_key": "D035",
+      "item_type": "skill",
+      "item_key": "sourcing",
+      "item_name": "Sourcing",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.unops.org/solutions/procurement/procurement-agent-services"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D035|skill|supplier-management",
+      "context_level": "domain",
+      "context_key": "D035",
+      "item_type": "skill",
+      "item_key": "supplier-management",
+      "item_name": "Supplier management",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://content.unops.org/service-Line-Documents/Procurement/UNOPS-Procurement-Manual-2021_EN.pdf"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D036|competency|evaluate-suppliers",
+      "context_level": "domain",
+      "context_key": "D036",
+      "item_type": "competency",
+      "item_key": "evaluate-suppliers",
+      "item_name": "Evaluate suppliers",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.oecd.org/en/publications/implementing-the-oecd-recommendation-on-public-procurement-in-member-and-partner-countries_02a46a58-en/full-report/implementation-of-the-oecd-recommendation-in-member-and-partner-countries_2305bb1b.html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D036|competency|manage-commercial-risk",
+      "context_level": "domain",
+      "context_key": "D036",
+      "item_type": "competency",
+      "item_key": "manage-commercial-risk",
+      "item_name": "Manage commercial risk",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.oecd.org/en/publications/managing-risks-in-the-public-procurement-of-goods-services-and-infrastructure_45667d2f-en.html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D036|competency|run-fair-procurement-processes",
+      "context_level": "domain",
+      "context_key": "D036",
+      "item_type": "competency",
+      "item_key": "run-fair-procurement-processes",
+      "item_name": "Run fair procurement processes",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://legalinstruments.oecd.org/public/doc/320/body-text.en.html"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D036|skill|procurement-planning",
+      "context_level": "domain",
+      "context_key": "D036",
+      "item_type": "skill",
+      "item_key": "procurement-planning",
+      "item_name": "Procurement planning",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://content.unops.org/service-Line-Documents/Procurement/UNOPS-Procurement-Manual-2021_EN.pdf"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D037|competency|analyse-and-communicate-legal-issues",
+      "context_level": "domain",
+      "context_key": "D037",
+      "item_type": "competency",
+      "item_key": "analyse-and-communicate-legal-issues",
+      "item_name": "analyse and communicate legal issues",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.sra.org.uk/solicitors/resources/continuing-competence/competence-statement"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D037|skill|legal-research",
+      "context_level": "domain",
+      "context_key": "D037",
+      "item_type": "skill",
+      "item_key": "legal-research",
+      "item_name": "legal research",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.sra.org.uk/solicitors/resources/continuing-competence/competence-statement"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D038|competency|analyse-and-communicate-legal-issues",
+      "context_level": "domain",
+      "context_key": "D038",
+      "item_type": "competency",
+      "item_key": "analyse-and-communicate-legal-issues",
+      "item_name": "analyse and communicate legal issues",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.sra.org.uk/solicitors/resources/continuing-competence/competence-statement"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D038|skill|legal-research",
+      "context_level": "domain",
+      "context_key": "D038",
+      "item_type": "skill",
+      "item_key": "legal-research",
+      "item_name": "legal research",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://www.sra.org.uk/solicitors/resources/continuing-competence/competence-statement"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D040|competency|demonstrate-practical-competence-against-nos",
+      "context_level": "domain",
+      "context_key": "D040",
+      "item_type": "competency",
+      "item_key": "demonstrate-practical-competence-against-nos",
+      "item_name": "demonstrate practical competence against NOS",
+      "decision": "linked",
+      "flags": [
+        "fewer_than_two_candidate_urls"
+      ],
+      "candidate_urls": [
+        "https://web.nbte.gov.ng/sites/default/files/2024-03/MANUAL%20new-compressed.pdf"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D103|skill|styling-and-image-work",
+      "context_level": "domain",
+      "context_key": "D103",
+      "item_type": "skill",
+      "item_key": "styling-and-image-work",
+      "item_name": "styling and image work",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.cityandguilds.com/-/media/productdocuments/creative/creative_techniques/7161/7161_level_2/centre_documents/7161-02-12-22-level-2-textiles-v_3%2C-d-%2C3-pdf.pdf"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D106|competency|build-a-professional-portfolio-and-business",
+      "context_level": "domain",
+      "context_key": "D106",
+      "item_type": "competency",
+      "item_key": "build-a-professional-portfolio-and-business",
+      "item_name": "build a professional portfolio and business",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.cityandguilds.com/-/media/productdocuments/creative/creative_techniques/7161/7161_level_2/centre_documents/7161-02-12-22-level-2-textiles-v_3%2C-d-%2C3-pdf.pdf"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D106|competency|develop-and-present-designs",
+      "context_level": "domain",
+      "context_key": "D106",
+      "item_type": "competency",
+      "item_key": "develop-and-present-designs",
+      "item_name": "develop and present designs",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.cityandguilds.com/-/media/productdocuments/creative/creative_techniques/7161/7161_level_2/centre_documents/7161-02-12-22-level-2-textiles-v_3%2C-d-%2C3-pdf.pdf"
+      ]
+    },
+    {
+      "subject_id": "item|domain|D106|competency|work-with-fashion-production-processes",
+      "context_level": "domain",
+      "context_key": "D106",
+      "item_type": "competency",
+      "item_key": "work-with-fashion-production-processes",
+      "item_name": "work with fashion production processes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.cityandguilds.com/-/media/productdocuments/creative/creative_techniques/7161/7161_level_2/centre_documents/7161-02-12-22-level-2-textiles-v_3%2C-d-%2C3-pdf.pdf"
+      ]
+    }
+  ]
+}

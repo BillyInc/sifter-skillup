@@ -37,8 +37,8 @@ class DownstreamProgrammeCoverageTest(unittest.TestCase):
         self.assertEqual(len(set(keys)), 237)
         self.assertTrue(all(row.get("context") is not None for row in programmes))
         self.assertTrue(all(row.get("curriculum") is not None for row in programmes))
-        self.assertEqual(summary["activeDomainLinks"], 1343)
-        self.assertEqual(summary["programmesWithoutActiveDomainMapping"], 1)
+        self.assertEqual(summary["activeDomainLinks"], 1344)
+        self.assertEqual(summary["programmesWithoutActiveDomainMapping"], 0)
 
     def test_smoke_fixtures_are_distinguished_from_population(self) -> None:
         by_key = {row["programmeKey"]: row for row in self.evidence["programmes"]}

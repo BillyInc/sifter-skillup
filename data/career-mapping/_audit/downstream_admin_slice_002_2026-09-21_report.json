@@ -1,0 +1,1109 @@
+{
+  "schema_version": "2026-09-21.downstream-admin-slice-report.v1",
+  "generated_on": "2026-09-21",
+  "read_only": true,
+  "selection_checkpoint": "data\\career-mapping\\_audit\\downstream_admin_slice_002_2026-09-21_checkpoint.json",
+  "scope": {
+    "programmes": 20,
+    "programme_keys": [
+      "Administration and Management::Securities and Investments Management",
+      "Administration and Management::Taxation",
+      "Administration and Management::Transport Management",
+      "Agricultural Science::Agribusiness",
+      "Agricultural Science::Agricultural Economics",
+      "Agricultural Science::Agricultural Extension",
+      "Agricultural Science::Animal Science",
+      "Agricultural Science::B. Agriculture",
+      "Agricultural Science::B.Sc./B.Tech Food Science and Technology",
+      "Agricultural Science::Crop Science",
+      "Agricultural Science::Family and Consumer Sciences",
+      "Agricultural Science::Fisheries and Aquaculture",
+      "Agricultural Science::Forest Resources and Wildlife Management",
+      "Agricultural Science::Horticulture and Landscape Management",
+      "Agricultural Science::Soil Science",
+      "Agricultural Science::Water Resources Management and Agro-Meteorology",
+      "Allied Health Sciences::Audiology",
+      "Allied Health Sciences::Complementary and Alternative Medicine",
+      "Allied Health Sciences::Dental Technology",
+      "Allied Health Sciences::Dental Therapy"
+    ],
+    "prior_overlap": [],
+    "canonical_programmes": 237,
+    "canonical_jamb_identities": 420
+  },
+  "programme_rows": [
+    {
+      "programme_key": "Administration and Management::Securities and Investments Management",
+      "discipline": "Administration and Management",
+      "programme": "Securities and Investments Management",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 34,
+        "outcome_count": 199
+      },
+      "downstream": {
+        "domain_routes": 11,
+        "subgroup_routes": 22,
+        "role_routes": 300,
+        "route_key_count": 335
+      },
+      "relationship_types": {
+        "direct": 2,
+        "functional": 9
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 40,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 20,
+        "notEstablishedRows": 20
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Administration and Management::Taxation",
+      "discipline": "Administration and Management",
+      "programme": "Taxation",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 37,
+        "outcome_count": 244
+      },
+      "downstream": {
+        "domain_routes": 7,
+        "subgroup_routes": 24,
+        "role_routes": 139,
+        "route_key_count": 172
+      },
+      "relationship_types": {
+        "functional": 7
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 80,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 40,
+        "notEstablishedRows": 40
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Administration and Management::Transport Management",
+      "discipline": "Administration and Management",
+      "programme": "Transport Management",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 45,
+        "outcome_count": 321
+      },
+      "downstream": {
+        "domain_routes": 7,
+        "subgroup_routes": 22,
+        "role_routes": 421,
+        "route_key_count": 452
+      },
+      "relationship_types": {
+        "functional": 6,
+        "direct": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 20,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 10,
+        "notEstablishedRows": 10
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Agricultural Science::Agribusiness",
+      "discipline": "Agricultural Science",
+      "programme": "Agribusiness",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 44,
+        "outcome_count": 238
+      },
+      "downstream": {
+        "domain_routes": 6,
+        "subgroup_routes": 16,
+        "role_routes": 199,
+        "route_key_count": 223
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 5
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 58,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 29,
+        "notEstablishedRows": 29
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Agricultural Science::Agricultural Economics",
+      "discipline": "Agricultural Science",
+      "programme": "Agricultural Economics",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 45,
+        "outcome_count": 261
+      },
+      "downstream": {
+        "domain_routes": 7,
+        "subgroup_routes": 19,
+        "role_routes": 273,
+        "route_key_count": 301
+      },
+      "relationship_types": {
+        "direct": 2,
+        "functional": 5
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 118,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 59,
+        "notEstablishedRows": 59
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Agricultural Science::Agricultural Extension",
+      "discipline": "Agricultural Science",
+      "programme": "Agricultural Extension",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 45,
+        "outcome_count": 231
+      },
+      "downstream": {
+        "domain_routes": 5,
+        "subgroup_routes": 11,
+        "role_routes": 154,
+        "route_key_count": 172
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 4
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 118,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 59,
+        "notEstablishedRows": 59
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Agricultural Science::Animal Science",
+      "discipline": "Agricultural Science",
+      "programme": "Animal Science",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 44,
+        "outcome_count": 301
+      },
+      "downstream": {
+        "domain_routes": 7,
+        "subgroup_routes": 31,
+        "role_routes": 239,
+        "route_key_count": 279
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 6
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 80,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 40,
+        "notEstablishedRows": 40
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Agricultural Science::B. Agriculture",
+      "discipline": "Agricultural Science",
+      "programme": "B. Agriculture",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 62,
+        "outcome_count": 341
+      },
+      "downstream": {
+        "domain_routes": 8,
+        "subgroup_routes": 31,
+        "role_routes": 229,
+        "route_key_count": 270
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 7
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 158,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 79,
+        "notEstablishedRows": 79
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Agricultural Science::B.Sc./B.Tech Food Science and Technology",
+      "discipline": "Agricultural Science",
+      "programme": "B.Sc./B.Tech Food Science and Technology",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 44,
+        "outcome_count": 261
+      },
+      "downstream": {
+        "domain_routes": 7,
+        "subgroup_routes": 25,
+        "role_routes": 314,
+        "route_key_count": 348
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 6
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 80,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 40,
+        "notEstablishedRows": 40
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Agricultural Science::Crop Science",
+      "discipline": "Agricultural Science",
+      "programme": "Crop Science",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 46,
+        "outcome_count": 214
+      },
+      "downstream": {
+        "domain_routes": 9,
+        "subgroup_routes": 32,
+        "role_routes": 237,
+        "route_key_count": 280
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 8
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 178,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 89,
+        "notEstablishedRows": 89
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Agricultural Science::Family and Consumer Sciences",
+      "discipline": "Agricultural Science",
+      "programme": "Family and Consumer Sciences",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 56,
+        "outcome_count": 305
+      },
+      "downstream": {
+        "domain_routes": 5,
+        "subgroup_routes": 16,
+        "role_routes": 181,
+        "route_key_count": 204
+      },
+      "relationship_types": {
+        "functional": 5
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 20,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 10,
+        "notEstablishedRows": 10
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Agricultural Science::Fisheries and Aquaculture",
+      "discipline": "Agricultural Science",
+      "programme": "Fisheries and Aquaculture",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 41,
+        "outcome_count": 277
+      },
+      "downstream": {
+        "domain_routes": 8,
+        "subgroup_routes": 25,
+        "role_routes": 331,
+        "route_key_count": 366
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 7
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 80,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 40,
+        "notEstablishedRows": 40
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Agricultural Science::Forest Resources and Wildlife Management",
+      "discipline": "Agricultural Science",
+      "programme": "Forest Resources and Wildlife Management",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 52,
+        "outcome_count": 291
+      },
+      "downstream": {
+        "domain_routes": 7,
+        "subgroup_routes": 28,
+        "role_routes": 216,
+        "route_key_count": 253
+      },
+      "relationship_types": {
+        "functional": 6,
+        "direct": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 118,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 59,
+        "notEstablishedRows": 59
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Agricultural Science::Horticulture and Landscape Management",
+      "discipline": "Agricultural Science",
+      "programme": "Horticulture and Landscape Management",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 44,
+        "outcome_count": 213
+      },
+      "downstream": {
+        "domain_routes": 7,
+        "subgroup_routes": 25,
+        "role_routes": 209,
+        "route_key_count": 243
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 6
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 158,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 79,
+        "notEstablishedRows": 79
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Agricultural Science::Soil Science",
+      "discipline": "Agricultural Science",
+      "programme": "Soil Science",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 44,
+        "outcome_count": 267
+      },
+      "downstream": {
+        "domain_routes": 9,
+        "subgroup_routes": 27,
+        "role_routes": 209,
+        "route_key_count": 247
+      },
+      "relationship_types": {
+        "functional": 8,
+        "direct": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 178,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 89,
+        "notEstablishedRows": 89
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Agricultural Science::Water Resources Management and Agro-Meteorology",
+      "discipline": "Agricultural Science",
+      "programme": "Water Resources Management and Agro-Meteorology",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 47,
+        "outcome_count": 274
+      },
+      "downstream": {
+        "domain_routes": 7,
+        "subgroup_routes": 11,
+        "role_routes": 176,
+        "route_key_count": 196
+      },
+      "relationship_types": {
+        "functional": 6,
+        "direct": 1
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 138,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 69,
+        "notEstablishedRows": 69
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Allied Health Sciences::Audiology",
+      "discipline": "Allied Health Sciences",
+      "programme": "Audiology",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 28,
+        "outcome_count": 223
+      },
+      "downstream": {
+        "domain_routes": 5,
+        "subgroup_routes": 15,
+        "role_routes": 161,
+        "route_key_count": 183
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 4
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "review_required",
+        "unresolved_relationships": 0,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 0,
+        "notEstablishedRows": 0
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Allied Health Sciences::Complementary and Alternative Medicine",
+      "discipline": "Allied Health Sciences",
+      "programme": "Complementary and Alternative Medicine",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 10,
+        "outcome_count": 62
+      },
+      "downstream": {
+        "domain_routes": 3,
+        "subgroup_routes": 6,
+        "role_routes": 68,
+        "route_key_count": 79
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 2
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 16,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 8,
+        "notEstablishedRows": 8
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Allied Health Sciences::Dental Technology",
+      "discipline": "Allied Health Sciences",
+      "programme": "Dental Technology",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 29,
+        "outcome_count": 152
+      },
+      "downstream": {
+        "domain_routes": 5,
+        "subgroup_routes": 10,
+        "role_routes": 101,
+        "route_key_count": 118
+      },
+      "relationship_types": {
+        "direct": 1,
+        "functional": 4
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 140,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 70,
+        "notEstablishedRows": 70
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    },
+    {
+      "programme_key": "Allied Health Sciences::Dental Therapy",
+      "discipline": "Allied Health Sciences",
+      "programme": "Dental Therapy",
+      "curriculum": {
+        "contract_present": true,
+        "course_count": 24,
+        "outcome_count": 104
+      },
+      "downstream": {
+        "domain_routes": 6,
+        "subgroup_routes": 10,
+        "role_routes": 131,
+        "route_key_count": 149
+      },
+      "relationship_types": {
+        "direct": 2,
+        "functional": 4
+      },
+      "queues": {
+        "resource": "review_required",
+        "relationship": "not_established",
+        "unresolved_relationships": 538,
+        "admin": "pending_full_population_render"
+      },
+      "context_findings": {
+        "missingGuidanceOwner": 0,
+        "ownerMismatch": 0,
+        "missingSourceReferences": 0,
+        "missingSourceLocators": 0,
+        "roleAggregateLeakageCandidates": 0,
+        "linkStateGaps": 0,
+        "unresolvedEndpointRows": 269,
+        "notEstablishedRows": 269
+      },
+      "checks": {
+        "curriculum_contract_present": true,
+        "active_mapping_present": true,
+        "active_relationship_types_only": true,
+        "downstream_route_complete": true,
+        "domain_contexts_present": true,
+        "ownership_and_state_complete": true,
+        "category_ownership_and_aggregate_boundary": true,
+        "provenance_complete": true,
+        "resource_state_explicit": true,
+        "relationship_state_explicit": true,
+        "admin_state_explicit": true,
+        "student_exposure_fail_closed": true
+      }
+    }
+  ],
+  "failures": [],
+  "aggregate": {
+    "domain_routes": 136,
+    "subgroup_routes": 406,
+    "role_routes": 4288,
+    "relationship_states": {
+      "not_established": 19,
+      "review_required": 1
+    },
+    "unresolved_relationships": 2316
+  },
+  "static_surface_checks": {
+    "student_language_boundary": {
+      "file": "src/screens/careerIntelligence/ProgrammeDetailRefinedScreen.tsx",
+      "passed": true,
+      "missing": []
+    },
+    "admin_language_boundary": {
+      "file": "src/screens/admin/AdminCareerDetailScreen.tsx",
+      "passed": true,
+      "missing": []
+    },
+    "admin_provenance_and_queue": {
+      "file": "src/screens/admin/adminGuidanceEvidence.ts",
+      "passed": true,
+      "missing": []
+    },
+    "student_fail_closed_boundary": {
+      "file": "src/lib/studentCareerBoundary.ts",
+      "passed": true,
+      "missing": []
+    },
+    "student_relationship_fail_closed_boundary": {
+      "file": "src/screens/admin/adminGuidanceEvidence.ts",
+      "passed": true,
+      "missing": []
+    },
+    "relationship_grouping": {
+      "file": "src/components/careerIntelligence/ToolGroupsBlock.tsx",
+      "passed": true,
+      "missing": []
+    }
+  },
+  "role_learning_reference": {
+    "allStudentRowsWithinCaps": true,
+    "maxStudentEssential": 12,
+    "maxStudentOptional": 5
+  },
+  "admin_reference": {
+    "localAdminBoundaryImplemented": true,
+    "fullAdminRenderAccepted": false,
+    "studentExposureAccepted": false
+  },
+  "decision": {
+    "bounded_contract_audit_complete": true,
+    "student_exposure_approved": false,
+    "browser_proof": false,
+    "live_sql_verification": false,
+    "reason": "This slice retains review/not-established/admin-pending states and does not claim browser or live SQL acceptance."
+  },
+  "inputs": [
+    "docs/GOAL_RESUME_STATUS_AND_AGENT_HANDOFF_2026-09-18.md",
+    "docs/user-facing-mockups/SOCIOLOGY_BOX_MOCKUP_IMPLEMENTATION_AUDIT_2026-09-17.md",
+    "docs/user-facing-mockups/SOCIOLOGY_TOP_DOWN_AUDIT_AND_CLOSURE_PLAN_2026-09-17.md",
+    "docs/LEVELUP_PRODUCT_WIDE_MOCKUP_SPEC.md",
+    "data/career-mapping/_audit/source_enrichment_batch_broad_2026-09-19.json",
+    "data/career-mapping/_audit/full_population_admin_agent_tranche_2026-09-21.json",
+    "data/career-mapping/_audit/programme_scaling_contract_2026-09-19.json",
+    "data/career-mapping/_audit/DOWNSTREAM_PROGRAMME_ROUTE_AUDIT_2026-09-19.json",
+    "data/career-mapping/_audit/programme_curriculum_contract_2026-09-18.json",
+    "data/career-mapping/_audit/role_learning_core_audit_2026-09-21.json",
+    "data/career-mapping/_audit/ADMIN_DOWNSTREAM_ACCEPTANCE_2026-09-19.json"
+  ],
+  "product_files_changed": false,
+  "sql_or_browser_proof": false
+}

@@ -1,0 +1,4492 @@
+{
+  "record_type": "relationship_selection",
+  "tranche": "038",
+  "date": "2026-09-21",
+  "selection_count": 72,
+  "batch_size": 100,
+  "rows": [
+    {
+      "candidate_id": "role|D161|Emergency Medical Technicians|tool|microsoft-office-software|||not_established",
+      "normalized_candidate_id": "role|D161|Emergency Medical Technicians|tool|microsoft-office-software|||not_established",
+      "context_level": "role",
+      "context_key": "D161|Emergency Medical Technicians",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-office-software",
+      "from_name": "Microsoft Office software",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D161|Emergency Medical Technicians",
+          "elementId": "2.E.1.k",
+          "elementName": "Office suite software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Emergency+Medical+Technicians",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D161|Emergency Medical Technicians",
+              "elementId": "2.E.1.k",
+              "elementName": "Office suite software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D161|Emergency Medical Technicians",
+              "elementId": "2.E.1.k",
+              "elementName": "Office suite software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D161|Emergency Medical Technicians|tool|microsoft-powerpoint|||not_established",
+      "normalized_candidate_id": "role|D161|Emergency Medical Technicians|tool|microsoft-powerpoint|||not_established",
+      "context_level": "role",
+      "context_key": "D161|Emergency Medical Technicians",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-powerpoint",
+      "from_name": "Microsoft PowerPoint",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D161|Emergency Medical Technicians",
+          "elementId": "2.E.4.f",
+          "elementName": "Presentation software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Emergency+Medical+Technicians",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D161|Emergency Medical Technicians",
+              "elementId": "2.E.4.f",
+              "elementName": "Presentation software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D161|Emergency Medical Technicians",
+              "elementId": "2.E.4.f",
+              "elementName": "Presentation software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D161|Emergency Medical Technicians|tool|microsoft-word|||not_established",
+      "normalized_candidate_id": "role|D161|Emergency Medical Technicians|tool|microsoft-word|||not_established",
+      "context_level": "role",
+      "context_key": "D161|Emergency Medical Technicians",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-word",
+      "from_name": "Microsoft Word",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D161|Emergency Medical Technicians",
+          "elementId": "2.E.4.d",
+          "elementName": "Word processing software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Emergency+Medical+Technicians",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D161|Emergency Medical Technicians",
+              "elementId": "2.E.4.d",
+              "elementName": "Word processing software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D161|Emergency Medical Technicians",
+              "elementId": "2.E.4.d",
+              "elementName": "Word processing software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D162|Customs and Border Protection Officers|tool|automated-manifest-system-ams|||not_established",
+      "normalized_candidate_id": "role|D162|Customs and Border Protection Officers|tool|automated-manifest-system-ams|||not_established",
+      "context_level": "role",
+      "context_key": "D162|Customs and Border Protection Officers",
+      "from_item_type": "tool",
+      "from_item_key": "automated-manifest-system-ams",
+      "from_name": "Automated Manifest System AMS",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D162|Customs and Border Protection Officers",
+          "elementId": "2.E.6.f",
+          "elementName": "Data base user interface and query software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Customs+and+Border+Protection+Officers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs and Border Protection Officers",
+              "elementId": "2.E.6.f",
+              "elementName": "Data base user interface and query software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs and Border Protection Officers",
+              "elementId": "2.E.6.f",
+              "elementName": "Data base user interface and query software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D162|Customs and Border Protection Officers|tool|corel-wordperfect-office-suite|||not_established",
+      "normalized_candidate_id": "role|D162|Customs and Border Protection Officers|tool|corel-wordperfect-office-suite|||not_established",
+      "context_level": "role",
+      "context_key": "D162|Customs and Border Protection Officers",
+      "from_item_type": "tool",
+      "from_item_key": "corel-wordperfect-office-suite",
+      "from_name": "Corel WordPerfect Office Suite",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D162|Customs and Border Protection Officers",
+          "elementId": "2.E.1.k",
+          "elementName": "Office suite software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Customs+and+Border+Protection+Officers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs and Border Protection Officers",
+              "elementId": "2.E.1.k",
+              "elementName": "Office suite software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs and Border Protection Officers",
+              "elementId": "2.E.1.k",
+              "elementName": "Office suite software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D162|Customs and Border Protection Officers|tool|global-positioning-system-gps-software|||not_established",
+      "normalized_candidate_id": "role|D162|Customs and Border Protection Officers|tool|global-positioning-system-gps-software|||not_established",
+      "context_level": "role",
+      "context_key": "D162|Customs and Border Protection Officers",
+      "from_item_type": "tool",
+      "from_item_key": "global-positioning-system-gps-software",
+      "from_name": "Global positioning system GPS software",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D162|Customs and Border Protection Officers",
+          "elementId": "2.E.16.h",
+          "elementName": "Mobile location based services software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Customs+and+Border+Protection+Officers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs and Border Protection Officers",
+              "elementId": "2.E.16.h",
+              "elementName": "Mobile location based services software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs and Border Protection Officers",
+              "elementId": "2.E.16.h",
+              "elementName": "Mobile location based services software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D162|Customs and Border Protection Officers|tool|ibm-websphere-mq|||not_established",
+      "normalized_candidate_id": "role|D162|Customs and Border Protection Officers|tool|ibm-websphere-mq|||not_established",
+      "context_level": "role",
+      "context_key": "D162|Customs and Border Protection Officers",
+      "from_item_type": "tool",
+      "from_item_key": "ibm-websphere-mq",
+      "from_name": "IBM WebSphere MQ",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D162|Customs and Border Protection Officers",
+          "elementId": "2.E.11.e",
+          "elementName": "Cloud-based management software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Customs+and+Border+Protection+Officers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs and Border Protection Officers",
+              "elementId": "2.E.11.e",
+              "elementName": "Cloud-based management software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs and Border Protection Officers",
+              "elementId": "2.E.11.e",
+              "elementName": "Cloud-based management software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D162|Customs and Border Protection Officers|tool|law-enforcement-information-databases|||not_established",
+      "normalized_candidate_id": "role|D162|Customs and Border Protection Officers|tool|law-enforcement-information-databases|||not_established",
+      "context_level": "role",
+      "context_key": "D162|Customs and Border Protection Officers",
+      "from_item_type": "tool",
+      "from_item_key": "law-enforcement-information-databases",
+      "from_name": "Law enforcement information databases",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D162|Customs and Border Protection Officers",
+          "elementId": "2.E.6.f",
+          "elementName": "Data base user interface and query software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Customs+and+Border+Protection+Officers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs and Border Protection Officers",
+              "elementId": "2.E.6.f",
+              "elementName": "Data base user interface and query software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs and Border Protection Officers",
+              "elementId": "2.E.6.f",
+              "elementName": "Data base user interface and query software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D162|Customs and Border Protection Officers|tool|microsoft-excel|||not_established",
+      "normalized_candidate_id": "role|D162|Customs and Border Protection Officers|tool|microsoft-excel|||not_established",
+      "context_level": "role",
+      "context_key": "D162|Customs and Border Protection Officers",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-excel",
+      "from_name": "Microsoft Excel",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D162|Customs and Border Protection Officers",
+          "elementId": "2.E.4.i",
+          "elementName": "Spreadsheet software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Customs+and+Border+Protection+Officers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs and Border Protection Officers",
+              "elementId": "2.E.4.i",
+              "elementName": "Spreadsheet software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs and Border Protection Officers",
+              "elementId": "2.E.4.i",
+              "elementName": "Spreadsheet software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "official_microsoft_excel_help",
+          "title": "Excel help and learning",
+          "url": "https://support.microsoft.com/en-us/excel/",
+          "region": "global",
+          "evidenceType": "item_specific_documentation",
+          "sourceIds": [
+            "official_microsoft_excel_help"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs and Border Protection Officers",
+              "elementId": "2.E.4.i",
+              "elementName": "Spreadsheet software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D162|Customs and Border Protection Officers|tool|microsoft-office-software|||not_established",
+      "normalized_candidate_id": "role|D162|Customs and Border Protection Officers|tool|microsoft-office-software|||not_established",
+      "context_level": "role",
+      "context_key": "D162|Customs and Border Protection Officers",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-office-software",
+      "from_name": "Microsoft Office software",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D162|Customs and Border Protection Officers",
+          "elementId": "2.E.1.k",
+          "elementName": "Office suite software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Customs+and+Border+Protection+Officers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs and Border Protection Officers",
+              "elementId": "2.E.1.k",
+              "elementName": "Office suite software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs and Border Protection Officers",
+              "elementId": "2.E.1.k",
+              "elementName": "Office suite software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D162|Customs and Border Protection Officers|tool|microsoft-outlook|||not_established",
+      "normalized_candidate_id": "role|D162|Customs and Border Protection Officers|tool|microsoft-outlook|||not_established",
+      "context_level": "role",
+      "context_key": "D162|Customs and Border Protection Officers",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-outlook",
+      "from_name": "Microsoft Outlook",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D162|Customs and Border Protection Officers",
+          "elementId": "2.E.16.a",
+          "elementName": "Electronic mail software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Customs+and+Border+Protection+Officers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs and Border Protection Officers",
+              "elementId": "2.E.16.a",
+              "elementName": "Electronic mail software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs and Border Protection Officers",
+              "elementId": "2.E.16.a",
+              "elementName": "Electronic mail software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D162|Customs and Border Protection Officers|tool|microsoft-word|||not_established",
+      "normalized_candidate_id": "role|D162|Customs and Border Protection Officers|tool|microsoft-word|||not_established",
+      "context_level": "role",
+      "context_key": "D162|Customs and Border Protection Officers",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-word",
+      "from_name": "Microsoft Word",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D162|Customs and Border Protection Officers",
+          "elementId": "2.E.4.d",
+          "elementName": "Word processing software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Customs+and+Border+Protection+Officers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs and Border Protection Officers",
+              "elementId": "2.E.4.d",
+              "elementName": "Word processing software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs and Border Protection Officers",
+              "elementId": "2.E.4.d",
+              "elementName": "Word processing software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D162|Customs and Border Protection Officers|tool|sap-software|||not_established",
+      "normalized_candidate_id": "role|D162|Customs and Border Protection Officers|tool|sap-software|||not_established",
+      "context_level": "role",
+      "context_key": "D162|Customs and Border Protection Officers",
+      "from_item_type": "tool",
+      "from_item_key": "sap-software",
+      "from_name": "SAP software",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D162|Customs and Border Protection Officers",
+          "elementId": "2.E.2.b",
+          "elementName": "Enterprise resource planning ERP software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Customs+and+Border+Protection+Officers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs and Border Protection Officers",
+              "elementId": "2.E.2.b",
+              "elementName": "Enterprise resource planning ERP software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs and Border Protection Officers",
+              "elementId": "2.E.2.b",
+              "elementName": "Enterprise resource planning ERP software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D162|Customs Brokers|tool|automated-commercial-environment-software-ace|||not_established",
+      "normalized_candidate_id": "role|D162|Customs Brokers|tool|automated-commercial-environment-software-ace|||not_established",
+      "context_level": "role",
+      "context_key": "D162|Customs Brokers",
+      "from_item_type": "tool",
+      "from_item_key": "automated-commercial-environment-software-ace",
+      "from_name": "Automated commercial environment software ACE",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D162|Customs Brokers",
+          "elementId": "2.E.6.f",
+          "elementName": "Data base user interface and query software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Customs+Brokers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs Brokers",
+              "elementId": "2.E.6.f",
+              "elementName": "Data base user interface and query software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs Brokers",
+              "elementId": "2.E.6.f",
+              "elementName": "Data base user interface and query software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D162|Customs Brokers|tool|automated-system-for-customs-data-asycuda|||not_established",
+      "normalized_candidate_id": "role|D162|Customs Brokers|tool|automated-system-for-customs-data-asycuda|||not_established",
+      "context_level": "role",
+      "context_key": "D162|Customs Brokers",
+      "from_item_type": "tool",
+      "from_item_key": "automated-system-for-customs-data-asycuda",
+      "from_name": "Automated system for customs data ASYCUDA",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D162|Customs Brokers",
+          "elementId": "2.E.9.e",
+          "elementName": "Compliance software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Customs+Brokers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs Brokers",
+              "elementId": "2.E.9.e",
+              "elementName": "Compliance software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs Brokers",
+              "elementId": "2.E.9.e",
+              "elementName": "Compliance software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D162|Customs Brokers|tool|customs-records-databases|||not_established",
+      "normalized_candidate_id": "role|D162|Customs Brokers|tool|customs-records-databases|||not_established",
+      "context_level": "role",
+      "context_key": "D162|Customs Brokers",
+      "from_item_type": "tool",
+      "from_item_key": "customs-records-databases",
+      "from_name": "Customs records databases",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D162|Customs Brokers",
+          "elementId": "2.E.6.f",
+          "elementName": "Data base user interface and query software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Customs+Brokers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs Brokers",
+              "elementId": "2.E.6.f",
+              "elementName": "Data base user interface and query software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs Brokers",
+              "elementId": "2.E.6.f",
+              "elementName": "Data base user interface and query software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D162|Customs Brokers|tool|microsoft-access|||not_established",
+      "normalized_candidate_id": "role|D162|Customs Brokers|tool|microsoft-access|||not_established",
+      "context_level": "role",
+      "context_key": "D162|Customs Brokers",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-access",
+      "from_name": "Microsoft Access",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D162|Customs Brokers",
+          "elementId": "2.E.6.f",
+          "elementName": "Data base user interface and query software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Customs+Brokers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs Brokers",
+              "elementId": "2.E.6.f",
+              "elementName": "Data base user interface and query software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs Brokers",
+              "elementId": "2.E.6.f",
+              "elementName": "Data base user interface and query software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D162|Customs Brokers|tool|microsoft-excel|||not_established",
+      "normalized_candidate_id": "role|D162|Customs Brokers|tool|microsoft-excel|||not_established",
+      "context_level": "role",
+      "context_key": "D162|Customs Brokers",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-excel",
+      "from_name": "Microsoft Excel",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D162|Customs Brokers",
+          "elementId": "2.E.4.i",
+          "elementName": "Spreadsheet software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Customs+Brokers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs Brokers",
+              "elementId": "2.E.4.i",
+              "elementName": "Spreadsheet software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs Brokers",
+              "elementId": "2.E.4.i",
+              "elementName": "Spreadsheet software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "official_microsoft_excel_help",
+          "title": "Excel help and learning",
+          "url": "https://support.microsoft.com/en-us/excel/",
+          "region": "global",
+          "evidenceType": "item_specific_documentation",
+          "sourceIds": [
+            "official_microsoft_excel_help"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs Brokers",
+              "elementId": "2.E.4.i",
+              "elementName": "Spreadsheet software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D162|Customs Brokers|tool|microsoft-office-software|||not_established",
+      "normalized_candidate_id": "role|D162|Customs Brokers|tool|microsoft-office-software|||not_established",
+      "context_level": "role",
+      "context_key": "D162|Customs Brokers",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-office-software",
+      "from_name": "Microsoft Office software",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D162|Customs Brokers",
+          "elementId": "2.E.1.k",
+          "elementName": "Office suite software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Customs+Brokers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs Brokers",
+              "elementId": "2.E.1.k",
+              "elementName": "Office suite software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs Brokers",
+              "elementId": "2.E.1.k",
+              "elementName": "Office suite software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D162|Customs Brokers|tool|microsoft-outlook|||not_established",
+      "normalized_candidate_id": "role|D162|Customs Brokers|tool|microsoft-outlook|||not_established",
+      "context_level": "role",
+      "context_key": "D162|Customs Brokers",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-outlook",
+      "from_name": "Microsoft Outlook",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D162|Customs Brokers",
+          "elementId": "2.E.16.a",
+          "elementName": "Electronic mail software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Customs+Brokers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs Brokers",
+              "elementId": "2.E.16.a",
+              "elementName": "Electronic mail software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs Brokers",
+              "elementId": "2.E.16.a",
+              "elementName": "Electronic mail software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D162|Customs Brokers|tool|microsoft-powerpoint|||not_established",
+      "normalized_candidate_id": "role|D162|Customs Brokers|tool|microsoft-powerpoint|||not_established",
+      "context_level": "role",
+      "context_key": "D162|Customs Brokers",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-powerpoint",
+      "from_name": "Microsoft PowerPoint",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D162|Customs Brokers",
+          "elementId": "2.E.4.f",
+          "elementName": "Presentation software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Customs+Brokers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs Brokers",
+              "elementId": "2.E.4.f",
+              "elementName": "Presentation software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs Brokers",
+              "elementId": "2.E.4.f",
+              "elementName": "Presentation software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D162|Customs Brokers|tool|microsoft-word|||not_established",
+      "normalized_candidate_id": "role|D162|Customs Brokers|tool|microsoft-word|||not_established",
+      "context_level": "role",
+      "context_key": "D162|Customs Brokers",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-word",
+      "from_name": "Microsoft Word",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D162|Customs Brokers",
+          "elementId": "2.E.4.d",
+          "elementName": "Word processing software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Customs+Brokers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs Brokers",
+              "elementId": "2.E.4.d",
+              "elementName": "Word processing software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs Brokers",
+              "elementId": "2.E.4.d",
+              "elementName": "Word processing software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D162|Customs Brokers|tool|sap-software|||not_established",
+      "normalized_candidate_id": "role|D162|Customs Brokers|tool|sap-software|||not_established",
+      "context_level": "role",
+      "context_key": "D162|Customs Brokers",
+      "from_item_type": "tool",
+      "from_item_key": "sap-software",
+      "from_name": "SAP software",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D162|Customs Brokers",
+          "elementId": "2.E.2.b",
+          "elementName": "Enterprise resource planning ERP software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Customs+Brokers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs Brokers",
+              "elementId": "2.E.2.b",
+              "elementName": "Enterprise resource planning ERP software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D162|Customs Brokers",
+              "elementId": "2.E.2.b",
+              "elementName": "Enterprise resource planning ERP software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D164|Air Traffic Controllers|tool|adobe-acrobat|||not_established",
+      "normalized_candidate_id": "role|D164|Air Traffic Controllers|tool|adobe-acrobat|||not_established",
+      "context_level": "role",
+      "context_key": "D164|Air Traffic Controllers",
+      "from_item_type": "tool",
+      "from_item_key": "adobe-acrobat",
+      "from_name": "Adobe Acrobat",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D164|Air Traffic Controllers",
+          "elementId": "2.E.5.b",
+          "elementName": "Document management software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Air+Traffic+Controllers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Air Traffic Controllers",
+              "elementId": "2.E.5.b",
+              "elementName": "Document management software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Air Traffic Controllers",
+              "elementId": "2.E.5.b",
+              "elementName": "Document management software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D164|Air Traffic Controllers|tool|advanced-technologies-and-oceanic-procedures-atop|||not_established",
+      "normalized_candidate_id": "role|D164|Air Traffic Controllers|tool|advanced-technologies-and-oceanic-procedures-atop|||not_established",
+      "context_level": "role",
+      "context_key": "D164|Air Traffic Controllers",
+      "from_item_type": "tool",
+      "from_item_key": "advanced-technologies-and-oceanic-procedures-atop",
+      "from_name": "Advanced technologies and oceanic procedures ATOP",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D164|Air Traffic Controllers",
+          "elementId": "2.E.1.i",
+          "elementName": "Expert system software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Air+Traffic+Controllers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Air Traffic Controllers",
+              "elementId": "2.E.1.i",
+              "elementName": "Expert system software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Air Traffic Controllers",
+              "elementId": "2.E.1.i",
+              "elementName": "Expert system software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D164|Air Traffic Controllers|tool|automated-radar-terminal-systems-arts|||not_established",
+      "normalized_candidate_id": "role|D164|Air Traffic Controllers|tool|automated-radar-terminal-systems-arts|||not_established",
+      "context_level": "role",
+      "context_key": "D164|Air Traffic Controllers",
+      "from_item_type": "tool",
+      "from_item_key": "automated-radar-terminal-systems-arts",
+      "from_name": "Automated radar terminal systems ARTS",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D164|Air Traffic Controllers",
+          "elementId": "2.E.1.i",
+          "elementName": "Expert system software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Air+Traffic+Controllers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Air Traffic Controllers",
+              "elementId": "2.E.1.i",
+              "elementName": "Expert system software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Air Traffic Controllers",
+              "elementId": "2.E.1.i",
+              "elementName": "Expert system software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D164|Air Traffic Controllers|tool|microsoft-access|||not_established",
+      "normalized_candidate_id": "role|D164|Air Traffic Controllers|tool|microsoft-access|||not_established",
+      "context_level": "role",
+      "context_key": "D164|Air Traffic Controllers",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-access",
+      "from_name": "Microsoft Access",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D164|Air Traffic Controllers",
+          "elementId": "2.E.6.f",
+          "elementName": "Data base user interface and query software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Air+Traffic+Controllers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Air Traffic Controllers",
+              "elementId": "2.E.6.f",
+              "elementName": "Data base user interface and query software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Air Traffic Controllers",
+              "elementId": "2.E.6.f",
+              "elementName": "Data base user interface and query software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D164|Air Traffic Controllers|tool|microsoft-excel|||not_established",
+      "normalized_candidate_id": "role|D164|Air Traffic Controllers|tool|microsoft-excel|||not_established",
+      "context_level": "role",
+      "context_key": "D164|Air Traffic Controllers",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-excel",
+      "from_name": "Microsoft Excel",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D164|Air Traffic Controllers",
+          "elementId": "2.E.4.i",
+          "elementName": "Spreadsheet software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Air+Traffic+Controllers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Air Traffic Controllers",
+              "elementId": "2.E.4.i",
+              "elementName": "Spreadsheet software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Air Traffic Controllers",
+              "elementId": "2.E.4.i",
+              "elementName": "Spreadsheet software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "official_microsoft_excel_help",
+          "title": "Excel help and learning",
+          "url": "https://support.microsoft.com/en-us/excel/",
+          "region": "global",
+          "evidenceType": "item_specific_documentation",
+          "sourceIds": [
+            "official_microsoft_excel_help"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Air Traffic Controllers",
+              "elementId": "2.E.4.i",
+              "elementName": "Spreadsheet software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D164|Air Traffic Controllers|tool|microsoft-office-software|||not_established",
+      "normalized_candidate_id": "role|D164|Air Traffic Controllers|tool|microsoft-office-software|||not_established",
+      "context_level": "role",
+      "context_key": "D164|Air Traffic Controllers",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-office-software",
+      "from_name": "Microsoft Office software",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D164|Air Traffic Controllers",
+          "elementId": "2.E.1.k",
+          "elementName": "Office suite software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Air+Traffic+Controllers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Air Traffic Controllers",
+              "elementId": "2.E.1.k",
+              "elementName": "Office suite software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Air Traffic Controllers",
+              "elementId": "2.E.1.k",
+              "elementName": "Office suite software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D164|Air Traffic Controllers|tool|microsoft-outlook|||not_established",
+      "normalized_candidate_id": "role|D164|Air Traffic Controllers|tool|microsoft-outlook|||not_established",
+      "context_level": "role",
+      "context_key": "D164|Air Traffic Controllers",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-outlook",
+      "from_name": "Microsoft Outlook",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D164|Air Traffic Controllers",
+          "elementId": "2.E.16.a",
+          "elementName": "Electronic mail software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Air+Traffic+Controllers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Air Traffic Controllers",
+              "elementId": "2.E.16.a",
+              "elementName": "Electronic mail software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Air Traffic Controllers",
+              "elementId": "2.E.16.a",
+              "elementName": "Electronic mail software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D164|Air Traffic Controllers|tool|microsoft-powerpoint|||not_established",
+      "normalized_candidate_id": "role|D164|Air Traffic Controllers|tool|microsoft-powerpoint|||not_established",
+      "context_level": "role",
+      "context_key": "D164|Air Traffic Controllers",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-powerpoint",
+      "from_name": "Microsoft PowerPoint",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D164|Air Traffic Controllers",
+          "elementId": "2.E.4.f",
+          "elementName": "Presentation software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Air+Traffic+Controllers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Air Traffic Controllers",
+              "elementId": "2.E.4.f",
+              "elementName": "Presentation software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Air Traffic Controllers",
+              "elementId": "2.E.4.f",
+              "elementName": "Presentation software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D164|Air Traffic Controllers|tool|microsoft-word|||not_established",
+      "normalized_candidate_id": "role|D164|Air Traffic Controllers|tool|microsoft-word|||not_established",
+      "context_level": "role",
+      "context_key": "D164|Air Traffic Controllers",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-word",
+      "from_name": "Microsoft Word",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D164|Air Traffic Controllers",
+          "elementId": "2.E.4.d",
+          "elementName": "Word processing software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Air+Traffic+Controllers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Air Traffic Controllers",
+              "elementId": "2.E.4.d",
+              "elementName": "Word processing software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Air Traffic Controllers",
+              "elementId": "2.E.4.d",
+              "elementName": "Word processing software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D164|Air Traffic Controllers|tool|sap-software|||not_established",
+      "normalized_candidate_id": "role|D164|Air Traffic Controllers|tool|sap-software|||not_established",
+      "context_level": "role",
+      "context_key": "D164|Air Traffic Controllers",
+      "from_item_type": "tool",
+      "from_item_key": "sap-software",
+      "from_name": "SAP software",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D164|Air Traffic Controllers",
+          "elementId": "2.E.2.b",
+          "elementName": "Enterprise resource planning ERP software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Air+Traffic+Controllers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Air Traffic Controllers",
+              "elementId": "2.E.2.b",
+              "elementName": "Enterprise resource planning ERP software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Air Traffic Controllers",
+              "elementId": "2.E.2.b",
+              "elementName": "Enterprise resource planning ERP software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists|tool|amazon-web-services-aws-software|||not_established",
+      "normalized_candidate_id": "role|D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists|tool|amazon-web-services-aws-software|||not_established",
+      "context_level": "role",
+      "context_key": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+      "from_item_type": "tool",
+      "from_item_key": "amazon-web-services-aws-software",
+      "from_name": "Amazon Web Services AWS software",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+          "elementId": "2.E.6.f",
+          "elementName": "Data base user interface and query software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Low+Vision+Therapists%2C+Orientation+and+Mobility+Specialists%2C+and+Vision+Rehabilitation+Therapists",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+              "elementId": "2.E.6.f",
+              "elementName": "Data base user interface and query software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+              "elementId": "2.E.6.f",
+              "elementName": "Data base user interface and query software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists|tool|microsoft-access|||not_established",
+      "normalized_candidate_id": "role|D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists|tool|microsoft-access|||not_established",
+      "context_level": "role",
+      "context_key": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-access",
+      "from_name": "Microsoft Access",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+          "elementId": "2.E.6.f",
+          "elementName": "Data base user interface and query software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Low+Vision+Therapists%2C+Orientation+and+Mobility+Specialists%2C+and+Vision+Rehabilitation+Therapists",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+              "elementId": "2.E.6.f",
+              "elementName": "Data base user interface and query software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+              "elementId": "2.E.6.f",
+              "elementName": "Data base user interface and query software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists|tool|microsoft-excel|||not_established",
+      "normalized_candidate_id": "role|D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists|tool|microsoft-excel|||not_established",
+      "context_level": "role",
+      "context_key": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-excel",
+      "from_name": "Microsoft Excel",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+          "elementId": "2.E.4.i",
+          "elementName": "Spreadsheet software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Low+Vision+Therapists%2C+Orientation+and+Mobility+Specialists%2C+and+Vision+Rehabilitation+Therapists",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+              "elementId": "2.E.4.i",
+              "elementName": "Spreadsheet software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+              "elementId": "2.E.4.i",
+              "elementName": "Spreadsheet software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "official_microsoft_excel_help",
+          "title": "Excel help and learning",
+          "url": "https://support.microsoft.com/en-us/excel/",
+          "region": "global",
+          "evidenceType": "item_specific_documentation",
+          "sourceIds": [
+            "official_microsoft_excel_help"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+              "elementId": "2.E.4.i",
+              "elementName": "Spreadsheet software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists|tool|microsoft-office-software|||not_established",
+      "normalized_candidate_id": "role|D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists|tool|microsoft-office-software|||not_established",
+      "context_level": "role",
+      "context_key": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-office-software",
+      "from_name": "Microsoft Office software",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+          "elementId": "2.E.1.k",
+          "elementName": "Office suite software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Low+Vision+Therapists%2C+Orientation+and+Mobility+Specialists%2C+and+Vision+Rehabilitation+Therapists",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+              "elementId": "2.E.1.k",
+              "elementName": "Office suite software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+              "elementId": "2.E.1.k",
+              "elementName": "Office suite software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists|tool|microsoft-outlook|||not_established",
+      "normalized_candidate_id": "role|D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists|tool|microsoft-outlook|||not_established",
+      "context_level": "role",
+      "context_key": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-outlook",
+      "from_name": "Microsoft Outlook",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+          "elementId": "2.E.16.a",
+          "elementName": "Electronic mail software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Low+Vision+Therapists%2C+Orientation+and+Mobility+Specialists%2C+and+Vision+Rehabilitation+Therapists",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+              "elementId": "2.E.16.a",
+              "elementName": "Electronic mail software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+              "elementId": "2.E.16.a",
+              "elementName": "Electronic mail software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists|tool|microsoft-powerpoint|||not_established",
+      "normalized_candidate_id": "role|D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists|tool|microsoft-powerpoint|||not_established",
+      "context_level": "role",
+      "context_key": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-powerpoint",
+      "from_name": "Microsoft PowerPoint",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+          "elementId": "2.E.4.f",
+          "elementName": "Presentation software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Low+Vision+Therapists%2C+Orientation+and+Mobility+Specialists%2C+and+Vision+Rehabilitation+Therapists",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+              "elementId": "2.E.4.f",
+              "elementName": "Presentation software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+              "elementId": "2.E.4.f",
+              "elementName": "Presentation software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists|tool|microsoft-visio|||not_established",
+      "normalized_candidate_id": "role|D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists|tool|microsoft-visio|||not_established",
+      "context_level": "role",
+      "context_key": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-visio",
+      "from_name": "Microsoft Visio",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+          "elementId": "2.E.1.p",
+          "elementName": "Process mapping and design software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Low+Vision+Therapists%2C+Orientation+and+Mobility+Specialists%2C+and+Vision+Rehabilitation+Therapists",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+              "elementId": "2.E.1.p",
+              "elementName": "Process mapping and design software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+              "elementId": "2.E.1.p",
+              "elementName": "Process mapping and design software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists|tool|microsoft-word|||not_established",
+      "normalized_candidate_id": "role|D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists|tool|microsoft-word|||not_established",
+      "context_level": "role",
+      "context_key": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-word",
+      "from_name": "Microsoft Word",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+          "elementId": "2.E.4.d",
+          "elementName": "Word processing software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Low+Vision+Therapists%2C+Orientation+and+Mobility+Specialists%2C+and+Vision+Rehabilitation+Therapists",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+              "elementId": "2.E.4.d",
+              "elementName": "Word processing software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+              "elementId": "2.E.4.d",
+              "elementName": "Word processing software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists|tool|oracle-database|||not_established",
+      "normalized_candidate_id": "role|D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists|tool|oracle-database|||not_established",
+      "context_level": "role",
+      "context_key": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+      "from_item_type": "tool",
+      "from_item_key": "oracle-database",
+      "from_name": "Oracle Database",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+          "elementId": "2.E.6.f",
+          "elementName": "Data base user interface and query software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Low+Vision+Therapists%2C+Orientation+and+Mobility+Specialists%2C+and+Vision+Rehabilitation+Therapists",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+              "elementId": "2.E.6.f",
+              "elementName": "Data base user interface and query software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+              "elementId": "2.E.6.f",
+              "elementName": "Data base user interface and query software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists|tool|oracle-java|||not_established",
+      "normalized_candidate_id": "role|D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists|tool|oracle-java|||not_established",
+      "context_level": "role",
+      "context_key": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+      "from_item_type": "tool",
+      "from_item_key": "oracle-java",
+      "from_name": "Oracle Java",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+          "elementId": "2.E.7.e",
+          "elementName": "Object or component oriented development software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Low+Vision+Therapists%2C+Orientation+and+Mobility+Specialists%2C+and+Vision+Rehabilitation+Therapists",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+              "elementId": "2.E.7.e",
+              "elementName": "Object or component oriented development software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D164|Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+              "elementId": "2.E.7.e",
+              "elementName": "Object or component oriented development software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D165|Fitness and Wellness Coordinators|tool|adobe-acrobat|||not_established",
+      "normalized_candidate_id": "role|D165|Fitness and Wellness Coordinators|tool|adobe-acrobat|||not_established",
+      "context_level": "role",
+      "context_key": "D165|Fitness and Wellness Coordinators",
+      "from_item_type": "tool",
+      "from_item_key": "adobe-acrobat",
+      "from_name": "Adobe Acrobat",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D165|Fitness and Wellness Coordinators",
+          "elementId": "2.E.5.b",
+          "elementName": "Document management software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Fitness+and+Wellness+Coordinators",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D165|Fitness and Wellness Coordinators",
+              "elementId": "2.E.5.b",
+              "elementName": "Document management software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D165|Fitness and Wellness Coordinators",
+              "elementId": "2.E.5.b",
+              "elementName": "Document management software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D165|Fitness and Wellness Coordinators|tool|airtable|||not_established",
+      "normalized_candidate_id": "role|D165|Fitness and Wellness Coordinators|tool|airtable|||not_established",
+      "context_level": "role",
+      "context_key": "D165|Fitness and Wellness Coordinators",
+      "from_item_type": "tool",
+      "from_item_key": "airtable",
+      "from_name": "Airtable",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D165|Fitness and Wellness Coordinators",
+          "elementId": "2.E.6.f",
+          "elementName": "Data base user interface and query software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Fitness+and+Wellness+Coordinators",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D165|Fitness and Wellness Coordinators",
+              "elementId": "2.E.6.f",
+              "elementName": "Data base user interface and query software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D165|Fitness and Wellness Coordinators",
+              "elementId": "2.E.6.f",
+              "elementName": "Data base user interface and query software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D165|Fitness and Wellness Coordinators|tool|email-software|||not_established",
+      "normalized_candidate_id": "role|D165|Fitness and Wellness Coordinators|tool|email-software|||not_established",
+      "context_level": "role",
+      "context_key": "D165|Fitness and Wellness Coordinators",
+      "from_item_type": "tool",
+      "from_item_key": "email-software",
+      "from_name": "Email software",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D165|Fitness and Wellness Coordinators",
+          "elementId": "2.E.16.a",
+          "elementName": "Electronic mail software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Fitness+and+Wellness+Coordinators",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D165|Fitness and Wellness Coordinators",
+              "elementId": "2.E.16.a",
+              "elementName": "Electronic mail software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D165|Fitness and Wellness Coordinators",
+              "elementId": "2.E.16.a",
+              "elementName": "Electronic mail software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D165|Fitness and Wellness Coordinators|tool|google-workspace-software|||not_established",
+      "normalized_candidate_id": "role|D165|Fitness and Wellness Coordinators|tool|google-workspace-software|||not_established",
+      "context_level": "role",
+      "context_key": "D165|Fitness and Wellness Coordinators",
+      "from_item_type": "tool",
+      "from_item_key": "google-workspace-software",
+      "from_name": "Google Workspace software",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D165|Fitness and Wellness Coordinators",
+          "elementId": "2.E.1.k",
+          "elementName": "Office suite software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Fitness+and+Wellness+Coordinators",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D165|Fitness and Wellness Coordinators",
+              "elementId": "2.E.1.k",
+              "elementName": "Office suite software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D165|Fitness and Wellness Coordinators",
+              "elementId": "2.E.1.k",
+              "elementName": "Office suite software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D165|Fitness and Wellness Coordinators|tool|microsoft-excel|||not_established",
+      "normalized_candidate_id": "role|D165|Fitness and Wellness Coordinators|tool|microsoft-excel|||not_established",
+      "context_level": "role",
+      "context_key": "D165|Fitness and Wellness Coordinators",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-excel",
+      "from_name": "Microsoft Excel",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D165|Fitness and Wellness Coordinators",
+          "elementId": "2.E.4.i",
+          "elementName": "Spreadsheet software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Fitness+and+Wellness+Coordinators",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D165|Fitness and Wellness Coordinators",
+              "elementId": "2.E.4.i",
+              "elementName": "Spreadsheet software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D165|Fitness and Wellness Coordinators",
+              "elementId": "2.E.4.i",
+              "elementName": "Spreadsheet software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "official_microsoft_excel_help",
+          "title": "Excel help and learning",
+          "url": "https://support.microsoft.com/en-us/excel/",
+          "region": "global",
+          "evidenceType": "item_specific_documentation",
+          "sourceIds": [
+            "official_microsoft_excel_help"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D165|Fitness and Wellness Coordinators",
+              "elementId": "2.E.4.i",
+              "elementName": "Spreadsheet software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D165|Fitness and Wellness Coordinators|tool|microsoft-office-software|||not_established",
+      "normalized_candidate_id": "role|D165|Fitness and Wellness Coordinators|tool|microsoft-office-software|||not_established",
+      "context_level": "role",
+      "context_key": "D165|Fitness and Wellness Coordinators",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-office-software",
+      "from_name": "Microsoft Office software",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D165|Fitness and Wellness Coordinators",
+          "elementId": "2.E.1.k",
+          "elementName": "Office suite software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Fitness+and+Wellness+Coordinators",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D165|Fitness and Wellness Coordinators",
+              "elementId": "2.E.1.k",
+              "elementName": "Office suite software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D165|Fitness and Wellness Coordinators",
+              "elementId": "2.E.1.k",
+              "elementName": "Office suite software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D165|Fitness and Wellness Coordinators|tool|microsoft-outlook|||not_established",
+      "normalized_candidate_id": "role|D165|Fitness and Wellness Coordinators|tool|microsoft-outlook|||not_established",
+      "context_level": "role",
+      "context_key": "D165|Fitness and Wellness Coordinators",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-outlook",
+      "from_name": "Microsoft Outlook",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D165|Fitness and Wellness Coordinators",
+          "elementId": "2.E.16.a",
+          "elementName": "Electronic mail software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Fitness+and+Wellness+Coordinators",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D165|Fitness and Wellness Coordinators",
+              "elementId": "2.E.16.a",
+              "elementName": "Electronic mail software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D165|Fitness and Wellness Coordinators",
+              "elementId": "2.E.16.a",
+              "elementName": "Electronic mail software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D165|Fitness and Wellness Coordinators|tool|microsoft-powerpoint|||not_established",
+      "normalized_candidate_id": "role|D165|Fitness and Wellness Coordinators|tool|microsoft-powerpoint|||not_established",
+      "context_level": "role",
+      "context_key": "D165|Fitness and Wellness Coordinators",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-powerpoint",
+      "from_name": "Microsoft PowerPoint",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D165|Fitness and Wellness Coordinators",
+          "elementId": "2.E.4.f",
+          "elementName": "Presentation software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Fitness+and+Wellness+Coordinators",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D165|Fitness and Wellness Coordinators",
+              "elementId": "2.E.4.f",
+              "elementName": "Presentation software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D165|Fitness and Wellness Coordinators",
+              "elementId": "2.E.4.f",
+              "elementName": "Presentation software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D165|Fitness and Wellness Coordinators|tool|microsoft-windows|||not_established",
+      "normalized_candidate_id": "role|D165|Fitness and Wellness Coordinators|tool|microsoft-windows|||not_established",
+      "context_level": "role",
+      "context_key": "D165|Fitness and Wellness Coordinators",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-windows",
+      "from_name": "Microsoft Windows",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D165|Fitness and Wellness Coordinators",
+          "elementId": "2.E.13.c",
+          "elementName": "Operating system software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Fitness+and+Wellness+Coordinators",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D165|Fitness and Wellness Coordinators",
+              "elementId": "2.E.13.c",
+              "elementName": "Operating system software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D165|Fitness and Wellness Coordinators",
+              "elementId": "2.E.13.c",
+              "elementName": "Operating system software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D165|Fitness and Wellness Coordinators|tool|microsoft-word|||not_established",
+      "normalized_candidate_id": "role|D165|Fitness and Wellness Coordinators|tool|microsoft-word|||not_established",
+      "context_level": "role",
+      "context_key": "D165|Fitness and Wellness Coordinators",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-word",
+      "from_name": "Microsoft Word",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D165|Fitness and Wellness Coordinators",
+          "elementId": "2.E.4.d",
+          "elementName": "Word processing software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Fitness+and+Wellness+Coordinators",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D165|Fitness and Wellness Coordinators",
+              "elementId": "2.E.4.d",
+              "elementName": "Word processing software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D165|Fitness and Wellness Coordinators",
+              "elementId": "2.E.4.d",
+              "elementName": "Word processing software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D168|Broadcast Technicians|tool|adobe-after-effects|||not_established",
+      "normalized_candidate_id": "role|D168|Broadcast Technicians|tool|adobe-after-effects|||not_established",
+      "context_level": "role",
+      "context_key": "D168|Broadcast Technicians",
+      "from_item_type": "tool",
+      "from_item_key": "adobe-after-effects",
+      "from_name": "Adobe After Effects",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D168|Broadcast Technicians",
+          "elementId": "2.E.4.c",
+          "elementName": "Video creation and editing software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Broadcast+Technicians",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Broadcast Technicians",
+              "elementId": "2.E.4.c",
+              "elementName": "Video creation and editing software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Broadcast Technicians",
+              "elementId": "2.E.4.c",
+              "elementName": "Video creation and editing software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D168|Broadcast Technicians|tool|adobe-illustrator|||not_established",
+      "normalized_candidate_id": "role|D168|Broadcast Technicians|tool|adobe-illustrator|||not_established",
+      "context_level": "role",
+      "context_key": "D168|Broadcast Technicians",
+      "from_item_type": "tool",
+      "from_item_key": "adobe-illustrator",
+      "from_name": "Adobe Illustrator",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D168|Broadcast Technicians",
+          "elementId": "2.E.4.b",
+          "elementName": "Graphics or photo imaging software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Broadcast+Technicians",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Broadcast Technicians",
+              "elementId": "2.E.4.b",
+              "elementName": "Graphics or photo imaging software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Broadcast Technicians",
+              "elementId": "2.E.4.b",
+              "elementName": "Graphics or photo imaging software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D168|Broadcast Technicians|tool|adobe-indesign|||not_established",
+      "normalized_candidate_id": "role|D168|Broadcast Technicians|tool|adobe-indesign|||not_established",
+      "context_level": "role",
+      "context_key": "D168|Broadcast Technicians",
+      "from_item_type": "tool",
+      "from_item_key": "adobe-indesign",
+      "from_name": "Adobe InDesign",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D168|Broadcast Technicians",
+          "elementId": "2.E.4.k",
+          "elementName": "Desktop publishing software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Broadcast+Technicians",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Broadcast Technicians",
+              "elementId": "2.E.4.k",
+              "elementName": "Desktop publishing software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Broadcast Technicians",
+              "elementId": "2.E.4.k",
+              "elementName": "Desktop publishing software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D168|Broadcast Technicians|tool|adobe-photoshop|||not_established",
+      "normalized_candidate_id": "role|D168|Broadcast Technicians|tool|adobe-photoshop|||not_established",
+      "context_level": "role",
+      "context_key": "D168|Broadcast Technicians",
+      "from_item_type": "tool",
+      "from_item_key": "adobe-photoshop",
+      "from_name": "Adobe Photoshop",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D168|Broadcast Technicians",
+          "elementId": "2.E.4.b",
+          "elementName": "Graphics or photo imaging software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Broadcast+Technicians",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Broadcast Technicians",
+              "elementId": "2.E.4.b",
+              "elementName": "Graphics or photo imaging software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Broadcast Technicians",
+              "elementId": "2.E.4.b",
+              "elementName": "Graphics or photo imaging software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D168|Broadcast Technicians|tool|autodesk-autocad|||not_established",
+      "normalized_candidate_id": "role|D168|Broadcast Technicians|tool|autodesk-autocad|||not_established",
+      "context_level": "role",
+      "context_key": "D168|Broadcast Technicians",
+      "from_item_type": "tool",
+      "from_item_key": "autodesk-autocad",
+      "from_name": "Autodesk AutoCAD",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D168|Broadcast Technicians",
+          "elementId": "2.E.9.c",
+          "elementName": "Computer aided design CAD software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Broadcast+Technicians",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Broadcast Technicians",
+              "elementId": "2.E.9.c",
+              "elementName": "Computer aided design CAD software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Broadcast Technicians",
+              "elementId": "2.E.9.c",
+              "elementName": "Computer aided design CAD software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D168|Broadcast Technicians|tool|linux|||not_established",
+      "normalized_candidate_id": "role|D168|Broadcast Technicians|tool|linux|||not_established",
+      "context_level": "role",
+      "context_key": "D168|Broadcast Technicians",
+      "from_item_type": "tool",
+      "from_item_key": "linux",
+      "from_name": "Linux",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D168|Broadcast Technicians",
+          "elementId": "2.E.13.c",
+          "elementName": "Operating system software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Broadcast+Technicians",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Broadcast Technicians",
+              "elementId": "2.E.13.c",
+              "elementName": "Operating system software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Broadcast Technicians",
+              "elementId": "2.E.13.c",
+              "elementName": "Operating system software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D168|Broadcast Technicians|tool|microsoft-excel|||not_established",
+      "normalized_candidate_id": "role|D168|Broadcast Technicians|tool|microsoft-excel|||not_established",
+      "context_level": "role",
+      "context_key": "D168|Broadcast Technicians",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-excel",
+      "from_name": "Microsoft Excel",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D168|Broadcast Technicians",
+          "elementId": "2.E.4.i",
+          "elementName": "Spreadsheet software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Broadcast+Technicians",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Broadcast Technicians",
+              "elementId": "2.E.4.i",
+              "elementName": "Spreadsheet software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Broadcast Technicians",
+              "elementId": "2.E.4.i",
+              "elementName": "Spreadsheet software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "official_microsoft_excel_help",
+          "title": "Excel help and learning",
+          "url": "https://support.microsoft.com/en-us/excel/",
+          "region": "global",
+          "evidenceType": "item_specific_documentation",
+          "sourceIds": [
+            "official_microsoft_excel_help"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Broadcast Technicians",
+              "elementId": "2.E.4.i",
+              "elementName": "Spreadsheet software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D168|Broadcast Technicians|tool|microsoft-office-software|||not_established",
+      "normalized_candidate_id": "role|D168|Broadcast Technicians|tool|microsoft-office-software|||not_established",
+      "context_level": "role",
+      "context_key": "D168|Broadcast Technicians",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-office-software",
+      "from_name": "Microsoft Office software",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D168|Broadcast Technicians",
+          "elementId": "2.E.1.k",
+          "elementName": "Office suite software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Broadcast+Technicians",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Broadcast Technicians",
+              "elementId": "2.E.1.k",
+              "elementName": "Office suite software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Broadcast Technicians",
+              "elementId": "2.E.1.k",
+              "elementName": "Office suite software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D168|Broadcast Technicians|tool|microsoft-outlook|||not_established",
+      "normalized_candidate_id": "role|D168|Broadcast Technicians|tool|microsoft-outlook|||not_established",
+      "context_level": "role",
+      "context_key": "D168|Broadcast Technicians",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-outlook",
+      "from_name": "Microsoft Outlook",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D168|Broadcast Technicians",
+          "elementId": "2.E.16.a",
+          "elementName": "Electronic mail software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Broadcast+Technicians",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Broadcast Technicians",
+              "elementId": "2.E.16.a",
+              "elementName": "Electronic mail software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Broadcast Technicians",
+              "elementId": "2.E.16.a",
+              "elementName": "Electronic mail software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D168|Broadcast Technicians|tool|microsoft-powerpoint|||not_established",
+      "normalized_candidate_id": "role|D168|Broadcast Technicians|tool|microsoft-powerpoint|||not_established",
+      "context_level": "role",
+      "context_key": "D168|Broadcast Technicians",
+      "from_item_type": "tool",
+      "from_item_key": "microsoft-powerpoint",
+      "from_name": "Microsoft PowerPoint",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D168|Broadcast Technicians",
+          "elementId": "2.E.4.f",
+          "elementName": "Presentation software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Broadcast+Technicians",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Broadcast Technicians",
+              "elementId": "2.E.4.f",
+              "elementName": "Presentation software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Broadcast Technicians",
+              "elementId": "2.E.4.f",
+              "elementName": "Presentation software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D168|Video Game Designers|tool|adobe-after-effects|||not_established",
+      "normalized_candidate_id": "role|D168|Video Game Designers|tool|adobe-after-effects|||not_established",
+      "context_level": "role",
+      "context_key": "D168|Video Game Designers",
+      "from_item_type": "tool",
+      "from_item_key": "adobe-after-effects",
+      "from_name": "Adobe After Effects",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D168|Video Game Designers",
+          "elementId": "2.E.4.c",
+          "elementName": "Video creation and editing software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Video+Game+Designers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Video Game Designers",
+              "elementId": "2.E.4.c",
+              "elementName": "Video creation and editing software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Video Game Designers",
+              "elementId": "2.E.4.c",
+              "elementName": "Video creation and editing software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D168|Video Game Designers|tool|adobe-creative-cloud-software|||not_established",
+      "normalized_candidate_id": "role|D168|Video Game Designers|tool|adobe-creative-cloud-software|||not_established",
+      "context_level": "role",
+      "context_key": "D168|Video Game Designers",
+      "from_item_type": "tool",
+      "from_item_key": "adobe-creative-cloud-software",
+      "from_name": "Adobe Creative Cloud software",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D168|Video Game Designers",
+          "elementId": "2.E.4.b",
+          "elementName": "Graphics or photo imaging software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Video+Game+Designers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Video Game Designers",
+              "elementId": "2.E.4.b",
+              "elementName": "Graphics or photo imaging software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Video Game Designers",
+              "elementId": "2.E.4.b",
+              "elementName": "Graphics or photo imaging software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D168|Video Game Designers|tool|adobe-illustrator|||not_established",
+      "normalized_candidate_id": "role|D168|Video Game Designers|tool|adobe-illustrator|||not_established",
+      "context_level": "role",
+      "context_key": "D168|Video Game Designers",
+      "from_item_type": "tool",
+      "from_item_key": "adobe-illustrator",
+      "from_name": "Adobe Illustrator",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D168|Video Game Designers",
+          "elementId": "2.E.4.b",
+          "elementName": "Graphics or photo imaging software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Video+Game+Designers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Video Game Designers",
+              "elementId": "2.E.4.b",
+              "elementName": "Graphics or photo imaging software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Video Game Designers",
+              "elementId": "2.E.4.b",
+              "elementName": "Graphics or photo imaging software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D168|Video Game Designers|tool|adobe-photoshop|||not_established",
+      "normalized_candidate_id": "role|D168|Video Game Designers|tool|adobe-photoshop|||not_established",
+      "context_level": "role",
+      "context_key": "D168|Video Game Designers",
+      "from_item_type": "tool",
+      "from_item_key": "adobe-photoshop",
+      "from_name": "Adobe Photoshop",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D168|Video Game Designers",
+          "elementId": "2.E.4.b",
+          "elementName": "Graphics or photo imaging software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Video+Game+Designers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Video Game Designers",
+              "elementId": "2.E.4.b",
+              "elementName": "Graphics or photo imaging software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Video Game Designers",
+              "elementId": "2.E.4.b",
+              "elementName": "Graphics or photo imaging software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D168|Video Game Designers|tool|atlassian-jira|||not_established",
+      "normalized_candidate_id": "role|D168|Video Game Designers|tool|atlassian-jira|||not_established",
+      "context_level": "role",
+      "context_key": "D168|Video Game Designers",
+      "from_item_type": "tool",
+      "from_item_key": "atlassian-jira",
+      "from_name": "Atlassian JIRA",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D168|Video Game Designers",
+          "elementId": "2.E.1.e",
+          "elementName": "Project management software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Video+Game+Designers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Video Game Designers",
+              "elementId": "2.E.1.e",
+              "elementName": "Project management software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Video Game Designers",
+              "elementId": "2.E.1.e",
+              "elementName": "Project management software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D168|Video Game Designers|tool|c|||not_established",
+      "normalized_candidate_id": "role|D168|Video Game Designers|tool|c|||not_established",
+      "context_level": "role",
+      "context_key": "D168|Video Game Designers",
+      "from_item_type": "tool",
+      "from_item_key": "c",
+      "from_name": "C#",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D168|Video Game Designers",
+          "elementId": "2.E.7.e",
+          "elementName": "Object or component oriented development software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Video+Game+Designers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Video Game Designers",
+              "elementId": "2.E.7.e",
+              "elementName": "Object or component oriented development software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Video Game Designers",
+              "elementId": "2.E.7.e",
+              "elementName": "Object or component oriented development software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D168|Video Game Designers|tool|extensible-markup-language-xml|||not_established",
+      "normalized_candidate_id": "role|D168|Video Game Designers|tool|extensible-markup-language-xml|||not_established",
+      "context_level": "role",
+      "context_key": "D168|Video Game Designers",
+      "from_item_type": "tool",
+      "from_item_key": "extensible-markup-language-xml",
+      "from_name": "Extensible markup language XML",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D168|Video Game Designers",
+          "elementId": "2.E.7.c",
+          "elementName": "Enterprise application integration software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Video+Game+Designers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Video Game Designers",
+              "elementId": "2.E.7.c",
+              "elementName": "Enterprise application integration software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Video Game Designers",
+              "elementId": "2.E.7.c",
+              "elementName": "Enterprise application integration software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D168|Video Game Designers|tool|git|||not_established",
+      "normalized_candidate_id": "role|D168|Video Game Designers|tool|git|||not_established",
+      "context_level": "role",
+      "context_key": "D168|Video Game Designers",
+      "from_item_type": "tool",
+      "from_item_key": "git",
+      "from_name": "Git",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D168|Video Game Designers",
+          "elementId": "2.E.5.c",
+          "elementName": "File versioning software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Video+Game+Designers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Video Game Designers",
+              "elementId": "2.E.5.c",
+              "elementName": "File versioning software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Video Game Designers",
+              "elementId": "2.E.5.c",
+              "elementName": "File versioning software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "role|D168|Video Game Designers|tool|python|||not_established",
+      "normalized_candidate_id": "role|D168|Video Game Designers|tool|python|||not_established",
+      "context_level": "role",
+      "context_key": "D168|Video Game Designers",
+      "from_item_type": "tool",
+      "from_item_key": "python",
+      "from_name": "Python",
+      "to_item_type": null,
+      "to_item_key": null,
+      "to_name": null,
+      "relationship_type": "not_established",
+      "current_state": "not_established",
+      "source_locators": [
+        {
+          "roleKey": "D168|Video Game Designers",
+          "elementId": "2.E.7.e",
+          "elementName": "Object or component oriented development software",
+          "owner": "role"
+        }
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Video+Game+Designers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_esco"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Video Game Designers",
+              "elementId": "2.E.7.e",
+              "elementName": "Object or component oriented development software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy",
+          "sourceIds": [
+            "global_onet"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Video Game Designers",
+              "elementId": "2.E.7.e",
+              "elementName": "Object or component oriented development software",
+              "owner": "role"
+            }
+          ]
+        },
+        {
+          "id": "official_python_documentation",
+          "title": "Python documentation",
+          "url": "https://docs.python.org/3/",
+          "region": "global",
+          "evidenceType": "item_specific_documentation",
+          "sourceIds": [
+            "official_python_documentation"
+          ],
+          "sourceLocators": [
+            {
+              "roleKey": "D168|Video Game Designers",
+              "elementId": "2.E.7.e",
+              "elementName": "Object or component oriented development software",
+              "owner": "role"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "normalized_prior_id_count": 2237,
+  "historical_ledger_files": [
+    "full_population_relationship_tranche_003_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_004_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_005_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_006_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_007_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_008_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_009_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_010_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_011_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_012_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_013_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_014_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_016_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_017_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_018_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_019_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_020_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_021_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_022_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_023_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_024_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_025_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_026_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_027_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_028_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_029_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_030_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_031_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_032_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_033_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_034_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_035_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_036_search_ledger_2026-09-21.jsonl",
+    "full_population_relationship_tranche_037_search_ledger_2026-09-21.jsonl"
+  ]
+}

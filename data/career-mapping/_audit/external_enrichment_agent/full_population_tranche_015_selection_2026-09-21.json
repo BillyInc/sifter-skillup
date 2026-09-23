@@ -1,0 +1,217 @@
+{
+  "schema": "2026-09-21.full-population-enrichment-tranche-selection.v1",
+  "accessed_on": "2026-09-21",
+  "tranche": "015",
+  "selection_order": "stable row_id ascending after excluding D078 and all prior item ledgers/selections",
+  "source_queue": "data/career-mapping/_audit/external_enrichment_queue_2026-09-20.json",
+  "excluded_context_prefix": "D078",
+  "disjoint_from": [
+    "full_population_tranche_001_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_002_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_003_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_004_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_005_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_006_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_007_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_008_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_009_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_010_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_011_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_012_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_013_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_014_search_ledger_2026-09-21.jsonl"
+  ],
+  "policy": {
+    "item_rows_are_unique_contextual_identities": true,
+    "source_links_are_not_promoted_without_item_specific_evidence": true,
+    "no_link_requires_an_actual_search": true,
+    "retired_or_uncertain_sources_remain_review_required": true
+  },
+  "items": [
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D037|certification|call-to-the-nigerian-bar-barrister-at-law-bl",
+      "subject_id": "item|domain|D037|certification|call-to-the-nigerian-bar-barrister-at-law-bl",
+      "context_level": "domain",
+      "context_key": "D037",
+      "domain_key": "D037",
+      "item_type": "certification",
+      "item_key": "call-to-the-nigerian-bar-barrister-at-law-bl",
+      "item_name": "Call to the Nigerian Bar (Barrister-at-Law, BL)"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D037|competency|analyse-and-communicate-legal-issues",
+      "subject_id": "item|domain|D037|competency|analyse-and-communicate-legal-issues",
+      "context_level": "domain",
+      "context_key": "D037",
+      "domain_key": "D037",
+      "item_type": "competency",
+      "item_key": "analyse-and-communicate-legal-issues",
+      "item_name": "analyse and communicate legal issues"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D037|competency|apply-nigerian-law",
+      "subject_id": "item|domain|D037|competency|apply-nigerian-law",
+      "context_level": "domain",
+      "context_key": "D037",
+      "domain_key": "D037",
+      "item_type": "competency",
+      "item_key": "apply-nigerian-law",
+      "item_name": "apply Nigerian law"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D037|competency|protect-client-confidentiality",
+      "subject_id": "item|domain|D037|competency|protect-client-confidentiality",
+      "context_level": "domain",
+      "context_key": "D037",
+      "domain_key": "D037",
+      "item_type": "competency",
+      "item_key": "protect-client-confidentiality",
+      "item_name": "protect client confidentiality"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D037|skill|case-analysis",
+      "subject_id": "item|domain|D037|skill|case-analysis",
+      "context_level": "domain",
+      "context_key": "D037",
+      "domain_key": "D037",
+      "item_type": "skill",
+      "item_key": "case-analysis",
+      "item_name": "case analysis"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D037|skill|drafting",
+      "subject_id": "item|domain|D037|skill|drafting",
+      "context_level": "domain",
+      "context_key": "D037",
+      "domain_key": "D037",
+      "item_type": "skill",
+      "item_key": "drafting",
+      "item_name": "drafting"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D037|skill|legal-research",
+      "subject_id": "item|domain|D037|skill|legal-research",
+      "context_level": "domain",
+      "context_key": "D037",
+      "domain_key": "D037",
+      "item_type": "skill",
+      "item_key": "legal-research",
+      "item_name": "legal research"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D038|competency|analyse-and-communicate-legal-issues",
+      "subject_id": "item|domain|D038|competency|analyse-and-communicate-legal-issues",
+      "context_level": "domain",
+      "context_key": "D038",
+      "domain_key": "D038",
+      "item_type": "competency",
+      "item_key": "analyse-and-communicate-legal-issues",
+      "item_name": "analyse and communicate legal issues"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D038|competency|apply-nigerian-law",
+      "subject_id": "item|domain|D038|competency|apply-nigerian-law",
+      "context_level": "domain",
+      "context_key": "D038",
+      "domain_key": "D038",
+      "item_type": "competency",
+      "item_key": "apply-nigerian-law",
+      "item_name": "apply Nigerian law"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D038|competency|protect-client-confidentiality",
+      "subject_id": "item|domain|D038|competency|protect-client-confidentiality",
+      "context_level": "domain",
+      "context_key": "D038",
+      "domain_key": "D038",
+      "item_type": "competency",
+      "item_key": "protect-client-confidentiality",
+      "item_name": "protect client confidentiality"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D038|skill|case-analysis",
+      "subject_id": "item|domain|D038|skill|case-analysis",
+      "context_level": "domain",
+      "context_key": "D038",
+      "domain_key": "D038",
+      "item_type": "skill",
+      "item_key": "case-analysis",
+      "item_name": "case analysis"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D038|skill|drafting",
+      "subject_id": "item|domain|D038|skill|drafting",
+      "context_level": "domain",
+      "context_key": "D038",
+      "domain_key": "D038",
+      "item_type": "skill",
+      "item_key": "drafting",
+      "item_name": "drafting"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D038|skill|legal-research",
+      "subject_id": "item|domain|D038|skill|legal-research",
+      "context_level": "domain",
+      "context_key": "D038",
+      "domain_key": "D038",
+      "item_type": "skill",
+      "item_key": "legal-research",
+      "item_name": "legal research"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D039|certification|registered-teacher-trcn-certificate",
+      "subject_id": "item|domain|D039|certification|registered-teacher-trcn-certificate",
+      "context_level": "domain",
+      "context_key": "D039",
+      "domain_key": "D039",
+      "item_type": "certification",
+      "item_key": "registered-teacher-trcn-certificate",
+      "item_name": "Registered Teacher (TRCN Certificate)"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D040|certification|trcn-registration-registered-teacher",
+      "subject_id": "item|domain|D040|certification|trcn-registration-registered-teacher",
+      "context_level": "domain",
+      "context_key": "D040",
+      "domain_key": "D040",
+      "item_type": "certification",
+      "item_key": "trcn-registration-registered-teacher",
+      "item_name": "TRCN Registration (Registered Teacher)"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D040|competency|demonstrate-practical-competence-against-nos",
+      "subject_id": "item|domain|D040|competency|demonstrate-practical-competence-against-nos",
+      "context_level": "domain",
+      "context_key": "D040",
+      "domain_key": "D040",
+      "item_type": "competency",
+      "item_key": "demonstrate-practical-competence-against-nos",
+      "item_name": "demonstrate practical competence against NOS"
+    }
+  ],
+  "counts": {
+    "pending_contextual_identities_excluding_d078": 75735,
+    "prior_ids_excluded": 352,
+    "remaining_after_exclusion": 75734,
+    "selected_rows": 16,
+    "item_rows": 16,
+    "unique_item_names": 10,
+    "d078_rows": 0
+  }
+}

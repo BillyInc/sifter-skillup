@@ -11,6 +11,7 @@ const {
   canApproveForStudent,
   canExposeToStudents,
   adminEvidenceQueueState,
+  partitionAdminGuidanceEvidence,
   normaliseAdminGuidanceEvidence,
 } = require("../src/screens/admin/adminGuidanceEvidence.ts");
 
@@ -64,5 +65,28 @@ assert.equal(canExposeToStudents(approved).allowed, true);
 assert.equal(adminEvidenceQueueState(approved), "student_ready");
 assert.equal(canExposeToStudents({ ...approved, sourceLocator: null, sourceUrl: null }).allowed, false);
 assert.equal(canExposeToStudents({ ...approved, sourceAccessedAt: null }).allowed, false);
+assert.equal(
+  canExposeToStudents({ ...approved, linkState: "review_required" }).allowed,
+  false,
+  "approved evidence with an unresolved link leaked to students",
+);
+assert.equal(
+  canExposeToStudents({ ...approved, sourceUrl: null, sourceLocator: null, sourceLocators: [{ page: 12 }] }).allowed,
+  true,
+  "structured source locators were not accepted as provenance",
+);
+assert.equal(
+  canExposeToStudents(normaliseAdminGuidanceEvidence({ ...base, evidence_state: "approved", sourceUrl: null, sourceLocator: null, source_url: null, source_locator: null, url: "https://example.org/learning" })).allowed,
+  false,
+  "an item link was treated as source provenance",
+);
+
+const views = partitionAdminGuidanceEvidence([
+  approved,
+  normaliseAdminGuidanceEvidence({ ...base, evidence_state: "review_required" }),
+]);
+assert.deepEqual(views.accepted.map((record) => record.id), [approved.id]);
+assert.deepEqual(views.internal.map((record) => record.id), ["relationship-1"]);
+assert.equal(normaliseAdminGuidanceEvidence({ ...base, review_status: "approved_guidance_v1" }).evidenceState, "approved");
 
 console.log("Admin guidance audit smoke passed (source trace, access date, approval, and student-exposure gates).");

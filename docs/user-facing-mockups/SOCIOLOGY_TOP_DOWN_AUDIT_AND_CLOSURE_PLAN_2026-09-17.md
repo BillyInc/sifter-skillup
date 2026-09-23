@@ -868,3 +868,78 @@ queues, context/owner alignment, student-exposure blocking, route-bound report
 actions and authoritative institution identity. The one unmapped programme
 (`Sciences::Mathematics`) and unresolved relationship rows remain explicit
 backlog entries. Full admin rendering, browser proof and SQL remain deferred.
+
+### 2026-09-21 full-population downstream/admin audit checkpoint
+
+The local top-down contract audit is complete across 237 programmes and 420
+JAMB identities. All 237 programme routes have domain-to-subgroup-to-role
+continuity; 1,344 domain, 3,580 subgroup and 46,941 role routes resolve across
+5,668 contexts. The checkpoint records card summaries/friendly titles, bounded
+role learning-needed skills, source/link state, relationship grouping,
+admin provenance/review queues and student-safe filtering. Local checks pass,
+but scaling remains unapproved while review queues, 2,305
+not-established/unresolved contextual edges, full rendered admin acceptance,
+browser proof and manual Supabase verification remain open. No UI or SQL was
+changed.
+
+### 2026-09-21 role work-profile continuation
+
+Role work-profile tranche 003 audited queue positions 41-60 without overlap
+with tranches 001-002. The evidence ledger preserves authoritative ESCO
+identity data and local source locators, while the unavailable public API
+transport leaves the online identity state unconfirmed. All 20 decisions are
+`review_required`; no profile, role mapping or student-facing preparation
+content was invented. The role-work-profile contract therefore remains open
+for the remaining 59 missing profiles and any later authoritative review.
+
+### 2026-09-21 role work-profile tranche 005
+
+The next non-overlapping missing-role slice, queue positions 81-100, was
+audited read-only. Fifteen O*NET identities were verified through official
+summary URLs; five ESCO identities retain exact local authority records and
+skill-relation locators. Every row remains `review_required`, with no invented
+work-profile fields, Nigerian mapping or student-facing role preparation.
+Nineteen missing profiles remain. This is evidence for the downstream audit,
+not approval of the role route or live deployment; browser, live payload and
+manual SQL gates remain open.
+
+### 2026-09-21 item-enrichment tranche 007
+
+The next 32 canonical item identities outside D078 and prior item tranches
+were searched read-only. The tranche closed with 21 linked records and 11
+`review_required` records; no broad or ambiguous source was promoted as an
+exact contextual match. Selection/ledger parity and non-overlap checks passed,
+and each evidence row retains an item-specific URL, locator, source summary and
+access date. This changes the external-search audit inventory only; the
+2,305 unresolved relationships, remaining item/role review queues, browser
+proof, live payload checks and manual SQL remain open.
+
+### 2026-09-21 item-enrichment tranche 008
+
+The next 32 canonical item identities after tranche 007 were searched
+read-only, excluding D078. Twenty-one were linked to authoritative
+item-specific evidence and eleven remain `review_required` because the evidence
+is retired, broad, combined or context-ambiguous. The append-only ledger passed
+selection/ledger parity, non-overlap, HTTPS and required-field checks. This
+updates the external-search inventory only; no relationship was promoted and
+the 2,305 unresolved relationships, remaining review queues, browser proof,
+live-payload checks and manual SQL remain open.
+
+### 2026-09-21 item-enrichment tranche 010
+
+The next 16 non-overlapping item identities were searched read-only outside
+D078. Fourteen carry authoritative item-specific evidence and two remain
+`review_required` because the available source did not name the exact combined
+catalogue competency. The append-only ledger passed parity, non-overlap,
+required-field and HTTPS checks. No relationship was promoted and no UI,
+catalogue, seed, SQL or browser-proof file was changed.
+
+### 2026-09-23 current execution-order clarification
+
+The dated closure notes above are historical checkpoints. For the current
+scaling phase, local subject/JAMB audits, the corrected all-420 JAMB resource
+check and the full 420-JAMB/237-CCMAS downstream/admin checks occur before any
+SQL. SQL remains the final manual deployment phase, with contextual migrations
+and curriculum seeds applied in dependency order and the 35 compressed
+contextual parts loaded last in numeric order. No local result in this document
+is a live Supabase deployment claim.

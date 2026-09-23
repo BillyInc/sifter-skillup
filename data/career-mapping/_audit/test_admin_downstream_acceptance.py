@@ -60,7 +60,7 @@ class AdminDownstreamAcceptanceTest(unittest.TestCase):
         queue = self.report["reviewQueue"]
         self.assertEqual(queue["unresolvedRelationshipRows"], 2305)
         self.assertGreater(queue["notEstablishedRelationshipRows"], 0)
-        self.assertGreaterEqual(queue["contextualItems"], 126414)
+        self.assertEqual(queue["contextualItems"], 121377)
         self.assertIn("NOT APPROVED", self.markdown)
         self.assertIn("Full 237-programme admin rendering", self.markdown)
         self.assertIn("browser proof and SQL remain deferred", self.markdown)

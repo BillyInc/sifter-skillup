@@ -1,0 +1,61 @@
+{
+  "schema_version": "2026-09-21.downstream-admin-slice-checkpoint.v1",
+  "generated_on": "2026-09-21",
+  "read_only": true,
+  "status": "selection_saved_before_audit",
+  "selection": {
+    "policy": "next 20 canonical programme keys after excluding every prior downstream/admin slice",
+    "programme_count": 20,
+    "programme_keys": [
+      "Arts::Modern European Languages B.A (French)",
+      "Arts::Modern European Languages B.A (German)",
+      "Arts::Music",
+      "Arts::Philosophy",
+      "Arts::Religious Studies",
+      "Arts::Sharcah",
+      "Arts::Theatre Arts",
+      "Basic Medical Sciences::Human Anatomy",
+      "Basic Medical Sciences::Physiology",
+      "Communication and Media Studies::ADVERTISING — P12, P13, P14",
+      "Communication and Media Studies::BROADCASTING — P12, P13, P14",
+      "Communication and Media Studies::DEVELOPMENT COMMUNICATION STUDIES — P12, P13, P14",
+      "Communication and Media Studies::FILM & MULTIMEDIA — P12, P13, P14",
+      "Communication and Media Studies::INFORMATION AND MEDIA STUDIES — P12, P13, P14",
+      "Communication and Media Studies::JOURNALISM AND MEDIA STUDIES — P12, P13, P14",
+      "Communication and Media Studies::MASS COMMUNICATION — P12, P13, P14",
+      "Communication and Media Studies::PUBLIC RELATIONS — P12, P13, P14",
+      "Communication and Media Studies::STRATEGIC COMMUNICATION — P12, P13, P14",
+      "Computing::Computer Science",
+      "Computing::Cybersecurity"
+    ],
+    "overlap_with_prior_admin_tranche": [],
+    "overlap_with_existing_local_slices": [],
+    "overlap_with_prior_slices": []
+  },
+  "scope_reference": {
+    "canonical_programmes": 237,
+    "canonical_jamb_identities": 420
+  },
+  "audit_contract": {
+    "student_admin_language_separation": "static contract markers plus per-programme queue state",
+    "category_ownership": "context ownership/state counters and student/admin boundary markers",
+    "bounded_role_learning": "role-learning caps and route-level role coverage",
+    "source_link_review_states": "per-programme provenance/link/review queue states",
+    "relationships": "active programme-domain types plus unresolved/not-established queues",
+    "provenance": "source reference/locator and ownership counters",
+    "fail_closed_student_exposure": "review-only/not-established states remain non-approved"
+  },
+  "inputs_read": [
+    "docs/GOAL_RESUME_STATUS_AND_AGENT_HANDOFF_2026-09-18.md",
+    "docs/user-facing-mockups/SOCIOLOGY_BOX_MOCKUP_IMPLEMENTATION_AUDIT_2026-09-17.md",
+    "docs/user-facing-mockups/SOCIOLOGY_TOP_DOWN_AUDIT_AND_CLOSURE_PLAN_2026-09-17.md",
+    "docs/LEVELUP_PRODUCT_WIDE_MOCKUP_SPEC.md",
+    "data/career-mapping/_audit/source_enrichment_batch_broad_2026-09-19.json",
+    "data/career-mapping/_audit/full_population_admin_agent_tranche_2026-09-21.json",
+    "data/career-mapping/_audit/downstream_admin_slice_002_2026-09-21_checkpoint.json"
+  ],
+  "excluded_prior_programmes": 80,
+  "search_started": false,
+  "product_files_changed": false,
+  "sql_or_browser_proof": false
+}

@@ -16,6 +16,7 @@ import type {
  * use the sanitised methods below.
  */
 const LEGACY_ONET_HOSTS = ["onetonline.org", "onetcenter.org"];
+const STUDENT_CONTEXT_LEVELS = new Set(["programme", "domain", "subgroup", "role"]);
 
 export function isLegacyOnetUrl(value?: unknown): boolean {
   if (typeof value !== "string" || !value.trim()) return false;
@@ -42,6 +43,24 @@ export function studentSafeUrl(value?: string | null): string | undefined {
   }
 }
 
+/**
+ * Student resources are approved, source-backed destinations owned by the
+ * surface that is rendering them.  Keeping this check here means a screen
+ * cannot accidentally re-introduce an audit-only or review-only URL by using
+ * a raw resource array.
+ */
+export function isStudentLearningResource(
+  resource?: CareerLearningResource,
+  expectedOwner?: CareerContextItem["contextLevel"],
+): boolean {
+  if (!resource || !studentSafeUrl(resource.url)) return false;
+  if (resource.reviewStatus !== "approved_guidance_v1") return false;
+  if (!resource.ownershipScope || resource.ownershipScope === "audit_only") return false;
+  if (expectedOwner && resource.ownershipScope !== expectedOwner) return false;
+  if (resource.dataState === "unsourced" || resource.sourceConfidence === "unsourced") return false;
+  return true;
+}
+
 /** Resolve the only URL an approved student card is allowed to open. */
 export function studentItemLinkUrl(
   item?: CareerContextItem,
@@ -49,9 +68,13 @@ export function studentItemLinkUrl(
   fallbackUrl?: string | null,
 ): string | undefined {
   if (item?.linkState === "review_required" || item?.linkState === "no_link") return undefined;
-  const candidates = item?.linkState === "linked"
-    ? [item.linkUrl, resource?.url, fallbackUrl]
-    : [resource?.url, fallbackUrl, item?.linkUrl];
+  // When an item exists, its explicit state is authoritative.  A resource or
+  // legacy URI may not override an explicit no-link/review decision, and may
+  // only supplement a linked item when it is the exact resource selected by
+  // the caller.
+  const candidates = item
+    ? item.linkState === "linked" ? [item.linkUrl, resource?.url] : []
+    : [resource?.url, fallbackUrl];
   return candidates.map((candidate) => studentSafeUrl(candidate)).find((candidate): candidate is string => Boolean(candidate));
 }
 
@@ -80,7 +103,13 @@ function scrubStudentObject<T>(value: T): T {
 }
 
 function studentContextItem(item: CareerContextItem): CareerContextItem | null {
-  if (item.linkState === "review_required") return null;
+  if (
+    item.dataState !== "source_backed"
+    || item.sourceConfidence === "unsourced"
+    || !STUDENT_CONTEXT_LEVELS.has(item.contextLevel)
+    || item.guidanceOwner !== item.contextLevel
+    || item.linkState === "review_required"
+  ) return null;
   const cleaned = scrubStudentObject(item);
   if (!cleaned.linkState) {
     cleaned.linkState = "no_link";
@@ -114,10 +143,13 @@ function studentContextItems(items?: CareerContextItem[]): CareerContextItem[] |
   return items.map(studentContextItem).filter((item): item is CareerContextItem => Boolean(item));
 }
 
-function studentResources(resources?: CareerLearningResource[]): CareerLearningResource[] | undefined {
+function studentResources(
+  resources?: CareerLearningResource[],
+  expectedOwner?: CareerContextItem["contextLevel"],
+): CareerLearningResource[] | undefined {
   if (!resources) return resources;
   return resources
-    .filter((resource) => Boolean(studentSafeUrl(resource.url)))
+    .filter((resource) => isStudentLearningResource(resource, expectedOwner))
     .map((resource) => scrubStudentObject(resource));
 }
 
@@ -140,7 +172,11 @@ function studentRoleResourceAllowed(resource: CareerLearningResource, items: Car
         ? "certification"
         : "skill";
   const item = items.find((candidate) => candidate.itemType === itemType && candidate.name.trim().toLowerCase() === target);
-  return !item || item.linkState !== "no_link";
+  // Role-level references describe the role itself and do not need a
+  // duplicated context-item row. Item-level resources do: otherwise a raw
+  // resource can make an explicitly unlinked item look verified.
+  if (resource.resourceType === "role_reference") return true;
+  return Boolean(item && item.linkState === "linked");
 }
 
 function studentWorkProfile(profile?: RoleWorkProfile | null): RoleWorkProfile | null | undefined {
@@ -154,18 +190,18 @@ function studentWorkProfile(profile?: RoleWorkProfile | null): RoleWorkProfile |
 export function sanitizeStudentProgramme(programme: Programme): Programme {
   const cleaned = scrubStudentObject(programme);
   cleaned.contextItems = studentContextItems(programme.contextItems);
-  cleaned.resources = studentResources(programme.resources);
+  cleaned.resources = studentResources(programme.resources, "programme");
   return cleaned;
 }
 
 export function sanitizeStudentDomain(domain: DomainV2): DomainV2 {
   const cleaned = scrubStudentObject(domain);
   cleaned.contextItems = studentContextItems(domain.contextItems);
-  cleaned.resources = studentResources(domain.resources);
+  cleaned.resources = studentResources(domain.resources, "domain");
   cleaned.subgroups = domain.subgroups.map((subgroup) => {
     const next = scrubStudentObject(subgroup);
     next.contextItems = studentContextItems(subgroup.contextItems);
-    next.resources = studentResources(subgroup.resources);
+    next.resources = studentResources(subgroup.resources, "subgroup");
     return next;
   });
   cleaned.roles = domain.roles.map((role) => scrubStudentObject(role));
@@ -176,7 +212,7 @@ export function sanitizeStudentRole(role: DomainRoleV2): DomainRoleV2 {
   const cleaned = scrubStudentObject(role);
   const contextItems = studentContextItems(role.contextItems) ?? [];
   cleaned.contextItems = contextItems;
-  cleaned.resources = studentResources(role.resources)?.filter((resource) => studentRoleResourceAllowed(resource, contextItems));
+  cleaned.resources = studentResources(role.resources, "role")?.filter((resource) => studentRoleResourceAllowed(resource, contextItems));
   cleaned.essentialSkillUris = role.essentialSkills.map((name) => {
     const item = studentContextItemFor(contextItems, "skill", name);
     return item ? studentItemUrl(item) || "" : "";

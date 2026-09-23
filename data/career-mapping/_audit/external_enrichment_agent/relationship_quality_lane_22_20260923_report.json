@@ -1,0 +1,13 @@
+{
+  "schema": "2026-09-23.relationship-quality-report.v1",
+  "batch": "relationship_quality_lane_22_20260923",
+  "status": "completed",
+  "selection_count": 44,
+  "searched_count": 44,
+  "review_required": 44,
+  "promoted": 0,
+  "duplicate_count": 0,
+  "source_evidence_records": 132,
+  "exact_reconciliation": "44/44",
+  "scope_guard": "Relationship evidence only; no item, catalogue, SQL, seed, UI or browser-proof writes."
+}

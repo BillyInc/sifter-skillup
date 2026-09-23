@@ -48,6 +48,7 @@ import {
   TextTabs,
   LearningResourcesBlock,
 } from "@/components/careerIntelligence";
+import { isStudentResource } from "@/components/careerIntelligence/resourceLinks";
 
 export interface DomainDetailScreenProps {
   /** Stable domain key (e.g. "D001"). */
@@ -411,12 +412,25 @@ function DomainBody({
   const [tab, setTab] = useState<"overview" | "build">("overview");
   const subgroups = domain.subgroups ?? [];
   const connection = domain.programmeConnection;
+  const studentConnection = connection && !connection.reviewRequired && !connection.sourceReviewRequired
+    ? connection
+    : null;
   const orientation = domain.studentOrientation;
+  const domainItems = (domain.contextItems ?? []).filter((item) =>
+    item.contextLevel === "domain"
+    && item.guidanceOwner === "domain"
+    && item.dataState === "source_backed"
+    && item.sourceConfidence !== "unsourced"
+    && item.linkState !== "review_required",
+  );
+  const domainResources = (domain.resources ?? []).filter((resource) =>
+    isStudentResource(resource, "domain"),
+  );
   // A route parameter is navigation context, not mapping evidence. If the
   // approved programme connection is absent, do not turn a stale or review-
   // only URL value into a relationship label.
-  const relationship = connection?.relationship;
-  const orientationResources = (domain.resources ?? []).filter((resource) => resource.resourceType === "domain_overview");
+  const relationship = studentConnection?.relationship;
+  const orientationResources = domainResources.filter((resource) => resource.resourceType === "domain_overview");
   const relationshipLabel = relationship === "direct"
     ? "Primary connection"
     : relationship === "functional"
@@ -459,15 +473,20 @@ function DomainBody({
 
       <TextTabs value={tab} onChange={setTab} tabs={[{ value: "overview", label: "Overview" }, { value: "build", label: "Build in this domain" }]} />
 
-      {connection ? (
+      {studentConnection ? (
         <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
           <View style={refinedStyles.cardHeading}>
             <Feather name="link" size={17} color={colors.accentRole.action} />
-            <Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Why {domain.name} is connected to {connection.programmeName}</Text>
+            <Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Why {domain.name} is connected to {studentConnection.programmeName}</Text>
           </View>
           <Text style={[refinedStyles.badge, { color: colors.accentRole.action }]}>{relationshipLabel}</Text>
-          <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{connection.explanation}</Text>
-          {connection.courseAnchors?.length ? <Text style={[refinedStyles.meta, { color: colors.textRole.muted }]}>This connection includes learning from {connection.courseAnchors.slice(0, 3).map((item) => item.title).join(", ")}.</Text> : null}
+          <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{studentConnection.explanation}</Text>
+          {studentConnection.courseAnchors?.length ? <Text style={[refinedStyles.meta, { color: colors.textRole.muted }]}>This connection includes learning from {studentConnection.courseAnchors.slice(0, 3).map((item) => item.title).join(", ")}.</Text> : null}
+        </View>
+      ) : connection ? (
+        <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+          <View style={refinedStyles.cardHeading}><Feather name="info" size={17} color={colors.textRole.muted} /><Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Programme connection not available yet</Text></View>
+          <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>We do not have enough verified information to explain this programme-to-field connection safely.</Text>
         </View>
       ) : null}
 
@@ -493,21 +512,21 @@ function DomainBody({
       {orientationResources.length ? <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}><LearningResourcesBlock resources={orientationResources} title={`Read more about ${domain.name}`} /></View> : null}
 
       <View style={refinedStyles.sectionHeading}>
-        <View style={refinedStyles.cardHeading}><Feather name="layers" size={17} color={colors.accentRole.action} /><Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Build the foundation</Text></View>
-        <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>These are the field-owned foundations. They come before a focused area, and each item explains what it is used for and what it connects to.</Text>
+         <View style={refinedStyles.cardHeading}><Feather name="layers" size={17} color={colors.accentRole.action} /><Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Domain foundation</Text></View>
+         <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>These field-owned foundations continue from the connected programme and come before a focused area.</Text>
       </View>
       <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
-        <FoundationSkillsBlock skills={domain.foundationSkills ?? []} resources={domain.resources} contextItems={domain.contextItems} title="What to learn first" />
+         <FoundationSkillsBlock skills={domain.foundationSkills ?? []} resources={domainResources} contextItems={domainItems} title="What to build first" />
       </View>
       <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
-        <ContextualItemList items={domain.contextItems} itemTypes={["skill", "competency"]} resources={domain.resources} excludeNames={(domain.foundationSkills ?? []).map((item) => item.skill)} title="Skills and competencies added in this field" />
+        <ContextualItemList items={domainItems} itemTypes={["skill", "competency"]} resources={domainResources} contextLevel="domain" excludeNames={(domain.foundationSkills ?? []).map((item) => item.skill)} title="Skills and competencies added in this field" />
       </View>
       <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
-        <ToolGroupsBlock tools={domain.tools} resources={domain.resources} contextItems={domain.contextItems} title="Tools by purpose" commonLabel="Useful across this field" distinctiveLabel="More specialised in this field" explanation="Choose the kind of work first. These are source-backed options, not a requirement to learn every tool." />
+        <ToolGroupsBlock tools={domain.tools} resources={domainResources} contextItems={domainItems} contextLevel="domain" title="Tools by purpose" commonLabel="Useful across this field" distinctiveLabel="More specialised in this field" explanation="Choose the kind of work first. These are source-backed options, not a requirement to learn every tool." />
       </View>
       <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
         <SectionLabel>Qualifications and professional routes</SectionLabel>
-        <CertPlacementList gateway={domain.gatewayCertifications} roleHint={domain.roleHintCertifications} contextItems={domain.contextItems} resources={domain.resources} />
+        <CertPlacementList gateway={domain.gatewayCertifications} roleHint={domain.roleHintCertifications} contextItems={domainItems} resources={domainResources} contextLevel="domain" />
       </View>
 
       <View style={refinedStyles.sectionHeading}>

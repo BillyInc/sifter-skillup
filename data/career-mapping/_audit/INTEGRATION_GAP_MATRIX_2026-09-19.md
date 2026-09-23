@@ -20,9 +20,9 @@ changes, does not fetch URLs, and does not approve live exposure.
 | --- | --- | --- | --- |
 | Programme population | 237 unique programme records; 236 generic + 1 Sociology | **PASS — audit coverage** | Render/API acceptance for every programme. |
 | Curriculum | 81,429 course-outcome rows; 237 contracts; curriculum locator/state/count gaps are 0 | **PARTIAL — contract** | Render review and source-page reachability. |
-| Programme → domain | 1,343 active evidence rows; 1 programme has no active mapping | **OPEN** | Review the unmapped programme and verify programme-specific explanations. |
+| Programme → domain | 1,344 active evidence rows; all 237 programmes now have an active mapping, including source-backed Mathematics → Data Science | **PARTIAL — source review** | Verify programme-specific explanations and downstream rendering for the newly mapped route. |
 | Context ownership/state | 126,414 typed rows; ownership/state/source-reference/locator gaps are 0; role-aggregate candidates are 0 | **PARTIAL — structural** | Record-level student review across all contexts. |
-| Item resources/link state | Sociology: 51 reviewed URLs, 27 exact item matches, 698 honest no-link states; generic full inventory is incomplete | **OPEN** | Enrich with authoritative item-specific URLs; retain `no_link` when none is established. |
+| Item resources/link state | 126,414 catalogue rows now carry explicit link state: 1,000 linked and 125,414 honest no-link states; Sociology retains 27 exact reviewed item matches | **PARTIAL — structural/source review** | Continue authoritative item-specific enrichment where evidence exists; retain `no_link` when none is established and verify runtime/admin rendering. |
 | Relationships | 422,739 catalogue rows; 2,305 unresolved/not-established rows; expanded programme view reports 21,238 unresolved and 21,238 not-established rows | **OPEN** | Research authoritative sources; promote only verified same-context endpoints with retained URLs/locators. |
 | Source states | Source-backed rows may be student-visible only when ownership and evidence pass; review-only/not-established/audit-only rows remain staff evidence | **FAIL-CLOSED** | `review_required` and `not_established` stay out of student payloads until independently verified. |
 | Student/admin boundary | Admin checkpoints cover provenance/review evidence; student contract excludes staff-only rows | **PARTIAL** | Full all-237 admin render plus student-leak negative checks. |
@@ -40,12 +40,17 @@ changes, does not fetch URLs, and does not approve live exposure.
 - `no_link` means no item-specific trusted destination was established. It is
   not permission to attach a generic homepage, and it is not evidence that the
   underlying item is invalid.
-- The current all-programme catalogue has **126,414** rows without an explicit
-  item-level link/no-link label. This is a schema/data-contract gap, not a claim
-  that 126,414 links were disproved.
+- The current all-programme catalogue has **126,414** rows with explicit
+  item-level link state: 1,000 verified destinations and 125,414 honest
+  `no_link` records. This is not URL-reachability proof and does not promote
+  every catalogue item to student-facing resource status.
 - External enrichment applies to curriculum, programme/domain evidence,
   resources, contextual items and relationships. Name similarity alone never
   creates a relationship.
+- The previously unmapped `Sciences::Mathematics` programme now has a
+  functional `D009 Data Science` link backed by retained Nigerian university
+  curriculum sources; weaker Mathematics-to-Actuarial and partial JAMB cases
+  remain review-required.
 
 ## Deferred gates and handoff
 

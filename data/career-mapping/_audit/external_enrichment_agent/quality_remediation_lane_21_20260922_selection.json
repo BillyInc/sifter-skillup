@@ -1,0 +1,1620 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-selection.v2",
+  "batch": "quality_remediation_lane_21_20260922",
+  "selected_at": "2026-09-22",
+  "source_audit": "data/career-mapping/_audit/external_enrichment_agent/item_ledger_quality_audit_2026-09-22.json",
+  "source_sha256": "0cfb6dea25de3bd7914195b1749cc524bc8b030e8c6fa41d0cf0d95ca586e972",
+  "selection_method": "atomic shared lock; exclude all prior valid claims by contextual and typed identity",
+  "prior_claimed_contextual_ids": 1372,
+  "prior_claimed_typed_items": 746,
+  "selection_count": 100,
+  "requested_count": 100,
+  "shortfall": 0,
+  "rows": [
+    {
+      "subject_id": "item|role|D004|ethical hacker|skill|owasp-zap",
+      "context_level": "role",
+      "context_key": "D004|ethical hacker",
+      "item_type": "skill",
+      "item_key": "owasp-zap",
+      "item_name": "OWASP ZAP",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|Computer Network Support Specialists|tool|microsoft-windows-server",
+      "context_level": "role",
+      "context_key": "D005|Computer Network Support Specialists",
+      "item_type": "tool",
+      "item_key": "microsoft-windows-server",
+      "item_name": "Microsoft Windows Server",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|ICT network administrator|skill|ict-network-routing",
+      "context_level": "role",
+      "context_key": "D005|ICT network administrator",
+      "item_type": "skill",
+      "item_key": "ict-network-routing",
+      "item_name": "ICT network routing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|ICT network administrator|skill|network-engineering",
+      "context_level": "role",
+      "context_key": "D005|ICT network administrator",
+      "item_type": "skill",
+      "item_key": "network-engineering",
+      "item_name": "network engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|ICT network administrator|skill|solution-deployment",
+      "context_level": "role",
+      "context_key": "D005|ICT network administrator",
+      "item_type": "skill",
+      "item_key": "solution-deployment",
+      "item_name": "solution deployment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|ICT network architect|skill|ict-networking-hardware",
+      "context_level": "role",
+      "context_key": "D005|ICT network architect",
+      "item_type": "skill",
+      "item_key": "ict-networking-hardware",
+      "item_name": "ICT networking hardware",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|ICT network architect|skill|identify-suppliers",
+      "context_level": "role",
+      "context_key": "D005|ICT network architect",
+      "item_type": "skill",
+      "item_key": "identify-suppliers",
+      "item_name": "identify suppliers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|ICT network technician|skill|analyse-network-configuration-and-performance",
+      "context_level": "role",
+      "context_key": "D005|ICT network technician",
+      "item_type": "skill",
+      "item_key": "analyse-network-configuration-and-performance",
+      "item_name": "analyse network configuration and performance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|ICT network technician|skill|ict-network-cable-limitations",
+      "context_level": "role",
+      "context_key": "D005|ICT network technician",
+      "item_type": "skill",
+      "item_key": "ict-network-cable-limitations",
+      "item_name": "ICT network cable limitations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|ICT network technician|skill|install-electronic-communication-equipment",
+      "context_level": "role",
+      "context_key": "D005|ICT network technician",
+      "item_type": "skill",
+      "item_key": "install-electronic-communication-equipment",
+      "item_name": "install electronic communication equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|ICT network technician|skill|use-back-up-and-recovery-tools",
+      "context_level": "role",
+      "context_key": "D005|ICT network technician",
+      "item_type": "skill",
+      "item_key": "use-back-up-and-recovery-tools",
+      "item_name": "use back-up and recovery tools",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|ICT network technician|skill|use-precision-tools",
+      "context_level": "role",
+      "context_key": "D005|ICT network technician",
+      "item_type": "skill",
+      "item_key": "use-precision-tools",
+      "item_name": "use precision tools",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|ICT system administrator|skill|operating-systems",
+      "context_level": "role",
+      "context_key": "D005|ICT system administrator",
+      "item_type": "skill",
+      "item_key": "operating-systems",
+      "item_name": "operating systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|ICT system administrator|skill|organisational-policies",
+      "context_level": "role",
+      "context_key": "D005|ICT system administrator",
+      "item_type": "skill",
+      "item_key": "organisational-policies",
+      "item_name": "organisational policies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|communication infrastructure maintainer|skill|assess-telecommunication-infrastructure-issues",
+      "context_level": "role",
+      "context_key": "D005|communication infrastructure maintainer",
+      "item_type": "skill",
+      "item_key": "assess-telecommunication-infrastructure-issues",
+      "item_name": "assess telecommunication infrastructure issues",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|communication infrastructure maintainer|skill|cisco",
+      "context_level": "role",
+      "context_key": "D005|communication infrastructure maintainer",
+      "item_type": "skill",
+      "item_key": "cisco",
+      "item_name": "Cisco",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|communication infrastructure maintainer|skill|concepts-of-telecommunications",
+      "context_level": "role",
+      "context_key": "D005|communication infrastructure maintainer",
+      "item_type": "skill",
+      "item_key": "concepts-of-telecommunications",
+      "item_name": "concepts of telecommunications",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|communication infrastructure maintainer|skill|monitor-communication-channels-performance",
+      "context_level": "role",
+      "context_key": "D005|communication infrastructure maintainer",
+      "item_type": "skill",
+      "item_key": "monitor-communication-channels-performance",
+      "item_name": "monitor communication channels' performance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|communication infrastructure maintainer|skill|operate-digging-construction-equipment",
+      "context_level": "role",
+      "context_key": "D005|communication infrastructure maintainer",
+      "item_type": "skill",
+      "item_key": "operate-digging-construction-equipment",
+      "item_name": "operate digging construction equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|communication infrastructure maintainer|skill|seal-wires",
+      "context_level": "role",
+      "context_key": "D005|communication infrastructure maintainer",
+      "item_type": "skill",
+      "item_key": "seal-wires",
+      "item_name": "seal wires",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|communication infrastructure maintainer|skill|telecom-regulations",
+      "context_level": "role",
+      "context_key": "D005|communication infrastructure maintainer",
+      "item_type": "skill",
+      "item_key": "telecom-regulations",
+      "item_name": "telecom regulations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|communication infrastructure maintainer|skill|telecommunication-trunking",
+      "context_level": "role",
+      "context_key": "D005|communication infrastructure maintainer",
+      "item_type": "skill",
+      "item_key": "telecommunication-trunking",
+      "item_name": "telecommunication trunking",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|communication infrastructure maintainer|skill|use-a-complex-communication-system",
+      "context_level": "role",
+      "context_key": "D005|communication infrastructure maintainer",
+      "item_type": "skill",
+      "item_key": "use-a-complex-communication-system",
+      "item_name": "use a complex communication system",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|communication infrastructure maintainer|tool|aeronet-calculator",
+      "context_level": "role",
+      "context_key": "D005|communication infrastructure maintainer",
+      "item_type": "tool",
+      "item_key": "aeronet-calculator",
+      "item_name": "AERONET calculator",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|communication infrastructure maintainer|tool|slack",
+      "context_level": "role",
+      "context_key": "D005|communication infrastructure maintainer",
+      "item_type": "tool",
+      "item_key": "slack",
+      "item_name": "Slack",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|data centre operator|skill|analyse-ict-system",
+      "context_level": "role",
+      "context_key": "D005|data centre operator",
+      "item_type": "skill",
+      "item_key": "analyse-ict-system",
+      "item_name": "analyse ICT system",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|data centre operator|skill|balance-database-resources",
+      "context_level": "role",
+      "context_key": "D005|data centre operator",
+      "item_type": "skill",
+      "item_key": "balance-database-resources",
+      "item_name": "balance database resources",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|data centre operator|skill|maintain-database-performance",
+      "context_level": "role",
+      "context_key": "D005|data centre operator",
+      "item_type": "skill",
+      "item_key": "maintain-database-performance",
+      "item_name": "maintain database performance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|data centre operator|skill|maintain-database-security",
+      "context_level": "role",
+      "context_key": "D005|data centre operator",
+      "item_type": "skill",
+      "item_key": "maintain-database-security",
+      "item_name": "maintain database security",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|data centre operator|skill|monitor-system-performance",
+      "context_level": "role",
+      "context_key": "D005|data centre operator",
+      "item_type": "skill",
+      "item_key": "monitor-system-performance",
+      "item_name": "monitor system performance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D005|data centre operator|skill|openedge-database",
+      "context_level": "role",
+      "context_key": "D005|data centre operator",
+      "item_type": "skill",
+      "item_key": "openedge-database",
+      "item_name": "OpenEdge Database",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|Internet of Things Specialists|skill|electricity-principles",
+      "context_level": "role",
+      "context_key": "D006|Internet of Things Specialists",
+      "item_type": "skill",
+      "item_key": "electricity-principles",
+      "item_name": "electricity principles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|Internet of Things Specialists|skill|hardware-materials",
+      "context_level": "role",
+      "context_key": "D006|Internet of Things Specialists",
+      "item_type": "skill",
+      "item_key": "hardware-materials",
+      "item_name": "hardware materials",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|IoT data analyst|skill|data-analysis-time-series-analytics-python-r-iot-data-pipelines",
+      "context_level": "role",
+      "context_key": "D006|IoT data analyst",
+      "item_type": "skill",
+      "item_key": "data-analysis-time-series-analytics-python-r-iot-data-pipelines",
+      "item_name": "data analysis; time-series analytics; Python/R; IoT data pipelines",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|IoT security specialist|skill|iot-security-firmware-security-penetration-testing-cryptography",
+      "context_level": "role",
+      "context_key": "D006|IoT security specialist",
+      "item_type": "skill",
+      "item_key": "iot-security-firmware-security-penetration-testing-cryptography",
+      "item_name": "IoT security; firmware security; penetration testing; cryptography",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|IoT solutions architect|skill|iot-architecture-cloud-platforms-protocol-design-system-integration",
+      "context_level": "role",
+      "context_key": "D006|IoT solutions architect",
+      "item_type": "skill",
+      "item_key": "iot-architecture-cloud-platforms-protocol-design-system-integration",
+      "item_name": "IoT architecture; cloud platforms; protocol design; system integration",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://aws.amazon.com/what-is-cloud-computing/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|IoT systems integrator|skill|systems-integration-api-development-hardware-commissioning-testing-and-validation",
+      "context_level": "role",
+      "context_key": "D006|IoT systems integrator",
+      "item_type": "skill",
+      "item_key": "systems-integration-api-development-hardware-commissioning-testing-and-validation",
+      "item_name": "systems integration; API development; hardware commissioning; testing and validation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.istqb.org/certifications/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|edge computing engineer|skill|edge-computing-containerisation-network-protocols-real-time-processing",
+      "context_level": "role",
+      "context_key": "D006|edge computing engineer",
+      "item_type": "skill",
+      "item_key": "edge-computing-containerisation-network-protocols-real-time-processing",
+      "item_name": "edge computing; containerisation; network protocols; real-time processing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|embedded system designer|skill|engineering-control-theory",
+      "context_level": "role",
+      "context_key": "D006|embedded system designer",
+      "item_type": "skill",
+      "item_key": "engineering-control-theory",
+      "item_name": "engineering control theory",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|embedded system designer|skill|real-time-computing",
+      "context_level": "role",
+      "context_key": "D006|embedded system designer",
+      "item_type": "skill",
+      "item_key": "real-time-computing",
+      "item_name": "real-time computing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|embedded system designer|skill|signal-processing",
+      "context_level": "role",
+      "context_key": "D006|embedded system designer",
+      "item_type": "skill",
+      "item_key": "signal-processing",
+      "item_name": "signal processing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|embedded systems engineer|skill|embedded-c-c-rtos-microcontroller-programming-hardware-software-co-design",
+      "context_level": "role",
+      "context_key": "D006|embedded systems engineer",
+      "item_type": "skill",
+      "item_key": "embedded-c-c-rtos-microcontroller-programming-hardware-software-co-design",
+      "item_name": "embedded C/C++; RTOS; microcontroller programming; hardware-software co-design",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|sensor engineering technician|skill|apply-soldering-techniques",
+      "context_level": "role",
+      "context_key": "D006|sensor engineering technician",
+      "item_type": "skill",
+      "item_key": "apply-soldering-techniques",
+      "item_name": "apply soldering techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|sensor engineering technician|skill|assemble-sensors",
+      "context_level": "role",
+      "context_key": "D006|sensor engineering technician",
+      "item_type": "skill",
+      "item_key": "assemble-sensors",
+      "item_name": "assemble sensors",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|sensor engineering technician|skill|consumer-electronics",
+      "context_level": "role",
+      "context_key": "D006|sensor engineering technician",
+      "item_type": "skill",
+      "item_key": "consumer-electronics",
+      "item_name": "consumer electronics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|sensor engineering technician|skill|digital-camera-sensors",
+      "context_level": "role",
+      "context_key": "D006|sensor engineering technician",
+      "item_type": "skill",
+      "item_key": "digital-camera-sensors",
+      "item_name": "digital camera sensors",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|sensor engineering technician|skill|electronic-equipment-standards",
+      "context_level": "role",
+      "context_key": "D006|sensor engineering technician",
+      "item_type": "skill",
+      "item_key": "electronic-equipment-standards",
+      "item_name": "electronic equipment standards",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|sensor engineering technician|skill|electronic-test-procedures",
+      "context_level": "role",
+      "context_key": "D006|sensor engineering technician",
+      "item_type": "skill",
+      "item_key": "electronic-test-procedures",
+      "item_name": "electronic test procedures",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|sensor engineering technician|skill|firmware",
+      "context_level": "role",
+      "context_key": "D006|sensor engineering technician",
+      "item_type": "skill",
+      "item_key": "firmware",
+      "item_name": "firmware",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|sensor engineering technician|skill|interpret-circuit-diagrams",
+      "context_level": "role",
+      "context_key": "D006|sensor engineering technician",
+      "item_type": "skill",
+      "item_key": "interpret-circuit-diagrams",
+      "item_name": "interpret circuit diagrams",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|sensor engineering technician|skill|microelectronics",
+      "context_level": "role",
+      "context_key": "D006|sensor engineering technician",
+      "item_type": "skill",
+      "item_key": "microelectronics",
+      "item_name": "microelectronics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|sensor engineering technician|skill|record-test-data",
+      "context_level": "role",
+      "context_key": "D006|sensor engineering technician",
+      "item_type": "skill",
+      "item_key": "record-test-data",
+      "item_name": "record test data",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|sensor engineering technician|skill|sensors",
+      "context_level": "role",
+      "context_key": "D006|sensor engineering technician",
+      "item_type": "skill",
+      "item_key": "sensors",
+      "item_name": "sensors",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|sensor engineering technician|skill|solder-electronics",
+      "context_level": "role",
+      "context_key": "D006|sensor engineering technician",
+      "item_type": "skill",
+      "item_key": "solder-electronics",
+      "item_name": "solder electronics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|sensor engineering technician|tool|apache-subversion-svn",
+      "context_level": "role",
+      "context_key": "D006|sensor engineering technician",
+      "item_type": "tool",
+      "item_key": "apache-subversion-svn",
+      "item_name": "Apache Subversion SVN",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|sensor engineering technician|tool|the-mathworks-matlab",
+      "context_level": "role",
+      "context_key": "D006|sensor engineering technician",
+      "item_type": "tool",
+      "item_key": "the-mathworks-matlab",
+      "item_name": "The MathWorks MATLAB",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|sensor engineer|skill|environmental-legislation",
+      "context_level": "role",
+      "context_key": "D006|sensor engineer",
+      "item_type": "skill",
+      "item_key": "environmental-legislation",
+      "item_name": "environmental legislation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|sensor engineer|skill|environmental-threats",
+      "context_level": "role",
+      "context_key": "D006|sensor engineer",
+      "item_type": "skill",
+      "item_key": "environmental-threats",
+      "item_name": "environmental threats",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|sensor engineer|skill|optics",
+      "context_level": "role",
+      "context_key": "D006|sensor engineer",
+      "item_type": "skill",
+      "item_key": "optics",
+      "item_name": "optics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D006|sensor engineer|skill|precision-mechanics",
+      "context_level": "role",
+      "context_key": "D006|sensor engineer",
+      "item_type": "skill",
+      "item_key": "precision-mechanics",
+      "item_name": "precision mechanics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|3D animator|skill|animate-3d-organic-forms",
+      "context_level": "role",
+      "context_key": "D007|3D animator",
+      "item_type": "skill",
+      "item_key": "animate-3d-organic-forms",
+      "item_name": "animate 3D organic forms",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|3D animator|skill|augmented-reality",
+      "context_level": "role",
+      "context_key": "D007|3D animator",
+      "item_type": "skill",
+      "item_key": "augmented-reality",
+      "item_name": "augmented reality",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|3D animator|skill|create-3d-characters",
+      "context_level": "role",
+      "context_key": "D007|3D animator",
+      "item_type": "skill",
+      "item_key": "create-3d-characters",
+      "item_name": "create 3D characters",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|3D animator|skill|create-3d-environments",
+      "context_level": "role",
+      "context_key": "D007|3D animator",
+      "item_type": "skill",
+      "item_key": "create-3d-environments",
+      "item_name": "create 3D environments",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|3D animator|skill|create-animated-narratives",
+      "context_level": "role",
+      "context_key": "D007|3D animator",
+      "item_type": "skill",
+      "item_key": "create-animated-narratives",
+      "item_name": "create animated narratives",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|3D animator|skill|create-storyboards",
+      "context_level": "role",
+      "context_key": "D007|3D animator",
+      "item_type": "skill",
+      "item_key": "create-storyboards",
+      "item_name": "create storyboards",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|3D animator|skill|discuss-artwork",
+      "context_level": "role",
+      "context_key": "D007|3D animator",
+      "item_type": "skill",
+      "item_key": "discuss-artwork",
+      "item_name": "discuss artwork",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|3D animator|skill|holography",
+      "context_level": "role",
+      "context_key": "D007|3D animator",
+      "item_type": "skill",
+      "item_key": "holography",
+      "item_name": "holography",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|3D animator|skill|maintain-an-artistic-portfolio",
+      "context_level": "role",
+      "context_key": "D007|3D animator",
+      "item_type": "skill",
+      "item_key": "maintain-an-artistic-portfolio",
+      "item_name": "maintain an artistic portfolio",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|3D animator|skill|manage-schedule-of-tasks",
+      "context_level": "role",
+      "context_key": "D007|3D animator",
+      "item_type": "skill",
+      "item_key": "manage-schedule-of-tasks",
+      "item_name": "manage schedule of tasks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|3D animator|skill|particle-animation",
+      "context_level": "role",
+      "context_key": "D007|3D animator",
+      "item_type": "skill",
+      "item_key": "particle-animation",
+      "item_name": "particle animation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|3D animator|skill|principles-of-animation",
+      "context_level": "role",
+      "context_key": "D007|3D animator",
+      "item_type": "skill",
+      "item_key": "principles-of-animation",
+      "item_name": "principles of animation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|3D animator|tool|canva",
+      "context_level": "role",
+      "context_key": "D007|3D animator",
+      "item_type": "tool",
+      "item_key": "canva",
+      "item_name": "Canva",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|3D modeller|skill|develop-creative-ideas",
+      "context_level": "role",
+      "context_key": "D007|3D modeller",
+      "item_type": "skill",
+      "item_key": "develop-creative-ideas",
+      "item_name": "develop creative ideas",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|3D modeller|skill|use-polygonal-modelling",
+      "context_level": "role",
+      "context_key": "D007|3D modeller",
+      "item_type": "skill",
+      "item_key": "use-polygonal-modelling",
+      "item_name": "use polygonal modelling",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|UI and UX Designers|skill|follow-a-brief",
+      "context_level": "role",
+      "context_key": "D007|UI and UX Designers",
+      "item_type": "skill",
+      "item_key": "follow-a-brief",
+      "item_name": "follow a brief",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|UI and UX Designers|skill|follow-work-schedule",
+      "context_level": "role",
+      "context_key": "D007|UI and UX Designers",
+      "item_type": "skill",
+      "item_key": "follow-work-schedule",
+      "item_name": "follow work schedule",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|UI and UX Designers|skill|graphic-design",
+      "context_level": "role",
+      "context_key": "D007|UI and UX Designers",
+      "item_type": "skill",
+      "item_key": "graphic-design",
+      "item_name": "graphic design",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|UI and UX Designers|skill|monitor-developments-in-technology-used-for-design",
+      "context_level": "role",
+      "context_key": "D007|UI and UX Designers",
+      "item_type": "skill",
+      "item_key": "monitor-developments-in-technology-used-for-design",
+      "item_name": "monitor developments in technology used for design",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|UI and UX Designers|skill|monitor-sociological-trends",
+      "context_level": "role",
+      "context_key": "D007|UI and UX Designers",
+      "item_type": "skill",
+      "item_key": "monitor-sociological-trends",
+      "item_name": "monitor sociological trends",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|UI and UX Designers|skill|understand-artistic-concepts",
+      "context_level": "role",
+      "context_key": "D007|UI and UX Designers",
+      "item_type": "skill",
+      "item_key": "understand-artistic-concepts",
+      "item_name": "understand artistic concepts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|animation layout artist|skill|adobe-illustrator",
+      "context_level": "role",
+      "context_key": "D007|animation layout artist",
+      "item_type": "skill",
+      "item_key": "adobe-illustrator",
+      "item_name": "Adobe Illustrator",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|animation layout artist|skill|adobe-photoshop",
+      "context_level": "role",
+      "context_key": "D007|animation layout artist",
+      "item_type": "skill",
+      "item_key": "adobe-photoshop",
+      "item_name": "Adobe Photoshop",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|animation layout artist|skill|consult-with-production-director",
+      "context_level": "role",
+      "context_key": "D007|animation layout artist",
+      "item_type": "skill",
+      "item_key": "consult-with-production-director",
+      "item_name": "consult with production director",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|animation layout artist|skill|digital-arts",
+      "context_level": "role",
+      "context_key": "D007|animation layout artist",
+      "item_type": "skill",
+      "item_key": "digital-arts",
+      "item_name": "digital arts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|animation layout artist|skill|gimp-graphics-editor-software",
+      "context_level": "role",
+      "context_key": "D007|animation layout artist",
+      "item_type": "skill",
+      "item_key": "gimp-graphics-editor-software",
+      "item_name": "GIMP (graphics editor software)",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|animation layout artist|skill|motion-capture",
+      "context_level": "role",
+      "context_key": "D007|animation layout artist",
+      "item_type": "skill",
+      "item_key": "motion-capture",
+      "item_name": "motion capture",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|animation layout artist|skill|motion-graphics",
+      "context_level": "role",
+      "context_key": "D007|animation layout artist",
+      "item_type": "skill",
+      "item_key": "motion-graphics",
+      "item_name": "motion graphics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|animation layout artist|skill|multimedia-systems",
+      "context_level": "role",
+      "context_key": "D007|animation layout artist",
+      "item_type": "skill",
+      "item_key": "multimedia-systems",
+      "item_name": "multimedia systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|animation layout artist|skill|provide-input-to-collaborators-to-guide-their-work",
+      "context_level": "role",
+      "context_key": "D007|animation layout artist",
+      "item_type": "skill",
+      "item_key": "provide-input-to-collaborators-to-guide-their-work",
+      "item_name": "provide input to collaborators to guide their work",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|animation layout artist|skill|sketchbook-pro",
+      "context_level": "role",
+      "context_key": "D007|animation layout artist",
+      "item_type": "skill",
+      "item_key": "sketchbook-pro",
+      "item_name": "SketchBook Pro",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|animator|skill|adapt-to-type-of-media",
+      "context_level": "role",
+      "context_key": "D007|animator",
+      "item_type": "skill",
+      "item_key": "adapt-to-type-of-media",
+      "item_name": "adapt to type of media",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|animator|skill|analyse-a-script",
+      "context_level": "role",
+      "context_key": "D007|animator",
+      "item_type": "skill",
+      "item_key": "analyse-a-script",
+      "item_name": "analyse a script",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|animator|skill|computer-equipment",
+      "context_level": "role",
+      "context_key": "D007|animator",
+      "item_type": "skill",
+      "item_key": "computer-equipment",
+      "item_name": "computer equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|animator|skill|digital-compositing",
+      "context_level": "role",
+      "context_key": "D007|animator",
+      "item_type": "skill",
+      "item_key": "digital-compositing",
+      "item_name": "digital compositing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|animator|skill|finish-project-within-budget",
+      "context_level": "role",
+      "context_key": "D007|animator",
+      "item_type": "skill",
+      "item_key": "finish-project-within-budget",
+      "item_name": "finish project within budget",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|desktop publisher|skill|adobe-creative-suite",
+      "context_level": "role",
+      "context_key": "D007|desktop publisher",
+      "item_type": "skill",
+      "item_key": "adobe-creative-suite",
+      "item_name": "adobe creative suite",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|desktop publisher|skill|copyright-legislation",
+      "context_level": "role",
+      "context_key": "D007|desktop publisher",
+      "item_type": "skill",
+      "item_key": "copyright-legislation",
+      "item_name": "copyright legislation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|desktop publisher|skill|desktop-publishing",
+      "context_level": "role",
+      "context_key": "D007|desktop publisher",
+      "item_type": "skill",
+      "item_key": "desktop-publishing",
+      "item_name": "desktop publishing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D007|desktop publisher|skill|digital-media",
+      "context_level": "role",
+      "context_key": "D007|desktop publisher",
+      "item_type": "skill",
+      "item_key": "digital-media",
+      "item_name": "digital media",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    }
+  ],
+  "policy": {
+    "review_required_preserved_unless_exact_item_evidence_established": true,
+    "no_relationship_inference": true,
+    "no_promotion": true
+  }
+}

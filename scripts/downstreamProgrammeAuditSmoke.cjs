@@ -85,12 +85,21 @@ assert.equal(canExposeToStudents(verified).allowed, false, "verified evidence by
 const approved = normaliseAdminGuidanceEvidence({ ...base, evidence_state: "approved" });
 assert.equal(canExposeToStudents(approved).allowed, true);
 assert.equal(
-  canExposeToStudents({ ...approved, source_locator: null, source_url: null }).allowed,
+  canExposeToStudents(normaliseAdminGuidanceEvidence({
+    ...base,
+    evidence_state: "approved",
+    sourceLocator: null,
+    sourceUrl: null,
+  })).allowed,
   false,
   "approved evidence without provenance leaked to students",
 );
 assert.equal(
-  canExposeToStudents({ ...approved, source_accessed_at: null }).allowed,
+  canExposeToStudents(normaliseAdminGuidanceEvidence({
+    ...base,
+    evidence_state: "approved",
+    sourceAccessedAt: null,
+  })).allowed,
   false,
   "approved evidence without access date leaked to students",
 );

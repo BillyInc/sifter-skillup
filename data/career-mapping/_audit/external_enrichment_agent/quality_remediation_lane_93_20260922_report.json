@@ -1,0 +1,19 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-report.v2",
+  "batch": "quality_remediation_lane_93_20260922",
+  "status": "needs_review",
+  "integrity_exception": true,
+  "selection_count": 200,
+  "searched_count": 200,
+  "ledger_count": 203,
+  "unique_subject_ids": 200,
+  "extra_record_count": 3,
+  "duplicate_count": 4,
+  "omitted_count": 0,
+  "all_selection_ids_reconciled": true,
+  "promotion_performed": false,
+  "duplicate_detail": "The duplicate audit found four duplicate identity findings associated with second ICAO-only entries, while the ledger has three records beyond the one-record-per-selected-identity baseline. All ledger rows are preserved for manual audit; no rows were deleted or overwritten.",
+  "exact_reconciliation": "200/200",
+  "scope_guard": "No scope changes: relationships, catalogue, SQL, seeds, UI, browser proof, checkpoint, and other lanes untouched.",
+  "note": "Report finalized with the audited duplicate state. Manual review is required before any further lane processing or integrity repair."
+}

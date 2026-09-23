@@ -1,0 +1,22 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-report.v2",
+  "batch": "quality_remediation_lane_52_20260922",
+  "selection_count": 100,
+  "searched_count": 100,
+  "ledger_count": 100,
+  "unique_subject_ids": 100,
+  "omitted_count": 0,
+  "duplicate_count": 0,
+  "promoted_count": 0,
+  "review_required_count": 100,
+  "evidence_records": 200,
+  "exact_reconciliation": "100/100",
+  "scope_guard": "Items only; relationships, catalogue, SQL, seeds, UI and browser proof untouched.",
+  "source_quality": {
+    "item_specific_queries_retained": 100,
+  "unique_query_urls_retained": 1421,
+    "exact_item_context_promotions": 0,
+    "weak_evidence_remains_review_only": true
+  },
+  "search_method": "Two external-search passes per fixed record: exact item/context official query and exact item phrase authority-focused query. No item was promoted without exact page-level item/type/context proof."
+}

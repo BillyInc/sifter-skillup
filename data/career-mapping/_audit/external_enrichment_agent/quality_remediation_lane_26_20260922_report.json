@@ -1,0 +1,37 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-report.v1",
+  "batch": "quality_remediation_lane_26_20260922",
+  "status": "complete_review",
+  "source_audit": "data/career-mapping/_audit/external_enrichment_agent/item_ledger_quality_audit_2026-09-22.json",
+  "selection": "quality_remediation_lane_26_20260922_selection.json",
+  "append_only_ledger": "quality_remediation_lane_26_20260922_append_only_ledger.jsonl",
+  "records_reviewed": 100,
+  "unique_records_reviewed": 100,
+  "decision_counts": {
+    "linked": 0,
+    "review_required": 100,
+    "genuinely_unavailable": 0
+  },
+  "evidence_urls": 200,
+  "reconciliation": {
+    "selection_count": 100,
+    "unique_selection_ids": 100,
+    "ledger_record_count": 100,
+    "unique_ledger_selection_ids": 100,
+    "missing_selection_ids": [],
+    "unexpected_ledger_selection_ids": [],
+    "duplicate_selection_ids": [],
+    "exact_match": true
+  },
+  "guardrails": {
+    "relationships_touched": false,
+    "catalogue_touched": false,
+    "sql_touched": false,
+    "seeds_touched": false,
+    "ui_touched": false,
+    "browser_proof_touched": false,
+    "promotion": false,
+    "prior_ledgers_modified": false
+  },
+  "result": "100 individually reviewed; all retained review_required because the exact item/type/context gate was not established."
+}

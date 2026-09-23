@@ -1,0 +1,671 @@
+{
+  "schema_version": "2026-09-19.source-backed-item-inventory.v1",
+  "kind": "items",
+  "input": "data/career-mapping/contextual_guidance_items.json.gz",
+  "selection": {
+    "offset": 0,
+    "limit": 200,
+    "context_prefix": "D001|Blockchain Engineers",
+    "item_types": [],
+    "order": [
+      "context_level",
+      "context_key",
+      "item_type",
+      "item_key"
+    ]
+  },
+  "total_items": 10,
+  "selected_count": 10,
+  "rows": [
+    {
+      "context_level": "role",
+      "context_key": "D001|Blockchain Engineers",
+      "domain_key": "D001",
+      "item_type": "tool",
+      "item_key": "amazon-web-services-aws-software",
+      "name": "Amazon Web Services AWS software",
+      "plain_meaning": "Amazon Web Services AWS software is a named tool in the source record. It is one possible way to amazon Web Services AWS software work; it is not the only tool you can use.",
+      "contextual_use": "For Blockchain Engineers, this is one option for carrying out the related work. It can be combined with the other tools and methods shown on the role page; it is not a required stack.",
+      "expected_output": "A tool-supported analysis, record, model, visualisation, query or report.",
+      "priority": "useful_later",
+      "priority_reason": "Tools follow the role foundation and should be chosen for the task, access and local context.",
+      "prerequisites": [],
+      "related_items": [],
+      "source_ids": [
+        "global_esco",
+        "global_onet"
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Blockchain+Engineers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy"
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy"
+        }
+      ],
+      "source_locators": [
+        {
+          "roleKey": "D001|Blockchain Engineers",
+          "elementId": "2.E.6.f",
+          "elementName": "Data base user interface and query software",
+          "owner": "role"
+        }
+      ],
+      "geographic_scope": "global",
+      "evidence_limitations": [
+        "The source names this tool as role evidence; it does not make the tool the only or universally required option."
+      ],
+      "evidence_type": "source_supported_synthesis",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "guidance_owner": "role",
+      "verified_at": "2026-09-12",
+      "link_state": "no_link",
+      "link_url": null,
+      "link_title": null,
+      "link_source_reference": {},
+      "link_accessed_at": null,
+      "link_confidence": "low",
+      "link_evidence": {
+        "status": "no_item_specific_source_verified",
+        "sources": [],
+        "reviewedAt": "2026-09-19",
+        "confidence": "low"
+      },
+      "no_link_reason": "No reviewed item-specific learning, documentation or official-information link is recorded for this item."
+    },
+    {
+      "context_level": "role",
+      "context_key": "D001|Blockchain Engineers",
+      "domain_key": "D001",
+      "item_type": "tool",
+      "item_key": "c",
+      "name": "C#",
+      "plain_meaning": "C# is a named tool in the source record. It is one possible way to c# work; it is not the only tool you can use.",
+      "contextual_use": "For Blockchain Engineers, this is one option for carrying out the related work. It can be combined with the other tools and methods shown on the role page; it is not a required stack.",
+      "expected_output": "A tool-supported analysis, record, model, visualisation, query or report.",
+      "priority": "useful_later",
+      "priority_reason": "Tools follow the role foundation and should be chosen for the task, access and local context.",
+      "prerequisites": [],
+      "related_items": [],
+      "source_ids": [
+        "global_esco",
+        "global_onet"
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Blockchain+Engineers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy"
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy"
+        }
+      ],
+      "source_locators": [
+        {
+          "roleKey": "D001|Blockchain Engineers",
+          "elementId": "2.E.7.e",
+          "elementName": "Object or component oriented development software",
+          "owner": "role"
+        }
+      ],
+      "geographic_scope": "global",
+      "evidence_limitations": [
+        "The source names this tool as role evidence; it does not make the tool the only or universally required option."
+      ],
+      "evidence_type": "source_supported_synthesis",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "guidance_owner": "role",
+      "verified_at": "2026-09-12",
+      "link_state": "no_link",
+      "link_url": null,
+      "link_title": null,
+      "link_source_reference": {},
+      "link_accessed_at": null,
+      "link_confidence": "low",
+      "link_evidence": {
+        "status": "no_item_specific_source_verified",
+        "sources": [],
+        "reviewedAt": "2026-09-19",
+        "confidence": "low"
+      },
+      "no_link_reason": "No reviewed item-specific learning, documentation or official-information link is recorded for this item."
+    },
+    {
+      "context_level": "role",
+      "context_key": "D001|Blockchain Engineers",
+      "domain_key": "D001",
+      "item_type": "tool",
+      "item_key": "docker",
+      "name": "Docker",
+      "plain_meaning": "Docker is a named tool in the source record. It is one possible way to docker work; it is not the only tool you can use.",
+      "contextual_use": "For Blockchain Engineers, this is one option for carrying out the related work. It can be combined with the other tools and methods shown on the role page; it is not a required stack.",
+      "expected_output": "A tool-supported analysis, record, model, visualisation, query or report.",
+      "priority": "useful_later",
+      "priority_reason": "Tools follow the role foundation and should be chosen for the task, access and local context.",
+      "prerequisites": [],
+      "related_items": [],
+      "source_ids": [
+        "global_esco",
+        "global_onet"
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Blockchain+Engineers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy"
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy"
+        }
+      ],
+      "source_locators": [
+        {
+          "roleKey": "D001|Blockchain Engineers",
+          "elementId": "2.E.10.a",
+          "elementName": "Application server software",
+          "owner": "role"
+        }
+      ],
+      "geographic_scope": "global",
+      "evidence_limitations": [
+        "The source names this tool as role evidence; it does not make the tool the only or universally required option."
+      ],
+      "evidence_type": "source_supported_synthesis",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "guidance_owner": "role",
+      "verified_at": "2026-09-12",
+      "link_state": "no_link",
+      "link_url": null,
+      "link_title": null,
+      "link_source_reference": {},
+      "link_accessed_at": null,
+      "link_confidence": "low",
+      "link_evidence": {
+        "status": "no_item_specific_source_verified",
+        "sources": [],
+        "reviewedAt": "2026-09-19",
+        "confidence": "low"
+      },
+      "no_link_reason": "No reviewed item-specific learning, documentation or official-information link is recorded for this item."
+    },
+    {
+      "context_level": "role",
+      "context_key": "D001|Blockchain Engineers",
+      "domain_key": "D001",
+      "item_type": "tool",
+      "item_key": "git",
+      "name": "Git",
+      "plain_meaning": "Git is a named tool in the source record. It is one possible way to git work; it is not the only tool you can use.",
+      "contextual_use": "For Blockchain Engineers, this is one option for carrying out the related work. It can be combined with the other tools and methods shown on the role page; it is not a required stack.",
+      "expected_output": "A tool-supported analysis, record, model, visualisation, query or report.",
+      "priority": "useful_later",
+      "priority_reason": "Tools follow the role foundation and should be chosen for the task, access and local context.",
+      "prerequisites": [],
+      "related_items": [],
+      "source_ids": [
+        "global_esco",
+        "global_onet"
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Blockchain+Engineers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy"
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy"
+        }
+      ],
+      "source_locators": [
+        {
+          "roleKey": "D001|Blockchain Engineers",
+          "elementId": "2.E.5.c",
+          "elementName": "File versioning software",
+          "owner": "role"
+        }
+      ],
+      "geographic_scope": "global",
+      "evidence_limitations": [
+        "The source names this tool as role evidence; it does not make the tool the only or universally required option."
+      ],
+      "evidence_type": "source_supported_synthesis",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "guidance_owner": "role",
+      "verified_at": "2026-09-12",
+      "link_state": "no_link",
+      "link_url": null,
+      "link_title": null,
+      "link_source_reference": {},
+      "link_accessed_at": null,
+      "link_confidence": "low",
+      "link_evidence": {
+        "status": "no_item_specific_source_verified",
+        "sources": [],
+        "reviewedAt": "2026-09-19",
+        "confidence": "low"
+      },
+      "no_link_reason": "No reviewed item-specific learning, documentation or official-information link is recorded for this item."
+    },
+    {
+      "context_level": "role",
+      "context_key": "D001|Blockchain Engineers",
+      "domain_key": "D001",
+      "item_type": "tool",
+      "item_key": "go",
+      "name": "Go",
+      "plain_meaning": "Go is a named tool in the source record. It is one possible way to go work; it is not the only tool you can use.",
+      "contextual_use": "For Blockchain Engineers, this is one option for carrying out the related work. It can be combined with the other tools and methods shown on the role page; it is not a required stack.",
+      "expected_output": "A tool-supported analysis, record, model, visualisation, query or report.",
+      "priority": "useful_later",
+      "priority_reason": "Tools follow the role foundation and should be chosen for the task, access and local context.",
+      "prerequisites": [],
+      "related_items": [],
+      "source_ids": [
+        "global_esco",
+        "global_onet"
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Blockchain+Engineers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy"
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy"
+        }
+      ],
+      "source_locators": [
+        {
+          "roleKey": "D001|Blockchain Engineers",
+          "elementId": "2.E.7.b",
+          "elementName": "Development environment software",
+          "owner": "role"
+        }
+      ],
+      "geographic_scope": "global",
+      "evidence_limitations": [
+        "The source names this tool as role evidence; it does not make the tool the only or universally required option."
+      ],
+      "evidence_type": "source_supported_synthesis",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "guidance_owner": "role",
+      "verified_at": "2026-09-12",
+      "link_state": "no_link",
+      "link_url": null,
+      "link_title": null,
+      "link_source_reference": {},
+      "link_accessed_at": null,
+      "link_confidence": "low",
+      "link_evidence": {
+        "status": "no_item_specific_source_verified",
+        "sources": [],
+        "reviewedAt": "2026-09-19",
+        "confidence": "low"
+      },
+      "no_link_reason": "No reviewed item-specific learning, documentation or official-information link is recorded for this item."
+    },
+    {
+      "context_level": "role",
+      "context_key": "D001|Blockchain Engineers",
+      "domain_key": "D001",
+      "item_type": "tool",
+      "item_key": "javascript",
+      "name": "JavaScript",
+      "plain_meaning": "JavaScript is a named tool in the source record. It is one possible way to javaScript work; it is not the only tool you can use.",
+      "contextual_use": "For Blockchain Engineers, this is one option for carrying out the related work. It can be combined with the other tools and methods shown on the role page; it is not a required stack.",
+      "expected_output": "A tool-supported analysis, record, model, visualisation, query or report.",
+      "priority": "useful_later",
+      "priority_reason": "Tools follow the role foundation and should be chosen for the task, access and local context.",
+      "prerequisites": [],
+      "related_items": [],
+      "source_ids": [
+        "global_esco",
+        "global_onet"
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Blockchain+Engineers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy"
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy"
+        }
+      ],
+      "source_locators": [
+        {
+          "roleKey": "D001|Blockchain Engineers",
+          "elementId": "2.E.7.h",
+          "elementName": "Web platform development software",
+          "owner": "role"
+        }
+      ],
+      "geographic_scope": "global",
+      "evidence_limitations": [
+        "The source names this tool as role evidence; it does not make the tool the only or universally required option."
+      ],
+      "evidence_type": "source_supported_synthesis",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "guidance_owner": "role",
+      "verified_at": "2026-09-12",
+      "link_state": "no_link",
+      "link_url": null,
+      "link_title": null,
+      "link_source_reference": {},
+      "link_accessed_at": null,
+      "link_confidence": "low",
+      "link_evidence": {
+        "status": "no_item_specific_source_verified",
+        "sources": [],
+        "reviewedAt": "2026-09-19",
+        "confidence": "low"
+      },
+      "no_link_reason": "No reviewed item-specific learning, documentation or official-information link is recorded for this item."
+    },
+    {
+      "context_level": "role",
+      "context_key": "D001|Blockchain Engineers",
+      "domain_key": "D001",
+      "item_type": "tool",
+      "item_key": "kubernetes",
+      "name": "Kubernetes",
+      "plain_meaning": "Kubernetes is a named tool in the source record. It is one possible way to kubernetes work; it is not the only tool you can use.",
+      "contextual_use": "For Blockchain Engineers, this is one option for carrying out the related work. It can be combined with the other tools and methods shown on the role page; it is not a required stack.",
+      "expected_output": "A tool-supported analysis, record, model, visualisation, query or report.",
+      "priority": "useful_later",
+      "priority_reason": "Tools follow the role foundation and should be chosen for the task, access and local context.",
+      "prerequisites": [],
+      "related_items": [],
+      "source_ids": [
+        "global_esco",
+        "global_onet"
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Blockchain+Engineers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy"
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy"
+        }
+      ],
+      "source_locators": [
+        {
+          "roleKey": "D001|Blockchain Engineers",
+          "elementId": "2.E.10.a",
+          "elementName": "Application server software",
+          "owner": "role"
+        }
+      ],
+      "geographic_scope": "global",
+      "evidence_limitations": [
+        "The source names this tool as role evidence; it does not make the tool the only or universally required option."
+      ],
+      "evidence_type": "source_supported_synthesis",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "guidance_owner": "role",
+      "verified_at": "2026-09-12",
+      "link_state": "no_link",
+      "link_url": null,
+      "link_title": null,
+      "link_source_reference": {},
+      "link_accessed_at": null,
+      "link_confidence": "low",
+      "link_evidence": {
+        "status": "no_item_specific_source_verified",
+        "sources": [],
+        "reviewedAt": "2026-09-19",
+        "confidence": "low"
+      },
+      "no_link_reason": "No reviewed item-specific learning, documentation or official-information link is recorded for this item."
+    },
+    {
+      "context_level": "role",
+      "context_key": "D001|Blockchain Engineers",
+      "domain_key": "D001",
+      "item_type": "tool",
+      "item_key": "microsoft-azure-software",
+      "name": "Microsoft Azure software",
+      "plain_meaning": "Microsoft Azure software is a named tool in the source record. It is one possible way to microsoft Azure software work; it is not the only tool you can use.",
+      "contextual_use": "For Blockchain Engineers, this is one option for carrying out the related work. It can be combined with the other tools and methods shown on the role page; it is not a required stack.",
+      "expected_output": "A tool-supported analysis, record, model, visualisation, query or report.",
+      "priority": "useful_later",
+      "priority_reason": "Tools follow the role foundation and should be chosen for the task, access and local context.",
+      "prerequisites": [],
+      "related_items": [],
+      "source_ids": [
+        "global_esco",
+        "global_onet"
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Blockchain+Engineers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy"
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy"
+        }
+      ],
+      "source_locators": [
+        {
+          "roleKey": "D001|Blockchain Engineers",
+          "elementId": "2.E.7.b",
+          "elementName": "Development environment software",
+          "owner": "role"
+        }
+      ],
+      "geographic_scope": "global",
+      "evidence_limitations": [
+        "The source names this tool as role evidence; it does not make the tool the only or universally required option."
+      ],
+      "evidence_type": "source_supported_synthesis",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "guidance_owner": "role",
+      "verified_at": "2026-09-12",
+      "link_state": "no_link",
+      "link_url": null,
+      "link_title": null,
+      "link_source_reference": {},
+      "link_accessed_at": null,
+      "link_confidence": "low",
+      "link_evidence": {
+        "status": "no_item_specific_source_verified",
+        "sources": [],
+        "reviewedAt": "2026-09-19",
+        "confidence": "low"
+      },
+      "no_link_reason": "No reviewed item-specific learning, documentation or official-information link is recorded for this item."
+    },
+    {
+      "context_level": "role",
+      "context_key": "D001|Blockchain Engineers",
+      "domain_key": "D001",
+      "item_type": "tool",
+      "item_key": "mongodb",
+      "name": "MongoDB",
+      "plain_meaning": "MongoDB is a named tool in the source record. It is one possible way to mongoDB work; it is not the only tool you can use.",
+      "contextual_use": "For Blockchain Engineers, this is one option for carrying out the related work. It can be combined with the other tools and methods shown on the role page; it is not a required stack.",
+      "expected_output": "A tool-supported analysis, record, model, visualisation, query or report.",
+      "priority": "useful_later",
+      "priority_reason": "Tools follow the role foundation and should be chosen for the task, access and local context.",
+      "prerequisites": [],
+      "related_items": [],
+      "source_ids": [
+        "global_esco",
+        "global_onet"
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Blockchain+Engineers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy"
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy"
+        }
+      ],
+      "source_locators": [
+        {
+          "roleKey": "D001|Blockchain Engineers",
+          "elementId": "2.E.6.d",
+          "elementName": "Data base management system software",
+          "owner": "role"
+        }
+      ],
+      "geographic_scope": "global",
+      "evidence_limitations": [
+        "The source names this tool as role evidence; it does not make the tool the only or universally required option."
+      ],
+      "evidence_type": "source_supported_synthesis",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "guidance_owner": "role",
+      "verified_at": "2026-09-12",
+      "link_state": "no_link",
+      "link_url": null,
+      "link_title": null,
+      "link_source_reference": {},
+      "link_accessed_at": null,
+      "link_confidence": "low",
+      "link_evidence": {
+        "status": "no_item_specific_source_verified",
+        "sources": [],
+        "reviewedAt": "2026-09-19",
+        "confidence": "low"
+      },
+      "no_link_reason": "No reviewed item-specific learning, documentation or official-information link is recorded for this item."
+    },
+    {
+      "context_level": "role",
+      "context_key": "D001|Blockchain Engineers",
+      "domain_key": "D001",
+      "item_type": "tool",
+      "item_key": "node-js",
+      "name": "Node.js",
+      "plain_meaning": "Node.js is a named tool in the source record. It is one possible way to node.js work; it is not the only tool you can use.",
+      "contextual_use": "For Blockchain Engineers, this is one option for carrying out the related work. It can be combined with the other tools and methods shown on the role page; it is not a required stack.",
+      "expected_output": "A tool-supported analysis, record, model, visualisation, query or report.",
+      "priority": "useful_later",
+      "priority_reason": "Tools follow the role foundation and should be chosen for the task, access and local context.",
+      "prerequisites": [],
+      "related_items": [],
+      "source_ids": [
+        "global_esco",
+        "global_onet"
+      ],
+      "source_references": [
+        {
+          "id": "global_esco",
+          "title": "ESCO occupations and skills",
+          "url": "https://esco.ec.europa.eu/en/use-esco?text=Blockchain+Engineers",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy"
+        },
+        {
+          "id": "global_onet",
+          "title": "O*NET Database",
+          "url": "https://www.onetcenter.org/database.html",
+          "region": "global",
+          "evidenceType": "occupation_taxonomy"
+        }
+      ],
+      "source_locators": [
+        {
+          "roleKey": "D001|Blockchain Engineers",
+          "elementId": "2.E.7.h",
+          "elementName": "Web platform development software",
+          "owner": "role"
+        }
+      ],
+      "geographic_scope": "global",
+      "evidence_limitations": [
+        "The source names this tool as role evidence; it does not make the tool the only or universally required option."
+      ],
+      "evidence_type": "source_supported_synthesis",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "guidance_owner": "role",
+      "verified_at": "2026-09-12",
+      "link_state": "no_link",
+      "link_url": null,
+      "link_title": null,
+      "link_source_reference": {},
+      "link_accessed_at": null,
+      "link_confidence": "low",
+      "link_evidence": {
+        "status": "no_item_specific_source_verified",
+        "sources": [],
+        "reviewedAt": "2026-09-19",
+        "confidence": "low"
+      },
+      "no_link_reason": "No reviewed item-specific learning, documentation or official-information link is recorded for this item."
+    }
+  ]
+}

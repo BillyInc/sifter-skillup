@@ -5,7 +5,7 @@ Read-only local checkpoint for the admin/institution boundary across the full pa
 ## Population boundary
 
 - Programmes: **237** (236 generic + 1 Sociology).
-- JAMB identities: **420**; active programme-domain links: **1344**.
+- Student lookup population: **420** canonical JAMB identities; CCMAS supporting packages: **237**.
 - Explicitly unmapped programme: **none**.
 - The admin contract is evaluated against the full population; Sociology/Nursing/Accounting route smokes remain fixtures, not full render proof.
 
@@ -18,14 +18,14 @@ Read-only local checkpoint for the admin/institution boundary across the full pa
 
 - Provenance requires a source URL or locator plus an access date.
 - Approval requires a stable context key and a guidance owner matching the context level.
-- `review_required`, `no_link`, `not_established`, `audit_only` and `unavailable` remain visible to admins but blocked from student exposure.
+- `review_required`, `no_link`, `not_established`, `audit_only` and `unavailable` remain visible to admins and excluded from student exposure. Unresolved item-to-item relationships are internal non-blocking coverage, not a blocker to the JAMB lookup population or CCMAS package audit.
 - The panel shows the review-queue state rather than treating a missing field as an empty or approved result.
 - Institution identity uses authoritative official/short name, address and school-code fields; student provisioning keeps aggregate and consent-gated views separate.
 - Report actions remain locked until the route-specific completed Review; a selection change reopens the gate.
 
 ## Remaining queues and proof
 
-- Contextual catalogue rows: **126414**; unresolved/not-established relationship rows: **2305** / **2305**.
+- Contextual catalogue rows: **121377**; unresolved/not-established relationship rows: **2305** / **2305** (internal, non-blocking coverage).
 - Contextual link-state gaps in the current scaling contract: **0**.
 - All parsed programmes currently have an active domain mapping; any future mapping change must retain the same source/evidence gate.
 - Full 237-programme admin rendering, live institution payloads, browser proof and SQL remain deferred.

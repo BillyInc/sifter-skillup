@@ -1,0 +1,47 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-report.v2",
+  "batch": "quality_remediation_lane_73_20260922",
+  "status": "completed",
+  "selection": "quality_remediation_lane_73_20260922_selection.json",
+  "pre_search_checkpoint": "quality_remediation_lane_73_20260922_pre_search_checkpoint.json",
+  "append_only_ledger": "quality_remediation_lane_73_20260922_append_only_ledger.jsonl",
+  "selection_count": 100,
+  "searched_count": 100,
+  "ledger_count": 100,
+  "unique_subject_ids": 100,
+  "omitted_count": 0,
+  "duplicate_count": 0,
+  "extra_record_count": 0,
+  "promoted_count": 0,
+  "review_required_count": 100,
+  "evidence_records": 100,
+  "exact_reconciliation": "100/100",
+  "decision_reconciliation": {
+    "linked": 0,
+    "review_required": 100,
+    "genuinely_unavailable": 0
+  },
+  "search_record_policy": "Each selected item has one item-specific external search-trail record with URLs, locator text, access date, query, evidence and limitations.",
+  "promotion_policy": "review_required was preserved because exact external item/type/context proof was not established; no browser proof was performed.",
+  "untouched_scope_flags": {
+    "relationships_touched": false,
+    "catalogue_touched": false,
+    "sql_touched": false,
+    "seeds_touched": false,
+    "ui_touched": false,
+    "browser_proof_touched": false,
+    "promotion_performed": false,
+    "prior_ledgers_modified": false,
+    "new_selection_created": false,
+    "existing_records_redone": false
+  },
+  "scope_guard": "Items only; relationships, catalogue, SQL, seeds, UI and browser proof untouched.",
+  "verification": {
+    "selection_subject_ids_missing_from_ledger": 0,
+    "ledger_subject_ids_outside_selection": 0,
+    "duplicate_ledger_subject_ids": 0,
+    "records_without_evidence": 0,
+    "records_with_non_review_required_decision": 0
+  },
+  "completed_at": "2026-09-22T19:02:11Z"
+}

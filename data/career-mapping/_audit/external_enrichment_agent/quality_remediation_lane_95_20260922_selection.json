@@ -1,0 +1,1972 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-selection.v2",
+  "batch": "quality_remediation_lane_95_20260922",
+  "selected_at": "2026-09-22",
+  "source_audit": "data/career-mapping/_audit/external_enrichment_agent/item_ledger_quality_audit_2026-09-22.json",
+  "source_sha256": "133bf28782e1b50abacca97438559242eb689f8fd38e69845dffdc0b9da18009",
+  "selection_method": "atomic shared lock; exclude all prior valid claims by contextual and typed identity",
+  "prior_claimed_contextual_ids": 10172,
+  "prior_claimed_typed_items": 9546,
+  "selection_count": 122,
+  "requested_count": 200,
+  "shortfall": 78,
+  "rows": [
+    {
+      "subject_id": "item|role|D035|tow truck driver|skill|maintain-vehicle-service",
+      "context_level": "role",
+      "context_key": "D035|tow truck driver",
+      "item_type": "skill",
+      "item_key": "maintain-vehicle-service",
+      "item_name": "maintain vehicle service",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|tow truck driver|skill|operate-towtruck",
+      "context_level": "role",
+      "context_key": "D035|tow truck driver",
+      "item_type": "skill",
+      "item_key": "operate-towtruck",
+      "item_name": "operate towtruck",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|tow truck driver|skill|operation-of-transport-equipment",
+      "context_level": "role",
+      "context_key": "D035|tow truck driver",
+      "item_type": "skill",
+      "item_key": "operation-of-transport-equipment",
+      "item_name": "operation of transport equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|tow truck driver|skill|position-vehicles-for-maintenance-and-repair",
+      "context_level": "role",
+      "context_key": "D035|tow truck driver",
+      "item_type": "skill",
+      "item_key": "position-vehicles-for-maintenance-and-repair",
+      "item_name": "position vehicles for maintenance and repair",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|tram driver|skill|perform-tram-equipment-checks",
+      "context_level": "role",
+      "context_key": "D035|tram driver",
+      "item_type": "skill",
+      "item_key": "perform-tram-equipment-checks",
+      "item_name": "perform tram equipment checks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|trolley bus driver|skill|electrical-operation-of-trolley-buses",
+      "context_level": "role",
+      "context_key": "D035|trolley bus driver",
+      "item_type": "skill",
+      "item_key": "electrical-operation-of-trolley-buses",
+      "item_name": "electrical operation of trolley buses",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|venue director|skill|apply-foreign-languages-in-hospitality",
+      "context_level": "role",
+      "context_key": "D035|venue director",
+      "item_type": "skill",
+      "item_key": "apply-foreign-languages-in-hospitality",
+      "item_name": "apply foreign languages in hospitality",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|venue director|skill|compile-wine-lists",
+      "context_level": "role",
+      "context_key": "D035|venue director",
+      "item_type": "skill",
+      "item_key": "compile-wine-lists",
+      "item_name": "compile wine lists",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|venue director|skill|contribute-to-the-programmer-s-reflection-process",
+      "context_level": "role",
+      "context_key": "D035|venue director",
+      "item_type": "skill",
+      "item_key": "contribute-to-the-programmer-s-reflection-process",
+      "item_name": "contribute to the programmer's reflection process",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|venue director|skill|ensure-maintenance-of-kitchen-equipment",
+      "context_level": "role",
+      "context_key": "D035|venue director",
+      "item_type": "skill",
+      "item_key": "ensure-maintenance-of-kitchen-equipment",
+      "item_name": "ensure maintenance of kitchen equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|venue director|skill|ensure-portion-control",
+      "context_level": "role",
+      "context_key": "D035|venue director",
+      "item_type": "skill",
+      "item_key": "ensure-portion-control",
+      "item_name": "ensure portion control",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|venue director|skill|handle-glassware",
+      "context_level": "role",
+      "context_key": "D035|venue director",
+      "item_type": "skill",
+      "item_key": "handle-glassware",
+      "item_name": "handle glassware",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|venue director|skill|hazard-analysis-and-critical-control-points",
+      "context_level": "role",
+      "context_key": "D035|venue director",
+      "item_type": "skill",
+      "item_key": "hazard-analysis-and-critical-control-points",
+      "item_name": "hazard analysis and critical control points",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|venue director|skill|inspect-table-settings",
+      "context_level": "role",
+      "context_key": "D035|venue director",
+      "item_type": "skill",
+      "item_key": "inspect-table-settings",
+      "item_name": "inspect table settings",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|venue director|skill|monitor-work-for-special-events",
+      "context_level": "role",
+      "context_key": "D035|venue director",
+      "item_type": "skill",
+      "item_key": "monitor-work-for-special-events",
+      "item_name": "monitor work for special events",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|venue director|skill|prepare-tableware",
+      "context_level": "role",
+      "context_key": "D035|venue director",
+      "item_type": "skill",
+      "item_key": "prepare-tableware",
+      "item_name": "prepare tableware",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|venue director|skill|supervise-the-work-of-staff-on-different-shifts",
+      "context_level": "role",
+      "context_key": "D035|venue director",
+      "item_type": "skill",
+      "item_key": "supervise-the-work-of-staff-on-different-shifts",
+      "item_name": "supervise the work of staff on different shifts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|venue programmer|skill|art-historical-values",
+      "context_level": "role",
+      "context_key": "D035|venue programmer",
+      "item_type": "skill",
+      "item_key": "art-historical-values",
+      "item_name": "art-historical values",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|venue programmer|skill|assemble-health-and-safety-resources-in-cultural-venues",
+      "context_level": "role",
+      "context_key": "D035|venue programmer",
+      "item_type": "skill",
+      "item_key": "assemble-health-and-safety-resources-in-cultural-venues",
+      "item_name": "assemble health and safety resources in cultural venues",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|venue programmer|skill|consult-exhibition-organisers",
+      "context_level": "role",
+      "context_key": "D035|venue programmer",
+      "item_type": "skill",
+      "item_key": "consult-exhibition-organisers",
+      "item_name": "consult exhibition organisers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|venue programmer|skill|determine-context-to-present-the-work",
+      "context_level": "role",
+      "context_key": "D035|venue programmer",
+      "item_type": "skill",
+      "item_key": "determine-context-to-present-the-work",
+      "item_name": "determine context to present the work",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|venue programmer|skill|engage-artistic-staff",
+      "context_level": "role",
+      "context_key": "D035|venue programmer",
+      "item_type": "skill",
+      "item_key": "engage-artistic-staff",
+      "item_name": "engage artistic staff",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|venue programmer|skill|monitor-programming-finances",
+      "context_level": "role",
+      "context_key": "D035|venue programmer",
+      "item_type": "skill",
+      "item_key": "monitor-programming-finances",
+      "item_name": "monitor programming finances",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|venue programmer|skill|negotiate-artistic-productions",
+      "context_level": "role",
+      "context_key": "D035|venue programmer",
+      "item_type": "skill",
+      "item_key": "negotiate-artistic-productions",
+      "item_name": "negotiate artistic productions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|venue programmer|skill|plan-musical-performances",
+      "context_level": "role",
+      "context_key": "D035|venue programmer",
+      "item_type": "skill",
+      "item_key": "plan-musical-performances",
+      "item_name": "plan musical performances",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|venue programmer|skill|select-artistic-productions",
+      "context_level": "role",
+      "context_key": "D035|venue programmer",
+      "item_type": "skill",
+      "item_key": "select-artistic-productions",
+      "item_name": "select artistic productions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|venue programmer|skill|study-music",
+      "context_level": "role",
+      "context_key": "D035|venue programmer",
+      "item_type": "skill",
+      "item_key": "study-music",
+      "item_name": "study music",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|warehouse order picker|skill|assemble-goods",
+      "context_level": "role",
+      "context_key": "D035|warehouse order picker",
+      "item_type": "skill",
+      "item_key": "assemble-goods",
+      "item_name": "assemble goods",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|warehouse order picker|skill|check-shipments",
+      "context_level": "role",
+      "context_key": "D035|warehouse order picker",
+      "item_type": "skill",
+      "item_key": "check-shipments",
+      "item_name": "check shipments",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|warehouse order picker|skill|deliver-outstanding-service",
+      "context_level": "role",
+      "context_key": "D035|warehouse order picker",
+      "item_type": "skill",
+      "item_key": "deliver-outstanding-service",
+      "item_name": "deliver outstanding service",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|warehouse order picker|skill|identify-damaged-goods-before-shipment",
+      "context_level": "role",
+      "context_key": "D035|warehouse order picker",
+      "item_type": "skill",
+      "item_key": "identify-damaged-goods-before-shipment",
+      "item_name": "identify damaged goods before shipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|warehouse order picker|skill|use-packaging-equipment",
+      "context_level": "role",
+      "context_key": "D035|warehouse order picker",
+      "item_type": "skill",
+      "item_key": "use-packaging-equipment",
+      "item_name": "use packaging equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|warehouse worker|skill|assist-in-the-movement-of-heavy-loads",
+      "context_level": "role",
+      "context_key": "D035|warehouse worker",
+      "item_type": "skill",
+      "item_key": "assist-in-the-movement-of-heavy-loads",
+      "item_name": "assist in the movement of heavy loads",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|warehouse worker|skill|clean-industrial-containers",
+      "context_level": "role",
+      "context_key": "D035|warehouse worker",
+      "item_type": "skill",
+      "item_key": "clean-industrial-containers",
+      "item_name": "clean industrial containers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|warehouse worker|skill|tend-packaging-machines",
+      "context_level": "role",
+      "context_key": "D035|warehouse worker",
+      "item_type": "skill",
+      "item_key": "tend-packaging-machines",
+      "item_name": "tend packaging machines",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|wedding planner|skill|entertain-people",
+      "context_level": "role",
+      "context_key": "D035|wedding planner",
+      "item_type": "skill",
+      "item_key": "entertain-people",
+      "item_name": "entertain people",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D036|leather raw materials purchasing manager|skill|leather-finishing-technologies",
+      "context_level": "role",
+      "context_key": "D036|leather raw materials purchasing manager",
+      "item_type": "skill",
+      "item_key": "leather-finishing-technologies",
+      "item_name": "leather finishing technologies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D036|leather raw materials purchasing manager|skill|leather-technology",
+      "context_level": "role",
+      "context_key": "D036|leather raw materials purchasing manager",
+      "item_type": "skill",
+      "item_key": "leather-technology",
+      "item_name": "leather technology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D037|case administrator|skill|brief-court-officials",
+      "context_level": "role",
+      "context_key": "D037|case administrator",
+      "item_type": "skill",
+      "item_key": "brief-court-officials",
+      "item_name": "brief court officials",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D037|case administrator|skill|civil-process-order",
+      "context_level": "role",
+      "context_key": "D037|case administrator",
+      "item_type": "skill",
+      "item_key": "civil-process-order",
+      "item_name": "civil process order",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D037|case administrator|skill|compile-legal-documents",
+      "context_level": "role",
+      "context_key": "D037|case administrator",
+      "item_type": "skill",
+      "item_key": "compile-legal-documents",
+      "item_name": "compile legal documents",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D037|case administrator|skill|correctional-procedures",
+      "context_level": "role",
+      "context_key": "D037|case administrator",
+      "item_type": "skill",
+      "item_key": "correctional-procedures",
+      "item_name": "correctional procedures",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D037|case administrator|skill|court-procedures",
+      "context_level": "role",
+      "context_key": "D037|case administrator",
+      "item_type": "skill",
+      "item_key": "court-procedures",
+      "item_name": "court procedures",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D037|case administrator|skill|ensure-proper-document-management",
+      "context_level": "role",
+      "context_key": "D037|case administrator",
+      "item_type": "skill",
+      "item_key": "ensure-proper-document-management",
+      "item_name": "ensure proper document management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D037|case administrator|skill|law-enforcement",
+      "context_level": "role",
+      "context_key": "D037|case administrator",
+      "item_type": "skill",
+      "item_key": "law-enforcement",
+      "item_name": "law enforcement",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D037|case administrator|skill|legal-case-management",
+      "context_level": "role",
+      "context_key": "D037|case administrator",
+      "item_type": "skill",
+      "item_key": "legal-case-management",
+      "item_name": "legal case management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D037|case administrator|skill|supervise-legal-case-procedures",
+      "context_level": "role",
+      "context_key": "D037|case administrator",
+      "item_type": "skill",
+      "item_key": "supervise-legal-case-procedures",
+      "item_name": "supervise legal case procedures",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D037|civil registrar|skill|act-discreetly",
+      "context_level": "role",
+      "context_key": "D037|civil registrar",
+      "item_type": "skill",
+      "item_key": "act-discreetly",
+      "item_name": "act discreetly",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D037|civil registrar|skill|check-official-documents",
+      "context_level": "role",
+      "context_key": "D037|civil registrar",
+      "item_type": "skill",
+      "item_key": "check-official-documents",
+      "item_name": "check official documents",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D037|civil registrar|skill|exercise-patience",
+      "context_level": "role",
+      "context_key": "D037|civil registrar",
+      "item_type": "skill",
+      "item_key": "exercise-patience",
+      "item_name": "exercise patience",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D037|civil registrar|skill|officiate-civil-partnerships",
+      "context_level": "role",
+      "context_key": "D037|civil registrar",
+      "item_type": "skill",
+      "item_key": "officiate-civil-partnerships",
+      "item_name": "officiate civil partnerships",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D037|civil registrar|skill|officiate-weddings",
+      "context_level": "role",
+      "context_key": "D037|civil registrar",
+      "item_type": "skill",
+      "item_key": "officiate-weddings",
+      "item_name": "officiate weddings",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D037|civil registrar|skill|register-birth",
+      "context_level": "role",
+      "context_key": "D037|civil registrar",
+      "item_type": "skill",
+      "item_key": "register-birth",
+      "item_name": "register birth",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D037|civil registrar|skill|register-death",
+      "context_level": "role",
+      "context_key": "D037|civil registrar",
+      "item_type": "skill",
+      "item_key": "register-death",
+      "item_name": "register death",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D037|civil registrar|skill|review-civil-documentation",
+      "context_level": "role",
+      "context_key": "D037|civil registrar",
+      "item_type": "skill",
+      "item_key": "review-civil-documentation",
+      "item_name": "review civil documentation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D037|contract manager|skill|use-e-procurement",
+      "context_level": "role",
+      "context_key": "D037|contract manager",
+      "item_type": "skill",
+      "item_key": "use-e-procurement",
+      "item_name": "use e-procurement",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D037|conveyance clerk|skill|conveyancing",
+      "context_level": "role",
+      "context_key": "D037|conveyance clerk",
+      "item_type": "skill",
+      "item_key": "conveyancing",
+      "item_name": "conveyancing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D037|conveyance clerk|skill|manage-digital-documents",
+      "context_level": "role",
+      "context_key": "D037|conveyance clerk",
+      "item_type": "skill",
+      "item_key": "manage-digital-documents",
+      "item_name": "manage digital documents",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D037|conveyance clerk|skill|provide-legal-legitimacy-to-the-transfer-of-assets",
+      "context_level": "role",
+      "context_key": "D037|conveyance clerk",
+      "item_type": "skill",
+      "item_key": "provide-legal-legitimacy-to-the-transfer-of-assets",
+      "item_name": "provide legal legitimacy to the transfer of assets",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D037|conveyance clerk|skill|use-word-processing-software",
+      "context_level": "role",
+      "context_key": "D037|conveyance clerk",
+      "item_type": "skill",
+      "item_key": "use-word-processing-software",
+      "item_name": "use word processing software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D037|corporate lawyer|skill|present-legal-arguments",
+      "context_level": "role",
+      "context_key": "D037|corporate lawyer",
+      "item_type": "skill",
+      "item_key": "present-legal-arguments",
+      "item_name": "present legal arguments",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D037|corporate lawyer|skill|private-law",
+      "context_level": "role",
+      "context_key": "D037|corporate lawyer",
+      "item_type": "skill",
+      "item_key": "private-law",
+      "item_name": "private law",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D037|corporate lawyer|skill|railway-law",
+      "context_level": "role",
+      "context_key": "D037|corporate lawyer",
+      "item_type": "skill",
+      "item_key": "railway-law",
+      "item_name": "railway law",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D037|court administrative officer|skill|assist-judge",
+      "context_level": "role",
+      "context_key": "D037|court administrative officer",
+      "item_type": "skill",
+      "item_key": "assist-judge",
+      "item_name": "assist judge",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D037|court administrative officer|skill|handle-case-evidence",
+      "context_level": "role",
+      "context_key": "D037|court administrative officer",
+      "item_type": "skill",
+      "item_key": "handle-case-evidence",
+      "item_name": "handle case evidence",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D037|court administrative officer|skill|maintain-court-order",
+      "context_level": "role",
+      "context_key": "D037|court administrative officer",
+      "item_type": "skill",
+      "item_key": "maintain-court-order",
+      "item_name": "maintain court order",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D045|special-interest groups|skill|represent-special-interest-groups-members",
+      "context_level": "role",
+      "context_key": "D045|special-interest groups",
+      "item_type": "skill",
+      "item_key": "represent-special-interest-groups-members",
+      "item_name": "represent special-interest groups' members",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|adult community care worker|skill|involve-service-users-and-carers-in-care-planning",
+      "context_level": "role",
+      "context_key": "D046|adult community care worker",
+      "item_type": "skill",
+      "item_key": "involve-service-users-and-carers-in-care-planning",
+      "item_name": "involve service users and carers in care planning",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|adult community care worker|skill|promote-the-safeguarding-of-young-people",
+      "context_level": "role",
+      "context_key": "D046|adult community care worker",
+      "item_type": "skill",
+      "item_key": "promote-the-safeguarding-of-young-people",
+      "item_name": "promote the safeguarding of young people",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|anthropologist|skill|participant-observation",
+      "context_level": "role",
+      "context_key": "D046|anthropologist",
+      "item_type": "skill",
+      "item_key": "participant-observation",
+      "item_name": "participant observation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|au pair|skill|attend-to-children-s-basic-physical-needs",
+      "context_level": "role",
+      "context_key": "D046|au pair",
+      "item_type": "skill",
+      "item_key": "attend-to-children-s-basic-physical-needs",
+      "item_name": "attend to children's basic physical needs",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|au pair|skill|baby-care",
+      "context_level": "role",
+      "context_key": "D046|au pair",
+      "item_type": "skill",
+      "item_key": "baby-care",
+      "item_name": "baby care",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|au pair|skill|handle-chemical-cleaning-agents",
+      "context_level": "role",
+      "context_key": "D046|au pair",
+      "item_type": "skill",
+      "item_key": "handle-chemical-cleaning-agents",
+      "item_name": "handle chemical cleaning agents",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|au pair|skill|maintain-relations-with-children-s-parents",
+      "context_level": "role",
+      "context_key": "D046|au pair",
+      "item_type": "skill",
+      "item_key": "maintain-relations-with-children-s-parents",
+      "item_name": "maintain relations with children's parents",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|au pair|skill|play-with-children",
+      "context_level": "role",
+      "context_key": "D046|au pair",
+      "item_type": "skill",
+      "item_key": "play-with-children",
+      "item_name": "play with children",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|au pair|skill|prepare-sandwiches",
+      "context_level": "role",
+      "context_key": "D046|au pair",
+      "item_type": "skill",
+      "item_key": "prepare-sandwiches",
+      "item_name": "prepare sandwiches",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|au pair|tool|educational-software",
+      "context_level": "role",
+      "context_key": "D046|au pair",
+      "item_type": "tool",
+      "item_key": "educational-software",
+      "item_name": "Educational software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|au pair|tool|scheduling-software",
+      "context_level": "role",
+      "context_key": "D046|au pair",
+      "item_type": "tool",
+      "item_key": "scheduling-software",
+      "item_name": "Scheduling software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|babysitter|skill|babysitting",
+      "context_level": "role",
+      "context_key": "D046|babysitter",
+      "item_type": "skill",
+      "item_key": "babysitting",
+      "item_name": "babysitting",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|babysitter|skill|prepare-ready-made-dishes",
+      "context_level": "role",
+      "context_key": "D046|babysitter",
+      "item_type": "skill",
+      "item_key": "prepare-ready-made-dishes",
+      "item_name": "prepare ready-made dishes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|babysitter|skill|supervise-children",
+      "context_level": "role",
+      "context_key": "D046|babysitter",
+      "item_type": "skill",
+      "item_key": "supervise-children",
+      "item_name": "supervise children",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|behavioural scientist|skill|experimental-psychology",
+      "context_level": "role",
+      "context_key": "D046|behavioural scientist",
+      "item_type": "skill",
+      "item_key": "experimental-psychology",
+      "item_name": "experimental psychology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|behavioural scientist|skill|phenomenology",
+      "context_level": "role",
+      "context_key": "D046|behavioural scientist",
+      "item_type": "skill",
+      "item_key": "phenomenology",
+      "item_name": "phenomenology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|benefits advice worker|skill|work-for-public-inclusion",
+      "context_level": "role",
+      "context_key": "D046|benefits advice worker",
+      "item_type": "skill",
+      "item_key": "work-for-public-inclusion",
+      "item_name": "work for public inclusion",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|bereavement counsellor|skill|behavioural-therapy",
+      "context_level": "role",
+      "context_key": "D046|bereavement counsellor",
+      "item_type": "skill",
+      "item_key": "behavioural-therapy",
+      "item_name": "behavioural therapy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|bereavement counsellor|skill|cognitive-behavioural-therapy",
+      "context_level": "role",
+      "context_key": "D046|bereavement counsellor",
+      "item_type": "skill",
+      "item_key": "cognitive-behavioural-therapy",
+      "item_name": "cognitive behavioural therapy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|bereavement counsellor|skill|reflexion",
+      "context_level": "role",
+      "context_key": "D046|bereavement counsellor",
+      "item_type": "skill",
+      "item_key": "reflexion",
+      "item_name": "reflexion",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|bereavement counsellor|skill|stages-of-bereavement",
+      "context_level": "role",
+      "context_key": "D046|bereavement counsellor",
+      "item_type": "skill",
+      "item_key": "stages-of-bereavement",
+      "item_name": "stages of bereavement",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|bereavement counsellor|skill|support-traumatised-children",
+      "context_level": "role",
+      "context_key": "D046|bereavement counsellor",
+      "item_type": "skill",
+      "item_key": "support-traumatised-children",
+      "item_name": "support traumatised children",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|care home worker|skill|provide-palliative-care",
+      "context_level": "role",
+      "context_key": "D046|care home worker",
+      "item_type": "skill",
+      "item_key": "provide-palliative-care",
+      "item_name": "provide palliative care",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|chaplain|skill|bible-texts",
+      "context_level": "role",
+      "context_key": "D046|chaplain",
+      "item_type": "skill",
+      "item_key": "bible-texts",
+      "item_name": "Bible texts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|chaplain|skill|canon-law",
+      "context_level": "role",
+      "context_key": "D046|chaplain",
+      "item_type": "skill",
+      "item_key": "canon-law",
+      "item_name": "canon law",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|chaplain|skill|interpret-religious-texts",
+      "context_level": "role",
+      "context_key": "D046|chaplain",
+      "item_type": "skill",
+      "item_key": "interpret-religious-texts",
+      "item_name": "interpret religious texts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|chaplain|skill|perform-religious-ceremonies",
+      "context_level": "role",
+      "context_key": "D046|chaplain",
+      "item_type": "skill",
+      "item_key": "perform-religious-ceremonies",
+      "item_name": "perform religious ceremonies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|chaplain|skill|promote-religious-activities",
+      "context_level": "role",
+      "context_key": "D046|chaplain",
+      "item_type": "skill",
+      "item_key": "promote-religious-activities",
+      "item_name": "promote religious activities",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|chaplain|skill|provide-charity-services",
+      "context_level": "role",
+      "context_key": "D046|chaplain",
+      "item_type": "skill",
+      "item_key": "provide-charity-services",
+      "item_name": "provide charity services",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|chaplain|skill|provide-spiritual-counselling",
+      "context_level": "role",
+      "context_key": "D046|chaplain",
+      "item_type": "skill",
+      "item_key": "provide-spiritual-counselling",
+      "item_name": "provide spiritual counselling",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|chaplain|skill|quran",
+      "context_level": "role",
+      "context_key": "D046|chaplain",
+      "item_type": "skill",
+      "item_key": "quran",
+      "item_name": "quran",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|chaplain|skill|reinforce-positive-behaviour",
+      "context_level": "role",
+      "context_key": "D046|chaplain",
+      "item_type": "skill",
+      "item_key": "reinforce-positive-behaviour",
+      "item_name": "reinforce positive behaviour",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|child care social worker|tool|student-information-systems-sis-software",
+      "context_level": "role",
+      "context_key": "D046|child care social worker",
+      "item_type": "tool",
+      "item_key": "student-information-systems-sis-software",
+      "item_name": "Student information systems SIS software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|child care worker|skill|determine-child-welfare",
+      "context_level": "role",
+      "context_key": "D046|child care worker",
+      "item_type": "skill",
+      "item_key": "determine-child-welfare",
+      "item_name": "determine child welfare",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|child care worker|tool|google-classroom",
+      "context_level": "role",
+      "context_key": "D046|child care worker",
+      "item_type": "tool",
+      "item_key": "google-classroom",
+      "item_name": "Google Classroom",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|child care worker|tool|nearpod",
+      "context_level": "role",
+      "context_key": "D046|child care worker",
+      "item_type": "tool",
+      "item_key": "nearpod",
+      "item_name": "Nearpod",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|child care worker|tool|schoology",
+      "context_level": "role",
+      "context_key": "D046|child care worker",
+      "item_type": "tool",
+      "item_key": "schoology",
+      "item_name": "Schoology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|child care worker|tool|seesaw",
+      "context_level": "role",
+      "context_key": "D046|child care worker",
+      "item_type": "tool",
+      "item_key": "seesaw",
+      "item_name": "Seesaw",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|child care worker|tool|tadpoles",
+      "context_level": "role",
+      "context_key": "D046|child care worker",
+      "item_type": "tool",
+      "item_key": "tadpoles",
+      "item_name": "Tadpoles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|child day care worker|skill|child-protection",
+      "context_level": "role",
+      "context_key": "D046|child day care worker",
+      "item_type": "skill",
+      "item_key": "child-protection",
+      "item_name": "child protection",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|child day care worker|skill|plan-youth-activities",
+      "context_level": "role",
+      "context_key": "D046|child day care worker",
+      "item_type": "skill",
+      "item_key": "plan-youth-activities",
+      "item_name": "plan youth activities",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|child welfare worker|skill|clinical-social-work",
+      "context_level": "role",
+      "context_key": "D046|child welfare worker",
+      "item_type": "skill",
+      "item_key": "clinical-social-work",
+      "item_name": "clinical social work",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|clinical psychologist|skill|diagnosis-of-mental-health-issues",
+      "context_level": "role",
+      "context_key": "D046|clinical psychologist",
+      "item_type": "skill",
+      "item_key": "diagnosis-of-mental-health-issues",
+      "item_name": "diagnosis of mental health issues",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|clinical psychologist|skill|expert-services-in-clinical-psychology",
+      "context_level": "role",
+      "context_key": "D046|clinical psychologist",
+      "item_type": "skill",
+      "item_key": "expert-services-in-clinical-psychology",
+      "item_name": "expert services in clinical psychology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|clinical psychologist|skill|forensic-psychiatry",
+      "context_level": "role",
+      "context_key": "D046|clinical psychologist",
+      "item_type": "skill",
+      "item_key": "forensic-psychiatry",
+      "item_name": "forensic psychiatry",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|clinical psychologist|skill|neuroscience",
+      "context_level": "role",
+      "context_key": "D046|clinical psychologist",
+      "item_type": "skill",
+      "item_key": "neuroscience",
+      "item_name": "neuroscience",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|clinical psychologist|skill|psychopharmacology",
+      "context_level": "role",
+      "context_key": "D046|clinical psychologist",
+      "item_type": "skill",
+      "item_key": "psychopharmacology",
+      "item_name": "psychopharmacology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|clinical social worker|skill|support-social-service-users-at-the-end-of-life",
+      "context_level": "role",
+      "context_key": "D046|clinical social worker",
+      "item_type": "skill",
+      "item_key": "support-social-service-users-at-the-end-of-life",
+      "item_name": "support social service users at the end of life",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|clinical social worker|skill|work-with-patterns-of-psychological-behaviour",
+      "context_level": "role",
+      "context_key": "D046|clinical social worker",
+      "item_type": "skill",
+      "item_key": "work-with-patterns-of-psychological-behaviour",
+      "item_name": "work with patterns of psychological behaviour",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|community care case worker|skill|provide-domestic-care",
+      "context_level": "role",
+      "context_key": "D046|community care case worker",
+      "item_type": "skill",
+      "item_key": "provide-domestic-care",
+      "item_name": "provide domestic care",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|community social worker|skill|perform-street-interventions-in-social-work",
+      "context_level": "role",
+      "context_key": "D046|community social worker",
+      "item_type": "skill",
+      "item_key": "perform-street-interventions-in-social-work",
+      "item_name": "perform street interventions in social work",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|consultant social worker|skill|manage-a-social-work-unit",
+      "context_level": "role",
+      "context_key": "D046|consultant social worker",
+      "item_type": "skill",
+      "item_key": "manage-a-social-work-unit",
+      "item_name": "manage a social work unit",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|consultant social worker|skill|support-social-service-users-to-live-at-home",
+      "context_level": "role",
+      "context_key": "D046|consultant social worker",
+      "item_type": "skill",
+      "item_key": "support-social-service-users-to-live-at-home",
+      "item_name": "support social service users to live at home",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|criminal justice social worker|skill|create-criminal-profiles",
+      "context_level": "role",
+      "context_key": "D046|criminal justice social worker",
+      "item_type": "skill",
+      "item_key": "create-criminal-profiles",
+      "item_name": "create criminal profiles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D046|criminal justice social worker|tool|case-management-software",
+      "context_level": "role",
+      "context_key": "D046|criminal justice social worker",
+      "item_type": "tool",
+      "item_key": "case-management-software",
+      "item_name": "Case management software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    }
+  ],
+  "policy": {
+    "review_required_preserved_unless_exact_item_evidence_established": true,
+    "no_relationship_inference": true,
+    "no_promotion": true
+  }
+}

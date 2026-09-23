@@ -1,0 +1,18 @@
+{
+  "schema": "2026-09-21.full-population-enrichment-tranche-checkpoint.v1",
+  "accessed_on": "2026-09-21",
+  "tranche": "013",
+  "status": "completed",
+  "blocked": false,
+  "blocker": null,
+  "selection": "data/career-mapping/_audit/external_enrichment_agent/full_population_tranche_013_selection_2026-09-21.json",
+  "source_queue": "data/career-mapping/_audit/external_enrichment_queue_2026-09-20.json",
+  "counts": {"selected_rows":16,"item_rows":16,"unique_item_names":13,"d078_rows":0},
+  "progress": {"selected_rows":16,"searched_rows":16,"linked":3,"review_required":13,"genuinely_unavailable":0,"remaining_selected_rows":0},
+  "search_started": true,
+  "guardrails": {"catalogue_touched":false,"generated_seed_transport_touched":false,"sql_touched":false,"ui_touched":false,"browser_proof_touched":false},
+  "ledger": "data/career-mapping/_audit/external_enrichment_agent/full_population_tranche_013_search_ledger_2026-09-21.jsonl",
+  "report": "data/career-mapping/_audit/external_enrichment_agent/full_population_tranche_013_report_2026-09-21.md",
+  "reconciliation": {"selection_ids":16,"ledger_ids":16,"missing_from_ledger":0,"unexpected_ledger_ids":0,"duplicate_ledger_ids":0,"required_fields_missing":0,"invalid_https_urls":0,"d078_rows":0},
+  "notes": "The pre-search checkpoint was saved before external searching. Selection remains disjoint from prior item ledgers by contextual row_id."
+}

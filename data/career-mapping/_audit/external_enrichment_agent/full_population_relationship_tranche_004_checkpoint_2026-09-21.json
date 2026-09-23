@@ -1,0 +1,42 @@
+{
+  "schema": "2026-09-21.full-population-relationship-tranche-checkpoint.v1",
+  "accessed_on": "2026-09-21",
+  "status": "complete",
+  "last_updated_at": "2026-09-21T14:07:30+01:00",
+  "latest_batch": {
+    "rows_completed_since_previous_checkpoint": 2,
+    "row_ids": [
+      "relationship|role|D001|Computer Programmers|tool|c|missing",
+      "relationship|role|D001|Computer Programmers|tool|cascading-style-sheets-css|missing",
+      "relationship|role|D001|Computer Programmers|tool|extensible-markup-language-xml|missing",
+      "relationship|role|D001|Computer Programmers|tool|hypertext-markup-language-html|missing"
+    ],
+    "decisions": {
+      "linked": 0,
+      "review_required": 2,
+      "genuinely_unavailable": 0
+    }
+  },
+  "selection": "data/career-mapping/_audit/external_enrichment_agent/full_population_relationship_tranche_004_selection_2026-09-21.json",
+  "scope": {
+    "prior_relationship_search_records": 20,
+    "prior_relationship_search_linked": 0,
+    "prior_relationship_search_review_required": 20,
+    "prior_relationship_search_genuinely_unavailable": 0,
+    "current_tranche_rows_selected": 8,
+    "current_tranche_rows_searched": 8,
+    "current_tranche_linked": 0,
+    "current_tranche_review_required": 8,
+    "current_tranche_genuinely_unavailable": 0,
+    "current_tranche_remaining_selected_rows": 0
+  },
+  "guardrails": {
+    "d078_rows": 0,
+    "prior_tranche_overlap": 0,
+    "sql_touched": false,
+    "generated_seed_transport_touched": false,
+    "catalogue_touched": false,
+    "ui_touched": false,
+    "browser_proof_touched": false
+  }
+}

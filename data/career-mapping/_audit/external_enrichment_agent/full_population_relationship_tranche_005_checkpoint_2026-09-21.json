@@ -1,0 +1,38 @@
+{
+  "schema": "2026-09-21.full-population-relationship-tranche-checkpoint.v1",
+  "accessed_on": "2026-09-21",
+  "status": "searched_checkpoint",
+  "selection": "data/career-mapping/_audit/external_enrichment_agent/full_population_relationship_tranche_005_selection_2026-09-21.json",
+  "ledger": "data/career-mapping/_audit/external_enrichment_agent/full_population_relationship_tranche_005_search_ledger_2026-09-21.jsonl",
+  "scope": {
+    "prior_relationship_search_records": 20,
+    "prior_relationship_search_linked": 0,
+    "prior_relationship_search_review_required": 20,
+    "prior_relationship_search_genuinely_unavailable": 0,
+    "current_tranche_rows_selected": 8,
+    "current_tranche_rows_searched": 8,
+    "current_tranche_linked": 0,
+    "current_tranche_review_required": 8,
+    "current_tranche_genuinely_unavailable": 0,
+    "current_tranche_remaining_selected_rows": 0
+  },
+  "reconciliation": {
+    "selection_ids": 8,
+    "ledger_ids": 8,
+    "missing_selection_ids": 0,
+    "unexpected_ledger_ids": 0,
+    "duplicate_ledger_ids": 0
+  },
+  "search_result": "All eight exact source-role/tool candidates were searched against the role authority and the named tool authority. O*NET establishes role/tool co-occurrence, while the official tool pages establish the tool identity or generic workflow. No source names both typed endpoints in the local context and an exact approved relationship type. All eight therefore remain review_required.",
+  "guardrails": {
+    "d078_rows": 0,
+    "prior_tranche_overlap": 0,
+    "sql_touched": false,
+    "generated_seed_transport_touched": false,
+    "catalogue_touched": false,
+    "ui_touched": false,
+    "browser_proof_touched": false,
+    "endpoints_inferred": false,
+    "relationships_promoted": false
+  }
+}

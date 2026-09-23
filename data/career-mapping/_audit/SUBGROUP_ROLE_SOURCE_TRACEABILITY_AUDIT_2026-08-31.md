@@ -7,7 +7,7 @@ The current subgroup layer has recorded provenance for every subgroup row. The c
 ## Counts
 
 - Domains: **168**.
-- Subgroups: **555**; with recorded source provenance: **555**.
+- Subgroups: **558**; with recorded source provenance: **558**.
 - Base role-library rows: **4703**.
 - Overlay rows: **511**; duplicate role keys removed during merge: **5**.
 - Merged role records: **5209**.
@@ -18,8 +18,8 @@ The current subgroup layer has recorded provenance for every subgroup row. The c
 - Merged roles with a source link in their work-profile record: **5090**.
 - Merged roles with any role-field or profile-link source evidence: **5209**.
 - Merged roles without any recorded anchor, provenance, or profile source link: **0**.
-- Merged roles assigned to a matching subgroup: **5088**.
-- Merged roles using the intentional direct domain-to-role fallback because their ISCO sub-major has no matching subgroup: **121**.
+- Merged roles assigned to a matching subgroup: **5091**.
+- Merged roles using the intentional direct domain-to-role fallback because their ISCO sub-major has no matching subgroup: **118**.
 - Merged roles in domains without a subgroup taxonomy: **0**.
 
 ## Lineage map

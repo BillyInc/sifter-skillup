@@ -1,0 +1,10 @@
+{
+  "schema": "2026-09-23.jamb-programme-scope-policy-correction.v1",
+  "student_population": {"jamb_identities": 420, "ccmas_packages": 237},
+  "ccmas_anchor_required_for_jamb_availability": false,
+  "affected_no_ccmas_anchor_occurrences": 11,
+  "required_action": "re_enrich_all_420_jamb_identities_including_11_occurrences",
+  "genuinely_unavailable_rule": "only after identity/resource evidence search fails; never solely because CCMAS anchor is absent",
+  "sql_applied": false,
+  "browser_proof": false
+}

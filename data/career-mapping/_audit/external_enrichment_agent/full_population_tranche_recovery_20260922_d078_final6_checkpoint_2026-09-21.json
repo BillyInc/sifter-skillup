@@ -1,0 +1,64 @@
+{
+  "schema": "2026-09-21.full-population-enrichment-tranche-checkpoint.v1",
+  "accessed_on": "2026-09-22",
+  "tranche": "recovery_20260922_d078_final6",
+  "status": "completed",
+  "blocked": false,
+  "blocker": null,
+  "selection": "data/career-mapping/_audit/external_enrichment_agent/full_population_tranche_recovery_20260922_d078_final6_selection_2026-09-21.json",
+  "source_queue": "data/career-mapping/_audit/external_enrichment_queue_2026-09-20.json",
+  "counts": {
+    "pending_queue_items": 6,
+    "successful_typed_items_excluded": 9984,
+    "active_typed_items_excluded": 0,
+    "eligible_pending_typed_rows": 6,
+    "selected_rows": 6,
+    "item_rows": 6,
+    "unique_typed_items": 6,
+    "unique_item_names": 6,
+    "d078_rows": 6
+  },
+  "progress": {
+    "selected_rows": 6,
+    "searched_rows": 6,
+    "unique_typed_items_searched": 6,
+    "linked": 0,
+    "review_required": 6,
+    "genuinely_unavailable": 0,
+    "remaining_selected_rows": 0,
+    "https_evidence_urls": 6
+  },
+  "selection_ids": [
+    "item|role|D078|genealogist|skill|analyse-recorded-sources",
+    "item|role|D078|genealogist|skill|conduct-qualitative-research",
+    "item|role|D078|genealogist|skill|genealogy",
+    "item|role|D078|genealogist|skill|interpret-pedigree-charts",
+    "item|role|D078|genealogist|skill|research-family-histories",
+    "item|role|D078|thanatology researcher|skill|thanatology"
+  ],
+  "searched_ids": [
+    "item|role|D078|genealogist|skill|analyse-recorded-sources",
+    "item|role|D078|genealogist|skill|conduct-qualitative-research",
+    "item|role|D078|genealogist|skill|genealogy",
+    "item|role|D078|genealogist|skill|interpret-pedigree-charts",
+    "item|role|D078|genealogist|skill|research-family-histories",
+    "item|role|D078|thanatology researcher|skill|thanatology"
+  ],
+  "missing_selection_ids": [],
+  "changed_files": [
+    "data/career-mapping/_audit/external_enrichment_agent/full_population_tranche_recovery_20260922_d078_final6_selection_2026-09-21.json",
+    "data/career-mapping/_audit/external_enrichment_agent/full_population_tranche_recovery_20260922_d078_final6_checkpoint_2026-09-21.json",
+    "data/career-mapping/_audit/external_enrichment_agent/full_population_tranche_recovery_20260922_d078_final6_checkpoint_2026-09-21.md"
+  ],
+  "search_started": true,
+  "guardrails": {
+    "relationship_ledgers_touched": false,
+    "catalogue_touched": false,
+    "generated_seed_transport_touched": false,
+    "sql_touched": false,
+    "ui_touched": false,
+    "browser_proof_touched": false,
+    "prior_ledgers_modified": false
+  },
+  "last_saved_row_id": "item|role|D078|thanatology researcher|skill|thanatology"
+}

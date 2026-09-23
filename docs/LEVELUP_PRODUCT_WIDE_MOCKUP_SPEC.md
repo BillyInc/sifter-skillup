@@ -1248,6 +1248,18 @@ shows a concise review state. It must not fill the gap with role frequency,
 neighbouring programme text, a generic software category, or a copied domain
 paragraph.
 
+### 2026-09-21 role-profile evidence update
+
+The role work-profile enrichment pass continued with a non-overlapping
+read-only tranche of 20 missing role profiles. Vendored European Commission
+ESCO identity evidence is retained with exact locators, but it is not treated
+as a substitute for the application's work-profile fields, Nigerian demand
+evidence or student preparation content. Because the public ESCO API could not
+be reached in this local run, the rows remain explicitly review-required. This
+preserves the rule above: unsupported work activities, context, job zones,
+qualifications or local mappings must not be invented to make a card look
+complete.
+
 ### 2026-09-19 implementation evidence for the Sociology slice
 
 The local Sociology render path now applies the contract's ownership and
@@ -1375,3 +1387,71 @@ remaining review states stay visible as open work. Institution identity,
 aggregate/consent boundaries and route-specific Review report locking are
 covered locally. Full admin rendering, live payload, browser proof and SQL
 acceptance remain deferred and student exposure stays fail-closed.
+
+### 2026-09-21 full-population downstream/admin audit checkpoint
+
+The local audit now covers all **237 programmes** and **420 JAMB identities**:
+237/237 programme route records have downstream coverage across 1,344 domain,
+3,580 subgroup and 46,941 role routes in 5,668 contexts. Curriculum summary,
+friendly-title, bounded role-learning, source/link-state, relationship-grouping,
+admin provenance and student-safe static checks pass locally. The canonical
+catalogue is 121,377 items / 408,163 relationships; 2,305
+not-established/unresolved relationships and all programme review queues remain
+staff-review states. A stale Nursing smoke-fixture key was corrected to
+`Allied Health Sciences::Nursing Sciences`. No UI or SQL changed; browser,
+live-payload and deployment gates remain open.
+
+### 2026-09-21 role-profile evidence tranche 005
+
+The role-profile evidence pass continued with queue positions 81-100. It
+verified 15 recorded O*NET identities against official item-specific summary
+pages and retained 5 ESCO identities with exact repository locators and
+occupation-skill relation evidence. All 20 remain `review_required`; no
+O*NET-style profile, Nigerian demand claim or student preparation content was
+invented. Nineteen missing role profiles remain. The mockup contract is
+unchanged: unsupported role detail stays explicitly review-only, and browser,
+live-payload and SQL proof are still final gates.
+
+### 2026-09-21 external item-evidence checkpoint: tranche 007
+
+The item-link contract was applied to the next 32 canonical contextual
+identities outside D078 and prior item tranches. Twenty-one records now carry
+authoritative item-specific evidence; eleven remain explicitly
+`review_required` because the source is broad, combined or not sufficiently
+context-specific. Evidence retains the external URL, authority, locator,
+summary and access date. The item-only pass did not modify relationships,
+catalogue rows, student UI or SQL, and no generic URL was promoted. Student
+rendering remains fail-closed until the remaining enrichment, browser and live
+deployment gates are complete.
+
+### 2026-09-21 external item-evidence checkpoint: tranche 008
+
+The item-link contract was applied to the next 32 non-overlapping canonical
+identities after tranche 007. Twenty-one records carry authoritative
+item-specific evidence and eleven remain `review_required` because the source
+is retired, broad, combined or context-ambiguous. Each row retains its URL,
+authority, locator, evidence summary and access date. No relationships were
+searched or promoted, and no catalogue, student UI or SQL behaviour changed.
+The student path remains fail-closed for unresolved or unreviewed evidence;
+browser, live-payload and deployment gates remain open.
+
+### 2026-09-21 item-enrichment tranche 010
+
+The next 16 non-overlapping contextual item identities after tranche 009 were
+searched against authoritative item-specific sources. Fourteen received linked
+evidence and two remain `review_required` because the source supports the
+components of the combined engineering safety-and-reliability label but does
+not establish that exact combined item. Every row retains its URL, authority,
+locator, evidence summary and access date. No relationship, catalogue,
+student UI or SQL behaviour changed; the item-link contract remains
+fail-closed and browser/live-payload acceptance remains open.
+
+### 2026-09-23 current execution-order clarification
+
+The dated boundary and scaling notes above are historical checkpoints. For the
+current goal, local subject/JAMB audits, the corrected all-420 JAMB resource
+check and the full 420-JAMB/237-CCMAS downstream/admin checks precede any SQL.
+SQL is the final manual deployment phase. Its contextual migrations and
+curriculum seeds follow their dependency order, and the 35 compressed
+contextual seed parts are loaded last in numeric order. Local audits, mockup
+checks, REST reads and browser checks do not constitute live deployment proof.

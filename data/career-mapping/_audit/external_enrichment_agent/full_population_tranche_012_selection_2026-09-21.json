@@ -1,0 +1,213 @@
+{
+  "schema": "2026-09-21.full-population-enrichment-tranche-selection.v1",
+  "accessed_on": "2026-09-21",
+  "tranche": "012",
+  "selection_order": "stable row_id ascending after excluding D078 and all prior item tranches",
+  "source_queue": "data/career-mapping/_audit/external_enrichment_queue_2026-09-20.json",
+  "excluded_context_prefix": "D078",
+  "disjoint_from": [
+    "full_population_tranche_001_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_002_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_003_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_004_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_005_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_006_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_007_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_008_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_009_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_010_search_ledger_2026-09-21.jsonl",
+    "full_population_tranche_011_search_ledger_2026-09-21.jsonl"
+  ],
+  "policy": {
+    "item_rows_are_unique_contextual_identities": true,
+    "source_links_are_not_promoted_without_item_specific_evidence": true,
+    "no_link_requires_an_actual_search": true,
+    "retired_or_uncertain_sources_remain_review_required": true
+  },
+  "items": [
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D023|skill|health-service-quality",
+      "subject_id": "item|domain|D023|skill|health-service-quality",
+      "context_level": "domain",
+      "context_key": "D023",
+      "domain_key": "D023",
+      "item_type": "skill",
+      "item_key": "health-service-quality",
+      "item_name": "health service quality"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D024|certification|advanced-cardiovascular-life-support-acls",
+      "subject_id": "item|domain|D024|certification|advanced-cardiovascular-life-support-acls",
+      "context_level": "domain",
+      "context_key": "D024",
+      "domain_key": "D024",
+      "item_type": "certification",
+      "item_key": "advanced-cardiovascular-life-support-acls",
+      "item_name": "Advanced Cardiovascular Life Support (ACLS)"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D024|certification|basic-life-support-bls",
+      "subject_id": "item|domain|D024|certification|basic-life-support-bls",
+      "context_level": "domain",
+      "context_key": "D024",
+      "domain_key": "D024",
+      "item_type": "certification",
+      "item_key": "basic-life-support-bls",
+      "item_name": "Basic Life Support (BLS)"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D024|certification|registered-nurse-registered-midwife-licence",
+      "subject_id": "item|domain|D024|certification|registered-nurse-registered-midwife-licence",
+      "context_level": "domain",
+      "context_key": "D024",
+      "domain_key": "D024",
+      "item_type": "certification",
+      "item_key": "registered-nurse-registered-midwife-licence",
+      "item_name": "Registered Nurse / Registered Midwife Licence"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D024|skill|health-service-quality",
+      "subject_id": "item|domain|D024|skill|health-service-quality",
+      "context_level": "domain",
+      "context_key": "D024",
+      "domain_key": "D024",
+      "item_type": "skill",
+      "item_key": "health-service-quality",
+      "item_name": "health service quality"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D025|certification|pharmacist-licence-registration",
+      "subject_id": "item|domain|D025|certification|pharmacist-licence-registration",
+      "context_level": "domain",
+      "context_key": "D025",
+      "domain_key": "D025",
+      "item_type": "certification",
+      "item_key": "pharmacist-licence-registration",
+      "item_name": "Pharmacist Licence / Registration"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D025|skill|health-service-quality",
+      "subject_id": "item|domain|D025|skill|health-service-quality",
+      "context_level": "domain",
+      "context_key": "D025",
+      "domain_key": "D025",
+      "item_type": "skill",
+      "item_key": "health-service-quality",
+      "item_name": "health service quality"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D026|certification|haccp-certification",
+      "subject_id": "item|domain|D026|certification|haccp-certification",
+      "context_level": "domain",
+      "context_key": "D026",
+      "domain_key": "D026",
+      "item_type": "certification",
+      "item_key": "haccp-certification",
+      "item_name": "HACCP Certification"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D026|competency|coordinate-community-health-programmes",
+      "subject_id": "item|domain|D026|competency|coordinate-community-health-programmes",
+      "context_level": "domain",
+      "context_key": "D026",
+      "domain_key": "D026",
+      "item_type": "competency",
+      "item_key": "coordinate-community-health-programmes",
+      "item_name": "coordinate community health programmes"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D026|competency|interpret-population-evidence",
+      "subject_id": "item|domain|D026|competency|interpret-population-evidence",
+      "context_level": "domain",
+      "context_key": "D026",
+      "domain_key": "D026",
+      "item_type": "competency",
+      "item_key": "interpret-population-evidence",
+      "item_name": "interpret population evidence"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D026|competency|plan-public-health-interventions",
+      "subject_id": "item|domain|D026|competency|plan-public-health-interventions",
+      "context_level": "domain",
+      "context_key": "D026",
+      "domain_key": "D026",
+      "item_type": "competency",
+      "item_key": "plan-public-health-interventions",
+      "item_name": "plan public-health interventions"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D026|skill|disease-prevention",
+      "subject_id": "item|domain|D026|skill|disease-prevention",
+      "context_level": "domain",
+      "context_key": "D026",
+      "domain_key": "D026",
+      "item_type": "skill",
+      "item_key": "disease-prevention",
+      "item_name": "disease prevention"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D026|skill|health-promotion",
+      "subject_id": "item|domain|D026|skill|health-promotion",
+      "context_level": "domain",
+      "context_key": "D026",
+      "domain_key": "D026",
+      "item_type": "skill",
+      "item_key": "health-promotion",
+      "item_name": "health promotion"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D026|skill|population-health",
+      "subject_id": "item|domain|D026|skill|population-health",
+      "context_level": "domain",
+      "context_key": "D026",
+      "domain_key": "D026",
+      "item_type": "skill",
+      "item_key": "population-health",
+      "item_name": "population health"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D027|certification|licensed-medical-laboratory-scientist",
+      "subject_id": "item|domain|D027|certification|licensed-medical-laboratory-scientist",
+      "context_level": "domain",
+      "context_key": "D027",
+      "domain_key": "D027",
+      "item_type": "certification",
+      "item_key": "licensed-medical-laboratory-scientist",
+      "item_name": "Licensed Medical Laboratory Scientist"
+    },
+    {
+      "record_type": "item",
+      "row_id": "item|domain|D027|certification|nebosh-international-general-certificate",
+      "subject_id": "item|domain|D027|certification|nebosh-international-general-certificate",
+      "context_level": "domain",
+      "context_key": "D027",
+      "domain_key": "D027",
+      "item_type": "certification",
+      "item_key": "nebosh-international-general-certificate",
+      "item_name": "NEBOSH International General Certificate"
+    }
+  ],
+  "counts": {
+    "canonical_contextual_identities_excluding_d078": 75909,
+    "prior_ids_excluded": 260,
+    "remaining_after_exclusion": 75909,
+    "selected_rows": 16,
+    "item_rows": 16,
+    "d078_rows": 0
+  }
+}

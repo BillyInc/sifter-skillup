@@ -51,7 +51,7 @@ function isStudentItem(item: CareerContextItem, resources?: CareerLearningResour
  * each entry explains its job in this exact domain, subgroup or role and has
  * at most one verified destination attached to the item itself.
  */
-export function ContextualItemList({ items, itemTypes, title = "Your preparation path", resources, style, excludeNames, methods }: {
+export function ContextualItemList({ items, itemTypes, title = "Your preparation path", resources, style, excludeNames, methods, contextLevel }: {
   items?: CareerContextItem[];
   itemTypes?: CareerContextItem["itemType"][];
   title?: string;
@@ -61,6 +61,8 @@ export function ContextualItemList({ items, itemTypes, title = "Your preparation
   excludeNames?: string[];
   /** Methods are shown inside the abilities section because they describe how the work is done, not a separate qualification. */
   methods?: Array<ComputationalMethodEvidence & { subgroupId?: string | null }>;
+  /** Optional explicit ownership boundary for a domain/subgroup/role surface. */
+  contextLevel?: CareerContextItem["contextLevel"];
 }) {
   const { colors } = useTheme();
   const [expanded, setExpanded] = useState(false);
@@ -69,7 +71,10 @@ export function ContextualItemList({ items, itemTypes, title = "Your preparation
   const ordered = useMemo(() => {
     const seen = new Set<string>();
     return [...(items ?? [])]
-      .filter((item) => isStudentItem(item, resources) && (!itemTypes?.length || itemTypes.includes(item.itemType)) && !excluded.has(item.name.trim().toLowerCase()))
+      .filter((item) => isStudentItem(item, resources)
+        && (!contextLevel || (item.contextLevel === contextLevel && item.guidanceOwner === contextLevel))
+        && (!itemTypes?.length || itemTypes.includes(item.itemType))
+        && !excluded.has(item.name.trim().toLowerCase()))
       .filter((item) => {
         const key = `${item.itemType}:${item.itemKey.trim().toLowerCase() || item.name.trim().toLowerCase()}`;
         if (seen.has(key)) return false;
@@ -80,7 +85,7 @@ export function ContextualItemList({ items, itemTypes, title = "Your preparation
         const order = { start_here: 0, build_next: 1, useful_later: 2, optional: 3 };
         return order[a.priority] - order[b.priority] || a.name.localeCompare(b.name);
       });
-  }, [excluded, itemTypes, items]);
+  }, [contextLevel, excluded, itemTypes, items, resources]);
   if (!ordered.length) return <View style={[styles.container, style]}>
     <SectionLabel>{title}</SectionLabel>
     <View style={[styles.emptyCard, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>

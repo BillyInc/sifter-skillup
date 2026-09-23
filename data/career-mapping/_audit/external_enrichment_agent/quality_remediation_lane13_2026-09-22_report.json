@@ -1,0 +1,29 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-report.v1",
+  "batch": "quality_remediation_lane13_2026-09-22",
+  "claim_id": "18b47f09bced49a9",
+  "status": "blocked",
+  "source_audit": "item_ledger_quality_audit_2026-09-22.json",
+  "selection": "quality_remediation_lane13_2026-09-22_selection.json",
+  "pre_search_checkpoint": "quality_remediation_lane13_2026-09-22_pre_search_checkpoint.json",
+  "append_only_ledger": "quality_remediation_lane13_2026-09-22_append_only_ledger.jsonl",
+  "records_reviewed": 200,
+  "unique_records_reviewed": 100,
+  "decision_counts": {
+    "linked": 0,
+    "review_required": 100,
+    "genuinely_unavailable": 0
+  },
+  "evidence_urls": 200,
+  "guardrails": {
+    "relationships_touched": false,
+    "catalogue_touched": false,
+    "sql_touched": false,
+    "seeds_touched": false,
+    "ui_touched": false,
+    "browser_proof_touched": false,
+    "promotion": false,
+    "prior_ledgers_modified": false
+  },
+  "result": "BLOCKED: the lane was invoked twice; the append-only ledger contains duplicate review rows for the same 100 identities. The artifacts are not a valid clean batch and must not be promoted."
+}

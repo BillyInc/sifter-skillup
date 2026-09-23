@@ -20,11 +20,44 @@ STOP = set(
 
 EXTRA_ANCHORS = {
     "D003": ["artificial intelligence", "machine learning", "neural network", "deep learning"],
+    "D009": [
+        "artificial intelligence", "machine learning", "neural network", "deep learning",
+        "data analytics", "data analysis", "data handling", "data processing",
+        "data mining", "data engineering", "statistical inference", "statistical computing",
+        "biostatistics", "quantitative methods", "quantitative analysis", "predictive analytics",
+        "research data", "information extraction", "computer programming", "analyse data",
+        "analyze data", "data modelling", "data modeling", "statistical models",
+    ],
+    "D010": [
+        "business intelligence", "information systems", "information management",
+        "business analysis", "data analytics", "decision support", "management information",
+        "analytics systems", "data warehouse",
+    ],
+    "D014": [
+        "financial mathematics", "survival models", "stochastic modelling", "insurance pricing",
+        "actuarial modelling", "actuarial data analysis", "risk quantification",
+    ],
+    "D072": [
+        "surveying", "geographic information systems", "geospatial", "spatial analysis",
+        "cartography", "geomatics", "remote sensing",
+    ],
     "D012": ["fintech", "payment", "banking app", "blockchain", "backend"],
     "D020": ["waste", "wastewater", "pollution", "water treatment", "environmental compliance", "sustainability"],
     "D028": ["budgets", "strategic", "leadership", "operations", "business administration"],
     "D030": ["marketing", "market", "advertising", "brand", "consumer", "customer", "sales", "public relations", "promotion", "audience"],
-    "D033": ["product", "innovation", "venture", "e-commerce", "value proposition", "business model"],
+    # Generic entrepreneurship/innovation terms are deliberately excluded.
+    # They occur across unrelated CCMAS curricula and do not establish Product
+    # Management. Keep only explicit product strategy, requirements, discovery,
+    # lifecycle or delivery concepts.
+    "D033": [
+        "product management", "product strategy", "product roadmap",
+        "product lifecycle", "product life cycle", "product requirements",
+        "product requirement",
+        "product owner", "product manager", "product portfolio",
+        "release planning", "requirements engineering",
+        "user research", "customer discovery", "user requirements",
+        "market requirements", "prioritise product", "prioritize product",
+    ],
     "D037": ["law", "legal", "court", "litigation", "jurisprudence"],
     "D042": ["broadcast", "broadcasting", "film", "multimedia", "journalism", "mass communication", "media production", "television", "radio"],
     "D039": ["teaching", "lesson", "curriculum", "instruction", "assessment", "pedagogy", "teacher education", "school management"],

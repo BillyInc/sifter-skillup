@@ -1,0 +1,39 @@
+{
+  "schema": "2026-09-19.external-source-enrichment.manifest.v1",
+  "generated_at": "2026-09-19T20:16:19.823096+00:00",
+  "accessed_on": "2026-09-19",
+  "input": "career-mapping/contextual_guidance_items.json.gz",
+  "scope": {
+    "canonical_programme_count": 237,
+    "canonical_jamb_identity_count": 420,
+    "context_count": 5668,
+    "item_rows_scanned": 126414,
+    "no_link_items_queued": 125414,
+    "relationship_rows_scanned": 422739,
+    "not_established_relationships_queued": 2305
+  },
+  "item_type_counts": {
+    "certification": 220,
+    "competency": 480,
+    "skill": 85963,
+    "tool": 39751
+  },
+  "search_ledger": {
+    "rows": 0,
+    "distinct_subjects_searched": 0,
+    "source_backed_decisions": 0,
+    "genuinely_unavailable_decisions": 0,
+    "unsearched_item_or_relationship_rows": 127719
+  },
+  "state_policy": {
+    "no_link_is_not_search_evidence": true,
+    "not_established_is_not_a_relationship": true,
+    "relationship_promotion_requires_exact_typed_same_context_endpoints": true,
+    "generic_homepages_and_search_urls_are_rejected": true
+  },
+  "outputs": {
+    "item_queue": "career-mapping/_audit/external_source_enrichment_item_queue_2026-09-19.json.gz",
+    "relationship_queue": "career-mapping/_audit/external_source_enrichment_relationship_queue_2026-09-19.json.gz",
+    "ledger": "career-mapping/_audit/external_source_enrichment_search_ledger_2026-09-19.jsonl"
+  }
+}

@@ -100,23 +100,19 @@ function outcomeAction(text: string): string {
 
 function studentAction(text: string): string {
   const cleaned = cleanText(text).replace(/[.;]+$/, "");
-  if (/^you will\b/i.test(cleaned)) return `${cleaned}.`;
+  if (/^you will learn to\b/i.test(cleaned)) return `${cleaned}.`;
+  if (/^you will\b/i.test(cleaned)) return `You will learn to ${cleaned.replace(/^you will\s+/i, "")}.`;
   return `You will learn to ${outcomeAction(cleaned)}.`;
 }
 
-function themeSentence(theme: Theme): string {
-  const titles = theme.courses.slice(0, 3).map((course) => course.title);
-  const coursePart = titles.length ? `The programme develops this through ${titles.join(", ")}.` : "The programme develops this through its recorded courses in this area.";
-  const explanation: Record<ThemeKey, string> = {
-    core: "You will build the main knowledge and ways of working that give this programme its identity.",
-    shared: "You will also meet wider university learning that helps you communicate, reason, work with others or respond to shared social and professional questions.",
-    people: "You will learn to recognise the people, groups, institutions, cultures or systems at the centre of the programme, and explain how they affect one another.",
-    ideas: "You will learn to use concepts, theories and historical ideas to interpret questions in this field and compare different explanations.",
-    research: "You will learn to frame a question, choose a method, gather and examine evidence, and communicate what it means and where it is limited.",
-    technology: "You will learn to use the recorded digital applications and information practices to find, process and communicate information responsibly.",
-    application: "You will practise using your learning in analysis, reports, presentations, projects or problem-solving where the curriculum records those activities.",
-  };
-  return `${explanation[theme.key]} ${coursePart}`;
+function themeOverview(theme: Theme): string | null {
+  const summaries = unique(
+    theme.courses.map((course) => cleanText(course.courseSummary)).filter(Boolean),
+    (summary) => summary,
+  ).slice(0, 2);
+  if (summaries.length) return summaries.join(" ");
+  const titles = theme.courses.slice(0, 3).map((course) => course.title).filter(Boolean);
+  return titles.length ? `This learning area is represented by ${titles.join(", ")} in the checked curriculum.` : null;
 }
 
 function themePracticeItems(theme: Theme): string[] {
@@ -149,7 +145,7 @@ function resourceMatchesTheme(resource: CareerLearningResource, theme: Theme): b
 }
 
 function resourcesForTheme(resources: CareerLearningResource[] | undefined, theme: Theme): CareerLearningResource[] {
-  const approved = (resources ?? []).filter(isStudentResource);
+  const approved = (resources ?? []).filter((resource) => isStudentResource(resource));
   const exact = approved.filter((resource) => resourceMatchesTheme(resource, theme));
   // Do not attach an unrelated programme book merely because this theme has
   // no exact target match. A missing association is safer than a misleading
@@ -217,11 +213,12 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
         {visibleThemes.map((theme) => {
           const open = openTheme === theme.key;
           const themeResources = resourcesForTheme(resources, theme);
+          const practiceItems = themePracticeItems(theme);
           return (
             <View key={theme.key} style={[styles.themeCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
               <View style={styles.headingLine}><Feather name={theme.icon} size={17} color={colors.accentRole.action} /><Text style={[styles.themeTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{theme.title}</Text></View>
-              <Text style={[styles.themeDescription, { color: colors.textRole.secondary }]}>{theme.description}</Text>
-              <Text style={[styles.themeSentence, { color: colors.textRole.secondary }]}>{themeSentence(theme)}</Text>
+              {themeOverview(theme) ? <Text style={[styles.themeDescription, { color: colors.textRole.secondary }]}>{themeOverview(theme)}</Text> : null}
+              {practiceItems.slice(0, 2).map((item) => <View key={item} style={styles.practiceRow}><Feather name="check-circle" size={14} color={colors.accentRole.action} /><Text style={[styles.courseSummary, { color: colors.textRole.secondary }]}>{item}</Text></View>)}
               {themeResources.length ? (
                 <View style={[styles.learningLinks, { borderTopColor: colors.borderRole.subtle }]}>
                 <Text style={[styles.linkHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Materials that explain this part</Text>
@@ -238,10 +235,10 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
               </TouchableOpacity>
               {open ? (
                 <View style={[styles.courseDetail, { borderTopColor: colors.borderRole.subtle }]}>
-                  {themePracticeItems(theme).length ? (
+                  {practiceItems.length ? (
                     <View style={styles.practiceBlock}>
                        <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What you will practise</Text>
-                      {themePracticeItems(theme).map((item) => (
+                      {practiceItems.map((item) => (
                         <View key={item} style={styles.practiceRow}>
                           <Feather name="check-circle" size={14} color={colors.accentRole.action} />
                           <Text style={[styles.courseSummary, { color: colors.textRole.secondary }]}>{item}</Text>

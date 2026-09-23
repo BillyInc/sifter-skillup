@@ -1,0 +1,17 @@
+{
+  "schema": "2026-09-22.lane3.item-remediation-pre-search-checkpoint.v1",
+  "batch": "lane3_item_remediation_batch_001_2026-09-22",
+  "checkpointed_at": "2026-09-22T11:43:18.211834+00:00",
+  "source_ledger": "item_ledger_quality_audit_2026-09-22.json",
+  "source_sha256": "c43e5a4cab4d07b63a49ba0152f45504e915ec097694ecda7ca4813844c18055",
+  "selection_file": "lane3_item_remediation_batch_001_2026-09-22_selection.json",
+  "selected": 100,
+  "searched": 0,
+  "linked": 0,
+  "review_required": 0,
+  "genuinely_unavailable": 0,
+  "promotion_performed": false,
+  "scope_guard": "Items only. No relationships, catalogue, SQL, seeds, UI, application code or browser proof touched.",
+  "pre_search_state": "selection committed before external review",
+  "selection_reconciled_to_ledger": true
+}

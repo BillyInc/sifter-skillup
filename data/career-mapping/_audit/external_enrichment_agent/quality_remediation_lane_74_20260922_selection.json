@@ -1,0 +1,1620 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-selection.v2",
+  "batch": "quality_remediation_lane_74_20260922",
+  "selected_at": "2026-09-22",
+  "source_audit": "data/career-mapping/_audit/external_enrichment_agent/item_ledger_quality_audit_2026-09-22.json",
+  "source_sha256": "133bf28782e1b50abacca97438559242eb689f8fd38e69845dffdc0b9da18009",
+  "selection_method": "atomic shared lock; exclude all prior valid claims by contextual and typed identity",
+  "prior_claimed_contextual_ids": 6672,
+  "prior_claimed_typed_items": 6046,
+  "selection_count": 100,
+  "requested_count": 100,
+  "shortfall": 0,
+  "rows": [
+    {
+      "subject_id": "item|role|D077|crossing guard|skill|record-license-plates-of-violators",
+      "context_level": "role",
+      "context_key": "D077|crossing guard",
+      "item_type": "skill",
+      "item_key": "record-license-plates-of-violators",
+      "item_name": "record license plates of violators",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|crossing guard|skill|use-signalling-equipment",
+      "context_level": "role",
+      "context_key": "D077|crossing guard",
+      "item_type": "skill",
+      "item_key": "use-signalling-equipment",
+      "item_name": "use signalling equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|crossing guard|tool|visual-computer-solutions-crossing-guard-scheduling",
+      "context_level": "role",
+      "context_key": "D077|crossing guard",
+      "item_type": "tool",
+      "item_key": "visual-computer-solutions-crossing-guard-scheduling",
+      "item_name": "Visual Computer Solutions Crossing Guard Scheduling",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|crowd controller|skill|control-crowd",
+      "context_level": "role",
+      "context_key": "D077|crowd controller",
+      "item_type": "skill",
+      "item_key": "control-crowd",
+      "item_name": "control crowd",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|crowd controller|skill|ensure-escape-routes",
+      "context_level": "role",
+      "context_key": "D077|crowd controller",
+      "item_type": "skill",
+      "item_key": "ensure-escape-routes",
+      "item_name": "ensure escape routes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|crowd controller|skill|monitor-guest-access",
+      "context_level": "role",
+      "context_key": "D077|crowd controller",
+      "item_type": "skill",
+      "item_key": "monitor-guest-access",
+      "item_name": "monitor guest access",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|crowd controller|skill|welcome-spectators",
+      "context_level": "role",
+      "context_key": "D077|crowd controller",
+      "item_type": "skill",
+      "item_key": "welcome-spectators",
+      "item_name": "welcome spectators",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|crowd controller|tool|ibm-lotus-1-2-3",
+      "context_level": "role",
+      "context_key": "D077|crowd controller",
+      "item_type": "tool",
+      "item_key": "ibm-lotus-1-2-3",
+      "item_name": "IBM Lotus 1-2-3",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|crowd controller|tool|mcafee",
+      "context_level": "role",
+      "context_key": "D077|crowd controller",
+      "item_type": "tool",
+      "item_key": "mcafee",
+      "item_name": "McAfee",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|crowd controller|tool|nortonlifelock-cybersecurity-software",
+      "context_level": "role",
+      "context_key": "D077|crowd controller",
+      "item_type": "tool",
+      "item_key": "nortonlifelock-cybersecurity-software",
+      "item_name": "NortonLifeLock cybersecurity software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|door supervisor|skill|check-tickets-at-venue-entry",
+      "context_level": "role",
+      "context_key": "D077|door supervisor",
+      "item_type": "skill",
+      "item_key": "check-tickets-at-venue-entry",
+      "item_name": "check tickets at venue entry",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|emergency response worker|skill|clean-up-spilled-oil",
+      "context_level": "role",
+      "context_key": "D077|emergency response worker",
+      "item_type": "skill",
+      "item_key": "clean-up-spilled-oil",
+      "item_name": "clean up spilled oil",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|emergency response worker|skill|evacuate-people-from-flooded-areas",
+      "context_level": "role",
+      "context_key": "D077|emergency response worker",
+      "item_type": "skill",
+      "item_key": "evacuate-people-from-flooded-areas",
+      "item_name": "evacuate people from flooded areas",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|emergency response worker|skill|perform-environmental-remediation",
+      "context_level": "role",
+      "context_key": "D077|emergency response worker",
+      "item_type": "skill",
+      "item_key": "perform-environmental-remediation",
+      "item_name": "perform environmental remediation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|emergency response worker|skill|provide-emergency-supplies",
+      "context_level": "role",
+      "context_key": "D077|emergency response worker",
+      "item_type": "skill",
+      "item_key": "provide-emergency-supplies",
+      "item_name": "provide emergency supplies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|emergency response worker|skill|provide-humanitarian-aid",
+      "context_level": "role",
+      "context_key": "D077|emergency response worker",
+      "item_type": "skill",
+      "item_key": "provide-humanitarian-aid",
+      "item_name": "provide humanitarian aid",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|emergency response worker|skill|remove-debris",
+      "context_level": "role",
+      "context_key": "D077|emergency response worker",
+      "item_type": "skill",
+      "item_key": "remove-debris",
+      "item_name": "remove debris",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|emergency response worker|skill|treat-flood-damage",
+      "context_level": "role",
+      "context_key": "D077|emergency response worker",
+      "item_type": "skill",
+      "item_key": "treat-flood-damage",
+      "item_name": "treat flood damage",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|firefighter|skill|navy-operations",
+      "context_level": "role",
+      "context_key": "D077|firefighter",
+      "item_type": "skill",
+      "item_key": "navy-operations",
+      "item_name": "navy operations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|game keeper|skill|apply-animal-hygiene-practices",
+      "context_level": "role",
+      "context_key": "D077|game keeper",
+      "item_type": "skill",
+      "item_key": "apply-animal-hygiene-practices",
+      "item_name": "apply animal hygiene practices",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|game keeper|skill|clear-woodland",
+      "context_level": "role",
+      "context_key": "D077|game keeper",
+      "item_type": "skill",
+      "item_key": "clear-woodland",
+      "item_name": "clear woodland",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|game keeper|skill|control-the-production-of-game-meat-for-human-consumption",
+      "context_level": "role",
+      "context_key": "D077|game keeper",
+      "item_type": "skill",
+      "item_key": "control-the-production-of-game-meat-for-human-consumption",
+      "item_name": "control the production of game meat for human consumption",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|game keeper|skill|coordinate-the-sale-of-game",
+      "context_level": "role",
+      "context_key": "D077|game keeper",
+      "item_type": "skill",
+      "item_key": "coordinate-the-sale-of-game",
+      "item_name": "coordinate the sale of game",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|game keeper|skill|maintain-game-equipment",
+      "context_level": "role",
+      "context_key": "D077|game keeper",
+      "item_type": "skill",
+      "item_key": "maintain-game-equipment",
+      "item_name": "maintain game equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|game keeper|skill|manage-game-management-plans",
+      "context_level": "role",
+      "context_key": "D077|game keeper",
+      "item_type": "skill",
+      "item_key": "manage-game-management-plans",
+      "item_name": "manage game management plans",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D077|game keeper|skill|manage-habitats-to-benefit-game",
+      "context_level": "role",
+      "context_key": "D077|game keeper",
+      "item_type": "skill",
+      "item_key": "manage-habitats-to-benefit-game",
+      "item_name": "manage habitats to benefit game",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D081|medical administrative assistant|skill|send-samples-to-laboratory",
+      "context_level": "role",
+      "context_key": "D081|medical administrative assistant",
+      "item_type": "skill",
+      "item_key": "send-samples-to-laboratory",
+      "item_name": "send samples to laboratory",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D081|medical administrative assistant|skill|type-on-electronic-devices",
+      "context_level": "role",
+      "context_key": "D081|medical administrative assistant",
+      "item_type": "skill",
+      "item_key": "type-on-electronic-devices",
+      "item_name": "type on electronic devices",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D081|membership administrator|skill|complete-membership-administration",
+      "context_level": "role",
+      "context_key": "D081|membership administrator",
+      "item_type": "skill",
+      "item_key": "complete-membership-administration",
+      "item_name": "complete membership administration",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D081|membership administrator|skill|manage-members",
+      "context_level": "role",
+      "context_key": "D081|membership administrator",
+      "item_type": "skill",
+      "item_key": "manage-members",
+      "item_name": "manage members",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D081|membership administrator|skill|provide-membership-service",
+      "context_level": "role",
+      "context_key": "D081|membership administrator",
+      "item_type": "skill",
+      "item_key": "provide-membership-service",
+      "item_name": "provide membership service",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D081|membership administrator|skill|recruit-members",
+      "context_level": "role",
+      "context_key": "D081|membership administrator",
+      "item_type": "skill",
+      "item_key": "recruit-members",
+      "item_name": "recruit members",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D081|office clerk|skill|align-content-with-form",
+      "context_level": "role",
+      "context_key": "D081|office clerk",
+      "item_type": "skill",
+      "item_key": "align-content-with-form",
+      "item_name": "align content with form",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D081|office manager|skill|manage-needs-for-stationery-items",
+      "context_level": "role",
+      "context_key": "D081|office manager",
+      "item_type": "skill",
+      "item_key": "manage-needs-for-stationery-items",
+      "item_name": "manage needs for stationery items",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D081|postman/postwoman|skill|analyse-travel-alternatives",
+      "context_level": "role",
+      "context_key": "D081|postman/postwoman",
+      "item_type": "skill",
+      "item_key": "analyse-travel-alternatives",
+      "item_name": "analyse travel alternatives",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D081|postman/postwoman|tool|address-management-system-ams",
+      "context_level": "role",
+      "context_key": "D081|postman/postwoman",
+      "item_type": "tool",
+      "item_key": "address-management-system-ams",
+      "item_name": "Address Management System AMS",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D081|postman/postwoman|tool|automated-data-collection-system-adcs",
+      "context_level": "role",
+      "context_key": "D081|postman/postwoman",
+      "item_type": "tool",
+      "item_key": "automated-data-collection-system-adcs",
+      "item_name": "Automated Data Collection System ADCS",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D081|postman/postwoman|tool|delivery-operations-information-system-dois",
+      "context_level": "role",
+      "context_key": "D081|postman/postwoman",
+      "item_type": "tool",
+      "item_key": "delivery-operations-information-system-dois",
+      "item_name": "Delivery operations information system DOIS",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D081|postman/postwoman|tool|delivery-routing-system-drs",
+      "context_level": "role",
+      "context_key": "D081|postman/postwoman",
+      "item_type": "tool",
+      "item_key": "delivery-routing-system-drs",
+      "item_name": "Delivery Routing System DRS",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D081|postman/postwoman|tool|electronic-time-clock-etc",
+      "context_level": "role",
+      "context_key": "D081|postman/postwoman",
+      "item_type": "tool",
+      "item_key": "electronic-time-clock-etc",
+      "item_name": "Electronic Time Clock ETC",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D081|proofreader|skill|apply-desktop-publishing-techniques",
+      "context_level": "role",
+      "context_key": "D081|proofreader",
+      "item_type": "skill",
+      "item_key": "apply-desktop-publishing-techniques",
+      "item_name": "apply desktop publishing techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D081|proofreader|skill|proofing-methods",
+      "context_level": "role",
+      "context_key": "D081|proofreader",
+      "item_type": "skill",
+      "item_key": "proofing-methods",
+      "item_name": "proofing methods",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D081|proofreader|skill|reproduce-documents",
+      "context_level": "role",
+      "context_key": "D081|proofreader",
+      "item_type": "skill",
+      "item_key": "reproduce-documents",
+      "item_name": "reproduce documents",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D081|proofreader|skill|rewrite-manuscripts",
+      "context_level": "role",
+      "context_key": "D081|proofreader",
+      "item_type": "skill",
+      "item_key": "rewrite-manuscripts",
+      "item_name": "rewrite manuscripts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D081|secretary|skill|monitor-staff-absences",
+      "context_level": "role",
+      "context_key": "D081|secretary",
+      "item_type": "skill",
+      "item_key": "monitor-staff-absences",
+      "item_name": "monitor staff absences",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D081|typist|skill|decode-handwritten-texts",
+      "context_level": "role",
+      "context_key": "D081|typist",
+      "item_type": "skill",
+      "item_key": "decode-handwritten-texts",
+      "item_name": "decode handwritten texts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D081|typist|skill|draft-corporate-emails",
+      "context_level": "role",
+      "context_key": "D081|typist",
+      "item_type": "skill",
+      "item_key": "draft-corporate-emails",
+      "item_name": "draft corporate emails",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D081|typist|skill|stenography",
+      "context_level": "role",
+      "context_key": "D081|typist",
+      "item_type": "skill",
+      "item_key": "stenography",
+      "item_name": "stenography",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D081|typist|skill|type-error-free-documents",
+      "context_level": "role",
+      "context_key": "D081|typist",
+      "item_type": "skill",
+      "item_key": "type-error-free-documents",
+      "item_name": "type error-free documents",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D081|typist|skill|use-dictionaries",
+      "context_level": "role",
+      "context_key": "D081|typist",
+      "item_type": "skill",
+      "item_key": "use-dictionaries",
+      "item_name": "use dictionaries",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D081|typist|skill|use-free-typing-techniques",
+      "context_level": "role",
+      "context_key": "D081|typist",
+      "item_type": "skill",
+      "item_key": "use-free-typing-techniques",
+      "item_name": "use free typing techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|camping ground operative|skill|assist-clients-with-special-needs",
+      "context_level": "role",
+      "context_key": "D082|camping ground operative",
+      "item_type": "skill",
+      "item_key": "assist-clients-with-special-needs",
+      "item_name": "assist clients with special needs",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|camping ground operative|skill|clean-camping-facilities",
+      "context_level": "role",
+      "context_key": "D082|camping ground operative",
+      "item_type": "skill",
+      "item_key": "clean-camping-facilities",
+      "item_name": "clean camping facilities",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|camping ground operative|skill|explain-features-in-accommodation-venue",
+      "context_level": "role",
+      "context_key": "D082|camping ground operative",
+      "item_type": "skill",
+      "item_key": "explain-features-in-accommodation-venue",
+      "item_name": "explain features in accommodation venue",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|customer contact centre information clerk|skill|answer-incoming-calls",
+      "context_level": "role",
+      "context_key": "D082|customer contact centre information clerk",
+      "item_type": "skill",
+      "item_key": "answer-incoming-calls",
+      "item_name": "answer incoming calls",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|customer contact centre information clerk|skill|call-centre-technologies",
+      "context_level": "role",
+      "context_key": "D082|customer contact centre information clerk",
+      "item_type": "skill",
+      "item_key": "call-centre-technologies",
+      "item_name": "call-centre technologies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|customer contact centre information clerk|skill|discern-written-communication",
+      "context_level": "role",
+      "context_key": "D082|customer contact centre information clerk",
+      "item_type": "skill",
+      "item_key": "discern-written-communication",
+      "item_name": "discern written communication",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|customer contact centre information clerk|skill|handle-helpdesk-problems",
+      "context_level": "role",
+      "context_key": "D082|customer contact centre information clerk",
+      "item_type": "skill",
+      "item_key": "handle-helpdesk-problems",
+      "item_name": "handle helpdesk problems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|customer contact centre information clerk|skill|perform-customer-management",
+      "context_level": "role",
+      "context_key": "D082|customer contact centre information clerk",
+      "item_type": "skill",
+      "item_key": "perform-customer-management",
+      "item_name": "perform customer management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|customer contact centre information clerk|skill|provide-customer-follow-up",
+      "context_level": "role",
+      "context_key": "D082|customer contact centre information clerk",
+      "item_type": "skill",
+      "item_key": "provide-customer-follow-up",
+      "item_name": "provide customer follow-up",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|customer service representative|skill|determine-charges-for-customer-services",
+      "context_level": "role",
+      "context_key": "D082|customer service representative",
+      "item_type": "skill",
+      "item_key": "determine-charges-for-customer-services",
+      "item_name": "determine charges for customer services",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|emergency medical dispatcher|skill|answer-emergency-calls",
+      "context_level": "role",
+      "context_key": "D082|emergency medical dispatcher",
+      "item_type": "skill",
+      "item_key": "answer-emergency-calls",
+      "item_name": "answer emergency calls",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|emergency medical dispatcher|skill|dispatch-ambulance",
+      "context_level": "role",
+      "context_key": "D082|emergency medical dispatcher",
+      "item_type": "skill",
+      "item_key": "dispatch-ambulance",
+      "item_name": "dispatch ambulance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|emergency medical dispatcher|skill|personnel-planning-in-emergency-response",
+      "context_level": "role",
+      "context_key": "D082|emergency medical dispatcher",
+      "item_type": "skill",
+      "item_key": "personnel-planning-in-emergency-response",
+      "item_name": "personnel planning in emergency response",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|emergency medical dispatcher|skill|provide-advice-to-emergency-callers",
+      "context_level": "role",
+      "context_key": "D082|emergency medical dispatcher",
+      "item_type": "skill",
+      "item_key": "provide-advice-to-emergency-callers",
+      "item_name": "provide advice to emergency callers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|emergency medical dispatcher|skill|support-distressed-emergency-callers",
+      "context_level": "role",
+      "context_key": "D082|emergency medical dispatcher",
+      "item_type": "skill",
+      "item_key": "support-distressed-emergency-callers",
+      "item_name": "support distressed emergency callers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|emergency medical dispatcher|skill|work-in-multidisciplinary-teams-related-to-emergency-care",
+      "context_level": "role",
+      "context_key": "D082|emergency medical dispatcher",
+      "item_type": "skill",
+      "item_key": "work-in-multidisciplinary-teams-related-to-emergency-care",
+      "item_name": "work in multidisciplinary teams related to emergency care",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|front line medical receptionist|skill|assist-patients-with-special-needs",
+      "context_level": "role",
+      "context_key": "D082|front line medical receptionist",
+      "item_type": "skill",
+      "item_key": "assist-patients-with-special-needs",
+      "item_name": "assist patients with special needs",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|hospitality establishment receptionist|skill|maintain-reception-area",
+      "context_level": "role",
+      "context_key": "D082|hospitality establishment receptionist",
+      "item_type": "skill",
+      "item_key": "maintain-reception-area",
+      "item_name": "maintain reception area",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|hotel concierge|tool|asi-frontdesk",
+      "context_level": "role",
+      "context_key": "D082|hotel concierge",
+      "item_type": "tool",
+      "item_key": "asi-frontdesk",
+      "item_name": "ASI FrontDesk",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|live chat operator|skill|work-with-e-services-available-to-citizens",
+      "context_level": "role",
+      "context_key": "D082|live chat operator",
+      "item_type": "skill",
+      "item_key": "work-with-e-services-available-to-citizens",
+      "item_name": "work with e-services available to citizens",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|market research interviewer|skill|capture-people-s-attention",
+      "context_level": "role",
+      "context_key": "D082|market research interviewer",
+      "item_type": "skill",
+      "item_key": "capture-people-s-attention",
+      "item_name": "capture people's attention",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|market research interviewer|skill|use-questioning-techniques",
+      "context_level": "role",
+      "context_key": "D082|market research interviewer",
+      "item_type": "skill",
+      "item_key": "use-questioning-techniques",
+      "item_name": "use questioning techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|medical transcriptionist|skill|edit-dictated-medical-texts",
+      "context_level": "role",
+      "context_key": "D082|medical transcriptionist",
+      "item_type": "skill",
+      "item_key": "edit-dictated-medical-texts",
+      "item_name": "edit dictated medical texts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|medical transcriptionist|skill|transcribe-medical-data",
+      "context_level": "role",
+      "context_key": "D082|medical transcriptionist",
+      "item_type": "skill",
+      "item_key": "transcribe-medical-data",
+      "item_name": "transcribe medical data",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|night auditor|skill|carry-out-end-of-day-accounts",
+      "context_level": "role",
+      "context_key": "D082|night auditor",
+      "item_type": "skill",
+      "item_key": "carry-out-end-of-day-accounts",
+      "item_name": "carry out end of day accounts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|night auditor|skill|deal-with-departures-in-accommodation",
+      "context_level": "role",
+      "context_key": "D082|night auditor",
+      "item_type": "skill",
+      "item_key": "deal-with-departures-in-accommodation",
+      "item_name": "deal with departures in accommodation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|survey enumerator|skill|document-interviews",
+      "context_level": "role",
+      "context_key": "D082|survey enumerator",
+      "item_type": "skill",
+      "item_key": "document-interviews",
+      "item_name": "document interviews",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|survey enumerator|skill|national-population-census",
+      "context_level": "role",
+      "context_key": "D082|survey enumerator",
+      "item_type": "skill",
+      "item_key": "national-population-census",
+      "item_name": "national population census",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|survey enumerator|skill|tabulate-survey-results",
+      "context_level": "role",
+      "context_key": "D082|survey enumerator",
+      "item_type": "skill",
+      "item_key": "tabulate-survey-results",
+      "item_name": "tabulate survey results",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|telephone switchboard operator|skill|maintain-telephony-system",
+      "context_level": "role",
+      "context_key": "D082|telephone switchboard operator",
+      "item_type": "skill",
+      "item_key": "maintain-telephony-system",
+      "item_name": "maintain telephony system",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D082|telephone switchboard operator|skill|redirect-callers",
+      "context_level": "role",
+      "context_key": "D082|telephone switchboard operator",
+      "item_type": "skill",
+      "item_key": "redirect-callers",
+      "item_name": "redirect callers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D083|chief conductor|skill|assist-passengers-in-emergency-situations",
+      "context_level": "role",
+      "context_key": "D083|chief conductor",
+      "item_type": "skill",
+      "item_key": "assist-passengers-in-emergency-situations",
+      "item_name": "assist passengers in emergency situations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D083|chief conductor|skill|operate-electronic-payment-terminals",
+      "context_level": "role",
+      "context_key": "D083|chief conductor",
+      "item_type": "skill",
+      "item_key": "operate-electronic-payment-terminals",
+      "item_name": "operate electronic payment terminals",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D083|chief conductor|skill|sell-train-tickets",
+      "context_level": "role",
+      "context_key": "D083|chief conductor",
+      "item_type": "skill",
+      "item_key": "sell-train-tickets",
+      "item_name": "sell train tickets",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D083|environmental education officer|skill|advise-on-nature-conservation",
+      "context_level": "role",
+      "context_key": "D083|environmental education officer",
+      "item_type": "skill",
+      "item_key": "advise-on-nature-conservation",
+      "item_name": "advise on nature conservation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D083|environmental education officer|skill|educate-the-public-about-wildlife",
+      "context_level": "role",
+      "context_key": "D083|environmental education officer",
+      "item_type": "skill",
+      "item_key": "educate-the-public-about-wildlife",
+      "item_name": "educate the public about wildlife",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D083|environmental education officer|skill|identify-plants-characteristics",
+      "context_level": "role",
+      "context_key": "D083|environmental education officer",
+      "item_type": "skill",
+      "item_key": "identify-plants-characteristics",
+      "item_name": "identify plants characteristics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D083|environmental education officer|skill|implement-risk-management-for-outdoors",
+      "context_level": "role",
+      "context_key": "D083|environmental education officer",
+      "item_type": "skill",
+      "item_key": "implement-risk-management-for-outdoors",
+      "item_name": "implement risk management for outdoors",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D083|environmental education officer|skill|provide-training-in-sustainable-tourism-development-and-management",
+      "context_level": "role",
+      "context_key": "D083|environmental education officer",
+      "item_type": "skill",
+      "item_key": "provide-training-in-sustainable-tourism-development-and-management",
+      "item_name": "provide training in sustainable tourism development and management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D083|ground steward/ground stewardess|skill|air-passenger-behaviour",
+      "context_level": "role",
+      "context_key": "D083|ground steward/ground stewardess",
+      "item_type": "skill",
+      "item_key": "air-passenger-behaviour",
+      "item_name": "air passenger behaviour",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D083|ground steward/ground stewardess|skill|check-in-luggage",
+      "context_level": "role",
+      "context_key": "D083|ground steward/ground stewardess",
+      "item_type": "skill",
+      "item_key": "check-in-luggage",
+      "item_name": "check in luggage",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D083|ground steward/ground stewardess|skill|check-in-passengers",
+      "context_level": "role",
+      "context_key": "D083|ground steward/ground stewardess",
+      "item_type": "skill",
+      "item_key": "check-in-passengers",
+      "item_name": "check in passengers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D083|ground steward/ground stewardess|skill|sell-tickets",
+      "context_level": "role",
+      "context_key": "D083|ground steward/ground stewardess",
+      "item_type": "skill",
+      "item_key": "sell-tickets",
+      "item_name": "sell tickets",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D083|ground steward/ground stewardess|tool|time-tracking-software",
+      "context_level": "role",
+      "context_key": "D083|ground steward/ground stewardess",
+      "item_type": "tool",
+      "item_key": "time-tracking-software",
+      "item_name": "Time tracking software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D083|host/hostess|skill|inform-tourist-groups-on-logistical-times",
+      "context_level": "role",
+      "context_key": "D083|host/hostess",
+      "item_type": "skill",
+      "item_key": "inform-tourist-groups-on-logistical-times",
+      "item_name": "inform tourist groups on logistical times",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D083|host/hostess|skill|welcome-tour-groups",
+      "context_level": "role",
+      "context_key": "D083|host/hostess",
+      "item_type": "skill",
+      "item_key": "welcome-tour-groups",
+      "item_name": "welcome tour groups",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D083|passenger fare controller|skill|communicate-clearly-with-passengers",
+      "context_level": "role",
+      "context_key": "D083|passenger fare controller",
+      "item_type": "skill",
+      "item_key": "communicate-clearly-with-passengers",
+      "item_name": "communicate clearly with passengers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D083|passenger fare controller|skill|engage-with-rail-stakeholders",
+      "context_level": "role",
+      "context_key": "D083|passenger fare controller",
+      "item_type": "skill",
+      "item_key": "engage-with-rail-stakeholders",
+      "item_name": "engage with rail stakeholders",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D083|railway passenger service agent|skill|advise-customers-on-the-product-range-of-railway-companies",
+      "context_level": "role",
+      "context_key": "D083|railway passenger service agent",
+      "item_type": "skill",
+      "item_key": "advise-customers-on-the-product-range-of-railway-companies",
+      "item_name": "advise customers on the product range of railway companies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    }
+  ],
+  "policy": {
+    "review_required_preserved_unless_exact_item_evidence_established": true,
+    "no_relationship_inference": true,
+    "no_promotion": true
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-report.v1",
+  "batch": "quality_remediation_lane_33_20260922",
+  "generated_at": "2026-09-22",
+  "selection_file": "data/career-mapping/_audit/external_enrichment_agent/quality_remediation_lane_33_20260922_selection.json",
+  "pre_search_checkpoint": "data/career-mapping/_audit/external_enrichment_agent/quality_remediation_lane_33_20260922_pre_search_checkpoint.json",
+  "selection_count": 100,
+  "searched_count": 100,
+  "ledger_count": 100,
+  "unique_subject_ids": 100,
+  "reconciliation": {
+    "exact_100_of_100": true,
+    "omissions": 0,
+    "duplicates": 0
+  },
+  "decisions": {
+    "promoted": 0,
+    "review_required": 100
+  },
+  "evidence_records": 300,
+  "policy": {
+    "no_promotion_without_item_specific_authoritative_evidence": true,
+    "no_relationships_or_catalogue_or_sql_or_seeds_or_ui_or_browser_touched": true
+  }
+}

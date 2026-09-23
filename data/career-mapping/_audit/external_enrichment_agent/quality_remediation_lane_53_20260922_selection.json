@@ -1,0 +1,1620 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-selection.v2",
+  "batch": "quality_remediation_lane_53_20260922",
+  "selected_at": "2026-09-22",
+  "source_audit": "data/career-mapping/_audit/external_enrichment_agent/item_ledger_quality_audit_2026-09-22.json",
+  "source_sha256": "ba57eb9dc390ed78cb1b3714bfddf29a69d97cc7025ca2e20e7f9a6e2f9caf0b",
+  "selection_method": "atomic shared lock; exclude all prior valid claims by contextual and typed identity",
+  "prior_claimed_contextual_ids": 4572,
+  "prior_claimed_typed_items": 3946,
+  "selection_count": 100,
+  "requested_count": 100,
+  "shortfall": 0,
+  "rows": [
+    {
+      "subject_id": "item|role|D034|machinery assembly coordinator|skill|analyse-production-processes-for-improvement",
+      "context_level": "role",
+      "context_key": "D034|machinery assembly coordinator",
+      "item_type": "skill",
+      "item_key": "analyse-production-processes-for-improvement",
+      "item_name": "analyse production processes for improvement",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|machinery assembly coordinator|skill|communicate-production-plan",
+      "context_level": "role",
+      "context_key": "D034|machinery assembly coordinator",
+      "item_type": "skill",
+      "item_key": "communicate-production-plan",
+      "item_name": "communicate production plan",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|machinery assembly coordinator|skill|manage-teamwork",
+      "context_level": "role",
+      "context_key": "D034|machinery assembly coordinator",
+      "item_type": "skill",
+      "item_key": "manage-teamwork",
+      "item_name": "manage teamwork",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|machinery assembly coordinator|skill|plan-manufacturing-processes",
+      "context_level": "role",
+      "context_key": "D034|machinery assembly coordinator",
+      "item_type": "skill",
+      "item_key": "plan-manufacturing-processes",
+      "item_name": "plan manufacturing processes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|machinery assembly coordinator|skill|report-on-production-results",
+      "context_level": "role",
+      "context_key": "D034|machinery assembly coordinator",
+      "item_type": "skill",
+      "item_key": "report-on-production-results",
+      "item_name": "report on production results",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|maritime water transport general manager|skill|develop-efficiency-plans-for-maritime-shipping",
+      "context_level": "role",
+      "context_key": "D034|maritime water transport general manager",
+      "item_type": "skill",
+      "item_key": "develop-efficiency-plans-for-maritime-shipping",
+      "item_name": "develop efficiency plans for maritime shipping",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|maritime water transport general manager|skill|global-maritime-distress-and-safety-system",
+      "context_level": "role",
+      "context_key": "D034|maritime water transport general manager",
+      "item_type": "skill",
+      "item_key": "global-maritime-distress-and-safety-system",
+      "item_name": "Global Maritime Distress and Safety System",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|maritime water transport general manager|skill|international-maritime-organisation-conventions",
+      "context_level": "role",
+      "context_key": "D034|maritime water transport general manager",
+      "item_type": "skill",
+      "item_key": "international-maritime-organisation-conventions",
+      "item_name": "International Maritime Organisation conventions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|maritime water transport general manager|skill|manage-ocean-going-oil-tankers",
+      "context_level": "role",
+      "context_key": "D034|maritime water transport general manager",
+      "item_type": "skill",
+      "item_key": "manage-ocean-going-oil-tankers",
+      "item_name": "manage ocean-going oil tankers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|maritime water transport general manager|skill|participate-as-observer-in-different-types-of-audits-in-the-food-sector",
+      "context_level": "role",
+      "context_key": "D034|maritime water transport general manager",
+      "item_type": "skill",
+      "item_key": "participate-as-observer-in-different-types-of-audits-in-the-food-sector",
+      "item_name": "participate as observer in different types of audits in the food sector",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|maritime water transport general manager|skill|plan-daily-ship-operations",
+      "context_level": "role",
+      "context_key": "D034|maritime water transport general manager",
+      "item_type": "skill",
+      "item_key": "plan-daily-ship-operations",
+      "item_name": "plan daily ship operations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|maritime water transport general manager|skill|simplify-communication-in-maritime-management",
+      "context_level": "role",
+      "context_key": "D034|maritime water transport general manager",
+      "item_type": "skill",
+      "item_key": "simplify-communication-in-maritime-management",
+      "item_name": "simplify communication in maritime management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|meat and meat products distribution manager|skill|manufacture-ingredients",
+      "context_level": "role",
+      "context_key": "D034|meat and meat products distribution manager",
+      "item_type": "skill",
+      "item_key": "manufacture-ingredients",
+      "item_name": "manufacture ingredients",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|move coordinator|skill|animal-transport-regulations",
+      "context_level": "role",
+      "context_key": "D034|move coordinator",
+      "item_type": "skill",
+      "item_key": "animal-transport-regulations",
+      "item_name": "animal transport regulations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|move coordinator|skill|animal-transportation-vehicles",
+      "context_level": "role",
+      "context_key": "D034|move coordinator",
+      "item_type": "skill",
+      "item_key": "animal-transportation-vehicles",
+      "item_name": "animal transportation vehicles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|move coordinator|skill|design-procedures-for-the-relocation-of-specific-goods",
+      "context_level": "role",
+      "context_key": "D034|move coordinator",
+      "item_type": "skill",
+      "item_key": "design-procedures-for-the-relocation-of-specific-goods",
+      "item_name": "design procedures for the relocation of specific goods",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|move coordinator|skill|handle-delivery-of-furniture-goods",
+      "context_level": "role",
+      "context_key": "D034|move coordinator",
+      "item_type": "skill",
+      "item_key": "handle-delivery-of-furniture-goods",
+      "item_name": "handle delivery of furniture goods",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|move coordinator|skill|maintain-inventory-of-tools",
+      "context_level": "role",
+      "context_key": "D034|move coordinator",
+      "item_type": "skill",
+      "item_key": "maintain-inventory-of-tools",
+      "item_name": "maintain inventory of tools",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|move coordinator|skill|prepare-resources-for-loading-activities",
+      "context_level": "role",
+      "context_key": "D034|move coordinator",
+      "item_type": "skill",
+      "item_key": "prepare-resources-for-loading-activities",
+      "item_name": "prepare resources for loading activities",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|move coordinator|skill|select-equipment-required-for-moving-activities",
+      "context_level": "role",
+      "context_key": "D034|move coordinator",
+      "item_type": "skill",
+      "item_key": "select-equipment-required-for-moving-activities",
+      "item_name": "select equipment required for moving activities",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|move coordinator|skill|use-communication-devices",
+      "context_level": "role",
+      "context_key": "D034|move coordinator",
+      "item_type": "skill",
+      "item_key": "use-communication-devices",
+      "item_name": "use communication devices",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|move manager|skill|leasing-process",
+      "context_level": "role",
+      "context_key": "D034|move manager",
+      "item_type": "skill",
+      "item_key": "leasing-process",
+      "item_name": "leasing process",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|movie distributor|skill|consult-with-motion-picture-producer",
+      "context_level": "role",
+      "context_key": "D034|movie distributor",
+      "item_type": "skill",
+      "item_key": "consult-with-motion-picture-producer",
+      "item_name": "consult with motion picture producer",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|movie distributor|skill|coordinate-sale-of-video-and-motion-picture-production-products",
+      "context_level": "role",
+      "context_key": "D034|movie distributor",
+      "item_type": "skill",
+      "item_key": "coordinate-sale-of-video-and-motion-picture-production-products",
+      "item_name": "coordinate sale of video and motion picture production products",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|movie distributor|skill|liaise-with-film-exhibitors",
+      "context_level": "role",
+      "context_key": "D034|movie distributor",
+      "item_type": "skill",
+      "item_key": "liaise-with-film-exhibitors",
+      "item_name": "liaise with film exhibitors",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|movie distributor|skill|manage-media-services-department",
+      "context_level": "role",
+      "context_key": "D034|movie distributor",
+      "item_type": "skill",
+      "item_key": "manage-media-services-department",
+      "item_name": "manage media services department",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|pipeline route manager|skill|assist-with-emergencies",
+      "context_level": "role",
+      "context_key": "D034|pipeline route manager",
+      "item_type": "skill",
+      "item_key": "assist-with-emergencies",
+      "item_name": "assist with emergencies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|pipeline superintendent|skill|produce-airport-lighting-system-reports",
+      "context_level": "role",
+      "context_key": "D034|pipeline superintendent",
+      "item_type": "skill",
+      "item_key": "produce-airport-lighting-system-reports",
+      "item_name": "produce airport lighting system reports",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|pipeline superintendent|skill|provide-rigging-plans",
+      "context_level": "role",
+      "context_key": "D034|pipeline superintendent",
+      "item_type": "skill",
+      "item_key": "provide-rigging-plans",
+      "item_name": "provide rigging plans",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|port coordinator|skill|customs-regulations-for-passengers",
+      "context_level": "role",
+      "context_key": "D034|port coordinator",
+      "item_type": "skill",
+      "item_key": "customs-regulations-for-passengers",
+      "item_name": "customs regulations for passengers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|port coordinator|skill|ensure-compliance-with-port-regulations",
+      "context_level": "role",
+      "context_key": "D034|port coordinator",
+      "item_type": "skill",
+      "item_key": "ensure-compliance-with-port-regulations",
+      "item_name": "ensure compliance with port regulations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|port coordinator|skill|ensure-ongoing-compliance-with-regulations",
+      "context_level": "role",
+      "context_key": "D034|port coordinator",
+      "item_type": "skill",
+      "item_key": "ensure-ongoing-compliance-with-regulations",
+      "item_name": "ensure ongoing compliance with regulations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|port coordinator|skill|physical-parts-of-the-vessel",
+      "context_level": "role",
+      "context_key": "D034|port coordinator",
+      "item_type": "skill",
+      "item_key": "physical-parts-of-the-vessel",
+      "item_name": "physical parts of the vessel",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|port coordinator|skill|port-regulation",
+      "context_level": "role",
+      "context_key": "D034|port coordinator",
+      "item_type": "skill",
+      "item_key": "port-regulation",
+      "item_name": "port regulation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|port coordinator|skill|supervise-movement-of-crew",
+      "context_level": "role",
+      "context_key": "D034|port coordinator",
+      "item_type": "skill",
+      "item_key": "supervise-movement-of-crew",
+      "item_name": "supervise movement of crew",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|port coordinator|skill|vessel-traffic-services",
+      "context_level": "role",
+      "context_key": "D034|port coordinator",
+      "item_type": "skill",
+      "item_key": "vessel-traffic-services",
+      "item_name": "vessel traffic services",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|rail logistics coordinator|skill|analyse-transportation-costs",
+      "context_level": "role",
+      "context_key": "D034|rail logistics coordinator",
+      "item_type": "skill",
+      "item_key": "analyse-transportation-costs",
+      "item_name": "analyse transportation costs",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|rail logistics coordinator|skill|comply-with-railway-safety-standards",
+      "context_level": "role",
+      "context_key": "D034|rail logistics coordinator",
+      "item_type": "skill",
+      "item_key": "comply-with-railway-safety-standards",
+      "item_name": "comply with railway safety standards",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|rail logistics coordinator|skill|manage-shipment-risks",
+      "context_level": "role",
+      "context_key": "D034|rail logistics coordinator",
+      "item_type": "skill",
+      "item_key": "manage-shipment-risks",
+      "item_name": "manage shipment risks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.nist.gov/cyberframework"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|rail logistics coordinator|skill|markets-for-modes-of-transport",
+      "context_level": "role",
+      "context_key": "D034|rail logistics coordinator",
+      "item_type": "skill",
+      "item_key": "markets-for-modes-of-transport",
+      "item_name": "markets for modes of transport",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|rail logistics coordinator|skill|negotiate-logistics-services",
+      "context_level": "role",
+      "context_key": "D034|rail logistics coordinator",
+      "item_type": "skill",
+      "item_key": "negotiate-logistics-services",
+      "item_name": "negotiate logistics services",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|rail logistics coordinator|skill|resolve-shipment-issues",
+      "context_level": "role",
+      "context_key": "D034|rail logistics coordinator",
+      "item_type": "skill",
+      "item_key": "resolve-shipment-issues",
+      "item_name": "resolve shipment issues",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|rail operations manager|skill|process-data-from-railway-control-rooms",
+      "context_level": "role",
+      "context_key": "D034|rail operations manager",
+      "item_type": "skill",
+      "item_key": "process-data-from-railway-control-rooms",
+      "item_name": "process data from railway control rooms",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|rail operations manager|skill|rail-disruption-management",
+      "context_level": "role",
+      "context_key": "D034|rail operations manager",
+      "item_type": "skill",
+      "item_key": "rail-disruption-management",
+      "item_name": "rail disruption management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|rail operations manager|skill|rail-project-financing",
+      "context_level": "role",
+      "context_key": "D034|rail operations manager",
+      "item_type": "skill",
+      "item_key": "rail-project-financing",
+      "item_name": "rail project financing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|rail operations manager|skill|train-planning",
+      "context_level": "role",
+      "context_key": "D034|rail operations manager",
+      "item_type": "skill",
+      "item_key": "train-planning",
+      "item_name": "train planning",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|rail traffic controller|skill|check-for-defects-in-railcars",
+      "context_level": "role",
+      "context_key": "D034|rail traffic controller",
+      "item_type": "skill",
+      "item_key": "check-for-defects-in-railcars",
+      "item_name": "check for defects in railcars",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|rail traffic controller|skill|determine-train-operational-safety-actions",
+      "context_level": "role",
+      "context_key": "D034|rail traffic controller",
+      "item_type": "skill",
+      "item_key": "determine-train-operational-safety-actions",
+      "item_name": "determine train operational safety actions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|rail traffic controller|skill|maintain-computerised-records-of-railway-traffic",
+      "context_level": "role",
+      "context_key": "D034|rail traffic controller",
+      "item_type": "skill",
+      "item_key": "maintain-computerised-records-of-railway-traffic",
+      "item_name": "maintain computerised records of railway traffic",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|rail traffic controller|skill|monitor-train-schedules",
+      "context_level": "role",
+      "context_key": "D034|rail traffic controller",
+      "item_type": "skill",
+      "item_key": "monitor-train-schedules",
+      "item_name": "monitor train schedules",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|rail traffic controller|skill|operate-train-signalling-equipment",
+      "context_level": "role",
+      "context_key": "D034|rail traffic controller",
+      "item_type": "skill",
+      "item_key": "operate-train-signalling-equipment",
+      "item_name": "operate train signalling equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|rail traffic controller|skill|oversee-the-daily-train-operations-plan",
+      "context_level": "role",
+      "context_key": "D034|rail traffic controller",
+      "item_type": "skill",
+      "item_key": "oversee-the-daily-train-operations-plan",
+      "item_name": "oversee the daily train operations plan",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|rail traffic controller|skill|react-calmly-in-stressful-situations",
+      "context_level": "role",
+      "context_key": "D034|rail traffic controller",
+      "item_type": "skill",
+      "item_key": "react-calmly-in-stressful-situations",
+      "item_name": "react calmly in stressful situations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|rail traffic controller|skill|signal-box-parts",
+      "context_level": "role",
+      "context_key": "D034|rail traffic controller",
+      "item_type": "skill",
+      "item_key": "signal-box-parts",
+      "item_name": "signal box parts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|rail traffic controller|skill|signal-boxes",
+      "context_level": "role",
+      "context_key": "D034|rail traffic controller",
+      "item_type": "skill",
+      "item_key": "signal-boxes",
+      "item_name": "signal boxes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|rail traffic controller|skill|write-signalling-reports",
+      "context_level": "role",
+      "context_key": "D034|rail traffic controller",
+      "item_type": "skill",
+      "item_key": "write-signalling-reports",
+      "item_name": "write signalling reports",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|rail traffic controller|tool|automated-equipment-identification-aei-software",
+      "context_level": "role",
+      "context_key": "D034|rail traffic controller",
+      "item_type": "tool",
+      "item_key": "automated-equipment-identification-aei-software",
+      "item_name": "Automated equipment identification AEI software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|rail traffic controller|tool|bourque-data-systems-yardmaster",
+      "context_level": "role",
+      "context_key": "D034|rail traffic controller",
+      "item_type": "tool",
+      "item_key": "bourque-data-systems-yardmaster",
+      "item_name": "Bourque Data Systems YardMaster",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D034|railway station manager|skill|follow-up-actions-resulting-from-railway-facilities-inspections",
+      "context_level": "role",
+      "context_key": "D034|railway station manager",
+      "item_type": "skill",
+      "item_key": "follow-up-actions-resulting-from-railway-facilities-inspections",
+      "item_name": "follow-up actions resulting from railway facilities inspections",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|aircraft fuel system operator|skill|perform-manual-work-autonomously",
+      "context_level": "role",
+      "context_key": "D035|aircraft fuel system operator",
+      "item_type": "skill",
+      "item_key": "perform-manual-work-autonomously",
+      "item_name": "perform manual work autonomously",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|aircraft fuel system operator|tool|access-software-airpax",
+      "context_level": "role",
+      "context_key": "D035|aircraft fuel system operator",
+      "item_type": "tool",
+      "item_key": "access-software-airpax",
+      "item_name": "Access Software AIRPAX",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|airport baggage handler|skill|assist-passengers",
+      "context_level": "role",
+      "context_key": "D035|airport baggage handler",
+      "item_type": "skill",
+      "item_key": "assist-passengers",
+      "item_name": "assist passengers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|airport baggage handler|skill|balance-transportation-cargo",
+      "context_level": "role",
+      "context_key": "D035|airport baggage handler",
+      "item_type": "skill",
+      "item_key": "balance-transportation-cargo",
+      "item_name": "balance transportation cargo",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|airport baggage handler|skill|ensure-client-orientation",
+      "context_level": "role",
+      "context_key": "D035|airport baggage handler",
+      "item_type": "skill",
+      "item_key": "ensure-client-orientation",
+      "item_name": "ensure client orientation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|airport baggage handler|skill|ensure-efficient-baggage-handling",
+      "context_level": "role",
+      "context_key": "D035|airport baggage handler",
+      "item_type": "skill",
+      "item_key": "ensure-efficient-baggage-handling",
+      "item_name": "ensure efficient baggage handling",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|airport baggage handler|skill|read-checked-baggage-tags",
+      "context_level": "role",
+      "context_key": "D035|airport baggage handler",
+      "item_type": "skill",
+      "item_key": "read-checked-baggage-tags",
+      "item_name": "read checked baggage tags",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|airport baggage handler|skill|set-up-ramps-in-airports",
+      "context_level": "role",
+      "context_key": "D035|airport baggage handler",
+      "item_type": "skill",
+      "item_key": "set-up-ramps-in-airports",
+      "item_name": "set up ramps in airports",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|bus driver|skill|control-the-performance-of-the-vehicle",
+      "context_level": "role",
+      "context_key": "D035|bus driver",
+      "item_type": "skill",
+      "item_key": "control-the-performance-of-the-vehicle",
+      "item_name": "control the performance of the vehicle",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|bus driver|skill|execute-vehicle-maintenance",
+      "context_level": "role",
+      "context_key": "D035|bus driver",
+      "item_type": "skill",
+      "item_key": "execute-vehicle-maintenance",
+      "item_name": "execute vehicle maintenance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|bus driver|skill|handle-petty-cash",
+      "context_level": "role",
+      "context_key": "D035|bus driver",
+      "item_type": "skill",
+      "item_key": "handle-petty-cash",
+      "item_name": "handle petty cash",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|bus driver|skill|help-to-control-passenger-behaviour-during-emergency-situations",
+      "context_level": "role",
+      "context_key": "D035|bus driver",
+      "item_type": "skill",
+      "item_key": "help-to-control-passenger-behaviour-during-emergency-situations",
+      "item_name": "help to control passenger behaviour during emergency situations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|bus driver|skill|transport-topography",
+      "context_level": "role",
+      "context_key": "D035|bus driver",
+      "item_type": "skill",
+      "item_key": "transport-topography",
+      "item_name": "transport topography",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|bus driver|tool|actsoft-comet-tracker",
+      "context_level": "role",
+      "context_key": "D035|bus driver",
+      "item_type": "tool",
+      "item_key": "actsoft-comet-tracker",
+      "item_name": "Actsoft Comet Tracker",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|bus driver|tool|aol-mapquest",
+      "context_level": "role",
+      "context_key": "D035|bus driver",
+      "item_type": "tool",
+      "item_key": "aol-mapquest",
+      "item_name": "AOL MapQuest",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|bus driver|tool|digital-dispatch",
+      "context_level": "role",
+      "context_key": "D035|bus driver",
+      "item_type": "tool",
+      "item_key": "digital-dispatch",
+      "item_name": "Digital Dispatch",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|bus driver|tool|easy-dispatch",
+      "context_level": "role",
+      "context_key": "D035|bus driver",
+      "item_type": "tool",
+      "item_key": "easy-dispatch",
+      "item_name": "Easy Dispatch",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|bus driver|tool|eventhelix-webtaxi",
+      "context_level": "role",
+      "context_key": "D035|bus driver",
+      "item_type": "tool",
+      "item_key": "eventhelix-webtaxi",
+      "item_name": "EventHelix WebTaxi",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|cargo vehicle driver|skill|anticipate-foreseeable-problems-on-the-road",
+      "context_level": "role",
+      "context_key": "D035|cargo vehicle driver",
+      "item_type": "skill",
+      "item_key": "anticipate-foreseeable-problems-on-the-road",
+      "item_name": "anticipate foreseeable problems on the road",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|cargo vehicle driver|skill|manoeuvre-heavy-trucks",
+      "context_level": "role",
+      "context_key": "D035|cargo vehicle driver",
+      "item_type": "skill",
+      "item_key": "manoeuvre-heavy-trucks",
+      "item_name": "manoeuvre heavy trucks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|cargo vehicle driver|skill|vehicle-cargo-capacity",
+      "context_level": "role",
+      "context_key": "D035|cargo vehicle driver",
+      "item_type": "skill",
+      "item_key": "vehicle-cargo-capacity",
+      "item_name": "vehicle cargo capacity",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|cargo vehicle driver|tool|3m-post-it-app",
+      "context_level": "role",
+      "context_key": "D035|cargo vehicle driver",
+      "item_type": "tool",
+      "item_key": "3m-post-it-app",
+      "item_name": "3M Post-it App",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|cargo vehicle driver|tool|warehouse-management-system-wms",
+      "context_level": "role",
+      "context_key": "D035|cargo vehicle driver",
+      "item_type": "tool",
+      "item_key": "warehouse-management-system-wms",
+      "item_name": "Warehouse management system WMS",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|concrete pump operator|skill|dismantle-concrete-pumps",
+      "context_level": "role",
+      "context_key": "D035|concrete pump operator",
+      "item_type": "skill",
+      "item_key": "dismantle-concrete-pumps",
+      "item_name": "dismantle concrete pumps",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|concrete pump operator|skill|haul-cement",
+      "context_level": "role",
+      "context_key": "D035|concrete pump operator",
+      "item_type": "skill",
+      "item_key": "haul-cement",
+      "item_name": "haul cement",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|concrete pump operator|skill|operate-concrete-pumps",
+      "context_level": "role",
+      "context_key": "D035|concrete pump operator",
+      "item_type": "skill",
+      "item_key": "operate-concrete-pumps",
+      "item_name": "operate concrete pumps",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|concrete pump operator|skill|operate-gps-systems",
+      "context_level": "role",
+      "context_key": "D035|concrete pump operator",
+      "item_type": "skill",
+      "item_key": "operate-gps-systems",
+      "item_name": "operate GPS systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|concrete pump operator|skill|operate-heavy-construction-machinery-without-supervision",
+      "context_level": "role",
+      "context_key": "D035|concrete pump operator",
+      "item_type": "skill",
+      "item_key": "operate-heavy-construction-machinery-without-supervision",
+      "item_name": "operate heavy construction machinery without supervision",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|concrete pump operator|skill|pour-concrete",
+      "context_level": "role",
+      "context_key": "D035|concrete pump operator",
+      "item_type": "skill",
+      "item_key": "pour-concrete",
+      "item_name": "pour concrete",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|concrete pump operator|skill|types-of-concrete-pumps",
+      "context_level": "role",
+      "context_key": "D035|concrete pump operator",
+      "item_type": "skill",
+      "item_key": "types-of-concrete-pumps",
+      "item_name": "types of concrete pumps",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|concrete pump operator|tool|adp-ezlabormanager",
+      "context_level": "role",
+      "context_key": "D035|concrete pump operator",
+      "item_type": "tool",
+      "item_key": "adp-ezlabormanager",
+      "item_name": "ADP ezLaborManager",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|concrete pump operator|tool|alk-technologies-pc-miler",
+      "context_level": "role",
+      "context_key": "D035|concrete pump operator",
+      "item_type": "tool",
+      "item_key": "alk-technologies-pc-miler",
+      "item_name": "ALK Technologies PC*Miler",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|concrete pump operator|tool|computerized-inventory-tracking-software",
+      "context_level": "role",
+      "context_key": "D035|concrete pump operator",
+      "item_type": "tool",
+      "item_key": "computerized-inventory-tracking-software",
+      "item_name": "Computerized inventory tracking software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|dangerous goods driver|skill|maintain-gas-mileage-records",
+      "context_level": "role",
+      "context_key": "D035|dangerous goods driver",
+      "item_type": "skill",
+      "item_key": "maintain-gas-mileage-records",
+      "item_name": "maintain gas mileage records",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|dangerous goods driver|skill|maintain-logbooks",
+      "context_level": "role",
+      "context_key": "D035|dangerous goods driver",
+      "item_type": "skill",
+      "item_key": "maintain-logbooks",
+      "item_name": "maintain logbooks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|dangerous goods driver|skill|operate-emergency-equipment",
+      "context_level": "role",
+      "context_key": "D035|dangerous goods driver",
+      "item_type": "skill",
+      "item_key": "operate-emergency-equipment",
+      "item_name": "operate emergency equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|dangerous goods driver|skill|revise-certifications-for-dangerous-good-transportation",
+      "context_level": "role",
+      "context_key": "D035|dangerous goods driver",
+      "item_type": "skill",
+      "item_key": "revise-certifications-for-dangerous-good-transportation",
+      "item_name": "revise certifications for dangerous good transportation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|dangerous goods driver|skill|transport-dangerous-goods",
+      "context_level": "role",
+      "context_key": "D035|dangerous goods driver",
+      "item_type": "skill",
+      "item_key": "transport-dangerous-goods",
+      "item_name": "transport dangerous goods",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|distribution centre dispatcher|skill|avoid-backlogs-in-receiving-raw-materials",
+      "context_level": "role",
+      "context_key": "D035|distribution centre dispatcher",
+      "item_type": "skill",
+      "item_key": "avoid-backlogs-in-receiving-raw-materials",
+      "item_name": "avoid backlogs in receiving raw materials",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|distribution centre dispatcher|skill|dispatch-order-processing",
+      "context_level": "role",
+      "context_key": "D035|distribution centre dispatcher",
+      "item_type": "skill",
+      "item_key": "dispatch-order-processing",
+      "item_name": "dispatch order processing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D035|distribution centre dispatcher|skill|load-bulk-trucks",
+      "context_level": "role",
+      "context_key": "D035|distribution centre dispatcher",
+      "item_type": "skill",
+      "item_key": "load-bulk-trucks",
+      "item_name": "load bulk trucks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    }
+  ],
+  "policy": {
+    "review_required_preserved_unless_exact_item_evidence_established": true,
+    "no_relationship_inference": true,
+    "no_promotion": true
+  }
+}

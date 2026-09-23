@@ -6,11 +6,11 @@ This audit checks CCMAS course outlines and learning outcomes against the curren
 
 - CCMAS programmes checked: **237**
 - Candidate rows checked: **5275** (scored candidates: **4718**)
-- Active mapping rows checked: **1683**
-- Active links failing the numeric course/outcome gate: **269**
-- Active links needing semantic review after the numeric gate: **71**
+- Active mapping rows checked: **1343**
+- Active links failing the numeric course/outcome gate: **0**
+- Active links needing semantic review after the numeric gate: **0**
 - Omitted candidates: **3217**
-- Omitted candidates that pass the numerical gate and need semantic review: **1515**
+- Omitted candidates that pass the numerical gate and need semantic review: **1489**
 - Normalized JAMB identity collisions: **4**
 - Brochure offering rows checked: **439**
 - Repeated normalized offering identities audited: **48**
@@ -27,11 +27,11 @@ Sociology is an exact JAMB→CCMAS Sociology inheritance. Its current top-level 
 
 Requested target review:
 
-- **Data Science** — already active; gate `passes_count_but_needs_semantic_review`; matched courses: 2; anchors: statistics.
+- **Data Science** — omitted candidate; gate `passes_course_outcome_gate`; matched courses: 2; anchors: data analysis, statistics.
 - **Quantitative Finance** — omitted candidate; gate `passes_count_but_needs_semantic_review`; matched courses: 2; anchors: statistics.
 - **Human Resources** — omitted candidate; gate `fails_course_outcome_gate`; matched courses: 1; anchors: human resources.
 - **Marketing, Brand** — omitted candidate; gate `fails_course_outcome_gate`; matched courses: 1; anchors: market, market research, marketing.
-- **Product Management** — omitted candidate; gate `passes_course_outcome_gate`; matched courses: 4; anchors: e-commerce, innovation, product, venture.
+- **Product Management** — omitted candidate; gate `fails_course_outcome_gate`; matched courses: 0; anchors: none.
 - **Supply Chain Management** — no scored candidate in the current CCMAS scorer; top-level domain; logistics/procurement/operations curriculum required.
 
 ## Upstream JAMB identity collisions
@@ -112,8 +112,8 @@ These categories are intentionally not hidden behind a generic `ready` label:
 - Source-blank variants: **17**.
 - University-specific exception rows in the generated seed: **3884**; structured subject options: **1998**; exception statuses: `{'not_subject_rule': 1275, 'parsed': 1983, 'needs_review': 626}`.
 - Generated offering seed check: **9130** rows and university UTME/O-level/Direct Entry columns emitted: **True**.
-- Active programme-domain links failing the evidence gate: **269**; active links needing semantic review: **71**.
-- Unverified programme-domain links retained outside active guidance: **375**.
+- Active programme-domain links failing the evidence gate: **0**; active links needing semantic review: **0**.
+- Unverified programme-domain links retained outside active guidance: **715**.
 
 Requirement review rows and no-source rows remain eligible for manual completion only; they must not be turned into inferred subject rules. Domain-link review is a separate CCMAS curriculum audit and does not mean the JAMB identity itself is broken.
 
@@ -212,10 +212,9 @@ These are review candidates only; they require semantic confirmation before prom
 - `Education::Guidance and Counselling` → **Trading** (D062), score 1.104; passes_course_outcome_gate; anchors: economics, trading.
 - `Education::Educational Technology` → **Social Sciences** (D078), score 1.103; passes_course_outcome_gate; anchors: economics, geography, research design, sociology, statistics.
 - `Education::Health Education` → **Social Sciences** (D078), score 1.103; passes_course_outcome_gate; anchors: economics, geography, research design, sociology, statistics.
-- `Education::Technology Education` → **Product Management** (D033), score 1.101; passes_course_outcome_gate; anchors: digital systems, e-commerce, innovation, product, strategic planning, venture.
+- `Education::Technology Education` → **Product Management** (D033), score 1.101; passes_count_but_needs_semantic_review; anchors: digital systems, strategic planning.
 - `Education::Early Childhood Education` → **General Management** (D028), score 1.1; passes_course_outcome_gate; anchors: leadership, operations, strategic, strategic planning.
 - `Education::Guidance and Counselling` → **Investment Analysis** (D013), score 1.099; passes_count_but_needs_semantic_review; anchors: economics.
-- `Education::Business Education` → **Product Management** (D033), score 1.098; passes_course_outcome_gate; anchors: e-commerce, innovation, product, strategic planning, venture.
 - `Education::English Language/Literature-in-English` → **Economics** (D063), score 1.097; passes_course_outcome_gate; anchors: economic, economics, finance, market, policy, statistics.
 - `Education::Library and Information Science` → **Economics** (D063), score 1.097; passes_course_outcome_gate; anchors: economic, economics, finance, market, policy, statistics.
 - `Education::Yoruba` → **Economics** (D063), score 1.097; passes_course_outcome_gate; anchors: economic, economics, finance, market, policy, politics.
@@ -229,5 +228,6 @@ These are review candidates only; they require semantic confirmation before prom
 - `Education::Efik-Ibibio Education` → **Trading** (D062), score 1.094; passes_course_outcome_gate; anchors: economics, trading.
 - `Education::Entrepreneurship Education` → **Insurance** (D061), score 1.092; passes_course_outcome_gate; anchors: economics, insurance, principles of insurance.
 - `Education::Guidance and Counselling` → **Marketing, Brand** (D030), score 1.091; passes_course_outcome_gate; anchors: advertising, brand, customer, market, market research, marketing.
+- `Education::Integrated Science` → **Human Resources** (D029), score 1.088; passes_course_outcome_gate; anchors: human resource management, human resources, personnel management.
 
 The JSON artifact contains every programme/domain candidate, course-level matches, gate result, Sociology target review, downstream subgroup/role paths, and all upstream JAMB identity collisions.

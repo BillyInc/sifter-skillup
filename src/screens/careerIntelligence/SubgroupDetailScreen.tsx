@@ -19,6 +19,7 @@ import { useExploreNav } from "@/lib/exploreNav";
 import type { GuidanceRouteContext } from "@/lib/guidanceRouteContext";
 import { pending, type DataState, type DomainV2 } from "@/types/career";
 import { CompassFonts, FontSize, Radius, Spacing, useTheme } from "@/theme";
+import { isStudentResource } from "@/components/careerIntelligence/resourceLinks";
 
 export default function SubgroupDetailScreen() {
   const params = useLocalSearchParams<{ id?: string; subgroupId?: string; programme_id?: string | string[]; jamb_programme_id?: string | string[]; school_id?: string | string[]; user_type?: string | string[]; journey_mode?: string | string[]; guidance_student_id?: string | string[]; guidance_target?: string | string[]; guidance_entry?: string | string[]; focus?: string | string[] }>();
@@ -64,7 +65,7 @@ export default function SubgroupDetailScreen() {
 
   const subgroup = state.data?.subgroups.find((item) => item.id === subgroupId);
   const resolvedDomainId = state.data?.id ?? domainId;
-  const roles = (state.data?.roles.filter((role) => role.subgroupId === subgroupId && role.guidanceAvailable !== false) ?? []).sort(compareCareerRoles);
+  const roles = (state.data?.roles.filter((role) => role.subgroupId === subgroupId && role.guidanceAvailable === true) ?? []).sort(compareCareerRoles);
   const programmeConnection = state.data?.programmeConnection;
 
   return (
@@ -153,10 +154,26 @@ function SubgroupBody({ subgroup, domain, roles, programmeConnection, guidanceCo
   exploreNav: ReturnType<typeof useExploreNav>;
 }) {
   const { colors } = useTheme();
-  const inherited = (domain?.foundationSkills ?? [])
-    .filter((item) => item.stage && item.stage !== "prepare_for_role")
-    .filter((item, index, values) => values.findIndex((candidate) => candidate.skill.trim().toLowerCase() === item.skill.trim().toLowerCase()) === index)
-    .slice(0, 4);
+  const studentConnection = programmeConnection && !programmeConnection.reviewRequired && !programmeConnection.sourceReviewRequired
+    ? programmeConnection
+    : null;
+  const domainItems = (domain?.contextItems ?? []).filter((item) =>
+    item.contextLevel === "domain"
+    && item.guidanceOwner === "domain"
+    && item.dataState === "source_backed"
+    && item.sourceConfidence !== "unsourced"
+    && item.linkState !== "review_required",
+  );
+  const subgroupItems = (subgroup.contextItems ?? []).filter((item) =>
+    item.contextLevel === "subgroup"
+    && item.guidanceOwner === "subgroup"
+    && item.dataState === "source_backed"
+    && item.sourceConfidence !== "unsourced"
+    && item.linkState !== "review_required",
+  );
+  const subgroupResources = (subgroup.resources ?? []).filter((resource) =>
+    isStudentResource(resource, "subgroup"),
+  );
   return (
     <View style={styles.body}>
       <View style={[styles.detail, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
@@ -164,8 +181,8 @@ function SubgroupBody({ subgroup, domain, roles, programmeConnection, guidanceCo
         <Text style={[styles.heading, { color: colors.textRole.primary }]}>{formatCareerLabel(subgroup.name)}</Text>
         <Text style={[styles.copy, { color: colors.textRole.secondary }]}>{studentSummary({ shortIntro: subgroup.studentOrientation?.shortIntro, whatPeopleDo: subgroup.studentOrientation?.whatPeopleDo || subgroup.whatPeopleDo, whatItStudies: subgroup.studentOrientation?.whatItStudies, description: subgroup.description, fallback: "A plain-language explanation of this focused area is not available yet." })}</Text>
       </View>
-      {programmeConnection ? <View style={[styles.detail, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}><SectionLabel>Why this area is in your path</SectionLabel><Text style={[styles.copy, { color: colors.textRole.secondary }]}>{programmeConnection.explanation}</Text></View> : null}
-      <GuidanceContinuation programmeName={programmeConnection?.programmeName} connection={programmeConnection} domainName={domain?.name ?? "Domain"} subgroupName={subgroup.name} domainFoundation={domain?.foundationSkills} domainItems={domain?.contextItems} subgroupItems={subgroup.contextItems} />
+      <GuidanceContinuation programmeName={studentConnection?.programmeName} connection={studentConnection} domainName={domain?.name ?? "Domain"} subgroupName={subgroup.name} domainFoundation={domain?.foundationSkills} domainItems={domainItems} subgroupItems={subgroupItems} />
+      {programmeConnection && !studentConnection ? <View style={[styles.detail, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}><SectionLabel>Programme connection not available yet</SectionLabel><Text style={[styles.copy, { color: colors.textRole.secondary }]}>We do not have enough verified information to explain this programme-to-area connection safely.</Text></View> : null}
       <View style={styles.section}>
         <HierarchyOrientationCard
           level="area"
@@ -175,13 +192,12 @@ function SubgroupBody({ subgroup, domain, roles, programmeConnection, guidanceCo
           workContext={subgroup.workContext}
           orientation={subgroup.studentOrientation}
         />
-        <View style={[styles.detail, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}><SectionLabel>What carries over from the domain</SectionLabel><Text style={[styles.copy, { color: colors.textRole.secondary }]}>This area keeps the foundation shared by the wider field.</Text>{inherited.length ? <Text style={[styles.copy, { color: colors.textRole.muted }]}>From {domain?.name ?? "the domain"}: {inherited.map((item) => item.skill).join(" · ")}</Text> : <Text style={[styles.copy, { color: colors.textRole.muted }]}>The shared field foundation is not available for this area yet.</Text>}</View>
       </View>
       <View style={styles.section}>
         <View style={styles.badgeRow}><Feather name="layers" size={18} color={colors.accentRole.action} /><SectionLabel>What this area adds</SectionLabel></View>
-        <ContextualItemList items={subgroup.contextItems} itemTypes={["skill", "competency"]} resources={subgroup.resources} methods={subgroup.methodEvidence} title="Skills and competencies this area adds" />
-        <ToolGroupsBlock tools={subgroup.tools} resources={subgroup.resources} contextItems={subgroup.contextItems} title="Tool options" commonLabel="Useful across this area" distinctiveLabel="More specialised options" explanation="These are options in the available guidance. Each tool supports particular work; no single tool is the whole area." />
-        <View style={styles.detail}><SectionLabel>Qualifications and routes to understand</SectionLabel><CertPlacementList subgroup={subgroup.certifications} contextItems={subgroup.contextItems} resources={subgroup.resources} emptyMessage="No formal certification or qualification route is recorded for this area yet." /></View>
+        <ContextualItemList items={subgroupItems} itemTypes={["skill", "competency"]} resources={subgroupResources} methods={subgroup.methodEvidence} contextLevel="subgroup" title="Skills and competencies this area adds" />
+        <ToolGroupsBlock tools={subgroup.tools} resources={subgroupResources} contextItems={subgroupItems} contextLevel="subgroup" title="Tool options" commonLabel="Useful across this area" distinctiveLabel="More specialised options" explanation="These are options in the available guidance. Each tool supports particular work; no single tool is the whole area." />
+        <View style={styles.detail}><SectionLabel>Qualifications and routes to understand</SectionLabel><CertPlacementList subgroup={subgroup.certifications} contextItems={subgroupItems} resources={subgroupResources} contextLevel="subgroup" emptyMessage="No formal certification or qualification route is recorded for this area yet." /></View>
       </View>
       <View style={styles.section}>
         <View style={styles.badgeRow}><Feather name="users" size={18} color={colors.accentRole.action} /><SectionLabel>Roles inside this area</SectionLabel></View>

@@ -1,0 +1,1620 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-selection.v2",
+  "batch": "quality_remediation_lane_28_20260922",
+  "selected_at": "2026-09-22",
+  "source_audit": "data/career-mapping/_audit/external_enrichment_agent/item_ledger_quality_audit_2026-09-22.json",
+  "source_sha256": "fd66ba82e6b6580327ff0ca1a5b1988026e2397d175c06b14031d87f061e1c66",
+  "selection_method": "atomic shared lock; exclude all prior valid claims by contextual and typed identity",
+  "prior_claimed_contextual_ids": 2072,
+  "prior_claimed_typed_items": 1446,
+  "selection_count": 100,
+  "requested_count": 100,
+  "shortfall": 0,
+  "rows": [
+    {
+      "subject_id": "item|role|D017|engine designer|skill|calculate-materials-to-build-equipment",
+      "context_level": "role",
+      "context_key": "D017|engine designer",
+      "item_type": "skill",
+      "item_key": "calculate-materials-to-build-equipment",
+      "item_name": "calculate materials to build equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|engine designer|skill|conduct-research-on-trends-in-design",
+      "context_level": "role",
+      "context_key": "D017|engine designer",
+      "item_type": "skill",
+      "item_key": "conduct-research-on-trends-in-design",
+      "item_name": "conduct research on trends in design",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|engine designer|skill|define-part-requirements",
+      "context_level": "role",
+      "context_key": "D017|engine designer",
+      "item_type": "skill",
+      "item_key": "define-part-requirements",
+      "item_name": "define part requirements",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|engine designer|skill|ecological-principles",
+      "context_level": "role",
+      "context_key": "D017|engine designer",
+      "item_type": "skill",
+      "item_key": "ecological-principles",
+      "item_name": "ecological principles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|engine designer|skill|motor-vehicle-parts-drawings",
+      "context_level": "role",
+      "context_key": "D017|engine designer",
+      "item_type": "skill",
+      "item_key": "motor-vehicle-parts-drawings",
+      "item_name": "motor vehicle parts drawings",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|engine designer|skill|packaging-engineering",
+      "context_level": "role",
+      "context_key": "D017|engine designer",
+      "item_type": "skill",
+      "item_key": "packaging-engineering",
+      "item_name": "packaging engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|engine designer|skill|packaging-processes",
+      "context_level": "role",
+      "context_key": "D017|engine designer",
+      "item_type": "skill",
+      "item_key": "packaging-processes",
+      "item_name": "packaging processes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|engine designer|skill|stay-up-to-date-with-vehicle-trends",
+      "context_level": "role",
+      "context_key": "D017|engine designer",
+      "item_type": "skill",
+      "item_key": "stay-up-to-date-with-vehicle-trends",
+      "item_name": "stay up-to-date with vehicle trends",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|engine designer|skill|use-cad-software",
+      "context_level": "role",
+      "context_key": "D017|engine designer",
+      "item_type": "skill",
+      "item_key": "use-cad-software",
+      "item_name": "use CAD software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|equipment engineer|skill|human-robot-collaboration",
+      "context_level": "role",
+      "context_key": "D017|equipment engineer",
+      "item_type": "skill",
+      "item_key": "human-robot-collaboration",
+      "item_name": "human-robot collaboration",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|equipment engineer|skill|interpret-technical-requirements",
+      "context_level": "role",
+      "context_key": "D017|equipment engineer",
+      "item_type": "skill",
+      "item_key": "interpret-technical-requirements",
+      "item_name": "interpret technical requirements",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|equipment engineer|skill|manage-engineering-project",
+      "context_level": "role",
+      "context_key": "D017|equipment engineer",
+      "item_type": "skill",
+      "item_key": "manage-engineering-project",
+      "item_name": "manage engineering project",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|equipment engineer|skill|perform-scientific-research",
+      "context_level": "role",
+      "context_key": "D017|equipment engineer",
+      "item_type": "skill",
+      "item_key": "perform-scientific-research",
+      "item_name": "perform scientific research",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|fluid power engineer|skill|hydraulic-fluid",
+      "context_level": "role",
+      "context_key": "D017|fluid power engineer",
+      "item_type": "skill",
+      "item_key": "hydraulic-fluid",
+      "item_name": "hydraulic fluid",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|fluid power engineer|skill|hydraulics",
+      "context_level": "role",
+      "context_key": "D017|fluid power engineer",
+      "item_type": "skill",
+      "item_key": "hydraulics",
+      "item_name": "hydraulics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|fluid power engineer|skill|principles-of-mechanical-engineering",
+      "context_level": "role",
+      "context_key": "D017|fluid power engineer",
+      "item_type": "skill",
+      "item_key": "principles-of-mechanical-engineering",
+      "item_name": "principles of mechanical engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|heating, ventilation, air conditioning (and refrigeration) drafter|skill|combined-heat-and-power-generation",
+      "context_level": "role",
+      "context_key": "D017|heating, ventilation, air conditioning (and refrigeration) drafter",
+      "item_type": "skill",
+      "item_key": "combined-heat-and-power-generation",
+      "item_name": "combined heat and power generation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|heating, ventilation, air conditioning (and refrigeration) drafter|skill|domestic-cooling-systems",
+      "context_level": "role",
+      "context_key": "D017|heating, ventilation, air conditioning (and refrigeration) drafter",
+      "item_type": "skill",
+      "item_key": "domestic-cooling-systems",
+      "item_name": "domestic cooling systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|heating, ventilation, air conditioning (and refrigeration) drafter|skill|electric-heating-systems",
+      "context_level": "role",
+      "context_key": "D017|heating, ventilation, air conditioning (and refrigeration) drafter",
+      "item_type": "skill",
+      "item_key": "electric-heating-systems",
+      "item_name": "electric heating systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|heating, ventilation, air conditioning (and refrigeration) drafter|skill|geothermal-energy-systems",
+      "context_level": "role",
+      "context_key": "D017|heating, ventilation, air conditioning (and refrigeration) drafter",
+      "item_type": "skill",
+      "item_key": "geothermal-energy-systems",
+      "item_name": "geothermal energy systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|heating, ventilation, air conditioning (and refrigeration) drafter|skill|heating-ventilation-air-conditioning-and-refrigeration-parts",
+      "context_level": "role",
+      "context_key": "D017|heating, ventilation, air conditioning (and refrigeration) drafter",
+      "item_type": "skill",
+      "item_key": "heating-ventilation-air-conditioning-and-refrigeration-parts",
+      "item_name": "heating, ventilation, air conditioning and refrigeration parts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|heating, ventilation, air conditioning (and refrigeration) drafter|skill|refrigerants",
+      "context_level": "role",
+      "context_key": "D017|heating, ventilation, air conditioning (and refrigeration) drafter",
+      "item_type": "skill",
+      "item_key": "refrigerants",
+      "item_name": "refrigerants",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|heating, ventilation, air conditioning (and refrigeration) drafter|skill|thermodynamics",
+      "context_level": "role",
+      "context_key": "D017|heating, ventilation, air conditioning (and refrigeration) drafter",
+      "item_type": "skill",
+      "item_key": "thermodynamics",
+      "item_name": "thermodynamics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|heating, ventilation, air conditioning (and refrigeration) drafter|skill|types-of-heat-pumps",
+      "context_level": "role",
+      "context_key": "D017|heating, ventilation, air conditioning (and refrigeration) drafter",
+      "item_type": "skill",
+      "item_key": "types-of-heat-pumps",
+      "item_name": "types of heat pumps",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|heating, ventilation, air conditioning (and refrigeration) drafter|skill|ventilation-systems",
+      "context_level": "role",
+      "context_key": "D017|heating, ventilation, air conditioning (and refrigeration) drafter",
+      "item_type": "skill",
+      "item_key": "ventilation-systems",
+      "item_name": "ventilation systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|heating, ventilation, air conditioning engineer|skill|district-heating-and-cooling",
+      "context_level": "role",
+      "context_key": "D017|heating, ventilation, air conditioning engineer",
+      "item_type": "skill",
+      "item_key": "district-heating-and-cooling",
+      "item_name": "district heating and cooling",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|industrial assembly supervisor|skill|adjust-production-schedule",
+      "context_level": "role",
+      "context_key": "D017|industrial assembly supervisor",
+      "item_type": "skill",
+      "item_key": "adjust-production-schedule",
+      "item_name": "adjust production schedule",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|industrial assembly supervisor|skill|conflict-management",
+      "context_level": "role",
+      "context_key": "D017|industrial assembly supervisor",
+      "item_type": "skill",
+      "item_key": "conflict-management",
+      "item_name": "conflict management",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|industrial assembly supervisor|skill|cope-with-manufacturing-deadlines-pressure",
+      "context_level": "role",
+      "context_key": "D017|industrial assembly supervisor",
+      "item_type": "skill",
+      "item_key": "cope-with-manufacturing-deadlines-pressure",
+      "item_name": "cope with manufacturing deadlines pressure",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|industrial assembly supervisor|skill|functionalities-of-machinery",
+      "context_level": "role",
+      "context_key": "D017|industrial assembly supervisor",
+      "item_type": "skill",
+      "item_key": "functionalities-of-machinery",
+      "item_name": "functionalities of machinery",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|industrial assembly supervisor|skill|industrial-design",
+      "context_level": "role",
+      "context_key": "D017|industrial assembly supervisor",
+      "item_type": "skill",
+      "item_key": "industrial-design",
+      "item_name": "industrial design",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|industrial assembly supervisor|skill|total-quality-control",
+      "context_level": "role",
+      "context_key": "D017|industrial assembly supervisor",
+      "item_type": "skill",
+      "item_key": "total-quality-control",
+      "item_name": "total quality control",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|industrial tool design engineer|skill|industrial-tools",
+      "context_level": "role",
+      "context_key": "D017|industrial tool design engineer",
+      "item_type": "skill",
+      "item_key": "industrial-tools",
+      "item_name": "industrial tools",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|machine operator supervisor|skill|perform-technically-demanding-tasks",
+      "context_level": "role",
+      "context_key": "D017|machine operator supervisor",
+      "item_type": "skill",
+      "item_key": "perform-technically-demanding-tasks",
+      "item_name": "perform technically demanding tasks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|machinery assembly supervisor|skill|follow-production-schedule",
+      "context_level": "role",
+      "context_key": "D017|machinery assembly supervisor",
+      "item_type": "skill",
+      "item_key": "follow-production-schedule",
+      "item_name": "follow production schedule",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|machinery assembly supervisor|skill|manage-resources",
+      "context_level": "role",
+      "context_key": "D017|machinery assembly supervisor",
+      "item_type": "skill",
+      "item_key": "manage-resources",
+      "item_name": "manage resources",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|marine engineering drafter|skill|naval-architecture",
+      "context_level": "role",
+      "context_key": "D017|marine engineering drafter",
+      "item_type": "skill",
+      "item_key": "naval-architecture",
+      "item_name": "naval architecture",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|marine engineering drafter|skill|solar-energy",
+      "context_level": "role",
+      "context_key": "D017|marine engineering drafter",
+      "item_type": "skill",
+      "item_key": "solar-energy",
+      "item_name": "solar energy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|mechanical engineering drafter|skill|create-technical-plans",
+      "context_level": "role",
+      "context_key": "D017|mechanical engineering drafter",
+      "item_type": "skill",
+      "item_key": "create-technical-plans",
+      "item_name": "create technical plans",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|mechanical engineering drafter|skill|use-manual-draughting-techniques",
+      "context_level": "role",
+      "context_key": "D017|mechanical engineering drafter",
+      "item_type": "skill",
+      "item_key": "use-manual-draughting-techniques",
+      "item_name": "use manual draughting techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|mechanical engineer|skill|sustainable-installation-materials",
+      "context_level": "role",
+      "context_key": "D017|mechanical engineer",
+      "item_type": "skill",
+      "item_key": "sustainable-installation-materials",
+      "item_name": "sustainable installation materials",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|mechatronics engineer|skill|control-engineering",
+      "context_level": "role",
+      "context_key": "D017|mechatronics engineer",
+      "item_type": "skill",
+      "item_key": "control-engineering",
+      "item_name": "control engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|mechatronics engineer|skill|micromechatronic-engineering",
+      "context_level": "role",
+      "context_key": "D017|mechatronics engineer",
+      "item_type": "skill",
+      "item_key": "micromechatronic-engineering",
+      "item_name": "micromechatronic engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|metal production supervisor|skill|ensure-correct-goods-labelling",
+      "context_level": "role",
+      "context_key": "D017|metal production supervisor",
+      "item_type": "skill",
+      "item_key": "ensure-correct-goods-labelling",
+      "item_name": "ensure correct goods labelling",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|metal production supervisor|skill|ensure-equipment-availability",
+      "context_level": "role",
+      "context_key": "D017|metal production supervisor",
+      "item_type": "skill",
+      "item_key": "ensure-equipment-availability",
+      "item_name": "ensure equipment availability",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|metal production supervisor|skill|ferrous-metal-processing",
+      "context_level": "role",
+      "context_key": "D017|metal production supervisor",
+      "item_type": "skill",
+      "item_key": "ferrous-metal-processing",
+      "item_name": "ferrous metal processing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|metal production supervisor|skill|first-aid",
+      "context_level": "role",
+      "context_key": "D017|metal production supervisor",
+      "item_type": "skill",
+      "item_key": "first-aid",
+      "item_name": "first aid",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|metal production supervisor|skill|identify-hazards-in-the-workplace",
+      "context_level": "role",
+      "context_key": "D017|metal production supervisor",
+      "item_type": "skill",
+      "item_key": "identify-hazards-in-the-workplace",
+      "item_name": "identify hazards in the workplace",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|metal production supervisor|skill|manage-supplies",
+      "context_level": "role",
+      "context_key": "D017|metal production supervisor",
+      "item_type": "skill",
+      "item_key": "manage-supplies",
+      "item_name": "manage supplies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|metal production supervisor|skill|monitor-automated-machines",
+      "context_level": "role",
+      "context_key": "D017|metal production supervisor",
+      "item_type": "skill",
+      "item_key": "monitor-automated-machines",
+      "item_name": "monitor automated machines",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|metal production supervisor|skill|types-of-metal",
+      "context_level": "role",
+      "context_key": "D017|metal production supervisor",
+      "item_type": "skill",
+      "item_key": "types-of-metal",
+      "item_name": "types of metal",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|metal production supervisor|skill|types-of-metal-manufacturing-processes",
+      "context_level": "role",
+      "context_key": "D017|metal production supervisor",
+      "item_type": "skill",
+      "item_key": "types-of-metal-manufacturing-processes",
+      "item_name": "types of metal manufacturing processes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|motor vehicle assembly supervisor|skill|defense-system",
+      "context_level": "role",
+      "context_key": "D017|motor vehicle assembly supervisor",
+      "item_type": "skill",
+      "item_key": "defense-system",
+      "item_name": "defense system",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|motor vehicle assembly supervisor|skill|manage-health-and-safety-standards",
+      "context_level": "role",
+      "context_key": "D017|motor vehicle assembly supervisor",
+      "item_type": "skill",
+      "item_key": "manage-health-and-safety-standards",
+      "item_name": "manage health and safety standards",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|motor vehicle assembly supervisor|skill|oversee-logistics-of-finished-products",
+      "context_level": "role",
+      "context_key": "D017|motor vehicle assembly supervisor",
+      "item_type": "skill",
+      "item_key": "oversee-logistics-of-finished-products",
+      "item_name": "oversee logistics of finished products",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|motor vehicle assembly supervisor|skill|supervise-staff",
+      "context_level": "role",
+      "context_key": "D017|motor vehicle assembly supervisor",
+      "item_type": "skill",
+      "item_key": "supervise-staff",
+      "item_name": "supervise staff",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|motor vehicle assembly supervisor|skill|supervise-work",
+      "context_level": "role",
+      "context_key": "D017|motor vehicle assembly supervisor",
+      "item_type": "skill",
+      "item_key": "supervise-work",
+      "item_name": "supervise work",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|motor vehicle assembly supervisor|skill|tend-cnc-milling-machine",
+      "context_level": "role",
+      "context_key": "D017|motor vehicle assembly supervisor",
+      "item_type": "skill",
+      "item_key": "tend-cnc-milling-machine",
+      "item_name": "tend CNC milling machine",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|optical instrument production supervisor|skill|glass-tempering",
+      "context_level": "role",
+      "context_key": "D017|optical instrument production supervisor",
+      "item_type": "skill",
+      "item_key": "glass-tempering",
+      "item_name": "glass tempering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|optical instrument production supervisor|skill|microoptics",
+      "context_level": "role",
+      "context_key": "D017|optical instrument production supervisor",
+      "item_type": "skill",
+      "item_key": "microoptics",
+      "item_name": "microoptics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|optical instrument production supervisor|skill|optical-components",
+      "context_level": "role",
+      "context_key": "D017|optical instrument production supervisor",
+      "item_type": "skill",
+      "item_key": "optical-components",
+      "item_name": "optical components",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|optical instrument production supervisor|skill|optical-engineering",
+      "context_level": "role",
+      "context_key": "D017|optical instrument production supervisor",
+      "item_type": "skill",
+      "item_key": "optical-engineering",
+      "item_name": "optical engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|optical instrument production supervisor|skill|optical-manufacturing-process",
+      "context_level": "role",
+      "context_key": "D017|optical instrument production supervisor",
+      "item_type": "skill",
+      "item_key": "optical-manufacturing-process",
+      "item_name": "optical manufacturing process",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|optical instrument production supervisor|skill|precision-engineering",
+      "context_level": "role",
+      "context_key": "D017|optical instrument production supervisor",
+      "item_type": "skill",
+      "item_key": "precision-engineering",
+      "item_name": "precision engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|optomechanical engineer|skill|cavity-optomechanics",
+      "context_level": "role",
+      "context_key": "D017|optomechanical engineer",
+      "item_type": "skill",
+      "item_key": "cavity-optomechanics",
+      "item_name": "cavity optomechanics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|optomechanical engineer|skill|optomechanical-components",
+      "context_level": "role",
+      "context_key": "D017|optomechanical engineer",
+      "item_type": "skill",
+      "item_key": "optomechanical-components",
+      "item_name": "optomechanical components",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|optomechanical engineer|skill|optomechanical-engineering",
+      "context_level": "role",
+      "context_key": "D017|optomechanical engineer",
+      "item_type": "skill",
+      "item_key": "optomechanical-engineering",
+      "item_name": "optomechanical engineering",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|optomechanical engineer|skill|quantum-technology",
+      "context_level": "role",
+      "context_key": "D017|optomechanical engineer",
+      "item_type": "skill",
+      "item_key": "quantum-technology",
+      "item_name": "quantum technology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|packing machinery engineer|skill|automatic-control-system",
+      "context_level": "role",
+      "context_key": "D017|packing machinery engineer",
+      "item_type": "skill",
+      "item_key": "automatic-control-system",
+      "item_name": "automatic control system",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|packing machinery engineer|skill|types-of-packaging-materials",
+      "context_level": "role",
+      "context_key": "D017|packing machinery engineer",
+      "item_type": "skill",
+      "item_key": "types-of-packaging-materials",
+      "item_name": "types of packaging materials",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|plastic and rubber products manufacturing supervisor|skill|adhesives",
+      "context_level": "role",
+      "context_key": "D017|plastic and rubber products manufacturing supervisor",
+      "item_type": "skill",
+      "item_key": "adhesives",
+      "item_name": "adhesives",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|plastic and rubber products manufacturing supervisor|skill|coating-substances",
+      "context_level": "role",
+      "context_key": "D017|plastic and rubber products manufacturing supervisor",
+      "item_type": "skill",
+      "item_key": "coating-substances",
+      "item_name": "coating substances",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|plastic and rubber products manufacturing supervisor|skill|consult-technical-resources",
+      "context_level": "role",
+      "context_key": "D017|plastic and rubber products manufacturing supervisor",
+      "item_type": "skill",
+      "item_key": "consult-technical-resources",
+      "item_name": "consult technical resources",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|plastic and rubber products manufacturing supervisor|skill|ensure-health-and-safety-in-manufacturing",
+      "context_level": "role",
+      "context_key": "D017|plastic and rubber products manufacturing supervisor",
+      "item_type": "skill",
+      "item_key": "ensure-health-and-safety-in-manufacturing",
+      "item_name": "ensure health and safety in manufacturing",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|plastic and rubber products manufacturing supervisor|skill|good-manufacturing-practices",
+      "context_level": "role",
+      "context_key": "D017|plastic and rubber products manufacturing supervisor",
+      "item_type": "skill",
+      "item_key": "good-manufacturing-practices",
+      "item_name": "good manufacturing practices",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|plastic and rubber products manufacturing supervisor|skill|monitor-gauge",
+      "context_level": "role",
+      "context_key": "D017|plastic and rubber products manufacturing supervisor",
+      "item_type": "skill",
+      "item_key": "monitor-gauge",
+      "item_name": "monitor gauge",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|plastic and rubber products manufacturing supervisor|skill|monitor-processing-environment-conditions",
+      "context_level": "role",
+      "context_key": "D017|plastic and rubber products manufacturing supervisor",
+      "item_type": "skill",
+      "item_key": "monitor-processing-environment-conditions",
+      "item_name": "monitor processing environment conditions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|plastic and rubber products manufacturing supervisor|skill|optimise-production-processes-parameters",
+      "context_level": "role",
+      "context_key": "D017|plastic and rubber products manufacturing supervisor",
+      "item_type": "skill",
+      "item_key": "optimise-production-processes-parameters",
+      "item_name": "optimise production processes parameters",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|plastic and rubber products manufacturing supervisor|skill|plan-resource-allocation",
+      "context_level": "role",
+      "context_key": "D017|plastic and rubber products manufacturing supervisor",
+      "item_type": "skill",
+      "item_key": "plan-resource-allocation",
+      "item_name": "plan resource allocation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|plastic and rubber products manufacturing supervisor|skill|plastic-resins",
+      "context_level": "role",
+      "context_key": "D017|plastic and rubber products manufacturing supervisor",
+      "item_type": "skill",
+      "item_key": "plastic-resins",
+      "item_name": "plastic resins",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|plastic and rubber products manufacturing supervisor|skill|report-defective-manufacturing-materials",
+      "context_level": "role",
+      "context_key": "D017|plastic and rubber products manufacturing supervisor",
+      "item_type": "skill",
+      "item_key": "report-defective-manufacturing-materials",
+      "item_name": "report defective manufacturing materials",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|plastic and rubber products manufacturing supervisor|skill|schedule-production",
+      "context_level": "role",
+      "context_key": "D017|plastic and rubber products manufacturing supervisor",
+      "item_type": "skill",
+      "item_key": "schedule-production",
+      "item_name": "schedule production",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|powertrain engineer|skill|car-controls",
+      "context_level": "role",
+      "context_key": "D017|powertrain engineer",
+      "item_type": "skill",
+      "item_key": "car-controls",
+      "item_name": "car controls",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|powertrain engineer|skill|locomotive-brake-applications",
+      "context_level": "role",
+      "context_key": "D017|powertrain engineer",
+      "item_type": "skill",
+      "item_key": "locomotive-brake-applications",
+      "item_name": "locomotive brake applications",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|powertrain engineer|skill|types-of-fuels",
+      "context_level": "role",
+      "context_key": "D017|powertrain engineer",
+      "item_type": "skill",
+      "item_key": "types-of-fuels",
+      "item_name": "types of fuels",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|powertrain engineer|skill|types-of-vehicles",
+      "context_level": "role",
+      "context_key": "D017|powertrain engineer",
+      "item_type": "skill",
+      "item_key": "types-of-vehicles",
+      "item_name": "types of vehicles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|precision engineer|skill|calibrate-precision-instrument",
+      "context_level": "role",
+      "context_key": "D017|precision engineer",
+      "item_type": "skill",
+      "item_key": "calibrate-precision-instrument",
+      "item_name": "calibrate precision instrument",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|precision mechanics supervisor|skill|micromechanics",
+      "context_level": "role",
+      "context_key": "D017|precision mechanics supervisor",
+      "item_type": "skill",
+      "item_key": "micromechanics",
+      "item_name": "micromechanics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|printed circuit board designer|skill|design-circuit-boards",
+      "context_level": "role",
+      "context_key": "D017|printed circuit board designer",
+      "item_type": "skill",
+      "item_key": "design-circuit-boards",
+      "item_name": "design circuit boards",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|printed circuit board designer|skill|draft-design-specifications",
+      "context_level": "role",
+      "context_key": "D017|printed circuit board designer",
+      "item_type": "skill",
+      "item_key": "draft-design-specifications",
+      "item_name": "draft design specifications",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|printed circuit board designer|skill|electrical-wiring-plans",
+      "context_level": "role",
+      "context_key": "D017|printed circuit board designer",
+      "item_type": "skill",
+      "item_key": "electrical-wiring-plans",
+      "item_name": "electrical wiring plans",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|product development engineering drafter|skill|circular-economy",
+      "context_level": "role",
+      "context_key": "D017|product development engineering drafter",
+      "item_type": "skill",
+      "item_key": "circular-economy",
+      "item_name": "circular economy",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|product development engineering drafter|skill|provide-technical-documentation",
+      "context_level": "role",
+      "context_key": "D017|product development engineering drafter",
+      "item_type": "skill",
+      "item_key": "provide-technical-documentation",
+      "item_name": "provide technical documentation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|product development engineering drafter|skill|use-cadd-software",
+      "context_level": "role",
+      "context_key": "D017|product development engineering drafter",
+      "item_type": "skill",
+      "item_key": "use-cadd-software",
+      "item_name": "use CADD software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|production supervisor|skill|assess-production-needs-to-plan-a-production-schedule",
+      "context_level": "role",
+      "context_key": "D017|production supervisor",
+      "item_type": "skill",
+      "item_key": "assess-production-needs-to-plan-a-production-schedule",
+      "item_name": "assess production needs to plan a production schedule",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|production supervisor|skill|energy-conservation",
+      "context_level": "role",
+      "context_key": "D017|production supervisor",
+      "item_type": "skill",
+      "item_key": "energy-conservation",
+      "item_name": "energy conservation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|production supervisor|skill|monitor-conveyor-belt",
+      "context_level": "role",
+      "context_key": "D017|production supervisor",
+      "item_type": "skill",
+      "item_key": "monitor-conveyor-belt",
+      "item_name": "monitor conveyor belt",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|production supervisor|skill|musical-instruments",
+      "context_level": "role",
+      "context_key": "D017|production supervisor",
+      "item_type": "skill",
+      "item_key": "musical-instruments",
+      "item_name": "musical instruments",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|production supervisor|skill|toys-and-games-industry",
+      "context_level": "role",
+      "context_key": "D017|production supervisor",
+      "item_type": "skill",
+      "item_key": "toys-and-games-industry",
+      "item_name": "toys and games industry",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D017|rolling stock engineer|skill|control-compliance-of-railway-vehicles-regulations",
+      "context_level": "role",
+      "context_key": "D017|rolling stock engineer",
+      "item_type": "skill",
+      "item_key": "control-compliance-of-railway-vehicles-regulations",
+      "item_name": "control compliance of railway vehicles regulations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    }
+  ],
+  "policy": {
+    "review_required_preserved_unless_exact_item_evidence_established": true,
+    "no_relationship_inference": true,
+    "no_promotion": true
+  }
+}

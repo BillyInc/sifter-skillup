@@ -2,8 +2,8 @@
   "schema_version": "2026-09-12.contextual-guidance.v1",
   "verified_at": "2026-09-12",
   "purpose": "Student-facing explanations whose ownership stays at programme, domain, subgroup or role level.",
-  "row_count": 126414,
-  "relationship_count": 422731,
+  "row_count": 121377,
+  "relationship_count": 408163,
   "covered_domains": 160,
   "covered_subgroups": 472,
   "covered_roles": 5036,
@@ -11,7 +11,7 @@
     "domain:certification": 220,
     "domain:competency": 480,
     "domain:skill": 480,
-    "role:skill": 80348,
+    "role:skill": 75311,
     "role:tool": 39751,
     "subgroup:skill": 5135
   },
@@ -32,212 +32,247 @@
     {
       "file": "backend/seed_career_context_items_v1_parts/part-001.sql.gz",
       "part": 1,
-      "row_count": 2398,
-      "bytes": 364274,
-      "sha256": "6947c7a00a521bc001a002132b66354741456bad73feeb9205c8d95200119a15"
+      "row_count": 2167,
+      "bytes": 426517,
+      "sha256": "9d0f6241f5b66058f49a3d1122d2cd9d7aa0729570648f9648065a375775dafd"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-002.sql.gz",
       "part": 2,
-      "row_count": 2486,
-      "bytes": 372928,
-      "sha256": "37b4c48f86640fa664355fbf88a8756b69ac5ed376d99a446614dce6aa515ae9"
+      "row_count": 2191,
+      "bytes": 432265,
+      "sha256": "319d843e19d67b1972610229404cb915d06a0830f7a4ab45e9b6fed8045f2af8"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-003.sql.gz",
       "part": 3,
-      "row_count": 3029,
-      "bytes": 381744,
-      "sha256": "fc9279586addd712582cf353da7d53ebcce2698d1dd281ddf8e354fb83041388"
+      "row_count": 2099,
+      "bytes": 421683,
+      "sha256": "c3ed096f0ee230d8b280647e549009f70194073f75e471f92765ab1945ac6444"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-004.sql.gz",
       "part": 4,
-      "row_count": 4666,
-      "bytes": 440698,
-      "sha256": "c0b446e05766b88cb5cfd987be0316338e29c2ca3b50f619ff839ed57eed2ca9"
+      "row_count": 3737,
+      "bytes": 464248,
+      "sha256": "61f8be35262cd68af38c3232f9ebd6725c3c14466898f936f098ff8924bf46a1"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-005.sql.gz",
       "part": 5,
-      "row_count": 4687,
-      "bytes": 425815,
-      "sha256": "5c53c364330cf2310dfd2d6158a7d9be950ca48315c428403bcb109d02b24e80"
+      "row_count": 3662,
+      "bytes": 479719,
+      "sha256": "9230feed6e255f836f6a172c6ee1243f29db83936f2e755802da414cfdcdc0d7"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-006.sql.gz",
       "part": 6,
-      "row_count": 4637,
-      "bytes": 435020,
-      "sha256": "863012a8700823fca1bb8b82c8cc9a3310268a377ab3010248b6fd344ea6155c"
+      "row_count": 3714,
+      "bytes": 475834,
+      "sha256": "7920814ce0acd6b32b74aeab38842f9b358247202f251951f3664e2fcfc26850"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-007.sql.gz",
       "part": 7,
-      "row_count": 4600,
-      "bytes": 437728,
-      "sha256": "ac6a0d5940c3ac8d47df7013b6692c7088645a9d15d7f11966c5b27b31b6012a"
+      "row_count": 3685,
+      "bytes": 469616,
+      "sha256": "04f310e486800001488740a84c71dfff3eabdef8c230656aee232c60258f4269"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-008.sql.gz",
       "part": 8,
-      "row_count": 4566,
-      "bytes": 415966,
-      "sha256": "497bf763095180c0571fb9b08323df7edf93b3da60f03165962b0b0ce8bd6997"
+      "row_count": 3665,
+      "bytes": 482313,
+      "sha256": "3d0cc479da5bf3a7cdf698b6188ca2d1dfbbc2490ee57fcf71023d16b76ddcad"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-009.sql.gz",
       "part": 9,
-      "row_count": 4585,
-      "bytes": 445470,
-      "sha256": "28dae094a7cf31e1e848e9ef49db26df6fa740b164a680f36ab149ec7ce0eb45"
+      "row_count": 3635,
+      "bytes": 448678,
+      "sha256": "b96fea180e2863a9c530d660254ca9eaba184deedce30a733cdae802185ec02c"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-010.sql.gz",
       "part": 10,
-      "row_count": 4455,
-      "bytes": 431889,
-      "sha256": "34c1c8f6c2a28442284248f8fc5a4fd948fe98a8b43b6baa7e013775436d9626"
+      "row_count": 3671,
+      "bytes": 481861,
+      "sha256": "6788dab8df1271cff9fe41c548c8137fdd1f78439cd33ca28b40f6a64bc7b463"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-011.sql.gz",
       "part": 11,
-      "row_count": 4382,
-      "bytes": 436013,
-      "sha256": "b82350ab87b8092a6c9c907cd7b2d9cdc2b7cb108ce0c91272a68419f58194ac"
+      "row_count": 3618,
+      "bytes": 475033,
+      "sha256": "bc3240b3014a6b2d6e168ef367a9bbc6d0dea4e3b2601fd45acc8f99c09a4d7a"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-012.sql.gz",
       "part": 12,
-      "row_count": 4193,
-      "bytes": 417473,
-      "sha256": "510eff2e14567ec623455032dda8fcb27f45074a3272e08b8d56d5eac3c337cd"
+      "row_count": 3603,
+      "bytes": 480847,
+      "sha256": "51cec3887bdc4fc9ab233aa0265cb9ecb820adf9b8067ee8016d99120c0a8655"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-013.sql.gz",
       "part": 13,
-      "row_count": 4182,
-      "bytes": 409186,
-      "sha256": "f1359b6495d213b587c9261171f6cb5042a65c066d5556be4c18ae5329356705"
+      "row_count": 3435,
+      "bytes": 484769,
+      "sha256": "19a72160c4f9af203069ead8c987a6861629f0704403be53d5311d18fb4e40d9"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-014.sql.gz",
       "part": 14,
-      "row_count": 4200,
-      "bytes": 411359,
-      "sha256": "8ae9f57d91b70b90241fd83434784235168b4053d72d4440ffbc8c194080ac96"
+      "row_count": 3427,
+      "bytes": 483638,
+      "sha256": "5be60eab9e36475f7a67d682f1e6ce911e5ae4fe2a14fdd0c85e0f93715ef900"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-015.sql.gz",
       "part": 15,
-      "row_count": 4625,
-      "bytes": 451979,
-      "sha256": "b15b77925aff65d3456648febb11af447250c5de9ec4ffbfd52b0a171a95c9af"
+      "row_count": 3440,
+      "bytes": 482045,
+      "sha256": "34a43637037e35337cc87b999f0fe4018f536f5d02c906ae07ad831f43e38a0c"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-016.sql.gz",
       "part": 16,
-      "row_count": 4585,
-      "bytes": 445294,
-      "sha256": "6b2141170e27c795c0b7dadf0bfa06ea1ef8b6c41266bbb59e45ed65d48ba493"
+      "row_count": 3401,
+      "bytes": 479535,
+      "sha256": "ecf0d09b07b3543b519b83d9c6a9931cd7be78ba76422426aa6f1eda34ab5533"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-017.sql.gz",
       "part": 17,
-      "row_count": 4691,
-      "bytes": 450417,
-      "sha256": "ef14685a48b10d7db83333eb35d3573cd515d614a42dd635cca863d8a1f9e8cf"
+      "row_count": 3708,
+      "bytes": 483286,
+      "sha256": "4f189de10446371bf2110c6efbecb3a1bf3221a36a75122f0d8c30b12fa9768f"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-018.sql.gz",
       "part": 18,
-      "row_count": 4641,
-      "bytes": 452689,
-      "sha256": "d86554064cf21c8359cb7df093b06de749fc097a4b5ba829dd0f6330cd24c1e4"
+      "row_count": 3660,
+      "bytes": 479251,
+      "sha256": "54a394d4d9ae123f19434efb7f59e6fa65a4c87b751a06808534bac244d5f3bb"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-019.sql.gz",
       "part": 19,
-      "row_count": 4616,
-      "bytes": 444646,
-      "sha256": "728ff08ca6eb620dea0c75ad1b2fb7d16559527c8d8af0d8d3529b1c69d58a93"
+      "row_count": 3733,
+      "bytes": 477903,
+      "sha256": "165ce02e2842c62bffdf89f90953d043cb4700c3c7934f8cb16e45a0f6b6be0c"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-020.sql.gz",
       "part": 20,
-      "row_count": 4642,
-      "bytes": 465625,
-      "sha256": "21bbb7c2a80e7438b82717961d31b1bfd298733d4570a51badd13cebeee92053"
+      "row_count": 3763,
+      "bytes": 469601,
+      "sha256": "f58033e6c1f8ac5531bc5fdaa4179635aa7a688afb4dd4103ea83fd39b5e27f1"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-021.sql.gz",
       "part": 21,
-      "row_count": 4550,
-      "bytes": 440438,
-      "sha256": "78891a53a08014593eb9d269f4f00841bb1f6574aa380d9c75efb9475160b0a8"
+      "row_count": 3688,
+      "bytes": 482736,
+      "sha256": "fa8c687a2582fa3cbacbb563734736e2d599b11b6287ab6a5f18bd18988c1148"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-022.sql.gz",
       "part": 22,
-      "row_count": 4604,
-      "bytes": 457914,
-      "sha256": "9c4411cfc7ff89796f36db209a9277d7f8d09ba4a9631aa2aca2f9fd64cb7301"
+      "row_count": 3704,
+      "bytes": 484801,
+      "sha256": "8fb85e64f0f13559b0a52cfc4b5d14333c94b65263443761428bb2667de066f9"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-023.sql.gz",
       "part": 23,
-      "row_count": 4533,
-      "bytes": 437417,
-      "sha256": "89feb7964ef36bd630ae10c35929f723e1f6e56a4fab0ba9b7944c830fee8fe2"
+      "row_count": 3709,
+      "bytes": 490328,
+      "sha256": "1dd9eb853bec917daa147bb46f0541b65f7e5e95160e50b931d24f400833cc35"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-024.sql.gz",
       "part": 24,
-      "row_count": 4583,
-      "bytes": 445442,
-      "sha256": "f0597e86df8862533ef508de9a92bf7061843edc26202eb4567fbc913a8aff7c"
+      "row_count": 3662,
+      "bytes": 479346,
+      "sha256": "09d15b9a19531fc4af5e0dbc1d736eac54449ccbdd69975eecb1fe3cf8d091c2"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-025.sql.gz",
       "part": 25,
-      "row_count": 4595,
-      "bytes": 449924,
-      "sha256": "c5145c78485d602d97a76214992668967991d2558ba59e39e4b192fb16383159"
+      "row_count": 3700,
+      "bytes": 493251,
+      "sha256": "f94a8b40da22b86a0e4294c7cb3521507ea4ec2ee5a9bf6978520eb92cb860e4"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-026.sql.gz",
       "part": 26,
-      "row_count": 4550,
-      "bytes": 441735,
-      "sha256": "72200b0aa62eb2ba7d10addb0f4a21b15233a972face7840272b6721401ea2bc"
+      "row_count": 3665,
+      "bytes": 476925,
+      "sha256": "60880b35ab8e4650c1e4f229be249922de510ce8c7b43790b672ce091dce6e94"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-027.sql.gz",
       "part": 27,
-      "row_count": 4551,
-      "bytes": 444449,
-      "sha256": "5502f1f106122f4980b626672dd2f9cdac5c5f06f300a17fbae417999775e6ef"
+      "row_count": 3678,
+      "bytes": 477042,
+      "sha256": "eda20c7119e412751a0b005182a02a9a288cc54d5b6e80b37795705a06e3ce6e"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-028.sql.gz",
       "part": 28,
-      "row_count": 4671,
-      "bytes": 439623,
-      "sha256": "237080f01688fe0ff76b9e28a289cbc930a2c4da704f67550890c9197b23ff2a"
+      "row_count": 3746,
+      "bytes": 475438,
+      "sha256": "3dea542d5792f4ef044645e6c80571207a81f08b5ce2f57a796fe613f03a57c9"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-029.sql.gz",
       "part": 29,
-      "row_count": 2800,
-      "bytes": 488864,
-      "sha256": "5f65762a699602ee0abfe01119c2a7f6733bfdf465b0c31e8b2b4c45e3b27ee1"
+      "row_count": 3634,
+      "bytes": 474109,
+      "sha256": "1507227f173e4bbaab90866fd2b6da1d3516cf45845cc01c186bfb74825ee8f0"
     },
     {
       "file": "backend/seed_career_context_items_v1_parts/part-030.sql.gz",
       "part": 30,
-      "row_count": 2111,
-      "bytes": 420277,
-      "sha256": "e9bcc5a34994053459dc63e7e5542b829dcda9c82ad668a0ad4b58034ba28ab0"
+      "row_count": 3677,
+      "bytes": 472809,
+      "sha256": "e543175977cf7f985ef6dd936e3866291577eef094c28c2664e0f1f63f2f2f7c"
+    },
+    {
+      "file": "backend/seed_career_context_items_v1_parts/part-031.sql.gz",
+      "part": 31,
+      "row_count": 3708,
+      "bytes": 469417,
+      "sha256": "9c1224809719e3063c51fe57508440c2027dbefe7aeac91a4ee5907ddc0752c5"
+    },
+    {
+      "file": "backend/seed_career_context_items_v1_parts/part-032.sql.gz",
+      "part": 32,
+      "row_count": 3717,
+      "bytes": 472990,
+      "sha256": "94ef827adaba47bf73f3120596334a410d3c78615f663d6447aceaa27f3be59e"
+    },
+    {
+      "file": "backend/seed_career_context_items_v1_parts/part-033.sql.gz",
+      "part": 33,
+      "row_count": 3618,
+      "bytes": 461882,
+      "sha256": "8500a1f21fb351d86b2c4aa368b2a042c2f4c3df48800aea9a77ac285f3fc9a4"
+    },
+    {
+      "file": "backend/seed_career_context_items_v1_parts/part-034.sql.gz",
+      "part": 34,
+      "row_count": 3602,
+      "bytes": 469292,
+      "sha256": "ce5bf81855b2bb219d6eb80010823772f6c8d1e78e335526d41e03f0df9a42cd"
+    },
+    {
+      "file": "backend/seed_career_context_items_v1_parts/part-035.sql.gz",
+      "part": 35,
+      "row_count": 1855,
+      "bytes": 230531,
+      "sha256": "8737ae6b343e27f37865dadf6c0d7500fe50afe38166df0aa7a3339a7b928421"
     }
   ],
   "source_rule": "Domain rows never use role prevalence; role-derived evidence appears only at subgroup/role level.",

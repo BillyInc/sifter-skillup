@@ -1,0 +1,19 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-selection.v2",
+  "batch": "quality_remediation_lane_20_20260922",
+  "selected_at": "2026-09-22",
+  "source_audit": "data/career-mapping/_audit/external_enrichment_agent/item_ledger_quality_audit_2026-09-22.json",
+  "source_sha256": "0cfb6dea25de3bd7914195b1749cc524bc8b030e8c6fa41d0cf0d95ca586e972",
+  "selection_method": "atomic shared lock; exclude all prior valid claims by contextual and typed identity",
+  "prior_claimed_contextual_ids": 13248,
+  "prior_claimed_typed_items": 9872,
+  "selection_count": 0,
+  "requested_count": 100,
+  "shortfall": 100,
+  "rows": [],
+  "policy": {
+    "review_required_preserved_unless_exact_item_evidence_established": true,
+    "no_relationship_inference": true,
+    "no_promotion": true
+  }
+}

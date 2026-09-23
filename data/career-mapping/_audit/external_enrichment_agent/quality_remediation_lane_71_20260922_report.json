@@ -1,0 +1,47 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-report.v2",
+  "batch": "quality_remediation_lane_71_20260922",
+  "status": "needs_review",
+  "integrity_exception": true,
+  "selection": {
+    "file": "quality_remediation_lane_71_20260922_selection.json",
+    "selection_count": 100,
+    "requested_count": 100,
+    "shortfall": 0,
+    "sha256": "c00619649d4596b41f2e6f23d294432e99d90d45b1696905bd37f3bf6fc5deab"
+  },
+  "ledger": {
+    "file": "quality_remediation_lane_71_20260922_append_only_ledger.jsonl",
+    "ledger_count": 120,
+    "valid_jsonl_row_count": 120,
+    "unique_subject_ids": 100,
+    "ledger_sha256": "37cef24dac70af1cdf0bc8e592637caf6606ceed004269cbaceaf6bea8b8d0ca"
+  },
+  "reconciliation": {
+    "all_selected_subject_ids_present": true,
+    "all_ids_reconciled": true,
+    "missing_selected_id_count": 0,
+    "outside_id_count": 0,
+    "extra_record_count": 20,
+    "duplicate_count": 20,
+    "duplicate_selection_subject_id_count": 0,
+    "duplicate_ledger_subject_id_count": 20
+  },
+  "decision_counts": {
+    "review_required": 120,
+    "promoted": 0,
+    "not_promoted": 120
+  },
+  "scope": {
+    "no_scope_changes": true,
+    "relationships_touched": false,
+    "catalogue_touched": false,
+    "sql_touched": false,
+    "seeds_touched": false,
+    "ui_touched": false,
+    "browser_proof_touched": false,
+    "ledger_modified_by_report": false,
+    "finalization_performed": false
+  },
+  "audit_note": "The 100 selected identities reconcile exactly as a set, but the append-only ledger contains 120 rows because 20 identities occur twice. This is an integrity exception requiring review; no ledger repair or promotion is performed by this report."
+}

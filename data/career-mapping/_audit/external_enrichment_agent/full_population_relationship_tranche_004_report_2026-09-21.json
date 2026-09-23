@@ -1,0 +1,29 @@
+{
+  "schema": "2026-09-21.full-population-relationship-tranche-report.v1",
+  "accessed_on": "2026-09-21",
+  "tranche": "full_population_relationship_tranche_004",
+  "selection": "data/career-mapping/_audit/external_enrichment_agent/full_population_relationship_tranche_004_selection_2026-09-21.json",
+  "ledger": "data/career-mapping/_audit/external_enrichment_agent/full_population_relationship_tranche_004_search_ledger_2026-09-21.jsonl",
+  "counts": {
+    "selected_rows": 8,
+    "rows_searched": 8,
+    "linked": 0,
+    "review_required": 8,
+    "genuinely_unavailable": 0,
+    "remaining_selected_rows": 0
+  },
+  "scope": {
+    "excluded_context_prefix": "D078",
+    "prior_tranche_row_ids_excluded": 72,
+    "prior_tranche_overlap": 0,
+    "catalogue_promotions": 0
+  },
+  "decision_summary": "All eight rows retained null target item type/key/name and null candidate relationship type. Official O*NET, Jenkins, Microsoft Learn, MDN, W3C and related standards sources established endpoint meanings or generic technical co-use/interoperability, but none established both typed local endpoints plus an explicit works_with/builds_on relationship in the exact same role context. All rows remain review_required; no edge was promoted.",
+  "guardrails": {
+    "sql_touched": false,
+    "generated_seed_transport_touched": false,
+    "catalogue_touched": false,
+    "ui_touched": false,
+    "browser_proof_touched": false
+  }
+}

@@ -1,0 +1,3220 @@
+{
+  "schema": "2026-09-22.external-item-quality-remediation-selection.v2",
+  "batch": "quality_remediation_lane_89_20260922",
+  "selected_at": "2026-09-22",
+  "source_audit": "data/career-mapping/_audit/external_enrichment_agent/item_ledger_quality_audit_2026-09-22.json",
+  "source_sha256": "133bf28782e1b50abacca97438559242eb689f8fd38e69845dffdc0b9da18009",
+  "selection_method": "atomic shared lock; exclude all prior valid claims by contextual and typed identity",
+  "prior_claimed_contextual_ids": 8972,
+  "prior_claimed_typed_items": 8346,
+  "selection_count": 200,
+  "requested_count": 200,
+  "shortfall": 0,
+  "rows": [
+    {
+      "subject_id": "item|role|D111|laundry ironer|tool|sales-processing-software",
+      "context_level": "role",
+      "context_key": "D111|laundry ironer",
+      "item_type": "tool",
+      "item_key": "sales-processing-software",
+      "item_name": "Sales processing software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D111|laundry ironer|tool|wash-dry-fold-pos",
+      "context_level": "role",
+      "context_key": "D111|laundry ironer",
+      "item_type": "tool",
+      "item_key": "wash-dry-fold-pos",
+      "item_name": "Wash-Dry-Fold POS",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D111|laundry worker|skill|clean-household-linens",
+      "context_level": "role",
+      "context_key": "D111|laundry worker",
+      "item_type": "skill",
+      "item_key": "clean-household-linens",
+      "item_name": "clean household linens",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D111|laundry worker|skill|operate-washer-extractor",
+      "context_level": "role",
+      "context_key": "D111|laundry worker",
+      "item_type": "skill",
+      "item_key": "operate-washer-extractor",
+      "item_name": "operate washer extractor",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D111|laundry worker|skill|types-of-staining",
+      "context_level": "role",
+      "context_key": "D111|laundry worker",
+      "item_type": "skill",
+      "item_key": "types-of-staining",
+      "item_name": "types of staining",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D111|laundry worker|skill|use-solvents",
+      "context_level": "role",
+      "context_key": "D111|laundry worker",
+      "item_type": "skill",
+      "item_key": "use-solvents",
+      "item_name": "use solvents",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D111|man-made fiber spinner|skill|process-man-made-fibres",
+      "context_level": "role",
+      "context_key": "D111|man-made fiber spinner",
+      "item_type": "skill",
+      "item_key": "process-man-made-fibres",
+      "item_name": "process man-made fibres",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D111|man-made fiber spinner|skill|tend-spinning-machines",
+      "context_level": "role",
+      "context_key": "D111|man-made fiber spinner",
+      "item_type": "skill",
+      "item_key": "tend-spinning-machines",
+      "item_name": "tend spinning machines",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D111|nonwoven staple machine operator|skill|adjust-filament-tension",
+      "context_level": "role",
+      "context_key": "D111|nonwoven staple machine operator",
+      "item_type": "skill",
+      "item_key": "adjust-filament-tension",
+      "item_name": "adjust filament tension",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D111|nonwoven staple machine operator|skill|bind-fibreglass-filaments",
+      "context_level": "role",
+      "context_key": "D111|nonwoven staple machine operator",
+      "item_type": "skill",
+      "item_key": "bind-fibreglass-filaments",
+      "item_name": "bind fibreglass filaments",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D111|nonwoven staple machine operator|skill|manufacture-texturised-filament-yarns",
+      "context_level": "role",
+      "context_key": "D111|nonwoven staple machine operator",
+      "item_type": "skill",
+      "item_key": "manufacture-texturised-filament-yarns",
+      "item_name": "manufacture texturised filament yarns",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D111|nonwoven staple machine operator|skill|staple-spinning-machine-technology",
+      "context_level": "role",
+      "context_key": "D111|nonwoven staple machine operator",
+      "item_type": "skill",
+      "item_key": "staple-spinning-machine-technology",
+      "item_name": "staple spinning machine technology",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D111|nonwoven staple machine operator|skill|tend-twisting-machines",
+      "context_level": "role",
+      "context_key": "D111|nonwoven staple machine operator",
+      "item_type": "skill",
+      "item_key": "tend-twisting-machines",
+      "item_name": "tend twisting machines",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D111|nonwoven staple machine operator|skill|wrap-yarn-around-bobbins",
+      "context_level": "role",
+      "context_key": "D111|nonwoven staple machine operator",
+      "item_type": "skill",
+      "item_key": "wrap-yarn-around-bobbins",
+      "item_name": "wrap yarn around bobbins",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D111|spinning textile operator|skill|convert-textile-fibres-into-sliver",
+      "context_level": "role",
+      "context_key": "D111|spinning textile operator",
+      "item_type": "skill",
+      "item_key": "convert-textile-fibres-into-sliver",
+      "item_name": "convert textile fibres into sliver",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D111|spinning textile operator|skill|covert-slivers-into-thread",
+      "context_level": "role",
+      "context_key": "D111|spinning textile operator",
+      "item_type": "skill",
+      "item_key": "covert-slivers-into-thread",
+      "item_name": "covert slivers into thread",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D111|textile pattern making machine operator|skill|design-woven-fabrics",
+      "context_level": "role",
+      "context_key": "D111|textile pattern making machine operator",
+      "item_type": "skill",
+      "item_key": "design-woven-fabrics",
+      "item_name": "design woven fabrics",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.theabr.org/get-certified/alternate-pathways-to-certification/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D111|textile printer|skill|tend-textile-printing-machines",
+      "context_level": "role",
+      "context_key": "D111|textile printer",
+      "item_type": "skill",
+      "item_key": "tend-textile-printing-machines",
+      "item_name": "tend textile printing machines",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D111|twisting machine operator|skill|cut-filament",
+      "context_level": "role",
+      "context_key": "D111|twisting machine operator",
+      "item_type": "skill",
+      "item_key": "cut-filament",
+      "item_name": "cut filament",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D111|twisting machine operator|skill|rope-manipulation",
+      "context_level": "role",
+      "context_key": "D111|twisting machine operator",
+      "item_type": "skill",
+      "item_key": "rope-manipulation",
+      "item_name": "rope manipulation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D111|twisting machine operator|skill|set-the-operation-speed-of-manufacturing-machines",
+      "context_level": "role",
+      "context_key": "D111|twisting machine operator",
+      "item_type": "skill",
+      "item_key": "set-the-operation-speed-of-manufacturing-machines",
+      "item_name": "set the operation speed of manufacturing machines",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D111|weaving machine operator|skill|use-weaving-machine-technologies",
+      "context_level": "role",
+      "context_key": "D111|weaving machine operator",
+      "item_type": "skill",
+      "item_key": "use-weaving-machine-technologies",
+      "item_name": "use weaving machine technologies",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D111|winding machine operator|skill|tend-winding-machines",
+      "context_level": "role",
+      "context_key": "D111|winding machine operator",
+      "item_type": "skill",
+      "item_key": "tend-winding-machines",
+      "item_name": "tend winding machines",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D111|winding machine operator|skill|types-of-strings",
+      "context_level": "role",
+      "context_key": "D111|winding machine operator",
+      "item_type": "skill",
+      "item_key": "types-of-strings",
+      "item_name": "types of strings",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|band saw operator|skill|operate-band-saw",
+      "context_level": "role",
+      "context_key": "D112|band saw operator",
+      "item_type": "skill",
+      "item_key": "operate-band-saw",
+      "item_name": "operate band saw",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|bleacher operator|skill|adjust-solutions-consistency",
+      "context_level": "role",
+      "context_key": "D112|bleacher operator",
+      "item_type": "skill",
+      "item_key": "adjust-solutions-consistency",
+      "item_name": "adjust solutions' consistency",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|bleacher operator|skill|pump-products-for-storage",
+      "context_level": "role",
+      "context_key": "D112|bleacher operator",
+      "item_type": "skill",
+      "item_key": "pump-products-for-storage",
+      "item_name": "pump products for storage",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|bleacher operator|skill|tend-bleacher",
+      "context_level": "role",
+      "context_key": "D112|bleacher operator",
+      "item_type": "skill",
+      "item_key": "tend-bleacher",
+      "item_name": "tend bleacher",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|bleacher operator|tool|objectif-lune-printshop-mail",
+      "context_level": "role",
+      "context_key": "D112|bleacher operator",
+      "item_type": "tool",
+      "item_key": "objectif-lune-printshop-mail",
+      "item_name": "Objectif Lune PrintShop Mail",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|bleacher operator|tool|quark-enterprise-publishing-software",
+      "context_level": "role",
+      "context_key": "D112|bleacher operator",
+      "item_type": "tool",
+      "item_key": "quark-enterprise-publishing-software",
+      "item_name": "Quark enterprise publishing software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|bleacher operator|tool|virtual-systems-mail-shop",
+      "context_level": "role",
+      "context_key": "D112|bleacher operator",
+      "item_type": "tool",
+      "item_key": "virtual-systems-mail-shop",
+      "item_name": "Virtual Systems Mail-Shop",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|chipper operator|skill|drive-chipper-truck",
+      "context_level": "role",
+      "context_key": "D112|chipper operator",
+      "item_type": "skill",
+      "item_key": "drive-chipper-truck",
+      "item_name": "drive chipper truck",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|chipper operator|skill|manage-logs-transfer",
+      "context_level": "role",
+      "context_key": "D112|chipper operator",
+      "item_type": "skill",
+      "item_key": "manage-logs-transfer",
+      "item_name": "manage logs transfer",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|chipper operator|skill|monitor-chipper-machine",
+      "context_level": "role",
+      "context_key": "D112|chipper operator",
+      "item_type": "skill",
+      "item_key": "monitor-chipper-machine",
+      "item_name": "monitor chipper machine",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|chipper operator|skill|operate-wood-chipper",
+      "context_level": "role",
+      "context_key": "D112|chipper operator",
+      "item_type": "skill",
+      "item_key": "operate-wood-chipper",
+      "item_name": "operate wood chipper",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|chipper operator|skill|replace-knives",
+      "context_level": "role",
+      "context_key": "D112|chipper operator",
+      "item_type": "skill",
+      "item_key": "replace-knives",
+      "item_name": "replace knives",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|chipper operator|skill|sharpen-edged-tools",
+      "context_level": "role",
+      "context_key": "D112|chipper operator",
+      "item_type": "skill",
+      "item_key": "sharpen-edged-tools",
+      "item_name": "sharpen edged tools",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|chipper operator|skill|types-of-wood-chippers",
+      "context_level": "role",
+      "context_key": "D112|chipper operator",
+      "item_type": "skill",
+      "item_key": "types-of-wood-chippers",
+      "item_name": "types of wood chippers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|crosscut saw operator|skill|handle-saw-securely",
+      "context_level": "role",
+      "context_key": "D112|crosscut saw operator",
+      "item_type": "skill",
+      "item_key": "handle-saw-securely",
+      "item_name": "handle saw securely",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|crosscut saw operator|skill|keep-sawing-equipment-in-good-condition",
+      "context_level": "role",
+      "context_key": "D112|crosscut saw operator",
+      "item_type": "skill",
+      "item_key": "keep-sawing-equipment-in-good-condition",
+      "item_name": "keep sawing equipment in good condition",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|crosscut saw operator|skill|operate-circular-saw",
+      "context_level": "role",
+      "context_key": "D112|crosscut saw operator",
+      "item_type": "skill",
+      "item_key": "operate-circular-saw",
+      "item_name": "operate circular saw",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|crosscut saw operator|skill|types-of-crosscut-saws",
+      "context_level": "role",
+      "context_key": "D112|crosscut saw operator",
+      "item_type": "skill",
+      "item_key": "types-of-crosscut-saws",
+      "item_name": "types of crosscut saws",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|crosscut saw operator|tool|assisi-compiler",
+      "context_level": "role",
+      "context_key": "D112|crosscut saw operator",
+      "item_type": "tool",
+      "item_key": "assisi-compiler",
+      "item_name": "Assisi Compiler",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|crosscut saw operator|tool|assisi-software-assisi-inventory",
+      "context_level": "role",
+      "context_key": "D112|crosscut saw operator",
+      "item_type": "tool",
+      "item_key": "assisi-software-assisi-inventory",
+      "item_name": "Assisi Software Assisi Inventory",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|crosscut saw operator|tool|assisi-software-assisi-manager",
+      "context_level": "role",
+      "context_key": "D112|crosscut saw operator",
+      "item_type": "tool",
+      "item_key": "assisi-software-assisi-manager",
+      "item_name": "Assisi Software Assisi Manager",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|debarker operator|skill|observe-logs",
+      "context_level": "role",
+      "context_key": "D112|debarker operator",
+      "item_type": "skill",
+      "item_key": "observe-logs",
+      "item_name": "observe logs",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|debarker operator|skill|operate-debarking-machine",
+      "context_level": "role",
+      "context_key": "D112|debarker operator",
+      "item_type": "skill",
+      "item_key": "operate-debarking-machine",
+      "item_name": "operate debarking machine",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|debarker operator|skill|transfer-logs",
+      "context_level": "role",
+      "context_key": "D112|debarker operator",
+      "item_type": "skill",
+      "item_key": "transfer-logs",
+      "item_name": "transfer logs",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|digester operator|skill|concentrate-pulp-slurry",
+      "context_level": "role",
+      "context_key": "D112|digester operator",
+      "item_type": "skill",
+      "item_key": "concentrate-pulp-slurry",
+      "item_name": "concentrate pulp slurry",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|froth flotation deinking operator|skill|froth-flotation-processes",
+      "context_level": "role",
+      "context_key": "D112|froth flotation deinking operator",
+      "item_type": "skill",
+      "item_key": "froth-flotation-processes",
+      "item_name": "froth flotation processes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|froth flotation deinking operator|skill|separate-ink",
+      "context_level": "role",
+      "context_key": "D112|froth flotation deinking operator",
+      "item_type": "skill",
+      "item_key": "separate-ink",
+      "item_name": "separate ink",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|froth flotation deinking operator|skill|tend-deinking-tank",
+      "context_level": "role",
+      "context_key": "D112|froth flotation deinking operator",
+      "item_type": "skill",
+      "item_key": "tend-deinking-tank",
+      "item_name": "tend deinking tank",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|laminating machine operator|skill|make-folding-styles",
+      "context_level": "role",
+      "context_key": "D112|laminating machine operator",
+      "item_type": "skill",
+      "item_key": "make-folding-styles",
+      "item_name": "make folding styles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|laminating machine operator|skill|operate-laminating-machine",
+      "context_level": "role",
+      "context_key": "D112|laminating machine operator",
+      "item_type": "skill",
+      "item_key": "operate-laminating-machine",
+      "item_name": "operate laminating machine",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|laminating machine operator|skill|read-job-ticket-instructions",
+      "context_level": "role",
+      "context_key": "D112|laminating machine operator",
+      "item_type": "skill",
+      "item_key": "read-job-ticket-instructions",
+      "item_name": "read job ticket instructions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|laminating machine operator|skill|types-of-laminators",
+      "context_level": "role",
+      "context_key": "D112|laminating machine operator",
+      "item_type": "skill",
+      "item_key": "types-of-laminators",
+      "item_name": "types of laminators",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|paper machine operator|skill|check-paper-quality",
+      "context_level": "role",
+      "context_key": "D112|paper machine operator",
+      "item_type": "skill",
+      "item_key": "check-paper-quality",
+      "item_name": "check paper quality",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|paper machine operator|skill|operate-headbox",
+      "context_level": "role",
+      "context_key": "D112|paper machine operator",
+      "item_type": "skill",
+      "item_key": "operate-headbox",
+      "item_name": "operate headbox",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|paper machine operator|skill|operate-paper-press",
+      "context_level": "role",
+      "context_key": "D112|paper machine operator",
+      "item_type": "skill",
+      "item_key": "operate-paper-press",
+      "item_name": "operate paper press",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|sawmill operator|skill|types-of-table-saws",
+      "context_level": "role",
+      "context_key": "D112|sawmill operator",
+      "item_type": "skill",
+      "item_key": "types-of-table-saws",
+      "item_name": "types of table saws",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|veneer slicer operator|skill|types-of-veneers",
+      "context_level": "role",
+      "context_key": "D112|veneer slicer operator",
+      "item_type": "skill",
+      "item_key": "types-of-veneers",
+      "item_name": "types of veneers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|wood fuel pelletiser|skill|maintain-hammer-mill",
+      "context_level": "role",
+      "context_key": "D112|wood fuel pelletiser",
+      "item_type": "skill",
+      "item_key": "maintain-hammer-mill",
+      "item_name": "maintain hammer mill",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|wood fuel pelletiser|skill|operate-hammer-mill",
+      "context_level": "role",
+      "context_key": "D112|wood fuel pelletiser",
+      "item_type": "skill",
+      "item_key": "operate-hammer-mill",
+      "item_name": "operate hammer mill",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|wood fuel pelletiser|skill|operate-pellet-press",
+      "context_level": "role",
+      "context_key": "D112|wood fuel pelletiser",
+      "item_type": "skill",
+      "item_key": "operate-pellet-press",
+      "item_name": "operate pellet press",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D112|wood fuel pelletiser|skill|pellet-standards",
+      "context_level": "role",
+      "context_key": "D112|wood fuel pelletiser",
+      "item_type": "skill",
+      "item_key": "pellet-standards",
+      "item_name": "pellet standards",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|Computer Numerically Controlled Tool Programmers|tool|autodesk-fusion-360",
+      "context_level": "role",
+      "context_key": "D114|Computer Numerically Controlled Tool Programmers",
+      "item_type": "tool",
+      "item_key": "autodesk-fusion-360",
+      "item_name": "Autodesk Fusion 360",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|Timing Device Assemblers and Adjusters|tool|retail-sales-software",
+      "context_level": "role",
+      "context_key": "D114|Timing Device Assemblers and Adjusters",
+      "item_type": "tool",
+      "item_key": "retail-sales-software",
+      "item_name": "Retail sales software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|aircraft assembler|tool|computerized-aircraft-log-manager-calm",
+      "context_level": "role",
+      "context_key": "D114|aircraft assembler",
+      "item_type": "tool",
+      "item_key": "computerized-aircraft-log-manager-calm",
+      "item_name": "Computerized aircraft log manager CALM",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|ammunition assembler|skill|assemble-ammunition",
+      "context_level": "role",
+      "context_key": "D114|ammunition assembler",
+      "item_type": "skill",
+      "item_key": "assemble-ammunition",
+      "item_name": "assemble ammunition",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|ammunition assembler|skill|assemble-bombs",
+      "context_level": "role",
+      "context_key": "D114|ammunition assembler",
+      "item_type": "skill",
+      "item_key": "assemble-bombs",
+      "item_name": "assemble bombs",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|ammunition assembler|skill|maintenance-of-ammunition",
+      "context_level": "role",
+      "context_key": "D114|ammunition assembler",
+      "item_type": "skill",
+      "item_key": "maintenance-of-ammunition",
+      "item_name": "maintenance of ammunition",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|ammunition assembler|skill|materials-of-die",
+      "context_level": "role",
+      "context_key": "D114|ammunition assembler",
+      "item_type": "skill",
+      "item_key": "materials-of-die",
+      "item_name": "materials of die",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|ammunition assembler|skill|types-of-cartridges",
+      "context_level": "role",
+      "context_key": "D114|ammunition assembler",
+      "item_type": "skill",
+      "item_key": "types-of-cartridges",
+      "item_name": "types of cartridges",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|ammunition assembler|skill|types-of-propellants",
+      "context_level": "role",
+      "context_key": "D114|ammunition assembler",
+      "item_type": "skill",
+      "item_key": "types-of-propellants",
+      "item_name": "types of propellants",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|bicycle assembler|skill|install-transport-equipment-lighting",
+      "context_level": "role",
+      "context_key": "D114|bicycle assembler",
+      "item_type": "skill",
+      "item_key": "install-transport-equipment-lighting",
+      "item_name": "install transport equipment lighting",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|electronic musical instrument maker|skill|assemble-musical-instrument-parts",
+      "context_level": "role",
+      "context_key": "D114|electronic musical instrument maker",
+      "item_type": "skill",
+      "item_key": "assemble-musical-instrument-parts",
+      "item_name": "assemble musical instrument parts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|electronic musical instrument maker|skill|create-musical-instrument-parts",
+      "context_level": "role",
+      "context_key": "D114|electronic musical instrument maker",
+      "item_type": "skill",
+      "item_key": "create-musical-instrument-parts",
+      "item_name": "create musical instrument parts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|electronic musical instrument maker|skill|maintain-musical-instruments",
+      "context_level": "role",
+      "context_key": "D114|electronic musical instrument maker",
+      "item_type": "skill",
+      "item_key": "maintain-musical-instruments",
+      "item_name": "maintain musical instruments",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|electronic musical instrument maker|skill|musical-instruments-materials",
+      "context_level": "role",
+      "context_key": "D114|electronic musical instrument maker",
+      "item_type": "skill",
+      "item_key": "musical-instruments-materials",
+      "item_name": "musical instruments materials",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|electronic musical instrument maker|skill|repair-musical-instruments",
+      "context_level": "role",
+      "context_key": "D114|electronic musical instrument maker",
+      "item_type": "skill",
+      "item_key": "repair-musical-instruments",
+      "item_name": "repair musical instruments",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|electronic musical instrument maker|skill|rewire-electronic-musical-instruments",
+      "context_level": "role",
+      "context_key": "D114|electronic musical instrument maker",
+      "item_type": "skill",
+      "item_key": "rewire-electronic-musical-instruments",
+      "item_name": "rewire electronic musical instruments",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|electronic musical instrument maker|skill|tuning-techniques",
+      "context_level": "role",
+      "context_key": "D114|electronic musical instrument maker",
+      "item_type": "skill",
+      "item_key": "tuning-techniques",
+      "item_name": "tuning techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|electronic musical instrument maker|tool|katsura-shareware-ks-strobe-tuner",
+      "context_level": "role",
+      "context_key": "D114|electronic musical instrument maker",
+      "item_type": "tool",
+      "item_key": "katsura-shareware-ks-strobe-tuner",
+      "item_name": "Katsura Shareware KS Strobe Tuner",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|electronic musical instrument maker|tool|katsura-shareware-prolevel",
+      "context_level": "role",
+      "context_key": "D114|electronic musical instrument maker",
+      "item_type": "tool",
+      "item_key": "katsura-shareware-prolevel",
+      "item_name": "Katsura Shareware ProLevel",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|electronic musical instrument maker|tool|katsura-shareware-soundframes",
+      "context_level": "role",
+      "context_key": "D114|electronic musical instrument maker",
+      "item_type": "tool",
+      "item_key": "katsura-shareware-soundframes",
+      "item_name": "Katsura Shareware SoundFrames",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|electronic musical instrument maker|tool|mensurix-audio",
+      "context_level": "role",
+      "context_key": "D114|electronic musical instrument maker",
+      "item_type": "tool",
+      "item_key": "mensurix-audio",
+      "item_name": "Mensurix Audio",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|electronic musical instrument maker|tool|reyburn-cybertuner",
+      "context_level": "role",
+      "context_key": "D114|electronic musical instrument maker",
+      "item_type": "tool",
+      "item_key": "reyburn-cybertuner",
+      "item_name": "Reyburn CyberTuner",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|electronic musical instrument maker|tool|tonalenergy-tuner-metronome",
+      "context_level": "role",
+      "context_key": "D114|electronic musical instrument maker",
+      "item_type": "tool",
+      "item_key": "tonalenergy-tuner-metronome",
+      "item_name": "TonalEnergy Tuner & Metronome",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|electronic musical instrument maker|tool|tunable-instrument-tuner",
+      "context_level": "role",
+      "context_key": "D114|electronic musical instrument maker",
+      "item_type": "tool",
+      "item_key": "tunable-instrument-tuner",
+      "item_name": "Tunable Instrument Tuner",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|electronic musical instrument maker|tool|tunelab",
+      "context_level": "role",
+      "context_key": "D114|electronic musical instrument maker",
+      "item_type": "tool",
+      "item_key": "tunelab",
+      "item_name": "TuneLab",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|electronic musical instrument maker|tool|tunic-onlypure",
+      "context_level": "role",
+      "context_key": "D114|electronic musical instrument maker",
+      "item_type": "tool",
+      "item_key": "tunic-onlypure",
+      "item_name": "Tunic OnlyPure",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|electronic musical instrument maker|tool|veritune-verituner",
+      "context_level": "role",
+      "context_key": "D114|electronic musical instrument maker",
+      "item_type": "tool",
+      "item_key": "veritune-verituner",
+      "item_name": "Veritune Verituner",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|firework assembler|skill|build-pyrotechnical-devices",
+      "context_level": "role",
+      "context_key": "D114|firework assembler",
+      "item_type": "skill",
+      "item_key": "build-pyrotechnical-devices",
+      "item_name": "build pyrotechnical devices",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|firework assembler|skill|operate-pyrotechnical-control",
+      "context_level": "role",
+      "context_key": "D114|firework assembler",
+      "item_type": "skill",
+      "item_key": "operate-pyrotechnical-control",
+      "item_name": "operate pyrotechnical control",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|firework assembler|skill|work-safely-with-pyrotechnical-materials-in-a-performance-environment",
+      "context_level": "role",
+      "context_key": "D114|firework assembler",
+      "item_type": "skill",
+      "item_key": "work-safely-with-pyrotechnical-materials-in-a-performance-environment",
+      "item_name": "work safely with pyrotechnical materials in a performance environment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|furniture assembler|skill|create-furniture-frames",
+      "context_level": "role",
+      "context_key": "D114|furniture assembler",
+      "item_type": "skill",
+      "item_key": "create-furniture-frames",
+      "item_name": "create furniture frames",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|furniture assembler|skill|memorise-assembly-instructions",
+      "context_level": "role",
+      "context_key": "D114|furniture assembler",
+      "item_type": "skill",
+      "item_key": "memorise-assembly-instructions",
+      "item_name": "memorise assembly instructions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|medical device assembler|skill|manufacture-medical-devices",
+      "context_level": "role",
+      "context_key": "D114|medical device assembler",
+      "item_type": "skill",
+      "item_key": "manufacture-medical-devices",
+      "item_name": "manufacture medical devices",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|metal products assembler|skill|fix-knife-blades",
+      "context_level": "role",
+      "context_key": "D114|metal products assembler",
+      "item_type": "skill",
+      "item_key": "fix-knife-blades",
+      "item_name": "fix knife blades",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|metal products assembler|skill|types-of-hand-operated-printing-devices",
+      "context_level": "role",
+      "context_key": "D114|metal products assembler",
+      "item_type": "skill",
+      "item_key": "types-of-hand-operated-printing-devices",
+      "item_name": "types of hand-operated printing devices",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|plastic products assembler|skill|assemble-plastic-parts",
+      "context_level": "role",
+      "context_key": "D114|plastic products assembler",
+      "item_type": "skill",
+      "item_key": "assemble-plastic-parts",
+      "item_name": "assemble plastic parts",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|rolling stock assembler|skill|european-train-control-system",
+      "context_level": "role",
+      "context_key": "D114|rolling stock assembler",
+      "item_type": "skill",
+      "item_key": "european-train-control-system",
+      "item_name": "European Train Control System",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|rubber goods assembler|skill|apply-fabric-tape",
+      "context_level": "role",
+      "context_key": "D114|rubber goods assembler",
+      "item_type": "skill",
+      "item_key": "apply-fabric-tape",
+      "item_name": "apply fabric tape",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.theabr.org/get-certified/alternate-pathways-to-certification/"
+      ]
+    },
+    {
+      "subject_id": "item|role|D114|rubber goods assembler|skill|use-tools-for-castings-repair",
+      "context_level": "role",
+      "context_key": "D114|rubber goods assembler",
+      "item_type": "skill",
+      "item_key": "use-tools-for-castings-repair",
+      "item_name": "use tools for castings repair",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|Ambulance Drivers and Attendants, Except Emergency Medical Technicians|tool|mapping-software",
+      "context_level": "role",
+      "context_key": "D115|Ambulance Drivers and Attendants, Except Emergency Medical Technicians",
+      "item_type": "tool",
+      "item_key": "mapping-software",
+      "item_name": "Mapping software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|Car, Van and Motorcycle Drivers|skill|obey-traffic-rules",
+      "context_level": "role",
+      "context_key": "D115|Car, Van and Motorcycle Drivers",
+      "item_type": "skill",
+      "item_key": "obey-traffic-rules",
+      "item_name": "obey traffic rules",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|Driver/Sales Workers|tool|bmobile-technology-route-manager",
+      "context_level": "role",
+      "context_key": "D115|Driver/Sales Workers",
+      "item_type": "tool",
+      "item_key": "bmobile-technology-route-manager",
+      "item_name": "bMobile Technology Route Manager",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|Driver/Sales Workers|tool|bmobile-technology-sales",
+      "context_level": "role",
+      "context_key": "D115|Driver/Sales Workers",
+      "item_type": "tool",
+      "item_key": "bmobile-technology-sales",
+      "item_name": "bMobile Technology Sales",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|Driver/Sales Workers|tool|computer-directions-route-sales-tracker",
+      "context_level": "role",
+      "context_key": "D115|Driver/Sales Workers",
+      "item_type": "tool",
+      "item_key": "computer-directions-route-sales-tracker",
+      "item_name": "Computer Directions Route Sales Tracker",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|Driver/Sales Workers|tool|geocomtms-a-maze-planning",
+      "context_level": "role",
+      "context_key": "D115|Driver/Sales Workers",
+      "item_type": "tool",
+      "item_key": "geocomtms-a-maze-planning",
+      "item_name": "GEOCOMtms A.Maze Planning",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|Driver/Sales Workers|tool|ibm-domino",
+      "context_level": "role",
+      "context_key": "D115|Driver/Sales Workers",
+      "item_type": "tool",
+      "item_key": "ibm-domino",
+      "item_name": "IBM Domino",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|Driver/Sales Workers|tool|mobitech-systems-route-sales-trakker",
+      "context_level": "role",
+      "context_key": "D115|Driver/Sales Workers",
+      "item_type": "tool",
+      "item_key": "mobitech-systems-route-sales-trakker",
+      "item_name": "MobiTech Systems Route Sales Trakker",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|Driver/Sales Workers|tool|regulussoft-route-accounting",
+      "context_level": "role",
+      "context_key": "D115|Driver/Sales Workers",
+      "item_type": "tool",
+      "item_key": "regulussoft-route-accounting",
+      "item_name": "Regulussoft Route Accounting",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|Driver/Sales Workers|tool|route-planning-software",
+      "context_level": "role",
+      "context_key": "D115|Driver/Sales Workers",
+      "item_type": "tool",
+      "item_key": "route-planning-software",
+      "item_name": "Route planning software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|armoured car driver|tool|gpc-autocab",
+      "context_level": "role",
+      "context_key": "D115|armoured car driver",
+      "item_type": "tool",
+      "item_key": "gpc-autocab",
+      "item_name": "GPC Autocab",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|armoured car driver|tool|mobile-knowledge-cabmate",
+      "context_level": "role",
+      "context_key": "D115|armoured car driver",
+      "item_type": "tool",
+      "item_key": "mobile-knowledge-cabmate",
+      "item_name": "Mobile Knowledge Cabmate",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|car and van delivery driver|tool|automatic-routing-software",
+      "context_level": "role",
+      "context_key": "D115|car and van delivery driver",
+      "item_type": "tool",
+      "item_key": "automatic-routing-software",
+      "item_name": "Automatic routing software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|hearse driver|skill|drive-vehicles-in-processions",
+      "context_level": "role",
+      "context_key": "D115|hearse driver",
+      "item_type": "skill",
+      "item_key": "drive-vehicles-in-processions",
+      "item_name": "drive vehicles in processions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|hearse driver|skill|maintain-vehicle-appearance",
+      "context_level": "role",
+      "context_key": "D115|hearse driver",
+      "item_type": "skill",
+      "item_key": "maintain-vehicle-appearance",
+      "item_name": "maintain vehicle appearance",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|hearse driver|skill|park-vehicles",
+      "context_level": "role",
+      "context_key": "D115|hearse driver",
+      "item_type": "skill",
+      "item_key": "park-vehicles",
+      "item_name": "park vehicles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|hearse driver|skill|transfer-coffins",
+      "context_level": "role",
+      "context_key": "D115|hearse driver",
+      "item_type": "skill",
+      "item_key": "transfer-coffins",
+      "item_name": "transfer coffins",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|motorcycle delivery person|skill|drive-two-wheeled-vehicles",
+      "context_level": "role",
+      "context_key": "D115|motorcycle delivery person",
+      "item_type": "skill",
+      "item_key": "drive-two-wheeled-vehicles",
+      "item_name": "drive two-wheeled vehicles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|motorcycle delivery person|skill|organise-mail-deliveries",
+      "context_level": "role",
+      "context_key": "D115|motorcycle delivery person",
+      "item_type": "skill",
+      "item_key": "organise-mail-deliveries",
+      "item_name": "organise mail deliveries",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|parking valet|skill|drive-automatic-car",
+      "context_level": "role",
+      "context_key": "D115|parking valet",
+      "item_type": "skill",
+      "item_key": "drive-automatic-car",
+      "item_name": "drive automatic car",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|parking valet|skill|park-guest-s-vehicle",
+      "context_level": "role",
+      "context_key": "D115|parking valet",
+      "item_type": "skill",
+      "item_key": "park-guest-s-vehicle",
+      "item_name": "park guest's vehicle",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|parking valet|tool|corepark-valet",
+      "context_level": "role",
+      "context_key": "D115|parking valet",
+      "item_type": "tool",
+      "item_key": "corepark-valet",
+      "item_name": "CorePark Valet",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|parking valet|tool|payment-processing-software",
+      "context_level": "role",
+      "context_key": "D115|parking valet",
+      "item_type": "tool",
+      "item_key": "payment-processing-software",
+      "item_name": "Payment processing software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|parking valet|tool|sms-valet",
+      "context_level": "role",
+      "context_key": "D115|parking valet",
+      "item_type": "tool",
+      "item_key": "sms-valet",
+      "item_name": "SMS Valet",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|patient transport services driver|skill|complete-patient-journey-records",
+      "context_level": "role",
+      "context_key": "D115|patient transport services driver",
+      "item_type": "skill",
+      "item_key": "complete-patient-journey-records",
+      "item_name": "complete patient journey records",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|patient transport services driver|skill|drive-ambulance-under-non-emergency-conditions",
+      "context_level": "role",
+      "context_key": "D115|patient transport services driver",
+      "item_type": "skill",
+      "item_key": "drive-ambulance-under-non-emergency-conditions",
+      "item_name": "drive ambulance under non-emergency conditions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|patient transport services driver|skill|transfer-patients",
+      "context_level": "role",
+      "context_key": "D115|patient transport services driver",
+      "item_type": "skill",
+      "item_key": "transfer-patients",
+      "item_name": "transfer patients",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|taxi driver|skill|provide-private-transport-services",
+      "context_level": "role",
+      "context_key": "D115|taxi driver",
+      "item_type": "skill",
+      "item_key": "provide-private-transport-services",
+      "item_name": "provide private transport services",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D115|taxi driver|skill|tolerate-sitting-for-long-periods",
+      "context_level": "role",
+      "context_key": "D115|taxi driver",
+      "item_type": "skill",
+      "item_key": "tolerate-sitting-for-long-periods",
+      "item_name": "tolerate sitting for long periods",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|Operating Engineers and Other Construction Equipment Operators|tool|maintenance-record-software",
+      "context_level": "role",
+      "context_key": "D116|Operating Engineers and Other Construction Equipment Operators",
+      "item_type": "tool",
+      "item_key": "maintenance-record-software",
+      "item_name": "Maintenance record software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|Operating Engineers and Other Construction Equipment Operators|tool|work-record-software",
+      "context_level": "role",
+      "context_key": "D116|Operating Engineers and Other Construction Equipment Operators",
+      "item_type": "tool",
+      "item_key": "work-record-software",
+      "item_name": "Work record software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|automated cable vehicle controller|skill|cable-propelled-transit",
+      "context_level": "role",
+      "context_key": "D116|automated cable vehicle controller",
+      "item_type": "skill",
+      "item_key": "cable-propelled-transit",
+      "item_name": "cable-propelled transit",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|automated cable vehicle controller|skill|ensure-passenger-comfort",
+      "context_level": "role",
+      "context_key": "D116|automated cable vehicle controller",
+      "item_type": "skill",
+      "item_key": "ensure-passenger-comfort",
+      "item_name": "ensure passenger comfort",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|automated cable vehicle controller|skill|follow-signalling-instructions",
+      "context_level": "role",
+      "context_key": "D116|automated cable vehicle controller",
+      "item_type": "skill",
+      "item_key": "follow-signalling-instructions",
+      "item_name": "follow signalling instructions",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|automated cable vehicle controller|skill|inspect-crane-equipment",
+      "context_level": "role",
+      "context_key": "D116|automated cable vehicle controller",
+      "item_type": "skill",
+      "item_key": "inspect-crane-equipment",
+      "item_name": "inspect crane equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|automated cable vehicle controller|skill|manage-computer-based-transport-operation-control-systems",
+      "context_level": "role",
+      "context_key": "D116|automated cable vehicle controller",
+      "item_type": "skill",
+      "item_key": "manage-computer-based-transport-operation-control-systems",
+      "item_name": "manage computer-based transport operation control systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|automated cable vehicle controller|skill|manage-on-board-hazards",
+      "context_level": "role",
+      "context_key": "D116|automated cable vehicle controller",
+      "item_type": "skill",
+      "item_key": "manage-on-board-hazards",
+      "item_name": "manage on board hazards",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|automated cable vehicle controller|skill|operate-bottom-supported-cable-propelled-vehicles",
+      "context_level": "role",
+      "context_key": "D116|automated cable vehicle controller",
+      "item_type": "skill",
+      "item_key": "operate-bottom-supported-cable-propelled-vehicles",
+      "item_name": "operate bottom supported cable-propelled vehicles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|automated cable vehicle controller|skill|operate-railway-vehicles",
+      "context_level": "role",
+      "context_key": "D116|automated cable vehicle controller",
+      "item_type": "skill",
+      "item_key": "operate-railway-vehicles",
+      "item_name": "operate railway vehicles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|automated cable vehicle controller|skill|operate-top-supported-cable-propelled-vehicles",
+      "context_level": "role",
+      "context_key": "D116|automated cable vehicle controller",
+      "item_type": "skill",
+      "item_key": "operate-top-supported-cable-propelled-vehicles",
+      "item_name": "operate top supported cable-propelled vehicles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|bulldozer operator|skill|move-soil",
+      "context_level": "role",
+      "context_key": "D116|bulldozer operator",
+      "item_type": "skill",
+      "item_key": "move-soil",
+      "item_name": "move soil",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|bulldozer operator|skill|operate-bulldozer",
+      "context_level": "role",
+      "context_key": "D116|bulldozer operator",
+      "item_type": "skill",
+      "item_key": "operate-bulldozer",
+      "item_name": "operate bulldozer",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|bulldozer operator|skill|operate-construction-scraper",
+      "context_level": "role",
+      "context_key": "D116|bulldozer operator",
+      "item_type": "skill",
+      "item_key": "operate-construction-scraper",
+      "item_name": "operate construction scraper",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|container crane operator|skill|have-spatial-awareness",
+      "context_level": "role",
+      "context_key": "D116|container crane operator",
+      "item_type": "skill",
+      "item_key": "have-spatial-awareness",
+      "item_name": "have spatial awareness",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|container crane operator|skill|maintain-crane-equipment",
+      "context_level": "role",
+      "context_key": "D116|container crane operator",
+      "item_type": "skill",
+      "item_key": "maintain-crane-equipment",
+      "item_name": "maintain crane equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|container crane operator|skill|operate-railway-lever-frames",
+      "context_level": "role",
+      "context_key": "D116|container crane operator",
+      "item_type": "skill",
+      "item_key": "operate-railway-lever-frames",
+      "item_name": "operate railway lever frames",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|container crane operator|skill|organise-weight-of-loads-according-to-lifting-equipment-capacity",
+      "context_level": "role",
+      "context_key": "D116|container crane operator",
+      "item_type": "skill",
+      "item_key": "organise-weight-of-loads-according-to-lifting-equipment-capacity",
+      "item_name": "organise weight of loads according to lifting equipment capacity",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|container crane operator|skill|set-up-crane",
+      "context_level": "role",
+      "context_key": "D116|container crane operator",
+      "item_type": "skill",
+      "item_key": "set-up-crane",
+      "item_name": "set up crane",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|dredge operator|skill|maintain-dredging-equipment",
+      "context_level": "role",
+      "context_key": "D116|dredge operator",
+      "item_type": "skill",
+      "item_key": "maintain-dredging-equipment",
+      "item_name": "maintain dredging equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|dredge operator|skill|measure-water-depth",
+      "context_level": "role",
+      "context_key": "D116|dredge operator",
+      "item_type": "skill",
+      "item_key": "measure-water-depth",
+      "item_name": "measure water depth",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|dredge operator|skill|position-dredger",
+      "context_level": "role",
+      "context_key": "D116|dredge operator",
+      "item_type": "skill",
+      "item_key": "position-dredger",
+      "item_name": "position dredger",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|dredge operator|tool|hypack-dredgepack",
+      "context_level": "role",
+      "context_key": "D116|dredge operator",
+      "item_type": "tool",
+      "item_key": "hypack-dredgepack",
+      "item_name": "HYPACK DREDGEPACK",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|dredge operator|tool|teledyne-odom-hydrographic-odom-echart",
+      "context_level": "role",
+      "context_key": "D116|dredge operator",
+      "item_type": "tool",
+      "item_key": "teledyne-odom-hydrographic-odom-echart",
+      "item_name": "Teledyne Odom Hydrographic ODOM eChart",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|dredge operator|tool|trimble-hydropro",
+      "context_level": "role",
+      "context_key": "D116|dredge operator",
+      "item_type": "tool",
+      "item_key": "trimble-hydropro",
+      "item_name": "Trimble HYDROpro",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|grader operator|skill|drive-mobile-heavy-construction-equipment",
+      "context_level": "role",
+      "context_key": "D116|grader operator",
+      "item_type": "skill",
+      "item_key": "drive-mobile-heavy-construction-equipment",
+      "item_name": "drive mobile heavy construction equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|grader operator|skill|operate-grader",
+      "context_level": "role",
+      "context_key": "D116|grader operator",
+      "item_type": "skill",
+      "item_key": "operate-grader",
+      "item_name": "operate grader",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|grader operator|tool|hcss-heavybid",
+      "context_level": "role",
+      "context_key": "D116|grader operator",
+      "item_type": "tool",
+      "item_key": "hcss-heavybid",
+      "item_name": "HCSS HeavyBid",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|grader operator|tool|time-report-software",
+      "context_level": "role",
+      "context_key": "D116|grader operator",
+      "item_type": "tool",
+      "item_key": "time-report-software",
+      "item_name": "Time report software",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|mobile crane operator|skill|operate-mobile-crane",
+      "context_level": "role",
+      "context_key": "D116|mobile crane operator",
+      "item_type": "skill",
+      "item_key": "operate-mobile-crane",
+      "item_name": "operate mobile crane",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|pile driving hammer operator|skill|drive-steel-piles",
+      "context_level": "role",
+      "context_key": "D116|pile driving hammer operator",
+      "item_type": "skill",
+      "item_key": "drive-steel-piles",
+      "item_name": "drive steel piles",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|pile driving hammer operator|skill|operate-pile-driver-hammer",
+      "context_level": "role",
+      "context_key": "D116|pile driving hammer operator",
+      "item_type": "skill",
+      "item_key": "operate-pile-driver-hammer",
+      "item_name": "operate pile driver hammer",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|pile driving hammer operator|tool|grl-engineers-wave-equation-analysis-program-grlweap",
+      "context_level": "role",
+      "context_key": "D116|pile driving hammer operator",
+      "item_type": "tool",
+      "item_key": "grl-engineers-wave-equation-analysis-program-grlweap",
+      "item_name": "GRL Engineers Wave Equation Analysis Program GRLWEAP",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|pile driving hammer operator|tool|pile-dynamics-case-pile-wave-analysis-program-capwap",
+      "context_level": "role",
+      "context_key": "D116|pile driving hammer operator",
+      "item_type": "tool",
+      "item_key": "pile-dynamics-case-pile-wave-analysis-program-capwap",
+      "item_name": "Pile Dynamics Case Pile Wave Analysis Program CAPWAP",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|pile driving hammer operator|tool|pile-dynamics-pile-driving-analyzer-pda",
+      "context_level": "role",
+      "context_key": "D116|pile driving hammer operator",
+      "item_type": "tool",
+      "item_key": "pile-dynamics-pile-driving-analyzer-pda",
+      "item_name": "Pile Dynamics Pile Driving Analyzer PDA",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|production plant crane operator|skill|determine-crane-load",
+      "context_level": "role",
+      "context_key": "D116|production plant crane operator",
+      "item_type": "skill",
+      "item_key": "determine-crane-load",
+      "item_name": "determine crane load",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|production plant crane operator|skill|determine-the-load-s-centre-of-gravity",
+      "context_level": "role",
+      "context_key": "D116|production plant crane operator",
+      "item_type": "skill",
+      "item_key": "determine-the-load-s-centre-of-gravity",
+      "item_name": "determine the load's centre of gravity",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|production plant crane operator|skill|handle-cargo",
+      "context_level": "role",
+      "context_key": "D116|production plant crane operator",
+      "item_type": "skill",
+      "item_key": "handle-cargo",
+      "item_name": "handle cargo",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|production plant crane operator|skill|liaise-with-the-transported-goods-workers",
+      "context_level": "role",
+      "context_key": "D116|production plant crane operator",
+      "item_type": "skill",
+      "item_key": "liaise-with-the-transported-goods-workers",
+      "item_name": "liaise with the transported goods' workers",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|production plant crane operator|skill|operate-cranes",
+      "context_level": "role",
+      "context_key": "D116|production plant crane operator",
+      "item_type": "skill",
+      "item_key": "operate-cranes",
+      "item_name": "operate cranes",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|road roller operator|skill|compaction-techniques",
+      "context_level": "role",
+      "context_key": "D116|road roller operator",
+      "item_type": "skill",
+      "item_key": "compaction-techniques",
+      "item_name": "compaction techniques",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|road roller operator|skill|operate-road-roller",
+      "context_level": "role",
+      "context_key": "D116|road roller operator",
+      "item_type": "skill",
+      "item_key": "operate-road-roller",
+      "item_name": "operate road roller",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|snow-clearing worker|skill|apply-measures-to-prevent-snow-removal-safety-hazards",
+      "context_level": "role",
+      "context_key": "D116|snow-clearing worker",
+      "item_type": "skill",
+      "item_key": "apply-measures-to-prevent-snow-removal-safety-hazards",
+      "item_name": "apply measures to prevent snow removal safety hazards",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|snow-clearing worker|skill|carry-out-de-icing-activities",
+      "context_level": "role",
+      "context_key": "D116|snow-clearing worker",
+      "item_type": "skill",
+      "item_key": "carry-out-de-icing-activities",
+      "item_name": "carry out de-icing activities",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|snow-clearing worker|skill|complete-report-sheets-of-activity",
+      "context_level": "role",
+      "context_key": "D116|snow-clearing worker",
+      "item_type": "skill",
+      "item_key": "complete-report-sheets-of-activity",
+      "item_name": "complete report sheets of activity",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|snow-clearing worker|skill|drive-heavy-duty-trucks-for-snow-removal",
+      "context_level": "role",
+      "context_key": "D116|snow-clearing worker",
+      "item_type": "skill",
+      "item_key": "drive-heavy-duty-trucks-for-snow-removal",
+      "item_name": "drive heavy duty trucks for snow removal",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|snow-clearing worker|skill|follow-organisational-guidelines-in-the-cleaning-industry",
+      "context_level": "role",
+      "context_key": "D116|snow-clearing worker",
+      "item_type": "skill",
+      "item_key": "follow-organisational-guidelines-in-the-cleaning-industry",
+      "item_name": "follow organisational guidelines in the cleaning industry",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|snow-clearing worker|skill|perform-emergency-street-clean-ups",
+      "context_level": "role",
+      "context_key": "D116|snow-clearing worker",
+      "item_type": "skill",
+      "item_key": "perform-emergency-street-clean-ups",
+      "item_name": "perform emergency street clean ups",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|snow-clearing worker|skill|perform-outdoor-cleaning-activities",
+      "context_level": "role",
+      "context_key": "D116|snow-clearing worker",
+      "item_type": "skill",
+      "item_key": "perform-outdoor-cleaning-activities",
+      "item_name": "perform outdoor cleaning activities",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|snow-clearing worker|skill|remove-snow",
+      "context_level": "role",
+      "context_key": "D116|snow-clearing worker",
+      "item_type": "skill",
+      "item_key": "remove-snow",
+      "item_name": "remove snow",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|snow-clearing worker|skill|snow-removal-safety-hazards",
+      "context_level": "role",
+      "context_key": "D116|snow-clearing worker",
+      "item_type": "skill",
+      "item_key": "snow-removal-safety-hazards",
+      "item_name": "snow removal safety hazards",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|snow-clearing worker|skill|use-snow-removal-equipment",
+      "context_level": "role",
+      "context_key": "D116|snow-clearing worker",
+      "item_type": "skill",
+      "item_key": "use-snow-removal-equipment",
+      "item_name": "use snow-removal equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|surface mine plant operator|skill|inspect-heavy-surface-mining-equipment",
+      "context_level": "role",
+      "context_key": "D116|surface mine plant operator",
+      "item_type": "skill",
+      "item_key": "inspect-heavy-surface-mining-equipment",
+      "item_name": "inspect heavy surface mining equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D116|tower crane operator|skill|operate-tower-crane",
+      "context_level": "role",
+      "context_key": "D116|tower crane operator",
+      "item_type": "skill",
+      "item_key": "operate-tower-crane",
+      "item_name": "operate tower crane",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D117|level crossing signalperson|skill|apply-signalling-control-procedures",
+      "context_level": "role",
+      "context_key": "D117|level crossing signalperson",
+      "item_type": "skill",
+      "item_key": "apply-signalling-control-procedures",
+      "item_name": "apply signalling control procedures",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D117|level crossing signalperson|skill|authorise-occupancy-of-rail-tracks",
+      "context_level": "role",
+      "context_key": "D117|level crossing signalperson",
+      "item_type": "skill",
+      "item_key": "authorise-occupancy-of-rail-tracks",
+      "item_name": "authorise occupancy of rail tracks",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D117|level crossing signalperson|skill|carry-out-railway-accident-investigations",
+      "context_level": "role",
+      "context_key": "D117|level crossing signalperson",
+      "item_type": "skill",
+      "item_key": "carry-out-railway-accident-investigations",
+      "item_name": "carry out railway accident investigations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D117|level crossing signalperson|skill|ensure-compliance-with-railway-regulation",
+      "context_level": "role",
+      "context_key": "D117|level crossing signalperson",
+      "item_type": "skill",
+      "item_key": "ensure-compliance-with-railway-regulation",
+      "item_name": "ensure compliance with railway regulation",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D117|level crossing signalperson|skill|level-crossing-regulations",
+      "context_level": "role",
+      "context_key": "D117|level crossing signalperson",
+      "item_type": "skill",
+      "item_key": "level-crossing-regulations",
+      "item_name": "level crossing regulations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D117|level crossing signalperson|skill|liaise-with-railway-stakeholders-for-accident-investigations",
+      "context_level": "role",
+      "context_key": "D117|level crossing signalperson",
+      "item_type": "skill",
+      "item_key": "liaise-with-railway-stakeholders-for-accident-investigations",
+      "item_name": "liaise with railway stakeholders for accident investigations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D117|level crossing signalperson|skill|maintain-railway-signal-equipment",
+      "context_level": "role",
+      "context_key": "D117|level crossing signalperson",
+      "item_type": "skill",
+      "item_key": "maintain-railway-signal-equipment",
+      "item_name": "maintain railway signal equipment",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D117|level crossing signalperson|skill|operate-railway-warning-systems",
+      "context_level": "role",
+      "context_key": "D117|level crossing signalperson",
+      "item_type": "skill",
+      "item_key": "operate-railway-warning-systems",
+      "item_name": "operate railway warning systems",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D117|rail switchperson|skill|follow-strict-level-crossing-operating-procedures",
+      "context_level": "role",
+      "context_key": "D117|rail switchperson",
+      "item_type": "skill",
+      "item_key": "follow-strict-level-crossing-operating-procedures",
+      "item_name": "follow strict level crossing operating procedures",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.iso.org/standard/63555.html"
+      ]
+    },
+    {
+      "subject_id": "item|role|D117|rail switchperson|skill|follow-switching-instructions-in-rail-operations",
+      "context_level": "role",
+      "context_key": "D117|rail switchperson",
+      "item_type": "skill",
+      "item_key": "follow-switching-instructions-in-rail-operations",
+      "item_name": "follow switching instructions in rail operations",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D117|rail switchperson|skill|manage-rail-yard-resources",
+      "context_level": "role",
+      "context_key": "D117|rail switchperson",
+      "item_type": "skill",
+      "item_key": "manage-rail-yard-resources",
+      "item_name": "manage rail yard resources",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D117|rail switchperson|skill|shunt-rolling-stock-in-marshalling-yards",
+      "context_level": "role",
+      "context_key": "D117|rail switchperson",
+      "item_type": "skill",
+      "item_key": "shunt-rolling-stock-in-marshalling-yards",
+      "item_name": "shunt rolling stock in marshalling yards",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    },
+    {
+      "subject_id": "item|role|D117|rail switchperson|skill|use-handbrake",
+      "context_level": "role",
+      "context_key": "D117|rail switchperson",
+      "item_type": "skill",
+      "item_key": "use-handbrake",
+      "item_name": "use handbrake",
+      "decision": "review_required",
+      "flags": [
+        "fewer_than_two_candidate_urls",
+        "source_reused_across_20_or_more_typed_items"
+      ],
+      "candidate_urls": [
+        "https://www.icao.int/operational-safety/Personnel-Training-and-Licensing"
+      ]
+    }
+  ],
+  "policy": {
+    "review_required_preserved_unless_exact_item_evidence_established": true,
+    "no_relationship_inference": true,
+    "no_promotion": true
+  }
+}

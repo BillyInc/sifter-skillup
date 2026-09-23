@@ -770,3 +770,81 @@ against all 237 programmes and 420 JAMB identities; the three named route
 smokes remain fixtures, not full render proof. `Sciences::Mathematics` and
 unresolved relationships remain explicit backlog. No SQL or browser proof was
 performed.
+
+### 2026-09-21 full-population downstream/admin audit checkpoint
+
+The full local downstream contract is now checkpointed for all 237 programmes
+and 420 JAMB identities. Route continuity covers 237/237 programmes, with
+1,344 domain, 3,580 subgroup and 46,941 role routes; curriculum/card-summary,
+friendly-title, bounded role-learning, source/link-state, relationship grouping,
+admin provenance/review queues and student-safe filtering are recorded in
+`data/career-mapping/_audit/full_population_downstream_admin_audit_2026-09-21.md`.
+The audit does not approve scaling: 2,305 unresolved/not-established
+relationships, programme review queues, browser proof, live-payload proof and
+manual SQL remain open. Only the stale Nursing audit-fixture key was corrected;
+no UI or SQL was changed.
+
+### 2026-09-21 role identity evidence checkpoint
+
+The next 20 missing role work-profile records after tranche 002 were audited
+read-only against the vendored European Commission ESCO occupation extract.
+Each retained the exact occupation identity, definition, concept URI and
+occupation-skill relation locator. The ESCO API check was attempted but could
+not connect in this local run; therefore all 20 remain review-required and
+bounded/local-only. No ESCO identity was rendered as an O*NET-style work
+profile or Nigerian demand mapping. This preserves the mockup contract that
+student role preparation must not be inferred from an unreviewed or
+ context-free occupation record.
+
+### 2026-09-21 role work-profile tranche 005
+
+The next disjoint read-only tranche audited queue positions 81-100: 15
+official O*NET identity matches and 5 ESCO identity records with retained
+locators. All 20 remain `review_required`; no occupational identity was
+converted into an O*NET-style profile, Nigerian mapping or student preparation
+content. This preserves the box contract that a role card must not look complete
+when its work-profile evidence is not reviewed. Nineteen missing role profiles
+remain. No UI or SQL changed; browser and live-payload proof remain open.
+
+### 2026-09-21 item-enrichment tranche 007
+
+The next 32 non-overlapping full-population item identities were searched
+against authoritative item-specific sources. Twenty-one received linked
+evidence and eleven remain `review_required` where the source did not establish
+the exact combined or contextual item label. The append-only ledger preserves
+the URL, authority, locator, evidence summary and access date for every row;
+there were no D078 rows, duplicate IDs or relationship promotions. No student
+card, UI, catalogue or SQL behaviour changed. The item-link contract therefore
+remains fail-closed while the broader item and relationship queues continue.
+
+### 2026-09-21 item-enrichment tranche 008
+
+The next 32 non-overlapping full-population item identities after tranche 007
+were searched against authoritative item-specific sources. Twenty-one received
+linked evidence and eleven remain `review_required`, including retired or
+context-ambiguous evidence. Selection/ledger parity passed with zero D078 rows,
+duplicates or missing evidence fields; every row retains its URL, authority,
+locator, summary and access date. No student card, UI, catalogue, relationship
+or SQL behaviour changed. The item-link contract remains fail-closed and
+browser/live-payload acceptance remains open.
+
+### 2026-09-21 item-enrichment tranche 010
+
+Sixteen new non-D078 contextual item identities were searched after tranche
+009. Fourteen are linked to authoritative item-specific evidence and two are
+explicitly `review_required`; the combined safety-and-reliability competency
+was not promoted from component evidence. Selection/ledger parity and
+non-overlap checks passed, and every row retains its URL, authority, locator,
+summary and access date. This pass changed only the external enrichment audit
+artifacts; no student card, UI, relationship, catalogue or SQL behaviour
+changed.
+
+### 2026-09-23 current execution-order clarification
+
+The dated gate notes above are historical audit checkpoints. For the current
+scaling phase, local subject/JAMB audits, the corrected all-420 JAMB resource
+check and the full 420-JAMB/237-CCMAS downstream/admin checks occur before any
+SQL. SQL remains the final manual deployment phase; the 35 compressed
+contextual parts are loaded only after their migrations and curriculum seeds in
+the documented dependency order. Local checks and this mockup audit are not
+live Supabase deployment proof.

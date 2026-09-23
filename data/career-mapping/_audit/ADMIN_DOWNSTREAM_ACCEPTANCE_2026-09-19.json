@@ -44,17 +44,22 @@
   },
   "reviewQueue": {
     "contextualItemLinkStateGaps": 0,
-    "contextualItems": 126414,
+    "contextualItems": 121377,
     "notEstablishedRelationshipRows": 2305,
-    "unresolvedRelationshipRows": 2305
+    "unresolvedRelationshipRows": 2305,
+    "unresolvedRelationshipsAreInternalNonBlockingCoverage": true
   },
   "schemaVersion": 1,
   "scope": {
     "activeProgrammeDomainLinks": 1344,
+    "ccmasPackagesAreSupportingEvidenceOnly": true,
+    "ccmasSupportingProgrammeCount": 237,
     "genericProgrammeCount": 236,
     "jambIdentityCount": 420,
+    "missingCcmasAnchorDoesNotHideJambIdentity": true,
     "programmeCount": 237,
-    "sociologyProgrammeCount": 1
+    "sociologyProgrammeCount": 1,
+    "studentLookupPopulation": "jamb_identities"
   },
   "unmappedProgrammes": []
 }

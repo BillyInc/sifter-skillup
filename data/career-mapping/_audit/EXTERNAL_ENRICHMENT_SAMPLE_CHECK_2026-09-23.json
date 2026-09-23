@@ -1,0 +1,38 @@
+{
+  "schema": "2026-09-23.external-enrichment-sample-check.v1",
+  "scope": "One current review-held item and one canonical unresolved relationship",
+  "item": {
+    "context_level": "role",
+    "context_key": "D001|software analyst",
+    "item_type": "tool",
+    "item_key": "microsoft-office-software",
+    "item_name": "Microsoft Office software",
+    "source_url": "https://learn.microsoft.com/microsoft-365-apps/deploy/about-microsoft-365-apps",
+    "source_type": "official Microsoft documentation",
+    "result": "substantive item identity evidence found",
+    "decision": "item_source_candidate",
+    "limitation": "The source confirms the software suite and its applications; it does not by itself prove that this tool is required for the specific D001 Software Analyst role."
+  },
+  "relationship": {
+    "candidate_id": "role|D001|Blockchain Engineers|tool|amazon-web-services-aws-software|||not_established",
+    "context_level": "role",
+    "context_key": "D001|Blockchain Engineers",
+    "from_item_type": "tool",
+    "from_item_key": "amazon-web-services-aws-software",
+    "relationship_type": "not_established",
+    "source_urls": [
+      "https://aws.amazon.com/what-is/blockchain/",
+      "https://aws.amazon.com/solutions/blockchain/",
+      "https://aws.amazon.com/web3/",
+      "https://aws.amazon.com/managed-blockchain/"
+    ],
+    "result": "substantive AWS blockchain product evidence found, but no exact typed relationship edge proven",
+    "decision": "not_established",
+    "limitation": "The current relationship has no target item. AWS sources describe blockchain services and builders/use cases, not a source-backed from-item-to-target-item edge in this role context."
+  },
+  "policy": {
+    "student_promotion": false,
+    "catalogue_or_sql_write": false,
+    "review_required_and_not_established_remain_internal": true
+  }
+}

@@ -1,0 +1,769 @@
+{
+  "schemaVersion": "2026-09-21.role-learning-core-audit.v1",
+  "roles": 5209,
+  "maxStudentEssential": 12,
+  "maxStudentOptional": 5,
+  "rolesWithRawValuesOverCap": 3910,
+  "explicitlyReviewedRoles": 2,
+  "explicitlyReviewedRoleKeys": [
+    "D063|business studies and economics teacher secondary school",
+    "D058|business studies and economics teacher secondary school"
+  ],
+  "allStudentRowsWithinCaps": true,
+  "rawOverCapSample": [
+    {
+      "roleKey": "D138|biomedical scientist",
+      "rawEssential": 98,
+      "rawOptional": 29,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D064|mental health social worker",
+      "rawEssential": 76,
+      "rawOptional": 5,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D128|mental health social worker",
+      "rawEssential": 76,
+      "rawOptional": 5,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D161|paramedic in emergency responses",
+      "rawEssential": 74,
+      "rawOptional": 9,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D161|rescue centre manager",
+      "rawEssential": 73,
+      "rawOptional": 19,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D128|child day care worker",
+      "rawEssential": 73,
+      "rawOptional": 1,
+      "studentEssential": 12,
+      "studentOptional": 1
+    },
+    {
+      "roleKey": "D128|consultant social worker",
+      "rawEssential": 72,
+      "rawOptional": 2,
+      "studentEssential": 12,
+      "studentOptional": 2
+    },
+    {
+      "roleKey": "D128|migrant social worker",
+      "rawEssential": 70,
+      "rawOptional": 2,
+      "studentEssential": 12,
+      "studentOptional": 2
+    },
+    {
+      "roleKey": "D128|foster care support worker",
+      "rawEssential": 70,
+      "rawOptional": 0,
+      "studentEssential": 12,
+      "studentOptional": 0
+    },
+    {
+      "roleKey": "D128|hospital social worker",
+      "rawEssential": 69,
+      "rawOptional": 12,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D128|community social worker",
+      "rawEssential": 68,
+      "rawOptional": 12,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D128|criminal justice social worker",
+      "rawEssential": 68,
+      "rawOptional": 10,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D151|criminal justice social worker",
+      "rawEssential": 68,
+      "rawOptional": 10,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D127|child care social worker",
+      "rawEssential": 68,
+      "rawOptional": 0,
+      "studentEssential": 12,
+      "studentOptional": 0
+    },
+    {
+      "roleKey": "D128|child care social worker",
+      "rawEssential": 68,
+      "rawOptional": 0,
+      "studentEssential": 12,
+      "studentOptional": 0
+    },
+    {
+      "roleKey": "D130|employment support worker",
+      "rawEssential": 68,
+      "rawOptional": 0,
+      "studentEssential": 12,
+      "studentOptional": 0
+    },
+    {
+      "roleKey": "D127|residential childcare worker",
+      "rawEssential": 67,
+      "rawOptional": 0,
+      "studentEssential": 12,
+      "studentOptional": 0
+    },
+    {
+      "roleKey": "D128|community development social worker",
+      "rawEssential": 66,
+      "rawOptional": 7,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D128|gerontology social worker",
+      "rawEssential": 65,
+      "rawOptional": 12,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D064|mental health support worker",
+      "rawEssential": 65,
+      "rawOptional": 3,
+      "studentEssential": 12,
+      "studentOptional": 3
+    },
+    {
+      "roleKey": "D128|crisis situation social worker",
+      "rawEssential": 63,
+      "rawOptional": 5,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D161|crisis situation social worker",
+      "rawEssential": 63,
+      "rawOptional": 5,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D128|adult community care worker",
+      "rawEssential": 61,
+      "rawOptional": 2,
+      "studentEssential": 12,
+      "studentOptional": 2
+    },
+    {
+      "roleKey": "D123|diagnostic radiographer",
+      "rawEssential": 55,
+      "rawOptional": 16,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D123|nuclear medicine radiographer",
+      "rawEssential": 55,
+      "rawOptional": 12,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D135|nuclear medicine radiographer",
+      "rawEssential": 55,
+      "rawOptional": 12,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D137|nuclear medicine radiographer",
+      "rawEssential": 55,
+      "rawOptional": 12,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D168|online community manager",
+      "rawEssential": 53,
+      "rawOptional": 12,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D121|conservation scientist",
+      "rawEssential": 52,
+      "rawOptional": 22,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D152|conservation scientist",
+      "rawEssential": 52,
+      "rawOptional": 22,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D155|microelectronics materials engineer",
+      "rawEssential": 50,
+      "rawOptional": 29,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D147|numerical tool and process control programmer",
+      "rawEssential": 50,
+      "rawOptional": 15,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D012|blockchain architect",
+      "rawEssential": 46,
+      "rawOptional": 11,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D152|museum scientist",
+      "rawEssential": 46,
+      "rawOptional": 9,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D147|automation engineer",
+      "rawEssential": 45,
+      "rawOptional": 64,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D144|hydrologist",
+      "rawEssential": 45,
+      "rawOptional": 34,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D152|zoo curator",
+      "rawEssential": 45,
+      "rawOptional": 12,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D138|specialist biomedical scientist",
+      "rawEssential": 44,
+      "rawOptional": 16,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D012|blockchain developer",
+      "rawEssential": 43,
+      "rawOptional": 17,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D006|sensor engineer",
+      "rawEssential": 42,
+      "rawOptional": 66,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D144|oceanographer",
+      "rawEssential": 42,
+      "rawOptional": 26,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D138|medical device engineer",
+      "rawEssential": 40,
+      "rawOptional": 61,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D151|digital forensics expert",
+      "rawEssential": 40,
+      "rawOptional": 37,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D160|beauty salon manager",
+      "rawEssential": 40,
+      "rawOptional": 25,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D134|marine mechanic",
+      "rawEssential": 37,
+      "rawOptional": 27,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D140|marine mechatronics technician",
+      "rawEssential": 37,
+      "rawOptional": 12,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D103|jewellery and watches shop manager",
+      "rawEssential": 37,
+      "rawOptional": 4,
+      "studentEssential": 12,
+      "studentOptional": 4
+    },
+    {
+      "roleKey": "D130|human resources manager",
+      "rawEssential": 36,
+      "rawOptional": 48,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D051|facilities manager",
+      "rawEssential": 36,
+      "rawOptional": 20,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D103|jewellery and watches specialised seller",
+      "rawEssential": 36,
+      "rawOptional": 8,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D096|vehicle technician",
+      "rawEssential": 34,
+      "rawOptional": 32,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D058|early years special educational needs teacher",
+      "rawEssential": 34,
+      "rawOptional": 24,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D127|early years special educational needs teacher",
+      "rawEssential": 34,
+      "rawOptional": 24,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D058|special educational needs teacher primary school",
+      "rawEssential": 33,
+      "rawOptional": 28,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D140|automation engineering technician",
+      "rawEssential": 33,
+      "rawOptional": 24,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D147|automation engineering technician",
+      "rawEssential": 33,
+      "rawOptional": 24,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D121|park guide",
+      "rawEssential": 33,
+      "rawOptional": 20,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D161|emergency ambulance driver",
+      "rawEssential": 33,
+      "rawOptional": 14,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D147|smart home engineer",
+      "rawEssential": 33,
+      "rawOptional": 10,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D025|pharmacy lecturer",
+      "rawEssential": 32,
+      "rawOptional": 63,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D147|instrumentation engineering technician",
+      "rawEssential": 32,
+      "rawOptional": 46,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D058|special educational needs teacher",
+      "rawEssential": 32,
+      "rawOptional": 37,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D135|nuclear engineer",
+      "rawEssential": 32,
+      "rawOptional": 13,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D137|medical physics expert",
+      "rawEssential": 32,
+      "rawOptional": 12,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D164|air traffic controller",
+      "rawEssential": 32,
+      "rawOptional": 4,
+      "studentEssential": 12,
+      "studentOptional": 4
+    },
+    {
+      "roleKey": "D146|heating, ventilation, air conditioning engineer",
+      "rawEssential": 31,
+      "rawOptional": 41,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D146|heating and ventilation service installer",
+      "rawEssential": 31,
+      "rawOptional": 31,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D058|special educational needs teacher secondary school",
+      "rawEssential": 31,
+      "rawOptional": 28,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D065|translation agency manager",
+      "rawEssential": 31,
+      "rawOptional": 20,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D006|embedded systems security engineer",
+      "rawEssential": 31,
+      "rawOptional": 10,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D152|exhibition curator",
+      "rawEssential": 31,
+      "rawOptional": 7,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D125|medical records manager",
+      "rawEssential": 30,
+      "rawOptional": 28,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D152|cultural centre director",
+      "rawEssential": 30,
+      "rawOptional": 20,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D125|medical records clerk",
+      "rawEssential": 30,
+      "rawOptional": 16,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D135|nuclear technician",
+      "rawEssential": 30,
+      "rawOptional": 13,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D063|economics lecturer",
+      "rawEssential": 29,
+      "rawOptional": 60,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D140|robotics engineering technician",
+      "rawEssential": 29,
+      "rawOptional": 34,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D166|robotics engineering technician",
+      "rawEssential": 29,
+      "rawOptional": 34,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D058|auxiliary nursing and midwifery vocational teacher",
+      "rawEssential": 29,
+      "rawOptional": 31,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D058|biology teacher secondary school",
+      "rawEssential": 29,
+      "rawOptional": 24,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D127|early years teacher",
+      "rawEssential": 29,
+      "rawOptional": 18,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D058|business administration vocational teacher",
+      "rawEssential": 29,
+      "rawOptional": 17,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D164|air traffic instructor",
+      "rawEssential": 29,
+      "rawOptional": 13,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D150|religious studies lecturer",
+      "rawEssential": 28,
+      "rawOptional": 56,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D140|mechatronics engineering technician",
+      "rawEssential": 28,
+      "rawOptional": 35,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D121|nature conservation officer",
+      "rawEssential": 28,
+      "rawOptional": 34,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D058|art teacher secondary school",
+      "rawEssential": 28,
+      "rawOptional": 28,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D005|ICT network architect",
+      "rawEssential": 28,
+      "rawOptional": 27,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D058|chemistry teacher secondary school",
+      "rawEssential": 28,
+      "rawOptional": 24,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D119|import export manager in dairy products and edible oils",
+      "rawEssential": 28,
+      "rawOptional": 0,
+      "studentEssential": 12,
+      "studentOptional": 0
+    },
+    {
+      "roleKey": "D156|marine surveyor",
+      "rawEssential": 27,
+      "rawOptional": 52,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D025|pharmaceutical engineer",
+      "rawEssential": 27,
+      "rawOptional": 32,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D119|dairy products manufacturing worker",
+      "rawEssential": 27,
+      "rawOptional": 26,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D119|dairy processing technician",
+      "rawEssential": 27,
+      "rawOptional": 25,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D058|business and marketing vocational teacher",
+      "rawEssential": 27,
+      "rawOptional": 23,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D155|materials engineer",
+      "rawEssential": 27,
+      "rawOptional": 20,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D058|adult literacy teacher",
+      "rawEssential": 27,
+      "rawOptional": 15,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D164|water traffic coordinator",
+      "rawEssential": 27,
+      "rawOptional": 7,
+      "studentEssential": 12,
+      "studentOptional": 5
+    },
+    {
+      "roleKey": "D147|smart home installer",
+      "rawEssential": 27,
+      "rawOptional": 4,
+      "studentEssential": 12,
+      "studentOptional": 4
+    },
+    {
+      "roleKey": "D025|import export manager in pharmaceutical goods",
+      "rawEssential": 27,
+      "rawOptional": 0,
+      "studentEssential": 12,
+      "studentOptional": 0
+    }
+  ],
+  "businessStudiesTeacherRows": [
+    {
+      "roleKey": "D063|business studies and economics teacher secondary school",
+      "studentEssential": [
+        "learning difficulties",
+        "instructional strategies",
+        "economics",
+        "business strategy concepts",
+        "curriculum objectives",
+        "prepare lesson content",
+        "teach business principles",
+        "adapt teaching to student's capabilities",
+        "assess students",
+        "give constructive feedback",
+        "perform classroom management",
+        "teach economic principles"
+      ],
+      "studentOptional": [
+        "business management principles",
+        "business law",
+        "mathematics",
+        "statistics",
+        "work with virtual learning environments"
+      ],
+      "rawEssentialCount": 12,
+      "rawOptionalCount": 5
+    },
+    {
+      "roleKey": "D058|business studies and economics teacher secondary school",
+      "studentEssential": [
+        "learning difficulties",
+        "instructional strategies",
+        "economics",
+        "business strategy concepts",
+        "curriculum objectives",
+        "prepare lesson content",
+        "teach business principles",
+        "adapt teaching to student's capabilities",
+        "assess students",
+        "give constructive feedback",
+        "perform classroom management",
+        "teach economic principles"
+      ],
+      "studentOptional": [
+        "business management principles",
+        "business law",
+        "mathematics",
+        "statistics",
+        "work with virtual learning environments"
+      ],
+      "rawEssentialCount": 12,
+      "rawOptionalCount": 5
+    }
+  ]
+}
