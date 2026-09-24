@@ -401,7 +401,7 @@ CROSS JOIN (VALUES
      '{ccmas_sociology,openlearn_ethics,mantra}',
      '[{"id":"openlearn_ethics","title":"Becoming an ethical researcher","url":"https://www.open.edu/openlearn/education-development/becoming-ethical-researcher","region":"global","evidenceType":"free_course"},{"id":"mantra","title":"Research Data MANTRA","url":"https://mantra.ed.ac.uk/","region":"global","evidenceType":"free_self_paced_course"}]',
      '[{"courseCodes":["SOC 301","SSC 302","SSC 401","SOC 408"]}]', 'global',
-     '["This is an educational and research-ethics pointer, not legal advice or a substitute for an institution\'s ethics process."]'),
+     '["This is an educational and research-ethics pointer, not legal advice or a substitute for an institution''s ethics process."]'),
     ('skill', 'use-computers-and-find-information', 'Use computers and find information',
      'This covers computer applications, online information retrieval and digital handling of sociological information.',
      'SSC 202 records computer applications, information processing and the use of search engines to find online resources.',
