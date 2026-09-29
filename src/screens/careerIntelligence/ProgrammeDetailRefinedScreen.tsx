@@ -25,6 +25,7 @@ import { type GuidanceRouteContext } from "@/lib/guidanceRouteContext";
 import { provisioningData } from "@/lib/provisioningData";
 import { awardLine } from "@/lib/programmeAward";
 import { studentSummary } from "@/lib/careerLabels";
+import { hasStudentDisplayableProgrammeLearning, programmePreviewExplanation, programmePreviewUnavailableMessage } from "@/lib/programmePreview";
 import { sanitizeRequirementText, type RequirementField } from "@/lib/sanitizeRequirementText";
 import { comingSoon, pending, real, type DataState, type DomainLink, type Programme } from "@/types/career";
 import { CompassFonts, FontSize, Radius, Spacing, useTheme, type ColorPalette } from "@/theme";
@@ -118,29 +119,6 @@ function institutionLocation(school: JambProgrammeSchool): string | null {
   return school.address?.trim() || [school.city, school.state, school.country].filter(Boolean).join(", ").trim() || null;
 }
 
-function curriculumCourseTitles(data: Programme): string[] {
-  const seen = new Set<string>();
-  return (data.curriculumContract?.outcomes ?? [])
-    .filter((outcome) => outcome.dataState === "source_backed")
-    .map((outcome) => outcome.courseTitle?.trim())
-    .filter((title): title is string => Boolean(title))
-    .filter((title) => {
-      const key = title.toLowerCase();
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
-    })
-    .slice(0, 4);
-}
-
-function programmePreviewExplanation(data: Programme): string | null {
-  const overview = data.overview?.trim();
-  if (overview) return overview;
-  const courseTitles = curriculumCourseTitles(data);
-  if (!courseTitles.length) return null;
-  return `The checked curriculum records learning areas including ${courseTitles.join(", ")}.`;
-}
-
 function relationshipLabel(matchType: DomainLink["matchType"]): string {
   if (matchType === "direct") return "Primary connection";
   if (matchType === "functional") return "Related application";
@@ -199,6 +177,8 @@ function ProgrammeDomainTransition({
           {visible.map((link) => <TouchableOpacity accessibilityRole="button" key={link.domainId} onPress={() => onOpenDomain(link)} style={[styles.preview, { borderColor: colors.borderRole.subtle }]}>
             <Text style={[styles.previewName, { color: colors.textRole.primary }]}>{link.domainName}</Text>
             <Text style={[styles.previewType, { color: colors.accentRole.action }]}>{relationshipLabel(link.matchType)}</Text>
+            {link.domainDescription ? <Text numberOfLines={3} style={[styles.body, { color: colors.textRole.secondary }]}>{link.domainDescription}</Text> : null}
+            <Text style={[styles.meta, { color: colors.textRole.muted }]}>How your programme connects</Text>
             <Text style={[styles.body, { color: colors.textRole.secondary }]}>{studentSummary({ shortIntro: link.explanation, fallback: relationshipCopy(link) })}</Text>
             {link.courseAnchors?.length ? <Text style={[styles.meta, { color: colors.textRole.muted }]}>Recorded through {link.courseAnchors.slice(0, 2).map((anchor) => anchor.title).join(" and ")}{link.courseAnchors.length > 2 ? " and other course evidence" : ""}.</Text> : null}
             <Text style={[styles.link, { color: colors.accentRole.action }]}>Open domain</Text>
@@ -409,8 +389,9 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
       return;
     }
     if (activeResumeStage === "university_context") {
-      if (canGoBack) router.back();
-      else exploreNav.programme(router, activeProgrammeId, { ...guidanceContext, resumeStage: "university_offerings", schoolId: undefined, replaceHistory: true, preserveHistory: true });
+      // A university was opened from the programme preview. Back should
+      // return to that preview, not strand the learner on the university list.
+      exploreNav.programme(router, activeProgrammeId, { ...guidanceContext, resumeStage: "programme_preview", schoolId: undefined, replaceHistory: true });
       return;
     }
     if (!focusedGuidance) {
@@ -664,6 +645,7 @@ function ProgrammeDetailBody({
   const orderedDomains = [...(data.domains ?? [])].sort(
     (a, b) => relationshipOrder(a.matchType) - relationshipOrder(b.matchType),
   );
+  const hasProgrammeLearningPreview = hasStudentDisplayableProgrammeLearning(data.curriculumContract);
 
   return (
     <View style={styles.content}>
@@ -707,18 +689,26 @@ function ProgrammeDetailBody({
           ) : null}
           {!selectedSchool ? (
             <>
+              {earlySecondary && hasProgrammeLearningPreview ? (
+                <DegreeSkills curriculumContract={data.curriculumContract} resources={data.resources} variant="teaser" />
+              ) : null}
               {earlySecondary && programmePreviewExplanation(data) ? (
                 <View style={styles.block}>
                   <SectionLabel>What this programme is about</SectionLabel>
                   <Text style={[styles.body, { color: colors.textRole.secondary }]}>{programmePreviewExplanation(data)}</Text>
                 </View>
               ) : null}
-              {earlySecondary && !programmePreviewExplanation(data) ? (
+              {earlySecondary && !programmePreviewExplanation(data) && !hasProgrammeLearningPreview && !data.contextItems?.length ? (
                 <View style={[styles.context, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
                   <SectionLabel>Programme learning preview unavailable</SectionLabel>
-                  <Text style={[styles.body, { color: colors.textRole.muted }]}>A checked programme explanation is not recorded yet. Choose a university to review the available offering details.</Text>
+                  <Text style={[styles.body, { color: colors.textRole.muted }]}>{programmePreviewUnavailableMessage(data.curriculumContract?.status)}</Text>
                 </View>
               ) : null}
+              {earlySecondary && data.contextItems?.length ? <ContextualItemList
+                items={data.contextItems}
+                resources={data.resources}
+                title="Learning capabilities for this programme"
+              /> : null}
               <View style={[styles.context, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
                 <SectionLabel>{earlySecondary ? "Choose a university when you are ready" : "Choose a university to continue"}</SectionLabel>
                 <Text style={[styles.body, { color: colors.textRole.secondary }]}>The same JAMB programme may be offered by several universities. Choose one to see its address and the requirements recorded for that university before continuing to the programme details.</Text>

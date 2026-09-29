@@ -14,6 +14,7 @@ import { SectionLabel } from "./RedesignPrimitives";
 import { ExternalLinkGuard } from "./ExternalLinkGuard";
 import { isStudentResource } from "./resourceLinks";
 import { programmeThemeForCourse, type ProgrammeThemeKey } from "./programmeCurriculumThemes";
+import { programmePreviewUnavailableMessage } from "@/lib/programmePreview";
 
 const INITIAL_THEMES = 5;
 const INITIAL_ABILITIES = 4;
@@ -185,11 +186,11 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
     (item) => item.studentText,
   ), [curriculumContract]);
 
-  if (!curriculumContract || curriculumContract.status !== "available" || !courses.length) {
+  if (!curriculumContract || curriculumContract.status !== "available" || (!courses.length && !abilities.length)) {
     return (
       <View style={variant === "teaser" ? styles.teaserCard : styles.block}>
         <View style={styles.headingLine}><Feather name="book-open" size={17} color={colors.accentRole.action} /><SectionLabel>What you will study</SectionLabel></View>
-        <Text style={[styles.empty, { color: colors.textRole.muted }]}>A checked programme learning preview will appear here when the programme record is available.</Text>
+        <Text style={[styles.empty, { color: colors.textRole.muted }]}>{programmePreviewUnavailableMessage(curriculumContract?.status)}</Text>
       </View>
     );
   }
@@ -198,7 +199,13 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
     return (
       <View style={[styles.teaserCard, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
         <Text style={[styles.teaserTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>A quick look at what you will study</Text>
-        <Text style={[styles.teaserText, { color: colors.textRole.secondary }]}>{themes.slice(0, 3).map((theme) => theme.title.toLowerCase()).join(", ")}{themes.length > 3 ? " and more" : ""} are brought together so you can understand what this programme studies, how it investigates questions and how you may apply what you learn.</Text>
+        {themes.length ? (
+          <Text style={[styles.teaserText, { color: colors.textRole.secondary }]}>{themes.slice(0, 3).map((theme) => theme.title.toLowerCase()).join(", ")}{themes.length > 3 ? " and more" : ""} are brought together so you can understand what this programme studies, how it investigates questions and how you may apply what you learn.</Text>
+        ) : (
+          <View style={styles.teaserAbilities}>
+            {abilities.slice(0, 3).map((ability) => <Text key={ability.abilityId} style={[styles.teaserText, { color: colors.textRole.secondary }]}>{abilitySentence(ability.studentText)}</Text>)}
+          </View>
+        )}
         <Text style={[styles.teaserMeta, { color: colors.textRole.muted }]}>Choose a university to see its own entry requirements and the fuller programme explanation.</Text>
       </View>
     );
@@ -289,6 +296,7 @@ const styles = StyleSheet.create({
   empty: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
   intro: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.55 },
   teaserCard: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.xs },
+  teaserAbilities: { gap: Spacing.xs },
   teaserTitle: { fontSize: FontSize.sm },
   teaserText: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },
   teaserMeta: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.4 },

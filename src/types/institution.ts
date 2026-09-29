@@ -479,6 +479,13 @@ export interface ProgrammeDomainSkillCoverage {
 export interface ProgrammeSkillCoverage {
   programmeId: string;
   programmeName: string;
+  jambProgrammeId?: string;
+  jambProgrammeName?: string;
+  jambFaculty?: string;
+  /** Institution-specific school_programmes row, distinct from its CCMAS anchor. */
+  offeringId?: string;
+  jambAnchorState?: "mapped" | "unmapped";
+  comparisonScope?: "institution_programme" | "jamb_ccmas_baseline";
   curriculumSkills: string[];
   curriculumTechnical: string[];
   curriculumTransferable: string[];
@@ -488,6 +495,13 @@ export interface ProgrammeSkillCoverage {
   programmeAbilities?: ProgrammeResourceEvidence[];
   programmeEvidence?: ProgrammeResourceEvidence[];
   domains: ProgrammeDomainSkillCoverage[];
+}
+
+export interface JambProgrammeOption {
+  id: string;
+  name: string;
+  faculty?: string;
+  hasCcmasAnchor: boolean;
 }
 
 export interface RoleDemandRow {
@@ -509,10 +523,56 @@ export interface RoleDemandRow {
 }
 
 export interface PeerInstitutionRow {
+  institutionId: string;
   institutionName: string;
+  isSelf?: boolean;
+  programmesAccessible: number;
   domainsAccessible: number;
+  specializationsAccessible: number;
+  rolesAccessible: number;
   /** Domains this peer reaches that the current institution does not. */
   uniqueDomains?: string[];
+}
+
+export interface PeerOfferingReach {
+  offeringId?: string;
+  jambProgrammeId: string;
+  programmeName: string;
+  jambFaculty?: string;
+  curriculumAnchor: "mapped" | "unmapped";
+  domainsAccessible: number;
+  specializationsAccessible: number;
+  rolesAccessible: number;
+}
+
+export interface InstitutionPortfolioReach {
+  institutionId: string;
+  institutionName: string;
+  programmesAccessible: number;
+  domainsAccessible: number;
+  specializationsAccessible: number;
+  rolesAccessible: number;
+  offerings: PeerOfferingReach[];
+  demandStatus: "coming_soon" | "available";
+  domainsInDemand?: number | null;
+  specializationsInDemand?: number | null;
+  rolesInDemand?: number | null;
+}
+
+export interface PeerSharedOffering {
+  /** Same national JAMB identity; preserve each university-specific offering. */
+  current: PeerOfferingReach;
+  peer: PeerOfferingReach;
+}
+
+export interface PeerProgrammeComparison {
+  current: InstitutionPortfolioReach;
+  peer: InstitutionPortfolioReach;
+  programmesPeerTeachesNotCurrent: PeerOfferingReach[];
+  programmesCurrentTeachesNotPeer: PeerOfferingReach[];
+  /** Shared identities retain both universities' offering IDs/faculty context. */
+  programmesBothTeach: PeerSharedOffering[];
+  demandNote: string;
 }
 
 //  Affiliation attribution (aggregate, k-anonymised) 

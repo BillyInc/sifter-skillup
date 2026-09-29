@@ -20,6 +20,7 @@ import { API } from "@/lib/api";
 import { saveEducatorProfile } from "@/lib/educatorProfile";
 import { setLocalAccountType } from "@/lib/accountType";
 import { adminData } from "@/lib/adminData";
+import { shouldRestoreEducatorDraft } from "@/lib/educatorOnboardingFlow";
 import { adminHomeForProfile } from "@/lib/adminAudience";
 import { clearOnboardingDraft, getOnboardingDraft, patchOnboardingDraft } from "@/lib/onboardingDraft";
 import type {
@@ -152,15 +153,20 @@ export default function EducatorOnboarding({
   const [finishing, setFinishing] = useState(false);
   const [finishError, setFinishError] = useState<string | null>(null);
   const draftLoaded = useRef(false);
+  const organisationChosenDuringLoad = useRef(false);
 
   useEffect(() => {
     let active = true;
     getOnboardingDraft(user?.id).then((draft) => {
       if (!active) return;
       if (draft?.mode === "educator") {
-        if (draft.step) setStep(draft.step);
+        // A slow draft read must not undo the organisation the user just
+        // selected. This was perceived as the first click collapsing the
+        // Admin / Secondary School details; the second click happened after
+        // this asynchronous restore had finished.
+        if (shouldRestoreEducatorDraft(organisationChosenDuringLoad.current) && draft.step) setStep(draft.step);
         const saved = draft.educatorProfile;
-        if (saved) {
+        if (saved && shouldRestoreEducatorDraft(organisationChosenDuringLoad.current)) {
           setOrgType(saved.organizationType);
           setOrgName(saved.organizationName ?? "");
           setOrgAddress(saved.organizationAddress ?? "");
@@ -202,6 +208,7 @@ export default function EducatorOnboarding({
   const back = () => setStep((s) => Math.max(1, s - 1));
 
   const pickOrg = (t: OrganizationType) => {
+    organisationChosenDuringLoad.current = true;
     if (orgType !== t) {
        setOrgName("");
        setOrgAddress("");
@@ -356,6 +363,7 @@ export default function EducatorOnboarding({
               title={o.title}
               subtitle={o.subtitle}
               selected={orgType === o.type}
+              accessibilityLabel={`${o.title} organisation`}
               onPress={() => pickOrg(o.type)}
             />
           ))}
