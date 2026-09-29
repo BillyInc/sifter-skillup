@@ -572,10 +572,13 @@ def _school_programmes(current_user: dict, cap: int = 100) -> list:
     if not org_id:
         return []
     prog_ids = _institution_programme_ids(org_id)
+    # An institution with no mapped JAMB programmes has no programme records
+    # to report. Never turn an empty mapping into the national catalogue.
+    if not prog_ids:
+        return []
     try:
         query = svc.table("programmes").select("id, name, discipline, qualification")
-        if prog_ids:
-            query = query.in_("id", prog_ids)
+        query = query.in_("id", prog_ids)
         return (query.limit(cap).execute().data) or []
     except Exception as exc:  # noqa: BLE001
         log.warning("institutions: school programmes read skipped", error=str(exc))
@@ -1174,6 +1177,13 @@ class ProgrammeSkillCoverage(_InstitutionBase):
 
     programme_id: str
     programme_name: str
+    jamb_programme_id: Optional[str] = None
+    jamb_programme_name: Optional[str] = None
+    jamb_faculty: Optional[str] = None
+    # Institution-specific JAMB offering row; different from the CCMAS programme id.
+    offering_id: Optional[str] = None
+    jamb_anchor_state: Optional[Literal["mapped", "unmapped"]] = None
+    comparison_scope: Literal["institution_programme", "jamb_ccmas_baseline"] = "institution_programme"
     curriculum_skills: List[str] = Field(default_factory=list)
     curriculum_technical: List[str] = Field(default_factory=list)
     curriculum_transferable: List[str] = Field(default_factory=list)
@@ -1183,6 +1193,69 @@ class ProgrammeSkillCoverage(_InstitutionBase):
     programme_abilities: List[ProgrammeResourceEvidence] = Field(default_factory=list)
     programme_evidence: List[ProgrammeResourceEvidence] = Field(default_factory=list)
     domains: List[ProgrammeDomainSkillCoverage] = Field(default_factory=list)
+
+
+def _coverage_reports_for_offerings(
+    reports: list[ProgrammeSkillCoverage], offerings: list[dict]
+) -> list[ProgrammeSkillCoverage]:
+    """Expand canonical curriculum reports without collapsing JAMB offerings."""
+    reports_by_programme = {report.programme_id: report for report in reports}
+    expanded: list[ProgrammeSkillCoverage] = []
+    for offering in offerings:
+        jamb = offering.get("jamb") or {}
+        jamb_id = str(offering.get("jamb_programme_id") or "")
+        canonical_id = offering.get("programme_id")
+        template = reports_by_programme.get(str(canonical_id)) if canonical_id else None
+        offering_id = str(offering.get("offering_id") or "") or None
+        jamb_name = str(jamb.get("jamb_name") or "JAMB programme")
+        jamb_faculty = str(jamb.get("jamb_faculty") or "").strip() or None
+        if template:
+            expanded.append(template.model_copy(update={
+                "programme_id": f"offering:{offering_id or jamb_id}:{canonical_id}",
+                "programme_name": jamb_name,
+                "jamb_programme_id": jamb_id or None,
+                "jamb_programme_name": jamb_name,
+                "jamb_faculty": jamb_faculty,
+                "offering_id": offering_id,
+                "jamb_anchor_state": "mapped",
+                "comparison_scope": "jamb_ccmas_baseline",
+            }))
+        else:
+            expanded.append(ProgrammeSkillCoverage(
+                programme_id=f"offering:{offering_id or jamb_id}:{canonical_id or 'unmapped'}",
+                programme_name=jamb_name,
+                jamb_programme_id=jamb_id or None,
+                jamb_programme_name=jamb_name,
+                jamb_faculty=jamb_faculty,
+                offering_id=offering_id,
+                jamb_anchor_state="mapped" if canonical_id else "unmapped",
+                comparison_scope="jamb_ccmas_baseline",
+                curriculum_status="source_missing",
+                curriculum_contract_state="unavailable",
+            ))
+    return expanded
+
+
+class JambProgrammeOption(_InstitutionBase):
+    id: str
+    name: str
+    faculty: Optional[str] = None
+    has_ccmas_anchor: bool = False
+
+
+def _jamb_programme_option_rows(jamb_rows: list[dict], mapping_rows: list[dict]) -> list[JambProgrammeOption]:
+    """Shape all canonical identities; an absent mapping never filters a JAMB row."""
+    anchored = {
+        str(row.get("jamb_programme_id"))
+        for row in mapping_rows
+        if row.get("jamb_programme_id")
+    }
+    return [JambProgrammeOption(
+        id=str(row["id"]),
+        name=str(row.get("jamb_name") or "Unnamed JAMB programme"),
+        faculty=str(row.get("jamb_faculty") or "").strip() or None,
+        has_ccmas_anchor=str(row["id"]) in anchored,
+    ) for row in jamb_rows if row.get("id")]
 
 
 class RoleDemandRow(_InstitutionBase):
@@ -1204,12 +1277,55 @@ class RoleDemandRow(_InstitutionBase):
 
 
 class PeerInstitutionRow(_InstitutionBase):
+    institution_id: str
     institution_name: str
+    programmes_accessible: int = 0
     domains_accessible: int = 0
+    specializations_accessible: int = 0
     unique_domains: Optional[List[str]] = None
-    # Peer comparison axes (Phase 6.8): structural coverage on domains + roles.
     roles_accessible: int = 0
     is_self: bool = False
+
+
+class PeerOfferingReach(_InstitutionBase):
+    offering_id: Optional[str] = None
+    jamb_programme_id: str
+    programme_name: str
+    jamb_faculty: Optional[str] = None
+    curriculum_anchor: Literal["mapped", "unmapped"] = "unmapped"
+    domains_accessible: int = 0
+    specializations_accessible: int = 0
+    roles_accessible: int = 0
+
+
+class InstitutionPortfolioReach(_InstitutionBase):
+    institution_id: str
+    institution_name: str
+    programmes_accessible: int = 0
+    domains_accessible: int = 0
+    specializations_accessible: int = 0
+    roles_accessible: int = 0
+    offerings: List[PeerOfferingReach] = Field(default_factory=list)
+    demand_status: Literal["coming_soon", "available"] = "coming_soon"
+    domains_in_demand: Optional[int] = None
+    specializations_in_demand: Optional[int] = None
+    roles_in_demand: Optional[int] = None
+
+
+class PeerSharedOffering(_InstitutionBase):
+    """A shared national JAMB identity with each university's own offering row."""
+    current: PeerOfferingReach
+    peer: PeerOfferingReach
+
+
+class PeerProgrammeComparison(_InstitutionBase):
+    current: InstitutionPortfolioReach
+    peer: InstitutionPortfolioReach
+    programmes_peer_teaches_not_current: List[PeerOfferingReach] = Field(default_factory=list)
+    programmes_current_teaches_not_peer: List[PeerOfferingReach] = Field(default_factory=list)
+    # Retain both institutional rows; never reduce shared offerings to names.
+    programmes_both_teach: List[PeerSharedOffering] = Field(default_factory=list)
+    demand_note: str = "Demand counts are unavailable until source-backed labour-market ingestion is active."
 
 
 class AffiliationStats(_InstitutionBase):
@@ -2024,9 +2140,39 @@ async def get_alerts(
     return ResponseModel(data=[r.model_dump(by_alias=True) for r in rows])
 
 
+@router.get("/{institution_id}/jamb-programme-options", response_model=ResponseModel)
+async def get_jamb_programme_options(
+    institution_id: str,
+    current_user: dict = Depends(Auth.require_admin),
+):
+    """Return the national JAMB catalogue, retaining identities without CCMAS anchors."""
+    _assert_own_institution(institution_id, current_user)
+    try:
+        svc = _svc()
+        jamb_rows = (svc.table("jamb_programmes")
+            .select("id, jamb_name, jamb_faculty")
+            .order("jamb_name")
+            .limit(1000)
+            .execute().data) or []
+        jamb_ids = [str(row.get("id")) for row in jamb_rows if row.get("id")]
+        mappings = (svc.table("programme_mapping")
+            .select("jamb_programme_id")
+            .in_("jamb_programme_id", jamb_ids)
+            .limit(2000)
+            .execute().data) or [] if jamb_ids else []
+        options = _jamb_programme_option_rows(jamb_rows, mappings)
+        return ResponseModel(data=[option.model_dump(by_alias=True) for option in options])
+    except HTTPException:
+        raise
+    except Exception as exc:  # noqa: BLE001
+        log.error("institutions JAMB programme options failed", error=str(exc))
+        raise HTTPException(status_code=503, detail="The national JAMB programme list is unavailable.") from exc
+
+
 @router.get("/{institution_id}/programme-skill-coverage", response_model=ResponseModel)
 async def get_programme_skill_coverage(
     institution_id: str,
+    jamb_programme_id: Optional[str] = Query(default=None),
     current_user: dict = Depends(Auth.require_admin),
 ):
     """Return CCMAS teaching versus sourced market/practice evidence.
@@ -2041,9 +2187,86 @@ async def get_programme_skill_coverage(
     _assert_own_institution(institution_id, current_user)
     try:
         svc = _svc()
-        programmes = _school_programmes(current_user, cap=2000)
+        requested_jamb: dict | None = None
+        institution_offerings: list[dict] = []
+        if jamb_programme_id:
+            requested_jamb_rows = (svc.table("jamb_programmes")
+                .select("id, jamb_name, jamb_faculty")
+                .eq("id", jamb_programme_id)
+                .limit(1).execute().data) or []
+            if not requested_jamb_rows:
+                raise HTTPException(status_code=404, detail="JAMB programme not found.")
+            requested_jamb = requested_jamb_rows[0]
+            mapping_rows = (svc.table("programme_mapping")
+                .select("programme_id")
+                .eq("jamb_programme_id", jamb_programme_id)
+                .limit(1).execute().data) or []
+            if not mapping_rows or not mapping_rows[0].get("programme_id"):
+                return ResponseModel(data=[ProgrammeSkillCoverage(
+                    programme_id=f"jamb:{jamb_programme_id}",
+                    programme_name=str(requested_jamb.get("jamb_name") or "JAMB programme"),
+                    jamb_programme_id=jamb_programme_id,
+                    jamb_programme_name=str(requested_jamb.get("jamb_name") or "JAMB programme"),
+                    jamb_faculty=str(requested_jamb.get("jamb_faculty") or "").strip() or None,
+                    jamb_anchor_state="unmapped",
+                    comparison_scope="jamb_ccmas_baseline",
+                    curriculum_status="source_missing",
+                    curriculum_contract_state="unavailable",
+                ).model_dump(by_alias=True)])
+            canonical_programme_id = str(mapping_rows[0]["programme_id"])
+            programmes = (svc.table("programmes")
+                .select("id, name, discipline, qualification")
+                .eq("id", canonical_programme_id)
+                .limit(1).execute().data) or []
+        else:
+            org_id = _resolve_org(current_user)
+            offering_rows = (svc.table("school_programmes")
+                .select("id, jamb_programme_id")
+                .eq("school_id", org_id)
+                .order("jamb_programme_id")
+                .limit(2000).execute().data) or [] if org_id else []
+            jamb_ids = list(dict.fromkeys(
+                str(row.get("jamb_programme_id"))
+                for row in offering_rows
+                if row.get("jamb_programme_id")
+            ))
+            jamb_rows = (svc.table("jamb_programmes")
+                .select("id, jamb_name, jamb_faculty")
+                .in_("id", jamb_ids).limit(2000).execute().data) or [] if jamb_ids else []
+            jamb_by_id = {str(row.get("id")): row for row in jamb_rows if row.get("id")}
+            mapping_rows = (svc.table("programme_mapping")
+                .select("jamb_programme_id, programme_id")
+                .in_("jamb_programme_id", jamb_ids).limit(2000).execute().data) or [] if jamb_ids else []
+            programme_by_jamb = {
+                str(row.get("jamb_programme_id")): str(row.get("programme_id"))
+                for row in mapping_rows
+                if row.get("jamb_programme_id") and row.get("programme_id")
+            }
+            institution_offerings = [
+                {
+                    "offering_id": str(offering.get("id") or ""),
+                    "jamb_programme_id": jamb_id,
+                    "jamb": jamb_by_id.get(jamb_id, {}),
+                    "programme_id": programme_by_jamb.get(jamb_id),
+                }
+                for offering in offering_rows
+                if (jamb_id := str(offering.get("jamb_programme_id") or ""))
+            ]
+            programmes = _school_programmes(current_user, cap=2000)
         programme_ids = [str(row.get("id")) for row in programmes if row.get("id")]
         if not programme_ids:
+            if requested_jamb:
+                return ResponseModel(data=[ProgrammeSkillCoverage(
+                    programme_id=f"jamb:{jamb_programme_id}",
+                    programme_name=str(requested_jamb.get("jamb_name") or "JAMB programme"),
+                    jamb_programme_id=jamb_programme_id,
+                    jamb_programme_name=str(requested_jamb.get("jamb_name") or "JAMB programme"),
+                    jamb_faculty=str(requested_jamb.get("jamb_faculty") or "").strip() or None,
+                    jamb_anchor_state="mapped",
+                    comparison_scope="jamb_ccmas_baseline",
+                    curriculum_status="source_missing",
+                    curriculum_contract_state="unavailable",
+                ).model_dump(by_alias=True)])
             return ResponseModel(data=[])
 
         # The cleaned curriculum contract is the authoritative admin teaching
@@ -2181,7 +2404,7 @@ async def get_programme_skill_coverage(
             identities = {_canonical_item_key(value)} | {
                 _canonical_item_key(alias) for alias in aliases
             }
-            taught = kind == "skill" and bool(identities & curriculum_keys)
+            taught = kind in {"skill", "competency", "tool", "certification"} and bool(identities & curriculum_keys)
             data_state = str(source_row.get("data_state") or "").strip() or None
             source_confidence = str(source_row.get("source_confidence") or "").strip() or None
             market_state = (
@@ -2535,7 +2758,12 @@ async def get_programme_skill_coverage(
                     deduped_programme_evidence.append(evidence)
             reports.append(ProgrammeSkillCoverage(
                 programme_id=programme_id,
-                programme_name=programme_names.get(programme_id) or "Programme not named",
+                programme_name=(str(requested_jamb.get("jamb_name")) if requested_jamb else programme_names.get(programme_id)) or "Programme not named",
+                jamb_programme_id=jamb_programme_id,
+                jamb_programme_name=str(requested_jamb.get("jamb_name")) if requested_jamb else None,
+                jamb_faculty=str(requested_jamb.get("jamb_faculty") or "").strip() or None if requested_jamb else None,
+                jamb_anchor_state="mapped" if requested_jamb else None,
+                comparison_scope="jamb_ccmas_baseline" if requested_jamb else "institution_programme",
                 curriculum_skills=curriculum,
                 curriculum_technical=technical,
                 curriculum_transferable=transferable,
@@ -2546,7 +2774,18 @@ async def get_programme_skill_coverage(
                 programme_evidence=deduped_programme_evidence,
                 domains=coverage_domains,
             ))
-        return ResponseModel(data=[report.model_dump(by_alias=True) for report in reports])
+        if requested_jamb:
+            return ResponseModel(data=[report.model_dump(by_alias=True) for report in reports])
+
+        # Preserve one report row per university ↔ JAMB offering. Several
+        # JAMB identities may share a CCMAS curriculum, but the institution's
+        # offering context and faculty must not disappear in a canonical-id
+        # aggregation. CCMAS evidence is reused as supporting curriculum, not
+        # relabelled as a university-authored curriculum.
+        offering_reports = _coverage_reports_for_offerings(reports, institution_offerings)
+        return ResponseModel(data=[report.model_dump(by_alias=True) for report in offering_reports])
+    except HTTPException:
+        raise
     except Exception as exc:  # noqa: BLE001
         log.error("institutions curriculum skill coverage failed", error=str(exc))
         return ResponseModel(data=[])
@@ -2630,91 +2869,209 @@ async def get_peers(
     institution_id: str,
     current_user: dict = Depends(Auth.require_admin),
 ):
-    """Peer-institution comparison (ADMIN-ONLY, Phase 6.8).
-
-    Compares schools on DOMAIN coverage + ROLE coverage. Each
-    school resolves to its reachable-domain set via school → school_programmes →
-    programme_mapping → CCMAS programme → programme_domain → domains. Role
-    coverage = distinct roles in those domains. `unique_domains` = domains the
-    current school covers that a peer does not.
-    """
+    """All-university aggregate index; detailed offering diffs use the route below."""
     _assert_own_institution(institution_id, current_user)
     try:
         svc = _svc()
-        # Resolve the current admin's school (may be None → all-programmes self).
         self_school_id = _resolve_org(current_user)
-
-        # A bounded peer set: universities with the most school_programmes rows.
-        # (Cheap proxy for "biggest portfolios" without a heavy aggregate.)
         schools_res = (
             svc.table("schools")
             .select("id, name, institution_type")
             .eq("institution_type", "university")
-            .limit(15)
+            .order("name")
+            .limit(2000)
             .execute()
         )
         peer_schools = schools_res.data or []
-        # Ensure the current school is included even if outside the sample.
-        if self_school_id and all(s["id"] != self_school_id for s in peer_schools):
+        if self_school_id and all(str(s.get("id")) != str(self_school_id) for s in peer_schools):
             me = svc.table("schools").select("id, name, institution_type").eq("id", self_school_id).limit(1).execute()
             if me.data:
-                peer_schools = [me.data[0], *peer_schools][:15]
-
-        def _reachable_domains(school_id: str) -> set:
-            prog_ids = _institution_programme_ids(school_id)
-            if not prog_ids:
-                return set()
-            pd = _programme_domain_rows(prog_ids)
-            return {r["domain_id"] for r in pd}
-
-        # Compute each peer's domain set once.
-        coverage: dict = {}
-        all_domain_ids: set = set()
-        for s in peer_schools:
-            dset = _reachable_domains(s["id"])
-            coverage[s["id"]] = dset
-            all_domain_ids |= dset
-
-        # Domain attributes: name only; this is a structural comparison.
-        dmeta = _domain_map(list(all_domain_ids))
-        # Role counts per domain (bounded single query over the involved domains).
-        role_counts: dict = {}
-        if all_domain_ids:
-            rc = (
-                svc.table("domain_roles")
-                .select("domain_id")
-                .in_("domain_id", list(all_domain_ids))
-                .limit(5000)
-                .execute()
-            )
-            for r in (rc.data or []):
-                did = r.get("domain_id")
-                role_counts[did] = role_counts.get(did, 0) + 1
-        my_domains = coverage.get(self_school_id, set()) if self_school_id else set()
+                peer_schools.append(me.data[0])
+        portfolios, entity_sets = _peer_institution_portfolios(peer_schools)
+        my_domains = entity_sets.get(str(self_school_id), {}).get("domains", set())
+        dmeta = _domain_map(list(my_domains))
         rows: List[PeerInstitutionRow] = []
         for s in peer_schools:
-            dset = coverage.get(s["id"], set())
-            is_self = bool(self_school_id and s["id"] == self_school_id)
-            # Domains I have that this peer lacks (only meaningful vs self).
-            unique = None
-            if self_school_id and not is_self:
-                diff = [dmeta.get(d, {}).get("name") for d in (my_domains - dset)]
-                unique = [n for n in diff if n][:12] or None
-            rows.append(
-                PeerInstitutionRow(
-                    institution_name=s.get("name") or "",
-                    domains_accessible=len(dset),
-                    roles_accessible=sum(role_counts.get(d, 0) for d in dset),
-                    unique_domains=unique,
-                    is_self=is_self,
-                )
-            )
-        # Strongest coverage first.
-        rows.sort(key=lambda r: r.domains_accessible, reverse=True)
+            school_id = str(s.get("id") or "")
+            portfolio = portfolios.get(school_id)
+            if not portfolio:
+                continue
+            peer_domains = entity_sets.get(school_id, {}).get("domains", set())
+            unique = None if school_id == str(self_school_id) else [
+                dmeta.get(did, {}).get("name")
+                for did in sorted(my_domains - peer_domains)
+                if dmeta.get(did, {}).get("name")
+            ] or None
+            rows.append(PeerInstitutionRow(
+                institution_id=school_id,
+                institution_name=portfolio.institution_name,
+                programmes_accessible=portfolio.programmes_accessible,
+                domains_accessible=portfolio.domains_accessible,
+                specializations_accessible=portfolio.specializations_accessible,
+                roles_accessible=portfolio.roles_accessible,
+                unique_domains=unique,
+                is_self=school_id == str(self_school_id),
+            ))
         return ResponseModel(data=[r.model_dump(by_alias=True) for r in rows])
     except Exception as exc:  # noqa: BLE001
         log.error("institutions peers failed", error=str(exc))
         return ResponseModel(data=[])
+
+
+# ─────────────────────────────────────────────────────────────
+# University programme portfolio comparison
+# ─────────────────────────────────────────────────────────────
+
+def _peer_institution_portfolios(
+    schools: list[dict],
+) -> tuple[dict[str, InstitutionPortfolioReach], dict[str, dict[str, set[str]]]]:
+    """Build structural portfolio summaries from university-scoped offers.
+
+    Counts derive from each school's own JAMB offering rows and current
+    JAMB→CCMAS→domain links. Demand is not inferred from taxonomy reach.
+    """
+    svc = _svc()
+    school_ids = [str(row.get("id")) for row in schools if row.get("id")]
+    if not school_ids:
+        return {}, {}
+    offer_rows = svc.table("school_programmes").select(
+        "id, school_id, jamb_programme_id"
+    ).in_("school_id", school_ids).limit(50000).execute().data or []
+    jamb_ids = list({str(row.get("jamb_programme_id")) for row in offer_rows if row.get("jamb_programme_id")})
+    jamb_by_id: dict[str, dict] = {}
+    mappings: dict[str, list[str]] = {}
+    domains_by_programme: dict[str, set[str]] = {}
+    subgroups_by_domain: dict[str, set[str]] = {}
+    roles_by_domain: dict[str, set[str]] = {}
+    if jamb_ids:
+        jamb_rows = svc.table("jamb_programmes").select(
+            "id, jamb_name, jamb_faculty"
+        ).in_("id", jamb_ids).limit(5000).execute().data or []
+        jamb_by_id = {str(row["id"]): row for row in jamb_rows if row.get("id")}
+        mapping_rows = svc.table("programme_mapping").select(
+            "jamb_programme_id, programme_id"
+        ).in_("jamb_programme_id", jamb_ids).limit(5000).execute().data or []
+        programme_ids = list({str(row["programme_id"]) for row in mapping_rows if row.get("programme_id")})
+        for row in mapping_rows:
+            if row.get("jamb_programme_id") and row.get("programme_id"):
+                mappings.setdefault(str(row["jamb_programme_id"]), []).append(str(row["programme_id"]))
+        domain_rows = _programme_domain_rows(programme_ids, cap=20000)
+        domain_ids: set[str] = set()
+        for row in domain_rows:
+            if row.get("programme_id") and row.get("domain_id"):
+                domains_by_programme.setdefault(str(row["programme_id"]), set()).add(str(row["domain_id"]))
+                domain_ids.add(str(row["domain_id"]))
+        if domain_ids:
+            subgroup_rows = svc.table("domain_subgroups").select("id, domain_id").in_(
+                "domain_id", list(domain_ids)
+            ).limit(30000).execute().data or []
+            role_rows = svc.table("domain_roles").select("id, domain_id").in_(
+                "domain_id", list(domain_ids)
+            ).limit(50000).execute().data or []
+            for row in subgroup_rows:
+                if row.get("id") and row.get("domain_id"):
+                    subgroups_by_domain.setdefault(str(row["domain_id"]), set()).add(str(row["id"]))
+            for row in role_rows:
+                if row.get("id") and row.get("domain_id"):
+                    roles_by_domain.setdefault(str(row["domain_id"]), set()).add(str(row["id"]))
+
+    offers_by_school: dict[str, list[PeerOfferingReach]] = {}
+    sets_by_school: dict[str, dict[str, set[str]]] = {}
+    for row in offer_rows:
+        school_id = str(row.get("school_id") or "")
+        jamb_id = str(row.get("jamb_programme_id") or "")
+        jamb = jamb_by_id.get(jamb_id, {})
+        reached_domains = {
+            domain_id
+            for programme_id in mappings.get(jamb_id, [])
+            for domain_id in domains_by_programme.get(programme_id, set())
+        }
+        reached_subgroups = {
+            subgroup_id for domain_id in reached_domains
+            for subgroup_id in subgroups_by_domain.get(domain_id, set())
+        }
+        reached_roles = {
+            role_id for domain_id in reached_domains
+            for role_id in roles_by_domain.get(domain_id, set())
+        }
+        offering = PeerOfferingReach(
+            offering_id=str(row.get("id") or "") or None,
+            jamb_programme_id=jamb_id,
+            programme_name=str(jamb.get("jamb_name") or "JAMB programme"),
+            jamb_faculty=str(jamb.get("jamb_faculty") or "").strip() or None,
+            curriculum_anchor="mapped" if mappings.get(jamb_id) else "unmapped",
+            domains_accessible=len(reached_domains),
+            specializations_accessible=len(reached_subgroups),
+            roles_accessible=len(reached_roles),
+        )
+        offers_by_school.setdefault(school_id, []).append(offering)
+        totals = sets_by_school.setdefault(school_id, {"domains": set(), "specializations": set(), "roles": set()})
+        totals["domains"].update(reached_domains)
+        totals["specializations"].update(reached_subgroups)
+        totals["roles"].update(reached_roles)
+
+    portfolios: dict[str, InstitutionPortfolioReach] = {}
+    for school in schools:
+        school_id = str(school.get("id") or "")
+        offerings = sorted(
+            offers_by_school.get(school_id, []),
+            key=lambda row: (row.programme_name.casefold(), row.jamb_programme_id),
+        )
+        totals = sets_by_school.get(school_id, {"domains": set(), "specializations": set(), "roles": set()})
+        portfolios[school_id] = InstitutionPortfolioReach(
+            institution_id=school_id,
+            institution_name=str(school.get("name") or "University"),
+            programmes_accessible=len({row.jamb_programme_id for row in offerings}),
+            domains_accessible=len(totals["domains"]),
+            specializations_accessible=len(totals["specializations"]),
+            roles_accessible=len(totals["roles"]),
+            offerings=offerings,
+            demand_status="coming_soon",
+        )
+    return portfolios, sets_by_school
+
+
+@router.get("/me/peer-programme-comparison", response_model=ResponseModel)
+async def get_peer_programme_comparison(
+    peer_school_id: str,
+    compare_school_id: Optional[str] = None,
+    current_user: dict = Depends(Auth.require_admin),
+):
+    """Compare two public JAMB portfolios while respecting caller scope."""
+    own_school_id = _assert_own_institution("me", current_user)
+    org = _org_from_school(own_school_id)
+    if org and org.type == "university":
+        left_id, right_id = own_school_id, peer_school_id
+    else:
+        if not compare_school_id:
+            raise HTTPException(status_code=422, detail="Select two universities to compare.")
+        left_id, right_id = compare_school_id, peer_school_id
+    if str(left_id) == str(right_id):
+        raise HTTPException(status_code=422, detail="Choose two different universities.")
+    rows = _svc().table("schools").select(
+        "id, name, institution_type"
+    ).in_("id", [left_id, right_id]).eq("institution_type", "university").limit(2).execute().data or []
+    schools = {str(row.get("id")): row for row in rows if row.get("id")}
+    if set(schools) != {str(left_id), str(right_id)}:
+        raise HTTPException(status_code=404, detail="One or both university records are unavailable.")
+    portfolios, _sets = _peer_institution_portfolios([schools[str(left_id)], schools[str(right_id)]])
+    current, peer = portfolios[str(left_id)], portfolios[str(right_id)]
+    current_by_jamb = {row.jamb_programme_id: row for row in current.offerings}
+    peer_by_jamb = {row.jamb_programme_id: row for row in peer.offerings}
+    peer_only = [peer_by_jamb[key] for key in sorted(peer_by_jamb.keys() - current_by_jamb.keys())]
+    current_only = [current_by_jamb[key] for key in sorted(current_by_jamb.keys() - peer_by_jamb.keys())]
+    shared = [
+        PeerSharedOffering(current=current_by_jamb[key], peer=peer_by_jamb[key])
+        for key in sorted(current_by_jamb.keys() & peer_by_jamb.keys())
+    ]
+    comparison = PeerProgrammeComparison(
+        current=current,
+        peer=peer,
+        programmes_peer_teaches_not_current=peer_only,
+        programmes_current_teaches_not_peer=current_only,
+        programmes_both_teach=shared,
+    )
+    return ResponseModel(data=comparison.model_dump(by_alias=True))
 
 
 # ─────────────────────────────────────────────────────────────

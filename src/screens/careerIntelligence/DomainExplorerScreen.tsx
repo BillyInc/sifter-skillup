@@ -31,6 +31,7 @@ import {
 } from "@/components/careerIntelligence";
 import { StaggerReveal } from "@/components/animations";
 import { careerData, type DomainClusterGroup } from "@/lib/careerData";
+import { studentSummary } from "@/lib/careerLabels";
 import { useExploreNav } from "@/lib/exploreNav";
 import { pending, type DataState } from "@/types/career";
 import {
@@ -314,9 +315,21 @@ export function DomainExplorerScreen() {
                                 { color: colors.textRole.primary },
                               ]}
                               numberOfLines={2}
-                            >
-                              {d.name}
-                            </Text>
+                              >
+                                {d.name}
+                              </Text>
+                              <Text style={[styles.domainCardSummary, { color: colors.textRole.secondary }]} numberOfLines={3}>
+                                {studentSummary({
+                                  shortIntro: d.studentOrientation?.shortIntro,
+                                  short_intro: d.studentOrientation?.short_intro,
+                                  whatPeopleDo: d.studentOrientation?.whatPeopleDo,
+                                  what_people_do: d.studentOrientation?.what_people_do,
+                                  whatItStudies: d.studentOrientation?.whatItStudies,
+                                  what_it_studies: d.studentOrientation?.what_it_studies,
+                                  description: d.description,
+                                  fallback: "A student-friendly summary is not available yet.",
+                                })}
+                              </Text>
 
                             {d.eliteFlag ? (
                               <View
@@ -480,13 +493,18 @@ const styles = StyleSheet.create({
   accentBar: {
     height: 5,
   },
-  domainCardBody: {
+    domainCardBody: {
     padding: Spacing.md,
     gap: Spacing.sm,
     minHeight: 112,
     justifyContent: "space-between",
-    alignItems: "center",
-  },
+      alignItems: "center",
+    },
+    domainCardSummary: {
+      fontSize: FontSize.sm,
+      lineHeight: 20,
+      textAlign: "center",
+    },
   domainCardTop: {
     flexDirection: "row",
     alignItems: "center",

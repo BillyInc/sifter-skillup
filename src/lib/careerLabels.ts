@@ -34,8 +34,11 @@ export function formatCareerLabel(value: string | null | undefined): string {
 
 export type StudentSummaryInput = {
   shortIntro?: string | null;
+  short_intro?: string | null;
   whatPeopleDo?: string | null;
+  what_people_do?: string | null;
   whatItStudies?: string | null;
+  what_it_studies?: string | null;
   description?: string | null;
   fallback: string;
 };
@@ -46,7 +49,7 @@ export type StudentSummaryInput = {
  * explanation when the API has not supplied one.
  */
 export function studentSummary(input: StudentSummaryInput, maxLength = 190): string {
-  const candidate = [input.shortIntro, input.whatPeopleDo, input.whatItStudies, input.description]
+  const candidate = [input.shortIntro, input.short_intro, input.whatPeopleDo, input.what_people_do, input.what_it_studies, input.whatItStudies, input.description]
     .map((value) => String(value ?? "").replace(/\s+/g, " ").trim())
     .find(Boolean);
   if (!candidate) return input.fallback;

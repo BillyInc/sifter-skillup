@@ -43,11 +43,11 @@ import LocalLegalNotice from "@/components/LocalLegalNotice";
 import { getEducatorProfile } from "@/lib/educatorProfile";
 import {
   getAdminProvisioningDrafts,
-  getAdminTask,
   saveAdminProvisioningDrafts,
   saveAdminTask,
 } from "@/lib/adminResume";
 import { useAuth } from "@/hooks/useAuth";
+import { provisioningDraftsNeedTicks, provisioningModeFor, selectedProvisioningDraftIds } from "@/lib/provisioningFlow";
 import {
   provisioningData,
   type DraftImage,
@@ -120,7 +120,7 @@ function isLocalDraftId(id: string) {
 }
 
 function makeLocalDraft(
-  studentType: ProvisioningStudentType,
+  studentType: ProvisioningStudentType | null,
 ): ProvisionDraft {
   return {
     id: `local-draft-${Date.now()}-${Math.random().toString(36).slice(2)}`,
@@ -146,33 +146,41 @@ export function StudentProvisioningScreen({
   const { user } = useAuth();
   const [tab, setTab] = useState<Tab>(initialTab);
   const [organizationType, setOrganizationType] = useState<string | null>(null);
+  const [organizationId, setOrganizationId] = useState<string | undefined>();
+  const [organizationContextReady, setOrganizationContextReady] = useState(false);
 
   useEffect(() => {
     let active = true;
     getEducatorProfile(user?.id).then((profile) => {
-      if (active) setOrganizationType(profile?.organizationType ?? null);
-    });
+      if (active) {
+        setOrganizationType(profile?.organizationType ?? null);
+        setOrganizationId(profile?.organizationId ?? undefined);
+      }
+    }).finally(() => { if (active) setOrganizationContextReady(true); });
     return () => { active = false; };
   }, [user?.id]);
 
   // The URL mode is only a navigation hint. The persisted organisation type is
   // authoritative, so a provider cannot widen itself into school stages.
-  const effectiveMode: "school" | "jamb" =
-    organizationType === "tutorial_centre" || organizationType === "jamb_cafe"
-      ? "jamb"
-      : initialMode;
+  const effectiveMode = provisioningModeFor(organizationType, initialMode);
   const isUniversity = organizationType === "university";
 
   return (
     <AdminShell title={effectiveMode === "jamb" ? "JAMB accounts" : "Students"} eyebrow={effectiveMode === "jamb" ? "Provider guidance" : "Students & provisioning"}>
       <View style={{ flex: 1, backgroundColor: colors.bg }}>
-        {isUniversity ? (
+        {!organizationContextReady ? (
+          <View style={{ flex: 1, alignItems: "center", justifyContent: "center", gap: Spacing.sm }}>
+            <ActivityIndicator color={colors.accentRole.action} />
+            <Text style={[styles.cardHint, { color: colors.textMuted }]}>Loading your organisation’s account options…</Text>
+          </View>
+        ) : null}
+        {organizationContextReady && isUniversity ? (
           <View style={{ padding: Spacing.xl, gap: Spacing.sm }}>
             <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>Student accounts are not created here</Text>
             <Text style={[styles.lede, { color: colors.textMuted }]}>University administrators use programme and curriculum intelligence. Student account provisioning is available to secondary schools and JAMB guidance providers only.</Text>
           </View>
         ) : null}
-        {!isUniversity ? <>
+        {organizationContextReady && !isUniversity ? <>
         {/* Tab switch */}
         <View style={[styles.tabBar, { borderBottomColor: colors.border }]}>
           {(["add", "roster"] as Tab[]).map((t) => (
@@ -196,7 +204,7 @@ export function StudentProvisioningScreen({
             </TouchableOpacity>
           ))}
         </View>
-        {tab === "roster" ? <RosterTab /> : <AddStudentsTab initialMode={effectiveMode} />}
+        {tab === "roster" ? <RosterTab /> : <AddStudentsTab initialMode={effectiveMode} organizationId={organizationId} organizationContextReady={organizationContextReady} />}
         </> : null}
       </View>
     </AdminShell>
@@ -643,7 +651,7 @@ function MergeCandidatesPanel({
 // Add students tab — import → review/select → done
 // ─────────────────────────────────────────────────────────────
 
-function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "jamb" }) {
+function AddStudentsTab({ initialMode = "school", organizationId, organizationContextReady }: { initialMode?: "school" | "jamb"; organizationId?: string; organizationContextReady: boolean }) {
   const { colors } = useTheme();
   const { user } = useAuth();
   const [stage, setStage] = useState<AddStage>("import");
@@ -661,16 +669,12 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
   const showStream = initialMode === "school";
 
   useEffect(() => {
-    if (!user?.id) {
-      setResumeHydrated(true);
-      return;
-    }
-    getAdminTask(user.id).then((task) => {
-      if (task?.href === "/(admin)/students" && task.stage && ["import", "review", "done"].includes(task.stage)) {
-        setStage(task.stage as AddStage);
-      }
-    }).finally(() => setResumeHydrated(true));
-  }, [user?.id]);
+    // Always open on the two deliberate actions. A saved task may preserve
+    // data locally, but must not drop an administrator straight into a
+    // pre-created review/account row when they open Students.
+    setStage("import");
+    setResumeHydrated(true);
+  }, []);
 
   useEffect(() => {
     if (!user?.id || !resumeHydrated) return;
@@ -706,19 +710,19 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
 
   // Load any existing (previously staged) drafts on entry.
   useEffect(() => {
+    if (!organizationContextReady) return;
     provisioningData
-      .listDrafts()
+      .listDrafts(organizationId)
       .then((d) => {
         if (d.length) {
           setDrafts(d.map((draft) => ({
             ...draft,
-            studentType: draft.studentType ?? defaultStudentType,
+            studentType: draft.studentType ?? (showStream ? null : defaultStudentType),
           })));
-          setStage("review");
         }
       })
       .catch(() => {});
-  }, [defaultStudentType]);
+  }, [defaultStudentType, organizationContextReady, organizationId, showStream]);
 
   const pickAndExtract = useCallback(async () => {
     setError(null);
@@ -748,23 +752,26 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
     setManualEntryOnly(false);
     setUploadMenuOpen(false);
     try {
-      const staged = await provisioningData.createDrafts({ images });
+      const staged = await provisioningData.createDrafts({ images, organizationId });
       if (!staged.length) {
         setError("No student names could be read from that file. Try a clearer image or add students manually.");
         return;
       }
       const normalized: ProvisionDraft[] = staged.map((draft) => ({
         ...draft,
-        studentType: draft.studentType ?? defaultStudentType,
+        studentType: draft.studentType ?? (showStream ? null : defaultStudentType),
       }));
-      setDrafts((prev) => [...normalized, ...prev]);
+      const previousServerIds = drafts.filter((draft) => !isLocalDraftId(draft.id)).map((draft) => draft.id);
+      if (previousServerIds.length) await provisioningData.clearDrafts(previousServerIds, organizationId);
+      setDrafts(normalized);
+      setSelected({});
       setStage("review");
     } catch (e) {
       setError((e as Error)?.message ?? "Extraction failed. Add students manually.");
     } finally {
       setBusy(false);
     }
-  }, [defaultStudentType]);
+  }, [defaultStudentType, drafts, organizationId, showStream]);
 
   const pickDocumentAndExtract = useCallback(async () => {
     if (Platform.OS !== "web" || typeof document === "undefined") {
@@ -799,31 +806,47 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
         reader.onerror = () => reject(new Error("The selected document could not be read."));
         reader.readAsDataURL(file);
       })));
-      const staged = await provisioningData.createDrafts({ images });
+      const staged = await provisioningData.createDrafts({ images, organizationId });
       if (!staged.length) {
         setError("No student names could be read from that document. Try another file or add students manually.");
         return;
       }
-      setDrafts((prev) => prev.concat(staged.map((draft) => ({
+      const previousServerIds = drafts.filter((draft) => !isLocalDraftId(draft.id)).map((draft) => draft.id);
+      if (previousServerIds.length) await provisioningData.clearDrafts(previousServerIds, organizationId);
+      setDrafts(staged.map((draft) => ({
         ...draft,
-        studentType: draft.studentType ?? defaultStudentType,
-      }))));
+        studentType: draft.studentType ?? (showStream ? null : defaultStudentType),
+      })));
+      setSelected({});
       setStage("review");
     } catch (e) {
       setError((e as Error)?.message ?? "The document could not be read. Add students manually.");
     } finally {
       setBusy(false);
     }
-  }, [defaultStudentType]);
+  }, [defaultStudentType, drafts, organizationId, showStream]);
 
-  const addManualRow = useCallback(() => {
+  const addManualRow = useCallback(async () => {
     setError(null);
+    if (stage === "import" && drafts.length) {
+      const previousServerIds = drafts.filter((draft) => !isLocalDraftId(draft.id)).map((draft) => draft.id);
+      try {
+        if (previousServerIds.length) await provisioningData.clearDrafts(previousServerIds, organizationId);
+      } catch (e) {
+        setError((e as Error)?.message ?? "Could not reset the previous account list.");
+        return;
+      }
+      setDrafts([]);
+    }
     setManualEntryOnly(true);
     // Keep manual entry local until the administrator confirms account creation.
     // This prevents an empty row from triggering the slow document-staging path.
-    setDrafts((prev) => prev.concat(makeLocalDraft(defaultStudentType)));
+    setDrafts((prev) => stage === "import"
+      ? [makeLocalDraft(showStream ? null : defaultStudentType)]
+      : prev.concat(makeLocalDraft(showStream ? null : defaultStudentType)));
+    setSelected({});
     setStage("review");
-  }, [defaultStudentType]);
+  }, [defaultStudentType, drafts, organizationId, showStream, stage]);
 
   const patchDraft = useCallback(
     (id: string, patch: Partial<ProvisionDraft>) => {
@@ -849,19 +872,17 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
           studentType: d.studentType ?? defaultStudentType,
           guardianConsent: d.guardianConsent,
           guardianName: d.guardianName ?? undefined,
-        });
+        }, organizationId);
         patchDraft(d.id, updated);
       } catch {
         /* keep local edit; will retry on generate */
       }
     },
-    [defaultStudentType, patchDraft, showStream],
+    [defaultStudentType, organizationId, patchDraft, showStream],
   );
 
   const generate = useCallback(async () => {
-    const selectedOriginalIds = new Set(
-      drafts.filter((d) => selected[d.id]).map((d) => d.id),
-    );
+    const selectedOriginalIds = new Set(selectedProvisioningDraftIds(drafts, selected));
 
     if (!selectedOriginalIds.size) {
       setError("Select at least one named student to create accounts.");
@@ -876,14 +897,15 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
         (d) => selectedOriginalIds.has(d.id) && isLocalDraftId(d.id),
       );
       const selectedDrafts = drafts.filter((d) => selectedOriginalIds.has(d.id));
+      if (showStream && selectedDrafts.some((d) => !d.studentType)) {
+        throw new Error("Choose SS1, SS2 or SS3 for each selected student.");
+      }
       if (showStream && selectedDrafts.some((d) => !d.stream)) {
         throw new Error("Choose a stream for every selected student before creating accounts.");
       }
-      if (showStream && selectedDrafts.some((d) => d.guardianConsent && !(d.guardianName ?? "").trim())) {
-        throw new Error("Add the guardian name for each row marked as consent recorded.");
-      }
       if (localSelected.length) {
         const staged = await provisioningData.createDrafts({
+          organizationId,
           manualRows: localSelected.map((d) => ({
             fullName: d.fullName ?? "",
             studentClass: d.studentClass ?? undefined,
@@ -923,7 +945,7 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
           .filter((d) => selectedIds.has(d.id))
           .map((d) => commitDraft(d)),
       );
-      const result = await provisioningData.generate(items);
+      const result = await provisioningData.generate(items, organizationId);
       setGenerated(result);
       setDrafts((prev) => prev.filter((d) => !selectedIds.has(d.id)));
       setSelected({});
@@ -933,7 +955,7 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
     } finally {
       setBusy(false);
     }
-  }, [defaultStudentType, drafts, selected, commitDraft, showStream]);
+  }, [defaultStudentType, drafts, organizationId, selected, commitDraft, showStream]);
 
   const clearSelectedRows = useCallback(async () => {
     const ids = drafts.filter((d) => selected[d.id] && !isLocalDraftId(d.id)).map((d) => d.id);
@@ -943,7 +965,7 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
     setManualEntryOnly(false);
     setError(null);
     try {
-      if (ids.length) await provisioningData.clearDrafts(ids);
+      if (ids.length) await provisioningData.clearDrafts(ids, organizationId);
       setDrafts((current) => current.filter((d) => !selected[d.id]));
       setSelected({});
       if (!drafts.some((d) => !selected[d.id])) setStage("import");
@@ -952,7 +974,25 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
     } finally {
       setBusy(false);
     }
-  }, [drafts, selected]);
+  }, [drafts, organizationId, selected]);
+
+  const removeDraft = useCallback(async (draftId: string) => {
+    const target = drafts.find((draft) => draft.id === draftId);
+    if (!target) return;
+    try {
+      if (!isLocalDraftId(target.id)) await provisioningData.clearDrafts([target.id], organizationId);
+      setDrafts((current) => current.filter((draft) => draft.id !== draftId));
+      setSelected((current) => {
+        const next = { ...current };
+        delete next[draftId];
+        return next;
+      });
+      if (drafts.length === 1) setStage("import");
+      setError(null);
+    } catch (e) {
+      setError((e as Error)?.message ?? "Could not remove this account row.");
+    }
+  }, [drafts, organizationId]);
 
   const selectedCount = Object.values(selected).filter(Boolean).length;
 
@@ -988,7 +1028,7 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
               <Text style={[styles.cardHint, { color: colors.textMuted }]}>You can return here before selecting a file.</Text>
             </View>
           ) : null}
-          <SecondaryButton label="Add students manually instead" onPress={addManualRow} />
+          <PrimaryButton label="Create student account" onPress={() => void addManualRow()} />
           {drafts.length ? (
             <SecondaryButton
               label="Resume review"
@@ -1022,7 +1062,7 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
                 d.needsReview && { borderColor: colors.warning ?? "#e0a106" },
               ]}
             >
-              <TouchableOpacity
+              {provisioningDraftsNeedTicks(drafts) ? <TouchableOpacity
                 onPress={() =>
                   setSelected((s) => ({ ...s, [d.id]: !s[d.id] }))
                 }
@@ -1035,7 +1075,7 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
                 ]}
               >
                 {selected[d.id] && <Text style={[styles.checkmark, CompassFonts.displayBold]}>✓</Text>}
-              </TouchableOpacity>
+              </TouchableOpacity> : null}
               <View style={{ flex: 1, gap: Spacing.xs }}>
                 <View style={styles.inputWithClear}>
                   <TextInput
@@ -1091,7 +1131,7 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
                       >
                         {d.guardianConsent ? <Text style={[styles.checkmark, CompassFonts.displayBold]}>✓</Text> : null}
                       </View>
-                      <Text style={[styles.cardHint, { color: colors.text }]}>Guardian consent recorded</Text>
+                      <Text style={[styles.cardHint, { color: colors.text }]}>Record guardian consent (optional)</Text>
                     </TouchableOpacity>
                     {d.guardianConsent ? (
                       <TextInput
@@ -1103,17 +1143,22 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
                         style={[styles.inputSmall, { color: colors.text, borderColor: colors.border, backgroundColor: colors.bg, maxWidth: undefined }]}
                       />
                     ) : (
-                      <Text style={[styles.cardHint, { color: colors.textMuted }]}>Account creation does not imply consent.</Text>
+                      <Text style={[styles.cardHint, { color: colors.textMuted }]}>Consent is not required to create the account.</Text>
                     )}
                   </View>
                 ) : null}
               </View>
-              {d.needsReview ? <Text style={[styles.reviewFlag, CompassFonts.bodyBold, { color: colors.warning ?? "#e0a106" }]}>Details need confirmation</Text> : null}
+              <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: Spacing.sm }}>
+                {d.needsReview ? <Text style={[styles.reviewFlag, CompassFonts.bodyBold, { color: colors.warning ?? "#e0a106" }]}>Details need confirmation</Text> : <View />}
+                <TouchableOpacity accessibilityRole="button" accessibilityLabel={`Remove ${d.fullName || "student"} from this account list`} onPress={() => void removeDraft(d.id)}>
+                  <Text style={[styles.cardHint, { color: colors.danger }]}>Remove</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           ))}
 
           <View style={{ flexDirection: "row", gap: Spacing.sm, flexWrap: "wrap" }}>
-            <SecondaryButton
+            {!manualEntryOnly ? <SecondaryButton
               label="Back to upload options"
               onPress={() => {
                 setError(null);
@@ -1121,7 +1166,7 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
                 setUploadMenuOpen(false);
                 setStage("import");
               }}
-            />
+            /> : null}
             <SecondaryButton label="+ Add another" onPress={addManualRow} />
             {selectedCount ? <SecondaryButton label={`Clear selected (${selectedCount})`} onPress={() => void clearSelectedRows()} /> : null}
             {!manualEntryOnly ? <SecondaryButton
@@ -1137,11 +1182,13 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
           ) : null}
 
           <PrimaryButton
-            label={
-              selectedCount
-                ? `Create ${selectedCount} account${selectedCount > 1 ? "s" : ""}`
-                : "Create accounts"
-            }
+            label={(() => {
+              const implicitSingle = drafts.length === 1 && Boolean(drafts[0].fullName?.trim());
+              const count = selectedCount || (implicitSingle ? 1 : 0);
+              return count
+                ? `Create ${count} account${count === 1 ? "" : "s"}`
+                : "Create selected accounts";
+            })()}
             onPress={generate}
             busy={busy}
           />
@@ -1341,7 +1388,7 @@ function StagePicker({
   onChange,
 }: {
   label?: string;
-  value: ProvisioningStudentType;
+  value?: ProvisioningStudentType | null;
   options: { value: ProvisioningStudentType; label: string }[];
   onChange: (value: ProvisioningStudentType) => void;
 }) {
@@ -1353,6 +1400,7 @@ function StagePicker({
           {label}
         </Text>
       ) : null}
+      {!value ? <Text style={[styles.cardHint, { color: colors.textMuted }]}>Choose a class</Text> : null}
       <View style={styles.streamPills}>
         {options.map((option) => {
           const active = option.value === value;

@@ -85,18 +85,23 @@ export function OptionCard({
   title,
   subtitle,
   selected,
+  accessibilityLabel,
   onPress,
 }: {
   icon: string;
   title: string;
   subtitle?: string;
   selected?: boolean;
+  accessibilityLabel?: string;
   onPress: () => void;
 }) {
   const { colors } = useTheme();
 
   return (
     <TouchableOpacity
+      accessibilityRole="radio"
+      accessibilityState={{ checked: Boolean(selected) }}
+      accessibilityLabel={accessibilityLabel ?? title}
       activeOpacity={0.85}
       onPress={onPress}
       style={[

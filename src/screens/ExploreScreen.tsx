@@ -241,7 +241,7 @@ export default function ExploreScreen({
       </Text>
       <View style={styles.titleRow}>
         <Text style={[styles.title, { color: colors.textRole.primary }]}>
-          {heading ?? `Find your domain, role\nor programme`}
+          {heading ?? (adminAudience ? "Explore learning and career routes" : `Find your domain, role\nor programme`)}
         </Text>
       </View>
 
@@ -267,9 +267,9 @@ export default function ExploreScreen({
       {intro}
 
       {/* ── Search ────────────────────────────────────────────── */}
-      {!isGuest ? <Text style={[styles.stateLine, { color: colors.textRole.muted }]}>Use Search in the workspace header to find programmes, universities, domains, roles or skills. The filters below narrow the results shown here.</Text> : null}
+      {!isGuest && !adminAudience ? <Text style={[styles.stateLine, { color: colors.textRole.muted }]}>Use Search in the workspace header to find programmes, universities, domains, roles or skills. The filters below narrow the results shown here.</Text> : null}
 
-      {!isGuest ? <View style={styles.filterRow}>
+      {!isGuest && !adminAudience ? <View style={styles.filterRow}>
         {filters.map((item) => (
           <FilterChip
             key={item.value}
@@ -532,7 +532,15 @@ function ExploreIdle({
 }) {
   const { colors } = useTheme();
   const { isMobile, columns } = useResponsive();
-  const visibleClusters = isGuest ? CLUSTER_HEROES.slice(0, 4) : CLUSTER_HEROES;
+  const visibleClusters = isGuest || adminAudience ? CLUSTER_HEROES.slice(0, 4) : CLUSTER_HEROES;
+  const advisoryOrg = adminType === "tutorial_centre" || adminType === "jamb_cafe";
+  const exploreLabel = adminAudience === "university"
+    ? "Fields connected to your programmes"
+    : advisoryOrg
+      ? "JAMB fields to explore with learners"
+      : adminAudience === "school"
+        ? "Learning fields for SS1–SS3"
+        : "Explore by domain";
   const openDomains = () => {
     if (isGuest) {
       router.push("/(auth)/signup" as never);
@@ -544,7 +552,7 @@ function ExploreIdle({
     <View style={styles.idle}>
       {/* ── Hero cluster carousel ──────────────────────────────── */}
       <View style={styles.section}>
-        <SectionLabel>Explore by domain</SectionLabel>
+        <SectionLabel>{exploreLabel}</SectionLabel>
         {isMobile ? (
           <ScrollView
             horizontal
@@ -556,11 +564,11 @@ function ExploreIdle({
             snapToAlignment="start"
           >
             {visibleClusters.map((c, i) => (
-              <StaggerReveal key={c.id} index={i} style={{ width: CLUSTER_CARD_W, flexShrink: 0 }}>
+              <StaggerReveal key={c.id} index={i} style={{ width: adminAudience ? 190 : CLUSTER_CARD_W, flexShrink: 0 }}>
                 <TouchableOpacity
                   activeOpacity={0.85}
                   onPress={openDomains}
-                  style={[styles.clusterCard, { borderColor: c.color + "30" }]}
+                  style={[styles.clusterCard, adminAudience ? styles.clusterCardCompact : null, { borderColor: c.color + "30" }]}
                 >
                   <View style={[styles.clusterAccent, { backgroundColor: c.color }]} />
                   <View style={[styles.clusterIconWrap, { backgroundColor: c.color + "12" }]}>
@@ -580,12 +588,13 @@ function ExploreIdle({
             {visibleClusters.map((c, i) => {
               const cardW = isGuest ? "23%" : columns === 2 ? "48%" : columns === 3 ? "31%" : "23%";
               return (
-                <StaggerReveal key={c.id} index={i} style={{ width: cardW, flexShrink: 0 }}>
+                <StaggerReveal key={c.id} index={i} style={{ width: adminAudience ? (columns === 2 ? "48%" : "23%") : cardW, flexShrink: 0 }}>
                   <TouchableOpacity
                     activeOpacity={0.85}
                     onPress={openDomains}
                     style={[
                       styles.clusterGridCard,
+                      adminAudience ? styles.clusterGridCardCompact : null,
                       { borderColor: c.color + "30", width: "100%" },
                     ]}
                   >
@@ -610,7 +619,7 @@ function ExploreIdle({
           style={styles.seeAllLink}
         >
           <Text style={[styles.seeAllText, { color: colors.accentRole.action }]}>
-            {isGuest ? "Create an account to browse all fields →" : "Browse all fields →"}
+            {isGuest ? "Create an account to browse all fields →" : adminAudience ? "Browse the full field catalogue →" : "Browse all fields →"}
           </Text>
         </TouchableOpacity>
       </View>
@@ -782,13 +791,18 @@ function AdminExploreActions({
   nav: ExploreNav;
 }) {
   const { colors } = useTheme();
+  const provider = adminType === "tutorial_centre" || adminType === "jamb_cafe";
   const items = audience === "university"
     ? [
         { title: "Review your programme mix", body: "Review programmes and connected domains in the institution dashboard.", onPress: () => router.push("/(admin)/dashboard" as never), icon: "bar-chart-2" as const },
         { title: "Compare peer universities", body: "Compare your programme and domain coverage with other universities.", onPress: () => router.push("/(admin)/peers" as never), icon: "users" as const },
         { title: "Audit domain reach", body: "Review direct, functional and adjacent domain connections.", onPress: () => router.push("/(admin)/domain-reach" as never), icon: "map" as const },
       ]
-    : [
+    : provider ? [
+        { title: "Find a JAMB programme", body: "Compare universities and published requirements for a learner’s chosen programme.", onPress: () => nav.admissionHub(router, "programme", adminType), icon: "book-open" as const },
+        { title: "Guide a JAMB subject choice", body: "Use a learner’s UTME subjects to explore possible programme routes.", onPress: () => nav.admissionHub(router, "subjects", adminType), icon: "compass" as const },
+        { title: "Start a guidance session", body: "Open a temporary session without creating a school student roster.", onPress: () => router.push("/(admin)/session" as never), icon: "users" as const },
+      ] : [
         { title: "Compare university options", body: "Review the universities with a student's programme and explain the differences.", onPress: () => nav.admissionHub(router, "programme", adminType), icon: "users" as const },
         { title: "Guide from a student's choice", body: "Start with subjects or a programme idea and explain the available routes.", onPress: () => nav.admissionHub(router, "subjects", adminType), icon: "compass" as const },
         { title: "Review your students", body: "Open the cohort view for accounts, sessions and shared guidance signals.", onPress: () => router.push("/(admin)/guidance" as never), icon: "book-open" as const },
@@ -796,7 +810,7 @@ function AdminExploreActions({
 
   return (
     <View style={styles.section}>
-      <SectionLabel>{audience === "university" ? "Institution planning" : "Guidance tools"}</SectionLabel>
+      <SectionLabel>{audience === "university" ? "Institution planning" : provider ? "JAMB guidance" : "Secondary-school guidance"}</SectionLabel>
       <View style={styles.adminActionGrid}>
         {items.map((item) => (
           <TouchableOpacity key={item.title} activeOpacity={0.82} onPress={item.onPress} style={[styles.adminAction, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
@@ -1103,6 +1117,11 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
     overflow: "hidden",
   },
+  clusterCardCompact: {
+    minHeight: 124,
+    padding: Spacing.sm,
+    gap: Spacing.xs,
+  },
   clusterGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -1117,6 +1136,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     gap: Spacing.sm,
     overflow: "hidden",
+  },
+  clusterGridCardCompact: {
+    minHeight: 112,
+    padding: Spacing.sm,
+    alignItems: "flex-start",
   },
   clusterAccent: {
     position: "absolute",

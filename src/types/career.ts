@@ -229,6 +229,8 @@ export interface Programme {
 export interface DomainLink {
   domainId: string;
   domainName: string;
+  /** Plain-language summary of the destination domain, separate from the programme link explanation. */
+  domainDescription?: string | null;
   matchType: DomainMatchType; // direct | functional | adjacent
   /** Approved course anchors for this specific programme/domain edge. */
   courseAnchorQuality?: string | null;
@@ -845,9 +847,12 @@ export interface FoundationSkill {
 export interface DomainStudentOrientation {
   /** A short student-facing introduction used in the domain hero. */
   shortIntro?: string;
+  short_intro?: string;
   whatItStudies?: string;
+  what_it_studies?: string;
   questions?: string[];
   whatPeopleDo?: string;
+  what_people_do?: string;
   /** Concrete kinds of work or outputs a student can expect to encounter. */
   outputs?: string[];
   /** The evidence-to-explanation sequence used in the field. */

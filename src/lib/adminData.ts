@@ -23,8 +23,10 @@ import type {
   IntelligenceAlert,
   SkillGapRow,
   ProgrammeSkillCoverage,
+  JambProgrammeOption,
   RoleDemandRow,
   PeerInstitutionRow,
+  PeerProgrammeComparison,
   Organization,
   EducatorProfile,
   AffiliationStats,
@@ -309,11 +311,21 @@ export const adminData = {
   },
 
   /** Programme → mapped domain → source-backed curriculum bridge. */
-  async getProgrammeSkillCoverage(): Promise<DataState<ProgrammeSkillCoverage[]>> {
+  async getProgrammeSkillCoverage(jambProgrammeId?: string): Promise<DataState<ProgrammeSkillCoverage[]>> {
     try {
-      return fromApi(await request<ProgrammeSkillCoverage[] | DataState<ProgrammeSkillCoverage[]>>(`/api/institutions/me/programme-skill-coverage`));
+      const query = jambProgrammeId ? `?jamb_programme_id=${encodeURIComponent(jambProgrammeId)}` : "";
+      return fromApi(await request<ProgrammeSkillCoverage[] | DataState<ProgrammeSkillCoverage[]>>(`/api/institutions/me/programme-skill-coverage${query}`));
     } catch {
       return comingSoon<ProgrammeSkillCoverage[]>("Programme skill coverage is being populated.");
+    }
+  },
+
+  /** National JAMB picker; includes identities without a CCMAS anchor. */
+  async getJambProgrammeOptions(): Promise<DataState<JambProgrammeOption[]>> {
+    try {
+      return fromApi(await request<JambProgrammeOption[] | DataState<JambProgrammeOption[]>>("/api/institutions/me/jamb-programme-options"));
+    } catch {
+      return comingSoon<JambProgrammeOption[]>("JAMB programme options are temporarily unavailable.");
     }
   },
 
@@ -337,6 +349,22 @@ export const adminData = {
       return fromApi(await request<PeerInstitutionRow[] | DataState<PeerInstitutionRow[]>>(`/api/institutions/me/peers`));
     } catch {
       return comingSoon<PeerInstitutionRow[]>("Peer-institution benchmarks are being populated.");
+    }
+  },
+
+  /** Offering-level comparison; structural curriculum reach, never inferred demand. */
+  async getPeerProgrammeComparison(
+    peerSchoolId: string,
+    compareSchoolId?: string,
+  ): Promise<DataState<PeerProgrammeComparison>> {
+    try {
+      const query = new URLSearchParams({ peer_school_id: peerSchoolId });
+      if (compareSchoolId) query.set("compare_school_id", compareSchoolId);
+      return fromApi(await request<PeerProgrammeComparison | DataState<PeerProgrammeComparison>>(
+        `/api/institutions/me/peer-programme-comparison?${query.toString()}`,
+      ));
+    } catch {
+      return comingSoon<PeerProgrammeComparison>("University programme comparison is temporarily unavailable.");
     }
   },
 
