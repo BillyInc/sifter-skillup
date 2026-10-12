@@ -2,22 +2,22 @@
 
 Generated from the checked-in inheritance, programme-mapping, and curriculum-scope audit artifacts. This is a local audit only; it does not apply SQL or change student exposure.
 
-Denominator: **420** unique JAMB names. Stored states: **86 `review_required`**, **0 `unavailable`**.
+Denominator: **420** unique JAMB names. Stored states: **74 `review_required`**, **0 `unavailable`**.
 
 ## Coverage
 
 | Case | JAMB rows | Share | Review-required | Unavailable | Evidence / handling |
 | --- | ---: | ---: | ---: | ---: | --- |
-| Partial CCMAS curriculum scope | 273 | 65.0% | 0 | 0 | Reviewed course-scoped CCMAS slices; only anchored domain links may be exposed. |
-| Combined CCMAS components | 28 | 6.7% | 0 | 0 | Explicit primary plus supporting component references; links are the reviewed component union. |
-| No CCMAS standard / external evidence required | 6 | 1.4% | 0 | 0 | D_custom rows with external scope; no unscoped CCMAS fan-out is permitted. |
-| Single full CCMAS curriculum (baseline) | 113 | 26.9% | 86 | 0 | One resolved CCMAS programme inherited in full; this is the comparison baseline. |
+| Partial CCMAS curriculum scope | 266 | 63.3% | 5 | 0 | Reviewed course-scoped CCMAS slices; only anchored domain links may be exposed. |
+| Combined CCMAS components | 35 | 8.3% | 35 | 0 | Explicit primary plus supporting component references; links are the reviewed component union. |
+| No CCMAS standard / external evidence required | 6 | 1.4% | 1 | 0 | D_custom rows with external scope; no unscoped CCMAS fan-out is permitted. |
+| Single full CCMAS curriculum (baseline) | 113 | 26.9% | 33 | 0 | One resolved CCMAS programme inherited in full; this is the comparison baseline. |
 
 ## Multi-discipline and split checks
 
-- Combined rows: **28**; **10** span two or more named CCMAS disciplines, **1** include a custom/external component, and **18** do not span two or more named CCMAS disciplines.
+- Combined rows: **35**; **13** span two or more named CCMAS disciplines, **1** include a custom/external component, and **22** do not span two or more named CCMAS disciplines.
 - Split/fan-out review queue: **83** CCMAS components are referenced by **346** overlapping JAMB rows. These rows are not an additional category and are not automatically promoted to full curriculum coverage.
-- Fan-out states: `{"ready": 48, "ready_external": 1, "ready_partial": 233, "review_required": 64}`; review-required rows: **64**; unavailable rows: **0**.
+- Fan-out states: `{"ready": 59, "ready_external": 1, "ready_partial": 221, "review_required": 65}`; review-required rows: **65**; unavailable rows: **0**.
 
 ## Guardrails
 

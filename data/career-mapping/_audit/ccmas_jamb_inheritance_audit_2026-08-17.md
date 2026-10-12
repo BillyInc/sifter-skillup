@@ -2,22 +2,22 @@
 
 ## Decision
 
-The active JAMB domain map is derived from full CCMAS curricula, explicit combined components, course-scoped partial curricula, and separately evidenced external curricula. 86 row(s) remain review-required because their scope/domain evidence is still insufficient.
+All 420 active JAMB names have an explicit inheritance scope: full CCMAS, combined CCMAS, course-scoped partial CCMAS, or separately evidenced external curriculum, with no inheritance-status holds. However, 0 active JAMB rows still have domain links that differ from the current course-scoped evidence; domain reconciliation is not signed off.
 
 The active JAMB map now uses CCMAS-derived links for reviewed rows, records inheritance metadata, and intentionally withholds unsupported links for partial and external rows.
 
 ## Current inheritance categories
 
-- **partial_curriculum_scope**: 273
+- **partial_curriculum_scope**: 256
 - **single_ccmas_full_curriculum**: 113
-- **combined_ccmas_curriculum**: 28
+- **combined_ccmas_curriculum**: 45
 - **external_sources_required**: 6
 
-The bridge has **420** rows and **28** explicit supporting-component declarations. The stored skills artifact has **420** names, so **0** bridge names are stale or missing from it.
-The original brochure source audit matched **400** bridge names exactly and **16** through declared source aliases; **0** have no source hit.
-The saved canonical inheritance artifact marks **55** full/combined rows ready, **273** partial rows ready from course-scoped evidence, **6** external rows ready from explicit enrichment evidence, and **86** for further review.
-The domain comparison found **334** rows matching their derived domain set and **0** with extra or tier-mismatched stored links. Remaining review rows have no exposed links.
-The parsed JAMB detail audit found source rows for **420 / 420** names. Field coverage is institutions **420**, UTME **420**, O-level **252**, Direct Entry **246**; the latter three are not complete.
+The bridge has **420** rows and **45** explicit supporting-component declarations. The stored skills artifact has **420** names, so **0** bridge names are stale or missing from it.
+The original brochure source audit matched **404** bridge names exactly and **16** through declared source aliases; **0** have no source hit.
+The saved canonical inheritance artifact marks **158** full/combined rows ready, **256** partial rows ready from course-scoped evidence, **5** external rows ready from explicit enrichment evidence, and **0** for further review.
+The domain comparison found **419** rows matching their derived domain set and **0** with extra or tier-mismatched stored links. Remaining review rows have no exposed links.
+The parsed JAMB detail audit found source rows for **419 / 420** names. Field coverage is institutions **419**, UTME **419**, O-level **251**, Direct Entry **245**; the latter three are not complete.
 CCMAS resolution checked **50** rows without a declared discipline using explicit name, unique code, faculty disambiguation, or reviewed external enrichment; unresolved components: **0**.
 
 ## Quantitative Finance

@@ -1,0 +1,22 @@
+# Append-only addendum — enriched Sociology overlay conflict review
+
+**Date:** 2026-09-25 (Africa/Lagos)  
+**Related checkpoint:** `agent-03-increment-004-rows-304-313-overlay-and-occurrence-reconciliation-2026-09-25.md`  
+**Scope:** row 307 Sociology only. The coordinator-enriched conflict ledger is a claim bundle, not independent acceptance. No canonical map/seed was edited.
+
+## Exact conflict rows and evidence check
+
+The enriched conflict ledger lists the canonical candidate IDs as D037, D046, D063, D064 and D078. It quarantines two prior overlay additions:
+
+| Prior overlay link | Ledger claim | Independent evidence checked | Disposition recommendation (not a map edit) |
+|---|---|---|---|
+| D151 Criminology, Criminal Justice; former `functional`, overlay-reviewed `adjacent` | Claims course `SOC 303 Sociology of Crime and Delinquency`, 28 destination role patterns and Nigerian correctional/police/digital-forensics URLs. Stored external source `locator` and `accessed_on` are null. | NUC Social Sciences CCMAS course structure (printed p. 321) lists SOC 303; its course outcomes/content (printed p. 335) cover the nature/extent of crime, crime theories, and traditional control of crime/deviance. The local role library’s D151 `criminologist` description is about studying social/psychological and environmental factors associated with crime; that research-oriented role is semantically aligned. The same CCMAS evidence does **not** teach police surveillance, evidence handling, criminal investigation, correctional custody or law-enforcement practice. Destination role patterns also include many such operational roles, so the ledger’s broad destination pattern set is not accepted wholesale. | Evidence supports **candidate-set amendment for an adjacent research/criminology bridge only**, restricted to the criminologist/criminology-research facet. Do not restore as functional or expose the whole D151 domain/role set. Because the active map remains fail-closed and the row has two source-faculty occurrences, student restoration waits for exact JAMB occurrence/course provenance and a narrowed destination path. |
+| D009 Data Science; former `functional`, overlay-reviewed `adjacent` | Claims sociology course `SOC 301 Methods of Social Research & Statistics`, many destination role patterns and multiple external Nigerian digital/data sources; stored source locators/access dates are null. | NUC Social Sciences CCMAS structure (p. 321) lists SOC 301; outcomes/content (pp. 334–335) establish social-research methods and quantitative/qualitative research. This supports transferable research/data-analysis preparation, not programming, database engineering, machine learning or general data-science occupation readiness. The role library’s D009 analyst/scientist roles require more than the demonstrated methods course. | If a candidate-set change is made, **adjacent only**, constrained to research/statistical-assistant or entry data-analysis bridge roles and accompanied by explicit additional learning (e.g. data handling, statistics practice, coding/tools) with verified item-specific resources. Do not accept the ledger’s broad 60-role pattern set or restore the previous functional tier. Exact JAMB occurrence scope and independent resource locators/access dates remain required. |
+
+The official NUC PDF is [Social Sciences CCMAS 2023](https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf), accessed 2026-09-25. The scope details above are printed pp. 321 and 334–335. The overlay’s destination URLs include official Nigerian bodies (including NCoS, PSC/NPF and NCCC), but those institution-level pages do not themselves establish the broad crosswalk of 28/60 destination role patterns; the ledger provides no exact page/section locator or access date for those records. They are not counted as verified source evidence here.
+
+## State and counts
+
+- Current active map remains the 2026-09-25 fail-closed output: Sociology has **0 links**, `review_required`; the comparison snapshot is not active truth.
+- Two missing-candidate overlay links reviewed; **zero restored**. Recommended candidate amendments are D151 adjacent for the criminology-research facet and D009 adjacent for a narrowly scoped research/data-analysis bridge, both contingent on exact occurrence and descendant/path completion.
+- This addendum changes neither the 304–313 row count nor its **0/10 truly closed** status.

@@ -1,0 +1,29 @@
+# JAMB–CCMAS authoritative follow-up — rows 261–270 (course/outcome and descendants supplement)
+
+**Checkpoint:** 027 · 10 identities · 2026-09-26 · audit-only. No shared map/scope/seed/code/taxonomy/label/role changed.
+
+## Primary sources
+
+- JAMB IBASS [Agriculture brochure](https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-agriculture.pdf); accessed 2026-09-26. Parsed awarder tokens remain unverified against exact PDF table cells.
+- NUC [Agricultural Sciences CCMAS](https://www.nuc.edu.ng/wp-content/uploads/2022/12/Agriculture-CCMAS.pdf) and [Administration and Management CCMAS](https://www.nuc.edu.ng/wp-content/uploads/2022/12/Administration-Management-CCMAS.pdf); accessed 2026-09-26. Course-level local join and anomalies are recorded in [`jamb_ccmas_independent_audit_rows_261_270_2026-09-26.md`](jamb_ccmas_independent_audit_rows_261_270_2026-09-26.md). FCS 431 placeholder and repeated HTM/TRM identifiers require page-image comparison to original CCMAS PDFs before use.
+
+## Findings
+
+| Row | Curriculum evidence / defect | Active links and descendant review |
+|---:|---|---|
+| 261 | 18 Crop Science courses cover crop physiology/production, pests, breeding, processing/storage and practice. | D118 Crop/Horticulture direct. Economics, Forestry/Wildlife, Agriculture, Research, Marketing and Livestock functional. D118 strongest; each other subgroup/role needs an outcome→student item→task chain; crop production does not automatically require forestry/livestock/business occupations. |
+| 262 | Full Crop Science CCMAS parent is present. **Control:** full inheritance is not a missing curriculum. | `ready` with nine broad links: D118 plus Forestry, Economics, Agriculture, Research, Marketing, Livestock and Climate/Meteorology. **Confirmed review defect:** broad active links lack adequate per-descendant justification merely from full parent. Check all groups/roles; crop-specific is strongest. |
+| 263 | Full Soil Science CCMAS parent is present. Need validate soil chemistry/fertility, land assessment, conservation and hydrology outcomes against actual paths. | `ready` with nine broad links: D047 Agriculture plus Research, Economics, Forestry, Agricultural, Geospatial, Crop, Climate and Environmental Engineering. **Confirmed link-review gap:** full curriculum does not establish all routes. Environmental Engineering/Economics especially need specific task bridges. |
+| 264 | Nine Family and Consumer Sciences rows include FCS 431 titled as a “not found” placeholder, yet attached content/outcomes are authored. **Confirmed source-quality defect:** do not attribute/display this item until original course identity/outcomes are located. | D063 Economics, D030 Marketing, D075 Fashion/Textiles functional. Nine rows do not establish full nutrition/dietetics; Fashion may fit verified clothing/textile learning, other roles need their own task evidence. |
+| 265 | 11 Food Science and Technology selections include processing/preservation, analysis, food microbiology, process engineering/quality/product development. Business facet is not explicit in this selected sequence. | D048 Food Science direct is strongest. Economics, Agriculture, Livestock, Biomedical, Chemical Engineering functional. Supplier sector is not necessarily a student path; engineering/biomedical roles require tasks and course outcomes. Business component remains an unresolved candidate. |
+| 266 | Declares full Forest Resources/Wildlife plus Fisheries/Aquaculture packages but has no expanded reviewed union. | No links / `review_required` is a hold, not “no curriculum.” Keep forest/wildlife and fisheries/aquaculture learning paths distinct, then assess each set of roles. |
+| 267 | Declares the same two packages but is a distinct JAMB identity. Similar names do not prove identical offerings/institutions. | No links / `review_required` pending source and course review. Preserve row-specific offering evidence and separate the forestry/wildlife and fisheries/aquaculture role paths. |
+| 268 | 15 Crop Science courses include breeding/genetics, seed production, protection/physiology and production outcomes. Seed-technology depth remains to compare against full CCMAS. | D118 direct is strongest. Economics, Agricultural, Research, Agriculture and Marketing functional. Confirm seed-quality/testing and specific business tasks before exposing descendants; broad Agriculture is not a substitute for this specialty. |
+| 269 | 19 Family and Consumer Sciences rows include unverified FCS 431 placeholder and repeated rows; **confirmed source-quality/data issue.** Verify duplicates and course text before treating counts/outcomes as valid. | Economics, Social Sciences, Marketing, Agriculture and Fashion/Textiles functional. Fashion may match verified clothing/textile outcomes; other general business/social/agriculture descendants need specific task evidence. |
+| 270 | 26 Hospitality and Tourism Management courses; NUC section covers hotel/catering, destinations, planning, food service and industry practice. Duplicate HTM 403, TRM 408 and HTM 410 variants need original source reconciliation. | D053 Hospitality and D083 Travel/Tourism direct are strongest. Management, Marketing, Trading and Economics functional; narrow each to hospitality/tourism tasks, not generic occupations. |
+
+## Disposition
+
+**Confirmed defects:** source placeholder FCS 431 in 264/269 and duplicate course rows in 269; 270 repeated identifiers/title variants need source comparison; broad active links for full-parent rows 262–263 are not validated by parent inheritance; 266–267 are correctly held but require distinct component review. **Unresolved:** course/source corrections, JAMB awarder rows, business facet in 265, Seed Technology breadth in 268, and role-specific path evidence for 261–270. No genuine-unavailability conclusion.
+
+**Coverage:** rows 261–270 supplemented. Next 271–280 (final set in the assigned range).

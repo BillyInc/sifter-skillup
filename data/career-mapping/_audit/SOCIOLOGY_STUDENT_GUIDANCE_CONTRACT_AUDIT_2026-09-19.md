@@ -4,24 +4,24 @@ This is a local source-contract audit. HTTPS URL syntax and recorded source fiel
 
 ## Student-visible contextual items
 
-- D078 contextual catalogue rows: **725** ({'domain': 6, 'subgroup': 20, 'role': 699}; types {'skill': 503, 'competency': 3, 'tool': 219}).
-- Source-backed and correctly owned: **725**; approval-ready after certification metadata: **725**.
-- Source-reference coverage: **725**; source-locator coverage: **725**.
-- Approved item-specific resource matches: **27**; honest no-link states: **698**.
+- D078 contextual catalogue rows: **653** ({'domain': 6, 'subgroup': 20, 'role': 627}; types {'skill': 431, 'competency': 3, 'tool': 219}).
+- Source-backed and correctly owned: **653**; approval-ready after certification metadata: **653**.
+- Source-reference coverage: **653**; source-locator coverage: **653**.
+- Approved item-specific resource matches: **27**; honest no-link states: **626**.
 - No-link means the source evidence remains available for audit, but no reviewed resource was attached to that exact item; it is not a claim that no useful resource exists.
 
 ## Normalized relationships
 
-- D078 relationship rows: **2519**; student-visible source-backed resolved edges: **2519**.
-- Status/type counts: `{'status:source_backed': 2519, 'data_state:source_backed': 2519, 'type:works_with': 931, 'type:builds_on': 1588}`.
-- Integrity: `{'from_resolved': 2519, 'to_resolved': 2519, 'duplicate_edge_rows': 0}`. Any review-only, audit-only, not-established or unresolved edge must stay out of student guidance.
+- D078 relationship rows: **2231**; student-visible source-backed resolved edges: **2231**.
+- Status/type counts: `{'status:source_backed': 2231, 'data_state:source_backed': 2231, 'type:works_with': 787, 'type:builds_on': 1444}`.
+- Integrity: `{'from_resolved': 2231, 'to_resolved': 2231, 'duplicate_edge_rows': 0}`. Any review-only, audit-only, not-established or unresolved edge must stay out of student guidance.
 
 ## Reviewed resource contract
 
-- Reviewed migration rows: **51** by scope `{'programme': 10, 'domain': 14, 'subgroup': 16, 'role': 11}` and type `{'programme_reading': 3, 'domain_overview': 3, 'skill_learning': 34, 'tool_learning': 10, 'role_reference': 1}`.
-- HTTPS syntax-valid reviewed URLs: **51**; invalid rows: **0**.
+- Reviewed migration rows: **62** by scope `{'programme': 21, 'domain': 14, 'subgroup': 16, 'role': 11}` and type `{'people': 1, 'programme_reading': 13, 'domain_overview': 3, 'skill_learning': 34, 'tool_learning': 10, 'role_reference': 1}`.
+- HTTPS syntax-valid reviewed URLs: **61**; invalid rows: **1**.
 - Imported broad D078 catalogue rows kept separate from approval: **829** ({'domain': 101, 'role': 728}; states `{'source_backed': 827, 'limited': 2}`).
-- Numbered contextual SQL transport parts checked: **30**; manifest integrity: **True**; old generic D078 certification signal hits: **0**.
+- Numbered contextual SQL transport parts checked: **35**; manifest integrity: **True**; old generic D078 certification signal hits: **0**.
 - Only the reviewed migration rows count as approved student resources in this audit; broad imported references are not promoted by name overlap.
 
 ## Certification scope
@@ -32,7 +32,7 @@ This is a local source-contract audit. HTTPS URL syntax and recorded source fiel
 
 ## Sociology programme layer
 
-- Reviewed migration programme context cards: **9**; programme-owned reviewed resources: **10**.
+- Reviewed migration programme context cards: **9**; programme-owned reviewed resources: **21**.
 - The programme cards and resources are source-recorded; this audit does not claim that their external URLs are live.
 
 ## Decision

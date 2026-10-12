@@ -1,0 +1,3 @@
+# Partition 01 — increment 012: rows 51–60 course-count correction
+
+Append-only correction to `coordinator-increment-010-rows-051-060-occurrence-curriculum-review-2026-09-25.md`. Recounted the nonempty selected-course arrays in the canonical scope artifact. The correct total is **95 selected rows**: row 53 = 20, row 57 = 31, row 59 = 18, row 60 = 26; rows 51, 52, 54, 55, 56 and 58 have zero expanded selections. The prior increment-010 statement of **96** is incorrect and superseded. Exact CCMAS joins/outcome field result remains 95/95 for these rows. No canonical source/map/seed/SQL was changed.
