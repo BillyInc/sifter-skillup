@@ -95,6 +95,31 @@ domain, subgroup or role only changes the current selection. Persist only when
 the user invokes the actual continue/save action. First opening an audience or
 detail section must not collapse the content underneath it.
 
+### Cumulative learning progression
+
+Show the learning route in layers rather than as one flat list:
+
+```text
+DOMAIN FOUNDATION
+[Source-backed foundations shared across the field]
+
+AREA / SUBGROUP ADDS
+[Only the additional learning for this focused area; inherit the domain stage]
+
+ROLE ADDS
+[Only the additional learning for this role; inherit both earlier stages]
+```
+
+For a route with no subgroup, show **Domain foundation → Role adds** directly.
+Do not invent an empty subgroup or hide the direct route. An item already
+introduced at a prior level is inherited, not repeated as a new requirement at
+the next level. Keep every item at its actual evidence/ownership level, with its
+own explanation and learning resource; a higher-level link must not be attached
+to a lower-level item merely because the learner follows that path. Show only
+source-backed, student-owned items; review-only or unsupported records are not
+student requirements. “First/then/next” describes the progression through
+levels, not a prerequisite order among items unless a sourced dependency says so.
+
 ## 2. Organization-specific admin Explore
 
 Explore has a distinct framing and data boundary for each organization type;
@@ -377,6 +402,7 @@ with no upload context.
 | University selection | Selected offering overview and requirements render; back returns to original preview/stage. |
 | Skip to guidance | Navigates to guidance start with selected programme context. |
 | Domain/subgroup/role selection | Check/tick toggles selection; no implicit persistence or collapse on first click. |
+| Learning progression | Domain foundations first; subgroup/AOS and role show only additive items. If no subgroup exists, show domain → role. Preserve ownership, explanations and item-specific learning links; do not repeat inherited items as new requirements. |
 | University Explore | Own offerings/stats; identify aggregate peer coverage as aggregate, and do not imply same-programme comparisons without offering-scoped evidence. Never use student-guidance framing or expose cross-institution private records. |
 | School Explore | All public programme/university comparisons plus the school's own capabilities; school-specific language. Skills Matcher is out of scope. |
 | Tutorial Explore | All public JAMB programme/university comparisons plus centre capabilities; JAMB-only framing. Skills Matcher is out of scope. |

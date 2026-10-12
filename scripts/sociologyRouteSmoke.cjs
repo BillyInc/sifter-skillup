@@ -37,7 +37,7 @@ const target = router();
 nav.programme(target, "sociology-id", { ...context, resumeStage: "university_offerings" });
 nav.programme(target, "sociology-id", { ...context, resumeStage: "university_context" });
 nav.domain(target, "D078", context);
-nav.subgroup(target, "D078", "D078|sg:research", context);
+nav.subgroup(target, "D078", "D078:sociology-social-anthropology", context);
 nav.role(target, "D078|role:social-researcher", context);
 
 const hrefs = target.calls.filter(([kind]) => kind === "push").map(([, href]) => href);
@@ -47,7 +47,7 @@ const requiredFragments = [
   "programme_id=sociology-id",
   "jamb_programme_id=sociology-jamb-id",
   "school_id=university-id",
-  "/domain/D078/subgroup/D078%7Csg%3Aresearch",
+  "/domain/D078/subgroup/D078%3Asociology-social-anthropology",
   "/role/D078|role:social-researcher",
 ];
 

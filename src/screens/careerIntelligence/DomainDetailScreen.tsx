@@ -32,6 +32,7 @@ import type { GuidanceRouteContext } from "@/lib/guidanceRouteContext";
 import {
   pending,
   type DataState,
+  type DomainStudentOrientation,
   type DomainV2,
 } from "@/types/career";
 import {
@@ -45,8 +46,10 @@ import {
   MappingFeedbackButton,
   SectionLabel,
   ContextualItemList,
+  GuidanceContinuation,
   TextTabs,
   LearningResourcesBlock,
+  ExternalLinkGuard,
 } from "@/components/careerIntelligence";
 import { isStudentResource } from "@/components/careerIntelligence/resourceLinks";
 
@@ -179,6 +182,7 @@ function LegacyDomainBody({
               <Text style={[styles.heroDesc, { color: colors.textRole.secondary }]}>
                 {domain.description}
               </Text>
+              {domain.descriptionSources?.map((source) => <ExternalLinkGuard key={`${source.title}:${source.locator}`} url={source.url} label={source.shortLabel || source.title} description={`This opens the source used to explain ${domain.name}.`} textStyle={[styles.heroDesc, { color: colors.accentRole.action }]} />)}
             </>
           ) : null}
           <View style={styles.heroChips}>
@@ -225,15 +229,25 @@ function LegacyDomainBody({
               <Text style={[styles.orientationHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Course evidence for this connection</Text>
               {programmeConnection.courseAnchors.slice(0, 4).map((anchor) => (
                 <Text key={`${anchor.code ?? "course"}-${anchor.title}`} style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>
-                  {anchor.code ? `${anchor.code} · ` : ""}{anchor.title}
+                  {anchor.title}
                 </Text>
               ))}
               {programmeConnection.courseAnchors.length > 4 ? <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>More supporting curriculum is recorded for this connection.</Text> : null}
             </View>
           ) : null}
-          {programmeConnection?.transferableEvidence?.length ? (
+          {programmeConnection?.curriculumOutcomes?.length ? (
             <View style={styles.connectionEvidence}>
-              <Text style={[styles.orientationHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What may carry over</Text>
+              <Text style={[styles.orientationHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Already covered for this field</Text>
+              {programmeConnection.curriculumOutcomes.map((outcome, index) => (
+                <View key={outcome.outcomeId ?? `${outcome.courseCode ?? outcome.courseTitle ?? "outcome"}-${index}`} style={styles.orientationPart}>
+                  {outcome.courseTitle ? <Text style={[refinedStyles.meta, { color: colors.textRole.muted }]}>{outcome.courseTitle}</Text> : null}
+                  <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>{outcome.studentText}</Text>
+                </View>
+              ))}
+            </View>
+          ) : programmeConnection?.transferableEvidence?.length ? (
+            <View style={styles.connectionEvidence}>
+              <Text style={[styles.orientationHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Programme evidence for this field</Text>
               {programmeConnection.transferableEvidence.slice(0, 4).map((item) => (
                 <Text key={item} style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>{item}</Text>
               ))}
@@ -320,21 +334,27 @@ function LegacyDomainBody({
         <FoundationSkillsBlock
           skills={domain.foundationSkills ?? []}
           resources={domain.resources}
+          contextItems={domain.contextItems}
           title="Start here: foundation skills"
+          learningFocus
+          targetStudentId={targetStudentId}
         />
-        <ContextualItemList items={domain.contextItems} resources={domain.resources} title="What each skill, tool and certification does in this domain" />
+        <ContextualItemList items={domain.contextItems} resources={domain.resources} title="What each skill, tool and certification does in this domain" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} learningFocus targetStudentId={targetStudentId} />
         <ToolGroupsBlock
           tools={domain.tools}
           resources={domain.resources}
           title="Tools you may use"
           contextItems={domain.contextItems}
+          contextLevel="domain"
+          learningFocus
+          targetStudentId={targetStudentId}
           commonLabel="Useful throughout this domain"
           distinctiveLabel="Used in particular areas"
           explanation="These tools support work across the domain. The area you choose later will show which ones matter most there."
         />
         <View style={{ gap: Spacing.sm }}>
           <SectionLabel>Credentials to understand</SectionLabel>
-          <CertPlacementList gateway={domain.gatewayCertifications} roleHint={domain.roleHintCertifications} contextItems={domain.contextItems} />
+          <CertPlacementList gateway={domain.gatewayCertifications} roleHint={domain.roleHintCertifications} contextItems={domain.contextItems} contextLevel="domain" learningFocus targetStudentId={targetStudentId} />
         </View>
       </View>
 
@@ -393,9 +413,36 @@ function LegacyDomainBody({
   return <View style={{ gap: Spacing.lg }}>{content}</View>;
 }
 
+function OrientationEvidenceLinks({
+  orientation,
+  field,
+  colors,
+}: {
+  orientation?: DomainStudentOrientation;
+  field: string;
+  colors: ReturnType<typeof useTheme>["colors"];
+}) {
+  const sources = orientation?.evidenceByField?.[field] ?? [];
+  if (!sources.length) return null;
+  return (
+    <View style={{ flexDirection: "row", flexWrap: "wrap", gap: Spacing.xs }}>
+      {sources.map((source) => (
+        <ExternalLinkGuard
+          key={`${source.title}:${source.locator}`}
+          url={source.url}
+          label={source.shortLabel || source.title}
+          description={`${source.title}; ${source.locator}`}
+          textStyle={{ color: colors.accentRole.action, fontSize: FontSize.xs }}
+        />
+      ))}
+    </View>
+  );
+}
+
 function DomainBody({
   domain,
   domainKey,
+  targetStudentId,
   guidanceContext,
   focusedGuidance,
 }: {
@@ -468,6 +515,7 @@ function DomainBody({
           {domain.cluster ? <Text style={[refinedStyles.eyebrow, { color: colors.textRole.muted }]}>{domain.cluster}</Text> : null}
           <Text style={[refinedStyles.heroTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{formatCareerLabel(domain.name)}</Text>
           <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{studentSummary({ shortIntro: orientation?.shortIntro, whatPeopleDo: orientation?.whatPeopleDo, whatItStudies: orientation?.whatItStudies, description: domain.description, fallback: "A reviewed plain-language explanation of this field is not available yet." })}</Text>
+          {domain.descriptionSources?.map((source) => <ExternalLinkGuard key={`${source.title}:${source.locator}`} url={source.url} label={source.shortLabel || source.title} description={`This opens the source used to explain ${domain.name}.`} textStyle={[refinedStyles.meta, { color: colors.accentRole.action }]} />)}
         </View>
       </View>
 
@@ -490,6 +538,14 @@ function DomainBody({
         </View>
       ) : null}
 
+      <GuidanceContinuation
+        programmeName={studentConnection?.programmeName}
+        connection={studentConnection}
+        domainName={domain.name}
+        domainFoundation={domain.foundationSkills}
+        domainItems={domainItems}
+      />
+
       <View style={[refinedStyles.card, refinedStyles.orientationCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
         <View style={refinedStyles.cardHeading}>
           <Feather name="compass" size={17} color={colors.accentRole.action} />
@@ -498,14 +554,16 @@ function DomainBody({
             <Text style={[refinedStyles.meta, { color: colors.textRole.muted }]}>This explanation uses the reviewed programme and field information.</Text>
           </View>
         </View>
-        {orientation?.whatItStudies ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>What this field studies</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.whatItStudies}</Text></View> : null}
-        {orientation?.whatPeopleDo ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>What people in it do</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.whatPeopleDo}</Text></View> : null}
-        {orientation?.questions?.length ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Questions this field helps answer</Text><View style={refinedStyles.infoGrid}>{orientation.questions.map((question) => <View key={question} style={[refinedStyles.infoCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><Feather name="help-circle" size={15} color={colors.accentRole.action} /><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{question}</Text></View>)}</View></View> : null}
-        {orientation?.outputs?.length ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>What the work can produce</Text><View style={refinedStyles.infoGrid}>{orientation.outputs.map((output) => <View key={output} style={[refinedStyles.infoCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><Feather name="file-text" size={15} color={colors.accentRole.action} /><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{output}</Text></View>)}</View></View> : null}
-        {orientation?.howWorkHappens?.length ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>How the work usually happens</Text><View style={refinedStyles.steps}>{orientation.howWorkHappens.map((step, index) => <View key={step} style={refinedStyles.step}><View style={[refinedStyles.stepNumber, { backgroundColor: colors.accentRole.action }]}><Text style={refinedStyles.stepNumberText}>{index + 1}</Text></View><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{step}</Text></View>)}</View></View> : null}
-        {orientation?.whereProgrammeFits ? <View style={[refinedStyles.subsection, refinedStyles.highlight]}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Where your programme fits</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.whereProgrammeFits}</Text></View> : null}
-        {orientation?.decisionGuide ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Could this field suit you?</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.decisionGuide}</Text></View> : null}
-         {orientation?.relatedProgrammes?.length ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Related programmes</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.relatedProgrammes.join(", ")}</Text></View> : null}
+        {orientation?.whatItStudies ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>What this field studies</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.whatItStudies}</Text><OrientationEvidenceLinks orientation={orientation} field="whatItStudies" colors={colors} /></View> : null}
+        {orientation?.whatPeopleDo ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>What people in it do</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.whatPeopleDo}</Text><OrientationEvidenceLinks orientation={orientation} field="whatPeopleDo" colors={colors} /></View> : null}
+        {orientation?.questions?.length ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Questions this field helps answer</Text><View style={refinedStyles.infoGrid}>{orientation.questions.map((question) => <View key={question} style={[refinedStyles.infoCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><Feather name="help-circle" size={15} color={colors.accentRole.action} /><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{question}</Text></View>)}</View><OrientationEvidenceLinks orientation={orientation} field="questions" colors={colors} /></View> : null}
+        {orientation?.outputs?.length ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>What the work can produce</Text><View style={refinedStyles.infoGrid}>{orientation.outputs.map((output) => <View key={output} style={[refinedStyles.infoCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><Feather name="file-text" size={15} color={colors.accentRole.action} /><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{output}</Text></View>)}</View><OrientationEvidenceLinks orientation={orientation} field="outputs" colors={colors} /></View> : null}
+        {orientation?.howWorkHappens?.length ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>How the work can happen</Text><View style={refinedStyles.steps}>{orientation.howWorkHappens.map((step, index) => <View key={step} style={refinedStyles.step}><View style={[refinedStyles.stepNumber, { backgroundColor: colors.accentRole.action }]}><Text style={refinedStyles.stepNumberText}>{index + 1}</Text></View><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{step}</Text></View>)}</View><OrientationEvidenceLinks orientation={orientation} field="howWorkHappens" colors={colors} /></View> : null}
+        {orientation?.whereProgrammeFits ? <View style={[refinedStyles.subsection, refinedStyles.highlight]}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Where your programme fits</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.whereProgrammeFits}</Text><OrientationEvidenceLinks orientation={orientation} field="whereProgrammeFits" colors={colors} /></View> : null}
+        {orientation?.globalContext ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Global context</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.globalContext}</Text><OrientationEvidenceLinks orientation={orientation} field="globalContext" colors={colors} /></View> : null}
+        {orientation?.nigerianContext ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Nigerian context</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.nigerianContext}</Text><OrientationEvidenceLinks orientation={orientation} field="nigerianContext" colors={colors} /></View> : null}
+        {orientation?.entryExpectations ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Common ways people enter this field</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.entryExpectations}</Text><OrientationEvidenceLinks orientation={orientation} field="entryExpectations" colors={colors} /></View> : null}
+        {orientation?.opportunitiesAndConstraints ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Opportunities and constraints</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.opportunitiesAndConstraints}</Text><OrientationEvidenceLinks orientation={orientation} field="opportunitiesAndConstraints" colors={colors} /></View> : null}
          {orientation?.sourceNote ? <Text style={[refinedStyles.meta, { color: colors.textRole.muted }]}>Reference basis: {orientation.sourceNote}</Text> : null}
       </View>
 
@@ -513,20 +571,20 @@ function DomainBody({
 
       <View style={refinedStyles.sectionHeading}>
          <View style={refinedStyles.cardHeading}><Feather name="layers" size={17} color={colors.accentRole.action} /><Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Domain foundation</Text></View>
-         <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>These field-owned foundations continue from the connected programme and come before a focused area.</Text>
+         <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>These field-owned foundations continue from the connected programme and come before a focused area. They are shared starting points, not a complete qualification for every area or role; each focused area adds its own learning.</Text>
       </View>
       <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
-         <FoundationSkillsBlock skills={domain.foundationSkills ?? []} resources={domainResources} contextItems={domainItems} title="What to build first" />
+         <FoundationSkillsBlock skills={domain.foundationSkills ?? []} resources={domainResources} contextItems={domainItems} title="What to build first" learningFocus targetStudentId={targetStudentId} />
       </View>
       <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
-        <ContextualItemList items={domainItems} itemTypes={["skill", "competency"]} resources={domainResources} contextLevel="domain" excludeNames={(domain.foundationSkills ?? []).map((item) => item.skill)} title="Skills and competencies added in this field" />
+        <ContextualItemList items={domainItems} itemTypes={["skill", "competency"]} resources={domainResources} contextLevel="domain" excludeNames={(domain.foundationSkills ?? []).map((item) => item.skill)} title="Skills and competencies added in this field" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} learningFocus targetStudentId={targetStudentId} />
       </View>
       <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
-        <ToolGroupsBlock tools={domain.tools} resources={domainResources} contextItems={domainItems} contextLevel="domain" title="Tools by purpose" commonLabel="Useful across this field" distinctiveLabel="More specialised in this field" explanation="Choose the kind of work first. These are source-backed options, not a requirement to learn every tool." />
+        <ToolGroupsBlock tools={domain.tools} resources={domainResources} contextItems={domainItems} contextLevel="domain" title="Tools by purpose" commonLabel="Useful across this field" distinctiveLabel="More specialised in this field" explanation="Choose the kind of work first. These are source-backed options, not a requirement to learn every tool." learningFocus targetStudentId={targetStudentId} />
       </View>
       <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
         <SectionLabel>Qualifications and professional routes</SectionLabel>
-        <CertPlacementList gateway={domain.gatewayCertifications} roleHint={domain.roleHintCertifications} contextItems={domainItems} resources={domainResources} contextLevel="domain" />
+        <CertPlacementList gateway={domain.gatewayCertifications} roleHint={domain.roleHintCertifications} contextItems={domainItems} resources={domainResources} contextLevel="domain" learningFocus targetStudentId={targetStudentId} />
       </View>
 
       <View style={refinedStyles.sectionHeading}>

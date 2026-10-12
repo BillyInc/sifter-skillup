@@ -114,3 +114,64 @@ Do not change Skills Matcher behavior or its screen.
 This checkpoint describes local source/API behavior only. No SQL was applied,
 and it is not evidence that the canonical seed or live Supabase contains the
 new source-context identity or that demand data is live.
+
+## Incremental continuation checkpoint — 2026-10-03
+
+### Scope and ownership
+
+- Continued from this checked-in checkpoint and the full governing mockup.
+- The previously referenced UI agent is unavailable in this session; no agent
+  control/spawn tool is exposed. Work is continuing locally within the same UI
+  scope. No Skills Matcher screen or behavior is being changed.
+- No push, SQL, or live deployment has been performed.
+
+### Changes in this continuation
+
+- Added an explicit cumulative learning-progression contract to
+  `docs/user-facing-mockups/ADMIN_EXPLORE_PROGRAMME_MARKET_INTELLIGENCE_MOCKUP.md`:
+  **domain foundation → subgroup/AOS additions → role additions**. Where a
+  route has no subgroup, it is **domain → role**. Previously introduced items
+  are inherited, not presented again as new requirements; ownership, evidence,
+  explanation, and item-specific learning links stay at the correct level.
+- Added `src/components/careerIntelligence/GuidanceContinuation.test.tsx` to
+  verify both route shapes, deduplication of inherited items, and exclusion of
+  review-only items from the student path.
+- Inspected the existing `GuidanceContinuation` implementation: it already
+  builds domain, subgroup and role stages additively and supports the direct
+  domain-to-role case. The new tests are intended to guard that behavior.
+
+### Verification so far
+
+- Backend peer-comparison/domain-reach/institution-access tests:
+  **96 passed** (`backend/tests/test_peer_programme_comparison.py`,
+  `backend/tests/test_domain_reach.py`,
+  `backend/tests/test_institution_access.py`). Pytest emitted one cache-write
+  permission warning only.
+- Focused Explore/programme-preview/provisioning UI tests:
+  **5 suites / 18 tests passed** (`src/screens/admin/AdminExploreSurfaces.test.tsx`,
+  `src/lib/adminExploreState.test.ts`, `src/lib/programmePreview.test.ts`,
+  `__tests__/provisioningFlow.test.ts`, `__tests__/uiIssueFlow.test.ts`).
+- Cumulative-progression UI test:
+  **1 suite / 2 tests passed** (`src/components/careerIntelligence/GuidanceContinuation.test.tsx`).
+  Jest logged the existing Expo native-constants warning; the tests passed.
+- TypeScript check: `NODE_OPTIONS=--max-old-space-size=4096 pnpm exec tsc
+  --noEmit --pretty false` — **passed**.
+- Production web build: `pnpm run build` — **passed**. Existing duplicate-key,
+  duplicate JSX-style, mixed dynamic-import, and large-chunk warnings remain;
+  they are outside this scoped UI continuation.
+
+### Remaining work
+
+1. Finish the cumulative-progression test and fix any failure in the scoped UI
+   component/test only.
+2. TypeScript and Vite production build passed; run the final scoped
+   `git diff --check` and re-audit changed paths.
+3. Audit final changes against the full mockup and ensure no Skills Matcher file
+   or behavior is included. Keep unrelated dirty files untouched.
+4. Browser/live-data verification remains unavailable unless an authorized
+   browser and representative local API/database data can be accessed. The
+   previously documented FUOTUOKE Social Sciences Accounting and Finance
+   canonical source-offering dependency remains a data/seed limitation, not a
+   reason to block UI rendering.
+5. Do not push until scoped tests, final UI-only change audit, and browser
+   verification decision are complete.

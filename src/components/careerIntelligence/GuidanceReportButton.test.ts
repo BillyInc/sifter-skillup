@@ -61,4 +61,38 @@ describe("guidance report selection gate", () => {
     expect(removed.university).toEqual(completedPath.university);
     expect(removed.resume).toEqual({ stage: "in_progress", status: "in_progress" });
   });
+
+  it("stores granular learning-focus choices separately from route and mastery state", () => {
+    const selection: GuidanceReportSelection = {
+      kind: "learningFocus",
+      id: "domain:D078:skill:research-design",
+      name: "Research design",
+      contextLevel: "domain",
+      contextKey: "D078",
+      itemType: "skill",
+      itemKey: "research-design",
+      domainId: "D078",
+    };
+
+    const next = toggleGuidanceSelectionPath(completedPath, selection);
+
+    expect(next.learningFocus).toEqual([
+      expect.objectContaining({
+        id: selection.id,
+        name: selection.name,
+        contextLevel: "domain",
+        contextKey: "D078",
+        itemType: "skill",
+        itemKey: "research-design",
+      }),
+    ]);
+    expect(next.domains).toEqual(completedPath.domains);
+    expect(next.subgroups).toEqual(completedPath.subgroups);
+    expect(next.roles).toEqual(completedPath.roles);
+    expect(next.resume).toEqual({ stage: "in_progress", status: "in_progress" });
+    expect(isGuidanceReportReady(next)).toBe(false);
+
+    const removed = toggleGuidanceSelectionPath(next, selection);
+    expect(removed.learningFocus).toEqual([]);
+  });
 });

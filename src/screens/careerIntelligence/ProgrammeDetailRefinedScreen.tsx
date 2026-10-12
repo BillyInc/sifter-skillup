@@ -18,6 +18,7 @@ import {
   SectionLabel,
   TextTabs,
   invalidateGuidancePathCache,
+  ExternalLinkGuard,
 } from "@/components/careerIntelligence";
 import { careerData, type GuidanceReportPath, type JambProgrammeRequirements, type JambProgrammeSchool } from "@/lib/careerData";
 import { ADMIN_EXPLORE_BASE, useExploreNav } from "@/lib/exploreNav";
@@ -120,9 +121,9 @@ function institutionLocation(school: JambProgrammeSchool): string | null {
 }
 
 function relationshipLabel(matchType: DomainLink["matchType"]): string {
-  if (matchType === "direct") return "Primary connection";
-  if (matchType === "functional") return "Related application";
-  return "Nearby direction";
+  if (matchType === "direct") return "Closely connected to what you studied";
+  if (matchType === "functional") return "You learned things used in this field";
+  return "A possible next direction—not a close match";
 }
 
 function relationshipOrder(matchType: DomainLink["matchType"]): number {
@@ -132,21 +133,21 @@ function relationshipOrder(matchType: DomainLink["matchType"]): number {
 const DOMAIN_CONNECTIONS: DomainLink["matchType"][] = ["direct", "functional", "adjacent"];
 
 function connectionHeading(matchType: DomainLink["matchType"]): string {
-  if (matchType === "direct") return "Closest matches";
-  if (matchType === "functional") return "Useful foundations";
-  return "Possible next directions";
+  if (matchType === "direct") return "Your course is closely connected to this field";
+  if (matchType === "functional") return "You learned things used in this field";
+  return "This could be a new direction for you";
 }
 
 function connectionGroupLabel(matchType: DomainLink["matchType"]): string {
-  if (matchType === "direct") return "closest matches";
-  if (matchType === "functional") return "related applications";
-  return "nearby directions";
+  if (matchType === "direct") return "closest course connections";
+  if (matchType === "functional") return "fields that use things you studied";
+  return "possible new directions";
 }
 
 function connectionExplanation(matchType: DomainLink["matchType"]): string {
-  if (matchType === "direct") return "The programme covers a substantial part of the foundation used in this area.";
-  if (matchType === "functional") return "Some knowledge and ways of working transfer here, but the field has its own foundation to learn.";
-  return "The programme gives you a starting point, but a larger bridge may be needed before specialising.";
+  if (matchType === "direct") return "Your programme covers several ideas or ways of working that are also used in this field. This is a close study connection, but it does not mean you are ready for every job in the field. Each card shows the courses behind the connection.";
+  if (matchType === "functional") return "Your course examples show specific things you learned that are used in some parts of this field. They do not cover everything you would need to learn about the field. Each card shows what carries over and which courses support the link.";
+  return "This is a step further from what you studied: the link is based on a related idea and abilities you can use in other settings, not a close match to the field's main work. You would have more new things to learn. Each card shows why it is listed and which courses support the link.";
 }
 
 function ProgrammeDomainTransition({
@@ -166,7 +167,8 @@ function ProgrammeDomainTransition({
 
   return <View style={styles.block}>
     <SectionLabel>Where this programme can lead</SectionLabel>
-    <Text style={[styles.body, { color: colors.textRole.secondary }]}>These groups show how your programme relates to each field. They describe the curriculum link; they do not mean you already have every skill or are ready for a role.</Text>
+    <Text style={[styles.body, { color: colors.textRole.secondary }]}>These groups show how closely what you studied connects to each field. They do not mean you already have every skill or are ready for a job.</Text>
+    <Text style={[styles.meta, { color: colors.textRole.muted }]}>These are study connections, not admission decisions. Check the national and university-specific entry requirements shown on this programme page separately.</Text>
     {groups.length ? groups.map(({ matchType, links }) => {
       const isExpanded = Boolean(expanded[matchType]);
       const visible = isExpanded ? links : links.slice(0, 3);
@@ -178,9 +180,10 @@ function ProgrammeDomainTransition({
             <Text style={[styles.previewName, { color: colors.textRole.primary }]}>{link.domainName}</Text>
             <Text style={[styles.previewType, { color: colors.accentRole.action }]}>{relationshipLabel(link.matchType)}</Text>
             {link.domainDescription ? <Text numberOfLines={3} style={[styles.body, { color: colors.textRole.secondary }]}>{link.domainDescription}</Text> : null}
-            <Text style={[styles.meta, { color: colors.textRole.muted }]}>How your programme connects</Text>
+            {link.domainDescriptionSources?.map((source) => <ExternalLinkGuard key={`${source.title}:${source.locator}`} url={source.url} label={source.shortLabel || source.title} description={`This opens the source used to explain ${link.domainName}.`} textStyle={[styles.meta, { color: colors.accentRole.action }]} />)}
+            <Text style={[styles.meta, { color: colors.textRole.muted }]}>Why this field is listed</Text>
             <Text style={[styles.body, { color: colors.textRole.secondary }]}>{studentSummary({ shortIntro: link.explanation, fallback: relationshipCopy(link) })}</Text>
-            {link.courseAnchors?.length ? <Text style={[styles.meta, { color: colors.textRole.muted }]}>Recorded through {link.courseAnchors.slice(0, 2).map((anchor) => anchor.title).join(" and ")}{link.courseAnchors.length > 2 ? " and other course evidence" : ""}.</Text> : null}
+            {link.courseAnchors?.length ? <Text style={[styles.meta, { color: colors.textRole.muted }]}>Courses that support this link: {link.courseAnchors.slice(0, 2).map((anchor) => anchor.title).join(" and ")}{link.courseAnchors.length > 2 ? " and others" : ""}.</Text> : null}
             <Text style={[styles.link, { color: colors.accentRole.action }]}>Open domain</Text>
           </TouchableOpacity>)}
         </View>

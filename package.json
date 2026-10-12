@@ -19,6 +19,7 @@
     "test": "jest",
     "test:sociology-route": "node scripts/sociologyRouteSmoke.cjs",
     "test:sociology-report": "node scripts/sociologyReportSmoke.cjs",
+    "test:sociology-learning-plan": "node scripts/sociologyLearningPlanPersistenceSmoke.cjs",
     "test:programme-scale": "node scripts/programmeGuidanceScaleSmoke.cjs",
     "gen:simulators": "ts-node scripts/generateSimulators.ts",
     "gen:simulators:all": "ts-node scripts/generateSimulators.ts --all",

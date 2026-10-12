@@ -132,6 +132,7 @@ export default function ExploreScreen({
   const [searchSchoolId, setSearchSchoolId] = useState<string | null>(null);
   const [startingPoint, setStartingPoint] = useState<StartingPointProfile | null>(null);
   const [startingPointResolved, setStartingPointResolved] = useState(false);
+  const [schoolMatcherOpen, setSchoolMatcherOpen] = useState(false);
 
   const [query, setQuery] = useState(initialQuery);
   const [filter, setFilter] = useState<ResultFilter>("all");
@@ -222,6 +223,11 @@ export default function ExploreScreen({
   };
 
   const padH = responsive.isWide ? Spacing.xxl : responsive.isDesktop ? Spacing.xl : Spacing.lg;
+  const showSkillMatcher = !adminAudience || (
+    adminType === "secondary_school" ||
+    adminType === "tutorial_centre" ||
+    adminType === "jamb_cafe"
+  );
 
   return (
     <ScrollView
@@ -303,8 +309,6 @@ export default function ExploreScreen({
 
       {/* Skills Match is an independent optional tool. Keep the main search
           primary and expose this flipped-discovery route after its scope. */}
-      <SkillDiscoveryPanel adminType={adminType ?? adminAudience ?? null} />
-
       {trimmed.length > 0 && trimmed.length < MIN_QUERY ? (
         <Text style={[styles.stateLine, { color: colors.textRole.muted }]}>
           Type at least {MIN_QUERY} characters to search the career map.
@@ -499,6 +503,20 @@ export default function ExploreScreen({
       ) : (
         <DataLimitedState />
       )}
+      {showSkillMatcher && adminAudience === "school" ? (
+        <View style={{ gap: Spacing.sm, marginTop: Spacing.lg }}>
+          <TouchableOpacity
+            accessibilityRole="button"
+            accessibilityState={{ expanded: schoolMatcherOpen }}
+            onPress={() => setSchoolMatcherOpen((open) => !open)}
+            style={[styles.schoolMatcherToggle, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}
+          >
+            <Text style={[styles.schoolMatcherTitle, { color: colors.textRole.primary }]}>{schoolMatcherOpen ? "Close skill matcher" : "Optional: explore a learner’s skills"}</Text>
+            <Text style={[styles.schoolMatcherBody, { color: colors.textRole.muted }]}>{adminType === "tutorial_centre" || adminType === "jamb_cafe" ? "Use this JAMB-focused tool only when a learner is ready to connect skills with study routes." : "Use this secondary-school tool only when a learner is ready to connect skills with study routes."}</Text>
+          </TouchableOpacity>
+          {schoolMatcherOpen ? <SkillDiscoveryPanel adminType={adminType ?? null} /> : null}
+        </View>
+      ) : null}
       <CareerDisclaimer variant="footer" />
     </ScrollView>
   );
@@ -1067,6 +1085,20 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     gap: Spacing.xs,
+  },
+  schoolMatcherToggle: {
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.md,
+    padding: Spacing.md,
+    gap: Spacing.xs,
+  },
+  schoolMatcherTitle: {
+    fontSize: FontSize.sm,
+    ...CompassFonts.bodySemibold,
+  },
+  schoolMatcherBody: {
+    fontSize: FontSize.xs,
+    lineHeight: FontSize.xs * 1.5,
   },
 
   // ── Idle ─────────────────────────────────────────────────────

@@ -11,6 +11,7 @@ import { getEducatorProfile } from "../../src/lib/educatorProfile";
 import { adminAudienceForProfile } from "../../src/lib/adminAudience";
 import type { EducatorProfile } from "../../src/types/institution";
 import { AdminShell } from "../../src/screens/admin/AdminShell";
+import { LevelUpWebWordmark } from "../../src/components/brand/LevelUpWebWordmark";
 import "./styles.css";
 
 const TOKEN_KEY = "sifter_auth_token_v2";
@@ -225,7 +226,7 @@ function AuthEntry({ initialMode }: { initialMode: AuthMode }) {
     <main className="shell">
       <section className="auth-layout">
         <div className="intro-panel">
-          <div className="intro-brand-lockup"><span className="intro-brand-mark" aria-hidden="true"><i /><i /><i /></span><span>Sifter <b>LevelUp</b></span></div>
+          <div className="intro-brand-lockup"><LevelUpWebWordmark variant="dark" width={460} height={132} /></div>
           <h1>Find the direction that fits you.</h1>
           <p>Explore programmes, subjects, skills and opportunities with guidance that keeps your choices connected.</p>
           <div className="promise-list"><span>Programme and university guidance</span><span>Subject-aware next steps</span><span>Your choices saved in one place</span></div>
@@ -676,9 +677,8 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
 
   return <main className={`platform-shell${focusedGuidance ? " is-guidance-workspace" : ""}`}>
     {!focusedGuidance ? <aside className="platform-sidebar">
-      <a className="brand" href="/home" onClick={(event) => { event.preventDefault(); go("/home"); }} aria-label="Sifter LevelUp home">
-        <span className="brand-mark" aria-hidden="true"><i /><i /><i /></span>
-        <span>Sifter <b>LevelUp</b></span>
+      <a className="brand" href="/home" onClick={(event) => { event.preventDefault(); go("/home"); }} aria-label="LevelUp home">
+        <LevelUpWebWordmark variant="light" width={188} height={50} />
       </a>
       <nav className="platform-nav" aria-label="Main navigation">
         <a href="/home" onClick={(e) => { e.preventDefault(); go("/home"); }}>Home</a>
@@ -698,7 +698,7 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
           if (focusedGuidance) go(guidanceEntry?.startsWith("/") ? guidanceEntry : "/home", true);
           else platformBack(path);
         }} aria-label="Go back">← {focusedGuidance ? "Exit guidance" : "Back"}</button> : null}
-        {focusedGuidance ? <div className="platform-guidance-title"><span>Focused guidance workspace</span><strong>Follow your selected path</strong></div> : <div className="global-search-shell" ref={searchShellRef}>
+        {focusedGuidance ? <div className="platform-guidance-title"><span className="platform-guidance-brand platform-guidance-brand-full"><LevelUpWebWordmark variant="light" width={126} height={34} /></span><span className="platform-guidance-brand platform-guidance-brand-compact"><LevelUpWebWordmark variant="light" width={34} height={34} compact /></span><span>Focused guidance workspace</span><strong>Follow your selected path</strong></div> : <div className="global-search-shell" ref={searchShellRef}>
         <form className="global-search" onSubmit={submitGlobalSearch} role="search">
           <span aria-hidden="true">⌕</span>
           <input value={globalQuery} onFocus={() => setSearchOpen(true)} onChange={(event) => { setGlobalQuery(event.target.value); setSearchOpen(true); }} placeholder="Search programmes, universities, domains, roles or skills" aria-label="Search Sifter" />

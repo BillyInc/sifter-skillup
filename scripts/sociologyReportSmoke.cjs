@@ -174,8 +174,26 @@ assert.equal(afterReReview.share.length, 1, "share must reopen after Review is c
 
 const scaffoldSource = fs.readFileSync("src/components/careerIntelligence/DetailScaffold.tsx", "utf8");
 const guidedSource = fs.readFileSync("src/screens/careerIntelligence/GuidedFieldSelectionScreen.tsx", "utf8");
+const myWorldSource = fs.readFileSync("src/screens/MyWorldScreen.tsx", "utf8");
 assert.match(scaffoldSource, /reportActionsEnabled\s*&&\s*pdf\s*&&\s*!isGuest/);
 assert.match(scaffoldSource, /reportActionsEnabled\s*&&\s*pdfPath\s*&&\s*!isGuest/);
 assert.match(guidedSource, /reportActionsEnabled=\{reviewComplete && !saving\}/);
+assert.match(guidedSource, /onPrint=\{reviewComplete && !saving \? printLearningPlan : undefined\}/);
+assert.match(guidedSource, /onShare=\{reviewComplete && !saving \? shareLearningPlan : undefined\}/);
+assert.match(guidedSource, /setShareInput\(\{ routeLabel: routeLabels, focusNames \}\)/);
+assert.match(guidedSource, /shareTextSummary\(copy\.title, copy\.message\)/);
+assert.doesNotMatch(guidedSource, /shareStudentDocument\(reportDocumentPath/);
+assert.match(guidedSource, /learningPlanRemovedIdsByRoute/);
+assert.match(guidedSource, /params\.snapshot_id/);
+assert.match(guidedSource, /learningFocus: sanitizedFocus/);
+assert.match(guidedSource, /How your route is organized/);
+assert.match(guidedSource, /does not make every item in an earlier layer a prerequisite/);
+assert.match(myWorldSource, /Saved learning plan route stacks/);
+assert.match(myWorldSource, /not included in this route/);
+assert.match(myWorldSource, /savedReportContext\.domains/);
+assert.match(myWorldSource, /savedReportContext\.subgroups/);
+assert.match(myWorldSource, /savedReportContext\.roles/);
+assert.match(myWorldSource, /deleteGuidanceSnapshot\(snapshotId\)/);
+assert.match(myWorldSource, /snapshot_id=\$\{encodeURIComponent\(activeSnapshotId\)\}/);
 
 console.log("Sociology report smoke passed: locked before Review, open after Review, relocked after selection change, reopened after re-review.");

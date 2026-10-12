@@ -281,7 +281,11 @@ substitute for production deployment verification.
 | 12a-ii | `backend/migration_programme_domain_evidence_2026-09-17.sql` | Stores cleaned course anchors and transferable evidence for each programme-to-domain relationship so the explanation is specific to the selected programme. It does not alter mapping labels. | #5 and the canonical career seed |
 | 12a-iii | `backend/migration_programme_domain_review_corrections_2026-09-18.sql` | Removes 715 programme-domain edges that fail the numeric/semantic evidence gate or are explicitly retained outside active guidance; the source mapping retains them as unverified audit records. | 12a-ii and the canonical career seed |
 | 12a | `backend/migration_contextual_career_items.sql` | Adds the student-facing programme/domain/subgroup/role contextual evidence table. Each emitted skill, competency, tool and certification row carries its meaning, context-specific use, learning priority, connections, source links, source locator and evidence limitation. | #8, #9, #11a and #12 |
+| 12a-claim | `backend/migration_career_context_claim_validation.sql` | Adds method/knowledge/resource item types and claim-by-claim review state/evidence plus learning-link metadata. Existing rows remain review-required until the exact checkpoint claims and their external learning links have been reviewed. | 12a |
 | 12a-i | `backend/migration_career_item_relationships_2026-09-17.sql` | Adds normalized typed relationships between contextual skills, competencies, tools and certifications. It stores explicit source-backed `builds_on`/`works_with` edges and `not_established` coverage rows for every contextual tool/certification with no established cross-type edge. | #12a |
+| 12a-ia | `backend/migration_career_item_relationship_explanations_2026-10-12.sql` | Adds a separate learner-facing explanation field to typed item relationships. Existing relationships remain unchanged and stay out of learner relationship UI until a reviewed, non-empty explanation is present; source limitations are never used as positive explanations. | 12a-i |
+| 12a-ib | `backend/migration_career_item_sequence_policy_2026-10-12.sql` | Adds explicit sequence approval, policy, condition and route-scope fields. Existing source-backed relationships default to advisory/unapproved; relationship type alone cannot create a learner prerequisite. | 12a-ia |
+| 12a-ii | `backend/migration_career_context_path_targets.sql` | Adds theme/use-case grouping, item requirement status separate from learning order, and an evidence-backed item-to-specialization/role applicability table. Existing rows remain unclassified until explicitly enriched; the API exposes only source-backed links owned by the item's context. | #12a |
 | 12b | `backend/migration_sociology_curriculum_contract_2026-09-17.sql` | Clean programme-owned Sociology CCMAS outcome/ability tables. It is the only student curriculum source for the reviewed Sociology slice; legacy flattened skill arrays remain audit-only. | #14 and the `programmes` seed |
 | 12b-i | `backend/migration_programme_curriculum_contract_general_2026-09-18.sql` | Generalizes the cleaned programme curriculum contract for every non-Sociology parsed programme; it does not replace the source reconciliation or the Sociology slice. | 12b and the `programmes` seed |
 | 12b-ii | `backend/migration_guidance_programme_reading_and_market_scope_2026-09-12.sql` | Allows lawful programme-reading references and records whether a credential has Nigerian, global, or both evidence scopes. | #12 |
@@ -308,7 +312,8 @@ testing login or finishing onboarding with the updated backend.
 
 ### Contextual career item transport
 
-After the local goal gate and after applying migrations **12a–12e**, the
+After the local goal gate and after applying migrations **12a–12e**, including
+**12a-claim** and **12a-ia**, the
 Sociology curriculum contract, and the base career seed, load the 35 ordered
 gzip parts in
 `backend/seed_career_context_items_v1_parts/` in numeric order through the
@@ -341,9 +346,58 @@ not the 420-row JAMB resource ledger. A dedicated persistence migration/seed
 must exist and be manually applied before anyone claims those 420 resource
 rows are live.
 
+#### Current D078 specialization taxonomy and guided-content seeds — local, not deployment proof
+
+The reviewed D078 seven-area taxonomy and multi-area role routes are persisted
+separately from the legacy ISCO subgroup taxonomy. Apply
+`backend/migration_d078_specialization_taxonomy_2026-10-12.sql` after the
+canonical career domain/role schema exists, and then apply
+`backend/seed_d078_specialization_taxonomy_2026-10-12.sql` after the canonical
+D078 domain and role rows have been seeded. This D078-only seed contains the
+seven current areas and all 26 already-reviewed area-to-role routes (18
+supported, 8 conditional). It preserves the conditional scope, task evidence,
+negative boundary checks and provenance. It does not re-adjudicate role fit or
+emit retired ISCO subgroup buckets as current areas. The schema is additive;
+applying the seed does not itself switch the API from its checked-in
+catalog/graph to database reads.
+
+Generate the local taxonomy seed with
+`python data/career-mapping/_build_d078_taxonomy_seed_2026_10_12.py`. Its
+builder cross-checks the seven catalog area IDs against the consolidated D078
+master and requires exact agreement between the current route graph and the
+approved master graph before writing SQL.
+
+After the 35 generic contextual seed parts have been loaded, the scoped D078
+content seed may be applied to refresh the current locally approved Sociology
+domain and Area-of-Specialization records:
+
+```text
+backend/seed_d078_guided_content_2026-10-12.sql
+```
+
+It is generated with
+`python data/career-mapping/_build_d078_guided_content_seed_2026_10_12.py`
+from the current consolidated master. The verified local seed contains **190
+approved items**: 52 domain items and 138 distinct area cards across all seven
+current areas. It omits unapproved records and consolidated duplicate aliases.
+The actual Sociology programme curriculum has **14 themes**; the separate
+three Research-theme claim records are explanatory curriculum items, not the
+theme count. Programme curriculum/outcomes and theme-reading resources remain
+in their own programme contract/resource seed layers. This contextual seed is
+separate from the D078 taxonomy/role-route seed above; both files are required
+for the current locally approved D078 data package. Neither seed rewrites
+role-fit decisions or the 173 role-item dispositions. Regenerate only after
+rebuilding and checking the D078 master, theme audits, sequence and
+student-promotion gate. Local generation is not SQL application or student
+release approval.
+
 The same seed contains normalized cross-type relationship rows. Apply
 `backend/migration_career_item_relationships_2026-09-17.sql` before loading the
-parts. Each contextual tool and certification is covered by either a
+parts. Apply `backend/migration_career_context_path_targets.sql` before loading
+any seed that includes the new theme/use-case, requirement-level or path-target
+fields. Existing seed parts do not gain inferred path targets merely because
+the schema exists; enrich those records from reviewed evidence first. Each
+contextual tool and certification is covered by either a
 source-backed typed edge or a `not_established` row. The latter means the
 reviewed sources did not establish a relationship; it must not be rendered as
 a student recommendation or used to infer a requirement. Verify the layer with:
@@ -490,7 +544,9 @@ required by the 2026-09-12 seed.
    `migration_programme_domain_review_corrections_2026-09-18.sql`, then
    apply `seed_programme_domain_evidence_2026-09-17.sql`,
    `migration_contextual_career_items.sql`,
+   `migration_career_context_claim_validation.sql`,
    `migration_career_item_relationships_2026-09-17.sql`,
+   `migration_career_context_path_targets.sql`,
    `migration_sociology_curriculum_contract_2026-09-17.sql`, and
    `migration_programme_curriculum_contract_general_2026-09-18.sql`.
 5. Apply `migration_guidance_programme_reading_and_market_scope_2026-09-12.sql`,

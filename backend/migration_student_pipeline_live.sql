@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS skillup_dev.subject_catalog (
     aliases      TEXT[] NOT NULL DEFAULT '{}',
     exam_types   TEXT[] NOT NULL DEFAULT '{}', -- utme, olevel
     category     TEXT, -- science | commercial | art | general | language | technical
-    stream_tags  TEXT[] NOT NULL DEFAULT '{}', -- science | commercial | art
+    stream_tags  TEXT[] NOT NULL DEFAULT '{}', -- science | commercial | art | technical
     active       BOOLEAN NOT NULL DEFAULT true,
     created_at   TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );

@@ -6,6 +6,9 @@ const RESOURCE_TYPES: Record<CareerContextItem["itemType"], CareerLearningResour
   tool: ["tool_learning"],
   competency: ["competency_reference"],
   certification: ["certification_exam", "professional_body"],
+  method: ["skill_learning", "tool_learning", "competency_reference"],
+  knowledge: ["programme_reading", "domain_overview", "skill_learning"],
+  resource: ["programme_reading", "domain_overview", "role_reference", "skill_learning"],
 };
 
 /** Student resources must be approved, source-backed and owned by a visible context. */

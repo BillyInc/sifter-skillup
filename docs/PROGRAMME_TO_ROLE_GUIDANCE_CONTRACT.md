@@ -40,12 +40,15 @@ and curriculum evidence, not from the frequency of role skills. Each item says
 what it means in that domain, why it appears in the learning sequence, what it
 connects to, and which public resource explains it.
 
-### Subgroup
+### Area of specialization (legacy API label: subgroup)
 
-The subgroup adds a narrower method or area of work. It inherits the useful
-domain foundation but does not repeat it as if it were subgroup-specific. Its
-skills, tools, competencies, certifications and resources explain what the
-area adds and how they are used together.
+This record identifies a recognized area of specialization within the
+domain; it is not a learning path or an occupational code bucket. Its
+source-backed skills, tools, competencies, certifications and resources
+explain what is specific to that area beyond the shared domain foundation.
+Only after the area is justified should roles be independently checked for
+fit with the parent domain and, separately, with the area. Membership in an
+ISCO/ESCO family does not establish either relationship.
 
 ### Role
 

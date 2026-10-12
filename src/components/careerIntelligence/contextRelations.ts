@@ -1,10 +1,14 @@
 import type { CareerContextItem, CareerContextItemRelationship } from "@/types/career";
+import { isApprovedStudentContextItem } from "@/lib/studentCareerBoundary";
 
 const TYPE_LABEL: Record<CareerContextItem["itemType"], string> = {
   skill: "Skill",
   tool: "Tool",
   competency: "Competency",
   certification: "Certification or qualification",
+  method: "Method",
+  knowledge: "Knowledge",
+  resource: "Learning resource",
 };
 
 export function contextItemFor(
@@ -14,6 +18,13 @@ export function contextItemFor(
 ): CareerContextItem | undefined {
   const key = name.trim().toLowerCase();
   return (items ?? []).find((item) => item.itemType === itemType && item.name.trim().toLowerCase() === key);
+}
+
+/** Client-side backstop for the API's exact-checkpoint student visibility gate.
+ * A legacy skill/tool/cert row cannot become visible merely because it has a
+ * plausible name, a nearby resource, or a URL of its own. */
+export function isStudentApprovedContextItem(item: CareerContextItem | undefined): boolean {
+  return isApprovedStudentContextItem(item);
 }
 
 export function relationNames(

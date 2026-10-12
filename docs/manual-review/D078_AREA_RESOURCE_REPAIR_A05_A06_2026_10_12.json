@@ -1,0 +1,453 @@
+{
+  "artifact_type": "manual_review_area_evidence_and_learning_resource_repair",
+  "artifact_id": "D078_AREA_RESOURCE_REPAIR_A05_A06_2026_10_12",
+  "review_date": "2026-10-12",
+  "access_date": "2026-10-12",
+  "purpose": "Source-check the nine Human Geography and Population Studies (A05) records and eleven Social Research and Evaluation (A06) records; add direct evidence locators and free task-specific learning links.",
+  "authority": "Evidence/resource review only. This ledger does not change item ownership, role fit, relationships, sequence, student visibility, canonical data, matcher data, graph data, or implementation.",
+  "source_registry": [
+    {
+      "source_id": "OPEN_HUMAN_GEOGRAPHY",
+      "publisher": "Open Textbook Library / University of Minnesota",
+      "title": "Fundamentals of Human Geography",
+      "url": "https://open.umn.edu/opentextbooks/textbooks/fundamentals-of-human-geography",
+      "exact_locator": "Table of Contents: Chapter 1 Introduction to Human Geography; Chapter 2 Population and Health; Chapter 3 Migration; Chapter 12 Human Settlements. Listing provides online and PDF formats under CC BY.",
+      "accessed_on": "2026-10-12",
+      "access_cost": "Free; attribution license",
+      "scope_limit": "Global introductory examples; supplement with current Nigerian data and local geography."
+    },
+    {
+      "source_id": "QGIS_TRAINING",
+      "publisher": "QGIS Project / Open Source Geospatial Foundation",
+      "title": "QGIS Training Manual, version 3.44",
+      "url": "https://docs.qgis.org/3.44/en/docs/training_manual/",
+      "exact_locator": "Contents: 2 Creating and Exploring a Basic Map; 3 Classifying Vector Data; 4 Laying out the Maps; 6 Vector Analysis (reprojecting/transforming, vector analysis, network analysis, spatial statistics); 13 Assessment (base map, analyse data, final map).",
+      "accessed_on": "2026-10-12",
+      "access_cost": "Free documentation and exercises; QGIS is open-source software",
+      "scope_limit": "Teaches software operations, not the validity of a social construct, local boundary authority, causal inference, or human-geography theory."
+    },
+    {
+      "source_id": "UNSD_CENSUS_2030",
+      "publisher": "United Nations Statistics Division",
+      "title": "2030 World Population and Housing Census Programme",
+      "url": "https://unstats.un.org/unsd/demographic/sources/census/wphc/default.htm",
+      "exact_locator": "Programme overview and Principles and Recommendations for Population and Housing Censuses, Revision 4: census as a primary source of disaggregated data; programme objectives include comparable, integrated and quality-assured census data.",
+      "accessed_on": "2026-10-12",
+      "access_cost": "Free official statistics guidance",
+      "scope_limit": "Census-system guidance; does not make census data automatically current, complete, comparable, or fit for every research question."
+    },
+    {
+      "source_id": "NBS_GHS_PANEL_2023_24",
+      "publisher": "National Bureau of Statistics, Nigeria",
+      "title": "Nigeria General Household Survey, Panel 2023-2024, Wave 5",
+      "url": "https://microdata.nigerianstat.gov.ng/index.php/catalog/82",
+      "exact_locator": "Catalogue sections Identification, Version, Scope and Sampling: nationally representative panel of about 5,000 households and six geopolitical zones; household geographic-area identification, migration, labour, education and other modules; anonymized public-distribution dataset metadata.",
+      "accessed_on": "2026-10-12",
+      "access_cost": "Metadata free; microdata access is subject to the catalogue's access conditions",
+      "scope_limit": "One survey round and its defined population; geographic identifiers and anonymization limit fine-scale use."
+    },
+    {
+      "source_id": "IUSSP_DEMOGRAPHIC_METHODS",
+      "publisher": "International Union for the Scientific Study of Population / London School of Hygiene and Tropical Medicine",
+      "title": "Introduction to Demographic Methods and Population Analysis",
+      "url": "https://iussp.org/en/demographic-methods-and-population-analysis",
+      "exact_locator": "Course overview: 28 interactive self-study lectures in three modules covering measurement/analysis of fertility, mortality and migration, population projections, life tables and population models.",
+      "accessed_on": "2026-10-12",
+      "access_cost": "Free with OpenStudy registration",
+      "scope_limit": "Course materials developed in 2014-2015; introductory methods, no computing support or Nigerian source-system instruction."
+    },
+    {
+      "source_id": "UNSD_MIGRATION_STATS",
+      "publisher": "United Nations Statistics Division, Demographic and Social Statistics",
+      "title": "International migration statistics: methods and resources",
+      "url": "https://unstats.un.org/unsd/demographic-social/sconcerns/migration/",
+      "exact_locator": "Methods/resources list includes 2025 Recommendations on Statistics of International Migration and Temporary Mobility, 2025 data-integration materials, 2022 Indicators, and the 2022 Handbook on Measuring International Migration through Population Censuses; page describes stocks, flows, data quality and comparability.",
+      "accessed_on": "2026-10-12",
+      "access_cost": "Free official statistics guidance",
+      "scope_limit": "International migration standards; concepts and data availability must be checked against the specific national source and study period."
+    },
+    {
+      "source_id": "OPENLEARN_MIGRATION_PLACE",
+      "publisher": "The Open University, OpenLearn",
+      "title": "Exploring how migration changes the places where we live",
+      "url": "https://www.open.edu/openlearn/course/view.php?id=14286",
+      "exact_locator": "Course overview and sections on migration, cities, community, belonging, local authorities and inclusion; course text/videos explain how migration shapes places and communities.",
+      "accessed_on": "2026-10-12",
+      "access_cost": "Free OpenLearn learning resource",
+      "scope_limit": "UK policy and city examples; use for concepts and interpretation, not Nigerian migration facts or statistical methods."
+    },
+    {
+      "source_id": "UN_WPP_2024_METHOD",
+      "publisher": "United Nations Department of Economic and Social Affairs, Population Division",
+      "title": "World Population Prospects 2024: Methodology report",
+      "url": "https://www.un.org/development/desa/pd/content/world-population-prospects-2024-methodology-report",
+      "exact_locator": "Methodology report for the UN's 2024 population estimates and projections; report defines projection uncertainty components and describes empirical inputs, estimation methods and model assumptions. Use the uncertainty and assumptions sections and variant results when interpreting projections.",
+      "accessed_on": "2026-10-12",
+      "access_cost": "Free official report and data portal",
+      "scope_limit": "UN global/national estimates and model assumptions; not a substitute for a fit-for-purpose local projection or a guarantee of future outcomes."
+    },
+    {
+      "source_id": "CDC_EVALUATION_FRAMEWORK",
+      "publisher": "U.S. Centers for Disease Control and Prevention",
+      "title": "CDC Program Evaluation Framework",
+      "url": "https://www.cdc.gov/evaluation/php/evaluation-framework/index.html",
+      "exact_locator": "Evaluation Steps: assess context; describe the program; focus evaluation questions and design; gather credible evidence; generate and support conclusions; act on findings. The framework page identifies these steps as its evaluation process.",
+      "accessed_on": "2026-10-12",
+      "access_cost": "Free public guidance",
+      "scope_limit": "Public-health framework with wider evaluation use; guidance, not Nigerian law, a credential, or a mandatory design for every study."
+    },
+    {
+      "source_id": "CDC_EVALUATION_ACTION_GUIDE",
+      "publisher": "U.S. Centers for Disease Control and Prevention",
+      "title": "CDC Program Evaluation Framework Action Guide",
+      "url": "https://www.cdc.gov/evaluation/php/evaluation-framework-action-guide/",
+      "exact_locator": "Purpose and How to Use sections: practical how-to guide for planning, designing and implementing evaluations; stand-alone step-by-step material with evaluation standards, cross-cutting actions and a linked 60-minute self-guided module.",
+      "accessed_on": "2026-10-12",
+      "access_cost": "Free guide; linked self-guided module is 60 minutes",
+      "scope_limit": "Public-health framing and non-prescriptive guidance; adapt to local institutional and legal requirements."
+    },
+    {
+      "source_id": "MAGENTA_BOOK",
+      "publisher": "HM Treasury and UK Evaluation Task Force",
+      "title": "Magenta Book: Central Government guidance on evaluation",
+      "url": "https://www.gov.uk/government/publications/the-magenta-book/magenta-book-central-government-guidance-on-evaluation-html",
+      "exact_locator": "Sections 2.2.1-2.2.2 on understanding an intervention, theory of change and evaluation purpose/questions; survey sampling section describes probability/non-probability sampling, representativeness and non-response; methods chapters cover evaluation design and evidence.",
+      "accessed_on": "2026-10-12",
+      "access_cost": "Free public guidance",
+      "scope_limit": "UK central-government guidance; methodological reference, not Nigerian policy or a universal evaluation recipe."
+    },
+    {
+      "source_id": "SOCIAL_SCIENCE_RESEARCH_TEXT",
+      "publisher": "Anol Bhattacherjee / University of Southern Queensland Open Textbooks",
+      "title": "Social Science Research: Principles, Methods and Practices, revised edition",
+      "url": "https://usq.pressbooks.pub/socialscienceresearch/",
+      "exact_locator": "Table of contents: Chapter 3 The research process; 5 Research design; 6 Measurement of constructs; 7 Scale reliability and validity; 8 Sampling; 9 Survey research; 11 Case research; 12 Interpretive research; 13 Qualitative analysis; 14-15 quantitative analysis; 16 Research ethics. Online text and downloads are listed under CC BY-NC-SA 4.0.",
+      "accessed_on": "2026-10-12",
+      "access_cost": "Free open textbook; CC BY-NC-SA 4.0",
+      "scope_limit": "Compact foundational text; Chapter 16 includes Australian context and legal/institutional rules must be checked locally."
+    },
+    {
+      "source_id": "AEA_COMPETENCIES",
+      "publisher": "American Evaluation Association",
+      "title": "AEA Evaluator Competencies",
+      "url": "https://www.eval.org/About/Competencies-Standards/AEA-Evaluator-Competencies",
+      "exact_locator": "Competency domains include methodology, context, planning/management and interpersonal practice; interpersonal domain names communication, facilitation and conflict resolution. The page describes a professional competency framework.",
+      "accessed_on": "2026-10-12",
+      "access_cost": "Free public guidance",
+      "scope_limit": "Professional framework, not a licence, universal job requirement, or methods course."
+    },
+    {
+      "source_id": "AEA_GUIDING_PRINCIPLES",
+      "publisher": "American Evaluation Association",
+      "title": "Guiding Principles for Evaluators",
+      "url": "https://www.eval.org/About/Guiding-Principles",
+      "exact_locator": "Guiding Principles page and Systematic Inquiry principle: data-based, thorough, methodical and contextually relevant inquiry; the five principles also include competence, integrity, respect for people, and common good/equity.",
+      "accessed_on": "2026-10-12",
+      "access_cost": "Free public guidance",
+      "scope_limit": "Professional ethics guidance, not Nigerian law or an institutional research-ethics approval."
+    },
+    {
+      "source_id": "NIGERIA_DATA_PROTECTION_ACT",
+      "publisher": "Nigeria Data Protection Commission; Act copy linked by Nigeria's ngCERT",
+      "title": "Nigeria Data Protection Act, 2023",
+      "url": "https://www.ndpc.gov.ng/ndp-act-2023/",
+      "exact_locator": "Official Act landing page and linked Act text; sections 24-25 address personal-data processing principles and lawful bases. For a study, check the current Act text and applicable institutional guidance rather than treating this note as legal advice.",
+      "accessed_on": "2026-10-12",
+      "access_cost": "Free official legal text",
+      "scope_limit": "Nigerian data-protection law; does not by itself supply research-design or ethics-committee approval."
+    },
+    {
+      "source_id": "KOBO_WEB_FORMS",
+      "publisher": "KoboToolbox Support",
+      "title": "Collecting data using web forms",
+      "url": "https://support.kobotoolbox.org/data_through_webforms.html",
+      "exact_locator": "Overview and Offline data collection sections: web forms support configured form logic including skip logic and validation; offline use requires opening and caching the form before disconnecting, with queued submissions uploading after reconnection.",
+      "accessed_on": "2026-10-12",
+      "access_cost": "Free public documentation",
+      "scope_limit": "Describes a platform implementation; test the actual device, project settings, security, consent flow and connectivity before field use."
+    },
+    {
+      "source_id": "KOBO_EXPORT",
+      "publisher": "KoboToolbox Support",
+      "title": "Exporting and downloading your data",
+      "url": "https://support.kobotoolbox.org/export_download.html",
+      "exact_locator": "Downloading your data and Export types sections: project DATA > Downloads workflow and XLS, CSV, GeoJSON and SPSS Labels formats; CSV is described for import into data-management software and GeoJSON for GIS integration.",
+      "accessed_on": "2026-10-12",
+      "access_cost": "Free public documentation",
+      "scope_limit": "Export format does not validate the questionnaire, sample, measure or analysis."
+    },
+    {
+      "source_id": "OPENLEARN_EVALUATION",
+      "publisher": "The Open University, OpenLearn",
+      "title": "Global challenges in practice: designing a development intervention",
+      "url": "https://www.open.edu/openlearn/mod/oucontent/view.php?id=141129&section=3",
+      "exact_locator": "Week 3 section 2, Why is evaluation important?; adjacent course sections distinguish monitoring and evaluation and discuss indicator choice. The course page identifies this as a free, 12-hour intermediate course.",
+      "accessed_on": "2026-10-12",
+      "access_cost": "Free course; free account for course tracking/participation statement",
+      "scope_limit": "Development-intervention context; introductory orientation rather than a full design manual."
+    },
+    {
+      "source_id": "DATACARPENTRY_R_SOCIALSCI",
+      "publisher": "The Carpentries / Data Carpentry",
+      "title": "R for Social Scientists",
+      "url": "https://datacarpentry.github.io/r-socialsci/",
+      "exact_locator": "Learner lesson episodes: Starting with Data; Data Wrangling with dplyr/tidyr; Data Visualisation with ggplot2. The lesson description specifies an introductory R workflow for social-science data; its materials state alpha/under-development status.",
+      "accessed_on": "2026-10-12",
+      "access_cost": "Free lesson materials",
+      "scope_limit": "Optional software workflow; lesson is marked alpha and does not select a research design or establish statistical validity."
+    },
+    {
+      "source_id": "OPENLEARN_SPSS",
+      "publisher": "The Open University, OpenLearn",
+      "title": "Getting started with SPSS",
+      "url": "https://www.open.edu/openlearn/society-politics-law/sociology/getting-started-spss/content-section-0?active-tab=description-tab",
+      "exact_locator": "Course description and learning outcomes: seven interactive activities; define variables, enter basic data and carry out a statistical analysis to test hypotheses; no statistics software is needed for the course activities.",
+      "accessed_on": "2026-10-12",
+      "access_cost": "Free course; statement of participation available",
+      "scope_limit": "Introductory SPSS orientation; it does not teach study design, sampling or all statistical methods."
+    },
+    {
+      "source_id": "TAGUETTE_GETTING_STARTED",
+      "publisher": "Taguette project",
+      "title": "Getting started with Taguette",
+      "url": "https://www.taguette.org/getting-started.html",
+      "exact_locator": "Start a project, upload materials, highlight/tag passages and export tags, highlights, codebooks, documents and project; supports a basic documented coding workflow.",
+      "accessed_on": "2026-10-12",
+      "access_cost": "Free and open-source tool with free documentation",
+      "scope_limit": "Software operation only; the researcher must select and justify the qualitative method, coding approach and interpretation."
+    }
+  ],
+  "records": [
+    {
+      "item_id": "D078:human-geography-population:spatial-concepts-and-place",
+      "area_id": "D078:human-geography-population",
+      "area": "A05 Human Geography and Population Studies",
+      "label": "Spatial patterns, place and scale",
+      "evidence_source_ids": ["OPEN_HUMAN_GEOGRAPHY", "UNSD_CENSUS_2030"],
+      "free_learning_source_ids": ["OPEN_HUMAN_GEOGRAPHY"],
+      "source_check_finding": "Human-geography chapters establish a people/place conceptual foundation; UN census guidance supports the relevance of disaggregated population data. Neither source makes spatial analysis necessary for every social question.",
+      "item_limit": "Use a non-spatial table or qualitative place study when location is not material; map patterns do not establish causation.",
+      "student_visibility": "hidden; no approval or promotion in this review"
+    },
+    {
+      "item_id": "D078:human-geography-population:spatial-data-provenance-scale",
+      "area_id": "D078:human-geography-population",
+      "area": "A05 Human Geography and Population Studies",
+      "label": "Spatial data provenance, geographic units and scale",
+      "evidence_source_ids": ["UNSD_CENSUS_2030", "NBS_GHS_PANEL_2023_24"],
+      "free_learning_source_ids": ["QGIS_TRAINING", "NBS_GHS_PANEL_2023_24"],
+      "source_check_finding": "UN census programme standards and NBS survey metadata support checking geography, coverage, reference period and source design before comparing mapped observations. NBS metadata is a concrete Nigerian exercise source.",
+      "item_limit": "The GHS panel is not a census or a complete geographic register; inspect public-use access and anonymization before analysis.",
+      "student_visibility": "hidden; no approval or promotion in this review"
+    },
+    {
+      "item_id": "D078:human-geography-population:spatial-analysis-method",
+      "area_id": "D078:human-geography-population",
+      "area": "A05 Human Geography and Population Studies",
+      "label": "Spatial analysis and map-based comparison",
+      "evidence_source_ids": ["QGIS_TRAINING", "UNSD_CENSUS_2030", "NBS_GHS_PANEL_2023_24"],
+      "free_learning_source_ids": ["QGIS_TRAINING"],
+      "source_check_finding": "QGIS manual provides direct vector-analysis, reprojection, spatial-statistics and map-assessment exercises; official census and NBS metadata ground data-quality requirements.",
+      "item_limit": "Spatial association is not causal evidence; coordinate systems, boundary changes, missingness and unit choice can alter results.",
+      "student_visibility": "hidden; no approval or promotion in this review"
+    },
+    {
+      "item_id": "D078:human-geography-population:qgis-spatial-tool",
+      "area_id": "D078:human-geography-population",
+      "area": "A05 Human Geography and Population Studies",
+      "label": "QGIS for a human-geography spatial workflow",
+      "evidence_source_ids": ["QGIS_TRAINING"],
+      "free_learning_source_ids": ["QGIS_TRAINING"],
+      "source_check_finding": "Official versioned QGIS manual covers loading/vector data, reprojecting, analysis, spatial statistics and map production in explicit modules.",
+      "item_limit": "QGIS is an optional implementation; it cannot choose the research question, validate inputs, or establish a valid social interpretation.",
+      "student_visibility": "hidden; no approval or promotion in this review"
+    },
+    {
+      "item_id": "D078:human-geography-population:spatial-pattern-communication",
+      "area_id": "D078:human-geography-population",
+      "area": "A05 Human Geography and Population Studies",
+      "label": "Explain spatial patterns without overclaiming",
+      "evidence_source_ids": ["QGIS_TRAINING", "OPEN_HUMAN_GEOGRAPHY", "NBS_GHS_PANEL_2023_24"],
+      "free_learning_source_ids": ["QGIS_TRAINING", "OPEN_HUMAN_GEOGRAPHY"],
+      "source_check_finding": "QGIS map-layout/final-map exercises support communication practice; the open text supplies human-geography context, and NBS metadata supports communicating coverage and unit limits.",
+      "item_limit": "A polished map is not proof of a mechanism or causal effect; state alternatives, uncertainty and data limitations.",
+      "student_visibility": "hidden; no approval or promotion in this review"
+    },
+    {
+      "item_id": "D078:human-geography-population:population-measures",
+      "area_id": "D078:human-geography-population",
+      "area": "A05 Human Geography and Population Studies",
+      "label": "Population measures and demographic change",
+      "evidence_source_ids": ["IUSSP_DEMOGRAPHIC_METHODS", "UNSD_MIGRATION_STATS", "NBS_GHS_PANEL_2023_24"],
+      "free_learning_source_ids": ["IUSSP_DEMOGRAPHIC_METHODS"],
+      "source_check_finding": "The IUSSP/LSHTM lectures directly cover fertility, mortality, migration, life tables and population models; UNSD and NBS materials anchor migration definitions and data coverage.",
+      "item_limit": "Define numerator, denominator, population, time period and source; international recommendations do not guarantee local data completeness.",
+      "student_visibility": "hidden; no approval or promotion in this review"
+    },
+    {
+      "item_id": "D078:human-geography-population:census-survey-admin-appraisal",
+      "area_id": "D078:human-geography-population",
+      "area": "A05 Human Geography and Population Studies",
+      "label": "Appraise census, survey and administrative population data",
+      "evidence_source_ids": ["UNSD_CENSUS_2030", "NBS_GHS_PANEL_2023_24", "UNSD_MIGRATION_STATS"],
+      "free_learning_source_ids": ["NBS_GHS_PANEL_2023_24", "IUSSP_DEMOGRAPHIC_METHODS"],
+      "source_check_finding": "UN standards distinguish census-system aims; the NBS Wave 5 catalogue exposes sampling, population coverage, geography, period and questionnaire scope for a tangible source-comparison exercise.",
+      "item_limit": "A sample survey, census and administrative system have different populations, error structures and access conditions; do not treat them as interchangeable.",
+      "student_visibility": "hidden; no approval or promotion in this review"
+    },
+    {
+      "item_id": "D078:human-geography-population:migration-urbanisation-interpretation",
+      "area_id": "D078:human-geography-population",
+      "area": "A05 Human Geography and Population Studies",
+      "label": "Interpret migration and urbanisation patterns",
+      "evidence_source_ids": ["UNSD_MIGRATION_STATS", "NBS_GHS_PANEL_2023_24", "OPENLEARN_MIGRATION_PLACE"],
+      "free_learning_source_ids": ["OPENLEARN_MIGRATION_PLACE"],
+      "source_check_finding": "Current UNSD resources define stock/flow and data-quality scope; NBS provides Nigeria-specific migration modules; OpenLearn connects migration with place, community and belonging.",
+      "item_limit": "OpenLearn examples are UK-based; migration trends and urban change require dated, population-specific data and competing explanations.",
+      "student_visibility": "hidden; no approval or promotion in this review"
+    },
+    {
+      "item_id": "D078:human-geography-population:demographic-estimation-projection",
+      "area_id": "D078:human-geography-population",
+      "area": "A05 Human Geography and Population Studies",
+      "label": "Population estimation and projection with uncertainty",
+      "evidence_source_ids": ["UN_WPP_2024_METHOD", "IUSSP_DEMOGRAPHIC_METHODS", "NBS_GHS_PANEL_2023_24"],
+      "free_learning_source_ids": ["IUSSP_DEMOGRAPHIC_METHODS", "UN_WPP_2024_METHOD"],
+      "source_check_finding": "UN WPP 2024 provides the official methodology and model assumptions for estimates/projections; IUSSP provides introductory projection and population-model instruction.",
+      "item_limit": "Projection is conditional on inputs and assumptions; report uncertainty/scenarios and avoid presenting a projection as a forecast certainty.",
+      "student_visibility": "hidden; no approval or promotion in this review"
+    },
+    {
+      "item_id": "D078:social-research-evaluation:study-question-design",
+      "area_id": "D078:social-research-evaluation",
+      "area": "A06 Social Research and Evaluation",
+      "label": "Turn a social question into a feasible study design",
+      "evidence_source_ids": ["CDC_EVALUATION_FRAMEWORK", "MAGENTA_BOOK", "SOCIAL_SCIENCE_RESEARCH_TEXT"],
+      "free_learning_source_ids": ["SOCIAL_SCIENCE_RESEARCH_TEXT", "CDC_EVALUATION_ACTION_GUIDE"],
+      "source_check_finding": "CDC and Magenta Book connect evaluation purpose/questions to design and evidence; textbook Chapters 3 and 5 provide a free research-process/design learning route.",
+      "item_limit": "Formal study design is conditional on the task; the framework does not determine the right method for every population or question.",
+      "student_visibility": "hidden; no approval or promotion in this review"
+    },
+    {
+      "item_id": "D078:social-research-evaluation:sampling-and-measurement",
+      "area_id": "D078:social-research-evaluation",
+      "area": "A06 Social Research and Evaluation",
+      "label": "Sampling, measurement and representativeness",
+      "evidence_source_ids": ["MAGENTA_BOOK", "SOCIAL_SCIENCE_RESEARCH_TEXT", "NBS_GHS_PANEL_2023_24"],
+      "free_learning_source_ids": ["SOCIAL_SCIENCE_RESEARCH_TEXT", "NBS_GHS_PANEL_2023_24"],
+      "source_check_finding": "Magenta Book's sampling section distinguishes probability and non-probability samples, non-response and inference limits; textbook Chapters 6-8 cover measurement, reliability/validity and sampling. NBS metadata supplies a real sampling design example.",
+      "item_limit": "Representativeness depends on frame, selection, response and weighting; measurement quality and sample size alone do not guarantee valid inference.",
+      "student_visibility": "hidden; no approval or promotion in this review"
+    },
+    {
+      "item_id": "D078:social-research-evaluation:field-and-document-method-choice",
+      "area_id": "D078:social-research-evaluation",
+      "area": "A06 Social Research and Evaluation",
+      "label": "Choose between surveys, interviews, focus groups and document methods",
+      "evidence_source_ids": ["SOCIAL_SCIENCE_RESEARCH_TEXT", "CDC_EVALUATION_FRAMEWORK", "AEA_COMPETENCIES"],
+      "free_learning_source_ids": ["SOCIAL_SCIENCE_RESEARCH_TEXT", "OPENLEARN_EVALUATION"],
+      "source_check_finding": "Textbook Chapters 9 and 11-13 directly cover survey, case, interpretive and qualitative methods; CDC connects design to evaluation questions. OpenLearn gives a free evaluation orientation including qualitative/quantitative methods in its course contents.",
+      "item_limit": "Methods are not interchangeable; choose according to question, evidence, access, ethics and inference target. The source text is foundational rather than exhaustive.",
+      "student_visibility": "hidden; no approval or promotion in this review"
+    },
+    {
+      "item_id": "D078:social-research-evaluation:research-ethics-data-stewardship",
+      "area_id": "D078:social-research-evaluation",
+      "area": "A06 Social Research and Evaluation",
+      "label": "Protect participants and handle research data responsibly",
+      "evidence_source_ids": ["NIGERIA_DATA_PROTECTION_ACT", "AEA_GUIDING_PRINCIPLES", "SOCIAL_SCIENCE_RESEARCH_TEXT"],
+      "free_learning_source_ids": ["SOCIAL_SCIENCE_RESEARCH_TEXT", "CDC_EVALUATION_ACTION_GUIDE"],
+      "source_check_finding": "Nigeria's Act supplies local personal-data obligations (sections 24-25); AEA's principles support context-sensitive, respectful inquiry; textbook Chapter 16 is a free ethics learning section.",
+      "item_limit": "Data-protection compliance is not equivalent to ethics approval or informed-consent adequacy; check current institutional and legal requirements for the actual study.",
+      "student_visibility": "hidden; no approval or promotion in this review"
+    },
+    {
+      "item_id": "D078:social-research-evaluation:kobo-electronic-collection",
+      "area_id": "D078:social-research-evaluation",
+      "area": "A06 Social Research and Evaluation",
+      "label": "KoboToolbox for electronic form collection",
+      "evidence_source_ids": ["KOBO_WEB_FORMS", "KOBO_EXPORT"],
+      "free_learning_source_ids": ["KOBO_WEB_FORMS", "KOBO_EXPORT"],
+      "source_check_finding": "Official Kobo documentation confirms form logic, validation, offline caching/queue behavior and data-export options, directly matching the implementation task.",
+      "item_limit": "Tool use follows a justified instrument and sampling plan; test skip/validation logic, security and offline synchronization before collecting real data.",
+      "student_visibility": "hidden; no approval or promotion in this review"
+    },
+    {
+      "item_id": "D078:social-research-evaluation:programme-theory-and-logic",
+      "area_id": "D078:social-research-evaluation",
+      "area": "A06 Social Research and Evaluation",
+      "label": "Describe how a programme is expected to produce change",
+      "evidence_source_ids": ["MAGENTA_BOOK", "CDC_EVALUATION_FRAMEWORK"],
+      "free_learning_source_ids": ["OPENLEARN_EVALUATION", "CDC_EVALUATION_ACTION_GUIDE"],
+      "source_check_finding": "Magenta Book sections 2.2.1-2.2.2 describe theory of change, causal steps, assumptions, context, stakeholder testing and evaluation questions; CDC places programme description before question/design and evidence.",
+      "item_limit": "A logic model records an explicit programme theory; it does not prove that the causal chain operates or that outcomes were caused by the programme.",
+      "student_visibility": "hidden; no approval or promotion in this review"
+    },
+    {
+      "item_id": "D078:social-research-evaluation:evaluation-design-and-evidence",
+      "area_id": "D078:social-research-evaluation",
+      "area": "A06 Social Research and Evaluation",
+      "label": "Select evaluation questions, design and credible evidence",
+      "evidence_source_ids": ["CDC_EVALUATION_FRAMEWORK", "MAGENTA_BOOK", "AEA_COMPETENCIES"],
+      "free_learning_source_ids": ["CDC_EVALUATION_ACTION_GUIDE", "MAGENTA_BOOK"],
+      "source_check_finding": "CDC's six steps explicitly connect context, programme description, evaluation questions/design, credible evidence and conclusions; Magenta Book scopes evaluation purposes and method choices. Both have free practical learning material.",
+      "item_limit": "Evaluation design depends on purpose and context; impact claims need a defensible comparison strategy, while process and descriptive evaluations can use other designs.",
+      "student_visibility": "hidden; no approval or promotion in this review"
+    },
+    {
+      "item_id": "D078:social-research-evaluation:stakeholder-use-and-reporting",
+      "area_id": "D078:social-research-evaluation",
+      "area": "A06 Social Research and Evaluation",
+      "label": "Turn findings into usable, transparent recommendations",
+      "evidence_source_ids": ["CDC_EVALUATION_FRAMEWORK", "MAGENTA_BOOK", "AEA_COMPETENCIES", "AEA_GUIDING_PRINCIPLES"],
+      "free_learning_source_ids": ["CDC_EVALUATION_ACTION_GUIDE", "OPENLEARN_EVALUATION"],
+      "source_check_finding": "CDC includes acting on findings; Magenta Book covers intended users and use of evaluation questions; AEA competencies specify communication/facilitation and its principles call for systematic, context-relevant inquiry.",
+      "item_limit": "Recommendations are not findings; distinguish evidence, uncertainty, alternative explanations and stakeholder values.",
+      "student_visibility": "hidden; no approval or promotion in this review"
+    },
+    {
+      "item_id": "D078:social-research-evaluation:quantitative-analysis-choice",
+      "area_id": "D078:social-research-evaluation",
+      "area": "A06 Social Research and Evaluation",
+      "label": "Use a quantitative analysis workflow only when the design supports it",
+      "evidence_source_ids": ["MAGENTA_BOOK", "SOCIAL_SCIENCE_RESEARCH_TEXT", "NBS_GHS_PANEL_2023_24"],
+      "free_learning_source_ids": ["DATACARPENTRY_R_SOCIALSCI", "SOCIAL_SCIENCE_RESEARCH_TEXT"],
+      "source_check_finding": "Magenta Book links evidence and design to evaluation questions; textbook Chapters 14-15 cover descriptive and inferential analysis; Data Carpentry provides a free social-science data import, cleaning and visualization workflow.",
+      "item_limit": "A reproducible workflow does not repair biased sampling, invalid measures, confounding or unsupported causal claims; the Carpentries lesson is marked alpha.",
+      "student_visibility": "hidden; no approval or promotion in this review"
+    },
+    {
+      "item_id": "D078:social-research-evaluation:spss-quantitative-tool",
+      "area_id": "D078:social-research-evaluation",
+      "area": "A06 Social Research and Evaluation",
+      "label": "IBM SPSS for a justified social-data analysis",
+      "evidence_source_ids": ["OPENLEARN_SPSS", "MAGENTA_BOOK"],
+      "free_learning_source_ids": ["OPENLEARN_SPSS"],
+      "source_check_finding": "OpenLearn labels its seven-activity SPSS introduction a free course and states learning outcomes for variable definitions, data entry and basic hypothesis-testing analysis.",
+      "item_limit": "Course use requires no SPSS installation, but applying SPSS to real data may require licensed software; software operation does not justify the procedure or inference.",
+      "student_visibility": "hidden; no approval or promotion in this review"
+    },
+    {
+      "item_id": "D078:social-research-evaluation:qualitative-coding-options",
+      "area_id": "D078:social-research-evaluation",
+      "area": "A06 Social Research and Evaluation",
+      "label": "NVivo or Taguette for documented qualitative coding",
+      "evidence_source_ids": ["TAGUETTE_GETTING_STARTED", "AEA_GUIDING_PRINCIPLES", "SOCIAL_SCIENCE_RESEARCH_TEXT"],
+      "free_learning_source_ids": ["TAGUETTE_GETTING_STARTED", "SOCIAL_SCIENCE_RESEARCH_TEXT"],
+      "source_check_finding": "Taguette's official getting-started guide documents importing, tagging/highlighting and exporting codebooks and project material; the textbook's Chapters 12-13 cover interpretive research and qualitative analysis. NVivo remains a commercial alternative, not a free learning route.",
+      "item_limit": "Coding software organizes material; it does not choose a method, make themes true, establish representativeness or replace researcher interpretation. Check hosting, confidentiality and licence terms.",
+      "student_visibility": "hidden; no approval or promotion in this review"
+    }
+  ],
+  "validation": {
+    "record_count": 20,
+    "A05_human_geography_population_count": 9,
+    "A06_social_research_evaluation_count": 11,
+    "all_records_have_evidence_and_free_learning_links": true,
+    "all_source_entries_have_exact_locators_and_access_date": true,
+    "all_access_dates": "2026-10-12",
+    "canonical_or_graph_changes": 0,
+    "role_fit_or_matcher_changes": 0,
+    "student_visibility_changes": 0
+  }
+}
