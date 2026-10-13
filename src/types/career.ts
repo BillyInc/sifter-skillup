@@ -180,10 +180,70 @@ export interface ProgrammeAbility {
   dataState: "source_backed" | "review_only" | "excluded" | string;
 }
 
+/** Fixed, source-reviewed explanations attached to a programme curriculum theme.
+ * These are not supplemental selections or claims about learner mastery.
+ */
+export interface ProgrammeThemeGuidance {
+  themeKey: string;
+  itemKey: string;
+  displayOrder?: number | null;
+  itemType: "knowledge" | "method" | "competency";
+  title: string;
+  plainMeaning: string;
+  everydayExample: string;
+  contextualUse: string;
+  expectedOutput: string;
+  curriculumAnchors: string[];
+  claimEvidence: Record<string, unknown>;
+  sources: Array<{
+    id: string;
+    title: string;
+    publisher: string;
+    url: string;
+    jurisdiction: string;
+    locators: Record<string, string>;
+  }>;
+  learningLabel: string;
+  learningUrl: string;
+  learningResourceType: "open_course" | "learning_article" | string;
+  learningSourceReference: Record<string, unknown>;
+  learningLevel?: string | null;
+  learningDuration?: string | null;
+  learningAccess?: string | null;
+  learningVerifiedOn: string;
+  selectionState: "fixed_programme_guidance_not_selectable";
+  limitations: string[];
+}
+
+/** Fixed, source-reviewed explanation of how two learning items connect. */
+export interface ProgrammeThemeRelationship {
+  themeKey: string;
+  relationshipKey: string;
+  fromItemType: string;
+  fromItemKey: string;
+  fromTitle: string;
+  toItemType: string;
+  toItemKey: string;
+  toTitle: string;
+  relationshipType: string;
+  learnerExplanation: string;
+  evidence: string[];
+  sources: ProgrammeThemeGuidance["sources"];
+  learningLabel: string;
+  learningUrl: string;
+  learningResourceType: string;
+  learningSourceReference: Record<string, unknown>;
+  learningVerifiedOn: string;
+  selectionState: "fixed_programme_guidance_not_selectable";
+  limitations: string[];
+}
+
 export interface ProgrammeCurriculumContract {
   status: "available" | "not_seeded" | "unavailable" | string;
   outcomes: ProgrammeCurriculumOutcome[];
   abilities: ProgrammeAbility[];
+  themeGuidance?: ProgrammeThemeGuidance[];
+  themeRelationships?: ProgrammeThemeRelationship[];
   sourceAuthority?: {
     parsedSource?: string | null;
     originalPdf?: string | null;
@@ -231,6 +291,7 @@ export interface DomainLink {
   domainName: string;
   /** Plain-language summary of the destination domain, separate from the programme link explanation. */
   domainDescription?: string | null;
+  domainDescriptionSources?: Array<{ title: string; shortLabel?: string; url: string; locator: string; jurisdiction?: string | null }>;
   matchType: DomainMatchType; // direct | functional | adjacent
   /** Approved course anchors for this specific programme/domain edge. */
   courseAnchorQuality?: string | null;
@@ -687,6 +748,18 @@ export type ContextItemPriority = "start_here" | "build_next" | "useful_later" |
 export interface CareerContextItemRelationship {
   relationshipType: "builds_on" | "works_with" | "supports" | "alternative" | "complements" | "qualifies_for";
   relationshipStatus: "source_backed" | "review_required" | "not_established";
+  /** Plain-language, item-specific reason for this link; never infer from its type or limitations. */
+  learnerExplanation?: string | null;
+  /** Only an explicitly approved hard prerequisite can constrain saved-plan order. */
+  sequenceApproved?: boolean;
+  sequencePolicy?: "hard_prerequisite" | "conditional_prerequisite" | "workflow" | "advisory" | "none" | null;
+  sequenceCondition?: string | null;
+  sequenceScope?: {
+    programmeIds?: string[];
+    domainIds?: string[];
+    areaIds?: string[];
+    roleIds?: string[];
+  } | null;
   fromItemType: CareerContextItem["itemType"];
   fromItemKey: string;
   toItemType?: CareerContextItem["itemType"] | null;
@@ -697,22 +770,49 @@ export interface CareerContextItemRelationship {
   evidenceLimitations?: string[];
 }
 
+/** Evidence-backed applicability from one learning item to a downstream path.
+ * "Supports" is not a guarantee of employment or qualification.
+ */
+export interface CareerContextItemPathTarget {
+  targetLevel: "subgroup" | "role";
+  targetKey: string;
+  targetLabel: string;
+  useCaseKey?: string | null;
+  requirementLevel: "needed" | "useful" | "optional";
+  pathReason: string;
+  relationshipStatus: "source_backed";
+  sourceIds: string[];
+  sourceReferences: Array<{ id?: string; title?: string; url: string; region?: string | null; evidenceType?: string | null }>;
+  evidenceLimitations: string[];
+}
+
 export interface CareerContextItem {
   contextLevel: "programme" | "domain" | "subgroup" | "role";
   contextKey: string;
   domainId: string;
-  itemType: "skill" | "competency" | "tool" | "certification";
+  itemType: "skill" | "competency" | "tool" | "certification" | "method" | "knowledge" | "resource";
   itemKey: string;
   name: string;
   plainMeaning: string;
   contextualUse: string;
   expectedOutput?: string | null;
-  priority: ContextItemPriority;
-  priorityReason: string;
+  /** Presentation grouping; does not imply that items share the same requirement status. */
+  themeKey?: string | null;
+  themeLabel?: string | null;
+  useCaseKey?: string | null;
+  /** Necessity for this path, separate from the item's learning-order priority. */
+  requirementLevel?: "needed" | "useful" | "optional" | null;
+  requirementReason?: string | null;
+  /** Learning order is assigned within a selected specialization or role path, not globally at domain foundation. */
+  priority?: ContextItemPriority | null;
+  priorityReason?: string | null;
+  learningOrder?: ContextItemPriority | null;
   prerequisites: string[];
   relatedItems: string[];
   /** Normalized, source-backed cross-type edges when the additive edge table is present. */
   relationships?: CareerContextItemRelationship[];
+  /** Verified downstream specializations/roles this item supports. */
+  pathTargets?: CareerContextItemPathTarget[];
   sourceIds: string[];
   sourceReferences: Array<{
     id?: string;
@@ -727,11 +827,9 @@ export interface CareerContextItem {
   evidenceType: "source_supported_synthesis";
   sourceConfidence: SourceConfidence;
   dataState: "source_backed";
-  /**
-   * Explicit student-facing link boundary.  A reviewed record may be shown
-   * without a link, but an unresolved/review-required link must stay out of
-   * the student route and remain available to admin/audit views only.
-   */
+  /** A learner-facing item requires both approved claims and a verified link. */
+  claimReviewState?: "approved" | "review_required" | "excluded";
+  claimEvidence?: Record<string, unknown>;
   linkState?: "linked" | "no_link" | "review_required";
   linkUrl?: string | null;
   linkTitle?: string | null;
@@ -739,6 +837,11 @@ export interface CareerContextItem {
   linkAccessedAt?: string | null;
   linkConfidence?: SourceConfidence;
   linkEvidence?: Record<string, unknown>;
+  linkKind?: string | null;
+  linkLevel?: string | null;
+  linkLanguage?: string | null;
+  linkAccess?: string | null;
+  linkDuration?: string | null;
   noLinkReason?: string | null;
   guidanceOwner?: "programme" | "domain" | "subgroup" | "role" | "role_aggregated" | "review_only" | "audit_only" | null;
   verifiedAt: string;
@@ -755,6 +858,10 @@ export interface ComputationalMethodEvidence {
   evidenceRoles?: string[];
   sourceProvenance?: Record<string, unknown>;
   dataState?: SourceDataState;
+  claimReviewState?: "approved" | "review_required" | "excluded";
+  learningUrl?: string | null;
+  learningLinkTitle?: string | null;
+  learningLinkVerifiedAt?: string | null;
 }
 
 export interface SubgroupV2 extends SourceBackedFields {
@@ -777,6 +884,18 @@ export interface SubgroupV2 extends SourceBackedFields {
   certifications: CertificationV2[]; // specialization certs
   resources?: CareerLearningResource[];
   contextItems?: CareerContextItem[];
+  /** Current specialization/practice area provenance (used by D078). */
+  areaSources?: Array<{ id?: string | null; title?: string | null; url: string; locator?: string | null }>;
+  areaRoutes?: Array<{
+    areaId: string;
+    areaName?: string;
+    status?: "reviewed_supported" | "reviewed_conditional" | string;
+    rationale?: string | null;
+    condition?: string | null;
+    positiveTaskEvidence?: string | null;
+    sourceReferences?: Array<{ url: string }>;
+  }>;
+  isCurrentAreaOfSpecialization?: boolean;
 }
 
 export interface DomainRoleSummary {
@@ -792,6 +911,17 @@ export interface DomainRoleSummary {
   tier?: "entry" | "mid" | "senior";
   alsoKnownAs?: string[];
   subgroupId?: string | null;
+  /** Current reviewed D078 area routes; legacy subgroup ownership is not the area taxonomy. */
+  areaIds?: string[];
+  areaRoutes?: Array<{
+    areaId: string;
+    areaName?: string;
+    status?: "reviewed_supported" | "reviewed_conditional" | string;
+    rationale?: string | null;
+    condition?: string | null;
+    positiveTaskEvidence?: string | null;
+    sourceReferences?: Array<{ url: string }>;
+  }>;
   eliteStatus?: string;
   resources?: CareerLearningResource[];
   /** True only when this specific role has reviewed, role-owned student guidance. */
@@ -858,6 +988,20 @@ export interface DomainStudentOrientation {
   /** The evidence-to-explanation sequence used in the field. */
   howWorkHappens?: string[];
   whereProgrammeFits?: string;
+  /** Separately scoped, source-backed orientation additions. */
+  globalContext?: string;
+  nigerianContext?: string;
+  entryExpectations?: string;
+  opportunitiesAndConstraints?: string;
+  /** Evidence shown beside the exact approved overview claim. */
+  evidenceByField?: Record<string, Array<{
+    title: string;
+    shortLabel?: string;
+    url: string;
+    locator: string;
+    jurisdiction?: string | null;
+    supports?: string | null;
+  }>>;
   /** Helps a student decide whether to explore this field further. */
   decisionGuide?: string;
   relatedProgrammes?: string[];
@@ -879,6 +1023,14 @@ export interface ProgrammeDomainConnection {
     code?: string | null;
     matchedAnchors: string[];
   }>;
+  /** Exact source-backed programme outcomes whose text supports this domain edge. */
+  curriculumOutcomes?: Array<{
+    outcomeId?: string | null;
+    courseCode?: string | null;
+    courseTitle?: string | null;
+    studentText: string;
+    evidenceText?: string | null;
+  }>;
   transferableEvidence?: string[];
   mappingSource?: string | null;
   sourceReviewRequired?: boolean;
@@ -895,6 +1047,7 @@ export interface DomainV2 extends SourceBackedFields {
   cluster?: string;
   clusters: string[];
   description?: string;
+  descriptionSources?: Array<{ title: string; shortLabel?: string; url: string; locator: string; jurisdiction?: string | null }>;
   studentOrientation?: DomainStudentOrientation;
   institutionType: string[];
   eliteDomain: boolean;
@@ -922,6 +1075,17 @@ export interface DomainRoleV2 extends SourceBackedFields {
   description?: string;
   studentOrientation?: DomainStudentOrientation;
   subgroupId?: string | null;
+  /** Reviewed D078 routes; can include more than one area and conditional routes. */
+  areaIds?: string[];
+  areaRoutes?: Array<{
+    areaId: string;
+    areaName?: string;
+    status?: "reviewed_supported" | "reviewed_conditional" | string;
+    rationale?: string | null;
+    condition?: string | null;
+    positiveTaskEvidence?: string | null;
+    sourceReferences?: Array<{ url: string }>;
+  }>;
   tier?: "entry" | "mid" | "senior";
   alsoKnownAs?: string[];
   iscoGroup?: string;
@@ -1063,6 +1227,7 @@ export interface SkillDiscoveryResult {
   matchMode: "both" | "either";
   intent?: "learned" | "intended";
   userType?: string | null;
+  userTypes?: string[];
   adminType?: string | null;
   allowedUserTypes?: string[];
   streamOptions?: string[];
@@ -1106,8 +1271,30 @@ export interface SkillDiscoveryResult {
     matchLabel: string;
     matchExplanation: string;
   }[];
+  /** Competencies returned independently from tools and certifications. */
+  competencies: {
+    name?: string | null;
+    domainId?: string | null;
+    domainName?: string | null;
+    contextLevel?: "domain" | "subgroup" | "role" | null;
+    contextKey?: string | null;
+    plainMeaning?: string | null;
+    contextualUse?: string | null;
+    expectedOutput?: string | null;
+    matchedSkills: string[];
+    matchScore: number;
+    matchLabel: string;
+    sourceReferences?: Array<{ title?: string; url: string }>;
+    geographicScope?: "nigeria" | "global" | "nigeria_to_global" | null;
+  }[];
   tools: { name?: string | null; group?: string | null; domainId?: string | null; domainName?: string | null; matchedSkills: string[]; matchScore: number; matchLabel: string }[];
   certifications: { name?: string | null; body?: string | null; level?: string | null; domainId?: string | null; domainName?: string | null; matchedSkills: string[]; matchScore: number; matchLabel: string }[];
+  /** Approved, source-backed learning links owned by matched route layers. */
+  resources: Array<CareerLearningResource & {
+    domainName?: string | null;
+    subgroupName?: string | null;
+    roleName?: string | null;
+  }>;
   /** Source-backed graph routes surfaced from the selected skills. */
   paths: {
     domainId: string;
@@ -1126,7 +1313,7 @@ export interface SkillDiscoveryResult {
   }[];
   suggestedNext: {
     name: string;
-    itemType: "skill" | "competency" | "tool" | "certification";
+    itemType: "skill" | "competency" | "tool" | "certification" | "method" | "knowledge" | "resource";
     contextLevel: "domain" | "subgroup" | "role";
     contextKey: string;
     domainId?: string | null;

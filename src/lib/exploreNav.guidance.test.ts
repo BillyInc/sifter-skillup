@@ -45,12 +45,13 @@ describe("guided programme navigation", () => {
     } as const;
 
     nav.domain(target, "D078", context);
-    nav.subgroup(target, "D078", "D078|sg:21", context);
+    nav.subgroup(target, "D078", "D078:sociology-social-anthropology", context);
 
     expect(target.push).toHaveBeenNthCalledWith(1, expect.stringContaining("programme_id=sociology-id"));
     expect(target.push).toHaveBeenNthCalledWith(1, expect.stringContaining("school_id=university-id"));
     expect(target.push).toHaveBeenNthCalledWith(2, expect.stringContaining("programme_id=sociology-id"));
     expect(target.push).toHaveBeenNthCalledWith(2, expect.stringContaining("jamb_programme_id=sociology-jamb-id"));
+    expect(target.push).toHaveBeenNthCalledWith(2, expect.stringContaining("/domain/D078/subgroup/D078%3Asociology-social-anthropology"));
   });
 
   it("keeps the Explore doors context-specific", () => {

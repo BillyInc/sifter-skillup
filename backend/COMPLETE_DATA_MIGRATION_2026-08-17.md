@@ -109,7 +109,9 @@ only for an explicitly approved empty staging database.
 backend/migration_programme_domain_evidence_2026-09-17.sql
 backend/migration_programme_domain_review_corrections_2026-09-18.sql
 backend/migration_contextual_career_items.sql
+backend/migration_career_context_claim_validation.sql
 backend/migration_career_item_relationships_2026-09-17.sql
+backend/migration_career_context_path_targets.sql
 backend/migration_sociology_curriculum_contract_2026-09-17.sql
 backend/migration_programme_curriculum_contract_general_2026-09-18.sql
 backend/migration_guidance_programme_reading_and_market_scope_2026-09-12.sql
@@ -130,7 +132,10 @@ uncompressed copy.
 
 The contextual parts also contain normalized `career_item_relationships`
 rows. Apply `migration_career_item_relationships_2026-09-17.sql` before the
-parts. Only same-context source-backed `builds_on`/`works_with` edges whose
+parts, and apply `migration_career_context_path_targets.sql` before any seed
+that writes theme/use-case, requirement-level, or downstream-path-target data.
+Path targets are separate from item-to-item edges and must resolve to an
+evidenced specialization or role. Only same-context source-backed `builds_on`/`works_with` edges whose
 targets resolve to another typed item may be promoted. A `not_established` row
 is an audit/source-review coverage state, not a student-facing relationship
 and not evidence of a requirement.

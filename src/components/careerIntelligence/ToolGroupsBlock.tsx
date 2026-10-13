@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, type ViewStyle } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useTheme, Spacing, Radius, FontSize, FontWeight } from "../../theme";
-import type { CareerContextItem, CareerLearningResource, ToolGroupsEnriched, ToolV2Enriched } from "../../types/career";
+import type { CareerContextItem, CareerContextItemPathTarget, CareerContextItemRelationship, CareerLearningResource, ToolGroupsEnriched, ToolV2Enriched } from "../../types/career";
 import { SectionLabel } from "./RedesignPrimitives";
 import { resourceForItem, studentItemLinkUrl } from "./resourceLinks";
 import { ExternalLinkGuard } from "./ExternalLinkGuard";
 import { ContextSourceLinks } from "./ContextSourceLinks";
-import { contextItemFor, relationshipTargets as resolveRelationshipTargets } from "./contextRelations";
+import { contextItemFor, isStudentApprovedContextItem, relationshipTargets as resolveRelationshipTargets } from "./contextRelations";
+import { GuidanceReportButton } from "./GuidanceReportButton";
+import { ContextRelationshipChips, relationshipRecords } from "./ContextRelationshipSheet";
 
 export interface ToolGroupsBlockProps {
   tools: ToolGroupsEnriched;
@@ -20,6 +22,9 @@ export interface ToolGroupsBlockProps {
   contextItems?: CareerContextItem[];
   /** Optional explicit ownership boundary for a domain/subgroup/role surface. */
   contextLevel?: CareerContextItem["contextLevel"];
+  /** Let an authenticated learner include a reviewed tool in the focused report. */
+  learningFocus?: boolean;
+  targetStudentId?: string;
 }
 
 type ToolPurposeKey = "collect" | "organise" | "analyse" | "compute" | "map" | "communicate" | "other";
@@ -126,27 +131,91 @@ function ToolCard({
   resource,
   contextItems,
   scopeLabel,
+  learningFocus,
+  targetStudentId,
 }: {
   tool: ToolV2Enriched;
   prominent: boolean;
   resource?: CareerLearningResource;
   contextItems?: CareerContextItem[];
   scopeLabel?: string;
+  learningFocus?: boolean;
+  targetStudentId?: string;
 }) {
   const { colors } = useTheme();
+  const [expanded, setExpanded] = useState(false);
   const relation = contextItemFor(contextItems, "tool", tool.tool);
   const url = studentItemLinkUrl(relation, resource, tool.toolUrl);
   const purpose = purposeForTool(tool);
   const definition = TOOL_PURPOSES[purpose];
+  const backedRelationships = (relation?.relationships ?? []).filter((edge: CareerContextItemRelationship) => edge.relationshipStatus === "source_backed");
+  const backedTargets = (relation?.pathTargets ?? []).filter((target: CareerContextItemPathTarget) => target.relationshipStatus === "source_backed");
+  const studentRelationships = relation ? relationshipRecords(relation) : [];
+  const hasDetails = Boolean(
+    relation?.plainMeaning
+    || relation?.contextualUse
+    || relation?.expectedOutput
+    || relation?.prerequisites?.length
+    || relation?.evidenceLimitations?.length
+    || backedRelationships.length
+    || backedTargets.length,
+  );
   return (
     <View style={[styles.toolCard, { backgroundColor: prominent ? colors.surface.subtle : colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
       <View style={styles.toolHeading}>
         <Feather name={toolIcon(String(tool.tool ?? ""))} size={16} color={colors.accentRole.action} />
         <Text style={[styles.toolName, { color: colors.textRole.primary }]} numberOfLines={2}>{tool.tool}</Text>
+        {learningFocus && relation ? <GuidanceReportButton
+          targetStudentId={targetStudentId}
+          selection={{
+            kind: "learningFocus",
+            id: `${relation.contextLevel}:${relation.contextKey}:tool:${relation.itemKey}`,
+            name: relation.name,
+            contextLevel: relation.contextLevel,
+            contextKey: relation.contextKey,
+            itemType: "tool",
+            itemKey: relation.itemKey,
+            domainId: relation.domainId,
+          }}
+        /> : null}
       </View>
       <Text style={[styles.toolPurpose, { color: colors.textRole.muted }]}>{definition.title} · optional choice, not a requirement</Text>
       {scopeLabel ? <Text style={[styles.toolScope, { color: colors.textRole.muted }]}>{scopeLabel}</Text> : null}
+      <ContextRelationshipChips itemName={tool.tool} relationships={studentRelationships} />
       <Text style={[styles.toolNote, { color: colors.textRole.secondary }]}>{resource?.description || definition.explanation}</Text>
+      {hasDetails ? <TouchableOpacity
+        accessibilityRole="button"
+        accessibilityState={{ expanded }}
+        onPress={() => setExpanded((value) => !value)}
+        style={[styles.detailButton, { borderColor: colors.borderRole.subtle }]}
+      >
+        <Feather name={expanded ? "chevron-up" : "chevron-down"} size={15} color={colors.accentRole.action} />
+        <Text style={[styles.detailButtonText, { color: colors.accentRole.action }]}>{expanded ? "Hide how this tool fits" : "How this tool fits"}</Text>
+      </TouchableOpacity> : null}
+      {expanded ? <View style={[styles.toolDetails, { borderTopColor: colors.borderRole.subtle }]}>
+        {relation?.plainMeaning ? <ToolDetail label="What it is" value={relation.plainMeaning} colors={colors} /> : null}
+        {relation?.contextualUse ? <ToolDetail label="What it helps you do here" value={relation.contextualUse} colors={colors} /> : null}
+        {relation?.expectedOutput ? <ToolDetail label="Possible output" value={relation.expectedOutput} colors={colors} /> : null}
+        {relation?.requirementLevel ? <ToolDetail label="Place in this route" value={`${relation.requirementLevel}${relation.requirementReason ? ` — ${relation.requirementReason}` : ""}`} colors={colors} /> : null}
+        {relation?.prerequisites?.length ? <ToolDetail label="Builds on" value={relation.prerequisites.join(" · ")} colors={colors} /> : null}
+        {backedRelationships.length ? <View style={styles.toolDetailGroup}>
+          <Text style={[styles.toolDetailLabel, { color: colors.textRole.primary }]}>Source-backed connections</Text>
+          {backedRelationships.map((edge: CareerContextItemRelationship, index: number) => <Text key={`${edge.relationshipType}-${edge.toItemKey ?? edge.toName ?? index}`} style={[styles.toolNote, { color: colors.textRole.secondary }]}>
+            {relationshipDisplayLabel(edge.relationshipType)}: {edge.toName || edge.toItemKey || "related item"}{edge.evidenceLimitations?.length ? ` — ${edge.evidenceLimitations.join("; ")}` : ""}
+          </Text>)}
+        </View> : null}
+        {backedTargets.length ? <View style={styles.toolDetailGroup}>
+          <Text style={[styles.toolDetailLabel, { color: colors.textRole.primary }]}>Routes this can support</Text>
+          {backedTargets.map((target: CareerContextItemPathTarget) => <Text key={`${target.targetLevel}-${target.targetKey}`} style={[styles.toolNote, { color: colors.textRole.secondary }]}>
+            {target.targetLabel} · {target.requirementLevel} — {target.pathReason}
+          </Text>)}
+        </View> : null}
+        {relation?.evidenceLimitations?.length ? <View style={styles.toolDetailGroup}>
+          <Text style={[styles.toolDetailLabel, { color: colors.textRole.primary }]}>What it cannot prove or replace</Text>
+          {relation.evidenceLimitations.map((limitation: string) => <Text key={limitation} style={[styles.toolNote, { color: colors.textRole.muted }]}>{limitation}</Text>)}
+        </View> : null}
+        <Text style={[styles.toolNote, { color: colors.textRole.muted }]}>Using this tool does not by itself prove competence, qualification or job readiness.</Text>
+      </View> : null}
       <ExternalLinkGuard
         url={url}
         label={url ? `Open ${tool.tool}` : `No verified link for ${tool.tool}`}
@@ -164,18 +233,38 @@ function ToolCard({
   );
 }
 
+function relationshipDisplayLabel(type: CareerContextItemRelationship["relationshipType"]): string {
+  if (type === "builds_on") return "Builds on";
+  if (type === "works_with") return "Works with";
+  if (type === "complements") return "Complements";
+  if (type === "alternative") return RELATIONSHIP_GROUP_ALTERNATIVES;
+  if (type === "qualifies_for") return "Qualification route";
+  return "Supports";
+}
+
+function ToolDetail({ label, value, colors }: { label: string; value: string; colors: ReturnType<typeof useTheme>["colors"] }) {
+  return <View style={styles.toolDetailGroup}>
+    <Text style={[styles.toolDetailLabel, { color: colors.textRole.primary }]}>{label}</Text>
+    <Text style={[styles.toolNote, { color: colors.textRole.secondary }]}>{value}</Text>
+  </View>;
+}
+
 function ToolGroup({
   label,
   entries,
   prominent,
   resources,
   contextItems,
+  learningFocus,
+  targetStudentId,
 }: {
   label: string;
-  entries: Array<{ tool: ToolV2Enriched; scopeLabel?: string }>;
+  entries: { tool: ToolV2Enriched; scopeLabel?: string }[];
   prominent: boolean;
   resources?: CareerLearningResource[];
   contextItems?: CareerContextItem[];
+  learningFocus?: boolean;
+  targetStudentId?: string;
 }) {
   const { colors } = useTheme();
   if (!entries.length) return null;
@@ -191,6 +280,8 @@ function ToolGroup({
             resource={resourceForItem(resources, "tool", String(tool.tool ?? ""))}
             contextItems={contextItems}
             scopeLabel={scopeLabel}
+            learningFocus={learningFocus}
+            targetStudentId={targetStudentId}
           />
         ))}
       </View>
@@ -202,13 +293,17 @@ function PurposePath({
   entries,
   resources,
   contextItems,
+  learningFocus,
+  targetStudentId,
 }: {
-  entries: Array<{ tool: ToolV2Enriched; scopeLabel?: string }>;
+  entries: { tool: ToolV2Enriched; scopeLabel?: string }[];
   resources?: CareerLearningResource[];
   contextItems?: CareerContextItem[];
+  learningFocus?: boolean;
+  targetStudentId?: string;
 }) {
   const [expandedPurposes, setExpandedPurposes] = useState<Set<ToolPurposeKey>>(new Set());
-  const groups = new Map<ToolPurposeKey, Array<{ tool: ToolV2Enriched; scopeLabel?: string }>>();
+  const groups = new Map<ToolPurposeKey, { tool: ToolV2Enriched; scopeLabel?: string }[]>();
   for (const entry of entries) {
     const key = purposeForTool(entry.tool);
     groups.set(key, [...(groups.get(key) || []), entry]);
@@ -230,7 +325,7 @@ function PurposePath({
             <Text style={styles.purposeExplanation}>{definition.explanation}</Text>
             <Text style={styles.optionLabel}>Options recorded for this purpose</Text>
             <Text style={styles.purposeNote}>{purpose.length > 1 ? "These are different options for a similar kind of work. Choose one to start; you do not need to learn them all." : "This is one recorded option for this kind of work. It is not a universal requirement."}</Text>
-          <ToolGroup label="Named options" entries={displayedPurpose} prominent resources={resources} contextItems={contextItems} />
+          <ToolGroup label="Named options" entries={displayedPurpose} prominent resources={resources} contextItems={contextItems} learningFocus={learningFocus} targetStudentId={targetStudentId} />
             {purpose.length > 4 ? <TouchableOpacity onPress={() => setExpandedPurposes((current) => {
               const next = new Set(current);
               if (next.has(key)) next.delete(key); else next.add(key);
@@ -255,6 +350,8 @@ export function ToolGroupsBlock({
   style,
   contextItems,
   contextLevel,
+  learningFocus,
+  targetStudentId,
 }: ToolGroupsBlockProps) {
   const isStudentVisible = (tool: ToolV2Enriched) =>
     Boolean(tool.tool?.trim())
@@ -265,7 +362,7 @@ export function ToolGroupsBlock({
      && (!contextLevel || tool.guidanceOwner === contextLevel)
     && (!tool.dataState || tool.dataState === "source_backed")
     && tool.sourceConfidence !== "unsourced"
-    && contextItemFor(contextItems, "tool", tool.tool)?.linkState !== "review_required"
+    && isStudentApprovedContextItem(contextItemFor(contextItems, "tool", tool.tool))
     && (purposeForTool(tool) !== "other" || Boolean(tool.purposeLabel && tool.purposeDescription));
   const seen = new Set<string>();
   const selectTools = (list: ToolV2Enriched[]) => list.filter(isStudentVisible).filter((tool) => {
@@ -285,7 +382,7 @@ export function ToolGroupsBlock({
     <View style={[styles.container, style]}>
       {title ? <SectionLabel>{title}</SectionLabel> : null}
       <Text style={styles.explanation}>{explanation}</Text>
-      {entries.length ? <PurposePath entries={entries} resources={resources} contextItems={contextItems} /> : <View style={styles.emptyCard}><Feather name="tool" size={17} color="#6B7280" /><Text style={styles.toolNote}>No named, reviewed tools are attached to this level yet. Generic source categories are kept out of the student view because they do not identify a tool to learn.</Text></View>}
+      {entries.length ? <PurposePath entries={entries} resources={resources} contextItems={contextItems} learningFocus={learningFocus} targetStudentId={targetStudentId} /> : <View style={styles.emptyCard}><Feather name="tool" size={17} color="#6B7280" /><Text style={styles.toolNote}>No named, reviewed tools are attached to this level yet. Generic source categories are kept out of the student view because they do not identify a tool to learn.</Text></View>}
     </View>
   );
 }
@@ -306,6 +403,11 @@ const styles = StyleSheet.create({
   toolCard: { flex: 1, minWidth: 230, borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.xs },
   toolHeading: { flexDirection: "row", alignItems: "flex-start", gap: Spacing.xs },
   toolName: { flex: 1, fontSize: FontSize.sm, fontWeight: FontWeight.semibold, lineHeight: FontSize.sm * 1.35 },
+  detailButton: { alignSelf: "flex-start", flexDirection: "row", alignItems: "center", gap: Spacing.xs, borderWidth: 1, borderRadius: Radius.sm, paddingHorizontal: Spacing.sm, paddingVertical: Spacing.xs, marginTop: Spacing.xs },
+  detailButtonText: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
+  toolDetails: { borderTopWidth: 1, paddingTop: Spacing.sm, gap: Spacing.sm, marginTop: Spacing.xs },
+  toolDetailGroup: { gap: 2 },
+  toolDetailLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
   toolPurpose: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.35 },
   toolScope: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold, lineHeight: FontSize.xs * 1.3 },
   explanation: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },

@@ -24,7 +24,7 @@ Each layer owns a different kind of explanation:
 | --- | --- | --- |
 | Programme | What the student studies and practises, and what each recorded capability means in that programme | CCMAS programme, course titles, outcomes, course contents, programme skills and programme-owned resources |
 | Domain | The broad field and its shared foundation | Domain-owned records plus relevant programme curriculum evidence |
-| Subgroup | What the focused area adds to the domain | Subgroup record, subgroup methods, explicit subgroup mappings, and only then role evidence inside that subgroup |
+| Specialization (legacy API label: subgroup) | What this recognized area of specialization covers within the domain | A source-supported specialization definition; methods and role evidence may illustrate it but do not define it by themselves |
 | Role | What a particular kind of work involves | Role record, occupational sources, role skills, tools, competencies and role resources |
 
 Role frequency may validate a domain internally, but it must not define what
@@ -38,7 +38,7 @@ Priority is staged, not a single ranked list:
 
 1. Start with the programme or domain foundation.
 2. Add prerequisites that make the next stage understandable.
-3. Add the selected subgroup's additional methods and capabilities.
+3. If the learner selects an area of specialization, add only the verified methods and capabilities relevant to that area.
 4. Add role-specific skills, tools, proof and qualifications after a role is
    selected.
 5. Keep weak, generic, unverified or role-only items out of the earlier layer.
@@ -50,6 +50,22 @@ Each visible skill, competency, tool or certification card must explain what the
 item means in that layer, what it is used for there, what it can help produce,
 what it connects to, and which source supports it. The same item may therefore
 appear again at a lower layer with a different explanation.
+
+The route is cumulative. The domain foundation is the shared preparation
+baseline for pursuing work across Sociology's valid areas; it should not be a
+generic introduction or a promise of eligibility for every job. Keep genuinely
+cross-branch capabilities at the domain; add branch-specific capabilities only
+under the selected area of specialization, then add task-specific requirements
+at the role. Do not give domain items a universal “learn this first/next” order:
+sequence the additions within the selected specialization and role route. Where a
+domain-owned item also supports a particular downstream branch, record and show
+that explicit, source-backed destination (including the use case and whether it
+is needed, useful or optional for that destination). If it is not shared, place
+it at the lower layer instead. A role view combines and deduplicates only its
+own domain foundation, selected specialization and role additions, while
+showing the layer and evidence for each item. Label the connection “supports
+this path,” never as a job or qualification guarantee. Group items by theme or
+use case without hiding their Skill, Competency, Tool or Certification type.
 
 ### 1.3 Resource-link rule
 
@@ -475,7 +491,13 @@ Interpret limitations and meaning
 Communicate the findings
 ```
 
-### 7.5 Subgroup learning sequence
+### 7.5 Specialization-specific capability progression
+
+The subgroup record names an area of specialization; it is not itself a
+student learning path. The following is an optional progression of capabilities
+for this selected computational-methods area. It is not a compulsory sequence
+for every Sociology learner, and selection of this area does not imply that a
+role is appropriate for the parent domain.
 
 | Stage | What to build | Why it is here |
 | --- | --- | --- |
@@ -640,9 +662,9 @@ Sociology programme
 Social Sciences domain
   → field meaning, shared foundation, research questions and domain limits
 
-Computational Social Science & Quantitative Methods subgroup
+Computational Social Science & Quantitative Methods specialization
   → quantitative and computational additions, option-based tools and explicit
-    subgroup learning links
+    specialization-specific resources and verified capability additions
 
 Statistician role
   → role activities, outputs, role skills, tool options and role-specific links

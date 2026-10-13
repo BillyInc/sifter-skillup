@@ -24,8 +24,10 @@ import type { CareerContextItem, CareerLearningResource, CertificationV2Enriched
 import { Badge } from "../ui";
 import { ExternalLinkGuard } from "./ExternalLinkGuard";
 import { ContextSourceLinks } from "./ContextSourceLinks";
-import { contextItemFor, relationshipTargets as resolveRelationshipTargets } from "./contextRelations";
+import { contextItemFor, isStudentApprovedContextItem, relationshipTargets as resolveRelationshipTargets } from "./contextRelations";
 import { resourceForItem, studentItemLinkUrl } from "./resourceLinks";
+import { GuidanceReportButton } from "./GuidanceReportButton";
+import { ContextRelationshipChips, relationshipRecords } from "./ContextRelationshipSheet";
 
 export interface CertPlacementListProps {
   gateway?: CertificationV2Enriched[];
@@ -38,6 +40,9 @@ export interface CertPlacementListProps {
   resources?: CareerLearningResource[];
   /** Optional explicit ownership boundary for a domain/subgroup/role surface. */
   contextLevel?: CareerContextItem["contextLevel"];
+  /** Let an authenticated learner include a reviewed certification in the focused report. */
+  learningFocus?: boolean;
+  targetStudentId?: string;
 }
 
 const LEVEL_VARIANT: Record<
@@ -145,7 +150,7 @@ function isStudentCertification(
     && cert.reviewStatus !== "unverified"
     && cert.ownershipScope !== "audit_only"
     && (!contextLevel || cert.guidanceOwner === contextLevel)
-    && Boolean(contextItemFor(contextItems, "certification", cert.name));
+    && isStudentApprovedContextItem(contextItemFor(contextItems, "certification", cert.name));
 }
 
 function studentRelationshipTargets(item: CareerContextItem | undefined, type: "builds_on" | "works_with", contextItems?: CareerContextItem[]) {
@@ -164,18 +169,30 @@ function CertRow({
   emphasise,
   contextItems,
   resources,
+  learningFocus,
+  targetStudentId,
 }: {
   cert: CertificationV2Enriched;
   emphasise: boolean;
   contextItems?: CareerContextItem[];
   resources?: CareerLearningResource[];
+  learningFocus?: boolean;
+  targetStudentId?: string;
 }) {
   const { colors } = useTheme();
+  const [detailsOpen, setDetailsOpen] = useState(false);
   const price = formatPrice(cert.price, cert.currency);
   const resource = resourceForItem(resources, "certification", cert.name);
   const relation = contextItemFor(contextItems, "certification", cert.name);
   const url = studentItemLinkUrl(relation, resource, cert.officialUrl);
   const hasUrl = !!url;
+  const hasDetails = Boolean(
+    relation?.expectedOutput
+    || relation?.requirementLevel
+    || relation?.requirementReason
+    || relation?.prerequisites?.length
+    || relation?.evidenceLimitations?.length,
+  );
 
   return (
     <View
@@ -194,9 +211,39 @@ function CertRow({
         <Text style={[styles.certName, { color: colors.text }]} numberOfLines={2}>
           {cert.name}
         </Text>
+        {learningFocus && relation ? <GuidanceReportButton
+          targetStudentId={targetStudentId}
+          selection={{
+            kind: "learningFocus",
+            id: `${relation.contextLevel}:${relation.contextKey}:certification:${relation.itemKey}`,
+            name: relation.name,
+            contextLevel: relation.contextLevel,
+            contextKey: relation.contextKey,
+            itemType: "certification",
+            itemKey: relation.itemKey,
+            domainId: relation.domainId,
+          }}
+        /> : null}
         </View>
-        {relation?.plainMeaning ? <Text style={[styles.certBody, { color: colors.textMuted }]}>{relation.plainMeaning}</Text> : null}
-        {relation?.contextualUse ? <Text style={[styles.certBody, { color: colors.textMuted }]}>{relation.contextualUse}</Text> : null}
+        {relation?.plainMeaning ? <Text style={[styles.certBody, { color: colors.textMuted }]}>What it is: {relation.plainMeaning}</Text> : null}
+        {relation?.contextualUse ? <Text style={[styles.certBody, { color: colors.textMuted }]}>How it is used here: {relation.contextualUse}</Text> : null}
+        {relation ? <ContextRelationshipChips itemName={relation.name} relationships={relationshipRecords(relation)} /> : null}
+        {hasDetails ? <TouchableOpacity
+          accessibilityRole="button"
+          accessibilityState={{ expanded: detailsOpen }}
+          onPress={() => setDetailsOpen((value) => !value)}
+          style={[styles.certDetailButton, { borderColor: colors.border }]}
+        >
+          <Feather name={detailsOpen ? "chevron-up" : "chevron-down"} size={14} color={colors.accent} />
+          <Text style={[styles.certDetailButtonText, { color: colors.accent }]}>{detailsOpen ? "Hide how this credential fits" : "How this credential fits"}</Text>
+        </TouchableOpacity> : null}
+        {detailsOpen ? <View style={[styles.certDetails, { borderTopColor: colors.border }]}>
+          {relation?.expectedOutput ? <CertDetail label="Capability or route it supports" value={relation.expectedOutput} colors={colors} /> : null}
+          {relation?.requirementLevel ? <CertDetail label="Place in this route" value={`${relation.requirementLevel}${relation.requirementReason ? ` — ${relation.requirementReason}` : ""}`} colors={colors} /> : null}
+          {relation?.prerequisites?.length ? <CertDetail label="Builds on" value={relation.prerequisites.join(" · ")} colors={colors} /> : null}
+          {relation?.evidenceLimitations?.length ? <CertDetail label="What it cannot prove or replace" value={relation.evidenceLimitations.join("; ")} colors={colors} /> : null}
+          <Text style={[styles.certBody, { color: colors.textMuted }]}>Holding a credential does not by itself prove practical competence or guarantee employment.</Text>
+        </View> : null}
         <ExternalLinkGuard url={url} label={hasUrl ? `Open information for ${cert.name}` : `No verified link for ${cert.name}`} description={resource?.description || `This opens the official information or reference page recorded for ${cert.name}.`} textStyle={[styles.certBody, { color: colors.accent }]} />
         {cert.body ? (
           <Text
@@ -278,6 +325,13 @@ function CertRow({
   );
 }
 
+function CertDetail({ label, value, colors }: { label: string; value: string; colors: ReturnType<typeof useTheme>["colors"] }) {
+  return <View style={styles.certDetailGroup}>
+    <Text style={[styles.certDetailLabel, { color: colors.text }]}>{label}</Text>
+    <Text style={[styles.certBody, { color: colors.textMuted }]}>{value}</Text>
+  </View>;
+}
+
 function CertGroup({
   label,
   certs,
@@ -285,6 +339,8 @@ function CertGroup({
   expanded,
   contextItems,
   resources,
+  learningFocus,
+  targetStudentId,
 }: {
   label: string;
   certs: CertificationV2Enriched[];
@@ -292,6 +348,8 @@ function CertGroup({
   expanded: boolean;
   contextItems?: CareerContextItem[];
   resources?: CareerLearningResource[];
+  learningFocus?: boolean;
+  targetStudentId?: string;
 }) {
   const { colors } = useTheme();
   if (!certs.length) return null;
@@ -303,7 +361,7 @@ function CertGroup({
       </Text>
       <View style={styles.groupRows}>
         {visible.map((c, i) => (
-          <CertRow key={`${c.name}-${i}`} cert={c} emphasise={!!emphasise} contextItems={contextItems} resources={resources} />
+          <CertRow key={`${c.name}-${i}`} cert={c} emphasise={!!emphasise} contextItems={contextItems} resources={resources} learningFocus={learningFocus} targetStudentId={targetStudentId} />
         ))}
       </View>
     </View>
@@ -319,6 +377,8 @@ export function CertPlacementList({
   resources,
   emptyMessage,
   contextLevel,
+  learningFocus,
+  targetStudentId,
 }: CertPlacementListProps) {
   const { colors } = useTheme();
   const seen = new Set<string>();
@@ -347,9 +407,9 @@ export function CertPlacementList({
 
   return (
     <View style={[styles.container, style]}>
-      <CertGroup label="Required in some regulated paths" certs={g} emphasise expanded={expanded} contextItems={contextItems} resources={resources} />
-      <CertGroup label="Credentials for specific areas" certs={s} expanded={expanded} contextItems={contextItems} resources={resources} />
-      <CertGroup label="Credentials that may strengthen this route" certs={r} expanded={expanded} contextItems={contextItems} resources={resources} />
+      <CertGroup label="Required in some regulated paths" certs={g} emphasise expanded={expanded} contextItems={contextItems} resources={resources} learningFocus={learningFocus} targetStudentId={targetStudentId} />
+      <CertGroup label="Credentials for specific areas" certs={s} expanded={expanded} contextItems={contextItems} resources={resources} learningFocus={learningFocus} targetStudentId={targetStudentId} />
+      <CertGroup label="Credentials that may strengthen this route" certs={r} expanded={expanded} contextItems={contextItems} resources={resources} learningFocus={learningFocus} targetStudentId={targetStudentId} />
       {total > visibleCount ? <View style={styles.moreWrap}><Text style={[styles.moreHint, { color: colors.textMuted }]}>The first credentials are shown by placement level. The rest remain available when you want the full list.</Text><TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded }} onPress={() => setExpanded((value) => !value)}><Badge label={expanded ? "Show fewer credentials" : `See all ${total} credentials`} variant="info" size="sm" /></TouchableOpacity></View> : null}
     </View>
   );
@@ -382,6 +442,11 @@ const styles = StyleSheet.create({
   certName: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
   certNameLink: { textDecorationLine: "underline" },
   certBody: { fontSize: FontSize.xs, fontWeight: FontWeight.medium },
+  certDetailButton: { alignSelf: "flex-start", flexDirection: "row", alignItems: "center", gap: Spacing.xs, borderWidth: 1, borderRadius: Radius.sm, paddingHorizontal: Spacing.sm, paddingVertical: Spacing.xs, marginTop: Spacing.xs },
+  certDetailButtonText: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
+  certDetails: { borderTopWidth: 1, paddingTop: Spacing.sm, gap: Spacing.sm, marginTop: Spacing.xs },
+  certDetailGroup: { gap: 2 },
+  certDetailLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
   certFacts: {
     flexDirection: "row",
     alignItems: "center",

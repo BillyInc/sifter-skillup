@@ -1,0 +1,12 @@
+# Local reconciliation checkpoint 001 — 2026-09-29
+
+Applied three findings from source-audit lanes without changing CCMAS curriculum scope or downstream mapping:
+
+1. **PST 322 (DPT Physiotherapy):** removed the extracted `(2 Units` title fragment; set the source-supported 2 units and LH 30; replaced the 400-character truncated content summary with a complete concise coverage summary; added NUC item-level URL, printed-page locator and access date. Kept PH null because the source table uses a dash, and preserved all six outcomes. Evidence: `jamb_ccmas_source_audit_lane_1_2026-09-28_018_physio_pst322.json`.
+2. **Biochemistry and Molecular Biology:** retained the three verified awarders (DOU, HENSARD, ZAMFARA) and restored the repository's `Sciences.txt:419-423` locator. Checkpoint 026 clarifies that this is `splitlines()` numbering; the same cell is at LF-only lines 411-416. The earlier locator-defect finding was false. The following Biotechnology and Molecular Biology entry remains separate. Evidence: lane-2 checkpoints 023, 024 and 026 and checked-in `data/career-mapping/_jamb_txt/Sciences.txt`.
+3. **Polymer and Textile Engineering:** replaced parser-spill awarder tokens with FUTO and UNIZIK, recorded the JAMB printed p. 368 exact-row citation and verification metadata, and updated the matching offering occurrence in the JAMB context inventory. The raw parsed tokens remain available in the inventory as evidence of the parser defect. Requirement fields were not changed. Evidence: `jamb_ccmas_source_audit_lane_3_2026-09-28_increment_018.json`.
+4. **Computer Science and Information Technology:** replaced the false `evidence_hold` state with the exact official JAMB cell locator (printed pp. 623–624), source URL/access date and source-support note; verified awarders remain ACHIEVERS, BABCOCK, IGBINEDION and OAUSTECH. The adjacent Computer Science and Information Science row remains separate with BINGHAM and LCITY. Evidence: lane-2 checkpoints 022, 024 and 026; official JAMB Sciences brochure.
+
+The JAMB browser pages resolve to a JavaScript shell in the web retrieval tool; the local reconciliation relies on the lane-3 saved primary-source observation and locator for the exact PDF row. No SQL or seed regeneration is claimed here. A separate checkpoint-024 held-state finding for Computer Science and Information Technology remains queued for local reconciliation.
+
+Regression tests: `test_jamb_ccmas_reconciliation_2026_09_29.py`.

@@ -1,0 +1,43 @@
+# Sociology pre-domain entry audit — 2026-10-08
+
+Scope: audit only the programme-to-domain choice card for the Sociology → D078 example. This is not an audit of the programme overview as a whole, the full domain overview, domain learning content, matcher, or canonical mapping. No UI, mapping, API, or SQL changes were made.
+
+## Evidence inspected
+
+- Student card: `src/screens/careerIntelligence/ProgrammeDetailRefinedScreen.tsx`, `ProgrammeDomainTransition` (around lines 110–191). It groups visible links into direct, functional, and adjacent; labels each group; shows a domain name/description and source links, a relationship explanation, up to two course titles, and “Open domain.” The course-anchor display uses `anchor.title`, not `anchor.code`.
+- Sociology evidence: `data/career-mapping/_audit/programme_domain_evidence_recomputed_2026-10-02.json`, key `Social Sciences::Sociology::D078`. The record declares `match_type: direct`, `course_anchor_quality: strong`, `course_anchor_count: 19`, `source_review_required: false`, `review_required: false`, and `transferable_evidence_count: 46`. The two count fields are totals; the builder intentionally serializes at most 12 preview objects in each evidence array (`data/career-mapping/_build_programme_domain_evidence.py`). The student card uses those preview titles and does not present the totals as if they were the preview length. Its `domain_name` is the older short label “Social Sciences”; the student-facing domain title comes from the canonical domain record, whose D078 name in `data/career-mapping/domain_meta.json` is “Social Sciences & Behavioural Research.” This recomputed audit artifact is not proof of current live database state.
+- The D078 evidence row’s first course-title anchors are “Introduction to Sociology I,” “Introduction to Anthropology,” and “Introduction to Psychology”; the card itself separately displays only the first two title anchors and no course codes. Internal source records retain codes (for example, `SOC 101::Introduction to Sociology I`), which is appropriate for provenance and not exposed by this card.
+- Domain-description gate: `backend/routes/career_routes.py`, `_student_domain_description` (around lines 750–780), returns the description only when the approved claim exactly equals the stored description and at least one valid HTTPS source has a title and locator. The D078 claim is in `backend/migration_domain_student_orientation_2026-09-18.sql`, `domainDescriptionEvidence`: NUC Social Sciences CCMAS 2023, preamble printed p. 17; and ILO ISCO-08, unit groups 2631–2633, printed pp. 161–163. The claim also explicitly limits the description: NUC is Nigerian curriculum scope; ISCO is selected occupational examples, not a complete global domain taxonomy; the text is not exhaustive and does not establish job readiness. The card renders the returned short source labels as tappable links.
+- Programme-to-domain gate: `backend/routes/career_routes.py`, `_student_programme_domain_evidence` and `get_programme` (around lines 1944–2105) require an available clean programme curriculum, exact programme/domain evidence, no review-required/hidden state, and at least one course anchor or transferable item. An evidence-table/query failure or missing curriculum removes the links rather than falling back to legacy mappings. The UI then says “Career connections are not available for this programme yet.”
+- Focused tests: `backend/tests/test_student_guidance_contract.py`, `test_programme_domain_categories_have_distinct_student_facing_explanations` checks that the three descriptions differ; `test_domain_description_requires_exact_approved_claim_and_resolvable_sources` checks exact claim/source gating. These are helper-level checks, not an end-to-end render/API test of the Sociology transition card or its held/unavailable states.
+
+## Local implementation update
+
+The programme card now includes an explicit admission-eligibility disclaimer alongside its job-readiness disclaimer. This is a local UI change only; no mapping, API, SQL or live-deployment claim is made.
+
+## Findings
+
+1. **Why the groups exist — present, but only at category level.** The card says the groups show how closely programme learning connects to each field. Its copy distinguishes: direct as closely shared ideas/ways of working; functional as specific learning used in some parts of a field, without covering the whole field; adjacent as a related idea and transferable abilities, but not a close match to the field’s main work and requiring more new learning. Functional and adjacent are meaningfully different in the current wording. The card also says these links are not proof of job readiness.
+
+2. **Sociology’s specific “direct” rationale — usable, but keep it evidence-specific.** D078 is labelled direct; the record retains 19 total course anchors and 46 total transferable-evidence records while carrying a 12-item preview for each. A learner sees a short generated explanation and title anchors, not raw matching keywords. The current explanation is tied to the exact approved course titles returned for the edge, and the card now also clarifies that the connection tier is not an admission decision. Do not expose the totals as a qualification threshold or infer a direct/functional rule from the count alone.
+
+3. **Exact title-only anchors — pass for this card.** It renders course titles, not course codes. Internal keys/codes remain in audit/source records. This honors the stated requirement that course codes can vary across institutions.
+
+4. **Limits — pass locally.** The card clearly disclaims job readiness, explains that an adjacent route needs more new learning and that functional evidence is limited to some parts of a field, and now explicitly says that these are study connections rather than admission decisions. Admission requirements remain displayed separately on the programme page.
+
+5. **Domain description provenance — evidence is present and appropriately bounded.** D078’s exact description has two HTTPS source records with title, locator, support statement, and jurisdiction in the orientation migration. The UI links their short labels. The description has a clear scope limitation. This verifies the local contract/code path, not that the migration is applied in Supabase or that links resolve at runtime.
+
+6. **Held/unavailable state — safely fail-closed, but not diagnostic to the learner.** Missing/unapproved evidence or unavailable curriculum/query suppresses the connection and prevents legacy fallback. The generic empty-state copy does not tell the learner whether no reviewed connections exist yet or whether evidence is being withheld pending review. Keep held items hidden, but use a student-safe state such as “We’re reviewing the evidence for this programme’s field connections; they are not shown yet” only when the backend can distinguish held/review-required from genuinely absent links. Keep technical/query failures as temporary-unavailable, not as a claim that no connections exist.
+
+## Recommended closure before scaling this card
+
+- Keep the explicit admission-eligibility disclaimer alongside the existing job-readiness limit.
+- Keep the D078 rationale concise and source-traceable, connecting the shown titles to the D078 scope without exposing raw codes or keyword-matching jargon. The total-versus-preview count policy is now documented; it is not a data contradiction.
+- Add a focused transition-card/API contract test covering the Sociology card’s title-only anchors, description source links, all three category explanations, and evidence-held/unavailable behavior. Current tests cover only helper-level category distinction and description gating.
+- Preserve the existing fail-closed policy and distinguish “under review” from “no reviewed connections” and technical unavailability only when the API has reliable status data for those states.
+
+## Source locators
+
+- `backend/migration_domain_student_orientation_2026-09-18.sql`: D078 `domainDescriptionEvidence`, NUC Social Sciences CCMAS 2023 preamble, printed p. 17; ILO ISCO-08 unit groups 2631–2633, printed pp. 161–163.
+- `data/career-mapping/_audit/programme_domain_evidence_recomputed_2026-10-02.json`: `Social Sciences::Sociology::D078`, `course_anchors`, `transferable_evidence`, and review flags. This is a local recomputation artifact, not a current-live-state certificate.
+- NUC curriculum source cited by the local Sociology evidence: Social Sciences CCMAS 2023, Sociology curriculum/outcomes printed pp. 333–338 (programme-theme ledger locator in `data/career-mapping/_audit/sociology_programme_theme_claims_2026_10_08.json`, `sources.nuc_social_sciences_ccmas_2023.locators`).

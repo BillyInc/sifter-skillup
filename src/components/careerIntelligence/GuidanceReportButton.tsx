@@ -6,7 +6,7 @@ import { careerData } from "../../lib/careerData";
 import { provisioningData } from "../../lib/provisioningData";
 import { useAuth } from "@/hooks/useAuth";
 
-type BranchKind = "programmes" | "domains" | "subgroups" | "roles";
+type BranchKind = "programmes" | "domains" | "subgroups" | "roles" | "learningFocus";
 type GuidanceListItem = { id: string; programme?: { id?: string } };
 export type GuidancePathRecord = Record<string, GuidanceListItem[] | unknown>;
 
@@ -130,6 +130,10 @@ export interface GuidanceReportSelection {
   subgroupId?: string;
   subgroupName?: string;
   matchType?: string;
+  contextLevel?: "programme" | "domain" | "subgroup" | "role";
+  contextKey?: string;
+  itemType?: string;
+  itemKey?: string;
 }
 
 /**
@@ -151,6 +155,12 @@ export function toggleGuidanceSelectionPath(
     ...(selection.subgroupId ? { subgroupId: selection.subgroupId } : {}),
     ...(selection.subgroupName ? { subgroupName: selection.subgroupName } : {}),
     ...(selection.matchType ? { matchType: selection.matchType } : {}),
+    ...(selection.kind === "learningFocus" ? {
+      contextLevel: selection.contextLevel,
+      contextKey: selection.contextKey,
+      itemType: selection.itemType,
+      itemKey: selection.itemKey,
+    } : {}),
   };
   const nextList = selected
     ? list.filter((entry) => selectionId(entry, selection.kind) !== selection.id)
@@ -247,7 +257,7 @@ export function GuidanceReportButton({
   return (
     <View style={styles.wrap}>
       <SifterButton
-        label={busy ? "Saving..." : selected ? "Selected" : selection.kind === "programmes" ? "Select programme" : "Select"}
+        label={busy ? "Saving..." : selected ? (selection.kind === "learningFocus" ? "Included" : "Selected") : selection.kind === "programmes" ? "Select programme" : selection.kind === "learningFocus" ? "Include in my focus" : "Select"}
         icon={busy ? undefined : selected ? "check-circle" : "circle"}
         onPress={add}
         variant="ghost"

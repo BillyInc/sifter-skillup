@@ -4,9 +4,9 @@ Source: `C:\Users\USER\Downloads\jamb brochure`
 
 This audit checks whether each current JAMB bridge name appears in the supplied programme-catalogue PDFs. It does not treat a name match as proof of CCMAS curriculum inheritance.
 
-- Bridge rows checked: **416**
-- Exact normalized catalogue matches: **400** (96.15%)
-- Resolved with exact name or declared alias: **416** (100.0%)
+- Bridge rows checked: **420**
+- Exact normalized catalogue matches: **404** (96.19%)
+- Resolved with exact name or declared alias: **420** (100.0%)
 - Declared alias matches requiring manual confirmation: **16**
 - Rows with no exact or declared-alias hit: **0**
 

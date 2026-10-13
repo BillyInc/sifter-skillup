@@ -154,7 +154,7 @@ export function SeniorSecondaryExploreSetupForm({
             maxSelected={MAX_OLEVEL_SUBJECTS}
             minSelected={5}
             showSearch={false}
-            helperText="English Language and Mathematics are shown first. Choose at least 3 more subjects. These choices help us suggest programmes, but each programme will still show its own exact requirements."
+            helperText="English Language and Mathematics are shown first. Choose at least 3 more subjects. Your school stream only reorders the list; all WAEC/NECO catalogue subjects remain available. Each programme still uses its own exact requirements."
           />
           <Text style={[styles.note, { color: colors.textMuted }]}>
             We will compare your subjects with programme requirements, then show

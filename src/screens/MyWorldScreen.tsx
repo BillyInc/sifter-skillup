@@ -31,7 +31,9 @@ import {
   TextInput,
   Pressable,
   Linking,
+  Alert,
 } from "react-native";
+import * as Clipboard from "expo-clipboard";
 import { useFocusEffect, useRouter, type Href } from "expo-router";
 import {
   useTheme,
@@ -44,7 +46,9 @@ import {
 import { Feather } from "@expo/vector-icons";
 import { DataStateView, LockedPill } from "@/components/careerIntelligence";
 import { careerData, type GuidanceReportPath } from "@/lib/careerData";
-import { openStudentDocument } from "@/lib/provisioningData";
+import { openStudentDocument, shareTextSummary } from "@/lib/provisioningData";
+import { LearningPlanShareSheet } from "@/components/careerIntelligence/LearningPlanShareSheet";
+import { buildLearningPlanShareInputFromStacks, type LearningPlanShareCopy, type LearningPlanShareInput } from "@/lib/learningPlanShare";
 import { exploreNav } from "@/lib/exploreNav";
 import {
   type DataState,
@@ -61,7 +65,7 @@ import { featureFlags } from "@/lib/featureFlags";
 import { WORLD_NAV } from "@/lib/worldNav";
 import { xpEngine, type XPSnapshot } from "@/lib/XPEngine";
 import { streakEngine, type StreakStatus } from "@/lib/StreakEngine";
-import { PdfExportButton, ShareExportButton } from "@/components/careerIntelligence";
+import { PdfExportButton } from "@/components/careerIntelligence";
 
 /** Human-friendly glyphs / labels per saved entity type. */
 const ENTITY_META: Record<SavedEntityType, { icon: string; label: string }> = {
@@ -564,7 +568,11 @@ function GuidanceReportCard() {
   const { colors } = useTheme();
   const router = useRouter();
   const [state, setState] = useState<DataState<GuidanceReportPath | null> | null>(null);
+  const [selectedSnapshotId, setSelectedSnapshotId] = useState<string | null>(null);
   const [downloadNotice, setDownloadNotice] = useState<string | null>(null);
+  const [shareNotice, setShareNotice] = useState<string | null>(null);
+  const [shareSheetVisible, setShareSheetVisible] = useState(false);
+  const [shareInput, setShareInput] = useState<LearningPlanShareInput>({});
 
   useFocusEffect(
     useCallback(() => {
@@ -588,10 +596,152 @@ function GuidanceReportCard() {
   const universityName = typeof university?.name === "string" ? university.name : "your selected university";
   const ready = Boolean(programme?.name && university?.name);
   const resumeInProgress = path.resume?.status === "in_progress";
+  const savedSnapshots = (Array.isArray(path.learningPlanSnapshots) ? path.learningPlanSnapshots : [])
+    .filter((entry): entry is Record<string, unknown> => Boolean(entry && typeof entry === "object" && typeof entry.snapshotId === "string"));
+  const fallbackSnapshot = path.learningPlanSnapshot;
+  const selectedSavedSnapshot = savedSnapshots.find((entry) => entry.snapshotId === selectedSnapshotId)
+    ?? savedSnapshots[savedSnapshots.length - 1]
+    ?? (fallbackSnapshot && typeof fallbackSnapshot === "object" ? fallbackSnapshot : null);
+  const activeSnapshotId = typeof selectedSavedSnapshot?.snapshotId === "string" ? selectedSavedSnapshot.snapshotId : null;
+  const learningPlanSnapshot = selectedSavedSnapshot;
+  const savedReportContext = selectedSavedSnapshot?.reportPathContext
+    && typeof selectedSavedSnapshot.reportPathContext === "object"
+    ? selectedSavedSnapshot.reportPathContext as Record<string, unknown>
+    : {};
+  const learningPlanStacks = learningPlanSnapshot && Array.isArray(learningPlanSnapshot.stacks)
+    ? learningPlanSnapshot.stacks
+    : [];
+  const learningPlanItemCount = learningPlanStacks.reduce((total, stack) => (
+    total + (stack && typeof stack === "object" && Array.isArray((stack as { selectedIds?: unknown[] }).selectedIds)
+      ? (stack as { selectedIds: unknown[] }).selectedIds.length
+      : 0)
+  ), 0);
+  const learningPlanRouteSummaries = learningPlanStacks.map((stack, index) => {
+    const record = stack && typeof stack === "object" ? stack as {
+      route?: Record<string, unknown>;
+      selectedIds?: unknown[];
+      order?: unknown[];
+      removedIds?: unknown[];
+    } : {};
+    const route = record.route ?? {};
+    const findName = (entries: Record<string, unknown>[] | undefined, id: unknown) => {
+      if (!Array.isArray(entries) || !id) return undefined;
+      const match = entries.find((entry) => String(entry.id ?? "") === String(id));
+      return typeof match?.name === "string" ? match.name : undefined;
+    };
+    const domainName = findName(
+      Array.isArray(savedReportContext.domains) ? savedReportContext.domains as Record<string, unknown>[] : path.domains,
+      route.domainId,
+    );
+    const areaName = findName(
+      Array.isArray(savedReportContext.subgroups) ? savedReportContext.subgroups as Record<string, unknown>[] : path.subgroups,
+      route.areaId,
+    );
+    const roleName = findName(
+      Array.isArray(savedReportContext.roles) ? savedReportContext.roles as Record<string, unknown>[] : path.roles,
+      route.roleId,
+    );
+    const savedProgramme = savedReportContext.programme && typeof savedReportContext.programme === "object"
+      ? savedReportContext.programme as Record<string, unknown>
+      : null;
+    const savedProgrammeName = typeof savedProgramme?.name === "string" ? savedProgramme.name : programmeName;
+    const routeLabel = [
+      typeof savedProgrammeName === "string" ? savedProgrammeName : undefined,
+      domainName ?? (typeof route.domainId === "string" ? route.domainId : undefined),
+      areaName ?? (typeof route.areaId === "string" ? route.areaId : undefined),
+      roleName ?? (typeof route.roleId === "string" ? route.roleId : undefined),
+    ].filter(Boolean).join(" · ") || `Saved route ${index + 1}`;
+    return {
+      key: `${String(route.domainId ?? "route")}-${String(route.areaId ?? "all")}-${String(route.roleId ?? "all")}-${index}`,
+      label: routeLabel,
+      selected: Array.isArray(record.selectedIds) ? record.selectedIds.length : 0,
+      ordered: Array.isArray(record.order) ? record.order.length : 0,
+      removed: Array.isArray(record.removedIds) ? record.removedIds.length : 0,
+    };
+  });
+  const savedReportProgramme = savedReportContext.programme && typeof savedReportContext.programme === "object"
+    ? savedReportContext.programme as Record<string, unknown>
+    : programme;
+  const savedReportUniversity = savedReportContext.university && typeof savedReportContext.university === "object"
+    ? savedReportContext.university as Record<string, unknown>
+    : university;
+  const savedProgrammeId = typeof savedReportProgramme?.jambProgrammeId === "string"
+    ? savedReportProgramme.jambProgrammeId
+    : typeof savedReportProgramme?.jamb_programme_id === "string"
+      ? savedReportProgramme.jamb_programme_id
+      : typeof savedReportProgramme?.id === "string" ? savedReportProgramme.id : "";
+  const savedUniversityId = typeof savedReportUniversity?.id === "string" ? savedReportUniversity.id : "";
+  const editLearningPlan = () => {
+    const params = [
+      "guided=1",
+      "focus=guidance",
+      ...(savedProgrammeId ? [`jamb_programme_id=${encodeURIComponent(savedProgrammeId)}`] : []),
+      ...(savedUniversityId ? [`school_id=${encodeURIComponent(savedUniversityId)}`] : []),
+      ...(activeSnapshotId ? [`snapshot_id=${encodeURIComponent(activeSnapshotId)}`] : []),
+    ];
+    router.push(`/(tabs)/explore/pathways?${params.join("&")}` as never);
+  };
+
+  const openLearningPlanShare = () => {
+    const shareStacks = learningPlanStacks.map((stack, index) => {
+      const record = stack && typeof stack === "object" ? stack as {
+        selectedIds?: unknown[];
+        itemSummaries?: Array<{ id?: unknown; name?: unknown }>;
+      } : {};
+      return {
+        routeLabel: learningPlanRouteSummaries[index]?.label,
+        selectedIds: record.selectedIds,
+        itemSummaries: record.itemSummaries,
+      };
+    });
+    const fallbackRoute = [
+      programmeName,
+      ...(path.domains ?? []).map((domain) => typeof domain.name === "string" ? domain.name : ""),
+    ].filter(Boolean).join(" / ");
+    setShareInput(buildLearningPlanShareInputFromStacks(shareStacks, fallbackRoute));
+    setShareNotice(null);
+    setShareSheetVisible(true);
+  };
+
+  const shareSelectedCopy = (copy: LearningPlanShareCopy) => {
+    setShareSheetVisible(false);
+    void shareTextSummary(copy.title, copy.message).then((shared) => {
+      setShareNotice(shared
+        ? "Your private details were left out. Choose an available sharing option to continue."
+        : "Sharing is unavailable right now. You can copy the message instead.");
+    });
+  };
+
+  const copySelectedShareCopy = (copy: LearningPlanShareCopy) => {
+    setShareSheetVisible(false);
+    void Clipboard.setStringAsync(copy.message).then(() => {
+      setShareNotice("Platform-specific message copied. Paste it into your social post or email.");
+    }).catch(() => {
+      setShareNotice("Could not copy the message. Reopen share options to try again.");
+    });
+  };
+
+  const confirmDeleteSnapshot = (snapshotId: string) => {
+    Alert.alert("Delete saved version?", "This removes this version from your My World archive. It will not change your other saved versions.", [
+      { text: "Cancel", style: "cancel" },
+      { text: "Delete version", style: "destructive", onPress: () => {
+        void careerData.deleteGuidanceSnapshot(snapshotId).then((result) => {
+          if (result.status === "real") {
+            setState(result);
+            if (selectedSnapshotId === snapshotId) setSelectedSnapshotId(null);
+            setShareNotice("Saved version deleted.");
+          } else {
+            setDownloadNotice("This saved version could not be deleted. Try again when you are online.");
+          }
+        });
+      } },
+    ]);
+  };
 
   const downloadEditableCopy = async () => {
     setDownloadNotice(null);
-    const opened = await openStudentDocument("/api/student/report.docx", {
+    const reportPath = `/api/student/report.docx${activeSnapshotId ? `?snapshot_id=${encodeURIComponent(activeSnapshotId)}` : ""}`;
+    const opened = await openStudentDocument(reportPath, {
       download: "sifter-guidance-report.docx",
     });
     if (!opened) setDownloadNotice("The editable copy is unavailable right now. Try again when you are online.");
@@ -608,10 +758,48 @@ function GuidanceReportCard() {
             ? "Your choices are saved, but the report is not ready until you select both a programme and a university."
             : "Your saved guidance is not complete enough to create a report yet."}
       </Text>
+      {learningPlanStacks.length ? <View style={[styles.reportPlanSummary, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
+        <Text style={[styles.reportPlanTitle, CompassFonts.bodyBold, { color: colors.textRole.primary }]}>Focused learning plan saved</Text>
+        <Text style={[styles.reportPlanBody, CompassFonts.body, { color: colors.textRole.secondary }]}>
+          {learningPlanStacks.length} route{learningPlanStacks.length === 1 ? "" : "s"} · {learningPlanItemCount} selected learning item{learningPlanItemCount === 1 ? "" : "s"}. Routes remain separate in the report.
+        </Text>
+        {savedSnapshots.length > 0 ? <View style={styles.reportRouteList} accessibilityLabel="Saved learning plan versions">
+          <Text style={[styles.reportRouteLabel, CompassFonts.bodyBold, { color: colors.textRole.primary }]}>Saved versions</Text>
+          {savedSnapshots.map((snapshot, index) => {
+            const createdAt = typeof snapshot.createdAt === "string" ? new Date(snapshot.createdAt) : null;
+            const dateLabel = createdAt && !Number.isNaN(createdAt.getTime()) ? createdAt.toLocaleString() : `Saved version ${index + 1}`;
+            const isSelected = snapshot.snapshotId === activeSnapshotId;
+            return <View key={String(snapshot.snapshotId)} style={[styles.reportRouteRow, { borderColor: isSelected ? colors.accentRole.action : colors.borderRole.subtle, backgroundColor: isSelected ? colors.surface.raised : "transparent" }]}>
+              <TouchableOpacity onPress={() => setSelectedSnapshotId(String(snapshot.snapshotId))}
+                accessibilityRole="button" accessibilityState={{ selected: isSelected }} style={styles.savedVersionSelect}>
+                <Text style={[styles.reportRouteLabel, CompassFonts.bodyBold, { color: isSelected ? colors.accentRole.action : colors.textRole.primary }]}>{dateLabel}</Text>
+                <Text style={[styles.reportRouteMeta, CompassFonts.body, { color: colors.textRole.muted }]}>{isSelected ? "Selected for preview and export" : "Tap to preview and export"}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => confirmDeleteSnapshot(String(snapshot.snapshotId))}
+                accessibilityRole="button" accessibilityLabel={`Delete saved version ${dateLabel}`} style={styles.deleteVersionButton}>
+                <Feather name="trash-2" size={16} color={colors.textRole.muted} />
+              </TouchableOpacity>
+            </View>;
+          })}
+        </View> : null}
+        <View style={styles.reportRouteList} accessibilityLabel="Saved learning plan route stacks">
+          {learningPlanRouteSummaries.map((summary) => <View key={summary.key} style={[styles.reportRouteRow, { borderColor: colors.borderRole.subtle }]}>
+            <Text style={[styles.reportRouteLabel, CompassFonts.bodyBold, { color: colors.textRole.primary }]}>{summary.label}</Text>
+            <Text style={[styles.reportRouteMeta, CompassFonts.body, { color: colors.textRole.muted }]}>
+              {summary.selected} selected · {summary.ordered} ordered{summary.removed ? ` · ${summary.removed} not included in this route` : ""}
+            </Text>
+          </View>)}
+        </View>
+        <TouchableOpacity onPress={editLearningPlan} style={[styles.reportPlanEdit, { borderColor: colors.borderRole.subtle }]} accessibilityRole="button" accessibilityLabel="Edit saved learning plan">
+          <Text style={[styles.reportLinkText, CompassFonts.bodyBold, { color: colors.accentRole.action }]}>Open this version as an editable copy</Text>
+        </TouchableOpacity>
+      </View> : null}
       {ready ? (
         <View style={styles.reportActions}>
-          <PdfExportButton title="Print / save report" documentPath="/api/student/report.html" />
-          <ShareExportButton documentPath="/api/student/report.html" fileName="sifter-guidance-report.html" />
+          <PdfExportButton title="Print / save report" documentPath={`/api/student/report.html${activeSnapshotId ? `?snapshot_id=${encodeURIComponent(activeSnapshotId)}` : ""}`} />
+          <TouchableOpacity onPress={openLearningPlanShare} style={[styles.reportLink, { borderColor: colors.borderRole.subtle }]} accessibilityRole="button" accessibilityLabel="Share learning plan summary">
+            <Text style={[styles.reportLinkText, CompassFonts.bodyBold, { color: colors.accentRole.action }]}>Share summary</Text>
+          </TouchableOpacity>
           <TouchableOpacity onPress={() => { void downloadEditableCopy(); }} style={[styles.reportLink, { borderColor: colors.borderRole.subtle }]}>
             <Text style={[styles.reportLinkText, CompassFonts.bodyBold, { color: colors.accentRole.action }]}>Download editable copy</Text>
           </TouchableOpacity>
@@ -622,6 +810,14 @@ function GuidanceReportCard() {
         </TouchableOpacity>
       )}
       {downloadNotice ? <Text style={[styles.reportNotice, CompassFonts.body, { color: colors.textRole.muted }]}>{downloadNotice}</Text> : null}
+      {shareNotice ? <Text style={[styles.reportNotice, CompassFonts.body, { color: colors.textRole.muted }]}>{shareNotice}</Text> : null}
+      <LearningPlanShareSheet
+        visible={shareSheetVisible}
+        input={shareInput}
+        onClose={() => setShareSheetVisible(false)}
+        onShare={shareSelectedCopy}
+        onCopy={copySelectedShareCopy}
+      />
     </View>
   );
 }
@@ -1160,6 +1356,47 @@ const styles = StyleSheet.create({
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.45,
   },
+  reportPlanSummary: {
+    borderWidth: 1,
+    borderRadius: Radius.md,
+    padding: Spacing.md,
+    gap: Spacing.xs,
+  },
+  reportPlanTitle: {
+    fontSize: FontSize.sm,
+  },
+  reportPlanBody: {
+    fontSize: FontSize.xs,
+    lineHeight: FontSize.xs * 1.5,
+  },
+  reportRouteList: {
+    gap: Spacing.xs,
+    marginTop: Spacing.xs,
+  },
+  reportRouteRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1,
+    borderRadius: Radius.sm,
+    padding: Spacing.sm,
+    gap: 2,
+  },
+  reportRouteLabel: {
+    fontSize: FontSize.xs,
+    lineHeight: FontSize.xs * 1.35,
+  },
+  reportRouteMeta: {
+    fontSize: 10,
+    lineHeight: 13,
+  },
+  reportPlanEdit: {
+    alignSelf: "flex-start",
+    borderWidth: 1,
+    borderRadius: Radius.full,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+    marginTop: Spacing.xs,
+  },
   reportActions: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -1225,6 +1462,8 @@ const styles = StyleSheet.create({
     fontSize: FontSize.xs,
     letterSpacing: 0.3,
   },
+  savedVersionSelect: { flex: 1, minHeight: 40, justifyContent: "center", gap: 2 },
+  deleteVersionButton: { minWidth: 40, minHeight: 40, alignItems: "center", justifyContent: "center" },
   selectedRow: { flexDirection: "row", alignItems: "center", gap: 4, marginTop: 3 },
   selectedText: { fontSize: FontSize.xs, fontWeight: "700" },
   removeBtn: {

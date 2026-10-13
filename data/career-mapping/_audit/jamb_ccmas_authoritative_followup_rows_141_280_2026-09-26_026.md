@@ -1,0 +1,29 @@
+# JAMB–CCMAS authoritative follow-up — rows 251–260 (course/outcome and descendants supplement)
+
+**Checkpoint:** 026 · 10 identities · 2026-09-26 · audit-only. No shared map, curriculum scope, seed, code, taxonomy, labels or role was changed.
+
+## Sources / locators
+
+- JAMB IBASS [Medical/Pharmaceutical/Health brochure](https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf) and [Agriculture brochure](https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-agriculture.pdf); accessed 2026-09-26. Exact offering-cell verification remains open as documented in the independent checkpoint; preserve faculty occurrences separately.
+- NUC [Allied Health CCMAS](https://www.nuc.edu.ng/wp-content/uploads/2022/12/Allied-Health-CCMAS.pdf), [Agriculture CCMAS](https://www.nuc.edu.ng/wp-content/uploads/2022/12/Agriculture-CCMAS.pdf), and [Pharmacy CCMAS](https://www.nuc.edu.ng/wp-content/uploads/2022/12/Pharmacy-CCMAS.pdf); accessed 2026-09-26. Course outcomes and course codes are enumerated in [`jamb_ccmas_independent_audit_rows_251_260_2026-09-26.md`](jamb_ccmas_independent_audit_rows_251_260_2026-09-26.md).
+
+## Findings
+
+| Row | CCMAS course/outcome evidence | Current map and descendant disposition |
+|---:|---|---|
+| 251 | Full Allied Health Physiotherapy package is inherited (58 course records; 57 with local outcomes). **No curriculum gap inferred from empty selected rows.** | Current map has no links and `review_required`: downstream hold only. Reassess full outcomes for physiotherapy-specific learning; protect regulated/supervised-practice boundaries; do not reuse stale link lists. |
+| 252 | Full Allied Health Pharmacology package (31/31 local outcomes). **Curriculum present; map hold is distinct.** | No active links/`review_required`. Distinguish pharmacology education/research from pharmacy practice, medicine and allied-health licensure. Build only supported learning paths and inspect every role descendant. |
+| 253 | Full Allied Health Radiography package (32/32 outcomes). **Curriculum present; map hold is distinct.** | No active links/`review_required`. Audit imaging, patient care, radiation safety and placement outcomes; keep separate from radiation therapy, medical physics, nuclear engineering and physician roles. |
+| 254 | 26 Agriculture courses include crops/animals, agronomy, extension, farm management/economics and research. | D047 Agriculture direct is plausible; D063 Economics, D096 Agricultural, D030 Marketing, D041 Research and D118 Crop/Horticulture functional. Agriculture/crop/extension/enterprise/research have strongest support. Generic economics/marketing roles need separate task anchors. |
+| 255 | Ten Horticulture and Landscape Management entries; HLM 306 and HLM 408 lack extracted outcome text. **Confirmed local evidence-extraction gap**; validate the original CCMAS entries before using them. | D118 direct is well aligned. Economics/agriculture/research/broad agricultural links are functional but need course-to-task and subgroup/role checks. No conclusion from the two missing extracted texts until source PDF inspected. |
+| 256 | 15 Fisheries/Aquaculture courses span biology, aquaculture, gear, stock assessment, processing and management. FAA 403/405 text appears merged in the local extract; compare original CCMAS pages. Two JAMB faculty occurrences must remain separate pending official table proof. | D120 Fisheries/Aquaculture direct is strongest. D063/D030 may support bounded enterprise tasks. D027 Biomedical and D119 Livestock are unsubstantiated; broad D047 Agriculture is not a substitute for fisheries-specific student paths. Review every descendant under each linked domain. |
+| 257 | Agronomy currently selects only AGG 102 Introduction to Agriculture I. **Confirmed severe under-selection:** one general introduction does not evidence an Agronomy curriculum. | D118 Crop/Horticulture, D096 Agricultural, D041 Research and D047 Agriculture use the same sparse evidence. None should be treated as a supported student path until relevant Crop Science/Agronomy outcomes are selected and matched to descendants. |
+| 258 | 21 Animal Science courses span production, breeding, nutrition, health, husbandry and research. | D119 Livestock direct is strongest. D063 Economics, D041 Research, D027 Biomedical, D047 Agriculture, D121 Forestry/Wildlife and D030 Marketing are functional. Restrict to supported animal-production/research/enterprise tasks; biomedical/forestry are not general requirements and animal science is not veterinary qualification. |
+| 259 | Full Animal Science CCMAS inheritance (44 course records; 43 with local outcomes). **Curriculum exists despite no selected rows.** | Current map no links/`review_required`: review hold, not unavailable. Verify the one outcome gap and construct role-specific paths from the complete package; stale former links are not current evidence. |
+| 260 | 14 Animal Science courses include genetics/breeding and supporting production, health, nutrition, statistics and research. | D119 Livestock is a candidate but current direct anchor is only one course. D063/D041/D027/D047/D030 broad functional paths need individual outcome-to-task links. Do not imply veterinary authority. |
+
+## Confirmed vs unresolved
+
+**Confirmed:** row 255 has two unparsed outcome records requiring original-source verification; row 257's one-course scope is insufficient for Agronomy or its four linked domains. Rows 251–253 and 259 have full curriculum contracts but current links are held; this is not a missing curriculum. **Unresolved:** exact awarder cells; Fisheries source occurrence and merged FAA text; row 254/256/258/260 link and role fit; every subgroup/role descendant under active paths. No genuine-unavailability determination is made.
+
+**Coverage:** rows 251–260 supplemented. Next 261–270.

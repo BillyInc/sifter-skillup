@@ -1,0 +1,276 @@
+# Subgroup and role-path reconciliation — 2026-10-03
+
+This local repair uses the same role merge as the career seed and the current subgroup contract. It does not alter domain names, role identities, or ISCO/ESCO/O*NET source records.
+
+## Reconciled result
+
+- Canonical merged roles: **3,964** across **168** domains.
+- Student-visible role mappings after domain-context exclusions: **3,441**.
+- Active student subgroup paths: **311**.
+- Excluded subgroup paths preserved in the source ledger: **246**.
+- Domain/subgroup role-count fields reconciled: **122** on first run.
+- Duplicate subgroup skills already represented at the domain foundation were removed from subgroup-specific lists: **0**; full removed-value ledger is in the JSON report.
+- Student-facing subgroup explanations refined from reviewed domain context: **0**.
+- Role paths without a valid domain/subgroup-or-direct route: **0**.
+
+A subgroup is student-visible only when its domain qualifies for clustering and the current canonical role catalogue contains at least one role in that exact ISCO sub-major. Otherwise the subgroup remains tagged `excluded` for audit, and its roles are served directly from the domain when the seed is regenerated. No role is assigned to a different subgroup to force a card.
+
+## Excluded subgroup records
+
+- `D001` / ISCO `25` — 32 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D002` / ISCO `25` — 17 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D003` / ISCO `25` — 5 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D004` / ISCO `12` — 2 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D004` / ISCO `25` — 11 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D007` / ISCO `21` — 14 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D007` / ISCO `25` — 8 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D140` / ISCO `23` — 0 current role(s); `no_current_canonical_roles`.
+- `D012` / ISCO `33` — 0 current role(s); `no_current_canonical_roles`.
+- `D159` / ISCO `24` — 11 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D159` / ISCO `33` — 8 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D016` / ISCO `21` — 28 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D016` / ISCO `31` — 10 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D017` / ISCO `21` — 19 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D017` / ISCO `31` — 21 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D018` / ISCO `21` — 32 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D018` / ISCO `31` — 29 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D019` / ISCO `21` — 7 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D019` / ISCO `31` — 10 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D019` / ISCO `74` — 3 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D020` / ISCO `21` — 11 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D020` / ISCO `31` — 9 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D020` / ISCO `32` — 5 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D021` / ISCO `21` — 18 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D021` / ISCO `31` — 5 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D072` / ISCO `21` — 18 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D146` / ISCO `13` — 0 current role(s); `no_current_canonical_roles`.
+- `D146` / ISCO `33` — 0 current role(s); `no_current_canonical_roles`.
+- `D147` / ISCO `74` — 0 current role(s); `no_current_canonical_roles`.
+- `D156` / ISCO `21` — 6 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D156` / ISCO `31` — 0 current role(s); `no_current_canonical_roles`.
+- `D156` / ISCO `33` — 1 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D164` / ISCO `13` — 0 current role(s); `no_current_canonical_roles`.
+- `D164` / ISCO `21` — 12 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D164` / ISCO `23` — 0 current role(s); `no_current_canonical_roles`.
+- `D164` / ISCO `31` — 0 current role(s); `no_current_canonical_roles`.
+- `D164` / ISCO `43` — 1 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D023` / ISCO `13` — 2 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D023` / ISCO `22` — 33 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D023` / ISCO `32` — 12 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D024` / ISCO `22` — 12 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D024` / ISCO `32` — 17 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D024` / ISCO `53` — 9 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D026` / ISCO `24` — 0 current role(s); `no_current_canonical_roles`.
+- `D027` / ISCO `21` — 16 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D027` / ISCO `31` — 8 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D027` / ISCO `32` — 0 current role(s); `no_current_canonical_roles`.
+- `D064` / ISCO `32` — 0 current role(s); `no_current_canonical_roles`.
+- `D067` / ISCO `22` — 0 current role(s); `no_current_canonical_roles`.
+- `D067` / ISCO `32` — 1 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D067` / ISCO `82` — 1 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D068` / ISCO `22` — 30 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D068` / ISCO `32` — 8 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D029` / ISCO `12` — 5 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D029` / ISCO `24` — 6 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D029` / ISCO `44` — 0 current role(s); `no_current_canonical_roles`.
+- `D030` / ISCO `12` — 14 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D030` / ISCO `24` — 29 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D036` / ISCO `24` — 0 current role(s); `no_current_canonical_roles`.
+- `D076` / ISCO `21` — 0 current role(s); `no_current_canonical_roles`.
+- `D076` / ISCO `31` — 0 current role(s); `no_current_canonical_roles`.
+- `D076` / ISCO `75` — 0 current role(s); `no_current_canonical_roles`.
+- `D076` / ISCO `83` — 0 current role(s); `no_current_canonical_roles`.
+- `D079` / ISCO `13` — 0 current role(s); `no_current_canonical_roles`.
+- `D079` / ISCO `33` — 0 current role(s); `no_current_canonical_roles`.
+- `D037` / ISCO `26` — 0 current role(s); `no_current_canonical_roles`.
+- `D037` / ISCO `33` — 0 current role(s); `no_current_canonical_roles`.
+- `D037` / ISCO `34` — 0 current role(s); `no_current_canonical_roles`.
+- `D038` / ISCO `12` — 1 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D038` / ISCO `24` — 0 current role(s); `no_current_canonical_roles`.
+- `D038` / ISCO `26` — 0 current role(s); `no_current_canonical_roles`.
+- `D038` / ISCO `33` — 0 current role(s); `no_current_canonical_roles`.
+- `D157` / ISCO `24` — 0 current role(s); `no_current_canonical_roles`.
+- `D157` / ISCO `33` — 0 current role(s); `no_current_canonical_roles`.
+- `D162` / ISCO `24` — 1 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D162` / ISCO `26` — 0 current role(s); `no_current_canonical_roles`.
+- `D162` / ISCO `33` — 2 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D162` / ISCO `34` — 0 current role(s); `no_current_canonical_roles`.
+- `D149` / ISCO `11` — 5 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D149` / ISCO `24` — 6 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D149` / ISCO `26` — 0 current role(s); `no_current_canonical_roles`.
+- `D163` / ISCO `12` — 0 current role(s); `no_current_canonical_roles`.
+- `D163` / ISCO `21` — 0 current role(s); `no_current_canonical_roles`.
+- `D163` / ISCO `26` — 0 current role(s); `no_current_canonical_roles`.
+- `D163` / ISCO `33` — 1 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D163` / ISCO `34` — 1 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D039` / ISCO `13` — 0 current role(s); `no_current_canonical_roles`.
+- `D039` / ISCO `23` — 0 current role(s); `no_current_canonical_roles`.
+- `D040` / ISCO `23` — 0 current role(s); `no_current_canonical_roles`.
+- `D040` / ISCO `24` — 0 current role(s); `no_current_canonical_roles`.
+- `D040` / ISCO `53` — 0 current role(s); `no_current_canonical_roles`.
+- `D041` / ISCO `21` — 10 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D041` / ISCO `31` — 1 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D042` / ISCO `11` — 0 current role(s); `no_current_canonical_roles`.
+- `D042` / ISCO `12` — 0 current role(s); `no_current_canonical_roles`.
+- `D042` / ISCO `13` — 0 current role(s); `no_current_canonical_roles`.
+- `D043` / ISCO `26` — 36 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D044` / ISCO `21` — 3 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D044` / ISCO `26` — 1 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D044` / ISCO `34` — 0 current role(s); `no_current_canonical_roles`.
+- `D065` / ISCO `26` — 0 current role(s); `no_current_canonical_roles`.
+- `D071` / ISCO `13` — 0 current role(s); `no_current_canonical_roles`.
+- `D071` / ISCO `14` — 0 current role(s); `no_current_canonical_roles`.
+- `D071` / ISCO `26` — 0 current role(s); `no_current_canonical_roles`.
+- `D071` / ISCO `34` — 0 current role(s); `no_current_canonical_roles`.
+- `D080` / ISCO `21` — 0 current role(s); `no_current_canonical_roles`.
+- `D080` / ISCO `34` — 0 current role(s); `no_current_canonical_roles`.
+- `D152` / ISCO `21` — 0 current role(s); `no_current_canonical_roles`.
+- `D152` / ISCO `31` — 0 current role(s); `no_current_canonical_roles`.
+- `D152` / ISCO `34` — 0 current role(s); `no_current_canonical_roles`.
+- `D152` / ISCO `44` — 0 current role(s); `no_current_canonical_roles`.
+- `D153` / ISCO `26` — 0 current role(s); `no_current_canonical_roles`.
+- `D153` / ISCO `34` — 0 current role(s); `no_current_canonical_roles`.
+- `D153` / ISCO `35` — 0 current role(s); `no_current_canonical_roles`.
+- `D160` / ISCO `34` — 0 current role(s); `no_current_canonical_roles`.
+- `D045` / ISCO `11` — 0 current role(s); `no_current_canonical_roles`.
+- `D045` / ISCO `24` — 0 current role(s); `no_current_canonical_roles`.
+- `D045` / ISCO `33` — 0 current role(s); `no_current_canonical_roles`.
+- `D161` / ISCO `25` — 0 current role(s); `no_current_canonical_roles`.
+- `D049` / ISCO `21` — 0 current role(s); `no_current_canonical_roles`.
+- `D049` / ISCO `31` — 0 current role(s); `no_current_canonical_roles`.
+- `D049` / ISCO `72` — 0 current role(s); `no_current_canonical_roles`.
+- `D050` / ISCO `21` — 0 current role(s); `no_current_canonical_roles`.
+- `D050` / ISCO `31` — 0 current role(s); `no_current_canonical_roles`.
+- `D050` / ISCO `82` — 0 current role(s); `no_current_canonical_roles`.
+- `D075` / ISCO `14` — 0 current role(s); `no_current_canonical_roles`.
+- `D075` / ISCO `21` — 0 current role(s); `no_current_canonical_roles`.
+- `D075` / ISCO `24` — 0 current role(s); `no_current_canonical_roles`.
+- `D075` / ISCO `33` — 0 current role(s); `no_current_canonical_roles`.
+- `D075` / ISCO `52` — 0 current role(s); `no_current_canonical_roles`.
+- `D075` / ISCO `75` — 0 current role(s); `no_current_canonical_roles`.
+- `D075` / ISCO `81` — 0 current role(s); `no_current_canonical_roles`.
+- `D052` / ISCO `13` — 0 current role(s); `no_current_canonical_roles`.
+- `D052` / ISCO `21` — 0 current role(s); `no_current_canonical_roles`.
+- `D052` / ISCO `31` — 0 current role(s); `no_current_canonical_roles`.
+- `D052` / ISCO `71` — 0 current role(s); `no_current_canonical_roles`.
+- `D053` / ISCO `14` — 0 current role(s); `no_current_canonical_roles`.
+- `D053` / ISCO `34` — 0 current role(s); `no_current_canonical_roles`.
+- `D053` / ISCO `51` — 0 current role(s); `no_current_canonical_roles`.
+- `D054` / ISCO `13` — 0 current role(s); `no_current_canonical_roles`.
+- `D054` / ISCO `21` — 0 current role(s); `no_current_canonical_roles`.
+- `D054` / ISCO `31` — 0 current role(s); `no_current_canonical_roles`.
+- `D054` / ISCO `81` — 0 current role(s); `no_current_canonical_roles`.
+- `D055` / ISCO `21` — 2 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D055` / ISCO `31` — 0 current role(s); `no_current_canonical_roles`.
+- `D055` / ISCO `81` — 1 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D148` / ISCO `21` — 10 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D148` / ISCO `31` — 4 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D056` / ISCO `25` — 25 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D082` / ISCO `33` — 2 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D082` / ISCO `42` — 12 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D083` / ISCO `42` — 9 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D083` / ISCO `51` — 13 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D084` / ISCO `33` — 1 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D084` / ISCO `43` — 8 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D085` / ISCO `52` — 69 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D087` / ISCO `51` — 5 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D088` / ISCO `51` — 8 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D089` / ISCO `51` — 4 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D090` / ISCO `51` — 15 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D091` / ISCO `23` — 1 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D091` / ISCO `51` — 6 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D093` / ISCO `74` — 21 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D094` / ISCO `31` — 9 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D094` / ISCO `74` — 17 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D095` / ISCO `12` — 0 current role(s); `no_current_canonical_roles`.
+- `D095` / ISCO `31` — 0 current role(s); `no_current_canonical_roles`.
+- `D095` / ISCO `72` — 11 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D095` / ISCO `75` — 0 current role(s); `no_current_canonical_roles`.
+- `D095` / ISCO `82` — 0 current role(s); `no_current_canonical_roles`.
+- `D097` / ISCO `72` — 57 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D098` / ISCO `72` — 4 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D098` / ISCO `73` — 6 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D098` / ISCO `75` — 0 current role(s); `no_current_canonical_roles`.
+- `D099` / ISCO `71` — 14 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D099` / ISCO `83` — 0 current role(s); `no_current_canonical_roles`.
+- `D099` / ISCO `93` — 1 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D100` / ISCO `71` — 13 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D101` / ISCO `71` — 6 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D103` / ISCO `13` — 0 current role(s); `no_current_canonical_roles`.
+- `D103` / ISCO `14` — 0 current role(s); `no_current_canonical_roles`.
+- `D103` / ISCO `33` — 0 current role(s); `no_current_canonical_roles`.
+- `D104` / ISCO `73` — 17 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D105` / ISCO `73` — 10 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D106` / ISCO `75` — 25 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D107` / ISCO `14` — 0 current role(s); `no_current_canonical_roles`.
+- `D107` / ISCO `33` — 0 current role(s); `no_current_canonical_roles`.
+- `D107` / ISCO `52` — 0 current role(s); `no_current_canonical_roles`.
+- `D107` / ISCO `73` — 0 current role(s); `no_current_canonical_roles`.
+- `D108` / ISCO `31` — 1 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D108` / ISCO `73` — 18 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D109` / ISCO `81` — 19 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D110` / ISCO `81` — 53 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D112` / ISCO `31` — 3 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D112` / ISCO `81` — 19 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D113` / ISCO `74` — 1 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D113` / ISCO `81` — 26 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D114` / ISCO `82` — 42 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D115` / ISCO `83` — 25 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D116` / ISCO `83` — 18 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D118` / ISCO `61` — 19 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D118` / ISCO `92` — 4 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D119` / ISCO `13` — 0 current role(s); `no_current_canonical_roles`.
+- `D119` / ISCO `31` — 0 current role(s); `no_current_canonical_roles`.
+- `D119` / ISCO `61` — 11 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D119` / ISCO `75` — 0 current role(s); `no_current_canonical_roles`.
+- `D119` / ISCO `81` — 0 current role(s); `no_current_canonical_roles`.
+- `D119` / ISCO `92` — 4 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D121` / ISCO `71` — 0 current role(s); `no_current_canonical_roles`.
+- `D121` / ISCO `74` — 0 current role(s); `no_current_canonical_roles`.
+- `D121` / ISCO `91` — 0 current role(s); `no_current_canonical_roles`.
+- `D122` / ISCO `31` — 0 current role(s); `no_current_canonical_roles`.
+- `D123` / ISCO `22` — 2 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D123` / ISCO `32` — 8 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D124` / ISCO `32` — 5 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D124` / ISCO `53` — 9 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D126` / ISCO `22` — 8 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D126` / ISCO `32` — 3 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D131` / ISCO `21` — 11 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D131` / ISCO `25` — 0 current role(s); `no_current_canonical_roles`.
+- `D131` / ISCO `31` — 9 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D132` / ISCO `21` — 3 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D132` / ISCO `31` — 3 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D133` / ISCO `73` — 0 current role(s); `no_current_canonical_roles`.
+- `D134` / ISCO `54` — 0 current role(s); `no_current_canonical_roles`.
+- `D166` / ISCO `21` — 7 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D166` / ISCO `25` — 5 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D166` / ISCO `31` — 0 current role(s); `no_current_canonical_roles`.
+- `D166` / ISCO `75` — 0 current role(s); `no_current_canonical_roles`.
+- `D136` / ISCO `43` — 0 current role(s); `no_current_canonical_roles`.
+- `D136` / ISCO `75` — 0 current role(s); `no_current_canonical_roles`.
+- `D136` / ISCO `83` — 0 current role(s); `no_current_canonical_roles`.
+- `D137` / ISCO `21` — 0 current role(s); `no_current_canonical_roles`.
+- `D137` / ISCO `22` — 3 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D137` / ISCO `31` — 1 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D137` / ISCO `32` — 0 current role(s); `no_current_canonical_roles`.
+- `D138` / ISCO `32` — 0 current role(s); `no_current_canonical_roles`.
+- `D138` / ISCO `82` — 0 current role(s); `no_current_canonical_roles`.
+- `D142` / ISCO `21` — 18 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D144` / ISCO `21` — 6 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D144` / ISCO `31` — 1 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D145` / ISCO `21` — 1 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D145` / ISCO `26` — 6 current role(s); `domain_uses_direct_domain_to_role_path_per_subgroup_contract`.
+- `D145` / ISCO `32` — 0 current role(s); `no_current_canonical_roles`.
+- `D167` / ISCO `31` — 0 current role(s); `no_current_canonical_roles`.
+- `D167` / ISCO `75` — 0 current role(s); `no_current_canonical_roles`.
+
+## Remaining evidence limits
+
+The structural audit leaves **0** invalid role paths. **118** role records have no ISCO code; they remain direct domain-to-role paths rather than receiving an invented subgroup. **24** active subgroup skill lists are empty after removing repeated domain-foundation items; no skill was invented to fill those lists.
+
+## D078 Social Sciences review
+
+The Sociology worked example explicitly supports two D078 branches, so both remain visible. The queried `biometrician` row is excluded from D078 student routes: ISCO 2120 establishes a statistical occupational family, but the role description centers on biometric/biological measurement, and no social-science-specific role evidence establishes its domain fit. The original source row and exclusion rationale remain internal; the role is not silently reclassified into another domain.
+
+
+This updates local source data and seed-generation behavior only. It does not regenerate or apply SQL.

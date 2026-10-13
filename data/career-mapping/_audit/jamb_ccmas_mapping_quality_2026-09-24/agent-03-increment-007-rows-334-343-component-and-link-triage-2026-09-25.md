@@ -1,0 +1,59 @@
+# Partition 03 checkpoint — rows 334–343
+
+Date: 2026-09-25  
+Basis: stored row order in `data/career-mapping/_audit/jamb_curriculum_scopes_2026-08-17.json`. Append-only audit note; no canonical map, SQL, seed, or scope edit.
+
+## Progress
+
+- Sequentially checkpointed rows 304–343: 40/140 identities.
+- Rows 334–343 checkpointed: 10; full acceptance closure: 0/10. These are component/course/link triage with primary CCMAS sources opened; exact JAMB offering occurrence and all downstream subgroup/role fits remain unverified.
+- Links in the scope ledger: 73; current fail-closed active map: 42; pre-fail-closed snapshot: 73. Link presence is not acceptance.
+- Three `review_required` identities with zero active links: Geography and Environmental Management, Geography and Geosciences, Islamic Studies. Two combined-title rows have `combined_scope_review_required`, no scoped course rows and no active links; they are not confirmed defects until the official offering context and two-component curriculum fit are reconciled.
+- Remaining sequential rows 344–420: 77. Deferred earlier gaps after row 420: 282–287 and 289 (7); prior checkpoint-only rows 281, 288, 290–303 (16). Thus 100 identities still need a first-pass checkpoint; prior-checkpoint rows are not closed.
+- Source access: not blocked. NUC PDFs and JAMB brochure endpoints are reachable; exact brochure occurrence checks and downstream audit are still pending.
+
+## Parsed offering occurrences — leads, not verification
+
+The inventory explicitly marks institution token arrays and parsed row associations as unverified pending exact PDF table locators.
+
+| Row | Identity | Occurrence / parser file; source faculty | Tokens | PDF/institution check |
+|---:|---|---|---:|---|
+| 334 | FISHERIES AND AQUACULTURE | `24ed1056aa6f2817`; `Sciences.pdf`; Sciences | 2 | Pending |
+| 335 | Food Science & Nutrition | `14c7633be13f8cea`; `Sciences.pdf`; Sciences | 1 | Pending |
+| 336 | Food Science and Technology | `630be3f00a3d26ac`; `Sciences.pdf`; Sciences | 6 | Pending |
+| 337 | Geography and Environmental Management | `b228d4035eef9180`; `Sciences.pdf`; Sciences | 1 | Pending |
+| 338 | Geography and Geosciences | `0da220dad8ac870c`; `Sciences.pdf`; Sciences | 2 | Pending |
+| 339 | HOME SCIENCE | `06bd921599372bcb`; `Sciences.pdf`; Sciences | 1 | Pending |
+| 340 | INFORMATION AND MEDIA SCIENCE | `7d63510153612a63`; `Sciences.pdf`; Sciences | 1 | Pending |
+| 341 | INFORMATION SCIENCE AND MEDIA STUDIES | `49d32d0260d7be71`; `Sciences.pdf`; Sciences | 2 | Pending |
+| 342 | Information and Media Studies | `bc28ebe9d64abe3b`; `Administration.pdf`; Administration | 1 | Pending; parser faculty is a mismatch lead |
+| 343 | Islamic Studies | `d079a999b1b1ae27`; `Administration.pdf`; Administration | 1 | Pending; compare against Arts CCMAS, do not trust parser faculty label |
+
+Official sources accessed 2026-09-25: [JAMB Sciences brochure](https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-sciences.pdf), [JAMB Administration brochure](https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-administration.pdf), [NUC CCMAS index](https://www.nuc.edu.ng/ccmas/), [Agriculture CCMAS](https://www.nuc.edu.ng/wp-content/uploads/2026/03/Agriculture-2023.pdf), [Communication and Media Studies CCMAS](https://www.nuc.edu.ng/wp-content/uploads/2026/03/Communication-and-Media-Studies-CCMAS-2023-FINAL.pdf), [Sciences CCMAS](https://www.nuc.edu.ng/wp-content/uploads/2026/03/Sciences-CCMAS-2023-FINAL.pdf), [Arts CCMAS](https://www.nuc.edu.ng/wp-content/uploads/2026/03/Arts-CCMAS-2023-FINAL.pdf), and [Environmental Sciences CCMAS](https://www.nuc.edu.ng/wp-content/uploads/2026/03/Environmental-Sciences-CCMAS-2023-FINAL.pdf). JAMB exact institution/programme table page locators are still outstanding.
+
+## Component, course/outcome and link reconciliation
+
+| Row | Component and selected course evidence | Active links and evidence disposition |
+|---:|---|---|
+| 334 Fisheries and Aquaculture | `Agricultural Science::Fisheries and Aquaculture`, full-component inheritance; no scope course rows. NUC curriculum overview/objectives printed pp. 250–253 describe capture/culture fisheries, fish production, aquaculture, sustainable food/nutrition and livelihood; course/outcome sections extend to ICT, apps, AI and value-chain analysis (e.g. FAA410 outcomes pp. 276–278). Need validate the full course extraction and outcomes, not infer from the component label. | D120 Fisheries/Aquaculture direct; D063 Economics, D030 Marketing, D041 Research, D027 Biomedical, D047 Agriculture, D048 Food Science, D119 Livestock/Poultry/Dairy functional (8). Direct identity is supported; biomedical and livestock edges are not established by general interdisciplinary wording. Other edges need scoped-course and role-task evidence. |
+| 335 Food Science & Nutrition | `Agricultural Science::B.Sc./B.Tech Food Science and Technology`, 11 selected courses: FST201, 301, 302, 303, 304, 306, 401, 402, 405, 502, 505. This slice covers processing/preservation, food microbiology/chemistry, process engineering, analysis, unit operations, quality/plant sanitation, SIWES, meat/fish technology and product development. NUC Agriculture CCMAS programme section around printed pp. 200–216; course outcomes must be attached course by course. | D048 Food Science direct; D063 Economics, D047 Agriculture, D119 Livestock/Poultry/Dairy, D027 Biomedical, D055 Chemical Engineering functional (6). Direct Food Science is supported; economic/agriculture links need specific task bridges; general FST course titles do not establish biomedical or chemical-engineering job readiness. |
+| 336 Food Science and Technology | Same CCMAS component and same 11-course selected slice as row 335. | Same six links as row 335. Two JAMB identities have nearly identical supporting component/course data, but remain distinct canonical JAMB names; their source offerings and any “Nutrition” specialization must be verified separately. Current active map has one additional link relative to the old snapshot; inspect that exact change during map reconciliation. |
+| 337 Geography and Environmental Management | Two components in scope: `Environmental Sciences::Geography` and `Environmental Sciences::Environmental Management`; `combined_scope_review_required`; zero selected courses. NUC Geography curriculum pp. 270–289 and Environmental Management pp. 99–122 are both real programmes with distinct course/outcome contracts. The combined JAMB name is not yet shown to correspond to a prescribed merger of both whole CCMAS curricula. | 0 active; 10 links in previous snapshot. Do not restore all 10 or treat no-link status as unavailable. First verify actual JAMB programme offering and exact curriculum combination; then review each domain/tier and descendants against both components. |
+| 338 Geography and Geosciences | `Environmental Sciences::Geography` plus `Sciences::Geology`; `combined_scope_review_required`; zero selected courses. NUC Geography pp. 270–289 and Geology pp. 275 onward have distinct learning outcomes. Geology includes mapping, fieldwork, resource exploration, hydrogeology, petroleum/mining and engineering-geology routes (NUC Sciences CCMAS printed pp. 275–279). | 0 active; 10 previous-snapshot links. Both components are semantically plausible under a combined title, but their entirety cannot be assumed. No exact combined course slice or domain tier is accepted until brochure context and course/outcome matching are established. |
+| 339 HOME SCIENCE | `Agricultural Science::Family and Consumer Sciences`, 11 selected rows: AGR206; FCS303, 411, 413, 415, 321, 325, 423, 331, 333, 431. FCS431 is a not-found placeholder, not a verified course. NUC FCS overview printed pp. 219–221 identifies human development/family relations, resource management/extension and clothing/textiles/interior decoration. | D063 Economics, D030 Marketing, D075 Fashion/Textiles functional (3); four links in previous snapshot. Textile/clothing courses support a narrow fashion/textile bridge; family welfare courses do not establish a generic social-science or economics career path. Resolve FCS431 or exclude it from confirmed guidance. |
+| 340 INFORMATION AND MEDIA SCIENCE | `Communication and Media Studies::INFORMATION AND MEDIA STUDIES – P12, P13, P14`, 27 selected courses: CMS111/112/201/311/312/313/411/412 and ISM111/112/201–206/312–316/411–415/421. Themes include communication, media writing, information systems/networks, production, digital culture, data management/research, communication data analysis, databases, information security, analytics and policy. NUC CMS CCMAS printed pp. 16–19 lists Information and Media Studies as a distinct programme (Table 2/4); course outcome section remains to be fully matched. | D042 Media Production direct; D030 Marketing/Brand adjacent; D043 Journalism functional; D168 Esports/Creator Economy adjacent (4). Course themes support some media production/info paths, but marketing/journalism/creator-economy descendants require task-specific proof; adjacency is not a default requirement. |
+| 341 INFORMATION SCIENCE AND MEDIA STUDIES | Same CCMAS component and 27 selected courses as row 340. | Same four links as row 340. Title variation may be a JAMB alias/offer name, but exact brochure identity and source programmes must be verified; no inference that all institution offerings use exactly the same approved curriculum. |
+| 342 Information and Media Studies | Same component and 27 selected courses as rows 340–341. | Same four links as rows 340–341. The parser associates it with an Administration source, while the CCMAS anchor is Communication and Media Studies. That mismatch is an unresolved source-context issue, not proof that the canonical component is wrong. |
+| 343 Islamic Studies | `Arts::Islamic Studies`, full-component inheritance; no selected scope courses. NUC Arts CCMAS printed pp. 389–392 describes Qur’an, Hadith, Tawhid, Islamic history/civilization, contemporary issues and interdisciplinary links. Its listed employability examples (p. 391) include teaching Islamic Studies, managing a school, civil service/judiciary/foreign service and some creative work; each remains a distinct route requiring role-specific evidence. | 0 active; 4 previous-snapshot links. Conflict D130 Recruitment/Employment was marked “resolved Nigerian bridge” by overlay, with ENT211 Entrepreneurship and Innovation as its CCMAS anchor plus broad HR/social-work/people-service role patterns. Entrepreneurship outcomes do not establish recruiting/HR practice. Destination source records lack exact locators/access dates. Keep D130 quarantined; no candidate amendment from this evidence. |
+
+## Conflict/crosswalk notes
+
+- Only Islamic Studies intersects the current enriched overlay conflict file within these ten. Overlay disposition is a claim, not independent acceptance. The entry's many destination role patterns exceed what the cited course alone supports; no restore.
+- The unreferenced CCMAS crosswalk is not a substitute for the mapped components above. Any lexical lead must be checked against the actual JAMB programme and full course outcomes.
+- The current conflict artifact reports 85 rows / 199 occurrences; this differs from the coordinator's preceding 86/200 note and remains a count-reconciliation issue.
+- All candidate dispositions remain separate from a canonical change. No map, seed or SQL changes were made.
+
+## Remaining acceptance work
+
+For these ten rows: exact JAMB PDF offer and institution table locators, full selected-course/outcome completeness, per-link tier justification, and review of all active subgroups/roles. Rows 337–338 require explicit resolution of the two-component combined scope before any path is considered. No confirmed student paths are asserted by this checkpoint.
+

@@ -39,6 +39,7 @@ import {
   type Chartership,
   type AdmissionInsight,
   type DomainV2,
+  type DomainStudentOrientation,
   type DomainRoleV2,
   type CareerSearchResult,
   type SearchIntent,
@@ -71,6 +72,12 @@ import {
 const REFERENCE_TTL_MS = 24 * 60 * 60 * 1000;
 const SEARCH_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 const DETAIL_TTL_MS = REFERENCE_TTL_MS;
+// Career detail routes assemble curriculum, provenance, resources, tools,
+// subgroups and role context from several source-backed tables. In local
+// Supabase-backed development that fan-out can exceed the generic 30s API
+// timeout even though the route eventually returns a complete response.
+// Keep the longer budget scoped to these reference-detail reads only.
+const CAREER_DETAIL_TIMEOUT_MS = 90_000;
 
 async function readThrough<T>(
   key: string,
@@ -113,9 +120,11 @@ async function updateSavedItemsCache(next: SavedItem[]): Promise<void> {
 export interface DomainClusterGroup {
   cluster: string;
   domains: {
-    id: string;
-    name: string;
-    eliteFlag?: boolean;
+      id: string;
+      name: string;
+      description?: string;
+      studentOrientation?: DomainStudentOrientation;
+      eliteFlag?: boolean;
   }[];
 }
 
@@ -142,6 +151,31 @@ export interface GuidanceReportPath {
     domains?: GuidanceDomainSelection[];
     subgroups?: Record<string, unknown>[];
     roles?: Record<string, unknown>[];
+    /** Learner-selected contextual items to include in the focused guide. */
+    learningFocus?: {
+      id: string;
+      name: string;
+      contextLevel: "programme" | "domain" | "subgroup" | "role";
+      contextKey: string;
+      itemType: string;
+      itemKey: string;
+      domainId?: string;
+      domainName?: string;
+      subgroupId?: string;
+      subgroupName?: string;
+      /** Routes in which this personal choice is included. Missing means legacy/global. */
+      routeKeys?: string[];
+    }[];
+    /** Route-keyed focused-plan snapshot; separate from canonical taxonomy. */
+    learningPlanSnapshot?: Record<string, unknown>;
+    /** Immutable completed reports retained separately from the editable draft. */
+    learningPlanSnapshots?: Record<string, unknown>[];
+    /** Personal removals are retained so reopening never silently re-adds an item. */
+    learningPlanRemovedIds?: string[];
+    /** Route-local removals for independent multi-route stacks. */
+    learningPlanRemovedIdsByRoute?: Record<string, string[]>;
+    /** Learner presentation order per route, constrained by prerequisites. */
+    learningPlanOrderByRoute?: Record<string, string[]>;
     notes?: string[];
     /** Account-scoped checkpoint for reopening an unfinished guidance flow. */
     resume?: Record<string, unknown>;
@@ -165,8 +199,10 @@ export interface SubjectCatalogItem {
   code?: string | null;
   name: string;
   aliases: string[];
+  examTypes?: Array<"utme" | "olevel" | string>;
   category?: string | null;
   streamTags: string[];
+  streams?: string[];
 }
 
 export interface UniversityRequirementException {
@@ -652,7 +688,10 @@ export const careerData = {
   async getProgramme(programmeId: string): Promise<DataState<Programme>> {
     return readThrough(
       `programme_${programmeId}`,
-      () => request<DataState<Programme>>(`/api/career/programmes/${encodeURIComponent(programmeId)}`),
+      () => request<DataState<Programme>>(
+        `/api/career/programmes/${encodeURIComponent(programmeId)}`,
+        { timeoutMs: CAREER_DETAIL_TIMEOUT_MS },
+      ),
       "Programme details are temporarily unavailable.",
       DETAIL_TTL_MS,
     );
@@ -740,13 +779,26 @@ export const careerData = {
     }
   },
 
+  async deleteGuidanceSnapshot(snapshotId: string): Promise<DataState<GuidanceReportPath>> {
+    try {
+      const result = await request<DataState<GuidanceReportPath>>(
+        `/api/student/guidance-path/snapshots/${encodeURIComponent(snapshotId)}`,
+        { method: "DELETE" },
+      );
+      if (result.status === "real") await setCached("guidance_path", result, DETAIL_TTL_MS);
+      return result;
+    } catch {
+      return comingSoon<GuidanceReportPath>("Could not delete this saved version. Check your connection and try again.");
+    }
+  },
+
   /** Reverse the career graph from known or intended skills/tools/certs. */
   async discoverBySkills(params: {
     skills?: string[];
     match?: "both" | "either";
     intent?: "learned" | "intended";
     category?: string;
-    userType?: string;
+    userType?: string | string[];
     adminType?: string;
   }): Promise<DataState<SkillDiscoveryResult>> {
     try {
@@ -791,7 +843,10 @@ export const careerData = {
     const query = programmeId ? `?programme_id=${encodeURIComponent(programmeId)}` : "";
     return readThrough(
       `domain_${domainKey}_${programmeId ?? "none"}`,
-      () => request<DataState<DomainV2>>(`/api/career/domains/${encodeURIComponent(domainKey)}${query}`),
+      () => request<DataState<DomainV2>>(
+        `/api/career/domains/${encodeURIComponent(domainKey)}${query}`,
+        { timeoutMs: CAREER_DETAIL_TIMEOUT_MS },
+      ),
       "See what this field does, the skills it needs, and the roles it can unlock.",
       DETAIL_TTL_MS,
     );
@@ -807,7 +862,10 @@ export const careerData = {
     const query = programmeId ? `?programme_id=${encodeURIComponent(programmeId)}` : "";
     return readThrough(
       `subgroup_${subgroupId}_${programmeId ?? "none"}`,
-      () => request<DataState<DomainV2>>(`/api/career/subgroups/${encodeURIComponent(subgroupId)}${query}`),
+      () => request<DataState<DomainV2>>(
+        `/api/career/subgroups/${encodeURIComponent(subgroupId)}${query}`,
+        { timeoutMs: CAREER_DETAIL_TIMEOUT_MS },
+      ),
       "See what this area does, the skills it needs, and the roles it can unlock.",
       DETAIL_TTL_MS,
     );
@@ -825,19 +883,26 @@ export const careerData = {
   },
 
   /** v2 role detail: essential/optional skills, tier, appearsIn, demand metrics. */
-  async getRoleV2(roleKey: string, programmeId?: string): Promise<DataState<DomainRoleV2>> {
-    const query = programmeId ? `?programme_id=${encodeURIComponent(programmeId)}` : "";
+  async getRoleV2(roleKey: string, programmeId?: string, areaId?: string): Promise<DataState<DomainRoleV2>> {
+    const queryParams = new URLSearchParams();
+    if (programmeId) queryParams.set("programme_id", programmeId);
+    if (areaId) queryParams.set("area_id", areaId);
+    const queryString = queryParams.toString();
+    const query = queryString ? `?${queryString}` : "";
     return readThrough(
-      `role_${roleKey}_${programmeId ?? "none"}`,
-      () => request<DataState<DomainRoleV2>>(`/api/career/roles/${encodeURIComponent(roleKey)}${query}`),
+      `role_${roleKey}_${programmeId ?? "none"}_${areaId ?? "none"}`,
+      () => request<DataState<DomainRoleV2>>(
+        `/api/career/roles/${encodeURIComponent(roleKey)}${query}`,
+        { timeoutMs: CAREER_DETAIL_TIMEOUT_MS },
+      ),
       "Understand the role, the bridge skills, and the proof you need to become credible.",
       DETAIL_TTL_MS,
     );
   },
 
   /** Student boundary: admin retains the raw occupation evidence method. */
-  async getRoleV2ForStudent(roleKey: string, programmeId?: string): Promise<DataState<DomainRoleV2>> {
-    return sanitizeStudentDataState(await careerData.getRoleV2(roleKey, programmeId), sanitizeStudentRole);
+  async getRoleV2ForStudent(roleKey: string, programmeId?: string, areaId?: string): Promise<DataState<DomainRoleV2>> {
+    return sanitizeStudentDataState(await careerData.getRoleV2(roleKey, programmeId, areaId), sanitizeStudentRole);
   },
 
   /** Opportunities matched to a programme/domain, eligibility-filtered.

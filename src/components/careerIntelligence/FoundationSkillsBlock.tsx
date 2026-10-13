@@ -6,14 +6,18 @@ import type { CareerContextItem, CareerLearningResource, FoundationSkillEnriched
 import { SectionLabel } from "./RedesignPrimitives";
 import { ExternalLinkGuard } from "./ExternalLinkGuard";
 import { ContextSourceLinks } from "./ContextSourceLinks";
-import { contextItemFor, relationshipTargets as resolveRelationshipTargets } from "./contextRelations";
+import { GuidanceReportButton } from "./GuidanceReportButton";
+import { contextItemFor, isStudentApprovedContextItem, relationshipTargets as resolveRelationshipTargets } from "./contextRelations";
 import { isStudentResource, studentItemLinkUrl } from "./resourceLinks";
+import { ContextRelationshipChips, relationshipRecords } from "./ContextRelationshipSheet";
 
 export interface FoundationSkillsBlockProps {
   skills: FoundationSkillEnriched[];
   resources?: CareerLearningResource[];
   contextItems?: CareerContextItem[];
   title?: string;
+  learningFocus?: boolean;
+  targetStudentId?: string;
   style?: ViewStyle;
 }
 
@@ -35,12 +39,15 @@ export function FoundationSkillsBlock({
   resources,
   contextItems,
   title = "Common skills in this domain",
+  learningFocus = false,
+  targetStudentId,
   style,
 }: FoundationSkillsBlockProps) {
   const { colors } = useTheme();
   const [expanded, setExpanded] = useState(false);
   const reviewedSkills = [...(skills ?? [])]
     .filter((skill) => skill.stage && skill.stage !== "prepare_for_role")
+    .filter((skill) => isStudentApprovedContextItem(contextItemFor(contextItems, "skill", skill.skill)))
     .filter((skill, index, values) => values.findIndex((candidate) => candidate.skill.trim().toLowerCase() === skill.skill.trim().toLowerCase()) === index);
 
   if (!reviewedSkills.length) return <View style={[styles.container, style]}>
@@ -80,12 +87,26 @@ export function FoundationSkillsBlock({
               >
                 {skill.skill}
               </Text>
+              {learningFocus && contextItem ? <GuidanceReportButton
+                targetStudentId={targetStudentId}
+                selection={{
+                  kind: "learningFocus",
+                  id: `${contextItem.contextLevel}:${contextItem.contextKey}:skill:${contextItem.itemKey}`,
+                  name: contextItem.name,
+                  contextLevel: contextItem.contextLevel,
+                  contextKey: contextItem.contextKey,
+                  itemType: "skill",
+                  itemKey: contextItem.itemKey,
+                  domainId: contextItem.domainId,
+                }}
+              /> : null}
             </View>
             <Text style={[styles.note, { color: colors.textRole.muted }]} numberOfLines={3}>
-              {contextItem?.plainMeaning || resource?.description || skill.priorityReason || "This is one of the foundations for the field."}
+              What it is: {contextItem?.plainMeaning || resource?.description || skill.priorityReason || "This is one of the foundations for the field."}
             </Text>
-            {contextItem?.contextualUse ? <Text style={[styles.note, { color: colors.textRole.secondary }]} numberOfLines={3}>{contextItem.contextualUse}</Text> : null}
-            {contextItem?.expectedOutput ? <Text style={[styles.note, { color: colors.textRole.secondary }]} numberOfLines={3}>Helps you: {contextItem.expectedOutput}</Text> : null}
+            {contextItem?.contextualUse ? <Text style={[styles.note, { color: colors.textRole.secondary }]} numberOfLines={3}>How it is used here: {contextItem.contextualUse}</Text> : null}
+            {contextItem?.expectedOutput ? <Text style={[styles.note, { color: colors.textRole.secondary }]} numberOfLines={3}>What it helps you do: {contextItem.expectedOutput}</Text> : null}
+            {contextItem ? <ContextRelationshipChips itemName={contextItem.name} relationships={relationshipRecords(contextItem)} /> : null}
             {buildOn.length ? <Text style={[styles.note, { color: colors.textRole.muted }]}>Builds on: {buildOn.join(" · ")}</Text> : null}
             {worksWith.length ? <Text style={[styles.note, { color: colors.textRole.muted }]}>Works with: {worksWith.join(" · ")}</Text> : null}
             {skill.evidenceNote ? <Text style={[styles.note, { color: colors.textRole.muted }]} numberOfLines={3}>{skill.evidenceNote}</Text> : null}

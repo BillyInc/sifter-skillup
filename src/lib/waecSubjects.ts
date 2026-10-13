@@ -1,6 +1,6 @@
 import type { ChoiceOption } from "../components/onboarding/primitives";
 
-export type SchoolStream = "science" | "commercial" | "art";
+export type SchoolStream = "science" | "commercial" | "art" | "technical";
 
 export const WAEC_CORE_SUBJECTS_2026_2027 = [
   "English Language",
@@ -47,6 +47,25 @@ export const WAEC_STREAM_SUBJECTS: Record<SchoolStream, string[]> = {
     "Home Management",
     "Catering Craft",
   ],
+  technical: [
+    ...WAEC_CORE_SUBJECTS_2026_2027,
+    "Physics",
+    "Chemistry",
+    "Biology",
+    "Agriculture",
+    "Technical Drawing",
+    "Building Construction",
+    "Woodwork",
+    "Basic Electricity",
+    "Auto Mechanics",
+    "Computer Studies",
+    "Data Processing",
+    "Information Technology",
+    "Home Economics",
+    "Clothing and Textile",
+    "Garment Making",
+    "Catering Craft",
+  ],
 };
 
 export const WAEC_TRADE_SUBJECTS = [
@@ -69,6 +88,7 @@ export const STREAM_OPTIONS: ChoiceOption[] = [
   { label: "Science", value: "science" },
   { label: "Commercial", value: "commercial" },
   { label: "Arts", value: "art" },
+  { label: "Technical / vocational", value: "technical" },
 ];
 
 export const toChoiceOptions = (subjects: string[]): ChoiceOption[] =>

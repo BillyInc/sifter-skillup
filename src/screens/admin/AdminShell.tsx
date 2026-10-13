@@ -16,6 +16,7 @@ import React, { useEffect, useMemo, useRef, useState, type ReactNode } from "rea
 import {
   View,
   Text,
+  Image,
   StyleSheet,
   TouchableOpacity,
   ScrollView,
@@ -462,8 +463,14 @@ function WebAdminShell({
   const nav = (
     <div className="web-admin-nav-inner">
       <div className="web-admin-brand">
-        <span className="web-admin-brand-mark" aria-hidden="true"><i /><i /><i /></span>
-        <span><strong>Sifter LevelUp</strong><small>{workspaceName}</small></span>
+        <Image
+          source={{ uri: "/brand/levelup-lockup-light.png" }}
+          accessibilityLabel="LevelUp"
+          accessible
+          resizeMode="contain"
+          style={{ width: 214, height: 56, flexShrink: 0 }}
+        />
+        <span className="web-admin-brand-context"><small>{workspaceName}</small></span>
         {drawerOpen ? <button className="web-admin-close" onClick={onDrawerClose} aria-label="Close navigation">×</button> : null}
       </div>
       <nav className="web-admin-nav" aria-label="Administrator navigation">
@@ -495,6 +502,7 @@ function WebAdminShell({
           <button className="web-admin-menu" onClick={onDrawerOpen} aria-label="Open navigation">☰</button>
           {!isHome ? <button className="web-admin-back" onClick={onBack}>{focusedGuidance ? "Exit guidance" : "Back"}</button> : null}
           <div className="web-admin-heading">
+            {focusedGuidance ? <><span className="web-admin-guidance-brand-full"><Image source={{ uri: "/brand/levelup-lockup-light.png" }} accessibilityLabel="LevelUp" accessible resizeMode="contain" style={{ width: 132, height: 35, flexShrink: 0 }} /></span><span className="web-admin-guidance-brand-compact"><Image source={{ uri: "/brand/levelup-icon-light.png" }} accessibilityLabel="LevelUp icon" accessible resizeMode="contain" style={{ width: 34, height: 34, flexShrink: 0 }} /></span></> : null}
             {eyebrow ? <span>{eyebrow}</span> : null}
             <h1>{focusedGuidance ? "Guidance workspace" : title}</h1>
           </div>

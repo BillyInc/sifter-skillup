@@ -8,15 +8,20 @@ import { resourceForItem, studentItemLinkUrl } from "./resourceLinks";
 import { ExternalLinkGuard } from "./ExternalLinkGuard";
 import { ContextSourceLinks } from "./ContextSourceLinks";
 import { relationshipTargets as resolveRelationshipTargets } from "./contextRelations";
+import { GuidanceReportButton } from "./GuidanceReportButton";
+import { ContextRelationshipChips, relationshipRecords } from "./ContextRelationshipSheet";
+import type { LearningPlanRoute } from "@/lib/guidedLearningPlan";
 
-const PRIORITY_LABEL: Record<CareerContextItem["priority"], string> = {
+const PRIORITY_LABEL: Record<NonNullable<CareerContextItem["learningOrder"]>, string> = {
   start_here: "Start here", build_next: "Build next", useful_later: "Useful later", optional: "Optional",
 };
 const ITEM_TYPE_LABEL: Record<CareerContextItem["itemType"], string> = {
   skill: "Skill", tool: "Tool", competency: "Competency", certification: "Certification or qualification",
+  method: "Method", knowledge: "Knowledge", resource: "Learning resource",
 };
-const ITEM_ICON: Record<CareerContextItem["itemType"], "check-circle" | "layers" | "tool" | "award"> = {
+const ITEM_ICON: Record<CareerContextItem["itemType"], "check-circle" | "layers" | "tool" | "award" | "activity" | "book-open" | "external-link"> = {
   skill: "check-circle", competency: "layers", tool: "tool", certification: "award",
+  method: "activity", knowledge: "book-open", resource: "external-link",
 };
 
 function relationshipTargets(
@@ -42,8 +47,9 @@ function isStudentItem(item: CareerContextItem, resources?: CareerLearningResour
   return item.dataState === "source_backed"
     && item.sourceConfidence !== "unsourced"
     && item.guidanceOwner === item.contextLevel
-    && item.linkState !== "review_required"
-    && (item.linkState !== "linked" || Boolean(studentItemLinkUrl(item, resource)));
+    && item.claimReviewState === "approved"
+    && item.linkState === "linked"
+    && Boolean(studentItemLinkUrl(item, resource));
 }
 
 /**
@@ -51,7 +57,7 @@ function isStudentItem(item: CareerContextItem, resources?: CareerLearningResour
  * each entry explains its job in this exact domain, subgroup or role and has
  * at most one verified destination attached to the item itself.
  */
-export function ContextualItemList({ items, itemTypes, title = "Your preparation path", resources, style, excludeNames, methods, contextLevel }: {
+export function ContextualItemList({ items, itemTypes, title = "Your preparation path", resources, style, excludeNames, methods, contextLevel, learningFocus, learningRoute, targetStudentId }: {
   items?: CareerContextItem[];
   itemTypes?: CareerContextItem["itemType"][];
   title?: string;
@@ -60,9 +66,15 @@ export function ContextualItemList({ items, itemTypes, title = "Your preparation
   /** Names already rendered by an ordered foundation path at the parent level. */
   excludeNames?: string[];
   /** Methods are shown inside the abilities section because they describe how the work is done, not a separate qualification. */
-  methods?: Array<ComputationalMethodEvidence & { subgroupId?: string | null }>;
+  methods?: (ComputationalMethodEvidence & { subgroupId?: string | null })[];
   /** Optional explicit ownership boundary for a domain/subgroup/role surface. */
   contextLevel?: CareerContextItem["contextLevel"];
+  /** Let an authenticated learner include this item in the focused report. */
+  learningFocus?: boolean;
+  /** Current programme/domain/area/role route for scoped relationship display. */
+  learningRoute?: LearningPlanRoute;
+  /** Admin-guided save target, when the list is rendered for an administrator. */
+  targetStudentId?: string;
 }) {
   const { colors } = useTheme();
   const [expanded, setExpanded] = useState(false);
@@ -83,7 +95,9 @@ export function ContextualItemList({ items, itemTypes, title = "Your preparation
       })
       .sort((a, b) => {
         const order = { start_here: 0, build_next: 1, useful_later: 2, optional: 3 };
-        return order[a.priority] - order[b.priority] || a.name.localeCompare(b.name);
+        const aOrder = a.contextLevel === "domain" ? 4 : order[a.learningOrder ?? a.priority ?? "optional"];
+        const bOrder = b.contextLevel === "domain" ? 4 : order[b.learningOrder ?? b.priority ?? "optional"];
+        return aOrder - bOrder || a.name.localeCompare(b.name);
       });
   }, [contextLevel, excluded, itemTypes, items, resources]);
   if (!ordered.length) return <View style={[styles.container, style]}>
@@ -91,13 +105,15 @@ export function ContextualItemList({ items, itemTypes, title = "Your preparation
     <View style={[styles.emptyCard, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
       <Feather name="inbox" size={17} color={colors.textRole.muted} />
       <Text style={[styles.copy, { color: colors.textRole.secondary }]}>No connected learning items are available for this level yet.</Text>
-      <Text style={[styles.limit, { color: colors.textRole.muted }]}>Each item will show what it is for, what it connects to and a verified link when one is available.</Text>
+      <Text style={[styles.limit, { color: colors.textRole.muted }]}>Items appear here only after their explanation is checked for this level and a relevant learning link is verified.</Text>
     </View>
   </View>;
   const visible = expanded ? ordered : ordered.slice(0, 5);
   return <View style={[styles.container, style]}>
     <SectionLabel>{title}</SectionLabel>
-    <Text style={[styles.caption, { color: colors.textRole.muted }]}>Follow the sequence instead of treating it as a checklist. Open an item to see what it is for, what it builds on and its verified learning or reference link.</Text>
+    <Text style={[styles.caption, { color: colors.textRole.muted }]}>{contextLevel === "domain"
+      ? "These are shared foundations for the field. Choose an area of specialization to see what it adds and in what order to build those capabilities."
+      : "Follow this selected path's sequence instead of treating it as a checklist. Open an item to see what it is for, what it builds on and its verified learning or reference link."}</Text>
     {visible.map((item) => {
       const key = `${item.contextKey}:${item.itemType}:${item.itemKey}`;
       const isOpen = openKey === key;
@@ -107,23 +123,50 @@ export function ContextualItemList({ items, itemTypes, title = "Your preparation
       // attached resource may become a student link; otherwise the card must
       // show the honest no-link state.
       const url = studentItemLinkUrl(item, resource);
-       const label = resource ? `Open ${resource.provider}` : `Open verified information for ${item.name}`;
+      const orderLabel = item.contextLevel === "domain"
+        ? (item.useCaseKey ? "Domain learning option" : "Shared domain foundation")
+        : PRIORITY_LABEL[item.learningOrder ?? item.priority ?? "optional"];
+       const label = item.linkTitle?.trim() || (resource ? `Open ${resource.provider}` : `Open verified information for ${item.name}`);
       return <View key={key} style={[styles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
         <View style={styles.header}>
           <View style={{ flex: 1, gap: Spacing.xs }}>
             <Feather name={ITEM_ICON[item.itemType]} size={14} color={colors.accentRole.action} />
-            <Text style={[styles.type, { color: colors.textRole.muted }]}>{ITEM_TYPE_LABEL[item.itemType]} · {PRIORITY_LABEL[item.priority]}</Text>
+            <Text style={[styles.type, { color: colors.textRole.muted }]}>{ITEM_TYPE_LABEL[item.itemType]} · {orderLabel}</Text>
             <Text style={[styles.name, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{item.name}</Text>
+            {item.themeLabel || item.useCaseKey ? <Text style={[styles.caption, { color: colors.textRole.muted }]}>{[item.themeLabel, item.useCaseKey?.replace(/[-_]/g, " ")].filter(Boolean).join(" · ")}</Text> : null}
+            {item.requirementLevel ? <Text style={[styles.caption, { color: colors.textRole.secondary }]}>{item.requirementLevel === "needed" ? "Needed at this level" : item.requirementLevel === "useful" ? "Useful at this level" : "Optional at this level"}</Text> : null}
           </View>
           <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: isOpen }} onPress={() => setOpenKey(isOpen ? null : key)}>
             <Text style={[styles.more, { color: colors.accentRole.action }]}>{isOpen ? "Show less" : "How it fits"}</Text>
           </TouchableOpacity>
+          {learningFocus ? <GuidanceReportButton
+            targetStudentId={targetStudentId}
+            selection={{
+              kind: "learningFocus",
+              id: `${item.contextLevel}:${item.contextKey}:${item.itemType}:${item.itemKey}`,
+              name: item.name,
+              contextLevel: item.contextLevel,
+              contextKey: item.contextKey,
+              itemType: item.itemType,
+              itemKey: item.itemKey,
+              domainId: item.domainId,
+            }}
+          /> : null}
         </View>
-        <Text style={[styles.copy, { color: colors.textRole.secondary }]}>{item.plainMeaning}</Text>
-        <Text style={[styles.copy, { color: colors.textRole.secondary }]}>{item.contextualUse}</Text>
+        <Text style={[styles.copy, { color: colors.textRole.secondary }]}>What it is: {item.plainMeaning}</Text>
+        <Text style={[styles.copy, { color: colors.textRole.secondary }]}>How it is used here: {item.contextualUse}</Text>
+        <ContextRelationshipChips itemName={item.name} relationships={relationshipRecords(item, learningRoute)} />
         {isOpen ? <View style={[styles.detail, { borderTopColor: colors.borderRole.subtle }]}>
           {item.expectedOutput ? <Detail label="What this helps you do" value={item.expectedOutput} /> : null}
-          <Detail label="Why it comes here" value={item.priorityReason} />
+          {item.priorityReason && item.contextLevel !== "domain" ? <Detail label="Why this step comes here" value={item.priorityReason} /> : null}
+          {item.requirementReason ? <Detail label="Why this requirement level" value={item.requirementReason} /> : null}
+          {item.pathTargets?.length ? <View style={styles.methodsInline}>
+            <Text style={[styles.detailLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Downstream paths this supports</Text>
+            {item.pathTargets.map((target) => <View key={`${target.targetLevel}:${target.targetKey}:${target.useCaseKey ?? ""}`}>
+              <Text style={[styles.copy, { color: colors.textRole.secondary }]}>{target.targetLabel} · {target.requirementLevel} · {target.pathReason}</Text>
+              {target.evidenceLimitations.map((limitation) => <Text key={limitation} style={[styles.limit, { color: colors.textRole.muted }]}>{limitation}</Text>)}
+            </View>)}
+          </View> : null}
           {relationshipTargets(item, "builds_on", items).length ? <Detail label="Builds on" value={relationshipTargets(item, "builds_on", items).join(" · ")} /> : null}
           {relationshipTargets(item, "works_with", items).length ? <Detail label={item.itemType === "competency" ? "Uses or connects with" : "Works with"} value={relationshipTargets(item, "works_with", items).join(" · ")} /> : null}
           {relationshipTargets(item, "complements", items).length ? <Detail label="Complements" value={relationshipTargets(item, "complements", items).join(" · ")} /> : null}
@@ -137,9 +180,9 @@ export function ContextualItemList({ items, itemTypes, title = "Your preparation
               {method.description ? <Text style={[styles.copy, { color: colors.textRole.secondary }]}>{method.description}</Text> : null}
               <Text style={[styles.limit, { color: colors.textRole.muted }]}>This is a way of applying the capability, not a separate qualification or proof that you already have it.</Text>
               <ExternalLinkGuard
-                url={methodSourceUrl(method.sourceProvenance)}
-                label={methodSourceUrl(method.sourceProvenance) ? `Open source for ${method.name}` : `No verified source for ${method.name}`}
-                description={`This opens the source used to explain the method ${method.name}.`}
+                url={method.learningUrl || undefined}
+                label={method.learningLinkTitle ? `Learn ${method.name}: ${method.learningLinkTitle}` : `Open a learning guide for ${method.name}`}
+                description={`This opens a verified learning resource for the method ${method.name}.`}
               />
             </View>)}
           </View> : null}
@@ -157,7 +200,7 @@ export function ContextualItemList({ items, itemTypes, title = "Your preparation
 }
 
 function methodsForItem(
-  methods: Array<ComputationalMethodEvidence & { subgroupId?: string | null }> | undefined,
+  methods: (ComputationalMethodEvidence & { subgroupId?: string | null })[] | undefined,
   item: CareerContextItem,
 ) {
   // Embed a method only when the source uses the same named capability. Do
@@ -165,16 +208,10 @@ function methodsForItem(
   const itemKey = item.name.trim().toLowerCase();
   return (methods ?? []).filter((method) =>
     (!method.dataState || method.dataState === "source_backed")
+    && method.claimReviewState === "approved"
+    && Boolean(method.learningUrl && method.learningLinkVerifiedAt)
     && method.name.trim().toLowerCase() === itemKey,
   );
-}
-
-function methodSourceUrl(sourceProvenance?: Record<string, unknown>): string | undefined {
-  for (const key of ["sourceUrl", "source_url", "url"]) {
-    const value = sourceProvenance?.[key];
-    if (typeof value === "string" && /^https?:\/\//i.test(value)) return value;
-  }
-  return undefined;
 }
 
 function Detail({ label, value }: { label: string; value: string }) {

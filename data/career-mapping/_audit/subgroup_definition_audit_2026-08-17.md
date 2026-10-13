@@ -2,7 +2,7 @@
 
 This audit compares the live subgroup artefacts with the attached definition. It does not assume the definition is internally consistent; conflicts are reported explicitly.
 
-Canonical deduplicated role rows: **5212**; domains: **168**; stored subgroups: **555**.
+Canonical student-visible deduplicated role rows: **3390**; domains: **168**; stored subgroups: **311**.
 
 ## Important specification conflict
 
@@ -12,12 +12,14 @@ The OR threshold also creates a design flaw: a large domain with only one ISCO s
 
 ## Findings
 
-- Derivation mismatches (missing or unsupported ISCO sub-majors): **3** domains.
-- Threshold/over-clustering mismatches: **56** domains.
-- Priority-3 level/direction violations: **8** domains.
+- Derivation mismatches (missing or unsupported ISCO sub-majors): **7** domains.
+- Threshold/over-clustering mismatches: **6** domains.
+- Priority-3 level/direction violations: **0** domains.
 - Placeholder or missing labels/descriptions: **0** subgroup rows.
-- Empty/duplicative subgroup skill findings: **305**.
-- Stored role-count mismatches against the canonical role library: **21** domains.
+- Empty/duplicative subgroup skill findings: **24**.
+- Stored role-count mismatches against the canonical role library: **1** domains.
+- Stored subgroup role-count mismatches against the canonical role library: **0** subgroup rows.
+- Excluded subgroup records preserved for audit: **246**.
 
 ## Runtime/schema checks
 

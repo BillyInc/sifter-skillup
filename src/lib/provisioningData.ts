@@ -186,6 +186,30 @@ export async function shareStudentDocument(
     return false;
   }
 }
+
+/** Share only a learner-created, identity-free summary of a guided plan. */
+export async function shareTextSummary(
+  title: string,
+  message: string,
+): Promise<boolean> {
+  try {
+    if (Platform.OS === "web" && typeof navigator !== "undefined") {
+      if (typeof navigator.share === "function") {
+        await navigator.share({ title, text: message });
+        return true;
+      }
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(message);
+        return true;
+      }
+      return false;
+    }
+    await Share.share({ title, message });
+    return true;
+  } catch {
+    return false;
+  }
+}
 interface WireRosterStudent {
   user_id: string;
   full_name?: string | null;

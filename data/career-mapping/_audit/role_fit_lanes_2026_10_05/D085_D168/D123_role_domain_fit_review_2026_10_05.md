@@ -1,0 +1,39 @@
+# D123 role-to-parent-domain fit review — 2026-10-05
+
+Scope: Radiography and medical imaging uses X-rays, CT, MRI, ultrasound and related technology to see inside the body and to treat disease with radiation. Radiographers and imaging technologists position patients and operate scanners, sonographers perform ultrasound examinations, and radiation therapists deliver radiotherapy. They work mainly in hospitals and diagnostic imaging centres.
+
+- Exact queued roles reviewed: **13**
+- Supported: **12**
+- Conditional: **0**
+- Unsupported for this parent: **1**
+- Unresolved: **0**
+
+| Exact role key | Task description | Fit | Why |
+|---|---|---|---|
+| `D123|CT technologist` | Operates computed tomography scanners to produce cross-sectional images for diagnostic purposes. | supported | Operates CT scanners to produce diagnostic cross-sectional images, directly within the domain's CT imaging scope. |
+| `D123|Diagnostic Medical Sonographers` | Produce ultrasonic recordings of internal organs for use by physicians. Includes vascular technologists. | supported | Produces ultrasound recordings of internal organs for physician diagnosis; ultrasound imaging is explicitly within the parent scope. |
+| `D123|MRI technologist` | Operates MRI scanners to obtain detailed images of the body for clinical diagnosis without ionising radiation. | supported | Operates MRI scanners to obtain clinical diagnostic images, directly within the parent scope. |
+| `D123|Magnetic Resonance Imaging Technologists` | Operate Magnetic Resonance Imaging (MRI) scanners. Monitor patient safety and comfort, and view images of area being scanned to ensure quality of pictures. May administer gadolinium contrast dosage intravenously. May interview patient, explain MRI procedures, and position patient on examining table. May enter into the computer data such as patient history, anatomical area to be scanned, orientation specified, and position of entry. | supported | Operates MRI scanners, manages patient safety and image quality, and enters scan data; these are direct medical-imaging tasks. |
+| `D123|clinical perfusion scientist` | Clinical perfusion scientists operate heart-lung equipment during surgical operations to ensure breathing and blood circulation. They work as part of the surgical team, connect patients to the heart-lung machines in preparation for surgery, monitor their condition during surgery, report to the team | unsupported_for_domain | Operates heart-lung equipment to maintain circulation/respiration during surgery. This is clinical perfusion/cardiac surgical support, not radiography, imaging or radiation treatment. |
+| `D123|diagnostic medical sonographer` | Uses ultrasound equipment to produce images of soft tissues, organs, and vascular structures for diagnosis. | supported | Uses ultrasound equipment to image soft tissues, organs and vessels for diagnosis; direct fit to the domain's sonography scope. |
+| `D123|diagnostic radiographer` | Diagnostic radiographers plan, prepare and perform diagnostic imaging examinations and post processing, with a wide range of equipment and techniques using X-rays, strong magnetic fields or Magnetic Resonance Imaging (MRI) and high frequency sound (Ultrasound). | supported | Performs diagnostic examinations using X-ray, MRI and ultrasound equipment; these modalities are expressly inside the parent scope. |
+| `D123|fluoroscopy technologist` | Operates fluoroscopic equipment to produce real-time X-ray imaging for interventional and diagnostic procedures. | supported | Operates fluoroscopy for real-time X-ray imaging in diagnostic/interventional procedures; directly within radiography and imaging. |
+| `D123|mammographer` | Performs mammographic imaging for breast cancer screening and diagnostic purposes. | supported | Performs breast imaging for screening and diagnosis; mammography is a medical-imaging discipline within the parent scope. |
+| `D123|nuclear medicine radiographer` | Nuclear medicine radiographers plan, prepare and perform nuclear medicine examinations, post-processing and treatment with a wide range of equipment and techniques using X-rays, magnetic resonance imaging and radiopharmaceuticals. | supported | Performs nuclear-medicine examinations and treatments using imaging equipment and radiopharmaceuticals; the parent includes imaging and treatment with radiation. |
+| `D123|nuclear medicine technologist` | Prepares and administers radiopharmaceuticals and operates imaging equipment to diagnose and treat diseases. | supported | Prepares/administers radiopharmaceuticals and operates imaging equipment for diagnosis and treatment; direct nuclear-medicine work. |
+| `D123|radiation therapist` | Delivers prescribed radiation treatments to patients with cancer under the direction of a radiation oncologist. | supported | Delivers prescribed radiation treatment for cancer; the parent explicitly includes treating disease with radiation. |
+| `D123|radiographer` | Operates radiographic equipment to produce diagnostic images for clinical assessment and treatment planning. | supported | Operates radiographic equipment to produce diagnostic images for clinical assessment and treatment planning; direct fit. |
+
+## Sources and limits
+
+- **QUEUE_TASK_PROFILE — Checked-in role/domain lane queue:** [D085_D168_role_fit_queue_2026_10_05.json](D085_D168_role_fit_queue_2026_10_05.json). Exact D123 role_key and task description for every decision. Supports: The recorded duties for each specific mapping. Limit: Local task profiles are not an independent occupational authority.
+- **ASRT_MEDICAL_IMAGING_PRACTICE_STANDARDS — American Society of Radiologic Technologists (ASRT):** [https://www.asrt.org/main/standards-and-regulations/professional-practice/practice-standards-online](https://www.asrt.org/main/standards-and-regulations/professional-practice/practice-standards-online). Practice standard definition and modality-specific scopes: radiography, CT, MRI, mammography, nuclear medicine, radiation therapy and sonography. Supports: These are recognized medical imaging/radiation therapy disciplines and distinguishes diagnostic imaging, nuclear medicine and therapeutic radiation work. Limit: Professional practice standard is US-based; used as occupational scope corroboration, not as a universal licensing rule.
+- **WHO_RADIATION_SAFETY_HEALTHCARE — World Health Organization:** [https://www.who.int/initiatives/global-initiative-on-radiation-safety-in-health-care-settings/](https://www.who.int/initiatives/global-initiative-on-radiation-safety-in-health-care-settings/). Global initiative scope covering diagnostic/interventional radiology, nuclear medicine and radiotherapy. Supports: Global context that radiology, nuclear medicine and radiotherapy are distinct health-care radiation/imaging applications. Limit: High-level radiation-safety scope, not a role-by-role occupational standard.
+- **NHS_CLINICAL_PERFUSION — NHS Health Careers:** [https://www.healthcareers.nhs.uk/printpdf/248](https://www.healthcareers.nhs.uk/printpdf/248). Clinical perfusion science role description: cardiac operating theatre, heart-lung equipment, temporary respiratory/circulatory support. Supports: Clinical perfusion is cardiopulmonary bypass/surgical support, distinct from radiography and medical imaging. Limit: UK occupational description; used to clarify the exact task boundary, not as global regulation.
+
+## Audit notes
+
+- All 13 D123 exact role keys were matched with the lane queue and each original task description is retained.
+- Perfusion is distinguished from medical imaging by its described cardiopulmonary-bypass task, not by subgroup or taxonomy placement.
+- ASRT is a US professional practice standard and WHO provides high-level global scope context; neither is represented as a universal licensing rule.
+- No role-to-specialization assignment, student-visibility decision or canonical taxonomy/mapping change is made.

@@ -43,6 +43,35 @@ export function studentSafeUrl(value?: string | null): string | undefined {
   }
 }
 
+/** Exact student-facing item gate, mirrored from the API contract. The source
+ * record must explicitly approve its explanation at this checkpoint, and a
+ * separate, accessed learning destination must be evidenced. */
+export function isApprovedStudentContextItem(item?: CareerContextItem | null): boolean {
+  if (
+    !item
+    || item.claimReviewState !== "approved"
+    || item.linkState !== "linked"
+    || !studentSafeUrl(item.linkUrl)
+    || !item.linkAccessedAt
+    || !item.linkSourceReference
+    || !Object.keys(item.linkSourceReference).length
+    || !item.linkEvidence
+    || !Object.keys(item.linkEvidence).length
+  ) return false;
+  const claims = item.claimEvidence?.claims;
+  if (!claims || typeof claims !== "object") return false;
+  const required = ["item_identity", "checkpoint_fit", "plain_meaning", "contextual_use"];
+  if (item.expectedOutput) required.push("expected_output");
+  if (["subgroup", "role"].includes(item.contextLevel) && item.priority) required.push("priority");
+  return required.every((key) => {
+    const claim = (claims as Record<string, unknown>)[key];
+    if (!claim || typeof claim !== "object") return false;
+    const evidence = claim as Record<string, unknown>;
+    return Array.isArray(evidence.source_references) && evidence.source_references.length > 0
+      && Array.isArray(evidence.source_locators) && evidence.source_locators.length > 0;
+  });
+}
+
 /**
  * Student resources are approved, source-backed destinations owned by the
  * surface that is rendering them.  Keeping this check here means a screen
@@ -108,33 +137,9 @@ function studentContextItem(item: CareerContextItem): CareerContextItem | null {
     || item.sourceConfidence === "unsourced"
     || !STUDENT_CONTEXT_LEVELS.has(item.contextLevel)
     || item.guidanceOwner !== item.contextLevel
-    || item.linkState === "review_required"
+    || !isApprovedStudentContextItem(item)
   ) return null;
   const cleaned = scrubStudentObject(item);
-  if (!cleaned.linkState) {
-    cleaned.linkState = "no_link";
-    cleaned.linkUrl = null;
-    cleaned.linkTitle = null;
-    cleaned.linkSourceReference = undefined;
-    cleaned.linkEvidence = undefined;
-    cleaned.noLinkReason = "A verified student destination is not attached yet.";
-  }
-  if (item.linkState === "linked" && isLegacyOnetUrl(item.linkUrl)) {
-    cleaned.linkState = "no_link";
-    cleaned.linkUrl = null;
-    cleaned.linkTitle = null;
-    cleaned.linkSourceReference = undefined;
-    cleaned.linkEvidence = undefined;
-    cleaned.noLinkReason = "The source is retained for staff review, not student guidance.";
-  }
-  if (cleaned.linkState === "linked" && !studentSafeUrl(cleaned.linkUrl)) {
-    cleaned.linkState = "no_link";
-    cleaned.linkUrl = null;
-    cleaned.linkTitle = null;
-    cleaned.linkSourceReference = undefined;
-    cleaned.linkEvidence = undefined;
-    cleaned.noLinkReason = "A verified student destination is not attached yet.";
-  }
   return cleaned;
 }
 

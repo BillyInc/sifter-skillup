@@ -1,0 +1,28 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "incremental": false
+  },
+  "files": [
+    "src/types/career.ts",
+    "src/lib/guidedLearningPlan.ts",
+    "src/lib/guidedLearningPlanAdapter.ts",
+    "src/lib/guidedLearningPlanAdapter.test.ts",
+    "src/lib/guidedLearningPlan.test.ts",
+    "src/screens/careerIntelligence/GuidedFieldSelectionScreen.tsx",
+    "src/screens/MyWorldScreen.tsx",
+    "src/components/careerIntelligence/ContextRelationshipSheet.tsx",
+    "src/components/careerIntelligence/ContextRelationshipSheet.test.ts",
+    "src/components/careerIntelligence/ContextualItemList.tsx",
+    "src/components/careerIntelligence/GuidedLearningTray.tsx",
+    "src/components/careerIntelligence/LearningPlanShareSheet.tsx",
+    "src/components/careerIntelligence/LearningPlanShareSheet.test.tsx",
+    "src/lib/learningPlanShare.ts",
+    "src/lib/learningPlanShare.test.ts",
+    "src/screens/careerIntelligence/DomainDetailScreen.tsx",
+    "src/screens/careerIntelligence/SubgroupDetailScreen.tsx",
+    "src/screens/careerIntelligence/RoleDetailScreen.tsx"
+  ],
+  "include": []
+}

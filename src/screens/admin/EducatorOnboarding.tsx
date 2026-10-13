@@ -321,6 +321,10 @@ export default function EducatorOnboarding({
             "Could not create the admin workspace right now.",
         );
       }
+      // Persist the canonical server organisation id. Provisioning uses it to
+      // avoid accidentally selecting another active membership for this owner.
+      profile.organizationId = verification.data.id;
+      profile.organizationType = verification.data.type as OrganizationType;
       await API.completeOnboarding({ account_type: accountType });
       await refreshUser();
       await saveEducatorProfile(profile, user?.id);

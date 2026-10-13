@@ -120,7 +120,9 @@ backend/migration_jamb_programme_learning_resources_2026-09-23.sql
 backend/migration_programme_domain_evidence_2026-09-17.sql
 backend/migration_programme_domain_review_corrections_2026-09-18.sql
 backend/migration_contextual_career_items.sql
+backend/migration_career_context_claim_validation.sql
 backend/migration_career_item_relationships_2026-09-17.sql
+backend/migration_career_item_relationship_explanations_2026-10-12.sql
 backend/migration_sociology_curriculum_contract_2026-09-17.sql
 backend/migration_programme_curriculum_contract_general_2026-09-18.sql
 backend/migration_guidance_programme_reading_and_market_scope_2026-09-12.sql
@@ -165,7 +167,11 @@ in numeric order. The generated manifest is
 The contextual seed parts also contain the normalized rows for
 `career_item_relationships`. Apply
 `backend/migration_career_item_relationships_2026-09-17.sql` before loading
-those parts. The generator stores only same-context source-backed
+those parts, then apply
+`backend/migration_career_item_relationship_explanations_2026-10-12.sql`.
+Existing edges are not promoted just because the nullable explanation field
+exists; the learner UI must omit typed relationships without a reviewed,
+item-specific explanation. The generator stores only same-context source-backed
 `builds_on`/`works_with` edges whose targets resolve to another typed item.
 Every contextual tool and certification without an established edge receives
 a `not_established` coverage row. This state is for audit and source review;
@@ -241,6 +247,15 @@ Rows without explicit ownership default to `review_only`; only a row whose
 owner matches its context level (`programme`, `domain`, `subgroup` or `role`)
 may be returned to students. Role-aggregated foundation/tool rows remain
 staff-audit-only. The source audit and contract builder are:
+
+For guided-experience contextual rows, apply
+`backend/migration_career_context_claim_validation.sql` after
+`migration_contextual_career_items.sql` and before loading contextual seeds.
+Existing items remain `review_required`; source ownership and `source_backed`
+do not approve student-facing explanations. The API/UI require reviewed
+checkpoint-specific evidence and a verified external learning link. This
+migration is only prepared locally until the user explicitly requests SQL
+application.
 
 ```powershell
 python data/career-mapping/_audit_programme_curriculum_contract.py
