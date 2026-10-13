@@ -7,20 +7,20 @@ The current subgroup layer has recorded provenance for every subgroup row. The c
 ## Counts
 
 - Domains: **168**.
-- Subgroups: **555**; with recorded source provenance: **555**.
-- Base role-library rows: **4703**.
-- Overlay rows: **511**; duplicate role keys removed during merge: **5**.
-- Merged role records: **5209**.
-- O*NET work-profile rows: **5096**; role records with a work-profile row: **5090**.
-- Merged roles with an explicit ESCO code: **4739**.
-- Merged roles with an explicit O*NET code: **4389**.
-- Roles whose previously missing code was recovered by an exact O*NET 31.0 title match in this audit: **329**.
-- Merged roles with a source link in their work-profile record: **5090**.
-- Merged roles with any role-field or profile-link source evidence: **5209**.
+- Subgroups: **557**; with recorded source provenance: **557**.
+- Base role-library rows: **3411**.
+- Overlay rows: **511**; duplicate role keys removed during merge: **3**.
+- Merged role records: **3919**.
+- O*NET work-profile rows: **5096**; role records with a work-profile row: **3800**.
+- Merged roles with an explicit ESCO code: **3458**.
+- Merged roles with an explicit O*NET code: **3262**.
+- Roles whose previously missing code was recovered by an exact O*NET 31.0 title match in this audit: **317**.
+- Merged roles with a source link in their work-profile record: **3800**.
+- Merged roles with any role-field or profile-link source evidence: **3919**.
 - Merged roles without any recorded anchor, provenance, or profile source link: **0**.
-- Merged roles assigned to a matching subgroup: **5088**.
-- Merged roles using the intentional direct domain-to-role fallback because their ISCO sub-major has no matching subgroup: **121**.
-- Merged roles in domains without a subgroup taxonomy: **0**.
+- Merged roles assigned to a matching subgroup: **2406**.
+- Merged roles using the intentional direct domain-to-role fallback because their ISCO sub-major has no matching subgroup: **95**.
+- Merged roles in domains without a subgroup taxonomy: **1418**.
 
 ## Lineage map
 

@@ -18,7 +18,12 @@ from unittest.mock import MagicMock, patch
 import routes.career_routes as cr
 
 DOMAINS = [
-    {"id": "u1", "domain_key": "D001", "name": "Zebra Studies", "cluster": "ICT",
+    {"id": "u1", "domain_key": "D001", "name": "Example Systems", "description": "A test domain description.",
+     "source_provenance": {"student_orientation": {"shortIntro": "A test student summary.", "whatPeopleDo": "A source-backed test overview.", "decisionGuide": "Unsupported recommendation.", "orientationFieldEvidence": {
+         "whatPeopleDo": {"reviewState": "approved", "claim": "A source-backed test overview.", "sources": [{"title": "Work source", "url": "https://example.org/work", "locator": "section 1"}]}
+     }, "domainDescriptionEvidence": {
+         "reviewState": "approved", "claim": "A test domain description.", "sources": [{"title": "Test reference", "shortLabel": "Test reference · p. 1", "url": "https://example.org/reference", "locator": "printed p. 1"}]
+     }}, "staff_note": "private"}, "cluster": "ICT",
      "elite_domain": False, "excluded": False},
     {"id": "u2", "domain_key": "D002", "name": "Alpha Systems", "cluster": "ICT",
      "elite_domain": True, "excluded": False},
@@ -82,7 +87,7 @@ class TestDomainClusters:
     def test_excluded_domains_are_dropped(self):
         out = _call()
         ict = next(g for g in out["data"] if g["cluster"] == "ICT")
-        assert [d["name"] for d in ict["domains"]] == ["Alpha Systems", "Zebra Studies"]
+        assert [d["name"] for d in ict["domains"]] == ["Alpha Systems", "Example Systems"]
 
     def test_id_is_the_domain_key_the_detail_route_expects(self):
         # The domain route keys on domain_key ("D001"), not the uuid. Emitting
@@ -94,7 +99,7 @@ class TestDomainClusters:
     def test_demand_score_is_not_presented_before_source_backed_ingestion(self):
         out = _call()
         by_name = {d["name"]: d for g in out["data"] for d in g["domains"]}
-        assert "inDemandScore" not in by_name["Zebra Studies"]
+        assert "inDemandScore" not in by_name["Example Systems"]
         # Absent rather than 0 — a domain with no metric has no score, and 0
         # would read as "measured, and it is zero".
         assert "inDemandScore" not in by_name["Alpha Systems"]
@@ -105,7 +110,7 @@ class TestDomainClusters:
         # as one drew every domain as full demand.
         out = _call()
         by_name = {d["name"]: d for g in out["data"] for d in g["domains"]}
-        assert "demandBand" not in by_name["Zebra Studies"]
+        assert "demandBand" not in by_name["Example Systems"]
         assert "demandBand" not in by_name["Nursing"]
         assert "demandBand" not in by_name["Alpha Systems"]
 
@@ -115,9 +120,52 @@ class TestDomainClusters:
         assert by_name["Alpha Systems"]["eliteFlag"] is True
         assert by_name["Nursing"]["eliteFlag"] is False
 
+    def test_student_summary_is_returned_without_raw_provenance(self):
+        out = _call()
+        example = next(d for g in out["data"] for d in g["domains"] if d["name"] == "Example Systems")
+        assert example["description"] == "A test domain description."
+        assert example["descriptionSources"][0]["shortLabel"] == "Test reference · p. 1"
+        assert example["studentOrientation"]["whatPeopleDo"] == "A source-backed test overview."
+        assert example["studentOrientation"]["evidenceByField"]["whatPeopleDo"][0]["locator"] == "section 1"
+        assert "decisionGuide" not in example["studentOrientation"]
+        assert "orientationFieldEvidence" not in example["studentOrientation"]
+        assert "sourceProvenance" not in example
+
     def test_empty_table_degrades_instead_of_lying(self):
         out = _call(domains=[], metrics=[])
         assert out["status"] == "coming_soon"
+
+
+def test_domain_orientation_requires_exact_approved_claim_and_cited_https_locator():
+    orientation = {
+        "whatItStudies": "Supported scope.",
+        "whatPeopleDo": "Unreviewed work summary.",
+        "decisionGuide": "Unsupported recommendation.",
+        "orientationFieldEvidence": {
+            "whatItStudies": {
+                "reviewState": "approved",
+                "claim": "Supported scope.",
+                "sources": [{"title": "Scope source", "url": "https://example.org/scope", "locator": "p. 1"}],
+            },
+            "whatPeopleDo": {
+                "reviewState": "review_required",
+                "claim": "Unreviewed work summary.",
+                "sources": [{"title": "Work source", "url": "https://example.org/work", "locator": "p. 2"}],
+            },
+            "decisionGuide": {
+                "reviewState": "approved",
+                "claim": "Unsupported recommendation.",
+                "sources": [{"title": "Bad scheme", "url": "http://example.org/bad", "locator": "p. 3"}],
+            },
+        },
+    }
+
+    visible = cr._student_domain_orientation(orientation)
+    assert visible["whatItStudies"] == "Supported scope."
+    assert visible["evidenceByField"]["whatItStudies"][0]["locator"] == "p. 1"
+    assert "whatPeopleDo" not in visible
+    assert "decisionGuide" not in visible
+    assert "orientationFieldEvidence" not in visible
 
     def test_demand_failure_still_returns_domains(self):
         # Demand is enrichment; losing it must not empty the screen.

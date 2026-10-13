@@ -27,7 +27,7 @@ import uuid
 from datetime import datetime, timedelta, timezone
 from typing import Any, List, Optional
 
-from fastapi import APIRouter, Body, Depends, HTTPException, Response
+from fastapi import APIRouter, Body, Depends, HTTPException, Query, Response
 
 from pydantic import BaseModel, Field
 
@@ -69,7 +69,7 @@ _CLAIM_CODE_TTL_DAYS = 365
 _CODE_ALPHABET = "ABCDEFGHJKMNPQRSTUVWXYZ23456789"
 _CODE_LEN = 8
 _CONSENT_SCOPES = {"progress", "contact", "full"}
-_GUIDANCE_STREAMS = {"science", "commercial", "art"}
+_GUIDANCE_STREAMS = {"science", "commercial", "art", "technical"}
 _GUIDANCE_LEARNER_TYPES = {
     "secondary_school": {"ss1", "ss2", "ss3"},
     "tutorial_centre": {"jamb"},
@@ -142,9 +142,9 @@ def _guidance_path_snapshot(path: dict[str, Any]) -> dict[str, Any]:
     """
     allowed_single = {
         "academicContext", "subjects", "programme", "university", "requirements",
-        "discoveryDoor", "notes", "resume",
+        "discoveryDoor", "notes", "resume", "learningPlanSnapshot",
     }
-    allowed_lists = {"domains", "subgroups", "roles"}
+    allowed_lists = {"domains", "subgroups", "roles", "learningFocus"}
     out: dict[str, Any] = {}
     for key in allowed_single:
         value = path.get(key)
@@ -154,11 +154,91 @@ def _guidance_path_snapshot(path: dict[str, Any]) -> dict[str, Any]:
         value = path.get(key)
         if isinstance(value, list):
             out[key] = [item for item in value if isinstance(item, dict)]
+    history = path.get("learningPlanSnapshots")
+    if isinstance(history, list):
+        valid = [
+            item for item in history[-100:]
+            if isinstance(item, dict)
+            and isinstance(item.get("snapshotId"), str)
+            and item.get("snapshotId", "").strip()
+            and isinstance(item.get("stacks"), list)
+        ]
+        seen: set[str] = set()
+        normalized: list[dict[str, Any]] = []
+        for item in reversed(valid):
+            snapshot_id = item["snapshotId"].strip()
+            if snapshot_id in seen:
+                continue
+            seen.add(snapshot_id)
+            normalized.append(item)
+        out["learningPlanSnapshots"] = list(reversed(normalized))[-20:]
+    removed_ids = path.get("learningPlanRemovedIds")
+    if isinstance(removed_ids, list):
+        out["learningPlanRemovedIds"] = [str(item) for item in removed_ids if isinstance(item, str) and item.strip()]
+    removed_by_route = path.get("learningPlanRemovedIdsByRoute")
+    if isinstance(removed_by_route, dict):
+        out["learningPlanRemovedIdsByRoute"] = {
+            str(route_key): [str(item) for item in values if isinstance(item, str) and item.strip()]
+            for route_key, values in removed_by_route.items()
+            if isinstance(route_key, str) and route_key.strip() and isinstance(values, list)
+        }
+    order_by_route = path.get("learningPlanOrderByRoute")
+    if isinstance(order_by_route, dict):
+        out["learningPlanOrderByRoute"] = {
+            str(route_key): [str(item) for item in values if isinstance(item, str) and item.strip()]
+            for route_key, values in order_by_route.items()
+            if isinstance(route_key, str) and route_key.strip() and isinstance(values, list)
+        }
     return out
 
 
-def _resolve_school_id(current_user: dict) -> Optional[str]:
+def _resolve_school_id(current_user: dict, requested_school_id: Optional[str] = None) -> Optional[str]:
     """The school the current admin/educator administers, via institution_members."""
+    if requested_school_id:
+        requested_school_id = requested_school_id.strip()
+        if not requested_school_id:
+            return None
+        try:
+            membership = (
+                _svc()
+                .table("institution_members")
+                .select("school_id, seat_status")
+                .eq("user_id", current_user["id"])
+                .eq("school_id", requested_school_id)
+                .limit(1)
+                .execute()
+                .data
+                or []
+            )
+            if membership and membership[0].get("seat_status") != "revoked":
+                return requested_school_id
+            return None
+        except Exception as exc:  # noqa: BLE001
+            # Older schemas may not have seat_status. Retry the scoped lookup,
+            # but still reject an explicitly revoked seat if the field exists.
+            log.warning("provisioning: selected organisation membership lookup retried", error=str(exc))
+            error_text = str(exc).lower()
+            if "seat_status" not in error_text or not any(
+                marker in error_text
+                for marker in ("column", "schema cache", "does not exist", "not found")
+            ):
+                return None
+            try:
+                membership = (
+                    _svc()
+                    .table("institution_members")
+                    .select("school_id")
+                    .eq("user_id", current_user["id"])
+                    .eq("school_id", requested_school_id)
+                    .limit(1)
+                    .execute()
+                    .data
+                    or []
+                )
+                return requested_school_id if membership else None
+            except Exception as fallback_exc:  # noqa: BLE001
+                log.warning("provisioning: selected organisation membership lookup failed", error=str(fallback_exc))
+                return None
     try:
         res = (
             _svc()
@@ -242,9 +322,11 @@ def _stream_for_org(value: Optional[str], org_type: str) -> Optional[str]:
     return _clean_stream(value) if org_type == "secondary_school" else None
 
 
-def _provisioning_context(current_user: dict) -> tuple[str, str]:
-    school_id = _resolve_school_id(current_user)
+def _provisioning_context(current_user: dict, requested_school_id: Optional[str] = None) -> tuple[str, str]:
+    school_id = _resolve_school_id(current_user, requested_school_id)
     if not school_id:
+        if requested_school_id:
+            raise HTTPException(status_code=403, detail="You do not have an active membership in the selected organisation.")
         raise HTTPException(status_code=409, detail="Your account is not linked to an organisation yet.")
     row = (_svc().table("schools").select("institution_type").eq("id", school_id).limit(1).execute().data or [None])[0]
     org_type = (row or {}).get("institution_type") or "secondary_school"
@@ -292,6 +374,7 @@ class DraftInput(BaseModel):
     student_type: Optional[str] = None
     guardian_consent: bool = False
     guardian_name: Optional[str] = None
+    organization_id: Optional[str] = None
 
 
 class DraftImportRequest(BaseModel):
@@ -301,6 +384,7 @@ class DraftImportRequest(BaseModel):
     manual_rows: List[DraftInput] = Field(default_factory=list)
     stream: Optional[str] = None
     student_type: Optional[str] = None
+    organization_id: Optional[str] = None
 
 
 class DraftRow(BaseModel):
@@ -334,6 +418,7 @@ class GenerateItem(BaseModel):
 
 class GenerateRequest(BaseModel):
     items: List[GenerateItem]
+    organization_id: Optional[str] = None
 
 
 class DeleteStudentsRequest(BaseModel):
@@ -346,6 +431,7 @@ class ClearDraftsRequest(BaseModel):
     """Explicit draft ids selected for removal before account generation."""
 
     draft_ids: List[str] = Field(default_factory=list)
+    organization_id: Optional[str] = None
 
 
 class GuidanceUpdate(BaseModel):
@@ -435,7 +521,7 @@ async def create_drafts(
     """Stage draft rows for the review grid. Vision pre-fill from uploaded pages
     (transient — images discarded here) plus any manual rows. Nothing is minted;
     the educator corrects and confirms before /generate."""
-    school_id, org_type = _provisioning_context(current_user)
+    school_id, org_type = _provisioning_context(current_user, payload.organization_id)
 
     rows: List[dict] = []
     batch_stream = _stream_for_org(payload.stream, org_type)
@@ -502,9 +588,12 @@ async def create_drafts(
 
 
 @router.get("/drafts", response_model=ResponseModel)
-async def list_drafts(current_user: dict = Depends(Auth.require_admin)):
+async def list_drafts(
+    organization_id: Optional[str] = Query(default=None),
+    current_user: dict = Depends(Auth.require_admin),
+):
     """The review grid: all still-draft rows for the admin's school."""
-    school_id = _require_school(current_user)
+    school_id, _org_type = _provisioning_context(current_user, organization_id)
     try:
         res = _svc().table("student_provision_drafts").select(
             "id, full_name, student_class, stream, needs_review, guardian_consent, guardian_name, status"
@@ -524,7 +613,7 @@ async def update_draft(
     current_user: dict = Depends(Auth.require_admin),
 ):
     """Correct/confirm a draft in the review grid (the assisted-correction step)."""
-    school_id, org_type = _provisioning_context(current_user)
+    school_id, org_type = _provisioning_context(current_user, payload.organization_id)
     _validate_provisioning_type(payload.student_type, org_type)
     updates = {
         "full_name": payload.full_name,
@@ -566,7 +655,7 @@ async def generate_accounts(
     'provisioned', claim_state 'unclaimed'. Subjects arriving in the payload seed
     the chosen direction inline and are then discarded — never written.
     """
-    school_id, org_type = _provisioning_context(current_user)
+    school_id, org_type = _provisioning_context(current_user, payload.organization_id)
     school_row = (_svc().table("schools").select("name").eq("id", school_id).limit(1).execute().data or [None])[0]
     school_name = (school_row or {}).get("name")
     if not payload.items:
@@ -840,7 +929,7 @@ async def clear_drafts(
 ):
     """Clear explicitly selected review rows before accounts are generated."""
 
-    school_id = _require_school(current_user)
+    school_id, _org_type = _provisioning_context(current_user, payload.organization_id)
     ids = list(dict.fromkeys(i.strip() for i in payload.draft_ids if i and i.strip()))
     if not ids:
         raise HTTPException(status_code=400, detail="Select at least one draft row to clear.")
@@ -1450,8 +1539,9 @@ async def respond_to_student_consent_request(
 def _resolve_report_context(user: dict, school_name: Optional[str], generated_on: str) -> ReportContext:
     """Build a ReportContext from the student's chosen_direction + taxonomy.
 
-    Reads domain (foundation_skills, description), its roles, and the chosen
-    programme. Every field degrades gracefully to None/empty — never invents.
+    Reads the explicit domain-owned foundation table, domain description, its
+    roles, and the chosen programme. Every field degrades gracefully to
+    None/empty — never invents or falls back to role-frequency foundations.
     """
     # New guidance-path records preserve the complete selected branches. Keep
     # the legacy direction resolver below as a compatibility fallback for
@@ -1488,16 +1578,20 @@ def _resolve_report_context(user: dict, school_name: Optional[str], generated_on
     try:
         if domain_key:
             dres = _svc().table("domains").select(
-                "id, domain_key, name, description, foundation_skills"
+                "id, domain_key, name, description"
             ).eq("domain_key", domain_key).limit(1).execute()
             dom = (dres.data or [None])[0]
             if dom:
                 domain_name = dom.get("name")
                 domain_description = dom.get("description")
-                for s in (dom.get("foundation_skills") or [])[:12]:
-                    label = s.get("skill") if isinstance(s, dict) else str(s)
-                    if label:
-                        foundation_skills.append(label)
+                foundation_rows = _svc().table("career_guidance_foundations").select(
+                    "item_name"
+                ).eq("domain_id", dom["id"]).order("display_order").execute().data or []
+                foundation_skills = [
+                    str(row["item_name"]).strip()
+                    for row in foundation_rows[:12]
+                    if row.get("item_name")
+                ]
                 # Roles reachable from this domain.
                 rres = _svc().table("domain_roles").select("role_name").eq(
                     "domain_id", dom["id"]
@@ -1526,13 +1620,16 @@ def _resolve_report_context(user: dict, school_name: Optional[str], generated_on
                 domain_ids = [row.get("domain_id") for row in pd_rows if row.get("domain_id")]
                 if domain_ids:
                     drows = _svc().table("domains").select(
-                        "id, name, description, foundation_skills"
+                        "id, name, description"
                     ).in_("id", domain_ids).execute().data or []
                     for drow in drows:
                         domain_name = domain_name or drow.get("name")
                         domain_description = domain_description or drow.get("description")
-                        for skill in (drow.get("foundation_skills") or [])[:12]:
-                            label = skill.get("skill") if isinstance(skill, dict) else str(skill)
+                        foundation_rows = _svc().table("career_guidance_foundations").select(
+                            "item_name"
+                        ).eq("domain_id", drow["id"]).order("display_order").execute().data or []
+                        for row in foundation_rows[:12]:
+                            label = str(row.get("item_name") or "").strip()
                             if label and label not in foundation_skills:
                                 foundation_skills.append(label)
                     rrows = _svc().table("domain_roles").select(

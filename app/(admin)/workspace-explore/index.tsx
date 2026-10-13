@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
-import ExploreScreen from "@/screens/ExploreScreen";
-import { AdminExploreIntro } from "@/screens/admin/AdminExploreIntro";
+import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 import { getEducatorProfile } from "@/lib/educatorProfile";
-import { adminAudienceForProfile, type AdminAudience } from "@/lib/adminAudience";
 import { useAuth } from "@/hooks/useAuth";
+import { CompassFonts, Spacing, useTheme } from "@/theme";
 import type { EducatorProfile } from "@/types/institution";
+import { SecondarySchoolExploreSurface, TutorialCentreExploreSurface, UniversityExploreSurface } from "@/screens/admin/AdminExploreSurfaces";
 
 /**
  * Explore (§5.4) — the full pathways catalogue inside the admin shell.
@@ -26,44 +26,47 @@ export default function AdminExploreRoute() {
   const params = useLocalSearchParams<{ q?: string | string[] }>();
   const { user } = useAuth();
   const [profile, setProfile] = useState<EducatorProfile | null>(null);
+  const [profileStatus, setProfileStatus] = useState<"pending" | "ready" | "error">("pending");
+  const [profileRetry, setProfileRetry] = useState(0);
+  const { colors } = useTheme();
 
   useEffect(() => {
     let active = true;
+    setProfileStatus("pending");
     getEducatorProfile(user?.id).then(
       (p) => {
-        if (active) setProfile(p);
+        if (!active) return;
+        setProfile(p);
+        setProfileStatus("ready");
       },
       () => {
-        // Framing only. A failed profile read must not blank the catalogue,
-        // and must not surface as an unhandled rejection.
-        if (active) setProfile(null);
+        if (!active) return;
+        setProfile(null);
+        setProfileStatus("error");
       },
     );
     return () => {
       active = false;
     };
-  }, [user?.id]);
+  }, [user?.id, profileRetry]);
 
-  const audience: AdminAudience = adminAudienceForProfile(profile);
-
-  return (
-    <ExploreScreen
-      initialQuery={readParam(params.q)}
-      adminAudience={audience}
-      adminType={profile?.organizationType}
-      heading={
-        profile?.organizationType === "university"
-          ? "Review programmes,\ndomains and peers"
-          : profile?.organizationType === "tutorial_centre" || profile?.organizationType === "jamb_cafe"
-            ? "Guide JAMB students\nfrom skills to routes"
-          : "Guide a student through\nsubjects and programmes"
-      }
-      intro={
-        <AdminExploreIntro
-          audience={audience}
-          providerSessionOnly={Boolean(profile?.providerSessionOnly)}
-        />
-      }
-    />
-  );
+  const initialQuery = readParam(params.q);
+  if (profileStatus !== "ready") {
+    return <View style={{ flex: 1, alignItems: "center", justifyContent: "center", gap: Spacing.sm, padding: Spacing.lg }}>
+      {profileStatus === "pending" ? <ActivityIndicator color={colors.accentRole.action} /> : null}
+      <Text style={[CompassFonts.bodySemibold, { color: colors.textRole.primary }]}>
+        {profileStatus === "pending" ? "Loading your organization workspace…" : "We couldn’t load your organization type."}
+      </Text>
+      {profileStatus === "error" ? <TouchableOpacity accessibilityRole="button" onPress={() => setProfileRetry((value) => value + 1)}>
+        <Text style={{ color: colors.accentRole.action }}>Try again</Text>
+      </TouchableOpacity> : null}
+    </View>;
+  }
+  if (profile?.organizationType === "university") {
+    return <UniversityExploreSurface profile={profile} initialQuery={initialQuery} />;
+  }
+  if (profile?.organizationType === "tutorial_centre" || profile?.organizationType === "jamb_cafe") {
+    return <TutorialCentreExploreSurface profile={profile} initialQuery={initialQuery} />;
+  }
+  return <SecondarySchoolExploreSurface profile={profile} initialQuery={initialQuery} />;
 }

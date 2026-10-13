@@ -1,11 +1,22 @@
 #!/usr/bin/env python3
-"""BEFORE-AGGREGATE step: build a clean per-programme skill aggregate from the granular
-per-course learning outcomes (+ employability + 21st-century). Runs across all ccmas/*.json.
-- course-derived skills = union of every course's skills_learned (the differentiating, technical set)
-- transferable skills   = employability_skills + skills_21st_century (generic/cross-cutting)
-Dedup merges near-duplicates (same normalized 28-char prefix) keeping the fuller phrasing.
-Writes back: programme.skills_profile (clean, all), .skills_profile_technical, .skills_profile_transferable,
-and .skills_count. This is INTRINSIC to the CCMAS programme (done before JAMB)."""
+"""Build the derived programme skill arrays from granular CCMAS records.
+
+The course records remain the source of truth.  This step only creates derived
+arrays used by downstream matching; it must not turn maintainer annotations or
+shared-course rows into a single undifferentiated student list.
+
+The output boundaries are:
+* ``skills_profile_technical``: clean course-outcome wording, still owned by the
+  programme (including shared/general courses when the programme records them);
+* ``skills_profile_transferable``: the programme's explicit employability and
+  21st-century ability records, not course outcomes;
+* ``skills_profile``: the union of those two arrays for compatibility.
+
+Exact-normalised deduplication is used.  Prefix-based deduplication is unsafe:
+two different outcomes can share an opening phrase while requiring different
+learning.  Appended ``[... NOTE]`` annotations are retained in the source
+record for audit but are removed from the derived arrays.
+"""
 import json, glob, re
 
 # --- identify shared foundation/service courses (appear across >=4 disciplines) ---
@@ -20,27 +31,34 @@ SHARED_FOUNDATION = {code for code, ds in _disc_of_code.items() if len(ds) >= 4}
 def norm(s): return re.sub(r"[^a-z0-9]", "", s.lower())
 def clean(s): return re.sub(r"\s+", " ", (s or "").strip()).strip(" .;,")
 
+# Parser/maintainer annotations are metadata, not programme learning.  The
+# annotation itself remains in the raw CCMAS input and in the audit artifact.
+ANNOTATION = re.compile(r"\s+>\s+\*\*\[[^]]+\]:\*\*.*$", re.IGNORECASE)
+
+def clean_outcome(s):
+    return clean(ANNOTATION.sub("", str(s or "")))
+
 def dedup(items):
-    """merge near-duplicates: same first-28 normalized chars -> keep the longer/fuller one."""
+    """Deduplicate only exact-normalised wording; never merge by prefix."""
     best = {}
     for s in items:
-        s = clean(s)
+        s = clean_outcome(s)
         if len(norm(s)) < 5: continue
-        k = norm(s)[:28]
-        if k not in best or len(s) > len(best[k]): best[k] = s
-    # order by original appearance is lost; sort transferable-ish (short) first is not needed -> keep insertion of best
+        k = norm(s)
+        if k not in best: best[k] = s
     return list(best.values())
 
 tp = tsk = 0
 for f in sorted(glob.glob("ccmas/*.json")):
     d = json.load(open(f, encoding="utf-8"))
     for p in d["programmes"]:
-        tech_raw = []; foundation_raw = []
+        tech_raw = []
         for c in p["courses"]:
-            (foundation_raw if c["code"] in SHARED_FOUNDATION else tech_raw).extend(c.get("skills_learned", []))
-        # transferable = generic employability/21c + shared-foundation-course outcomes (GST/ENT/service sci)
-        transferable = dedup(list(p.get("employability_skills", [])) + list(p.get("skills_21st_century", [])) + foundation_raw)
-        # technical = only programme-DISTINCTIVE course outcomes
+            tech_raw.extend(c.get("skills_learned", []))
+        # Keep explicit programme abilities separate from course outcomes.  A
+        # shared GST/ENT/SSC course is still part of this programme's recorded
+        # curriculum; it is not automatically a transferable ability.
+        transferable = dedup(list(p.get("employability_skills", [])) + list(p.get("skills_21st_century", [])))
         technical = dedup(tech_raw)
         # full profile = transferable + technical, deduped across both
         full = dedup(transferable + technical)

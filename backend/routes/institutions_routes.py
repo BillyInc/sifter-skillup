@@ -41,7 +41,7 @@ from datetime import datetime, timedelta, timezone
 import hmac
 import re
 from uuid import uuid4
-from typing import List, Literal, Optional
+from typing import Any, List, Literal, Optional
 
 from fastapi import APIRouter, Body, Depends, File, Form, HTTPException, Query, UploadFile
 from pydantic import BaseModel, ConfigDict, Field
@@ -146,7 +146,10 @@ def _org_from_school(school_id: str) -> Optional["Organization"]:
             id=row.get("id") or school_id,
             type=org_type,
             name=row.get("name") or "",
+            official_name=row.get("official_name") or row.get("full_name"),
+            short_name=row.get("short_name") or row.get("abbreviation"),
             jamb_code=row.get("jamb_code"),
+            nuc_code=row.get("nuc_code"),
             state=row.get("state"),
             address=row.get("address"),
             city=row.get("city"),
@@ -569,10 +572,13 @@ def _school_programmes(current_user: dict, cap: int = 100) -> list:
     if not org_id:
         return []
     prog_ids = _institution_programme_ids(org_id)
+    # An institution with no mapped JAMB programmes has no programme records
+    # to report. Never turn an empty mapping into the national catalogue.
+    if not prog_ids:
+        return []
     try:
         query = svc.table("programmes").select("id, name, discipline, qualification")
-        if prog_ids:
-            query = query.in_("id", prog_ids)
+        query = query.in_("id", prog_ids)
         return (query.limit(cap).execute().data) or []
     except Exception as exc:  # noqa: BLE001
         log.warning("institutions: school programmes read skipped", error=str(exc))
@@ -580,11 +586,17 @@ def _school_programmes(current_user: dict, cap: int = 100) -> list:
 
 
 def _programme_domain_rows(programme_ids: list, cap: int = 4000) -> list:
-    """programme_domain rows for a set of programmes (bounded)."""
+    """programme_domain rows, with the closest relationship first.
+
+    This ordering is part of the programme-intelligence contract: direct
+    connections are reviewed before functional extensions and adjacent
+    exploration. Consumers still retain ``match_type`` and must not infer a
+    curriculum requirement from ordering alone.
+    """
     if not programme_ids:
         return []
     try:
-        return (
+        rows = (
             _svc()
             .table("programme_domain")
             .select("programme_id, domain_id, match_type, elite_flag")
@@ -593,6 +605,14 @@ def _programme_domain_rows(programme_ids: list, cap: int = 4000) -> list:
             .execute()
             .data
         ) or []
+        priority = {"direct": 0, "functional": 1, "adjacent": 2}
+        return sorted(
+            rows,
+            key=lambda row: (
+                priority.get(str(row.get("match_type") or ""), 3),
+                str(row.get("domain_id") or ""),
+            ),
+        )
     except Exception as exc:  # noqa: BLE001
         log.warning("institutions: programme_domain read skipped", error=str(exc))
         return []
@@ -753,6 +773,114 @@ def _to_camel(name: str) -> str:
     return head + "".join(part[:1].upper() + part[1:] for part in tail)
 
 
+def _canonical_item_key(value: str) -> str:
+    """Return a conservative identity key for curriculum comparisons.
+
+    This only normalises punctuation, spacing and the common ``&`` spelling.
+    It deliberately does not invent semantic synonyms: an unrecognised
+    equivalent remains reviewable instead of being silently counted as taught.
+    """
+    text = value.casefold().replace("&", " and ")
+    return re.sub(r"[^a-z0-9]+", " ", text).strip()
+
+
+def _source_aliases(row: dict) -> list[str]:
+    """Read aliases only when the source row explicitly provides them."""
+    for key in ("aliases", "source_aliases", "also_known_as"):
+        value = row.get(key)
+        if isinstance(value, str) and value.strip():
+            return [value.strip()]
+        if isinstance(value, list):
+            return [str(item).strip() for item in value if str(item).strip()]
+    return []
+
+
+def _provenance_value(row: dict, *keys: str) -> Optional[str]:
+    provenance = row.get("source_provenance")
+    for key in keys:
+        value = row.get(key)
+        if value not in (None, ""):
+            return str(value)
+        if isinstance(provenance, dict) and provenance.get(key) not in (None, ""):
+            return str(provenance[key])
+    return None
+
+
+def _provenance_json(row: dict, *keys: str) -> Any:
+    """Return a structured provenance value without flattening audit evidence.
+
+    Admin consumers need the original references/locators to review a row.
+    Student-facing adapters may choose a short label, but this route must not
+    discard the source payload while building the institution evidence ledger.
+    """
+    provenance = row.get("source_provenance")
+    for key in keys:
+        value = row.get(key)
+        if value not in (None, "", [], {}):
+            return value
+        if isinstance(provenance, dict) and provenance.get(key) not in (None, "", [], {}):
+            return provenance[key]
+    return None
+
+
+def _optional_rows(builder) -> list[dict]:
+    """Read an additive evidence layer without turning absence into data.
+
+    The institution contract is also used while the live project is being
+    migrated.  A missing additive table therefore becomes an unavailable
+    layer, not a reason to fall back to a guessed or legacy student record.
+    Keeping this helper at module scope also makes the ordering explicit for
+    the programme-coverage route.
+    """
+    try:
+        return builder().execute().data or []
+    except Exception as resource_exc:  # noqa: BLE001
+        log.debug("institutions evidence layer unavailable", error=str(resource_exc))
+        return []
+
+
+def _json_list(value: Any) -> list[Any]:
+    if isinstance(value, list):
+        return value
+    if value in (None, "", {}):
+        return []
+    return [value]
+
+
+def _admin_evidence_state(row: dict, context_level: str) -> str:
+    """Classify an admin row without promoting it to student guidance.
+
+    The database has separate link, ownership and data-state fields. The
+    admin ledger exposes their intersection as one queue state so missing or
+    ambiguous evidence cannot look approved merely because it has a name.
+    """
+    owner = str(row.get("guidance_owner") or "").strip().casefold()
+    link_state = str(row.get("link_state") or "").strip().casefold()
+    data_state = str(row.get("data_state") or "").strip().casefold()
+    relationship_state = str(row.get("relationship_status") or "").strip().casefold()
+    if relationship_state == "not_established" or data_state == "not_established":
+        return "not_established"
+    if owner in {"audit_only", "role_aggregated", "review_only"}:
+        return "audit_only"
+    if link_state == "no_link":
+        return "no_link"
+    if link_state in {"review_required", "review-only"}:
+        return "review_required"
+    if data_state in {"review_required", "review", "partial", "unsourced", "source_review"}:
+        return "review_required"
+    if owner != context_level:
+        return "review_required"
+    if (
+        str(row.get("item_type") or "").strip().casefold() == "relationship"
+        and relationship_state == "source_backed"
+        and data_state == "source_backed"
+    ):
+        return "verified"
+    if link_state == "linked" and data_state in {"", "source_backed"}:
+        return "verified"
+    return "review_required"
+
+
 class _InstitutionBase(BaseModel):
     model_config = ConfigDict(
         alias_generator=_to_camel,
@@ -765,6 +893,8 @@ class Organization(_InstitutionBase):
     id: str
     type: str  # secondary_school | university | tutorial_centre | jamb_cafe
     name: str
+    official_name: Optional[str] = None
+    short_name: Optional[str] = None
     jamb_code: Optional[str] = None
     nuc_code: Optional[str] = None
     moe_approval_no: Optional[str] = None
@@ -851,6 +981,14 @@ class AdminAccessCodeRequest(_InstitutionBase):
 
 class InstitutionSummary(_InstitutionBase):
     institution_name: str
+    institution_official_name: Optional[str] = None
+    institution_short_name: Optional[str] = None
+    institution_address: Optional[str] = None
+    institution_city: Optional[str] = None
+    institution_state: Optional[str] = None
+    institution_country: Optional[str] = None
+    institution_type: Optional[str] = None
+    verification_status: Optional[str] = None
     institution_code: str
     active_programmes: int = 0
     faculty_count: Optional[int] = None
@@ -949,28 +1087,60 @@ class SkillGapRow(_InstitutionBase):
 
 
 class ProgrammeResourceEvidence(_InstitutionBase):
-    """One source-backed skill, tool, or certification in a mapped path."""
+    """One sourced market/practice item compared with CCMAS teaching."""
 
     name: str
-    kind: Literal["skill", "tool", "certification"]
-    source: Literal["domain", "subgroup", "role"]
+    kind: Literal["skill", "tool", "competency", "ability", "certification", "resource", "relationship"]
+    source: Literal["programme", "domain", "subgroup", "role"]
     scope_name: Optional[str] = None
     role_name: Optional[str] = None
+    canonical_key: Optional[str] = None
+    aliases: List[str] = Field(default_factory=list)
     state: Literal["covered", "bridge"]
+    curriculum_state: Literal["taught", "partly_evidenced", "not_evidenced", "source_review"] = "source_review"
+    market_state: Literal["market_practice_evidence", "insufficient_evidence", "source_review"] = "source_review"
     url: Optional[str] = None
     provider: Optional[str] = None
     description: Optional[str] = None
+    explanation: Optional[str] = None
     resource_type: Optional[str] = None
     source_confidence: Optional[str] = None
     data_state: Optional[str] = None
+    evidence_source: Optional[str] = None
+    observed_at: Optional[str] = None
+    geography: Optional[str] = None
+    # Admin-only evidence ledger fields. These are retained separately from
+    # the compact comparison fields above so a reviewer can resolve an item
+    # without the student payload inheriting raw source metadata.
+    context_key: Optional[str] = None
+    programme_key: Optional[str] = None
+    guidance_owner: Optional[str] = None
+    evidence_state: Literal[
+        "verified", "approved", "review_required", "no_link",
+        "not_established", "audit_only", "unavailable"
+    ] = "review_required"
+    source_locator: Any = None
+    source_accessed_at: Optional[str] = None
+    source_references: List[Any] = Field(default_factory=list)
+    source_locators: List[Any] = Field(default_factory=list)
+    link_state: Optional[str] = None
+    link_url: Optional[str] = None
+    no_link_reason: Optional[str] = None
+    source_ids: List[str] = Field(default_factory=list)
+    relationship_type: Optional[str] = None
+    relationship_status: Optional[str] = None
+    from_item_type: Optional[str] = None
+    to_item_type: Optional[str] = None
+    to_item_key: Optional[str] = None
+    to_name: Optional[str] = None
 
 
 class ProgrammeDomainSkillCoverage(_InstitutionBase):
     """A programme-first skill bridge for one mapped domain.
 
-    ``bridge`` means an exact-name skill in the domain evidence that is not
-    present in the programme's recorded CCMAS/JAMB outcome list. It is not an
-    employer-demand claim and it does not infer equivalence between synonyms.
+    ``bridge`` means a sourced market/practice item not evidenced by the
+    programme's recorded CCMAS/JAMB outcome list. It is not an accreditation
+    instruction. Employment postings remain a separate signal.
     """
 
     domain_id: str
@@ -982,6 +1152,24 @@ class ProgrammeDomainSkillCoverage(_InstitutionBase):
     bridge_count: int = 0
     coverage_status: Literal["complete", "source_missing", "review_only"] = "source_missing"
     explanation: str
+    priority: Optional[Literal[1, 2, 3]] = None
+    market_state: Literal["market_practice_evidence", "insufficient_evidence", "source_review"] = "source_review"
+
+
+class ProgrammeCurriculumEvidence(_InstitutionBase):
+    """One raw-but-reviewed programme curriculum row for administrators."""
+
+    outcome_id: Optional[str] = None
+    course_code: Optional[str] = None
+    course_title: Optional[str] = None
+    course_level: Optional[int] = None
+    display_group: Optional[str] = None
+    outcome_index: Optional[int] = None
+    source_text: Optional[str] = None
+    student_text: Optional[str] = None
+    source_locator: Any = None
+    student_display: bool = False
+    data_state: str = "unavailable"
 
 
 class ProgrammeSkillCoverage(_InstitutionBase):
@@ -989,11 +1177,85 @@ class ProgrammeSkillCoverage(_InstitutionBase):
 
     programme_id: str
     programme_name: str
+    jamb_programme_id: Optional[str] = None
+    jamb_programme_name: Optional[str] = None
+    jamb_faculty: Optional[str] = None
+    # Institution-specific JAMB offering row; different from the CCMAS programme id.
+    offering_id: Optional[str] = None
+    jamb_anchor_state: Optional[Literal["mapped", "unmapped"]] = None
+    comparison_scope: Literal["institution_programme", "jamb_ccmas_baseline"] = "institution_programme"
     curriculum_skills: List[str] = Field(default_factory=list)
     curriculum_technical: List[str] = Field(default_factory=list)
     curriculum_transferable: List[str] = Field(default_factory=list)
     curriculum_status: Literal["complete", "source_missing"] = "source_missing"
+    curriculum_contract_state: Literal["available", "unavailable"] = "unavailable"
+    curriculum_evidence: List[ProgrammeCurriculumEvidence] = Field(default_factory=list)
+    programme_abilities: List[ProgrammeResourceEvidence] = Field(default_factory=list)
+    programme_evidence: List[ProgrammeResourceEvidence] = Field(default_factory=list)
     domains: List[ProgrammeDomainSkillCoverage] = Field(default_factory=list)
+
+
+def _coverage_reports_for_offerings(
+    reports: list[ProgrammeSkillCoverage], offerings: list[dict]
+) -> list[ProgrammeSkillCoverage]:
+    """Expand canonical curriculum reports without collapsing JAMB offerings."""
+    reports_by_programme = {report.programme_id: report for report in reports}
+    expanded: list[ProgrammeSkillCoverage] = []
+    for offering in offerings:
+        jamb = offering.get("jamb") or {}
+        jamb_id = str(offering.get("jamb_programme_id") or "")
+        canonical_id = offering.get("programme_id")
+        template = reports_by_programme.get(str(canonical_id)) if canonical_id else None
+        offering_id = str(offering.get("offering_id") or "") or None
+        jamb_name = str(jamb.get("jamb_name") or "JAMB programme")
+        jamb_faculty = str(jamb.get("jamb_faculty") or "").strip() or None
+        if template:
+            expanded.append(template.model_copy(update={
+                "programme_id": f"offering:{offering_id or jamb_id}:{canonical_id}",
+                "programme_name": jamb_name,
+                "jamb_programme_id": jamb_id or None,
+                "jamb_programme_name": jamb_name,
+                "jamb_faculty": jamb_faculty,
+                "offering_id": offering_id,
+                "jamb_anchor_state": "mapped",
+                "comparison_scope": "jamb_ccmas_baseline",
+            }))
+        else:
+            expanded.append(ProgrammeSkillCoverage(
+                programme_id=f"offering:{offering_id or jamb_id}:{canonical_id or 'unmapped'}",
+                programme_name=jamb_name,
+                jamb_programme_id=jamb_id or None,
+                jamb_programme_name=jamb_name,
+                jamb_faculty=jamb_faculty,
+                offering_id=offering_id,
+                jamb_anchor_state="mapped" if canonical_id else "unmapped",
+                comparison_scope="jamb_ccmas_baseline",
+                curriculum_status="source_missing",
+                curriculum_contract_state="unavailable",
+            ))
+    return expanded
+
+
+class JambProgrammeOption(_InstitutionBase):
+    id: str
+    name: str
+    faculty: Optional[str] = None
+    has_ccmas_anchor: bool = False
+
+
+def _jamb_programme_option_rows(jamb_rows: list[dict], mapping_rows: list[dict]) -> list[JambProgrammeOption]:
+    """Shape all canonical identities; an absent mapping never filters a JAMB row."""
+    anchored = {
+        str(row.get("jamb_programme_id"))
+        for row in mapping_rows
+        if row.get("jamb_programme_id")
+    }
+    return [JambProgrammeOption(
+        id=str(row["id"]),
+        name=str(row.get("jamb_name") or "Unnamed JAMB programme"),
+        faculty=str(row.get("jamb_faculty") or "").strip() or None,
+        has_ccmas_anchor=str(row["id"]) in anchored,
+    ) for row in jamb_rows if row.get("id")]
 
 
 class RoleDemandRow(_InstitutionBase):
@@ -1015,12 +1277,55 @@ class RoleDemandRow(_InstitutionBase):
 
 
 class PeerInstitutionRow(_InstitutionBase):
+    institution_id: str
     institution_name: str
+    programmes_accessible: int = 0
     domains_accessible: int = 0
+    specializations_accessible: int = 0
     unique_domains: Optional[List[str]] = None
-    # Peer comparison axes (Phase 6.8): structural coverage on domains + roles.
     roles_accessible: int = 0
     is_self: bool = False
+
+
+class PeerOfferingReach(_InstitutionBase):
+    offering_id: Optional[str] = None
+    jamb_programme_id: str
+    programme_name: str
+    jamb_faculty: Optional[str] = None
+    curriculum_anchor: Literal["mapped", "unmapped"] = "unmapped"
+    domains_accessible: int = 0
+    specializations_accessible: int = 0
+    roles_accessible: int = 0
+
+
+class InstitutionPortfolioReach(_InstitutionBase):
+    institution_id: str
+    institution_name: str
+    programmes_accessible: int = 0
+    domains_accessible: int = 0
+    specializations_accessible: int = 0
+    roles_accessible: int = 0
+    offerings: List[PeerOfferingReach] = Field(default_factory=list)
+    demand_status: Literal["coming_soon", "available"] = "coming_soon"
+    domains_in_demand: Optional[int] = None
+    specializations_in_demand: Optional[int] = None
+    roles_in_demand: Optional[int] = None
+
+
+class PeerSharedOffering(_InstitutionBase):
+    """A shared national JAMB identity with each university's own offering row."""
+    current: PeerOfferingReach
+    peer: PeerOfferingReach
+
+
+class PeerProgrammeComparison(_InstitutionBase):
+    current: InstitutionPortfolioReach
+    peer: InstitutionPortfolioReach
+    programmes_peer_teaches_not_current: List[PeerOfferingReach] = Field(default_factory=list)
+    programmes_current_teaches_not_peer: List[PeerOfferingReach] = Field(default_factory=list)
+    # Retain both institutional rows; never reduce shared offerings to names.
+    programmes_both_teach: List[PeerSharedOffering] = Field(default_factory=list)
+    demand_note: str = "Demand counts are unavailable until source-backed labour-market ingestion is active."
 
 
 class AffiliationStats(_InstitutionBase):
@@ -1604,21 +1909,43 @@ async def get_institution_summary(
     # The RESOLVED org, never the raw path value. Echoing the URL back is how
     # `institution_code: "me"` used to reach the client as if it were real.
     org_id = _assert_own_institution(institution_id, current_user)
+    org = _org_from_school(org_id) if org_id else None
+    institution_name = (org.official_name or org.name) if org else ""
+    institution_code = (org.school_code or org_id or "") if org else (org_id or "")
     try:
         programmes = _school_programmes(current_user, cap=1000)
         prog_ids = [p["id"] for p in programmes]
         pd_rows = _programme_domain_rows(prog_ids)
         domains_accessible = len({r["domain_id"] for r in pd_rows})
         summary = InstitutionSummary(
-            institution_name="",
-            institution_code=org_id or "",
+            institution_name=institution_name,
+            institution_official_name=org.official_name if org else None,
+            institution_short_name=org.short_name if org else None,
+            institution_address=org.address if org else None,
+            institution_city=org.city if org else None,
+            institution_state=org.state if org else None,
+            institution_country=org.country if org else None,
+            institution_type=org.type if org else None,
+            verification_status=org.verification_status if org else None,
+            institution_code=institution_code,
             active_programmes=len(programmes),
             domains_accessible=domains_accessible,
         )
         return ResponseModel(data=summary.model_dump(by_alias=True))
     except Exception as exc:  # noqa: BLE001
         log.error("institutions summary failed", error=str(exc))
-        summary = InstitutionSummary(institution_name="", institution_code=org_id or "")
+        summary = InstitutionSummary(
+            institution_name=institution_name,
+            institution_official_name=org.official_name if org else None,
+            institution_short_name=org.short_name if org else None,
+            institution_address=org.address if org else None,
+            institution_city=org.city if org else None,
+            institution_state=org.state if org else None,
+            institution_country=org.country if org else None,
+            institution_type=org.type if org else None,
+            verification_status=org.verification_status if org else None,
+            institution_code=institution_code,
+        )
         return ResponseModel(data=summary.model_dump(by_alias=True))
 
 
@@ -1813,49 +2140,151 @@ async def get_alerts(
     return ResponseModel(data=[r.model_dump(by_alias=True) for r in rows])
 
 
-@router.get("/{institution_id}/programme-skill-coverage", response_model=ResponseModel)
-async def get_programme_skill_coverage(
+@router.get("/{institution_id}/jamb-programme-options", response_model=ResponseModel)
+async def get_jamb_programme_options(
     institution_id: str,
     current_user: dict = Depends(Auth.require_admin),
 ):
-    """Return programme curriculum coverage only when source evidence exists.
+    """Return the national JAMB catalogue, retaining identities without CCMAS anchors."""
+    _assert_own_institution(institution_id, current_user)
+    try:
+        svc = _svc()
+        jamb_rows = (svc.table("jamb_programmes")
+            .select("id, jamb_name, jamb_faculty")
+            .order("jamb_name")
+            .limit(1000)
+            .execute().data) or []
+        jamb_ids = [str(row.get("id")) for row in jamb_rows if row.get("id")]
+        mappings = (svc.table("programme_mapping")
+            .select("jamb_programme_id")
+            .in_("jamb_programme_id", jamb_ids)
+            .limit(2000)
+            .execute().data) or [] if jamb_ids else []
+        options = _jamb_programme_option_rows(jamb_rows, mappings)
+        return ResponseModel(data=[option.model_dump(by_alias=True) for option in options])
+    except HTTPException:
+        raise
+    except Exception as exc:  # noqa: BLE001
+        log.error("institutions JAMB programme options failed", error=str(exc))
+        raise HTTPException(status_code=503, detail="The national JAMB programme list is unavailable.") from exc
 
-    A domain's generic foundation skills are not proof that a programme has a
-    curriculum gap. Market demand is deliberately not joined here; it belongs
-    to the separate Market Intelligence route. Until programme curriculum
-    coverage is loaded, return an honest empty state.
+
+@router.get("/{institution_id}/programme-skill-coverage", response_model=ResponseModel)
+async def get_programme_skill_coverage(
+    institution_id: str,
+    jamb_programme_id: Optional[str] = Query(default=None),
+    current_user: dict = Depends(Auth.require_admin),
+):
+    """Return CCMAS teaching versus sourced market/practice evidence.
+
+    The programme curriculum is the teaching baseline. Domain, subgroup and
+    role skills, tools and certifications are the sourced market/practice
+    comparison layer. A ``bridge`` item is therefore a gap candidate when it
+    is not evidenced in the programme profile; it is not an accreditation
+    instruction. Employment-posting, salary and vacancy metrics remain owned
+    by the separate Market Intelligence route.
     """
     _assert_own_institution(institution_id, current_user)
     try:
         svc = _svc()
-        programmes = _school_programmes(current_user, cap=2000)
+        requested_jamb: dict | None = None
+        institution_offerings: list[dict] = []
+        if jamb_programme_id:
+            requested_jamb_rows = (svc.table("jamb_programmes")
+                .select("id, jamb_name, jamb_faculty")
+                .eq("id", jamb_programme_id)
+                .limit(1).execute().data) or []
+            if not requested_jamb_rows:
+                raise HTTPException(status_code=404, detail="JAMB programme not found.")
+            requested_jamb = requested_jamb_rows[0]
+            mapping_rows = (svc.table("programme_mapping")
+                .select("programme_id")
+                .eq("jamb_programme_id", jamb_programme_id)
+                .limit(1).execute().data) or []
+            if not mapping_rows or not mapping_rows[0].get("programme_id"):
+                return ResponseModel(data=[ProgrammeSkillCoverage(
+                    programme_id=f"jamb:{jamb_programme_id}",
+                    programme_name=str(requested_jamb.get("jamb_name") or "JAMB programme"),
+                    jamb_programme_id=jamb_programme_id,
+                    jamb_programme_name=str(requested_jamb.get("jamb_name") or "JAMB programme"),
+                    jamb_faculty=str(requested_jamb.get("jamb_faculty") or "").strip() or None,
+                    jamb_anchor_state="unmapped",
+                    comparison_scope="jamb_ccmas_baseline",
+                    curriculum_status="source_missing",
+                    curriculum_contract_state="unavailable",
+                ).model_dump(by_alias=True)])
+            canonical_programme_id = str(mapping_rows[0]["programme_id"])
+            programmes = (svc.table("programmes")
+                .select("id, name, discipline, qualification")
+                .eq("id", canonical_programme_id)
+                .limit(1).execute().data) or []
+        else:
+            org_id = _resolve_org(current_user)
+            offering_rows = (svc.table("school_programmes")
+                .select("id, jamb_programme_id")
+                .eq("school_id", org_id)
+                .order("jamb_programme_id")
+                .limit(2000).execute().data) or [] if org_id else []
+            jamb_ids = list(dict.fromkeys(
+                str(row.get("jamb_programme_id"))
+                for row in offering_rows
+                if row.get("jamb_programme_id")
+            ))
+            jamb_rows = (svc.table("jamb_programmes")
+                .select("id, jamb_name, jamb_faculty")
+                .in_("id", jamb_ids).limit(2000).execute().data) or [] if jamb_ids else []
+            jamb_by_id = {str(row.get("id")): row for row in jamb_rows if row.get("id")}
+            mapping_rows = (svc.table("programme_mapping")
+                .select("jamb_programme_id, programme_id")
+                .in_("jamb_programme_id", jamb_ids).limit(2000).execute().data) or [] if jamb_ids else []
+            programme_by_jamb = {
+                str(row.get("jamb_programme_id")): str(row.get("programme_id"))
+                for row in mapping_rows
+                if row.get("jamb_programme_id") and row.get("programme_id")
+            }
+            institution_offerings = [
+                {
+                    "offering_id": str(offering.get("id") or ""),
+                    "jamb_programme_id": jamb_id,
+                    "jamb": jamb_by_id.get(jamb_id, {}),
+                    "programme_id": programme_by_jamb.get(jamb_id),
+                }
+                for offering in offering_rows
+                if (jamb_id := str(offering.get("jamb_programme_id") or ""))
+            ]
+            programmes = _school_programmes(current_user, cap=2000)
         programme_ids = [str(row.get("id")) for row in programmes if row.get("id")]
         if not programme_ids:
+            if requested_jamb:
+                return ResponseModel(data=[ProgrammeSkillCoverage(
+                    programme_id=f"jamb:{jamb_programme_id}",
+                    programme_name=str(requested_jamb.get("jamb_name") or "JAMB programme"),
+                    jamb_programme_id=jamb_programme_id,
+                    jamb_programme_name=str(requested_jamb.get("jamb_name") or "JAMB programme"),
+                    jamb_faculty=str(requested_jamb.get("jamb_faculty") or "").strip() or None,
+                    jamb_anchor_state="mapped",
+                    comparison_scope="jamb_ccmas_baseline",
+                    curriculum_status="source_missing",
+                    curriculum_contract_state="unavailable",
+                ).model_dump(by_alias=True)])
             return ResponseModel(data=[])
 
-        mappings = (
-            svc.table("programme_mapping")
-            .select("programme_id, jamb_programme_id")
+        # The cleaned curriculum contract is the authoritative admin teaching
+        # record when it has been deployed. Keep this optional for older
+        # databases: absence is an unavailable evidence layer, never a reason
+        # to promote legacy skills arrays as source-backed curriculum.
+        curriculum_outcome_rows = _optional_rows(
+            lambda: svc.table("programme_curriculum_outcomes")
+            .select("*")
             .in_("programme_id", programme_ids)
-            .limit(20000)
-            .execute()
-            .data
-        ) or []
-        jamb_ids = list({str(row.get("jamb_programme_id")) for row in mappings if row.get("jamb_programme_id")})
-        jamb_by_programme: dict[str, list[str]] = {}
-        for row in mappings:
-            if row.get("programme_id") and row.get("jamb_programme_id"):
-                jamb_by_programme.setdefault(str(row["programme_id"]), []).append(str(row["jamb_programme_id"]))
-
-        jamb_rows = (
-            svc.table("jamb_programmes")
-            .select("id, skills_technical, skills_transferable")
-            .in_("id", jamb_ids)
-            .limit(20000)
-            .execute()
-            .data
-        ) or [] if jamb_ids else []
-        jamb_skills = {str(row.get("id")): row for row in jamb_rows if row.get("id")}
+            .limit(200000)
+        ) if programme_ids else []
+        programme_ability_rows = _optional_rows(
+            lambda: svc.table("programme_abilities")
+            .select("*")
+            .in_("programme_id", programme_ids)
+            .limit(50000)
+        ) if programme_ids else []
 
         domain_links = _programme_domain_rows(programme_ids, cap=20000)
         domain_ids = list({str(row.get("domain_id")) for row in domain_links if row.get("domain_id")})
@@ -1868,6 +2297,11 @@ async def get_programme_skill_coverage(
             .data
         ) or [] if domain_ids else []
         domain_by_id = {str(row.get("id")): row for row in domain_rows if row.get("id")}
+        domain_keys = [
+            str(row.get("domain_key"))
+            for row in domain_rows
+            if row.get("domain_key")
+        ]
 
         subgroup_rows = (
             svc.table("domain_subgroups")
@@ -1902,28 +2336,45 @@ async def get_programme_skill_coverage(
         # the public detail routes. Read them here as optional evidence layers;
         # if an additive table is absent on an older test database, that layer
         # stays unavailable instead of becoming invented data.
-        def optional_rows(builder) -> list[dict]:
-            try:
-                return builder().execute().data or []
-            except Exception as resource_exc:  # noqa: BLE001
-                log.debug("institutions curriculum resource layer unavailable", error=str(resource_exc))
-                return []
-
-        domain_bridge_rows = optional_rows(lambda: svc.table("domain_bridge_skills").select("domain_id, skill_name, category").in_("domain_id", domain_ids).limit(40000)) if domain_ids else []
-        role_bridge_rows = optional_rows(lambda: svc.table("role_bridge_skills").select("domain_id, role_id, skill_name, category").in_("domain_id", domain_ids).limit(80000)) if domain_ids else []
-        tool_rows = optional_rows(lambda: svc.table("domain_tools").select("*").in_("domain_id", domain_ids).limit(80000)) if domain_ids else []
-        certification_rows = optional_rows(lambda: svc.table("domain_certifications").select("*").in_("domain_id", domain_ids).limit(80000)) if domain_ids else []
-        role_tool_rows = optional_rows(lambda: svc.table("domain_tools").select("*").in_("domain_id", domain_ids).eq("scope", "role").limit(80000)) if domain_ids else []
-        role_cert_rows = optional_rows(lambda: svc.table("role_certifications").select("*").limit(80000))
-        learning_resource_rows = optional_rows(
+        domain_bridge_rows = _optional_rows(lambda: svc.table("domain_bridge_skills").select("domain_id, skill_name, category").in_("domain_id", domain_ids).limit(40000)) if domain_ids else []
+        role_bridge_rows = _optional_rows(lambda: svc.table("role_bridge_skills").select("domain_id, role_id, skill_name, category").in_("domain_id", domain_ids).limit(80000)) if domain_ids else []
+        tool_rows = _optional_rows(lambda: svc.table("domain_tools").select("*").in_("domain_id", domain_ids).limit(80000)) if domain_ids else []
+        certification_rows = _optional_rows(lambda: svc.table("domain_certifications").select("*").in_("domain_id", domain_ids).limit(80000)) if domain_ids else []
+        role_tool_rows = _optional_rows(lambda: svc.table("domain_tools").select("*").in_("domain_id", domain_ids).eq("scope", "role").limit(80000)) if domain_ids else []
+        role_cert_rows = _optional_rows(lambda: svc.table("role_certifications").select("*").limit(80000))
+        learning_resource_rows = _optional_rows(
             lambda: svc.table("career_learning_resources")
-            .select(
-                "id, domain_id, subgroup_id, role_id, resource_type, target_name, "
-                "provider, url, description, source_confidence, data_state"
-            )
+            .select("*")
             .in_("domain_id", domain_ids)
             .limit(150000)
         ) if domain_ids else []
+        # Contextual items and relationships are the source-backed contract
+        # for skills, tools, competencies, certifications and their explicit
+        # relationships. They are read for the selected institution's mapped
+        # domains and remain admin evidence until the student gate is met.
+        contextual_item_rows = _optional_rows(
+            lambda: svc.table("career_context_items")
+            .select("*")
+            .in_("domain_key", domain_keys)
+            .limit(200000)
+        ) if domain_keys else []
+        relationship_rows = _optional_rows(
+            lambda: svc.table("career_item_relationships")
+            .select("*")
+            .in_("domain_key", domain_keys)
+            .limit(250000)
+        ) if domain_keys else []
+
+        curriculum_by_programme: dict[str, list[dict]] = {}
+        for row in curriculum_outcome_rows:
+            programme_key = str(row.get("programme_id") or "").strip()
+            if programme_key:
+                curriculum_by_programme.setdefault(programme_key, []).append(row)
+        abilities_by_programme: dict[str, list[dict]] = {}
+        for row in programme_ability_rows:
+            programme_key = str(row.get("programme_id") or "").strip()
+            if programme_key:
+                abilities_by_programme.setdefault(programme_key, []).append(row)
 
         programme_names = {str(row.get("id")): str(row.get("name") or "") for row in programmes if row.get("id")}
         links_by_programme: dict[str, list[dict]] = {}
@@ -1946,14 +2397,117 @@ async def get_programme_skill_coverage(
                     result.append(value)
             return result
 
+        def resource_details(kind: str, value: str, row: dict | None = None) -> dict:
+            """Build the comparison metadata without inventing equivalence."""
+            source_row = row or {}
+            aliases = _source_aliases(source_row)
+            identities = {_canonical_item_key(value)} | {
+                _canonical_item_key(alias) for alias in aliases
+            }
+            taught = kind in {"skill", "competency", "tool", "certification"} and bool(identities & curriculum_keys)
+            data_state = str(source_row.get("data_state") or "").strip() or None
+            source_confidence = str(source_row.get("source_confidence") or "").strip() or None
+            market_state = (
+                "source_review"
+                if data_state in {"unsourced", "partial", "review", "source_review"}
+                else "market_practice_evidence"
+            )
+            curriculum_state = "taught" if taught else "not_evidenced"
+            if market_state == "source_review":
+                curriculum_state = "source_review"
+            explanation = (
+                "This canonical skill identity is evidenced in the CCMAS outcome profile."
+                if taught
+                else "This sourced market/practice item is not evidenced by the programme outcome profile. Review the curriculum and source before treating it as a teaching change."
+            )
+            return {
+                "canonical_key": _canonical_item_key(value) or None,
+                "aliases": aliases,
+                "state": "covered" if taught else "bridge",
+                "curriculum_state": curriculum_state,
+                "market_state": market_state,
+                "explanation": explanation,
+                "source_confidence": source_confidence,
+                "data_state": data_state,
+                "evidence_source": _provenance_value(source_row, "source_url", "provider", "source"),
+                "observed_at": _provenance_value(source_row, "observed_at", "as_of", "checked_at", "updated_at", "price_as_of"),
+                "geography": str(source_row.get("region") or source_row.get("geography") or "").strip() or None,
+            }
+
         def resource_state(kind: str, value: str) -> Literal["covered", "bridge"]:
-            # The programme profile contains learning outcomes/skills, not
-            # proof that a specific tool or certification was taught. Only a
-            # skill can therefore be marked covered by exact-name overlap;
-            # tools and certifications remain actionable bridge resources.
-            if kind == "skill" and " ".join(value.casefold().split()) in curriculum_keys:
-                return "covered"
-            return "bridge"
+            return resource_details(kind, value)["state"]
+
+        def make_resource(
+            name: str,
+            kind: Literal["skill", "tool", "competency", "ability", "certification", "resource", "relationship"],
+            source: Literal["programme", "domain", "subgroup", "role"],
+            *,
+            row: dict | None = None,
+            scope_name: str | None = None,
+            role_name: str | None = None,
+            url: str | None = None,
+            provider: str | None = None,
+            description: str | None = None,
+            resource_type: str | None = None,
+            context_level: str | None = None,
+            programme_key: str | None = None,
+            relationship_type: str | None = None,
+            relationship_status: str | None = None,
+            from_item_type: str | None = None,
+            to_item_type: str | None = None,
+            to_item_key: str | None = None,
+            to_name: str | None = None,
+        ) -> ProgrammeResourceEvidence:
+            source_row = row or {}
+            details = resource_details(kind, name, source_row)
+            level = context_level or source
+            row_for_state = dict(source_row)
+            row_for_state.setdefault("item_type", kind)
+            row_for_state.setdefault("guidance_owner", level)
+            row_for_state.setdefault("context_key", source_row.get("context_key") or scope_name or programme_key)
+            if relationship_type:
+                row_for_state.setdefault("relationship_type", relationship_type)
+            if relationship_status:
+                row_for_state.setdefault("relationship_status", relationship_status)
+            evidence_state = str(source_row.get("evidence_state") or "").strip()
+            if evidence_state not in {"verified", "approved", "review_required", "no_link", "not_established", "audit_only", "unavailable"}:
+                evidence_state = _admin_evidence_state(row_for_state, level)
+            link_state = str(source_row.get("link_state") or "").strip() or None
+            link_url = str(source_row.get("link_url") or source_row.get("url") or url or "").strip() or None
+            source_locator = _provenance_json(source_row, "source_locator", "sourceLocator", "locator")
+            source_references = _json_list(_provenance_json(source_row, "source_references", "sourceReferences"))
+            source_locators = _json_list(_provenance_json(source_row, "source_locators", "sourceLocators"))
+            source_ids = [str(item).strip() for item in _json_list(source_row.get("source_ids")) if str(item).strip()]
+            return ProgrammeResourceEvidence(
+                name=name,
+                kind=kind,
+                source=source,
+                scope_name=scope_name,
+                role_name=role_name,
+                url=link_url,
+                provider=provider,
+                description=description,
+                resource_type=resource_type,
+                **details,
+                context_key=str(row_for_state.get("context_key") or "").strip() or None,
+                programme_key=programme_key or str(source_row.get("programme_key") or source_row.get("programme_id") or "").strip() or None,
+                guidance_owner=str(source_row.get("guidance_owner") or level).strip() or None,
+                evidence_state=evidence_state,
+                source_locator=source_locator,
+                source_accessed_at=_provenance_value(source_row, "source_accessed_at", "sourceAccessedAt", "accessed_at", "observed_at", "verified_at"),
+                source_references=source_references,
+                source_locators=source_locators,
+                link_state=link_state,
+                link_url=link_url,
+                no_link_reason=str(source_row.get("no_link_reason") or "").strip() or None,
+                source_ids=source_ids,
+                relationship_type=relationship_type or str(source_row.get("relationship_type") or "").strip() or None,
+                relationship_status=relationship_status or str(source_row.get("relationship_status") or "").strip() or None,
+                from_item_type=from_item_type or str(source_row.get("from_item_type") or "").strip() or None,
+                to_item_type=to_item_type or str(source_row.get("to_item_type") or "").strip() or None,
+                to_item_key=to_item_key or str(source_row.get("to_item_key") or "").strip() or None,
+                to_name=to_name or str(source_row.get("to_name") or "").strip() or None,
+            )
 
         def learning_kind(resource_type: object) -> Literal["skill", "tool", "certification"] | None:
             kind = str(resource_type or "").strip().casefold()
@@ -1969,17 +2523,60 @@ async def get_programme_skill_coverage(
 
         reports: list[ProgrammeSkillCoverage] = []
         for programme_id in programme_ids:
-            technical: list[str] = []
-            transferable: list[str] = []
-            for jamb_id in jamb_by_programme.get(programme_id, []):
-                row = jamb_skills.get(jamb_id) or {}
-                technical.extend(skill_names(row.get("skills_technical")))
-                transferable.extend(skill_names(row.get("skills_transferable")))
-            technical = unique(technical)
-            transferable = unique(transferable)
-            curriculum = unique(technical + transferable)
-            curriculum_keys = {" ".join(value.casefold().split()) for value in curriculum}
+            contract_rows = curriculum_by_programme.get(programme_id, [])
+            clean_rows = [
+                row for row in contract_rows
+                if str(row.get("data_state") or "").strip() == "source_backed"
+                and bool(row.get("student_display", True))
+            ]
+            curriculum_evidence = [
+                ProgrammeCurriculumEvidence(
+                    outcome_id=str(row.get("outcome_id") or "").strip() or None,
+                    course_code=str(row.get("course_code") or "").strip() or None,
+                    course_title=str(row.get("course_title") or "").strip() or None,
+                    course_level=row.get("course_level"),
+                    display_group=str(row.get("display_group") or "").strip() or None,
+                    outcome_index=row.get("outcome_index"),
+                    source_text=str(row.get("source_text") or "").strip() or None,
+                    student_text=str(row.get("student_text") or "").strip() or None,
+                    source_locator=_provenance_json(row, "source_locator", "sourceLocator", "locator"),
+                    student_display=bool(row.get("student_display", False)),
+                    data_state=str(row.get("data_state") or "unavailable"),
+                )
+                for row in contract_rows
+            ]
+            # The cleaned programme contract is the only teaching baseline.
+            # Legacy JAMB skill arrays remain available to older catalogue
+            # routes, but cannot masquerade as reviewed curriculum evidence.
+            curriculum = unique([
+                str(row.get("student_text") or "").strip()
+                for row in clean_rows
+                if str(row.get("student_text") or "").strip()
+            ])
+            technical = []
+            transferable = []
+            curriculum_keys = {_canonical_item_key(value) for value in curriculum}
             coverage_domains: list[ProgrammeDomainSkillCoverage] = []
+            programme_abilities: list[ProgrammeResourceEvidence] = []
+            for ability in abilities_by_programme.get(programme_id, []):
+                ability_row = dict(ability)
+                ability_row.setdefault("guidance_owner", "programme")
+                ability_row.setdefault("context_key", programme_id)
+                ability_row.setdefault("item_type", "ability")
+                if not ability_row.get("link_state"):
+                    ability_row["link_state"] = "no_link"
+                    ability_row.setdefault("no_link_reason", "No item-specific learning link is recorded for this programme ability.")
+                title = str(ability.get("display_title") or ability.get("ability_id") or "Programme ability").strip()
+                programme_abilities.append(make_resource(
+                    title,
+                    "ability",
+                    "programme",
+                    row=ability_row,
+                    programme_key=programme_id,
+                    description=str(ability.get("student_text") or ability.get("source_text") or "").strip() or None,
+                ))
+
+            programme_evidence_rows: list[ProgrammeResourceEvidence] = list(programme_abilities)
             for link in links_by_programme.get(programme_id, []):
                 domain_id = str(link["domain_id"])
                 domain = domain_by_id.get(domain_id) or {}
@@ -1991,50 +2588,96 @@ async def get_programme_skill_coverage(
                     url = str(row.get("url") or "").strip()
                     if not kind or not value or not url:
                         return
-                    domain_resources.append(ProgrammeResourceEvidence(
-                        name=value,
-                        kind=kind,
-                        source=source,
+                    domain_resources.append(make_resource(
+                        value,
+                        kind,
+                        source,
+                        row=row,
                         scope_name=scope_name,
                         role_name=role_name,
-                        state=resource_state(kind, value),
                         url=url,
                         provider=str(row.get("provider") or "").strip() or None,
                         description=str(row.get("description") or "").strip() or None,
                         resource_type=str(row.get("resource_type") or "").strip() or None,
-                        source_confidence=str(row.get("source_confidence") or "").strip() or None,
-                        data_state=str(row.get("data_state") or "").strip() or None,
                     ))
 
                 for value in skill_names(domain.get("foundation_skills")):
-                    domain_resources.append(ProgrammeResourceEvidence(name=value, kind="skill", source="domain", state=resource_state("skill", value)))
+                    domain_resources.append(make_resource(value, "skill", "domain"))
                 for row in domain_bridge_rows:
                     if str(row.get("domain_id")) == domain_id and row.get("skill_name"):
                         value = str(row["skill_name"]).strip()
-                        domain_resources.append(ProgrammeResourceEvidence(name=value, kind="skill", source="domain", state=resource_state("skill", value)))
+                        domain_resources.append(make_resource(value, "skill", "domain", row=row))
                 for row in tool_rows:
                     if str(row.get("domain_id")) == domain_id and row.get("scope") == "domain" and row.get("tool_name"):
                         value = str(row["tool_name"]).strip()
-                        domain_resources.append(ProgrammeResourceEvidence(name=value, kind="tool", source="domain", state=resource_state("tool", value), url=str(row.get("tool_url") or "").strip() or None, provider=str(row.get("source") or "").strip() or None, source_confidence=str(row.get("source_confidence") or "").strip() or None, data_state=str(row.get("data_state") or "").strip() or None))
+                        domain_resources.append(make_resource(value, "tool", "domain", row=row, url=str(row.get("tool_url") or "").strip() or None, provider=str(row.get("source") or "").strip() or None))
                 for row in certification_rows:
                     if str(row.get("domain_id")) == domain_id and row.get("placement") in {"gateway", "role_hint"} and row.get("name"):
                         value = str(row["name"]).strip()
-                        domain_resources.append(ProgrammeResourceEvidence(name=value, kind="certification", source="domain", state=resource_state("certification", value), url=str(row.get("official_url") or "").strip() or None, description=str(row.get("body") or "").strip() or None, source_confidence=str(row.get("source_confidence") or "").strip() or None, data_state=str(row.get("data_state") or "").strip() or None))
+                        domain_resources.append(make_resource(value, "certification", "domain", row=row, url=str(row.get("official_url") or "").strip() or None, description=str(row.get("body") or "").strip() or None))
                 for row in learning_resource_rows:
                     if str(row.get("domain_id")) == domain_id and not row.get("subgroup_id") and not row.get("role_id"):
                         add_learning_resource(row, "domain")
+
+                # The contextual contract is the canonical typed item layer.
+                # Keep all owned and review-only rows visible to admins; the
+                # student renderer applies the stricter exposure gate later.
+                for row in contextual_item_rows:
+                    if str(row.get("domain_key") or "") != str(domain.get("domain_key") or ""):
+                        continue
+                    level = str(row.get("context_level") or "").strip()
+                    if level not in {"domain", "subgroup", "role"}:
+                        continue
+                    scope_name = str(row.get("context_key") or "").strip() or None
+                    programme_evidence_rows.append(make_resource(
+                        str(row.get("name") or row.get("item_key") or "Unnamed item").strip(),
+                        str(row.get("item_type") or "resource").strip() if str(row.get("item_type") or "resource").strip() in {"skill", "tool", "competency", "certification", "resource", "relationship"} else "resource",
+                        level,
+                        row=row,
+                        scope_name=scope_name,
+                        programme_key=programme_id,
+                        context_level=level,
+                        url=str(row.get("link_url") or "").strip() or None,
+                        provider=str(row.get("link_title") or "").strip() or None,
+                        description=str(row.get("plain_meaning") or "").strip() or None,
+                    ))
+                for row in relationship_rows:
+                    if str(row.get("domain_key") or "") != str(domain.get("domain_key") or ""):
+                        continue
+                    level = str(row.get("context_level") or "").strip()
+                    if level not in {"domain", "subgroup", "role"}:
+                        continue
+                    programme_evidence_rows.append(make_resource(
+                        str(row.get("from_name") or row.get("from_item_key") or "Relationship").strip(),
+                        "relationship",
+                        level,
+                        row=row,
+                        scope_name=str(row.get("context_key") or "").strip() or None,
+                        programme_key=programme_id,
+                        context_level=level,
+                        description=(
+                            f"{row.get('relationship_type') or 'Relationship'} → "
+                            f"{row.get('to_name') or 'target not established'}"
+                        ),
+                        relationship_type=str(row.get("relationship_type") or "").strip() or None,
+                        relationship_status=str(row.get("relationship_status") or "").strip() or None,
+                        from_item_type=str(row.get("from_item_type") or "").strip() or None,
+                        to_item_type=str(row.get("to_item_type") or "").strip() or None,
+                        to_item_key=str(row.get("to_item_key") or "").strip() or None,
+                        to_name=str(row.get("to_name") or "").strip() or None,
+                    ))
                 for subgroup in subgroup_by_domain.get(domain_id, []):
                     subgroup_name = str(subgroup.get("label") or "") or None
                     for value in skill_names(subgroup.get("cluster_skills")):
-                        domain_resources.append(ProgrammeResourceEvidence(name=value, kind="skill", source="subgroup", scope_name=subgroup_name, state=resource_state("skill", value)))
+                        domain_resources.append(make_resource(value, "skill", "subgroup", row=subgroup, scope_name=subgroup_name))
                     for row in tool_rows:
                         if str(row.get("domain_id")) == domain_id and str(row.get("subgroup_id")) == str(subgroup.get("id")) and row.get("tool_name"):
                             value = str(row["tool_name"]).strip()
-                            domain_resources.append(ProgrammeResourceEvidence(name=value, kind="tool", source="subgroup", scope_name=subgroup_name, state=resource_state("tool", value), url=str(row.get("tool_url") or "").strip() or None, provider=str(row.get("source") or "").strip() or None, source_confidence=str(row.get("source_confidence") or "").strip() or None, data_state=str(row.get("data_state") or "").strip() or None))
+                            domain_resources.append(make_resource(value, "tool", "subgroup", row=row, scope_name=subgroup_name, url=str(row.get("tool_url") or "").strip() or None, provider=str(row.get("source") or "").strip() or None))
                     for row in certification_rows:
                         if str(row.get("domain_id")) == domain_id and str(row.get("subgroup_id")) == str(subgroup.get("id")) and row.get("placement") == "subgroup" and row.get("name"):
                             value = str(row["name"]).strip()
-                            domain_resources.append(ProgrammeResourceEvidence(name=value, kind="certification", source="subgroup", scope_name=subgroup_name, state=resource_state("certification", value), url=str(row.get("official_url") or "").strip() or None, description=str(row.get("body") or "").strip() or None, source_confidence=str(row.get("source_confidence") or "").strip() or None, data_state=str(row.get("data_state") or "").strip() or None))
+                            domain_resources.append(make_resource(value, "certification", "subgroup", row=row, scope_name=subgroup_name, url=str(row.get("official_url") or "").strip() or None, description=str(row.get("body") or "").strip() or None))
                     for row in learning_resource_rows:
                         if str(row.get("domain_id")) == domain_id and str(row.get("subgroup_id")) == str(subgroup.get("id")) and not row.get("role_id"):
                             add_learning_resource(row, "subgroup", scope_name=subgroup_name)
@@ -2042,20 +2685,20 @@ async def get_programme_skill_coverage(
                     role_name = str(role.get("role_name") or "") or None
                     subgroup_name = subgroup_names.get(str(role.get("subgroup_id"))) or None
                     for value in skill_names(role.get("essential_skills")) + skill_names(role.get("optional_skills")):
-                        domain_resources.append(ProgrammeResourceEvidence(name=value, kind="skill", source="role", scope_name=subgroup_name, role_name=role_name, state=resource_state("skill", value)))
+                        domain_resources.append(make_resource(value, "skill", "role", scope_name=subgroup_name, role_name=role_name))
                     for row in role_bridge_rows:
                         if str(row.get("domain_id")) == domain_id and str(row.get("role_id")) in {str(role.get("id")), str(role.get("role_key"))} and row.get("skill_name"):
                             value = str(row["skill_name"]).strip()
-                            domain_resources.append(ProgrammeResourceEvidence(name=value, kind="skill", source="role", scope_name=subgroup_name, role_name=role_name, state=resource_state("skill", value)))
+                            domain_resources.append(make_resource(value, "skill", "role", row=row, scope_name=subgroup_name, role_name=role_name))
                     for row in role_tool_rows:
                         if str(row.get("domain_id")) == domain_id and str(row.get("role_id")) == str(role.get("id")) and row.get("tool_name"):
                             value = str(row["tool_name"]).strip()
-                            domain_resources.append(ProgrammeResourceEvidence(name=value, kind="tool", source="role", scope_name=subgroup_name, role_name=role_name, state=resource_state("tool", value), url=str(row.get("tool_url") or "").strip() or None, provider=str(row.get("source") or "").strip() or None, source_confidence=str(row.get("source_confidence") or "").strip() or None, data_state=str(row.get("data_state") or "").strip() or None))
+                            domain_resources.append(make_resource(value, "tool", "role", row=row, scope_name=subgroup_name, role_name=role_name, url=str(row.get("tool_url") or "").strip() or None, provider=str(row.get("source") or "").strip() or None))
                     role_key = str(role.get("role_key") or "")
                     for row in role_cert_rows:
                         if str(row.get("role_key")) == role_key and row.get("name"):
                             value = str(row["name"]).strip()
-                            domain_resources.append(ProgrammeResourceEvidence(name=value, kind="certification", source="role", scope_name=subgroup_name, role_name=role_name, state=resource_state("certification", value), url=str(row.get("official_url") or "").strip() or None, description=str(row.get("body") or "").strip() or None, provider=str(row.get("source") or "").strip() or None, source_confidence=str(row.get("source_confidence") or "").strip() or None, data_state=str(row.get("data_state") or "").strip() or None))
+                            domain_resources.append(make_resource(value, "certification", "role", row=row, scope_name=subgroup_name, role_name=role_name, url=str(row.get("official_url") or "").strip() or None, description=str(row.get("body") or "").strip() or None, provider=str(row.get("source") or "").strip() or None))
                     for row in learning_resource_rows:
                         if str(row.get("domain_id")) == domain_id and str(row.get("role_id")) == str(role.get("id")):
                             add_learning_resource(row, "role", scope_name=subgroup_name, role_name=role_name)
@@ -2063,10 +2706,10 @@ async def get_programme_skill_coverage(
                 # Keep the evidence list readable without losing the domain
                 # grouping. The same skill can legitimately appear at more
                 # than one level, so dedupe by skill + evidence scope.
-                seen_evidence: set[tuple[str, str, str, str]] = set()
+                seen_evidence: set[tuple[str, str, str, str, str]] = set()
                 deduped: list[ProgrammeResourceEvidence] = []
                 for evidence in domain_resources:
-                    key = (evidence.name.casefold(), evidence.kind, evidence.source, evidence.scope_name or "", evidence.role_name or "")
+                    key = (evidence.canonical_key or _canonical_item_key(evidence.name), evidence.kind, evidence.source, evidence.scope_name or "", evidence.role_name or "")
                     if key not in seen_evidence:
                         seen_evidence.add(key)
                         deduped.append(evidence)
@@ -2081,7 +2724,7 @@ async def get_programme_skill_coverage(
                 elif not deduped:
                     explanation = "This mapped domain does not yet have source-backed skill evidence to compare."
                 else:
-                    explanation = "Bridge resources are domain, subgroup and role skills, tools and certifications not evidenced by the programme outcome profile. Skill coverage uses exact-name overlap only; tools and certifications remain bridge resources unless separate programme evidence is added."
+                    explanation = "Sourced market/practice resources are domain, subgroup and role skills, tools and certifications. Items not evidenced by the programme outcome profile are gap candidates for review; exact-name skill overlap is only an initial evidence check, and tools/certifications remain candidates unless programme evidence is added."
                 coverage_domains.append(ProgrammeDomainSkillCoverage(
                     domain_id=str(domain.get("domain_key") or domain_id),
                     domain_name=str(domain.get("name") or "Domain not named"),
@@ -2092,17 +2735,57 @@ async def get_programme_skill_coverage(
                     bridge_count=bridge_count,
                     coverage_status=status,
                     explanation=explanation,
+                    priority={"direct": 1, "functional": 2, "adjacent": 3}.get(match_type),
+                    market_state=(
+                        "market_practice_evidence"
+                        if any(evidence.market_state == "market_practice_evidence" for evidence in deduped)
+                        else "source_review" if deduped else "insufficient_evidence"
+                    ),
                 ))
+            seen_programme_evidence: set[tuple[str, str, str, str, str, str]] = set()
+            deduped_programme_evidence: list[ProgrammeResourceEvidence] = []
+            for evidence in programme_evidence_rows:
+                key = (
+                    evidence.kind,
+                    evidence.name.casefold(),
+                    evidence.source,
+                    evidence.context_key or "",
+                    evidence.role_name or "",
+                    evidence.relationship_type or "",
+                )
+                if key not in seen_programme_evidence:
+                    seen_programme_evidence.add(key)
+                    deduped_programme_evidence.append(evidence)
             reports.append(ProgrammeSkillCoverage(
                 programme_id=programme_id,
-                programme_name=programme_names.get(programme_id) or "Programme not named",
+                programme_name=(str(requested_jamb.get("jamb_name")) if requested_jamb else programme_names.get(programme_id)) or "Programme not named",
+                jamb_programme_id=jamb_programme_id,
+                jamb_programme_name=str(requested_jamb.get("jamb_name")) if requested_jamb else None,
+                jamb_faculty=str(requested_jamb.get("jamb_faculty") or "").strip() or None if requested_jamb else None,
+                jamb_anchor_state="mapped" if requested_jamb else None,
+                comparison_scope="jamb_ccmas_baseline" if requested_jamb else "institution_programme",
                 curriculum_skills=curriculum,
                 curriculum_technical=technical,
                 curriculum_transferable=transferable,
                 curriculum_status="complete" if curriculum else "source_missing",
+                curriculum_contract_state="available" if contract_rows else "unavailable",
+                curriculum_evidence=curriculum_evidence,
+                programme_abilities=programme_abilities,
+                programme_evidence=deduped_programme_evidence,
                 domains=coverage_domains,
             ))
-        return ResponseModel(data=[report.model_dump(by_alias=True) for report in reports])
+        if requested_jamb:
+            return ResponseModel(data=[report.model_dump(by_alias=True) for report in reports])
+
+        # Preserve one report row per university ↔ JAMB offering. Several
+        # JAMB identities may share a CCMAS curriculum, but the institution's
+        # offering context and faculty must not disappear in a canonical-id
+        # aggregation. CCMAS evidence is reused as supporting curriculum, not
+        # relabelled as a university-authored curriculum.
+        offering_reports = _coverage_reports_for_offerings(reports, institution_offerings)
+        return ResponseModel(data=[report.model_dump(by_alias=True) for report in offering_reports])
+    except HTTPException:
+        raise
     except Exception as exc:  # noqa: BLE001
         log.error("institutions curriculum skill coverage failed", error=str(exc))
         return ResponseModel(data=[])
@@ -2186,91 +2869,209 @@ async def get_peers(
     institution_id: str,
     current_user: dict = Depends(Auth.require_admin),
 ):
-    """Peer-institution comparison (ADMIN-ONLY, Phase 6.8).
-
-    Compares schools on DOMAIN coverage + ROLE coverage. Each
-    school resolves to its reachable-domain set via school → school_programmes →
-    programme_mapping → CCMAS programme → programme_domain → domains. Role
-    coverage = distinct roles in those domains. `unique_domains` = domains the
-    current school covers that a peer does not.
-    """
+    """All-university aggregate index; detailed offering diffs use the route below."""
     _assert_own_institution(institution_id, current_user)
     try:
         svc = _svc()
-        # Resolve the current admin's school (may be None → all-programmes self).
         self_school_id = _resolve_org(current_user)
-
-        # A bounded peer set: universities with the most school_programmes rows.
-        # (Cheap proxy for "biggest portfolios" without a heavy aggregate.)
         schools_res = (
             svc.table("schools")
             .select("id, name, institution_type")
             .eq("institution_type", "university")
-            .limit(15)
+            .order("name")
+            .limit(2000)
             .execute()
         )
         peer_schools = schools_res.data or []
-        # Ensure the current school is included even if outside the sample.
-        if self_school_id and all(s["id"] != self_school_id for s in peer_schools):
+        if self_school_id and all(str(s.get("id")) != str(self_school_id) for s in peer_schools):
             me = svc.table("schools").select("id, name, institution_type").eq("id", self_school_id).limit(1).execute()
             if me.data:
-                peer_schools = [me.data[0], *peer_schools][:15]
-
-        def _reachable_domains(school_id: str) -> set:
-            prog_ids = _institution_programme_ids(school_id)
-            if not prog_ids:
-                return set()
-            pd = _programme_domain_rows(prog_ids)
-            return {r["domain_id"] for r in pd}
-
-        # Compute each peer's domain set once.
-        coverage: dict = {}
-        all_domain_ids: set = set()
-        for s in peer_schools:
-            dset = _reachable_domains(s["id"])
-            coverage[s["id"]] = dset
-            all_domain_ids |= dset
-
-        # Domain attributes: name only; this is a structural comparison.
-        dmeta = _domain_map(list(all_domain_ids))
-        # Role counts per domain (bounded single query over the involved domains).
-        role_counts: dict = {}
-        if all_domain_ids:
-            rc = (
-                svc.table("domain_roles")
-                .select("domain_id")
-                .in_("domain_id", list(all_domain_ids))
-                .limit(5000)
-                .execute()
-            )
-            for r in (rc.data or []):
-                did = r.get("domain_id")
-                role_counts[did] = role_counts.get(did, 0) + 1
-        my_domains = coverage.get(self_school_id, set()) if self_school_id else set()
+                peer_schools.append(me.data[0])
+        portfolios, entity_sets = _peer_institution_portfolios(peer_schools)
+        my_domains = entity_sets.get(str(self_school_id), {}).get("domains", set())
+        dmeta = _domain_map(list(my_domains))
         rows: List[PeerInstitutionRow] = []
         for s in peer_schools:
-            dset = coverage.get(s["id"], set())
-            is_self = bool(self_school_id and s["id"] == self_school_id)
-            # Domains I have that this peer lacks (only meaningful vs self).
-            unique = None
-            if self_school_id and not is_self:
-                diff = [dmeta.get(d, {}).get("name") for d in (my_domains - dset)]
-                unique = [n for n in diff if n][:12] or None
-            rows.append(
-                PeerInstitutionRow(
-                    institution_name=s.get("name") or "",
-                    domains_accessible=len(dset),
-                    roles_accessible=sum(role_counts.get(d, 0) for d in dset),
-                    unique_domains=unique,
-                    is_self=is_self,
-                )
-            )
-        # Strongest coverage first.
-        rows.sort(key=lambda r: r.domains_accessible, reverse=True)
+            school_id = str(s.get("id") or "")
+            portfolio = portfolios.get(school_id)
+            if not portfolio:
+                continue
+            peer_domains = entity_sets.get(school_id, {}).get("domains", set())
+            unique = None if school_id == str(self_school_id) else [
+                dmeta.get(did, {}).get("name")
+                for did in sorted(my_domains - peer_domains)
+                if dmeta.get(did, {}).get("name")
+            ] or None
+            rows.append(PeerInstitutionRow(
+                institution_id=school_id,
+                institution_name=portfolio.institution_name,
+                programmes_accessible=portfolio.programmes_accessible,
+                domains_accessible=portfolio.domains_accessible,
+                specializations_accessible=portfolio.specializations_accessible,
+                roles_accessible=portfolio.roles_accessible,
+                unique_domains=unique,
+                is_self=school_id == str(self_school_id),
+            ))
         return ResponseModel(data=[r.model_dump(by_alias=True) for r in rows])
     except Exception as exc:  # noqa: BLE001
         log.error("institutions peers failed", error=str(exc))
         return ResponseModel(data=[])
+
+
+# ─────────────────────────────────────────────────────────────
+# University programme portfolio comparison
+# ─────────────────────────────────────────────────────────────
+
+def _peer_institution_portfolios(
+    schools: list[dict],
+) -> tuple[dict[str, InstitutionPortfolioReach], dict[str, dict[str, set[str]]]]:
+    """Build structural portfolio summaries from university-scoped offers.
+
+    Counts derive from each school's own JAMB offering rows and current
+    JAMB→CCMAS→domain links. Demand is not inferred from taxonomy reach.
+    """
+    svc = _svc()
+    school_ids = [str(row.get("id")) for row in schools if row.get("id")]
+    if not school_ids:
+        return {}, {}
+    offer_rows = svc.table("school_programmes").select(
+        "id, school_id, jamb_programme_id"
+    ).in_("school_id", school_ids).limit(50000).execute().data or []
+    jamb_ids = list({str(row.get("jamb_programme_id")) for row in offer_rows if row.get("jamb_programme_id")})
+    jamb_by_id: dict[str, dict] = {}
+    mappings: dict[str, list[str]] = {}
+    domains_by_programme: dict[str, set[str]] = {}
+    subgroups_by_domain: dict[str, set[str]] = {}
+    roles_by_domain: dict[str, set[str]] = {}
+    if jamb_ids:
+        jamb_rows = svc.table("jamb_programmes").select(
+            "id, jamb_name, jamb_faculty"
+        ).in_("id", jamb_ids).limit(5000).execute().data or []
+        jamb_by_id = {str(row["id"]): row for row in jamb_rows if row.get("id")}
+        mapping_rows = svc.table("programme_mapping").select(
+            "jamb_programme_id, programme_id"
+        ).in_("jamb_programme_id", jamb_ids).limit(5000).execute().data or []
+        programme_ids = list({str(row["programme_id"]) for row in mapping_rows if row.get("programme_id")})
+        for row in mapping_rows:
+            if row.get("jamb_programme_id") and row.get("programme_id"):
+                mappings.setdefault(str(row["jamb_programme_id"]), []).append(str(row["programme_id"]))
+        domain_rows = _programme_domain_rows(programme_ids, cap=20000)
+        domain_ids: set[str] = set()
+        for row in domain_rows:
+            if row.get("programme_id") and row.get("domain_id"):
+                domains_by_programme.setdefault(str(row["programme_id"]), set()).add(str(row["domain_id"]))
+                domain_ids.add(str(row["domain_id"]))
+        if domain_ids:
+            subgroup_rows = svc.table("domain_subgroups").select("id, domain_id").in_(
+                "domain_id", list(domain_ids)
+            ).limit(30000).execute().data or []
+            role_rows = svc.table("domain_roles").select("id, domain_id").in_(
+                "domain_id", list(domain_ids)
+            ).limit(50000).execute().data or []
+            for row in subgroup_rows:
+                if row.get("id") and row.get("domain_id"):
+                    subgroups_by_domain.setdefault(str(row["domain_id"]), set()).add(str(row["id"]))
+            for row in role_rows:
+                if row.get("id") and row.get("domain_id"):
+                    roles_by_domain.setdefault(str(row["domain_id"]), set()).add(str(row["id"]))
+
+    offers_by_school: dict[str, list[PeerOfferingReach]] = {}
+    sets_by_school: dict[str, dict[str, set[str]]] = {}
+    for row in offer_rows:
+        school_id = str(row.get("school_id") or "")
+        jamb_id = str(row.get("jamb_programme_id") or "")
+        jamb = jamb_by_id.get(jamb_id, {})
+        reached_domains = {
+            domain_id
+            for programme_id in mappings.get(jamb_id, [])
+            for domain_id in domains_by_programme.get(programme_id, set())
+        }
+        reached_subgroups = {
+            subgroup_id for domain_id in reached_domains
+            for subgroup_id in subgroups_by_domain.get(domain_id, set())
+        }
+        reached_roles = {
+            role_id for domain_id in reached_domains
+            for role_id in roles_by_domain.get(domain_id, set())
+        }
+        offering = PeerOfferingReach(
+            offering_id=str(row.get("id") or "") or None,
+            jamb_programme_id=jamb_id,
+            programme_name=str(jamb.get("jamb_name") or "JAMB programme"),
+            jamb_faculty=str(jamb.get("jamb_faculty") or "").strip() or None,
+            curriculum_anchor="mapped" if mappings.get(jamb_id) else "unmapped",
+            domains_accessible=len(reached_domains),
+            specializations_accessible=len(reached_subgroups),
+            roles_accessible=len(reached_roles),
+        )
+        offers_by_school.setdefault(school_id, []).append(offering)
+        totals = sets_by_school.setdefault(school_id, {"domains": set(), "specializations": set(), "roles": set()})
+        totals["domains"].update(reached_domains)
+        totals["specializations"].update(reached_subgroups)
+        totals["roles"].update(reached_roles)
+
+    portfolios: dict[str, InstitutionPortfolioReach] = {}
+    for school in schools:
+        school_id = str(school.get("id") or "")
+        offerings = sorted(
+            offers_by_school.get(school_id, []),
+            key=lambda row: (row.programme_name.casefold(), row.jamb_programme_id),
+        )
+        totals = sets_by_school.get(school_id, {"domains": set(), "specializations": set(), "roles": set()})
+        portfolios[school_id] = InstitutionPortfolioReach(
+            institution_id=school_id,
+            institution_name=str(school.get("name") or "University"),
+            programmes_accessible=len({row.jamb_programme_id for row in offerings}),
+            domains_accessible=len(totals["domains"]),
+            specializations_accessible=len(totals["specializations"]),
+            roles_accessible=len(totals["roles"]),
+            offerings=offerings,
+            demand_status="coming_soon",
+        )
+    return portfolios, sets_by_school
+
+
+@router.get("/me/peer-programme-comparison", response_model=ResponseModel)
+async def get_peer_programme_comparison(
+    peer_school_id: str,
+    compare_school_id: Optional[str] = None,
+    current_user: dict = Depends(Auth.require_admin),
+):
+    """Compare two public JAMB portfolios while respecting caller scope."""
+    own_school_id = _assert_own_institution("me", current_user)
+    org = _org_from_school(own_school_id)
+    if org and org.type == "university":
+        left_id, right_id = own_school_id, peer_school_id
+    else:
+        if not compare_school_id:
+            raise HTTPException(status_code=422, detail="Select two universities to compare.")
+        left_id, right_id = compare_school_id, peer_school_id
+    if str(left_id) == str(right_id):
+        raise HTTPException(status_code=422, detail="Choose two different universities.")
+    rows = _svc().table("schools").select(
+        "id, name, institution_type"
+    ).in_("id", [left_id, right_id]).eq("institution_type", "university").limit(2).execute().data or []
+    schools = {str(row.get("id")): row for row in rows if row.get("id")}
+    if set(schools) != {str(left_id), str(right_id)}:
+        raise HTTPException(status_code=404, detail="One or both university records are unavailable.")
+    portfolios, _sets = _peer_institution_portfolios([schools[str(left_id)], schools[str(right_id)]])
+    current, peer = portfolios[str(left_id)], portfolios[str(right_id)]
+    current_by_jamb = {row.jamb_programme_id: row for row in current.offerings}
+    peer_by_jamb = {row.jamb_programme_id: row for row in peer.offerings}
+    peer_only = [peer_by_jamb[key] for key in sorted(peer_by_jamb.keys() - current_by_jamb.keys())]
+    current_only = [current_by_jamb[key] for key in sorted(current_by_jamb.keys() - peer_by_jamb.keys())]
+    shared = [
+        PeerSharedOffering(current=current_by_jamb[key], peer=peer_by_jamb[key])
+        for key in sorted(current_by_jamb.keys() & peer_by_jamb.keys())
+    ]
+    comparison = PeerProgrammeComparison(
+        current=current,
+        peer=peer,
+        programmes_peer_teaches_not_current=peer_only,
+        programmes_current_teaches_not_peer=current_only,
+        programmes_both_teach=shared,
+    )
+    return ResponseModel(data=comparison.model_dump(by_alias=True))
 
 
 # ─────────────────────────────────────────────────────────────

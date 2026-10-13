@@ -239,9 +239,11 @@ Vocational education means teaching practical, job-focused skills such as hospit
 
 Scientific research is the systematic study of the natural world through observation and experiment. Chemists, geologists and environmental scientists design studies and draft scientific papers, while technicians run laboratory tests, collect samples and support biology and agriculture research. Laboratories, research institutes, universities and government agencies are the usual workplaces.
 
-**D078 — Social Sciences** (22 roles)
+**D078 — Social Sciences & Behavioural Research** (22 roles; source-backed wording reviewed 2026-10-08)
 
-Social sciences study how people, societies and institutions behave and change over time. Researchers such as sociologists, historians, criminologists and archaeologists design studies, gather and analyse data, and write academic papers and policy reports, often using statistics. They commonly work in universities, research institutes and government agencies.
+Social Sciences & Behavioural Research studies how people behave, how societies and institutions work, and how social, economic, political and environmental conditions affect people's lives. Researchers use evidence and social-science methods to understand these issues and help inform policy.
+
+Evidence: NUC, *Social Sciences CCMAS 2023*, Preamble, printed p. 17 (subject matter, behaviour, institutions, environment, methods and policy); ILO, *ISCO-08 Volume I*, unit groups 2631–2633, printed pp. 161–163 (economists, sociologists/anthropologists and political scientists; research, analysis and policy advice). The NUC source is Nigerian curriculum scope; ISCO describes selected occupations, not the complete global domain. See `migration_domain_student_orientation_2026-09-18.sql` for claim-level source records and the display gate.
 
 ## Electrical & Electronics Trades
 

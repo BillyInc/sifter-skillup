@@ -93,8 +93,8 @@ app.add_middleware(
 app.add_middleware(DeviceSessionMiddleware)
 
 # Server-owned document versions. Clients must accept these exact versions.
-CURRENT_TERMS_VERSION = "2026-08-14"
-CURRENT_PRIVACY_VERSION = "2026-08-14"
+CURRENT_TERMS_VERSION = "2026-10-10"
+CURRENT_PRIVACY_VERSION = "2026-10-10"
 
 @app.middleware("http")
 async def logging_middleware(request: Request, call_next):

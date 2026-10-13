@@ -1,6 +1,6 @@
 # Career resource seed gate
 
-SQL regeneration allowed: **YES**
+SQL regeneration allowed: **NO**
 
 | Check | Result |
 |---|---|
@@ -9,7 +9,7 @@ SQL regeneration allowed: **YES**
 | all_assigned_body_ids_have_source_audit_evidence | PASS |
 | all_assigned_body_ids_have_source_audit_or_supplemental_evidence | PASS |
 | supplemental_direct_page_review_complete | PASS |
-| all_domain_review_rows_are_structural_only | PASS |
+| all_domain_review_rows_are_structural_only | BLOCKED |
 | no_unsourced_roles | PASS |
 | mechanical_resource_validation | PASS |
 | all_visible_domains_have_role_resources | PASS |
@@ -26,9 +26,9 @@ SQL regeneration allowed: **YES**
 - Assigned body IDs with original source evidence: **129**
 - Assigned body IDs pending supplemental review: **0**
 - Catalog body IDs unassigned to visible domains: **22**
-- Domains requiring source review: **0**
+- Domains requiring source review: **142**
 - Roles without a source signal: **0**
 - Mechanical population rows: **160914**
 - Mechanical validation errors: **0**
 
-All source and mechanical checks passed. Review the generated population before seeding.
+Keep SQL generation blocked until every failed source and denominator check is reconciled.

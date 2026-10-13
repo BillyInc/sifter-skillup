@@ -1,0 +1,2 @@
+{"snapshot": "partial", "status": "in_progress", "pairs_enumerated": 558, "initial_dispositions": 558, "row_level_review": "in progress", "provisional_decisions": {"KEEP": 545, "REFINE": 7, "UNCERTAIN": 6}, "checkpoint_file": "data/career-mapping/_audit/domain_subgroup_label_progress_2026-09-25.json"}
+{"snapshot": "completion", "status": "complete", "pairs_reviewed": 558, "final_decisions": {"KEEP": 541, "REFINE": 9, "UNCERTAIN": 8}, "flagged_membership_or_scope_reviews": 8, "final_report": "data/career-mapping/_audit/domain_subgroup_label_checkpoint_2026-09-25.json"}

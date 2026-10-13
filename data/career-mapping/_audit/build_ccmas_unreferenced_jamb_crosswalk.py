@@ -1,0 +1,161 @@
+#!/usr/bin/env python3
+"""Build a discovery-only crosswalk for CCMAS packages absent from JAMB scopes.
+
+This script does not change canonical mappings, curriculum scopes, or seeds.
+String similarity only produces research leads; it never establishes that a
+CCMAS curriculum belongs to a JAMB identity or offering context.
+"""
+
+from __future__ import annotations
+
+import json
+import re
+from collections import defaultdict
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[3]
+CCMAS_DIR = ROOT / "data/career-mapping/ccmas"
+JAMB_DIR = ROOT / "data/career-mapping/jamb"
+SCOPES_PATH = ROOT / "data/career-mapping/_audit/jamb_curriculum_scopes_2026-08-17.json"
+MAPPINGS_PATH = ROOT / "data/career-mapping/programme_mapping.json"
+OUTPUT_PATH = ROOT / "data/career-mapping/_audit/ccmas_unreferenced_jamb_crosswalk_2026-09-25.md"
+
+
+def load_json(path: Path):
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def normalize(value: str) -> str:
+    return re.sub(r"[^a-z0-9]+", " ", value.casefold()).strip()
+
+
+def token_similarity(left: str, right: str) -> float:
+    a, b = set(normalize(left).split()), set(normalize(right).split())
+    return len(a & b) / len(a | b) if a and b else 0.0
+
+
+def markdown_cell(value: object) -> str:
+    return str(value or "").replace("|", "\\|").replace("\n", " ")
+
+
+def main() -> None:
+    scopes = load_json(SCOPES_PATH)["rows"]
+    component_refs = {ref for row in scopes for ref in row.get("component_refs", [])}
+    mappings = load_json(MAPPINGS_PATH)["mappings"]
+    jamb_by_name = {row["jamb_name"]: row for row in mappings if row.get("jamb_name")}
+
+    offering_contexts: dict[str, list[dict[str, object]]] = defaultdict(list)
+    for path in sorted(JAMB_DIR.glob("*_offerings.json")):
+        source = load_json(path)
+        faculty = source.get("faculty")
+        for offering in source.get("programmes", []):
+            name = offering.get("jamb_name")
+            if name:
+                offering_contexts[name].append(
+                    {
+                        "faculty": faculty,
+                        "source_file": source.get("source") or path.name,
+                        "parsed_file": path.name,
+                        "institutions": offering.get("institutions") or [],
+                    }
+                )
+
+    missing = []
+    for path in sorted(CCMAS_DIR.glob("*.json")):
+        discipline = load_json(path)
+        for programme in discipline.get("programmes", []):
+            component = f"{discipline.get('discipline', '')}::{programme.get('name', '')}"
+            if component in component_refs:
+                continue
+
+            ranked = sorted(
+                (
+                    (token_similarity(programme.get("name", ""), jamb_name), jamb_name)
+                    for jamb_name in jamb_by_name
+                ),
+                key=lambda item: (-item[0], item[1].casefold()),
+            )
+            exact = [
+                name
+                for name in jamb_by_name
+                if normalize(name) == normalize(programme.get("name", ""))
+            ]
+            leads = [
+                {
+                    "jamb_name": name,
+                    "jamb_faculty": jamb_by_name[name].get("jamb_faculty"),
+                    "similarity": round(score, 3),
+                    "parsed_source_contexts": offering_contexts.get(name, []),
+                }
+                for score, name in ranked[:5]
+                if score >= 0.30
+            ]
+            missing.append(
+                {
+                    "component": component,
+                    "source_file": path.name,
+                    "programme_code": programme.get("code"),
+                    "course_count": len(programme.get("courses") or []),
+                    "exact_name_candidates": [
+                        {
+                            "jamb_name": name,
+                            "jamb_faculty": jamb_by_name[name].get("jamb_faculty"),
+                            "parsed_source_contexts": offering_contexts.get(name, []),
+                        }
+                        for name in exact
+                    ],
+                    "lexical_leads": leads,
+                    "disposition": "candidate_only_requires_offering_and_curriculum_evidence",
+                }
+            )
+
+    lines = [
+        "# CCMAS components absent from saved JAMB scope references — discovery crosswalk",
+        "",
+        "Generated from the checked-in CCMAS programme files, the 420-row JAMB mapping registry, parsed JAMB offering files, and the saved curriculum scopes. This is a triage artifact, not an authoritative mapping decision.",
+        "",
+        f"- CCMAS packages with no exact `component_refs` entry: **{len(missing)}**.",
+        f"- Exact normalized-name candidate pairs: **{sum(len(row['exact_name_candidates']) for row in missing)}**.",
+        "- Lexical leads are generated by token Jaccard similarity (top five, minimum 0.30); similarity is not curriculum evidence.",
+        "- Parsed offering faculty/institution lists retain their source-file labels but may contain extraction errors; verify against the original JAMB brochure row before use.",
+        "- For each candidate, compare the CCMAS course titles, content summaries, and learning outcomes with the exact JAMB source context. A same-name Education CCMAS package is not automatically the curriculum for a non-Education offering.",
+        "",
+        "| CCMAS component | Code | Courses | Exact-name JAMB candidate(s) | Best lexical leads (score; JAMB faculty; parsed source files) |",
+        "|---|---:|---:|---|---|",
+    ]
+    for row in missing:
+        exact = ", ".join(
+            f"{item['jamb_name']} ({item.get('jamb_faculty') or 'faculty unset'})"
+            for item in row["exact_name_candidates"]
+        ) or "—"
+        leads = "; ".join(
+            f"{item['jamb_name']} ({item['similarity']:.2f}; {item.get('jamb_faculty') or 'faculty unset'}; "
+            + ", ".join(str(context["parsed_file"]) for context in item["parsed_source_contexts"])
+            + ")"
+            for item in row["lexical_leads"]
+        ) or "—"
+        lines.append(
+            f"| {markdown_cell(row['component'])} | {markdown_cell(row['programme_code'])} | "
+            f"{row['course_count']} | {markdown_cell(exact)} | {markdown_cell(leads)} |"
+        )
+
+    lines.extend(
+        [
+            "",
+            "## Required review before changing mappings",
+            "",
+            "1. Verify the JAMB programme name, faculty, and awarding-institution association from the official brochure table—not only the catalogue/index or parsed list.",
+            "2. Identify whether the CCMAS component is a valid curriculum for that exact offering context; inspect its course titles, contents, and outcomes.",
+            "3. Decide whether it is a full component, a partial component, a distinct offering-context variant, or unrelated. Record evidence and explain exclusions.",
+            "4. Reassess domain links and downstream subgroups/roles only from the established scoped curriculum evidence.",
+            "5. Do not promote lexical leads or missing-anchor states into student-visible relationships.",
+            "",
+        ]
+    )
+    OUTPUT_PATH.write_text("\n".join(lines), encoding="utf-8")
+    print(f"Wrote {OUTPUT_PATH.relative_to(ROOT)} ({len(missing)} unreferenced CCMAS components).")
+
+
+if __name__ == "__main__":
+    main()

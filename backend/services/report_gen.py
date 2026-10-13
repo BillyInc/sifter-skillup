@@ -182,6 +182,228 @@ def _subject_match_status(path: dict) -> tuple[str, str]:
     return "Not checked", "Subject matching was not used for this programme search."
 
 
+def _learning_focus_id(item: dict) -> str:
+    """Use the same stable item key as the client learning-plan adapter."""
+    level = "area" if item.get("contextLevel") == "subgroup" else str(item.get("contextLevel") or "item")
+    return f"{level}:{item.get('contextKey')}:{item.get('itemType')}:{item.get('itemKey')}"
+
+
+def _learning_plan_html(path: dict) -> str:
+    """Render the saved focused-plan snapshot without treating selection as mastery."""
+    snapshot = path.get("learningPlanSnapshot") if isinstance(path.get("learningPlanSnapshot"), dict) else {}
+    focus = [item for item in (path.get("learningFocus") or []) if isinstance(item, dict)]
+    stacks = snapshot.get("stacks") if isinstance(snapshot.get("stacks"), list) else []
+    if not stacks and not focus:
+        return ""
+
+    names: dict[str, str] = {}
+    programme = path.get("programme") if isinstance(path.get("programme"), dict) else {}
+    if programme.get("id") and programme.get("name"):
+        names[str(programme["id"])] = str(programme["name"])
+    for key in ("domains", "subgroups", "roles"):
+        for item in path.get(key) or []:
+            if not isinstance(item, dict):
+                continue
+            item_id = item.get("id") or item.get("roleKey")
+            if item_id and item.get("name"):
+                names[str(item_id)] = str(item["name"])
+
+    def route_name(route: dict) -> str:
+        values = [route.get("programmeId"), route.get("domainId"), route.get("areaId"), route.get("roleId")]
+        return " → ".join(html.escape(names.get(str(value), str(value))) for value in values if value)
+
+    focus_by_id = {_learning_focus_id(item): item for item in focus}
+    blocks: list[str] = []
+    report_warnings = snapshot.get("routeWarnings") if isinstance(snapshot.get("routeWarnings"), list) else []
+    warning_html = ""
+    if report_warnings:
+        warning_html = "<div class='entity nested'><strong>Route note</strong><ul>" + "".join(
+            f"<li>{html.escape(str(warning.get('message') or 'This report contains more than one route.'))}</li>"
+            for warning in report_warnings if isinstance(warning, dict)
+        ) + "</ul></div>"
+    for stack in stacks:
+        if not isinstance(stack, dict):
+            continue
+        selected_ids = [str(value) for value in (stack.get("selectedIds") or [])]
+        # The sequence engine stores the dependency-checked learner order
+        # separately from the selection set. Prefer that order for the printed
+        # route; older snapshots may not have it, so retain their saved list.
+        requested_order = [str(value) for value in (stack.get("order") or [])]
+        ordered_ids = list(dict.fromkeys(
+            [value for value in requested_order if value in selected_ids]
+            + [value for value in selected_ids if value not in requested_order]
+        ))
+        summaries = [item for item in (stack.get("itemSummaries") or []) if isinstance(item, dict)]
+        summary_by_id = {str(item.get("id")): item for item in summaries if item.get("id")}
+        selected_items = []
+        for item_id in ordered_ids:
+            item = dict(summary_by_id.get(item_id) or focus_by_id.get(item_id) or {})
+            if item:
+                selected_items.append(item)
+        rows = []
+        for step_number, item in enumerate(selected_items, start=1):
+            layer = item.get("layer") or item.get("contextLevel") or "item"
+            level = "Area of specialization" if layer == "subgroup" else str(layer).replace("_", " ").title()
+            explanation = str(item.get("explanation") or "").strip()
+            link = str(item.get("linkUrl") or "").strip()
+            detail_parts = []
+            item_type = str(item.get("itemType") or "").strip()
+            theme = str(item.get("themeLabel") or "").strip()
+            use_case = str(item.get("useCaseKey") or "").strip()
+            requirement = str(item.get("requirementLevel") or "").strip()
+            plain_meaning = str(item.get("plainMeaning") or "").strip()
+            contextual_use = str(item.get("contextualUse") or "").strip()
+            expected_output = str(item.get("expectedOutput") or "").strip()
+            if explanation:
+                detail_parts.append(f"<p class='muted'>{html.escape(explanation)}</p>")
+            if item_type:
+                detail_parts.append(f"<p><strong>Type:</strong> {html.escape(item_type.replace('_', ' '))}</p>")
+            if theme:
+                detail_parts.append(f"<p><strong>Theme:</strong> {html.escape(theme)}</p>")
+            if use_case:
+                detail_parts.append(f"<p><strong>Use case:</strong> {html.escape(use_case.replace('_', ' '))}</p>")
+            if requirement:
+                detail_parts.append(f"<p><strong>Why it is shown:</strong> {html.escape(requirement.replace('_', ' '))}</p>")
+            if plain_meaning and plain_meaning != explanation:
+                detail_parts.append(f"<p><strong>What it is:</strong> {html.escape(plain_meaning)}</p>")
+            if contextual_use:
+                detail_parts.append(f"<p><strong>In this route:</strong> {html.escape(contextual_use)}</p>")
+            if expected_output:
+                detail_parts.append(f"<p><strong>What you can produce:</strong> {html.escape(expected_output)}</p>")
+            prerequisites = [str(value).strip() for value in (item.get("prerequisites") or []) if str(value).strip()]
+            if prerequisites:
+                detail_parts.append(
+                    "<p><strong>Learn or review first:</strong> "
+                    + html.escape(", ".join(prerequisites))
+                    + "</p>"
+                )
+            relationships = [relation for relation in (item.get("relationships") or []) if isinstance(relation, dict)]
+            relationship_lines = []
+            for relation in relationships:
+                relation_type = str(relation.get("type") or "").replace("_", " ").strip()
+                target = str(relation.get("targetName") or relation.get("targetId") or "").strip()
+                relation_explanation = str(relation.get("explanation") or "").strip()
+                if not relation_type or not target:
+                    continue
+                suffix = f": {relation_explanation}" if relation_explanation else ""
+                source_references = [
+                    reference for reference in (relation.get("sourceReferences") or [])
+                    if isinstance(reference, dict) and str(reference.get("url") or "").startswith("https://")
+                ]
+                source_links = "".join(
+                    f" <a href='{html.escape(str(reference['url']))}'>"
+                    f"Evidence: {html.escape(str(reference.get('title') or 'Source'))}</a>"
+                    for reference in source_references
+                )
+                relationship_lines.append(
+                    f"<li><strong>{html.escape(relation_type.title())}:</strong> "
+                    f"{html.escape(target)}{html.escape(suffix)}{source_links}</li>"
+                )
+            if relationship_lines:
+                detail_parts.append("<p><strong>How it connects:</strong></p><ul>" + "".join(relationship_lines) + "</ul>")
+            limitations = [str(value).strip() for value in (item.get("limitations") or []) if str(value).strip()]
+            if limitations:
+                detail_parts.append(
+                    "<p><strong>Limits:</strong> " + html.escape("; ".join(limitations)) + "</p>"
+                )
+            source_rows = []
+            source_references = [
+                reference for reference in (item.get("sourceReferences") or [])
+                if isinstance(reference, dict) and str(reference.get("url") or "").startswith("https://")
+            ]
+            locators = [locator for locator in (item.get("sourceLocators") or []) if isinstance(locator, dict)]
+            for reference in source_references:
+                title = str(reference.get("title") or "Supporting source")
+                url = str(reference["url"])
+                ref_id = reference.get("id")
+                locator = next((entry for entry in locators if ref_id and entry.get("sourceId") == ref_id), None)
+                locator_text = str(locator.get("locator") or "").strip() if locator else ""
+                source_rows.append(
+                    f"<li><a href='{html.escape(url)}'>{html.escape(title)}</a>"
+                    + (f" — Where to look: {html.escape(locator_text)}" if locator_text else "")
+                    + "</li>"
+                )
+            if source_rows:
+                detail_parts.append("<p><strong>Evidence for this item:</strong></p><ul>" + "".join(source_rows) + "</ul>")
+            detail = "".join(detail_parts)
+            if link.startswith("https://"):
+                detail += f"<p><a href='{html.escape(link)}'>Open learning resource</a></p>"
+            rows.append(
+                f"<li><strong>Step {step_number} · {html.escape(level)}:</strong> "
+                f"{html.escape(str(item.get('name') or item.get('itemKey') or 'Selected item'))}{detail}</li>"
+            )
+        if not rows and selected_ids:
+            rows.append(f"<li>{len(selected_ids)} selected item(s) are stored in this route snapshot.</li>")
+        removed_ids = [str(value) for value in (stack.get("removedIds") or [])]
+        if removed_ids:
+            rows.append(
+                f"<li class='muted'>{len(removed_ids)} item(s) were deliberately not included in this route focus. "
+                "This does not remove them from the canonical route.</li>"
+            )
+        alternative_groups = [group for group in (stack.get("alternativeSummaries") or []) if isinstance(group, dict)]
+        alternative_rows = []
+        for group in alternative_groups:
+            options = [item for item in (group.get("options") or []) if isinstance(item, dict)]
+            if not options:
+                continue
+            selected = summary_by_id.get(str(group.get("selectedId") or ""), {})
+            selected_name = str(selected.get("name") or "the selected option")
+            option_rows = []
+            for option in options:
+                name = str(option.get("name") or "Option")
+                details = []
+                item_type = str(option.get("itemType") or "").strip()
+                meaning = str(option.get("plainMeaning") or option.get("explanation") or "").strip()
+                contextual_use = str(option.get("contextualUse") or "").strip()
+                expected_output = str(option.get("expectedOutput") or "").strip()
+                limitations = [str(value).strip() for value in (option.get("limitations") or []) if str(value).strip()]
+                link = str(option.get("linkUrl") or "").strip()
+                if item_type:
+                    details.append(f"<p><strong>Type:</strong> {html.escape(item_type.replace('_', ' '))}</p>")
+                if meaning:
+                    details.append(f"<p><strong>What it is:</strong> {html.escape(meaning)}</p>")
+                if contextual_use:
+                    details.append(f"<p><strong>In this route:</strong> {html.escape(contextual_use)}</p>")
+                if expected_output:
+                    details.append(f"<p><strong>What it helps you produce:</strong> {html.escape(expected_output)}</p>")
+                if limitations:
+                    details.append(f"<p><strong>Limits:</strong> {html.escape('; '.join(limitations))}</p>")
+                if link.startswith("https://"):
+                    details.append(f"<p><a href='{html.escape(link)}'>Explore this alternative</a></p>")
+                option_rows.append(
+                    f"<li><strong>{html.escape(name)}</strong><span class='muted'> — not selected</span>{''.join(details)}</li>"
+                )
+            alternative_rows.append(
+                f"<li><strong>Other options compared with {html.escape(selected_name)}</strong>"
+                "<ul>" + "".join(option_rows) + "</ul>"
+                "<p class='muted'>These options remain outside your selected learning focus.</p></li>"
+            )
+        if alternative_rows:
+            rows.append(
+                "<li><strong>Alternatives not selected</strong><ul>"
+                + "".join(alternative_rows)
+                + "</ul></li>"
+            )
+        blocks.append(
+            f"<div class='entity nested'><h4>{route_name(stack.get('route') or {}) or 'Selected route'}</h4>"
+            "<p class='muted'>Items follow the saved order for this route. Programme, domain, area and role labels show where an item belongs; they do not make every item in one layer a prerequisite for the next. Only an explicitly reviewed, route-specific prerequisite constrains order.</p>"
+            f"<ol class='learning-plan-steps'>{''.join(rows) or '<li>No granular item has been selected on this route.</li>'}</ol></div>"
+        )
+    if not blocks and focus:
+        blocks.append("<div class='entity nested'><h4>Current learning focus</h4><ul>" + "".join(
+            f"<li>{html.escape(str(item.get('name') or item.get('itemKey') or 'Selected item'))}</li>" for item in focus
+        ) + "</ul></div>")
+    return (
+        "<section class='entity page-break'><div class='entity-kicker'>Focused learning plan</div>"
+        "<h3>Your selected learning focus</h3>"
+        "<p>This is a personal focus list, not a test result, mastery claim or employment guarantee. "
+        "Items stay grouped by their selected route.</p>"
+        + warning_html
+        + "".join(blocks)
+        + "</section>"
+    )
+
+
 def _report_access_block(access_code: object) -> str:
     """Render a real provisioned-student handoff, when one exists."""
     if not access_code:
@@ -287,6 +509,7 @@ def build_full_guidance_report_html(ctx: ReportContext) -> str:
             {('<h4>Selected roles</h4>' + ''.join(role_blocks)) if role_blocks else '<p class="muted">No role was selected under this domain.</p>'}
           </section>""")
     domains_html = "".join(domain_blocks) or "<p class='muted'>No domain, sub-group, or role has been selected for this report yet.</p>"
+    learning_plan_html = _learning_plan_html(path)
     discovery_door = path.get("discoveryDoor") or "Not recorded"
     data_notes_html = _guidance_data_notes(domains)
     school = academic.get("schoolName") or ctx.school_name
@@ -326,6 +549,7 @@ ul {{ margin:5px 0 10px; padding-left:22px; }} li {{ margin:3px 0; }} .muted {{ 
 <h2>Admission requirements</h2><div>{requirement_rows}</div>
 <h2>Subject check status</h2><div>{subject_status_html}</div>
 <h2>Selected intelligence path</h2>{domains_html}
+{learning_plan_html}
 <h2>Data notes</h2><ul>{data_notes_html}</ul>
 {access_block}
 <div class='foot'>This report contains the source-backed selections made during guidance. It does not include unselected catalogue entities, unsupported demand claims, or Post-UTME claims. Guidance is not an admission, employment, salary, immigration, legal or professional guarantee. Verify current requirements with the relevant Nigerian institution or regulator before acting. Generated by Sifter LevelUp.</div>

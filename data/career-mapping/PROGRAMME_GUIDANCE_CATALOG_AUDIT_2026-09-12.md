@@ -1,0 +1,253 @@
+# Programme guidance catalogue audit (2026-09-12)
+
+- Original source directory: `C:\\Users\\USER\\Downloads\\ccmas original documents`
+- Official source page: https://www.nuc.edu.ng/ccmas/
+- Parsed programmes covered: **237**
+- Programme context rows: **1197**
+- Programme resources: **473**
+
+## Policy
+
+The programme layer is synthesized from the parsed CCMAS course titles, course outcomes, employability records and original source filename. It explains what the programme is designed to teach and how to begin learning. It does not claim that the student is already skilled, that an open reference is prescribed by a Nigerian university, or that a certification is required.
+
+Sociology remains the only programme with specifically reviewed Haralambos/Holborn and Giddens references. It does not receive the generic Social Sciences open reference from this migration. Other programmes receive discipline-appropriate open foundation references until a manual programme-specific reading-list review supplies stronger evidence.
+
+## Coverage
+
+- `Administration and Management / Accounting` — 31 courses, 4 context rows, 2 references; parsed `administration_management.json`, original `Administration-and-Management.pdf`
+- `Administration and Management / Actuarial Science` — 35 courses, 5 context rows, 2 references; parsed `administration_management.json`, original `Administration-and-Management.pdf`
+- `Administration and Management / Aviation Management` — 31 courses, 5 context rows, 2 references; parsed `administration_management.json`, original `Administration-and-Management.pdf`
+- `Administration and Management / Finance / Banking and Finance` — 35 courses, 6 context rows, 2 references; parsed `administration_management.json`, original `Administration-and-Management.pdf`
+- `Administration and Management / Business Administration` — 37 courses, 4 context rows, 2 references; parsed `administration_management.json`, original `Administration-and-Management.pdf`
+- `Administration and Management / Business Information Technology` — 36 courses, 4 context rows, 2 references; parsed `administration_management.json`, original `Administration-and-Management.pdf`
+- `Administration and Management / Co-operative and Rural Development` — 39 courses, 4 context rows, 2 references; parsed `administration_management.json`, original `Administration-and-Management.pdf`
+- `Administration and Management / Employment and Human Resource Management` — 41 courses, 4 context rows, 2 references; parsed `administration_management.json`, original `Administration-and-Management.pdf`
+- `Administration and Management / Entrepreneurship` — 30 courses, 4 context rows, 2 references; parsed `administration_management.json`, original `Administration-and-Management.pdf`
+- `Administration and Management / Hospitality and Tourism Management` — 46 courses, 4 context rows, 2 references; parsed `administration_management.json`, original `Administration-and-Management.pdf`
+- `Administration and Management / Information Resource Management` — 32 courses, 4 context rows, 2 references; parsed `administration_management.json`, original `Administration-and-Management.pdf`
+- `Administration and Management / Insurance` — 32 courses, 4 context rows, 2 references; parsed `administration_management.json`, original `Administration-and-Management.pdf`
+- `Administration and Management / Local Government and Development Studies` — 40 courses, 4 context rows, 2 references; parsed `administration_management.json`, original `Administration-and-Management.pdf`
+- `Administration and Management / Logistics and Supply Chain Management` — 36 courses, 5 context rows, 2 references; parsed `administration_management.json`, original `Administration-and-Management.pdf`
+- `Administration and Management / Marketing` — 39 courses, 5 context rows, 2 references; parsed `administration_management.json`, original `Administration-and-Management.pdf`
+- `Administration and Management / Office and Information Management` — 38 courses, 5 context rows, 2 references; parsed `administration_management.json`, original `Administration-and-Management.pdf`
+- `Administration and Management / Petroleum Information Management` — 43 courses, 5 context rows, 2 references; parsed `administration_management.json`, original `Administration-and-Management.pdf`
+- `Administration and Management / Procurement Management` — 35 courses, 4 context rows, 2 references; parsed `administration_management.json`, original `Administration-and-Management.pdf`
+- `Administration and Management / Project Management` — 34 courses, 4 context rows, 2 references; parsed `administration_management.json`, original `Administration-and-Management.pdf`
+- `Administration and Management / Public Administration` — 37 courses, 4 context rows, 2 references; parsed `administration_management.json`, original `Administration-and-Management.pdf`
+- `Administration and Management / Securities and Investments Management` — 34 courses, 4 context rows, 2 references; parsed `administration_management.json`, original `Administration-and-Management.pdf`
+- `Administration and Management / Taxation` — 37 courses, 4 context rows, 2 references; parsed `administration_management.json`, original `Administration-and-Management.pdf`
+- `Administration and Management / Transport Management` — 45 courses, 5 context rows, 2 references; parsed `administration_management.json`, original `Administration-and-Management.pdf`
+- `Agricultural Science / Agribusiness` — 44 courses, 6 context rows, 2 references; parsed `agricultural_science.json`, original `Agriculture-2023.pdf`
+- `Agricultural Science / B. Agriculture` — 62 courses, 6 context rows, 2 references; parsed `agricultural_science.json`, original `Agriculture-2023.pdf`
+- `Agricultural Science / Agricultural Economics` — 45 courses, 6 context rows, 2 references; parsed `agricultural_science.json`, original `Agriculture-2023.pdf`
+- `Agricultural Science / Agricultural Extension` — 45 courses, 5 context rows, 2 references; parsed `agricultural_science.json`, original `Agriculture-2023.pdf`
+- `Agricultural Science / Animal Science` — 44 courses, 5 context rows, 2 references; parsed `agricultural_science.json`, original `Agriculture-2023.pdf`
+- `Agricultural Science / Crop Science` — 46 courses, 4 context rows, 2 references; parsed `agricultural_science.json`, original `Agriculture-2023.pdf`
+- `Agricultural Science / Family and Consumer Sciences` — 56 courses, 4 context rows, 2 references; parsed `agricultural_science.json`, original `Agriculture-2023.pdf`
+- `Agricultural Science / Fisheries and Aquaculture` — 41 courses, 4 context rows, 2 references; parsed `agricultural_science.json`, original `Agriculture-2023.pdf`
+- `Agricultural Science / B.Sc./B.Tech Food Science and Technology` — 44 courses, 4 context rows, 2 references; parsed `agricultural_science.json`, original `Agriculture-2023.pdf`
+- `Agricultural Science / Forest Resources and Wildlife Management` — 52 courses, 6 context rows, 2 references; parsed `agricultural_science.json`, original `Agriculture-2023.pdf`
+- `Agricultural Science / Horticulture and Landscape Management` — 44 courses, 4 context rows, 2 references; parsed `agricultural_science.json`, original `Agriculture-2023.pdf`
+- `Agricultural Science / Soil Science` — 44 courses, 5 context rows, 2 references; parsed `agricultural_science.json`, original `Agriculture-2023.pdf`
+- `Agricultural Science / Water Resources Management and Agro-Meteorology` — 47 courses, 4 context rows, 2 references; parsed `agricultural_science.json`, original `Agriculture-2023.pdf`
+- `Allied Health Sciences / Pharmacology` — 31 courses, 4 context rows, 2 references; parsed `allied_health.json`, original `Allied-Health-Sciences-2023.pdf`
+- `Allied Health Sciences / Physiotherapy` — 58 courses, 5 context rows, 2 references; parsed `allied_health.json`, original `Allied-Health-Sciences-2023.pdf`
+- `Allied Health Sciences / Audiology` — 28 courses, 4 context rows, 2 references; parsed `allied_health.json`, original `Allied-Health-Sciences-2023.pdf`
+- `Allied Health Sciences / Nursing Sciences` — 34 courses, 4 context rows, 2 references; parsed `allied_health.json`, original `Allied-Health-Sciences-2023.pdf`
+- `Allied Health Sciences / Complementary and Alternative Medicine` — 10 courses, 4 context rows, 2 references; parsed `allied_health.json`, original `Allied-Health-Sciences-2023.pdf`
+- `Allied Health Sciences / Dental Technology` — 29 courses, 4 context rows, 2 references; parsed `allied_health.json`, original `Allied-Health-Sciences-2023.pdf`
+- `Allied Health Sciences / Dental Therapy` — 24 courses, 5 context rows, 2 references; parsed `allied_health.json`, original `Allied-Health-Sciences-2023.pdf`
+- `Allied Health Sciences / Environmental Health Science` — 26 courses, 5 context rows, 2 references; parsed `allied_health.json`, original `Allied-Health-Sciences-2023.pdf`
+- `Allied Health Sciences / Health Care Administration and Hospital Management` — 16 courses, 4 context rows, 2 references; parsed `allied_health.json`, original `Allied-Health-Sciences-2023.pdf`
+- `Allied Health Sciences / Information Technology and Health Informatics` — 23 courses, 6 context rows, 2 references; parsed `allied_health.json`, original `Allied-Health-Sciences-2023.pdf`
+- `Allied Health Sciences / Health Information Management` — 26 courses, 5 context rows, 2 references; parsed `allied_health.json`, original `Allied-Health-Sciences-2023.pdf`
+- `Allied Health Sciences / Medical Laboratory Science` — 29 courses, 4 context rows, 2 references; parsed `allied_health.json`, original `Allied-Health-Sciences-2023.pdf`
+- `Allied Health Sciences / Human Nutrition and Dietetics` — 25 courses, 5 context rows, 2 references; parsed `allied_health.json`, original `Allied-Health-Sciences-2023.pdf`
+- `Allied Health Sciences / Occupational Therapy` — 26 courses, 4 context rows, 2 references; parsed `allied_health.json`, original `Allied-Health-Sciences-2023.pdf`
+- `Allied Health Sciences / Public Health` — 19 courses, 4 context rows, 2 references; parsed `allied_health.json`, original `Allied-Health-Sciences-2023.pdf`
+- `Allied Health Sciences / Optometry` — 63 courses, 6 context rows, 2 references; parsed `allied_health.json`, original `Allied-Health-Sciences-2023.pdf`
+- `Allied Health Sciences / Prosthetics and Orthotics` — 20 courses, 4 context rows, 2 references; parsed `allied_health.json`, original `Allied-Health-Sciences-2023.pdf`
+- `Allied Health Sciences / Radiography` — 32 courses, 4 context rows, 2 references; parsed `allied_health.json`, original `Allied-Health-Sciences-2023.pdf`
+- `Allied Health Sciences / Speech-Language Therapy` — 19 courses, 4 context rows, 2 references; parsed `allied_health.json`, original `Allied-Health-Sciences-2023.pdf`
+- `Architecture / Architecture` — 23 courses, 4 context rows, 2 references; parsed `architecture.json`, original `Architecture-CCMAS-2023-FINAL.pdf`
+- `Architecture / Architectural Technology` — 21 courses, 4 context rows, 2 references; parsed `architecture.json`, original `Architecture-CCMAS-2023-FINAL.pdf`
+- `Architecture / Furniture Design` — 26 courses, 4 context rows, 2 references; parsed `architecture.json`, original `Architecture-CCMAS-2023-FINAL.pdf`
+- `Architecture / Interior Architecture and Design` — 26 courses, 4 context rows, 2 references; parsed `architecture.json`, original `Architecture-CCMAS-2023-FINAL.pdf`
+- `Architecture / Landscape Architecture` — 23 courses, 4 context rows, 2 references; parsed `architecture.json`, original `Architecture-CCMAS-2023-FINAL.pdf`
+- `Architecture / Naval Architecture` — 23 courses, 4 context rows, 2 references; parsed `architecture.json`, original `Architecture-CCMAS-2023-FINAL.pdf`
+- `Arts / Arabic` — 38 courses, 4 context rows, 2 references; parsed `arts.json`, original `Arts-CCMAS-2023-FINAL.pdf`
+- `Arts / Archaeology` — 22 courses, 4 context rows, 2 references; parsed `arts.json`, original `Arts-CCMAS-2023-FINAL.pdf`
+- `Arts / African Tradition Religion` — 27 courses, 4 context rows, 2 references; parsed `arts.json`, original `Arts-CCMAS-2023-FINAL.pdf`
+- `Arts / Chinese Studies` — 37 courses, 4 context rows, 2 references; parsed `arts.json`, original `Arts-CCMAS-2023-FINAL.pdf`
+- `Arts / Christian Religious Studies` — 28 courses, 4 context rows, 2 references; parsed `arts.json`, original `Arts-CCMAS-2023-FINAL.pdf`
+- `Arts / Christian Theology` — 34 courses, 4 context rows, 2 references; parsed `arts.json`, original `Arts-CCMAS-2023-FINAL.pdf`
+- `Arts / Classics` — 30 courses, 4 context rows, 2 references; parsed `arts.json`, original `Arts-CCMAS-2023-FINAL.pdf`
+- `Arts / Efik` — 36 courses, 4 context rows, 2 references; parsed `arts.json`, original `Arts-CCMAS-2023-FINAL.pdf`
+- `Arts / English Language and Literature` — 52 courses, 4 context rows, 2 references; parsed `arts.json`, original `Arts-CCMAS-2023-FINAL.pdf`
+- `Arts / Film Production` — 37 courses, 4 context rows, 2 references; parsed `arts.json`, original `Arts-CCMAS-2023-FINAL.pdf`
+- `Arts / Folklore Studies` — 29 courses, 4 context rows, 2 references; parsed `arts.json`, original `Arts-CCMAS-2023-FINAL.pdf`
+- `Arts / Hausa` — 40 courses, 4 context rows, 2 references; parsed `arts.json`, original `Arts-CCMAS-2023-FINAL.pdf`
+- `Arts / History/History and Diplomatic Studies` — 32 courses, 4 context rows, 2 references; parsed `arts.json`, original `Arts-CCMAS-2023-FINAL.pdf`
+- `Arts / Ibibio` — 40 courses, 4 context rows, 2 references; parsed `arts.json`, original `Arts-CCMAS-2023-FINAL.pdf`
+- `Arts / Igbo` — 40 courses, 4 context rows, 2 references; parsed `arts.json`, original `Arts-CCMAS-2023-FINAL.pdf`
+- `Arts / Islamic Studies` — 41 courses, 4 context rows, 2 references; parsed `arts.json`, original `Arts-CCMAS-2023-FINAL.pdf`
+- `Arts / Linguistics` — 36 courses, 4 context rows, 2 references; parsed `arts.json`, original `Arts-CCMAS-2023-FINAL.pdf`
+- `Arts / Modern European Languages B.A (French)` — 40 courses, 4 context rows, 2 references; parsed `arts.json`, original `Arts-CCMAS-2023-FINAL.pdf`
+- `Arts / Modern European Languages B.A (German)` — 41 courses, 4 context rows, 2 references; parsed `arts.json`, original `Arts-CCMAS-2023-FINAL.pdf`
+- `Arts / Modern European Languages (Russian)` — 51 courses, 4 context rows, 2 references; parsed `arts.json`, original `Arts-CCMAS-2023-FINAL.pdf`
+- `Arts / Music` — 50 courses, 4 context rows, 2 references; parsed `arts.json`, original `Arts-CCMAS-2023-FINAL.pdf`
+- `Arts / Philosophy` — 40 courses, 4 context rows, 2 references; parsed `arts.json`, original `Arts-CCMAS-2023-FINAL.pdf`
+- `Arts / Religious Studies` — 39 courses, 4 context rows, 2 references; parsed `arts.json`, original `Arts-CCMAS-2023-FINAL.pdf`
+- `Arts / Sharcah` — 42 courses, 4 context rows, 2 references; parsed `arts.json`, original `Arts-CCMAS-2023-FINAL.pdf`
+- `Arts / Theatre Arts` — 49 courses, 4 context rows, 2 references; parsed `arts.json`, original `Arts-CCMAS-2023-FINAL.pdf`
+- `Arts / African Languages and Literature Yoruba` — 26 courses, 4 context rows, 2 references; parsed `arts.json`, original `Arts-CCMAS-2023-FINAL.pdf`
+- `Basic Medical Sciences / Human Anatomy` — 45 courses, 4 context rows, 2 references; parsed `basic_medical.json`, original `Basic-Medical-Sciences-CCMAS-FINAL-December-26-2022.pdf`
+- `Basic Medical Sciences / Physiology` — 43 courses, 4 context rows, 2 references; parsed `basic_medical.json`, original `Basic-Medical-Sciences-CCMAS-FINAL-December-26-2022.pdf`
+- `Communication and Media Studies / ADVERTISING — P12, P13, P14` — 35 courses, 4 context rows, 2 references; parsed `communication_media.json`, original `Communication-and-Media-Studies-CCMAS-2023-FINAL.pdf`
+- `Communication and Media Studies / BROADCASTING — P12, P13, P14` — 40 courses, 5 context rows, 2 references; parsed `communication_media.json`, original `Communication-and-Media-Studies-CCMAS-2023-FINAL.pdf`
+- `Communication and Media Studies / DEVELOPMENT COMMUNICATION STUDIES — P12, P13, P14` — 37 courses, 5 context rows, 2 references; parsed `communication_media.json`, original `Communication-and-Media-Studies-CCMAS-2023-FINAL.pdf`
+- `Communication and Media Studies / FILM & MULTIMEDIA — P12, P13, P14` — 40 courses, 5 context rows, 2 references; parsed `communication_media.json`, original `Communication-and-Media-Studies-CCMAS-2023-FINAL.pdf`
+- `Communication and Media Studies / INFORMATION AND MEDIA STUDIES — P12, P13, P14` — 37 courses, 5 context rows, 2 references; parsed `communication_media.json`, original `Communication-and-Media-Studies-CCMAS-2023-FINAL.pdf`
+- `Communication and Media Studies / JOURNALISM AND MEDIA STUDIES — P12, P13, P14` — 36 courses, 5 context rows, 2 references; parsed `communication_media.json`, original `Communication-and-Media-Studies-CCMAS-2023-FINAL.pdf`
+- `Communication and Media Studies / MASS COMMUNICATION — P12, P13, P14` — 57 courses, 5 context rows, 2 references; parsed `communication_media.json`, original `Communication-and-Media-Studies-CCMAS-2023-FINAL.pdf`
+- `Communication and Media Studies / PUBLIC RELATIONS — P12, P13, P14` — 42 courses, 6 context rows, 2 references; parsed `communication_media.json`, original `Communication-and-Media-Studies-CCMAS-2023-FINAL.pdf`
+- `Communication and Media Studies / STRATEGIC COMMUNICATION — P12, P13, P14` — 40 courses, 5 context rows, 2 references; parsed `communication_media.json`, original `Communication-and-Media-Studies-CCMAS-2023-FINAL.pdf`
+- `Computing / Computer Science` — 38 courses, 5 context rows, 2 references; parsed `computing.json`, original `Computing-CCMAS-2023-FINAL.pdf`
+- `Computing / Cybersecurity` — 39 courses, 6 context rows, 2 references; parsed `computing.json`, original `Computing-CCMAS-2023-FINAL.pdf`
+- `Computing / Data Science` — 37 courses, 6 context rows, 2 references; parsed `computing.json`, original `Computing-CCMAS-2023-FINAL.pdf`
+- `Computing / Information and Communication Technology` — 38 courses, 5 context rows, 2 references; parsed `computing.json`, original `Computing-CCMAS-2023-FINAL.pdf`
+- `Computing / Information Systems` — 38 courses, 6 context rows, 2 references; parsed `computing.json`, original `Computing-CCMAS-2023-FINAL.pdf`
+- `Computing / Information Technology` — 39 courses, 5 context rows, 2 references; parsed `computing.json`, original `Computing-CCMAS-2023-FINAL.pdf`
+- `Computing / Software Engineering` — 38 courses, 5 context rows, 2 references; parsed `computing.json`, original `Computing-CCMAS-2023-FINAL.pdf`
+- `Education / Adult and Continuing Education` — 86 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Agricultural Education` — 39 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Arabic` — 39 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Biology` — 44 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Business Education` — 49 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Chemistry` — 37 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Christian Religious Studies` — 32 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Computer Science` — 21 courses, 4 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Creative Arts Education` — 35 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Early Childhood Education` — 58 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Educational Management` — 31 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Efik-Ibibio Education` — 39 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / English Language/Literature-in-English` — 33 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Entrepreneurship Education` — 34 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Environmental Education` — 24 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / French` — 30 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Geography` — 31 courses, 6 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Guidance and Counselling` — 30 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Hausa` — 15 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Health Education` — 40 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / History` — 32 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Home Economics` — 24 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Human Kinetics/Physical Education` — 12 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Igbo` — 29 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Integrated Science` — 37 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Islamic Studies` — 33 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Language Arts and Communication` — 37 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Library and Information Science` — 24 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Mathematics` — 36 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Music` — 34 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Physics` — 32 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Political Science` — 37 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Primary Education` — 27 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Social Studies and Civic Education` — 36 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Special Needs Education` — 32 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Sustainable Development Studies` — 28 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Technology Education` — 68 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Yoruba` — 32 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Education / Educational Technology` — 30 courses, 5 context rows, 2 references; parsed `education.json`, original `Education-CCMAS-2023-New.pdf`
+- `Engineering / AEROSPACE ENGINEERING` — 53 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / AGRICULTURAL AND BIOSYSTEMS ENGINEERING` — 53 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / AUTOMOTIVE ENGINEERING` — 48 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / BIOMEDICAL ENGINEERING` — 53 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / CHEMICAL ENGINEERING` — 52 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / CIVIL ENGINEERING` — 49 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / COMPUTER ENGINEERING` — 50 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / ELECTRICAL ENGINEERING` — 50 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / ELECTRONIC ENGINEERING` — 51 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / ELECTRICAL AND ELECTRONIC ENGINEERING` — 50 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / ENVIRONMENTAL ENGINEERING` — 51 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / FOOD ENGINEERING` — 50 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / FOOD SCIENCE AND TECHNOLOGY` — 56 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / INFORMATION AND COMMUNICATION ENGINEERING` — 53 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / INDUSTRIAL AND PRODUCTION ENGINEERING` — 48 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / MARINE AND OFFSHORE ENGINEERING` — 60 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / MATERIALS AND METALLURGICAL ENGINEERING` — 52 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / MINERAL PROCESSING AND CHEMICAL-METALLURGICAL ENGINEERING` — 48 courses, 7 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / MECHANICAL ENGINEERING` — 51 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / MECHATRONICS ENGINEERING` — 49 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / METALLURGICAL ENGINEERING` — 51 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / MATERIALS ENGINEERING` — 49 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / MINING ENGINEERING` — 49 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / NATURAL GAS ENGINEERING` — 50 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / NUCLEAR ENGINEERING` — 36 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / PETROCHEMICAL ENGINEERING` — 56 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / PETROLEUM AND GAS ENGINEERING` — 51 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / PETROLEUM ENGINEERING` — 49 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / RAILWAY ENGINEERING` — 42 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / STRUCTURAL ENGINEERING` — 47 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / SYSTEMS ENGINEERING` — 50 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / TELECOMMUNICATIONS ENGINEERING` — 52 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / WATER RESOURCES ENGINEERING` — 49 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Engineering / WOOD PRODUCTS ENGINEERING` — 50 courses, 8 context rows, 2 references; parsed `engineering.json`, original `Engineering-Technology-CCMAS-2023-FINAL.pdf`
+- `Environmental Sciences / Building` — 70 courses, 5 context rows, 2 references; parsed `environmental_sciences.json`, original `Environmental-Sciences-CCMAS-2023-FINAL.pdf`
+- `Environmental Sciences / Clothing and Textile Design` — 34 courses, 5 context rows, 2 references; parsed `environmental_sciences.json`, original `Environmental-Sciences-CCMAS-2023-FINAL.pdf`
+- `Environmental Sciences / Environmental Management` — 40 courses, 4 context rows, 2 references; parsed `environmental_sciences.json`, original `Environmental-Sciences-CCMAS-2023-FINAL.pdf`
+- `Environmental Sciences / ENVIRONMENTAL STANDARDS` — 44 courses, 5 context rows, 2 references; parsed `environmental_sciences.json`, original `Environmental-Sciences-CCMAS-2023-FINAL.pdf`
+- `Environmental Sciences / Estate management` — 37 courses, 5 context rows, 2 references; parsed `environmental_sciences.json`, original `Environmental-Sciences-CCMAS-2023-FINAL.pdf`
+- `Environmental Sciences / Fashion design` — 47 courses, 4 context rows, 2 references; parsed `environmental_sciences.json`, original `Environmental-Sciences-CCMAS-2023-FINAL.pdf`
+- `Environmental Sciences / Fine and Applied Arts` — 18 courses, 4 context rows, 2 references; parsed `environmental_sciences.json`, original `Environmental-Sciences-CCMAS-2023-FINAL.pdf`
+- `Environmental Sciences / Geography` — 69 courses, 6 context rows, 2 references; parsed `environmental_sciences.json`, original `Environmental-Sciences-CCMAS-2023-FINAL.pdf`
+- `Environmental Sciences / Quantity Surveying` — 51 courses, 6 context rows, 2 references; parsed `environmental_sciences.json`, original `Environmental-Sciences-CCMAS-2023-FINAL.pdf`
+- `Environmental Sciences / Surveying and Geoinformatics` — 41 courses, 6 context rows, 2 references; parsed `environmental_sciences.json`, original `Environmental-Sciences-CCMAS-2023-FINAL.pdf`
+- `Environmental Sciences / Urban and Regional Planning` — 33 courses, 6 context rows, 2 references; parsed `environmental_sciences.json`, original `Environmental-Sciences-CCMAS-2023-FINAL.pdf`
+- `Environmental Sciences / Industrial Design` — 10 courses, 4 context rows, 2 references; parsed `environmental_sciences.json`, original `Environmental-Sciences-CCMAS-2023-FINAL.pdf`
+- `Law / Law` — 70 courses, 4 context rows, 2 references; parsed `law.json`, original `Law-ALL.pdf`
+- `Law / Common and Islamic Law` — 75 courses, 4 context rows, 2 references; parsed `law.json`, original `Law-ALL.pdf`
+- `Medicine and Dentistry / Bachelor of Medicine and Bachelor of Surgery (MBBS/MBChB)` — 223 courses, 4 context rows, 2 references; parsed `medicine_dentistry.json`, original `Medicine-and-Dentistry-CCMAS-2023-FINAL.pdf`
+- `Medicine and Dentistry / Bachelor of Dental Surgery (BDS/BChD)` — 176 courses, 4 context rows, 2 references; parsed `medicine_dentistry.json`, original `Medicine-and-Dentistry-CCMAS-2023-FINAL.pdf`
+- `Pharmacy and Pharmaceutical Sciences / Bachelor of Pharmacy` — 87 courses, 5 context rows, 2 references; parsed `pharmacy.json`, original `Pharmacy-and-Pharmaceutical-Sciences-CCMAS-2023-FINAL.pdf`
+- `Pharmacy and Pharmaceutical Sciences / Doctor of Pharmacy` — 102 courses, 4 context rows, 2 references; parsed `pharmacy.json`, original `Pharmacy-and-Pharmaceutical-Sciences-CCMAS-2023-FINAL.pdf`
+- `Sciences / Applied Geophysics` — 44 courses, 5 context rows, 2 references; parsed `sciences.json`, original `Sciences-CCMAS-2023-FINAL.pdf`
+- `Sciences / Biochemistry` — 40 courses, 4 context rows, 2 references; parsed `sciences.json`, original `Sciences-CCMAS-2023-FINAL.pdf`
+- `Sciences / Biology` — 37 courses, 4 context rows, 2 references; parsed `sciences.json`, original `Sciences-CCMAS-2023-FINAL.pdf`
+- `Sciences / Biotechnology` — 42 courses, 4 context rows, 2 references; parsed `sciences.json`, original `Sciences-CCMAS-2023-FINAL.pdf`
+- `Sciences / Botany` — 48 courses, 4 context rows, 2 references; parsed `sciences.json`, original `Sciences-CCMAS-2023-FINAL.pdf`
+- `Sciences / Brewing Science and Technology` — 40 courses, 4 context rows, 2 references; parsed `sciences.json`, original `Sciences-CCMAS-2023-FINAL.pdf`
+- `Sciences / Chemistry` — 42 courses, 4 context rows, 2 references; parsed `sciences.json`, original `Sciences-CCMAS-2023-FINAL.pdf`
+- `Sciences / Environmental Management and Toxicology` — 51 courses, 5 context rows, 2 references; parsed `sciences.json`, original `Sciences-CCMAS-2023-FINAL.pdf`
+- `Sciences / Forensic Science` — 36 courses, 4 context rows, 2 references; parsed `sciences.json`, original `Sciences-CCMAS-2023-FINAL.pdf`
+- `Sciences / Geology` — 38 courses, 4 context rows, 2 references; parsed `sciences.json`, original `Sciences-CCMAS-2023-FINAL.pdf`
+- `Sciences / Industrial Chemistry` — 42 courses, 4 context rows, 2 references; parsed `sciences.json`, original `Sciences-CCMAS-2023-FINAL.pdf`
+- `Sciences / Industrial Mathematics` — 34 courses, 6 context rows, 2 references; parsed `sciences.json`, original `Sciences-CCMAS-2023-FINAL.pdf`
+- `Sciences / Industrial Physics` — 33 courses, 4 context rows, 2 references; parsed `sciences.json`, original `Sciences-CCMAS-2023-FINAL.pdf`
+- `Sciences / Marine Science` — 36 courses, 4 context rows, 2 references; parsed `sciences.json`, original `Sciences-CCMAS-2023-FINAL.pdf`
+- `Sciences / Maritime Science` — 38 courses, 4 context rows, 2 references; parsed `sciences.json`, original `Sciences-CCMAS-2023-FINAL.pdf`
+- `Sciences / Mathematics` — 39 courses, 5 context rows, 2 references; parsed `sciences.json`, original `Sciences-CCMAS-2023-FINAL.pdf`
+- `Sciences / Medical Physics` — 38 courses, 5 context rows, 2 references; parsed `sciences.json`, original `Sciences-CCMAS-2023-FINAL.pdf`
+- `Sciences / Medicinal Chemistry` — 44 courses, 4 context rows, 2 references; parsed `sciences.json`, original `Sciences-CCMAS-2023-FINAL.pdf`
+- `Sciences / Meteorology` — 47 courses, 4 context rows, 2 references; parsed `sciences.json`, original `Sciences-CCMAS-2023-FINAL.pdf`
+- `Sciences / Microbiology` — 35 courses, 4 context rows, 2 references; parsed `sciences.json`, original `Sciences-CCMAS-2023-FINAL.pdf`
+- `Sciences / Petroleum Chemistry` — 39 courses, 4 context rows, 2 references; parsed `sciences.json`, original `Sciences-CCMAS-2023-FINAL.pdf`
+- `Sciences / Physics with Electronics` — 25 courses, 4 context rows, 2 references; parsed `sciences.json`, original `Sciences-CCMAS-2023-FINAL.pdf`
+- `Sciences / Physics` — 35 courses, 4 context rows, 2 references; parsed `sciences.json`, original `Sciences-CCMAS-2023-FINAL.pdf`
+- `Sciences / Science Laboratory Technology` — 120 courses, 4 context rows, 2 references; parsed `sciences.json`, original `Sciences-CCMAS-2023-FINAL.pdf`
+- `Sciences / Statistics` — 29 courses, 6 context rows, 2 references; parsed `sciences.json`, original `Sciences-CCMAS-2023-FINAL.pdf`
+- `Sciences / Zoology` — 42 courses, 4 context rows, 2 references; parsed `sciences.json`, original `Sciences-CCMAS-2023-FINAL.pdf`
+- `Social Sciences / Criminology and Security Studies` — 34 courses, 4 context rows, 2 references; parsed `social_sciences.json`, original `Social-Sciences-CCMAS-FINAL-2023-A.pdf`
+- `Social Sciences / Demography and Social Statistics` — 38 courses, 6 context rows, 2 references; parsed `social_sciences.json`, original `Social-Sciences-CCMAS-FINAL-2023-A.pdf`
+- `Social Sciences / Development Studies` — 40 courses, 5 context rows, 2 references; parsed `social_sciences.json`, original `Social-Sciences-CCMAS-FINAL-2023-A.pdf`
+- `Social Sciences / Economics` — 38 courses, 4 context rows, 2 references; parsed `social_sciences.json`, original `Social-Sciences-CCMAS-FINAL-2023-A.pdf`
+- `Social Sciences / International Relations` — 38 courses, 4 context rows, 2 references; parsed `social_sciences.json`, original `Social-Sciences-CCMAS-FINAL-2023-A.pdf`
+- `Social Sciences / Library and Information Science` — 38 courses, 5 context rows, 2 references; parsed `social_sciences.json`, original `Social-Sciences-CCMAS-FINAL-2023-A.pdf`
+- `Social Sciences / Peace Studies and Conflict Resolution` — 38 courses, 4 context rows, 2 references; parsed `social_sciences.json`, original `Social-Sciences-CCMAS-FINAL-2023-A.pdf`
+- `Social Sciences / Petroleum Economics and Policy Studies` — 35 courses, 4 context rows, 2 references; parsed `social_sciences.json`, original `Social-Sciences-CCMAS-FINAL-2023-A.pdf`
+- `Social Sciences / Political Science` — 41 courses, 4 context rows, 2 references; parsed `social_sciences.json`, original `Social-Sciences-CCMAS-FINAL-2023-A.pdf`
+- `Social Sciences / Politics, Philosophy and Economics (PPE)` — 46 courses, 4 context rows, 2 references; parsed `social_sciences.json`, original `Social-Sciences-CCMAS-FINAL-2023-A.pdf`
+- `Social Sciences / Psychology` — 41 courses, 5 context rows, 2 references; parsed `social_sciences.json`, original `Social-Sciences-CCMAS-FINAL-2023-A.pdf`
+- `Social Sciences / Social Standards` — 40 courses, 4 context rows, 2 references; parsed `social_sciences.json`, original `Social-Sciences-CCMAS-FINAL-2023-A.pdf`
+- `Social Sciences / Social Work` — 33 courses, 4 context rows, 2 references; parsed `social_sciences.json`, original `Social-Sciences-CCMAS-FINAL-2023-A.pdf`
+- `Social Sciences / Sociology` — 34 courses, 4 context rows, 1 references; parsed `social_sciences.json`, original `Social-Sciences-CCMAS-FINAL-2023-A.pdf`
+- `Veterinary Medicine / Veterinary Medicine` — 94 courses, 5 context rows, 2 references; parsed `veterinary.json`, original `Veterinary-Medicine-CCMAS-2023-FINAL.pdf`
