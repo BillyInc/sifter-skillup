@@ -227,10 +227,12 @@ def canonical_inheritance_rows(
         component_refs = [f"{item['discipline']}::{item['name']}" for item in components]
         candidate_links = list(union_links(components, programme_domains).values())
         scoped_links = scope.get("domain_links") or []
-        if scoped_links and (
-            category in {"partial_curriculum_scope", "external_sources_required"}
-            or any(ref.startswith("__custom__::") for ref in component_refs)
-        ):
+        # The current scope builder has already reapplied course-level domain
+        # evidence gates to the selected JAMB curriculum. Prefer those exact
+        # links for every inheritance type; checking the old whole-package
+        # domain evidence again incorrectly holds an otherwise supported JAMB
+        # path because of unrelated/legacy links elsewhere in the parent.
+        if scoped_links:
             candidate_links = scoped_links
         component_evidence = []
         for component in components:
@@ -251,24 +253,42 @@ def canonical_inheritance_rows(
                 "has_reviewed_domain_evidence": bool(links) and len(reviewed_links) == len(links),
             })
 
-        if category == "single_ccmas_full_curriculum" and len(components) == 1 and candidate_links and all(
-            item["has_reviewed_domain_evidence"] for item in component_evidence
+        if (
+            category == "single_ccmas_full_curriculum"
+            and len(components) == 1
+            and scope.get("scope_status") == "full"
+            and scope.get("scope_approval") in {"not_applicable", "reviewed"}
+            and scoped_links
         ):
             status = "ready"
-            reason = "one resolved CCMAS programme with reviewed domain links"
-            exposed_links = candidate_links
-        elif category == "combined_ccmas_curriculum" and scope.get("scope_status") == "combined_scope_evidenced" and scoped_links:
-            status = "ready"
-            reason = "primary and supporting components are explicit; external component links are source-anchored"
+            reason = "full declared CCMAS curriculum with course-scoped domain links passing the JAMB evidence gate"
             exposed_links = scoped_links
-        elif category == "combined_ccmas_curriculum" and components and all(
-            item["has_reviewed_domain_evidence"] for item in component_evidence
-        ):
-            status = "ready"
-            reason = "primary plus every resolved supporting CCMAS component"
-            exposed_links = candidate_links
+        elif category == "combined_ccmas_curriculum":
+            selected_courses = scope.get("selected_courses") or []
+            if (
+                scope.get("scope_status") in {"combined_scope_evidenced", "combined_scope_reviewed"}
+                and scope.get("scope_approval") == "reviewed"
+                and selected_courses
+                and scoped_links
+            ):
+                status = "ready"
+                reason = "reviewed offering-specific course scope and domain links are recorded"
+                exposed_links = scoped_links
+            else:
+                status = "review_required"
+                reason = scope.get("scope_reason") or (
+                    "named components are not sufficient: verify the offering-specific "
+                    "course/outcome slice and each downstream domain link"
+                )
+                exposed_links = []
         elif category == "external_sources_required":
-            if scope.get("scope_status") == "external_scope_evidenced" and scoped_links:
+            if scope.get("scope_status") == "external_scope_verified_no_curriculum":
+                status = "unsupported_no_verified_curriculum"
+                reason = scope.get("scope_reason") or (
+                    "External source review is closed: no exact programme curriculum was located; do not publish a guessed curriculum or domain path."
+                )
+                exposed_links = []
+            elif scope.get("scope_status") == "external_scope_evidenced" and scoped_links:
                 status = "ready_external"
                 reason = "external curriculum is explicit and its domain links are anchored to the selected source courses"
                 exposed_links = scoped_links
@@ -277,9 +297,13 @@ def canonical_inheritance_rows(
                 reason = "no CCMAS curriculum; domain evidence must come from external sources"
                 exposed_links = []
         elif category == "partial_curriculum_scope":
-            if scope.get("scope_status") == "partial_scope_reviewed" and scope.get("scope_approval") == "reviewed" and scoped_links:
+            if (
+                scope.get("scope_status") in {"partial_scope_reviewed", "full"}
+                and scope.get("scope_approval") == "reviewed"
+                and scoped_links
+            ):
                 status = "ready_partial"
-                reason = "explicitly reviewed partial CCMAS scope supports the exposed domain links"
+                reason = "reviewed JAMB curriculum scope supports the exposed course-scoped domain links"
                 exposed_links = scoped_links
             else:
                 status = "review_required"
@@ -620,7 +644,7 @@ def main() -> None:
             "single_ccmas_full_curriculum": "A_exact/C_reclassified rows inherit one reviewed CCMAS programme.",
             "partial_curriculum_scope": "B_granular rows expose only the domain links anchored by their recorded CCMAS course slice.",
             "combined_ccmas_curriculum": "Resolved blends inherit the primary plus all supporting CCMAS components.",
-            "external_sources_required": "D_custom rows use explicit external curriculum evidence and do not inherit an unscoped CCMAS fan-out.",
+            "external_sources_required": "D_custom rows use explicit external curriculum evidence and do not inherit an unscoped CCMAS fan-out; an externally verified absence of an exact curriculum is closed as unsupported with no student paths.",
         },
         "counts": {
             "rows": len(canonical_rows),
@@ -630,6 +654,10 @@ def main() -> None:
         "rows": canonical_rows,
     }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     review_count = sum(1 for row in canonical_rows if row.get("mapping_status") in {"review_required", "external_review_required"})
+    stored_domain_mismatch_count = sum(
+        1 for row in domain_alignment["rows"]
+        if row.get("status") == "stored_links_do_not_match_ccmas_derived_set"
+    )
     if review_count:
         decision = (
             "The active JAMB domain map is derived from full CCMAS curricula, explicit combined components, "
@@ -639,8 +667,8 @@ def main() -> None:
     else:
         decision = (
             f"All {len(rows_by_name)} active JAMB names have an explicit inheritance scope: full CCMAS, combined CCMAS, "
-            "course-scoped partial CCMAS, or separately evidenced external curriculum. "
-            "The active domain links match the saved canonical scope artifact."
+            "course-scoped partial CCMAS, or separately evidenced external curriculum, with no inheritance-status holds. "
+            f"However, {stored_domain_mismatch_count} active JAMB rows still have domain links that differ from the current course-scoped evidence; domain reconciliation is not signed off."
         )
     report = {
         "schema_version": 1,

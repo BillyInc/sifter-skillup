@@ -302,7 +302,7 @@ def _parse_condition_only(body: str, exam_type: str | None):
     """Represent a precise local condition without inventing a full rule."""
     if not re.search(
         r"\b(?:do(?:es)?\s+not\s+accept|do(?:es)?\s+not\s+require|do(?:es)?\s+not\s+allow|"
-        r"do(?:es)?\s+not\s+insist|not\s+compulsory|in\s+lieu|pass(?:es)?\s+in|accepts?\s+pass|"
+        r"do(?:es)?\s+not\s+insist|not\s+compulsory|in\s+lieu|(?<!credit )pass(?:es)?\s+in|accepts?\s+pass|"
         r"relevant\s+(?:subject|programme|area)|(?:one|two|1|2)\s*"
         r"(?:\(\s*[12]\s*\))?\s+sittings?|"
         r"maximum\s+of\s+(?:one|two|1|2)\s*(?:\(\s*[12]\s*\))?\s+sittings?)\b",

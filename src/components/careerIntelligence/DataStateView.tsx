@@ -5,7 +5,7 @@ import { useTheme, Spacing, Radius, FontSize } from "../../theme";
 import type { DataState, DataStatus } from "../../types/career";
 
 const PRESET: Record<Exclude<DataStatus, "real">, { icon: keyof typeof Feather.glyphMap; title: string; body: string }> = {
-  coming_soon: { icon: "lock", title: "Locked", body: "This surface is waiting for verified data." },
+  coming_soon: { icon: "info", title: "Not available yet", body: "This surface is waiting for verified data." },
   locked: { icon: "lock", title: "Locked", body: "Create an account or wait for release to unlock this surface." },
   pending: { icon: "clock", title: "Loading your saved items", body: "We’re loading the information available for this view." },
   fallback: { icon: "info", title: "Standard data", body: "Showing the national standard while detailed data is added." },
@@ -132,7 +132,7 @@ function lockedPreviewFor(notice?: string): { icon: keyof typeof Feather.glyphMa
                         : "lock";
   return {
     icon,
-    title: "Locked",
+    title: "Not available yet",
     body: copy ?? "This page is ready and waiting for verified data before it opens.",
   };
 }

@@ -3,6 +3,8 @@ import { View, Text, StyleSheet } from "react-native";
 import { useTheme, Spacing, Radius, FontSize, CompassFonts } from "@/theme";
 import type { ComputationalMethodEvidence } from "@/types/career";
 import { SectionLabel } from "./RedesignPrimitives";
+import { ExternalLinkGuard } from "./ExternalLinkGuard";
+import { studentSafeUrl } from "@/lib/studentCareerBoundary";
 
 export interface MethodEvidenceBlockProps {
   methods?: Array<ComputationalMethodEvidence & { subgroupId?: string | null }>;
@@ -10,7 +12,7 @@ export interface MethodEvidenceBlockProps {
 }
 
 /** Shows source-backed methods without implying demonstrated student mastery. */
-export function MethodEvidenceBlock({ methods, title = "Methods used in this area" }: MethodEvidenceBlockProps) {
+export function MethodEvidenceBlock({ methods, title = "Ways of working that support these skills" }: MethodEvidenceBlockProps) {
   const { colors } = useTheme();
   if (!methods?.length) return null;
 
@@ -18,7 +20,7 @@ export function MethodEvidenceBlock({ methods, title = "Methods used in this are
     <View style={styles.container}>
       <SectionLabel>{title}</SectionLabel>
       <Text style={[styles.explanation, { color: colors.textRole.muted }, CompassFonts.body]}>
-        These methods appear in source-backed role evidence. They describe knowledge used in related work, not proof that you already have the competence.
+        These are ways of working that support the skills and competencies above. They show how people carry out the work; they are not a separate checklist and do not mean that you already have the competence.
       </Text>
       <View style={styles.list}>
         {methods.map((method, index) => (
@@ -39,11 +41,25 @@ export function MethodEvidenceBlock({ methods, title = "Methods used in this are
                 {method.description}
               </Text>
             ) : null}
+            <ExternalLinkGuard
+              url={method.sourceProvenance && typeof method.sourceProvenance === "object" ? firstSourceUrl(method.sourceProvenance) : undefined}
+              label={firstSourceUrl(method.sourceProvenance ?? {}) ? "Open source for this method" : "No verified source for this method yet"}
+              description={`This opens the source used to explain ${method.name}.`}
+            />
           </View>
         ))}
       </View>
     </View>
   );
+}
+
+function firstSourceUrl(provenance: Record<string, unknown>): string | undefined {
+  for (const key of ["sourceUrl", "source_url", "url"]) {
+    const value = provenance[key];
+    const safe = studentSafeUrl(typeof value === "string" ? value : undefined);
+    if (safe) return safe;
+  }
+  return undefined;
 }
 
 export default MethodEvidenceBlock;

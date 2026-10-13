@@ -11,19 +11,15 @@
  *   Remote              → "Remote %" is now a column on the role row
  *   Salary              → "Salary" is now a column on the role row
  *
- * §5.2 collapses them into ONE screen with two entry modes over the same data:
- *   • By Programme (default) — your programmes ranked by demand, drill into
- *     domain → role, with the §5.3 skills-gap report nested in the drill-down.
- *   • By Domain/Role (§5.2.1) — the same demand data entered from the market
- *     side: an expandable domain table with its roles underneath.
+ * This view is demand-only: source-backed signals by domain and role, with
+ * specialization-level demand shown only when the API has sourced records.
+ * Programme curriculum and learning-gap reports live in Programme Intelligence.
  *
  * Trend is ALWAYS a number beside the figure (▲12% / ▼3%), never a separate
  * chart or screen. Remote % and salary are ALWAYS columns on the role row.
  *
- * Data comes only from adminData (getProgrammeDemand, getDomainRanking,
- * getRoleDemand, getSkillsGapReport) plus the existing
- * GET /api/institutions/me/vs-national read that the retired vs-national
- * screen owned.
+ * Data comes only from adminData's source-backed domain and role demand reads.
+ * Programme and curriculum records are intentionally not read on this screen.
  * Every block branches through ComingSoonPanel — nothing is ever fabricated.
  */
 import React, { useEffect, useMemo, useState } from "react";
@@ -722,11 +718,16 @@ function DomainRow({
 // ─── Screen ──────────────────────────────────────────────────────
 export function MarketIntelligenceScreen() {
   const { colors } = useTheme();
-  const [mode, setMode] = useState<"programme" | "market">("programme");
+  // Programme skill-gap intelligence lives on the separate Skills Gap view.
+  // This screen is exclusively the market-demand lens.
+  // The programme curriculum/skills-gap report lives on the dedicated
+  // Skills Gap screen; this route intentionally renders only market demand.
+  const mode: string = "market";
   const [scope, setScope] = useState<RankScope>("nigerian");
   const [programmeSort, setProgrammeSort] = useState<ProgrammeSort>("demand");
   const [marketSort, setMarketSort] = useState<MarketSort>("volume");
   const [query, setQuery] = useState("");
+  const [retryKey, setRetryKey] = useState(0);
 
   const [programmes, setProgrammes] = useState<DataState<ProgrammeDemandRow[]>>({
     status: "pending",
@@ -744,20 +745,6 @@ export function MarketIntelligenceScreen() {
   useEffect(() => {
     let active = true;
     adminData
-      .getProgrammeDemand({})
-      .then((d) => {
-        if (active) setProgrammes(d);
-      })
-      .catch(() => {
-        if (active) {
-          setProgrammes(
-            comingSoon<ProgrammeDemandRow[]>(
-              "Programme demand could not be loaded. Try again shortly.",
-            ),
-          );
-        }
-      });
-    adminData
       .getRoleDemand()
       .then((d) => {
         if (active) setRoles(d);
@@ -774,7 +761,7 @@ export function MarketIntelligenceScreen() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [retryKey]);
 
   // Scope-driven reads — the lens is never collapsed into one score.
   useEffect(() => {
@@ -797,7 +784,7 @@ export function MarketIntelligenceScreen() {
     return () => {
       active = false;
     };
-  }, [scope]);
+  }, [retryKey, scope]);
 
   const domainList = useMemo(
     () => (domains.status === "real" ? (domains.data ?? []) : []),
@@ -860,6 +847,11 @@ export function MarketIntelligenceScreen() {
     return { ...roles, data: rows };
   }, [roles, domainList, query]);
 
+  const roleList = roles.status === "real" ? roles.data ?? [] : [];
+  const hasMarketSignals = domainList.length > 0 || roleList.length > 0;
+  const marketLoading = domains.status === "pending" || roles.status === "pending";
+  const marketHasError = domains.status === "error" || roles.status === "error";
+
   return (
     <AdminShell title="Market Intelligence" eyebrow="Advisory · aggregate only">
       <ScrollView
@@ -869,28 +861,15 @@ export function MarketIntelligenceScreen() {
       >
         <View style={styles.section}>
             <SectionHeading
-              title="Programme and domain mapping"
-              note="Curriculum mappings are available. Labour-market demand is not yet source-backed, so no current job, salary or trend claims are shown."
+              title="Labour-market signals"
+              note="This view is separate from programme curriculum and skills-gap intelligence. Current job, salary, remote-share and trend claims appear only when backed by market sources."
             />
-
-          <Segmented
-            value={mode}
-            onChange={setMode}
-            options={[
-              { value: "programme", label: "By Programme" },
-              { value: "market", label: "By Domain/Role" },
-            ]}
-          />
 
           <ScopeToggle
             value={scope as ScopeOption}
             onChange={(s) => setScope(s as RankScope)}
           />
 
-          <Notice>
-            Demand intelligence is not available yet. Taxonomy-derived baselines
-            are not presented as current labour-market demand.
-          </Notice>
         </View>
 
         {mode === "programme" ? (
@@ -945,14 +924,29 @@ export function MarketIntelligenceScreen() {
         ) : (
           <View style={styles.section}>
             <SectionHeading
-              title="Domain and role mapping"
-              note="This view will show source-backed labour-market data after ingestion. Remote share, salary and trend fields remain unavailable for now."
+              title="Domains, areas of specialization and roles"
+              note="Only sourced labour-market observations belong here. Programme curriculum comparisons are in Programme Intelligence."
             />
-
+            {!hasMarketSignals ? (
+              <View style={[styles.marketUnavailable, { borderColor: colors.border, backgroundColor: colors.card }]}>
+                <Text style={[styles.detailTitle, CompassFonts.bodyBold, { color: colors.text }]}>
+                  {marketLoading ? "Loading market demand" : "Demand intelligence is not available yet"}
+                </Text>
+                <Text style={[styles.notice, { color: colors.textMuted }]}>
+                  {marketLoading
+                    ? "Checking for source-backed demand by domain and role."
+                    : "No source-backed market-demand records are available for this view yet. Programme curriculum and skills gaps are in Programme Intelligence."}
+                </Text>
+                {!marketLoading && marketHasError ? <TouchableOpacity accessibilityRole="button" onPress={() => setRetryKey((key) => key + 1)} style={styles.retryAction}>
+                  <Text style={[styles.openLink, { color: colors.accent }]}>Try again</Text>
+                </TouchableOpacity> : null}
+              </View>
+            ) : <>
+            <Text style={[styles.notice, { color: colors.textMuted }]}>Specialization-level demand appears only when it is supported by its own market evidence. A taxonomy link alone is not presented as demand.</Text>
             <TextInput
               value={query}
               onChangeText={setQuery}
-              placeholder="Search domain or role…"
+              placeholder="Search domain, specialization or role…"
               placeholderTextColor={colors.textMuted}
               style={[
                 styles.search,
@@ -977,31 +971,17 @@ export function MarketIntelligenceScreen() {
               />
             </View>
 
-            <ComingSoonPanel
+            {marketDomains.status === "real" ? <ComingSoonPanel
               state={marketDomains}
               empty={(rows) => rows.length === 0}
-              emptyTitle="No domains yet"
-              emptyBody="Domain demand rankings appear here once populated."
+              emptyTitle="No matching domains"
+              emptyBody="Try another search or sort option."
             >
               {(items) => {
-                const max = Math.max(
-                  1,
-                  ...items.map((i) => i.postingsPerMonth || 0),
-                );
-                return (
-                  <View style={{ gap: Spacing.sm }}>
-                    {items.map((item) => (
-                      <DomainRow
-                        key={item.domainId}
-                        item={item}
-                        roles={roles}
-                        max={max}
-                      />
-                    ))}
-                  </View>
-                );
+                const max = Math.max(1, ...items.map((i) => i.postingsPerMonth || 0));
+                return <View style={{ gap: Spacing.sm }}>{items.map((item) => <DomainRow key={item.domainId} item={item} roles={roles} max={max} />)}</View>;
               }}
-            </ComingSoonPanel>
+            </ComingSoonPanel> : <Text style={[styles.notice, { color: colors.textMuted }]}>Domain-level demand is not available in this source yet.</Text>}
 
             {/* Roles outside the ranked domains still have to be reachable.
                 Rendered only when real rows exist — a state panel here would be
@@ -1024,16 +1004,10 @@ export function MarketIntelligenceScreen() {
                 />
               </View>
             ) : null}
+            </>}
           </View>
         )}
 
-        <View style={styles.section}>
-          <Notice>
-            Programme and domain mapping is available from the curriculum
-            registry. Labour-market demand, salary, remote-share and trend data
-            remain unavailable until source-backed ingestion is live.
-          </Notice>
-        </View>
       </ScrollView>
     </AdminShell>
   );
@@ -1111,6 +1085,9 @@ const styles = StyleSheet.create({
     padding: Spacing.md,
     gap: Spacing.md,
   },
+  marketUnavailable: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.md, padding: Spacing.lg, gap: Spacing.sm },
+  retryAction: { alignSelf: "flex-start", minHeight: 38, justifyContent: "center" },
+  openLink: { fontSize: FontSize.xs, fontWeight: "800" },
   detailTitle: { fontSize: 9, letterSpacing: 1 },
   detailBody: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.6 },
   detailNote: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.6 },

@@ -2,8 +2,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Bump this whenever the legal text or a material data-use practice changes.
 // Old device-only acceptance values are intentionally not treated as valid.
-export const TERMS_VERSION = "2026-08-14";
-export const PRIVACY_VERSION = "2026-08-14";
+export const TERMS_VERSION = "2026-10-10";
+export const PRIVACY_VERSION = "2026-10-10";
 export const LEGAL_ACCEPTANCE_KEY = "@sifter_legal_acceptance_v2";
 const LEGACY_ANALYTICS_CONSENT_KEY = "@sifter_analytics_consent_v1";
 

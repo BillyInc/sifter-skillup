@@ -44,7 +44,13 @@ export function makeExploreNav(base: string) {
     programme(router: Nav, programmeId: string, context?: GuidanceRouteContext) {
       const query = guidanceContextQuery(context);
       logGuidanceRoute(`${base}/programme`, context, "programme_preview");
-      router.push(`${base}/programme/${encodeURIComponent(programmeId)}${query ? `?${query}` : ""}` as never);
+      const href = `${base}/programme/${encodeURIComponent(programmeId)}${query ? `?${query}` : ""}` as never;
+      // Most focused transitions replace the originating search surface. An
+      // intentional multi-step guidance route may opt into browser history so
+      // Preview -> University selection -> University overview remains a
+      // reversible sequence.
+      if (context?.replaceHistory || (context?.focused && !context?.preserveHistory)) router.replace(href);
+      else router.push(href);
     },
     guided(router: Nav, context?: GuidanceRouteContext) {
       if (context?.programmeId || context?.jambProgrammeId) {
@@ -97,6 +103,10 @@ export function makeExploreNav(base: string) {
       const query = guidanceContextQuery(context, { includeProgrammeId: true });
       router.push(`${base}/domain/${encodeURIComponent(domainId)}/subgroup/${encodeURIComponent(subgroupId)}${query ? `?${query}` : ""}` as never);
     },
+    subgroupDirect(router: Nav, subgroupId: string, context?: GuidanceRouteContext) {
+      const query = guidanceContextQuery(context, { includeProgrammeId: true });
+      router.push(`${base}/subgroup/${encodeURIComponent(subgroupId)}${query ? `?${query}` : ""}` as never);
+    },
 
     // ─── Phase 7: elite pathways & special flows ────────────────
     elitePathways(router: Nav) {
@@ -131,10 +141,32 @@ export function makeExploreNav(base: string) {
     },
 
     // ─── Phase 8: admission intelligence ─────────────────────────
-    /** The admission hub, optionally in a given picker mode. */
-    admissionHub(router: Nav, mode?: "programme" | "subjects", adminType?: string | null) {
+    /**
+     * Admission entry points are deliberately typed.  A programme-name door
+     * must not reopen the mixed programme/university/subjects hub, and a
+     * subject door must carry the learner context that owns its subject rules.
+     */
+    admissionHub(
+      router: Nav,
+      mode?: "programme" | "subjects" | "school",
+      adminType?: string | null,
+      options?: {
+        entry?: "programme_and_university" | "programme_search" | "subject_match";
+        userType?: string | null;
+        className?: string | null;
+        stream?: string | null;
+        examType?: "utme" | "olevel" | "combined";
+        journey?: string | null;
+      },
+    ) {
       const query = [
           mode ? `mode=${mode}` : "",
+          options?.entry ? `entry=${options.entry}` : "",
+          options?.userType ? `user_type=${encodeURIComponent(options.userType)}` : "",
+          options?.className ? `class_name=${encodeURIComponent(options.className)}` : "",
+          options?.stream ? `stream=${encodeURIComponent(options.stream)}` : "",
+          options?.examType ? `exam_type=${options.examType}` : "",
+          options?.journey ? `journey=${encodeURIComponent(options.journey)}` : "",
           base === ADMIN_EXPLORE_BASE ? "admin=1" : "",
           base === ADMIN_EXPLORE_BASE && adminType ? `admin_type=${encodeURIComponent(adminType)}` : "",
         ].filter(Boolean).join("&");

@@ -232,7 +232,7 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
           maxSelected={MAX_OLEVEL_SUBJECTS}
           fixedSubjects={["English Language", "Mathematics"]}
           showSearch={false}
-          helperText="Choose at least 5 subjects, including the core subjects shown first. We use them to check whether a programme&apos;s O-level requirements fit your plan."
+          helperText="Choose at least 5 subjects from your selected stream. Cross-listed subjects appear in every applicable stream. Exact programme and institution requirements are checked separately and take priority."
         />
       ) : null}
 
@@ -247,7 +247,7 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
           maxSelected={4}
           showSearch={false}
           fixedSubjects={["English Language"]}
-          helperText="Use of English is fixed. Choose 3 other UTME subjects. The stream only orders relevant choices; all valid UTME subjects remain available."
+          helperText="Use of English is fixed. Choose 3 other UTME subjects from your selected stream. Cross-listed subjects appear in every applicable stream. Exact programme and institution combinations are checked separately and take priority."
         />
       ) : null}
 
@@ -301,7 +301,7 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
             kind="programme"
           />
           <Text style={[styles.note, { color: colors.textMuted }]}>
-            We will show universities offering this exact programme identity.
+            We will show universities with this exact programme identity.
             If a different JAMB programme name appears, it will be shown as a
             separate programme with its own universities and requirements.
           </Text>
@@ -312,7 +312,7 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
         <View style={{ gap: Spacing.lg }}>
           <Text style={[styles.caption, { color: colors.textMuted }]}> 
             We will show programmes that accept this combination, explain any
-            missing O-level requirement, and then show the universities offering
+            missing O-level requirement, and then show the universities with
             the programme.
           </Text>
         </View>

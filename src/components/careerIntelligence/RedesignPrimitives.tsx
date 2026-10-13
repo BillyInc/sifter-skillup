@@ -273,6 +273,8 @@ export function ListRow({
       activeOpacity={0.78}
       onPress={onPress}
       disabled={disabled}
+      accessibilityRole={selected ? "checkbox" : "button"}
+      accessibilityState={selected ? { selected: true, disabled } : { disabled }}
       style={[
         styles.listRow,
         {
@@ -329,6 +331,8 @@ export function ListRow({
       {right ?? (
         locked ? (
           <Feather name="lock" size={15} color={colors.state.locked} />
+        ) : selected ? (
+          <Feather name="check-circle" size={17} color={colors.accentRole.action} />
         ) : onPress ? (
           <Feather name="chevron-right" size={17} color={colors.textRole.muted} />
         ) : null

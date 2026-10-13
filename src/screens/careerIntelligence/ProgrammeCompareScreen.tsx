@@ -115,7 +115,7 @@ export default function ProgrammeCompareScreen() {
       const rows = await Promise.all(
         selectedIds.map(async (id) => ({
           id,
-          programme: await careerData.getProgramme(id),
+          programme: await careerData.getProgrammeForStudent(id),
         })),
       );
       if (active) setItems(rows);
@@ -197,21 +197,16 @@ export default function ProgrammeCompareScreen() {
               {rows.slice(0, 8).map((row) => {
                 const added = selectedSet.has(row.id);
                 return (
-                  <TouchableOpacity
+                  <ListRow
                     key={row.id}
-                    activeOpacity={0.8}
+                    title={row.name}
+                    subtitle={row.discipline ?? row.institutionType}
+                    meta={added ? "Added" : "Select to compare"}
+                    icon="book-open"
+                    selected={added}
+                    locked={!canAdd && !added}
                     onPress={() => addProgramme(row.id)}
-                    disabled={added || !canAdd}
-                  >
-                    <ListRow
-                      title={row.name}
-                      subtitle={row.discipline ?? row.institutionType}
-                      meta={added ? "Added" : "Tap to add"}
-                      icon="book-open"
-                      selected={added}
-                      locked={!canAdd && !added}
-                    />
-                  </TouchableOpacity>
+                  />
                 );
               })}
             </View>

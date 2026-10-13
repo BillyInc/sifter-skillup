@@ -20,11 +20,44 @@ STOP = set(
 
 EXTRA_ANCHORS = {
     "D003": ["artificial intelligence", "machine learning", "neural network", "deep learning"],
+    "D009": [
+        "artificial intelligence", "machine learning", "neural network", "deep learning",
+        "data analytics", "data analysis", "data handling", "data processing",
+        "data mining", "data engineering", "statistical inference", "statistical computing",
+        "biostatistics", "quantitative methods", "quantitative analysis", "predictive analytics",
+        "research data", "information extraction", "computer programming", "analyse data",
+        "analyze data", "data modelling", "data modeling", "statistical models",
+    ],
+    "D010": [
+        "business intelligence", "information systems", "information management",
+        "business analysis", "data analytics", "decision support", "management information",
+        "analytics systems", "data warehouse",
+    ],
+    "D014": [
+        "financial mathematics", "survival models", "stochastic modelling", "insurance pricing",
+        "actuarial modelling", "actuarial data analysis", "risk quantification",
+    ],
+    "D072": [
+        "surveying", "geographic information systems", "geospatial", "spatial analysis",
+        "cartography", "geomatics", "remote sensing",
+    ],
     "D012": ["fintech", "payment", "banking app", "blockchain", "backend"],
     "D020": ["waste", "wastewater", "pollution", "water treatment", "environmental compliance", "sustainability"],
     "D028": ["budgets", "strategic", "leadership", "operations", "business administration"],
     "D030": ["marketing", "market", "advertising", "brand", "consumer", "customer", "sales", "public relations", "promotion", "audience"],
-    "D033": ["product", "innovation", "venture", "e-commerce", "value proposition", "business model"],
+    # Generic entrepreneurship/innovation terms are deliberately excluded.
+    # They occur across unrelated CCMAS curricula and do not establish Product
+    # Management. Keep only explicit product strategy, requirements, discovery,
+    # lifecycle or delivery concepts.
+    "D033": [
+        "product management", "product strategy", "product roadmap",
+        "product lifecycle", "product life cycle", "product requirements",
+        "product requirement",
+        "product owner", "product manager", "product portfolio",
+        "release planning", "requirements engineering",
+        "user research", "customer discovery", "user requirements",
+        "market requirements", "prioritise product", "prioritize product",
+    ],
     "D037": ["law", "legal", "court", "litigation", "jurisprudence"],
     "D042": ["broadcast", "broadcasting", "film", "multimedia", "journalism", "mass communication", "media production", "television", "radio"],
     "D039": ["teaching", "lesson", "curriculum", "instruction", "assessment", "pedagogy", "teacher education", "school management"],
@@ -78,6 +111,11 @@ REVIEW_SOURCE_STATES = {
     "table_omitted",
     "programme_conflict",
 }
+
+# A course repeated across many unrelated CCMAS packages is shared foundation,
+# not programme-specific evidence for a specialist domain. Keep such matches
+# visible in the audit trail, but exclude them from link-strength decisions.
+COMMON_COURSE_REUSE_THRESHOLD = 20
 
 # The CCMAS extraction stores transferable curriculum evidence separately from
 # discipline/technical skills.  Keep the gate conservative: only retain an
@@ -187,26 +225,52 @@ def as_text(value) -> str:
     return value
 
 
-def transferable_evidence(programme: dict) -> list[dict]:
-    """Return only source-provided, recognizable transferable evidence.
+def get_course_identity(course: dict) -> str:
+    title = as_text(course.get("title", ""))
+    return as_text(course.get("course_identity", "")) or "::".join(
+        filter(None, [as_text(course.get("code", "")), title])
+    )
 
-    This is deliberately not a generated capability list.  The extracted
-    CCMAS item remains the evidence, while the category is an audit aid for
-    the Adjacent mapping gate.
+
+def transferable_evidence(programme: dict, course_anchors: list[dict]) -> list[dict]:
+    """Return transferable outcomes from the courses that anchor this domain.
+
+    ``skills_profile_transferable`` is a package-wide extraction and can
+    contain outcomes from unrelated common/core courses. It therefore cannot
+    support a particular programme-to-domain edge. Keep the evidence tied to
+    the exact CCMAS courses already matched to this domain; categories are
+    audit labels only and do not create curriculum content.
     """
     results = []
-    for raw in programme.get("skills_profile_transferable", []) or []:
-        text = as_text(raw)
-        if not text:
+    anchored_identities = {
+        item.get("course_identity") for item in course_anchors
+        if item.get("course_identity")
+    }
+    seen = set()
+    for course in programme.get("courses", []) or []:
+        title = as_text(course.get("title", ""))
+        identity = get_course_identity(course)
+        if identity not in anchored_identities:
             continue
-        lowered = text.lower()
-        categories = [
-            category
-            for category, terms in TRANSFERABLE_COMPETENCY_TERMS.items()
-            if any(term in lowered for term in terms)
-        ]
-        if categories:
-            results.append({"evidence": text, "categories": categories})
+        for raw in course.get("skills_learned", []) or []:
+            text = as_text(raw)
+            if not text:
+                continue
+            lowered = text.lower()
+            categories = [
+                category
+                for category, terms in TRANSFERABLE_COMPETENCY_TERMS.items()
+                if any(term in lowered for term in terms)
+            ]
+            key = (identity, text)
+            if categories and key not in seen:
+                results.append({
+                    "evidence": text,
+                    "course_identity": identity,
+                    "course_title": title,
+                    "categories": categories,
+                })
+                seen.add(key)
     return results
 
 
@@ -227,6 +291,12 @@ def main() -> None:
     meta = json.loads(META_PATH.read_text(encoding="utf-8"))
     structure = json.loads(STRUCTURE_PATH.read_text(encoding="utf-8"))
     programmes, source_files = load_programmes()
+    course_identity_frequency = Counter(
+        get_course_identity(course)
+        for programme in programmes.values()
+        for course in programme.get("courses", []) or []
+        if get_course_identity(course)
+    )
     evidence: dict[str, dict] = {}
     quality_counts = Counter()
 
@@ -234,7 +304,6 @@ def main() -> None:
         programme = programmes[programme_key]
         discipline, programme_name = programme_key.split("::", 1)
         courses = programme.get("courses", [])
-        transferable_items = transferable_evidence(programme)
         programme_source_flags = []
         if programme_source_review_required(discipline, programme_name, programme):
             programme_source_flags.append({
@@ -269,20 +338,31 @@ def main() -> None:
                 if as_text(phrase) and len(as_text(phrase)) > 2
             }, key=lambda phrase: (-len(phrase), phrase))
             course_anchors = []
+            common_course_candidates = []
             source_flagged_courses = []
             for course in courses:
                 title = as_text(course.get("title", ""))
                 mapping_title = as_text(course.get("mapping_title", ""))
-                course_identity = as_text(course.get("course_identity", "")) or "::".join(filter(None, [as_text(course.get("code", "")), title]))
+                course_identity = get_course_identity(course)
                 haystack = " ".join([title, mapping_title, as_text(course.get("content_summary", "")), *[as_text(item) for item in course.get("skills_learned", [])]]).lower()
                 matched = sorted({phrase for phrase in anchor_phrases if phrase in haystack})
                 if matched:
                     item = {"title": title, "mapping_title": mapping_title or None, "code": course.get("code"), "course_identity": course_identity, "matched_anchors": matched[:12]}
+                    occurrence_count = course_identity_frequency.get(course_identity, 0)
+                    if occurrence_count >= COMMON_COURSE_REUSE_THRESHOLD:
+                        common_course_candidates.append({
+                            **item,
+                            "ccmas_package_occurrences": occurrence_count,
+                            "exclusion_reason": "shared_course_not_programme_specific_evidence",
+                        })
+                        continue
                     if course_source_review_required(discipline, programme_name, course):
                         item["source_flags"] = list(course.get("flags") or [])
                         item["source_state"] = course.get("source_state")
                         source_flagged_courses.append(item)
                     course_anchors.append(item)
+
+            transferable_items = transferable_evidence(programme, course_anchors)
 
             # The active mapping rule requires at least two specific,
             # source-backed course/objective anchors for Direct or Functional
@@ -315,6 +395,8 @@ def main() -> None:
                 "course_anchor_quality": quality,
                 "course_anchor_count": len(course_anchors),
                 "course_anchors": course_anchors[:12],
+                "common_course_candidate_count": len(common_course_candidates),
+                "common_course_candidates": common_course_candidates[:12],
                 "transferable_evidence_count": len(transferable_items),
                 "transferable_evidence": transferable_items[:12],
                 "adjacent_evidence_gate": (

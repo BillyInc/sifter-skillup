@@ -2,9 +2,13 @@ import React, { useEffect, useMemo, useState } from "react";
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useRouter } from "expo-router";
 import { careerData } from "@/lib/careerData";
+import { formatCareerLabel } from "@/lib/careerLabels";
 import type { DataState, DomainRoleV2, DomainV2, Programme } from "@/types/career";
 import { AdminShell } from "./AdminShell";
 import { CompassFonts, FontSize, Radius, Spacing, useTheme, webContainer } from "@/theme";
+import { ExternalLinkGuard } from "@/components/careerIntelligence/ExternalLinkGuard";
+import { AdminGuidanceEvidencePanel } from "@/components/admin/AdminGuidanceEvidencePanel";
+import { normaliseAdminGuidanceEvidence, type AdminGuidanceEvidenceRecord } from "./adminGuidanceEvidence";
 
 type Entity = "programme" | "domain" | "role";
 
@@ -19,6 +23,71 @@ function Provenance({ value }: { value: unknown }) {
   return parts.length ? (
     <Text style={[styles.provenance, { color: colors.textRole.muted }]}>Data state: {parts.join(" · ")}</Text>
   ) : null;
+}
+
+type ReviewLike = {
+  guidanceOwner?: string | null;
+  linkState?: string | null;
+  dataState?: string | null;
+  sourceConfidence?: string | null;
+  reviewStatus?: string | null;
+};
+
+function evidenceRecordsForEntity(entity: Entity, value: Programme | DomainV2 | DomainRoleV2): AdminGuidanceEvidenceRecord[] {
+  const rows: unknown[] = [];
+  const entityKey = entity === "role"
+    ? (value as DomainRoleV2).key
+    : (value as Programme | DomainV2).id;
+  if (entity === "programme") {
+    const programme = value as Programme;
+    rows.push(...(programme.contextItems ?? []), ...(programme.resources ?? []));
+  } else if (entity === "domain") {
+    const domain = value as DomainV2;
+    rows.push(
+      ...(domain.contextItems ?? []),
+      ...(domain.resources ?? []),
+      ...(domain.tools.distinctive ?? []),
+      ...(domain.tools.common ?? []),
+      ...(domain.gatewayCertifications ?? []),
+      ...(domain.roleHintCertifications ?? []),
+      ...domain.subgroups.flatMap((subgroup) => [
+        ...(subgroup.contextItems ?? []),
+        ...(subgroup.resources ?? []),
+        ...(subgroup.tools.distinctive ?? []),
+        ...(subgroup.tools.common ?? []),
+        ...(subgroup.certifications ?? []),
+      ]),
+    );
+  } else {
+    const role = value as DomainRoleV2;
+    rows.push(...(role.contextItems ?? []), ...(role.resources ?? []), ...(role.tools ?? []), ...(role.certifications ?? []));
+  }
+  return rows.map((row, index) => normaliseAdminGuidanceEvidence(row as Record<string, unknown>, {
+    id: `${entity}-${entityKey}-evidence-${index}`,
+    level: entity === "role" ? "role" : entity,
+    contextName: value.name,
+  }));
+}
+
+function AdminIdentity({ label, id, value, rows = [] }: { label: string; id: string; value: unknown; rows?: ReviewLike[] }) {
+  const { colors } = useTheme();
+  const source = value as { sourceConfidence?: string; dataState?: string; sourceProvenance?: Record<string, unknown> };
+  const reviewStates = rows.reduce<Record<string, number>>((counts, row) => {
+    const state = row.reviewStatus || row.linkState || row.dataState || row.guidanceOwner;
+    if (state) counts[state] = (counts[state] ?? 0) + 1;
+    return counts;
+  }, {});
+  const stateText = Object.entries(reviewStates).map(([state, count]) => `${state}: ${count}`).join(" · ");
+  return (
+    <View style={[styles.card, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
+      <Text style={[styles.cardTitle, CompassFonts.bodySemibold, { color: colors.textRole.primary }]}>Canonical record and review state</Text>
+      <Text style={[styles.caption, { color: colors.textRole.secondary }]}>Canonical {label} ID: {id || "Not recorded"}</Text>
+      <Text style={[styles.caption, { color: colors.textRole.secondary }]}>Student display label: {formatCareerLabel(label === "role" ? (value as DomainRoleV2).name : label === "domain" ? (value as DomainV2).name : (value as Programme).studentName ?? (value as Programme).name)}</Text>
+      <Text style={[styles.caption, { color: colors.textRole.muted }]}>Source state: {[source.sourceConfidence, source.dataState].filter(Boolean).join(" · ") || "Not supplied by this endpoint"}</Text>
+      <Text style={[styles.caption, { color: colors.textRole.muted }]}>Item review state: {stateText || "No row-level review state supplied"}</Text>
+      {source.sourceProvenance ? <Text style={[styles.caption, { color: colors.textRole.muted }]}>Source provenance: {JSON.stringify(source.sourceProvenance)}</Text> : null}
+    </View>
+  );
 }
 
 function Chips({ items, label }: { items: string[]; label: string }) {
@@ -45,6 +114,8 @@ function AdminProgramme({ programme }: { programme: Programme }) {
     <>
       <Text style={[styles.title, CompassFonts.displayBold, { color: colors.textRole.primary }]}>{programme.name}</Text>
       <Text style={[styles.caption, { color: colors.textRole.secondary }]}>Canonical programme record used to connect university teaching outcomes to the career taxonomy.</Text>
+      <AdminIdentity label="programme" id={programme.id} value={programme} />
+      <AdminGuidanceEvidencePanel records={evidenceRecordsForEntity("programme", programme)} />
       {/* No <Provenance /> here. Programme carries neither sourceConfidence nor
           dataState — /api/career/programmes/{id} does not emit them, unlike the
           domain and role payloads — so the call could only ever render null,
@@ -100,9 +171,16 @@ function AdminDomain({ domain }: { domain: DomainV2 }) {
       <Text style={[styles.title, CompassFonts.displayBold, { color: colors.textRole.primary }]}>{domain.name}</Text>
       <Text style={[styles.caption, { color: colors.textRole.secondary }]}>{domain.description ?? "Domain record with source-backed foundation, subgroup and role data."}</Text>
       <Provenance value={domain} />
+      <AdminIdentity label="domain" id={domain.id} value={domain} rows={[...(domain.contextItems ?? []), ...(domain.tools.distinctive ?? []), ...(domain.tools.common ?? []), ...(domain.gatewayCertifications ?? []), ...(domain.roleHintCertifications ?? [])]} />
+      <AdminGuidanceEvidencePanel records={evidenceRecordsForEntity("domain", domain)} />
       <View style={styles.card}>
         <Text style={[styles.cardTitle, CompassFonts.bodySemibold, { color: colors.textRole.primary }]}>Domain-level intelligence</Text>
-        <Chips items={domain.foundationSkills.map((item) => `${item.skill} (${Math.round(item.prevalence * 100)}% of roles)`)} label="Foundation skills" />
+        <Chips
+          items={domain.foundationSkills.map((item) => item.prevalence == null
+            ? `${item.skill}${item.stage ? ` (${item.stage.replaceAll("_", " ")})` : ""}`
+            : `${item.skill} (${Math.round(item.prevalence * 100)}% of roles)`)}
+          label="Foundation skills"
+        />
         <ResourceSummary
           tools={[...(domain.tools.distinctive ?? []), ...(domain.tools.common ?? [])].map((item) => item.tool)}
           certifications={[...(domain.gatewayCertifications ?? []), ...(domain.roleHintCertifications ?? [])].map((item) => item.name)}
@@ -115,7 +193,9 @@ function AdminDomain({ domain }: { domain: DomainV2 }) {
           return (
             <View key={subgroup.id} style={[styles.subgroup, { borderTopColor: colors.borderRole.subtle }]}>
               <Text style={[styles.subgroupTitle, CompassFonts.bodySemibold, { color: colors.textRole.primary }]}>{subgroup.name}</Text>
+              <Text style={[styles.caption, { color: colors.textRole.muted }]}>Canonical subgroup ID: {subgroup.id}</Text>
               {subgroup.description ? <Text style={[styles.caption, { color: colors.textRole.secondary }]}>{subgroup.description}</Text> : null}
+              <AdminReviewSummary rows={[...(subgroup.contextItems ?? []), ...(subgroup.tools.distinctive ?? []), ...(subgroup.tools.common ?? []), ...(subgroup.certifications ?? [])]} />
               <Chips items={subgroup.clusterSkills} label="Subgroup skills" />
               <ResourceSummary
                 tools={[...(subgroup.tools.distinctive ?? []), ...(subgroup.tools.common ?? [])].map((item) => item.tool)}
@@ -146,6 +226,8 @@ function AdminRole({ role }: { role: DomainRoleV2 }) {
       <Text style={[styles.title, CompassFonts.displayBold, { color: colors.textRole.primary }]}>{role.name}</Text>
       <Text style={[styles.caption, { color: colors.textRole.secondary }]}>Role-level record. Skills, methods, tools and credentials below belong to this role; they are not inherited silently from the parent domain.</Text>
       <Provenance value={role} />
+      <AdminIdentity label="role" id={role.key} value={role} rows={[...(role.contextItems ?? []), ...(role.tools ?? []), ...(role.certifications ?? [])]} />
+      <AdminGuidanceEvidencePanel records={evidenceRecordsForEntity("role", role)} />
       <View style={styles.card}>
         <Chips items={role.essentialSkills ?? []} label="Essential skills" />
         <Chips items={role.optionalSkills ?? []} label="Optional skills" />
@@ -154,12 +236,27 @@ function AdminRole({ role }: { role: DomainRoleV2 }) {
         <Chips items={(role.onetEssentialSkills ?? []).map((item) => `${item.elementName}${item.importance != null ? ` (${item.importance})` : ""}`)} label="O*NET essential-skill evidence" />
       </View>
       <View style={styles.card}>
+        <Text style={[styles.cardTitle, CompassFonts.bodySemibold, { color: colors.textRole.primary }]}>Occupation evidence links (admin/audit)</Text>
+        <Text style={[styles.caption, { color: colors.textRole.muted }]}>These source links support review of the raw occupation record. They are intentionally not part of the approved student work-evidence display.</Text>
+        {role.workProfile?.sourceLinks?.length ? role.workProfile.sourceLinks.map((source, index) => <ExternalLinkGuard key={`${source.url}-${index}`} audience="admin" url={source.url} label={source.label ?? "Open retained occupation source"} description="This opens the retained source for admin or audit review." textStyle={{ color: colors.accentRole.action }} />) : <Text style={[styles.caption, { color: colors.textRole.muted }]}>No occupation source link is recorded for this role.</Text>}
+      </View>
+      <View style={styles.card}>
         <Text style={[styles.cardTitle, CompassFonts.bodySemibold, { color: colors.textRole.primary }]}>Domain and subgroup placement</Text>
         {role.appearsIn.map((item) => <Text key={`${item.domainId}-${item.roleKey}`} style={[styles.caption, { color: colors.textRole.secondary }]}>{item.domainName} · {item.domainId}</Text>)}
         {role.subgroupId ? <Text style={[styles.caption, { color: colors.textRole.secondary }]}>Subgroup ID: {role.subgroupId}</Text> : null}
       </View>
     </>
   );
+}
+
+function AdminReviewSummary({ rows }: { rows: ReviewLike[] }) {
+  const { colors } = useTheme();
+  const counts = rows.reduce<Record<string, number>>((result, row) => {
+    const state = row.reviewStatus || row.linkState || row.dataState || row.guidanceOwner;
+    if (state) result[state] = (result[state] ?? 0) + 1;
+    return result;
+  }, {});
+  return <Text style={[styles.caption, { color: colors.textRole.muted }]}>Admin review rows: {rows.length || "none"}{Object.keys(counts).length ? ` · ${Object.entries(counts).map(([key, value]) => `${key} ${value}`).join(" · ")}` : " · state not supplied"}</Text>;
 }
 
 export function AdminCareerDetailScreen({ entity, id }: { entity: Entity; id: string }) {

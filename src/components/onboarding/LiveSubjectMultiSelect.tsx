@@ -8,6 +8,11 @@ import {
 } from "react-native";
 
 import { careerData, type SubjectCatalogItem } from "@/lib/careerData";
+import {
+  orderSubjectCatalogItems,
+  subjectCategoryLabel,
+  subjectStreamLabels,
+} from "@/lib/subjectCatalogOrdering";
 import { Brand, FontSize, Radius, Spacing, useTheme } from "@/theme";
 import { SearchField } from "./primitives";
 
@@ -57,13 +62,8 @@ export function LiveSubjectMultiSelect({
     [fixedSubjects],
   );
   const visibleSubjects = useMemo(() => {
-    return [...subjects].sort((a, b) => {
-      const aFixed = fixedSet.has(a.name.toLowerCase()) ? 0 : 1;
-      const bFixed = fixedSet.has(b.name.toLowerCase()) ? 0 : 1;
-      if (aFixed !== bFixed) return aFixed - bFixed;
-      return a.name.localeCompare(b.name);
-    });
-  }, [fixedSet, subjects]);
+    return orderSubjectCatalogItems(subjects, stream, fixedSubjects);
+  }, [fixedSubjects, stream, subjects]);
   const countLabel =
     maxSelected <= 4
       ? `${selected.length}/${maxSelected}`
@@ -192,6 +192,8 @@ export function LiveSubjectMultiSelect({
           const active = selected.some(
             (s) => s.toLowerCase() === subject.name.toLowerCase(),
           );
+          const categoryLabel = subjectCategoryLabel(subject.category);
+          const streamLabels = subjectStreamLabels(subject.streamTags);
           return (
             <TouchableOpacity
               key={subject.id}
@@ -213,6 +215,18 @@ export function LiveSubjectMultiSelect({
               >
                 {subject.name}
               </Text>
+              {categoryLabel || streamLabels.length ? (
+                <Text
+                  style={[
+                    styles.optionMeta,
+                    { color: active ? colors.textRole.inverse : colors.textMuted },
+                  ]}
+                >
+                  {categoryLabel ? `Subject group: ${categoryLabel}` : ""}
+                  {categoryLabel && streamLabels.length ? " · " : ""}
+                  {streamLabels.length ? `Stream tags: ${streamLabels.join(", ")}` : ""}
+                </Text>
+              ) : null}
             </TouchableOpacity>
           );
         })}
@@ -251,6 +265,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   optionText: { fontSize: FontSize.sm, fontWeight: "700" },
+  optionMeta: { fontSize: 10, fontWeight: "600", marginTop: 2 },
   selectedChip: {
     borderWidth: 1,
     borderRadius: Radius.full,

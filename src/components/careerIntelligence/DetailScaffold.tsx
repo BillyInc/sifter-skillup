@@ -44,6 +44,8 @@ export interface DetailScaffoldProps<T> {
   save?: { entityType: SavedEntityType; entityId: string; label?: string };
   /** Show online report printing/download action. */
   pdf?: boolean;
+  /** Export is only available after the guidance route reaches its review step. */
+  reportActionsEnabled?: boolean;
   pdfTitle?: string;
   /** Authenticated report endpoint; fails closed when offline. */
   pdfPath?: string;
@@ -78,6 +80,7 @@ export function DetailScaffold<T>({
   onBack,
   save,
   pdf,
+  reportActionsEnabled = false,
   pdfTitle,
   pdfPath,
   reportSelection,
@@ -102,7 +105,9 @@ export function DetailScaffold<T>({
       onBack();
       return;
     }
-    if (router.canGoBack()) {
+    const canGoBack = typeof (router as typeof router & { canGoBack?: () => boolean }).canGoBack === "function"
+      && (router as typeof router & { canGoBack: () => boolean }).canGoBack();
+    if (canGoBack) {
       router.back();
     } else {
       router.replace("/(tabs)/explore" as never);
@@ -161,8 +166,8 @@ export function DetailScaffold<T>({
               />
             ) : null}
             {reportSelection && !isGuest ? <GuidanceReportButton selection={reportSelection} targetStudentId={targetStudentId} /> : null}
-            {pdf && !isGuest ? <PdfExportButton title={pdfTitle ?? (pdfPath ? "Open / print report" : "Save as PDF")} documentPath={pdfPath} /> : null}
-            {pdfPath && !isGuest ? <ShareExportButton documentPath={pdfPath} fileName={`${(pdfTitle ?? title).replace(/[^a-z0-9]+/gi, "-").toLowerCase()}-report.html`} /> : null}
+            {reportActionsEnabled && pdf && !isGuest ? <PdfExportButton title={pdfTitle ?? (pdfPath ? "Open / print report" : "Save as PDF")} documentPath={pdfPath} /> : null}
+            {reportActionsEnabled && pdfPath && !isGuest ? <ShareExportButton documentPath={pdfPath} fileName={`${(pdfTitle ?? title).replace(/[^a-z0-9]+/gi, "-").toLowerCase()}-report.html`} /> : null}
           </View>
         </View>
       </View>

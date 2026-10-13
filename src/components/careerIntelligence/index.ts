@@ -10,6 +10,7 @@
 export { ComingSoon, LockedPill } from "./ComingSoon";
 export { DataStateView } from "./DataStateView";
 export type { DataStateViewProps } from "./DataStateView";
+export { EntityUnavailableCard } from "./EntityUnavailableCard";
 export { DetailScaffold } from "./DetailScaffold";
 export type { DetailScaffoldProps } from "./DetailScaffold";
 export { DataSourceBadge } from "./DataSourceBadge";
@@ -76,6 +77,9 @@ export type { ReadinessBadgeViewProps } from "./ReadinessBadgeView";
 export { FoundationSkillsBlock } from "./FoundationSkillsBlock";
 export type { FoundationSkillsBlockProps } from "./FoundationSkillsBlock";
 export { ContextualItemList } from "./ContextualItemList";
+export { ExternalLinkGuard } from "./ExternalLinkGuard";
+export { ContextSourceLinks } from "./ContextSourceLinks";
+export { GuidanceContinuation } from "./GuidanceContinuation";
 export { ToolGroupsBlock } from "./ToolGroupsBlock";
 export type { ToolGroupsBlockProps } from "./ToolGroupsBlock";
 export { LearningResourcesBlock } from "./LearningResourcesBlock";
@@ -89,6 +93,8 @@ export { RoleWorkEvidenceBlock } from "./RoleWorkEvidenceBlock";
 export type { NigerianContextBlockProps } from "./NigerianContextBlock";
 export { CertPlacementList } from "./CertPlacementList";
 export type { CertPlacementListProps } from "./CertPlacementList";
+export { HierarchyOrientationCard } from "./HierarchyOrientationCard";
+export type { HierarchyOrientationCardProps } from "./HierarchyOrientationCard";
 
 // ── Opportunity / elite cluster ───────────────────────────────
 export { OpportunityCard } from "./OpportunityCard";

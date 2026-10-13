@@ -1,14 +1,17 @@
 import React, { useState } from "react";
-import { Linking, StyleSheet, Text, TouchableOpacity, View, type ViewStyle } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, type ViewStyle } from "react-native";
 import { CompassFonts, FontSize, Radius, Spacing, useTheme } from "../../theme";
 import { SectionLabel } from "./RedesignPrimitives";
-import { hasInternetConnection, OFFLINE_LINK_NOTICE } from "@/lib/networkState";
+import { ExternalLinkGuard } from "./ExternalLinkGuard";
+import { isLegacyOnetUrl, studentSafeUrl } from "@/lib/studentCareerBoundary";
 
 type ContextItem = {
   name?: unknown;
   priority?: unknown;
   source_ids?: unknown;
   evidence?: unknown;
+  limitation?: unknown;
+  evidence_limitation?: unknown;
 };
 
 type ContextRecord = Record<string, unknown>;
@@ -85,7 +88,9 @@ function sourceRows(context: ContextRecord): { name: string; url?: string }[] {
     const source = record(value);
     const name = typeof source.name === "string" ? source.name : typeof source.id === "string" ? source.id : "";
     const urls = Array.isArray(source.urls) ? source.urls.filter((url): url is string => typeof url === "string") : [];
-    return name ? [{ name, url: urls[0] }] : [];
+    const url = studentSafeUrl(urls[0]);
+    if (!name || /o\*?net/i.test(name) || isLegacyOnetUrl(urls[0])) return [];
+    return [{ name, url }];
   });
   const seen = new Set(rows.map((row) => row.name.toLowerCase()));
   const ids = [
@@ -94,8 +99,8 @@ function sourceRows(context: ContextRecord): { name: string; url?: string }[] {
   for (const value of ids) {
     if (typeof value !== "string") continue;
     const fallback = SOURCE_LINKS[value];
-    if (!fallback || seen.has(fallback.name.toLowerCase())) continue;
-    rows.push(fallback);
+    if (!fallback || /o\*?net/i.test(fallback.name) || isLegacyOnetUrl(fallback.url) || seen.has(fallback.name.toLowerCase())) continue;
+    rows.push({ name: fallback.name, url: studentSafeUrl(fallback.url) });
     seen.add(fallback.name.toLowerCase());
   }
   return rows;
@@ -116,10 +121,20 @@ function Layer({ label, source, expanded }: { label: string; source: unknown; ex
           <Text style={[styles.categoryLabel, { color: colors.textRole.muted }]}>{group.label}</Text>
           {(expanded ? group.items : group.items.slice(0, 6)).map((item, index) => {
             const priority = priorityLabel(item.priority);
+            const evidence = typeof item.evidence === "string" ? item.evidence.trim() : "";
+            const limitation = typeof item.limitation === "string"
+              ? item.limitation.trim()
+              : typeof item.evidence_limitation === "string"
+                ? item.evidence_limitation.trim()
+                : "";
             return (
-              <View key={`${group.key}-${nameOf(item)}-${index}`} style={styles.itemRow}>
-                <Text style={[styles.itemName, { color: colors.textRole.secondary }]}>{nameOf(item)}</Text>
-                {priority ? <Text style={[styles.priority, { color: colors.accentRole.action }]}>{priority}</Text> : null}
+              <View key={`${group.key}-${nameOf(item)}-${index}`} style={styles.itemBlock}>
+                <View style={styles.itemRow}>
+                  <Text style={[styles.itemName, { color: colors.textRole.secondary }]}>{nameOf(item)}</Text>
+                  {priority ? <Text style={[styles.priority, { color: colors.accentRole.action }]}>{priority}</Text> : null}
+                </View>
+                {evidence ? <Text style={[styles.itemExplanation, { color: colors.textRole.muted }]}>Why it appears: {evidence}</Text> : null}
+                {limitation ? <Text style={[styles.itemExplanation, { color: colors.textRole.muted }]}>Evidence limit: {limitation}</Text> : null}
               </View>
             );
           })}
@@ -134,7 +149,6 @@ function Layer({ label, source, expanded }: { label: string; source: unknown; ex
 export function NigerianContextBlock({ context, level, style }: NigerianContextBlockProps) {
   const { colors } = useTheme();
   const [expanded, setExpanded] = useState(false);
-  const [notice, setNotice] = useState<string | null>(null);
   const data = record(context);
   const priority = record(data.priority_metadata);
   const starterKeys = level === "domain"
@@ -151,9 +165,9 @@ export function NigerianContextBlock({ context, level, style }: NigerianContextB
 
   return (
     <View style={[styles.container, style]}>
-      <SectionLabel>Context that supports this guidance</SectionLabel>
+      <SectionLabel>What supports this guidance</SectionLabel>
       <Text style={[styles.intro, { color: colors.textRole.secondary }]}>
-        These are source-backed context items attached to this {level}. Start with the suggested items, then review the fuller context if you need it. A listed item is not automatically required for every employer or route.
+        These are supporting items for this {level}. Start with the suggestions, then open the fuller details if you need them. A listed item is not automatically required for every employer or route.
       </Text>
       {starterItems.length ? (
         <View style={[styles.startCard, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
@@ -162,8 +176,8 @@ export function NigerianContextBlock({ context, level, style }: NigerianContextB
         </View>
       ) : null}
       {expanded ? <>
-        <Layer label="Local evidence" source={actual} expanded />
-        <Layer label="Field context" source={fieldContext} expanded />
+        <Layer label="Local information" source={actual} expanded />
+        <Layer label="Field information" source={fieldContext} expanded />
       </> : null}
       <TouchableOpacity
         accessibilityRole="button"
@@ -176,14 +190,14 @@ export function NigerianContextBlock({ context, level, style }: NigerianContextB
       {data.evidence_limit ? <Text style={[styles.limit, { color: colors.textRole.muted }]}>{String(data.evidence_limit)}</Text> : null}
       {sources.length ? (
         <View style={styles.sources}>
-          <Text style={[styles.sourceLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Sources checked</Text>
+          <Text style={[styles.sourceLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Learn more</Text>
           {sources.slice(0, expanded ? sources.length : 4).map((source, index) => (
-            <TouchableOpacity key={`${source.name}-${index}`} disabled={!source.url} onPress={async () => { if (!source.url) return; if (!(await hasInternetConnection())) { setNotice(OFFLINE_LINK_NOTICE); return; } const opened = await Linking.openURL(source.url).then(() => true).catch(() => false); if (!opened) setNotice("This source could not be opened. Try again when your connection is stable."); }} accessibilityRole={source.url ? "link" : undefined}>
+            <View key={`${source.name}-${index}`}>
               <Text style={[styles.source, { color: source.url ? colors.accentRole.action : colors.textRole.secondary }]}>{source.name}{source.url ? " ↗" : ""}</Text>
-            </TouchableOpacity>
+              <ExternalLinkGuard url={source.url} label={source.name} description={`This opens the source supporting the ${data.domain_name || "field"} context.`} textStyle={{ color: colors.accentRole.action }} />
+            </View>
           ))}
           {!expanded && sources.length > 4 ? <Text style={[styles.moreHint, { color: colors.textRole.muted }]}>+ {sources.length - 4} more source references</Text> : null}
-          {notice ? <Text style={[styles.moreHint, { color: colors.textRole.muted }]}>{notice}</Text> : null}
         </View>
       ) : null}
     </View>
@@ -202,9 +216,11 @@ const styles = StyleSheet.create({
   layerLabel: { fontSize: FontSize.xs, letterSpacing: 0.7, textTransform: "uppercase" },
   category: { gap: 4 },
   categoryLabel: { fontSize: FontSize.xs, fontWeight: "700" },
+  itemBlock: { gap: 2 },
   itemRow: { flexDirection: "row", alignItems: "baseline", gap: Spacing.sm },
   itemName: { flex: 1, fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.35 },
   priority: { fontSize: FontSize.xs, textTransform: "capitalize" },
+  itemExplanation: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.35 },
   moreHint: { fontSize: FontSize.xs },
   moreButton: { alignSelf: "flex-start", borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
   moreText: { fontSize: FontSize.sm },

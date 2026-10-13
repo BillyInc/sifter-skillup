@@ -186,6 +186,30 @@ export async function shareStudentDocument(
     return false;
   }
 }
+
+/** Share only a learner-created, identity-free summary of a guided plan. */
+export async function shareTextSummary(
+  title: string,
+  message: string,
+): Promise<boolean> {
+  try {
+    if (Platform.OS === "web" && typeof navigator !== "undefined") {
+      if (typeof navigator.share === "function") {
+        await navigator.share({ title, text: message });
+        return true;
+      }
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(message);
+        return true;
+      }
+      return false;
+    }
+    await Share.share({ title, message });
+    return true;
+  } catch {
+    return false;
+  }
+}
 interface WireRosterStudent {
   user_id: string;
   full_name?: string | null;
@@ -318,11 +342,13 @@ export const provisioningData = {
     images?: DraftImage[];
     manualRows?: ManualDraft[];
     stream?: ProvisioningStream;
+    organizationId?: string;
   }): Promise<ProvisionDraft[]> {
     const rows = await request<WireDraft[]>(`/api/provisioning/drafts`, {
       method: "POST",
       body: JSON.stringify({
         stream: input.stream ?? null,
+        organization_id: input.organizationId ?? null,
         images: (input.images ?? []).map((i) => ({ media_type: i.mediaType, data: i.data })),
         manual_rows: (input.manualRows ?? []).map((m) => ({
           full_name: m.fullName ?? null,
@@ -338,8 +364,9 @@ export const provisioningData = {
   },
 
   /** The review grid: all still-draft rows for the admin's school. */
-  async listDrafts(): Promise<ProvisionDraft[]> {
-    const rows = await request<WireDraft[]>(`/api/provisioning/drafts`);
+  async listDrafts(organizationId?: string): Promise<ProvisionDraft[]> {
+    const query = organizationId ? `?organization_id=${encodeURIComponent(organizationId)}` : "";
+    const rows = await request<WireDraft[]>(`/api/provisioning/drafts${query}`);
     return (rows ?? []).map(toDraft);
   },
 
@@ -347,6 +374,7 @@ export const provisioningData = {
   async updateDraft(
     draftId: string,
     patch: ManualDraft,
+    organizationId?: string,
   ): Promise<ProvisionDraft> {
     const row = await request<WireDraft>(`/api/provisioning/drafts/${draftId}`, {
       method: "PATCH",
@@ -357,22 +385,23 @@ export const provisioningData = {
         student_type: patch.studentType ?? null,
         guardian_consent: patch.guardianConsent ?? false,
         guardian_name: patch.guardianName ?? null,
+        organization_id: organizationId ?? null,
       }),
     });
     return toDraft(row);
   },
 
   /** Remove selected review rows before account generation. */
-  async clearDrafts(draftIds: string[]): Promise<number> {
+  async clearDrafts(draftIds: string[], organizationId?: string): Promise<number> {
     const w = await request<{ deleted: number }>(`/api/provisioning/drafts`, {
       method: "DELETE",
-      body: JSON.stringify({ draft_ids: draftIds }),
+      body: JSON.stringify({ draft_ids: draftIds, organization_id: organizationId ?? null }),
     });
     return Number(w?.deleted ?? 0);
   },
 
   /** Mint accounts + claim codes for the SELECTED drafts. */
-  async generate(items: GenerateItem[]): Promise<GeneratedStudent[]> {
+  async generate(items: GenerateItem[], organizationId?: string): Promise<GeneratedStudent[]> {
     const rows = await request<WireGenerated[]>(`/api/provisioning/generate`, {
       method: "POST",
       // Provisioning creates a real account, affiliation and claim code. The
@@ -381,6 +410,7 @@ export const provisioningData = {
       // timeouts elsewhere.
       timeoutMs: 90000,
       body: JSON.stringify({
+        organization_id: organizationId ?? null,
         items: items.map((i) => ({
           draft_id: i.draftId,
           stream: i.stream ?? null,

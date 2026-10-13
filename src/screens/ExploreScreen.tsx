@@ -47,6 +47,7 @@ import { SkillDiscoveryPanel } from "@/components/careerIntelligence/SkillDiscov
 import { CareerDisclaimer } from "@/components/careerIntelligence/CareerDisclaimer";
 import { getStartingPoint } from "@/lib/startingPoint";
 import { useSearchLauncher } from "@/components/shell/searchLauncher";
+import type { StartingPointProfile } from "@/types/onboarding";
 
 // ─── Cluster hero data ───────────────────────────────────────────
 // The 8 signature clusters from BUILD_PLAN.md with their defined
@@ -129,6 +130,9 @@ export default function ExploreScreen({
   const hasSession = Boolean(user);
   const [searchUserType, setSearchUserType] = useState<string | null>(null);
   const [searchSchoolId, setSearchSchoolId] = useState<string | null>(null);
+  const [startingPoint, setStartingPoint] = useState<StartingPointProfile | null>(null);
+  const [startingPointResolved, setStartingPointResolved] = useState(false);
+  const [schoolMatcherOpen, setSchoolMatcherOpen] = useState(false);
 
   const [query, setQuery] = useState(initialQuery);
   const [filter, setFilter] = useState<ResultFilter>("all");
@@ -148,12 +152,17 @@ export default function ExploreScreen({
     if (!user?.id || isGuest) {
       setSearchUserType(null);
       setSearchSchoolId(null);
+      setStartingPoint(null);
+      setStartingPointResolved(true);
       return () => { active = false; };
     }
+    setStartingPointResolved(false);
     void getStartingPoint(user.id).then((profile) => {
       if (!active) return;
+      setStartingPoint(profile);
       setSearchUserType(profile?.userType ?? null);
       setSearchSchoolId(profile?.preferredSchoolId ?? null);
+      setStartingPointResolved(true);
     });
     return () => { active = false; };
   }, [isGuest, user?.id]);
@@ -214,6 +223,11 @@ export default function ExploreScreen({
   };
 
   const padH = responsive.isWide ? Spacing.xxl : responsive.isDesktop ? Spacing.xl : Spacing.lg;
+  const showSkillMatcher = !adminAudience || (
+    adminType === "secondary_school" ||
+    adminType === "tutorial_centre" ||
+    adminType === "jamb_cafe"
+  );
 
   return (
     <ScrollView
@@ -233,7 +247,7 @@ export default function ExploreScreen({
       </Text>
       <View style={styles.titleRow}>
         <Text style={[styles.title, { color: colors.textRole.primary }]}>
-          {heading ?? `Find your domain, role\nor programme`}
+          {heading ?? (adminAudience ? "Explore learning and career routes" : `Find your domain, role\nor programme`)}
         </Text>
       </View>
 
@@ -259,9 +273,9 @@ export default function ExploreScreen({
       {intro}
 
       {/* ── Search ────────────────────────────────────────────── */}
-      {!isGuest ? <Text style={[styles.stateLine, { color: colors.textRole.muted }]}>Use Search in the workspace header to find programmes, universities, domains, roles or skills. The filters below narrow the results shown here.</Text> : null}
+      {!isGuest && !adminAudience ? <Text style={[styles.stateLine, { color: colors.textRole.muted }]}>Use Search in the workspace header to find programmes, universities, domains, roles or skills. The filters below narrow the results shown here.</Text> : null}
 
-      {!isGuest ? <View style={styles.filterRow}>
+      {!isGuest && !adminAudience ? <View style={styles.filterRow}>
         {filters.map((item) => (
           <FilterChip
             key={item.value}
@@ -277,14 +291,24 @@ export default function ExploreScreen({
       {!adminAudience ? (
         <AdmissionEntryCard
           isGuest={isGuest}
-          onPress={() => isGuest ? router.push("/(auth)/signup" as never) : exploreNav.admissionHub(router, "programme")}
+          undergraduate={startingPoint?.userType === "student"}
+          onPress={() => {
+            if (isGuest) {
+              router.push("/(auth)/signup" as never);
+            } else if (startingPoint?.userType === "student") {
+              exploreNav.admissionHub(router, "school", null, {
+                userType: "student",
+                journey: "undergraduate_programmes",
+              });
+            } else {
+              exploreNav.admissionHub(router, "programme");
+            }
+          }}
         />
       ) : null}
 
       {/* Skills Match is an independent optional tool. Keep the main search
           primary and expose this flipped-discovery route after its scope. */}
-      <SkillDiscoveryPanel adminType={adminType ?? adminAudience ?? null} />
-
       {trimmed.length > 0 && trimmed.length < MIN_QUERY ? (
         <Text style={[styles.stateLine, { color: colors.textRole.muted }]}>
           Type at least {MIN_QUERY} characters to search the career map.
@@ -298,6 +322,8 @@ export default function ExploreScreen({
           isGuest={isGuest}
           router={router}
           nav={exploreNav}
+          startingPoint={startingPoint}
+          startingPointResolved={startingPointResolved}
           onPick={(term) => {
             setQuery(term);
             launchSearch(term);
@@ -477,6 +503,20 @@ export default function ExploreScreen({
       ) : (
         <DataLimitedState />
       )}
+      {showSkillMatcher && adminAudience === "school" ? (
+        <View style={{ gap: Spacing.sm, marginTop: Spacing.lg }}>
+          <TouchableOpacity
+            accessibilityRole="button"
+            accessibilityState={{ expanded: schoolMatcherOpen }}
+            onPress={() => setSchoolMatcherOpen((open) => !open)}
+            style={[styles.schoolMatcherToggle, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}
+          >
+            <Text style={[styles.schoolMatcherTitle, { color: colors.textRole.primary }]}>{schoolMatcherOpen ? "Close skill matcher" : "Optional: explore a learner’s skills"}</Text>
+            <Text style={[styles.schoolMatcherBody, { color: colors.textRole.muted }]}>{adminType === "tutorial_centre" || adminType === "jamb_cafe" ? "Use this JAMB-focused tool only when a learner is ready to connect skills with study routes." : "Use this secondary-school tool only when a learner is ready to connect skills with study routes."}</Text>
+          </TouchableOpacity>
+          {schoolMatcherOpen ? <SkillDiscoveryPanel adminType={adminType ?? null} /> : null}
+        </View>
+      ) : null}
       <CareerDisclaimer variant="footer" />
     </ScrollView>
   );
@@ -491,6 +531,8 @@ function ExploreIdle({
   nav,
   onPick,
   onFocusSearch,
+  startingPoint,
+  startingPointResolved,
   adminAudience,
   adminType,
 }: {
@@ -501,12 +543,22 @@ function ExploreIdle({
   nav: ExploreNav;
   onPick: (term: string) => void;
   onFocusSearch: () => void;
+  startingPoint: StartingPointProfile | null;
+  startingPointResolved: boolean;
   adminAudience?: "school" | "university";
   adminType?: string | null;
 }) {
   const { colors } = useTheme();
   const { isMobile, columns } = useResponsive();
-  const visibleClusters = isGuest ? CLUSTER_HEROES.slice(0, 4) : CLUSTER_HEROES;
+  const visibleClusters = isGuest || adminAudience ? CLUSTER_HEROES.slice(0, 4) : CLUSTER_HEROES;
+  const advisoryOrg = adminType === "tutorial_centre" || adminType === "jamb_cafe";
+  const exploreLabel = adminAudience === "university"
+    ? "Fields connected to your programmes"
+    : advisoryOrg
+      ? "JAMB fields to explore with learners"
+      : adminAudience === "school"
+        ? "Learning fields for SS1–SS3"
+        : "Explore by domain";
   const openDomains = () => {
     if (isGuest) {
       router.push("/(auth)/signup" as never);
@@ -518,7 +570,7 @@ function ExploreIdle({
     <View style={styles.idle}>
       {/* ── Hero cluster carousel ──────────────────────────────── */}
       <View style={styles.section}>
-        <SectionLabel>Explore by domain</SectionLabel>
+        <SectionLabel>{exploreLabel}</SectionLabel>
         {isMobile ? (
           <ScrollView
             horizontal
@@ -530,11 +582,11 @@ function ExploreIdle({
             snapToAlignment="start"
           >
             {visibleClusters.map((c, i) => (
-              <StaggerReveal key={c.id} index={i} style={{ width: CLUSTER_CARD_W, flexShrink: 0 }}>
+              <StaggerReveal key={c.id} index={i} style={{ width: adminAudience ? 190 : CLUSTER_CARD_W, flexShrink: 0 }}>
                 <TouchableOpacity
                   activeOpacity={0.85}
                   onPress={openDomains}
-                  style={[styles.clusterCard, { borderColor: c.color + "30" }]}
+                  style={[styles.clusterCard, adminAudience ? styles.clusterCardCompact : null, { borderColor: c.color + "30" }]}
                 >
                   <View style={[styles.clusterAccent, { backgroundColor: c.color }]} />
                   <View style={[styles.clusterIconWrap, { backgroundColor: c.color + "12" }]}>
@@ -554,12 +606,13 @@ function ExploreIdle({
             {visibleClusters.map((c, i) => {
               const cardW = isGuest ? "23%" : columns === 2 ? "48%" : columns === 3 ? "31%" : "23%";
               return (
-                <StaggerReveal key={c.id} index={i} style={{ width: cardW, flexShrink: 0 }}>
+                <StaggerReveal key={c.id} index={i} style={{ width: adminAudience ? (columns === 2 ? "48%" : "23%") : cardW, flexShrink: 0 }}>
                   <TouchableOpacity
                     activeOpacity={0.85}
                     onPress={openDomains}
                     style={[
                       styles.clusterGridCard,
+                      adminAudience ? styles.clusterGridCardCompact : null,
                       { borderColor: c.color + "30", width: "100%" },
                     ]}
                   >
@@ -584,7 +637,7 @@ function ExploreIdle({
           style={styles.seeAllLink}
         >
           <Text style={[styles.seeAllText, { color: colors.accentRole.action }]}>
-            {isGuest ? "Create an account to browse all fields →" : "Browse all fields →"}
+            {isGuest ? "Create an account to browse all fields →" : adminAudience ? "Browse the full field catalogue →" : "Browse all fields →"}
           </Text>
         </TouchableOpacity>
       </View>
@@ -630,7 +683,8 @@ function ExploreIdle({
           partially initialised guidance route. */}
       {!adminAudience && isGuest ? (
         <GuestExploreActions onCreateAccount={() => router.push("/(auth)/signup" as never)} />
-      ) : !adminAudience ? (
+      ) : !adminAudience && startingPointResolved && startingPoint?.userType === "student" ? null
+      : !adminAudience && startingPointResolved ? (
         <View style={styles.section}>
           <SectionLabel>Starting points</SectionLabel>
           {DOORS.map((d, i) => (
@@ -639,10 +693,26 @@ function ExploreIdle({
                 activeOpacity={0.85}
                 onPress={
                   d.key === "know"
-                    ? onFocusSearch
+                    ? () => nav.admissionHub(router, "programme", null, {
+                        entry: "programme_and_university",
+                        userType: startingPoint?.userType,
+                        className: startingPoint?.ssClass,
+                        stream: startingPoint?.stream,
+                      })
                     : d.key === "what"
-                      ? () => nav.admissionHub(router, "programme")
-                      : () => nav.admissionHub(router, "subjects")
+                      ? () => nav.admissionHub(router, "programme", null, {
+                          entry: "programme_search",
+                          userType: startingPoint?.userType,
+                          className: startingPoint?.ssClass,
+                          stream: startingPoint?.stream,
+                        })
+                      : () => nav.admissionHub(router, "subjects", null, {
+                          entry: "subject_match",
+                          userType: startingPoint?.userType,
+                          className: startingPoint?.ssClass,
+                          stream: startingPoint?.stream,
+                          examType: startingPoint?.userType === "senior_secondary" ? "olevel" : "combined",
+                        })
                 }
                 style={[
                   styles.card,
@@ -676,7 +746,7 @@ function ExploreIdle({
   );
 }
 
-function AdmissionEntryCard({ isGuest, onPress }: { isGuest: boolean; onPress: () => void }) {
+function AdmissionEntryCard({ isGuest, undergraduate, onPress }: { isGuest: boolean; undergraduate: boolean; onPress: () => void }) {
   const { colors } = useTheme();
   return (
     <TouchableOpacity
@@ -688,10 +758,10 @@ function AdmissionEntryCard({ isGuest, onPress }: { isGuest: boolean; onPress: (
         <Feather name="book-open" size={22} color={colors.accentRole.action} />
       </View>
       <View style={styles.admissionLeft}>
-        <Text style={[styles.admissionEyebrow, { color: colors.accentRole.action }]}>PROGRAMME + UNIVERSITY</Text>
-        <Text style={[styles.admissionTitle, { color: colors.textRole.primary }]}>Find a programme and university</Text>
+        <Text style={[styles.admissionEyebrow, { color: colors.accentRole.action }]}>{undergraduate ? "MY UNIVERSITY" : "PROGRAMME + UNIVERSITY"}</Text>
+        <Text style={[styles.admissionTitle, { color: colors.textRole.primary }]}>{undergraduate ? "I’m studying this programme" : "Find a programme and university"}</Text>
         <Text style={[styles.admissionBody, { color: colors.textRole.secondary }]}>
-          {isGuest ? "Create an account to start a connected programme and university search." : "Start with what you know, your subjects, or a university and compare the right options."}
+          {isGuest ? "Create an account to start connected guidance." : undergraduate ? "Choose your university and programme, then follow what you are learning into domains, subgroups, roles and next skills." : "Start with what you know, your subjects, or a university and compare the right options."}
         </Text>
         <Text style={[styles.admissionAction, { color: colors.accentRole.action }]}>
           {isGuest ? "Create account to start" : "Start matching"} <Text style={{ fontSize: 16 }}>→</Text>
@@ -739,21 +809,26 @@ function AdminExploreActions({
   nav: ExploreNav;
 }) {
   const { colors } = useTheme();
+  const provider = adminType === "tutorial_centre" || adminType === "jamb_cafe";
   const items = audience === "university"
     ? [
         { title: "Review your programme mix", body: "Review programmes and connected domains in the institution dashboard.", onPress: () => router.push("/(admin)/dashboard" as never), icon: "bar-chart-2" as const },
         { title: "Compare peer universities", body: "Compare your programme and domain coverage with other universities.", onPress: () => router.push("/(admin)/peers" as never), icon: "users" as const },
         { title: "Audit domain reach", body: "Review direct, functional and adjacent domain connections.", onPress: () => router.push("/(admin)/domain-reach" as never), icon: "map" as const },
       ]
-    : [
-        { title: "Compare university options", body: "Review the universities that offer a student's programme and explain the differences.", onPress: () => nav.admissionHub(router, "programme", adminType), icon: "users" as const },
+    : provider ? [
+        { title: "Find a JAMB programme", body: "Compare universities and published requirements for a learner’s chosen programme.", onPress: () => nav.admissionHub(router, "programme", adminType), icon: "book-open" as const },
+        { title: "Guide a JAMB subject choice", body: "Use a learner’s UTME subjects to explore possible programme routes.", onPress: () => nav.admissionHub(router, "subjects", adminType), icon: "compass" as const },
+        { title: "Start a guidance session", body: "Open a temporary session without creating a school student roster.", onPress: () => router.push("/(admin)/session" as never), icon: "users" as const },
+      ] : [
+        { title: "Compare university options", body: "Review the universities with a student's programme and explain the differences.", onPress: () => nav.admissionHub(router, "programme", adminType), icon: "users" as const },
         { title: "Guide from a student's choice", body: "Start with subjects or a programme idea and explain the available routes.", onPress: () => nav.admissionHub(router, "subjects", adminType), icon: "compass" as const },
         { title: "Review your students", body: "Open the cohort view for accounts, sessions and shared guidance signals.", onPress: () => router.push("/(admin)/guidance" as never), icon: "book-open" as const },
       ];
 
   return (
     <View style={styles.section}>
-      <SectionLabel>{audience === "university" ? "Institution planning" : "Guidance tools"}</SectionLabel>
+      <SectionLabel>{audience === "university" ? "Institution planning" : provider ? "JAMB guidance" : "Secondary-school guidance"}</SectionLabel>
       <View style={styles.adminActionGrid}>
         {items.map((item) => (
           <TouchableOpacity key={item.title} activeOpacity={0.82} onPress={item.onPress} style={[styles.adminAction, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
@@ -921,7 +996,7 @@ function buildExtendedSearchGroups(
         subtitle: item.domainName ? `Used in ${item.domainName}` : "Career skill",
         meta: item.context,
         href: item.domainId ? `${basePath}/domain/${encodeURIComponent(item.domainId)}` : undefined,
-        icon: "zap",
+        icon: "check-circle",
       })),
     },
     {
@@ -1011,6 +1086,20 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     gap: Spacing.xs,
   },
+  schoolMatcherToggle: {
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.md,
+    padding: Spacing.md,
+    gap: Spacing.xs,
+  },
+  schoolMatcherTitle: {
+    fontSize: FontSize.sm,
+    ...CompassFonts.bodySemibold,
+  },
+  schoolMatcherBody: {
+    fontSize: FontSize.xs,
+    lineHeight: FontSize.xs * 1.5,
+  },
 
   // ── Idle ─────────────────────────────────────────────────────
   idle: {
@@ -1060,6 +1149,11 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
     overflow: "hidden",
   },
+  clusterCardCompact: {
+    minHeight: 124,
+    padding: Spacing.sm,
+    gap: Spacing.xs,
+  },
   clusterGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -1074,6 +1168,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     gap: Spacing.sm,
     overflow: "hidden",
+  },
+  clusterGridCardCompact: {
+    minHeight: 112,
+    padding: Spacing.sm,
+    alignItems: "flex-start",
   },
   clusterAccent: {
     position: "absolute",

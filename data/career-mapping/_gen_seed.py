@@ -527,9 +527,108 @@ if os.path.exists(_source_rules_path):
     print(f"brochure source variants: {len(rows['jamb_programme_requirement_sources'])} preserved")
 
 # ── 3. programme_mapping (bridge) ───────────────────────────────
+# Exact, parseable IBASS brochure cells can resolve an individual offering
+# without rewriting the canonical national JAMB rule. The audit builder only
+# emits `scoped_exact` rows when the source cell has one identifiable catalogue
+# programme, explicit institution codes matching the canonical offering list,
+# and one unambiguous executable rule. Conflicts and ambiguous cells remain
+# structured source evidence and are not promoted here.
+_scoped_resolution_path = os.path.join(
+    HERE, "_audit", "jamb_subject_scoped_resolution_2026_10_08.json"
+)
+_scoped_exceptions_added = 0
+if os.path.exists(_scoped_resolution_path):
+    _scoped_resolution = json.load(open(_scoped_resolution_path, encoding="utf-8"))
+    _existing_exception_keys = {
+        (str(row[1]), str(row[4]), str(row[5]))
+        for row in rows["school_programme_requirement_exceptions"]
+    }
+    for _resolved in _scoped_resolution.get("resolved_scoped_rows", []):
+        if _resolved.get("resolution_status") not in {"scoped_exact", "scoped_conflict"}:
+            continue
+        _jname = _resolved.get("jamb_programme")
+        _exam_type = _resolved.get("exam_type")
+        if _exam_type not in {"utme", "olevel"} or not _jname:
+            continue
+        for _candidate in _resolved.get("candidates", []):
+            _raw_text = (_candidate.get("raw_source_text") or "").strip()
+            _note = f"{_exam_type.upper()}: {_raw_text}"
+            _local_rule = parse_local_exception(_note)
+            if _local_rule.get("status") != "parsed" or _local_rule.get("exam_type") != _exam_type:
+                continue
+            _locator = _candidate.get("source_locator") or {}
+            _source_file = _locator.get("source_file") or "IBASS brochure"
+            _source_page = _locator.get("pdf_page")
+            _source_row = _locator.get("table_row")
+            _source_url = _candidate.get("source_url") or ""
+            _source_accessed = _candidate.get("source_accessed_date") or "unknown"
+            _source_label = (
+                f"IBASS exact offering cell | {_source_url} | "
+                f"{_source_file}:p{_source_page}:r{_source_row} | "
+                f"accessed {_source_accessed}"
+            )
+            _conflicting_codes = set(_candidate.get("conflicting_institution_codes") or [])
+            for _code in _candidate.get("institution_codes", []):
+                if _code in _conflicting_codes:
+                    continue
+                _sid = uid("school", _code)
+                _jid = uid("jamb", _jname)
+                _spid = uid("sp", _code, _jname)
+                if _code not in rows["schools"] or _spid not in school_programme_by_id:
+                    continue
+                _duplicate_key = (str(_spid), str(_exam_type), _note)
+                if _duplicate_key in _existing_exception_keys:
+                    continue
+                _exception_id = uid(
+                    "spe", "ibass_scoped", _code, _jname, _exam_type, _note,
+                    _source_url, str(_source_page), str(_source_row),
+                )
+                rows["school_programme_requirement_exceptions"].append(
+                    (
+                        _exception_id, _spid, _sid, _jid, _exam_type, _note,
+                        _source_file, _source_label, "parsed",
+                    )
+                )
+                _existing_exception_keys.add(_duplicate_key)
+                _option_id = uid("school_subj_opt", _exception_id)
+                rows["school_programme_subject_options"].append(
+                    (
+                        _option_id, _exception_id, _spid, _sid, _jid,
+                        _local_rule["exam_type"], _local_rule["rule_scope"],
+                        f"Institution-specific {_exam_type.upper()} rule (IBASS)",
+                        _local_rule["min_required"], _local_rule["rule_text"],
+                        _local_rule.get("condition_text"),
+                    )
+                )
+                _group_index = 0
+                for _part in _local_rule["parts"]:
+                    if _part[0] == "required":
+                        _codes = [_part[1]]
+                        _role = "required"
+                        _group_key = None
+                        _group_min = None
+                        _distinct_group = None
+                    else:
+                        _, _group_min, _codes, *_tail = _part
+                        _role = "one_of"
+                        _group_index += 1
+                        _group_key = f"group_{_group_index}"
+                        _distinct_group = _tail[0] if _tail else None
+                    for _subject_code in _codes:
+                        rows["school_programme_subject_option_items"].append(
+                            (
+                                uid("school_subj_item", _exception_id, _group_key or "required", _subject_code),
+                                _option_id, _subject_code, _role, _group_key,
+                                _group_min, _distinct_group,
+                            )
+                        )
+                _scoped_exceptions_added += 1
+    print(f"exact IBASS institution-scoped exceptions added: {_scoped_exceptions_added}")
+
 pm = load("programme_mapping.json")
 custom_link = {name: name for name in prog_id_by_name}
 seen_jids = set()
+programme_mapping_unresolved = []
 for x in pm["mappings"]:
     jname = x["jamb_name"]; jid = uid("jamb", jname)
     if jid in seen_jids:   # programme_mapping has UNIQUE(jamb_programme_id)
@@ -547,8 +646,17 @@ for x in pm["mappings"]:
     # 3) code-only (legacy pilot rows; their codes are globally unique)
     if pid is None and x.get("ccmas_code"):
         pid = prog_id_by_code.get(x["ccmas_code"])
-    if pid is None and (jname in custom_link or x.get("mapping_type") == "D_custom"):
+    # Some D_custom JAMB entries intentionally have no exact CCMAS package.
+    # Preserve their bridge row with a NULL target instead of indexing a
+    # missing custom-link key and crashing the pre-SQL generator.
+    if pid is None and jname in custom_link:
         pid = prog_id_by_name.get(custom_link[jname])
+    if pid is None:
+        programme_mapping_unresolved.append({
+            "jamb_name": jname,
+            "mapping_type": x.get("mapping_type"),
+            "reason": "no exact CCMAS programme target; retained as unresolved bridge",
+        })
     rows["programme_mapping"].append(
         (uid("pm", jname), jid, pid, x["mapping_type"], x.get("mapping_note")))
 
@@ -652,9 +760,13 @@ if rows["school_programme_subject_option_items"]:
     out.append("")
 
 out += ["COMMIT;"]
-open(os.path.join(HERE, "..", "..", "backend", "seed_career_pilot.sql"), "w", encoding="utf-8").write("\n".join(out))
+_seed_output_path = os.environ.get(
+    "CAREER_PILOT_SEED_OUTPUT_PATH",
+    os.path.join(HERE, "..", "..", "backend", "seed_career_pilot.sql"),
+)
+open(_seed_output_path, "w", encoding="utf-8").write("\n".join(out))
 
-print("seed_career_pilot.sql generated:")
+print(f"{os.path.basename(_seed_output_path)} generated:")
 print(f"  programmes:                    {len(rows['programmes'])} (ccmas {len(prog_id_by_code)} + custom {len(prog_id_by_name)})")
 print(f"  schools (distinct, normalized): {len(rows['schools'])}")
 print(f"  jamb_programmes:               {len(rows['jamb_programmes'])}")
@@ -667,3 +779,4 @@ print(f"  parsed university subject options: {len(rows['school_programme_subject
 print(f"  parsed university subject items: {len(rows['school_programme_subject_option_items'])}")
 linked = sum(1 for _,_,c,_,_ in rows["programme_mapping"] if c)
 print(f"  mappings linked to a programme: {linked}/{len(rows['programme_mapping'])}")
+print(f"  mappings intentionally unresolved: {len(programme_mapping_unresolved)}")

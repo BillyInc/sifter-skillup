@@ -41,7 +41,13 @@ const SESSION_STEPS = [
   },
 ];
 
-type SessionJourney = "full" | "programme_to_role" | "utme_only" | "olevel_only" | "universities_only";
+type SessionJourney = "full" | "programme_to_role" | "programme_preview" | "guided_subject_discovery" | "utme_only" | "olevel_only" | "universities_only";
+
+const ADMISSION_DOORS: { value: SessionJourney; title: string; body: string }[] = [
+  { value: "programme_to_role", title: "I know the programme and university", body: "Open the university-specific programme details, then continue into domains, areas and roles." },
+  { value: "programme_preview", title: "I know the programme, but not the university", body: "Open the programme preview first, then choose a university and inspect its requirements." },
+  { value: "guided_subject_discovery", title: "I want help finding a programme", body: "Use O-level and UTME subjects to narrow programme identities before choosing a university." },
+];
 
 const SESSION_JOURNEYS: { value: SessionJourney; title: string; body: string }[] = [
   {
@@ -77,7 +83,7 @@ export function SessionModeScreen() {
   const router = useRouter();
   const [profile, setProfile] = useState<EducatorProfile | null>(null);
   const [loaded, setLoaded] = useState(false);
-  const [journey, setJourney] = useState<SessionJourney>("full");
+  const [journey, setJourney] = useState<SessionJourney>("guided_subject_discovery");
 
   useEffect(() => {
     let active = true;
@@ -99,8 +105,8 @@ export function SessionModeScreen() {
   const startJourney = (value: SessionJourney) => {
     if (!profile) return;
     setJourney(value);
-    const mode = value === "full" || value === "utme_only" || value === "olevel_only" ? "subjects" : "programme";
-    const examType = value === "utme_only" ? "utme" : value === "olevel_only" ? "olevel" : value === "full" ? "combined" : "";
+    const mode = value === "full" || value === "utme_only" || value === "olevel_only" || value === "guided_subject_discovery" ? "subjects" : "programme";
+    const examType = value === "utme_only" ? "utme" : value === "olevel_only" ? "olevel" : value === "full" || value === "guided_subject_discovery" ? "combined" : "";
     const guidanceContext = guidanceContextQuery({
       className: "JAMB",
       userType: "jamb",
@@ -177,7 +183,7 @@ export function SessionModeScreen() {
               <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>Choose how to guide</Text>
               <Text style={[styles.cardBody, { color: colors.textMuted }]}>Choose the smallest journey that answers the student&apos;s question. You can return and run a fuller flow later.</Text>
               <View style={styles.actions}>
-                {SESSION_JOURNEYS.map((option) => {
+                {(profile?.providerSessionOnly ? ADMISSION_DOORS : SESSION_JOURNEYS).map((option) => {
                   const active = journey === option.value;
                   return (
                     <TouchableOpacity

@@ -1,7 +1,7 @@
 import type { OrganizationType } from "../types/institution";
 
 export type AdminLearnerType = "ss1" | "ss2" | "ss3" | "jamb" | "undergraduate";
-export type AdminLearnerStream = "science" | "commercial" | "art";
+export type AdminLearnerStream = "science" | "commercial" | "art" | "technical";
 
 export interface AdminLearnerAudience {
   learnerTypes: AdminLearnerType[];
@@ -13,7 +13,7 @@ export interface AdminLearnerAudience {
 
 const SECONDARY: AdminLearnerAudience = {
   learnerTypes: ["ss1", "ss2", "ss3"],
-  streams: ["science", "commercial", "art"],
+  streams: ["science", "commercial", "art", "technical"],
   streamRequired: true,
   label: "Secondary students",
   description: "Choose SS1, SS2 or SS3, then the student's stream.",

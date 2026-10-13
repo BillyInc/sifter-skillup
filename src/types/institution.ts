@@ -61,6 +61,9 @@ export interface Organization {
   id: string;
   type: OrganizationType;
   name: string;
+  /** Authoritative registry display fields; never inferred from an acronym. */
+  officialName?: string;
+  shortName?: string;
   /** Registry anchors (which apply depends on type). */
   jambCode?: string; // JAMB/CAPS institution code (universities)
   nucCode?: string; // NUC accreditation (universities)
@@ -260,6 +263,14 @@ export interface ProvisioningMergeCandidate {
 //  Aggregate dashboard (the 5 stat cards) 
 export interface InstitutionSummary {
   institutionName: string;
+  institutionOfficialName?: string | null;
+  institutionShortName?: string | null;
+  institutionAddress?: string | null;
+  institutionCity?: string | null;
+  institutionState?: string | null;
+  institutionCountry?: string | null;
+  institutionType?: OrganizationType | null;
+  verificationStatus?: VerificationStatus | null;
   institutionCode: string;
   activeProgrammes: number;
   facultyCount?: number;
@@ -389,19 +400,64 @@ export interface SkillGapRow {
 
 export type CurriculumCoverageStatus = "complete" | "source_missing" | "review_only";
 
+/** One sourced market/practice item compared with the CCMAS programme record. */
 export interface ProgrammeResourceEvidence {
   name: string;
-  kind: "skill" | "tool" | "certification";
-  source: "domain" | "subgroup" | "role";
+  kind: "skill" | "tool" | "competency" | "ability" | "certification" | "resource" | "relationship";
+  source: "programme" | "domain" | "subgroup" | "role";
   scopeName?: string;
   roleName?: string;
+  /** Stable comparison identity; aliases are source-provided only. */
+  canonicalKey?: string;
+  aliases?: string[];
+  /** ``bridge`` means present in mapped market/practice evidence but not
+   * evidenced in the programme profile; it is not an accreditation mandate. */
   state: "covered" | "bridge";
+  curriculumState?: "taught" | "partly_evidenced" | "not_evidenced" | "source_review";
+  /** The sourced domain/subgroup/role record is the market/practice layer. */
+  marketState?: "market_practice_evidence" | "insufficient_evidence" | "source_review";
   url?: string;
   provider?: string;
   description?: string;
+  explanation?: string;
   resourceType?: string;
   sourceConfidence?: string;
   dataState?: string;
+  evidenceSource?: string;
+  observedAt?: string;
+  geography?: string;
+  contextKey?: string;
+  programmeKey?: string;
+  guidanceOwner?: string;
+  evidenceState?: "verified" | "approved" | "review_required" | "no_link" | "not_established" | "audit_only" | "unavailable";
+  sourceLocator?: unknown;
+  sourceAccessedAt?: string;
+  sourceReferences?: unknown[];
+  sourceLocators?: unknown[];
+  linkState?: "linked" | "no_link" | "review_required" | string;
+  linkUrl?: string;
+  noLinkReason?: string;
+  sourceIds?: string[];
+  relationshipType?: string;
+  relationshipStatus?: string;
+  fromItemType?: string;
+  toItemType?: string;
+  toItemKey?: string;
+  toName?: string;
+}
+
+export interface ProgrammeCurriculumEvidence {
+  outcomeId?: string;
+  courseCode?: string;
+  courseTitle?: string;
+  courseLevel?: number;
+  displayGroup?: string;
+  outcomeIndex?: number;
+  sourceText?: string;
+  studentText?: string;
+  sourceLocator?: unknown;
+  studentDisplay: boolean;
+  dataState: string;
 }
 
 export interface ProgrammeDomainSkillCoverage {
@@ -414,17 +470,38 @@ export interface ProgrammeDomainSkillCoverage {
   bridgeCount: number;
   coverageStatus: CurriculumCoverageStatus;
   explanation: string;
+  /** Display order: direct first, then functional, then adjacent. */
+  priority?: 1 | 2 | 3;
+  marketState?: "market_practice_evidence" | "insufficient_evidence" | "source_review";
 }
 
 /** Programme-first curriculum bridge: programme → mapped domain → skills. */
 export interface ProgrammeSkillCoverage {
   programmeId: string;
   programmeName: string;
+  jambProgrammeId?: string;
+  jambProgrammeName?: string;
+  jambFaculty?: string;
+  /** Institution-specific school_programmes row, distinct from its CCMAS anchor. */
+  offeringId?: string;
+  jambAnchorState?: "mapped" | "unmapped";
+  comparisonScope?: "institution_programme" | "jamb_ccmas_baseline";
   curriculumSkills: string[];
   curriculumTechnical: string[];
   curriculumTransferable: string[];
   curriculumStatus: "complete" | "source_missing";
+  curriculumContractState?: "available" | "unavailable";
+  curriculumEvidence?: ProgrammeCurriculumEvidence[];
+  programmeAbilities?: ProgrammeResourceEvidence[];
+  programmeEvidence?: ProgrammeResourceEvidence[];
   domains: ProgrammeDomainSkillCoverage[];
+}
+
+export interface JambProgrammeOption {
+  id: string;
+  name: string;
+  faculty?: string;
+  hasCcmasAnchor: boolean;
 }
 
 export interface RoleDemandRow {
@@ -446,10 +523,56 @@ export interface RoleDemandRow {
 }
 
 export interface PeerInstitutionRow {
+  institutionId: string;
   institutionName: string;
+  isSelf?: boolean;
+  programmesAccessible: number;
   domainsAccessible: number;
+  specializationsAccessible: number;
+  rolesAccessible: number;
   /** Domains this peer reaches that the current institution does not. */
   uniqueDomains?: string[];
+}
+
+export interface PeerOfferingReach {
+  offeringId?: string;
+  jambProgrammeId: string;
+  programmeName: string;
+  jambFaculty?: string;
+  curriculumAnchor: "mapped" | "unmapped";
+  domainsAccessible: number;
+  specializationsAccessible: number;
+  rolesAccessible: number;
+}
+
+export interface InstitutionPortfolioReach {
+  institutionId: string;
+  institutionName: string;
+  programmesAccessible: number;
+  domainsAccessible: number;
+  specializationsAccessible: number;
+  rolesAccessible: number;
+  offerings: PeerOfferingReach[];
+  demandStatus: "coming_soon" | "available";
+  domainsInDemand?: number | null;
+  specializationsInDemand?: number | null;
+  rolesInDemand?: number | null;
+}
+
+export interface PeerSharedOffering {
+  /** Same national JAMB identity; preserve each university-specific offering. */
+  current: PeerOfferingReach;
+  peer: PeerOfferingReach;
+}
+
+export interface PeerProgrammeComparison {
+  current: InstitutionPortfolioReach;
+  peer: InstitutionPortfolioReach;
+  programmesPeerTeachesNotCurrent: PeerOfferingReach[];
+  programmesCurrentTeachesNotPeer: PeerOfferingReach[];
+  /** Shared identities retain both universities' offering IDs/faculty context. */
+  programmesBothTeach: PeerSharedOffering[];
+  demandNote: string;
 }
 
 //  Affiliation attribution (aggregate, k-anonymised) 

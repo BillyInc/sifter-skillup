@@ -69,11 +69,13 @@ two specific course or objective anchors. Adjacent links require at least one
 specific conceptual prerequisite plus the relevant transferable-competency
 evidence. These are evidence gates, not employment predictions.
 
-The plain-language display should say:
+Student-facing copy should explain the distinction in everyday language, without requiring learners to understand the audit terms:
 
-- **Direct:** “Your programme teaches a foundation closely related to this domain.”
-- **Functional:** “Your programme gives you useful preparation for this domain, but you will need to build additional domain-specific capability.”
-- **Adjacent:** “This is a possible pivot. Your current foundation helps, but you need this bridge before specializing.”
+- **Direct:** “Your course is closely connected to this field.” The linked courses cover ideas or ways of working also used in the field.
+- **Functional:** “You learned things used in this field.” The linked courses teach capabilities used in some parts of the field, even though the programme does not cover everything needed to work in it.
+- **Adjacent:** “This could be a new direction for you.” The evidence shows a related idea and abilities useful in other settings, but not a close match to the field's main work; expect a bigger step into new learning.
+
+Show the course evidence on the individual card. These descriptions explain the curriculum link only; they do not promise readiness or employment.
 
 ## 4. Programme mapping data currently present
 
@@ -181,21 +183,31 @@ Roles must be ordered by preparation stage:
 
 The current role-score artifact already contains `entry`, `mid`, and `senior` labels in sampled records, but the canonical role library and role seed still require a dedicated provenance audit to prove how every tier was assigned. A title alone is not enough; use ISCO skill level, O*NET job zone/preparation, work profile evidence, and reviewed role-family rules.
 
-## 7. Subgroup behavior
+## 7. Area-of-specialization behavior (legacy API label: subgroup)
 
-If the role library has a supported subgroup, the route is:
+If evidence supports an area of specialization, the catalogue may show the
+relationship:
 
 ```text
 programme → domain → subgroup → role
 ```
 
-If no defensible subgroup taxonomy exists, the route is intentionally:
+This is a catalogue relationship, not a prescribed learning sequence. Each
+role must independently fit the parent domain; placement in a specialization
+cannot establish that fit. If no defensible specialization taxonomy exists,
+keep the direct domain-to-role relationship:
 
 ```text
 programme → domain → role
 ```
 
-The UI must never create a fabricated subgroup merely to preserve a visual pattern. Each subgroup needs a source anchor, a coherent work focus, and role membership evidence. ISCO sub-major grouping can provide the structural fallback, but the subgroup label and description must be reviewed for clarity.
+The UI must never create a fabricated specialization merely to preserve a
+visual pattern. Each area needs source evidence that it is a recognized,
+distinct part of the parent domain, defensible boundaries, and a clear
+student-facing name. ISCO/ESCO codes may support occupational identity, but
+must not define specialization boundaries or prove role-to-domain fit. A
+specialization can be defined before its roles are mapped; role membership is
+reviewed separately and only assigned when the evidence supports it.
 
 ## 8. Evidence shown to the learner
 

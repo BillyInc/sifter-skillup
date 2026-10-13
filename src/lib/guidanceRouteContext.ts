@@ -26,6 +26,8 @@ export type GuidanceRouteContext = {
   className?: string;
   stream?: string;
   programmeId?: string;
+  /** Current selected D078 area when a role is opened from that area route. */
+  areaId?: string;
   jambProgrammeId?: string;
   schoolId?: string;
   journeyMode?: string;
@@ -34,6 +36,10 @@ export type GuidanceRouteContext = {
   resumeStage?: GuidanceResumeStage | string;
   /** Route to return to when a focused guidance session is exited. */
   entryPath?: string;
+  /** Replace a transient picker route when opening the next focused detail. */
+  replaceHistory?: boolean;
+  /** Keep a focused guidance step in browser history for an intentional Back path. */
+  preserveHistory?: boolean;
   focused?: boolean;
   viewOnly?: boolean;
 };
@@ -124,6 +130,7 @@ export function guidanceContextQuery(
   };
 
   if (options.includeProgrammeId) add("programme_id", context.programmeId);
+  add("area_id", context.areaId);
   add("jamb_programme_id", context.jambProgrammeId);
   add("school_id", context.schoolId);
   add("user_type", context.userType);

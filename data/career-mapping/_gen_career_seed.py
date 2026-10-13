@@ -11,6 +11,9 @@ import json, re, uuid, os, glob, math
 from collections import Counter, defaultdict
 
 from _role_overlay_loader import load_overlay_roles
+from _role_tools_loader import load_role_tools
+from _role_learning_core import student_skill_lists, selection_metadata
+from _role_subgroup_route import effective_subgroup_code
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SEED_OUTPUT_PATH = os.environ.get("CAREER_SEED_OUTPUT_PATH") or os.path.join(HERE, "..", "..", "backend", "seed_career_v2.sql")
@@ -67,7 +70,7 @@ scope_audit = load("domain_skill_competency_certification_audit.json")
 # ownership.
 roles  = load("role_library_v3_cleaned.json")
 roles.extend(load_overlay_roles())
-role_tools = load("role_tools.json") if os.path.exists(os.path.join(HERE, "role_tools.json")) else {}
+role_tools = load_role_tools()
 role_work_profiles = {}
 _work_profile_path = os.path.join(HERE, "role_work_profiles.json")
 if os.path.exists(_work_profile_path):
@@ -95,18 +98,16 @@ for _role in roles:
 roles_by_key = {}
 for _role in roles:
     roles_by_key[f'{_role.get("domain_id")}|{_role.get("role_name")}'] = _role
-roles = list(roles_by_key.values())
+roles = [
+    role for role in roles_by_key.values()
+    if str(role.get("student_path_status") or "active").casefold() != "excluded"
+]
 role_count_by_domain = Counter(str(role.get("domain_id")) for role in roles)
 role_count_by_subgroup = Counter(
-    (str(role.get("domain_id")), str(role.get("isco_group"))[:2])
+    (str(role.get("domain_id")), effective_subgroup_code(role))
     for role in roles
-    if role.get("domain_id") and role.get("isco_group") is not None
+    if role.get("domain_id") and effective_subgroup_code(role) is not None
 )
-
-def skill_values(value):
-    if isinstance(value, list):
-        return [str(item).strip() for item in value if str(item).strip()]
-    return [part.strip() for part in str(value or "").split("|") if part.strip()]
 
 def alias_values(value):
     if isinstance(value, list):
@@ -129,6 +130,8 @@ computational_methods = load("computational_method_evidence.json") if os.path.ex
 HIDDEN = set(scope_audit.get("scope", {}).get("hidden_domains_excluded", []))
 def dom_uid(dk): return uid("domain", dk)
 def sg_uid(dk, sm): return uid("subgroup", dk, str(sm))
+def subgroup_is_student_visible(subgroup):
+    return str(subgroup.get("data_state") or "").strip().lower() not in {"review_only", "excluded", "audit_only"}
 
 # Every (domain_key, isco_submajor) pair that section 2 will actually emit as a
 # domain_subgroups row. The computational layers reference subgroups by ISCO
@@ -142,12 +145,13 @@ def sg_uid(dk, sm): return uid("subgroup", dk, str(sm))
 VALID_SG = {
     (dk, str(sg["isco_submajor"]))
     for dk, st in struct.items() if dk not in HIDDEN
-    for sg in st.get("subgroups", [])
+    for sg in st.get("subgroups", []) if subgroup_is_student_visible(sg)
 }
 # Collected rather than silently dropped: a missing subgroup means the evidence
 # file and domain_structure.json disagree, and that belongs in front of whoever
 # owns the data, not buried in a diff of row counts.
 computational_skipped = []
+computational_audit_only = []
 
 R = defaultdict(list)  # table -> list[list[str sql-literals]]
 
@@ -187,7 +191,7 @@ for family in cross_domain_families.get("families") or []:
     for member in family.get("members") or []:
         role_key = str(member.get("role_key") or "")
         domain_key = str(member.get("domain_key") or "")
-        if not role_key or not domain_key or domain_key in HIDDEN:
+        if not role_key or role_key not in roles_by_key or not domain_key or domain_key in HIDDEN:
             continue
         R["career_role_family_members"].append([
             q(uid("role_family_member", family_key, role_key)), q(family_id),
@@ -203,7 +207,7 @@ for link in computational_links.get("links") or []:
     role_key = str(link.get("role_key") or "")
     domain_key = str(link.get("domain_id") or role_key.split("|", 1)[0])
     subgroup_key = str(link.get("subgroup_isco_submajor") or "")
-    if not role_key or not domain_key or not subgroup_key or domain_key in HIDDEN:
+    if not role_key or role_key not in roles_by_key or not domain_key or not subgroup_key or domain_key in HIDDEN:
         continue
     if (domain_key, subgroup_key) not in VALID_SG:
         computational_skipped.append(
@@ -228,6 +232,12 @@ for method in computational_methods.get("methods") or []:
     method_name = str(method.get("name") or "").strip()
     if not domain_key or not subgroup_key or not method_name or domain_key in HIDDEN:
         continue
+    seed_disposition = str(method.get("seed_disposition") or "")
+    if seed_disposition.startswith("audit_only"):
+        computational_audit_only.append(
+            ("computational_method_evidence", domain_key, subgroup_key, method_name, seed_disposition)
+        )
+        continue
     if (domain_key, subgroup_key) not in VALID_SG:
         computational_skipped.append(
             ("computational_method_evidence", domain_key, subgroup_key, method_name))
@@ -238,7 +248,11 @@ for method in computational_methods.get("methods") or []:
         q(method.get("skill_type") or "unknown"), q("not_demonstrated"),
         q(method.get("esco_id")), q(method.get("description")),
         jsonb(method.get("evidence_roles") or []),
-        jsonb({"sources": [method.get("source") or "global_esco"], "mapping_method": "exact ESCO skill"}),
+        jsonb({
+            "sources": [method.get("source") or "global_esco"],
+            "mapping_method": "source-backed method evidence",
+            "applicability": method.get("applicability") or "role_specificity_not_established",
+        }),
         q(method.get("data_state") or "source_backed"),
     ])
 
@@ -271,7 +285,7 @@ for dk, st in struct.items():
                 q(sg.get("raw_isco_label")), str(role_count_by_subgroup.get((dk, str(sg["isco_submajor"])), 0)),
                 jsonb(sg.get("cluster_skills", [])),
                 q(subgroup_provenance.get("source_confidence") or "unsourced"),
-                q(subgroup_provenance.get("data_state") or "partial"),
+                q(sg.get("data_state") or subgroup_provenance.get("data_state") or "partial"),
                 jsonb(subgroup_provenance.get("skills", {})),
                 jsonb(subgroup_provenance.get("nigerian_context") or {}),
                 str(sg.get("display_order")) if sg.get("display_order") is not None else "NULL"])
@@ -281,12 +295,14 @@ for dk, st in struct.items():
 sg_by = {}
 for dk, st in struct.items():
     for sg in st.get("subgroups", []):
-        sg_by[(dk, str(sg["isco_submajor"]))] = sg_uid(dk, sg["isco_submajor"])
+        if subgroup_is_student_visible(sg):
+            sg_by[(dk, str(sg["isco_submajor"]))] = sg_uid(dk, sg["isco_submajor"])
 for r in roles:
     dk = r["domain_id"]
     if dk not in meta or dk in HIDDEN: continue
     rk = f'{dk}|{r["role_name"]}'
-    sm = str(r.get("isco_group", ""))[:2]
+    student_display_name = r.get("student_display_name") or r["role_name"]
+    sm = effective_subgroup_code(r)
     sgid = sg_by.get((dk, sm))
     aka = alias_values(r.get("also_known_as"))
     source_entry = role_tools.get(rk, {})
@@ -296,10 +312,10 @@ for r in roles:
     role_data_state = source_entry.get("data_state") or "unsourced"
     R["domain_roles"].append([
         q(uid("role", rk)), q(dom_uid(dk)), (q(sgid) if sgid else "NULL"),
-        q(rk), q(r["role_name"]), q(r.get("description")), arr(aka), q(r.get("tier")),
+        q(rk), q(student_display_name), q(r.get("description")), arr(aka), q(r.get("tier")),
         q(str(r.get("isco_group") or "")), q(r.get("esco_code")),
         q(r.get("elite_status") or "deferred"),
-        jsonb(r.get("essential_skills", [])), jsonb(r.get("optional_skills", [])),
+        jsonb(student_skill_lists(r)[0]), jsonb(student_skill_lists(r)[1]),
         arr(esco_entry.get("occupation_uris", [])), q(role_source_confidence),
         q(role_data_state), arr(onet_entry.get("occupation_codes", [])),
         jsonb(onet_entry.get("essential_skills", [])), jsonb({
@@ -307,7 +323,15 @@ for r in roles:
             "esco_occupation_uris": esco_entry.get("occupation_uris", []),
             "onet_occupation_codes": onet_entry.get("occupation_codes", []),
             "framework": source_entry.get("source_provenance") or {},
+            "student_skill_selection": selection_metadata(r),
             "nigerian_context": source_entry.get("nigerian_context") or {},
+            "role_subgroup_fit": {
+                "status": r.get("subgroup_fit_status"),
+                "override_isco_submajor": r.get("subgroup_override_isco_submajor"),
+                "review_basis": r.get("subgroup_fit_review_basis"),
+                "review_source_register": r.get("subgroup_fit_review_source_register"),
+                "semantic_signoff": r.get("subgroup_fit_semantic_signoff"),
+            },
             "sources": [source for source in (
                 "esco" if esco_entry.get("occupation_uris") else None,
                 "onet" if onet_entry.get("essential_skills") or any(t.get("source") == "onet" for t in source_entry.get("tools") or []) else None,
@@ -386,12 +410,12 @@ for dk, tv in tools.items():
 
 # ── 4b. role-level tools (L3T) from role_tools.json, if built ────
 # Emitted as scope='role' rows (requires migration_role_tools.sql).
-rt_path = os.path.join(HERE, "role_tools.json")
 role_tools_n = 0
-if os.path.exists(rt_path):
-    role_tools = json.load(open(rt_path, encoding="utf-8"))
+if role_tools:
     for rk, ent in role_tools.items():
         if rk == "_meta":
+            continue
+        if rk not in roles_by_key:
             continue
         dk = rk.split("|", 1)[0]
         if dk not in meta or dk in HIDDEN: continue
@@ -427,6 +451,8 @@ for dk, st in struct.items():
             q("role_hint"), q(c["name"]), q(c.get("body")), q(c.get("region")),
             q(c.get("level")), q(c.get("gate_reason"))])
     for sg in st.get("subgroups", []):
+        if not subgroup_is_student_visible(sg):
+            continue
         sgid = sg_uid(dk, sg["isco_submajor"])
         for c in sg.get("certifications", []):
             ci += 1
@@ -459,9 +485,13 @@ for key, v in scores.items():
         if dk not in meta or dk in HIDDEN: continue
         for r in d["roles"]:
             rk = f'{dk}|{r["role"]}'
+            source_role = roles_by_key.get(rk) or {}
+            if not source_role:
+                continue
+            student_display_name = source_role.get("student_display_name") or r["role"]
             prs += 1
             R["programme_role_score"].append([
-                q(uid("prs", pid, rk)), q(pid), q(dom_uid(dk)), q(rk), q(r["role"]),
+                q(uid("prs", pid, rk)), q(pid), q(dom_uid(dk)), q(rk), q(student_display_name),
                 q(r["label"]), numornull(r.get("coverage")), q(r.get("tier")),
                 q(r.get("sub_group")), jsonb(r.get("bridge_skills", []))])
 
@@ -483,7 +513,7 @@ dom_skills = defaultdict(set)
 for r in roles:
     dk = r["domain_id"]
     if dk in HIDDEN or dk not in meta: continue
-    for s in skill_values(r.get("essential_skills", [])):
+    for s in student_skill_lists(r)[0]:
         dom_skills[dk].add(s.strip().lower())
 # down-weight ubiquitous skills (in >40% of domains) so overlap reflects DISTINCTIVE transfer
 ND = len(dom_skills) or 1
@@ -632,3 +662,8 @@ if computational_skipped:
         have = sorted(sm2 for (dk2, sm2) in VALID_SG if dk2 == dk)
         print(f"  {table:34} {dk} isco_submajor={sm:<4} ref={ref!r}")
         print(f"    {dk} has subgroups: {have or 'NONE'}")
+if computational_audit_only:
+    print()
+    print(f"INTENTIONAL AUDIT-ONLY: {len(computational_audit_only)} computational row(s) retained in the evidence ledger but omitted from the canonical seed")
+    for table, dk, sm, ref, disposition in sorted(computational_audit_only):
+        print(f"  {table:34} {dk} isco_submajor={sm:<4} ref={ref!r} disposition={disposition}")

@@ -21,40 +21,37 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
+import { Feather } from "@expo/vector-icons";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { useTheme, Spacing, Radius, FontSize, CompassFonts } from "@/theme";
-import { useResponsive } from "@/hooks/useResponsive";
 import { getClusterColor } from "@/data/clusterMaps";
 import { careerData } from "@/lib/careerData";
+import { formatCareerLabel, studentSummary } from "@/lib/careerLabels";
 import { useExploreNav } from "@/lib/exploreNav";
 import type { GuidanceRouteContext } from "@/lib/guidanceRouteContext";
 import {
   pending,
   type DataState,
+  type DomainStudentOrientation,
   type DomainV2,
 } from "@/types/career";
 import {
   DetailScaffold,
   DomainIcon,
   FoundationSkillsBlock,
-  GuidanceEvidenceBlock,
-  NigerianContextBlock,
   ToolGroupsBlock,
   CertPlacementList,
-  LearningResourcesBlock,
   NotesWidget,
   RouteLine,
   MappingFeedbackButton,
   SectionLabel,
   ContextualItemList,
+  GuidanceContinuation,
+  TextTabs,
+  LearningResourcesBlock,
+  ExternalLinkGuard,
 } from "@/components/careerIntelligence";
-
-const SECTIONS = [
-  { key: "overview", label: "Overview" },
-  { key: "areas", label: "Areas of work" },
-  { key: "prepare", label: "Learn and prepare" },
-  { key: "build", label: "Build" },
-] as const;
+import { isStudentResource } from "@/components/careerIntelligence/resourceLinks";
 
 export interface DomainDetailScreenProps {
   /** Stable domain key (e.g. "D001"). */
@@ -62,14 +59,15 @@ export interface DomainDetailScreenProps {
 }
 
 export function DomainDetailScreen(props: DomainDetailScreenProps) {
-  const params = useLocalSearchParams<{ id: string; programme_id?: string | string[]; jamb_programme_id?: string | string[]; school_id?: string | string[]; user_type?: string | string[]; journey_mode?: string | string[]; guidance_student_id?: string | string[]; guidance_target?: string | string[]; guidance_entry?: string | string[]; focus?: string | string[]; match_type?: string | string[] }>();
+  const params = useLocalSearchParams<{ id: string; programme_id?: string | string[]; jamb_programme_id?: string | string[]; school_id?: string | string[]; user_type?: string | string[]; journey_mode?: string | string[]; guidance_student_id?: string | string[]; guidance_target?: string | string[]; guidance_entry?: string | string[]; focus?: string | string[] }>();
   const domainKey = props.domainId ?? String(params.id ?? "");
+  const router = useRouter();
+  const exploreNav = useExploreNav();
   const scrollRef = useRef<ScrollView>(null);
   const targetStudentId = Array.isArray(params.guidance_student_id)
     ? params.guidance_student_id[0]
     : params.guidance_student_id;
   const focusedGuidance = (Array.isArray(params.focus) ? params.focus[0] : params.focus) === "guidance";
-  const matchType = Array.isArray(params.match_type) ? params.match_type[0] : params.match_type;
   const guidanceContext: GuidanceRouteContext = {
     programmeId: Array.isArray(params.programme_id) ? params.programme_id[0] : params.programme_id,
     jambProgrammeId: Array.isArray(params.jamb_programme_id) ? params.jamb_programme_id[0] : params.jamb_programme_id,
@@ -89,24 +87,30 @@ export function DomainDetailScreen(props: DomainDetailScreenProps) {
   const loadDomain = useCallback(() => {
     setState(pending<DomainV2>("Loading domain details..."));
     let alive = true;
-    void careerData.getDomainV2(domainKey).then((res) => {
+    void careerData.getDomainV2ForStudent(domainKey, guidanceContext.programmeId).then((res) => {
       if (alive) setState(res);
     });
     return () => {
       alive = false;
     };
-  }, [domainKey]);
+  }, [domainKey, guidanceContext.programmeId]);
 
   useEffect(() => loadDomain(), [loadDomain]);
+
+  const onBack = useCallback(() => {
+    const canGoBack = typeof (router as typeof router & { canGoBack?: () => boolean }).canGoBack === "function"
+      && (router as typeof router & { canGoBack: () => boolean }).canGoBack();
+    if (canGoBack) router.back();
+    else router.replace(`${exploreNav.base}/domains` as never);
+  }, [exploreNav.base, router]);
 
   return (
     <DetailScaffold
       eyebrow="DOMAIN"
       title={state.data?.name ?? "Domain"}
       backLabel={targetStudentId ? "Back to student guidance" : "Back to programme"}
+      onBack={onBack}
       save={focusedGuidance ? undefined : { entityType: "domain", entityId: domainKey }}
-      pdf
-      pdfPath={targetStudentId ? `/api/provisioning/students/${encodeURIComponent(targetStudentId)}/report.html` : "/api/student/report.html"}
       reportSelection={{ kind: "domains", id: domainKey, name: state.data?.name ?? "Domain" }}
       targetStudentId={targetStudentId}
       state={state}
@@ -115,18 +119,17 @@ export function DomainDetailScreen(props: DomainDetailScreenProps) {
       requiresAccountForDetails
       guestDescription={state.data?.description}
     >
-      {(domain) => <DomainBody domain={domain} domainKey={domainKey} targetStudentId={targetStudentId} focusedGuidance={focusedGuidance} guidanceContext={guidanceContext} matchType={matchType} scrollRef={scrollRef} />}
+      {(domain) => <DomainBody domain={domain} domainKey={domainKey} targetStudentId={targetStudentId} focusedGuidance={focusedGuidance} guidanceContext={guidanceContext} scrollRef={scrollRef} />}
     </DetailScaffold>
   );
 }
 
-function DomainBody({
+function LegacyDomainBody({
   domain,
   domainKey,
   targetStudentId,
   focusedGuidance,
   guidanceContext,
-  matchType,
   scrollRef: outerScrollRef,
 }: {
   domain: DomainV2;
@@ -134,20 +137,16 @@ function DomainBody({
   targetStudentId?: string;
   focusedGuidance: boolean;
   guidanceContext: GuidanceRouteContext;
-  matchType?: string;
   scrollRef: React.RefObject<ScrollView | null>;
 }) {
   const { colors } = useTheme();
   const router = useRouter();
   const exploreNav = useExploreNav();
-  const resp = useResponsive();
-
   const cluster = domain.cluster ?? domain.clusters?.[0];
   const subgroups = domain.subgroups ?? [];
   const roleCount = domain.roleCount ?? domain.roles?.length ?? 0;
   const clusterColor = getClusterColor(cluster ?? "");
-
-  const isDesktop = resp.isDesktop && resp.isWeb;
+  const programmeConnection = domain.programmeConnection;
 
   // No match/coverageRatio passed: the domain endpoint does not return ESCO
   // coverage for these roles. This used to pass `match="match"
@@ -156,16 +155,15 @@ function DomainBody({
   // the same badge. Both props are optional now, and the badge renders nothing
   // when there is nothing to say.
   // ── Section positions for nav scrolling ──────────────────────
-  const [activeSection, setActiveSection] = useState("overview");
   const [subgroupsExpanded, setSubgroupsExpanded] = useState(false);
-  const desktopScrollRef = useRef<ScrollView>(null);
+  const [domainTab, setDomainTab] = useState<"overview" | "build">("overview");
   const visibleSubgroups = subgroupsExpanded ? subgroups : subgroups.slice(0, 6);
 
   // ── Desktop layout: section nav + content side-by-side ───────
   const content = (
     <>
       {/* Hero section */}
-      {activeSection === "overview" ? <View style={[styles.hero, { borderBottomColor: colors.borderRole.subtle }]}>
+      <View style={[styles.hero, { borderBottomColor: colors.borderRole.subtle }]}>
         <View style={[styles.heroIconWrap, clusterColor ? { backgroundColor: clusterColor + "15" } : undefined]}>
            <DomainIcon cluster={cluster} size={36} />
         </View>
@@ -180,10 +178,11 @@ function DomainBody({
           </Text>
           {domain.description ? (
             <>
-              <Text style={[styles.heroDescLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>What this domain is and what people do</Text>
+              <Text style={[styles.heroDescLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>What this field is about</Text>
               <Text style={[styles.heroDesc, { color: colors.textRole.secondary }]}>
                 {domain.description}
               </Text>
+              {domain.descriptionSources?.map((source) => <ExternalLinkGuard key={`${source.title}:${source.locator}`} url={source.url} label={source.shortLabel || source.title} description={`This opens the source used to explain ${domain.name}.`} textStyle={[styles.heroDesc, { color: colors.accentRole.action }]} />)}
             </>
           ) : null}
           <View style={styles.heroChips}>
@@ -197,25 +196,111 @@ function DomainBody({
             ) : null}
           </View>
         </View>
-      </View> : null}
+      </View>
 
-      {activeSection === "overview" && matchType ? (
+      <TextTabs
+        value={domainTab}
+        onChange={setDomainTab}
+        tabs={[
+          { value: "overview" as const, label: "Overview" },
+          { value: "build" as const, label: "Build" },
+        ]}
+      />
+
+      {domainTab === "build" ? (
+        <View style={[styles.buildEntry, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+          <SectionLabel>What can you build in this field?</SectionLabel>
+          <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>Build is a separate product for exploring projects, services and ventures connected to this domain. Your domain guidance stays unchanged while you explore it.</Text>
+          <TouchableOpacity onPress={() => exploreNav.entrepreneurship(router, { ...guidanceContext, domainId: domainKey })} style={[styles.buildButton, { borderColor: colors.accentRole.action }]}>
+            <Text style={[styles.buildButtonText, { color: colors.accentRole.action }]}>Open Build in this domain</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+      <>
+
+      {programmeConnection ? (
         <View style={[styles.connectionNote, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
-          <SectionLabel>Why this domain is in your route</SectionLabel>
+          <SectionLabel>{`Why ${domain.name} is connected to ${programmeConnection.programmeName}`}</SectionLabel>
           <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>
-            {matchType === "direct"
-              ? "This is a direct connection: your programme teaches knowledge that is closely related to this domain."
-              : matchType === "functional"
-                ? "This is a functional connection: some of what your programme teaches can be applied here, but the work is different."
-              : matchType === "adjacent"
-                  ? "This is a possible direction outside your programme. Review this domain to see what further learning may be needed."
-                  : "This domain is available in the wider career catalogue. Review its foundation before deciding whether it belongs in your route."}
+            {programmeConnection.explanation}
           </Text>
+          {programmeConnection?.courseAnchors?.length ? (
+            <View style={styles.connectionEvidence}>
+              <Text style={[styles.orientationHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Course evidence for this connection</Text>
+              {programmeConnection.courseAnchors.slice(0, 4).map((anchor) => (
+                <Text key={`${anchor.code ?? "course"}-${anchor.title}`} style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>
+                  {anchor.title}
+                </Text>
+              ))}
+              {programmeConnection.courseAnchors.length > 4 ? <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>More supporting curriculum is recorded for this connection.</Text> : null}
+            </View>
+          ) : null}
+          {programmeConnection?.curriculumOutcomes?.length ? (
+            <View style={styles.connectionEvidence}>
+              <Text style={[styles.orientationHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Already covered for this field</Text>
+              {programmeConnection.curriculumOutcomes.map((outcome, index) => (
+                <View key={outcome.outcomeId ?? `${outcome.courseCode ?? outcome.courseTitle ?? "outcome"}-${index}`} style={styles.orientationPart}>
+                  {outcome.courseTitle ? <Text style={[refinedStyles.meta, { color: colors.textRole.muted }]}>{outcome.courseTitle}</Text> : null}
+                  <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>{outcome.studentText}</Text>
+                </View>
+              ))}
+            </View>
+          ) : programmeConnection?.transferableEvidence?.length ? (
+            <View style={styles.connectionEvidence}>
+              <Text style={[styles.orientationHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Programme evidence for this field</Text>
+              {programmeConnection.transferableEvidence.slice(0, 4).map((item) => (
+                <Text key={item} style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>{item}</Text>
+              ))}
+            </View>
+          ) : null}
+          {programmeConnection?.reviewRequired || programmeConnection?.sourceReviewRequired ? (
+            <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>This connection is marked for review in the mapping evidence, so use it as a route to inspect rather than a confirmed equivalence.</Text>
+          ) : null}
+        </View>
+      ) : null}
+
+      {domain.studentOrientation ? (
+        <View style={[styles.orientationBlock, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
+          <SectionLabel>Understand this field first</SectionLabel>
+          {domain.studentOrientation.whatItStudies ? (
+            <View style={styles.orientationPart}>
+              <Text style={[styles.orientationHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What it studies</Text>
+              <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>{domain.studentOrientation.whatItStudies}</Text>
+            </View>
+          ) : null}
+          {domain.studentOrientation.whatPeopleDo ? (
+            <View style={styles.orientationPart}>
+              <Text style={[styles.orientationHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What people do</Text>
+              <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>{domain.studentOrientation.whatPeopleDo}</Text>
+            </View>
+          ) : null}
+          {domain.studentOrientation.questions?.length ? (
+            <View style={styles.orientationPart}>
+              <Text style={[styles.orientationHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Questions this field asks</Text>
+              <View style={styles.orientationList}>
+                {domain.studentOrientation.questions.map((question) => (
+                  <Text key={question} style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>• {question}</Text>
+                ))}
+              </View>
+            </View>
+          ) : null}
+          {domain.studentOrientation.whereProgrammeFits ? (
+            <View style={styles.orientationPart}>
+              <Text style={[styles.orientationHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Where your programme fits</Text>
+              <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>{domain.studentOrientation.whereProgrammeFits}</Text>
+            </View>
+          ) : null}
+          {domain.studentOrientation.relatedProgrammes?.length ? (
+            <View style={styles.orientationPart}>
+              <Text style={[styles.orientationHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Related programmes</Text>
+              <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>{domain.studentOrientation.relatedProgrammes.join(" • ")}</Text>
+            </View>
+          ) : null}
         </View>
       ) : null}
 
       {/* Wayfinding — this domain's place on the journey */}
-      {activeSection === "overview" ? <RouteLine
+      <RouteLine
         variant="spine"
         stations={[
           { state: "you", label: "Foundations" },
@@ -223,17 +308,17 @@ function DomainBody({
           { state: "target", label: `${roleCount || ""} roles`.trim() },
         ]}
         edges={["solid", "dashed"]}
-      /> : null}
+      />
 
-      {activeSection === "overview" ? <View style={[styles.connectionNote, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+      <View style={[styles.connectionNote, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
         <SectionLabel>How this domain is organised</SectionLabel>
         <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>
           Start with the domain overview, then choose an area of work. The {subgroups.length || "available"} area{subgroups.length === 1 ? "" : "s"} below divide this broad field into more focused kinds of work, so you can understand an area before choosing a role.
         </Text>
         <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>Roles belong inside an area because the same broad domain can lead to very different kinds of work. Open an area when you are ready to compare its capabilities, tools, resources and roles.</Text>
-      </View> : null}
+      </View>
 
-      {activeSection === "overview" ? <View style={styles.statsRow}>
+      <View style={styles.statsRow}>
         <View style={[styles.statCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
           <Text style={[styles.statValue, { color: colors.textRole.primary }]}>{subgroups.length}</Text>
           <Text style={[styles.statLabel, { color: colors.textRole.muted }]}>areas of work</Text>
@@ -242,59 +327,36 @@ function DomainBody({
           <Text style={[styles.statValue, { color: colors.textRole.primary }]}>{roleCount}</Text>
           <Text style={[styles.statLabel, { color: colors.textRole.muted }]}>roles organised inside them</Text>
         </View>
-      </View> : null}
-
-      {/* Domain-owned build surface. This is separate from programme skills:
-          it answers what someone can create or develop within this domain. */}
-      {activeSection === "build" ? <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
-        <View style={{ gap: Spacing.sm }}>
-          <SectionLabel>What can you build in this domain?</SectionLabel>
-          <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>
-            Explore source-backed build and entrepreneurship guidance for this domain.
-          </Text>
-          {domain.domainBridgeSkills?.length ? (
-            <View style={styles.bridgeList}>
-              <Text style={[styles.bridgeLabel, { color: colors.textRole.muted }]}>Domain foundations</Text>
-              <View style={styles.bridgeChips}>
-                {domain.domainBridgeSkills.map((item) => (
-                  <View key={item.name} style={[styles.bridgeChip, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
-                    <Text style={[styles.bridgeChipText, { color: colors.textRole.secondary }]}>{item.name}</Text>
-                  </View>
-                ))}
-              </View>
-            </View>
-          ) : null}
-          <TouchableOpacity
-            onPress={() => exploreNav.entrepreneurship(router, { ...guidanceContext, domainId: domainKey })}
-            style={[styles.buildButton, { borderColor: colors.accentRole.action }]}
-          >
-            <Text style={[styles.buildButtonText, { color: colors.accentRole.action }]}>Open Build / Entrepreneurship</Text>
-          </TouchableOpacity>
-        </View>
-      </View> : null}
+      </View>
 
       {/* Foundation skills */}
-      {activeSection === "prepare" ? <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
+      <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
         <FoundationSkillsBlock
           skills={domain.foundationSkills ?? []}
+          resources={domain.resources}
+          contextItems={domain.contextItems}
           title="Start here: foundation skills"
+          learningFocus
+          targetStudentId={targetStudentId}
         />
-        <ContextualItemList items={domain.contextItems} title="What each skill, tool and certification does in this domain" />
+        <ContextualItemList items={domain.contextItems} resources={domain.resources} title="What each skill, tool and certification does in this domain" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} learningFocus targetStudentId={targetStudentId} />
         <ToolGroupsBlock
           tools={domain.tools}
+          resources={domain.resources}
           title="Tools you may use"
+          contextItems={domain.contextItems}
+          contextLevel="domain"
+          learningFocus
+          targetStudentId={targetStudentId}
           commonLabel="Useful throughout this domain"
           distinctiveLabel="Used in particular areas"
           explanation="These tools support work across the domain. The area you choose later will show which ones matter most there."
         />
-        {(domain.gatewayCertifications?.length || domain.roleHintCertifications?.length) ? <View style={{ gap: Spacing.sm }}>
+        <View style={{ gap: Spacing.sm }}>
           <SectionLabel>Credentials to understand</SectionLabel>
-          <CertPlacementList gateway={domain.gatewayCertifications} roleHint={domain.roleHintCertifications} />
-        </View> : null}
-        {domain.resources?.length ? <LearningResourcesBlock resources={domain.resources} /> : null}
-        <GuidanceEvidenceBlock evidence={domain.guidanceEvidence} />
-        <NigerianContextBlock context={domain.nigerianContext} level="domain" />
-      </View> : null}
+          <CertPlacementList gateway={domain.gatewayCertifications} roleHint={domain.roleHintCertifications} contextItems={domain.contextItems} contextLevel="domain" learningFocus targetStudentId={targetStudentId} />
+        </View>
+      </View>
 
       {/* Per-edge mapping feedback */}
       <MappingFeedbackButton
@@ -308,11 +370,12 @@ function DomainBody({
 
       {/* The domain page stops at subgroups. Roles appear after a subgroup is
           selected in the guided route, rather than beside the domain itself. */}
-      {activeSection === "areas" ? <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
+      <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
         <View style={{ gap: Spacing.sm }}>
           {subgroups.length ? <>
-            <SectionLabel>Areas of work in this domain</SectionLabel>
+            <SectionLabel>Explore areas within this field</SectionLabel>
             <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>Choose an area first. Its page will then show the capabilities, tools and roles that belong to that part of the domain.</Text>
+            <View style={styles.subgroupGrid}>
             {visibleSubgroups.map((sg) => (
              <TouchableOpacity
               key={sg.id}
@@ -326,94 +389,244 @@ function DomainBody({
               <Text style={[styles.linkText, { color: colors.accentRole.action }]}>Explore this area and its roles →</Text>
             </TouchableOpacity>
             ))}
+            </View>
             {subgroups.length > 6 ? <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: subgroupsExpanded }} onPress={() => setSubgroupsExpanded((value) => !value)} style={[styles.moreButton, { borderColor: colors.borderRole.subtle }]}><Text style={[styles.moreButtonText, { color: colors.accentRole.action }]}>{subgroupsExpanded ? "Show fewer areas" : `See all ${subgroups.length} areas`}</Text></TouchableOpacity> : null}
           </> : <View style={[styles.emptySubgroups, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
             <SectionLabel>No areas published yet</SectionLabel>
             <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>This domain does not currently have a supported area mapping yet.</Text>
           </View>}
         </View>
-      </View> : null}
+      </View>
 
       {/* Notes stay in Career Intelligence; learning actions belong in My World. */}
-      {activeSection === "overview" ? <NotesWidget entityType="domain" entityId={domainKey} /> : null}
+      <NotesWidget entityType="domain" entityId={domainKey} />
+
+      </>
+      )}
 
     </>
   );
 
-  // Desktop layout: section nav on left, content on right
-  if (isDesktop) {
+  // The guidance page is intentionally one narrative flow. The cards below
+  // are the page's progressive sections; hierarchy is navigated by the cards,
+  // not by switching between disconnected tabs.
+  return <View style={{ gap: Spacing.lg }}>{content}</View>;
+}
+
+function OrientationEvidenceLinks({
+  orientation,
+  field,
+  colors,
+}: {
+  orientation?: DomainStudentOrientation;
+  field: string;
+  colors: ReturnType<typeof useTheme>["colors"];
+}) {
+  const sources = orientation?.evidenceByField?.[field] ?? [];
+  if (!sources.length) return null;
+  return (
+    <View style={{ flexDirection: "row", flexWrap: "wrap", gap: Spacing.xs }}>
+      {sources.map((source) => (
+        <ExternalLinkGuard
+          key={`${source.title}:${source.locator}`}
+          url={source.url}
+          label={source.shortLabel || source.title}
+          description={`${source.title}; ${source.locator}`}
+          textStyle={{ color: colors.accentRole.action, fontSize: FontSize.xs }}
+        />
+      ))}
+    </View>
+  );
+}
+
+function DomainBody({
+  domain,
+  domainKey,
+  targetStudentId,
+  guidanceContext,
+  focusedGuidance,
+}: {
+  domain: DomainV2;
+  domainKey: string;
+  targetStudentId?: string;
+  focusedGuidance: boolean;
+  guidanceContext: GuidanceRouteContext;
+  scrollRef: React.RefObject<ScrollView | null>;
+}) {
+  const { colors } = useTheme();
+  const router = useRouter();
+  const exploreNav = useExploreNav();
+  const [tab, setTab] = useState<"overview" | "build">("overview");
+  const subgroups = domain.subgroups ?? [];
+  const connection = domain.programmeConnection;
+  const studentConnection = connection && !connection.reviewRequired && !connection.sourceReviewRequired
+    ? connection
+    : null;
+  const orientation = domain.studentOrientation;
+  const domainItems = (domain.contextItems ?? []).filter((item) =>
+    item.contextLevel === "domain"
+    && item.guidanceOwner === "domain"
+    && item.dataState === "source_backed"
+    && item.sourceConfidence !== "unsourced"
+    && item.linkState !== "review_required",
+  );
+  const domainResources = (domain.resources ?? []).filter((resource) =>
+    isStudentResource(resource, "domain"),
+  );
+  // A route parameter is navigation context, not mapping evidence. If the
+  // approved programme connection is absent, do not turn a stale or review-
+  // only URL value into a relationship label.
+  const relationship = studentConnection?.relationship;
+  const orientationResources = domainResources.filter((resource) => resource.resourceType === "domain_overview");
+  const relationshipLabel = relationship === "direct"
+    ? "Primary connection"
+    : relationship === "functional"
+      ? "Related application"
+      : relationship === "adjacent"
+        ? "Nearby direction"
+        : "Connected field";
+
+  if (tab === "build") {
     return (
-      <View style={styles.desktopRow}>
-        <View style={styles.navColumn}>
-          <View style={[styles.navSticky, { borderColor: colors.borderRole.subtle, position: "sticky" as any, top: 0 }]}>
-            <Text style={[styles.navTitle, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
-              On this page
-            </Text>
-            {SECTIONS.map((s) => (
-              <TouchableOpacity
-                key={s.key}
-               onPress={() => setActiveSection(s.key)}
-                style={[
-                  styles.navItem,
-                  activeSection === s.key && { backgroundColor: colors.surface.subtle },
-                ]}
-                activeOpacity={0.6}
-              >
-                <View
-                  style={[
-                    styles.navDot,
-                    {
-                      backgroundColor:
-                        activeSection === s.key ? colors.accentRole.action : colors.borderRole.subtle,
-                    },
-                  ]}
-                />
-                <Text
-                  style={[
-                    styles.navLabel,
-                    { color: activeSection === s.key ? colors.textRole.primary : colors.textRole.secondary },
-                    CompassFonts.bodyMedium,
-                  ]}
-                  numberOfLines={1}
-                >
-                  {s.label}
-                </Text>
-              </TouchableOpacity>
-            ))}
+      <View style={refinedStyles.page}>
+        <TextTabs value={tab} onChange={setTab} tabs={[{ value: "overview", label: "Overview" }, { value: "build", label: "Build in this domain" }]} />
+        <View style={[refinedStyles.tabIntro, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+          <Feather name="briefcase" size={22} color={colors.accentRole.action} />
+          <View style={refinedStyles.copyBlock}>
+            <Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What can you build in {domain.name}?</Text>
+            <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>This is a separate Build space for projects, services and ventures connected to this field. It is not a list of courses or a promise that one idea will work.</Text>
+            <TouchableOpacity accessibilityRole="button" onPress={() => exploreNav.entrepreneurship(router, { ...guidanceContext, domainId: domainKey })} style={[refinedStyles.action, { borderColor: colors.accentRole.action }]}>
+              <Feather name="arrow-up-right" size={15} color={colors.accentRole.action} />
+              <Text style={[refinedStyles.actionText, { color: colors.accentRole.action }]}>Open Build in this domain</Text>
+            </TouchableOpacity>
           </View>
         </View>
-        <ScrollView
-           ref={desktopScrollRef}
-          style={styles.mainScroll}
-          showsVerticalScrollIndicator={false}
-          scrollEventThrottle={16}
-        >
-          <View style={{ gap: Spacing.lg }}>
-            {content}
-          </View>
-        </ScrollView>
       </View>
     );
   }
 
-  // Mobile / tablet: single column
   return (
-    <View style={{ gap: Spacing.lg }}>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.mobileSectionNav}>
-        {SECTIONS.map((s) => (
-          <TouchableOpacity
-            key={s.key}
-            onPress={() => setActiveSection(s.key)}
-            style={[styles.mobileSectionTab, { borderColor: activeSection === s.key ? colors.accentRole.action : colors.borderRole.subtle, backgroundColor: activeSection === s.key ? colors.surface.subtle : colors.surface.raised }]}
-          >
-            <Text style={[styles.navLabel, { color: activeSection === s.key ? colors.textRole.primary : colors.textRole.secondary }, CompassFonts.bodyMedium]}>{s.label}</Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-      {content}
+    <View style={refinedStyles.page}>
+      <View style={[refinedStyles.hero, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
+        <View style={[refinedStyles.iconBox, { backgroundColor: getClusterColor(domain.cluster ?? "") + "18" }]}>
+          <DomainIcon cluster={domain.cluster ?? domain.clusters?.[0]} size={30} />
+        </View>
+        <View style={refinedStyles.copyBlock}>
+          {domain.cluster ? <Text style={[refinedStyles.eyebrow, { color: colors.textRole.muted }]}>{domain.cluster}</Text> : null}
+          <Text style={[refinedStyles.heroTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{formatCareerLabel(domain.name)}</Text>
+          <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{studentSummary({ shortIntro: orientation?.shortIntro, whatPeopleDo: orientation?.whatPeopleDo, whatItStudies: orientation?.whatItStudies, description: domain.description, fallback: "A reviewed plain-language explanation of this field is not available yet." })}</Text>
+          {domain.descriptionSources?.map((source) => <ExternalLinkGuard key={`${source.title}:${source.locator}`} url={source.url} label={source.shortLabel || source.title} description={`This opens the source used to explain ${domain.name}.`} textStyle={[refinedStyles.meta, { color: colors.accentRole.action }]} />)}
+        </View>
+      </View>
+
+      <TextTabs value={tab} onChange={setTab} tabs={[{ value: "overview", label: "Overview" }, { value: "build", label: "Build in this domain" }]} />
+
+      {studentConnection ? (
+        <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+          <View style={refinedStyles.cardHeading}>
+            <Feather name="link" size={17} color={colors.accentRole.action} />
+            <Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Why {domain.name} is connected to {studentConnection.programmeName}</Text>
+          </View>
+          <Text style={[refinedStyles.badge, { color: colors.accentRole.action }]}>{relationshipLabel}</Text>
+          <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{studentConnection.explanation}</Text>
+          {studentConnection.courseAnchors?.length ? <Text style={[refinedStyles.meta, { color: colors.textRole.muted }]}>This connection includes learning from {studentConnection.courseAnchors.slice(0, 3).map((item) => item.title).join(", ")}.</Text> : null}
+        </View>
+      ) : connection ? (
+        <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+          <View style={refinedStyles.cardHeading}><Feather name="info" size={17} color={colors.textRole.muted} /><Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Programme connection not available yet</Text></View>
+          <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>We do not have enough verified information to explain this programme-to-field connection safely.</Text>
+        </View>
+      ) : null}
+
+      <GuidanceContinuation
+        programmeName={studentConnection?.programmeName}
+        connection={studentConnection}
+        domainName={domain.name}
+        domainFoundation={domain.foundationSkills}
+        domainItems={domainItems}
+      />
+
+      <View style={[refinedStyles.card, refinedStyles.orientationCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
+        <View style={refinedStyles.cardHeading}>
+          <Feather name="compass" size={17} color={colors.accentRole.action} />
+          <View style={refinedStyles.copyBlock}>
+            <Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Understand {domain.name} before choosing an area</Text>
+            <Text style={[refinedStyles.meta, { color: colors.textRole.muted }]}>This explanation uses the reviewed programme and field information.</Text>
+          </View>
+        </View>
+        {orientation?.whatItStudies ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>What this field studies</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.whatItStudies}</Text><OrientationEvidenceLinks orientation={orientation} field="whatItStudies" colors={colors} /></View> : null}
+        {orientation?.whatPeopleDo ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>What people in it do</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.whatPeopleDo}</Text><OrientationEvidenceLinks orientation={orientation} field="whatPeopleDo" colors={colors} /></View> : null}
+        {orientation?.questions?.length ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Questions this field helps answer</Text><View style={refinedStyles.infoGrid}>{orientation.questions.map((question) => <View key={question} style={[refinedStyles.infoCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><Feather name="help-circle" size={15} color={colors.accentRole.action} /><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{question}</Text></View>)}</View><OrientationEvidenceLinks orientation={orientation} field="questions" colors={colors} /></View> : null}
+        {orientation?.outputs?.length ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>What the work can produce</Text><View style={refinedStyles.infoGrid}>{orientation.outputs.map((output) => <View key={output} style={[refinedStyles.infoCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><Feather name="file-text" size={15} color={colors.accentRole.action} /><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{output}</Text></View>)}</View><OrientationEvidenceLinks orientation={orientation} field="outputs" colors={colors} /></View> : null}
+        {orientation?.howWorkHappens?.length ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>How the work can happen</Text><View style={refinedStyles.steps}>{orientation.howWorkHappens.map((step, index) => <View key={step} style={refinedStyles.step}><View style={[refinedStyles.stepNumber, { backgroundColor: colors.accentRole.action }]}><Text style={refinedStyles.stepNumberText}>{index + 1}</Text></View><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{step}</Text></View>)}</View><OrientationEvidenceLinks orientation={orientation} field="howWorkHappens" colors={colors} /></View> : null}
+        {orientation?.whereProgrammeFits ? <View style={[refinedStyles.subsection, refinedStyles.highlight]}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Where your programme fits</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.whereProgrammeFits}</Text><OrientationEvidenceLinks orientation={orientation} field="whereProgrammeFits" colors={colors} /></View> : null}
+        {orientation?.globalContext ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Global context</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.globalContext}</Text><OrientationEvidenceLinks orientation={orientation} field="globalContext" colors={colors} /></View> : null}
+        {orientation?.nigerianContext ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Nigerian context</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.nigerianContext}</Text><OrientationEvidenceLinks orientation={orientation} field="nigerianContext" colors={colors} /></View> : null}
+        {orientation?.entryExpectations ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Common ways people enter this field</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.entryExpectations}</Text><OrientationEvidenceLinks orientation={orientation} field="entryExpectations" colors={colors} /></View> : null}
+        {orientation?.opportunitiesAndConstraints ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Opportunities and constraints</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.opportunitiesAndConstraints}</Text><OrientationEvidenceLinks orientation={orientation} field="opportunitiesAndConstraints" colors={colors} /></View> : null}
+         {orientation?.sourceNote ? <Text style={[refinedStyles.meta, { color: colors.textRole.muted }]}>Reference basis: {orientation.sourceNote}</Text> : null}
+      </View>
+
+      {orientationResources.length ? <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}><LearningResourcesBlock resources={orientationResources} title={`Read more about ${domain.name}`} /></View> : null}
+
+      <View style={refinedStyles.sectionHeading}>
+         <View style={refinedStyles.cardHeading}><Feather name="layers" size={17} color={colors.accentRole.action} /><Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Domain foundation</Text></View>
+         <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>These field-owned foundations continue from the connected programme and come before a focused area. They are shared starting points, not a complete qualification for every area or role; each focused area adds its own learning.</Text>
+      </View>
+      <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
+         <FoundationSkillsBlock skills={domain.foundationSkills ?? []} resources={domainResources} contextItems={domainItems} title="What to build first" learningFocus targetStudentId={targetStudentId} />
+      </View>
+      <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
+        <ContextualItemList items={domainItems} itemTypes={["skill", "competency"]} resources={domainResources} contextLevel="domain" excludeNames={(domain.foundationSkills ?? []).map((item) => item.skill)} title="Skills and competencies added in this field" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} learningFocus targetStudentId={targetStudentId} />
+      </View>
+      <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
+        <ToolGroupsBlock tools={domain.tools} resources={domainResources} contextItems={domainItems} contextLevel="domain" title="Tools by purpose" commonLabel="Useful across this field" distinctiveLabel="More specialised in this field" explanation="Choose the kind of work first. These are source-backed options, not a requirement to learn every tool." learningFocus targetStudentId={targetStudentId} />
+      </View>
+      <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
+        <SectionLabel>Qualifications and professional routes</SectionLabel>
+        <CertPlacementList gateway={domain.gatewayCertifications} roleHint={domain.roleHintCertifications} contextItems={domainItems} resources={domainResources} contextLevel="domain" learningFocus targetStudentId={targetStudentId} />
+      </View>
+
+      <View style={refinedStyles.sectionHeading}>
+        <View style={refinedStyles.cardHeading}><Feather name="grid" size={17} color={colors.accentRole.action} /><Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Choose a focused area</Text></View>
+        <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>Each area keeps the field foundation and adds a more specific way to study or work. Roles appear inside the area, not on this domain page.</Text>
+      </View>
+      {subgroups.length ? <View style={refinedStyles.grid}>{subgroups.map((subgroup) => <TouchableOpacity key={subgroup.id} accessibilityRole="button" onPress={() => exploreNav.subgroup(router, domainKey, subgroup.id, guidanceContext)} style={[refinedStyles.tile, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}><Feather name="grid" size={20} color={colors.accentRole.action} /><Text style={[refinedStyles.tileTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{formatCareerLabel(subgroup.name)}</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{studentSummary({ shortIntro: subgroup.studentOrientation?.shortIntro, whatPeopleDo: subgroup.studentOrientation?.whatPeopleDo || subgroup.whatPeopleDo, whatItStudies: subgroup.studentOrientation?.whatItStudies, description: subgroup.description, fallback: "A plain-language explanation of this focused area is not available yet." })}</Text><Text style={[refinedStyles.meta, { color: colors.textRole.muted }]}>{subgroup.roleCount ?? 0} {(subgroup.roleCount ?? 0) === 1 ? "role" : "roles"} in this area</Text><Text style={[refinedStyles.actionText, { color: colors.accentRole.action }]}>Explore area →</Text></TouchableOpacity>)}</View> : <Text style={[refinedStyles.copy, { color: colors.textRole.muted }]}>No reviewed areas are available yet.</Text>}
     </View>
   );
 }
+
+const refinedStyles = StyleSheet.create({
+  page: { gap: Spacing.lg, paddingBottom: Spacing.xxl },
+  hero: { flexDirection: "row", gap: Spacing.md, borderWidth: 1, borderRadius: Radius.lg, padding: Spacing.lg },
+  iconBox: { width: 54, height: 54, borderRadius: Radius.md, alignItems: "center", justifyContent: "center" },
+  heroTitle: { fontSize: FontSize.xxl, lineHeight: FontSize.xxl * 1.12 },
+  eyebrow: { fontSize: FontSize.xs, letterSpacing: 0.8, textTransform: "uppercase" },
+  copyBlock: { flex: 1, gap: Spacing.xs },
+  card: { borderWidth: 1, borderRadius: Radius.lg, padding: Spacing.lg, gap: Spacing.sm },
+  orientationCard: { gap: Spacing.md },
+  cardHeading: { flexDirection: "row", alignItems: "center", gap: Spacing.sm },
+  cardTitle: { fontSize: FontSize.md, lineHeight: FontSize.md * 1.3, flex: 1 },
+  copy: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.55 },
+  meta: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.45 },
+  badge: { fontSize: FontSize.xs, fontWeight: "800", textTransform: "uppercase", letterSpacing: 0.6 },
+  subsection: { gap: Spacing.xs, paddingTop: Spacing.sm },
+  subheading: { fontSize: FontSize.sm, ...CompassFonts.bodySemibold },
+  infoGrid: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
+  infoCard: { flex: 1, minWidth: 220, flexDirection: "row", alignItems: "flex-start", gap: Spacing.sm, borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md },
+  steps: { gap: Spacing.sm },
+  step: { flexDirection: "row", alignItems: "flex-start", gap: Spacing.sm },
+  stepNumber: { width: 24, height: 24, borderRadius: Radius.full, alignItems: "center", justifyContent: "center" },
+  stepNumberText: { color: "#FFFFFF", fontSize: FontSize.xs, fontWeight: "800" },
+  highlight: { borderLeftWidth: 3, paddingLeft: Spacing.md },
+  sectionHeading: { gap: Spacing.sm },
+  grid: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
+  tile: { flex: 1, minWidth: 250, borderWidth: 1, borderRadius: Radius.lg, padding: Spacing.md, gap: Spacing.sm },
+  tileTitle: { fontSize: FontSize.md },
+  action: { alignSelf: "flex-start", flexDirection: "row", alignItems: "center", gap: Spacing.xs, borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, marginTop: Spacing.xs },
+  actionText: { fontSize: FontSize.sm, ...CompassFonts.bodySemibold },
+  tabIntro: { flexDirection: "row", gap: Spacing.md, borderWidth: 1, borderRadius: Radius.lg, padding: Spacing.lg },
+});
 
 export default DomainDetailScreen;
 
@@ -493,12 +706,31 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth,
     paddingTop: Spacing.lg,
   },
+  buildEntry: {
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.md,
+    padding: Spacing.md,
+    gap: Spacing.sm,
+  },
   connectionNote: {
     gap: Spacing.sm,
     borderWidth: StyleSheet.hairlineWidth,
     borderRadius: Radius.lg,
     padding: Spacing.md,
   },
+  connectionEvidence: {
+    gap: Spacing.xs,
+    paddingTop: Spacing.xs,
+  },
+  orientationBlock: {
+    borderWidth: 1,
+    borderRadius: Radius.lg,
+    padding: Spacing.lg,
+    gap: Spacing.md,
+  },
+  orientationPart: { gap: Spacing.xs },
+  orientationHeading: { fontSize: FontSize.sm },
+  orientationList: { gap: Spacing.xs },
   statsRow: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
   statCard: { flex: 1, minWidth: 150, gap: 2, borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.md, padding: Spacing.md },
   statValue: { fontSize: FontSize.xl, fontWeight: "800" },
@@ -522,7 +754,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: Radius.lg,
     padding: Spacing.md,
+    flex: 1,
+    minWidth: 250,
   },
+  subgroupGrid: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
   subgroupTitle: { fontSize: FontSize.md },
   subgroupMeta: { fontSize: FontSize.xs },
   linkText: { fontSize: FontSize.sm, fontWeight: "800", marginTop: Spacing.xs },
