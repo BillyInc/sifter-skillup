@@ -1,0 +1,39 @@
+# Reverse CCMAS component crosswalk — adjudication checkpoint 005
+
+Access date: 2026-09-25  
+Ledger slice: entries 041–050 of `unreferenced_ccmas_component_crosswalk_2026-09-25.jsonl`  
+Scope: Education CCMAS components cross-checked to exact JAMB Education-table contexts and official NUC course/outcome evidence. Earlier checkpoints remain unchanged.  
+Disposition: 5 confirmed programme-level matches; 5 unresolved candidates; 0 no-support conclusions.
+
+## Decisions
+
+| # | CCMAS component | JAMB offering-context evidence | CCMAS course/outcome check and decision |
+|---|---|---|---|
+| 041 | Education — Entrepreneurship Education (ACC; 34 courses) | No exact JAMB Entrepreneurship Education institution row established. Entrepreneurship, Digital Entrepreneurship, and Business Education are leads only. | The CCMAS component ledger uses programme code `ACC` and includes `ACC111 Principles of Accounting/Book Keeping` plus management/office courses. That may be intentional supporting content or a component/source-code collision; the full official section must resolve it before treating these 34 rows as the Entrepreneurship Education curriculum. **Candidate requiring source evidence; data-integrity concern recorded.** |
+| 042 | Education — Environmental Education (EMT; 24) | JAMB Education index lists Environmental Education, but the exact university-awarder row for this component was not verified. Environmental Management, Environmental Biology and Environmental Standards are not substitutes. | The component includes explicit Environmental Education/Method courses (EED) together with chemistry, microbiology and environmental subject matter. This is a plausible education curriculum, but official programme-specific outcomes and JAMB awarder context need an item-level replay. **Candidate requiring source evidence.** |
+| 043 | Education — French (FRE; 30) | JAMB Education, printed p. 252: exact `EDUCATION AND FRENCH` row with awarding-institution list including AAU, ADEYEMIDEG, AGBORCOE, AOCOE, BAYERO, BENIN, CALABAR and DELSU. This is distinct from standalone French, French/German and French/Russian. | NUC Education CCMAS French is a B.A. (Ed) subject programme; FRE 109 covers Nigeria’s Francophone neighbours and FRE 110 French-language history, alongside language/grammar/literature courses. **Confirmed match** — exact education-and-French JAMB context with French subject scope. |
+| 044 | Education — Geography (GEO; 31) | JAMB Education index lists `Education/Geography` and Geography/Environmental Management variants, but the exact awarder row for the NUC Geography Education component was not verified. JAMB Geography in other faculties remains a separate identity. | NUC GEO 101–105 cover physical/human geography and field studies. This confirms geography content, not the precise Education degree context. **Candidate requiring source evidence.** |
+| 045 | Education — Guidance and Counselling (GCE; 30) | JAMB Education table includes `EDUCATIONAL/PSYCHOLOGY GUIDANCE AND COUNSELLING` (PHC and IMSU) and Education-foundation/administration contexts with Guidance and Counselling options. | NUC GCE 101–103 introduce guidance/counselling and psychology; GCE 202/203 cover adolescent psychology and special-needs counselling. **Confirmed match** — named JAMB education pathway and direct counselling course/outcome scope. Keep programme-option contexts separate. |
+| 046 | Education — Hausa (HED; 15) | JAMB Education, printed p. 325: exact `EDUCATION AND HAUSA` row, institutions include ABU, AL-QALAM, ARGUNGU-DEG, BAYERO, COEA, EDGUMEL, EDGUSAU(T), EDZAR and others. Distinct from standalone Hausa in Arts. | NUC HED 201 (Hausa language method), HED 301 (Hausa reading/research methods) and HED 401 (applied linguistics in Hausa) explicitly combine language mastery and teaching. **Confirmed match** — exact teacher-education context and course-specific evidence. |
+| 047 | Education — Health Education (EHE; 40) | JAMB Education table has the `HEALTH EDUCATION` course context and names awarding institutions/requirements; the separate `HUMAN KINETICS AND HEALTH EDUCATION` row is not silently substituted. | NUC EHE 111 is Introduction to Health Education; EHE 113 addresses personal health/dental education; EHE 114 environmental health and EHE 120 community health. **Confirmed match** — exact programme and direct health-education scope. |
+| 048 | Education — History (HIS; 32) | JAMB Education index lists `Education/History`; no exact awarding-institution row for this NUC History Education component was established in the checked table. Standalone History, History/International Relations and History/Diplomacy remain separate offerings. | NUC HIS 101–105 cover history as a discipline, West African history and world civilizations. This validates history curriculum but not the exact JAMB Education awarder context. **Candidate requiring source evidence.** |
+| 049 | Education — Human Kinetics/Physical Education (EDU; 12) | JAMB has a `HUMAN KINETICS AND HEALTH EDUCATION` row, not an exact standalone `Human Kinetics/Physical Education` identity. | The CCMAS component ledger contains only generic EDU teaching/curriculum records in its reviewed items, with no clearly identified subject-specific Human Kinetics/Physical Education course sequence. **Candidate requiring source evidence** — do not infer equivalence from the neighboring combined JAMB programme. |
+| 050 | Education — Igbo (IGB; 29) | JAMB Education, printed p. 256: exact `EDUCATION AND IGBO` row with institutions COOU, IMSU, ESCOE, LAGOS, LASUED, NSUGBE, PCE-DEG, UNIZIK and UNN. Separate `EDUCATION, IGBO AND LINGUISTICS` is a combined context. | NUC Education CCMAS IGB 101/103/104 covers the Igbo people, comprehension and orthography; language and linguistics coursework supports the subject programme. **Confirmed match** — exact education-and-Igbo context. Do not merge the additional Linguistics offering. |
+
+## Sources and item locators
+
+Access date: 2026-09-25. URLs point to official JAMB/NUC sources; exact course codes or brochure table headings identify the items.
+
+| Source | URL | Locator |
+|---|---|---|
+| Official JAMB Education brochure | https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-education.pdf | Education and French, printed p. 252; Education and Hausa, printed p. 325; Education and Igbo, printed p. 256; Guidance and Counselling table/option rows; Health Education and Human Kinetics and Health Education rows; Education course index for Environmental Education and Education/Geography/History. |
+| Official NUC Education CCMAS | https://www.nuc.edu.ng/wp-content/uploads/2026/03/Education-CCMAS-2023-New.pdf | Programme-specific locators ACC111; EED 211; FRE 109/110; GEO 101–105; GCE 101–103/202/203; HED 201/301/401; EHE 111/113/114/120; HIS 101–105; EDU-coded Human Kinetics record; IGB 101/103/104. Course codes and titles are from the component ledger and should be used to locate the official PDF passages. |
+| NUC official CCMAS index | https://www.nuc.edu.ng/ccmas/ | Education discipline and official source document index. |
+
+## Confirmed data-integrity follow-up
+
+The Entrepreneurship Education component’s `ACC` code/accounting course pattern requires reconciliation against the NUC Education source section and the programme/course parser before any component course is promoted as Entrepreneurship Education content. The Human Kinetics component likewise lacks a discipline-specific course sequence in the inspected ledger slice. These are source-data issues, not grounds to invent or reject a JAMB offering.
+
+The five candidates remain unresolved, not rejected. No shared canonical map, seed, SQL, UI or API was edited. Next slice begins at entry 051.
+
+Machine check: 10 entries (041–050); 5 confirmed; 5 unresolved candidates; 0 no-support conclusions.

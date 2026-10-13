@@ -1,0 +1,45 @@
+# Role → subgroup semantic audit checkpoint — 2026-10-06 run 003
+
+The full active role→subgroup path set has been scanned for this run. This checkpoint is evidence of coverage, not a claim that every conditional row is semantically resolved.
+
+- Register: `role_to_subgroup_semantic_register_2026_10_06_003.json`
+- Merged role records: **3,919**
+- Active subgroup paths: **394**
+- Active role→subgroup records audited: **2,405**
+- Deterministic exclusions: **0**
+- Supported candidates: **460**
+- Conditional/insufficient evidence: **1,945**
+
+- Domain edge cases assessed: **73**
+- Domains without visible subgroup: **73**
+- Domains without active role mapping: **17**
+- Domain route dispositions: `{"needs_role_enrichment_before_subgroup_decision": 1, "needs_supported_specialization_layer": 22, "unresolved_ownership_and_role_enrichment": 16, "unresolved_ownership_or_source_review": 34}`
+
+- Role-enrichment candidates loaded: **145** across **79** domains.
+- Role-enrichment classifications: `{"duplicate_or_overlap": 58, "evidence_backed_missing_role": 31, "no_addition_case": 35, "source_ownership_hold": 21}`
+
+Exact role-enrichment candidate keys by classification:
+- `duplicate_or_overlap`:
+D045|policy administration professional, D046|community development practitioner family, D047|agricultural research scientist, D048|food product development scientist, D048|food quality and microbiology scientist, D050|industrial control systems integrator, D055|chemical process design engineer, D055|chemical process safety engineer, D056|smart contract security auditor, D058|learning experience designer, D059|flight dynamics engineer, D061|insurance actuary, D062|quantitative investment researcher, D065|interpreter, D072|earth observation specialist, D074|occupational hygienist, D075|garment and product designer, D076|port state control officer, D076|ship surveyor, D080|graphic and multimedia designer, D080|interior designer, D080|set and scenic designer, D085|retail_buyer_merchandise_buyer, D085|retail_trade_manager_family, D092|existing_library_chef_not_active, D092|existing_library_pastry_cook_not_active, D093|existing_library_electrical_engineering_technician_not_active, D095|existing_library_motor_vehicle_body_repairer_not_active, D096|existing_library_agronomist_not_active, D096|existing_library_crop_farmer_not_active, D098|existing_library_machinist_cnc_not_active, D100|existing_library_pipefitter_not_active, D108|existing_library_print_production_manager_not_active, D109|existing_library_foundry_moulder_not_active, D109|existing_library_metallurgical_technician_not_active, D110|chemical_engineering_technician_inactive, D111|tailor_inactive, D111|textile_industrial_engineer_inactive, D113|cement_stone_mineral_plant_operator_scope_candidate, D114|packaging_line_operator_overlap, D120|aquaculture_production_manager_inactive, D121|forester_inactive, D121|logger_tree_feller_inactive, D122|biomedical_scientist_inactive, D122|blood_bank_technologist_specialization_candidate, D125|medical_secretary_inactive, D126|chiropractor_inactive, D128|generic_social_worker_inactive, D128|social_work_assistant_inactive, D128|youth_worker_inactive, D131|race_engineer_inactive, D132|spacecraft_operations_controller_family, D134|electro_technical_officer_missing, D134|marine_surveyor_task_family, D136|flight_test_engineer_missing, D143|forensic_reporting_scientist_family, D143|scene_of_crime_examiner_family, D144|meteorological_observer_function
+- `evidence_backed_missing_role`:
+D046|qualified social worker practice family, D047|agricultural extension adviser, D047|agronomist, D047|soil scientist, D048|food engineer, D048|food scientist or technologist, D048|food sensory scientist, D050|industrial automation engineer, D051|property asset and tenancy manager, D051|real estate valuation surveyor, D052|construction project manager, D052|construction site manager, D052|quantity surveyor, D053|hotel operations manager, D054|drilling engineer, D054|petroleum production engineer, D054|reservoir engineer, D055|chemical process engineer, D057|health data analyst, D058|instructional designer, D058|learning management system administrator, D059|spacecraft operations engineer, D068|prosthetist orthotist, D068|radiation therapist, D069|flight operations officer flight dispatcher, D070|musician singer composer family, D071|sport administrator, D071|sports performance analyst, D071|sports referee match official, D072|geospatial analyst, D075|textile and clothing technologist
+- `no_addition_case`:
+D064|counseling psychology specialty (not a proposed new role), D066|veterinary epidemiology specialty, D071|sports coach, D139|game_environment_artist_family, D145|neural_engineer_bci_research_candidate, D146|building_automation_controls_function, D146|building_commissioning_function, D148|offshore_surveyor_family, D148|rov_pilot_technician_family, D151|criminal_judge_magistrate_family, D151|criminal_prosecutor_family, D152|archaeologist_and_site_manager_family, D152|conservator_inactive, D152|museum_curator_inactive, D153|music_creation_and_performance_library_family, D153|recording_and_audio_production_library_family, D153|sound_design_and_postproduction_library_family, D154|sports_scientist_performance_analyst_inactive, D154|strength_and_conditioning_coach_inactive, D155|materials_characterization_and_computational_science_inactive, D156|geodesist_inactive, D156|photogrammetrist_inactive, D157|tax_advisory_and_compliance_existing_records, D157|transfer_pricing_specialist_existing_record, D158|corporate_treasurer_inactive, D158|investment_banker_inactive, D159|structured_finance_analyst_inactive, D160|fashion_stylist_and_personal_shopper_inactive, D161|humanitarian_logistics_function, D161|humanitarian_programme_and_protection_functions, D162|immigration_lawyer_and_asylum_caseworker_inactive, D163|patent_and_trademark_representative_inactive, D165|health_wellness_coach_function, D166|autonomous_vehicle_perception_sensor_fusion_candidate, D167|xr_interaction_designer_function
+- `source_ownership_hold`:
+D045|public programme evaluation professional, D049|automotive manufacturing and quality engineer, D049|automotive powertrain and electrified vehicle systems engineer, D049|automotive product design and development engineer, D049|automotive test validation and development engineer, D051|real estate development and investment analyst, D053|hospitality guest services and front office, D054|petroleum geoscience family, D057|health information systems implementation specialist, D060|bank compliance officer, D065|localization specialist, D071|sports talent scout, D075|textile garment and footwear production trades, D079|customs broker or clearing agent, D089|crematory_operator_regional_candidate, D096|existing_library_farmworker_not_active, D096|existing_library_mixed_crop_livestock_farmer_not_active, D108|existing_library_printing_engineer_not_active, D119|dairy_farmer_inactive_and_source_count_conflict, D126|naturopath_inactive, D137|medical_dosimetrist_function
+
+Exact zero-visible-subgroup domain IDs:
+D001, D002, D003, D004, D007, D016, D017, D018, D019, D020, D021, D023, D024, D030, D037, D038, D039, D040, D041, D043, D045, D049, D050, D052, D053, D054, D055, D056, D068, D071, D072, D075, D076, D079, D080, D082, D083, D084, D085, D087, D088, D089, D090, D091, D093, D094, D097, D100, D101, D104, D105, D106, D108, D109, D110, D112, D113, D114, D115, D116, D118, D119, D123, D124, D126, D132, D142, D144, D148, D153, D157, D159, D162
+
+Exact zero-active-role domain IDs:
+D037, D038, D039, D040, D045, D049, D050, D052, D053, D054, D071, D075, D076, D079, D080, D153, D157
+
+Exact unresolved ownership/source-review domain IDs:
+D003, D004, D007, D021, D023, D024, D030, D037, D038, D039, D040, D041, D043, D045, D049, D050, D052, D053, D054, D055, D056, D068, D072, D075, D076, D079, D080, D082, D083, D084, D100, D101, D104, D105, D106, D108, D109, D110, D112, D116, D124, D126, D132, D142, D144, D148, D153, D157, D159, D162
+
+
+Canonical files changed: **no**.
+
+Register SHA-256: `eafab972974cbf99df0a491dfcc638ebea14d777388af2cf81ed5695966a09c1`
+
+Next gate: resolve conditional/insufficient role→subgroup rows and role-enrichment candidates with subgroup/domain-specific task evidence, then prepare a separately reviewed canonical correction set.

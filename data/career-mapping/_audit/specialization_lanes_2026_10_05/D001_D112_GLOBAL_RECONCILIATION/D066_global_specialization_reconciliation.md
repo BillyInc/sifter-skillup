@@ -1,0 +1,44 @@
+# D066 — Veterinary Science
+
+Global specialization recommendation reconciliation (2026-10-06). This is an internal recommendation, not canonical taxonomy or external academic sign-off.
+
+- **Candidate areas:** 8
+- **Evidence URLs:** 6 unique; 0 source records screened as global/international
+- **Canonical changes / role assignments:** none / none
+- **Geographic scope:** global phase only; Nigerian-specific evidence intentionally deferred
+
+## Recommendation
+
+Replace the three mixed occupation/level buckets with eight candidate areas: Companion Animal Medicine and Surgery; Equine Medicine and Surgery; Livestock, Poultry and Aquatic Animal Health and Production; Veterinary Public Health, Food Safety and Epidemiology; Veterinary Clinical Disciplines and Diagnostics; Wildlife, Zoo and Conservation Medicine; Animal Welfare, Behaviour and Clinical Nutrition; Laboratory Animal Science and Veterinary Research. These combine recurring species/context groupings and cross-species disciplines appearing in WOAH international veterinary-education material and the RCVS specialist framework. The count is an internal synthesis, not a global accreditation taxonomy; retain cross-cutting specialties as skills/paths shared across species where appropriate.
+
+## Candidate areas and boundaries
+
+- **Companion Animal Medicine and Surgery.** Prevent, diagnose and manage disease and injury in companion animals, including medical, surgical, emergency and preventive-care pathways.
+- **Equine Medicine and Surgery.** Provide preventive, diagnostic and treatment services for horses and related equids, including internal medicine, reproduction, performance and surgical care.
+- **Livestock, Poultry and Aquatic Animal Health and Production.** Maintain health, welfare, biosecurity and productivity in farmed animals through herd/flock health, reproduction, nutrition, disease control and production-system support.
+- **Veterinary Public Health, Food Safety and Epidemiology.** Prevent and investigate animal-to-human health risks, monitor animal populations and outbreaks, and support food hygiene, safety and veterinary public services.
+- **Veterinary Clinical Disciplines and Diagnostics.** Develop deeper expertise in cross-species veterinary disciplines such as diagnostic imaging, pathology, anaesthesia, clinical nutrition, dentistry, pharmacology, laboratory diagnostics and specialist surgery.
+- **Wildlife, Zoo and Conservation Medicine.** Protect the health and welfare of free-ranging, rehabilitated and managed wildlife populations, including disease surveillance, clinical care, population health and conservation-linked veterinary work.
+- **Animal Welfare, Behaviour and Clinical Nutrition.** Assess and improve animal welfare, behaviour and nutrition using veterinary evidence across clinical, production, companion and managed-wildlife settings.
+- **Laboratory Animal Science and Veterinary Research.** Protect the health and welfare of research animals and apply veterinary science in biomedical, translational and animal-health research settings.
+
+## Source evidence and limits
+
+- [World Organisation for Animal Health (WOAH; formerly OIE) — Veterinary Education Core Curriculum](https://www.woah.org/en/document/veterinary_education_core_curriculum/) — Core curriculum guidance and companion Day-1 graduate competency framework; thematic areas include animal health, veterinary services, public health, production and welfare. **Supports:** International veterinary education covers animal and public health, animal production, welfare and public veterinary services as distinguishable competency contexts. **Limit:** A fixed set/count of student specialization cards or national accreditation/qualification requirements. International guidance. **Scope screen:** geographic_scope_not_established.
+- [Royal College of Veterinary Surgeons (RCVS) — Recognised specialties and titles](https://www.rcvs.org.uk/veterinary-professionals/learning-and-development/training-and-development-for-veterinary/specialist-status/rcvs-specialist-information-and-application-guide/recognised-specialties-and-titles) — Three headings: Production Animal Medicine; Companion and Competitive Animals; Disciplines. Includes production species, equine/small-animal medicine and surgery, animal welfare, nutrition, behaviour, veterinary public health, pathology, epidemiology, imaging, zoo/wildlife and aquatic fields. **Supports:** Veterinary subject/species groupings and cross-species clinical disciplines are recognized; specialty areas include both species-focused and functional/disciplinary pathways. **Limit:** A globally binding taxonomy or legal specialty status outside the UK. RCVS requires registration for UK protected specialist title use. **Scope screen:** country_or_institution_specific_corroboration.
+- [Royal College of Veterinary Surgeons — Advanced Practitioner status](https://www.rcvs.org.uk/veterinary-professionals/learning-and-development/training-and-development-for-veterinary-surgeons/advanced-practitioner-status) — Advanced practice recognizes advanced skills/knowledge in designated fields and provides a subject-area list; guidance includes animal species and clinical discipline designations. **Supports:** Specialization can be organized by recognized subject/species field and demonstrated advanced knowledge, not merely by job family. **Limit:** A universal credential, exact student taxonomy or automatic role-to-domain fit. Geography: UK. **Scope screen:** country_or_institution_specific_corroboration.
+- [World Organisation for Animal Health (WOAH) — Introduction to recommendations for veterinary public health (Terrestrial Animal Health Code, Chapter 6.1)](https://www.woah.org/fileadmin/Home/eng/Health_standards/tahc/2018/en_chapitre_introduction_sante_publique_veterinaire.htm) — Articles 6.1.1 and following: veterinary public health, food safety, zoonoses, animal welfare, biomedical research and veterinary services contributions. **Supports:** Veterinary public health and food-safety/zoonosis work are core veterinary application areas with human-health outcomes. **Limit:** That all public-health occupations belong to veterinary science or that one curriculum structure applies in each jurisdiction. **Scope screen:** geographic_scope_not_established.
+- [World Organisation for Animal Health — Capacity Building and Education — Animal Welfare](https://www.woah.org/en/what-we-do/animal-health-and-welfare/animal-welfare/capacity-building-and-education/) — States animal welfare and behaviour knowledge should be among minimum competencies expected of veterinarians; references WOAH core curriculum and paraprofessional education guidance. **Supports:** Animal welfare and behaviour are cross-cutting veterinary competencies and established focused learning content. **Limit:** That welfare is only an advanced specialty or that specific local welfare law is global. **Scope screen:** geographic_scope_not_established.
+- [World Organisation for Animal Health (WOAH; formerly OIE) — Veterinary education and core competencies resources](https://www.woah.org/en/what-we-offer/improving-veterinary-services/pvs-pathway/) — Links to Day-1 veterinary graduate competencies, veterinary education core curriculum, and paraprofessional guidance; includes veterinary service capabilities such as food hygiene, contagious-disease management and research. **Supports:** International framing of entry-level veterinary capabilities across animal/public health and food safety. **Limit:** An exact specialist count, local practice authorization or a global credential. **Scope screen:** geographic_scope_not_established.
+
+## Open limits / reconciliation notes
+
+- WOAH/OIE veterinary-education materials are international guidance for competencies and curriculum development; they are not a global accreditation syllabus or an exact specialty taxonomy.
+- RCVS specialty titles, registration and use of 'specialist' are UK-specific. The RCVS taxonomy informs candidate subject boundaries, not globally portable legal status.
+- Species and specialist recognition vary across national/regional veterinary education and regulatory systems; country-specific qualifications, permits and service authorities must be labelled.
+- The eight-area count is an internal synthesis. Equine split, public health grouping, and the combination of welfare/behaviour/nutrition remain review points.
+- This review does not assess veterinary nursing/technician scope, role-domain fit, role-specialization fit, or the necessary educational/legal qualification level for any occupation.
+
+## Audit boundary
+
+No roles were assigned to these areas. Current subgroup counts, ISCO grouping, role frequency and computational keyword hits were not used to determine candidate count. Nigeria-specific context is explicitly out of scope in this global phase.

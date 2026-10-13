@@ -1,0 +1,47 @@
+# JAMB–CCMAS final verification — catalogue-wide omission reconciliation, rows 001–420
+
+**Created:** 2026-09-26 (Africa/Lagos)  
+**Purpose:** reconcile omission classes already documented by the 001–140, 141–280 and 281–420 audits. This is not a restart of row work.  
+**Scope:** canonical JAMB identity/source-occurrence and CCMAS/external curriculum-scope evidence only. No downstream domain/subgroup/role work and no source, mapping, scope, seed or SQL edits.  
+**Result:** row-slice coverage exists for 420/420 identities. Full requested closure remains **0/420**; evidence and correction work remains open.
+
+## Existing coverage reconciled
+
+Read the full-range report and append-only issue ledger for rows 001–140; row checkpoints and cross-cut checkpoint for 141–280; row checkpoints 001–014, issue register, and cross-cut checkpoint 015 for 281–420; then recomputed current-snapshot counts from `_audit/jamb_curriculum_scopes_2026-08-17.json`, `_audit/jamb_scope_course_provenance_audit_2026-09-26.json`, `_audit/jamb_offering_context_inventory_2026-09-25.json`, and `ccmas/*.json`.
+
+| Catalogue-wide check | Current count | Meaning / classification |
+|---|---:|---|
+| Canonical JAMB identities | 420 | Three ranges of 140 each have row-level checkpoints. This is audit coverage, not closure. |
+| JAMB source offering occurrences | 441 | 440 parsed + one manually source-confirmed; 401 identities have one occurrence, 18 have two, and one has four. The same-name identity must retain distinct faculty/provider contexts. |
+| Occurrences marked PDF-awarder verified in inventory | 3/441 | **Confirmed stale/inconsistent inventory state:** prior row checkpoints document exact source-cell evidence for at least 28 contexts in rows 201–204, 211–229, 232–235 and 240, plus confirmed JAMB contexts for rows 411, 412 and 420. The existing inventory does not carry those confirmations. This is a reconciliation defect, not a reason to repeat already documented source checks. |
+| Mapping faculty absent from parsed source-faculty contexts | 29 identities | Unresolved context reconciliation candidates from the inventory; do not treat the parsed faculty or mapping faculty as authoritative without exact brochure evidence. |
+| Scope rows without `source_context` / without `scope_evidence` | 408/420 each | Confirmed row-level evidence omissions. Non-empty selected-course arrays and `full` labels do not substitute for exact offering context or a scope crosswalk. |
+| Scope state counts | 261 `partial_scope_reviewed`; 112 `full`; 34 `combined_scope_review_required`; 7 `external_scope_evidenced`; 4 `partial_scope_review_required`; 2 `full_scope_review_required` | State labels are not source verification. See existing row-level findings for confirmed omissions, stale flags, and held-but-valid states. |
+| Selected course records | 5,612 | 5,443 refer to CCMAS component/code/title records; 169 are custom/external records without a CCMAS component reference. |
+| Local CCMAS exact component + code + title candidates | 5,443/5,443 | All selected records that declare a CCMAS file/programme resolve locally. This is internal referential integrity, not proof of NUC-PDF fidelity, correct component selection, or JAMB offering applicability. 32 occurrences have multiple exact local candidates and need source-row/locator adjudication. |
+| Selected records with no item URL, printed locator, or access date | 4,950/5,612 for each citation field | 662 occurrence records have a complete three-field citation. The 4,950 are traceability gaps in persisted scopes, **not evidence that a prior internet search did not occur** and not a blanket instruction to repeat searches without checking saved source evidence. |
+| Unique component/course keys lacking any complete citation | 2,238/2,688 | Cross-context deduplication reduces the occurrence count but does not establish that all contexts share the same offering/curriculum. |
+| Unique keys missing source CCMAS file / programme | 160 / 120 | These key-level gaps overlap and are concentrated in custom/external rows; inspect the source item before treating it as a missing CCMAS anchor. |
+| Selected records missing units / source status | 5,612 / 5,612 | Confirmed generated-scope contract omissions. Of 5,443 linked CCMAS source candidates, 5,366 contain source unit values and all 5,443 contain source `status`; those known values are dropped in the selected-scope representation. The other 77 CCMAS candidates have no source unit value to copy. Source lecture hours occur on 4,871 candidates and practical hours on 1,640; neither field is carried into selected scopes. |
+| Selected content summaries | 710 empty + 151 `---` = 861/5,612 without substantive content | Confirmed persisted field gap. Empty local text is not proof the NUC source lacks content; row checkpoints record source-side confirmations and unresolved extraction cases. |
+| Selected learning outcomes | 317 missing/empty | Confirmed persisted field gap; distinguish from outcome text absent in authoritative source. |
+| Rows with no selected course objects | 139 | 112 full-parent scopes, 26 combined-held scopes, and one external-evidence row. Full-parent inheritance may be a valid representation but is not a row-specific course/outcome crosswalk. The zero-course combined cases remain unresolved; do not call them unavailable. |
+| External-scope rows | 7 | The 169 custom/external course records are represented as code/title-only or empty evidence in the recorded cases (rows 20/32 and 281–420 findings include source-specific detail). Their status labels do not establish item-level source content. |
+| CCMAS packages with no exact component reference in the current scope crosswalk | 83 | Existing whole-catalogue screen: **reverse-coverage queue, not 83 proven unmatched programmes**. Some may be represented through combined titles or externally supported scopes; reconcile package-to-identity evidence before disposition. |
+
+## Newly reconciled omission classes / status conflicts
+
+1. **Course metadata is systematically dropped from selected JAMB scopes.** The 141–280 audit found this in its own range; aggregation confirms the same contract omission across all 5,612 selected records. Units exist in 5,366 of the 5,443 linked CCMAS candidates, and source status exists in all 5,443, yet selected records omit both fields. Treat this as a generator/scope-contract correction item for the local source-correction owner; this audit made no edit.
+2. **Course-level search evidence and row-level scope evidence are separate.** 4,950 selected course occurrences lack complete URL+printed locator+access-date citations, while 408 identities lack scope evidence and source context. These counts overlap with source extraction/content defects; do not sum them as unique issues or reinterpret them as proof that earlier searches were not exhaustive. Reuse existing item-specific evidence where it exists, then fill only genuine traceability gaps.
+3. **The offering inventory under-reports completed exact-cell checks.** Only 3/441 occurrences carry its PDF-verification flag, while prior checkpoints already document exact-cell evidence across additional, disjoint row ranges. Preserve completed evidence and reconcile its source URL, printed page/table cell, institution tokens, access date, and occurrence identity into the inventory; do not redo closed searches solely because the flag is stale.
+4. **External evidence is a distinct source branch, not a CCMAS-anchor failure.** The 169 selected records with no CCMAS component reference are not automatically invalid: some are intentional external/custom curriculum scopes. However, each still needs programme/provider-specific authoritative source content, outcomes, locator/date and correct status. A missing CCMAS anchor alone does not make a JAMB programme unavailable.
+5. **Reverse CCMAS coverage remains unresolved.** The 83 packages without an exact saved component reference require identity/facet reconciliation. They are not automatically omitted curriculum because combined-component and externally supported JAMB identities exist. Keep the existing package-to-identity crosswalk queue; do not force full-package unions.
+6. **Source/package field parity is only a partial test.** The 5,443 CCMAS-linked items resolve by component, course code and title, but 32 have multiple exact local candidates. Local parity cannot discover a transcription defect shared with the source JSON; checkpoints already record confirmed package defects, title collisions, extraction loss, wrong-family contamination, and stale prior flags. Those row-specific findings remain authoritative and must be re-audited against NUC originals before closure.
+
+## Reconciled range disposition
+
+- 001–140: 140/140 row slices; 0/140 fully closed in the existing full-range report.
+- 141–280: 140/140 row slices; 0/140 fully closed in the existing range report.
+- 281–420: 140/140 row slices; 0/140 fully closed in checkpoints 001–014 and cross-cut checkpoint 015.
+- Catalogue: **420/420 identities have audit coverage; 0/420 meet the full requested closure standard.** Row-specific confirmed defects, unresolved evidence candidates, stale prior flags, and bounded verified findings remain in their original append-only ledgers/checkpoints; this cross-cut does not overwrite their dispositions.
+- No downstream domain/subgroup/role assertion was audited. No curriculum/mapping data was changed. No programme was marked unavailable on the basis of missing CCMAS evidence alone.
