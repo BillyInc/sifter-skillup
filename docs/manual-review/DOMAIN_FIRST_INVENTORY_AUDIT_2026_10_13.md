@@ -30,11 +30,13 @@ compared as if they were the same table.
 ## Normalization finding
 
 `domain_structure.json` still contains a `subgroups` field alongside
-`areas_of_specialization`. The active concept is area of specialization. The
-legacy subgroup field is provenance/migration evidence only and must not appear
-in enrichment assignments, active graph output, student payloads, or reports.
-For example, D078 has seven current areas and two legacy subgroup records; the
-seven areas are the only active downstream specialization layer.
+`areas_of_specialization`. Areas of specialization are the canonical/main
+subgroup layer. The ISCO-defined subgroup field is legacy
+provenance/migration evidence only and must not appear as a parallel layer in
+enrichment assignments, active graph output, student payloads, or reports.
+For example, D078 has seven current areas and two ISCO-defined legacy subgroup
+records; the seven areas are the only active downstream specialization/main
+subgroup layer.
 
 The first implementation gate is therefore a deterministic seven-area-style
 normalization test generalized across all domains:

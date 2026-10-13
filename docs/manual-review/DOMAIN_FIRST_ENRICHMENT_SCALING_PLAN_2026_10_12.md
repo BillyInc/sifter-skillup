@@ -351,6 +351,11 @@ The later integrated programme → domain → area → role UI/report release ch
 
 ## Token-efficient enrichment and evidence reuse
 
+Terminology rule: **area of specialization = canonical/main subgroup**.
+ISCO-defined subgroup records are legacy provenance only. They are never a
+second active enrichment layer, assignment denominator, route layer, graph
+layer, API output, or student-facing category.
+
 The domain-first workflow must optimize both quality and token usage. Do not
 send the full inventory, all source text, or all descendants to every model
 call. Create and maintain a reusable, source-backed evidence index before the
