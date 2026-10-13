@@ -51,6 +51,44 @@ Keep a query/source trail in the audit checkpoint. An item may be called unsuppo
 
 Treat submitted roadmaps as hypotheses to test. In particular, SAE automation levels describe system capability rather than a learner sequence; a platform-specific item such as TensorRT must be labelled optional/platform-specific where appropriate; and a safety standard such as ISO 26262 is not itself a certification. A Python+C++ starting point must lead only to role paths that have supporting evidence, with verified next steps rather than an assumed shortcut to a job.
 
+## Source registry and confidence contract
+
+Create the source registry before enriching a domain tree. Give every source a stable
+`source_id` and record its publisher or issuer, authority class, source role, URL,
+exact page/section or other locator, version or publication date, jurisdiction and
+scope, access date, and limitations. A source role must be explicit: `identity_or_function`,
+`task_or_checkpoint_fit`, `plain_language_explanation`, `learning_instruction`, or
+`nigerian_context`. One source may have more than one role only when each claim is
+listed separately. An authoritative source is fit-for-purpose evidence; it does not
+make the whole dataset industry-certified.
+
+Attach evidence references to every retained item claim and every relationship. Do
+not use one overall confidence value. Record these separately, each with a short
+rationale:
+
+- `identity_confidence`: whether the item is correctly identified and typed;
+- `context_fit_confidence`: whether it belongs at the claimed domain, area or role;
+- `relationship_confidence`: whether the stated complement, alternative, support or
+  prerequisite is directly supported;
+- `sequence_confidence`: whether the proposed order is supported for this route;
+- `learning_link_confidence`: whether the attached instruction actually teaches the
+  stated task at the stated level; and
+- `nigerian_context_status`: `supported`, `global_only_no_local_claim`, or
+  `not_applicable`, with the search scope recorded.
+
+Use `high`, `medium` or `low` only with evidence and a reason. A hard prerequisite,
+student-facing `needed` label, or sequence constraint requires high relationship and
+sequence confidence with direct evidence. Medium confidence can support a clearly
+labelled useful preparation, complement or exploratory route. Low-confidence claims
+remain internal and unapproved. Never infer a prerequisite from co-occurrence,
+category membership, name similarity or a shared source list.
+
+The agent records `agent_verified` after checking the complete source packet. Local
+records `thoroughly_verified` once after the package is complete. Later approval,
+canonicalization, display and graph gates check ownership, required fields, allowed
+status, rendering and graph integrity using that evidence packet; they do not repeat
+the same source search. This is the required anti-loop rule.
+
 ## Agent operating contract
 
 Run four agents concurrently. In each tranche, one agent owns exactly one complete domain tree, including all of that domain's active subgroups and roles. Repeat tranches until every active domain is audited; a first tranche is not completion. Initial risk-based tranche:
