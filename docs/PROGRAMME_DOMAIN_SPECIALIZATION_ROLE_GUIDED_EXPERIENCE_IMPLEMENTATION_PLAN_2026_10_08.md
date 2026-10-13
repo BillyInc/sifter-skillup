@@ -294,6 +294,42 @@ An item appearing in the inventory is not enough to justify presenting it to a l
 
 Keep the evidence trail granular: item → exact source passage/locator → owning checkpoint → learner-facing wording → any downstream route or relationship supported by that evidence. Review the wording against the source before exposing it. If evidence supports the item but not the specific use claimed, narrow the wording to what is established; if it does not support the checkpoint assignment or use, mark it review-only/not-established and keep it out of confirmed student guidance. A source-backed label must never be expanded into plausible-sounding but unverified examples, prerequisites, importance, or job outcomes.
 
+### Source registry and confidence model
+
+The enrichment workflow must index sources before it expands the inventory. Every
+source receives a stable `source_id` and records its publisher or issuer, authority
+class, source role, direct URL, exact locator, version/date, jurisdiction, scope,
+access date and limitations. Source roles are kept separate: item identity/function,
+checkpoint or task fit, plain-language explanation, learning instruction, and Nigerian
+context. An authoritative source is evidence appropriate to a claim; it does not by
+itself certify the complete dataset.
+
+Store evidence references and separate confidence values for every displayed item and
+relationship:
+
+- identity confidence;
+- domain/area/role applicability confidence;
+- relationship confidence;
+- sequence or prerequisite confidence;
+- learning-link confidence; and
+- Nigerian-context status, separated from global applicability.
+
+Use `high`, `medium` or `low` only with a written rationale. High relationship and
+sequence confidence, supported by direct evidence, is required before a relationship
+is rendered as a hard prerequisite, a `needed` item or a sequence constraint. Medium
+confidence may be shown as useful preparation, a complement or an exploratory route
+with that wording. Low-confidence claims remain hidden from confirmed student guidance.
+Never infer a relationship from co-occurrence, category membership, text similarity,
+frequency or a shared source list. A strong item identity does not prove a strong
+prerequisite.
+
+The research agent marks a complete packet `agent_verified`; local marks it
+`thoroughly_verified` after one complete evidence pass. Promotion, canonicalization,
+graph and UI gates then check ownership, required fields, permitted status, safe
+rendering and graph integrity using the verified packet. They do not repeat the same
+source search. This prevents a completed evidence stage from being reopened under a
+different label.
+
 ## Learning links
 
 Use clear action text such as “Start a beginner Python lesson” or “Open the Python tutorial for data tables,” not an unexplained “click here.” Every item that appears in a student-facing checkpoint or printable learning guide must have at least one attached, externally hosted, verified learning link, presented as an accessible action/button. Verify that the destination is reachable, relevant to the item and its described use, and suitable for the learner’s stated level. A link must match what it promises:

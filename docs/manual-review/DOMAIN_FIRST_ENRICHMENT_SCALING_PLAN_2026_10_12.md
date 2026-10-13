@@ -134,6 +134,40 @@ For every retained item, record at minimum:
 | Search closure | Source families and official/maintained material inspected; searches/no-hits; rejected duplicates or unsupported items; what was not found and why the item is approved or unapproved |
 | Verification | `verification_status: agent_verified`, verifier/lane, checked date, evidence IDs and exact check performed; independent `decision_status: approved` or `unapproved` with rationale |
 
+### Source registry and confidence fields
+
+Every package must create or extend a stable source registry before adding claims.
+Each `source_id` records the publisher/issuer, authority class, source role
+(`identity_or_function`, `task_or_checkpoint_fit`, `plain_language_explanation`,
+`learning_instruction`, or `nigerian_context`), direct URL, exact locator, version or
+publication date, jurisdiction, scope, access date and limitations. “Authoritative”
+means appropriate evidence for the claim; it is not a guarantee that the resulting
+catalogue is industry-certified.
+
+Each item claim and each relationship must reference the source claims that support
+it and carry separate confidence fields with a rationale:
+
+- `identity_confidence` — correct identity and item type;
+- `context_fit_confidence` — fit for this domain, area or role;
+- `relationship_confidence` — evidence for complement, alternative, support or prerequisite;
+- `sequence_confidence` — evidence for the proposed learning order;
+- `learning_link_confidence` — whether the link teaches the stated task at the stated level; and
+- `nigerian_context_status` — `supported`, `global_only_no_local_claim`, or
+  `not_applicable`, with the search scope recorded.
+
+Use `high`, `medium` or `low` only with a written reason. A hard prerequisite, a
+student-facing `needed` label, and a sequence constraint require high relationship and
+sequence confidence supported directly by the cited evidence. Medium confidence may
+support a labelled useful preparation, complement or exploratory route. Low-confidence
+claims remain unapproved. Confidence never creates a relationship by itself: do not
+infer edges from co-occurrence, category membership, text similarity or frequency.
+
+The assigned agent writes `agent_verified` after checking the complete packet. Local
+writes `thoroughly_verified` after one complete package pass. Later promotion,
+canonicalization, display and graph checks consume that packet and check compatibility,
+required fields, ownership and rendering; they do not repeat the source search. This
+is a required anti-loop rule for every scaled domain.
+
 “Exhaustive” means a bounded, documented search of relevant authoritative and maintained source families, including linked standards/reports/pages when material to the claim—not an unprovable claim to have checked the entire internet. Search-result snippets alone do not verify an assertion. For global-only practice, explicitly record that Nigerian context was checked for relevance or was not applicable; lack of a Nigerian source is not a blocker.
 
 ### Maturity and breadth rules
