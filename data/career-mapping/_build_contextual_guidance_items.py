@@ -10,7 +10,8 @@ This catalogue is deliberately narrower than the raw taxonomy tables:
 
 The output is partitioned because the complete role catalogue is too large for
 one practical Supabase SQL paste.  The SQL is idempotent and can be run after
-``migration_contextual_career_items.sql``.
+``migration_contextual_career_items.sql`` and
+``migration_career_context_claim_validation.sql``.
 """
 
 from __future__ import annotations
@@ -446,6 +447,7 @@ def add(rows: list[dict], *, level: str, key: str, domain: str, kind: str, name:
         meaning: str, use: str, output: str, priority: str, reason: str,
         prerequisites: list[str], related: list[str], source_ids: list[str],
         refs: list[dict], locators: list[dict], limitations: list[str], confidence: str = "high",
+        relationships: list[dict] | None = None,
         link_candidates: list[dict] | None = None,
         context_link: dict[str, object] | None = None) -> None:
     name = clean(name)
@@ -483,6 +485,10 @@ def add(rows: list[dict], *, level: str, key: str, domain: str, kind: str, name:
         "priority_reason": reason,
         "prerequisites": prerequisites,
         "related_items": related,
+        # Relationships are separate claims and require their own evidence.
+        # Keep the legacy arrays for compatibility, but never derive graph
+        # edges from item-list order or co-occurrence.
+        "relationships": relationships or [],
         "source_ids": list(dict.fromkeys(source_ids)),
         "source_references": unique_sources(refs),
         "source_locators": locators,
@@ -492,7 +498,16 @@ def add(rows: list[dict], *, level: str, key: str, domain: str, kind: str, name:
         "source_confidence": confidence,
         "data_state": "source_backed",
         "guidance_owner": level,
+        # Presence/provenance does not certify every learner-facing claim.
+        # Approval requires an explicit checkpoint-scoped evidence ledger.
+        "claim_review_state": "review_required",
+        "claim_evidence": {},
         "verified_at": VERIFIED_AT,
+        "link_kind": None,
+        "link_level": None,
+        "link_language": None,
+        "link_access": None,
+        "link_duration": None,
         **link,
     })
 
@@ -511,6 +526,8 @@ def build() -> list[dict]:
     EXTERNAL_CONTEXT_LINKS.clear()
     load_context_search_ledger()
     audit = load(HERE / "domain_skill_competency_certification_audit.json")
+    provenance = load(HERE / "domain_skill_provenance.json")
+    source_catalog = load(HERE / "domain_role_source_registry.json").get("source_catalog") or {}
     structure = load(HERE / "domain_structure.json")
     # The canonical role layer is the cleaned library plus the source-backed
     # emerging/thin-domain overlays.  Keep the first occurrence of a role key
@@ -531,42 +548,92 @@ def build() -> list[dict]:
         row = audit_by_id.get(domain_id) or {}
         if not domain_id:
             continue
+        domain_name = clean(row.get("domain_name"))
         ids, refs, _ = refs_for_domain(row)
-        web = row.get("nigerian_web_evidence") or {}
-        skills = [clean(value) for value in web.get("skills") or [] if clean(value)]
-        competencies = [clean(value) for value in web.get("competencies") or [] if clean(value)]
-        # Only explicitly named credentials may become student-facing
-        # certification items.  ``nigerian_web_evidence.certifications`` and
-        # ``credential_signals`` can contain source-audit prose such as
-        # "academic and research qualifications"; those describe a pathway or
-        # sector context, not a credential with a market scope and credential
-        # type.  The reviewed current-domain list is the narrow named-
-        # credential authority.  Keep broader signals in the audit JSON, but
-        # never promote them into the contextual student contract.
+        # The broad web-evidence arrays are search findings, not a vetted
+        # student curriculum. In the old builder the first three entries from
+        # each array became an arbitrary "start here" sequence, with edges
+        # inferred from list order. Use only the explicit domain-owned,
+        # approved foundation records from the provenance ledger instead.
+        foundation_map = (provenance.get(domain_id) or {}).get("foundation_skills") or {}
+        ids: list[str] = []
+        domain_foundations: list[tuple[str, dict, list[dict]]] = []
+        for item in foundation_map.values():
+            if not isinstance(item, dict):
+                continue
+            if item.get("ownership") != "domain" or item.get("student_visibility") != "approved":
+                continue
+            if item.get("data_state") != "source_backed" or item.get("source_confidence") not in {"high", "medium"}:
+                continue
+            item_sources = [clean(value) for value in item.get("sources") or [] if clean(value)]
+            item_refs: list[dict] = []
+            for source_id in item_sources:
+                catalog_key = source_id if source_id in source_catalog else {
+                    "esco": "global_esco",
+                    "onet": "global_onet",
+                }.get(source_id, source_id)
+                source = source_catalog.get(catalog_key) or {}
+                source_urls = source.get("urls") or ([source.get("url")] if source.get("url") else [])
+                for url in source_urls:
+                    if clean(url).startswith("https://"):
+                        item_refs.append(source_ref(
+                            source_id,
+                            clean(source.get("name") or catalog_key),
+                            clean(url),
+                            clean(source.get("region") or "global"),
+                            clean(source.get("evidence_type") or "domain_skill_evidence"),
+                        ))
+            item_refs = unique_sources(item_refs)
+            if not item_refs:
+                continue
+            item_name = clean(item.get("label"))
+            if not item_name:
+                continue
+            ids.extend(item_sources)
+            domain_foundations.append((item_name, item, item_refs))
+        ids = list(dict.fromkeys(ids))
+        # A named credential in the broad domain audit is only a candidate:
+        # it is not enough to establish the issuer, current status, eligibility,
+        # relevance to this domain, or whether it is optional. Promote it only
+        # after an exact domain+credential source review has marked it linked.
         certifications = [clean(value) for value in (row.get("current_domain_certifications") or []) if clean(value)]
-        all_foundation = skills[:3] + competencies[:3]
-        for index, name in enumerate(all_foundation):
-            kind = "competency" if name in competencies else "skill"
-            previous = all_foundation[max(0, index - 2):index]
-            add(rows, level="domain", key=domain_id, domain=domain_id, kind=kind, name=name,
-                meaning=item_meaning(kind, name),
-                use=f"At domain level, this helps a student understand the shared foundation of {clean(row.get('domain_name'))} before choosing a subgroup or role.",
-                output="A documented question, analysis, explanation or piece of work appropriate to the field.",
-                priority="start_here" if index < 2 else "build_next",
-                 reason="Start with the domain-owned foundation before adding subgroup or role-specific preparation." if index < 2 else "Build this after the foundation because it is explicitly named in the checked domain evidence.",
-                 prerequisites=previous[-2:], related=all_foundation[index + 1:index + 3], source_ids=ids, refs=refs,
-                 locators=[{"domainId": domain_id, "evidenceKind": kind, "owner": "domain"}],
-                 context_link=external_context_link("domain", domain_id, kind, name),
-                 limitations=["This is domain context, not a universal requirement, demand ranking or proof of competence."])
+        for name, foundation_record, item_refs in domain_foundations:
+            add(rows, level="domain", key=domain_id, domain=domain_id, kind="skill", name=name,
+                meaning=f"{name} is identified as a shared foundation for {domain_name}; the examples and depth depend on the area you choose.",
+                use=f"Build familiarity with {name} before specialising in {domain_name}; use the focused-area and role pages to find its concrete application.",
+                output=f"A small, field-relevant work sample showing how you apply {name}.",
+                priority="start_here",
+                 reason="This source-backed item is owned by the domain. It is an entry foundation, not a ranking against the other foundations.",
+                 prerequisites=[], related=[], source_ids=foundation_record.get("sources") or [], refs=item_refs,
+                 locators=[{"domainId": domain_id, "evidenceKind": "domain_foundation_skill", "owner": "domain", "provenanceKey": clean(foundation_record.get("label"))}],
+                 context_link=external_context_link("domain", domain_id, "skill", name),
+                 confidence=clean(foundation_record.get("source_confidence") or "medium"),
+                 limitations=["The source supports the domain foundation label; no prerequisite order or item-specific learning link is established here.", "This is not evidence that every connected role or employer requires the item."])
         for name in list(dict.fromkeys(certifications))[:4]:
+            credential_evidence = external_context_link("domain", domain_id, "certification", name)
+            if not credential_evidence or credential_evidence.get("decision") != "linked":
+                continue
+            credential_sources = [source for source in (credential_evidence.get("sources") or []) if isinstance(source, dict)]
+            credential_refs = unique_sources([
+                source_ref(
+                    clean(source.get("source_key") or source.get("url")),
+                    clean(source.get("title") or name),
+                    clean(source.get("url")),
+                    "global",
+                    "credential_specific_evidence",
+                )
+                for source in credential_sources
+            ])
+            if not credential_refs:
+                continue
             add(rows, level="domain", key=domain_id, domain=domain_id, kind="certification", name=name,
                 meaning=item_meaning("certification", name),
                 use="Use this as a pointer to understand the qualification or professional context. Check the Nigerian issuer or regulator first when your intended work is local, then compare any global pathway.",
                 output="A qualification, training record or bounded professional membership where the issuer confirms eligibility.",
                  priority="useful_later", reason="Credentials come after the academic and domain foundation and only matter for routes that use them.",
-                 prerequisites=all_foundation[:2], related=[], source_ids=ids, refs=refs,
-                 locators=[{"domainId": domain_id, "evidenceKind": "certification", "owner": "domain"}],
-                 context_link=external_context_link("domain", domain_id, "certification", name),
+                 prerequisites=[], related=[], source_ids=[clean(source.get("source_key")) for source in credential_sources if clean(source.get("source_key"))], refs=credential_refs,
+                 locators=[{"domainId": domain_id, "evidenceKind": "credential_specific_evidence", "owner": "domain", "accessedAt": clean(credential_evidence.get("accessedAt"))}],
+                 context_link=credential_evidence,
                  limitations=["No domain row by itself proves that every Nigerian employer or role requires this credential."])
         # Explicit subgroup records, not a re-labelled role-frequency list.
         for subgroup in (structure.get(domain_id) or {}).get("subgroups") or []:
@@ -575,14 +642,14 @@ def build() -> list[dict]:
             source_ids = list(dict.fromkeys((subgroup.get("source_provenance") or {}).get("sources") or ids))
             subgroup_refs = refs
             skills = [clean(value) for value in subgroup.get("cluster_skills") or [] if clean(value)]
-            for index, name in enumerate(dict.fromkeys(skills)):
+            for name in dict.fromkeys(skills):
                 add(rows, level="subgroup", key=subgroup_key, domain=domain_id, kind="skill", name=name,
                     meaning=item_meaning("skill", name),
                     use=f"This is an area-specific capability in {clean(subgroup.get('label'))}; it adds focus to the shared {clean(row.get('domain_name'))} foundation.",
                     output="An area-specific analysis, method, dataset, report or other work product.",
-                    priority="start_here" if index < 3 else "build_next",
-                     reason="Start with the area foundation, then add more specialised capabilities as your direction becomes clearer.",
-                     prerequisites=skills[max(0, index - 2):index], related=skills[index + 1:index + 3], source_ids=source_ids, refs=subgroup_refs,
+                    priority="build_next",
+                     reason="This is an area-specific option that extends the domain foundation; list position does not establish a learning order, and learners need not select every item.",
+                     prerequisites=[], related=[], source_ids=source_ids, refs=subgroup_refs,
                      locators=[{"domainId": domain_id, "subgroup": clean(subgroup.get("label")), "iscoSubmajor": subgroup_id, "owner": "subgroup"}],
                      context_link=external_context_link("subgroup", subgroup_key, "skill", name),
                      limitations=["This subgroup record describes an area of work; it is not a requirement to learn every listed capability."])
@@ -602,15 +669,15 @@ def build() -> list[dict]:
         ids, refs = role_refs(role)
         essential, optional = student_skill_lists(role)
         all_skills = list(dict.fromkeys(essential + optional))
-        for index, name in enumerate(all_skills):
+        for name in all_skills:
             is_essential = name in essential
             add(rows, level="role", key=role_key, domain=domain_id, kind="skill", name=name,
                 meaning=item_meaning("skill", name),
                 use=f"In the {role_name} role, this supports the work described by the role record and is used alongside the other skills shown here.",
                 output="A role-related analysis, decision, report, dataset, presentation or other work product.",
-                priority="start_here" if is_essential and index < 3 else "build_next" if is_essential else "optional",
-                reason="Essential role evidence is shown before optional additions; it does not mean the student already has the skill." if is_essential else "This is an optional addition named in the role record and should follow the core preparation.",
-                prerequisites=all_skills[max(0, index - 2):index], related=all_skills[index + 1:index + 3], source_ids=ids, refs=refs,
+                priority="build_next" if is_essential else "optional",
+                reason="The role source classifies this as essential; that does not establish a sequence or mean the learner already has it." if is_essential else "The role source classifies this as optional; list position does not establish a learning order.",
+                prerequisites=[], related=[], source_ids=ids, refs=refs,
                 locators=[{"roleKey": role_key, "evidenceKind": "essential_skill" if is_essential else "optional_skill", "owner": "role"}],
                 limitations=["Role evidence describes the occupation; it does not prove competence, employment demand, salary or automatic licensing."])
         tool_row = role_tools.get(role_key) or {}
@@ -627,7 +694,7 @@ def build() -> list[dict]:
                 use=f"For {role_name}, this is one option for carrying out the related work. It can be combined with the other tools and methods shown on the role page; it is not a required stack.",
                 output="A tool-supported analysis, record, model, visualisation, query or report.",
                 priority="useful_later", reason="Tools follow the role foundation and should be chosen for the task, access and local context.",
-                prerequisites=essential[:3], related=[], source_ids=tool_ids, refs=tool_refs,
+                prerequisites=[], related=[], source_ids=tool_ids, refs=tool_refs,
                 locators=[{"roleKey": role_key, "elementId": clean(tool.get("element_id")), "elementName": clean(tool.get("element_name")), "owner": "role"}],
                 limitations=["The source names this tool as role evidence; it does not make the tool the only or universally required option."])
     return rows
@@ -643,7 +710,10 @@ def row_sql(row: dict) -> str:
         sql(row["evidence_type"]), sql(row["source_confidence"]), sql(row["data_state"]),
         sql(row["link_state"]), sql(row["link_url"]), sql(row["link_title"]),
         sql_json(row["link_source_reference"]), sql(row["link_accessed_at"]), sql(row["link_confidence"]),
-        sql_json(row["link_evidence"]), sql(row["no_link_reason"]), sql(row["guidance_owner"]), sql(row["verified_at"]),
+        sql_json(row["link_evidence"]), sql(row["no_link_reason"]), sql(row["guidance_owner"]),
+        sql(row["claim_review_state"]), sql_json(row["claim_evidence"]),
+        sql(row["link_kind"]), sql(row["link_level"]), sql(row["link_language"]),
+        sql(row["link_access"]), sql(row["link_duration"]), sql(row["verified_at"]),
     ]) + ")"
 
 
@@ -739,89 +809,37 @@ def _lower_confidence(*rows: dict) -> str:
 
 
 def relationship_rows(rows: list[dict]) -> list[dict]:
-    """Normalize explicit edges and record honest coverage for tools/certs.
+    """Emit honest relationship-coverage rows; never infer edges from lists.
 
-    The JSON arrays remain useful for compatibility, but this table gives the
-    API a typed edge between a skill, competency, tool or certification. A
-    missing target is deliberately not turned into a source-backed edge. Each
-    contextual tool and certification still receives one ``not_established``
-    coverage row when no explicit edge exists, so an audit can distinguish
-    "reviewed and no relationship established" from "relationship data was
-    never generated". External source review can later replace that state.
+    The current source builder has no dedicated relationship evidence ledger.
+    Skill order, co-occurrence and endpoint citations therefore cannot support
+    ``builds_on`` or ``works_with`` claims. Keep an explicit not-established
+    row for every typed item until a relationship record supplies its own
+    source, locator and exact supporting passage.
     """
-    by_context: dict[tuple[str, str, str], dict[str, dict]] = {}
-    for row in rows:
-        by_context.setdefault((row["context_level"], row["context_key"], row["domain_key"]), {})[
-            (row["item_type"], row["item_key"])
-        ] = row
     edges: list[dict] = []
-    seen: set[tuple] = set()
     for row in rows:
-        context = (row["context_level"], row["context_key"], row["domain_key"])
-        targets = by_context.get(context, {})
-        for relationship_type, names in (("builds_on", row.get("prerequisites") or []), ("works_with", row.get("related_items") or [])):
-            for name in names:
-                candidate_name = str(name).strip()
-                if not candidate_name:
-                    continue
-                exact = [candidate for candidate in targets.values() if candidate["name"].casefold() == candidate_name.casefold()]
-                target = next((candidate for candidate in exact if candidate["item_key"] != row["item_key"] and candidate["item_type"] == row["item_type"]), None)
-                target = target or next((candidate for candidate in exact if candidate["item_key"] != row["item_key"]), None)
-                if target:
-                    edge_key = (context, row["item_type"], row["item_key"], relationship_type, target["item_type"], target["item_key"])
-                    if edge_key in seen:
-                        continue
-                    seen.add(edge_key)
-                    evidence = _relationship_source_evidence(row, target, extra_limitations=[
-                        "Endpoint evidence is not proof that this relationship is universally required or exclusive."
-                    ])
-                    edges.append({
-                        "context_level": row["context_level"], "context_key": row["context_key"], "domain_key": row["domain_key"],
-                        "from_item_type": row["item_type"], "from_item_key": row["item_key"], "from_name": row["name"],
-                        "to_item_type": target["item_type"], "to_item_key": target["item_key"], "to_name": target["name"],
-                        "relationship_type": relationship_type, "relationship_status": "source_backed",
-                        **evidence, "source_confidence": _lower_confidence(row, target),
-                        "data_state": "source_backed", "guidance_owner": row["guidance_owner"], "verified_at": row["verified_at"],
-                    })
-                    continue
-
-                # Similar-but-not-identical names are deliberately not fuzzy-
-                # matched. Keep the explicit candidate as a non-student-facing
-                # backlog row so later source review can resolve it safely.
-                backlog_key = f"unresolved-{relationship_type}-{slug(candidate_name)}"
-                edge_key = (context, row["item_type"], row["item_key"], "not_established", "", backlog_key)
-                if edge_key in seen:
-                    continue
-                seen.add(edge_key)
-                evidence = _relationship_source_evidence(row, extra_limitations=[
-                    f"Explicit {relationship_type} candidate {candidate_name!r} did not resolve to an exact typed item; review before linking.",
-                    "This backlog row does not assert a relationship or establish a target item.",
-                ])
-                edges.append({
-                    "context_level": row["context_level"], "context_key": row["context_key"], "domain_key": row["domain_key"],
-                    "from_item_type": row["item_type"], "from_item_key": row["item_key"], "from_name": row["name"],
-                    "to_item_type": None, "to_item_key": backlog_key, "to_name": candidate_name,
-                    "relationship_type": "not_established", "relationship_status": "not_established",
-                    **evidence, "source_confidence": "low", "data_state": "not_established",
-                    "guidance_owner": row["guidance_owner"], "verified_at": row["verified_at"],
-                })
-    edge_sources = {(edge["context_level"], edge["context_key"], edge["from_item_type"], edge["from_item_key"]) for edge in edges}
-    for row in rows:
-        if row["item_type"] not in {"tool", "certification"}:
-            continue
-        key = (row["context_level"], row["context_key"], row["item_type"], row["item_key"])
-        if key in edge_sources:
-            continue
-        evidence = _relationship_source_evidence(row, extra_limitations=[
-            "No cross-type relationship is established in the reviewed source records."
-        ])
         edges.append({
-            "context_level": row["context_level"], "context_key": row["context_key"], "domain_key": row["domain_key"],
-            "from_item_type": row["item_type"], "from_item_key": row["item_key"], "from_name": row["name"],
-            "to_item_type": None, "to_item_key": None, "to_name": None,
-            "relationship_type": "not_established", "relationship_status": "not_established",
-            **evidence, "source_confidence": row["source_confidence"], "data_state": "not_established",
-            "guidance_owner": row["guidance_owner"], "verified_at": row["verified_at"],
+            "context_level": row["context_level"],
+            "context_key": row["context_key"],
+            "domain_key": row["domain_key"],
+            "from_item_type": row["item_type"],
+            "from_item_key": row["item_key"],
+            "from_name": row["name"],
+            "to_item_type": None,
+            "to_item_key": None,
+            "to_name": None,
+            "relationship_type": "not_established",
+            "relationship_status": "not_established",
+            "source_ids": [],
+            "source_references": [],
+            "evidence_limitations": [
+                "No item-to-item relationship has its own source-backed evidence record. Item co-occurrence, list position, and endpoint citations do not prove a prerequisite, complement, alternative, or use relationship."
+            ],
+            "source_confidence": "low",
+            "data_state": "not_established",
+            "guidance_owner": row["guidance_owner"],
+            "verified_at": row["verified_at"],
         })
     return edges
 
@@ -838,10 +856,10 @@ def relationship_sql(edge: dict) -> str:
 
 
 def render_sql(rows: list[dict], edges: list[dict], part: int) -> str:
-    columns = "(context_level, context_key, domain_key, item_type, item_key, name, plain_meaning, contextual_use, expected_output, priority, priority_reason, prerequisites, related_items, source_ids, source_references, source_locators, geographic_scope, evidence_limitations, evidence_type, source_confidence, data_state, link_state, link_url, link_title, link_source_reference, link_accessed_at, link_confidence, link_evidence, no_link_reason, guidance_owner, verified_at)"
+    columns = "(context_level, context_key, domain_key, item_type, item_key, name, plain_meaning, contextual_use, expected_output, priority, priority_reason, prerequisites, related_items, source_ids, source_references, source_locators, geographic_scope, evidence_limitations, evidence_type, source_confidence, data_state, link_state, link_url, link_title, link_source_reference, link_accessed_at, link_confidence, link_evidence, no_link_reason, guidance_owner, claim_review_state, claim_evidence, link_kind, link_level, link_language, link_access, link_duration, verified_at)"
     lines = [
         "-- Generated source-backed contextual guidance rows.",
-        f"-- Part {part}; run after backend/migration_contextual_career_items.sql and backend/migration_career_item_relationships_2026-09-17.sql.",
+        f"-- Part {part}; run after backend/migration_contextual_career_items.sql, backend/migration_career_context_claim_validation.sql, and backend/migration_career_item_relationships_2026-09-17.sql.",
         "BEGIN;",
         "INSERT INTO skillup_dev.career_context_items",
         f"    {columns}",
@@ -859,6 +877,9 @@ def render_sql(rows: list[dict], edges: list[dict], part: int) -> str:
         "    link_state = EXCLUDED.link_state, link_url = EXCLUDED.link_url, link_title = EXCLUDED.link_title,",
         "    link_source_reference = EXCLUDED.link_source_reference, link_accessed_at = EXCLUDED.link_accessed_at,",
         "    link_confidence = EXCLUDED.link_confidence, link_evidence = EXCLUDED.link_evidence, no_link_reason = EXCLUDED.no_link_reason,",
+        "    claim_review_state = EXCLUDED.claim_review_state, claim_evidence = EXCLUDED.claim_evidence,",
+        "    link_kind = EXCLUDED.link_kind, link_level = EXCLUDED.link_level, link_language = EXCLUDED.link_language,",
+        "    link_access = EXCLUDED.link_access, link_duration = EXCLUDED.link_duration,",
         "    verified_at = EXCLUDED.verified_at;",
     ]
     if edges:

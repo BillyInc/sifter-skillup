@@ -49,7 +49,7 @@
     "roles_with_esco": 599,
     "roles_source_backed": 663,
     "roles_with_onet": 554,
-    "roles_with_competencies": 515,
+    "roles_with_competencies": 535,
     "roles_with_tools": 575,
     "related_role_links": 4,
     "missing_groups": 0,
@@ -64,7 +64,7 @@
       "roles_with_esco": 28,
       "roles_source_backed": 35,
       "roles_with_onet": 28,
-      "roles_with_competencies": 25,
+      "roles_with_competencies": 28,
       "roles_with_tools": 28,
       "related_computational_role_links": 0
     },
@@ -88,7 +88,7 @@
       "roles_with_esco": 4,
       "roles_source_backed": 4,
       "roles_with_onet": 4,
-      "roles_with_competencies": 2,
+      "roles_with_competencies": 4,
       "roles_with_tools": 4,
       "related_computational_role_links": 0
     },
@@ -100,7 +100,7 @@
       "roles_with_esco": 10,
       "roles_source_backed": 12,
       "roles_with_onet": 11,
-      "roles_with_competencies": 9,
+      "roles_with_competencies": 11,
       "roles_with_tools": 11,
       "related_computational_role_links": 0
     },
@@ -136,7 +136,7 @@
       "roles_with_esco": 24,
       "roles_source_backed": 24,
       "roles_with_onet": 22,
-      "roles_with_competencies": 20,
+      "roles_with_competencies": 21,
       "roles_with_tools": 21,
       "related_computational_role_links": 0
     },
@@ -160,7 +160,7 @@
       "roles_with_esco": 30,
       "roles_source_backed": 36,
       "roles_with_onet": 31,
-      "roles_with_competencies": 27,
+      "roles_with_competencies": 29,
       "roles_with_tools": 30,
       "related_computational_role_links": 0
     },
@@ -172,7 +172,7 @@
       "roles_with_esco": 33,
       "roles_source_backed": 37,
       "roles_with_onet": 30,
-      "roles_with_competencies": 26,
+      "roles_with_competencies": 28,
       "roles_with_tools": 28,
       "related_computational_role_links": 0
     },
@@ -268,7 +268,7 @@
       "roles_with_esco": 25,
       "roles_source_backed": 25,
       "roles_with_onet": 21,
-      "roles_with_competencies": 18,
+      "roles_with_competencies": 21,
       "roles_with_tools": 21,
       "related_computational_role_links": 0
     },
@@ -280,7 +280,7 @@
       "roles_with_esco": 7,
       "roles_source_backed": 7,
       "roles_with_onet": 6,
-      "roles_with_competencies": 5,
+      "roles_with_competencies": 6,
       "roles_with_tools": 6,
       "related_computational_role_links": 0
     },
@@ -340,7 +340,7 @@
       "roles_with_esco": 27,
       "roles_source_backed": 41,
       "roles_with_onet": 23,
-      "roles_with_competencies": 22,
+      "roles_with_competencies": 23,
       "roles_with_tools": 37,
       "related_computational_role_links": 0
     },
@@ -388,7 +388,7 @@
       "roles_with_esco": 23,
       "roles_source_backed": 23,
       "roles_with_onet": 25,
-      "roles_with_competencies": 19,
+      "roles_with_competencies": 22,
       "roles_with_tools": 22,
       "related_computational_role_links": 0
     },
@@ -396,7 +396,7 @@
       "domain_id": "D144",
       "domain_name": "Climate Science, Meteorology",
       "role_count": 4,
-      "subgroup_count": 2,
+      "subgroup_count": 1,
       "roles_with_esco": 4,
       "roles_source_backed": 4,
       "roles_with_onet": 4,
@@ -456,7 +456,7 @@
       "domain_id": "D166",
       "domain_name": "Autonomous Vehicles, Self-Driving Systems",
       "role_count": 9,
-      "subgroup_count": 4,
+      "subgroup_count": 3,
       "roles_with_esco": 9,
       "roles_source_backed": 9,
       "roles_with_onet": 8,
@@ -489,7 +489,7 @@
       "roles_with_esco": 28,
       "roles_with_onet": 28,
       "roles_with_source_tools": 28,
-      "roles_with_onet_competencies": 25,
+      "roles_with_onet_competencies": 28,
       "group_skills": 5,
       "group_tools": 2,
       "source_ids": [
@@ -531,7 +531,7 @@
       "roles_with_esco": 4,
       "roles_with_onet": 4,
       "roles_with_source_tools": 4,
-      "roles_with_onet_competencies": 2,
+      "roles_with_onet_competencies": 4,
       "group_skills": 6,
       "group_tools": 5,
       "source_ids": [
@@ -575,7 +575,7 @@
       "roles_with_esco": 9,
       "roles_with_onet": 10,
       "roles_with_source_tools": 10,
-      "roles_with_onet_competencies": 8,
+      "roles_with_onet_competencies": 10,
       "group_skills": 7,
       "group_tools": 0,
       "source_ids": [
@@ -707,7 +707,7 @@
       "roles_with_esco": 11,
       "roles_with_onet": 10,
       "roles_with_source_tools": 10,
-      "roles_with_onet_competencies": 9,
+      "roles_with_onet_competencies": 10,
       "group_skills": 10,
       "group_tools": 10,
       "source_ids": [
@@ -838,7 +838,7 @@
       "roles_with_esco": 26,
       "roles_with_onet": 20,
       "roles_with_source_tools": 20,
-      "roles_with_onet_competencies": 18,
+      "roles_with_onet_competencies": 20,
       "group_skills": 10,
       "group_tools": 10,
       "source_ids": [
@@ -901,7 +901,7 @@
       "roles_with_esco": 6,
       "roles_with_onet": 9,
       "roles_with_source_tools": 7,
-      "roles_with_onet_competencies": 6,
+      "roles_with_onet_competencies": 7,
       "group_skills": 10,
       "group_tools": 10,
       "source_ids": [
@@ -922,7 +922,7 @@
       "roles_with_esco": 24,
       "roles_with_onet": 18,
       "roles_with_source_tools": 18,
-      "roles_with_onet_competencies": 17,
+      "roles_with_onet_competencies": 18,
       "group_skills": 10,
       "group_tools": 10,
       "source_ids": [
@@ -1243,7 +1243,7 @@
       "roles_with_esco": 25,
       "roles_with_onet": 21,
       "roles_with_source_tools": 21,
-      "roles_with_onet_competencies": 18,
+      "roles_with_onet_competencies": 21,
       "group_skills": 7,
       "group_tools": 3,
       "source_ids": [
@@ -1507,7 +1507,7 @@
       "roles_with_esco": 9,
       "roles_with_onet": 8,
       "roles_with_source_tools": 11,
-      "roles_with_onet_competencies": 7,
+      "roles_with_onet_competencies": 8,
       "group_skills": 10,
       "group_tools": 10,
       "source_ids": [
@@ -1669,7 +1669,7 @@
       "roles_with_esco": 9,
       "roles_with_onet": 8,
       "roles_with_source_tools": 8,
-      "roles_with_onet_competencies": 5,
+      "roles_with_onet_competencies": 8,
       "group_skills": 10,
       "group_tools": 10,
       "source_ids": [

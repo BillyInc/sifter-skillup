@@ -17,6 +17,7 @@ import json
 import re
 import unicodedata
 from collections import Counter
+from datetime import date
 from pathlib import Path
 from typing import Any
 
@@ -144,7 +145,7 @@ def main() -> None:
     )
     output = {
         "schemaVersion": 1,
-        "auditedOn": "2026-09-17",
+        "auditedOn": date.today().isoformat(),
         "sourceDirectory": "data/career-mapping/ccmas",
         "sourcePolicy": "Parsed CCMAS course records are authoritative. Appended parser/maintainer notes are retained for staff audit but excluded from student wording.",
         "programmeCount": len(programmes),
@@ -167,7 +168,7 @@ def main() -> None:
     OUT_JSON.write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     lines = [
-        "# Programme curriculum data-quality audit (2026-09-17)",
+        f"# Programme curriculum data-quality audit ({date.today().isoformat()})",
         "",
         "This is a read-only audit of the checked-in parsed CCMAS records. It is not a claim that the source PDFs themselves are wrong. The audit separates source wording from appended parser/maintainer notes and identifies where the legacy flattened profile cannot be used as student-facing data.",
         "",

@@ -17,10 +17,6 @@
     "build:web:expo": "node scripts/checkLegalConfig.mjs && node ./node_modules/expo/bin/cli export --platform web",
     "check:legal-config": "node scripts/checkLegalConfig.mjs",
     "test": "jest",
-    "test:sociology-route": "node scripts/sociologyRouteSmoke.cjs",
-    "test:sociology-report": "node scripts/sociologyReportSmoke.cjs",
-    "test:sociology-learning-plan": "node scripts/sociologyLearningPlanPersistenceSmoke.cjs",
-    "test:programme-scale": "node scripts/programmeGuidanceScaleSmoke.cjs",
     "gen:simulators": "ts-node scripts/generateSimulators.ts",
     "gen:simulators:all": "ts-node scripts/generateSimulators.ts --all",
     "gen:lab": "ts-node scripts/generateSimulators.ts --lab --file",
@@ -124,8 +120,7 @@
       "<rootDir>/.claude/worktrees/"
     ],
     "moduleNameMapper": {
-      "^react-native/Libraries/BatchedBridge/NativeModules$": "<rootDir>/__mocks__/nativeModules.js",
-      "^starkzap$": "<rootDir>/__mocks__/starkzap.js"
+      "^react-native/Libraries/BatchedBridge/NativeModules$": "<rootDir>/__mocks__/nativeModules.js"
     },
     "transformIgnorePatterns": [
       "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@supabase/.*|@tanstack/.*|zustand)"

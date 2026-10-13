@@ -87,14 +87,6 @@ data/career-mapping/role_tools_malformed_2026-08-26.json
 # Large generated career preview SQL is reconstructed locally from the tracked
 # gzip parts; never add the monolithic output to GitHub.
 backend/seed_career_v2_preview_*.sql
-# Same rule for the dated transports, which the pattern above does not match.
-# These reconstructions run 600-670 MB — well past GitHub's 100 MB per-file
-# limit — and are rebuilt on demand from the tracked *_parts_gz directories by
-# data/career-mapping/split_large_artifacts.py join-sql. A stray
-# seed_career_v2_2026-08-31.sql (630 MB) sat untracked in backend/ because
-# nothing here matched its name.
-backend/seed_career_v2_20*.sql
-backend/seed_career_canonical_*.sql
 nul
 
 # Ephemeral Claude Code agent worktrees. These were committed as bare gitlinks
@@ -106,8 +98,3 @@ nul
 # Unrelated local tool checkouts, likewise committed as stray gitlinks.
 /claude-code-proxy/
 /free-claude-code/
-
-# Live E2E run reports. They carry the test account emails and up to 800
-# characters of raw backend error bodies, and land in whatever directory the
-# script was run from.
-e2e*.json

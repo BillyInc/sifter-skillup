@@ -18,6 +18,7 @@ import json
 import re
 import unicodedata
 from collections import Counter
+from datetime import date
 from pathlib import Path
 from typing import Any
 
@@ -302,6 +303,7 @@ def emit_sql(programmes: list[dict[str, Any]]) -> str:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
+    parser.add_argument("--audit-out", type=Path, default=AUDIT_OUT)
     args = parser.parse_args()
     reviews = load_review()
     programmes: list[dict[str, Any]] = []
@@ -318,7 +320,7 @@ def main() -> None:
     args.out.write_text(sql_text, encoding="utf-8")
     audit = {
         "schemaVersion": 1,
-        "generatedOn": "2026-09-18",
+        "generatedOn": date.today().isoformat(),
         "contractName": "generic_ccmas_programme_curriculum_guidance",
         "sourcePolicy": "Course-scoped CCMAS outcomes are student-facing only when the original-source reconciliation is source_backed. Review-only rows remain in the seed for staff audit but are filtered from the student API. Legacy skills_profile arrays and generic employability prose do not define curriculum outcomes.",
         "programmeCount": len(programmes),
@@ -336,8 +338,8 @@ def main() -> None:
         ],
         "seedPath": str(args.out),
     }
-    AUDIT_OUT.parent.mkdir(parents=True, exist_ok=True)
-    AUDIT_OUT.write_text(json.dumps(audit, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    args.audit_out.parent.mkdir(parents=True, exist_ok=True)
+    args.audit_out.write_text(json.dumps(audit, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({key: value for key, value in audit.items() if key not in {"programmes"}}, indent=2))
 
 

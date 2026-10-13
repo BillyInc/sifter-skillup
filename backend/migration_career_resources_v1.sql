@@ -9,7 +9,6 @@ CREATE TABLE IF NOT EXISTS skillup_dev.career_learning_resources (
     subgroup_id       UUID REFERENCES skillup_dev.domain_subgroups(id) ON DELETE CASCADE,
     role_id           UUID REFERENCES skillup_dev.domain_roles(id) ON DELETE CASCADE,
     resource_type     TEXT NOT NULL CHECK (resource_type IN (
-        'programme_reading',
         'domain_overview',
         'role_reference',
         'skill_reference',

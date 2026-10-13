@@ -20,6 +20,9 @@ COMPUTATIONAL_MANIFEST = os.path.join(HERE, "computational_layer_manifest.json")
 # occupational groupings, not invented specialisations: the role library's
 # existing `isco_group` value is the source-backed ownership boundary.
 ISCO_SUBMAJOR = {
+    "01": ("Commissioned Armed Forces Officers", "Command and lead armed-forces units in commissioned officer roles."),
+    "02": ("Non-commissioned Armed Forces Officers", "Supervise and lead personnel in non-commissioned armed-forces roles."),
+    "03": ("Armed Forces Occupations, Other Ranks", "Carry out operational, combat and technical work in armed-forces roles outside commissioned and non-commissioned officer groups."),
     "12": ("Administrative and Commercial Managers", "Plan and direct commercial, administrative and service operations."),
     "13": ("Production and Specialised Services Managers", "Plan and direct production and specialised service operations."),
     "21": ("Science and Engineering Professionals", "Apply scientific, mathematical and engineering knowledge to professional work."),
@@ -52,6 +55,13 @@ ISCO_SUBMAJOR = {
 }
 
 SUBGROUP_LABELS = {
+    ("D107", "31"): ("Footwear & Leather Production, Technical, Quality and Supervisory Roles", "This group includes footwear and leather production technicians, product developers, quality staff and production supervisors."),
+    ("D111", "72"): ("Textile Machinery Maintenance and Repair", "Maintain and repair the machinery used in textile production."),
+    ("D111", "75"): ("Textile Product Inspection", "Inspect textile products and assess whether they meet specified quality requirements."),
+    ("D111", "81"): ("Textile, Apparel and Laundry Machine Operations", "Operate machinery used to process textiles and apparel, and to perform laundry operations."),
+    ("D129", "01"): ("Commissioned Armed Forces Officers", "Lead, plan and command armed-forces units in commissioned officer roles."),
+    ("D129", "02"): ("Non-commissioned Armed Forces Officers", "Lead and supervise personnel in non-commissioned armed-forces roles."),
+    ("D129", "03"): ("Armed Forces Occupations, Other Ranks", "Carry out operational, combat and technical work in armed-forces roles outside commissioned and non-commissioned officer groups."),
     ("D140", "21"): ("Robotics Engineering & Automation", "Design and develop robotic, automation and control systems."),
     ("D140", "31"): ("Robotics Technicians & Precision Systems", "Maintain, test and support robotic and precision systems."),
     ("D141", "21"): ("Quantum Hardware & Sensing", "Build and operate quantum hardware, sensors and control systems."),
@@ -60,8 +70,9 @@ SUBGROUP_LABELS = {
     ("D141", "31"): ("Quantum Technology Operations", "Operate, maintain and calibrate quantum technology equipment."),
     ("D070", "26"): ("Performers & Creative Directors", "Create, rehearse and lead artistic work for live performance."),
     ("D070", "34"): ("Stage & Production Crew", "Coordinate and operate the technical and production systems behind live shows."),
-    ("D167", "35"): ("XR Technical Support Specialists", "Help people use immersive hardware and software reliably."),
-    ("D167", "24"): ("XR Innovation & Solution Architecture", "Translate needs into workable immersive technology solutions."),
+    ("D167", "35"): ("Extended Reality Technical Support Specialists", "Help people use immersive hardware and software reliably."),
+    ("D167", "24"): ("Extended Reality Innovation & Solution Architecture", "Translate needs into workable immersive technology solutions."),
+    ("D167", "25"): ("Augmented and Virtual Reality Software Developers", "Code AR, VR, and spatial computing applications"),
     ("D168", "12"): ("Esports Operations & Management", "Coordinate the business and operational side of esports."),
     ("D168", "24"): ("Esports Community & Partnerships", "Grow audiences, communities and commercial relationships."),
     ("D168", "26"): ("Esports Broadcast & Content Production", "Create and deliver esports broadcast and editorial content."),
@@ -81,10 +92,10 @@ SUBGROUP_LABELS = {
     ("D003", "25"): ("Machine Learning & Computational Intelligence", "Build computational models that learn from data and support decisions."),
     ("D004", "25"): ("Cyber Defence & Security Engineering", "Protect systems, investigate incidents and test security controls."),
     ("D004", "12"): ("Cybersecurity Leadership & Governance", "Set security direction, manage risk and coordinate protective work."),
-    ("D005", "25"): ("Cloud Infrastructure & DevOps", "Design, deploy and automate reliable cloud systems."),
+    ("D005", "25"): ("Cloud Infrastructure & Development and Operations", "Design, deploy and automate reliable cloud systems."),
     ("D005", "35"): ("Cloud Technical Support", "Keep cloud services working and help resolve technical issues."),
-    ("D006", "25"): ("IoT Software & Systems", "Connect software, devices and data into working IoT systems."),
-    ("D006", "21"): ("IoT Engineering & Sensing", "Design the engineering and sensing systems behind connected devices."),
+    ("D006", "25"): ("Internet of Things Software & Systems", "Connect software, devices and data into working IoT systems."),
+    ("D006", "21"): ("Internet of Things Engineering & Sensing", "Design the engineering and sensing systems behind connected devices."),
     ("D012", "25"): ("FinTech Software & Systems", "Build secure software and data systems for financial services."),
     ("D012", "33"): ("FinTech Operations & Products", "Support the systems, processes and products that deliver financial services."),
     ("D056", "25"): ("Blockchain Software & Protocols", "Build and maintain distributed-ledger software, protocols and applications."),

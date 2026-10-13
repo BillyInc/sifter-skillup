@@ -42,7 +42,9 @@ def _load_catalog() -> dict[str, dict[str, str]]:
     text = (BACKEND / "seed_subject_catalog.sql").read_text(encoding="utf-8")
     rows: dict[str, dict[str, str]] = {}
     for match in re.finditer(
-        r"\(\s*'(?P<code>[A-Z0-9]+)'\s*,\s*'(?P<name>(?:''|[^'])*)'\s*,",
+        # Catalogue codes include technical/trade identifiers such as
+        # ``COLOR_GLAZE`` and ``GRAPH_PRINT``.
+        r"\(\s*'(?P<code>[A-Z0-9_]+)'\s*,\s*'(?P<name>(?:''|[^'])*)'\s*,",
         text,
     ):
         code = match.group("code")
@@ -307,6 +309,16 @@ def _option_expected(
             maxsplit=1,
             flags=re.I,
         )[0]
+        # Some brochure cells arrive with the category phrase glued together
+        # (for example ``anyotherArtssubject``).  The structured group already
+        # represents the category; normalize the source wording for this
+        # explanatory gate instead of rejecting a valid option.
+        source_scope_text = re.sub(
+            r"\banyother(?:arts?|social\s*sciences?)subjects?\b",
+            "any other subjects",
+            source_scope_text,
+            flags=re.I,
+        )
         unresolved_scope = re.search(
             r"\b(?:relevant|suitable|appropriate|related|cognate|pertinent)\b|"
             r"\bshares?\s+(?:the\s+)?block\b",
@@ -320,7 +332,14 @@ def _option_expected(
             r"\bany\s+subject\b",
             source_scope_text,
         )
-        if broad_group and (unresolved_scope or not explicit_open_scope):
+        fixed_total_leaves_one_open_credit = (
+            option["min_required"] > 0
+            and len(required) == option["min_required"] - 1
+        )
+        if broad_group and (
+            unresolved_scope
+            or not (explicit_open_scope or fixed_total_leaves_one_open_credit)
+        ):
             return False
     return all(_distinct_groups_satisfied(scope_groups, selected_codes) for scope_groups in related.values())
 

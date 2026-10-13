@@ -119,12 +119,11 @@ def category_hints(text):
 
 
 def resolve_contextual_rules(programmes):
-    """Resolve programme-level qualifier scope exactly like option generation.
+    """Parse each national exam layer from its own source wording.
 
-    The typed source-rule seed must agree with the executable option seed. In
-    particular, Arabic's O-level ``relevant subjects`` is resolved from the
-    same programme's narrow Arts/Social-Science UTME scope, while direct-entry
-    wording is never used as O-level/UTME scope.
+    UTME or O'Level wording cannot silently define the other layer's subject
+    pool. Explicit brochure cross-references ("as in [programme]") are still
+    resolved, while an unstated relevant/suitable pool remains non-matchable.
     """
     utme_text, olevel_text, utme_rules, olevel_rules = {}, {}, {}, {}
     utme_refs, olevel_refs = {}, {}
@@ -143,7 +142,7 @@ def resolve_contextual_rules(programmes):
         if olevel_text[name]:
             olevel_rules[name] = parse_olevel(olevel_text[name])
             same_as = re.match(
-                r"^\s*same\s+as\s+(?:in|for)\s+([^(.]+?)(?:\s*\(|\s*$)",
+                r"^\s*(?:same\s+as\s+(?:in|for)|as\s+in)\s+([^(.]+?)(?:\s*\(|\s*$)",
                 olevel_text[name],
                 re.I,
             )
@@ -162,41 +161,6 @@ def resolve_contextual_rules(programmes):
             if resolved_name and olevel_rules.get(resolved_name):
                 olevel_rules[name] = olevel_rules[resolved_name]
                 del olevel_refs[name]
-
-    def narrow_scope(parts, allowed_codes, source_codes):
-        if not parts:
-            return None
-        codes = {part[1] for part in parts if part[0] == "required"}
-        codes.update(
-            code
-            for part in parts
-            if part[0] == "one_of"
-            for code in part[2]
-        )
-        codes &= set(allowed_codes)
-        source_coverage = len(codes & set(source_codes)) / max(1, len(source_codes))
-        if not codes or source_coverage >= 0.70:
-            return None
-        return codes
-
-    for name in sorted(programmes):
-        if olevel_text[name] and not olevel_rules.get(name):
-            scope = narrow_scope(utme_rules.get(name), OLEVEL_CODES, UTME_CODES)
-            if scope:
-                candidate = parse_olevel(olevel_text[name], context_codes=scope)
-                if candidate:
-                    olevel_rules[name] = candidate
-        if utme_text[name] and not utme_rules.get(name):
-            resolved_olevel = olevel_rules.get(name)
-            scope = narrow_scope(
-                resolved_olevel[1] if resolved_olevel else None,
-                UTME_CODES,
-                OLEVEL_CODES,
-            )
-            if scope:
-                candidate = parse_utme(utme_text[name], context_codes=scope)
-                if candidate and not (isinstance(candidate, tuple) and candidate[0] == "ref"):
-                    utme_rules[name] = candidate
 
     return {
         name: {
@@ -274,6 +238,79 @@ def source_rule(text, exam_type, parsed_override=None):
     }
 
 
+def source_rule_with_variants(text, exam_type, parsed_override=None, variants=()):
+    """Choose a safe rule while distinguishing absent sources from unusable cells.
+
+    Exact/inherited brochure text that cannot be represented by the matcher is
+    still source evidence. Preserve it as ``structured_source`` rather than
+    claiming that the source is missing. Only an empty primary cell with no
+    usable source variants remains ``source_missing``.
+    """
+    primary = source_rule(text, exam_type, parsed_override)
+    if not variants:
+        return primary
+
+    def variant_text(value):
+        return value.get("text", "") if isinstance(value, dict) else str(value or "")
+
+    def attach_variant_provenance(candidate, variant):
+        # Keep source-cell provenance inside the typed record.  This is
+        # evidence for an institution/programme offering, not national scope.
+        enriched = json.loads(json.dumps(candidate))
+        source = variant.get("source") if isinstance(variant, dict) else None
+        enriched["rule_json"]["scope"] = "offering_variant"
+        enriched["rule_json"]["sourceStatus"] = (
+            variant.get("status") if isinstance(variant, dict) else "unknown"
+        )
+        if source:
+            enriched["rule_json"]["sourceLocator"] = {
+                key: source.get(key)
+                for key in ("source_file", "pdf_page", "table_row", "course_cell")
+                if source.get(key) is not None
+            }
+        inherited = variant.get("inherited_from") if isinstance(variant, dict) else None
+        if inherited:
+            enriched["rule_json"]["inheritedFrom"] = inherited
+        continuation = variant.get("continuation_sources") if isinstance(variant, dict) else None
+        if continuation:
+            enriched["rule_json"]["continuationSources"] = continuation
+        return enriched
+
+    parsed_variants = [
+        attach_variant_provenance(source_rule(variant_text(variant), exam_type), variant)
+        for variant in variants
+    ]
+    variant_payloads = [candidate["rule_json"] for candidate in parsed_variants]
+    if primary["rule_status"] == "matchable":
+        primary["rule_json"]["sourceVariants"] = variant_payloads
+        return primary
+
+    if primary["rule_status"] not in {
+        "source_missing", "structured_source", "cross_reference"
+    }:
+        return primary
+
+    if primary["rule_status"] == "source_missing":
+        return {
+            "rule_status": "structured_source",
+            "rule_kind": "source_variants",
+            "rule_json": {
+                "version": 1,
+                "examType": exam_type,
+                "reason": "source_variants_present_but_not_matchable",
+                "sourceVariants": variant_payloads,
+            },
+        }
+
+    # Source variants are individual brochure offering cells.  Even when a
+    # cell is parseable, it is not a national rule and must not make an
+    # otherwise blank/ambiguous national requirement executable.  Retain it
+    # as evidence for the separate institution-scoped reconciliation pass.
+    primary["rule_json"]["sourceVariants"] = variant_payloads
+    primary["rule_kind"] = "source_variants"
+    return primary
+
+
 def main():
     programmes = load_programmes()
     contextual_rules = resolve_contextual_rules(programmes)
@@ -290,29 +327,12 @@ def main():
         for exam_type, field in (("utme", "utme_subjects"), ("olevel", "olevel_requirement"), ("direct_entry", "direct_entry")):
             text = as_text(programme.get(field))
             variants = source_variant_texts(report, name, exam_type)
-            primary = source_rule(
+            rule = source_rule_with_variants(
                 text,
                 exam_type,
                 contextual_rules.get(name, {}).get(exam_type),
+                variants,
             )
-            rule = primary
-            if primary["rule_status"] in {"source_missing", "structured_source", "cross_reference"} and variants:
-                parsed_variants = [source_rule(variant, exam_type) for variant in variants]
-                matchable = [candidate for candidate in parsed_variants if candidate["rule_status"] == "matchable"]
-                if matchable:
-                    rule = {
-                        "rule_status": "matchable",
-                        "rule_kind": "source_variants",
-                        "rule_json": {
-                            "version": 1,
-                            "examType": exam_type,
-                            "variants": [candidate["rule_json"] for candidate in matchable],
-                            "sourceVariantCount": len(variants),
-                        },
-                    }
-                else:
-                    rule["rule_json"]["sourceVariants"] = [source_rule(variant, exam_type)["rule_json"] for variant in variants]
-                    rule["rule_kind"] = "source_variants"
             rid = uid("psr", name)
             record_id = uid("subject_rule_record", name, exam_type)
             sql.append(

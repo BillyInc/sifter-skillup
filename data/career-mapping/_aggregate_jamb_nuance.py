@@ -35,9 +35,9 @@ for f in [
     "enrichment/anthropology.json",
     "enrichment/intelligence_security.json",
     "enrichment/social_justice.json",
-    "enrichment/french.json",
     "enrichment/sport_science.json",
     "enrichment/sport_management_education.json",
+    "enrichment/portuguese.json",
 ]:
     d = json.load(open(f, encoding="utf-8"))
     # custom files list courses with skills_learned; roll them up as technical
@@ -69,9 +69,86 @@ def resolve_key(disc, code, faculty=None, name=None):
 # primary already comes from programme_mapping; here we add the SECONDARY programme(s).
 # Each entry: jamb_name -> [(discipline, code), ...] extra components to union in.
 SECONDARY = {
+    # UNIZIK's official undergraduate catalogue names the award "Igbo,
+    # African and Asian Studies" and lists Chinese Language and Igbo Language
+    # as options. Keep both matching CCMAS curricula as separate option
+    # branches; this is a national reference, not a claim about UNIZIK's exact
+    # course schedule.
+    "African and Asian Studies": [("Arts", "CHS")],
+    # The official JAMB Sciences identity names both Biotechnology and
+    # Molecular Biology. Keep the latter as a narrow Biology CCMAS component
+    # (BIO 414 only); do not inherit the full Biology curriculum. The exact
+    # FUHS-ILA awarder context and selected course scope are recorded in the
+    # manual scope override and remain held pending course/domain adjudication.
+    "BIOTECHNOLOGY AND MOLECULAR BIOLOGY": [("Sciences", "BIO")],
+    # JAMB has distinct Accounting and Finance offerings in Administration
+    # (BCU) and Social/Management Sciences (FEDOTUOKE). Retain both separate
+    # NUC CCMAS curriculum components as a held reference union. This does not
+    # claim either university uses the full union as its exact course plan.
+    "Accounting and Finance": [("Administration and Management", "ACC")],
+    # JAMB names Chemistry and Industrial Chemistry as distinct curriculum
+    # facets. Retain the separate Chemistry CCMAS package alongside the
+    # primary Industrial Chemistry package as a held reference union; this
+    # does not assert an institution-specific course schedule.
+    "Chemistry and Industrial Chemistry": [("Sciences", "CHM")],
+    # The Sciences JAMB identity names Economics alongside Computer Science.
+    # Keep the separate Economics CCMAS package as a supporting curriculum
+    # component; the full union is a reference scope, not an institution-
+    # specific combined degree plan.
+    "COMPUTER SCIENCE WITH ECONOMICS": [("Social Sciences", "ECO")],
+    # JAMB's official Sciences awarder table lists the distinct programme
+    # "Industrial Mathematics and Computer Science" at REDEEMERS. NUC has
+    # separate Industrial Mathematics (Sciences) and Computer Science
+    # (Computing) CCMAS packages. Keep both as an explicit reference union;
+    # the offering-specific course scope and domain links remain held for
+    # course/outcome and source-provenance review.
+    "Industrial Mathematics and Computer Science": [("Computing", "COS")],
+    # Two explicit options under one JAMB identity, not one simultaneous
+    # course schedule. Preserve both CCMAS standards as distinct option
+    # branches; institution-specific selection and downstream links remain
+    # under review.
+    "Physical Sciences (with options in i. Industrial Physics, ii. Physics with Electronics)": [("Sciences", "PHE")],
+    # Both named curriculum families are retained without asserting a
+    # campus-specific course schedule or inheriting either parent's paths.
+    "Industrial Physics with Applied Geophysics": [("Sciences", "IPH")],
+    # The JAMB title names the electronics facet alongside Industrial Physics.
+    # PHE is a distinct CCMAS standard; IT-application depth still needs its
+    # own course/outcome and learning-resource evidence.
+    "Industrial Physics with Electronics and IT Application": [("Sciences", "PHE")],
+    # JAMB explicitly lists the blended identity, and both named CCMAS
+    # programmes exist as distinct standards. Keep Mathematics as a distinct
+    # component instead of treating three MTH courses embedded in the CS
+    # package as a complete Mathematics curriculum. The union is a CCMAS
+    # reference scope, not proof of any institution's exact degree plan.
+    "Mathematics with Computer Science": [("Sciences", "MTH")],
+    # These two distinct JAMB identities also name both Computer Science and
+    # Mathematics. Preserve Mathematics as a separate CCMAS reference
+    # component; the held union is not an institution-specific timetable and
+    # must not publish downstream links until both facets are reconciled.
+    "COMPUTER SCIENCE AND MATHEMATICS": [("Sciences", "MTH")],
+    "COMPUTER SCIENCE WITH MATHEMATICS": [("Sciences", "MTH")],
+    # The JAMB title explicitly names both regulated subject areas. Retain the
+    # Actuarial Science CCMAS package as a distinct component; do not certify a
+    # blended course slice or inherit either parent's domains until a scoped
+    # course/outcome pass establishes the offering-level selection.
+    "Insurance and Actuarial Science": [("Administration and Management", "ACS")],
     "Economics and Statistics": [("Sciences", "STA")],
+    # Statistics Education combines the mathematics-teacher preparation
+    # package with the substantive Statistics curriculum. The education
+    # package alone does not cover the named Statistics facet.
+    "Statistics Education": [("Sciences", "STA")],
+    # Portuguese/English is a true curriculum blend: English is the primary
+    # CCMAS component and Portuguese is supplied by the checked-in external
+    # reference curriculum. Retain both components explicitly in the bridge.
+    "Portuguese/English": [("__custom__", "Portuguese")],
     "Economics with/and Operation Research": [("Sciences", "IMT")],  # OR hosted in Industrial Maths
     "Economics and Development Studies": [("Social Sciences", "DES")],
+    # TASUED's official undergraduate programme is titled Home Economics &
+    # Hotel Management and its course list includes both home-economics and
+    # hotel-management/service learning. Retain the distinct CCMAS HTM package
+    # as a supporting reference curriculum, not an institution-specific full
+    # course schedule. Source: https://tasued.edu.ng/home-economics-and-hotel-management/
+    "Home Economics and Hotel Management": [("Administration and Management", "HTM")],
     "Peace and Development Studies": [("Social Sciences", "PCR")],   # primary DES + Peace
     "International and Comparative Politics": [("Social Sciences", "POL")],
     "History and International Relations": [("Arts", "HIS")],
@@ -82,7 +159,6 @@ SECONDARY = {
     "Political Science and International Studies": [("Social Sciences", "IRS")],
     "Political Science and Conflict Resolution": [("Social Sciences", "PCR")],
     "Political Science and Conflict": [("Social Sciences", "PCR")],
-    "Political Science and Defence Studies": [("Social Sciences", "IRS")],  # defence ~ strategic/IR
     "Political Science and Diplomacy": [("Social Sciences", "IRS")],
     "Government and Public Administration": [("Administration and Management", "PAD")],
     "Political Science / International Law and Diplomacy": [("Social Sciences", "IRS")],
@@ -98,6 +174,15 @@ SECONDARY = {
     "History and Strategic Studies": [("Social Sciences", "IRS")],  # strategic ~ IR/strategic studies
     "Geography and Environmental Management": [("Environmental Sciences", "EVM")],
     "Geography and Geosciences": [("Sciences", "GEY")],
+    # FUNAAB's official admission catalogue lists Agricultural Economics and
+    # Farm Management separately from Agricultural Extension and Rural
+    # Development. Preserve both CCMAS curriculum families for the combined
+    # JAMB display identity; this is not a university-specific course plan.
+    "Farm Management & Agric. Extension": [("Agricultural Science", "AGE")],
+    # UNN's official department lists three combined-honours options:
+    # French/German, French/Russian, and German/Russian. Keep all three
+    # corresponding CCMAS language standards rather than French alone.
+    "French and German/Russian": [("Arts", "GER"), ("Arts", "RUS")],
 }
 
 DASH28 = re.compile(r"[^a-z0-9]")
@@ -116,6 +201,7 @@ for x in pm["mappings"]:
     jname = x["jamb_name"]
     code = x.get("ccmas_code"); disc = x.get("ccmas_discipline")
     comps = []
+    row_unresolved = []
     # Type-D rows have no CCMAS code by design.  Their reviewed enrichment
     # curriculum is an external primary component and must still produce a
     # skills profile; it must not be silently dropped from the JAMB bridge.
@@ -126,15 +212,32 @@ for x in pm["mappings"]:
     if pk:
         comps.append((pk, "primary"))
     else:
-        unresolved.append((jname, "primary", disc, code))
+        item = (jname, "primary", disc, code)
+        unresolved.append(item)
+        row_unresolved.append(item)
     for (sdisc, scode) in SECONDARY.get(jname, []):
         # custom Type-D programmes are keyed by (disc, name) directly
         if (sdisc, scode) in prog:
             comps.append(((sdisc, scode), "secondary")); continue
         sk = resolve_key(sdisc, scode)
         if sk: comps.append((sk, "secondary"))
-        else: unresolved.append((jname, "secondary", sdisc, scode))
+        else:
+            item = (jname, "secondary", sdisc, scode)
+            unresolved.append(item)
+            row_unresolved.append(item)
     if not comps:
+        out[jname] = {
+            "components": [],
+            "skills_profile_technical": [],
+            "skills_profile_transferable": [],
+            "skills_count": 0,
+            "is_blend": False,
+            "mapping_status": "review_required",
+            "unresolved_components": [
+                {"role": role, "discipline": item_disc, "code": item_code}
+                for _, role, item_disc, item_code in row_unresolved
+            ],
+        }
         continue
     tech, trans, complist = [], [], []
     for (k, role) in comps:
@@ -146,7 +249,12 @@ for x in pm["mappings"]:
                   "skills_profile_technical": tech,
                   "skills_profile_transferable": trans,
                   "skills_count": len(tech) + len(trans),
-                  "is_blend": len(complist) > 1}
+                  "is_blend": len(complist) > 1,
+                  "mapping_status": "review_required" if row_unresolved else "resolved",
+                  "unresolved_components": [
+                      {"role": role, "discipline": item_disc, "code": item_code}
+                      for _, role, item_disc, item_code in row_unresolved
+                  ]}
 
 json.dump(out, open("jamb/jamb_skills_nuance.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 

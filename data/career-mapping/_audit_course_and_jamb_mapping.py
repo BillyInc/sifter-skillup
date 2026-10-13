@@ -155,6 +155,7 @@ def course_evidence(programme: dict, domain_id: str, meta: dict, structure: dict
         row = {
             "code": course.get("code"),
             "title": title,
+            "course_identity": evidence.get_course_identity(course),
             "matched_anchors": matched[:16],
             "outcome_count": len(course.get("skills_learned") or []),
             "has_content_summary": bool(content),
@@ -178,7 +179,11 @@ def course_evidence(programme: dict, domain_id: str, meta: dict, structure: dict
             if anchor in D033_SPECIFIC_ANCHORS
             and anchor not in D033_GENERIC_OVERLAP
         ]
-    transferable = evidence.transferable_evidence(programme)
+    # The transferable-evidence helper is intentionally scoped to the exact
+    # courses that anchored this domain.  Pass those matched course records;
+    # the old one-argument call predates that safety contract and crashes the
+    # pre-SQL audit.
+    transferable = evidence.transferable_evidence(programme, matched_courses)
     return {
         "matched_course_count": len(matched_courses),
         "distinct_anchor_count": len(distinct),

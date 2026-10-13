@@ -12,7 +12,7 @@
   },
   "counts": {
     "domains": 168,
-    "subgroups": 558,
+    "subgroups": 555,
     "base_role_library_rows": 4703,
     "overlay_rows": 511,
     "merged_role_records": 5209,
@@ -24,12 +24,12 @@
     "role_records_with_esco_code": 4739,
     "role_records_with_onet_code": 4389,
     "role_records_with_work_profile": 5090,
-    "subgroups_with_source_provenance": 558,
+    "subgroups_with_source_provenance": 555,
     "subgroups_without_source_provenance": 0,
     "roles_without_any_recorded_anchor": 0,
     "roles_without_work_profile_row": 119,
-    "roles_assigned_to_subgroup": 5091,
-    "roles_using_direct_domain_fallback": 118,
+    "roles_assigned_to_subgroup": 5088,
+    "roles_using_direct_domain_fallback": 121,
     "roles_in_domains_without_subgroup_taxonomy": 0
   },
   "overlay_rows": {
@@ -40,7 +40,7 @@
     "arm_robotics_career": 1,
     "british_esports": 4,
     "global_esco": 49,
-    "global_isco": 79,
+    "global_isco": 76,
     "global_nice": 2,
     "global_sfia": 7,
     "isco_submajor_derived": 404,
@@ -2986,18 +2986,17 @@
       "domain_name": "Climate Science, Meteorology",
       "excluded": false,
       "role_records_after_overlay_dedup": 14,
-      "subgroup_records": 2,
+      "subgroup_records": 1,
       "roles_with_explicit_source_anchor": 14,
       "roles_with_profile_link_anchor": 14,
       "roles_with_any_source_evidence": 14,
       "roles_with_esco_code": 7,
       "roles_with_onet_code": 13,
       "roles_with_work_profile": 14,
-      "subgroups_with_source_provenance": 2,
+      "subgroups_with_source_provenance": 1,
       "source_kinds": [
         "esco",
         "global_esco",
-        "global_isco",
         "global_onet",
         "global_wef",
         "ng_environment"
@@ -3140,14 +3139,14 @@
       "domain_name": "Criminology, Criminal Justice",
       "excluded": false,
       "role_records_after_overlay_dedup": 20,
-      "subgroup_records": 7,
+      "subgroup_records": 6,
       "roles_with_explicit_source_anchor": 20,
       "roles_with_profile_link_anchor": 20,
       "roles_with_any_source_evidence": 20,
       "roles_with_esco_code": 14,
       "roles_with_onet_code": 18,
       "roles_with_work_profile": 20,
-      "subgroups_with_source_provenance": 7,
+      "subgroups_with_source_provenance": 6,
       "source_kinds": [
         "esco",
         "global_esco",
@@ -3459,14 +3458,14 @@
       "domain_name": "Autonomous Vehicles, Self-Driving Systems",
       "excluded": false,
       "role_records_after_overlay_dedup": 14,
-      "subgroup_records": 4,
+      "subgroup_records": 3,
       "roles_with_explicit_source_anchor": 14,
       "roles_with_profile_link_anchor": 14,
       "roles_with_any_source_evidence": 14,
       "roles_with_esco_code": 12,
       "roles_with_onet_code": 12,
       "roles_with_work_profile": 14,
-      "subgroups_with_source_provenance": 4,
+      "subgroups_with_source_provenance": 3,
       "source_kinds": [
         "esco",
         "global_esco",
@@ -11332,29 +11331,6 @@
     {
       "domain_id": "D151",
       "domain_name": "Criminology, Criminal Justice",
-      "isco_submajor": "25",
-      "label": "ISCO-08 group 25",
-      "description": "Source-backed occupational activities within this domain.",
-      "role_count": 1,
-      "source": "global_isco",
-      "sources": [
-        "global_isco"
-      ],
-      "source_provenance": {
-        "source": "global_isco",
-        "sources": [
-          "global_isco"
-        ],
-        "ownership": "subgroup",
-        "mapping_method": "canonical_role_library_isco_submajor",
-        "source_url": "https://isco.ilo.org/en/isco-08/"
-      },
-      "source_backed": true,
-      "has_nigerian_context": false
-    },
-    {
-      "domain_id": "D151",
-      "domain_name": "Criminology, Criminal Justice",
       "isco_submajor": "26",
       "label": "Criminologists & Probation Officers",
       "description": "Study crime and supervise offender rehabilitation",
@@ -16234,7 +16210,7 @@
       "isco_submajor": "22",
       "label": "Health professionals",
       "description": "Source-backed activities within this domain.",
-      "role_count": 2,
+      "role_count": 1,
       "source": "global_isco",
       "sources": [
         "global_isco"
@@ -17046,7 +17022,7 @@
       "isco_submajor": "21",
       "label": "Automotive & Powertrain Engineers",
       "description": "Engineer vehicle systems, powertrains and telecommunications hardware.",
-      "role_count": 8,
+      "role_count": 7,
       "source": "isco_submajor_derived",
       "sources": [
         "global_esco"
@@ -17101,29 +17077,6 @@
       },
       "source_backed": true,
       "has_nigerian_context": true
-    },
-    {
-      "domain_id": "D166",
-      "domain_name": "Autonomous Vehicles, Self-Driving Systems",
-      "isco_submajor": "31",
-      "label": "Science and Engineering Associate Professionals",
-      "description": "Support scientific, technical and engineering work through practical application and measurement.",
-      "role_count": 1,
-      "source": "global_isco",
-      "sources": [
-        "global_isco"
-      ],
-      "source_provenance": {
-        "source": "global_isco",
-        "sources": [
-          "global_isco"
-        ],
-        "ownership": "subgroup",
-        "mapping_method": "canonical_role_library_isco_submajor",
-        "source_url": "https://isco.ilo.org/en/isco-08/"
-      },
-      "source_backed": true,
-      "has_nigerian_context": false
     },
     {
       "domain_id": "D166",
@@ -17524,7 +17477,7 @@
       "isco_submajor": "22",
       "label": "Health professionals",
       "description": "Health professionals conduct research,; improve or develop concepts, theories and operational methods; and apply scientific knowledge relating to medicine, nursing, dentistry, veterinary medicine, pharmacy, and promotion of health. Competent performance in most occupations in this sub-major group requires skills at the fourth ISCO skill level.\nTasks performed by workers in this sub-major group usu",
-      "role_count": 3,
+      "role_count": 2,
       "source": "isco_submajor_derived",
       "sources": [
         "global_esco",
@@ -17828,7 +17781,7 @@
       "isco_submajor": "21",
       "label": "Climate Modelling & Atmospheric Science",
       "description": "Use observations, statistics and models to understand climate and weather.",
-      "role_count": 6,
+      "role_count": 4,
       "source": "global_esco",
       "sources": [
         "global_esco",
@@ -17855,29 +17808,6 @@
       },
       "source_backed": true,
       "has_nigerian_context": true
-    },
-    {
-      "domain_id": "D144",
-      "domain_name": "Climate Science, Meteorology",
-      "isco_submajor": "31",
-      "label": "Science and Engineering Associate Professionals",
-      "description": "Support scientific, technical and engineering work through practical application and measurement.",
-      "role_count": 1,
-      "source": "global_isco",
-      "sources": [
-        "global_isco"
-      ],
-      "source_provenance": {
-        "source": "global_isco",
-        "sources": [
-          "global_isco"
-        ],
-        "ownership": "subgroup",
-        "mapping_method": "canonical_role_library_isco_submajor",
-        "source_url": "https://isco.ilo.org/en/isco-08/"
-      },
-      "source_backed": true,
-      "has_nigerian_context": false
     },
     {
       "domain_id": "D145",
@@ -17974,7 +17904,7 @@
       "isco_submajor": "21",
       "label": "Nanoscience & Advanced Materials Research",
       "description": "Use scientific modelling, measurement and engineering to develop advanced materials.",
-      "role_count": 11,
+      "role_count": 8,
       "source": "global_esco",
       "sources": [
         "global_esco",
@@ -222444,7 +222374,7 @@
       "data_state": "source_backed",
       "isco_group": "3111",
       "isco_submajor": "31",
-      "subgroup_assignment": "subgroup",
+      "subgroup_assignment": "direct_domain_fallback",
       "esco_code": "3111.8",
       "onet_occupation_codes": [
         "19-2021.00"
@@ -228007,7 +227937,7 @@
       "data_state": "source_backed",
       "isco_group": "2529",
       "isco_submajor": "25",
-      "subgroup_assignment": "subgroup",
+      "subgroup_assignment": "direct_domain_fallback",
       "esco_code": "2529.2",
       "onet_occupation_codes": [
         "15-1299.06"
@@ -242843,7 +242773,7 @@
       "data_state": "source_backed",
       "isco_group": "3119",
       "isco_submajor": "31",
-      "subgroup_assignment": "subgroup",
+      "subgroup_assignment": "direct_domain_fallback",
       "esco_code": "3119.2.1",
       "onet_occupation_codes": [
         "17-2199.08",

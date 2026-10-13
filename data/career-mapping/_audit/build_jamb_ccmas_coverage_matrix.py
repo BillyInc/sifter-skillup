@@ -20,8 +20,8 @@ ROOT = HERE.parent
 CANONICAL_PATH = HERE / "jamb_ccmas_inheritance_canonical_2026-08-17.json"
 MAPPING_PATH = ROOT / "programme_mapping.json"
 SCOPE_PATH = HERE / "jamb_curriculum_scopes_2026-08-17.json"
-OUT_JSON = HERE / "jamb_ccmas_curriculum_coverage_matrix_2026-09-19.json"
-OUT_MD = HERE / "JAMB_CCMAS_CURRICULUM_COVERAGE_MATRIX_2026-09-19.md"
+OUT_JSON = HERE / "jamb_ccmas_curriculum_coverage_matrix_2026-09-28.json"
+OUT_MD = HERE / "JAMB_CCMAS_CURRICULUM_COVERAGE_MATRIX_2026-09-28.md"
 
 REVIEW_STATES = {"review_required", "external_review_required"}
 UNAVAILABLE_STATES = {

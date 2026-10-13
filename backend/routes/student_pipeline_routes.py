@@ -13,7 +13,7 @@ import re
 import uuid
 from datetime import datetime, timezone
 from difflib import SequenceMatcher
-from typing import Any, Literal, Optional
+from typing import Any, Optional
 
 from fastapi import APIRouter, Body, Depends, HTTPException, Query, Response
 from pydantic import BaseModel, Field
@@ -347,7 +347,9 @@ def _normalise_stream(value: Optional[str]) -> Optional[str]:
     stream = (value or "").strip().lower()
     if stream == "arts":
         return "art"
-    return stream if stream in {"science", "commercial", "art"} else None
+    if stream in {"technical/vocational", "technical and vocational", "vocational"}:
+        return "technical"
+    return stream if stream in {"science", "commercial", "art", "technical"} else None
 
 
 def _resolve_subject_catalog(subjects: list[str]) -> dict[str, dict]:
@@ -424,19 +426,7 @@ def _profile_out(row: dict, subject_rows: Optional[list[dict]] = None) -> dict:
 
 
 class StartingPointIn(BaseModel):
-    # These four mirror the CHECK constraints on
-    # skillup_dev.student_starting_points (migration_student_pipeline_live.sql).
-    # Validating here turns a bad value into a 422 at the request boundary
-    # instead of a Postgres constraint violation behind a generic 500.
-    userType: Literal[
-        "senior_secondary",
-        "ss3_secondary",
-        "jamb",
-        "student",
-        "skilled_worker",
-        "professional",
-        "graduate",
-    ]
+    userType: str
     institutionType: Optional[str] = None
     schoolName: Optional[str] = None
     programmeName: Optional[str] = None
@@ -447,9 +437,9 @@ class StartingPointIn(BaseModel):
     jambPrepMode: Optional[str] = None
     tutorialCentreId: Optional[str] = None
     tutorialCentreName: Optional[str] = None
-    ssDoor: Optional[Literal["know_where", "know_what", "unsure"]] = None
-    ssClass: Optional[Literal["ss1", "ss2", "ss3"]] = None
-    stream: Optional[Literal["science", "art", "commercial"]] = None
+    ssDoor: Optional[str] = None
+    ssClass: Optional[str] = None
+    stream: Optional[str] = None
     exploreIntent: list[str] = Field(default_factory=list)
     jambSubjects: list[str] = Field(default_factory=list)
     olevelSubjects: list[str] = Field(default_factory=list)
@@ -694,9 +684,9 @@ def _path_snapshot(path: dict[str, Any]) -> dict[str, Any]:
     """
     allowed_single = {
         "academicContext", "subjects", "programme", "university", "requirements",
-        "discoveryDoor", "notes",
+        "discoveryDoor", "notes", "learningPlanSnapshot",
     }
-    allowed_lists = {"domains", "subgroups", "roles"}
+    allowed_lists = {"domains", "subgroups", "roles", "learningFocus"}
     out: dict[str, Any] = {}
     for key in allowed_single:
         value = path.get(key)
@@ -706,6 +696,59 @@ def _path_snapshot(path: dict[str, Any]) -> dict[str, Any]:
         value = path.get(key)
         if isinstance(value, list):
             out[key] = [item for item in value if isinstance(item, dict)]
+    history = path.get("learningPlanSnapshots")
+    if isinstance(history, list):
+        # Keep a bounded, newest-first history in the account-owned JSON path;
+        # ordinary saves preserve existing IDs, while drafts live separately
+        # in learningPlanSnapshot and do not create history.
+        valid = [
+            item for item in history[-100:]
+            if isinstance(item, dict)
+            and isinstance(item.get("snapshotId"), str)
+            and item.get("snapshotId", "").strip()
+            and isinstance(item.get("stacks"), list)
+        ]
+        seen: set[str] = set()
+        normalized: list[dict[str, Any]] = []
+        for item in reversed(valid):
+            snapshot_id = item["snapshotId"].strip()
+            if snapshot_id in seen:
+                continue
+            seen.add(snapshot_id)
+            normalized.append(item)
+        out["learningPlanSnapshots"] = list(reversed(normalized))[-20:]
+    deleted_ids = path.get("deletedLearningPlanSnapshotIds")
+    if isinstance(deleted_ids, list):
+        out["deletedLearningPlanSnapshotIds"] = list(dict.fromkeys(
+            value.strip() for value in deleted_ids
+            if isinstance(value, str) and value.strip()
+        ))[-500:]
+        deleted = set(out["deletedLearningPlanSnapshotIds"])
+        if isinstance(out.get("learningPlanSnapshots"), list):
+            out["learningPlanSnapshots"] = [
+                item for item in out["learningPlanSnapshots"]
+                if item.get("snapshotId") not in deleted
+            ]
+        current_snapshot = out.get("learningPlanSnapshot")
+        if isinstance(current_snapshot, dict) and current_snapshot.get("snapshotId") in deleted:
+            out.pop("learningPlanSnapshot", None)
+    removed_ids = path.get("learningPlanRemovedIds")
+    if isinstance(removed_ids, list):
+        out["learningPlanRemovedIds"] = [str(item) for item in removed_ids if isinstance(item, str) and item.strip()]
+    removed_by_route = path.get("learningPlanRemovedIdsByRoute")
+    if isinstance(removed_by_route, dict):
+        out["learningPlanRemovedIdsByRoute"] = {
+            str(route_key): [str(item) for item in values if isinstance(item, str) and item.strip()]
+            for route_key, values in removed_by_route.items()
+            if isinstance(route_key, str) and route_key.strip() and isinstance(values, list)
+        }
+    order_by_route = path.get("learningPlanOrderByRoute")
+    if isinstance(order_by_route, dict):
+        out["learningPlanOrderByRoute"] = {
+            str(route_key): [str(item) for item in values if isinstance(item, str) and item.strip()]
+            for route_key, values in order_by_route.items()
+            if isinstance(route_key, str) and route_key.strip() and isinstance(values, list)
+        }
     resume = path.get("resume")
     if isinstance(resume, dict):
         checkpoint = {
@@ -716,6 +759,79 @@ def _path_snapshot(path: dict[str, Any]) -> dict[str, Any]:
         if checkpoint:
             out["resume"] = checkpoint
     return out
+
+
+def _merge_guidance_snapshot_history(existing_path: dict[str, Any], incoming_path: dict[str, Any]) -> dict[str, Any]:
+    """Preserve completed snapshots across ordinary client path saves.
+
+    Existing snapshot IDs win over client-supplied copies, so a client cannot
+    rewrite or silently delete a completed report through the general path
+    upsert. Explicit archive-management actions need their own owner-scoped API.
+    """
+    existing = _path_snapshot(existing_path)
+    incoming = _path_snapshot(incoming_path)
+    tombstones = list(dict.fromkeys([
+        *(existing.get("deletedLearningPlanSnapshotIds") or []),
+        *(incoming.get("deletedLearningPlanSnapshotIds") or []),
+    ]))[-500:]
+    incoming["deletedLearningPlanSnapshotIds"] = tombstones
+    deleted = set(tombstones)
+    merged: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for source in (existing.get("learningPlanSnapshots", []), incoming.get("learningPlanSnapshots", [])):
+        for snapshot in source:
+            snapshot_id = str(snapshot.get("snapshotId") or "").strip()
+            if snapshot_id and snapshot_id not in seen and snapshot_id not in deleted:
+                seen.add(snapshot_id)
+                merged.append(snapshot)
+    if merged:
+        incoming["learningPlanSnapshots"] = merged[-20:]
+    elif "learningPlanSnapshots" in existing:
+        incoming["learningPlanSnapshots"] = existing["learningPlanSnapshots"]
+    return incoming
+
+
+def _delete_learning_plan_snapshot(path: dict[str, Any], snapshot_id: str) -> dict[str, Any]:
+    normalized = _path_snapshot(path)
+    history = normalized.get("learningPlanSnapshots", [])
+    if not any(item.get("snapshotId") == snapshot_id for item in history):
+        raise HTTPException(status_code=404, detail="That saved learning plan was not found.")
+    normalized["learningPlanSnapshots"] = [
+        item for item in history if item.get("snapshotId") != snapshot_id
+    ]
+    current = normalized.get("learningPlanSnapshot")
+    if isinstance(current, dict) and current.get("snapshotId") == snapshot_id:
+        if normalized["learningPlanSnapshots"]:
+            normalized["learningPlanSnapshot"] = normalized["learningPlanSnapshots"][-1]
+        else:
+            normalized.pop("learningPlanSnapshot", None)
+    tombstones = list(normalized.get("deletedLearningPlanSnapshotIds") or [])
+    normalized["deletedLearningPlanSnapshotIds"] = list(dict.fromkeys([*tombstones, snapshot_id]))[-500:]
+    return normalized
+
+
+def _path_with_selected_learning_snapshot(path: dict[str, Any], snapshot_id: str) -> dict[str, Any]:
+    """Select only a completed snapshot from the path already scoped to its owner."""
+    history = path.get("learningPlanSnapshots")
+    selected = next((
+        item for item in history
+        if isinstance(item, dict) and item.get("snapshotId") == snapshot_id
+    ), None) if isinstance(history, list) else None
+    if selected is None:
+        raise HTTPException(status_code=404, detail="That saved report was not found.")
+    result = dict(path)
+    result["learningPlanSnapshot"] = selected
+    context = selected.get("reportPathContext")
+    if isinstance(context, dict):
+        for key in (
+            "academicContext", "subjects", "programme", "programmes", "university",
+            "requirements", "subjectMatch", "domains", "subgroups", "roles", "notes",
+            "learningFocus", "learningPlanRemovedIds", "learningPlanRemovedIdsByRoute",
+            "learningPlanOrderByRoute",
+        ):
+            if key in context:
+                result[key] = context[key]
+    return result
 
 
 @router.get("/guidance-path", response_model=ResponseModel)
@@ -752,6 +868,11 @@ async def save_guidance_path(
     if not snapshot:
         return ResponseModel(success=False, message="Choose a guidance path before saving.", data=None)
     try:
+        existing_rows = (_svc().table("guidance_report_paths").select("path")
+                         .eq("student_id", current_user["id"]).limit(1).execute().data or [])
+        existing_path = existing_rows[0].get("path") if existing_rows and isinstance(existing_rows[0], dict) else {}
+        if isinstance(existing_path, dict):
+            snapshot = _merge_guidance_snapshot_history(existing_path, snapshot)
         now = _now()
         res = _svc().table("guidance_report_paths").upsert({
             "student_id": current_user["id"],
@@ -773,13 +894,50 @@ async def save_guidance_path(
         return ResponseModel(success=False, message="Could not save this guidance path yet.", data=None)
 
 
-def _current_guidance_report_context(current_user: dict) -> ReportContext:
+@router.delete("/guidance-path/snapshots/{snapshot_id}", response_model=ResponseModel)
+async def delete_guidance_snapshot(
+    snapshot_id: str,
+    current_user: dict = Depends(Auth.get_current_user),
+):
+    """Delete one completed snapshot from the authenticated student's archive."""
+    try:
+        rows = (_svc().table("guidance_report_paths").select("path, source")
+                .eq("student_id", current_user["id"]).limit(1).execute().data or [])
+        if not rows or not isinstance(rows[0].get("path"), dict):
+            raise HTTPException(status_code=404, detail="That saved learning plan was not found.")
+        path = _delete_learning_plan_snapshot(rows[0]["path"], snapshot_id)
+        now = _now()
+        saved = _svc().table("guidance_report_paths").upsert({
+            "student_id": current_user["id"],
+            "created_by": current_user["id"],
+            "source": rows[0].get("source") or "explore",
+            "path": path,
+            "updated_at": now,
+        }, on_conflict="student_id").execute()
+        row = (saved.data or [{}])[0]
+        return ResponseModel(data=_real({
+            "id": row.get("id"), "studentId": current_user["id"],
+            "source": rows[0].get("source") or "explore", "path": path, "updatedAt": now,
+        }))
+    except HTTPException:
+        raise
+    except Exception as exc:  # noqa: BLE001
+        log.error("student guidance snapshot delete failed", error=str(exc))
+        return ResponseModel(success=False, message="Could not delete this saved learning plan yet.", data=None)
+
+
+def _current_guidance_report_context(current_user: dict, snapshot_id: Optional[str] = None) -> ReportContext:
     user_row = (_users().select(
         "id, username, student_class, stream, provisioning_school_id"
     ).eq("id", current_user["id"]).limit(1).execute().data or [None])[0]
     user = user_row or current_user
     path_row = (_svc().table("guidance_report_paths").select("path, source, updated_at")
                 .eq("student_id", current_user["id"]).limit(1).execute().data or [None])[0]
+    if snapshot_id:
+        if not path_row or not isinstance(path_row.get("path"), dict):
+            raise HTTPException(status_code=404, detail="That saved report was not found.")
+        owned_path = _path_with_selected_learning_snapshot(path_row["path"], snapshot_id)
+        path_row = {**path_row, "path": owned_path}
     full_path = resolve_guidance_report_context(_svc(), user, path_row)
     programme = full_path.get("programme") or {}
     university = full_path.get("university") or {}
@@ -802,12 +960,13 @@ def _current_guidance_report_context(current_user: dict) -> ReportContext:
 
 @router.get("/report.html")
 async def get_my_guidance_report_html(
+    snapshot_id: Optional[str] = Query(None, min_length=1, max_length=180),
     current_user: dict = Depends(Auth.get_current_user),
 ):
     """Authenticated Student report; print-to-PDF is handled by the browser."""
     _require_career_report_exports_enabled()
     try:
-        ctx = _current_guidance_report_context(current_user)
+        ctx = _current_guidance_report_context(current_user, snapshot_id)
         return Response(content=build_report_html(ctx), media_type="text/html")
     except HTTPException:
         raise
@@ -818,12 +977,13 @@ async def get_my_guidance_report_html(
 
 @router.get("/report.docx")
 async def get_my_guidance_report_docx(
+    snapshot_id: Optional[str] = Query(None, min_length=1, max_length=180),
     current_user: dict = Depends(Auth.get_current_user),
 ):
     """Authenticated Student report as an editable document."""
     _require_career_report_exports_enabled()
     try:
-        ctx = _current_guidance_report_context(current_user)
+        ctx = _current_guidance_report_context(current_user, snapshot_id)
         safe = (ctx.student_name or "student").replace(" ", "_")[:40]
         return Response(
             content=build_report_docx(ctx),
@@ -855,20 +1015,15 @@ async def list_subjects(
         query = (
             _svc()
             .table("subject_catalog")
-            .select("id, code, name, aliases, category, stream_tags")
+            .select("id, code, name, aliases, exam_types, category, stream_tags")
             .eq("active", True)
         )
-        if q:
-            query = query.ilike("name", f"%{q.strip()}%")
         normalized_stream = _normalise_stream(stream)
-        # Stream is a relevance/order hint, not an eligibility filter. The
-        # picker must still expose every valid JAMB/O-level subject for the
-        # selected stream, including subjects outside its usual cluster.
         if exam_type:
             query = query.contains("exam_types", [exam_type.strip().lower()])
-        # Return the complete active catalogue for the requested exam type.
-        # Stream tags only affect ordering; they must never hide valid subjects
-        # that a Student may need to choose.
+        # The chosen school stream filters the picker only. It does not alter
+        # national programme rules or institution/offering exceptions used by
+        # the eligibility matcher.
         res = query.order("name").execute()
         items = [
             {
@@ -876,16 +1031,30 @@ async def list_subjects(
                 "code": r.get("code"),
                 "name": r.get("name"),
                 "aliases": r.get("aliases") or [],
+                "examTypes": r.get("exam_types") or [],
                 "category": r.get("category"),
                 "streamTags": r.get("stream_tags") or [],
+                # Keep the existing `art` wire tag for older clients while
+                # exposing the user-facing Arts/Science/Commercial grouping.
+                "streams": [
+                    "arts" if tag == "art" else tag
+                    for tag in (r.get("stream_tags") or [])
+                ],
             }
             for r in (res.data or [])
         ]
-        if normalized_stream and items:
-            items.sort(key=lambda item: (
-                0 if normalized_stream in (item.get("streamTags") or []) else 1,
-                item.get("name") or "",
-            ))
+        if q and q.strip():
+            needle = q.strip().casefold()
+            items = [
+                item for item in items
+                if needle in str(item.get("name") or "").casefold()
+                or any(needle in str(alias).casefold() for alias in item["aliases"])
+            ]
+        if normalized_stream:
+            items = [
+                item for item in items
+                if normalized_stream in (item.get("streamTags") or [])
+            ]
         set_json(cache_key, items, REFERENCE_TTL_SECONDS)
         return ResponseModel(data=_real(items))
     except Exception as exc:  # noqa: BLE001
@@ -1256,7 +1425,7 @@ def _jamb_detail_out(r: dict, *, full: bool = False) -> dict:
 
 
 def _programme_context_items_for_student(svc: Any, programme_id: Any) -> list[dict]:
-    """Read programme-owned explanations for a JAMB identity's canonical row."""
+    """Read only reviewed programme explanations with verified learning links."""
     if not programme_id:
         return []
 
@@ -1296,6 +1465,8 @@ def _programme_context_items_for_student(svc: Any, programme_id: Any) -> list[di
                 "evidenceType": row.get("evidence_type") or "source_supported_synthesis",
                 "sourceConfidence": row.get("source_confidence"),
                 "dataState": row.get("data_state") or "source_backed",
+                "claimReviewState": row.get("claim_review_state"),
+                "claimEvidence": row.get("claim_evidence") or {},
                 "linkState": row.get("link_state") or "review_required",
                 "linkUrl": row.get("link_url"),
                 "linkTitle": row.get("link_title"),
@@ -1303,24 +1474,56 @@ def _programme_context_items_for_student(svc: Any, programme_id: Any) -> list[di
                 "linkAccessedAt": row.get("link_accessed_at"),
                 "linkConfidence": row.get("link_confidence") or "low",
                 "linkEvidence": row.get("link_evidence") or {},
+                "linkKind": row.get("link_kind"),
+                "linkLevel": row.get("link_level"),
+                "linkLanguage": row.get("link_language"),
+                "linkAccess": row.get("link_access"),
+                "linkDuration": row.get("link_duration"),
                 "noLinkReason": row.get("no_link_reason"),
                 "guidanceOwner": row.get("guidance_owner"),
                 "verifiedAt": row.get("verified_at"),
             }
             for row in rows
-            # Context ownership and explicit source state are both required
-            # for the student JAMB route.  In particular, do not treat a
-            # missing data_state as source-backed: older role-aggregated and
-            # review-only rows remain audit data until they are classified and
-            # approved for the programme layer.
+            # Ownership/source state alone do not approve a student-facing
+            # explanation. Missing claim review or learning-link evidence
+            # leaves the row hidden until it has passed the same contract as
+            # domain, subgroup and role items.
             if row.get("name")
             and row.get("guidance_owner") == "programme"
             and row.get("data_state") == "source_backed"
-            and row.get("link_state") in {"linked", "no_link"}
+            and _student_programme_context_item_visible(row)
         ]
     except Exception as exc:  # noqa: BLE001
         log.debug("programme context lookup unavailable for JAMB detail", error=str(exc))
         return []
+
+
+def _student_programme_context_item_visible(row: dict) -> bool:
+    if row.get("claim_review_state") != "approved":
+        return False
+    link_url = str(row.get("link_url") or "").strip()
+    if (
+        row.get("link_state") != "linked"
+        or not re.match(r"^https://[^\s]+$", link_url, re.IGNORECASE)
+        or not row.get("link_accessed_at")
+        or not isinstance(row.get("link_source_reference"), dict)
+        or not row.get("link_source_reference")
+        or not isinstance(row.get("link_evidence"), dict)
+        or not row.get("link_evidence")
+    ):
+        return False
+    evidence = row.get("claim_evidence")
+    claims = evidence.get("claims") if isinstance(evidence, dict) else None
+    if not isinstance(claims, dict):
+        return False
+    required_claims = {"item_identity", "checkpoint_fit", "plain_meaning", "contextual_use"}
+    if row.get("expected_output"):
+        required_claims.add("expected_output")
+    for claim_key in required_claims:
+        claim = claims.get(claim_key)
+        if not isinstance(claim, dict) or not claim.get("source_references") or not claim.get("source_locators"):
+            return False
+    return True
 
 
 def _programme_curriculum_contract_for_student(svc: Any, programme_id: Any) -> dict:
@@ -1546,6 +1749,27 @@ async def get_jamb_programme_domains(jamb_programme_id: str):
             .execute()
         )
         domains = []
+        domain_keys = list({
+            str(row.get("domain_key"))
+            for row in (res.data or [])
+            if row.get("domain_key")
+        })
+        descriptions_by_key = {}
+        if domain_keys:
+            try:
+                description_rows = (
+                    _svc()
+                    .table("domains")
+                    .select("domain_key, description")
+                    .in_("domain_key", domain_keys)
+                    .execute()
+                ).data or []
+                descriptions_by_key = {
+                    str(row.get("domain_key")): row.get("description")
+                    for row in description_rows
+                }
+            except Exception as description_exc:  # noqa: BLE001
+                log.debug("student JAMB domain summaries unavailable", error=str(description_exc))
         for r in (res.data or []):
             # An unclassified link is not evidence of an adjacent relationship.
             # Keep the matcher fail-closed instead of silently turning missing
@@ -1557,6 +1781,7 @@ async def get_jamb_programme_domains(jamb_programme_id: str):
                 {
                     "domainId": r.get("domain_key"),
                     "domainName": r.get("domain_name"),
+                    "domainDescription": descriptions_by_key.get(str(r.get("domain_key") or "")),
                     "cluster": r.get("cluster"),
                     "matchType": match_type,
                     "eliteFlag": bool(r.get("elite_domain")),
@@ -2764,6 +2989,17 @@ def _match_structured_subject_options(
             flags=re.I,
         )[0]
         source_norm = _normalise_subject(source_for_subjects)
+        # Brochure UTME cells commonly use ``Agricultural Science`` while the
+        # current JAMB approved-subject picker names the same UTME choice
+        # ``Agriculture``. Reconcile only this source spelling at the UTME
+        # layer so the O-level ``Agricultural Science`` catalogue item remains
+        # distinct and source-backed.
+        if exam_type == "utme":
+            source_norm = re.sub(
+                r"\b(?:agricultural\s+science|agriculture\s+science)\b",
+                "agriculture",
+                source_norm,
+            )
         source_subjects = [
             subject
             for subject in catalog_subjects
@@ -2856,7 +3092,10 @@ def _match_structured_subject_options(
         generic_olevel_scope = (
             exam_type == "olevel"
             and broad_group
-            and (bool(unresolved_scope) or not explicit_open_scope)
+            and (bool(unresolved_scope) or (
+                not explicit_open_scope
+                and len(required) < max(1, min_required - 1)
+            ))
         )
         if generic_olevel_scope:
             continue

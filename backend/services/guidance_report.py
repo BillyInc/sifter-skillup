@@ -307,6 +307,8 @@ def resolve_guidance_report_context(
         "university": university,
         "requirements": requirements,
         "subjectMatch": path.get("subjectMatch") if isinstance(path.get("subjectMatch"), dict) else {"status": "not_checked"},
+        "learningFocus": path.get("learningFocus") if isinstance(path.get("learningFocus"), list) else [],
+        "learningPlanSnapshot": path.get("learningPlanSnapshot") if isinstance(path.get("learningPlanSnapshot"), dict) else None,
         "accessCode": access_code,
         "domains": domains,
         "selectedCounts": {

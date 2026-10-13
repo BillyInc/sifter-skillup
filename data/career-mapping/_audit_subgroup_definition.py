@@ -1,8 +1,8 @@
 """Audit subgroup data and runtime behaviour against the approved definition.
 
-This is intentionally an audit first. It does not rewrite domain_structure.json:
-the definition says subgroups are a derived presentation layer, so any repair
-must preserve the canonical role library and the two-digit ISCO rule.
+This is intentionally an audit first. It does not rewrite domain_structure.json.
+Role-to-subgroup counts follow the same explicit route resolver as the seed
+generator; ISCO remains role identity and does not itself establish subgroup fit.
 """
 
 from __future__ import annotations
@@ -11,6 +11,9 @@ import json
 import re
 from collections import Counter, defaultdict
 from pathlib import Path
+
+from _role_overlay_loader import load_overlay_roles
+from _role_subgroup_route import effective_subgroup_code
 
 
 ROOT = Path(__file__).parent
@@ -26,6 +29,8 @@ BACKEND_CAREER = ROOT.parent.parent / "backend" / "routes" / "career_routes.py"
 P1 = {"D009", "D010", "D022", "D028", "D031", "D034", "D035", "D036", "D042", "D047", "D048", "D052", "D053", "D071", "D107"}
 P2 = {"D011", "D013", "D039", "D062", "D064", "D077", "D158"}
 P3 = {"D016", "D017", "D018", "D019", "D020", "D021", "D022", "D023", "D024"}
+# The reviewed Sociology worked example explicitly defines two D078 branches.
+EXPLICIT_SUBGROUP_DOMAINS = {"D078"}
 
 PLACEHOLDER_LABEL = re.compile(r"^D\d{3}\s+\d{2}$", re.I)
 PLACEHOLDER_DESCRIPTION = {
@@ -36,11 +41,10 @@ PLACEHOLDER_DESCRIPTION = {
 
 def load_roles() -> list[dict]:
     roles = json.loads(ROLE_LIBRARY.read_text(encoding="utf-8"))
-    for filename in ("emerging_role_overlays.json", "thin_domain_role_overlays.json"):
-        path = ROOT / filename
-        if path.exists():
-            roles.extend(json.loads(path.read_text(encoding="utf-8")).get("roles") or [])
-    # Mirror _gen_career_seed.py: the last source-backed row for a role key wins.
+    # Match _gen_career_seed.py exactly: overlay records are first deduplicated
+    # with emerging-role precedence, then appended to the base library, and the
+    # final domain|role merge lets the overlay record replace a base record.
+    roles.extend(load_overlay_roles())
     by_key = {}
     for role in roles:
         by_key[f"{role.get('domain_id')}|{role.get('role_name')}"] = role
@@ -54,12 +58,17 @@ def norm(value: object) -> str:
 def main() -> None:
     structure = json.loads(STRUCTURE.read_text(encoding="utf-8"))
     meta = json.loads(META.read_text(encoding="utf-8"))
-    roles = load_roles()
+    all_roles = load_roles()
+    excluded_role_mappings = [
+        {"role_key": f"{role.get('domain_id')}|{role.get('role_name')}", "reason": role.get("student_path_exclusion_reason")}
+        for role in all_roles if str(role.get("student_path_status") or "").casefold() == "excluded"
+    ]
+    roles = [role for role in all_roles if str(role.get("student_path_status") or "active").casefold() != "excluded"]
     roles_by_domain: dict[str, list[dict]] = defaultdict(list)
     roles_by_group: dict[tuple[str, str], list[dict]] = defaultdict(list)
     for role in roles:
         domain_id = str(role.get("domain_id") or "")
-        submajor = str(role.get("isco_group") or "")[:2]
+        submajor = effective_subgroup_code(role) or ""
         if not domain_id:
             continue
         roles_by_domain[domain_id].append(role)
@@ -77,6 +86,7 @@ def main() -> None:
         "skills": [],
         "source_layer": [],
         "role_counts": [],
+        "subgroup_role_counts": [],
         "runtime": [],
         "schema": [],
     }
@@ -109,13 +119,19 @@ def main() -> None:
     })
 
     total_groups = 0
+    excluded_group_count = 0
     placeholder_count = 0
     empty_skill_count = 0
     overlap_count = 0
     for domain_id, domain in structure.items():
         canonical_roles = roles_by_domain.get(domain_id, [])
-        observed_submajors = sorted({str(r.get("isco_group") or "")[:2] for r in canonical_roles if str(r.get("isco_group") or "")[:2]})
-        groups = domain.get("subgroups") or []
+        observed_submajors = sorted({
+            code for role in canonical_roles
+            if (code := effective_subgroup_code(role))
+        })
+        all_groups = domain.get("subgroups") or []
+        groups = [group for group in all_groups if str(group.get("data_state") or "").lower() not in {"review_only", "excluded", "audit_only"}]
+        excluded_group_count += len(all_groups) - len(groups)
         actual_submajors = [str(group.get("isco_submajor") or "") for group in groups]
         actual_set = set(actual_submajors)
         expected_set = set(observed_submajors)
@@ -124,10 +140,12 @@ def main() -> None:
         role_count = len(canonical_roles)
         needs_by_size = len(observed_submajors) > 2 or (role_count > 50 and len(observed_submajors) > 1)
         priority = "P1/P3 conflict" if domain_id in (P1 & P3) else "P1" if domain_id in P1 else "P2" if domain_id in P2 else "P3" if domain_id in P3 else None
-        if domain_id in P3 and domain_id != "D022":
+        if domain_id in EXPLICIT_SUBGROUP_DOMAINS:
+            expected_cluster = bool(observed_submajors)
+        elif domain_id in P3 and domain_id != "D022":
             expected_cluster = False
-        elif domain_id in P2:
-            expected_cluster = True
+        elif domain_id in (P1 | P2):
+            expected_cluster = bool(observed_submajors)
         else:
             expected_cluster = needs_by_size
         invalid = sorted(actual_set - expected_set)
@@ -161,6 +179,9 @@ def main() -> None:
 
         for group in groups:
             total = {"domain_id": domain_id, "isco_submajor": group.get("isco_submajor")}
+            observed_count = len(roles_by_group.get((domain_id, str(group.get("isco_submajor") or "")), []))
+            if group.get("role_count") != observed_count:
+                findings["subgroup_role_counts"].append({**total, "stored": group.get("role_count"), "canonical": observed_count})
             label = str(group.get("label") or "").strip()
             description = str(group.get("description") or "").strip()
             if PLACEHOLDER_LABEL.match(label) or not label:
@@ -232,7 +253,7 @@ def main() -> None:
     report = {
         "definition": {
             "grouping_key": "first_two_digits_of_role.isco_group",
-            "threshold": "explicit P1/P2, or distinct sub-majors > 2, or roles > 50 with at least two distinct sub-majors; P3 stays flat except the independently resolved D022 case",
+            "threshold": "explicit P1/P2, explicit reviewed D078 Sociology branches, or distinct sub-majors > 2, or roles > 50 with at least two distinct sub-majors; P3 stays flat except the independently resolved D022 case",
             "priority3_override": "P3 excludes clustering; D022 conflict with P1 is recorded, not silently resolved",
             "role_demand_ordering": "deferred until a validated role-demand dataset exists",
             "promotion_impact": {
@@ -242,8 +263,10 @@ def main() -> None:
             },
         },
         "canonical_roles": len(roles),
+        "excluded_student_role_mappings": excluded_role_mappings,
         "domains": len(structure),
         "subgroups": total_groups,
+        "excluded_subgroups_preserved_in_source": excluded_group_count,
         "summary": {
             "derivation_findings": len(findings["derivation"]),
             "threshold_findings": len(findings["thresholds"]),
@@ -252,6 +275,7 @@ def main() -> None:
             "empty_or_overlapping_skill_findings": len(findings["skills"]),
             "source_layer_overlap_is_evidence_index": len(findings["source_layer"]),
             "stored_role_count_findings": len(findings["role_counts"]),
+            "stored_subgroup_role_count_findings": len(findings["subgroup_role_counts"]),
             "independent_resolution_findings": len(findings["independent_resolution"]),
         },
         "findings": findings,
@@ -264,7 +288,7 @@ def main() -> None:
         "",
         "This audit compares the live subgroup artefacts with the attached definition. It does not assume the definition is internally consistent; conflicts are reported explicitly.",
         "",
-        f"Canonical deduplicated role rows: **{len(roles)}**; domains: **{len(structure)}**; stored subgroups: **{total_groups}**.",
+        f"Canonical student-visible deduplicated role rows: **{len(roles)}**; domains: **{len(structure)}**; stored subgroups: **{total_groups}**.",
         "",
         "## Important specification conflict",
         "",
@@ -280,6 +304,8 @@ def main() -> None:
         f"- Placeholder or missing labels/descriptions: **{placeholder_count}** subgroup rows.",
         f"- Empty/duplicative subgroup skill findings: **{len(findings['skills'])}**.",
         f"- Stored role-count mismatches against the canonical role library: **{len(findings['role_counts'])}** domains.",
+        f"- Stored subgroup role-count mismatches against the canonical role library: **{len(findings['subgroup_role_counts'])}** subgroup rows.",
+        f"- Excluded subgroup records preserved for audit: **{excluded_group_count}**.",
         "",
         "## Runtime/schema checks",
         "",

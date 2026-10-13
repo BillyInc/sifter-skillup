@@ -166,13 +166,8 @@ describe("requirementFallbackText", () => {
   });
 
   it("returns the Direct Entry fallback", () => {
-    // Deliberately generic, and deliberately not Direct-Entry-specific: the
-    // product omits Direct Entry from student/SS/JAMB/university guidance
-    // responses (see the apply-now contract in CLAUDE.md), so this placeholder
-    // must not promise the reader a Direct Entry answer. Changed in 306202a7,
-    // which updated the source string and left this assertion behind.
     expect(requirementFallbackText("direct_entry")).toBe(
-      "Check the university's current admission notice for any additional requirements.",
+      "Check individual university for Direct Entry requirements for this programme.",
     );
   });
 

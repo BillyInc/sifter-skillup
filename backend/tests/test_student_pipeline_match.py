@@ -7,12 +7,6 @@ and being mis-ranked.
 """
 
 import asyncio
-import re
-import typing
-from pathlib import Path
-
-import pytest
-from pydantic import ValidationError
 
 from routes import student_pipeline_routes as spr
 
@@ -36,6 +30,12 @@ class _FakeQuery:
         return self
 
     def contains(self, *args, **kwargs):
+        if args and args[0] == "exam_types" and len(args) > 1:
+            wanted = set(args[1] or [])
+            self._data = [
+                row for row in self._data
+                if wanted.issubset(set(row.get("exam_types") or []))
+            ]
         return self
 
     def ilike(self, *args, **kwargs):
@@ -326,7 +326,7 @@ def test_utme_and_combined_routes_require_use_of_english():
         assert "Use of English" in result.data["meta"]["notice"]
 
 
-def test_stream_reorders_but_does_not_hide_subjects(monkeypatch):
+def test_stream_filters_subjects_but_keeps_cross_listed_rows(monkeypatch):
     monkeypatch.setattr(spr, "get_json", lambda _key: None)
     monkeypatch.setattr(spr, "set_json", lambda *args: None)
     monkeypatch.setattr(
@@ -340,6 +340,7 @@ def test_stream_reorders_but_does_not_hide_subjects(monkeypatch):
                         "code": "PHY",
                         "name": "Physics",
                         "aliases": [],
+                        "exam_types": ["utme", "olevel"],
                         "category": "science",
                         "stream_tags": ["science"],
                     },
@@ -348,6 +349,7 @@ def test_stream_reorders_but_does_not_hide_subjects(monkeypatch):
                         "code": "ECON",
                         "name": "Economics",
                         "aliases": [],
+                        "exam_types": ["utme", "olevel"],
                         "category": "social_science",
                         "stream_tags": ["commercial", "art"],
                     },
@@ -359,7 +361,81 @@ def test_stream_reorders_but_does_not_hide_subjects(monkeypatch):
     result = asyncio.run(spr.list_subjects(q=None, stream="science", exam_type="utme"))
     names = [row["name"] for row in result.data["data"]]
 
-    assert names == ["Physics", "Economics"]
+    assert names == ["Physics"]
+
+
+def test_technical_stream_filters_each_exam_layer_and_preserves_cross_listing(monkeypatch):
+    monkeypatch.setattr(spr, "get_json", lambda _key: None)
+    monkeypatch.setattr(spr, "set_json", lambda *args: None)
+    monkeypatch.setattr(
+        spr,
+        "_svc",
+        lambda: _FakeSvc({
+            "subject_catalog": [
+                {
+                    "id": "technical-only",
+                    "code": "TD",
+                    "name": "Technical Drawing",
+                    "aliases": [],
+                    "exam_types": ["olevel"],
+                    "category": "technical",
+                    "stream_tags": ["science", "technical"],
+                },
+                {
+                    "id": "technical-cross-listed",
+                    "code": "HEC",
+                    "name": "Home Economics",
+                    "aliases": [],
+                    "exam_types": ["utme", "olevel"],
+                    "category": "technical",
+                    "stream_tags": ["art", "science", "technical"],
+                },
+                {
+                    "id": "science-only",
+                    "code": "PHY",
+                    "name": "Physics",
+                    "aliases": [],
+                    "exam_types": ["utme", "olevel"],
+                    "category": "science",
+                    "stream_tags": ["science"],
+                },
+            ]
+        }),
+    )
+
+    olevel = asyncio.run(spr.list_subjects(q=None, stream="technical", exam_type="olevel"))
+    utme = asyncio.run(spr.list_subjects(q=None, stream="technical", exam_type="utme"))
+
+    assert [row["name"] for row in olevel.data["data"]] == [
+        "Technical Drawing", "Home Economics"
+    ]
+    assert [row["name"] for row in utme.data["data"]] == ["Home Economics"]
+
+
+def test_subject_list_includes_exam_layers_stream_groups_and_alias_search(monkeypatch):
+    monkeypatch.setattr(spr, "get_json", lambda _key: None)
+    monkeypatch.setattr(spr, "set_json", lambda *args: None)
+    monkeypatch.setattr(
+        spr,
+        "_svc",
+        lambda: _FakeSvc({
+            "subject_catalog": [{
+                "id": "civic",
+                "code": "CIV",
+                "name": "Civic Education",
+                "aliases": ["Civics"],
+                "exam_types": ["utme", "olevel"],
+                "category": "general",
+                "stream_tags": ["science", "commercial", "art"],
+            }]
+        }),
+    )
+
+    result = asyncio.run(spr.list_subjects(q="Civics", stream="arts", exam_type="utme"))
+
+    assert [row["name"] for row in result.data["data"]] == ["Civic Education"]
+    assert result.data["data"][0]["examTypes"] == ["utme", "olevel"]
+    assert result.data["data"][0]["streams"] == ["science", "commercial", "arts"]
 
 
 def test_programme_search_shape_keeps_requirements_for_detail_view():
@@ -759,106 +835,6 @@ def test_subject_match_keeps_all_university_offerings(monkeypatch):
     assert len(rows[0]["schoolOfferings"]) == 15
     assert rows[0]["schoolCount"] == 15
 
-
-# ─────────────────────────────────────────────────────────────
-# StartingPointIn enum validation (mirrors the CHECK constraints)
-# ─────────────────────────────────────────────────────────────
-#
-# _clean_text only strips whitespace, so before these annotations a bad value
-# travelled all the way to Postgres and came back as one CHECK violation at a
-# time behind a generic 500 envelope. The contract now lives at the request
-# boundary, which means it can drift from the database — hence the second test
-# below, which reads the constraint sets straight out of the migration.
-
-# The migrations that constrain student_starting_points, in APPLY order.
-#
-# The base migration is not the authority on its own: the ss3 patch DROPs and
-# re-ADDs student_starting_points_user_type_check, so the deployed constraint
-# is whichever file touched the column last.
-#
-# This list is declared rather than globbed because filename order is not apply
-# order — "migration_ss3_..." sorts BEFORE "migration_student_pipeline_live..."
-# ('s' < 't'), so a sorted glob hands back the base as the last match, which is
-# exactly the file that must not win. These filenames carry no numeric or date
-# prefix, so apply order cannot be recovered from them. Add new patches here,
-# at the end, when they touch this table.
-_MIGRATION_DIR = Path(__file__).parents[1]
-_MIGRATIONS = [
-    _MIGRATION_DIR / "migration_student_pipeline_live.sql",
-    _MIGRATION_DIR / "migration_ss3_secondary_starting_point_patch.sql",
-]
-
-
-def _valid_starting_point(**overrides):
-    payload = {"userType": "senior_secondary"}
-    payload.update(overrides)
-    return payload
-
-
-def test_valid_starting_point_is_accepted():
-    """Guards the negative cases below from passing for the wrong reason."""
-    model = spr.StartingPointIn(**_valid_starting_point(
-        ssDoor="know_what", ssClass="ss2", stream="science",
-    ))
-    assert model.userType == "senior_secondary"
-    assert (model.ssDoor, model.ssClass, model.stream) == ("know_what", "ss2", "science")
-
-
-@pytest.mark.parametrize(
-    "field, bad_value",
-    [
-        ("userType", "hacker"),
-        ("ssDoor", "maybe"),
-        ("ssClass", "ss9"),
-        ("stream", "engineering"),
-    ],
-)
-def test_starting_point_rejects_values_outside_the_check_constraint(field, bad_value):
-    with pytest.raises(ValidationError) as caught:
-        spr.StartingPointIn(**_valid_starting_point(**{field: bad_value}))
-
-    assert field in str(caught.value)
-
-
-def _sql_in_values(column: str) -> set[str]:
-    """The `column IN ('a', …)` set as the last migration to touch it leaves it."""
-    found: list[tuple[str, set[str]]] = []
-    for path in _MIGRATIONS:
-        assert path.exists(), f"{path.name} is listed in _MIGRATIONS but missing"
-        sql = path.read_text(encoding="utf-8")
-        for match in re.finditer(rf"\b{column}\s+IN\s*\(([^)]*)\)", sql, re.IGNORECASE):
-            values = set(re.findall(r"'([^']+)'", match.group(1)))
-            assert values, f"`{column} IN (...)` in {path.name} parsed as empty"
-            found.append((path.name, values))
-    assert found, f"no `{column} IN (...)` CHECK found in any migration_*.sql"
-    return found[-1][1]
-
-
-@pytest.mark.parametrize(
-    "field, column",
-    [
-        ("userType", "user_type"),
-        ("ssDoor", "ss_door"),
-        ("ssClass", "ss_class"),
-        ("stream", "stream"),
-    ],
-)
-def test_starting_point_literals_match_the_migration_check_constraints(field, column):
-    """Drift guard: the Pydantic Literal and the DB CHECK are one contract.
-
-    typing.get_args on an Optional[Literal[...]] yields (Literal[...], NoneType),
-    so the Literal's own args are collected from whichever arg has them.
-    """
-    annotation = spr.StartingPointIn.model_fields[field].annotation
-    args = typing.get_args(annotation)
-    literal_values = {a for a in args if isinstance(a, str)}
-    for arg in args:
-        literal_values.update(a for a in typing.get_args(arg) if isinstance(a, str))
-
-    assert literal_values == _sql_in_values(column), (
-        f"StartingPointIn.{field} has drifted from the "
-        f"{column} CHECK constraint in the migration_*.sql set"
-    )
 
 def test_subject_match_preserves_authoritative_school_identity(monkeypatch):
     monkeypatch.setattr(

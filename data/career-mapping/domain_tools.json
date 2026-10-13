@@ -90718,12 +90718,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Computer based training software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -90743,12 +90738,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Analytical or scientific software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -90768,12 +90758,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Analytical or scientific software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -90793,12 +90778,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Project management software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -90818,12 +90798,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Analytical or scientific software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -90843,12 +90818,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Web platform development software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -90868,12 +90838,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Geographic information system"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -90893,12 +90858,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Operating system software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -90918,12 +90878,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Development environment software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -90944,12 +90899,7 @@
      "element_names": [
       "Data base user interface and query software",
       "Data base management system software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -90969,12 +90919,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Business intelligence and data analysis software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -90994,12 +90939,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Internet browser software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -91019,12 +90959,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Data base management system software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -91044,12 +90979,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Development environment software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -91069,12 +90999,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Data base management system software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -91094,12 +91019,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Data base user interface and query software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -91120,12 +91040,7 @@
      "element_names": [
       "Project management software",
       "Enterprise application integration software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -91145,12 +91060,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Application server software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -91170,12 +91080,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Object or component oriented development software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -91195,12 +91100,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Web platform development software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -91218,12 +91118,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Object or component oriented development software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     },
     "element_name": "Object or component oriented development software",
     "element_id": "2.E.7.e"
@@ -91247,12 +91142,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Spreadsheet software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -91272,12 +91162,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Office suite software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -91297,12 +91182,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Presentation software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -91322,12 +91202,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Word processing software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -91347,12 +91222,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Analytical or scientific software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -91374,12 +91244,7 @@
       "Geographic information system",
       "Map creation software",
       "Analytical or scientific software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -91399,12 +91264,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Data base user interface and query software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -91425,12 +91285,7 @@
      "element_names": [
       "Electronic mail software",
       "Word processing software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -91450,12 +91305,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Analytical or scientific software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -91475,12 +91325,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Object or component oriented development software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -91500,12 +91345,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Graphics or photo imaging software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    },
    {
@@ -91525,12 +91365,7 @@
      "source": "onet_31_0_software_skills",
      "element_names": [
       "Data base user interface and query software"
-     ],
-     "ownership": "role_aggregated",
-     "student_visibility": "review_only",
-     "context_level": "domain",
-     "guidance_layer": "legacy_role_software_inventory_v1",
-     "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation."
+     ]
     }
    }
   ],
@@ -91554,14 +91389,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Computer based training software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "26",
-       "inherited_from_domain_scope": true
+       ]
       }
      },
      {
@@ -91581,14 +91409,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Analytical or scientific software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "26",
-       "inherited_from_domain_scope": true
+       ]
       }
      },
      {
@@ -91608,14 +91429,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Analytical or scientific software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "26",
-       "inherited_from_domain_scope": true
+       ]
       }
      },
      {
@@ -91635,14 +91449,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Geographic information system"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "26",
-       "inherited_from_domain_scope": true
+       ]
       }
      },
      {
@@ -91662,14 +91469,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Web platform development software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "26",
-       "inherited_from_domain_scope": true
+       ]
       }
      },
      {
@@ -91689,14 +91489,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Operating system software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "26",
-       "inherited_from_domain_scope": true
+       ]
       }
      },
      {
@@ -91716,14 +91509,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Business intelligence and data analysis software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "26",
-       "inherited_from_domain_scope": true
+       ]
       }
      },
      {
@@ -91743,14 +91529,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Development environment software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "26",
-       "inherited_from_domain_scope": true
+       ]
       }
      },
      {
@@ -91770,14 +91549,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Internet browser software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "26",
-       "inherited_from_domain_scope": true
+       ]
       }
      },
      {
@@ -91797,14 +91569,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Project management software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "26",
-       "inherited_from_domain_scope": true
+       ]
       }
      },
      {
@@ -91822,14 +91587,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Object or component oriented development software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "26",
-       "inherited_from_domain_scope": true
+       ]
       },
       "element_name": "Object or component oriented development software",
       "element_id": "2.E.7.e"
@@ -91849,14 +91607,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Object or component oriented development software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "26",
-       "inherited_from_domain_scope": true
+       ]
       },
       "element_name": "Object or component oriented development software",
       "element_id": "2.E.7.e"
@@ -91876,14 +91627,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Analytical or scientific software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "26",
-       "inherited_from_domain_scope": true
+       ]
       },
       "element_name": "Analytical or scientific software",
       "element_id": "2.E.9.d"
@@ -91903,14 +91647,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Analytical or scientific software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "26",
-       "inherited_from_domain_scope": true
+       ]
       },
       "element_name": "Analytical or scientific software",
       "element_id": "2.E.9.d"
@@ -91930,14 +91667,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Data base user interface and query software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "26",
-       "inherited_from_domain_scope": true
+       ]
       },
       "element_name": "Data base user interface and query software",
       "element_id": "2.E.6.f"
@@ -91961,14 +91691,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Spreadsheet software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "26",
-       "inherited_from_domain_scope": true
+       ]
       }
      },
      {
@@ -91988,14 +91711,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Office suite software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "26",
-       "inherited_from_domain_scope": true
+       ]
       }
      },
      {
@@ -92015,14 +91731,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Presentation software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "26",
-       "inherited_from_domain_scope": true
+       ]
       }
      },
      {
@@ -92042,14 +91751,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Word processing software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "26",
-       "inherited_from_domain_scope": true
+       ]
       }
      },
      {
@@ -92070,14 +91772,7 @@
        "element_names": [
         "Electronic mail software",
         "Word processing software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "26",
-       "inherited_from_domain_scope": true
+       ]
       }
      },
      {
@@ -92099,14 +91794,7 @@
         "Geographic information system",
         "Map creation software",
         "Analytical or scientific software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "26",
-       "inherited_from_domain_scope": true
+       ]
       }
      }
     ]
@@ -92130,14 +91818,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Analytical or scientific software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "21",
-       "inherited_from_domain_scope": true
+       ]
       }
      },
      {
@@ -92157,14 +91838,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Analytical or scientific software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "21",
-       "inherited_from_domain_scope": true
+       ]
       }
      },
      {
@@ -92184,14 +91858,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Project management software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "21",
-       "inherited_from_domain_scope": true
+       ]
       }
      },
      {
@@ -92211,14 +91878,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Analytical or scientific software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "21",
-       "inherited_from_domain_scope": true
+       ]
       }
      },
      {
@@ -92238,13 +91898,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Data base user interface and query software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation.",
-       "isco_submajor": "21"
+       ]
       }
      },
      {
@@ -92264,14 +91918,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Web platform development software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "21",
-       "inherited_from_domain_scope": true
+       ]
       }
      },
      {
@@ -92292,13 +91939,7 @@
        "element_names": [
         "Business intelligence and data analysis software",
         "Object or component oriented development software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation.",
-       "isco_submajor": "21"
+       ]
       }
      },
      {
@@ -92318,13 +91959,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Data base management system software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation.",
-       "isco_submajor": "21"
+       ]
       }
      },
      {
@@ -92344,14 +91979,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Data base user interface and query software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "21",
-       "inherited_from_domain_scope": true
+       ]
       }
      },
      {
@@ -92372,14 +92000,7 @@
        "element_names": [
         "Project management software",
         "Enterprise application integration software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "21",
-       "inherited_from_domain_scope": true
+       ]
       }
      },
      {
@@ -92397,14 +92018,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Object or component oriented development software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "21",
-       "inherited_from_domain_scope": true
+       ]
       },
       "element_name": "Object or component oriented development software",
       "element_id": "2.E.7.e"
@@ -92424,14 +92038,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Object or component oriented development software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "21",
-       "inherited_from_domain_scope": true
+       ]
       },
       "element_name": "Object or component oriented development software",
       "element_id": "2.E.7.e"
@@ -92451,14 +92058,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Analytical or scientific software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "21",
-       "inherited_from_domain_scope": true
+       ]
       },
       "element_name": "Analytical or scientific software",
       "element_id": "2.E.9.d"
@@ -92478,14 +92078,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Data base user interface and query software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "21",
-       "inherited_from_domain_scope": true
+       ]
       },
       "element_name": "Data base user interface and query software",
       "element_id": "2.E.6.f"
@@ -92506,13 +92099,7 @@
        "element_names": [
         "Development environment software",
         "Object or component oriented development software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation.",
-       "isco_submajor": "21"
+       ]
       },
       "element_name": "Development environment software",
       "element_id": "2.E.7.b"
@@ -92533,13 +92120,7 @@
        "element_names": [
         "Content workflow software",
         "Project management software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation.",
-       "isco_submajor": "21"
+       ]
       },
       "element_name": "Content workflow software",
       "element_id": "2.E.5.a"
@@ -92560,13 +92141,7 @@
        "element_names": [
         "Development environment software",
         "Object or component oriented development software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation.",
-       "isco_submajor": "21"
+       ]
       },
       "element_name": "Development environment software",
       "element_id": "2.E.7.b"
@@ -92586,13 +92161,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Development environment software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation.",
-       "isco_submajor": "21"
+       ]
       },
       "element_name": "Development environment software",
       "element_id": "2.E.7.b"
@@ -92617,13 +92186,7 @@
        "element_names": [
         "Development environment software",
         "Object or component oriented development software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation.",
-       "isco_submajor": "21"
+       ]
       }
      },
      {
@@ -92643,13 +92206,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Enterprise application integration software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 role-derived software inventory retained for staff audit; not an owned foundation/tool recommendation.",
-       "isco_submajor": "21"
+       ]
       }
      },
      {
@@ -92669,14 +92226,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Analytical or scientific software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "21",
-       "inherited_from_domain_scope": true
+       ]
       }
      },
      {
@@ -92696,14 +92246,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Data base user interface and query software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "21",
-       "inherited_from_domain_scope": true
+       ]
       }
      },
      {
@@ -92723,14 +92266,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Spreadsheet software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "21",
-       "inherited_from_domain_scope": true
+       ]
       }
      },
      {
@@ -92750,14 +92286,7 @@
        "source": "onet_31_0_software_skills",
        "element_names": [
         "Office suite software"
-       ],
-       "ownership": "role_aggregated",
-       "student_visibility": "review_only",
-       "context_level": "subgroup",
-       "guidance_layer": "legacy_role_software_inventory_v1",
-       "review_reason": "D078 subgroup copy duplicates a role-derived domain-scope tool; retain for audit until explicit subgroup ownership is reviewed.",
-       "isco_submajor": "21",
-       "inherited_from_domain_scope": true
+       ]
       }
      }
     ]

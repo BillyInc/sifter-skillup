@@ -1790,9 +1790,17 @@
     "social network analysis"
    ],
    "tools": [
-   ],
-   "tool_ownership": "review_only_role_aggregate",
-   "tool_review_note": "Role-derived software observations remain in the audit inventory; no subgroup tool is student-owned until a subgroup-specific purpose and source contract is approved."
+    "Microsoft Excel",
+    "Microsoft Office software",
+    "Python",
+    "R",
+    "IBM SPSS Statistics",
+    "SAS",
+    "C",
+    "Atlassian JIRA",
+    "C#",
+    "Eclipse IDE"
+   ]
   },
   {
    "domain_id": "D078",
@@ -1817,9 +1825,13 @@
     "game theory"
    ],
    "tools": [
-   ],
-   "tool_ownership": "review_only_role_aggregate",
-   "tool_review_note": "Role-derived software observations remain in the audit inventory; no subgroup tool is student-owned until a subgroup-specific purpose and source contract is approved."
+    "R",
+    "Python",
+    "SAS",
+    "IBM SPSS Statistics",
+    "Structured query language SQL",
+    "ESRI ArcGIS software"
+   ]
   },
   {
    "domain_id": "D138",

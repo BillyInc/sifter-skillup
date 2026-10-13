@@ -289,6 +289,118 @@ def build_manual_rows() -> tuple[dict[str, Any], dict[str, Any]]:
             }
         )
 
+    local_seed = load_local_seed()
+    school_by_code = {
+        str(row.get("jambCode") or "").strip().upper(): str(row.get("name") or code)
+        for code, row in (local_seed.get("schools") or {}).items()
+        if str(row.get("jambCode") or "").strip()
+    }
+
+    # The manual operator searches each university + programme pair once and
+    # captures all IBASS requirement layers together. Keep the audit state and
+    # existing parsed text under the corresponding field in that single row.
+    field_labels = {
+        "utme": "UTME",
+        "olevel": "O-level",
+        "direct_entry": "Direct Entry",
+    }
+
+    def field_key(value: Any) -> str | None:
+        normalized = norm_key(str(value or ""))
+        if "directentry" in normalized:
+            return "direct_entry"
+        if "utme" in normalized or "unifiedtertiarymatriculation" in normalized:
+            return "utme"
+        if "olevel" in normalized or "ssce" in normalized or "waec" in normalized:
+            return "olevel"
+        return None
+
+    pairs: dict[tuple[str, str], dict[str, Any]] = {}
+
+    def add_to_pair(
+        university: str,
+        programme: str,
+        field: Any,
+        *,
+        status: Any,
+        reason: Any,
+        current_text: Any,
+        scope: str,
+    ) -> None:
+        normalized_field = field_key(field)
+        if not normalized_field:
+            return
+        pair_key = (norm_key(university), norm_key(programme))
+        pair = pairs.setdefault(
+            pair_key,
+            {
+                "university": university,
+                "programme": programme,
+                "fields": {
+                    key: {
+                        "needsIbassCheck": False,
+                        "currentStates": [],
+                        "currentTexts": [],
+                        "scopes": [],
+                        "reasons": [],
+                    }
+                    for key in field_labels
+                },
+            },
+        )
+        evidence = pair["fields"][normalized_field]
+        evidence["needsIbassCheck"] = True
+        for key, value in (
+            ("currentStates", status),
+            ("currentTexts", current_text),
+            ("scopes", scope),
+            ("reasons", reason),
+        ):
+            text = str(value or "").strip()
+            if text and text not in evidence[key]:
+                evidence[key].append(text)
+
+    for row in pending_national:
+        institutions = row.get("knownInstitutions") or []
+        for institution_code in institutions:
+            code = str(institution_code or "").strip()
+            if not code:
+                continue
+            university = school_by_code.get(code.upper(), code)
+            add_to_pair(
+                university,
+                str(row.get("jambName") or ""),
+                row.get("layer"),
+                status=row.get("status"),
+                reason=row.get("reason"),
+                current_text=row.get("currentText"),
+                scope="national_requirement",
+            )
+    for row in pending_exceptions:
+        code = str(row.get("institution") or "").strip()
+        add_to_pair(
+            school_by_code.get(code.upper(), code),
+            str(row.get("jambName") or ""),
+            row.get("examType") or row.get("route"),
+            status=row.get("status"),
+            reason=row.get("reason"),
+            current_text=row.get("currentText"),
+            scope="university_exception",
+        )
+
+    search_queue = list(pairs.values())
+    for pair in search_queue:
+        for field_key_value, evidence in pair["fields"].items():
+            evidence["field"] = field_labels[field_key_value]
+            evidence["currentState"] = "; ".join(evidence.pop("currentStates")) or "not flagged in this audit"
+            evidence["currentText"] = " | ".join(evidence.pop("currentTexts")) or "No pending text recorded"
+            evidence["scope"] = "; ".join(evidence.pop("scopes"))
+            evidence["reason"] = "; ".join(evidence.pop("reasons"))
+    search_queue.sort(key=lambda item: (
+        norm_key(str(item.get("university") or "")),
+        norm_key(str(item.get("programme") or "")),
+    ))
+
     source_counts = source_rules.get("counts", {})
     summary = {
         "nationalPending": len(pending_national),
@@ -301,8 +413,14 @@ def build_manual_rows() -> tuple[dict[str, Any], dict[str, Any]]:
         "manualConfirmationsApplied": len(confirmations),
         "programmeCount": len(offerings),
         "offeringCount": sum(len(row.get("institutions", [])) for row in offerings.values()),
+        "universityProgrammeSearchQueue": len(search_queue),
     }
-    return {"summary": summary, "national": pending_national, "universityExceptions": pending_exceptions}, offerings
+    return {
+        "summary": summary,
+        "national": pending_national,
+        "universityExceptions": pending_exceptions,
+        "universityProgrammeSearchQueue": search_queue,
+    }, offerings
 
 
 def rule_shape(rule: dict[str, Any]) -> dict[str, Any]:
@@ -775,6 +893,29 @@ def render_manual(data: dict[str, Any]) -> str:
     for index, row in enumerate(data["universityExceptions"], 1):
         lines.append(
             f"| {index} | {md_cell(row['institution'], 80)} | {md_cell(row['jambName'], 100)} | {md_cell(row['route'], 50)} | {md_cell(row['reason'], 60)} | {md_cell(row['currentText'])} | {md_cell(row.get('sourceLabel'), 180)} |"
+        )
+    lines.extend([
+        "",
+        "## Exact university + programme search queue",
+        "",
+        "Use this queue for the remaining manual IBASS pass. Search each exact **university** and **programme** pair once, then paste all IBASS requirements for that pair together. Each field cell shows whether IBASS checking is needed, the current audit state, and the text currently recorded. The university name is the searchable institution identity, not a CCMAS discipline or a shortened source grouping.",
+        "",
+        f"Unique university + programme pairs in this queue: **{summary['universityProgrammeSearchQueue']}**. Repeated national and university-specific findings for the same pair are grouped under their field.",
+        "",
+        "| # | University | Programme | UTME: check / state / current text | O-level: check / state / current text | Direct Entry: check / state / current text |",
+        "|---:|---|---|---|---|---|",
+    ])
+    for index, row in enumerate(data["universityProgrammeSearchQueue"], 1):
+        cells = []
+        for field_key_value in ("utme", "olevel", "direct_entry"):
+            evidence = row["fields"][field_key_value]
+            check = "CHECK IBASS" if evidence["needsIbassCheck"] else "No pending check"
+            details = [check, evidence["currentState"], evidence["currentText"]]
+            if evidence.get("scope"):
+                details.append(f"scope: {evidence['scope']}")
+            cells.append(md_cell("; ".join(details), 900))
+        lines.append(
+            f"| {index} | {md_cell(row.get('university'), 110)} | {md_cell(row.get('programme'), 110)} | {cells[0]} | {cells[1]} | {cells[2]} |"
         )
     lines.extend([
         "",

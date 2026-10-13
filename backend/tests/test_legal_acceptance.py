@@ -14,8 +14,8 @@ def _login_as(mock_db, user_row):
 
 def test_legal_acceptance_payload_is_explicit():
     payload = LegalAcceptanceInput(
-        terms_version="2026-08-14",
-        privacy_version="2026-08-14",
+        terms_version="2026-10-10",
+        privacy_version="2026-10-10",
         analytics_consent=False,
     )
     assert payload.analytics_consent is False
@@ -29,8 +29,8 @@ def test_signup_requires_current_legal_versions():
     assert missing.value.status_code == 400
 
     accepted = _validated_signup_legal_acceptance({
-        "terms_version": "2026-08-14",
-        "privacy_version": "2026-08-14",
+        "terms_version": "2026-10-10",
+        "privacy_version": "2026-10-10",
         "analytics_consent": True,
     })
     assert accepted["analyticsConsent"] is True
@@ -62,8 +62,8 @@ def test_legal_acceptance_preserves_existing_settings(client, auth_header, mock_
         "/api/users/legal-acceptance",
         headers=auth_header,
         json={
-            "terms_version": "2026-08-14",
-            "privacy_version": "2026-08-14",
+        "terms_version": "2026-10-10",
+        "privacy_version": "2026-10-10",
             "analytics_consent": True,
         },
     )

@@ -5,13 +5,3 @@
 UPDATE skillup_dev.subject_catalog
 SET stream_tags = ARRAY['science']
 WHERE code = 'AUTO';
-
--- Technical/vocational is a selectable school stream, not merely a subject
--- category. Preserve every existing cross-stream tag and add Technical to
--- technical-category rows and the core subjects.
-UPDATE skillup_dev.subject_catalog
-SET stream_tags = CASE
-  WHEN 'technical' = ANY(stream_tags) THEN stream_tags
-  ELSE array_append(stream_tags, 'technical')
-END
-WHERE category = 'technical' OR code IN ('ENG', 'MATH', 'CIV');

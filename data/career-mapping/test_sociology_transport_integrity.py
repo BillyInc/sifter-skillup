@@ -5,6 +5,7 @@ from __future__ import annotations
 import gzip
 import hashlib
 import importlib.util
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -18,6 +19,24 @@ SPEC.loader.exec_module(AUDIT)
 
 
 class SociologyTransportIntegrityTests(unittest.TestCase):
+    def test_research_theme_course_locators_are_preserved_in_contract_and_seed(self) -> None:
+        root = Path(__file__).resolve().parent
+        contract_path = root / "_audit" / "sociology_curriculum_contract_2026-09-17.json"
+        seed_path = root.parent.parent / "backend" / "seed_sociology_curriculum_contract_2026-09-17.sql"
+        contract = json.loads(contract_path.read_text(encoding="utf-8"))
+        expected = {
+            "SSC 302": "Original CCMAS source: Sociology; SSC 302; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed p. 333",
+            "SOC 301": "Original CCMAS source: Sociology; SOC 301; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed pp. 334–335",
+            "SSC 401": "Original CCMAS source: Sociology; SSC 401; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed p. 337",
+            "SOC 408": "Original CCMAS source: Sociology; SOC 408; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed p. 338",
+        }
+        courses = {row.get("code"): row for row in contract["programme"]["courses"]}
+        seed = seed_path.read_text(encoding="utf-8")
+        for code, locator in expected.items():
+            with self.subTest(course_code=code):
+                self.assertEqual(locator, courses[code]["sourceLocator"].get("sourceLocatorText"))
+                self.assertIn(locator, seed)
+
     def test_checksum_drift_is_reported(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             parts_dir = Path(directory)

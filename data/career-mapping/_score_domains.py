@@ -5,7 +5,7 @@ Generic tokens (financial, data, analyse, management) create spurious matches, s
 Method: technical overlap -> Direct/Functional; transferable -> Adjacent; NAME match = purpose (Direct);
 course-title match = content (Functional). Tight thresholds + per-programme cap.
 """
-import json, glob, re
+import argparse, json, glob, re
 from collections import defaultdict, Counter
 
 STOP = set("a an the of and or to in for with on at by from as is are be this that your you their able "
@@ -117,7 +117,10 @@ for f in sorted(glob.glob("ccmas/*.json")):
         out[f"{d['discipline']}::{p['name']}"] = {"discipline": d["discipline"], "programme": p["name"],
                                                   "code": p.get("code"), "links": score_programme(p)}
         n += 1
-json.dump(out, open("programme_domain_scores.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+parser = argparse.ArgumentParser()
+parser.add_argument("--output", default="programme_domain_scores.json", help="write scores to this path (default: programme_domain_scores.json)")
+args = parser.parse_args()
+json.dump(out, open(args.output, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 
 tot = sum(len(v["links"]) for v in out.values())
 mt = Counter(l["match_type"] for v in out.values() for l in v["links"])

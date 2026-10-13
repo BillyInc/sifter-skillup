@@ -120,14 +120,17 @@ def locator(course: dict[str, Any], index: int) -> dict[str, Any]:
     # parallel curriculum table. It remains source provenance, not a new
     # curriculum claim.
     content_summary = course.get("content_summary")
+    source_title_variants = course.get("source_title_variants")
     return {
         "sourceFile": "social_sciences.json",
         "parsedSource": "CCMAS_Social_Sciences_COMBINED.md",
         "originalPdf": ORIGINAL_PDF,
+        "sourceLocatorText": course.get("source_locator"),
         "courseCode": course.get("code"),
         "courseTitle": course.get("title"),
         "level": course.get("level"),
         "courseSummary": content_summary if isinstance(content_summary, str) and content_summary.strip() else None,
+        "sourceTitleVariants": source_title_variants if isinstance(source_title_variants, dict) else None,
         "outcomeIndex": index,
     }
 

@@ -399,6 +399,7 @@ class RoleDetail(_CareerBase):
 class DomainLinkOut(_CareerBase):
     domainId:      Optional[str]         = None
     domainName:    Optional[str]         = None
+    domainDescription: Optional[str]    = None
     matchType:     Optional[str]         = None
     eliteFlag:     bool                  = False
 

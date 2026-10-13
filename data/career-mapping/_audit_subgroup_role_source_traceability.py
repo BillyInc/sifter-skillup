@@ -8,6 +8,8 @@ import re
 from collections import Counter, defaultdict
 from pathlib import Path
 
+from _role_overlay_loader import load_overlay_roles
+
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parent.parent
 
@@ -68,12 +70,14 @@ def main() -> None:
         overlay_counts[name] = len(items)
     merged: dict[str, dict] = {}
     duplicate_role_keys = []
-    for role in [*base_roles, *overlays]:
+    # Mirror the career-seed loader: deduplicate overlay files with the first
+    # overlay owning duplicate keys, then let the merged overlay replace base.
+    for role in [*base_roles, *load_overlay_roles()]:
         key = role_key(role)
-        if not key or key in merged:
-            if key:
-                duplicate_role_keys.append(key)
+        if not key:
             continue
+        if key in merged:
+            duplicate_role_keys.append(key)
         merged[key] = role
 
     profiles = load("role_work_profiles.json").get("profiles", [])
@@ -96,6 +100,8 @@ def main() -> None:
                 "label": subgroup.get("label"),
                 "description": subgroup.get("description"),
                 "role_count": subgroup.get("role_count"),
+                "data_state": subgroup.get("data_state"),
+                "student_visibility_reason": subgroup.get("student_visibility_reason"),
                 "source": source,
                 "sources": sources,
                 "source_provenance": provenance,
@@ -134,6 +140,7 @@ def main() -> None:
         domain_subgroup_keys = {
             clean(item.get("isco_submajor"))
             for item in (structure.get(domain_id, {}).get("subgroups") or [])
+            if clean(item.get("data_state")).lower() not in {"review_only", "excluded", "audit_only"}
         }
         if role_isco_submajor in domain_subgroup_keys:
             subgroup_assignment = "subgroup"
@@ -213,6 +220,8 @@ def main() -> None:
         "counts": {
             "domains": len(meta),
             "subgroups": len(subgroup_rows),
+            "student_visible_subgroups": sum(row.get("data_state") not in {"review_only", "excluded", "audit_only"} for row in subgroup_rows),
+            "excluded_subgroups_preserved_in_source": sum(row.get("data_state") in {"review_only", "excluded", "audit_only"} for row in subgroup_rows),
             "base_role_library_rows": len(base_roles),
             "overlay_rows": len(overlays),
             "merged_role_records": len(role_rows),
