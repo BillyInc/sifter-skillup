@@ -133,6 +133,51 @@ Only after a domain's evidence ledger has been reviewed should the coordinator i
 - test category and ownership boundaries, relationship resolution, missing-link behavior, search combinations, and programme-to-domain evidence. Include regression cases for Microsoft Office in technical domains, inappropriate role-level skill aggregation, SAE levels, TensorRT, ISO 26262, and Python+C++ route claims;
 - regenerate affected seeds only from their canonical sources and run all required local audits, API/UI tests, and browser proof. Follow repository `AGENTS.md` gates: local evidence and browser proof precede manual SQL; do not call a local result a live deployment. Push only after the agreed gates pass, preserving unrelated worktree changes.
 
+## Efficient research architecture for all downstream enrichment
+
+Downstream enrichment is granular in judgment but shared in research. First
+build a versioned evidence index from authoritative sources covering common,
+versatile, useful-edge, emerging, experimental, and near-future work. Index
+records must be claim-level and include source identity, locator, jurisdiction,
+scope, maturity, date, task/use case, output, limitation, learning resource,
+and confidence. The index is a retrieval layer, not a domain assignment.
+
+After indexing, group records by semantic similarity: canonical concept,
+alias, task expressed in student language, method family, tool family,
+competency, certification, prerequisite, complement, alternative, and output.
+Do not merge records merely because their names are similar. Preserve separate
+records when task, scope, evidence, maturity, prerequisite, or ownership
+differs.
+
+For every domain, area of specialization, and role, perform a context-fit pass
+over the relevant index groups. The pass must prove the item is used in that
+context, state what the learner does with it, classify its requirement level,
+identify relationships and limitations, and attach the exact path target. A
+reused source saves search and token cost but does not skip adjudication.
+Existing inventory is audited alongside new research; it is not presumed
+complete merely because it has a URL.
+
+The economical default is GPT-6 Luna at medium reasoning for indexing,
+retrieval-based reuse, extraction, normalization, deduplication, and bounded
+contract completion. Keep prompts compact, retrieve only relevant source
+records, cache stable instructions, require strict structured output, and use
+batch processing for independent records. Escalate only genuinely ambiguous,
+conflicting, cross-domain, emerging, or high-impact decisions to a stronger
+model. Agent verification and local verification are separate states; one
+local reconciliation pass closes a package unless a documented anti-loop
+trigger occurs.
+
+The required sequence is:
+
+`source index → similarity groups → existing-inventory audit → domain fit → area fit → role fit → local reconciliation → dependency graph → student promotion`
+
+No item may be promoted because it was found in the index or because another
+domain uses it. No item may be rejected solely because Nigerian evidence is
+absent when authoritative global evidence establishes its use; local context
+is an enrichment dimension, not a universal eligibility gate. Every decision
+must preserve reused evidence IDs, new searches, opened sources, rejected
+claims, context-fit rationale, and token-efficient retrieval provenance.
+
 ## Completion definition
 
 The audit is complete only when the manifest covers 100% of active domains, subgroups, roles, and candidate student-facing items; every candidate has an explicit disposition; every confirmed item and relationship has context-appropriate evidence; all retained learner items have verified item-specific sources/links; removed items cannot leak into matcher output; programme provenance is preserved; the matcher behavior and audience rules pass; and the generated artifacts pass repository audits and browser checks. Report remaining genuinely unavailable or not-yet-verified items separately with the evidence trail. Do not report “done” based on agent activity, a sample, URL syntax checks, or a successful local generator alone.
