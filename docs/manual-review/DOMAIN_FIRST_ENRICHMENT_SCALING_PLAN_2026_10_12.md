@@ -349,6 +349,49 @@ The later integrated programme → domain → area → role UI/report release ch
 | Item exists in inventory or has a URL but lacks checkpoint-fit evidence, or URL is a reference page not instruction | Substantive item-specific gap. Resolve during the one assigned research/verification cycle; otherwise final disposition is unapproved/hidden with the exact reason. |
 | Conditional relationship is counted as a prerequisite or role-fit audit reopens during item placement | Correct relationship type/metadata and preserve the approved route. Only a separately documented, genuinely new contradiction can reopen role fit. |
 
+## Token-efficient enrichment and evidence reuse
+
+Terminology rule: **area of specialization = canonical/main subgroup**.
+ISCO-defined subgroup records are legacy provenance only. They are never a
+second active enrichment layer, assignment denominator, route layer, graph
+layer, API output, or student-facing category.
+
+The domain-first workflow must optimize both quality and token usage. Do not
+send the full inventory, all source text, or all descendants to every model
+call. Create and maintain a reusable, source-backed evidence index before the
+main domain waves. An index record may cover a recurring tool, method,
+competency, skill, knowledge item, certification, task, output, learning
+resource, or relationship, but it must retain source identity, locator,
+jurisdiction, scope, maturity, access date, and claim-level evidence.
+
+Reuse is permitted only as evidence reuse, never as automatic placement. For
+each proposed reuse, the domain/area/role pass must separately establish that
+the item is used in the target context, the task or output it supports there,
+its requirement level, its limitations, and the exact path target and
+rationale. Similarity grouping may cluster aliases, repeated tasks, related
+methods, common tool families, and shared sources; it must not merge items with
+different scope, maturity, prerequisites, outputs, or ownership.
+
+The efficient sequence is:
+
+`source index → similarity groups → domain fit → area fit → role fit → one local reconciliation → graph rebuild`
+
+Use GPT-6 Luna as the default enrichment worker at medium reasoning for
+structured extraction, source indexing, deduplication, evidence reuse,
+contract completion, and bounded relationship classification. Use compact
+retrieval packages, cached shared instructions, strict JSON output, and batch
+requests. Escalate only ambiguous boundaries, conflicting sources,
+cross-domain placement, emerging/experimental claims, or final synthesis to a
+stronger reasoning model. A Luna result is agent-verified evidence, not
+canonical approval; local reconciliation remains the single substantive final
+verification pass.
+
+Every wave must record reused evidence IDs, newly searched queries, opened
+sources, claims added or rejected, context checks performed, and the exact
+checkpoint/version. This prevents repeated research loops and prevents a
+source index from silently turning a globally useful item into a universal
+domain requirement.
+
 ## Stage ledger for this scaling plan
 
 | Stage | Owner | Output | Completion evidence | State/transition |
