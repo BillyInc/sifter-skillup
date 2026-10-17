@@ -6,6 +6,27 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Sifter LevelUp is a Duolingo-style learning app for crypto literacy and quant finance. It has two main parts: a React Native/Expo mobile frontend and a FastAPI Python backend, backed by Supabase (Postgres) with Celery/Redis for background jobs.
 
+## Windows local command runner contract
+
+- The current operator workflow is the IDE and its integrated terminal, not the
+  Codex CLI. Do not redirect instructions or diagnostics to a CLI workflow.
+- If the IDE reports `Failed exit -1`, distinguish the IDE runner status from
+  the child process: capture the exact command and child exit code/output before
+  attributing the failure. A successful shell probe does not prove that a
+  long-running IDE task runner is fixed.
+- Prefer explicit executable paths for project launchers: `node.exe` with
+  `node_modules/expo/bin/cli`, `uv.exe`, and `python.exe`. Do not invoke bare
+  `npx`, `pnpm`, or `python` from PowerShell when a `.ps1` shim may be selected.
+- Use `scripts/start-frontend.ps1` and `scripts/start-backend.ps1`; they run in
+  the foreground and return the child process exit code. Do not detach services
+  or hide their output when the user is diagnosing startup.
+- Run one command per process invocation; avoid shell-nested quoting and
+  `cmd.exe /c` wrappers for Python/Node arguments. In PowerShell, use `.cmd`
+  only when a package-manager command is required, and preserve its
+  `$LASTEXITCODE` immediately.
+- Pytest scratch folders are ignored; do not recursively scan or delete
+  permission-protected temporary folders to resolve a command failure.
+
 ## SUPABASE APPLY-NOW CONTRACT — READ BEFORE TESTING ADMIN, MATCHING, OR REPORTS
 
 This is the visible deployment order Claude must follow when the task involves
@@ -104,6 +125,112 @@ rows. It must be applied after both the career/offering seed and the typed
 rule-record seed. A successful local generation is not proof of a live
 deployment; rerun the post-apply counts and exhaustive matcher audit in
 `backend/COMPLETE_DATA_MIGRATION_2026-08-17.md`.
+
+### D078/Sociology student-display reseed gate (2026-10-14)
+
+Frontend fixes do not make Sociology data appear in a database that still has
+an old or partial seed. Before retesting the programme → Social Sciences →
+area → role flow, perform a read-only preflight and apply only missing schema
+and seed files. Do not treat an empty student payload as proof that reviewed
+content was rejected; compare it with the local approved contracts and seed
+counts first.
+
+The authoritative current migration and seed order is the dated
+`Authoritative D078/Sociology apply order (15 October 2026)` section in
+`backend/MIGRATION_RUNBOOK.md`. That section is the source of truth for this
+slice; do not create a second order from this summary or reopen a content
+stage that has already passed.
+
+After the canonical career seed has created the Sociology programme, D078
+domain, roles and role IDs, confirm these D078 display migrations and seeds
+are applied (use the migration runbook to resolve any already-applied files):
+
+```text
+backend/migration_programme_domain_evidence_2026-09-17.sql
+backend/migration_programme_domain_review_corrections_2026-09-18.sql
+backend/migration_sociology_curriculum_contract_2026-09-17.sql
+backend/migration_programme_curriculum_contract_general_2026-09-18.sql
+backend/migration_contextual_career_items.sql
+backend/migration_career_context_claim_validation.sql
+backend/migration_career_item_relationships_2026-09-17.sql
+backend/migration_career_item_relationship_explanations_2026-10-12.sql
+backend/migration_career_item_sequence_policy_2026-10-12.sql
+backend/migration_career_item_relationship_target_context_2026-10-17.sql
+backend/migration_career_context_path_targets.sql
+backend/migration_guidance_programme_reading_and_market_scope_2026-09-12.sql
+backend/migration_guidance_ownership_and_sociology_resources_2026-09-11.sql
+backend/migration_domain_student_orientation_2026-09-18.sql
+backend/migration_sociology_domain_tool_path_2026-09-18.sql
+backend/migration_d078_specialization_taxonomy_2026-10-12.sql
+backend/migration_d078_role_item_contracts_2026-10-15.sql
+backend/migration_d078_requirement_lanes_2026-10-17.sql
+```
+
+Then apply the current D078 data in this order:
+
+```text
+backend/seed_programme_domain_evidence_2026-09-17.sql
+backend/seed_sociology_curriculum_contract_2026-09-17.sql
+backend/seed_sociology_programme_theme_guidance_2026-10-08.sql
+backend/seed_sociology_domain_guidance_2026-10-08.sql
+backend/migration_guidance_all_programmes_2026-09-12.sql
+backend/migration_guidance_global_2026-09-11.sql
+backend/seed_d078_specialization_taxonomy_2026-10-12.sql
+backend/migration_d078_role_route_visibility_2026-10-15.sql
+backend/seed_career_context_items_v1_parts/part-001.sql.gz ... part-035.sql.gz
+backend/seed_d078_guided_content_2026-10-12.sql
+backend/seed_d078_role_item_contracts_2026-10-15.sql
+backend/seed_d078_role_tools_2026-10-16.sql
+```
+
+The role-item migration stores the complete 173-row backend ledger. The
+companion role-item seed also materializes approved, routed records as 202
+student-owned `career_context_items` cards; the ledger alone does not make a
+role card visible. The current local contract has 171 approved and 2
+unapproved decisions, 166 individually eligible records, 224 supported
+role-owner links, and 202 deduplicated role cards. The role-tool seed adds 95
+optional role-owned tool cards across 19 routed roles. It does not make tools
+compulsory or create prerequisite edges.
+
+Repository transport rule: generated audit JSON and generated seed SQL are
+stored as `.json.gz` or `.sql.gz` transport artifacts when the compressed
+counterpart is present; their raw generated counterparts are not part of the
+push package. Small manifest files and migration DDL remain plain text so the
+files can be indexed and the schema can be inspected/executed. Supabase cannot
+execute gzip bytes directly: decompress a numbered transport before applying
+it, and never apply both a raw and compressed copy of the same seed.
+
+For D078 guided content, the compressed transport is
+`backend/seed_d078_guided_content_2026-10-12.sql.gz`; decompress the plain SQL
+before applying. Never submit gzip bytes to Supabase and never apply both the
+plain and compressed copy of the same seed. Use a read-only preflight, apply
+only missing files in the order above, stop at the first SQL error, then verify
+the seven canonical areas, multi-area role links, role cards, tools, themes,
+outcomes, relationship explanations, item-specific links, and programme,
+domain, area and role API payloads. Local generation and tests are not
+live-deployment proof, and UI selection/tray/report behavior still requires
+separate rendered acceptance.
+
+Apply only missing files and preserve the dependency order in the runbook.
+The local Sociology curriculum preview is a development fallback, not a
+replacement for its seed. The D078 student flow uses seven canonical areas
+and reviewed area-role routes; never restore the retired legacy subgroup
+buckets. Verify all seven areas and their role routes after seeding, and make
+sure programme themes are derived from the full source-backed outcome
+contract rather than a fixed three-theme sample.
+
+After applying, confirm row counts and request programme, domain, area and
+role payloads again. Check that programme themes/outcomes, shared domain
+foundations, separately scoped domain options, named tools/methods/knowledge,
+area-owned additions, explained relationships, item-specific learning links,
+and roles under their reviewed areas are returned as approved/source-backed.
+The APSA “Rethinking Political Science Education” report remains an audit
+source for a bounded political-science education claim, not a general
+Social-Sciences learning resource.
+Selection removal, tray opening, and report behavior are application checks
+and must be tested separately; SQL success alone is not UI proof. This is a
+manual migration flow: do not apply SQL from local code or claim a live reseed
+without post-apply counts.
 
 ### Career guidance ownership and reviewed Sociology slice
 

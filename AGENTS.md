@@ -6,6 +6,32 @@ This file provides guidance to Codex (Codex.ai/code) when working with code in t
 
 Sifter LevelUp is a Duolingo-style learning app for crypto literacy and quant finance. It has two main parts: a React Native/Expo mobile frontend and a FastAPI Python backend, backed by Supabase (Postgres) with Celery/Redis for background jobs.
 
+## Windows local command runner contract
+
+- The current operator workflow is the IDE and its integrated terminal, not
+  Codex CLI. Keep command guidance and diagnostics in that workflow.
+- Treat `Failed exit -1` and `helper_unknown_error` as runner/setup symptoms
+  until the child process output proves otherwise. Record the exact command,
+  runner result, and child exit code/output before attributing the failure.
+- A successful short shell probe does not prove that a long-running IDE task
+  runner is fixed. Conversely, a runner status of `-1` is not proof that the
+  child process failed; preserve and inspect the child's own output and code.
+- Do not use a Node REPL or another persistent helper while diagnosing shell
+  startup. Do not delete or change ACLs on runtime executables, disable
+  sandboxing, or switch to a weaker sandbox as an automatic workaround.
+- Prefer explicit executable paths for project launchers: `node.exe` with
+  `node_modules/expo/bin/cli`, `uv.exe`, and `python.exe`. Do not invoke bare
+  `npx`, `pnpm`, or `python` from PowerShell when a `.ps1` shim may be selected.
+- Use `scripts/start-frontend.ps1` and `scripts/start-backend.ps1`; they run in
+  the foreground and return the child process exit code. Do not detach services
+  or hide their output when the user is diagnosing startup.
+- Run one command per process invocation; avoid shell-nested quoting and
+  `cmd.exe /c` wrappers for Python/Node arguments. In PowerShell, use `.cmd`
+  only when a package-manager command is required, and preserve its
+  `$LASTEXITCODE` immediately.
+- Pytest scratch folders are ignored; do not recursively scan or delete
+  permission-protected temporary folders to resolve a command failure.
+
 ## SUPABASE APPLY-NOW CONTRACT — READ BEFORE TESTING ADMIN, MATCHING, OR REPORTS
 
 This is the visible deployment order Codex must follow when the task involves
@@ -227,8 +253,10 @@ programme learning to students. After `seed_career_pilot.sql` has created the
 canonical Sociology programme row, apply
 `backend/migration_sociology_curriculum_contract_2026-09-17.sql`, then run
 `backend/seed_sociology_curriculum_contract_2026-09-17.sql`. This seed contains
-only the 243 Sociology CCMAS course-outcome rows that passed the local quality
-gate and the seven separately stored programme abilities. It strips appended
+the 236 Sociology CCMAS course-outcome rows that passed the local quality
+gate and seven separately stored programme abilities (243 curriculum records
+total). The 14 reviewed theme groupings explain these records without
+replacing or discarding outcome evidence. It strips appended
 source annotations from student text while retaining their locators for staff
 audit. It does not rewrite legacy `skills_*` JSONB arrays and it does not seed
 domains, subgroups or roles. The API must return `not_seeded` or

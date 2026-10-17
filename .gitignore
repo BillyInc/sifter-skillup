@@ -43,6 +43,10 @@ backend/.env.bak*
 __pycache__/
 *.pyc
 .venv/
+.pytest_cache/
+# Temporary audit/test worktrees can be ACL-protected on Windows. Keep Git and
+# ripgrep from traversing these disposable pytest directories during normal use.
+.pytest-tmp-*/
 
 # Backend logs
 backend/logs/

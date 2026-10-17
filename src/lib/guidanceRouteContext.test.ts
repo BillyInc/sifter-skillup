@@ -78,6 +78,19 @@ describe("guidance route context telemetry", () => {
     );
   });
 
+  it("serializes the full programme, domain, area and role route", () => {
+    expect(guidanceContextQuery({
+      programmeId: "sociology",
+      domainId: "D078",
+      areaId: "A01",
+      roleId: "D078|sociologist",
+      focused: true,
+      openTray: true,
+    }, { includeProgrammeId: true })).toBe(
+      "programme_id=sociology&domain_id=D078&area_id=A01&role_id=D078%7Csociologist&focus=guidance&open_tray=1",
+    );
+  });
+
   it("rejects a stale route when its account target or student changes", () => {
     const current = {
       userType: "ss3_secondary",
@@ -97,6 +110,13 @@ describe("guidance route context telemetry", () => {
     })).toBe(false);
     expect(isGuidanceContextCompatible(current, {
       userType: "jamb",
+    })).toBe(false);
+    expect(isGuidanceContextCompatible({ domainId: "D078", roleId: "role-a" }, {
+      domainId: "D078",
+      roleId: "role-a",
+    })).toBe(true);
+    expect(isGuidanceContextCompatible({ domainId: "D078", roleId: "role-a" }, {
+      roleId: "role-b",
     })).toBe(false);
   });
 });

@@ -17,10 +17,10 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[3]
 AUDIT = ROOT / "data" / "career-mapping" / "_audit"
-GRAPH = AUDIT / "D078_PROGRAMME_TO_ROLE_LEARNING_PATH_GRAPH_2026_10_10.json"
-HANDOFF = AUDIT / "D078_ROLE_ITEM_RECONCILIATION_AGENT_CHECKPOINT_2026_10_10.json"
-OUT = AUDIT / "D078_ROLE_ITEM_RECONCILIATION_INTEGRATION_2026_10_10.json"
-REPORT = ROOT / "docs" / "manual-review" / "D078_ROLE_ITEM_RECONCILIATION_INTEGRATION_2026_10_10.md"
+GRAPH = AUDIT / "D078_PROGRAMME_TO_ROLE_LEARNING_PATH_GRAPH_2026_10_15.rebuilt.json"
+HANDOFF = AUDIT / "D078_MASTER_GUIDED_EXPERIENCE_RECONCILIATION_2026_10_12.json"
+OUT = AUDIT / "D078_ROLE_ITEM_RECONCILIATION_INTEGRATION_2026_10_15.json"
+REPORT = ROOT / "docs" / "manual-review" / "D078_ROLE_ITEM_RECONCILIATION_INTEGRATION_2026_10_15.md"
 
 
 def load(path: Path) -> Any:
@@ -41,9 +41,11 @@ def selected_contract(record: dict[str, Any]) -> dict[str, Any]:
         "evidence", "nigeria_context", "learning_link", "source_locators",
         "resolved_source_urls", "unresolved_reasons", "final_disposition_status",
         "student_visibility", "role_task_reconciliation", "area_route_ids_reconciled",
-        "area_route_labels_reconciled", "state", "approval_basis",
+        "area_route_labels_reconciled", "state", "approval_basis", "approval_reason",
         "role_task_relationship_verified", "checkpoint_placement_approved",
         "student_display_approved", "source_approval_rejected", "integration_disposition",
+        "role_snapshot_reconciliation", "approval_status", "reconciliation_status",
+        "learning_link_review", "content_link_repair_provenance", "original_unresolved_reasons",
     )
     return {field: record.get(field) for field in fields if field in record}
 
@@ -156,8 +158,15 @@ def build_learning_path_inventory(nodes: list[dict[str, Any]], edges: list[dict[
             "details_imported_only_when_role_selected": True,
         })
     routed_ids = {item_id for ids in role_item_ids_by_role.values() for item_id in ids}
-    if len(routed_ids) != 163:
-        raise ValueError(f"Expected the 163 approved/conditional role-item records to be routed; found {len(routed_ids)}")
+    expected_routed_ids = {
+        node["id"] for node in role_items
+        if (node.get("role_item_reconciliation") or {}).get("role_snapshot_reconciliation", {}).get("current_area_routed_role_owners")
+    }
+    if routed_ids != expected_routed_ids:
+        raise ValueError(
+            "Every role-item record with a current area-routed owner must have a graph edge; "
+            f"expected {len(expected_routed_ids)}, found {len(routed_ids)}"
+        )
 
     return {
         "status": "complete_hidden_path_inventory_sequence_approved_release_gates_open",
@@ -222,7 +231,7 @@ def build_learning_path_inventory(nodes: list[dict[str, Any]], edges: list[dict[
 def main() -> None:
     graph = load(GRAPH)
     handoff = load(HANDOFF)
-    records = handoff.get("records") or []
+    records = handoff.get("role_item_reconciliation", {}).get("records") or []
     if len(records) != 173 or len({r.get("queue_position") for r in records}) != 173:
         raise ValueError("The role-item handoff must contain 173 unique queue positions before integration")
 
@@ -233,6 +242,7 @@ def main() -> None:
         str(node.get("label", "")).strip().casefold(): node
         for node in nodes if node.get("kind") == "role"
     }
+    current_role_owner_keys = set(role_nodes)
     added_hidden_nodes: list[int] = []
     existing_integrated = 0
     hidden_count = 0
@@ -240,10 +250,20 @@ def main() -> None:
     disposition_counts: Counter[str] = Counter()
     route_count = 0
     role_edge_count = 0
+    bounded_task_verified_count = 0
+    records_with_current_role_owner = 0
 
     for record in records:
         position = int(record["queue_position"])
-        disposition = str(record.get("final_disposition_status") or record.get("integration_disposition") or "hidden")
+        final_status = str(record.get("approval_status") or "unapproved")
+        if final_status == "approved":
+            disposition = (
+                "conditional_for_later_integration"
+                if record.get("placement_decision") in {"conditional", "conditional_route_candidate"}
+                else "approved_for_later_integration"
+            )
+        else:
+            disposition = "hidden"
         disposition_counts[disposition] += 1
         contract = selected_contract(record)
         node = by_queue.get(position)
@@ -273,6 +293,9 @@ def main() -> None:
         node["approval"] = "role_item_contract_reconciled_hidden"
         node["role_fit_reopened"] = False
         node["canonical_promotion"] = False
+        bounded_task_verified_count += bool(
+            (record.get("approval_reason") or record.get("approval_basis") or {}).get("direct_task_output_evidence")
+        )
         route_count += len(record.get("area_route_ids_reconciled") or [])
         if disposition == "hidden":
             hidden_count += 1
@@ -289,7 +312,10 @@ def main() -> None:
         }:
             unresolved_count += 1
 
-        for role_label in record.get("roles_snapshot") or []:
+        role_labels = (record.get("role_snapshot_reconciliation") or {}).get("current_area_routed_role_owners") or []
+        if any(str(role_label).strip().casefold() in current_role_owner_keys for role_label in role_labels):
+            records_with_current_role_owner += 1
+        for role_label in role_labels:
             role = role_nodes.get(str(role_label).strip().casefold())
             if role:
                 add_edge(edges, {
@@ -344,8 +370,8 @@ def main() -> None:
         ),
         "hidden_with_final_reason": hidden_count,
         "unresolved_student_items": unresolved_count,
-        "bounded_task_verified": handoff.get("counts", {}).get("bounded_task_verified", 0),
-        "current_area_routes": handoff.get("counts", {}).get("with_current_area_route", 0),
+        "bounded_task_verified": bounded_task_verified_count,
+        "current_area_routes": records_with_current_role_owner,
         "existing_graph_nodes_integrated": existing_integrated,
         "hidden_nodes_added": len(added_hidden_nodes),
         "reconciled_area_route_references": route_count,
@@ -386,7 +412,7 @@ def main() -> None:
     GRAPH.write_text(json.dumps(graph, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
     result = {
-        "schema_version": "2026-10-10.d078.role-item-reconciliation-integration.v1",
+        "schema_version": "2026-10-15.d078.role-item-reconciliation-integration.v2",
         "reviewed_on": str(date.today()),
         "status": "integrated_hidden_handoff_sequence_and_ui_gates_open",
         "counts": {
@@ -399,12 +425,18 @@ def main() -> None:
             ),
             "hidden_with_final_reason": hidden_count,
             "unresolved_student_items": unresolved_count,
-            "bounded_task_verified": handoff.get("counts", {}).get("bounded_task_verified", 0),
-            "with_current_area_route": handoff.get("counts", {}).get("with_current_area_route", 0),
+            "bounded_task_verified": bounded_task_verified_count,
+            "with_current_area_route": records_with_current_role_owner,
             "existing_graph_nodes_integrated": existing_integrated,
             "hidden_nodes_added": len(added_hidden_nodes),
             "hidden_node_queue_positions_added": added_hidden_nodes,
-            "role_edges_added_or_existing": role_edge_count,
+            "role_edges_added_or_existing": sum(
+                edge.get("relationship") == "reconciled_role_item_to_role" for edge in edges
+            ),
+            "role_item_records_with_role_edges": len({
+                edge.get("source") for edge in edges
+                if edge.get("relationship") == "reconciled_role_item_to_role"
+            }),
             "total_graph_nodes": len(nodes),
             "total_graph_edges": len(edges),
             "area_relationship_candidate_edges": graph.get("area_reconciliation", {}).get("relationship_graph", {}).get("area_item_relationship_edges", 0),
@@ -434,10 +466,11 @@ def main() -> None:
             f"- Hidden with final reasons: **{result['counts']['hidden_with_final_reason']}**.",
             f"- Unresolved student candidates (missing/invalid disposition or hidden reason): **{result['counts']['unresolved_student_items']}**.",
             f"- Bounded task contracts verified: **{result['counts']['bounded_task_verified']}**.",
-            f"- Current area routes attached: **{result['counts']['with_current_area_route']}**.",
+            f"- Records attached to at least one current, graph-routed role: **{result['counts']['with_current_area_route']}**.",
+            f"- Unique role-item-to-role relationships represented: **{result['counts']['role_edges_added_or_existing']}** across **{result['counts']['role_item_records_with_role_edges']}** role-item records.",
             f"- Student-visible promotions: **{result['counts']['student_visible']}**.",
             "",
-            "Approved/conditional handoff records are already part of the rebuilt graph; their later learning-path placement and sequencing are in scope for this design pass. Final-hidden records stay internal and out of the learner path. Role/domain/area fit, taxonomy and the subject matcher were not reopened or modified. Nigerian context remains additive; global evidence remains valid. The graph remains hidden until sequence, content and UI gates are verified.",
+            "Each role-item graph node retains the reconciled task/output, programme/domain/area/role context, placement rationale, prerequisites, complements, alternatives, limitations, source locators and learning-link disposition. Edges connect each record only to its currently routed role owners; role selection remains the point at which those role details enter a saved plan. Final-hidden records remain separated from learner-path candidates. Role/domain/area fit, taxonomy and the subject matcher were not reopened or modified. Nigerian context is additive; global evidence remains valid. The graph stays an internal audit/design artifact, not a student screen.",
             "",
             "Next: run one integrated programme → domain → area → role verification and continue the guided implementation. Do not return to role-fit adjudication.",
         ]) + "\n",

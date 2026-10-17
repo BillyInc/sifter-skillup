@@ -181,3 +181,34 @@ claims, context-fit rationale, and token-efficient retrieval provenance.
 ## Completion definition
 
 The audit is complete only when the manifest covers 100% of active domains, subgroups, roles, and candidate student-facing items; every candidate has an explicit disposition; every confirmed item and relationship has context-appropriate evidence; all retained learner items have verified item-specific sources/links; removed items cannot leak into matcher output; programme provenance is preserved; the matcher behavior and audience rules pass; and the generated artifacts pass repository audits and browser checks. Report remaining genuinely unavailable or not-yet-verified items separately with the evidence trail. Do not report “done” based on agent activity, a sample, URL syntax checks, or a successful local generator alone.
+
+## Student-facing explanation depth (2026-10-16)
+
+Every explanatory narration must work for a learner who has little or no prior
+knowledge of the concept. A name, category, one-line gloss, or single sentence
+is not enough when the learner needs to understand what the item does, how it is
+used in this context, and why it belongs in the route. For unfamiliar or
+multi-part concepts, provide a concise but connected multi-sentence explanation
+(normally at least two sentences); do not inflate familiar labels or repeat
+content just to make it longer.
+
+This applies independently to programme overviews and themes, outcome
+explanations, programme-to-domain transfer, domain/area/role overviews, every
+skill, tool, method, competency, knowledge item and certification, its use case
+and output, its requirement rationale, prerequisites, complements, alternatives,
+limitations, relationships, and the reason for each attached learning resource.
+Explain technical terms in professional, accessible language without
+discarding the correct concept. State the item's meaning in the selected
+programme/domain/area/role context and distinguish curriculum-taught content
+from domain enrichment.
+
+Keep the narration partitioned into learner-facing sections: what it is; what
+it helps the learner do here; what work/output it supports; why it is included
+at this checkpoint; how it connects to other items and earlier/later layers;
+what it cannot prove or replace; and why the linked resource teaches this
+particular use. Explain relationship meaning and choice consequences rather
+than exposing raw relationship codes or internal route notes. Preserve source
+outcomes faithfully and add an explanation alongside them. Section headings
+and compact status labels may be brief, but cannot stand in for these
+explanations. The standard applies through the tray, saved route, comparison,
+report and print as well as the main guided screens.

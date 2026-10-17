@@ -26,6 +26,13 @@ function item(overrides: Partial<CareerContextItem>): CareerContextItem {
     linkState: "linked",
     linkUrl: "https://example.com/learn",
     linkTitle: "Task-specific guide",
+    requirementLevel: "useful",
+    requirementReason: "Use this when the selected route includes analysis of interview transcripts; it is not needed for every research task.",
+    programmeContext: "The Sociology programme introduces research questions and evidence; this tool is an additional way to work with textual material.",
+    domainContext: "Social-science researchers can use it to organise qualitative material and keep coding decisions traceable.",
+    areaContext: "In Sociology and Social Anthropology, it can help compare how participants describe institutions and social relationships.",
+    roleContext: "For a qualitative researcher, it can support an auditable coding workflow, but does not interpret the material on its own.",
+    linkEvidence: { why_this_resource: "This official tutorial demonstrates the project's coding and retrieval steps rather than only describing the software." },
     guidanceOwner: "domain",
     verifiedAt: "2026-10-09",
     relationships: [],
@@ -102,10 +109,18 @@ test("maps reviewed context items to route-scoped candidates without legacy infe
     { id: "src-1", title: "Official guide", url: "https://example.com/source", region: "global", evidenceType: "official_documentation" },
   ]);
   expect(pythonCandidate.sourceLocators).toEqual([{ locator: "section 1" }]);
+  expect(pythonCandidate.geographicScope).toBe("nigeria_to_global");
   expect(pythonCandidate.sourceConfidence).toBe("high");
+  expect(pythonCandidate.explanation).toBeUndefined();
   expect(pythonCandidate.verifiedAt).toBe("2026-10-09");
+  expect(pythonCandidate.requirementReason).toMatch(/not needed for every research task/);
+  expect(pythonCandidate.programmeContext).toMatch(/Sociology programme/);
+  expect(pythonCandidate.domainContext).toMatch(/traceable/);
+  expect(pythonCandidate.areaContext).toMatch(/Sociology and Social Anthropology/);
+  expect(pythonCandidate.roleContext).toMatch(/does not interpret/);
+  expect(pythonCandidate.linkRationale).toMatch(/coding and retrieval steps/);
   expect(pythonCandidate.visibility).toBe("selectable");
-  expect(pythonCandidate.category).toBe("shared_foundation");
+  expect(pythonCandidate.category).toBe("useful_edge");
   expect(pythonCandidate.routeScope).toEqual({ domainIds: ["D078"] });
   expect(pythonCandidate.prerequisiteIds).toEqual(["domain:D078:skill:research-methods"]);
   expect(pythonCandidate.prerequisiteNames).toEqual(["Research methods"]);
@@ -247,4 +262,26 @@ test("treats the subgroup source owner as the student-facing area owner", () => 
   expect(candidate.layer).toBe("area");
   expect(candidate.guidanceOwner).toBe("area");
   expect(candidate.visibility).toBe("selectable");
+});
+
+test("keeps optional area and role items outside the main route, regardless of task grouping", () => {
+  const optionalArea = item({
+    contextLevel: "subgroup", contextKey: "D078:area", domainId: "D078",
+    itemKey: "qgis", name: "QGIS", guidanceOwner: "subgroup",
+    requirementLevel: "useful", useCaseKey: null,
+  });
+  const requiredArea = item({
+    ...optionalArea, itemKey: "mapping-basics", name: "Mapping basics", requirementLevel: "needed",
+  });
+  const optionalRole = item({
+    contextLevel: "role", contextKey: "D078|researcher", itemKey: "python", name: "Python",
+    guidanceOwner: "role", requirementLevel: "optional", useCaseKey: "",
+  });
+  const requiredRole = item({ ...optionalRole, itemKey: "research-design", name: "Research design", requirementLevel: "needed" });
+  const candidates = contextItemsToLearningCandidates([optionalArea, requiredArea, optionalRole, requiredRole]);
+
+  expect(candidates.find((candidate) => candidate.name === "QGIS")?.category).toBe("useful_edge");
+  expect(candidates.find((candidate) => candidate.name === "Mapping basics")?.category).toBe("area_addition");
+  expect(candidates.find((candidate) => candidate.name === "Python")?.category).toBe("useful_edge");
+  expect(candidates.find((candidate) => candidate.name === "Research design")?.category).toBe("role_addition");
 });

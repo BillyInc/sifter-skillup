@@ -27,6 +27,7 @@ import { useTheme, Spacing, Radius, FontSize, CompassFonts } from "@/theme";
 import { getClusterColor } from "@/data/clusterMaps";
 import { careerData } from "@/lib/careerData";
 import { formatCareerLabel, studentSummary } from "@/lib/careerLabels";
+import { visibleDomainAreas } from "@/lib/d078RoutePresentation";
 import { useExploreNav } from "@/lib/exploreNav";
 import type { GuidanceRouteContext } from "@/lib/guidanceRouteContext";
 import {
@@ -46,10 +47,10 @@ import {
   MappingFeedbackButton,
   SectionLabel,
   ContextualItemList,
-  GuidanceContinuation,
   TextTabs,
   LearningResourcesBlock,
   ExternalLinkGuard,
+  ProgrammeCurriculumCarryForward,
 } from "@/components/careerIntelligence";
 import { isStudentResource } from "@/components/careerIntelligence/resourceLinks";
 
@@ -339,7 +340,7 @@ function LegacyDomainBody({
           learningFocus
           targetStudentId={targetStudentId}
         />
-        <ContextualItemList items={domain.contextItems} resources={domain.resources} title="What each skill, tool and certification does in this domain" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} learningFocus targetStudentId={targetStudentId} />
+        <ContextualItemList items={domain.contextItems} itemTypes={["skill", "competency", "method", "knowledge"]} resources={domain.resources} title="Skills, methods and knowledge for this field" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} learningFocus targetStudentId={targetStudentId} />
         <ToolGroupsBlock
           tools={domain.tools}
           resources={domain.resources}
@@ -348,6 +349,7 @@ function LegacyDomainBody({
           contextLevel="domain"
           learningFocus
           targetStudentId={targetStudentId}
+          learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }}
           commonLabel="Useful throughout this domain"
           distinctiveLabel="Used in particular areas"
           explanation="These tools support work across the domain. The area you choose later will show which ones matter most there."
@@ -458,6 +460,9 @@ function DomainBody({
   const exploreNav = useExploreNav();
   const [tab, setTab] = useState<"overview" | "build">("overview");
   const subgroups = domain.subgroups ?? [];
+  // D078's historical subgroups are retired; expose only its current canonical
+  // areas of specialization even if an older API payload still contains them.
+  const visibleAreas = visibleDomainAreas(domain);
   const connection = domain.programmeConnection;
   const studentConnection = connection && !connection.reviewRequired && !connection.sourceReviewRequired
     ? connection
@@ -468,7 +473,8 @@ function DomainBody({
     && item.guidanceOwner === "domain"
     && item.dataState === "source_backed"
     && item.sourceConfidence !== "unsourced"
-    && item.linkState !== "review_required",
+    && item.claimReviewState === "approved"
+    && item.linkState === "linked",
   );
   const domainResources = (domain.resources ?? []).filter((resource) =>
     isStudentResource(resource, "domain"),
@@ -521,15 +527,37 @@ function DomainBody({
 
       <TextTabs value={tab} onChange={setTab} tabs={[{ value: "overview", label: "Overview" }, { value: "build", label: "Build in this domain" }]} />
 
-      {studentConnection ? (
-        <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
-          <View style={refinedStyles.cardHeading}>
-            <Feather name="link" size={17} color={colors.accentRole.action} />
-            <Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Why {domain.name} is connected to {studentConnection.programmeName}</Text>
+      <View style={[refinedStyles.card, refinedStyles.orientationCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
+        <View style={refinedStyles.cardHeading}>
+          <Feather name="compass" size={17} color={colors.accentRole.action} />
+          <View style={refinedStyles.copyBlock}>
+            <Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Understand {domain.name} before choosing an area</Text>
           </View>
+        </View>
+        {!orientation?.whatItStudies && domain.description ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>What this field is about</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{domain.description}</Text>{domain.descriptionSources?.map((source) => <ExternalLinkGuard key={`${source.title}:${source.locator}`} url={source.url} label={source.shortLabel || source.title} description={`This source supports the overview of ${domain.name}.`} textStyle={[refinedStyles.meta, { color: colors.accentRole.action }]} />)}</View> : null}
+        {orientation?.whatItStudies ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>What this field studies</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.whatItStudies}</Text><OrientationEvidenceLinks orientation={orientation} field="whatItStudies" colors={colors} /></View> : null}
+        {orientation?.whatPeopleDo ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>What people in it do</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.whatPeopleDo}</Text><OrientationEvidenceLinks orientation={orientation} field="whatPeopleDo" colors={colors} /></View> : null}
+        {orientation?.questions?.length ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Questions this field helps answer</Text><View style={refinedStyles.infoGrid}>{orientation.questions.map((question) => <View key={question} style={[refinedStyles.infoCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><Feather name="help-circle" size={15} color={colors.accentRole.action} /><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{question}</Text></View>)}</View><OrientationEvidenceLinks orientation={orientation} field="questions" colors={colors} /></View> : null}
+        {orientation?.outputs?.length ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>What the work can produce</Text><View style={refinedStyles.infoGrid}>{orientation.outputs.map((output) => <View key={output} style={[refinedStyles.infoCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><Feather name="file-text" size={15} color={colors.accentRole.action} /><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{output}</Text></View>)}</View><OrientationEvidenceLinks orientation={orientation} field="outputs" colors={colors} /></View> : null}
+        {orientation?.howWorkHappens?.length ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>How the work can happen</Text><View style={refinedStyles.steps}>{orientation.howWorkHappens.map((step, index) => <View key={step} style={refinedStyles.step}><View style={[refinedStyles.stepNumber, { backgroundColor: colors.accentRole.action }]}><Text style={refinedStyles.stepNumberText}>{index + 1}</Text></View><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{step}</Text></View>)}</View><OrientationEvidenceLinks orientation={orientation} field="howWorkHappens" colors={colors} /></View> : null}
+        {!studentConnection && orientation?.whereProgrammeFits ? <View style={[refinedStyles.subsection, refinedStyles.highlight]}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Where your programme fits</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.whereProgrammeFits}</Text><OrientationEvidenceLinks orientation={orientation} field="whereProgrammeFits" colors={colors} /></View> : null}
+        {orientation?.globalContext ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Global context</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.globalContext}</Text><OrientationEvidenceLinks orientation={orientation} field="globalContext" colors={colors} /></View> : null}
+        {orientation?.nigerianContext ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Nigerian context</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.nigerianContext}</Text><OrientationEvidenceLinks orientation={orientation} field="nigerianContext" colors={colors} /></View> : null}
+        {orientation?.entryExpectations ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Common ways people enter this field</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.entryExpectations}</Text><OrientationEvidenceLinks orientation={orientation} field="entryExpectations" colors={colors} /></View> : null}
+        {orientation?.opportunitiesAndConstraints ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Opportunities and constraints</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.opportunitiesAndConstraints}</Text><OrientationEvidenceLinks orientation={orientation} field="opportunitiesAndConstraints" colors={colors} /></View> : null}
+         {orientation?.sourceNote ? <Text style={[refinedStyles.meta, { color: colors.textRole.muted }]}>Reference basis: {orientation.sourceNote}</Text> : null}
+      </View>
+
+      {studentConnection ? (
+        <View style={refinedStyles.card}>
+          <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+          <View style={refinedStyles.cardHeading}><Feather name="book-open" size={17} color={colors.accentRole.action} /><Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Why your Sociology programme connects to this field</Text></View>
           <Text style={[refinedStyles.badge, { color: colors.accentRole.action }]}>{relationshipLabel}</Text>
           <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{studentConnection.explanation}</Text>
-          {studentConnection.courseAnchors?.length ? <Text style={[refinedStyles.meta, { color: colors.textRole.muted }]}>This connection includes learning from {studentConnection.courseAnchors.slice(0, 3).map((item) => item.title).join(", ")}.</Text> : null}
+          {studentConnection.transferableLearningNarrative ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>How your learning carries into the field</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{studentConnection.transferableLearningNarrative}</Text></View> : null}
+          <Text style={[refinedStyles.meta, { color: colors.textRole.muted }]}>Your programme provides a starting point. The compulsory domain path below adds field-wide learning; optional useful edges support particular work. This connection does not claim that your course teaches every later item or that you are job-ready.</Text>
+          </View>
+          <ProgrammeCurriculumCarryForward connection={studentConnection} fieldName={domain.name} />
         </View>
       ) : connection ? (
         <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
@@ -538,60 +566,56 @@ function DomainBody({
         </View>
       ) : null}
 
-      <GuidanceContinuation
-        programmeName={studentConnection?.programmeName}
-        connection={studentConnection}
-        domainName={domain.name}
-        domainFoundation={domain.foundationSkills}
-        domainItems={domainItems}
-      />
+      <TouchableOpacity
+        accessibilityRole="button"
+        accessibilityLabel="Open my learning tray"
+        onPress={() => exploreNav.guided(router, { ...guidanceContext, programmeId: guidanceContext.programmeId, focused: true, openTray: true })}
+        style={[refinedStyles.trayAction, { borderColor: colors.accentRole.action, backgroundColor: colors.surface.subtle }]}
+      >
+        <Feather name="briefcase" size={17} color={colors.accentRole.action} />
+        <Text style={[refinedStyles.actionText, { color: colors.accentRole.action }]}>View my learning tray</Text>
+      </TouchableOpacity>
 
-      <View style={[refinedStyles.card, refinedStyles.orientationCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
-        <View style={refinedStyles.cardHeading}>
-          <Feather name="compass" size={17} color={colors.accentRole.action} />
-          <View style={refinedStyles.copyBlock}>
-            <Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Understand {domain.name} before choosing an area</Text>
-            <Text style={[refinedStyles.meta, { color: colors.textRole.muted }]}>This explanation uses the reviewed programme and field information.</Text>
-          </View>
-        </View>
-        {orientation?.whatItStudies ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>What this field studies</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.whatItStudies}</Text><OrientationEvidenceLinks orientation={orientation} field="whatItStudies" colors={colors} /></View> : null}
-        {orientation?.whatPeopleDo ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>What people in it do</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.whatPeopleDo}</Text><OrientationEvidenceLinks orientation={orientation} field="whatPeopleDo" colors={colors} /></View> : null}
-        {orientation?.questions?.length ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Questions this field helps answer</Text><View style={refinedStyles.infoGrid}>{orientation.questions.map((question) => <View key={question} style={[refinedStyles.infoCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><Feather name="help-circle" size={15} color={colors.accentRole.action} /><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{question}</Text></View>)}</View><OrientationEvidenceLinks orientation={orientation} field="questions" colors={colors} /></View> : null}
-        {orientation?.outputs?.length ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>What the work can produce</Text><View style={refinedStyles.infoGrid}>{orientation.outputs.map((output) => <View key={output} style={[refinedStyles.infoCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><Feather name="file-text" size={15} color={colors.accentRole.action} /><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{output}</Text></View>)}</View><OrientationEvidenceLinks orientation={orientation} field="outputs" colors={colors} /></View> : null}
-        {orientation?.howWorkHappens?.length ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>How the work can happen</Text><View style={refinedStyles.steps}>{orientation.howWorkHappens.map((step, index) => <View key={step} style={refinedStyles.step}><View style={[refinedStyles.stepNumber, { backgroundColor: colors.accentRole.action }]}><Text style={refinedStyles.stepNumberText}>{index + 1}</Text></View><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{step}</Text></View>)}</View><OrientationEvidenceLinks orientation={orientation} field="howWorkHappens" colors={colors} /></View> : null}
-        {orientation?.whereProgrammeFits ? <View style={[refinedStyles.subsection, refinedStyles.highlight]}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Where your programme fits</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.whereProgrammeFits}</Text><OrientationEvidenceLinks orientation={orientation} field="whereProgrammeFits" colors={colors} /></View> : null}
-        {orientation?.globalContext ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Global context</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.globalContext}</Text><OrientationEvidenceLinks orientation={orientation} field="globalContext" colors={colors} /></View> : null}
-        {orientation?.nigerianContext ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Nigerian context</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.nigerianContext}</Text><OrientationEvidenceLinks orientation={orientation} field="nigerianContext" colors={colors} /></View> : null}
-        {orientation?.entryExpectations ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Common ways people enter this field</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.entryExpectations}</Text><OrientationEvidenceLinks orientation={orientation} field="entryExpectations" colors={colors} /></View> : null}
-        {orientation?.opportunitiesAndConstraints ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Opportunities and constraints</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.opportunitiesAndConstraints}</Text><OrientationEvidenceLinks orientation={orientation} field="opportunitiesAndConstraints" colors={colors} /></View> : null}
-         {orientation?.sourceNote ? <Text style={[refinedStyles.meta, { color: colors.textRole.muted }]}>Reference basis: {orientation.sourceNote}</Text> : null}
-      </View>
-
-      {orientationResources.length ? <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}><LearningResourcesBlock resources={orientationResources} title={`Read more about ${domain.name}`} /></View> : null}
+      {orientationResources.length ? <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>A guide to {domain.name}</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>Use this field-level reference to understand the subject before exploring its shared foundations and areas. It is orientation material, not a list of extra requirements.</Text><LearningResourcesBlock resources={orientationResources} title="Open the field guide" /></View> : null}
 
       <View style={refinedStyles.sectionHeading}>
-         <View style={refinedStyles.cardHeading}><Feather name="layers" size={17} color={colors.accentRole.action} /><Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Domain foundation</Text></View>
-         <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>These field-owned foundations continue from the connected programme and come before a focused area. They are shared starting points, not a complete qualification for every area or role; each focused area adds its own learning.</Text>
+        <View style={refinedStyles.cardHeading}><Feather name="layers" size={17} color={colors.accentRole.action} /><Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Compulsory domain foundations</Text></View>
+        <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>After the programme connection above, complete the compulsory shared foundations shown here. They carry across the domain, areas and roles, and they are the only progression gate. Everything after them is an optional, route-supported learning choice unless a selected route states a condition.</Text>
+      </View>
+        <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
+        <ContextualItemList items={domainItems} itemTypes={["skill", "competency", "method", "knowledge", "tool", "certification"]} resources={domainResources} contextLevel="domain" itemScope="shared-foundation" title={`Compulsory domain foundations for ${domain.name}`} learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} domainName={domain.name} learningFocus targetStudentId={targetStudentId} />
+      </View>
+      <View style={refinedStyles.sectionHeading}>
+        <View style={refinedStyles.cardHeading}><Feather name="compass" size={17} color={colors.accentRole.action} /><Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Next in the domain sequence</Text></View>
+        <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>After the shared foundations, follow the broad domain spine in order. Each card explains why it appears next; these additions remain skippable and do not block moving to an area.</Text>
       </View>
       <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
-         <FoundationSkillsBlock skills={domain.foundationSkills ?? []} resources={domainResources} contextItems={domainItems} title="What to build first" learningFocus targetStudentId={targetStudentId} />
+        <ContextualItemList items={domainItems} itemTypes={["skill", "competency", "method", "knowledge"]} resources={domainResources} contextLevel="domain" itemScope="learning-options" sequenceBand="domain_core" title="Broad domain learning" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} domainName={domain.name} learningFocus targetStudentId={targetStudentId} />
       </View>
       <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
-        <ContextualItemList items={domainItems} itemTypes={["skill", "competency"]} resources={domainResources} contextLevel="domain" excludeNames={(domain.foundationSkills ?? []).map((item) => item.skill)} title="Skills and competencies added in this field" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} learningFocus targetStudentId={targetStudentId} />
+        <ContextualItemList items={domainItems} itemTypes={["skill", "competency", "method", "knowledge"]} resources={domainResources} contextLevel="domain" itemScope="learning-options" sequenceBand="cross_cutting" title="Cross-cutting safeguards and reproducibility" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} domainName={domain.name} learningFocus targetStudentId={targetStudentId} />
       </View>
       <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
-        <ToolGroupsBlock tools={domain.tools} resources={domainResources} contextItems={domainItems} contextLevel="domain" title="Tools by purpose" commonLabel="Useful across this field" distinctiveLabel="More specialised in this field" explanation="Choose the kind of work first. These are source-backed options, not a requirement to learn every tool." learningFocus targetStudentId={targetStudentId} />
+        <ContextualItemList items={domainItems} itemTypes={["method"]} resources={domainResources} contextLevel="domain" itemScope="learning-options" sequenceBand="method_routes" title="Method routes: choose or combine to fit the question" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} domainName={domain.name} learningFocus targetStudentId={targetStudentId} />
       </View>
       <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
-        <SectionLabel>Qualifications and professional routes</SectionLabel>
-        <CertPlacementList gateway={domain.gatewayCertifications} roleHint={domain.roleHintCertifications} contextItems={domainItems} resources={domainResources} contextLevel="domain" learningFocus targetStudentId={targetStudentId} />
+        <ContextualItemList items={domainItems} itemTypes={["method"]} resources={domainResources} contextLevel="domain" itemScope="learning-options" sequenceBand="advanced_extensions" title="Advanced and specialist extensions" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} domainName={domain.name} learningFocus targetStudentId={targetStudentId} />
+        <ContextualItemList items={domainItems} itemTypes={["method"]} resources={domainResources} contextLevel="domain" itemScope="learning-options" sequenceBand="specialist_extensions" title="Computational, spatial and simulation branches" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} domainName={domain.name} learningFocus targetStudentId={targetStudentId} />
+      </View>
+      <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
+        <ContextualItemList items={domainItems} itemTypes={["tool"]} resources={domainResources} contextLevel="domain" itemScope="learning-options" sequenceBand="tool_support" title="Tools supporting the selected method" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} domainName={domain.name} learningFocus targetStudentId={targetStudentId} />
+        <ToolGroupsBlock tools={domain.tools} resources={domainResources} contextItems={domainItems} contextLevel="domain" title="Tool groups and alternatives" commonLabel="Used across this field" distinctiveLabel="Useful for particular work" explanation="Tools are embedded after the method choice. Choose one suitable option; complementary libraries can be learned together. No tool is a universal domain blocker." learningFocus targetStudentId={targetStudentId} learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} />
+        <View style={refinedStyles.subsection}>
+          <Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Credentials and professional routes</Text>
+          <CertPlacementList gateway={domain.gatewayCertifications} roleHint={domain.roleHintCertifications} contextItems={domainItems} resources={domainResources} contextLevel="domain" learningFocus targetStudentId={targetStudentId} emptyMessage="No reviewed domain-level credential is recorded here. A credential may apply only to a particular area or role." />
+        </View>
       </View>
 
       <View style={refinedStyles.sectionHeading}>
         <View style={refinedStyles.cardHeading}><Feather name="grid" size={17} color={colors.accentRole.action} /><Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Choose a focused area</Text></View>
         <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>Each area keeps the field foundation and adds a more specific way to study or work. Roles appear inside the area, not on this domain page.</Text>
       </View>
-      {subgroups.length ? <View style={refinedStyles.grid}>{subgroups.map((subgroup) => <TouchableOpacity key={subgroup.id} accessibilityRole="button" onPress={() => exploreNav.subgroup(router, domainKey, subgroup.id, guidanceContext)} style={[refinedStyles.tile, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}><Feather name="grid" size={20} color={colors.accentRole.action} /><Text style={[refinedStyles.tileTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{formatCareerLabel(subgroup.name)}</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{studentSummary({ shortIntro: subgroup.studentOrientation?.shortIntro, whatPeopleDo: subgroup.studentOrientation?.whatPeopleDo || subgroup.whatPeopleDo, whatItStudies: subgroup.studentOrientation?.whatItStudies, description: subgroup.description, fallback: "A plain-language explanation of this focused area is not available yet." })}</Text><Text style={[refinedStyles.meta, { color: colors.textRole.muted }]}>{subgroup.roleCount ?? 0} {(subgroup.roleCount ?? 0) === 1 ? "role" : "roles"} in this area</Text><Text style={[refinedStyles.actionText, { color: colors.accentRole.action }]}>Explore area →</Text></TouchableOpacity>)}</View> : <Text style={[refinedStyles.copy, { color: colors.textRole.muted }]}>No reviewed areas are available yet.</Text>}
+      {visibleAreas.length ? <View style={refinedStyles.grid}>{visibleAreas.map((subgroup) => <TouchableOpacity key={subgroup.id} accessibilityRole="button" onPress={() => exploreNav.subgroup(router, domainKey, subgroup.id, guidanceContext)} style={[refinedStyles.tile, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}><Feather name="grid" size={20} color={colors.accentRole.action} /><Text style={[refinedStyles.tileTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{formatCareerLabel(subgroup.name)}</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{studentSummary({ shortIntro: subgroup.studentOrientation?.shortIntro, whatPeopleDo: subgroup.studentOrientation?.whatPeopleDo || subgroup.whatPeopleDo, whatItStudies: subgroup.studentOrientation?.whatItStudies, description: subgroup.description, fallback: "A plain-language explanation of this focused area is not available yet." })}</Text><Text style={[refinedStyles.meta, { color: colors.textRole.muted }]}>{subgroup.roleCount ?? 0} {(subgroup.roleCount ?? 0) === 1 ? "role" : "roles"} in this area</Text><Text style={[refinedStyles.actionText, { color: colors.accentRole.action }]}>Explore area →</Text></TouchableOpacity>)}</View> : <Text style={[refinedStyles.copy, { color: colors.textRole.muted }]}>{domain.id === "D078" ? "No current areas of specialization are available in this response." : "No reviewed areas are available yet."}</Text>}
     </View>
   );
 }
@@ -606,12 +630,12 @@ const refinedStyles = StyleSheet.create({
   card: { borderWidth: 1, borderRadius: Radius.lg, padding: Spacing.lg, gap: Spacing.sm },
   orientationCard: { gap: Spacing.md },
   cardHeading: { flexDirection: "row", alignItems: "center", gap: Spacing.sm },
-  cardTitle: { fontSize: FontSize.md, lineHeight: FontSize.md * 1.3, flex: 1 },
-  copy: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.55 },
-  meta: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.45 },
+  cardTitle: { fontSize: 18, lineHeight: 25, flex: 1 },
+  copy: { fontSize: 16, lineHeight: 25 },
+  meta: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },
   badge: { fontSize: FontSize.xs, fontWeight: "800", textTransform: "uppercase", letterSpacing: 0.6 },
   subsection: { gap: Spacing.xs, paddingTop: Spacing.sm },
-  subheading: { fontSize: FontSize.sm, ...CompassFonts.bodySemibold },
+  subheading: { fontSize: 18, lineHeight: 25, ...CompassFonts.bodySemibold },
   infoGrid: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
   infoCard: { flex: 1, minWidth: 220, flexDirection: "row", alignItems: "flex-start", gap: Spacing.sm, borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md },
   steps: { gap: Spacing.sm },
@@ -622,13 +646,16 @@ const refinedStyles = StyleSheet.create({
   sectionHeading: { gap: Spacing.sm },
   grid: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
   tile: { flex: 1, minWidth: 250, borderWidth: 1, borderRadius: Radius.lg, padding: Spacing.md, gap: Spacing.sm },
-  tileTitle: { fontSize: FontSize.md },
+  tileTitle: { fontSize: 18, lineHeight: 25 },
   action: { alignSelf: "flex-start", flexDirection: "row", alignItems: "center", gap: Spacing.xs, borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, marginTop: Spacing.xs },
+  trayAction: { alignSelf: "flex-start", minHeight: 44, flexDirection: "row", alignItems: "center", gap: Spacing.sm, borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
   actionText: { fontSize: FontSize.sm, ...CompassFonts.bodySemibold },
   tabIntro: { flexDirection: "row", gap: Spacing.md, borderWidth: 1, borderRadius: Radius.lg, padding: Spacing.lg },
 });
 
 export default DomainDetailScreen;
+
+/** Keep retired D078 taxonomy nodes out of the student-facing area list. */
 
 const styles = StyleSheet.create({
   // ── Hero ──────────────────────────────────────────────────
@@ -660,8 +687,8 @@ const styles = StyleSheet.create({
     lineHeight: FontSize.hero * 1.1,
   },
   heroDesc: {
-    fontSize: FontSize.md,
-    lineHeight: FontSize.md * 1.5,
+    fontSize: 16,
+    lineHeight: 25,
     marginTop: 2,
   },
   heroDescLabel: {
@@ -729,13 +756,13 @@ const styles = StyleSheet.create({
     gap: Spacing.md,
   },
   orientationPart: { gap: Spacing.xs },
-  orientationHeading: { fontSize: FontSize.sm },
+  orientationHeading: { fontSize: 18, lineHeight: 25 },
   orientationList: { gap: Spacing.xs },
   statsRow: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
   statCard: { flex: 1, minWidth: 150, gap: 2, borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.md, padding: Spacing.md },
   statValue: { fontSize: FontSize.xl, fontWeight: "800" },
   statLabel: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.35 },
-  guidanceNote: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
+  guidanceNote: { fontSize: 16, lineHeight: 24 },
   bridgeList: { gap: Spacing.xs },
   bridgeLabel: { fontSize: FontSize.xs, fontWeight: "800", textTransform: "uppercase", letterSpacing: 0.5 },
   bridgeChips: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.xs },
@@ -758,7 +785,7 @@ const styles = StyleSheet.create({
     minWidth: 250,
   },
   subgroupGrid: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
-  subgroupTitle: { fontSize: FontSize.md },
+  subgroupTitle: { fontSize: 18, lineHeight: 25 },
   subgroupMeta: { fontSize: FontSize.xs },
   linkText: { fontSize: FontSize.sm, fontWeight: "800", marginTop: Spacing.xs },
   moreButton: { alignSelf: "flex-start", borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },

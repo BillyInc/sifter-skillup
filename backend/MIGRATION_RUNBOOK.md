@@ -285,6 +285,7 @@ substitute for production deployment verification.
 | 12a-i | `backend/migration_career_item_relationships_2026-09-17.sql` | Adds normalized typed relationships between contextual skills, competencies, tools and certifications. It stores explicit source-backed `builds_on`/`works_with` edges and `not_established` coverage rows for every contextual tool/certification with no established cross-type edge. | #12a |
 | 12a-ia | `backend/migration_career_item_relationship_explanations_2026-10-12.sql` | Adds a separate learner-facing explanation field to typed item relationships. Existing relationships remain unchanged and stay out of learner relationship UI until a reviewed, non-empty explanation is present; source limitations are never used as positive explanations. | 12a-i |
 | 12a-ib | `backend/migration_career_item_sequence_policy_2026-10-12.sql` | Adds explicit sequence approval, policy, condition and route-scope fields. Existing source-backed relationships default to advisory/unapproved; relationship type alone cannot create a learner prerequisite. | 12a-ia |
+| 12a-ic | `backend/migration_career_item_relationship_target_context_2026-10-17.sql` | Adds target ownership context so an approved area route may explicitly point to an inherited domain item; the target must independently pass its student-content gate. | 12a-ib |
 | 12a-ii | `backend/migration_career_context_path_targets.sql` | Adds theme/use-case grouping, item requirement status separate from learning order, and an evidence-backed item-to-specialization/role applicability table. Existing rows remain unclassified until explicitly enriched; the API exposes only source-backed links owned by the item's context. | #12a |
 | 12b | `backend/migration_sociology_curriculum_contract_2026-09-17.sql` | Clean programme-owned Sociology CCMAS outcome/ability tables. It is the only student curriculum source for the reviewed Sociology slice; legacy flattened skill arrays remain audit-only. | #14 and the `programmes` seed |
 | 12b-i | `backend/migration_programme_curriculum_contract_general_2026-09-18.sql` | Generalizes the cleaned programme curriculum contract for every non-Sociology parsed programme; it does not replace the source reconciliation or the Sociology slice. | 12b and the `programmes` seed |
@@ -367,6 +368,18 @@ builder cross-checks the seven catalog area IDs against the consolidated D078
 master and requires exact agreement between the current route graph and the
 approved master graph before writing SQL.
 
+The current route graph input is
+`data/career-mapping/_audit/D078_PROGRAMME_TO_ROLE_LEARNING_PATH_GRAPH_2026_10_15.json`.
+It carries all 14 reviewed Sociology curriculum themes and all 236 course
+outcomes grouped under those themes. The two exact theme-to-domain evidence
+matches are highlighted connections only: they do not filter the curriculum,
+declare other themes irrelevant, or limit what a Sociology student may learn
+next. The programme-to-domain transition narrates verified transferable
+learning, then distinguishes additional domain, area and role capabilities.
+The graph is a local design/audit artifact; the dedicated Sociology curriculum
+contract seed remains the data source for course outcomes, so these graph nodes
+do not require a new SQL table or imply that the UI already displays them.
+
 After the 35 generic contextual seed parts have been loaded, the scoped D078
 content seed may be applied to refresh the current locally approved Sociology
 domain and Area-of-Specialization records:
@@ -377,9 +390,16 @@ backend/seed_d078_guided_content_2026-10-12.sql
 
 It is generated with
 `python data/career-mapping/_build_d078_guided_content_seed_2026_10_12.py`
-from the current consolidated master. The verified local seed contains **190
-approved items**: 52 domain items and 138 distinct area cards across all seven
-current areas. It omits unapproved records and consolidated duplicate aliases.
+from the current consolidated master. The verified local seed contains **202
+domain/area items**: 52 student-eligible domain items and 150 area-owned cards/options across
+all seven current areas. The 150 area rows include the individually explained,
+task-linked Human Geography and Social Behaviour tool options reconciled on
+2026-10-15. It omits unapproved master rows and consolidated duplicate aliases.
+The compressed transport is
+`backend/seed_d078_guided_content_2026-10-12.sql.gz`; decompress it before
+applying. The separate 173 role-item contracts are persisted by the additive
+contract migration/seed below; that table is not itself the student role-card
+payload and remains behind the independent display/API gate.
 The actual Sociology programme curriculum has **14 themes**; the separate
 three Research-theme claim records are explanatory curriculum items, not the
 theme count. Programme curriculum/outcomes and theme-reading resources remain
@@ -390,6 +410,133 @@ role-fit decisions or the 173 role-item dispositions. Regenerate only after
 rebuilding and checking the D078 master, theme audits, sequence and
 student-promotion gate. Local generation is not SQL application or student
 release approval.
+
+#### D078 SQL-to-student-display contract
+
+Running the SQL is necessary but is not, by itself, student-display approval.
+The following conditions must all hold before a programme, domain, area or role
+card may be returned to the student UI:
+
+1. The canonical Sociology programme, D078 domain, seven current areas and
+   routed roles exist. The two retired ISCO-style subgroup labels are not
+   current areas and must not be emitted by a student query.
+2. The Sociology curriculum contract is loaded, including all 14 reviewed
+   themes and its cleaned course/outcome records. A two-theme evidence
+   crosswalk is an explanatory connection, not a filter on the other themes.
+3. Contextual rows have matching ownership (`programme`, `domain`, `subgroup`
+   or `role`), `data_state = 'source_backed'`,
+   `claim_review_state = 'approved'`, `link_state = 'linked'`, and an HTTPS
+   learning/reference URL with item-specific rationale. Rows with another
+   owner, `review_required`, `excluded`, `review_only`, missing rationale or a
+   missing link remain hidden with their audit reason.
+4. The three shared D078 foundations are the only compulsory progression
+   spine. Their `requirement_scope` is `needed`, `skippable = false` and
+   `blocks_progression = true`, and they appear in their approved order.
+   Later domain, area and role items are not silently converted into
+   prerequisites: useful/optional items remain selectable and skippable;
+   alternatives are presented as choices; complements and `works_with` edges
+   explain co-learning without blocking progress.
+5. The seven-area taxonomy and 26 area-role routes are loaded before the route
+   visibility recalculation. A supported route needs source-backed rationale,
+   positive task evidence and an HTTPS source; a conditional route additionally
+   needs its explicit scope condition. A stale stored `false` must not override
+   these current checks, while an actually failing current check remains
+   hidden.
+6. The 173 role-item contracts are loaded for audit/backend reconciliation
+   (171 approved and 2 unapproved). The role contract table is deliberately
+   staff/backend-only; it is not a student SELECT surface. The companion role
+   contract seed must also materialize only approved, currently owned, linked
+   role cards into `career_context_items` (202 deduplicated role-owned cards
+   from the eligible records/owner routes). It must not expose the two
+   unapproved records, ownerless records or retired legacy route labels.
+7. The role-tool seed is loaded after the role-item contract and lane schemas.
+   Its 95 tools are optional route choices, not compulsory requirements. A
+   reused tool keeps its canonical identity while its selected area/role use,
+   alternatives, complements, limitations and resource rationale remain
+   route-specific.
+8. Normalized relationship rows are returned only when the edge is
+   source-backed, has a reviewed learner explanation, has a valid HTTPS source,
+   and its visible target is present in the permitted context. `not_established`
+   coverage rows are audit records and must never become learner relationships.
+
+Required local post-seed checks are: 14 Sociology themes; 7 canonical areas;
+26 area-role routes; 202 student-eligible domain/area rows (52 domain and 150
+area); 3 compulsory foundations; 3 advisory route-scoped sequence edges; 173
+role-item contracts (171/2 disposition split); 166 individually eligible role
+records projecting to 202 deduplicated student-owned role cards; 224 supported
+role-owner links; and 95 optional role-tool rows. Then
+reload programme, domain, every area and every role response and verify that
+the response contains the expected sections, item explanations, relationships,
+alternatives, selection removal and tray/report payloads. A database count is
+not visual proof, and a local seed is not live-deployment proof.
+
+The role-item contract ledger and the checked-in D078 runtime contract remain
+distinct concerns, but the seed now contains both required database writes:
+the 173-row audit ledger and the approved role-card projection into
+`career_context_items`. Applying only the ledger table would not populate a
+role card; therefore the regenerated companion seed must be run in full after
+`migration_contextual_career_items.sql` and
+`migration_career_context_claim_validation.sql`. The API/runtime contract
+still performs the same current gate and can merge the reviewed runtime
+explanations, while the database projection makes the student route durable
+after reseeding. This distinction prevents a successful ledger-only load from
+being mistaken for a complete student display.
+
+#### D078 role-item contract ledger — local seed ready, not student approval
+
+The 173 role-item records now have nonblank plain-language definitions and an
+item-level learning-link review. The older 2026-10-10 worksheet supplies those
+content/link repairs only; placement decisions come from the consolidated
+`D078_MASTER_GUIDED_EXPERIENCE_RECONCILIATION_2026_10_12.json`. Current master
+counts are **171 approved, 2 unapproved**. All 173 have a link-review record;
+zero definitions are blank and zero link states remain candidate-only. The two
+unapproved records remain persisted with their reasons. Five records have no
+current canonical role owner (three approved item dispositions, two
+unapproved); they are retained without inventing role routes. The seed contains
+224 supported role-owner links and projects 202 deduplicated approved
+role-owned contextual cards; 166 eligible ledger records can account for
+multiple role-owner cards.
+
+Generate and test locally:
+
+```powershell
+python data/career-mapping/_audit/merge_d078_role_item_content_repairs_into_master_2026_10_15.py
+python data/career-mapping/_build_d078_role_item_contract_seed_2026_10_15.py
+python -m pytest backend/tests/test_d078_role_item_contract_seed.py -q
+```
+
+After the canonical D078 taxonomy and role records exist, apply this additive
+schema and seed in order:
+
+```text
+backend/migration_d078_role_item_contracts_2026-10-15.sql
+backend/seed_d078_role_item_contracts_2026-10-15.sql
+```
+
+`backend/seed_d078_role_item_contracts_2026-10-15.sql.gz` is transport only;
+decompress before SQL execution. Local generation does not apply the migration.
+The contract table intentionally has no student SELECT policy. The seed now
+records `student_display_approved = true` only for the **166 individual records**
+that pass the current item gate: approved disposition, a current routed role
+owner, and a reviewed HTTPS learning/reference link. Seven records retain
+explicit non-eligible states (2 unapproved, 3 approved but ownerless, 2 with no
+supported D078 learning route). This row flag is an API-contract eligibility
+decision, not table access and not approval of the complete graph. The seed
+materializes eligible role cards from the consolidated master; the API reads
+those student-owned rows and may merge the same reviewed runtime contract;
+role tools from
+the selected area are returned as area-owned options, never relabeled as
+role-owned or universal requirements. Verify post-apply counts (173 ledger
+rows, 171/2 disposition split, 166 item-eligible records, 202 student-owned
+role cards, 173 nonblank definitions and link reviews) before relying on the
+route; no SQL is applied by local generation.
+
+Older `student_display_approved = false` and visibility values inside the source
+JSON are preserved under `contract_payload.historical_gate_values` for audit
+only. They must not override the freshly computed top-level eligibility fields;
+the source's legacy `role_task_relationship_verified = false` is likewise
+history-only and is omitted from the active contract payload. Do not reopen
+completed evidence review solely because those historical values are false.
 
 The same seed contains normalized cross-type relationship rows. Apply
 `backend/migration_career_item_relationships_2026-09-17.sql` before loading the
@@ -408,6 +555,177 @@ from skillup_dev.career_item_relationships
 group by relationship_status, relationship_type
 order by relationship_status, relationship_type;
 ```
+
+### Authoritative D078/Sociology apply order (15 October 2026)
+
+This is the single authoritative order for the current D078 slice. It
+supersedes the abbreviated D078 seed order in older sections and in
+`COMPLETE_DATA_MIGRATION_2026-08-17.md`. For an existing database, run a
+read-only preflight and apply only missing files. The canonical career seed
+must already have created the Sociology programme, D078 domain and role rows.
+Do not use `migration_career_v2.sql` for this additive update.
+
+#### 1. Apply missing schemas in dependency order
+
+Run one whole SQL file/transaction at a time, stopping at the first error:
+
+```text
+backend/migration_programme_domain_evidence_2026-09-17.sql
+backend/migration_programme_domain_review_corrections_2026-09-18.sql
+backend/migration_sociology_curriculum_contract_2026-09-17.sql
+backend/migration_programme_curriculum_contract_general_2026-09-18.sql
+backend/migration_contextual_career_items.sql
+backend/migration_career_context_claim_validation.sql
+backend/migration_career_item_relationships_2026-09-17.sql
+backend/migration_career_item_relationship_explanations_2026-10-12.sql
+backend/migration_career_item_sequence_policy_2026-10-12.sql
+backend/migration_career_item_relationship_target_context_2026-10-17.sql
+backend/migration_career_context_path_targets.sql
+backend/migration_guidance_programme_reading_and_market_scope_2026-09-12.sql
+backend/migration_guidance_ownership_and_sociology_resources_2026-09-11.sql
+backend/migration_domain_student_orientation_2026-09-18.sql
+backend/migration_sociology_domain_tool_path_2026-09-18.sql
+backend/migration_d078_specialization_taxonomy_2026-10-12.sql
+backend/migration_d078_role_item_contracts_2026-10-15.sql
+backend/migration_d078_requirement_lanes_2026-10-17.sql
+```
+
+If preflight shows missing canonical programme/domain/role rows, stop: this
+additive sequence cannot create the base taxonomy. Relationship explanations
+and sequence policy follow the relationship table; the target-context
+extension follows sequence policy. The role-contract schema must exist before
+`migration_d078_requirement_lanes_2026-10-17.sql`, because the lane migration
+adds columns to that table. These schemas and the path-target table must exist
+before loading the D078 content seed.
+
+#### 2. Apply the D078 data refresh in dependency order
+
+After the schemas above exist, apply only missing data in this order:
+
+```text
+backend/seed_programme_domain_evidence_2026-09-17.sql
+backend/seed_sociology_curriculum_contract_2026-09-17.sql
+backend/seed_sociology_programme_theme_guidance_2026-10-08.sql
+backend/seed_sociology_domain_guidance_2026-10-08.sql
+backend/migration_guidance_all_programmes_2026-09-12.sql
+backend/migration_guidance_global_2026-09-11.sql
+backend/seed_d078_specialization_taxonomy_2026-10-12.sql
+backend/migration_d078_role_route_visibility_2026-10-15.sql
+backend/seed_career_context_items_v1_parts/part-001.sql.gz ... part-035.sql.gz
+backend/seed_d078_guided_content_2026-10-12.sql
+backend/seed_d078_role_item_contracts_2026-10-15.sql
+backend/seed_d078_role_tools_2026-10-16.sql
+```
+
+The route-visibility recalculation follows the seven-area/26-route taxonomy
+seed. It repairs stale route visibility from current route evidence; it does
+not adjudicate role fit or promote role-item candidates. The 173-row role-item
+contract table remains separate backend evidence, while its companion seed also
+projects 202 approved, deduplicated role-owned item cards into
+`career_context_items`. The final additive seed adds 95 optional, role-owned tool cards (five distinct
+choices for each of the 19 currently routed D078 roles). It reuses the existing
+`career_context_items` schema and runs after the 173-row role-item seed so both
+sets can be read through the same role-context API. No new migration is
+required. The seed does not make a tool compulsory and creates no prerequisite
+or sequence edge. The graph records 28 canonical tool identities, 95
+tool-to-role-task support edges, and 104 named alternative-tool edges. Reused
+domain/area tools retain one identity while role-specific use and alternatives
+are attached to the selected route. Regenerate locally
+with `python data/career-mapping/_audit/enrich_d078_role_tools_2026_10_16.py`
+and `python data/career-mapping/_audit/integrate_d078_role_tools_into_graph_2026_10_16.py`.
+The full local contract is
+`data/career-mapping/_audit/D078_ROLE_TOOL_ROUTE_ENRICHMENT_2026_10_16.json`;
+the handoff is `docs/manual-review/D078_ROLE_TOOL_ENRICHMENT_2026_10_16.md`.
+Local generation is not live SQL application or rendered-UI verification.
+
+The generic four-part programme curriculum seed
+(`backend/seed_programme_curriculum_contract_2026-09-18_parts_gz/`) is not a
+prerequisite for the D078-only path when the dedicated Sociology contract is
+seeded. If an all-programme curriculum refresh is also explicitly in scope,
+run its four decompressed parts after the general curriculum schema and before
+programme theme guidance.
+
+#### 3. Transport, execution and rollback safeguards
+
+- Repository transport rule: generated audit JSON and generated seed SQL are
+  stored as `.json.gz` or `.sql.gz` transport artifacts when compressed
+  counterparts are present. Small manifests and migration DDL remain plain
+  text. Do not add or apply a raw generated counterpart when its compressed
+  transport is the package selected for deployment.
+- `.sql.gz` files are transport only. Decompress each numbered part and run
+  each transaction in numeric order; never submit gzip bytes or run both the
+  plain and compressed copy of the same seed.
+- Use the Supabase SQL Editor or a verified `psql` connection with
+  `ON_ERROR_STOP=1`; REST keys cannot run DDL. Back up the target database and
+  record the project, date, file and result. Keep this workflow manual unless
+  the user explicitly authorizes a database write.
+- Never apply the destructive/staging-only `migration_career_v2.sql` here.
+  Do not reseed retired legacy D078 subgroup buckets as current areas.
+- Stop at the first SQL error. Fix the cause and retry only the failed file;
+  do not rerun completed content research because an old summary or historical
+  boolean is stale.
+
+#### 4. Post-apply acceptance checks
+
+Verify database and API results against these local expected values: 14
+Sociology themes; seven canonical D078 areas; 26 area-role routes, including
+multi-area roles; 202 approved domain/area runtime items (52 student-eligible domain and 150
+area after area-tool integration); 173 role-item disposition rows (171
+approved, 2 unapproved), 166 individually eligible role cards, 224
+supported role-owner links, and 95 optional role-tool records across 19 roles
+(five distinct choices each, 28 canonical identities, three route-scoped advisory sequence edges).
+The unapproved domain certification-boundary
+claim remains excluded. These numbers are expected local counts, not proof of
+deployment until live queries and API responses match.
+
+Then verify programme, domain, each area and each role response; the named
+tools/methods/knowledge and resource rationale; role ownership; add/remove;
+tray opening; no-area/no-role advisory behavior; report and print. A successful
+SQL transaction or count query is not visual acceptance. Keep public release
+blocked until authenticated rendered acceptance and explicit approval are
+recorded. Do not re-open passed content dispositions merely because the graph
+artifact is hidden or an old field says `false`.
+
+### D078/Sociology student-display reseed and retest (historical summary)
+
+The local UI fix is not visible to a student if the database still has the
+previous or partial D078 content seed. Run a read-only preflight first and
+apply only missing schema/data files; never use the taxonomy rebuild for this
+additive correction. Preserve the full schema dependency order in this
+runbook and the manual-only deployment rule.
+
+The authoritative current D078 schema and data order is the preceding
+“Authoritative D078/Sociology apply order (15 October 2026)” section. The list
+below is retained as historical context only; do not execute it as an
+independent or complete sequence.
+
+The current D078 guided-content seed is also stored as the compressed transport
+`backend/seed_d078_guided_content_2026-10-12.sql.gz`. Rebuild the plain SQL from
+the generator before applying; never submit gzip bytes to the SQL editor.
+
+Use the schema names and exact pre-seed order already documented above. In
+particular, `migration_career_item_relationship_explanations_2026-10-12.sql`
+must follow the relationship-table migration and precede seeds that write
+relationship explanations; `migration_d078_specialization_taxonomy_2026-10-12.sql`
+must follow the canonical career schema and precede its taxonomy seed. The
+Sociology programme-theme seed is not a substitute for the complete
+curriculum-contract seed.
+
+Post-seed verification must confirm: the curriculum outcome count and theme
+groups come from the full reviewed Sociology contract (not a fixed three-theme
+sample); all seven canonical areas exist and the 26 reviewed area-role routes
+are present; the student payload contains approved domain foundations
+separately from use-case-specific options, and returns any approved named
+tools, methods, knowledge, relationships and learning links; every area
+returns its reviewed roles. Then reload the programme, domain and each area
+payload and test selection removal plus tray opening. A successful SQL run is
+not proof that the UI is wired or rendered correctly. If counts or payloads
+remain empty, diagnose the missing/failed seed or ownership/review gate before
+changing the student filter; do not lower the evidence gate or fall back to
+legacy role-aggregated data.
+The APSA “Rethinking Political Science Education” report remains an audit
+source for a bounded political-science education claim, not a general
+Social-Sciences learning resource.
 
 ### Programme-to-domain evidence contract
 

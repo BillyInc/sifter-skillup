@@ -7,19 +7,23 @@ $repoRoot = Split-Path -Parent $PSScriptRoot
 $backendDir = Join-Path $repoRoot 'backend'
 Set-Location $backendDir
 
+$pythonExe = Join-Path $backendDir '.venv\Scripts\python.exe'
+if (-not (Test-Path -LiteralPath $pythonExe -PathType Leaf)) {
+    $pythonCommand = Get-Command python.exe -ErrorAction SilentlyContinue
+    if (-not $pythonCommand) {
+        throw 'The backend virtual environment and python.exe were not found.'
+    }
+    $pythonExe = $pythonCommand.Source
+}
+
 $commonArgs = @('main:app', '--host', '0.0.0.0', '--port', "$Port")
 if (-not $NoReload) {
     $commonArgs += '--reload'
 }
 
-if (Get-Command uv -ErrorAction SilentlyContinue) {
-    & uv run uvicorn @commonArgs
-    exit $LASTEXITCODE
+& $pythonExe -m uvicorn @commonArgs
+$childExitCode = $LASTEXITCODE
+if ($null -eq $childExitCode) {
+    throw 'Uvicorn exited without reporting a child-process exit code.'
 }
-
-if (Get-Command python -ErrorAction SilentlyContinue) {
-    & python -m uvicorn @commonArgs
-    exit $LASTEXITCODE
-}
-
-throw 'Neither uv nor python is available in this PowerShell session.'
+exit $childExitCode

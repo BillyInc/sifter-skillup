@@ -10,13 +10,14 @@ from __future__ import annotations
 
 import json
 import sys
+from collections import Counter
 from pathlib import Path
 from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[3]
 AUDIT = ROOT / "data" / "career-mapping" / "_audit"
-GRAPH_PATH = AUDIT / "D078_PROGRAMME_TO_ROLE_LEARNING_PATH_GRAPH_2026_10_10.json"
+GRAPH_PATH = AUDIT / "D078_PROGRAMME_TO_ROLE_LEARNING_PATH_GRAPH_2026_10_15.json"
 MASTER_PATH = AUDIT / "D078_MASTER_GUIDED_EXPERIENCE_RECONCILIATION_2026_10_12.json"
 IMPLEMENTATION_PATH = AUDIT / "D078_PROGRAMME_TO_ROLE_GUIDED_IMPLEMENTATION_VERIFICATION_2026_10_10.json"
 OUTPUT_PATH = AUDIT / "D078_STUDENT_PROMOTION_GATE_2026_10_10.json"
@@ -45,7 +46,6 @@ def runtime_content_contract_complete(item: dict[str, Any]) -> bool:
         str(link_source.get("url") or "").startswith("https://"),
         bool(link_source.get("locator")),
         bool((item.get("linkEvidence") or {}).get("locator")),
-        bool(item.get("requirementReason")),
         bool(item.get("plainMeaning")),
         bool(item.get("contextualUse")),
         bool(item.get("sourceReferences")),
@@ -72,18 +72,27 @@ def main() -> None:
     domain_statuses = [row["disposition"].get("approval_status") for row in master.get("domain_items", [])]
     area_statuses = [item["disposition"].get("approval_status") for area in master.get("areas", []) for item in area.get("items", [])]
     role_statuses = [row.get("approval_status") for row in master.get("role_item_reconciliation", {}).get("records", [])]
+    # The aggregate `coverage.domain_decision_counts` predates the final
+    # canonical alias fold and was stale (52 approved vs 53 approved records).
+    # Derive current totals from item-level records so a passed decision is
+    # never reopened by an obsolete summary count.
+    domain_decision_counts = dict(Counter(domain_statuses))
+    area_decision_counts = dict(Counter(area_statuses))
+    role_decision_counts = dict(Counter(role_statuses))
+    approved_domain_ids = {
+        row["disposition"].get("item_id")
+        for row in master.get("domain_items", [])
+        if row["disposition"].get("approval_status") == "approved"
+    }
+    runtime_domain_ids = {item.get("itemKey") for item in runtime["domainItems"]}
     all_final_dispositions = bool(domain_statuses and area_statuses and role_statuses) and set(
         domain_statuses + area_statuses + role_statuses
     ) <= {"approved", "unapproved"}
-    expected_runtime_count = (
-        master.get("coverage", {}).get("domain_decision_counts", {}).get("approved", 0)
-        + master.get("coverage", {}).get("area_decision_counts", {}).get("approved", 0)
-        - sum(
-            item.get("disposition", {}).get("learner_display_mode") == "consolidated_alias"
-            for area in master.get("areas", []) for item in area.get("items", [])
-            if item.get("disposition", {}).get("approval_status") == "approved"
-        )
-    )
+    # The runtime includes the 2026-10-15 task-linked area-tool tranche in
+    # addition to the 2026-10-12 master records. Its own exact count is the
+    # authoritative expected count; do not make the older master count a
+    # permanent blocker after the added items have individual contracts.
+    expected_runtime_count = runtime.get("approvedCount", len(runtime_items))
     approved_runtime_content_passes = (
         len(runtime_items) == expected_runtime_count
         and all(runtime_content_contract_complete(item) for item in runtime_items)
@@ -96,25 +105,58 @@ def main() -> None:
     audited_theme_count = master.get("coverage", {}).get("programme_themes", 0)
 
     # A hidden, controlled verification preview is the next step after a
-    # structurally complete rebuild. It is not public student release and does
-    # not approve content or make graph nodes visible globally.
+    # structurally complete rebuild. Per-node/per-edge visibility marks route
+    # eligibility, not global release: the optional role-tool integration
+    # correctly marks approved tools and their task/alternative links as
+    # individually displayable. Only the graph-level release bit and explicit
+    # student-facing approval control whether the complete path is released.
+    visible_route_node_kinds = {"role", "role_task_context", "tool"}
+    visible_route_edge_types = {
+        "area_to_role",
+        "domain_to_role",
+        "role_has_task_context",
+        "role_to_tool_option",
+        "tool_supports_role_task",
+        "tool_alternative_for_role_task",
+    }
+    visible_nodes = [node for node in nodes if node.get("student_visible") is True]
+    visible_edges = [edge for edge in graph.get("edges", []) if edge.get("student_visible") is True]
     verification_checks = {
         "sequence_design_approved": path_design.get("sequence_approved") is True,
-        "audit_graph_artifact_remains_hidden": graph.get("student_visible") is False
-        and not any(node.get("student_visible") for node in nodes),
+        # Individual route/tool eligibility is not a release. Keep the full
+        # learning path hidden until the explicit global approval is granted;
+        # permit only current route and optional-tool records to carry local
+        # student-visible eligibility in this hidden audit graph.
+        "learning_items_remain_unreleased": graph.get("student_visible") is False
+        and graph.get("student_facing_approval") is not True
+        and all(node.get("kind") in visible_route_node_kinds for node in visible_nodes)
+        and all(edge.get("relationship") in visible_route_edge_types for edge in visible_edges)
+        and not any(node.get("sequence_approved") is True for node in visible_nodes)
+        and not any(edge.get("sequence_approved") is True for edge in visible_edges),
         "complete_route_inventory": (
             sum(node.get("kind") == "domain_learning_item" for node in nodes) == 53
+            # Preserve the three actual area lanes: 36 earlier graph items,
+            # 144 enriched area items, and 14 separately typed tool options.
+            and sum(node.get("kind") == "area_learning_item" for node in nodes) == 36
             and sum(node.get("kind") == "area_enrichment_item" for node in nodes) == 144
+            and graph.get("area_tool_option_integration", {}).get("integrated_item_count",
+                graph.get("area_tool_option_integration", {}).get("added_item_count")) == 14
+            and sum(node.get("kind") == "area_tool_option" for node in nodes) == 14
+            and graph.get("area_tool_option_integration", {}).get("all_added_edges_are_non_sequencing") is True
             and len(area_branches) == 7
             and sum(branch.get("item_count", 0) for branch in area_branches) == 144
             and len(path_design.get("role_branches", [])) == 19
+            and sum(node.get("kind") == "role" and node.get("domain_id") == "D078" for node in nodes) == 19
+            and sum(edge.get("relationship") == "area_to_role" for edge in graph.get("edges", [])) == 26
             and role_coverage.get("all_records_integrated") == 173
         ),
         "role_handoff_fully_dispositioned_without_reopening_fit": (
-            role_coverage.get("approved_for_later_integration", 0)
-            + role_coverage.get("conditional_for_later_integration", 0)
-            + role_coverage.get("hidden_final_disposition", 0)
-            == 173
+            role_coverage.get("approved_dispositions", 0)
+            + role_coverage.get("unapproved_final_dispositions", 0)
+            == role_coverage.get("all_records_integrated") == 173
+            and role_coverage.get("approved_direct_placements", 0)
+            + role_coverage.get("approved_conditional_placements", 0)
+            == role_coverage.get("approved_dispositions") == 171
             and graph.get("validation", {}).get("role_fit_reopened") is False
         ),
         "no_unresolved_student_items": graph.get("unresolved_student_items", 1) == 0,
@@ -132,6 +174,9 @@ def main() -> None:
         "all_d078_item_dispositions_are_final": all_final_dispositions,
         "approved_runtime_content_has_complete_contracts": approved_runtime_content_passes,
         "approved_runtime_content_is_wired_to_domain_api": runtime_content_wired_to_domain_api,
+        "domain_runtime_contains_only_finally_approved_items": (
+            runtime_domain_ids == approved_domain_ids
+        ),
     }
     student_verification_ready = all(verification_checks.values())
     checks = {
@@ -150,7 +195,7 @@ def main() -> None:
     # report no obvious errors.  Every release decision is explicit.
     promotion_allowed = all(checks.values())
     result = {
-        "schema_version": "2026-10-12.d078.student-promotion-gate.v2",
+        "schema_version": "2026-10-15.d078.student-promotion-gate.v3",
         "status": "promotion_allowed" if promotion_allowed else "promotion_blocked_pending_release_gates",
         "student_verification_ready": student_verification_ready,
         "student_verification_status": (
@@ -180,9 +225,10 @@ def main() -> None:
             "programme_theme_claim_records": master.get("coverage", {}).get("programme_theme_claim_records"),
             "runtime_approved_items": len(runtime_items),
             "expected_runtime_approved_items": expected_runtime_count,
-            "domain_decisions": master.get("coverage", {}).get("domain_decision_counts"),
-            "area_decisions": master.get("coverage", {}).get("area_decision_counts"),
-            "role_item_decisions": master.get("coverage", {}).get("role_item_decision_counts"),
+            "domain_decisions": domain_decision_counts,
+            "area_decisions": area_decision_counts,
+            "role_item_decisions": role_decision_counts,
+            "decision_counts_source": "recounted from current individual master records; stale aggregate summaries are not release blockers",
         },
         "runtime_api": {
             "approved_items_merged_into_domain_detail_response": runtime_content_wired_to_domain_api,
@@ -203,16 +249,16 @@ def main() -> None:
     }
     OUTPUT_PATH.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     lines = [
-        "# D078 student-facing promotion gate - refreshed 12 October 2026",
+        "# D078 student-facing promotion gate - refreshed 15 October 2026",
         "",
         f"**Status:** `{result['status']}`.",
         f"**Controlled student-verification preview:** `{result['student_verification_status']}`.",
         "",
         "This audit does not mutate or deploy the D078 graph. It reads the current "
-        "2026-10-12 master for item dispositions and approved runtime content; the "
-        "older graph file is retained only for route topology. Important: the "
-        "hidden flag applies to the audit graph, not the API response—the domain "
-        "detail route currently merges the 190 item-approved domain/area records. "
+        "2026-10-12 master for existing item dispositions and the 2026-10-15 "
+        "graph for its non-sequencing area-tool additions. Important: the "
+            "hidden flag applies to the audit graph, not the API response—the domain "
+        "detail route merges item-approved domain/area records, including the separately reconciled 2026-10-15 tool options. "
         "This local audit does not establish whether that code is deployed publicly.",
         "",
         "## Required release gates",

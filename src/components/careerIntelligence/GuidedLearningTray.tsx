@@ -28,6 +28,7 @@ import type {
   LearningPlanStackSet,
 } from "../../lib/guidedLearningPlan";
 import { learningPlanRelationshipScopeMatches, learningPlanRouteKey } from "../../lib/guidedLearningPlan";
+import { studentContextSections, studentFacingCopy, studentGeographicContext, studentItemLimitations, studentOutputCopy, studentReasonCopy, studentResourceRationale } from "../../lib/studentExplanation";
 import { AlternativeComparisonSheet } from "./AlternativeComparisonSheet";
 import { ContextRelationshipChips, relationshipLabel, type StudentRelationship } from "./ContextRelationshipSheet";
 
@@ -69,7 +70,7 @@ const MODE_LABELS: Record<GuidedLearningTrayMode, string> = {
 
 const LAYER_LABELS: Record<LearningPlanLayer, string> = {
   programme: "Programme",
-  domain: "Domain foundation",
+  domain: "Domain learning",
   area: "Area of specialization",
   role: "Role route",
 };
@@ -123,7 +124,7 @@ function studentRelationships(item: LearningPlanCandidate, route: LearningPlanRo
       && learningPlanRelationshipScopeMatches(relationship.sequenceScope, route))
     .map((relationship) => ({
       type: relationship.type,
-      label: relationshipLabel(relationship.type),
+      label: relationshipLabel(relationship.type, relationship.sequenceApproved === true, relationship.sequencePolicy),
       target: relationship.targetName || relationship.targetId,
       explanation: relationship.explanation,
       status: relationship.status,
@@ -139,9 +140,14 @@ function layerChoiceTitle(choice: LearningPlanLayerChoices): string {
   return LAYER_LABELS[choice.layer];
 }
 
-function readableKey(value?: string): string | undefined {
-  if (!value) return undefined;
-  return value.replace(/[_-]+/g, " ").replace(/\s+/g, " ").trim();
+function candidatePlacementLabel(candidate: LearningPlanCandidate): string {
+  if (candidate.category === "useful_edge") return "Optional useful edge";
+  if (candidate.category === "alternative") return "Alternative choice";
+  if (candidate.category === "conditional") return "Use when it fits the task";
+  if (candidate.category === "shared_foundation") return "Compulsory domain foundation";
+  if (candidate.category === "area_addition") return "Compulsory area addition";
+  if (candidate.category === "role_addition") return "Compulsory role addition";
+  return "Route option";
 }
 
 function sourceLocatorLabel(locator: Record<string, unknown>): string | undefined {
@@ -156,17 +162,55 @@ function sourceLocatorLabel(locator: Record<string, unknown>): string | undefine
 function LearningItemDetails({ item, route }: { item: LearningPlanCandidate; route: LearningPlanRoute }) {
   const { colors } = useTheme();
   const type = item.itemType ? ITEM_TYPE_LABELS[item.itemType] : undefined;
-  const useCase = readableKey(item.useCaseKey);
+  const sameCopy = (left?: string | null, right?: string | null) =>
+    Boolean(left?.trim() && right?.trim() && left.trim().replace(/\s+/g, " ").toLocaleLowerCase() === right.trim().replace(/\s+/g, " ").toLocaleLowerCase());
+  const baseRequirementCopy = studentReasonCopy(item.requirementReason) || (item.requirementLevel === "needed"
+    ? "This item is part of the recommended learning for the selected route. The explanation below shows the work it supports; it does not mean every learner in the wider field needs the same preparation."
+    : "This item can help with particular work or interests on this route, but it is not a compulsory step. You can continue along the main learning path without choosing it.");
+  const requirementCopy = item.requirementLevel === "needed"
+    ? baseRequirementCopy
+    : `${baseRequirementCopy} If it fits the direction you want to pursue, you can add it alongside the compulsory learning for an additional advantage. It does not replace or block the main path.`;
+  const useSections = studentContextSections(item.contextualUse);
+  const meaning = studentFacingCopy(item.plainMeaning || item.explanation)
+    || "A plain-language explanation has not been provided for this item yet.";
+  const explanationCopy = studentFacingCopy(item.explanation);
+  const baseMeaning = studentFacingCopy(item.plainMeaning);
+  const routeUseMeaning = studentFacingCopy(useSections.meaning);
+  const explanationRepeatsSeparatedCopy = Boolean(baseMeaning && routeUseMeaning
+    && sameCopy(explanationCopy, `${baseMeaning} ${routeUseMeaning}`));
+  const distinctExtraExplanation = explanationCopy
+    && !sameCopy(explanationCopy, item.plainMeaning)
+    && !sameCopy(explanationCopy, useSections.meaning)
+    && !explanationRepeatsSeparatedCopy
+    ? explanationCopy
+    : "";
+  const resourceLinks = item.learningLinks?.length
+    ? item.learningLinks
+    : item.linkUrl ? [{ title: item.linkTitle || `Learning resource for ${item.name}`, url: item.linkUrl, rationale: item.linkRationale, access: item.linkAccess, kind: item.linkKind }] : [];
+  const section = (title: string, body?: string | null) => {
+    const learnerCopy = studentFacingCopy(body);
+    return learnerCopy ? <View key={title} style={[styles.explanationSection, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+    <Text accessibilityRole="header" style={[styles.explanationHeading, { color: colors.textRole.primary }]}>{title}</Text>
+    <Text style={[styles.detailText, { color: colors.textRole.secondary }]}>{learnerCopy}</Text>
+  </View> : null;
+  };
   return <View style={styles.detailPanel}>
-    {type ? <Text style={[styles.detailText, { color: colors.textRole.muted }]}><Text style={styles.detailLabel}>Type: </Text>{type}</Text> : null}
-    {item.themeLabel ? <Text style={[styles.detailText, { color: colors.textRole.secondary }]}><Text style={styles.detailLabel}>Theme: </Text>{item.themeLabel}</Text> : null}
-    {useCase ? <Text style={[styles.detailText, { color: colors.textRole.secondary }]}><Text style={styles.detailLabel}>Use case: </Text>{useCase}</Text> : null}
-    {item.requirementLevel ? <Text style={[styles.detailText, { color: colors.textRole.secondary }]}><Text style={styles.detailLabel}>Why it is shown: </Text>{readableKey(item.requirementLevel)}</Text> : null}
-    {item.plainMeaning ? <Text style={[styles.detailText, { color: colors.textRole.secondary }]}><Text style={styles.detailLabel}>What it is: </Text>{item.plainMeaning}</Text> : null}
-    {item.contextualUse ? <Text style={[styles.detailText, { color: colors.textRole.secondary }]}><Text style={styles.detailLabel}>In this route: </Text>{item.contextualUse}</Text> : null}
-    {item.expectedOutput ? <Text style={[styles.detailText, { color: colors.textRole.secondary }]}><Text style={styles.detailLabel}>What you can produce: </Text>{item.expectedOutput}</Text> : null}
-    {item.prerequisiteNames?.length ? <Text style={[styles.detailText, { color: colors.textRole.secondary }]}><Text style={styles.detailLabel}>Learn or review first: </Text>{item.prerequisiteNames.join(", ")}</Text> : null}
-    {item.limitations?.length ? <Text style={[styles.detailText, { color: colors.textRole.secondary }]}><Text style={styles.detailLabel}>Limits: </Text>{item.limitations.join("; ")}</Text> : null}
+    {type ? <Text style={[styles.detailMeta, { color: colors.textRole.muted }]}>{type}{item.themeLabel ? ` · ${item.themeLabel}` : ""}</Text> : null}
+    {item.requirementLevel ? section(item.requirementLevel === "needed" ? "Why this is part of the route" : "Why this optional item may help", requirementCopy) : null}
+    {item.category === "alternative" ? section("How this choice works", "This is an alternative in a choose-one group. Select it instead of another option in the group; the alternatives are not a set of items you must all learn.") : null}
+    {section("What it is", meaning)}
+    {item.plainMeaning ? section("A little more context", distinctExtraExplanation) : null}
+    {section("How it connects to your programme", item.programmeContext)}
+    {section("What it means in this domain", item.domainContext)}
+    {section("What it adds in this area", item.areaContext)}
+    {!sameCopy(item.roleContext, item.contextualUse) ? section("How it applies to this role", item.roleContext) : null}
+    {section("How it is used in this route", useSections.meaning || "A description of how this item is used on this route has not been provided yet.")}
+    {section("Example of the work", useSections.task)}
+    {item.geographicScope ? section("Evidence context", studentGeographicContext(item.geographicScope)) : null}
+    {section("What to keep in mind", useSections.guardrail)}
+    {section("What you may produce", studentOutputCopy(item.expectedOutput, item.contextualUse))}
+    {item.prerequisiteNames?.length ? section("Learn or review first", item.prerequisiteNames.join(", ")) : null}
+    {section("What it cannot prove or replace", studentItemLimitations(item.limitations).join("\n\n"))}
     {item.sourceReferences?.some((reference) => /^https:\/\//i.test(reference.url)) ? <View style={styles.sourceEvidence}>
       <Text style={[styles.detailText, styles.detailLabel, { color: colors.textRole.secondary }]}>Evidence for this item</Text>
       {item.sourceReferences.filter((reference) => /^https:\/\//i.test(reference.url)).map((reference, index) => {
@@ -182,15 +226,21 @@ function LearningItemDetails({ item, route }: { item: LearningPlanCandidate; rou
         </View>;
       })}
     </View> : null}
-    {item.linkUrl ? <TouchableOpacity
-      accessibilityRole="link"
-      accessibilityLabel={`Open learning resource for ${item.name}`}
-      onPress={() => { if (/^https:\/\//i.test(item.linkUrl ?? "")) void Linking.openURL(item.linkUrl!); }}
-      style={styles.resourceLink}
-    >
-      <Feather name="external-link" size={14} color={colors.accentRole.action} />
-      <Text style={[styles.resourceLinkText, { color: colors.accentRole.action }]}>Open learning resource</Text>
-    </TouchableOpacity> : null}
+    {resourceLinks.length ? <View style={styles.resourceEvidence}>
+      <Text accessibilityRole="header" style={[styles.explanationHeading, { color: colors.textRole.primary }]}>Learning and reference links</Text>
+      {resourceLinks.map((link, index) => <View key={`${link.url}:${index}`} style={[styles.explanationSection, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+        <TouchableOpacity accessibilityRole="link" accessibilityLabel={`Open ${link.title}`} onPress={() => { if (/^https:\/\//i.test(link.url)) void Linking.openURL(link.url); }} style={styles.resourceLink}>
+          <Feather name="external-link" size={14} color={colors.accentRole.action} />
+          <Text style={[styles.resourceLinkText, { color: colors.accentRole.action }]}>{link.title}</Text>
+        </TouchableOpacity>
+        <View style={styles.resourceWhy}>
+          <Text style={[styles.detailLabel, { color: colors.textRole.primary }]}>Why this resource is attached</Text>
+          <Text style={[styles.detailText, { color: colors.textRole.secondary }]}>{studentResourceRationale(link.rationale, item.name, item.contextualUse, link.locator)}</Text>
+        </View>
+        {link.locator ? <Text style={[styles.detailMeta, { color: colors.textRole.muted }]}>Start at: {link.locator}</Text> : null}
+        {link.kind || link.access ? <Text style={[styles.detailMeta, { color: colors.textRole.muted }]}>{[link.kind, link.access].filter(Boolean).join(" · ")}</Text> : null}
+      </View>)}
+    </View> : null}
     <ContextRelationshipChips itemName={item.name} relationships={studentRelationships(item, route)} />
   </View>;
 }
@@ -218,73 +268,88 @@ function RouteLayers({
   const items = stackItems(stack);
   const choices = stack.layerChoices;
   const selectedIds = new Set(stack.selectedIds);
-  const selectedStepById = new Map(stack.selectedIds.map((id, index) => [id, index + 1]));
+  const fixedProgrammeIds = new Set(stack.fixedProgramme.map((item) => item.id));
+  const programmeContextItems = items.filter((item) => fixedProgrammeIds.has(item.id));
+  const selectedItems = items.filter((item) => !fixedProgrammeIds.has(item.id));
+  const compulsoryItems = selectedItems.filter((item) => item.requirementLevel === "needed");
+  const optionalItems = selectedItems.filter((item) => item.requirementLevel !== "needed");
   const availableItems = stack.selectableItems.filter((candidate) => !selectedIds.has(candidate.id) && !candidate.alternativeGroup);
+  const renderSelectedItem = (item: LearningPlanCandidate, laneItems: LearningPlanCandidate[], index: number, lane: "context" | "compulsory" | "optional") => {
+    const laneIndex = laneItems.findIndex((candidate) => candidate.id === item.id);
+    const previousId = laneIndex > 0 ? laneItems[laneIndex - 1].id : undefined;
+    const nextId = laneIndex >= 0 && laneIndex < laneItems.length - 1 ? laneItems[laneIndex + 1].id : undefined;
+    const afterNextId = laneIndex >= 0 && laneIndex < laneItems.length - 2 ? laneItems[laneIndex + 2].id : undefined;
+    return <View key={item.id} style={styles.selectedItem}>
+      <View style={[styles.itemRow, { borderBottomColor: colors.borderRole.subtle }]}>
+        <TouchableOpacity
+          accessibilityRole="button"
+          accessibilityState={{ expanded: expandedCandidateId === item.id }}
+          accessibilityLabel={`${expandedCandidateId === item.id ? "Hide" : "Show"} explanation for ${item.name}`}
+          onPress={() => setExpandedCandidateId(expandedCandidateId === item.id ? null : item.id)}
+          style={styles.itemCopy}
+        >
+          <Text style={[styles.itemLayer, { color: colors.textRole.muted }]}>{lane === "context"
+            ? `${LAYER_LABELS[item.layer]} · programme context`
+            : lane === "compulsory"
+              ? `Required step ${index + 1} · ${LAYER_LABELS[item.layer]} · ${candidatePlacementLabel(item)}`
+              : `Optional choice · ${LAYER_LABELS[item.layer]} · ${candidatePlacementLabel(item)}`}</Text>
+          <Text style={[styles.itemName, { color: colors.textRole.primary }]}>{item.name}</Text>
+        </TouchableOpacity>
+        {(onRemove || onReorder) && isRemovable(stack, item) ? (
+          <View style={styles.itemActions}>
+            {onReorder ? <>
+              <TouchableOpacity
+                accessibilityRole="button"
+                accessibilityLabel={`Move ${item.name} earlier in this plan`}
+                disabled={!previousId}
+                onPress={() => onReorder(routeKey, item.id, previousId)}
+                style={styles.reorderButton}
+              >
+                <Feather name="arrow-up" size={14} color={previousId ? colors.accentRole.action : colors.textRole.muted} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                accessibilityRole="button"
+                accessibilityLabel={`Move ${item.name} later in this plan`}
+                disabled={!nextId}
+                onPress={() => onReorder(routeKey, item.id, afterNextId)}
+                style={styles.reorderButton}
+              >
+                <Feather name="arrow-down" size={14} color={nextId ? colors.accentRole.action : colors.textRole.muted} />
+              </TouchableOpacity>
+            </> : null}
+            {onRemove ? <TouchableOpacity
+              accessibilityRole="button"
+              accessibilityLabel={`Remove ${item.name} from this plan`}
+              onPress={() => onRemove(routeKey, item.id)}
+              style={styles.removeButton}
+            >
+              <Feather name="x" size={16} color={colors.textRole.muted} />
+            </TouchableOpacity> : null}
+          </View>
+        ) : null}
+      </View>
+      {expandedCandidateId === item.id ? <View style={styles.selectedDetails}>
+        <LearningItemDetails item={item} route={stack.route} />
+      </View> : null}
+    </View>;
+  };
   return (
     <View style={styles.routeBody}>
-      {items.length ? <Text style={[styles.choiceText, { color: colors.textRole.muted }]}>
-        Your chosen items are shown in route order. Layer labels show where each item belongs; they do not make every item in one layer a prerequisite for the next.
-      </Text> : null}
-      {items.map((item) => (
-        <View key={item.id} style={styles.selectedItem}>
-          <View style={[styles.itemRow, { borderBottomColor: colors.borderRole.subtle }]}>
-            <TouchableOpacity
-              accessibilityRole="button"
-              accessibilityState={{ expanded: expandedCandidateId === item.id }}
-              accessibilityLabel={`${expandedCandidateId === item.id ? "Hide" : "Show"} explanation for ${item.name}`}
-              onPress={() => setExpandedCandidateId(expandedCandidateId === item.id ? null : item.id)}
-              style={styles.itemCopy}
-            >
-              <Text style={[styles.itemLayer, { color: colors.textRole.muted }]}>{selectedStepById.has(item.id)
-                ? `Step ${selectedStepById.get(item.id)} · ${LAYER_LABELS[item.layer]}`
-                : `${LAYER_LABELS[item.layer]} · programme context`}</Text>
-              <Text style={[styles.itemName, { color: colors.textRole.primary }]}>{item.name}</Text>
-            </TouchableOpacity>
-            {(onRemove || onReorder) && isRemovable(stack, item) ? (
-              <View style={styles.itemActions}>
-                {onReorder ? (() => {
-                  const index = stack.selectedIds.indexOf(item.id);
-                  const previousId = index > 0 ? stack.selectedIds[index - 1] : undefined;
-                  const nextId = index >= 0 && index < stack.selectedIds.length - 1 ? stack.selectedIds[index + 1] : undefined;
-                  const afterNextId = index >= 0 && index < stack.selectedIds.length - 2 ? stack.selectedIds[index + 2] : undefined;
-                  return <>
-                    <TouchableOpacity
-                      accessibilityRole="button"
-                      accessibilityLabel={`Move ${item.name} earlier in this plan`}
-                      disabled={!previousId}
-                      onPress={() => onReorder(routeKey, item.id, previousId)}
-                      style={styles.reorderButton}
-                    >
-                      <Feather name="arrow-up" size={14} color={previousId ? colors.accentRole.action : colors.textRole.muted} />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      accessibilityRole="button"
-                      accessibilityLabel={`Move ${item.name} later in this plan`}
-                      disabled={!nextId}
-                      onPress={() => onReorder(routeKey, item.id, afterNextId)}
-                      style={styles.reorderButton}
-                    >
-                      <Feather name="arrow-down" size={14} color={nextId ? colors.accentRole.action : colors.textRole.muted} />
-                    </TouchableOpacity>
-                  </>;
-                })() : null}
-                {onRemove ? <TouchableOpacity
-                  accessibilityRole="button"
-                  accessibilityLabel={`Remove ${item.name} from this plan`}
-                  onPress={() => onRemove(routeKey, item.id)}
-                  style={styles.removeButton}
-                >
-                  <Feather name="x" size={16} color={colors.textRole.muted} />
-                </TouchableOpacity> : null}
-              </View>
-            ) : null}
-          </View>
-          {expandedCandidateId === item.id ? <View style={styles.selectedDetails}>
-              {item.explanation ? <Text style={[styles.choiceText, { color: colors.textRole.secondary }]}>{item.explanation}</Text> : null}
-              <LearningItemDetails item={item} route={stack.route} />
-            </View> : null}
-        </View>
-      ))}
+      {programmeContextItems.length ? <View style={styles.selectedLane}>
+        <Text style={[styles.choiceTitle, { color: colors.textRole.primary }]}>Programme learning already covered</Text>
+        <Text style={[styles.choiceText, { color: colors.textRole.secondary }]}>This is the programme context carried into your plan; it is not an extra domain, area or role requirement.</Text>
+        {programmeContextItems.map((item, index) => renderSelectedItem(item, programmeContextItems, index, "context"))}
+      </View> : null}
+      {compulsoryItems.length ? <View style={styles.selectedLane}>
+        <Text style={[styles.choiceTitle, { color: colors.textRole.primary }]}>Compulsory learning path</Text>
+        <Text style={[styles.choiceText, { color: colors.textRole.secondary }]}>These selected items are marked as needed for this route. Their order follows supported learning dependencies; items at the same level are not automatically prerequisites for one another.</Text>
+        {compulsoryItems.map((item, index) => renderSelectedItem(item, compulsoryItems, index, "compulsory"))}
+      </View> : null}
+      {optionalItems.length ? <View style={[styles.selectedLane, styles.optionalLane, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+        <Text style={[styles.choiceTitle, { color: colors.textRole.primary }]}>Optional useful edges you chose</Text>
+        <Text style={[styles.choiceText, { color: colors.textRole.secondary }]}>These can give you additional preparation for particular tasks or directions. They sit alongside—not inside—the compulsory path. You may skip or remove them and still continue; any order shown here is only for supported links among these optional choices.</Text>
+        {optionalItems.map((item, index) => renderSelectedItem(item, optionalItems, index, "optional"))}
+      </View> : null}
       {choices.map((choice) => (
         <View key={choice.layer} style={[styles.choiceBox, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
           <Text style={[styles.choiceTitle, { color: colors.textRole.primary }]}>{layerChoiceTitle(choice)}</Text>
@@ -327,13 +392,12 @@ function RouteLayers({
                 style={styles.availableHeader}
               >
                 <View style={styles.itemCopy}>
-                  <Text style={[styles.itemLayer, { color: colors.textRole.muted }]}>{LAYER_LABELS[candidate.layer]} · {candidate.category === "useful_edge" ? "Useful additional edge" : candidate.category === "conditional" ? "Use when it fits the task" : "Route option"}</Text>
+                  <Text style={[styles.itemLayer, { color: colors.textRole.muted }]}>{LAYER_LABELS[candidate.layer]} · {candidatePlacementLabel(candidate)}</Text>
                   <Text style={[styles.itemName, { color: colors.textRole.primary }]}>{candidate.name}</Text>
                 </View>
                 <Feather name={expanded ? "chevron-up" : "chevron-down"} size={17} color={colors.textRole.muted} />
               </TouchableOpacity>
               {expanded ? <View style={styles.availableDetails}>
-                {candidate.explanation ? <Text style={[styles.choiceText, { color: colors.textRole.secondary }]}>{candidate.explanation}</Text> : <Text style={[styles.choiceText, { color: colors.textRole.muted }]}>A reviewed explanation is not available for this item yet.</Text>}
                 <LearningItemDetails item={candidate} route={stack.route} />
                 <TouchableOpacity
                   accessibilityRole="button"
@@ -397,6 +461,15 @@ export function GuidedLearningTray({
   const dropOpacity = useRef(new Animated.Value(0)).current;
   const totalSelected = useMemo(() => stackSet.stacks.reduce((sum, stack) => sum + stack.selectedIds.length, 0), [stackSet.stacks]);
   const routeCount = stackSet.stacks.length;
+
+  // `initialMode` is also an open command from item cards. The guided route
+  // can remain mounted while navigation updates its query, so applying it
+  // only through useState's initializer leaves a collapsed tray invisible.
+  // Treat compact/mid/full as explicit open requests; an icon value never
+  // overrides a learner's later manual collapse.
+  useEffect(() => {
+    if (initialMode !== "icon") setMode(initialMode);
+  }, [initialMode]);
 
   useEffect(() => {
     if (dropKey === undefined || dropKey === previousDropKey.current) return;
@@ -527,37 +600,44 @@ const styles = StyleSheet.create({
   routeScroll: { maxHeight: 360, marginTop: Spacing.md },
   routeScrollContent: { gap: Spacing.md, paddingBottom: Spacing.xs },
   routeCard: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md },
-  routeTitle: { fontSize: FontSize.md, fontWeight: FontWeight.bold, marginBottom: Spacing.sm },
+  routeTitle: { fontSize: 18, lineHeight: 25, fontWeight: FontWeight.bold, marginBottom: Spacing.sm },
   routeBody: { gap: Spacing.sm },
+  selectedLane: { gap: Spacing.sm },
+  optionalLane: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md },
   selectedItem: { borderBottomWidth: 1 },
   itemRow: { minHeight: 44, borderBottomWidth: 1, flexDirection: "row", alignItems: "center", paddingVertical: Spacing.sm },
   itemCopy: { flex: 1 },
   itemActions: { flexDirection: "row", alignItems: "center", gap: 2 },
   itemLayer: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
-  itemName: { fontSize: FontSize.md, marginTop: 2 },
+  itemName: { fontSize: 16, lineHeight: 23, marginTop: 2 },
   removeButton: { minWidth: 44, minHeight: 44, alignItems: "center", justifyContent: "center" },
   reorderButton: { minWidth: 32, minHeight: 36, alignItems: "center", justifyContent: "center" },
   choiceBox: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, marginTop: Spacing.xs },
-  choiceTitle: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
+  choiceTitle: { fontSize: 18, lineHeight: 25, fontWeight: FontWeight.bold },
   choiceGroup: { marginTop: Spacing.sm },
-  choiceLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
-  choiceText: { fontSize: FontSize.sm, lineHeight: 17, marginTop: 2 },
+  choiceLabel: { fontSize: 16, lineHeight: 23, fontWeight: FontWeight.semibold },
+  choiceText: { fontSize: 16, lineHeight: 24, marginTop: 2 },
   availableBox: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, marginTop: Spacing.sm },
   availableItem: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.sm, marginTop: Spacing.sm },
   availableHeader: { minHeight: 44, flexDirection: "row", alignItems: "center", gap: Spacing.sm },
   availableDetails: { paddingTop: Spacing.xs, gap: Spacing.sm },
   selectedDetails: { paddingBottom: Spacing.sm, gap: Spacing.xs },
-  detailPanel: { gap: Spacing.xs, paddingTop: Spacing.xs },
-  detailText: { fontSize: FontSize.sm, lineHeight: 18 },
+  detailPanel: { gap: Spacing.sm, paddingTop: Spacing.sm },
+  explanationSection: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.xs },
+  explanationHeading: { fontSize: 18, lineHeight: 25, fontWeight: FontWeight.bold },
+  detailText: { fontSize: 16, lineHeight: 25 },
+  detailMeta: { fontSize: 16, lineHeight: 24 },
   detailLabel: { fontWeight: FontWeight.bold },
   resourceLink: { minHeight: 40, alignSelf: "flex-start", flexDirection: "row", alignItems: "center", gap: Spacing.xs, paddingVertical: Spacing.xs },
-  resourceLinkText: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
+  resourceLinkText: { fontSize: 16, lineHeight: 23, fontWeight: FontWeight.semibold },
   sourceEvidence: { gap: Spacing.xs, paddingTop: Spacing.xs },
+  resourceEvidence: { gap: Spacing.sm, paddingTop: Spacing.xs },
+  resourceWhy: { gap: Spacing.xs },
   addButton: { minHeight: 40, borderWidth: 1, borderRadius: Radius.full, paddingHorizontal: Spacing.md, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: Spacing.xs, alignSelf: "flex-start" },
   compareLink: { alignSelf: "flex-start", minHeight: 36, justifyContent: "center", marginTop: Spacing.xs },
   compareLinkText: { fontSize: FontSize.xs, fontWeight: "800" },
   advisoryBox: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, marginTop: Spacing.xs },
-  emptyText: { fontSize: FontSize.sm, paddingVertical: Spacing.md },
+  emptyText: { fontSize: 16, lineHeight: 24, paddingVertical: Spacing.md },
   modeRow: { flexDirection: "row", gap: Spacing.xs, marginTop: Spacing.md },
   modeButton: { minHeight: 36, paddingHorizontal: Spacing.md, borderRadius: Radius.full, borderWidth: 1, borderColor: "transparent", justifyContent: "center" },
   modeButtonText: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },

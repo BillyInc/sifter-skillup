@@ -135,6 +135,69 @@ def test_domain_connection_inherits_only_exact_course_anchored_student_outcomes(
     assert "sourceText" not in matched[0]
 
 
+def test_sociology_programme_themes_are_narrative_fixed_curriculum_groups():
+    themes = cr.d078_sociology_programme_themes()
+
+    assert len(themes) == 14
+    assert all(theme["selectionState"] == "fixed_programme_guidance_not_selectable" for theme in themes)
+    assert all(theme["narration"] and theme["courseAnchors"] and theme["source"]["url"].startswith("https://") for theme in themes)
+    assert sum(len(theme["courseCodes"]) for theme in themes) >= 34
+
+
+def test_domain_receives_full_programme_themes_and_outcomes_without_inventing_transfer_matches():
+    themes = cr.d078_sociology_programme_themes()
+    selected = themes[0]
+    first_code = selected["courseCodes"][0]
+    connections = cr._programme_curriculum_theme_context(
+        themes,
+        [{"outcomeId": "SOC103:1", "courseCode": first_code, "studentText": "an outcome"}],
+        [{"outcomeId": "SOC103:1", "courseCode": first_code, "courseTitle": "Course", "studentText": "an outcome", "sourceLocator": {"page": 1}}],
+    )
+
+    assert len(connections) == len(themes) == 14
+    matched = next(item for item in connections if item["themeKey"] == selected["themeKey"])
+    unmatched = next(item for item in connections if item["themeKey"] != selected["themeKey"])
+    assert matched["matchedOutcomeIds"] == ["SOC103:1"]
+    assert matched["matchedCourseCodes"] == [first_code]
+    assert matched["directTransferEvidenceStatus"] == "matched"
+    assert matched["narration"] == selected["narration"]
+    assert len(matched["courseAnchors"]) == len(selected["courseAnchors"])
+    assert [anchor["courseCode"] for anchor in matched["matchedCourseAnchors"]] == [first_code]
+    assert matched["programmeOutcomes"][0]["studentText"] == "an outcome"
+    assert matched["programmeOutcomes"][0]["sourceLocator"] == {"page": 1}
+    assert unmatched["directTransferEvidenceStatus"] == "no_exact_match_in_current_transfer_record"
+    assert "does not mean the theme is irrelevant" in unmatched["connectionExplanation"]
+
+
+def test_sociology_to_social_sciences_transition_weaves_verified_transfer_into_plain_language():
+    narrative = cr._programme_domain_transfer_narrative(
+        "Sociology",
+        "Social Sciences & Behavioural Research",
+        [
+            "relate the basic analysis and description of social structure and dynamics of human society",
+            "define the basic terms and concepts of sociology, culture and the process of socialisation; and",
+            "discuss the biological foundations of human behaviour",
+        ],
+    )
+
+    assert "analysing social structures and the dynamics of society" in narrative
+    assert "culture and socialisation" in narrative
+    assert "human behaviour and how it is studied" in narrative
+    assert "not the whole set of capabilities" in narrative
+
+
+def test_programme_to_domain_handoff_distinguishes_inherited_learning_from_domain_additions():
+    domain_name = "Social Sciences & Behavioural Research"
+    handoff = cr._programme_domain_handoff_copy("Sociology", domain_name)
+
+    assert "Sociology programme covers" in handoff["curriculumContextHeading"]
+    assert handoff["domainAddsHeading"] == f"What {domain_name} adds"
+    assert "shared domain foundations (the common starting path)" in handoff["domainAddsExplanation"]
+    assert "optional useful edges" in handoff["domainAddsExplanation"]
+    assert "does not claim that every employer requires every item" in handoff["domainAddsExplanation"]
+    assert "programme already taught these additions" in handoff["domainAddsExplanation"]
+
+
 def test_programme_domain_categories_have_distinct_student_facing_explanations():
     direct = cr._programme_domain_explanation("Sociology", "Social Sciences", "direct", [{"title": "Research Methods"}])
     functional = cr._programme_domain_explanation("Sociology", "Data Analysis", "functional", [{"title": "Research Methods"}])
@@ -349,6 +412,46 @@ def test_context_items_keep_only_owned_edges_with_sources_and_learner_explanatio
     assert visible[0]["relationships"][0]["sequenceCondition"] == "Only when the selected task includes this tool."
     assert visible[0]["relationships"][0]["sequenceScope"] == {"domainIds": ["D078"]}
     assert len(visible[0]["relationships"]) == 1
+
+
+def test_conditional_sequence_relationship_can_reference_an_inherited_domain_item():
+    area_key = "D078:economics-applied-analysis"
+    rows = [
+        _approved_context_row(**{
+            "context_level": "subgroup", "context_key": area_key, "domain_key": "D078",
+            "item_type": "method", "item_key": "econometrics", "name": "Applied econometrics",
+            "guidance_owner": "subgroup", "data_state": "source_backed",
+        }),
+        _approved_context_row(**{
+            "context_level": "domain", "context_key": "D078", "domain_key": "D078",
+            "item_type": "method", "item_key": "statistics", "name": "Introductory statistics",
+            "guidance_owner": "domain", "data_state": "source_backed",
+        }),
+    ]
+    edge = {
+        "context_level": "subgroup", "context_key": area_key, "domain_key": "D078",
+        "from_item_type": "method", "from_item_key": "econometrics",
+        "to_context_level": "domain", "to_context_key": "D078",
+        "to_item_type": "method", "to_item_key": "statistics", "to_name": "Introductory statistics",
+        "relationship_type": "builds_on", "relationship_status": "source_backed",
+        "learner_explanation": "Review statistical foundations first if they are new to you.",
+        "source_references": [{"url": "https://example.org/econometrics-syllabus"}],
+        "data_state": "source_backed", "guidance_owner": "subgroup",
+        "sequence_approved": True, "sequence_policy": "conditional_prerequisite",
+        "sequence_condition": "Only when you have not already studied comparable statistics.",
+        "sequence_scope": {"domainIds": ["D078"], "areaIds": [area_key]},
+    }
+
+    visible = cr._career_context_items(
+        _CareerService(rows, [edge]), context_level="subgroup", context_key=area_key
+    )
+
+    assert len(visible) == 1
+    relationship = visible[0]["relationships"][0]
+    assert relationship["toContextLevel"] == "domain"
+    assert relationship["toContextKey"] == "D078"
+    assert relationship["toItemKey"] == "statistics"
+    assert relationship["sequencePolicy"] == "conditional_prerequisite"
 
 
 def test_domain_items_expose_only_evidenced_downstream_path_targets():

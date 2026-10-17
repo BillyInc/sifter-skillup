@@ -1,11 +1,66 @@
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react-native";
+import { StyleSheet } from "react-native";
 import { DegreeSkills } from "./DegreeSkills";
 import { ThemeProvider } from "@/theme";
 import type { ProgrammeCurriculumContract } from "@/types/career";
 import { SOCIOLOGY_REVIEWED_THEME_BY_CODE } from "./programmeCurriculumThemes";
 
 describe("DegreeSkills programme preview", () => {
+  it("uses readable theme, outcome and section hierarchy at the documented minimum sizes", () => {
+    const curriculumContract: ProgrammeCurriculumContract = {
+      status: "available",
+      outcomes: [{
+        outcomeId: "readable-outcome",
+        courseCode: "SOC 301",
+        courseTitle: "Methods of Social Research and Statistics",
+        displayGroup: "sociology_programme",
+        outcomeIndex: 1,
+        sourceText: "Compare research methods.",
+        studentText: "Compare quantitative and qualitative approaches to a research question.",
+        sourceLocator: { page: 1 },
+        dataState: "source_backed",
+      }],
+      abilities: [],
+    };
+
+    render(<ThemeProvider><DegreeSkills curriculumContract={curriculumContract} /></ThemeProvider>);
+    const themeTitle = screen.getByText("Research and evidence");
+    expect(StyleSheet.flatten(themeTitle.props.style).fontSize).toBeGreaterThanOrEqual(18);
+    const narration = /You will move from forming a research question/;
+    expect(screen.getByText("Theme focus")).toBeTruthy();
+    expect(StyleSheet.flatten(screen.getByText("How these courses fit together").props.style).fontSize).toBeGreaterThanOrEqual(16);
+    expect(StyleSheet.flatten(screen.getByText(narration).props.style).fontSize).toBeGreaterThanOrEqual(16);
+
+    fireEvent.press(screen.getByRole("button", { name: "See courses and outcomes" }));
+    expect(screen.getAllByText(narration)).toHaveLength(1);
+    expect(StyleSheet.flatten(screen.getByText("Compare quantitative and qualitative approaches to a research question.").props.style).fontSize).toBeGreaterThanOrEqual(16);
+  });
+
+  it("explains ungrouped programme courses without exposing review workflow language", () => {
+    const curriculumContract: ProgrammeCurriculumContract = {
+      status: "available",
+      outcomes: [{
+        outcomeId: "ungrouped-outcome",
+        courseCode: "SOC 999",
+        courseTitle: "Special Topics in Sociology",
+        displayGroup: "sociology_programme",
+        outcomeIndex: 1,
+        sourceText: "Discuss a selected sociological topic.",
+        studentText: "Discuss a selected sociological topic using relevant social-science ideas.",
+        sourceLocator: { page: 1 },
+        dataState: "source_backed",
+      }],
+      abilities: [],
+    };
+
+    render(<ThemeProvider><DegreeSkills curriculumContract={curriculumContract} /></ThemeProvider>);
+
+    expect(screen.getByText("Core programme learning")).toBeTruthy();
+    expect(screen.getByText(/These courses are part of the programme curriculum/)).toBeTruthy();
+    expect(screen.queryByText(/assigned to a reviewed theme/i)).toBeNull();
+  });
+
   it("shows source-backed programme abilities in the preview when no course outcomes exist", () => {
     const curriculumContract: ProgrammeCurriculumContract = {
       status: "available",
@@ -55,7 +110,10 @@ describe("DegreeSkills programme preview", () => {
     expect(screen.getByText("Curriculum source: printed pp. 334–335")).toBeTruthy();
     expect(screen.queryByText(/Original CCMAS source|Social-Sciences-CCMAS-FINAL/)).toBeNull();
     expect(screen.getAllByText("Course outcomes, in learner-friendly wording").length).toBeGreaterThan(1);
-    expect(screen.getByText("Curriculum wording: Distinguish research methods.")).toBeTruthy();
+    expect(screen.queryByText("Curriculum wording: Distinguish research methods.")).toBeNull();
+    fireEvent.press(screen.getByRole("button", { name: "View original course outline for Methods of Social Research and Statistics" }));
+    expect(screen.getByText("Original curriculum outcome wording")).toBeTruthy();
+    expect(screen.getByText("Distinguish research methods.")).toBeTruthy();
   });
 
   it("gives every mapped Sociology theme a distinct student-facing outcome synthesis", () => {
@@ -234,6 +292,9 @@ describe("DegreeSkills programme preview", () => {
     expect(screen.getByText("Open material")).toBeTruthy();
     expect(screen.getByText("Recommended reading")).toBeTruthy();
     expect(screen.getByText("Sociology: A Global Introduction (recommended reference)")).toBeTruthy();
+    expect(screen.getByText("Why this material is here")).toBeTruthy();
+    expect(screen.getByText(/linked to the reviewed programme record for “Research and evidence”/)).toBeTruthy();
+    expect(screen.getByText("What it covers")).toBeTruthy();
     expect(screen.getByText(/Test Sociology Author · 2nd edition · 978-1-23456-789-0/)).toBeTruthy();
     expect(screen.getByText("Use this methodology chapter as a reference when comparing approaches to social research.")).toBeTruthy();
     expect(screen.getByText(/May require payment/)).toBeTruthy();
@@ -325,5 +386,34 @@ describe("DegreeSkills programme preview", () => {
     expect(screen.getByText("History of Conflicts in Nigeria (NOUN courseware)")).toBeTruthy();
     expect(screen.getByText(/NOUN Modules 1 and 4 include Nigerian historical examples/)).toBeTruthy();
     expect(screen.getByText("Follow NOUN courseware educational-use terms.")).toBeTruthy();
+  });
+
+  it("keeps raw course outline wording behind an explicit disclosure", () => {
+    const curriculumContract: ProgrammeCurriculumContract = {
+      status: "available",
+      outcomes: [{
+        outcomeId: "course-outcome",
+        courseCode: "SOC 301",
+        courseTitle: "Methods of Social Research and Statistics",
+        displayGroup: "sociology_programme",
+        outcomeIndex: 1,
+        sourceText: "Distinguish methods.",
+        studentText: "Explain when numerical and interview evidence answer different questions.",
+        sourceLocator: { courseSummary: "RAW CCMAS OUTLINE: sample surveys, data processing and statistical tests." },
+        dataState: "source_backed",
+      }],
+      abilities: [],
+    };
+
+    render(<ThemeProvider><DegreeSkills curriculumContract={curriculumContract} /></ThemeProvider>);
+    fireEvent.press(screen.getByRole("button", { name: "See courses and outcomes" }));
+    expect(screen.getByText("Explain when numerical and interview evidence answer different questions.")).toBeTruthy();
+    expect(screen.queryByText("RAW CCMAS OUTLINE: sample surveys, data processing and statistical tests.")).toBeNull();
+
+    fireEvent.press(screen.getByRole("button", { name: "View original course outline for Methods of Social Research and Statistics" }));
+    expect(screen.getByText("RAW CCMAS OUTLINE: sample surveys, data processing and statistical tests.")).toBeTruthy();
+    expect(screen.getByText(/Original curriculum wording is preserved here for reference/)).toBeTruthy();
+    expect(screen.getByText("Original curriculum outcome wording")).toBeTruthy();
+    expect(screen.getByText("Distinguish methods.")).toBeTruthy();
   });
 });

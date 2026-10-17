@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRouter } from "expo-router";
 import { View, Text, StyleSheet, TouchableOpacity, type ViewStyle } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useTheme, Spacing, Radius, FontSize, FontWeight } from "../../theme";
@@ -10,6 +11,9 @@ import { ContextSourceLinks } from "./ContextSourceLinks";
 import { contextItemFor, isStudentApprovedContextItem, relationshipTargets as resolveRelationshipTargets } from "./contextRelations";
 import { GuidanceReportButton } from "./GuidanceReportButton";
 import { ContextRelationshipChips, relationshipRecords } from "./ContextRelationshipSheet";
+import { useExploreNav } from "@/lib/exploreNav";
+import { learningPlanRouteKey, type LearningPlanRoute } from "@/lib/guidedLearningPlan";
+import { studentContextSections, studentFacingCopy, studentReasonCopy, studentResourceRationale, studentOutputCopy } from "@/lib/studentExplanation";
 
 export interface ToolGroupsBlockProps {
   tools: ToolGroupsEnriched;
@@ -25,6 +29,9 @@ export interface ToolGroupsBlockProps {
   /** Let an authenticated learner include a reviewed tool in the focused report. */
   learningFocus?: boolean;
   targetStudentId?: string;
+  /** Carry the selected route into the learning-plan tray. */
+  learningRoute?: LearningPlanRoute;
+  areaName?: string;
 }
 
 type ToolPurposeKey = "collect" | "organise" | "analyse" | "compute" | "map" | "communicate" | "other";
@@ -133,6 +140,8 @@ function ToolCard({
   scopeLabel,
   learningFocus,
   targetStudentId,
+  learningRoute,
+  areaName,
 }: {
   tool: ToolV2Enriched;
   prominent: boolean;
@@ -141,13 +150,32 @@ function ToolCard({
   scopeLabel?: string;
   learningFocus?: boolean;
   targetStudentId?: string;
+  learningRoute?: LearningPlanRoute;
+  areaName?: string;
 }) {
   const { colors } = useTheme();
+  const router = useRouter();
+  const exploreNav = useExploreNav();
   const [expanded, setExpanded] = useState(false);
   const relation = contextItemFor(contextItems, "tool", tool.tool);
+  const linkEvidence = relation?.linkEvidence;
+  const resourceReason = typeof linkEvidence?.why_this_resource === "string"
+    ? linkEvidence.why_this_resource
+    : typeof linkEvidence?.supports === "string"
+      ? linkEvidence.supports
+      : resource?.description;
+  const resourceLocator = typeof relation?.linkSourceReference?.locator === "string"
+    ? relation.linkSourceReference.locator
+    : undefined;
   const url = studentItemLinkUrl(relation, resource, tool.toolUrl);
   const purpose = purposeForTool(tool);
   const definition = TOOL_PURPOSES[purpose];
+  const meaning = studentFacingCopy(relation?.plainMeaning);
+  const contextualUse = studentFacingCopy(studentContextSections(relation?.contextualUse).meaning);
+  const output = studentOutputCopy(relation?.expectedOutput, relation?.contextualUse);
+  const preview = [meaning, contextualUse].filter(Boolean).join(" ") || definition.explanation;
+  const requirement = toolRequirementLabel(relation?.requirementLevel);
+  const resourceExplanation = studentResourceRationale(resourceReason, tool.tool, relation?.contextualUse, resourceLocator);
   const backedRelationships = (relation?.relationships ?? []).filter((edge: CareerContextItemRelationship) => edge.relationshipStatus === "source_backed");
   const backedTargets = (relation?.pathTargets ?? []).filter((target: CareerContextItemPathTarget) => target.relationshipStatus === "source_backed");
   const studentRelationships = relation ? relationshipRecords(relation) : [];
@@ -175,14 +203,21 @@ function ToolCard({
             contextKey: relation.contextKey,
             itemType: "tool",
             itemKey: relation.itemKey,
+            routeKey: learningRoute ? learningPlanRouteKey(learningRoute) : undefined,
             domainId: relation.domainId,
+            programmeId: learningRoute?.programmeId,
+            subgroupId: learningRoute?.areaId,
+            subgroupName: areaName,
+            roleId: learningRoute?.roleId,
+            roleName: learningRoute?.roleId,
           }}
+          onOpenPlan={() => exploreNav.guided(router, { programmeId: learningRoute?.programmeId, domainId: learningRoute?.domainId, areaId: learningRoute?.areaId, roleId: learningRoute?.roleId, focused: true, openTray: true })}
         /> : null}
       </View>
-      <Text style={[styles.toolPurpose, { color: colors.textRole.muted }]}>{definition.title} · optional choice, not a requirement</Text>
+      <Text style={[styles.toolPurpose, { color: colors.textRole.muted }]}>{definition.title} · {requirement}</Text>
       {scopeLabel ? <Text style={[styles.toolScope, { color: colors.textRole.muted }]}>{scopeLabel}</Text> : null}
       <ContextRelationshipChips itemName={tool.tool} relationships={studentRelationships} />
-      <Text style={[styles.toolNote, { color: colors.textRole.secondary }]}>{resource?.description || definition.explanation}</Text>
+      <Text style={[styles.toolNote, { color: colors.textRole.secondary }]}>{preview}</Text>
       {hasDetails ? <TouchableOpacity
         accessibilityRole="button"
         accessibilityState={{ expanded }}
@@ -193,41 +228,36 @@ function ToolCard({
         <Text style={[styles.detailButtonText, { color: colors.accentRole.action }]}>{expanded ? "Hide how this tool fits" : "How this tool fits"}</Text>
       </TouchableOpacity> : null}
       {expanded ? <View style={[styles.toolDetails, { borderTopColor: colors.borderRole.subtle }]}>
-        {relation?.plainMeaning ? <ToolDetail label="What it is" value={relation.plainMeaning} colors={colors} /> : null}
-        {relation?.contextualUse ? <ToolDetail label="What it helps you do here" value={relation.contextualUse} colors={colors} /> : null}
-        {relation?.expectedOutput ? <ToolDetail label="Possible output" value={relation.expectedOutput} colors={colors} /> : null}
-        {relation?.requirementLevel ? <ToolDetail label="Place in this route" value={`${relation.requirementLevel}${relation.requirementReason ? ` — ${relation.requirementReason}` : ""}`} colors={colors} /> : null}
-        {relation?.prerequisites?.length ? <ToolDetail label="Builds on" value={relation.prerequisites.join(" · ")} colors={colors} /> : null}
+        {meaning ? <ToolDetail label="What it is" value={meaning} colors={colors} /> : null}
+        {contextualUse ? <ToolDetail label="How it is used in this field" value={contextualUse} colors={colors} /> : null}
+        {output ? <ToolDetail label="What you may produce" value={output} colors={colors} /> : null}
+        {url ? <ToolDetail label="Why this learning link is here" value={resourceExplanation} colors={colors} /> : null}
+        {relation?.requirementLevel ? <ToolDetail label="Why it appears in this route" value={`${requirement}.${relation.requirementReason ? ` ${studentReasonCopy(relation.requirementReason)}` : ""}`} colors={colors} /> : null}
+        {relation?.prerequisites?.length ? <ToolDetail label="What may help you prepare" value={`${relation.prerequisites.map(studentFacingCopy).filter(Boolean).join(" ")} These notes do not create an automatic block or fixed order.`} colors={colors} /> : null}
         {backedRelationships.length ? <View style={styles.toolDetailGroup}>
-          <Text style={[styles.toolDetailLabel, { color: colors.textRole.primary }]}>Source-backed connections</Text>
+          <Text style={[styles.toolDetailLabel, { color: colors.textRole.primary }]}>How this tool connects to other learning</Text>
           {backedRelationships.map((edge: CareerContextItemRelationship, index: number) => <Text key={`${edge.relationshipType}-${edge.toItemKey ?? edge.toName ?? index}`} style={[styles.toolNote, { color: colors.textRole.secondary }]}>
-            {relationshipDisplayLabel(edge.relationshipType)}: {edge.toName || edge.toItemKey || "related item"}{edge.evidenceLimitations?.length ? ` — ${edge.evidenceLimitations.join("; ")}` : ""}
+            {relationshipDisplayLabel(edge.relationshipType)}: {edge.toName || edge.toItemKey || "related item"}. {studentFacingCopy(edge.learnerExplanation) || "The reviewed record connects this tool with the related learning for this kind of work."}{edge.evidenceLimitations?.length ? ` Limit: ${edge.evidenceLimitations.map(studentFacingCopy).filter(Boolean).join(" ")}` : ""}
           </Text>)}
         </View> : null}
         {backedTargets.length ? <View style={styles.toolDetailGroup}>
           <Text style={[styles.toolDetailLabel, { color: colors.textRole.primary }]}>Routes this can support</Text>
           {backedTargets.map((target: CareerContextItemPathTarget) => <Text key={`${target.targetLevel}-${target.targetKey}`} style={[styles.toolNote, { color: colors.textRole.secondary }]}>
-            {target.targetLabel} · {target.requirementLevel} — {target.pathReason}
+            {target.targetLabel} · {routeContributionLabel(target.requirementLevel)}. {studentFacingCopy(target.pathReason)}{target.evidenceLimitations.length ? ` Limit: ${target.evidenceLimitations.map(studentFacingCopy).filter(Boolean).join(" ")}` : ""}
           </Text>)}
         </View> : null}
         {relation?.evidenceLimitations?.length ? <View style={styles.toolDetailGroup}>
           <Text style={[styles.toolDetailLabel, { color: colors.textRole.primary }]}>What it cannot prove or replace</Text>
-          {relation.evidenceLimitations.map((limitation: string) => <Text key={limitation} style={[styles.toolNote, { color: colors.textRole.muted }]}>{limitation}</Text>)}
+          {relation.evidenceLimitations.map((limitation: string) => <Text key={limitation} style={[styles.toolNote, { color: colors.textRole.muted }]}>{studentFacingCopy(limitation)}</Text>)}
         </View> : null}
         <Text style={[styles.toolNote, { color: colors.textRole.muted }]}>Using this tool does not by itself prove competence, qualification or job readiness.</Text>
       </View> : null}
-      <ExternalLinkGuard
+        <ExternalLinkGuard
         url={url}
         label={url ? `Open ${tool.tool}` : `No verified link for ${tool.tool}`}
-        description={resource?.description || `This opens the verified learning or documentation page recorded for ${tool.tool}.`}
+          description={resourceExplanation}
         textStyle={{ color: colors.accentRole.action }}
       />
-      {studentRelationshipTargets(relation, "builds_on", contextItems).length ? <Text style={[styles.toolNote, { color: colors.textRole.secondary }]}>Builds on: {studentRelationshipTargets(relation, "builds_on", contextItems).join(" · ")}</Text> : null}
-      {studentRelationshipTargets(relation, "works_with", contextItems).length ? <Text style={[styles.toolNote, { color: colors.textRole.secondary }]}>Works with: {studentRelationshipTargets(relation, "works_with", contextItems).join(" · ")}</Text> : null}
-      {studentRelationshipTargets(relation, "complements", contextItems).length ? <Text style={[styles.toolNote, { color: colors.textRole.secondary }]}>Complements: {studentRelationshipTargets(relation, "complements", contextItems).join(" · ")}</Text> : null}
-      {studentRelationshipTargets(relation, "alternative", contextItems).length ? <Text style={[styles.toolNote, { color: colors.textRole.secondary }]}>{RELATIONSHIP_GROUP_ALTERNATIVES}: {studentRelationshipTargets(relation, "alternative", contextItems).join(" · ")}</Text> : null}
-      {studentRelationshipTargets(relation, "supports", contextItems).length ? <Text style={[styles.toolNote, { color: colors.textRole.secondary }]}>Supports: {studentRelationshipTargets(relation, "supports", contextItems).join(" · ")}</Text> : null}
-      {studentRelationshipTargets(relation, "qualifies_for", contextItems).length ? <Text style={[styles.toolNote, { color: colors.textRole.secondary }]}>Supports qualification route: {studentRelationshipTargets(relation, "qualifies_for", contextItems).join(" · ")}</Text> : null}
       <ContextSourceLinks item={relation} resource={resource} />
     </View>
   );
@@ -240,6 +270,20 @@ function relationshipDisplayLabel(type: CareerContextItemRelationship["relations
   if (type === "alternative") return RELATIONSHIP_GROUP_ALTERNATIVES;
   if (type === "qualifies_for") return "Qualification route";
   return "Supports";
+}
+
+function routeContributionLabel(level?: string | null): string {
+  if (level === "needed") return "Needed for this chosen route";
+  if (level === "useful") return "Useful for this route";
+  if (level === "optional") return "Optional route connection";
+  return "Useful when this situation applies";
+}
+
+function toolRequirementLabel(level?: CareerContextItem["requirementLevel"]): string {
+  if (level === "needed") return "needed for this chosen route";
+  if (level === "useful") return "a useful option for this work";
+  if (level === "optional") return "an optional learning focus";
+  return "a learning option for this route";
 }
 
 function ToolDetail({ label, value, colors }: { label: string; value: string; colors: ReturnType<typeof useTheme>["colors"] }) {
@@ -257,6 +301,8 @@ function ToolGroup({
   contextItems,
   learningFocus,
   targetStudentId,
+  learningRoute,
+  areaName,
 }: {
   label: string;
   entries: { tool: ToolV2Enriched; scopeLabel?: string }[];
@@ -265,6 +311,8 @@ function ToolGroup({
   contextItems?: CareerContextItem[];
   learningFocus?: boolean;
   targetStudentId?: string;
+  learningRoute?: LearningPlanRoute;
+  areaName?: string;
 }) {
   const { colors } = useTheme();
   if (!entries.length) return null;
@@ -282,6 +330,8 @@ function ToolGroup({
             scopeLabel={scopeLabel}
             learningFocus={learningFocus}
             targetStudentId={targetStudentId}
+            learningRoute={learningRoute}
+            areaName={areaName}
           />
         ))}
       </View>
@@ -295,12 +345,16 @@ function PurposePath({
   contextItems,
   learningFocus,
   targetStudentId,
+  learningRoute,
+  areaName,
 }: {
   entries: { tool: ToolV2Enriched; scopeLabel?: string }[];
   resources?: CareerLearningResource[];
   contextItems?: CareerContextItem[];
   learningFocus?: boolean;
   targetStudentId?: string;
+  learningRoute?: LearningPlanRoute;
+  areaName?: string;
 }) {
   const [expandedPurposes, setExpandedPurposes] = useState<Set<ToolPurposeKey>>(new Set());
   const groups = new Map<ToolPurposeKey, { tool: ToolV2Enriched; scopeLabel?: string }[]>();
@@ -325,7 +379,7 @@ function PurposePath({
             <Text style={styles.purposeExplanation}>{definition.explanation}</Text>
             <Text style={styles.optionLabel}>Options recorded for this purpose</Text>
             <Text style={styles.purposeNote}>{purpose.length > 1 ? "These are different options for a similar kind of work. Choose one to start; you do not need to learn them all." : "This is one recorded option for this kind of work. It is not a universal requirement."}</Text>
-          <ToolGroup label="Named options" entries={displayedPurpose} prominent resources={resources} contextItems={contextItems} learningFocus={learningFocus} targetStudentId={targetStudentId} />
+          <ToolGroup label="Named options" entries={displayedPurpose} prominent resources={resources} contextItems={contextItems} learningFocus={learningFocus} targetStudentId={targetStudentId} learningRoute={learningRoute} areaName={areaName} />
             {purpose.length > 4 ? <TouchableOpacity onPress={() => setExpandedPurposes((current) => {
               const next = new Set(current);
               if (next.has(key)) next.delete(key); else next.add(key);
@@ -352,6 +406,8 @@ export function ToolGroupsBlock({
   contextLevel,
   learningFocus,
   targetStudentId,
+  learningRoute,
+  areaName,
 }: ToolGroupsBlockProps) {
   const isStudentVisible = (tool: ToolV2Enriched) =>
     Boolean(tool.tool?.trim())
@@ -373,16 +429,41 @@ export function ToolGroupsBlock({
   });
   const common = selectTools(tools?.common ?? []);
   const distinctive = selectTools(tools?.distinctive ?? []);
+  const includedNames = new Set([...common, ...distinctive].map((tool) => tool.tool.trim().toLowerCase()));
+  // D078's reviewed tool contracts are owned by career_context_items, not the
+  // legacy domain-tools array. Use those exact approved records as the source
+  // for purpose cards so an empty legacy array cannot hide reviewed tools.
+  const contextualTools = (contextItems ?? [])
+    .filter((item) => item.itemType === "tool"
+      && (!contextLevel || item.contextLevel === contextLevel)
+      && item.guidanceOwner === item.contextLevel
+      && isStudentApprovedContextItem(item)
+      && !includedNames.has(item.name.trim().toLowerCase()))
+    .map((item) => {
+      const tool = {
+        tool: item.name,
+        group: "distinctive" as const,
+        elementName: item.themeLabel,
+        purposeLabel: "Explore this tool",
+        purposeDescription: item.plainMeaning || item.contextualUse || "Open the tool card to see how it is used in this field.",
+        guidanceOwner: item.guidanceOwner,
+        dataState: item.dataState,
+        sourceConfidence: item.sourceConfidence,
+      } as ToolV2Enriched;
+      includedNames.add(item.name.trim().toLowerCase());
+      return { tool, scopeLabel: undefined };
+    });
   const entries = [
     ...common.map((tool) => ({ tool, scopeLabel: commonLabel || "Useful across this level" })),
     ...distinctive.map((tool) => ({ tool, scopeLabel: distinctiveLabel || "More specialised at this level" })),
+    ...contextualTools,
   ];
 
   return (
     <View style={[styles.container, style]}>
       {title ? <SectionLabel>{title}</SectionLabel> : null}
       <Text style={styles.explanation}>{explanation}</Text>
-      {entries.length ? <PurposePath entries={entries} resources={resources} contextItems={contextItems} learningFocus={learningFocus} targetStudentId={targetStudentId} /> : <View style={styles.emptyCard}><Feather name="tool" size={17} color="#6B7280" /><Text style={styles.toolNote}>No named, reviewed tools are attached to this level yet. Generic source categories are kept out of the student view because they do not identify a tool to learn.</Text></View>}
+      {entries.length ? <PurposePath entries={entries} resources={resources} contextItems={contextItems} learningFocus={learningFocus} targetStudentId={targetStudentId} learningRoute={learningRoute} areaName={areaName} /> : <View style={styles.emptyCard}><Feather name="tool" size={17} color="#6B7280" /><Text style={styles.toolNote}>No named tools are available in the reviewed guidance for this level yet.</Text></View>}
     </View>
   );
 }

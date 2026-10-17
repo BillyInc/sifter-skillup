@@ -53,12 +53,12 @@ function contextItem(
 }
 
 describe("GuidanceContinuation", () => {
-  it("shows only additive learning as the route narrows domain → subgroup → role", () => {
+  it("shows the route handoff and keeps optional edges outside the compulsory path", () => {
     render(
       <ThemeProvider>
         <GuidanceContinuation
           domainName="Social Sciences"
-          subgroupName="Social Data Methods"
+          subgroupName="Computational and Digital Social Science"
           roleName="Social Researcher"
           domainFoundation={[{ skill: "Research reasoning" }]}
           domainItems={[contextItem("domain", "Python") ]}
@@ -75,12 +75,10 @@ describe("GuidanceContinuation", () => {
       </ThemeProvider>,
     );
 
-    expect(screen.getByText("Shared foundation in Social Sciences")).toBeTruthy();
-    expect(screen.getByText("This focused area adds capabilities in Social Data Methods")).toBeTruthy();
-    expect(screen.getByText("This role applies the path: Social Researcher")).toBeTruthy();
-    expect(screen.getAllByText(/Skill: Python/)).toHaveLength(1);
-    expect(screen.getAllByText(/Skill: Survey design/)).toHaveLength(1);
-    expect(screen.getByText(/Skill: Interview synthesis/)).toBeTruthy();
+    expect(screen.getByText("Compulsory domain foundations")).toBeTruthy();
+    expect(screen.getByText("Compulsory additions for Computational and Digital Social Science")).toBeTruthy();
+    expect(screen.getByText("Compulsory additions for Social Researcher")).toBeTruthy();
+    expect(screen.getAllByText("Optional useful edges").length).toBeGreaterThan(0);
     expect(screen.queryByText(/Review-only survey package/)).toBeNull();
   });
 
@@ -96,9 +94,26 @@ describe("GuidanceContinuation", () => {
       </ThemeProvider>,
     );
 
-    expect(screen.getByText("Shared foundation in Computational Science")).toBeTruthy();
-    expect(screen.getByText("This role applies the foundation: Scientific Programmer")).toBeTruthy();
-    expect(screen.getByText(/no subgroup on this route/)).toBeTruthy();
+    expect(screen.getByText("Compulsory domain foundations")).toBeTruthy();
+    expect(screen.getByText("Compulsory additions for Scientific Programmer")).toBeTruthy();
+    expect(screen.getByText(/This role connects directly to a domain that has no area layer\. The selected route therefore moves from the domain to the role without implying area-specific learning\./)).toBeTruthy();
+  });
+
+  it("does not describe a mapped D078 role as a direct domain-only route", () => {
+    render(
+      <ThemeProvider>
+        <GuidanceContinuation
+          domainName="Social Sciences and Behavioural Research"
+          domainId="D078"
+          domainHasAreas
+          roleName="Social Researcher"
+          roleItems={[contextItem("role", "Interview synthesis")]}
+        />
+      </ThemeProvider>,
+    );
+
+    expect(screen.getByText(/This role is supported through one or more areas in this domain/)).toBeTruthy();
+    expect(screen.queryByText(/no area-specific learning is implied/)).toBeNull();
   });
 
   it("shows the complete programme → domain → area → role route cumulatively", () => {
@@ -111,12 +126,17 @@ describe("GuidanceContinuation", () => {
             programmeName: "Sociology",
             relationship: "direct",
             explanation: "The programme provides checked evidence for this field.",
+            transferableLearningNarrative: "Your Sociology studies already introduce you to analysing social structures and the dynamics of society. These are relevant starting points for Social Sciences and Behavioural Research, not the whole set of capabilities used across the field. The domain learning path shows what to build beyond that programme learning.",
+            curriculumContextHeading: "What your Sociology programme covers",
+            domainAddsHeading: "What Social Sciences and Behavioural Research adds",
+            domainAddsExplanation: "Beyond your programme, build the field-wide foundations, then explore optional useful edges and focused route additions.",
             curriculumAvailable: true,
             courseAnchors: [{ code: "SOC 301", title: "Methods of Social Research and Statistics", matchedAnchors: ["research methods"] }],
             transferableEvidence: ["Compare quantitative and qualitative evidence."],
           }}
           domainName="Social Sciences and Behavioural Research"
-          subgroupName="Computational and Quantitative Social Research"
+          domainId="D078"
+          subgroupName="Computational and Digital Social Science"
           roleName="Social Researcher"
           domainFoundation={[{ skill: "Research reasoning" }]}
           domainItems={[contextItem("domain", "Research ethics")]}
@@ -126,11 +146,13 @@ describe("GuidanceContinuation", () => {
       </ThemeProvider>,
     );
 
-    expect(screen.getByText("Already covered in Sociology for this field")).toBeTruthy();
-    expect(screen.getByText("Shared foundation in Social Sciences and Behavioural Research")).toBeTruthy();
-    expect(screen.getByText("This focused area adds capabilities in Computational and Quantitative Social Research")).toBeTruthy();
-    expect(screen.getByText("This role applies the path: Social Researcher")).toBeTruthy();
-    expect(screen.getByText("Methods of Social Research and Statistics")).toBeTruthy();
+    expect(screen.getByText("What your Sociology programme covers")).toBeTruthy();
+    expect(screen.getByText("How that learning carries into Social Sciences and Behavioural Research")).toBeTruthy();
+    expect(screen.getByText(/Your Sociology studies already introduce you to analysing social structures/)).toBeTruthy();
+    expect(screen.getByText("Compulsory domain foundations")).toBeTruthy();
+    expect(screen.getByText("Compulsory additions for Computational and Digital Social Science")).toBeTruthy();
+    expect(screen.getByText("Compulsory additions for Social Researcher")).toBeTruthy();
+    expect(screen.getByText(/The connection is supported by Methods of Social Research and Statistics\./)).toBeTruthy();
     expect(screen.queryByText("SOC 301")).toBeNull();
   });
 
@@ -155,12 +177,12 @@ describe("GuidanceContinuation", () => {
       </ThemeProvider>,
     );
 
-    expect(screen.getByText("Already covered in Sociology for this field")).toBeTruthy();
-    expect(screen.getByText("Relevant curriculum already covered")).toBeTruthy();
-    expect(screen.getByText("Methods of Social Research and Statistics")).toBeTruthy();
-    expect(screen.getByText("Relevant outcome evidence already covered")).toBeTruthy();
-    expect(screen.getByText("Compare qualitative and quantitative evidence.")).toBeTruthy();
-    expect(screen.getByText("Shared foundation in Social Sciences")).toBeTruthy();
+    expect(screen.getByText("What your Sociology programme covers")).toBeTruthy();
+    expect(screen.getByText("Programme topics connected to this field")).toBeTruthy();
+    expect(screen.getByText(/The connection is supported by Methods of Social Research and Statistics\./)).toBeTruthy();
+    expect(screen.queryByText("Relevant outcome evidence already covered")).toBeNull();
+    expect(screen.queryByText("Compare qualitative and quantitative evidence.")).toBeNull();
+    expect(screen.getByText("Compulsory domain foundations")).toBeTruthy();
     expect(screen.queryByText("Include in my focus")).toBeNull();
   });
 });

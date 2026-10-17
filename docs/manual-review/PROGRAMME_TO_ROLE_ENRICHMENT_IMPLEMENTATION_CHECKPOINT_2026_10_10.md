@@ -3350,3 +3350,37 @@ considered. No Supabase SQL has been applied in this checkpoint.
   The handoff must state the current stage and one exact next action. Deferred
   tasks stay deferred; a new session or stale `false` value does not reopen a
   completed stage.
+
+#### D078 role-tool enrichment — 2026-10-16
+
+- Added 95 source-linked, optional role-tool contracts: five distinct tool
+  choices for each of the 19 currently routed D078 roles. Existing domain and
+  area tools reuse canonical identities; task-relevant specialist tools are
+  added only where warranted. Each record includes a plain-language
+  explanation, selected-role use, expected output, prerequisites, alternatives,
+  complements, limitations, official reference, learning link and a rationale
+  for attaching that learning resource.
+- These are optional learning choices, not compulsory role preparation.
+  Every tool has an explicit `supports` edge to a role-specific task-context
+  node; named alternatives that also appear on that role route have explicit
+  tool-to-tool `alternative` links. These links are informational, never
+  prerequisites.
+  The programme → domain → area → role route remains usable without selecting
+  any tool. Tool-to-role fit is a bounded synthesis of the reconciled role task
+  and documented tool capability, not an employer mandate or a Sociology
+  curriculum claim.
+- The graph now integrates 28 canonical tool identities, 95 tool-to-task
+  support edges, and 104 named alternative-tool edges. The role API returns
+  these relationships with the role-owned tool cards and approved role-item
+  cards. Generated SQL: `backend/seed_d078_role_tools_2026-10-16.sql`; no new
+  schema migration is needed because it uses `career_context_items`.
+- Verification: `python -m pytest backend/tests/test_d078_guided_content.py -q
+  -p no:cacheprovider` — **19 passed**; the combined D078 content/area suite
+  passed **40 tests**. The tests cover the runtime contract,
+  five distinct choices per role, HTTPS links, explanations, alternatives and
+  non-sequencing behavior. This does not prove SQL has been applied or that the
+  rendered role screen has passed visual verification.
+- Next step: apply the additive tool seed after the D078 role-item contract
+  seed as specified in `backend/MIGRATION_RUNBOOK.md`, then visually verify
+  role cards and selection. Do not repeat research unless a specific source or
+  link gap or changed tool claim is identified.

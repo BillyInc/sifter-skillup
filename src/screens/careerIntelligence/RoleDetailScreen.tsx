@@ -43,9 +43,12 @@ import {
 import { useTheme, Spacing, Radius, FontSize, CompassFonts } from "@/theme";
 import type { ColorPalette } from "@/theme";
 import { useResponsive } from "@/hooks/useResponsive";
+import { studentContextSections, studentFacingCopy, studentOutputCopy } from "@/lib/studentExplanation";
 import { contextItemFor, relationshipTargets as resolveRelationshipTargets } from "@/components/careerIntelligence/contextRelations";
 import { isStudentResource, studentItemLinkUrl, studentSafeUrl } from "@/components/careerIntelligence/resourceLinks";
 import { formatCareerLabel } from "@/lib/careerLabels";
+import { studentOptionalRoleLearningItems, studentRoleLearningItems } from "@/lib/roleLearningItems";
+import { ProgrammeOutcomeBridge } from "@/components/careerIntelligence/ProgrammeCurriculumCarryForward";
 
 const SECTIONS = [
   { key: "overview", label: "Overview" },
@@ -321,7 +324,7 @@ function LegacyRoleBody({
            {(hiddenSkillCount > 0 || skillsExpanded) ? <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: skillsExpanded }} onPress={() => setSkillsExpanded((value) => !value)} style={[styles.moreButton, { borderColor: colors.borderRole.subtle }]}><Text style={[styles.moreText, { color: colors.accentRole.action }]}>{skillsExpanded ? "Show fewer role skills" : `See all ${essential.length + optional.length} role skills`}</Text></TouchableOpacity> : null}
         </View>
       ) : <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>A skill list is not available for this role yet. This does not mean no preparation is needed.</Text>}
-      <ContextualItemList items={role.contextItems} resources={role.resources} title="What each skill and tool does in this role" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: role.appearsIn[0]?.domainId, areaId: role.subgroupId ?? undefined, roleId: roleKey }} learningFocus />
+      <ContextualItemList items={role.contextItems} resources={role.resources} title="What each skill and tool does in this role" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: role.appearsIn[0]?.domainId, areaId: role.subgroupId ?? undefined, roleId: roleKey }} roleName={formatCareerLabel(role.name)} learningFocus />
 
       <MethodEvidenceBlock methods={role.computationalMethods} title="Methods that support these skills" />
       <RoleWorkEvidenceBlock profile={role.workProfile} />
@@ -535,16 +538,27 @@ function RoleBody({ role: rawRole, roleKey, guidanceContext }: {
   const { colors } = useTheme();
   const role: DomainRoleV2 = {
     ...rawRole,
-    contextItems: (rawRole.contextItems ?? []).filter((item) => item.contextLevel === "role" && item.dataState === "source_backed" && item.sourceConfidence !== "unsourced" && item.guidanceOwner === item.contextLevel),
+    contextItems: studentRoleLearningItems(rawRole.contextItems),
   };
   const parent = role.parentContext;
-  const selectedAreaRoute = role.areaRoutes?.find((route) => route.areaId === guidanceContext.areaId);
+  // A role can belong to more than one area of specialization. Keep every
+  // reviewed route visible here; the route opened by the learner is marked,
+  // while conditional routes retain their own condition rather than being
+  // presented as universally applicable.
+  const visibleAreaRoutes = (role.areaRoutes ?? []).filter((route) =>
+    route.status === "reviewed_supported" || route.status === "reviewed_conditional",
+  );
   const programmeConnection = role.programmeConnection && !role.programmeConnection.reviewRequired && !role.programmeConnection.sourceReviewRequired
     ? role.programmeConnection
     : null;
   const roleResources = (role.resources ?? []).filter((resource) => isStudentResource(resource, "role"));
   const studentContextItems = role.contextItems ?? [];
+  const roleTaskOptions = studentOptionalRoleLearningItems(studentContextItems);
   const learningAreaId = guidanceContext.areaId ?? (role.appearsIn[0]?.domainId === "D078" ? undefined : role.subgroupId ?? undefined);
+  const selectedAreaToolOptions = learningAreaId
+    ? (role.areaToolOptions ?? []).filter((item) => item.contextKey === learningAreaId)
+    : [];
+  const selectedRouteTaskOptions = [...roleTaskOptions, ...selectedAreaToolOptions];
   const essentialSkills = [...new Set((role.essentialSkills ?? []).map((item) => item.trim()).filter(Boolean))]
     .filter((name) => Boolean(contextItemFor(studentContextItems, "skill", name)))
     .slice(0, 12);
@@ -567,72 +581,96 @@ function RoleBody({ role: rawRole, roleKey, guidanceContext }: {
   };
   return (
     <View style={roleRefinedStyles.page}>
-      <View style={[roleRefinedStyles.hero, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
-        <View style={[roleRefinedStyles.iconBox, { backgroundColor: colors.accentRole.action + "18" }]}><Feather name="user" size={28} color={colors.accentRole.action} /></View>
-        <View style={roleRefinedStyles.copyBlock}>
-          <Text style={[roleRefinedStyles.eyebrow, { color: colors.textRole.muted }]}>ROLE</Text>
-          <Text style={[roleRefinedStyles.heroTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{formatCareerLabel(role.name)}</Text>
-          <Text style={[roleRefinedStyles.copy, { color: colors.textRole.secondary }]}>{role.studentOrientation?.shortIntro || role.studentOrientation?.whatPeopleDo || role.studentOrientation?.whatItStudies || role.description || (parent?.subgroupName ? `${formatCareerLabel(role.name)} sits inside ${parent.subgroupName}, within ${parent.domainName ?? "this domain"}.` : "This role is a focused way to use the knowledge and capabilities in its parent area.")}</Text>
-        </View>
-      </View>
-      {programmeConnection ? <View style={[roleRefinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><View style={roleRefinedStyles.cardHeading}><Feather name="link" size={17} color={colors.accentRole.action} /><Text style={[roleRefinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Why this role is in your {programmeConnection.programmeName} route</Text></View><Text style={[roleRefinedStyles.badge, { color: colors.accentRole.action }]}>{programmeConnection.relationship}</Text><Text style={[roleRefinedStyles.copy, { color: colors.textRole.secondary }]}>{programmeConnection.explanation}</Text></View> : null}
-      {selectedAreaRoute ? <View style={[roleRefinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
-        <View style={roleRefinedStyles.cardHeading}><Feather name="layers" size={17} color={colors.accentRole.action} /><Text style={[roleRefinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Why this role appears in {selectedAreaRoute.areaName}</Text></View>
-        <Text style={[roleRefinedStyles.badge, { color: colors.accentRole.action }]}>{selectedAreaRoute.status === "reviewed_conditional" ? "Fits in a specific context" : "Reviewed fit for this area"}</Text>
-        {selectedAreaRoute.positiveTaskEvidence || selectedAreaRoute.rationale ? <Text style={[roleRefinedStyles.copy, { color: colors.textRole.secondary }]}>{selectedAreaRoute.positiveTaskEvidence || selectedAreaRoute.rationale}</Text> : null}
-        {selectedAreaRoute.status === "reviewed_conditional" && selectedAreaRoute.condition ? <Text style={[roleRefinedStyles.copy, { color: colors.textRole.secondary }]}>Context: {selectedAreaRoute.condition}</Text> : null}
-      </View> : null}
-      <GuidanceContinuation programmeName={programmeConnection?.programmeName} connection={programmeConnection} domainName={parent?.domainName ?? "Domain"} subgroupName={parent?.subgroupName} roleName={formatCareerLabel(role.name)} domainFoundation={parent?.domainFoundation} domainItems={parent?.domainItems} subgroupItems={parent?.subgroupItems} roleItems={studentContextItems} />
       <HierarchyOrientationCard
         level="role"
         title={formatCareerLabel(role.name)}
-          parentLabel={parent?.subgroupName || parent?.domainName || "its parent area"}
-          summary={role.studentOrientation?.whatPeopleDo || role.studentOrientation?.whatItStudies || role.description}
-          workContext={role.workProfile?.workContext}
-          orientation={role.studentOrientation}
-          activities={[
-            ...(role.workProfile?.activities ?? []),
-            ...(role.workProfile?.workActivities ?? []).map((item) => item.name ?? ""),
-          ]}
-        />
-      <View style={[roleRefinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
-        <View style={roleRefinedStyles.cardHeading}><Feather name="briefcase" size={17} color={colors.accentRole.action} /><Text style={[roleRefinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What this role does</Text></View>
-        <Text style={[roleRefinedStyles.copy, { color: colors.textRole.secondary }]}>{role.description || "A reviewed plain-language description is not available for this role yet."}</Text>
-        {role.studentOrientation?.questions?.length ? <Text style={[roleRefinedStyles.copy, { color: colors.textRole.secondary }]}><Text style={roleRefinedStyles.detailLabel}>Problems or questions it addresses: </Text>{role.studentOrientation.questions.slice(0, 3).join(" · ")}</Text> : null}
-        {role.studentOrientation?.outputs?.length ? <Text style={[roleRefinedStyles.copy, { color: colors.textRole.secondary }]}><Text style={roleRefinedStyles.detailLabel}>Outputs recorded for this role: </Text>{role.studentOrientation.outputs.slice(0, 3).join(" · ")}</Text> : null}
-      </View>
+        parentLabel={parent?.subgroupName || parent?.domainName || "its parent area"}
+        summary={role.studentOrientation?.shortIntro || role.studentOrientation?.whatPeopleDo || role.studentOrientation?.whatItStudies || role.description}
+        description={role.description}
+        workContext={role.workProfile?.workContext}
+        orientation={role.studentOrientation}
+        activities={[
+          ...(role.workProfile?.activities ?? []),
+          ...(role.workProfile?.workActivities ?? []).map((item) => item.name ?? ""),
+        ]}
+      />
+      {visibleAreaRoutes.length ? <View style={[roleRefinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+        <View style={roleRefinedStyles.cardHeading}><Feather name="layers" size={17} color={colors.accentRole.action} /><Text style={[roleRefinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Areas this role can connect to</Text></View>
+        <Text style={[roleRefinedStyles.copy, { color: colors.textRole.secondary }]}>A role may fit more than one area. Each route below has its own evidence and, where needed, its own conditions.</Text>
+        {visibleAreaRoutes.map((route) => {
+          const isSelected = route.areaId === guidanceContext.areaId;
+          const routeReason = studentFacingCopy(route.positiveTaskEvidence || route.rationale);
+          return <View key={route.areaId} style={[roleRefinedStyles.areaRoute, { borderColor: colors.borderRole.subtle, backgroundColor: isSelected ? colors.surface.raised : colors.surface.subtle }]}>
+            <View style={roleRefinedStyles.cardHeading}>
+              <Text style={[roleRefinedStyles.subheading, { color: colors.textRole.primary }]}>{route.areaName || "Area of specialization"}</Text>
+              {isSelected ? <Text style={[roleRefinedStyles.badge, { color: colors.accentRole.action }]}>Selected route</Text> : null}
+            </View>
+            <Text style={[roleRefinedStyles.badge, { color: colors.textRole.muted }]}>{route.status === "reviewed_conditional" ? "Fits in a specific context" : "Reviewed fit for this area"}</Text>
+            {routeReason ? <Text style={[roleRefinedStyles.copy, { color: colors.textRole.secondary }]}>{routeReason}</Text> : null}
+            {route.status === "reviewed_conditional" && route.condition ? <View style={roleRefinedStyles.routeCondition}>
+              <Text style={[roleRefinedStyles.detailLabel, { color: colors.textRole.primary }]}>When this route applies</Text>
+              <Text style={[roleRefinedStyles.copy, { color: colors.textRole.secondary }]}>{studentFacingCopy(route.condition)}</Text>
+            </View> : null}
+          </View>;
+        })}
+      </View> : null}
       <View style={[roleRefinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
         <RoleWorkEvidenceBlock profile={role.workProfile} />
       </View>
-      <RolePreparationChain skills={skills} competencies={competencies} tools={tools.map((tool) => tool.name).filter(Boolean)} certifications={certifications.map((cert) => cert.name).filter(Boolean)} />
-       <ContextualItemList items={studentContextItems} itemTypes={["competency"]} resources={role.resources} methods={roleMethods} title="Competencies used in this role" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: role.appearsIn[0]?.domainId, areaId: learningAreaId, roleId: roleKey }} learningFocus />
-      <View style={roleRefinedStyles.section}><View style={roleRefinedStyles.cardHeading}><Feather name="check-circle" size={17} color={colors.accentRole.action} /><Text style={[roleRefinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Skills to practise</Text></View><Text style={[roleRefinedStyles.copy, { color: colors.textRole.secondary }]}>{skills.length ? "These are the bounded learning needs recorded for this role. Start with the essential items, then add the others as the work becomes clearer." : "A skill list is not available for this role yet. This does not mean no preparation is needed."}</Text>{skills.length ? <View style={roleRefinedStyles.grid}>{skills.map((skill) => { const item = contextItemFor(role.contextItems, "skill", skill); const resource = roleResourceFor(roleResources, "skill", skill); return <View key={skill} style={[roleRefinedStyles.itemCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}><Feather name="check-circle" size={17} color={colors.accentRole.action} /><Text style={[roleRefinedStyles.itemTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{skill}</Text><Text style={[roleRefinedStyles.meta, { color: colors.textRole.muted }]}>{essentialNames.has(skill.toLowerCase()) ? "Essential for this role" : "May strengthen this route"}</Text><RoleItemDetails item={item} resource={resource} /><RelationshipLines item={item} resource={resource} contextItems={role.contextItems} /><ExternalLinkGuard url={skillUrl(skill)} label={`Learn about ${skill}`} description={`This is a learning or reference link for the role skill ${skill}.`} /></View>; })}</View> : null}</View>
-      <View style={roleRefinedStyles.section}><View style={roleRefinedStyles.cardHeading}><Feather name="tool" size={17} color={colors.accentRole.action} /><Text style={[roleRefinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Tools that may support the work</Text></View><Text style={[roleRefinedStyles.copy, { color: colors.textRole.secondary }]}>{tools.length ? "Tools help with particular tasks; they are options, not a requirement to learn every tool. Different tools can support similar work." : "No named tools are attached to this role yet. Generic tool categories are not shown as recommendations."}</Text>{tools.length ? <View style={roleRefinedStyles.grid}>{tools.map((tool) => { const item = contextItemFor(role.contextItems, "tool", tool.name); const resource = roleResourceFor(roleResources, "tool", tool.name); return <View key={tool.name} style={[roleRefinedStyles.itemCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}><Feather name="tool" size={17} color={colors.accentRole.action} /><Text style={[roleRefinedStyles.itemTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{tool.name}</Text>{tool.description ? <Text style={[roleRefinedStyles.copy, { color: colors.textRole.secondary }]}>{tool.description}</Text> : null}<Text style={[roleRefinedStyles.meta, { color: colors.textRole.muted }]}>{tool.group === "common" ? "Common option" : "Role-specific option"}</Text><RoleItemDetails item={item} resource={resource} /><RelationshipLines item={item} resource={resource} contextItems={role.contextItems} /><ExternalLinkGuard url={studentItemLinkUrl(item, resource)} label={item?.linkState === "linked" ? `Open ${tool.name}` : `No verified link for ${tool.name}`} description={`This opens the tool information or learning page recorded for ${tool.name}.`} /></View>; })}</View> : null}</View>
-      <View style={roleRefinedStyles.section}><View style={roleRefinedStyles.cardHeading}><Feather name="award" size={17} color={colors.accentRole.action} /><Text style={[roleRefinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Qualifications and certifications to understand</Text></View><Text style={[roleRefinedStyles.copy, { color: colors.textRole.secondary }]}>{certifications.length ? "These routes are shown with their Nigerian or global scope where the source establishes it. They are not automatically required for every role." : "No certification or qualification record is attached to this role yet."}</Text>{certifications.length ? <View style={roleRefinedStyles.grid}>{certifications.map((cert) => { const item = contextItemFor(role.contextItems, "certification", cert.name); const resource = roleResourceFor(roleResources, "certification", cert.name); return <View key={cert.name} style={[roleRefinedStyles.itemCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}><Feather name="award" size={17} color={colors.accentRole.action} /><Text style={[roleRefinedStyles.itemTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{cert.name}</Text><Text style={[roleRefinedStyles.copy, { color: colors.textRole.secondary }]}>{cert.credentialType === "professional_registration_or_licence" ? "Professional registration or licence" : cert.credentialType === "training_or_course" ? "Training or course" : "Qualification or professional route"}.</Text>{cert.marketScope === "nigeria" ? <Text style={[roleRefinedStyles.meta, { color: colors.textRole.muted }]}>Nigerian route{cert.marketNote ? ` — ${cert.marketNote}` : ""}</Text> : cert.marketScope === "global" ? <Text style={[roleRefinedStyles.meta, { color: colors.textRole.muted }]}>Global route{cert.marketNote ? ` — ${cert.marketNote}` : ""}</Text> : cert.marketScope === "nigeria_and_global" ? <Text style={[roleRefinedStyles.meta, { color: colors.textRole.muted }]}>Nigerian and global relevance{cert.marketNote ? ` — ${cert.marketNote}` : ""}</Text> : null}<RoleItemDetails item={item} resource={resource} /><RelationshipLines item={item} resource={resource} contextItems={role.contextItems} /><ExternalLinkGuard url={studentItemLinkUrl(item, resource)} label={item?.linkState === "linked" ? `Open information for ${cert.name}` : `No verified link for ${cert.name}`} description={`This opens the official information or reference page recorded for ${cert.name}.`} /></View>; })}</View> : null}</View>
+      {programmeConnection ? <ProgrammeOutcomeBridge connection={programmeConnection} nextLayer="role" /> : null}
+      <GuidanceContinuation programmeName={programmeConnection?.programmeName} connection={programmeConnection} domainId={role.appearsIn[0]?.domainId} domainHasAreas={visibleAreaRoutes.length > 0} domainName={parent?.domainName ?? "Domain"} subgroupName={parent?.subgroupName} roleName={formatCareerLabel(role.name)} domainFoundation={parent?.domainFoundation} domainItems={parent?.domainItems} subgroupItems={parent?.subgroupItems} roleItems={studentContextItems} />
+      {(parent?.domainItems?.length || parent?.subgroupItems?.length) ? <View style={[roleRefinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+        <View style={roleRefinedStyles.cardHeading}><Feather name="corner-down-right" size={17} color={colors.accentRole.action} /><Text style={[roleRefinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Earlier-stage learning and choices for this role</Text></View>
+        <Text style={[roleRefinedStyles.copy, { color: colors.textRole.secondary }]}>Required domain and area learning carries forward in its original context; it is not a new role requirement. The optional choices below are available because they can support this role, but they enter your plan only if you select them.</Text>
+        {parent?.domainItems?.some((item) => item.requirementLevel === "needed") ? <ContextualItemList items={parent.domainItems} resources={role.resources} contextLevel="domain" itemScope="shared-foundation" title="Compulsory domain foundations carried forward" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: parent.domainId ?? role.appearsIn[0]?.domainId, areaId: learningAreaId, roleId: roleKey }} domainName={parent.domainName ?? undefined} areaName={parent.subgroupName ?? undefined} roleName={formatCareerLabel(role.name)} learningFocus /> : null}
+        {parent?.domainItems?.some((item) => item.requirementLevel !== "needed" && (item.pathTargets ?? []).some((target) => target.targetLevel === "role" && target.targetKey === roleKey)) ? <ContextualItemList items={parent.domainItems} resources={role.resources} contextLevel="domain" itemScope="learning-options" title="Optional domain choices for this role" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: parent.domainId ?? role.appearsIn[0]?.domainId, areaId: learningAreaId, roleId: roleKey }} domainName={parent.domainName ?? undefined} areaName={parent.subgroupName ?? undefined} roleName={formatCareerLabel(role.name)} routeRoleIds={[roleKey]} learningFocus /> : null}
+        {parent?.subgroupItems?.some((item) => item.requirementLevel === "needed") ? <ContextualItemList items={parent.subgroupItems} resources={role.resources} contextLevel="subgroup" itemScope="shared-foundation" title="Compulsory area additions carried forward" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: parent.domainId ?? role.appearsIn[0]?.domainId, areaId: learningAreaId, roleId: roleKey }} domainName={parent.domainName ?? undefined} areaName={parent.subgroupName ?? undefined} roleName={formatCareerLabel(role.name)} learningFocus /> : null}
+        {parent?.subgroupItems?.some((item) => item.requirementLevel !== "needed") ? <ContextualItemList items={parent.subgroupItems} resources={role.resources} contextLevel="subgroup" itemScope="learning-options" title="Optional area choices for this role route" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: parent.domainId ?? role.appearsIn[0]?.domainId, areaId: learningAreaId, roleId: roleKey }} domainName={parent.domainName ?? undefined} areaName={parent.subgroupName ?? undefined} roleName={formatCareerLabel(role.name)} learningFocus /> : null}
+      </View> : null}
+         <View style={[roleRefinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
+         <View style={roleRefinedStyles.cardHeading}><Feather name="layers" size={17} color={colors.accentRole.action} /><Text style={[roleRefinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Role learning sequence for relevant work</Text></View>
+         <Text style={[roleRefinedStyles.copy, { color: colors.textRole.secondary }]}>These reviewed role-owned items are recommended for the bounded work described in each card. They are useful route additions, not universal role blockers or a job-readiness claim.</Text>
+         <ContextualItemList items={studentContextItems} resources={role.resources} contextLevel="role" itemScope="learning-options" methods={roleMethods} title="Recommended role capabilities" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: role.appearsIn[0]?.domainId, areaId: learningAreaId, roleId: roleKey }} domainName={parent?.domainName ?? undefined} areaName={parent?.subgroupName ?? undefined} roleName={formatCareerLabel(role.name)} learningFocus />
+       </View>
+         <View style={[roleRefinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
+         <View style={roleRefinedStyles.cardHeading}><Feather name="compass" size={17} color={colors.accentRole.action} /><Text style={[roleRefinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Options for particular tasks in this role</Text></View>
+         <Text style={[roleRefinedStyles.copy, { color: colors.textRole.secondary }]}>These cards keep all useful choices for the selected work together: methods, capabilities, tools, knowledge and credentials. Alternatives are choices, while complementary items can be learned together. Tools owned by an area appear here only for the selected area route and remain area-owned.</Text>
+         {visibleAreaRoutes.length > 1 && !learningAreaId ? <Text style={[roleRefinedStyles.routeCondition, { color: colors.textRole.muted }]}>Choose an area route above to include that area’s task-linked tools in this role view. Tools from unselected areas are not implied.</Text> : null}
+         <ContextualItemList
+           items={selectedRouteTaskOptions}
+           itemTypes={["skill", "competency", "method", "knowledge", "tool", "certification"]}
+           resources={role.resources}
+           itemScope="learning-options"
+           methods={roleMethods}
+           title="Role learning options for the selected work"
+           learningRoute={{ programmeId: guidanceContext.programmeId, domainId: role.appearsIn[0]?.domainId, areaId: learningAreaId, roleId: roleKey }}
+           domainName={parent?.domainName ?? undefined}
+           areaName={role.areaRoutes?.find((route) => route.areaId === learningAreaId)?.areaName ?? parent?.subgroupName ?? undefined}
+           roleName={formatCareerLabel(role.name)}
+           learningFocus
+         />
+       </View>
     </View>
   );
 }
 
 const roleRefinedStyles = StyleSheet.create({
   page: { gap: Spacing.lg, paddingBottom: Spacing.xxl },
-  hero: { flexDirection: "row", gap: Spacing.md, borderWidth: 1, borderRadius: Radius.lg, padding: Spacing.lg },
-  iconBox: { width: 54, height: 54, borderRadius: Radius.md, alignItems: "center", justifyContent: "center" },
-  copyBlock: { flex: 1, gap: Spacing.xs },
-  eyebrow: { fontSize: FontSize.xs, letterSpacing: 0.8, textTransform: "uppercase" },
-  heroTitle: { fontSize: FontSize.xxl, lineHeight: FontSize.xxl * 1.12 },
   card: { borderWidth: 1, borderRadius: Radius.lg, padding: Spacing.lg, gap: Spacing.sm },
+  areaRoute: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.xs },
+  routeCondition: { gap: Spacing.xs, paddingTop: Spacing.xs },
   cardHeading: { flexDirection: "row", alignItems: "center", gap: Spacing.sm },
-  cardTitle: { flex: 1, fontSize: FontSize.md, lineHeight: FontSize.md * 1.3 },
-  copy: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.55 },
+  cardTitle: { flex: 1, fontSize: 18, lineHeight: 25 },
+  copy: { fontSize: 16, lineHeight: 24 },
   meta: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.45 },
   badge: { fontSize: FontSize.xs, textTransform: "uppercase", letterSpacing: 0.7, fontWeight: "800" },
   subsection: { gap: Spacing.xs, paddingTop: Spacing.sm },
-  subheading: { fontSize: FontSize.sm, ...CompassFonts.bodySemibold },
+  subheading: { fontSize: 18, lineHeight: 25, ...CompassFonts.bodySemibold },
   section: { gap: Spacing.sm },
   grid: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
   itemCard: { flex: 1, minWidth: 230, borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.xs },
   prepCard: { flex: 1, minWidth: 220, borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.xs },
-  itemTitle: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.35 },
+  itemTitle: { fontSize: 16, lineHeight: 23 },
   relationships: { gap: 2, paddingTop: Spacing.xs },
   detailLabel: { fontWeight: "800" },
   methodCard: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.xs },
@@ -672,10 +710,13 @@ function methodSourceUrl(sourceProvenance?: Record<string, unknown>): string | u
 function RoleItemDetails({ item, resource }: { item?: CareerContextItem; resource?: CareerLearningResource }) {
   const { colors } = useTheme();
   if (!item && !resource?.description) return null;
+  const meaning = studentFacingCopy(item?.plainMeaning || resource?.description);
+  const contextualUse = studentFacingCopy(studentContextSections(item?.contextualUse).meaning);
+  const output = studentOutputCopy(item?.expectedOutput, item?.contextualUse);
   return <View style={roleRefinedStyles.relationships}>
-    {item?.plainMeaning ? <Text style={[roleRefinedStyles.copy, { color: colors.textRole.secondary }]}><Text style={roleRefinedStyles.detailLabel}>What it means: </Text>{item.plainMeaning}</Text> : null}
-    {item?.contextualUse ? <Text style={[roleRefinedStyles.copy, { color: colors.textRole.secondary }]}><Text style={roleRefinedStyles.detailLabel}>How it is used here: </Text>{item.contextualUse}</Text> : resource?.description ? <Text style={[roleRefinedStyles.copy, { color: colors.textRole.secondary }]}>{resource.description}</Text> : null}
-    {item?.expectedOutput ? <Text style={[roleRefinedStyles.copy, { color: colors.textRole.secondary }]}><Text style={roleRefinedStyles.detailLabel}>What it helps produce: </Text>{item.expectedOutput}</Text> : null}
+    {meaning ? <Text style={[roleRefinedStyles.copy, { color: colors.textRole.secondary }]}><Text style={roleRefinedStyles.detailLabel}>What it is: </Text>{meaning}</Text> : null}
+    {contextualUse ? <Text style={[roleRefinedStyles.copy, { color: colors.textRole.secondary }]}><Text style={roleRefinedStyles.detailLabel}>How it is used here: </Text>{contextualUse}</Text> : null}
+    {output ? <Text style={[roleRefinedStyles.copy, { color: colors.textRole.secondary }]}><Text style={roleRefinedStyles.detailLabel}>What it can help you produce: </Text>{output}</Text> : null}
   </View>;
 }
 
@@ -1032,8 +1073,8 @@ const styles = StyleSheet.create({
   },
 
   guidanceNote: {
-    fontSize: FontSize.sm,
-    lineHeight: FontSize.sm * 1.45,
+    fontSize: 16,
+    lineHeight: 24,
   },
   connectionCard: {
     borderWidth: StyleSheet.hairlineWidth,
@@ -1043,8 +1084,8 @@ const styles = StyleSheet.create({
   },
   roleMeaning: { gap: Spacing.sm },
   sourceLink: {
-    fontSize: FontSize.sm,
-    lineHeight: FontSize.sm * 1.4,
+    fontSize: 16,
+    lineHeight: 23,
     textDecorationLine: "underline",
   },
   // chips

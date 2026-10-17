@@ -25,8 +25,8 @@ import { ADMIN_EXPLORE_BASE, useExploreNav } from "@/lib/exploreNav";
 import { type GuidanceRouteContext } from "@/lib/guidanceRouteContext";
 import { provisioningData } from "@/lib/provisioningData";
 import { awardLine } from "@/lib/programmeAward";
-import { studentSummary } from "@/lib/careerLabels";
 import { hasStudentDisplayableProgrammeLearning, programmePreviewExplanation, programmePreviewUnavailableMessage } from "@/lib/programmePreview";
+import { programmeCurriculumForDisplay, programmeDomainsForDisplay } from "@/lib/sociologyCurriculumPreview";
 import { sanitizeRequirementText, type RequirementField } from "@/lib/sanitizeRequirementText";
 import { comingSoon, pending, real, type DataState, type DomainLink, type Programme } from "@/types/career";
 import { CompassFonts, FontSize, Radius, Spacing, useTheme, type ColorPalette } from "@/theme";
@@ -179,10 +179,10 @@ function ProgrammeDomainTransition({
           {visible.map((link) => <TouchableOpacity accessibilityRole="button" key={link.domainId} onPress={() => onOpenDomain(link)} style={[styles.preview, { borderColor: colors.borderRole.subtle }]}>
             <Text style={[styles.previewName, { color: colors.textRole.primary }]}>{link.domainName}</Text>
             <Text style={[styles.previewType, { color: colors.accentRole.action }]}>{relationshipLabel(link.matchType)}</Text>
-            {link.domainDescription ? <Text numberOfLines={3} style={[styles.body, { color: colors.textRole.secondary }]}>{link.domainDescription}</Text> : null}
+            {link.domainDescription ? <Text style={[styles.body, { color: colors.textRole.secondary }]}>{link.domainDescription}</Text> : null}
             {link.domainDescriptionSources?.map((source) => <ExternalLinkGuard key={`${source.title}:${source.locator}`} url={source.url} label={source.shortLabel || source.title} description={`This opens the source used to explain ${link.domainName}.`} textStyle={[styles.meta, { color: colors.accentRole.action }]} />)}
             <Text style={[styles.meta, { color: colors.textRole.muted }]}>Why this field is listed</Text>
-            <Text style={[styles.body, { color: colors.textRole.secondary }]}>{studentSummary({ shortIntro: link.explanation, fallback: relationshipCopy(link) })}</Text>
+            <Text style={[styles.body, { color: colors.textRole.secondary }]}>{link.explanation?.trim() || relationshipCopy(link)}</Text>
             {link.courseAnchors?.length ? <Text style={[styles.meta, { color: colors.textRole.muted }]}>Courses that support this link: {link.courseAnchors.slice(0, 2).map((anchor) => anchor.title).join(" and ")}{link.courseAnchors.length > 2 ? " and others" : ""}.</Text> : null}
             <Text style={[styles.link, { color: colors.accentRole.action }]}>Open domain</Text>
           </TouchableOpacity>)}
@@ -238,9 +238,18 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
   const activeResumeStage = Array.isArray(routeParams.resume) ? routeParams.resume[0] : routeParams.resume;
   const universityOptionsOnly = activeJourneyMode === "universities_only";
   const undergraduateContext = activeUserType === "student" || activeJourneyMode === "undergraduate_career" || activeJourneyMode === "undergraduate_programmes";
+  const secondaryUniversityFlow = ["senior_secondary", "ss3_secondary"].includes(activeUserType);
+  // University choice is part of the secondary-school exploration flow.
+  // An undergraduate already studies the selected programme, so stale or
+  // restored `universities_only` route state must never divert them back to a
+  // university picker.
+  const universitySelectionAllowed = !undergraduateContext
+    && (universityOptionsOnly || secondaryUniversityFlow || earlySecondary);
   const guidedAdmissionJourney = Boolean(
     guidanceStudentId
-    || earlySecondary
+    || secondaryUniversityFlow
+    || activeJourneyMode === "undergraduate_career"
+    || activeJourneyMode === "undergraduate_programmes"
     || (
       ["programme_preview", "guided_subject_discovery", "programme_to_role", "admin_created_student_guidance"].includes(activeJourneyMode)
       && (activeUserType === "ss3_secondary" || activeUserType === "jamb")
@@ -248,7 +257,7 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
   );
   const exploreNav = useExploreNav();
   const { colors } = useTheme();
-  const universitySelectionRoute = activeResumeStage === "university_offerings";
+  const universitySelectionRoute = universitySelectionAllowed && activeResumeStage === "university_offerings";
   const [tab, setTab] = useState<ProgrammeTab>(universitySelectionRoute ? "schools" : "overview");
   const [state, setState] = useState<DataState<Programme>>(() => pending("Loading programme details..."));
   const [schools, setSchools] = useState<JambProgrammeSchool[]>([]);
@@ -363,7 +372,7 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
       .filter(Boolean)
       .some((value) => String(value).toLowerCase().includes(query)));
   }, [universityQuery, visibleSchools]);
-  const selectedSchool = visibleSchools.find((school) => school.schoolId === selectedSchoolId) ?? null;
+  const selectedSchool = universitySelectionAllowed ? visibleSchools.find((school) => school.schoolId === selectedSchoolId) ?? null : null;
   const comparisonSchools = visibleSchools.filter((school) => comparisonSchoolIds.includes(school.schoolId));
   const guidanceContext: GuidanceRouteContext = {
     programmeId: activeProgrammeId,
@@ -414,6 +423,7 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
   };
 
   const openUniversitySelection = () => {
+    if (!universitySelectionAllowed) return;
     setUniversityQuery("");
     if (!guidedAdmissionJourney) {
       setTab("schools");
@@ -509,7 +519,7 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
       onChange={setTab}
        tabs={[
          { value: "overview", label: "Overview" },
-         ...(!guidedAdmissionJourney ? [{ value: "schools" as ProgrammeTab, label: "Universities" }] : []),
+         ...(universitySelectionAllowed && !guidedAdmissionJourney ? [{ value: "schools" as ProgrammeTab, label: "Universities" }] : []),
        ]}
       style={styles.tabs}
     />
@@ -645,10 +655,11 @@ function ProgrammeDetailBody({
     { label: "This university's UTME subjects", icon: "edit-3" as const, field: "utme_subjects" as RequirementField, value: universityRequirementText(selectedSchool, "utme_subjects") },
     { label: "This university's O-level requirements", icon: "book" as const, field: "olevel_requirement" as RequirementField, value: universityRequirementText(selectedSchool, "olevel_requirement") },
   ] : [];
-  const orderedDomains = [...(data.domains ?? [])].sort(
+  const orderedDomains = [...programmeDomainsForDisplay(data)].sort(
     (a, b) => relationshipOrder(a.matchType) - relationshipOrder(b.matchType),
   );
-  const hasProgrammeLearningPreview = hasStudentDisplayableProgrammeLearning(data.curriculumContract);
+  const displayCurriculum = programmeCurriculumForDisplay(data);
+  const hasProgrammeLearningPreview = hasStudentDisplayableProgrammeLearning(displayCurriculum);
 
   return (
     <View style={styles.content}>
@@ -663,7 +674,9 @@ function ProgrammeDetailBody({
               <Text style={[styles.body, { color: colors.textRole.secondary }]}>
                 {earlySecondary
                   ? "Start by understanding what this programme covers. When you are ready, choose a university to see its requirements."
-                  : "This is the programme identity. Choose a university to see this programme at that university, what you will study, and its requirements."}
+                  : undergraduateContext
+                    ? "This is the programme you are studying. Review its themes, then follow its supported connections into a field and focused areas of work."
+                    : "This is the programme identity. Choose a university to see this programme at that university, what you will study, and its requirements."}
               </Text>
             </View>
           ) : null}
@@ -692,33 +705,30 @@ function ProgrammeDetailBody({
           ) : null}
           {!selectedSchool ? (
             <>
+              {undergraduateContext && !universitySelectionAllowed ? <DegreeSkills curriculumContract={displayCurriculum} resources={data.resources} /> : null}
               {earlySecondary && hasProgrammeLearningPreview ? (
-                <DegreeSkills curriculumContract={data.curriculumContract} resources={data.resources} variant="teaser" />
+                <DegreeSkills curriculumContract={displayCurriculum} resources={data.resources} variant="teaser" />
               ) : null}
-              {earlySecondary && programmePreviewExplanation(data) ? (
+              {(earlySecondary || (undergraduateContext && !universitySelectionAllowed)) && programmePreviewExplanation(data, displayCurriculum) ? (
                 <View style={styles.block}>
                   <SectionLabel>What this programme is about</SectionLabel>
                   <Text style={[styles.body, { color: colors.textRole.secondary }]}>{programmePreviewExplanation(data)}</Text>
                 </View>
               ) : null}
-              {earlySecondary && !programmePreviewExplanation(data) && !hasProgrammeLearningPreview && !data.contextItems?.length ? (
+              {earlySecondary && !programmePreviewExplanation(data, displayCurriculum) && !hasProgrammeLearningPreview && !data.contextItems?.length ? (
                 <View style={[styles.context, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
                   <SectionLabel>Programme learning preview unavailable</SectionLabel>
-                  <Text style={[styles.body, { color: colors.textRole.muted }]}>{programmePreviewUnavailableMessage(data.curriculumContract?.status)}</Text>
+                  <Text style={[styles.body, { color: colors.textRole.muted }]}>{programmePreviewUnavailableMessage(displayCurriculum?.status)}</Text>
                 </View>
               ) : null}
-              {earlySecondary && data.contextItems?.length ? <ContextualItemList
-                items={data.contextItems}
-                resources={data.resources}
-                title="Learning capabilities for this programme"
-              /> : null}
-              <View style={[styles.context, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+              {universitySelectionAllowed ? <View style={[styles.context, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
                 <SectionLabel>{earlySecondary ? "Choose a university when you are ready" : "Choose a university to continue"}</SectionLabel>
                 <Text style={[styles.body, { color: colors.textRole.secondary }]}>The same JAMB programme may be offered by several universities. Choose one to see its address and the requirements recorded for that university before continuing to the programme details.</Text>
                 <TouchableOpacity onPress={onChooseSchool} style={[styles.primaryButton, { backgroundColor: colors.accentRole.action }]}>
                   <Text style={styles.primaryText}>View universities</Text>
                 </TouchableOpacity>
-              </View>
+              </View> : null}
+              {undergraduateContext && !universitySelectionAllowed && showCareerGuidance ? <ProgrammeDomainTransition domains={orderedDomains} colors={colors} onOpenDomain={(link) => exploreNav.domain(router, link.domainId, guidanceContext)} /> : null}
             </>
           ) : (
             <>
@@ -753,19 +763,19 @@ function ProgrammeDetailBody({
                   </View>
                 </View>
               ) : null}
-               {programmePreviewExplanation(data) ? (
+               {programmePreviewExplanation(data, displayCurriculum) ? (
                 <View style={styles.block}>
                   <SectionLabel>What this programme is about</SectionLabel>
-                  <Text style={[styles.body, { color: colors.textRole.secondary }]}>{programmePreviewExplanation(data)}</Text>
+                  <Text style={[styles.body, { color: colors.textRole.secondary }]}>{programmePreviewExplanation(data, displayCurriculum)}</Text>
                 </View>
               ) : null}
-              <DegreeSkills curriculumContract={data.curriculumContract} resources={data.resources} />
-              <ContextualItemList
+              <DegreeSkills curriculumContract={displayCurriculum} resources={data.resources} />
+              {data.contextItems?.length ? <ContextualItemList
                 items={data.contextItems}
                 resources={data.resources}
                 title="What the programme capabilities mean"
-              />
-              {data.curriculumContract?.status === "available" ? <DataSourceBadge verification="verified" source="CCMAS/JAMB curriculum records" /> : null}
+              /> : null}
+              {data.curriculumContract?.status === "available" ? <DataSourceBadge verification="verified" source="National curriculum and JAMB programme records" /> : null}
               <View style={styles.block}>
                 {undergraduateContext ? <Text style={[styles.body, { color: colors.textRole.secondary }]}>This is your current programme. Follow what it teaches into the domains, subgroups, roles, skills, tools, and certifications that can help you plan what to learn next.</Text> : null}
                 {viewOnly ? <Text style={[styles.body, { color: colors.textRole.muted }]}>This is a read-only route because subject fit has not been confirmed. You can inspect the programme and requirements while keeping your current choices unchanged.</Text> : null}
@@ -1052,10 +1062,10 @@ const styles = StyleSheet.create({
   section: { gap: Spacing.md },
   block: { gap: Spacing.sm },
   award: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
-  body: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
+  body: { fontSize: 16, lineHeight: 24 },
   context: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.md, padding: Spacing.md, gap: 3 },
   contextLabel: { fontSize: FontSize.xs, textTransform: "uppercase", letterSpacing: 0.7 },
-  contextName: { fontSize: FontSize.md, ...CompassFonts.bodySemibold },
+  contextName: { fontSize: 16, lineHeight: 23, ...CompassFonts.bodySemibold },
   contextAddress: { fontSize: FontSize.sm },
   inlineAction: { alignSelf: "flex-start", marginTop: Spacing.xs },
   contextActions: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.md },
@@ -1072,10 +1082,10 @@ const styles = StyleSheet.create({
   compareLabel: { fontSize: FontSize.xs, textTransform: "uppercase", letterSpacing: 0.6, marginTop: Spacing.xs },
   connectionGrid: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
   preview: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.md, padding: Spacing.md, gap: 4, flex: 1, minWidth: 240 },
-  previewName: { fontSize: FontSize.md, ...CompassFonts.bodySemibold },
+  previewName: { fontSize: 16, lineHeight: 23, ...CompassFonts.bodySemibold },
   previewType: { fontSize: FontSize.xs, ...CompassFonts.bodySemibold },
   connectionGroup: { gap: Spacing.sm },
-  connectionTitle: { fontSize: FontSize.md, ...CompassFonts.bodySemibold },
+  connectionTitle: { fontSize: 18, lineHeight: 25, ...CompassFonts.bodySemibold },
   connectionCount: { fontSize: FontSize.sm },
   moreButton: { alignSelf: "flex-start", borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
   moreButtonText: { fontSize: FontSize.sm, ...CompassFonts.bodySemibold },
@@ -1101,6 +1111,6 @@ const styles = StyleSheet.create({
   secondaryButton: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.sm, paddingHorizontal: Spacing.sm, paddingVertical: 7, flexDirection: "row", alignItems: "center", gap: Spacing.xs },
   compareButton: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.sm, paddingHorizontal: Spacing.sm, paddingVertical: 7, flexDirection: "row", alignItems: "center", gap: Spacing.xs },
   secondaryText: { fontSize: FontSize.xs, ...CompassFonts.bodySemibold },
-  notice: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.4 },
+  notice: { fontSize: 16, lineHeight: 23 },
   link: { fontSize: FontSize.sm, ...CompassFonts.bodySemibold },
 });

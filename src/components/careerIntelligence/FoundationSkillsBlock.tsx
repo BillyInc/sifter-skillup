@@ -10,6 +10,7 @@ import { GuidanceReportButton } from "./GuidanceReportButton";
 import { contextItemFor, isStudentApprovedContextItem, relationshipTargets as resolveRelationshipTargets } from "./contextRelations";
 import { isStudentResource, studentItemLinkUrl } from "./resourceLinks";
 import { ContextRelationshipChips, relationshipRecords } from "./ContextRelationshipSheet";
+import { studentContextSections, studentFacingCopy, studentOutputCopy } from "../../lib/studentExplanation";
 
 export interface FoundationSkillsBlockProps {
   skills: FoundationSkillEnriched[];
@@ -53,7 +54,7 @@ export function FoundationSkillsBlock({
   if (!reviewedSkills.length) return <View style={[styles.container, style]}>
     <SectionLabel>{title === "Common skills in this domain" ? "What to build first" : title}</SectionLabel>
     <View style={styles.emptyCard}>
-      <Text style={[styles.note, { color: colors.textRole.muted }]}>A learning sequence is not available for this level yet. The page will not guess a priority from unrelated role information.</Text>
+      <Text style={[styles.note, { color: colors.textRole.muted }]}>These are the reviewed foundations currently available for this field. Open an item to see its explanation, connections and learning links.</Text>
     </View>
   </View>;
 
@@ -101,15 +102,15 @@ export function FoundationSkillsBlock({
                 }}
               /> : null}
             </View>
-            <Text style={[styles.note, { color: colors.textRole.muted }]} numberOfLines={3}>
-              What it is: {contextItem?.plainMeaning || resource?.description || skill.priorityReason || "This is one of the foundations for the field."}
+            <Text style={[styles.note, { color: colors.textRole.muted }]}>
+              What it is: {studentFacingCopy(contextItem?.plainMeaning || resource?.description || skill.priorityReason) || "This is one of the foundations for the field."}
             </Text>
-            {contextItem?.contextualUse ? <Text style={[styles.note, { color: colors.textRole.secondary }]} numberOfLines={3}>How it is used here: {contextItem.contextualUse}</Text> : null}
-            {contextItem?.expectedOutput ? <Text style={[styles.note, { color: colors.textRole.secondary }]} numberOfLines={3}>What it helps you do: {contextItem.expectedOutput}</Text> : null}
+            {contextItem?.contextualUse ? <Text style={[styles.note, { color: colors.textRole.secondary }]}>How it is used here: {studentFacingCopy(studentContextSections(contextItem.contextualUse).meaning)}</Text> : null}
+            {contextItem?.expectedOutput ? <Text style={[styles.note, { color: colors.textRole.secondary }]}>What it helps you do: {studentOutputCopy(contextItem.expectedOutput, contextItem.contextualUse)}</Text> : null}
             {contextItem ? <ContextRelationshipChips itemName={contextItem.name} relationships={relationshipRecords(contextItem)} /> : null}
-            {buildOn.length ? <Text style={[styles.note, { color: colors.textRole.muted }]}>Builds on: {buildOn.join(" · ")}</Text> : null}
-            {worksWith.length ? <Text style={[styles.note, { color: colors.textRole.muted }]}>Works with: {worksWith.join(" · ")}</Text> : null}
-            {skill.evidenceNote ? <Text style={[styles.note, { color: colors.textRole.muted }]} numberOfLines={3}>{skill.evidenceNote}</Text> : null}
+            {buildOn.length ? <Text style={[styles.note, { color: colors.textRole.muted }]}>What this builds on: {buildOn.join(" · ")}</Text> : null}
+            {worksWith.length ? <Text style={[styles.note, { color: colors.textRole.muted }]}>What it works with: {worksWith.join(" · ")}</Text> : null}
+            {skill.evidenceNote ? <Text style={[styles.note, { color: colors.textRole.muted }]}>Why it appears here: {studentFacingCopy(skill.evidenceNote)}</Text> : null}
             <ExternalLinkGuard url={url} label={`Learn about ${skill.skill}`} description={resource?.description || `This opens a verified learning or reference page for ${skill.skill}.`} textStyle={[styles.link, { color: colors.accentRole.action }]} />
             <ContextSourceLinks item={contextItem} resource={resource} />
           </View>

@@ -207,8 +207,10 @@ backend/seed_sociology_curriculum_contract_2026-09-17.sql
 backend/seed_programme_curriculum_contract_2026-09-18_parts_gz/part-001.sql.gz ... part-004.sql.gz
 ```
 
-The seed contains 243 Sociology course-outcome rows and seven separately
-stored programme abilities. Every outcome keeps its course code/title, source
+The seed contains 236 Sociology course-outcome rows and seven separately
+stored programme abilities (243 curriculum records total). The 14 reviewed
+theme groupings explain these records without replacing or discarding outcome
+evidence. Every outcome keeps its course code/title, source
 locator and source wording; its student text is only the cleaned form of that
 same record. Appended source annotations are excluded from student text and
 remain in the local audit artifact. No domain, subgroup or role row is written
@@ -277,6 +279,92 @@ rerun the post-seed queries.
 Do not paste every SQL file in `backend/` into Supabase in filename order.
 Several files are historical patches, rollback scripts, or superseded schema
 variants.
+
+## D078/Sociology student-display reseed and retest (2026-10-14)
+
+> **Current order of record:** use the single authoritative 15 October schema,
+> seed, transport and postflight sequence in
+> [`MIGRATION_RUNBOOK.md`](MIGRATION_RUNBOOK.md#authoritative-d078sociology-apply-order-15-october-2026).
+> That sequence supersedes this document's older abbreviated lists. Do not
+> execute a historical list below as a complete migration plan.
+
+The local guided-screen changes are not live until the corresponding reviewed
+data is seeded. On an existing database, run a read-only preflight, apply only
+missing schema files in the dependency order in `MIGRATION_RUNBOOK.md`, and
+do not run `migration_career_v2.sql` or otherwise rebuild the taxonomy.
+
+The seed order is centralized in the current runbook section linked above so
+schema dependencies, the D078 route-visibility recalculation, and the separate
+role-item contract seed cannot be missed or applied out of order. The generic
+contextual parts must precede the final D078 guided-content overlay.
+
+The current D078 guided-content transport is compressed at
+`backend/seed_d078_guided_content_2026-10-12.sql.gz`; regenerate the plain SQL
+with its builder before applying. The latest local builder emits 202 domain/
+area items (52 student-eligible domain and 150 area-owned cards/options), including 14
+task-linked area-tool additions. The distinct 173 role-item contracts are
+seeded by `backend/seed_d078_role_item_contracts_2026-10-15.sql`, after
+`backend/migration_d078_role_item_contracts_2026-10-15.sql`. The seed uses the
+consolidated master for placement decisions (171 approved, 2 unapproved) and
+the repaired content lane for all 173 nonblank definitions and item-level link
+reviews; no candidate-only link states remain. Five records have no current
+canonical role owner and are retained without invented routes; the seed carries
+224 supported role-owner links. The current seed marks 166 individual
+role-item records `student_display_approved = true` after checking approved
+disposition, current role ownership and a reviewed HTTPS learning/reference
+link. The other seven retain explicit reasons: two unapproved, three approved
+but without current role owners, and two with no supported D078 learning route.
+The same seed now materializes 202 deduplicated approved role-owned cards into
+`career_context_items`; 166 eligible records can map to multiple role owners.
+This item flag does not grant SELECT on the staff-only contract table and does
+not approve the whole graph. The API reads the student-owned projection and
+may merge the same reviewed runtime explanations. Graph inclusion alone is not
+student release.
+
+Repository transport rule: generated audit JSON and generated seed SQL are
+stored as `.json.gz` or `.sql.gz` transport artifacts when the compressed
+counterpart is present. Small manifests and migration DDL remain plain text.
+Decompress the selected transport before applying it; Supabase cannot execute
+gzip bytes, and the raw and compressed copy of the same seed must never both
+be applied.
+Historical source-level false gate values are preserved only inside
+`contract_payload.historical_gate_values`; the seed recomputes current item
+eligibility and omits the legacy `role_task_relationship_verified = false`
+field from the active payload. Those historical values must not become stale
+blockers.
+
+The required additive schemas include programme/domain evidence, Sociology
+curriculum, contextual claim validation, relationship explanations and path
+targets, the seven-area taxonomy, route visibility, and the role-item contract.
+Their dependency order and preflight checks are in the linked runbook. Do not
+blindly reapply files or treat local seed generation as live deployment.
+
+For the current D078 slice, the runbook's **D078 SQL-to-student-display
+contract** is part of the migration requirement, not optional documentation.
+The SQL must load the 14-theme Sociology contract, seven canonical areas,
+26 area-role routes, 202 domain/area runtime rows, the three compulsory
+foundations, the 173 role-item ledger rows, the 202 student-owned role cards
+projected from eligible role records, and 95 optional role-tool rows in their
+dependency order. Student visibility still requires current ownership,
+approved claim review, linked HTTPS evidence and a reviewed explanation; a
+stale `false` field is not a blocker, but a current failed gate remains hidden
+with its reason. The role-item ledger is staff/backend-only; the companion seed
+also projects approved role cards into the student-owned contextual table. The
+API/runtime D078 contract and student-owned contextual rows must be deployed
+together. Do not treat a successful SQL transaction or
+row count as proof that the student UI can display the route; perform the
+post-seed programme -> domain -> area -> role payload checks in the runbook.
+
+After seeding, verify the exact postflight counts and API checks in the linked
+runbook: 14 Sociology themes; seven canonical areas and 26 routes; 202 approved
+domain/area runtime items (52 student-eligible domain and 150 area-owned); 173 role-item decisions (171 approved, 2
+unapproved), 166 eligible role-item records, 202 student-owned role cards and
+224 supported role-owner links. Then
+retest student screens, selection removal, tray, reports and print. A database
+count alone does not prove the UI renders those records. If any student payload
+is empty, inspect seed state, owner, claim state and link state before changing
+filters; never reintroduce legacy unreviewed content to fill an empty section.
+Keep SQL application manual and verify post-apply counts.
 
 ## Current generated outputs
 

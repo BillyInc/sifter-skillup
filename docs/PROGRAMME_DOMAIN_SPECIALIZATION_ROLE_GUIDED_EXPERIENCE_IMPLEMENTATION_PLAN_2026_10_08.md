@@ -860,3 +860,396 @@ the rendered fixture level; populate the D078 domain foundation with approved
 source-backed items; validate the area-stop inheritance and item relationships;
 then add optional role branches; finally run one integrated programme-to-role
 verification before any canonical promotion or SQL generation/application.
+
+## D078 role-card and tool-route integration checkpoint (2026-10-15)
+
+The local implementation now materializes approved role-item contracts in the
+D078 role API and renders them through the shared expanded item-card contract.
+Within each role, repeated ESCO identities are merged into one card while
+retaining that role's distinct task contexts, limits, prerequisites,
+complements, alternatives and checked learning links. The old
+`student_display_approved = false` seed value is no longer a blanket blocker:
+the regenerated ledger marks 166 individually eligible records true and gives
+the other seven explicit reasons (two unapproved, three without a current role
+owner, and two without a supported D078 learning route). This flag does not
+grant public table access or approve the whole graph.
+
+The role-item graph disposition was reconciled to the current master ledger:
+171 approved records (80 direct placements and 91 approved conditional
+placements), two unapproved records, 166 individually eligible role cards and
+224 current owner edges. The previous graph summary's “80 approved” counted
+only direct placements. Legacy `role_task_relationship_verified = false` is
+stored only as audit history and removed from the active role contract; it does
+not override the completed disposition. This per-item eligibility still does
+not release the graph globally.
+
+The 14 researched task-linked area tool options are represented as graph nodes
+and support relationships. They are carried into a role detail only when that
+area is selected (or is the role's only supported area route), remain owned by
+the area, and are labelled optional. The graph adds 72
+`area_tool_option_carried_into_role_view` edges as display-path metadata only;
+they are not role-fit evidence, prerequisites, or claims that each role uses
+every tool. The graph still has seven canonical areas and remains globally
+hidden pending the integrated content/UI release decision.
+
+Verified local state: 19 routed role cards; 202 role-context card instances
+after per-role identity deduplication; 132 distinct ESCO item identities across
+those routes; 14 area tool options; 72 area-tool-to-role-view display edges;
+3,834 graph edges; and an acyclic prerequisite subgraph. The focused backend
+suite passes (29 tests), and the graph structural suite passes (13 tests). The
+local role-contract SQL seed regenerates 173 rows and 166 eligible flags; it
+has not been applied to Supabase. Browser/rendered role-page verification and
+the complete student report/print journey remain separate release checks and
+must not be reported as completed by these local tests.
+
+Role-card presentation keeps required-for-relevant-task items distinct from
+optional/useful task options, even when both have task/use-case scope. Item
+details separately present meaning, programme/domain/area/role connection,
+example task/output, preparation notes, complements, alternatives, limits and
+resource rationale/locator. Prerequisite and complement text is advisory unless
+an independently reviewed graph edge establishes an actual sequence or block;
+plain-text notes do not silently create mandatory learning order. Historical
+`false` gate flags are retained as audit history only; the legacy
+`role_task_relationship_verified = false` field is omitted from the active
+payload. The seed recomputes current per-item eligibility from the approved disposition, current role owner
+and reviewed HTTPS resource. The seven ineligible records retain explicit
+reasons and do not block the other 166 eligible cards.
+
+## Consolidated UI architecture and implementation order (2026-10-15)
+
+The current complaint-by-complaint state and the implementation baseline are
+recorded in:
+
+- `docs/manual-review/D078_UI_AND_LEARNING_PATH_GAP_AUDIT_2026_10_15.md`
+- `docs/manual-review/D078_LEARNING_PATH_UI_ARCHITECTURE_2026_10_15.md`
+
+The architecture is the design baseline for the remaining D078 UI work. It
+supersedes older “next step” notes above where those notes describe work now
+completed or use earlier labels. Do not restart passed programme/domain
+content decisions, approved item dispositions, source searches, role
+adjudication, or graph sequencing because a stale snapshot says `false`,
+`pending`, or `hidden`. Reopen a passed checkpoint only for a demonstrated
+regression or newly discovered evidence.
+
+The remaining work is an implementation/integration pass, not another content
+research loop. Its order is: (1) requirement-led compulsory/optional grouping
+and whole-route projection; (2) relevant programme outcomes carried into domain
+and area; (3) inherited-versus-added display for canonical areas and supported
+role routes; (4) distinct mixed-type item cards, relationship-target navigation
+and meaningful alternative comparison; (5) reversible selection, route-aware
+tray and return-state preservation; (6) readable typography and rendered
+responsive acceptance; (7) save/reopen/report/print/share verification. Use the
+architecture’s wireframes, state rules and acceptance matrix. Rebuild the
+graph and local seed only after integrating already-researched, approved tool
+and route records; do not apply SQL automatically. Follow `AGENTS.md` for the
+manual Supabase migration/seed order and stop before live application unless
+the user explicitly requests and authorizes that phase.
+
+## 2026-10-16: student-facing explanation depth contract
+
+Student-facing explanation depth is a content requirement, not a matter of
+stylistic preference. A heading, label, or chip may be brief; an explanatory
+narration may not be reduced to a one-line glossary definition or a single
+sentence when the learner needs context to understand the idea. Write for a
+student who may be meeting the subject for the first time: use clear,
+professional language, explain unfamiliar terms in place, and provide enough
+connected explanation to answer what the thing is, what it helps someone do,
+and why it appears at this point in the learner's route. Be informative without
+repeating claims or overwhelming the learner with staff/audit detail.
+
+Apply this to programme overviews and theme narration; faithful course-outcome
+explanations; programme-to-domain transfer; domain, area-of-specialization and
+role overviews; item definitions and contextual uses; task/output descriptions;
+requirement rationale; prerequisites, complements and alternatives;
+relationship explanations; limitations; and the reason a learning resource is
+attached. For an unfamiliar or multi-part concept, use a short, connected
+paragraph (normally at least two sentences) rather than one sentence. Add
+detail only where it helps the learner understand the concept or make a choice;
+do not pad simple, familiar labels to meet a word count. Section headings and
+status labels stay concise and are not substitutes for the explanation beneath
+them.
+
+Keep each kind of explanation distinct and traceable instead of combining
+internal metadata into a dense paragraph. The learner should be able to find:
+
+- **What it is:** a plain-professional definition that explains the unfamiliar
+  concept, not just its category or name.
+- **What it means here:** how it applies at this programme, domain, area, or
+  selected role, and whether that connection is curriculum evidence or domain
+  enrichment.
+- **What someone does and produces:** an understandable task/use case and its
+  realistic output, without implying that a tool alone proves competence.
+- **Why it appears and where it fits:** the evidence-backed requirement level,
+  route purpose, and how it carries forward from earlier learning or adds
+  something new.
+- **How it relates to other items:** what a prerequisite, complement,
+  alternative, or sequence relationship means in practice; name the relevant
+  item and explain whether it is required, selectable, or a choose-one option.
+- **Limits and learning resource:** what the item cannot establish or replace,
+  plus why the attached resource is suitable for learning this specific use.
+
+For the programme-to-domain transition, explain what the learner has studied
+or is expected to learn through the programme, which outcomes transfer to the
+domain (only where evidence supports that connection), and what the domain
+adds. At the area and role transitions, distinguish inherited, already-selected
+learning from new route-specific additions and unselected optional choices.
+Never present an unsupported transfer as a fact. Keep source course outcomes
+faithful and identifiable; add an accessible explanation alongside them rather
+than silently rewriting their meaning. A bare relationship chip is a navigation
+cue, not the full explanation: explain the relationship in its own card or
+sheet.
+
+Before approval, review the actual rendered copy across programme, domain,
+area, role, item detail, relationship/comparison views, tray, saved route and
+report. Ask whether a learner with little prior knowledge can explain what the
+item is, why it is in this section, how it relates to the next/previous item,
+and what selecting it means. A one-sentence test fixture or a populated field
+does not prove this contract; representative examples and tests must guard
+against regression to terse placeholder copy.
+
+### Priority implementation gate: D078 explanation depth, route-wide (2026-10-16)
+
+This is the first remaining UI implementation task. Do not begin the remaining
+UI acceptance/polish work until this gate is locally implemented and its focused
+tests pass. It covers the complete Sociology programme route from programme
+details through domain, all seven canonical areas, supported roles, item detail,
+relationship/alternative views, selection tray, saved route and report/print
+projection. It does not authorize reopening passed evidence research or changing
+item decisions merely to make copy easier.
+
+For every visible explanatory surface, check the actual learner copy—not only
+whether a database field exists—against these guardrails:
+
+1. **Explain the idea, then its place.** For unfamiliar or multi-part concepts,
+   write a short connected explanation that tells a learner what it is, what
+   work it helps them do, and why it appears at this programme/domain/area/role
+   point. Normally use at least two useful sentences; this is a human meaning
+   check, not a word-count target. Explain specialist terms in the sentence
+   where they first matter. Headings, badges, chips, or a single glossary line
+   do not satisfy this gate.
+2. **Keep each claim in its own labelled section.** Separate definition,
+   programme/domain/area/role relevance, task/example and output, reason for
+   inclusion/requirement level, prerequisites, complements, alternatives,
+   relationship/sequence meaning, limitations, resource rationale and learning
+   links. Remove staff-only fields, route keys, audit states and duplicated
+   prose from learner copy. If two source fields say the same thing, display
+   that explanation once, retaining any genuinely distinct information.
+3. **Carry context forward honestly.** Programme themes and faithful course
+   outcomes are prior/ongoing learning, not new domain requirements. Explain
+   which evidence transfers and what the domain adds. At area and role, mark
+   prior selected learning as inherited, new requirements as additions, and
+   optional useful edges as choices. Never imply that studying Sociology alone
+   teaches every cross-disciplinary tool/task or guarantees job readiness.
+4. **Explain relationships by consequence.** Name the related item and explain
+   what the relationship means for the learner: must learn first only when a
+   reviewed prerequisite edge says so; complements add a distinct capability;
+   alternatives are choose-between options; “works with” is not automatically
+   a requirement. Explain how the relationship changes (or does not change)
+   order, selection, downstream inheritance and the ability to continue without
+   the optional edge.
+5. **Explain learning resources, not just attach URLs.** State why this exact
+   official/reference or learning resource helps with the displayed task, what
+   the learner can do with it, and relevant access/cost/coverage limits. A link
+   is not evidence of competence and must not be described as a certification.
+6. **Use student language and readable hierarchy.** Keep professional concepts
+   but translate them into plain, accurate language suitable for a senior
+   secondary learner with little prior knowledge. Use separately spaced
+   sections, clear headings more prominent than body copy, and readable body
+   type (16 px or larger at default scale for explanatory text). Do not expose
+   internal “task family”, `useCaseKey`, disposition or candidate labels.
+
+The acceptance audit must sample and test every type of surface and route
+transition above, and perform a data-backed completeness scan across all
+visible D078 programme/theme/outcome, domain, area, role, item, relationship and
+resource records. The scan identifies missing or suspiciously terse copy for
+human review; it must not auto-approve prose based on length, punctuation, or
+field presence. Do not claim that all item-context renderings were
+semantically reviewed because automated field checks pass. Record exact
+remaining gaps, fix them from already approved evidence, and rerun the single
+focused gate. Once this gate passes, retain its checkpoint and proceed to the
+remaining UI work without reopening it unless a regression or new evidence is
+identified.
+
+**Local implementation checkpoint (2026-10-16):** the first broad content/data
+handoff fix replaces the repeated generic area explanation with copy composed
+from each item's canonical area, approved route scope, task/output and source-
+recorded limitation. Programme, domain and area context are now separate
+student-visible fields on domain and area items; role-owned items already carry
+their programme/domain/area/role context. The focused backend contract suite
+checks these fields across all current domain/area records. This closes that
+specific handoff gap only. The full explanation gate remains open until the
+programme/theme/outcome, every item, relationship, resource, route transition,
+tray and report/print copy has passed the semantic and rendered checks above.
+
+**Additional local UI explanation checkpoint (2026-10-16):** Casevo remains a
+calibration example only; the explanation-depth requirement applies across
+programme details, all themes and outcomes, programme-to-domain carry-forward,
+domain and area/role overviews, every displayed learning item, its task and
+output, requirement level, relationships, alternatives, limitations and
+learning resources. The domain handoff now explains transfer separately for
+each programme theme, shows matched course/outcome evidence only where the
+reviewed record identifies it, and states when no exact theme-to-field outcome
+link is recorded. Remaining outcomes expand within their own theme. The area
+screen no longer repeats the area title and overview immediately before its
+structured orientation card, and the domain overview no longer repeats its
+short introduction. Focused UI explanation tests passed (32 tests across seven
+suites). One intermediate concurrent typecheck briefly saw `routeKeys` missing
+from `GuidanceListItem`; inspection showed the current declaration already
+contains `routeKeys?: string[]`, and the latest full scoped TypeScript check
+passes. Do not carry that transient result forward as an open blocker. These
+are local implementation results, not live-seed or authenticated rendered
+proof; keep the route-wide explanation gate open for those checks.
+
+**Explanation typography checkpoint (2026-10-16):** programme-theme carry-
+forward, item-detail and relationship explanations use a readable heading/body
+hierarchy; tray/relationship explanation headings are now at least 18 px and
+explanatory text at least 16 px with separate labeled sections. Focused
+regression tests assert these minimums (42 tests across seven suites passed on 2026-10-16).
+When a learner opens a selected role route, a distinct item-level `roleContext`
+is now shown separately from broader domain/area use; it is suppressed when it
+duplicates the displayed contextual-use explanation. A focused test verifies
+that the role-specific connection appears on the matching route.
+This does not certify the semantic adequacy of every stored explanation or the
+rendered layout at all screen sizes; both remain part of the route-wide
+explanation acceptance audit.
+
+**Role-context coverage clarification (2026-10-16):** an item’s role-specific
+explanation is shown only when the learner is on a selected role route and the
+role context adds information beyond the item’s general contextual-use text.
+It must not imply that a domain- or area-owned item becomes role-owned, nor
+repeat the same explanation under a second heading. The focused component test
+checks selected-route gating and duplicate suppression; this remains distinct
+from the broader semantic/rendered acceptance of every role explanation.
+
+**Explanation implementation continuation (2026-10-16):** this continuation is
+limited to learner-facing explanation and rendering; it does not reopen tool or
+role inventory research, ownership, or placement. Three concrete copy defects
+were corrected from existing reviewed content: the Casevo-only preparation
+notes now explain the unfamiliar concepts without “ABM”/“LLM API” shorthand;
+role-tool use/output narration now follows each already-reviewed task rather
+than displaying the repeated “documented [tool] work product” template; and
+embedded `Output:` text is separated from task narration and shown under
+“What you may produce.” The Casevo explanation remains unique to Casevo; no
+Casevo wording was used as a template for other items. Relationship-sheet
+guidance is now type-aware: alternatives read as choose-one choices,
+complements as optional companions, task support as relevance rather than a
+requirement, and only an explicitly approved hard/conditional prerequisite
+receives a “Learn first” label. Focused verification: 24 D078 guided-content
+tests, 19 `ContextualItemList` tests, 7 relationship-sheet tests, and four
+programme/domain/area/tray/continuation suites passed (15 tests total).
+
+This is not completion of the route-wide explanation gate. The runtime copy
+scan still identified short-definition candidates and duplicated/weak role
+item context that need explanation-only review against already-held content;
+the earlier 18-word scan is a review queue, not an automatic quality verdict.
+The generated compressed Sociology seed has not been regenerated from these
+latest explanation-source changes, so the persisted Supabase payload remains a
+separate downstream display gate. Do not start unrelated visual polishing or
+claim student promotion until the explanation-only review and seed/API
+verification are complete.
+
+**2026-10-16 explanation follow-up:** internal “task family” terminology and a
+pedigree-chart audit note were found in role-card copy. The learner adapter now
+uses plain role/work-context wording and explains that inheritance-chart
+interpretation is distinct from documentary/oral family-history research. The
+conditional genealogist route remains intact; no role fit or item-placement
+decision was changed. Verification: 27 backend guided-content tests and 35
+focused UI tests pass. Route-wide semantic review, latest seed/API verification
+and rendered acceptance remain outstanding.
+
+**Explanation-depth checkpoint (2026-10-16, supersedes the earlier short-copy
+scan counts where current runtime data differs):** explanatory copy only was
+expanded for terse domain-use summaries, two area-use summaries, the PySAL esda
+definition, and repeated role-tool definitions for Excel, Gephi, Zotero,
+Transkribus and OpenSesame. Sixteen area items also now have separately
+displayable work-product copy because their existing reviewed task-use text
+already named the deliverable. No item inventory, source decision, ownership,
+role fit or display flag changed. A current scan of 500 runtime domain/area/role
+items found no blank or under-12-word `plainMeaning`/`contextualUse` fields and
+no remaining area item missing an output where the reviewed task text already
+specified one. Verification: 32 backend guided-content tests and 46 tests
+across seven relevant programme/domain/area/item/tray/relationship suites pass.
+
+**Still open before moving to remaining UI acceptance:** manually review any
+role-task copy that still contains staff audit phrasing; complete semantic
+review of programme themes/outcomes, relationship and resource explanations;
+verify the resulting explanation payload after the local seed/API path is
+updated; then obtain the user's rendered browser acceptance. These remain
+explanation/display tasks, not permission to restart tool or role inventory
+research or to revisit role-fit decisions. Keep the D078 explanation gate open
+until those checks are actually evidenced.
+
+**Applied Zoology learner-scope clarification (2026-10-16):** retain the
+Behavioural Scientist record as a conditional useful edge outside the
+compulsory path. Explain that it is biological learning, not a general
+behavioural-science requirement, and is relevant only to a specific
+animal-behaviour, welfare, ecology or human–animal interaction study with
+appropriate biological expertise. The copy clarification does not alter
+placement or approval flags. Verification: 34/34 focused backend
+guided-content tests pass. This explanation pass also removes the unexplained
+"CCMAS" acronym from learner programme-context copy and replaces internal
+"role-task" wording with plain language; the programme source badge uses a
+student-readable source label. The same sweep replaces remaining internal
+domain codes, source-audit phrases and broken text encoding in learner
+narratives; expands explanations for biometrics, audit techniques, public
+finance, local-authority liaison and pedigree charts; and retains the Applied
+Zoology useful-edge caveat. A regression test checks all 500 current
+domain/area/role items for these specific leaks. Seven focused UI suites pass
+(46 tests).
+
+**2026-10-17 explanation UI continuation:** the shared area/role orientation
+card now renders its already-supplied `workContext` as a distinct “Work
+settings and conditions” section, retaining source wording/frequency and not
+misrepresenting it as a list of collaborators. Programme-theme reading cards
+now distinguish “Why this material is here” from “What it covers”; the
+rationale comes from an explicitly recorded theme rationale when present, or
+states the reviewed programme-record link and cautions that attachment alone
+does not make it prescribed reading. No role/tool or learning-item records
+were changed. Focused UI verification: 48 tests across seven relevant suites
+pass, plus the 35-test D078 explanation-data audit from this continuation;
+the scoped TypeScript check passes. This closes these two concrete UI
+gaps only; route-wide semantic and rendered acceptance remains open.
+
+**2026-10-17 comparison explanation follow-up:** the alternative-comparison
+sheet now uses the same learner-copy parser as item cards and the tray. It
+separates contextual use, task example, distinct output and guardrail/limits
+instead of exposing embedded `Task:`, `Output:` or `Guardrail:` markers in a
+single block. A focused regression covers an item whose output exists only in
+its contextual-use field. Comparison-sheet tests pass (4/4), the scoped
+TypeScript check passes, and the combined relevant explanation UI checks now
+total 52 passing tests across eight suites. No learning-item or tool records
+changed. Route-wide semantic and rendered acceptance remains open.
+
+**2026-10-17 programme-theme narration cleanup:** programme theme cards now
+label the short theme focus separately from the learner-facing explanation of
+how the courses fit together. The same course-fit narration is no longer
+repeated a second time when the learner expands the card; the expanded view
+continues to show theme guidance, relationships, courses and outcomes. The
+focused eight-suite explanation UI run passes (52 tests). This is a display
+deduplication only; it does not alter curriculum records or theme mappings.
+
+**2026-10-17 ungrouped-course explanation follow-up:** the fallback “Core
+programme learning” theme no longer tells students that a course was “not yet
+assigned to a reviewed theme,” which exposed internal review workflow. It now
+explains that these remain programme courses and points learners to their own
+titles and outcomes without inventing a shared theme. The focused
+`DegreeSkills.test.tsx` suite passes (8 tests), including a regression test for
+the fallback copy. The corrected combined UI invocation passes all 8 suites and
+53 tests; the scoped TypeScript check also passes. This does not alter
+course/theme records; full route-wide semantic and rendered acceptance remains
+open.
+
+**2026-10-17 route-wide explanation lint and copy repair:** added
+`data/career-mapping/_audit/audit_d078_student_explanation_copy_2026_10_17.py`
+and its JSON findings report. It scans the current student payload across 14
+Sociology themes, 53 domain items, 150 area items and 202 role-item instances
+owned by 19 roles. A conservative brevity heuristic flags 8 domain, 22 area
+and 66 role item-contexts for human review; it is not an auto-approval rule or
+a count of confirmed defects. The scan found one actual learner-copy leak:
+“Essential priority is a candidate only” in a social-work-researcher item
+limitation. The role response now says in learner language that priority in one
+role does not make an item a shared foundation and that it matters when the
+chosen route uses it. All 35 tests in `backend/tests/test_d078_guided_content.py`
+pass. This is a copy/rendering repair only; requirement decisions, evidence and
+role records were not changed. Programme outcomes and rendered browser
+acceptance remain outside this lint and still need route-wide review.

@@ -67,6 +67,15 @@ export interface LearningPlanSourceReference {
   evidenceType?: string | null;
 }
 
+export interface LearningPlanResourceLink {
+  title: string;
+  url: string;
+  locator?: string | null;
+  access?: string | null;
+  kind?: string | null;
+  rationale?: string | null;
+}
+
 export interface LearningPlanCandidate {
   id: string;
   name: string;
@@ -95,13 +104,24 @@ export interface LearningPlanCandidate {
   themeLabel?: string;
   useCaseKey?: string;
   requirementLevel?: "needed" | "useful" | "optional";
+  requirementReason?: string;
   plainMeaning?: string;
   contextualUse?: string;
+  programmeContext?: string;
+  domainContext?: string;
+  areaContext?: string;
+  roleContext?: string;
   expectedOutput?: string;
   limitations?: string[];
+  geographicScope?: "nigeria" | "global" | "nigeria_to_global";
   prerequisiteNames?: string[];
   /** Item-level evidence is distinct from its learning link and relationship evidence. */
   sourceReferences?: LearningPlanSourceReference[];
+  linkTitle?: string;
+  linkRationale?: string;
+  learningLinks?: LearningPlanResourceLink[];
+  linkAccess?: string;
+  linkKind?: string;
   sourceLocators?: Array<Record<string, unknown>>;
   sourceConfidence?: string;
   evidenceType?: string;
@@ -149,13 +169,24 @@ export interface LearningPlanSnapshotItem {
   themeLabel?: string;
   useCaseKey?: string;
   requirementLevel?: "needed" | "useful" | "optional";
+  requirementReason?: string;
   plainMeaning?: string;
   contextualUse?: string;
+  programmeContext?: string;
+  domainContext?: string;
+  areaContext?: string;
+  roleContext?: string;
   expectedOutput?: string;
   limitations?: string[];
+  geographicScope?: "nigeria" | "global" | "nigeria_to_global";
   prerequisites?: string[];
   relationships?: LearningPlanRelationship[];
   sourceReferences?: LearningPlanSourceReference[];
+  linkTitle?: string;
+  linkRationale?: string;
+  learningLinks?: LearningPlanResourceLink[];
+  linkAccess?: string;
+  linkKind?: string;
   sourceLocators?: Array<Record<string, unknown>>;
   sourceConfidence?: string;
   evidenceType?: string;
@@ -351,6 +382,21 @@ function activePrerequisiteIds(item: LearningPlanCandidate, route?: LearningPlan
   return [...new Set([...legacyUnscoped, ...explicitlyApproved])];
 }
 
+/**
+ * Conditional prerequisites guide sequence only when their reviewed route
+ * scope applies. They never block adding an item: the learner may already
+ * have equivalent preparation or may choose to explore the item first.
+ */
+function activeOrderingPrerequisiteIds(item: LearningPlanCandidate, route?: LearningPlanRoute): string[] {
+  const hard = activePrerequisiteIds(item, route);
+  const conditional = (item.relationships ?? [])
+    .filter((relationship) => relationship.sequenceApproved === true
+      && relationship.sequencePolicy === "conditional_prerequisite"
+      && learningPlanRelationshipScopeMatches(relationship.sequenceScope, route))
+    .map((relationship) => relationship.targetId);
+  return [...new Set([...hard, ...conditional])];
+}
+
 function routeLayerIsSelected(item: LearningPlanCandidate, route?: LearningPlanRoute): boolean {
   if (!route) return false;
   if (item.layer === "domain") return Boolean(route.domainId);
@@ -429,7 +475,7 @@ export function sequenceLearningPlanIds(
       return;
     }
     state.set(id, 1);
-    const prerequisites = (byId.get(id) ? activePrerequisiteIds(byId.get(id)!, route) : [])
+    const prerequisites = (byId.get(id) ? activeOrderingPrerequisiteIds(byId.get(id)!, route) : [])
       .filter((prerequisiteId) => selectedSet.has(prerequisiteId) && byId.has(prerequisiteId))
       .sort(compare);
     prerequisites.forEach((prerequisiteId) => visit(prerequisiteId, [...trail, id]));
@@ -599,8 +645,11 @@ export function buildLearningPlanStack(input: {
   const alternatives = groupByAlternative(selectable);
   const sharedFoundation = approvedSelected.filter((item) => item.category === "shared_foundation");
   const usefulEdges = approvedSelected.filter((item) => item.category === "useful_edge" || item.category === "conditional");
-  const areaAdditions = approvedSelected.filter((item) => item.layer === "area" || item.category === "area_addition");
-  const roleAdditions = approvedSelected.filter((item) => item.layer === "role" || item.category === "role_addition");
+  // Keep the learner's requirement lanes disjoint: optional edges remain
+  // selectable alongside required items, but must never be counted as an area
+  // or role requirement merely because they live at that downstream layer.
+  const areaAdditions = approvedSelected.filter((item) => item.category === "area_addition");
+  const roleAdditions = approvedSelected.filter((item) => item.category === "role_addition");
   const complements = approvedSelected.filter((item) => item.category === "complement" || (item.complementOf?.length ?? 0) > 0);
   const layerChoices = (["programme", "domain", "area", "role"] as LearningPlanLayer[]).map((layer) => {
     const layerOptions = selectable.filter((item) => item.layer === layer);
@@ -747,9 +796,22 @@ export function reorderLearningPlan(
   next.splice(index, 0, itemId);
   const positions = new Map(next.map((id, position) => [id, position]));
   const byId = new Map(items.map((item) => [item.id, item]));
-  const blocked = (byId.get(itemId) ? activePrerequisiteIds(byId.get(itemId)!, selection.route) : [])
-    .filter((id) => positions.has(id) && (positions.get(id)! > positions.get(itemId)!));
-  return blocked.length ? { order, blockedByPrerequisites: blocked } : { order: next, blockedByPrerequisites: [] };
+  // Validate the whole proposed ordering, not only the moved item's own
+  // prerequisites. Moving a prerequisite after its dependent must be rejected
+  // just as moving the dependent before its prerequisite is.
+  const blocked = new Set<string>();
+  for (const dependentId of next) {
+    const dependent = byId.get(dependentId);
+    if (!dependent) continue;
+    for (const prerequisiteId of activeOrderingPrerequisiteIds(dependent, selection.route)) {
+      if (positions.has(prerequisiteId) && positions.get(prerequisiteId)! > positions.get(dependentId)!) {
+        blocked.add(prerequisiteId);
+      }
+    }
+  }
+  return blocked.size
+    ? { order, blockedByPrerequisites: [...blocked].sort() }
+    : { order: next, blockedByPrerequisites: [] };
 }
 
 export function createLearningPlanSnapshot(input: {
@@ -784,13 +846,24 @@ export function createLearningPlanSnapshot(input: {
         ...(item.themeLabel ? { themeLabel: item.themeLabel } : {}),
         ...(item.useCaseKey ? { useCaseKey: item.useCaseKey } : {}),
         ...(item.requirementLevel ? { requirementLevel: item.requirementLevel } : {}),
+        ...(item.requirementReason ? { requirementReason: item.requirementReason } : {}),
         ...(item.plainMeaning ? { plainMeaning: item.plainMeaning } : {}),
         ...(item.contextualUse ? { contextualUse: item.contextualUse } : {}),
+        ...(item.programmeContext ? { programmeContext: item.programmeContext } : {}),
+        ...(item.domainContext ? { domainContext: item.domainContext } : {}),
+        ...(item.areaContext ? { areaContext: item.areaContext } : {}),
+        ...(item.roleContext ? { roleContext: item.roleContext } : {}),
         ...(item.expectedOutput ? { expectedOutput: item.expectedOutput } : {}),
         ...(item.limitations?.length ? { limitations: [...item.limitations] } : {}),
+        ...(item.geographicScope ? { geographicScope: item.geographicScope } : {}),
         ...(item.prerequisiteNames?.length ? { prerequisites: [...item.prerequisiteNames] } : {}),
         ...(item.relationships?.length ? { relationships: item.relationships.map((relation) => ({ ...relation })) } : {}),
         ...(item.sourceReferences?.length ? { sourceReferences: item.sourceReferences.map((reference) => ({ ...reference })) } : {}),
+        ...(item.linkTitle ? { linkTitle: item.linkTitle } : {}),
+        ...(item.linkRationale ? { linkRationale: item.linkRationale } : {}),
+        ...(item.learningLinks?.length ? { learningLinks: item.learningLinks.map((link) => ({ ...link })) } : {}),
+        ...(item.linkAccess ? { linkAccess: item.linkAccess } : {}),
+        ...(item.linkKind ? { linkKind: item.linkKind } : {}),
         ...(item.sourceLocators?.length ? { sourceLocators: item.sourceLocators.map((locator) => ({ ...locator })) } : {}),
         ...(item.sourceConfidence ? { sourceConfidence: item.sourceConfidence } : {}),
         ...(item.evidenceType ? { evidenceType: item.evidenceType } : {}),

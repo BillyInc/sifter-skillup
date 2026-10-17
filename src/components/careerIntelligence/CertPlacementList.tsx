@@ -28,6 +28,7 @@ import { contextItemFor, isStudentApprovedContextItem, relationshipTargets as re
 import { resourceForItem, studentItemLinkUrl } from "./resourceLinks";
 import { GuidanceReportButton } from "./GuidanceReportButton";
 import { ContextRelationshipChips, relationshipRecords } from "./ContextRelationshipSheet";
+import { studentContextSections, studentFacingCopy, studentOutputCopy, studentReasonCopy, studentResourceRationale } from "../../lib/studentExplanation";
 
 export interface CertPlacementListProps {
   gateway?: CertificationV2Enriched[];
@@ -135,6 +136,13 @@ function marketScopeLabel(scope?: CertificationV2Enriched["marketScope"]): strin
   }
 }
 
+function certificationRequirementLabel(level?: CareerContextItem["requirementLevel"]): string | null {
+  if (level === "needed") return "This credential is needed for the reviewed task route.";
+  if (level === "useful") return "This credential is a useful option for the reviewed task route.";
+  if (level === "optional") return "This credential is an optional learning focus for the reviewed route.";
+  return null;
+}
+
 function isStudentCertification(
   cert: CertificationV2Enriched,
   contextLevel?: CareerContextItem["contextLevel"],
@@ -186,6 +194,12 @@ function CertRow({
   const relation = contextItemFor(contextItems, "certification", cert.name);
   const url = studentItemLinkUrl(relation, resource, cert.officialUrl);
   const hasUrl = !!url;
+  const meaning = studentFacingCopy(relation?.plainMeaning || cert.body || resource?.description);
+  const contextualUse = studentFacingCopy(studentContextSections(relation?.contextualUse).meaning);
+  const output = studentOutputCopy(relation?.expectedOutput, relation?.contextualUse);
+  const requirement = certificationRequirementLabel(relation?.requirementLevel);
+  const resourceLocator = typeof resource?.sourceProvenance?.locator === "string" ? resource.sourceProvenance.locator : undefined;
+  const resourceRationale = studentResourceRationale(resource?.description, cert.name, relation?.contextualUse, resourceLocator);
   const hasDetails = Boolean(
     relation?.expectedOutput
     || relation?.requirementLevel
@@ -225,8 +239,9 @@ function CertRow({
           }}
         /> : null}
         </View>
-        {relation?.plainMeaning ? <Text style={[styles.certBody, { color: colors.textMuted }]}>What it is: {relation.plainMeaning}</Text> : null}
-        {relation?.contextualUse ? <Text style={[styles.certBody, { color: colors.textMuted }]}>How it is used here: {relation.contextualUse}</Text> : null}
+        {meaning ? <Text style={[styles.certBody, { color: colors.textMuted }]}>What it is: {meaning}</Text> : null}
+        {contextualUse ? <Text style={[styles.certBody, { color: colors.textMuted }]}>How it is used here: {contextualUse}</Text> : null}
+        {output ? <Text style={[styles.certBody, { color: colors.textMuted }]}>What it can help you demonstrate: {output}</Text> : null}
         {relation ? <ContextRelationshipChips itemName={relation.name} relationships={relationshipRecords(relation)} /> : null}
         {hasDetails ? <TouchableOpacity
           accessibilityRole="button"
@@ -238,31 +253,23 @@ function CertRow({
           <Text style={[styles.certDetailButtonText, { color: colors.accent }]}>{detailsOpen ? "Hide how this credential fits" : "How this credential fits"}</Text>
         </TouchableOpacity> : null}
         {detailsOpen ? <View style={[styles.certDetails, { borderTopColor: colors.border }]}>
-          {relation?.expectedOutput ? <CertDetail label="Capability or route it supports" value={relation.expectedOutput} colors={colors} /> : null}
-          {relation?.requirementLevel ? <CertDetail label="Place in this route" value={`${relation.requirementLevel}${relation.requirementReason ? ` — ${relation.requirementReason}` : ""}`} colors={colors} /> : null}
-          {relation?.prerequisites?.length ? <CertDetail label="Builds on" value={relation.prerequisites.join(" · ")} colors={colors} /> : null}
-          {relation?.evidenceLimitations?.length ? <CertDetail label="What it cannot prove or replace" value={relation.evidenceLimitations.join("; ")} colors={colors} /> : null}
+          {requirement ? <CertDetail label="Why it appears in this route" value={[requirement, studentReasonCopy(relation?.requirementReason)].filter(Boolean).join(" ")} colors={colors} /> : null}
+          {output ? <CertDetail label="What it can help you demonstrate" value={output} colors={colors} /> : null}
+          {relation?.prerequisites?.length ? <CertDetail label="What may help you prepare" value={`${relation.prerequisites.map(studentFacingCopy).filter(Boolean).join(", ")}. These are preparation notes, not an automatic block.`} colors={colors} /> : null}
+          {relation?.evidenceLimitations?.length ? <CertDetail label="What it cannot prove or replace" value={relation.evidenceLimitations.map(studentFacingCopy).filter(Boolean).join(" ")} colors={colors} /> : null}
           <Text style={[styles.certBody, { color: colors.textMuted }]}>Holding a credential does not by itself prove practical competence or guarantee employment.</Text>
         </View> : null}
-        <ExternalLinkGuard url={url} label={hasUrl ? `Open information for ${cert.name}` : `No verified link for ${cert.name}`} description={resource?.description || `This opens the official information or reference page recorded for ${cert.name}.`} textStyle={[styles.certBody, { color: colors.accent }]} />
-        {cert.body ? (
-          <Text
-            style={[styles.certBody, { color: colors.textMuted }]}
-            numberOfLines={1}
-          >
-            {cert.body}
-          </Text>
-          ) : null}
+        <ExternalLinkGuard url={url} label={hasUrl ? `Open information for ${cert.name}` : `No verified link for ${cert.name}`} description={resourceRationale} textStyle={[styles.certBody, { color: colors.accent }]} />
         {cert.gateReason ? (
           <Text style={[styles.certBody, { color: colors.textMuted }]}>
-            Why it appears here: {cert.gateReason}
+            Why it appears here: {studentReasonCopy(cert.gateReason) || "This credential is connected to the work described in this route."}
           </Text>
         ) : null}
         {studentRelationshipTargets(relation, "builds_on", contextItems).length ? (
-          <Text style={[styles.certBody, { color: colors.textMuted }]}>Builds on: {studentRelationshipTargets(relation, "builds_on", contextItems).join(" · ")}</Text>
+          <Text style={[styles.certBody, { color: colors.textMuted }]}>What it may build on: {studentRelationshipTargets(relation, "builds_on", contextItems).join(" · ")}</Text>
         ) : null}
         {studentRelationshipTargets(relation, "works_with", contextItems).length ? (
-          <Text style={[styles.certBody, { color: colors.textMuted }]}>Works with: {studentRelationshipTargets(relation, "works_with", contextItems).join(" · ")}</Text>
+          <Text style={[styles.certBody, { color: colors.textMuted }]}>What it may be used alongside: {studentRelationshipTargets(relation, "works_with", contextItems).join(" · ")}</Text>
         ) : null}
         <ContextSourceLinks item={relation} resource={resource} />
         {marketScopeLabel(cert.marketScope) ? (
