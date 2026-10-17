@@ -16,7 +16,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
 CATALOG_PATH = ROOT / "data/career-mapping/domain_specialization_catalog.json"
-ROUTE_GRAPH_PATH = ROOT / "data/career-mapping/_audit/D078_PROGRAMME_TO_ROLE_LEARNING_PATH_GRAPH_2026_10_10.json"
+ROUTE_GRAPH_PATH = ROOT / "data/career-mapping/_audit/D078_PROGRAMME_TO_ROLE_LEARNING_PATH_GRAPH_2026_10_15.json"
 MASTER_PATH = ROOT / "data/career-mapping/_audit/D078_MASTER_GUIDED_EXPERIENCE_RECONCILIATION_2026_10_12.json"
 ROLE_LIBRARY_PATH = ROOT / "data/career-mapping/role_library_v3_cleaned.json"
 DOMAIN_META_PATH = ROOT / "data/career-mapping/domain_meta.json"

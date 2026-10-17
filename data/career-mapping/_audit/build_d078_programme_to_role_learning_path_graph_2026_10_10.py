@@ -20,13 +20,13 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[3]
-PLACEMENT = ROOT / "data/career-mapping/_audit/D078_ROLE_ITEM_PLACEMENT_FINAL_DISPOSITION_2026_10_10.json"
+PLACEMENT = ROOT / "data/career-mapping/_audit/D078_MASTER_GUIDED_EXPERIENCE_RECONCILIATION_2026_10_12.json"
 DOMAIN_CONTRACT = ROOT / "data/career-mapping/_audit/d078_domain_learning_contract_2026_10_08.json"
 AREA_TASKS = ROOT / "data/career-mapping/_audit/d078_area_role_task_sets_2026_10_09.json"
 DOMAIN_EMERGING = ROOT / "data/career-mapping/_audit/D078_DOMAIN_EMERGING_TASK_ENRICHMENT_2026_10_10.json"
 DOMAIN_AREA_CROSSWALK = ROOT / "data/career-mapping/_audit/D078_DOMAIN_AREA_ROUTE_CROSSWALK_2026_10_10.json"
-OUTPUT = ROOT / "data/career-mapping/_audit/D078_PROGRAMME_TO_ROLE_LEARNING_PATH_GRAPH_2026_10_10.json"
-REPORT = ROOT / "docs/manual-review/D078_PROGRAMME_TO_ROLE_LEARNING_PATH_GRAPH_2026_10_10.md"
+OUTPUT = ROOT / "data/career-mapping/_audit/D078_PROGRAMME_TO_ROLE_LEARNING_PATH_GRAPH_2026_10_15.rebuilt.json"
+REPORT = ROOT / "docs/manual-review/D078_PROGRAMME_TO_ROLE_LEARNING_PATH_GRAPH_2026_10_15.md"
 
 
 def slug(value: str) -> str:
@@ -136,10 +136,10 @@ def main() -> None:
     nodes: dict[str, dict[str, Any]] = {}
     edges: list[dict[str, Any]] = []
 
-    approved_role_records = [
-        record for record in placement["records"]
-        if record.get("final_disposition_status") == "approved_for_provisional_d078_learning_path"
-    ]
+    placement_records = placement.get("role_item_reconciliation", {}).get("records") or []
+    if len(placement_records) != 173:
+        raise ValueError(f"Expected 173 role-item records from the consolidated master; got {len(placement_records)}")
+    approved_role_records = [record for record in placement_records if record.get("approval_status") == "approved"]
     for record in approved_role_records:
         position = record["queue_position"]
         item_id = f"role-item:{position}:{slug(record.get('pair_key') or record.get('label') or str(position))}"
@@ -154,8 +154,8 @@ def main() -> None:
             "student_visible": False,
             "approval": "provisional_design_approved",
             "source_ledger": "role_item_final_disposition",
-            "programme_scope": record["approval_basis"]["programme_domain_backstop"],
-            "nigerian_scope": record["approval_basis"]["nigerian_scope"],
+            "programme_scope": (record.get("approval_reason") or {}).get("programme_domain_backstop"),
+            "nigerian_scope": (record.get("approval_reason") or {}).get("nigerian_scope"),
         }
         for prerequisite in record.get("prerequisites", []):
             target = concept_node(nodes, prerequisite, "prerequisite", "role_item_final_disposition")
@@ -600,9 +600,9 @@ def main() -> None:
         "nodes": list(nodes.values()),
         "edges": edges,
         "validation": {
-            "role_item_source_records": len(placement["records"]),
+            "role_item_source_records": len(placement_records),
             "approved_role_item_records": len(approved_role_records),
-            "hidden_role_item_records_excluded": len(placement["records"]) - len(approved_role_records),
+            "hidden_role_item_records_excluded": len(placement_records) - len(approved_role_records),
             "domain_contract_records": len(rows),
             "domain_contract_alias_records_folded_into_canonical_items": sum(
                 len(row.get("lineage_alias_records", [])) for row in rows

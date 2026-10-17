@@ -5,8 +5,8 @@ This is the local disposition gate for the 173 repaired records. It is a design-
 ## Decision
 
 - Input records: **173**
-- Approved for the provisional D078 learning-path graph: **171**
-- Hidden as unresolved/excluded: **2**
+- Approved for the provisional D078 learning-path graph: **166**
+- Hidden as unresolved/excluded: **7**
 - Exact item URI resolved: **172**; unresolved: **1**
 - Global-only/no-local-claim accepted as non-blocking: **27**
 - Domain enrichment explicitly labelled as not verbatim CCMAS transfer: **58**

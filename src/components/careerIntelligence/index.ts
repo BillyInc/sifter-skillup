@@ -80,6 +80,8 @@ export { ContextualItemList } from "./ContextualItemList";
 export { ExternalLinkGuard } from "./ExternalLinkGuard";
 export { ContextSourceLinks } from "./ContextSourceLinks";
 export { GuidanceContinuation } from "./GuidanceContinuation";
+export { ProgrammeCurriculumCarryForward } from "./ProgrammeCurriculumCarryForward";
+export { ProgrammeOutcomeBridge } from "./ProgrammeCurriculumCarryForward";
 export { ToolGroupsBlock } from "./ToolGroupsBlock";
 export type { ToolGroupsBlockProps } from "./ToolGroupsBlock";
 export { LearningResourcesBlock } from "./LearningResourcesBlock";

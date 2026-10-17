@@ -26,8 +26,12 @@ export type GuidanceRouteContext = {
   className?: string;
   stream?: string;
   programmeId?: string;
+  /** Current broad field in the route being continued from. */
+  domainId?: string;
   /** Current selected D078 area when a role is opened from that area route. */
   areaId?: string;
+  /** Current role route when a learner adds role-owned learning. */
+  roleId?: string;
   jambProgrammeId?: string;
   schoolId?: string;
   journeyMode?: string;
@@ -41,6 +45,8 @@ export type GuidanceRouteContext = {
   /** Keep a focused guidance step in browser history for an intentional Back path. */
   preserveHistory?: boolean;
   focused?: boolean;
+  /** Open the learning tray when returning from an item-level selection. */
+  openTray?: boolean;
   viewOnly?: boolean;
 };
 
@@ -58,6 +64,9 @@ export function isGuidanceContextCompatible(
     "className",
     "stream",
     "programmeId",
+    "domainId",
+    "areaId",
+    "roleId",
     "jambProgrammeId",
     "schoolId",
     "journeyMode",
@@ -130,7 +139,9 @@ export function guidanceContextQuery(
   };
 
   if (options.includeProgrammeId) add("programme_id", context.programmeId);
+  add("domain_id", context.domainId);
   add("area_id", context.areaId);
+  add("role_id", context.roleId);
   add("jamb_programme_id", context.jambProgrammeId);
   add("school_id", context.schoolId);
   add("user_type", context.userType);
@@ -142,6 +153,7 @@ export function guidanceContextQuery(
   add("resume", context.resumeStage);
   add("guidance_entry", context.entryPath);
   if (context.focused) pairs.push("focus=guidance");
+  if (context.openTray) pairs.push("open_tray=1");
   if (context.viewOnly) pairs.push("view_only=1");
   return pairs.join("&");
 }

@@ -15,11 +15,14 @@ export function hasStudentDisplayableProgrammeLearning(
   return hasCourseEvidence || hasProgrammeAbilities;
 }
 
-export function programmePreviewExplanation(data: Programme): string | null {
+export function programmePreviewExplanation(
+  data: Programme,
+  displayContract: ProgrammeCurriculumContract | null | undefined = data.curriculumContract,
+): string | null {
   const overview = data.overview?.trim();
   if (overview) return overview;
   const seen = new Set<string>();
-  const courseTitles = (data.curriculumContract?.outcomes ?? [])
+  const courseTitles = (displayContract?.outcomes ?? [])
     .filter((outcome) => outcome.dataState === "source_backed")
     .map((outcome) => outcome.courseTitle?.trim())
     .filter((title): title is string => Boolean(title))

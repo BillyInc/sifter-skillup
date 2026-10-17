@@ -104,7 +104,7 @@ const THEME_META: Record<ThemeKey, Omit<Theme, "courses" | "narration">> = {
 };
 
 const SOCIOLOGY_THEME_NARRATION: Partial<Record<ThemeKey, string>> = {
-  core: "This section brings together programme learning that has not yet been assigned to a reviewed theme.",
+  core: "These courses are part of the programme curriculum. Their titles and outcomes below show the specific learning they cover, even when they do not sit under one of the named themes.",
   shared_communication: "You will practise communicating clearly in speech and writing, understanding written information, and presenting ideas. These are shared university skills that support your Sociology studies; the course does not replace the discipline-specific research and reporting taught elsewhere in the programme.",
   shared_nigerian_culture: "You will study Nigerian peoples and cultures through historical and social examples. This shared course adds Nigerian context to your university learning; it is not a complete account of every community or a substitute for the Sociology programme's own African and Nigerian society courses.",
   shared_philosophy: "You will examine philosophical questions and practise logic—checking whether reasons support a conclusion. These are shared reasoning foundations, while sociological theory and evidence are developed in the Sociology courses.",
@@ -214,6 +214,17 @@ function programmeReadingDescription(resource: CareerLearningResource, theme: Th
   return resource.description?.trim() || null;
 }
 
+function programmeReadingRationale(resource: CareerLearningResource, theme: Theme): string {
+  const provenance = resource.sourceProvenance ?? {};
+  const rationales = provenance.theme_rationales ?? provenance.themeRationales;
+  if (rationales && typeof rationales === "object" && !Array.isArray(rationales)) {
+    const byTheme = rationales as Record<string, unknown>;
+    const specific = byTheme[theme.key] ?? byTheme[theme.title];
+    if (typeof specific === "string" && specific.trim()) return specific.trim();
+  }
+  return `This material is linked to the reviewed programme record for “${theme.title}”. It can help you explore this theme; the link alone does not mean your university prescribes it.`;
+}
+
 function programmeReadingUrl(resource: CareerLearningResource, theme: Theme): string {
   const provenance = resource.sourceProvenance ?? {};
   const urls = provenance.theme_urls ?? provenance.themeUrls;
@@ -270,6 +281,7 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
   const [themesExpanded, setThemesExpanded] = useState(false);
   const [abilitiesExpanded, setAbilitiesExpanded] = useState(false);
   const [openTheme, setOpenTheme] = useState<ThemeKey | null>(null);
+  const [openCourseOutlines, setOpenCourseOutlines] = useState<Set<string>>(() => new Set());
   const courses = useMemo(() => curriculumContract ? groupCourses(curriculumContract) : [], [curriculumContract]);
   const themes = useMemo(() => buildThemes(courses), [courses]);
   const abilities = useMemo(() => unique(
@@ -307,6 +319,7 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
     <View style={styles.block}>
       <SectionLabel>What you will study</SectionLabel>
       <Text style={[styles.intro, { color: colors.textRole.secondary }]}>This is the curriculum your university programme teaches. These cards group its courses into themes and explain the outcomes in clear language; they are fixed programme learning, not a menu of extra learning choices. Open one to see the courses and original outcomes behind each explanation.</Text>
+      {curriculumContract.localSourcePreview ? <Text style={[styles.teaserMeta, { color: colors.textRole.muted }]}>Local preview from the reviewed Sociology curriculum source. This source-backed preview is not yet loaded in the database.</Text> : null}
       <View style={styles.themeGrid}>
         {visibleThemes.map((theme) => {
           const open = openTheme === theme.key;
@@ -316,8 +329,14 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
           return (
             <View key={theme.key} style={[styles.themeCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
               <View style={styles.headingLine}><Feather name={theme.icon} size={17} color={colors.accentRole.action} /><Text style={[styles.themeTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{theme.title}</Text></View>
-              {themeOverview(theme) ? <Text style={[styles.themeDescription, { color: colors.textRole.secondary }]}>{themeOverview(theme)}</Text> : null}
-              <Text style={[styles.themeDescription, { color: colors.textRole.secondary }]}>{theme.narration}</Text>
+              {themeOverview(theme) ? <View style={styles.themeCopyBlock}>
+                <Text accessibilityRole="header" style={[styles.guidanceLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Theme focus</Text>
+                <Text style={[styles.themeDescription, { color: colors.textRole.secondary }]}>{themeOverview(theme)}</Text>
+              </View> : null}
+              <View style={styles.themeCopyBlock}>
+                <Text accessibilityRole="header" style={[styles.guidanceLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>How these courses fit together</Text>
+                <Text style={[styles.themeDescription, { color: colors.textRole.secondary }]}>{theme.narration}</Text>
+              </View>
               {themeResources.length ? (
                 <View style={[styles.learningLinks, { borderTopColor: colors.borderRole.subtle }]}>
                 <Text style={[styles.linkHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Materials that explain this part</Text>
@@ -327,7 +346,9 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
                         <Text style={[styles.resourceKind, { color: colors.textRole.muted }]}>{programmeReadingLabel(resource)}</Text>
                         <Text style={[styles.linkName, { color: colors.textRole.secondary }]}>{resource.targetName}</Text>
                         {programmeReadingByline(resource) ? <Text style={[styles.resourceProvider, { color: colors.textRole.muted }]}>{programmeReadingByline(resource)}</Text> : null}
-                        {programmeReadingDescription(resource, theme) ? <Text style={[styles.courseSummary, { color: colors.textRole.secondary }]}>{programmeReadingDescription(resource, theme)}</Text> : null}
+                        <Text style={[styles.guidanceLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Why this material is here</Text>
+                        <Text style={[styles.courseSummary, { color: colors.textRole.secondary }]}>{programmeReadingRationale(resource, theme)}</Text>
+                        {programmeReadingDescription(resource, theme) ? <><Text style={[styles.guidanceLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What it covers</Text><Text style={[styles.courseSummary, { color: colors.textRole.secondary }]}>{programmeReadingDescription(resource, theme)}</Text></> : null}
                         <Text style={[styles.resourceProvider, { color: colors.textRole.muted }]}>{resource.provider} · {resource.accessType === "free" ? "Free access" : resource.accessType === "paid" ? "May require payment" : resource.accessType === "mixed" ? "Access varies" : "Check current access"}</Text>
                         {programmeReadingTerms(resource) ? <Text style={[styles.resourceProvider, { color: colors.textRole.muted }]}>{programmeReadingTerms(resource)}</Text> : null}
                       </View>
@@ -341,10 +362,6 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
               </TouchableOpacity>
               {open ? (
                 <View style={[styles.courseDetail, { borderTopColor: colors.borderRole.subtle }]}>
-                  <View style={styles.practiceBlock}>
-                    <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>How the courses fit together</Text>
-                    <Text style={[styles.themeSentence, { color: colors.textRole.secondary }]}>{theme.narration}</Text>
-                  </View>
                   {themeGuidance.length ? (
                     <View style={styles.guidanceBlock}>
                       <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Understand the ideas in this theme</Text>
@@ -370,7 +387,7 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
                                   label={`${source.title} — ${Object.values(source.locators).join("; ")}`}
                                   description={`This source supports ${item.title}. ${source.jurisdiction} scope.`}
                                   style={styles.guidanceSourceLink}
-                                  textStyle={{ color: colors.accentRole.action, fontSize: FontSize.xs }}
+                                  textStyle={{ color: colors.accentRole.action, fontSize: 13, lineHeight: 19 }}
                                 />
                               ))}
                             </View>
@@ -407,20 +424,41 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
                       <Text style={[styles.courseTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{course.title}</Text>
                       {levelLabel(course.level) ? <Text style={[styles.courseMeta, { color: colors.textRole.muted }]}>{levelLabel(course.level)}</Text> : null}
                       {studentSourceLocator(course.sourceLocatorText ?? null) ? <Text style={[styles.courseMeta, { color: colors.textRole.muted }]}>{studentSourceLocator(course.sourceLocatorText ?? null)}</Text> : null}
-                      {course.courseSummary ? <Text style={[styles.courseSummary, { color: colors.textRole.secondary }]}>{course.courseSummary}</Text> : null}
                       {course.outcomes.length ? (
                         <View style={styles.courseOutcomes}>
                           <Text style={[styles.courseMeta, { color: colors.textRole.muted }]}>Course outcomes, in learner-friendly wording</Text>
                           {course.outcomes.map((outcome) => (
                             <View key={outcome.outcomeId} style={styles.courseOutcome}>
                               <Text style={[styles.courseSummary, { color: colors.textRole.secondary }]}>{outcome.studentText}</Text>
-                              {outcome.sourceText && outcome.sourceText.trim() !== outcome.studentText.trim() ? (
-                                <Text style={[styles.sourceOutcome, { color: colors.textRole.muted }]}>Curriculum wording: {outcome.sourceText}</Text>
-                              ) : null}
                             </View>
                           ))}
                         </View>
                       ) : null}
+                      {course.courseSummary || course.outcomes.some((outcome) => outcome.sourceText && outcome.sourceText.trim() !== outcome.studentText.trim()) ? <View style={styles.sourceOutline}>
+                        <TouchableOpacity
+                          accessibilityRole="button"
+                          accessibilityState={{ expanded: openCourseOutlines.has(`${theme.key}:${course.code || course.title}`) }}
+                          accessibilityLabel={`${openCourseOutlines.has(`${theme.key}:${course.code || course.title}`) ? "Hide" : "View"} original course outline for ${course.title}`}
+                          onPress={() => setOpenCourseOutlines((current) => {
+                            const key = `${theme.key}:${course.code || course.title}`;
+                            const next = new Set(current);
+                            if (next.has(key)) next.delete(key);
+                            else next.add(key);
+                            return next;
+                          })}
+                          style={styles.moreButton}
+                        >
+                          <Text style={[styles.moreText, { color: colors.accentRole.action }]}>{openCourseOutlines.has(`${theme.key}:${course.code || course.title}`) ? "Hide original course outline" : "View original course outline"}</Text>
+                        </TouchableOpacity>
+                        {openCourseOutlines.has(`${theme.key}:${course.code || course.title}`) ? <View style={[styles.sourceOutlineContent, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
+                          <Text style={[styles.courseMeta, { color: colors.textRole.muted }]}>Original curriculum wording is preserved here for reference. It may be technical or compressed; the learner-friendly outcomes are shown above.</Text>
+                          {course.courseSummary ? <><Text style={[styles.guidanceLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Original course outline</Text><Text style={[styles.courseSummary, { color: colors.textRole.secondary }]}>{course.courseSummary}</Text></> : null}
+                          {course.outcomes.filter((outcome) => outcome.sourceText && outcome.sourceText.trim() !== outcome.studentText.trim()).map((outcome) => <View key={`${outcome.outcomeId}:source`} style={styles.sourceOutcomeBlock}>
+                            <Text style={[styles.guidanceLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Original curriculum outcome wording</Text>
+                            <Text style={[styles.courseSummary, { color: colors.textRole.secondary }]}>{outcome.sourceText}</Text>
+                          </View>)}
+                        </View> : null}
+                      </View> : null}
                     </View>
                   ))}
                 </View>
@@ -455,48 +493,50 @@ export default DegreeSkills;
 const styles = StyleSheet.create({
   block: { gap: Spacing.sm },
   headingLine: { flexDirection: "row", alignItems: "center", gap: Spacing.xs },
-  empty: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
-  intro: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.55 },
+  empty: { fontSize: 16, lineHeight: 24 },
+  intro: { fontSize: 16, lineHeight: 25 },
   teaserCard: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.xs },
   teaserAbilities: { gap: Spacing.xs },
-  teaserTitle: { fontSize: FontSize.sm },
-  teaserText: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },
-  teaserMeta: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.4 },
+  teaserTitle: { fontSize: 19, lineHeight: 26 },
+  teaserText: { fontSize: 16, lineHeight: 24 },
+  teaserMeta: { fontSize: 13, lineHeight: 19 },
   themeGrid: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
   themeCard: { flex: 1, minWidth: 280, borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm },
-  themeTitle: { flex: 1, fontSize: FontSize.md, lineHeight: FontSize.md * 1.3 },
-  themeDescription: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },
-  themeSentence: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
-  courseMeta: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.4 },
+  themeTitle: { flex: 1, fontSize: 19, lineHeight: 25 },
+  themeDescription: { fontSize: 16, lineHeight: 24 },
+  themeCopyBlock: { gap: Spacing.xs, paddingTop: Spacing.xs },
+  courseMeta: { fontSize: 13, lineHeight: 19 },
   learningLinks: { borderTopWidth: StyleSheet.hairlineWidth, paddingTop: Spacing.sm, gap: Spacing.xs },
-  linkHeading: { fontSize: FontSize.xs },
+  linkHeading: { fontSize: 20, lineHeight: 27, ...CompassFonts.bodySemibold },
   linkRow: { flexDirection: "row", alignItems: "flex-start", gap: Spacing.sm },
   resourceCopy: { flex: 1, gap: 2 },
   resourceButton: { minHeight: 34, justifyContent: "center", alignItems: "center", borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.sm, paddingHorizontal: Spacing.sm, paddingVertical: Spacing.xs },
-  resourceKind: { fontSize: FontSize.xs, fontWeight: "800" },
-  resourceProvider: { fontSize: FontSize.xs },
-  linkName: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.35 },
+  resourceKind: { fontSize: 13, lineHeight: 19, fontWeight: "800" },
+  resourceProvider: { fontSize: 13, lineHeight: 19 },
+  linkName: { fontSize: 16, lineHeight: 24 },
   moreButton: { alignSelf: "flex-start", minHeight: 32, justifyContent: "center", paddingTop: Spacing.xs },
-  moreText: { fontSize: FontSize.sm, ...CompassFonts.bodySemibold },
+  moreText: { fontSize: 16, lineHeight: 23, ...CompassFonts.bodySemibold },
   courseDetail: { borderTopWidth: StyleSheet.hairlineWidth, paddingTop: Spacing.sm, gap: Spacing.sm },
   guidanceBlock: { gap: Spacing.sm },
   guidanceCard: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.sm, padding: Spacing.sm, gap: Spacing.xs },
-  guidanceLabel: { fontSize: FontSize.xs },
+  guidanceLabel: { fontSize: 16, lineHeight: 23, ...CompassFonts.bodySemibold },
   guidanceSources: { gap: 2, paddingTop: Spacing.xs },
   guidanceSourceLink: { alignSelf: "flex-start", paddingVertical: 2 },
   guidanceLearning: { flexDirection: "row", alignItems: "flex-start", gap: Spacing.sm, borderTopWidth: StyleSheet.hairlineWidth, paddingTop: Spacing.xs },
   courseRow: { gap: 2 },
   courseOutcomes: { gap: Spacing.xs, paddingTop: Spacing.xs },
+  sourceOutline: { gap: Spacing.xs, alignItems: "flex-start" },
+  sourceOutlineContent: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm, width: "100%" },
+  sourceOutcomeBlock: { gap: Spacing.xs, paddingTop: Spacing.xs },
   courseOutcome: { gap: 2, paddingLeft: Spacing.sm },
-  sourceOutcome: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.35, fontStyle: "italic" },
-  courseTitle: { fontSize: FontSize.sm },
-  courseSummary: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.4 },
+  sourceOutcome: { fontSize: 13, lineHeight: 19, fontStyle: "italic" },
+  courseTitle: { fontSize: 18, lineHeight: 25 },
+  courseSummary: { fontSize: 16, lineHeight: 24 },
   abilitiesCard: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm },
-  practiceBlock: { gap: Spacing.xs, paddingBottom: Spacing.xs },
-  detailHeading: { fontSize: FontSize.sm },
-  abilitiesIntro: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
+  detailHeading: { fontSize: 20, lineHeight: 27, ...CompassFonts.bodySemibold },
+  abilitiesIntro: { fontSize: 16, lineHeight: 24 },
   abilityGrid: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
   abilityCard: { flex: 1, minWidth: 230, borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.sm, padding: Spacing.sm, gap: Spacing.xs },
-  abilityTitle: { fontSize: FontSize.sm },
-  outcome: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
+  abilityTitle: { fontSize: 18, lineHeight: 25 },
+  outcome: { fontSize: 16, lineHeight: 24 },
 });

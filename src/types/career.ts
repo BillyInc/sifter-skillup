@@ -240,14 +240,38 @@ export interface ProgrammeThemeRelationship {
 
 export interface ProgrammeCurriculumContract {
   status: "available" | "not_seeded" | "unavailable" | string;
+  /** Local development fallback from a checked-in reviewed source contract; not DB-seeded. */
+  localSourcePreview?: boolean;
   outcomes: ProgrammeCurriculumOutcome[];
   abilities: ProgrammeAbility[];
+  /** Fixed Sociology curriculum themes; outcome rows remain evidence, not the student narrative. */
+  programmeThemes?: ProgrammeCurriculumTheme[];
   themeGuidance?: ProgrammeThemeGuidance[];
   themeRelationships?: ProgrammeThemeRelationship[];
   sourceAuthority?: {
     parsedSource?: string | null;
     originalPdf?: string | null;
   } | null;
+}
+
+export interface ProgrammeCurriculumTheme {
+  themeKey: string;
+  title: string;
+  summary: string;
+  narration: string;
+  courseCodes: string[];
+  courseAnchors: Array<{
+    courseCode: string;
+    courseTitle?: string | null;
+    courseSummary?: string | null;
+    sourceLocator?: string | null;
+    sourceUrl?: string | null;
+  }>;
+  source: { title: string; publisher?: string | null; url: string; jurisdiction?: string | null; accessedOn?: string | null };
+  groupingStatus: string;
+  studentCopyStatus: string;
+  studentCopyApproval: string;
+  selectionState: "fixed_programme_guidance_not_selectable";
 }
 
 export interface Programme {
@@ -748,6 +772,8 @@ export type ContextItemPriority = "start_here" | "build_next" | "useful_later" |
 export interface CareerContextItemRelationship {
   relationshipType: "builds_on" | "works_with" | "supports" | "alternative" | "complements" | "qualifies_for";
   relationshipStatus: "source_backed" | "review_required" | "not_established";
+  /** Explicit approval in the consolidated D078 relationship contract; advisory only. */
+  reviewedContractRelationship?: boolean;
   /** Plain-language, item-specific reason for this link; never infer from its type or limitations. */
   learnerExplanation?: string | null;
   /** Only an explicitly approved hard prerequisite can constrain saved-plan order. */
@@ -796,6 +822,11 @@ export interface CareerContextItem {
   plainMeaning: string;
   contextualUse: string;
   expectedOutput?: string | null;
+  /** Separately scoped explanations for the programme → domain → area → role handoff. */
+  programmeContext?: string | null;
+  domainContext?: string | null;
+  areaContext?: string | null;
+  roleContext?: string | null;
   /** Presentation grouping; does not imply that items share the same requirement status. */
   themeKey?: string | null;
   themeLabel?: string | null;
@@ -803,11 +834,24 @@ export interface CareerContextItem {
   /** Necessity for this path, separate from the item's learning-order priority. */
   requirementLevel?: "needed" | "useful" | "optional" | null;
   requirementReason?: string | null;
+  /** Display contract for the progressive programme → domain → area → role path. */
+  learningStage?: string | null;
+  sequenceBand?: string | null;
+  sequenceKind?: "compulsory" | "recommended" | "conditional" | "alternative" | "complementary" | "specialist" | "tool_support" | "optional" | null;
+  sequenceOrder?: number | null;
+  selectionGroup?: string | null;
+  coLearningGroup?: string | null;
+  displayWhyNext?: string | null;
+  blocksProgression?: boolean;
   /** Learning order is assigned within a selected specialization or role path, not globally at domain foundation. */
   priority?: ContextItemPriority | null;
   priorityReason?: string | null;
   learningOrder?: ContextItemPriority | null;
   prerequisites: string[];
+  /** Reviewed preparation notes; not automatically hard sequencing edges. */
+  complements?: string[];
+  /** Task-dependent approaches, not necessarily equivalent substitutions. */
+  validAlternatives?: string[];
   relatedItems: string[];
   /** Normalized, source-backed cross-type edges when the additive edge table is present. */
   relationships?: CareerContextItemRelationship[];
@@ -837,6 +881,15 @@ export interface CareerContextItem {
   linkAccessedAt?: string | null;
   linkConfidence?: SourceConfidence;
   linkEvidence?: Record<string, unknown>;
+  /** Other individually checked links attached to this same item. */
+  additionalLearningLinks?: Array<{
+    title: string;
+    url: string;
+    locator?: string | null;
+    access?: string | null;
+    kind?: string | null;
+    rationale?: string | null;
+  }>;
   linkKind?: string | null;
   linkLevel?: string | null;
   linkLanguage?: string | null;
@@ -894,6 +947,14 @@ export interface SubgroupV2 extends SourceBackedFields {
     condition?: string | null;
     positiveTaskEvidence?: string | null;
     sourceReferences?: Array<{ url: string }>;
+  }>;
+  /** Reviewed D078 role-to-area routes, including conditional routes. */
+  areaRoleOptions?: Array<DomainRoleSummary & {
+    areaRouteStatus: "reviewed_supported" | "reviewed_conditional";
+    areaRouteReason?: string | null;
+    areaRouteCondition?: string | null;
+    areaTaskEvidence?: string | null;
+    areaRouteSources?: Array<{ url: string }>;
   }>;
   isCurrentAreaOfSpecialization?: boolean;
 }
@@ -1015,6 +1076,13 @@ export interface ProgrammeDomainConnection {
   programmeName: string;
   relationship: DomainMatchType;
   explanation: string;
+  /** Separates reviewed programme learning from what the selected domain adds next. */
+  curriculumContextHeading?: string;
+  domainAddsHeading?: string;
+  /** Clarifies shared foundations versus optional and downstream route additions. */
+  domainAddsExplanation?: string;
+  /** Narrative synthesis of source-backed programme learning that transfers to the selected field. */
+  transferableLearningNarrative?: string;
   curriculumAvailable: boolean;
   curriculumCourseCount?: number;
   courseAnchorQuality?: string | null;
@@ -1030,6 +1098,31 @@ export interface ProgrammeDomainConnection {
     courseTitle?: string | null;
     studentText: string;
     evidenceText?: string | null;
+  }>;
+  /** Full reviewed programme themes and course outcomes; not gated by domain transfer matches. */
+  programmeCurriculumThemes?: Array<{
+    themeKey: string;
+    title: string;
+    summary: string;
+    narration: string;
+    connectionExplanation: string;
+    directTransferEvidenceStatus: "matched" | "no_exact_match_in_current_transfer_record" | string;
+    matchedCourseCodes: string[];
+    matchedOutcomeIds: string[];
+    courseAnchors: ProgrammeCurriculumTheme["courseAnchors"];
+    matchedCourseAnchors: ProgrammeCurriculumTheme["courseAnchors"];
+    programmeOutcomes: Array<{
+      outcomeId?: string | null;
+      courseCode?: string | null;
+      courseTitle?: string | null;
+      studentText: string;
+      courseSummary?: string | null;
+      sourceLocator: Record<string, unknown>;
+    }>;
+    transferableEvidence: string[];
+    source?: ProgrammeCurriculumTheme["source"];
+    studentCopyStatus?: string;
+    studentCopyApproval?: string;
   }>;
   transferableEvidence?: string[];
   mappingSource?: string | null;
@@ -1112,6 +1205,8 @@ export interface DomainRoleV2 extends SourceBackedFields {
   }>;
   /** Tools owned by this role, distinct from domain/subgroup tools. */
   tools?: RoleToolV2[];
+  /** Optional tools owned by the selected D078 area route, shown as inherited area options on a role page. */
+  areaToolOptions?: CareerContextItem[];
   /** Certifications owned by this role, distinct from domain/subgroup certs. */
   certifications?: CertificationV2[];
   /** Every domain this role is reachable from (multi-domain by design). */

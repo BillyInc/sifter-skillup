@@ -14,12 +14,14 @@ import {
 } from "@/components/careerIntelligence";
 import { careerData } from "@/lib/careerData";
 import { formatCareerLabel, studentSummary } from "@/lib/careerLabels";
-import { compareCareerRoles } from "@/lib/careerRoleOrdering";
+import { areaRoleOptions, type AreaRoleOption } from "@/lib/d078RoutePresentation";
 import { useExploreNav } from "@/lib/exploreNav";
 import type { GuidanceRouteContext } from "@/lib/guidanceRouteContext";
 import { pending, type DataState, type DomainV2 } from "@/types/career";
 import { CompassFonts, FontSize, Radius, Spacing, useTheme } from "@/theme";
+import { studentFacingCopy } from "@/lib/studentExplanation";
 import { isStudentResource } from "@/components/careerIntelligence/resourceLinks";
+import { ProgrammeOutcomeBridge } from "@/components/careerIntelligence/ProgrammeCurriculumCarryForward";
 
 export default function SubgroupDetailScreen() {
   const params = useLocalSearchParams<{ id?: string; subgroupId?: string; programme_id?: string | string[]; jamb_programme_id?: string | string[]; school_id?: string | string[]; user_type?: string | string[]; journey_mode?: string | string[]; guidance_student_id?: string | string[]; guidance_target?: string | string[]; guidance_entry?: string | string[]; focus?: string | string[] }>();
@@ -65,10 +67,7 @@ export default function SubgroupDetailScreen() {
 
   const subgroup = state.data?.subgroups.find((item) => item.id === subgroupId);
   const resolvedDomainId = state.data?.id ?? domainId;
-  const roles = (state.data?.roles.filter((role) =>
-    (state.data?.id === "D078" ? role.areaIds?.includes(subgroupId) : role.subgroupId === subgroupId)
-    && role.guidanceAvailable === true
-  ) ?? []).sort(compareCareerRoles);
+  const roles = areaRoleOptions(state.data?.id ?? "", subgroup, state.data?.roles ?? []);
   const programmeConnection = state.data?.programmeConnection;
 
   return (
@@ -130,8 +129,8 @@ export default function SubgroupDetailScreen() {
           <View style={styles.section}>
               <SectionLabel>Learn and prepare for this area</SectionLabel>
               {subgroup.clusterSkills.length ? <View style={styles.detail}><SectionLabel>Capabilities to build in this area</SectionLabel><Text style={[styles.copy, { color: colors.textRole.muted }]}>Start with the capabilities shown first. The remaining ones are available when you want the full picture.</Text><View style={styles.skillList}>{(skillsExpanded ? subgroup.clusterSkills : subgroup.clusterSkills.slice(0, 3)).map((skill) => <Text key={skill} style={[styles.skill, { color: colors.textRole.secondary, borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>{skill}</Text>)}</View>{subgroup.clusterSkills.length > 3 ? <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: skillsExpanded }} onPress={() => setSkillsExpanded((value) => !value)} style={[styles.more, { borderColor: colors.borderRole.subtle }]}><Text style={[styles.moreText, { color: colors.accentRole.action }]}>{skillsExpanded ? "Show fewer capabilities" : `See all ${subgroup.clusterSkills.length} capabilities`}</Text></TouchableOpacity> : null}</View> : null}
-              <ContextualItemList items={subgroup.contextItems} resources={subgroup.resources} title="What each capability and tool does in this area" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain?.id, areaId: subgroup.id }} learningFocus />
-              <ToolGroupsBlock tools={subgroup.tools} resources={subgroup.resources} contextItems={subgroup.contextItems} title="Tools used in this area" commonLabel="Useful across this area" distinctiveLabel="More specialised tools in this area" explanation="These tools are attached to this area of work. They are options to understand and practise, not a requirement to learn every tool." />
+               <ContextualItemList items={subgroup.contextItems} itemTypes={["skill", "competency", "method", "knowledge"]} resources={subgroup.resources} title="Skills, methods and knowledge for this area" contextLevel="subgroup" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain?.id, areaId: subgroup.id }} learningFocus targetStudentId={targetStudentId} />
+               <ToolGroupsBlock tools={subgroup.tools} resources={subgroup.resources} contextItems={subgroup.contextItems} contextLevel="subgroup" title="Tools used in this area" commonLabel="Useful across this area" distinctiveLabel="More specialised tools in this area" explanation="These tools are attached to this area of work. They are options to understand and practise, not a requirement to learn every tool." learningFocus targetStudentId={targetStudentId} learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain?.id, areaId: subgroup.id }} />
         {subgroup.methodEvidence?.length ? <Text style={[styles.copy, { color: colors.textRole.muted }]}>The method records are shown inside the skills and competency guidance because they explain how the capabilities are applied, not a separate qualification.</Text> : null}
               <View style={styles.detail}><SectionLabel>Credentials to understand</SectionLabel><CertPlacementList subgroup={subgroup.certifications} contextItems={subgroup.contextItems} /></View>
              </View>
@@ -166,33 +165,43 @@ function SubgroupBody({ subgroup, domain, roles, programmeConnection, guidanceCo
     && item.guidanceOwner === "domain"
     && item.dataState === "source_backed"
     && item.sourceConfidence !== "unsourced"
-    && item.linkState !== "review_required",
+    && item.claimReviewState === "approved"
+    && item.linkState === "linked",
   );
   const subgroupItems = (subgroup.contextItems ?? []).filter((item) =>
     item.contextLevel === "subgroup"
     && item.guidanceOwner === "subgroup"
     && item.dataState === "source_backed"
     && item.sourceConfidence !== "unsourced"
-    && item.linkState !== "review_required",
+    && item.claimReviewState === "approved"
+    && item.linkState === "linked",
   );
+  const selectedAreaDomainTools = domainItems.filter((item) =>
+    item.itemType === "tool"
+    && (item.pathTargets ?? []).some((target) =>
+      (target.targetLevel === "subgroup" && target.targetKey === subgroup.id)
+      || (target.targetLevel === "role" && roles.some((role) => role.key === target.targetKey)),
+    ),
+  );
+  const inheritedDomainCompulsory = domainItems.some((item) => item.requirementLevel === "needed");
+  const inheritedDomainOptions = domainItems.some((item) => item.requirementLevel !== "needed"
+    && (item.pathTargets ?? []).some((target) =>
+      (target.targetLevel === "subgroup" && target.targetKey === subgroup.id)
+      || (target.targetLevel === "role" && roles.some((role) => role.key === target.targetKey)),
+    ));
   const subgroupResources = (subgroup.resources ?? []).filter((resource) =>
     isStudentResource(resource, "subgroup"),
   );
   return (
     <View style={styles.body}>
-      <View style={[styles.detail, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-        <View style={styles.badgeRow}><Feather name="grid" size={18} color={colors.accentRole.action} /><Text style={[styles.pathText, { color: colors.textRole.muted }]}>{domain?.name ?? "Domain"} / {subgroup.name}</Text></View>
-        <Text style={[styles.heading, { color: colors.textRole.primary }]}>{formatCareerLabel(subgroup.name)}</Text>
-        <Text style={[styles.copy, { color: colors.textRole.secondary }]}>{studentSummary({ shortIntro: subgroup.studentOrientation?.shortIntro, whatPeopleDo: subgroup.studentOrientation?.whatPeopleDo || subgroup.whatPeopleDo, whatItStudies: subgroup.studentOrientation?.whatItStudies, description: subgroup.description, fallback: "A plain-language explanation of this focused area is not available yet." })}</Text>
-      </View>
-      <GuidanceContinuation programmeName={studentConnection?.programmeName} connection={studentConnection} domainName={domain?.name ?? "Domain"} subgroupName={subgroup.name} domainFoundation={domain?.foundationSkills} domainItems={domainItems} subgroupItems={subgroupItems} />
-      {programmeConnection && !studentConnection ? <View style={[styles.detail, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}><SectionLabel>Programme connection not available yet</SectionLabel><Text style={[styles.copy, { color: colors.textRole.secondary }]}>We do not have enough verified information to explain this programme-to-area connection safely.</Text></View> : null}
+      <Text style={[styles.pathText, { color: colors.textRole.muted }]}>{domain?.name ?? "Domain"} / {formatCareerLabel(subgroup.name)}</Text>
       <View style={styles.section}>
         <HierarchyOrientationCard
           level="area"
           title={subgroup.name}
           parentLabel={domain?.name ?? "the wider domain"}
           summary={subgroup.studentOrientation?.whatItStudies || subgroup.studentOrientation?.whatPeopleDo || subgroup.whatPeopleDo || subgroup.description}
+            description={subgroup.description}
           workContext={subgroup.workContext}
           orientation={subgroup.studentOrientation}
         />
@@ -203,16 +212,77 @@ function SubgroupBody({ subgroup, domain, roles, programmeConnection, guidanceCo
           </TouchableOpacity>)}
         </View> : null}
       </View>
+      {studentConnection ? <ProgrammeOutcomeBridge connection={studentConnection} nextLayer="area" /> : programmeConnection ? <View style={[styles.detail, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}><SectionLabel>Programme connection not available yet</SectionLabel><Text style={[styles.copy, { color: colors.textRole.secondary }]}>We do not have enough verified information to explain this programme-to-area connection safely.</Text></View> : null}
+      {domain?.studentOrientation || domain?.description ? <View style={[styles.detail, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
+        <SectionLabel>{`What the ${domain?.name ?? "field"} studies`}</SectionLabel>
+        <Text style={[styles.copy, { color: colors.textRole.secondary }]}>{studentSummary({ shortIntro: domain?.studentOrientation?.shortIntro, whatItStudies: domain?.studentOrientation?.whatItStudies, whatPeopleDo: domain?.studentOrientation?.whatPeopleDo, description: domain?.description, fallback: "This section explains the wider field before showing its shared starting points." })}</Text>
+      </View> : null}
+      {inheritedDomainCompulsory || inheritedDomainOptions ? <View style={styles.section}>
+        <View style={styles.badgeRow}><Feather name="layers" size={18} color={colors.accentRole.action} /><Text style={[styles.roleTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{`What carries forward from ${domain?.name ?? "the field"}`}</Text></View>
+        <Text style={[styles.copy, { color: colors.textRole.secondary }]}>The selected area keeps relevant domain learning in view. Compulsory foundations continue as inherited learning; useful edges remain optional choices and are not added unless you select them.</Text>
+        {inheritedDomainCompulsory ? <ContextualItemList items={domainItems} itemTypes={["skill", "competency", "method", "knowledge", "tool", "certification"]} resources={domain?.resources} contextLevel="domain" itemScope="shared-foundation" title="Compulsory domain foundations carried forward" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain?.id, areaId: subgroup.id }} domainName={domain?.name} areaName={subgroup.name} learningFocus targetStudentId={targetStudentId} /> : null}
+        {inheritedDomainOptions ? <>
+          <ContextualItemList items={domainItems} itemTypes={["skill", "competency", "method", "knowledge", "tool", "certification"]} resources={domain?.resources} contextLevel="domain" itemScope="learning-options" title="Optional domain edges relevant to this area or its roles" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain?.id, areaId: subgroup.id }} domainName={domain?.name} areaName={subgroup.name} routeRoleIds={roles.map((role) => role.key)} learningFocus targetStudentId={targetStudentId} />
+          <Text style={[styles.copy, { color: colors.textRole.muted }]}>These field-level options may support this area or one of its roles. They remain optional and are added to your saved route only if you choose them; opening this area does not select them automatically.</Text>
+        </> : null}
+        {selectedAreaDomainTools.length ? <ToolGroupsBlock tools={{ common: [], distinctive: [] }} resources={domain?.resources} contextItems={selectedAreaDomainTools} contextLevel="domain" title="Field tools connected to this area or its roles" explanation="Only tools with an explicit reviewed connection to this area or one of its roles appear here. Open a tool to understand the work it supports, what it does not replace and how it relates to the selected route." learningFocus targetStudentId={targetStudentId} learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain?.id, areaId: subgroup.id }} areaName={subgroup.name} /> : null}
+      </View> : null}
+      <TouchableOpacity
+        accessibilityRole="button"
+        accessibilityLabel="Open my learning tray"
+        onPress={() => exploreNav.guided(router, { ...guidanceContext, programmeId: guidanceContext.programmeId, areaId: subgroup.id, focused: true, openTray: true })}
+        style={[styles.trayAction, { borderColor: colors.accentRole.action, backgroundColor: colors.surface.subtle }]}
+      >
+        <Feather name="briefcase" size={17} color={colors.accentRole.action} />
+        <Text style={[styles.moreText, { color: colors.accentRole.action }]}>View my learning tray</Text>
+      </TouchableOpacity>
       <View style={styles.section}>
         <View style={styles.badgeRow}><Feather name="layers" size={18} color={colors.accentRole.action} /><SectionLabel>What this area adds</SectionLabel></View>
-        <ContextualItemList items={subgroupItems} itemTypes={["skill", "competency"]} resources={subgroupResources} methods={subgroup.methodEvidence} contextLevel="subgroup" title="Skills and competencies this area adds" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain?.id, areaId: subgroup.id }} learningFocus />
-        <ToolGroupsBlock tools={subgroup.tools} resources={subgroupResources} contextItems={subgroupItems} contextLevel="subgroup" title="Tool options" commonLabel="Useful across this area" distinctiveLabel="More specialised options" explanation="These are options in the available guidance. Each tool supports particular work; no single tool is the whole area." learningFocus targetStudentId={targetStudentId} />
-        <View style={styles.detail}><SectionLabel>Qualifications and routes to understand</SectionLabel><CertPlacementList subgroup={subgroup.certifications} contextItems={subgroupItems} resources={subgroupResources} contextLevel="subgroup" learningFocus targetStudentId={targetStudentId} emptyMessage="No formal certification or qualification route is recorded for this area yet." /></View>
+        <Text style={[styles.copy, { color: colors.textRole.secondary }]}>The domain learning above carries into this area. These are this area’s own additions, shown in their reviewed order. Skills, tools, methods, knowledge, competencies and credentials stay together; optional useful edges can be skipped when you continue to a role.</Text>
+        <ContextualItemList
+          items={subgroupItems}
+          itemTypes={["skill", "competency", "method", "knowledge", "tool", "certification"]}
+          resources={subgroupResources}
+          contextLevel="subgroup"
+          itemScope="learning-options"
+          sequenceBand="area_additions"
+          title="Area learning sequence"
+          methods={subgroup.methodEvidence}
+          learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain?.id, areaId: subgroup.id }}
+          domainName={domain?.name}
+          areaName={subgroup.name}
+          learningFocus
+          targetStudentId={targetStudentId}
+        />
+        <ToolGroupsBlock tools={subgroup.tools} resources={subgroupResources} contextItems={subgroupItems} contextLevel="subgroup" title="Tools for work in this area" commonLabel="Used across this area" distinctiveLabel="Useful for particular work" explanation="These named tools are connected to reviewed work in this area. Open one for its purpose, route, relationships and limits; the list is not a requirement to learn every tool." learningFocus targetStudentId={targetStudentId} learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain?.id, areaId: subgroup.id }} areaName={subgroup.name} />
+        <View style={styles.detail}><SectionLabel>Credentials and professional routes</SectionLabel><CertPlacementList subgroup={subgroup.certifications} contextItems={subgroupItems} resources={subgroupResources} contextLevel="subgroup" learningFocus targetStudentId={targetStudentId} emptyMessage="No reviewed area-level credential is recorded here. A credential may apply only to a specific role." /></View>
       </View>
       <View style={styles.section}>
         <View style={styles.badgeRow}><Feather name="users" size={18} color={colors.accentRole.action} /><SectionLabel>Roles inside this area</SectionLabel></View>
-        <Text style={[styles.copy, { color: colors.textRole.secondary }]}>Roles belong inside an area because they use the area’s foundation in different ways. Open a role after you understand this area.</Text>
-        {roles.length ? <View style={styles.roleGrid}>{roles.map((role) => <TouchableOpacity key={role.key} accessibilityRole="button" onPress={() => exploreNav.role(router, role.key, { ...guidanceContext, areaId: subgroup.id })} style={[styles.role, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}><Feather name="user" size={20} color={colors.accentRole.action} /><View style={{ flex: 1, gap: Spacing.xs }}><Text style={[styles.roleTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{formatCareerLabel(role.name)}</Text><Text style={[styles.copy, { color: colors.textRole.secondary }]}>{studentSummary({ shortIntro: role.studentOrientation?.shortIntro, whatPeopleDo: role.studentOrientation?.whatPeopleDo, whatItStudies: role.studentOrientation?.whatItStudies, description: role.description, fallback: "A plain-language explanation of this role is not available yet." })}</Text><Text style={[styles.moreText, { color: colors.accentRole.action }]}>Explore role →</Text></View></TouchableOpacity>)}</View> : <Text style={[styles.copy, { color: colors.textRole.muted }]}>No roles are available for this area yet.</Text>}
+        <Text style={[styles.copy, { color: colors.textRole.secondary }]}>Roles are shown here only when the reviewed evidence connects their work to this area. A conditional route applies only in the stated work context; it is not a promise of employment or a qualification decision.</Text>
+          {roles.length ? <View style={styles.roleGrid}>{roles.map((role) => {
+            const areaOption = role as AreaRoleOption;
+            const route = role.areaRoutes?.find((candidate) => candidate.areaId === subgroup.id)
+              ?? (areaOption.areaRouteStatus ? {
+                status: areaOption.areaRouteStatus,
+                rationale: areaOption.areaRouteReason,
+                condition: areaOption.areaRouteCondition,
+                positiveTaskEvidence: areaOption.areaTaskEvidence,
+                sourceReferences: areaOption.areaRouteSources,
+              } : undefined);
+            return <TouchableOpacity key={role.key} accessibilityRole="button" onPress={() => exploreNav.role(router, role.key, { ...guidanceContext, areaId: subgroup.id })} style={[styles.role, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
+              <Feather name="user" size={20} color={colors.accentRole.action} />
+              <View style={{ flex: 1, gap: Spacing.xs }}>
+                <Text style={[styles.roleTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{formatCareerLabel(role.name)}</Text>
+                {route?.status ? <Text style={[styles.tierLabel, { color: colors.textRole.muted }]}>{route.status === "reviewed_conditional" ? "Connected in a specific work context" : "Connected to this area"}</Text> : null}
+                <Text style={[styles.copy, { color: colors.textRole.secondary }]}>{studentSummary({ shortIntro: role.studentOrientation?.shortIntro, whatPeopleDo: role.studentOrientation?.whatPeopleDo, whatItStudies: role.studentOrientation?.whatItStudies, description: role.description, fallback: "A plain-language explanation of this role is not available yet." })}</Text>
+                {route?.condition ? <View style={styles.routeNote}><Text style={[styles.tierLabel, { color: colors.textRole.primary }]}>When this route applies</Text><Text style={[styles.copy, { color: colors.textRole.secondary }]}>{route.condition}</Text></View> : null}
+                {route?.positiveTaskEvidence ? <View style={styles.routeNote}><Text style={[styles.tierLabel, { color: colors.textRole.primary }]}>Why this role connects to the area</Text><Text style={[styles.copy, { color: colors.textRole.secondary }]}>{studentFacingCopy(route.positiveTaskEvidence)}</Text></View> : null}
+                {role.areaRoutes?.filter((candidate) => candidate.areaId !== subgroup.id && ["reviewed_supported", "reviewed_conditional"].includes(candidate.status ?? "") && candidate.areaName).length ? <Text style={[styles.copy, { color: colors.textRole.muted }]}>Also connected to: {role.areaRoutes.filter((candidate) => candidate.areaId !== subgroup.id && ["reviewed_supported", "reviewed_conditional"].includes(candidate.status ?? "") && candidate.areaName).map((candidate) => candidate.areaName).join(", ")}</Text> : null}
+                <Text style={[styles.moreText, { color: colors.accentRole.action }]}>Explore role →</Text>
+              </View>
+            </TouchableOpacity>;
+          })}</View> : <Text accessibilityLabel={`Role routes not returned for ${subgroup.name}`} style={[styles.copy, { color: colors.textRole.muted }]}>No reviewed role routes were returned for this area. This response may be incomplete; it does not mean that no roles fit.</Text>}
       </View>
     </View>
   );
@@ -223,17 +293,19 @@ const styles = StyleSheet.create({
   pathPill: { paddingVertical: Spacing.xs },
   pathText: { fontSize: FontSize.xs, letterSpacing: 0.35 },
   section: { gap: Spacing.md },
-  heading: { fontSize: FontSize.xl, lineHeight: FontSize.xl * 1.25, ...CompassFonts.displayBold },
-  copy: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
+  heading: { fontSize: 22, lineHeight: 29, ...CompassFonts.displayBold },
+  copy: { fontSize: 16, lineHeight: 24 },
   more: { alignSelf: "flex-start", borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
-  moreText: { fontSize: FontSize.sm, fontWeight: "800" },
+  moreText: { fontSize: 16, lineHeight: 23, fontWeight: "800" },
+  trayAction: { alignSelf: "flex-start", minHeight: 44, flexDirection: "row", alignItems: "center", gap: Spacing.sm, borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
   detail: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm },
   skillList: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.xs },
   skill: { borderWidth: 1, borderRadius: Radius.full, paddingHorizontal: Spacing.sm, paddingVertical: Spacing.xs, fontSize: FontSize.xs },
   tierLabel: { fontSize: FontSize.xs, letterSpacing: 0.4, textTransform: "uppercase" },
+  routeNote: { gap: Spacing.xs, borderLeftWidth: 2, borderLeftColor: "#64748B", paddingLeft: Spacing.sm },
   badgeRow: { flexDirection: "row", alignItems: "center", gap: Spacing.xs, flexWrap: "wrap" },
   roleGrid: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
   role: { flexDirection: "row", alignItems: "center", gap: Spacing.sm, borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, flex: 1, minWidth: 260 },
-  roleTitle: { fontSize: FontSize.md },
+  roleTitle: { fontSize: 18, lineHeight: 25 },
   buildButton: { alignSelf: "flex-start", borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
 });

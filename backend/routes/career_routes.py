@@ -30,10 +30,13 @@ from auth import Auth
 from database import db
 from logger import log
 from models import ResponseModel
-from d078_guided_areas import d078_guided_area_data, is_d078_area_id
+from d078_guided_areas import d078_guided_area_data, d078_routed_role_keys, is_d078_area_id
 from d078_guided_content import (
     d078_area_context_items,
+    d078_area_tool_options,
     d078_domain_context_items,
+    d078_sociology_programme_themes,
+    d078_role_context_items,
     merge_d078_context_items,
 )
 
@@ -1035,6 +1038,20 @@ def _programme_domain_explanation(
     return " ".join([opening, *details])
 
 
+def _programme_domain_handoff_copy(programme_name: str, domain_name: str) -> dict[str, str]:
+    """Name inherited programme learning and clarify what the domain adds."""
+    return {
+        "curriculumContextHeading": f"What your {programme_name} programme covers",
+        "domainAddsHeading": f"What {domain_name} adds",
+        "domainAddsExplanation": (
+            "Beyond your programme, the learning path presents source-backed capabilities used in this "
+            "field and its selected routes. It separates shared domain foundations (the common starting "
+            "path) from optional useful edges and area- or role-specific additions. It does not claim that "
+            "every employer requires every item, or that your programme already taught these additions."
+        ),
+    }
+
+
 def _programme_domain_outcomes(
     curriculum_outcomes: list[dict],
     transferable_evidence: list[dict],
@@ -1083,6 +1100,130 @@ def _programme_domain_outcomes(
             })
             break
     return matched[:12]
+
+
+def _programme_curriculum_theme_context(
+    programme_themes: list[dict],
+    matched_outcomes: list[dict],
+    all_outcomes: list[dict] | None = None,
+) -> list[dict]:
+    """Carry the full programme curriculum context into its downstream route.
+
+    Curriculum visibility must not depend on whether a separate programme-to-
+    domain evidence ledger contains a direct match. Exact transfer matches are
+    attached as evidence; lack of one is not a claim that a theme is irrelevant.
+    """
+    matched_by_code: dict[str, list[dict]] = {}
+    for outcome in matched_outcomes:
+        code = str(outcome.get("courseCode") or "").strip().casefold()
+        if code:
+            matched_by_code.setdefault(code, []).append(outcome)
+
+    outcomes_by_code: dict[str, list[dict]] = {}
+    for outcome in all_outcomes or []:
+        code = str(outcome.get("courseCode") or "").strip().casefold()
+        if code:
+            outcomes_by_code.setdefault(code, []).append(outcome)
+
+    connections: list[dict] = []
+    for theme in programme_themes:
+        codes = [str(code).strip() for code in (theme.get("courseCodes") or []) if str(code).strip()]
+        supporting = [
+            (code, outcome)
+            for code in codes
+            for outcome in matched_by_code.get(code.casefold(), [])
+        ]
+        supporting_codes = list(dict.fromkeys(code for code, _ in supporting))
+        all_anchors = [
+            anchor for anchor in (theme.get("courseAnchors") or [])
+            if isinstance(anchor, dict)
+        ]
+        matched_anchors = [
+            anchor for anchor in (theme.get("courseAnchors") or [])
+            if str(anchor.get("courseCode") or "").strip().casefold() in {code.casefold() for code in supporting_codes}
+        ]
+        theme_outcomes = [
+            outcome
+            for code in codes
+            for outcome in outcomes_by_code.get(code.casefold(), [])
+        ]
+        connections.append({
+            "themeKey": theme.get("themeKey"),
+            "title": theme.get("title"),
+            "summary": theme.get("summary"),
+            "narration": theme.get("narration"),
+            "connectionExplanation": (
+                "This is part of the reviewed programme curriculum. A direct transfer match is shown where the "
+                "programme-to-field evidence supports one; no direct match recorded here does not mean the theme "
+                "is irrelevant to the learner or the field."
+            ),
+            "directTransferEvidenceStatus": "matched" if supporting else "no_exact_match_in_current_transfer_record",
+            "matchedCourseCodes": supporting_codes,
+            "matchedOutcomeIds": list(dict.fromkeys(
+                outcome.get("outcomeId") for _, outcome in supporting if outcome.get("outcomeId")
+            )),
+            "courseAnchors": all_anchors,
+            "matchedCourseAnchors": matched_anchors,
+            "programmeOutcomes": [
+                {
+                    "outcomeId": outcome.get("outcomeId"),
+                    "courseCode": outcome.get("courseCode"),
+                    "courseTitle": outcome.get("courseTitle"),
+                    "studentText": outcome.get("studentText"),
+                    "courseSummary": outcome.get("courseSummary"),
+                    "sourceLocator": outcome.get("sourceLocator") or {},
+                }
+                for outcome in theme_outcomes
+                if outcome.get("studentText")
+            ],
+            "transferableEvidence": list(dict.fromkeys(
+                str(outcome.get("evidenceText") or "").strip()
+                for _, outcome in supporting
+                if str(outcome.get("evidenceText") or "").strip()
+            )),
+            "source": theme.get("source"),
+            "studentCopyStatus": theme.get("studentCopyStatus"),
+            "studentCopyApproval": theme.get("studentCopyApproval"),
+        })
+    return connections
+
+
+def _programme_domain_transfer_narrative(
+    programme_name: str,
+    domain_name: str,
+    transferable_evidence: list[str] | None = None,
+) -> str:
+    """Weave verified programme learning into the handoff without a raw list."""
+    evidence = [str(value).casefold() for value in (transferable_evidence or [])]
+    if programme_name.casefold() == "sociology" and "social sciences" in domain_name.casefold():
+        has_social_structure = any("social structure" in item and "dynamics" in item for item in evidence)
+        has_culture = any("culture" in item and "socialisation" in item for item in evidence)
+        has_behavior = any("human behaviour" in item or "human behavior" in item for item in evidence)
+        parts = []
+        if has_social_structure:
+            parts.append("analysing social structures and the dynamics of society")
+        if has_culture:
+            parts.append("using core ideas about culture and socialisation")
+        if has_behavior:
+            parts.append("examining human behaviour and how it is studied")
+        if parts:
+            return (
+                f"Your {programme_name} studies already introduce you to "
+                f"{', '.join(parts)}. These are relevant starting points for {domain_name}, "
+                "not the whole set of capabilities used across the field. The domain learning path "
+                "shows what to build beyond that programme learning."
+            )
+    if transferable_evidence:
+        return (
+            f"Your {programme_name} includes learning supported by the course evidence recorded for "
+            f"{domain_name}. That is a starting point, not the full capability set used across the field; "
+            "the domain learning path shows what to build beyond the programme."
+        )
+    return (
+        f"Your {programme_name} curriculum is the starting point. The reviewed {domain_name} learning path "
+        "shows additional field-wide foundations and route-specific capabilities; it does not claim that "
+        "these additions were taught by your programme."
+    )
 
 
 def _career_resource(row: dict) -> dict:
@@ -1261,6 +1402,14 @@ def _context_item(
     path_targets: list[dict] | None = None,
 ) -> dict:
     """Map a source-backed contextual item row to the frontend contract."""
+    claim_evidence = row.get("claim_evidence") or {}
+    # The D078 SQL projection stores the richer route/display fields inside
+    # claim_evidence so the additive contextual schema does not need a second
+    # set of columns. Read them back here so database-backed role cards expose
+    # the same contract as the reviewed runtime cards.
+    display_contract = claim_evidence.get("studentDisplayContract") or {}
+    if not isinstance(display_contract, dict):
+        display_contract = {}
     return {
         "contextLevel": row.get("context_level"),
         "contextKey": row.get("context_key"),
@@ -1276,12 +1425,27 @@ def _context_item(
         "useCaseKey": row.get("use_case_key"),
         "requirementLevel": row.get("requirement_level"),
         "requirementReason": row.get("requirement_reason"),
+        "requirementScope": row.get("requirement_scope") or {},
+        "programmeContext": display_contract.get("programmeContext"),
+        "domainContext": display_contract.get("domainContext"),
+        "areaContext": display_contract.get("areaContext"),
+        "roleContext": display_contract.get("roleContext"),
+        "learningStage": display_contract.get("learningStage"),
+        "sequenceBand": display_contract.get("sequenceBand"),
+        "sequenceKind": display_contract.get("sequenceKind"),
+        "sequenceOrder": display_contract.get("sequenceOrder"),
+        "selectionGroup": display_contract.get("selectionGroup"),
+        "coLearningGroup": display_contract.get("coLearningGroup"),
+        "displayWhyNext": display_contract.get("displayWhyNext"),
+        "blocksProgression": display_contract.get("blocksProgression", False),
         # A domain foundation is shared, not a universal per-item sequence.
         # Learning order belongs to the selected specialization/role route.
         "priority": row.get("priority") if row.get("context_level") in {"subgroup", "role"} else None,
         "priorityReason": row.get("priority_reason") if row.get("context_level") in {"subgroup", "role"} else None,
         "learningOrder": row.get("priority") if row.get("context_level") in {"subgroup", "role"} else None,
         "prerequisites": row.get("prerequisites") or [],
+        "complements": display_contract.get("complements") or [],
+        "validAlternatives": display_contract.get("validAlternatives") or [],
         "relatedItems": row.get("related_items") or [],
         "relationships": relationships or [],
         "pathTargets": path_targets or [],
@@ -1295,7 +1459,7 @@ def _context_item(
         "dataState": row.get("data_state") or "source_backed",
         "guidanceOwner": row.get("guidance_owner"),
         "claimReviewState": row.get("claim_review_state"),
-        "claimEvidence": row.get("claim_evidence") or {},
+        "claimEvidence": claim_evidence,
         "linkState": row.get("link_state"),
         "linkUrl": row.get("link_url"),
         "linkTitle": row.get("link_title"),
@@ -1308,6 +1472,7 @@ def _context_item(
         "linkLanguage": row.get("link_language"),
         "linkAccess": row.get("link_access"),
         "linkDuration": row.get("link_duration"),
+        "additionalLearningLinks": display_contract.get("additionalLearningLinks") or [],
         "verifiedAt": _date_str(row.get("verified_at")),
     }
 
@@ -1333,7 +1498,10 @@ def _career_context_items(
             or []
         )
         visible_rows = [
-            row for row in rows if _student_context_item_visible(row, context_level)
+            row for row in rows
+            if _student_context_item_visible(row, context_level)
+            and str((row.get("requirement_scope") or {}).get("lane") or "") != "unapproved"
+            and (row.get("requirement_scope") or {}).get("student_eligible") is not False
         ]
         visible_domain_keys = {
             str(row.get("domain_key") or "")
@@ -1345,6 +1513,28 @@ def _career_context_items(
             for row in visible_rows
             if row.get("item_type") and row.get("item_key")
         }
+        visible_domain_item_keys: set[tuple[str, str]] = set()
+        if context_level == "subgroup" and visible_domain_keys:
+            try:
+                domain_rows = (
+                    svc.table("career_context_items")
+                    .select("domain_key,item_type,item_key,context_level,context_key,guidance_owner,claim_review_state,link_state,link_url,data_state")
+                    .eq("context_level", "domain")
+                    .eq("context_key", next(iter(visible_domain_keys)))
+                    .execute()
+                    .data
+                    or []
+                )
+                visible_domain_item_keys = {
+                    (str(row.get("item_type") or ""), str(row.get("item_key") or ""))
+                    for row in domain_rows
+                    if row.get("item_type")
+                    and row.get("item_key")
+                    and row.get("domain_key") in visible_domain_keys
+                    and _student_context_item_visible(row, "domain")
+                }
+            except Exception as domain_exc:  # noqa: BLE001
+                log.debug("D078 inherited domain relationship targets unavailable", error=str(domain_exc))
         relationships_by_item: dict[tuple[str, str], list[dict]] = {}
         path_targets_by_item: dict[tuple[str, str], list[dict]] = {}
         try:
@@ -1369,10 +1559,28 @@ def _career_context_items(
                     str(edge.get("to_item_key") or ""),
                 )
                 relationship_sources = edge.get("source_references") or []
+                target_context_level = edge.get("to_context_level") or context_level
+                target_context_key = edge.get("to_context_key") or context_key
+                edge_scope = edge.get("sequence_scope") or {}
+                same_context_target = (
+                    target_context_level == context_level
+                    and target_context_key == context_key
+                    and to_key in visible_item_keys
+                )
+                inherited_domain_target = (
+                    context_level == "subgroup"
+                    and target_context_level == "domain"
+                    and target_context_key in visible_domain_keys
+                    and to_key in visible_domain_item_keys
+                    and edge.get("sequence_approved") is True
+                    and edge.get("sequence_policy") == "conditional_prerequisite"
+                    and context_key in (edge_scope.get("areaIds") or [])
+                    and target_context_key in (edge_scope.get("domainIds") or [])
+                )
                 if (
                     not _student_owned_source_row(edge, context_level)
                     or from_key not in visible_item_keys
-                    or to_key not in visible_item_keys
+                    or not (same_context_target or inherited_domain_target)
                     or not isinstance(relationship_sources, list)
                     or not any(
                         isinstance(reference, dict)
@@ -1406,6 +1614,8 @@ def _career_context_items(
                     "fromItemKey": edge.get("from_item_key"),
                     "toItemType": edge.get("to_item_type"),
                     "toItemKey": edge.get("to_item_key"),
+                    "toContextLevel": target_context_level,
+                    "toContextKey": target_context_key,
                     "toName": edge.get("to_name"),
                     "sourceIds": edge.get("source_ids") or [],
                     "sourceReferences": edge.get("source_references") or [],
@@ -1463,6 +1673,7 @@ def _career_context_items(
                     "targetLabel": target.get("target_label"),
                     "useCaseKey": target.get("use_case_key"),
                     "requirementLevel": requirement_level,
+                    "requirementScope": target.get("requirement_scope") or {},
                     "pathReason": target.get("path_reason"),
                     "relationshipStatus": "source_backed",
                     "sourceIds": source_ids,
@@ -1690,6 +1901,7 @@ def _programme_curriculum_contract(svc: Any, programme_id: str) -> dict:
         "status": "unavailable",
         "outcomes": [],
         "abilities": [],
+        "programmeThemes": [],
         "themeGuidance": [],
         "themeRelationships": [],
         "sourceAuthority": None,
@@ -1835,6 +2047,23 @@ def _programme_curriculum_contract(svc: Any, programme_id: str) -> dict:
         }
         for row in ability_rows
     ]
+    themes = d078_sociology_programme_themes()
+    sociology_course_codes = {
+        str(code).strip().casefold()
+        for theme in themes
+        for code in (theme.get("courseCodes") or [])
+    }
+    sociology_code_matches = {
+        str(row.get("courseCode") or "").strip().casefold()
+        for row in result["outcomes"]
+        if str(row.get("courseCode") or "").strip().casefold() in sociology_course_codes
+    }
+    # Avoid attaching the Sociology pilot's themes to an unrelated programme
+    # that happens to have one similarly named course. Its own contract remains
+    # available, but this theme catalog is emitted only on a clear course-code
+    # match to the reviewed Sociology curriculum.
+    if len(sociology_code_matches) >= 10:
+        result["programmeThemes"] = themes
     result["themeGuidance"] = [
         {
             "themeKey": row.get("theme_key"),
@@ -2455,11 +2684,21 @@ async def get_domain(domain_id: str, programme_id: Optional[str] = Query(None)):
                             course_anchors,
                             transferable_evidence,
                         )
+                        handoff_copy = _programme_domain_handoff_copy(
+                            programme_name,
+                            str(domain.get("name") or "this field"),
+                        )
                         programme_connection = {
                             "programmeId": canonical_id,
                             "programmeName": programme_name,
                             "relationship": relationship,
                             "explanation": relation_copy,
+                            **handoff_copy,
+                            "transferableLearningNarrative": _programme_domain_transfer_narrative(
+                                programme_name,
+                                str(domain.get("name") or "this field"),
+                                transferable_evidence,
+                            ),
                             "curriculumAvailable": True,
                             "curriculumCourseCount": len({
                                 str(row.get("courseCode"))
@@ -2470,6 +2709,11 @@ async def get_domain(domain_id: str, programme_id: Optional[str] = Query(None)):
                             "courseAnchors": course_anchors,
                             "transferableEvidence": transferable_evidence,
                             "curriculumOutcomes": curriculum_outcomes,
+                            "programmeCurriculumThemes": _programme_curriculum_theme_context(
+                                curriculum.get("programmeThemes") or [],
+                                curriculum_outcomes,
+                                curriculum.get("outcomes") or [],
+                            ),
                             "mappingSource": evidence.get("mapping_source"),
                             "sourceReviewRequired": False,
                             "reviewRequired": False,
@@ -2494,6 +2738,10 @@ async def get_domain(domain_id: str, programme_id: Optional[str] = Query(None)):
             .select("*")
             .eq("domain_id", domain_uuid)
             .execute()
+        )
+        d078_routes = d078_guided_area_data() if domain_id == "D078" else None
+        d078_routed_role_keys_set = (
+            d078_routed_role_keys(role_res.data or []) if d078_routes else set()
         )
         reviewed_role_guidance_keys: set[str] = set()
         if domain_id == "D078":
@@ -2526,10 +2774,18 @@ async def get_domain(domain_id: str, programme_id: Optional[str] = Query(None)):
             not in {"review_only", "excluded", "audit_only"}
             and (
                 domain_id != "D078"
+                or str(row.get("role_key") or "").strip().casefold() in d078_routed_role_keys_set
                 or str(row.get("role_key") or "").strip().casefold() in reviewed_role_guidance_keys
             )
         ]
         role_guidance_keys = set(reviewed_role_guidance_keys)
+        if domain_id == "D078":
+            # A reviewed route is enough to make the role selectable and its
+            # detail route reachable. It is not proof that every role learning
+            # item is ready; item-level visibility remains separately gated.
+            role_guidance_keys.update(
+                d078_routed_role_keys_set
+            )
         if domain_id != "D078":
             role_guidance_keys.update(_student_role_guidance_keys(svc, domain_id))
         visible_role_count_by_subgroup: dict[str, int] = {}
@@ -2802,9 +3058,13 @@ async def get_domain(domain_id: str, programme_id: Optional[str] = Query(None)):
         # two legacy ISCO subgroup buckets in the guided student route. The
         # catalog and reviewed area→role routes are consumed as recorded; no
         # role-fit decisions are recomputed here.
-        d078_routes = d078_guided_area_data() if domain_id == "D078" else None
         if d078_routes:
             current_areas = []
+            role_rows_by_name = {
+                re.sub(r"[^a-z0-9]+", " ", str(row.get("role_name") or "").casefold()).strip(): row
+                for row in (role_res.data or [])
+                if row.get("role_name")
+            }
             for area in d078_routes["areas"]:
                 area_key = area["id"]
                 area_items = _career_context_items(
@@ -2814,11 +3074,52 @@ async def get_domain(domain_id: str, programme_id: Optional[str] = Query(None)):
                     area_items,
                     d078_area_context_items(area_key),
                 )
+                area_role_options = []
+                for route in area["roleRoutes"]:
+                    if not route.get("studentVisible"):
+                        continue
+                    role_name = str(route.get("roleName") or "").strip()
+                    normalized_role_name = re.sub(r"[^a-z0-9]+", " ", role_name.casefold()).strip()
+                    role_row = role_rows_by_name.get(normalized_role_name, {})
+                    route_context = []
+                    if route.get("domainRouteStatus") == "reviewed_conditional" and route.get("domainRouteCondition"):
+                        route_context.append(
+                            f"This role connects to Social Sciences & Behavioural Research when {route['domainRouteCondition']}"
+                        )
+                    if route.get("status") == "reviewed_conditional" and route.get("condition"):
+                        route_context.append(
+                            f"Within {route.get('areaName')}, this route fits when {route['condition']}"
+                        )
+                    route_context.append(
+                        route.get("positiveTaskEvidence") or route.get("rationale") or ""
+                    )
+                    route_description = ". ".join(
+                        part.strip().rstrip(".")
+                        for part in route_context
+                        if isinstance(part, str) and part.strip()
+                    )
+                    area_role_options.append({
+                        "key": role_row.get("role_key") or f"D078|{role_name.casefold()}",
+                        "name": role_row.get("role_name") or role_name.title(),
+                        "description": route_description or role_row.get("description"),
+                        "studentOrientation": (role_row.get("source_provenance") or {}).get("student_orientation") or {},
+                        "areaRouteStatus": route.get("status"),
+                        "areaRouteReason": route.get("rationale"),
+                        "areaRouteCondition": route.get("condition"),
+                        "areaTaskEvidence": route.get("positiveTaskEvidence"),
+                        "areaRouteSources": route.get("sourceReferences") or [],
+                        "domainRouteStatus": route.get("domainRouteStatus"),
+                        "domainRouteReason": route.get("domainRouteReason"),
+                        "domainRouteCondition": route.get("domainRouteCondition"),
+                        "domainTaskEvidence": route.get("domainTaskEvidence"),
+                        "domainRouteSources": route.get("domainRouteSources") or [],
+                        "guidanceAvailable": str(role_row.get("role_key") or "").strip().casefold() in role_guidance_keys,
+                    })
                 current_areas.append({
                     "id": area_key,
                     "name": area["name"],
                     "description": area["description"],
-                    "roleCount": len(area["roleRoutes"]),
+                    "roleCount": len(area_role_options),
                     "clusterSkills": [],
                     "tools": _tool_groups([], tool_resource_urls),
                     "certifications": [],
@@ -2826,6 +3127,7 @@ async def get_domain(domain_id: str, programme_id: Optional[str] = Query(None)):
                     "contextItems": area_items,
                     "areaSources": area["sources"],
                     "areaRoutes": area["roleRoutes"],
+                    "areaRoleOptions": area_role_options,
                     "sourceConfidence": area["sourceConfidence"],
                     "dataState": area["dataState"],
                     "displayOrder": area["displayOrder"],
@@ -2900,7 +3202,9 @@ async def get_domain(domain_id: str, programme_id: Optional[str] = Query(None)):
         domain_description, domain_description_sources = _student_domain_description(domain)
         data = {
             "id": domain.get("domain_key"),
-            "name": domain.get("name"),
+            # D078's approved learner-facing name is the full domain title;
+            # older taxonomy rows and role imports store only its shorthand.
+            "name": "Social Sciences & Behavioural Research" if domain_id == "D078" else domain.get("name"),
             "cluster": domain.get("cluster"),
             "clusters": domain.get("clusters") or [],
             "description": domain_description,
@@ -3018,6 +3322,8 @@ async def get_role(
             d078_area_routes = d078_data["roleAreas"].get(
                 str(role.get("role_key") or "").split("|", 1)[-1].strip().casefold(), []
             )
+            if not d078_area_routes:
+                return ResponseModel(data=_coming_soon("This role has no currently supported area route."))
             if area_id:
                 selected_d078_area = next(
                     (
@@ -3025,6 +3331,12 @@ async def get_role(
                         if area["id"] == area_id
                         and any(route["areaId"] == area_id for route in d078_area_routes)
                     ),
+                    None,
+                )
+            elif len(d078_area_routes) == 1:
+                sole_area_id = str(d078_area_routes[0].get("areaId") or "")
+                selected_d078_area = next(
+                    (area for area in d078_data["areas"] if area["id"] == sole_area_id),
                     None,
                 )
         if str(role.get("data_state") or "").strip().lower() in {"review_only", "excluded", "audit_only"}:
@@ -3035,14 +3347,28 @@ async def get_role(
         if str(role.get("role_key") or "").startswith("D078|"):
             resource_rows = _reviewed_guidance_resources(resource_rows)
         resource_rows = _student_guidance_resources(resource_rows, expected_scope="role")
+        role_key = str(role.get("role_key") or "").strip()
         role_context_items = _career_context_items(
-            svc, context_level="role", context_key=role_id
+            svc, context_level="role", context_key=role_key or role_id
         )
-        if str(role.get("role_key") or "").startswith("D078|") and not role_context_items:
-            # A direct role URL must obey the same exact role-owned context gate
-            # as the D078 domain role grid. Legacy descriptions and flattened
-            # skill arrays remain audit evidence, not student guidance.
-            return ResponseModel(data=_coming_soon("This role is not available in student guidance yet."))
+        # Older D078 seeds used the role UUID as context_key. Read those rows
+        # during migration, while new role-owned rows use the stable D078|name
+        # key consumed by the domain route and guidance tray.
+        if role_key.startswith("D078|") and not role_context_items:
+            role_context_items = _career_context_items(
+                svc, context_level="role", context_key=role_id
+            )
+        if role_key.startswith("D078|"):
+            # The reviewed master reconciliation is the current source for
+            # D078 role-owned tasks. The separate contract SQL ledger is not a
+            # student read surface; materialize its approved, linked records
+            # through the same item-level API contract used by domain/area
+            # cards. Per-item approval, ownership and learning-link checks
+            # happen in d078_role_context_items; role-route availability stays
+            # independently sourced from the current route graph.
+            role_context_items = merge_d078_context_items(
+                role_context_items, d078_role_context_items(role_key)
+            )
         role_context_item_keys = {
             (str(item.get("itemType") or "").casefold(), str(item.get("name") or "").casefold())
             for item in role_context_items
@@ -3076,6 +3402,15 @@ async def get_role(
                     and ("tool", str(tool.get("tool_name") or "").casefold()) in role_context_item_keys
                 ]
             )
+            if str(role.get("role_key") or "").startswith("D078|"):
+                # D078 tool cards now come from the complete, source-backed
+                # role-context contract. Avoid showing a second legacy tool
+                # row for the same visible item name.
+                reviewed_tool_names = {
+                    str(item.get("name") or "").strip().casefold()
+                    for item in role_context_items if item.get("itemType") == "tool"
+                }
+                role_tools = [tool for tool in role_tools if str(tool.get("tool_name") or "").strip().casefold() not in reviewed_tool_names]
             role_certs = (
                 svc.table("role_certifications").select("*")
                 .eq("role_key", role_id).order("name").execute().data or []
@@ -3359,6 +3694,19 @@ async def get_role(
         except Exception as method_exc:  # noqa: BLE001
             log.debug("career role computational method evidence unavailable", error=str(method_exc))
 
+        role_area_routes = []
+        role_area_tool_options: list[dict] = []
+        if role_key.startswith("D078|"):
+            normalized_role_name = re.sub(r"[^a-z0-9]+", " ", str(role.get("role_name") or "").casefold()).strip()
+            role_area_routes = (d078_guided_area_data().get("roleAreas") or {}).get(normalized_role_name, [])
+            if selected_d078_area:
+                selected_role_tool_ids = {
+                    str(item.get("canonicalToolId") or "").casefold()
+                    for item in role_context_items if item.get("itemType") == "tool"
+                }
+                role_area_tool_options = d078_area_tool_options(
+                    str(selected_d078_area["id"]), exclude_canonical_tool_ids=selected_role_tool_ids
+                )
         data = {
             "key": role.get("role_key"),
             "name": role.get("role_name"),
@@ -3372,7 +3720,6 @@ async def get_role(
             ),
             **({
                 "areaIds": list(dict.fromkeys(route["areaId"] for route in d078_area_routes)),
-                "areaRoutes": d078_area_routes,
             } if str(role.get("role_key") or "").startswith("D078|") else {}),
             "parentContext": parent_context,
             "computationalSubgroups": computational_subgroups,
@@ -3456,6 +3803,10 @@ async def get_role(
             "currencySource": role.get("currency_source"),
             "resources": resource_rows,
             "contextItems": role_context_items,
+            "areaRoutes": role_area_routes,
+            "areaToolOptions": role_area_tool_options,
+            "guidanceAvailable": bool(role_area_routes) if role_key.startswith("D078|") else bool(role_context_items),
+            "learningItemsAvailable": bool(role_context_items),
         }
         return ResponseModel(data=_real(data))
     except Exception as exc:  # noqa: BLE001

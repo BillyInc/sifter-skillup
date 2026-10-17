@@ -19,8 +19,9 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[3]
 AUDIT = ROOT / "data/career-mapping/_audit"
 LANES = AUDIT / "d078_area_enrichment_lanes_2026_10_10"
-GRAPH = AUDIT / "D078_PROGRAMME_TO_ROLE_LEARNING_PATH_GRAPH_2026_10_10.json"
-REPORT = ROOT / "docs/manual-review/D078_PROGRAMME_TO_ROLE_LEARNING_PATH_GRAPH_2026_10_10.md"
+GRAPH = AUDIT / "D078_PROGRAMME_TO_ROLE_LEARNING_PATH_GRAPH_2026_10_15.rebuilt.json"
+RUNTIME_GRAPH = AUDIT / "D078_PROGRAMME_TO_ROLE_LEARNING_PATH_GRAPH_2026_10_15.json"
+REPORT = ROOT / "docs/manual-review/D078_PROGRAMME_TO_ROLE_LEARNING_PATH_GRAPH_2026_10_15.md"
 ROLES_FILE = ROOT / "data/career-mapping/role_library_v3_cleaned.json"
 EMERGING_SUPPLEMENT = AUDIT / "D078_DOMAIN_WIDE_EMERGING_TASK_SET_ENRICHMENT_2026_10_10.json"
 EMERGING_DISPOSITION = AUDIT / "D078_DOMAIN_WIDE_EMERGING_SUPPLEMENT_DISPOSITION_2026_10_10.json"
@@ -444,6 +445,7 @@ def add_area_contract_relationships(nodes: dict[str, dict[str, Any]],
                 student_visible=False,
                 sequence_approved=False,
             )
+
             stats["relationship_edges"] += 1
 
         for relation in contract_entries(closure.get("relationships")):
@@ -861,6 +863,34 @@ def add_sociology_programme_route(
     nodes[programme_id] = programme_node
 
     theme_ids: list[str] = []
+    theme_domain_matches: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    outcomes_by_course: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for outcome in curriculum.get("curriculumOutcomes", {}).get("rows", []):
+        locator = outcome.get("sourceLocator") or {}
+        course_code = str(locator.get("courseCode") or "").strip()
+        if course_code:
+            outcomes_by_course[course_code].append(outcome)
+    for evidence in programme_evidence.get("transferable_evidence", []):
+        identity = str(evidence.get("course_identity") or "")
+        course_code = identity.split("::", 1)[0].strip()
+        evidence_text = norm(evidence.get("evidence"))
+        if not course_code or not evidence_text:
+            continue
+        matched_outcome = next((
+            outcome for outcome in outcomes_by_course.get(course_code, [])
+            if evidence_text in norm(outcome.get("sourceText"))
+        ), None)
+        if not matched_outcome:
+            continue
+        for theme in theme_audit["themes"]:
+            if course_code in theme.get("courseCodes", []):
+                theme_domain_matches[theme["themeKey"]].append({
+                    "course_code": course_code,
+                    "outcome_id": matched_outcome.get("outcomeId"),
+                    "evidence": evidence.get("evidence"),
+                    "course_identity": identity,
+                })
+
     for theme in theme_audit["themes"]:
         theme_id = f"programme-theme:sociology:{theme['themeKey']}"
         course_codes = list(theme.get("courseCodes", []))
@@ -897,6 +927,67 @@ def add_sociology_programme_route(
         nodes[theme_id] = theme_node
         theme_ids.append(theme_id)
         add_edge(edges, theme_id, programme_id, "fixed_curriculum_theme_of", "hidden_route_context_candidate")
+        matches = theme_domain_matches.get(theme["themeKey"], [])
+        if matches:
+            # This is a contextual transfer link, not a prerequisite or a
+            # claim that all programme learning is taught by the domain.
+            add_edge(
+                edges,
+                theme_id,
+                "domain:D078",
+                "programme_theme_connects_to_domain_evidence",
+                "evidence_matched_hidden_route_context",
+                matched_outcomes=sorted({row["outcome_id"] for row in matches if row.get("outcome_id")}),
+                matched_course_codes=sorted({row["course_code"] for row in matches}),
+                supporting_evidence=matches,
+                source_artifacts=[
+                    str(SOCIOLOGY_CURRICULUM_CONTRACT.relative_to(ROOT)).replace("\\", "/"),
+                    str(PROGRAMME_DOMAIN_EVIDENCE.relative_to(ROOT)).replace("\\", "/"),
+                ],
+                student_facing_explanation=(
+                    "This programme theme connects to the Social Sciences domain through the listed course evidence. "
+                    "It describes what the Sociology programme covers; it does not mean the programme teaches every part of the domain."
+                ),
+                student_visible=False,
+                sequence_approved=False,
+            )
+
+        # Preserve every course outcome under its reviewed programme theme.
+        # These fixed curriculum records provide context, not selectable domain
+        # items or prerequisites for the downstream learning path.
+        for code in course_codes:
+            for outcome in outcomes_by_course.get(code, []):
+                outcome_id = str(outcome.get("outcomeId") or "").strip()
+                if not outcome_id:
+                    continue
+                outcome_node_id = f"programme-outcome:sociology:{outcome_id}"
+                outcome_node = {
+                    "id": outcome_node_id,
+                    "kind": "programme_outcome",
+                    "programme_id": programme_id,
+                    "course_code": code,
+                    "course_title": outcome.get("courseTitle"),
+                    "label": outcome.get("studentText") or outcome.get("sourceText"),
+                    "source_text": outcome.get("sourceText"),
+                    "source_locator": outcome.get("sourceLocator") or {},
+                    "fixed_curriculum": True,
+                    "selectable": False,
+                    "student_visible": False,
+                    "approval": "hidden_route_design_candidate_not_student_approved",
+                    "source_artifacts": [str(SOCIOLOGY_CURRICULUM_CONTRACT.relative_to(ROOT)).replace("\\", "/")],
+                }
+                if outcome_node_id in nodes and nodes[outcome_node_id] != outcome_node:
+                    raise ValueError(f"Sociology programme outcome conflicts with curriculum source: {outcome_node_id}")
+                nodes[outcome_node_id] = outcome_node
+                add_edge(
+                    edges,
+                    outcome_node_id,
+                    theme_id,
+                    "curriculum_outcome_grouped_under_theme",
+                    "fixed_curriculum_context_hidden",
+                    student_visible=False,
+                    sequence_approved=False,
+                )
 
     transition_id = "sequence:programme-sociology-to-domain-d078"
     transition = {
@@ -911,7 +1002,8 @@ def add_sociology_programme_route(
         "transferable_evidence_count": programme_evidence["transferable_evidence_count"],
         "evidence_key": "Social Sciences::Sociology::D078",
         "evidence_artifact": str(PROGRAMME_DOMAIN_EVIDENCE.relative_to(ROOT)).replace("\\", "/"),
-        "student_facing_explanation": "The Sociology programme provides the learner's starting context. The Social Sciences domain then broadens that foundation into connected ways of studying people, institutions and society; domain enrichment is not being described as CCMAS-taught content.",
+        "student_facing_explanation": "Your Sociology studies introduce you to analysing social structures and society's dynamics, using ideas about culture and socialisation, and examining human behaviour. These are relevant starting points for Social Sciences—not the whole set of capabilities used across the field. Beyond the programme, the path shows shared domain foundations, optional useful edges, and additions for the areas or roles you choose. It does not claim every employer requires every item or that your degree already taught these additions.",
+        "transferable_learning_summary": "Analysing social structures and societal dynamics; using core ideas about culture and socialisation; examining human behaviour.",
         "student_visible": False,
         "sequence_approved": False,
     }
@@ -945,6 +1037,8 @@ def add_sociology_programme_route(
         "programme_node_id": programme_id,
         "programme_theme_nodes": len(theme_ids),
         "programme_domain_transition_edges": 1,
+        "programme_theme_domain_context_edges": len(theme_domain_matches),
+        "programme_theme_domain_matched_outcome_records": sum(len(rows) for rows in theme_domain_matches.values()),
         "course_anchor_count": programme_evidence["course_anchor_count"],
         "course_anchor_quality": programme_evidence["course_anchor_quality"],
         "student_visible": False,
@@ -1846,7 +1940,11 @@ def main() -> None:
         "full_path_sequence_design_integrated": True,
         "full_path_sequence_design_student_visible": False,
         "programme_theme_nodes": programme_route_audit["programme_theme_nodes"],
+        "programme_outcome_nodes": sum(1 for node in nodes.values() if node.get("kind") == "programme_outcome"),
+        "programme_theme_outcome_edges": sum(1 for edge in edges if edge.get("relationship") == "curriculum_outcome_grouped_under_theme"),
         "programme_domain_transition_edges": programme_route_audit["programme_domain_transition_edges"],
+        "programme_theme_domain_context_edges": programme_route_audit["programme_theme_domain_context_edges"],
+        "programme_theme_domain_matched_outcome_records": programme_route_audit["programme_theme_domain_matched_outcome_records"],
     })
     # The closure includes inherited audit prose as evidence context; apply the
     # retired-area-label guard after attaching it so retired names cannot leak
@@ -1861,10 +1959,135 @@ def main() -> None:
     # serialized graph from stopping at the pre-integration candidate union.
     role_item_integration = AUDIT / "integrate_d078_role_item_reconciliation_hidden_graph_2026_10_10.py"
     subprocess.run([sys.executable, str(role_item_integration)], cwd=ROOT, check=True)
+
+    # Materialize task-linked area tools only after all 173 role dispositions
+    # have candidate/audit nodes. Two unapproved records remain internal
+    # disposition nodes and do not become learner-path items.
+    tool_integration = AUDIT / "integrate_d078_area_tool_options_into_graph_2026_10_15.py"
+    subprocess.run([sys.executable, str(tool_integration)], cwd=ROOT, check=True)
     graph = load_json(GRAPH)
     nodes = {node["id"]: node for node in graph["nodes"]}
     edges = graph["edges"]
+
+    # A reviewed route being selectable is a different decision from approving
+    # every learning item in the graph. Recompute role-card visibility from the
+    # current route evidence so stale seed flags cannot hide a supported route.
+    # Keep the overall graph and all learning-item nodes hidden until their own
+    # item-level display contract is approved.
+    role_nodes = {
+        node["id"]: node
+        for node in graph["nodes"]
+        if node.get("kind") == "role" and node.get("domain_id") == "D078"
+    }
+    domain_edges = {
+        edge.get("target"): edge
+        for edge in edges
+        if edge.get("relationship") == "domain_to_role"
+        and edge.get("target") in role_nodes
+    }
+
+    def has_https_source(values: Any) -> bool:
+        return any(
+            isinstance(value, str) and value.startswith("https://")
+            for value in (values or [])
+        )
+
+    def route_condition(edge: dict[str, Any] | None) -> str:
+        evidence = (edge or {}).get("evidence") or {}
+        condition = str(evidence.get("conditional_use_case") or evidence.get("basis") or "")
+        for marker in (" Local reconciliation of ", " Role-agent exact-key review ", " Second-pass "):
+            condition = condition.split(marker, 1)[0]
+        if ": " in condition:
+            condition = condition.split(": ", 1)[1]
+        return condition.strip()
+
+    area_edges_by_role: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for edge in edges:
+        if edge.get("relationship") == "area_to_role" and edge.get("target") in role_nodes:
+            area_edges_by_role[edge["target"]].append(edge)
+
+    visible_role_ids: set[str] = set()
+    visible_area_route_count = 0
+    for role_id, role in role_nodes.items():
+        domain_edge = domain_edges.get(role_id)
+        domain_status = (domain_edge or {}).get("status")
+        domain_evidence = (domain_edge or {}).get("evidence") or {}
+        domain_ok = bool(
+            domain_status in {"reviewed_supported", "reviewed_conditional"}
+            and has_https_source(domain_evidence.get("source_refs"))
+            and (
+                domain_status != "reviewed_conditional"
+                or route_condition(domain_edge)
+            )
+        )
+        qualifying_area_edges = []
+        for edge in area_edges_by_role.get(role_id, []):
+            status = edge.get("status")
+            area_ok = bool(
+                status in {"reviewed_supported", "reviewed_conditional"}
+                and str(edge.get("rationale") or "").strip()
+                and str(edge.get("positive_task_evidence") or "").strip()
+                and has_https_source(edge.get("source_refs"))
+                and (status != "reviewed_conditional" or str(edge.get("scope_condition") or edge.get("condition") or "").strip())
+            )
+            edge["student_visible"] = bool(domain_ok and area_ok)
+            if edge["student_visible"]:
+                edge["visibility_scope"] = "selectable_role_route"
+                qualifying_area_edges.append(edge)
+                visible_area_route_count += 1
+            else:
+                edge["student_visible"] = False
+                edge.pop("visibility_scope", None)
+        role_visible = domain_ok and bool(qualifying_area_edges)
+        role["student_visible"] = role_visible
+        if role_visible:
+            visible_role_ids.add(role_id)
+            role["visibility_scope"] = "selectable_role_route"
+        else:
+            role.pop("visibility_scope", None)
+        if domain_edge:
+            domain_edge["student_visible"] = role_visible
+            if role_visible:
+                domain_edge["visibility_scope"] = "selectable_role_route"
+            else:
+                domain_edge.pop("visibility_scope", None)
+
+    graph["route_visibility_reconciliation"] = {
+        "status": "recomputed_from_current_source_backed_routes",
+        "visible_role_cards": len(visible_role_ids),
+        "roles_with_multiple_area_routes": sum(
+            sum(edge.get("student_visible") is True for edge in area_edges_by_role.get(role_id, [])) > 1
+            for role_id in visible_role_ids
+        ),
+        "visible_area_routes": visible_area_route_count,
+        "learning_item_visibility_changed": False,
+        "route_visibility_is_not_learning_item_approval": True,
+    }
+    graph["student_visible"] = False
+    graph["final_graph_ready"] = False
+    for node in graph["nodes"]:
+        if node.get("kind") != "role":
+            node["student_visible"] = False
+    for edge in edges:
+        if edge.get("relationship") not in {"domain_to_role", "area_to_role"}:
+            edge["student_visible"] = False
+
+    # The API's D078 route helper and the graph audit consume the stable path.
+    # Publish the same rebuilt artifact there so tools, role routes and the
+    # reconciled per-item decisions cannot diverge between two JSON files.
+    graph_text = json.dumps(graph, indent=2, ensure_ascii=False) + "\n"
+    GRAPH.write_text(graph_text, encoding="utf-8")
+    RUNTIME_GRAPH.write_text(graph_text, encoding="utf-8")
+    # Preserve the independently researched optional role-tool layer during a
+    # full rebuild; otherwise regeneration would silently drop those routes.
+    role_tool_integration = AUDIT / "integrate_d078_role_tools_into_graph_2026_10_16.py"
+    subprocess.run([sys.executable, str(role_tool_integration)], cwd=ROOT, check=True)
+    graph = load_json(GRAPH)
+    nodes = {node["id"]: node for node in graph["nodes"]}
+    edges = graph["edges"]
+    edges = graph["edges"]
     area_candidate_items = [node for node in nodes.values() if node.get("kind") == "area_enrichment_item"]
+    area_tool_options = [node for node in nodes.values() if node.get("kind") == "area_tool_option"]
     path_roles = [node for node in nodes.values() if node.get("kind") == "role"]
     area_role_edges = [edge for edge in edges if edge.get("relationship") == "area_to_role"]
     domain_role_edges = [edge for edge in edges if edge.get("relationship") == "domain_to_role"]
@@ -1901,12 +2124,13 @@ def main() -> None:
         f"- Current Areas of Specialization represented: **{len(area_ids_in_graph)}**.",
         f"- Earlier graph area-item records retained: **{graph['area_reconciliation']['old_graph_area_items_retained']}**.",
         f"- New unique area-enrichment items added: **{len(area_candidate_items)}**.",
+        f"- Newly researched, task-linked area tool options integrated as individual nodes: **{len(area_tool_options)}**; these remain optional choices and add no hard prerequisites.",
         f"- Separate domain-wide emerging supplement candidates included (hidden; no area/role ownership assigned): **{len(supplement_node_ids)}**.",
         f"- Each supplement has an official reference and a free, paid or video learning destination: **{all(nodes[node_id].get('official_reference_links') and (nodes[node_id].get('free_learning_links') or nodes[node_id].get('video_learning_links') or nodes[node_id].get('paid_learning_alternatives')) for node_id in supplement_node_ids.values())}**.",
         f"- Area-item content repairs attached to exact graph items (programme context/task/use/output): **{graph['area_reconciliation']['area_item_content_reconciliation_nodes_resolved']} / {len(context_rows)}**; alternatives: **{graph['area_reconciliation']['area_item_alternative_dispositions']}**; prerequisite dispositions: **{graph['area_reconciliation']['area_item_prerequisite_dispositions']}**.",
         f"- Area-resource repairs now attached to exact graph items: **{len(repaired_area_nodes)} / 35**; unique linked source/learning-route identities: **{len(repair_source_ids)}**; bounded scope branches retained for follow-up: **{unresolved_repair_branches}**.",
         f"- Area relationship declarations: **{area_relationship_audit['area_item_relationship_edges']}**; after disposition, **{area_relationship_audit['resolved_target_references']}** typed references resolve to existing graph items, **{area_relationship_audit['descriptive_relationship_annotations']}** remain non-item annotations, **{area_relationship_audit['new_hidden_candidate_reference_records']}** point to **{area_relationship_audit['unique_hidden_candidate_items']}** hidden candidate items, **{area_relationship_audit['unsupported_hidden_reference_records']}** are explicitly unsupported, and **{area_relationship_audit['unresolved_typed_target_references']}** remain undispositioned.",
-        f"- The programme route now includes {programme_route_audit['programme_theme_nodes']} fixed, non-selectable Sociology themes and one hidden direct Sociology→D078 transition supported by {programme_route_audit['course_anchor_count']} strong course anchors. The themes are student-facing groupings of curriculum courses, not official CCMAS theme labels.",
+        f"- The programme route includes {programme_route_audit['programme_theme_nodes']} fixed, non-selectable Sociology themes and {graph['validation']['programme_outcome_nodes']} fixed course-outcome records grouped under them, plus one hidden direct Sociology→D078 transition supported by {programme_route_audit['course_anchor_count']} strong course anchors. The transition explains programme learning that transfers directly (social-structure analysis, culture/socialisation concepts and human-behaviour study) and distinguishes it from shared domain foundations, optional useful edges and chosen area/role additions. Exact CCMAS evidence links {programme_route_audit['programme_theme_domain_context_edges']} theme(s) to D078 through {programme_route_audit['programme_theme_domain_matched_outcome_records']} matched outcome/evidence records; those links are evidence highlights, not a filter on which programme themes/outcomes are carried forward, nor added prerequisites. Themes are reviewed groupings of curriculum courses, not official CCMAS theme labels.",
         f"- Three route-scoped learning-order dependencies are source-checked and approved (statistics foundations→applied econometrics when needed; applied econometrics→causal ML on the advanced causal route; agent-based economics modelling→CASEVO on that implementation route). They remain hidden until the separate content/UI release gates pass.",
         f"- All dispositioned targets and candidate nodes remain hidden. The 19 sequencing-critical references have reconciled local interpretations and record-specific source checks ({sequence_direction_review_audit['reference_records']} / 19); workflow safeguards, conditions, alternatives and complements are not converted into learner prerequisites.",
         f"- Task-family nodes retained/added: **{len(area_task_nodes)}**.",
@@ -1940,6 +2164,7 @@ def main() -> None:
         "area_nodes": len(area_ids_in_graph),
         "old_area_items_retained": graph["area_reconciliation"]["old_graph_area_items_retained"],
         "new_area_items": len(area_candidate_items),
+        "new_task_linked_area_tool_options": len(area_tool_options),
         "unique_area_task_families": graph["area_reconciliation"]["new_unique_area_task_families"],
         "role_rows": graph["role_route_reconciliation"]["canonical_d078_role_rows"],
         "area_role_edges": len(area_role_edges),

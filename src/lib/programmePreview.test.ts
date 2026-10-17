@@ -1,44 +1,62 @@
-import { hasStudentDisplayableProgrammeLearning, programmePreviewUnavailableMessage } from "./programmePreview";
-import type { ProgrammeCurriculumContract } from "@/types/career";
+import { programmePreviewExplanation } from "./programmePreview";
+import { sociologyCurriculumPreview } from "./sociologyCurriculumPreview";
+import type { Programme, ProgrammeCurriculumContract } from "@/types/career";
 
-describe("programme preview learning availability", () => {
-  it("recognizes source-backed abilities when course outcomes are absent", () => {
-    const contract: ProgrammeCurriculumContract = {
-      status: "available",
-      outcomes: [],
-      abilities: [{
-        abilityId: "ability-1",
-        sourceText: "Apply evidence to a practical problem",
-        studentText: "Apply evidence to a practical problem",
-        sourceLocator: { page: 12 },
-        dataState: "source_backed",
-      }],
-    };
+describe("programmePreviewExplanation", () => {
+  it("loads the reviewed Sociology curriculum by its exact student-facing programme name", () => {
+    const programme = {
+      id: "sociology",
+      name: "Sociology",
+      institutionType: "university",
+      discipline: "Social Sciences",
+      domains: [],
+    } as Programme;
+    const preview = sociologyCurriculumPreview(programme);
 
-    expect(hasStudentDisplayableProgrammeLearning(contract)).toBe(true);
+    expect(preview?.status).toBe("available");
+    expect(preview?.outcomes.length).toBeGreaterThan(200);
+    expect(preview?.abilities).toHaveLength(7);
   });
 
-  it("does not treat review-only rows as student preview content", () => {
-    const contract: ProgrammeCurriculumContract = {
+  it("does not apply the Sociology-only curriculum to the distinct Sociology and Anthropology JAMB programme", () => {
+    const programme = {
+      id: "sociology",
+      name: "Sociology and Social Anthropology",
+      studentName: "Sociology",
+      institutionType: "university",
+      discipline: "Social Sciences",
+      domains: [],
+    } as Programme;
+
+    expect(sociologyCurriculumPreview(programme)).toBeUndefined();
+  });
+
+  it("uses the displayed local reviewed curriculum when the API contract is not seeded", () => {
+    const programme = {
+      id: "sociology",
+      name: "Sociology",
+      institutionType: "university",
+      discipline: "Social Sciences",
+      domains: [],
+    } as Programme;
+    const reviewedPreview: ProgrammeCurriculumContract = {
       status: "available",
+      localSourcePreview: true,
       outcomes: [{
         outcomeId: "outcome-1",
-        courseCode: "ABC101",
-        courseTitle: "Introduction to the field",
+        courseCode: "SOC 301",
+        courseTitle: "Methods of Social Research and Statistics",
         outcomeIndex: 1,
-        sourceText: "Review-only claim",
-        studentText: "Review-only claim",
-        sourceLocator: { page: 12 },
-        dataState: "review_only",
+        sourceText: "Use research methods.",
+        studentText: "Choose a suitable research method.",
+        sourceLocator: { page: 334 },
+        dataState: "source_backed",
       }],
       abilities: [],
     };
 
-    expect(hasStudentDisplayableProgrammeLearning(contract)).toBe(false);
-  });
-
-  it("distinguishes an empty available contract from one not loaded yet", () => {
-    expect(programmePreviewUnavailableMessage("available")).toMatch(/record is available/i);
-    expect(programmePreviewUnavailableMessage("not_seeded")).toMatch(/not been loaded/i);
+    expect(programmePreviewExplanation(programme, reviewedPreview)).toContain(
+      "Methods of Social Research and Statistics",
+    );
   });
 });

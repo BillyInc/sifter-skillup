@@ -134,7 +134,7 @@ export function LearningResourcesBlock({
     <View style={[styles.container, style]}>
       <SectionLabel>{title}</SectionLabel>
       <Text style={[styles.intro, { color: colors.textRole.muted }]}>
-        Use these links to understand the domain, build the most useful skills, and check professional requirements.
+        Each link is shown for the specific programme, field, skill, tool or role it supports. Check its note to see why it is relevant and what it helps you explore.
       </Text>
        {grouped.map((group) => {
          const expanded = Boolean(expandedStages[group.label]);
@@ -166,8 +166,8 @@ export function LearningResourcesBlock({
                   {resourceKind(resource)} · {resource.provider} · {accessLabel(resource)}
                 </Text>
                 {resource.description ? (
-                  <Text style={[styles.description, { color: colors.textRole.secondary }]} numberOfLines={2}>
-                    {resource.description}
+                  <Text style={[styles.description, { color: colors.textRole.secondary }]} numberOfLines={3}>
+                    Why this resource is here: {resource.description}
                   </Text>
                 ) : null}
               </View>

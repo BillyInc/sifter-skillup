@@ -51,6 +51,83 @@ describe("guided learning plan stack", () => {
     expect(result.roleAdditions).toEqual([]);
   });
 
+  it("lets a learner add a useful edge alongside the compulsory path without replacing it", () => {
+    const foundation = candidate({
+      id: "domain-foundation",
+      name: "Domain foundation",
+      layer: "domain",
+      category: "shared_foundation",
+      requirementLevel: "needed",
+    });
+    const useful = candidate({
+      id: "route-edge",
+      name: "Optional route edge",
+      layer: "domain",
+      category: "useful_edge",
+      requirementLevel: "useful",
+      requirementReason: "It supports a selected kind of work but is not needed to continue.",
+    });
+    const route = { programmeId: "sociology", domainId: "D078" };
+    const selected = addToLearningPlan({ route, selectedIds: [foundation.id] }, useful, [foundation, useful]);
+    const stack = buildLearningPlanStack({
+      route,
+      domainItems: [foundation, useful],
+      selectedIds: selected.selection.selectedIds,
+    });
+
+    expect(selected.conflicts).toEqual([]);
+    expect(selected.blockedByPrerequisites).toEqual([]);
+    expect(stack.selectedIds).toEqual([foundation.id, useful.id]);
+    expect(stack.sharedFoundation.map((item) => item.id)).toEqual([foundation.id]);
+    expect(stack.usefulEdges.map((item) => item.id)).toEqual([useful.id]);
+  });
+
+  it("keeps a downstream area useful edge selectable alongside compulsory domain and area learning", () => {
+    const domainFoundation = candidate({
+      id: "domain-foundation",
+      name: "Domain foundation",
+      layer: "domain",
+      category: "shared_foundation",
+      requirementLevel: "needed",
+    });
+    const areaRequirement = candidate({
+      id: "area-requirement",
+      name: "Area requirement",
+      layer: "area",
+      category: "area_addition",
+      requirementLevel: "needed",
+      routeScope: { domainIds: ["D078"], areaIds: ["sociology"] },
+    });
+    const areaEdge = candidate({
+      id: "area-edge",
+      name: "Optional area advantage",
+      layer: "area",
+      category: "useful_edge",
+      requirementLevel: "useful",
+      requirementReason: "It can strengthen one direction within the area, but is not needed to continue.",
+      routeScope: { domainIds: ["D078"], areaIds: ["sociology"] },
+    });
+    const route = { programmeId: "sociology-programme", domainId: "D078", areaId: "sociology" };
+    const available = [domainFoundation, areaRequirement, areaEdge];
+    const selected = addToLearningPlan(
+      { route, selectedIds: [domainFoundation.id, areaRequirement.id] },
+      areaEdge,
+      available,
+    );
+    const stack = buildLearningPlanStack({
+      route,
+      domainItems: [domainFoundation],
+      areaItems: [areaRequirement, areaEdge],
+      selectedIds: selected.selection.selectedIds,
+    });
+
+    expect(selected.conflicts).toEqual([]);
+    expect(selected.blockedByPrerequisites).toEqual([]);
+    expect(stack.sharedFoundation.map((item) => item.id)).toEqual([domainFoundation.id]);
+    expect(stack.areaAdditions.map((item) => item.id)).toEqual([areaRequirement.id]);
+    expect(stack.usefulEdges.map((item) => item.id)).toEqual([areaEdge.id]);
+  });
+
   it("keeps the area layer advisory when the learner stops at the domain", () => {
     const result = buildLearningPlanStack({
       route: { programmeId: "sociology", domainId: "D078" },
@@ -199,6 +276,29 @@ describe("guided learning plan stack", () => {
     ).order).toEqual(["econometrics", "foundation"]);
   });
 
+  it("orders selected conditional prerequisites within their route without blocking selection", () => {
+    const foundation = candidate({ id: "statistics", name: "Statistics foundations", layer: "domain" });
+    const econometrics = candidate({
+      id: "econometrics", name: "Applied econometrics", layer: "area",
+      relationships: [{
+        type: "builds_on", targetId: "statistics", targetName: "Statistics foundations",
+        status: "source_backed", explanation: "Review statistics first if it is new to you.",
+        sourceReferences: [{ title: "Course prerequisite example", url: "https://example.org/statistics" }],
+        sequenceApproved: true, sequencePolicy: "conditional_prerequisite",
+        sequenceCondition: "Only if prior statistics preparation is absent.",
+        sequenceScope: { domainIds: ["D078"], areaIds: ["economics"] },
+      }],
+    });
+    const route = { domainId: "D078", areaId: "economics" };
+    const added = addToLearningPlan({ route, selectedIds: [] }, econometrics, [foundation, econometrics]);
+    expect(added.blockedByPrerequisites).toEqual([]);
+    expect(added.selection.selectedIds).toEqual(["econometrics"]);
+    expect(sequenceLearningPlanIds(["econometrics", "statistics"], [foundation, econometrics], ["econometrics", "statistics"], route).order)
+      .toEqual(["statistics", "econometrics"]);
+    expect(sequenceLearningPlanIds(["econometrics", "statistics"], [foundation, econometrics], ["econometrics", "statistics"], { ...route, areaId: "sociology" }).order)
+      .toEqual(["econometrics", "statistics"]);
+  });
+
   it("does not carry an item outside the selected route", () => {
     const result = buildLearningPlanStack({
       route: { domainId: "D078", areaId: "research" },
@@ -224,6 +324,17 @@ describe("guided learning plan stack", () => {
       candidate({ id: "model", name: "Modelling", layer: "domain", prerequisiteIds: ["design"] }),
     ];
     const result = reorderLearningPlan(selection, ["design", "model"], "model", "design", items);
+    expect(result.order).toEqual(["design", "model"]);
+    expect(result.blockedByPrerequisites).toEqual(["design"]);
+  });
+
+  it("does not allow moving a prerequisite behind its selected dependent", () => {
+    const selection = { route: { domainId: "D078" }, selectedIds: ["design", "model"] };
+    const items = [
+      candidate({ id: "design", name: "Research design", layer: "domain" }),
+      candidate({ id: "model", name: "Modelling", layer: "domain", prerequisiteIds: ["design"] }),
+    ];
+    const result = reorderLearningPlan(selection, ["design", "model"], "design", undefined, items);
     expect(result.order).toEqual(["design", "model"]);
     expect(result.blockedByPrerequisites).toEqual(["design"]);
   });
@@ -295,9 +406,18 @@ describe("guided learning plan stack", () => {
       themeLabel: "Collect and understand evidence",
       useCaseKey: "survey_analysis",
       requirementLevel: "useful",
+      requirementReason: "It helps on routes that analyse survey responses, but is not needed for interview-only work.",
+      geographicScope: "nigeria_to_global",
       plainMeaning: "A tool for organising research data.",
       contextualUse: "Use it to review survey responses in this domain.",
+      programmeContext: "The programme introduces research evidence; this tool is an additional practice option.",
+      domainContext: "The domain uses it to inspect patterns in collected data.",
+      areaContext: "This area applies it when comparing group responses.",
+      roleContext: "A researcher can use it to create a checked summary, not to choose the research question.",
       expectedOutput: "A clear summary of the evidence.",
+      linkTitle: "Survey-analysis guide",
+      linkRationale: "This guide demonstrates the workflow named in the task.",
+      learningLinks: [{ title: "Survey-analysis guide", url: "https://example.org/guide", rationale: "It demonstrates the workflow named in the task.", locator: "Analysis section" }],
       limitations: ["It does not replace research design."],
       sourceReferences: [{ id: "esrc", title: "ESRC guidance", url: "https://example.org/esrc", region: "global" }],
       sourceLocators: [{ sourceId: "esrc", locator: "Section 2.1, pages 4–5" }],
@@ -324,9 +444,18 @@ describe("guided learning plan stack", () => {
       themeLabel: "Collect and understand evidence",
       useCaseKey: "survey_analysis",
       requirementLevel: "useful",
+      requirementReason: "It helps on routes that analyse survey responses, but is not needed for interview-only work.",
+      geographicScope: "nigeria_to_global",
       plainMeaning: "A tool for organising research data.",
       contextualUse: "Use it to review survey responses in this domain.",
+      programmeContext: "The programme introduces research evidence; this tool is an additional practice option.",
+      domainContext: "The domain uses it to inspect patterns in collected data.",
+      areaContext: "This area applies it when comparing group responses.",
+      roleContext: "A researcher can use it to create a checked summary, not to choose the research question.",
       expectedOutput: "A clear summary of the evidence.",
+      linkTitle: "Survey-analysis guide",
+      linkRationale: "This guide demonstrates the workflow named in the task.",
+      learningLinks: [expect.objectContaining({ title: "Survey-analysis guide", rationale: "It demonstrates the workflow named in the task.", locator: "Analysis section" })],
       limitations: ["It does not replace research design."],
       prerequisites: ["Research methods"],
       relationships: [expect.objectContaining({ type: "complements" })],

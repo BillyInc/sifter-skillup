@@ -211,6 +211,9 @@ export function SifterButton({
       style,
     ]}>
       <TouchableOpacity
+        accessibilityRole="button"
+        accessibilityLabel={label}
+        accessibilityState={{ disabled: Boolean(loading || disabled) }}
         onPress={onPress}
         onPressIn={onPressIn}
         onPressOut={onPressOut}

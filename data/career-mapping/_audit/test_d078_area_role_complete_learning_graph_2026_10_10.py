@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[3]
-GRAPH_PATH = ROOT / "data/career-mapping/_audit/D078_PROGRAMME_TO_ROLE_LEARNING_PATH_GRAPH_2026_10_10.json"
+GRAPH_PATH = ROOT / "data/career-mapping/_audit/D078_PROGRAMME_TO_ROLE_LEARNING_PATH_GRAPH_2026_10_15.json"
 ROLE_PATH = ROOT / "data/career-mapping/role_library_v3_cleaned.json"
 
 EXPECTED_AREAS = {
@@ -179,23 +179,51 @@ class D078AreaRoleGraphTests(unittest.TestCase):
             "programme_context", "shared_domain_foundation", "selected_area_of_specialization", "optional_role"
         ])
 
-    def test_only_approved_source_checked_route_scoped_sequence_edges_are_emitted_hidden(self):
+    def test_useful_route_sequence_candidates_remain_skippable_and_nonblocking(self):
         audit = self.graph["area_reconciliation"]["relationship_graph"]["sequence_direction_review"]
-        approved_edges = [edge for edge in self.edges if edge.get("status") == "approved_route_scoped_sequence_hidden_until_release"]
-        self.assertEqual(len(approved_edges), 3)
+        candidate_edges = [edge for edge in self.edges if edge.get("sequence_approved") is True]
+        self.assertEqual(len(candidate_edges), 3)
         self.assertEqual(audit["approved_sequence_edges_created"], 3)
         expected = {
             ("domain-item:d078-quantitative-approach", "area_enrichment_item:d078-econ-applied-econometrics"),
             ("area_enrichment_item:d078-econ-applied-econometrics", "area_enrichment_item:d078-econ-causal-ml"),
             ("area_enrichment_item:d078-econ-agent-based-modeling", "area_enrichment_item:d078-econ-casevo-llm-sim"),
         }
-        self.assertEqual({(edge["source"], edge["target"]) for edge in approved_edges}, expected)
-        for edge in approved_edges:
-            self.assertTrue(edge.get("route_scope"))
+        self.assertEqual({(edge["source"], edge["target"]) for edge in candidate_edges}, expected)
+        for edge in candidate_edges:
+            self.assertTrue(edge.get("sequence_scope"))
+            self.assertEqual(edge.get("blocking_policy"), "never")
+            self.assertFalse(edge.get("auto_add_target"))
             self.assertTrue(edge.get("condition"))
             self.assertTrue(edge.get("evidence_reference_ids"))
             self.assertTrue(edge["sequence_approved"])
+            self.assertEqual(edge["sequence_policy"], "conditional_prerequisite")
+            self.assertEqual(edge["blocking_policy"], "never")
+            self.assertTrue(edge["skippable"])
+            self.assertTrue(edge["auto_order_target"])
             self.assertFalse(edge["student_visible"])
+        sequence_contract = self.graph["sequence_policy_contract"]
+        self.assertEqual(sequence_contract["approved_blocking_edges"], [])
+        self.assertEqual(sequence_contract["approved_blocking_edge_count"], 0)
+        self.assertEqual(self.graph["validation"]["approved_sequence_edges"], 3)
+        self.assertEqual(self.graph["validation"]["sequence_policy_audit"]["compulsory_same_route_blocking_edges"], 0)
+
+    def test_specialist_domain_inventory_routes_only_to_its_recorded_area(self):
+        inventory = self.graph["learning_path_design"]["area_owned_specialist_domain_inventory"]
+        self.assertEqual(inventory["unique_item_count"], 8)
+        for record in inventory["item_routes"]:
+            item_id = record["item_node_id"]
+            area_id = record["area_node_ids"][0]
+            domain_edges = [edge for edge in self.edges if edge.get("relationship") == "domain_to_learning_item" and edge.get("target") == item_id]
+            area_edges = [edge for edge in self.edges if edge.get("relationship") == "area_to_learning_item" and edge.get("target") == item_id]
+            self.assertEqual(domain_edges, [])
+            self.assertEqual(len(area_edges), 1)
+            self.assertEqual(area_edges[0]["source"], area_id)
+            self.assertEqual(area_edges[0]["route_node_id"], area_id)
+            self.assertTrue(area_edges[0]["skippable"])
+            self.assertEqual(area_edges[0]["blocking_policy"], "never")
+            self.assertFalse(area_edges[0]["auto_add_target"])
+            self.assertFalse(area_edges[0]["auto_order_target"])
         adjacency = defaultdict(list)
         indegree = {node_id: 0 for node_id in self.nodes}
         for edge in self.edges:
@@ -215,30 +243,57 @@ class D078AreaRoleGraphTests(unittest.TestCase):
         self.assertEqual(visited, len(self.nodes), "Prerequisite/sequence edges must remain acyclic")
         self.assertEqual(self.graph["validation"]["candidate_sequence_edges"], 3)
         self.assertEqual(self.graph["validation"]["programme_theme_nodes"], 14)
+        programme_outcomes = [node for node in self.nodes.values() if node.get("kind") == "programme_outcome"]
+        self.assertEqual(self.graph["validation"]["programme_outcome_nodes"], 236)
+        self.assertEqual(len(programme_outcomes), 236)
+        self.assertTrue(all(node.get("fixed_curriculum") and not node.get("selectable") for node in programme_outcomes))
+        theme_outcome_edges = [edge for edge in self.edges if edge.get("relationship") == "curriculum_outcome_grouped_under_theme"]
+        self.assertEqual(self.graph["validation"]["programme_theme_outcome_edges"], 236)
+        self.assertEqual(len(theme_outcome_edges), 236)
+        self.assertTrue(all(not edge.get("student_visible") and not edge.get("sequence_approved") for edge in theme_outcome_edges))
         self.assertEqual(self.graph["validation"]["programme_domain_transition_edges"], 1)
+        theme_transfer_edges = [edge for edge in self.edges if edge.get("relationship") == "programme_theme_connects_to_domain_evidence"]
+        self.assertEqual(self.graph["validation"]["programme_theme_domain_context_edges"], 2)
+        self.assertEqual(len(theme_transfer_edges), 2)
+        self.assertTrue(all(edge.get("matched_outcomes") and edge.get("matched_course_codes") for edge in theme_transfer_edges))
+        self.assertTrue(all(not edge.get("student_visible") and not edge.get("sequence_approved") for edge in theme_transfer_edges))
+        programme_transition = next(edge for edge in self.edges if edge.get("relationship") == "programme_to_domain_context")
+        self.assertIn("analysing social structures", programme_transition["student_facing_explanation"])
+        self.assertIn("culture and socialisation", programme_transition["student_facing_explanation"])
+        self.assertIn("shared domain foundations, optional useful edges", programme_transition["student_facing_explanation"])
+        self.assertEqual(self.graph["role_tool_integration"]["role_tool_route_count"], 95)
+        self.assertEqual(self.graph["role_tool_integration"]["distinct_canonical_tools"], 28)
 
-    def test_full_path_sequence_dispositions_are_approved_but_hidden_until_release(self):
+    def test_full_path_sequence_proposals_remain_auditable_but_are_not_active_dependencies(self):
         audit = self.graph["area_reconciliation"]["relationship_graph"]["full_path_sequence_design"]
-        self.assertEqual(audit["status"], "sequence_design_approved_hidden_release_gates_open")
+        self.assertEqual(audit["status"], "source_reviewed_sequence_candidates_retained_nonblocking")
         self.assertEqual(audit["direct_area_order_declaration_count"], 27)
         self.assertEqual(len(audit["direct_area_order_dispositions"]), 27)
         self.assertEqual(audit["strict_learning_dependency_candidate_count"], 3)
         self.assertEqual(len(audit["strict_learning_dependencies"]), 3)
         self.assertEqual(audit["raw_role_prerequisite_notes_not_hard_edges"], 402)
-        self.assertTrue(audit["sequence_approved"])
+        self.assertTrue(audit["source_review_sequence_approved"])
+        self.assertFalse(audit["sequence_approved"])
+        self.assertEqual(audit["active_sequence_dependency_count"], 0)
         self.assertFalse(audit["student_visible"])
         self.assertFalse(audit["canonical_promotion"])
         for disposition in audit["direct_area_order_dispositions"]:
             self.assertFalse(disposition["hard_learning_dependency"])
             self.assertFalse(disposition["student_visible"])
         for dependency in audit["strict_learning_dependencies"]:
-            self.assertTrue(dependency["sequence_approved"])
+            self.assertTrue(dependency["source_review_approved"])
+            self.assertFalse(dependency["sequence_approved"])
+            self.assertEqual(dependency["sequence_policy"], "none")
+            self.assertEqual(dependency["blocking_policy"], "never")
+            self.assertTrue(dependency["skippable"])
             self.assertFalse(dependency["student_visible"])
         validation = self.graph["validation"]
         self.assertTrue(validation["full_path_sequence_design_integrated"])
         self.assertEqual(validation["full_path_area_order_declarations_dispositioned"], 27)
         self.assertEqual(validation["full_path_strict_dependency_candidates"], 3)
-        self.assertTrue(validation["full_path_sequence_design_sequence_approved"])
+        self.assertTrue(validation["full_path_sequence_design_source_review_approved"])
+        self.assertFalse(validation["full_path_sequence_design_sequence_approved"])
+        self.assertEqual(validation["full_path_sequence_design_active_dependencies"], 0)
         self.assertFalse(validation["full_path_sequence_design_student_visible"])
 
     def test_full_guided_path_inventory_is_layered_and_nothing_is_dropped(self):
@@ -257,10 +312,10 @@ class D078AreaRoleGraphTests(unittest.TestCase):
         self.assertEqual(len(design["role_branches"]), 19)
         role_coverage = design["role_item_coverage"]
         self.assertEqual(role_coverage["all_records_integrated"], 173)
-        self.assertEqual(role_coverage["approved_for_later_integration"], 76)
-        self.assertEqual(role_coverage["conditional_for_later_integration"], 87)
-        self.assertEqual(role_coverage["hidden_final_disposition"], 10)
-        self.assertEqual(role_coverage["candidate_item_nodes_with_supported_role_edge"], 163)
+        self.assertEqual(role_coverage["approved_direct_placements"], 80)
+        self.assertEqual(role_coverage["approved_conditional_placements"], 91)
+        self.assertEqual(role_coverage["unapproved_final_dispositions"], 2)
+        self.assertEqual(role_coverage["candidate_item_nodes_with_supported_role_edge"], 168)
         self.assertEqual(self.graph["validation"]["guided_path_domain_items_accounted"], 53)
         self.assertEqual(self.graph["validation"]["guided_path_area_items_accounted"], 144)
         self.assertEqual(self.graph["validation"]["guided_path_role_branches"], 19)
@@ -286,6 +341,64 @@ class D078AreaRoleGraphTests(unittest.TestCase):
         self.assertEqual(len(repaired_nodes), 35)
         self.assertTrue(all(not node["student_visible"] for node in repaired_nodes))
 
+    def test_area_task_mapping_repairs_all_30_supported_lane_items(self):
+        task_edges = [edge for edge in self.edges if edge.get("relationship") == "task_to_area_item"]
+        task_nodes = {node.get("task_family_id"): node for node in self.nodes.values() if node.get("kind") == "area_task_family"}
+        linked = {edge["target"] for edge in task_edges}
+        area_routed = {
+            edge["target"] for edge in self.edges
+            if edge.get("relationship") == "area_to_learning_item"
+            and self.nodes.get(edge["target"], {}).get("kind") == "area_enrichment_item"
+        }
+        lane_items = {
+            item_id for item_id in area_routed
+            if self.nodes[item_id].get("requirement_lane") in {"conditional", "useful_optional", "choose_one_alternative"}
+            and (self.nodes[item_id].get("requirement_scope") or {}).get("student_eligible") is not False
+        }
+        self.assertEqual(self.graph["learning_path_design"]["learner_flow_contract"]["area_task_mapping"]["useful_or_optional_area_items_with_explicit_task_family_link_added"], 30)
+        self.assertEqual(len(lane_items), 138)
+        self.assertTrue(lane_items.issubset(linked))
+        added = [edge for edge in task_edges if edge.get("mapping_basis") == "explicit_source_record_task_family_or_internal_task_group"]
+        self.assertEqual(len(added), 30)
+        for edge in added:
+            item = self.nodes[edge["target"]]
+            self.assertIn(edge["source"], {task["id"] for task in self.nodes.values() if task.get("kind") == "area_task_family"})
+            self.assertEqual(edge["route_type"], "area")
+            self.assertEqual(edge["requirement_level"], item["requirement_level"])
+            self.assertTrue(edge["skippable"])
+            self.assertEqual(edge["sequence_policy"], "none")
+            self.assertEqual(edge["blocking_policy"], "never")
+            self.assertFalse(edge["auto_add_target"])
+            self.assertFalse(edge["auto_order_target"])
+
+    def test_domain_item_area_usefulness_stays_candidate_only_and_preserves_ownership(self):
+        design = self.graph["learning_path_design"]["learner_flow_contract"]["domain_owned_area_usefulness"]
+        area_edges = [edge for edge in self.edges if edge.get("relationship") == "domain_item_supports_area"]
+        task_edges = [edge for edge in self.edges if edge.get("relationship") == "domain_item_supports_area_task"]
+        self.assertEqual(len(area_edges), 211)
+        self.assertEqual(len(task_edges), 277)
+        self.assertTrue(all(edge.get("status", "").startswith("reviewed_") for edge in area_edges + task_edges))
+        self.assertTrue(all(edge.get("student_visible") is False for edge in area_edges + task_edges))
+        self.assertTrue(all(edge.get("skippable") for edge in area_edges + task_edges))
+        self.assertTrue(all(edge.get("sequence_policy") == "none" and edge.get("blocking_policy") == "never" for edge in area_edges + task_edges))
+        self.assertEqual(design["pending_regular_area_usefulness_routes"], 0)
+        self.assertIn("Keep each item domain-owned", design["recommended_treatment"])
+        self.assertEqual(self.graph["validation"]["domain_item_area_candidate_edges"], 0)
+        self.assertEqual(self.graph["validation"]["domain_item_task_candidate_edges"], 0)
+        self.assertEqual(self.graph["validation"]["domain_item_area_reviewed_edges"], len(area_edges))
+        self.assertEqual(self.graph["validation"]["domain_item_task_reviewed_edges"], len(task_edges))
+
+        crosswalk_path = ROOT / "data/career-mapping/_audit/D078_DOMAIN_AREA_ROUTE_CROSSWALK_2026_10_10.json"
+        crosswalk = json.loads(crosswalk_path.read_text(encoding="utf-8"))
+        expected_pairs = {
+            ("domain-item:" + record["domain_item_id"].replace("_", "-"), "area:d078-" + route["area_id"].split(":", 1)[1])
+            for record in crosswalk["records"]
+            for route in record.get("area_routes", [])
+        }
+        actual_pairs = {(edge["source"], edge["target"]) for edge in area_edges if edge.get("mapping_basis") == "D078_DOMAIN_AREA_ROUTE_CROSSWALK_2026_10_10"}
+        self.assertEqual(actual_pairs, expected_pairs)
+        self.assertEqual(len(actual_pairs), 177)
+
     def test_everything_remains_hidden_and_no_retired_area_label_is_emitted(self):
         serialized = json.dumps(self.graph, ensure_ascii=False).casefold()
         self.assertEqual(self.graph["validation"]["total_nodes"], len(self.graph["nodes"]))
@@ -297,14 +410,14 @@ class D078AreaRoleGraphTests(unittest.TestCase):
         self.assertNotIn("computational and quantitative social research", serialized)
         self.assertFalse(self.graph["validation"]["role_fit_reopened"])
         self.assertTrue(self.graph["validation"]["every_path_role_has_domain_and_area_route"])
-        self.assertEqual(self.graph["hidden_final_disposition_items"], 10)
+        self.assertEqual(self.graph["hidden_final_disposition_items"], 2)
         self.assertEqual(self.graph["unresolved_student_items"], 0)
         item_reconciliation = self.graph["role_route_reconciliation"]["role_item_reconciliation"]
-        self.assertEqual(item_reconciliation["route_candidate_records_in_rebuilt_graph"], 163)
-        self.assertEqual(item_reconciliation["hidden_with_final_reason"], 10)
+        self.assertEqual(item_reconciliation["route_candidate_records_in_rebuilt_graph"], 171)
+        self.assertEqual(item_reconciliation["hidden_with_final_reason"], 2)
         self.assertEqual(self.graph["validation"]["role_item_nodes"], 173)
-        self.assertEqual(self.graph["validation"]["approved_role_item_records"], 76)
-        self.assertEqual(self.graph["validation"]["conditional_role_item_records"], 87)
+        self.assertEqual(self.graph["validation"]["approved_role_item_records"], 171)
+        self.assertEqual(self.graph["validation"]["conditional_role_item_records"], 91)
 
 
 if __name__ == "__main__":

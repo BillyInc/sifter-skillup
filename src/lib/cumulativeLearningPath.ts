@@ -21,14 +21,15 @@ function studentOwned(item: CareerContextItem): boolean {
     && isApprovedStudentContextItem(item);
 }
 
-/** Domain-owned foundation comes first; contextual domain items add to it. */
+/** Requirement level—not task-group presence—sets the compulsory path. */
 export function domainStageItems(
   foundation: FoundationSkill[] = [],
   items: CareerContextItem[] = [],
 ): CumulativePathItem[] {
   const candidates: CumulativePathItem[] = [
     ...foundation.map((item) => ({ itemType: "skill" as const, name: item.skill })),
-    ...items.filter(studentOwned).map((item) => ({ itemType: item.itemType, name: item.name })),
+    ...items.filter((item) => studentOwned(item) && item.requirementLevel === "needed")
+      .map((item) => ({ itemType: item.itemType, name: item.name })),
   ];
   return uniqueItems(candidates);
 }
@@ -40,10 +41,12 @@ export function domainStageItems(
 export function additiveStageItems(
   items: CareerContextItem[] = [],
   inherited: CumulativePathItem[] = [],
+  requirement?: "needed" | "optional",
 ): CumulativePathItem[] {
   const inheritedKeys = new Set(inherited.map((item) => itemKey(item.name)).filter(Boolean));
   return uniqueItems(items
-    .filter(studentOwned)
+    .filter((item) => studentOwned(item) && (!requirement
+      || (requirement === "needed" ? item.requirementLevel === "needed" : item.requirementLevel !== "needed")))
     .map((item) => ({ itemType: item.itemType, name: item.name }))
     .filter((item) => !inheritedKeys.has(itemKey(item.name))));
 }
@@ -53,8 +56,7 @@ export function cumulativeItemNames(...stages: CumulativePathItem[][]): Set<stri
 }
 
 export function formatPathItem(item: CumulativePathItem): string {
-  const category = item.itemType.charAt(0).toUpperCase() + item.itemType.slice(1);
-  return `${category}: ${item.name}`;
+  return item.name;
 }
 
 function uniqueItems(items: CumulativePathItem[]): CumulativePathItem[] {

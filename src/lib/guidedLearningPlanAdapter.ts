@@ -27,9 +27,10 @@ function itemNameKey(itemType: CareerContextItem["itemType"], value: string): st
 }
 
 function categoryFor(item: CareerContextItem): LearningPlanCategory {
+  // Keep useful/optional material outside the main required route at every
+  // layer. Item type and use-case presence do not change requirement status.
+  if (item.requirementLevel !== "needed") return "useful_edge";
   if (item.contextLevel === "domain") {
-    if (item.requirementLevel === "needed") return "shared_foundation";
-    if (item.requirementLevel === "useful") return "useful_edge";
     return "shared_foundation";
   }
   if (item.contextLevel === "subgroup") return "area_addition";
@@ -201,6 +202,10 @@ function reviewedPrerequisites(
   return [...resolved.values()].sort((a, b) => a.name.localeCompare(b.name) || a.id.localeCompare(b.id));
 }
 
+function firstText(...values: unknown[]): string | undefined {
+  return values.find((value): value is string => typeof value === "string" && Boolean(value.trim()))?.trim();
+}
+
 /** Convert one reviewed item without adding any source, relationship or link. */
 export function contextItemToLearningCandidate(
   item: CareerContextItem,
@@ -209,6 +214,18 @@ export function contextItemToLearningCandidate(
   const index = makeItemIndex(allItems);
   const alternativeGroup = alternativeGroups(allItems, index).get(stableId(item));
   const prerequisites = reviewedPrerequisites(item, index);
+  const linkEvidence = item.linkEvidence ?? {};
+  const linkSource = item.linkSourceReference ?? {};
+  const learningLinks = [
+    ...(item.linkUrl && item.linkTitle ? [{
+      title: item.linkTitle,
+      url: item.linkUrl,
+      access: item.linkAccess,
+      kind: item.linkKind,
+      rationale: firstText(linkEvidence.why_this_resource, linkEvidence.evidence_use, linkEvidence.evidenceUse, linkEvidence.supports),
+    }] : []),
+    ...(item.additionalLearningLinks ?? []).map((link) => ({ ...link })),
+  ].filter((link) => /^https:\/\//i.test(link.url));
   return {
     id: stableId(item),
     name: item.name,
@@ -223,19 +240,33 @@ export function contextItemToLearningCandidate(
     complementOf: relationshipRecords(item, index).filter((relation) => relation.type === "complements").map((relation) => relation.targetId),
     prerequisiteIds: prerequisites.map(({ id }) => id),
     displayOrder: item.learningOrder === "start_here" ? 0 : item.learningOrder === "build_next" ? 1 : item.learningOrder === "useful_later" ? 2 : 3,
-    explanation: `${item.plainMeaning} ${item.contextualUse}`.trim(),
+    // Keep definition and route use in their own learner-facing sections.
+    // Synthesizing one concatenated explanation here makes the tray repeat
+    // both fields under “A little more context”.
     itemType: item.itemType,
     themeLabel: item.themeLabel ?? undefined,
     useCaseKey: item.useCaseKey ?? undefined,
     requirementLevel: item.requirementLevel ?? undefined,
+    requirementReason: item.requirementReason ?? undefined,
     plainMeaning: item.plainMeaning,
     contextualUse: item.contextualUse,
+    programmeContext: item.programmeContext ?? undefined,
+    domainContext: item.domainContext ?? undefined,
+    areaContext: item.areaContext ?? undefined,
+    roleContext: item.roleContext ?? undefined,
     expectedOutput: item.expectedOutput ?? undefined,
     limitations: item.evidenceLimitations?.length ? [...item.evidenceLimitations] : undefined,
+    geographicScope: item.geographicScope,
     prerequisiteNames: prerequisites.length ? prerequisites.map(({ name }) => name) : undefined,
     sourceReferences: item.sourceReferences
       ?.filter((reference) => /^https:\/\//i.test(reference.url))
       .map(({ id, title, url, region, evidenceType }) => ({ id, title, url, region, evidenceType })),
+    linkTitle: item.linkTitle ?? undefined,
+    linkRationale: firstText(linkEvidence.why_this_resource, linkEvidence.evidence_use, linkEvidence.evidenceUse, linkEvidence.supports,
+      linkSource.evidence_use, linkSource.evidenceUse, linkSource.supports),
+    learningLinks: learningLinks.length ? learningLinks : undefined,
+    linkAccess: item.linkAccess ?? undefined,
+    linkKind: item.linkKind ?? undefined,
     sourceLocators: item.sourceLocators?.map((locator) => ({ ...locator })),
     sourceConfidence: item.sourceConfidence,
     evidenceType: item.evidenceType,

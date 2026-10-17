@@ -7,7 +7,14 @@ import { provisioningData } from "../../lib/provisioningData";
 import { useAuth } from "@/hooks/useAuth";
 
 type BranchKind = "programmes" | "domains" | "subgroups" | "roles" | "learningFocus";
-type GuidanceListItem = { id: string; programme?: { id?: string } };
+type GuidanceListItem = {
+  id: string;
+  name?: string;
+  programme?: { id?: string };
+  domainId?: string;
+  subgroupId?: string;
+  routeKeys?: string[];
+};
 export type GuidancePathRecord = Record<string, GuidanceListItem[] | unknown>;
 
 function asRecord(value: unknown): Record<string, unknown> | null {
@@ -129,11 +136,16 @@ export interface GuidanceReportSelection {
   domainName?: string;
   subgroupId?: string;
   subgroupName?: string;
+  roleId?: string;
+  roleName?: string;
+  /** The route-local membership of a learning-focus choice. */
+  routeKey?: string;
   matchType?: string;
   contextLevel?: "programme" | "domain" | "subgroup" | "role";
   contextKey?: string;
   itemType?: string;
   itemKey?: string;
+  programmeId?: string;
 }
 
 /**
@@ -145,7 +157,16 @@ export function toggleGuidanceSelectionPath(
   selection: GuidanceReportSelection,
 ): GuidancePathRecord {
   const list = guidanceItems(path, selection.kind);
-  const selected = list.some((entry) => selectionId(entry, selection.kind) === selection.id);
+  const selectedEntry = list.find((entry) => selectionId(entry, selection.kind) === selection.id);
+  const removedByRoute = asRecord(path.learningPlanRemovedIdsByRoute);
+  const routeRemovedIds = selection.routeKey && Array.isArray(removedByRoute?.[selection.routeKey])
+    ? removedByRoute[selection.routeKey] as string[]
+    : [];
+  const removedFromRoute = routeRemovedIds.includes(selection.id);
+  const selected = Boolean(selectedEntry && (selection.kind !== "learningFocus"
+    || !selection.routeKey
+    || !Array.isArray(selectedEntry.routeKeys)
+    || selectedEntry.routeKeys.includes(selection.routeKey)) && !removedFromRoute);
   const item = {
     id: selection.id,
     name: selection.name,
@@ -160,13 +181,30 @@ export function toggleGuidanceSelectionPath(
       contextKey: selection.contextKey,
       itemType: selection.itemType,
       itemKey: selection.itemKey,
+      ...(selection.routeKey ? { routeKeys: [selection.routeKey] } : {}),
     } : {}),
   };
-  const nextList = selected
-    ? list.filter((entry) => selectionId(entry, selection.kind) !== selection.id)
-    : [...list.filter((entry) => selectionId(entry, selection.kind) !== selection.id), item];
+  const isLegacyGlobal = selection.kind === "learningFocus"
+    && selectedEntry
+    && (!Array.isArray(selectedEntry.routeKeys) || selectedEntry.routeKeys.length === 0);
+  const nextList = selection.kind === "learningFocus" && selectedEntry && selection.routeKey
+    ? isLegacyGlobal
+      ? list
+      : selected
+        ? list.flatMap((entry) => {
+          if (selectionId(entry, selection.kind) !== selection.id) return [entry];
+          const routeKeys = Array.isArray(entry.routeKeys) ? entry.routeKeys : [];
+          const remaining = routeKeys.filter((routeKey) => routeKey !== selection.routeKey);
+          return remaining.length ? [{ ...entry, routeKeys: remaining }] : [];
+        })
+        : list.map((entry) => selectionId(entry, selection.kind) === selection.id
+          ? { ...entry, routeKeys: [...new Set([...(Array.isArray(entry.routeKeys) ? entry.routeKeys : []), selection.routeKey!])] }
+          : entry)
+    : selected
+      ? list.filter((entry) => selectionId(entry, selection.kind) !== selection.id)
+      : [...list.filter((entry) => selectionId(entry, selection.kind) !== selection.id), item];
   const resume = asRecord(path.resume);
-  return {
+  const nextPath: GuidancePathRecord = {
     ...path,
     [selection.kind]: nextList,
     resume: {
@@ -175,14 +213,51 @@ export function toggleGuidanceSelectionPath(
       status: "in_progress",
     },
   };
+  if (selection.kind === "learningFocus" && selection.routeKey) {
+    const nextRemovedByRoute = { ...(removedByRoute ?? {}) } as Record<string, unknown>;
+    const currentRemoved = Array.isArray(nextRemovedByRoute[selection.routeKey])
+      ? nextRemovedByRoute[selection.routeKey] as string[]
+      : [];
+    const nextRemoved = selected
+      ? [...new Set([...currentRemoved, selection.id])]
+      : currentRemoved.filter((id) => id !== selection.id);
+    if (nextRemoved.length) nextRemovedByRoute[selection.routeKey] = nextRemoved;
+    else delete nextRemovedByRoute[selection.routeKey];
+    if (Object.keys(nextRemovedByRoute).length) nextPath.learningPlanRemovedIdsByRoute = nextRemovedByRoute;
+    else delete nextPath.learningPlanRemovedIdsByRoute;
+  }
+  if (selection.kind === "learningFocus" && !selected) {
+    const addRouteItem = (kind: "domains" | "subgroups", id?: string, name?: string, domainId?: string) => {
+      if (!id || !name) return;
+      const entries = guidanceItems(nextPath, kind);
+      if (entries.some((entry) => entry.id === id)) return;
+      nextPath[kind] = [...entries, { id, name, ...(domainId ? { domainId } : {}) }];
+    };
+    addRouteItem("domains", selection.domainId, selection.domainName);
+    addRouteItem("subgroups", selection.subgroupId, selection.subgroupName, selection.domainId);
+    if (selection.roleId && selection.roleName) {
+      const roles = guidanceItems(nextPath, "roles");
+      if (!roles.some((entry) => entry.id === selection.roleId)) {
+        nextPath.roles = [...roles, {
+          id: selection.roleId,
+          name: selection.roleName,
+          ...(selection.domainId ? { domainId: selection.domainId } : {}),
+          ...(selection.subgroupId ? { subgroupId: selection.subgroupId } : {}),
+        }];
+      }
+    }
+  }
+  return nextPath;
 }
 
 export function GuidanceReportButton({
   selection,
   targetStudentId,
+  onOpenPlan,
 }: {
   selection: GuidanceReportSelection;
   targetStudentId?: string;
+  onOpenPlan?: () => void;
 }) {
   const { colors } = useTheme();
   const { user } = useAuth();
@@ -197,12 +272,13 @@ export function GuidanceReportButton({
     readGuidancePath(targetStudentId, ownerId).then((path) => {
       if (!active) return;
       const list = guidanceItems(path, selection.kind);
-      setSelected(list.some((entry) => selectionId(entry, selection.kind) === selection.id));
+      setSelected(list.some((entry) => selectionId(entry, selection.kind) === selection.id
+        && (selection.kind !== "learningFocus" || !selection.routeKey || !Array.isArray(entry.routeKeys) || entry.routeKeys.includes(selection.routeKey))));
     });
     return () => {
       active = false;
     };
-  }, [ownerId, selection.kind, selection.id, targetStudentId]);
+  }, [ownerId, selection.kind, selection.id, selection.routeKey, targetStudentId]);
 
   const add = async () => {
     if (busy) return;
@@ -216,9 +292,8 @@ export function GuidanceReportButton({
         .then(async (): Promise<SelectionWriteResult> => {
           const path = await readGuidancePath(targetStudentId, ownerId);
           const nextPath = toggleGuidanceSelectionPath(path, selection);
-          const nextSelected = guidanceItems(nextPath, selection.kind).some(
-            (entry) => selectionId(entry, selection.kind) === selection.id,
-          );
+          const nextSelected = guidanceItems(nextPath, selection.kind).some((entry) => selectionId(entry, selection.kind) === selection.id
+            && (selection.kind !== "learningFocus" || !selection.routeKey || !Array.isArray(entry.routeKeys) || entry.routeKeys.includes(selection.routeKey)));
           if (targetStudentId) {
             await provisioningData.saveGuidancePath(targetStudentId, nextPath);
             pathCache.set(key, nextPath);
@@ -242,6 +317,9 @@ export function GuidanceReportButton({
         if (targetStudentId && !result.notice) {
           setNotice(result.selected ? "Added to this student's guidance." : "Removed from this student's guidance.");
         }
+        // Make the destination visible immediately after a learner saves an
+        // item. Admins editing another student's plan stay on this screen.
+        if (result.selected && selection.kind === "learningFocus" && !targetStudentId) onOpenPlan?.();
       } finally {
         if (pathWrites.get(key) === operation) pathWrites.delete(key);
       }
@@ -257,7 +335,7 @@ export function GuidanceReportButton({
   return (
     <View style={styles.wrap}>
       <SifterButton
-        label={busy ? "Saving..." : selected ? (selection.kind === "learningFocus" ? "Included" : "Selected") : selection.kind === "programmes" ? "Select programme" : selection.kind === "learningFocus" ? "Include in my focus" : "Select"}
+        label={busy ? "Saving..." : selected ? (selection.kind === "learningFocus" ? "Remove from my focus" : "Selected") : selection.kind === "programmes" ? "Select programme" : selection.kind === "learningFocus" ? "Add to my focus" : "Select"}
         icon={busy ? undefined : selected ? "check-circle" : "circle"}
         onPress={add}
         variant="ghost"
@@ -266,6 +344,7 @@ export function GuidanceReportButton({
         disabled={busy}
       />
       {busy ? <ActivityIndicator size="small" color={colors.textRole.muted} /> : null}
+      {selected && selection.kind === "learningFocus" && onOpenPlan ? <SifterButton label="Open my learning tray" onPress={onOpenPlan} variant="primary" size="sm" fullWidth={false} /> : null}
       {notice ? <Text style={[styles.notice, { color: colors.textRole.muted }]}>{notice}</Text> : null}
     </View>
   );

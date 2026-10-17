@@ -7,16 +7,32 @@ param(
 $repoRoot = Split-Path -Parent $PSScriptRoot
 Set-Location $repoRoot
 
-$args = @('expo', 'start')
-if ($Web) {
-    $args += '--web'
-}
-if ($Clear) {
-    $args += '--clear'
-}
-if ($Tunnel) {
-    $args += '--tunnel'
+$expoCli = Join-Path $repoRoot 'node_modules/expo/bin/cli'
+if (-not (Test-Path -LiteralPath $expoCli -PathType Leaf)) {
+    throw "The local Expo CLI was not found at $expoCli. Run the repository's dependency install first."
 }
 
-& npx @args
-exit $LASTEXITCODE
+$nodeCommand = Get-Command node.exe -ErrorAction SilentlyContinue
+if (-not $nodeCommand) {
+    throw 'node.exe was not found. Install Node.js or repair PATH, then rerun this script.'
+}
+
+$startArgs = @($expoCli, 'start')
+if ($Web) {
+    $startArgs += '--web'
+}
+if ($Clear) {
+    $startArgs += '--clear'
+}
+if ($Tunnel) {
+    $startArgs += '--tunnel'
+}
+
+# Run the checked-in CLI with node.exe directly. This avoids PowerShell's
+# npx.ps1 shim, npm/npx network resolution and package-manager shell ambiguity.
+& $nodeCommand.Source @startArgs
+$childExitCode = $LASTEXITCODE
+if ($null -eq $childExitCode) {
+    throw 'Expo exited without reporting a child-process exit code.'
+}
+exit $childExitCode

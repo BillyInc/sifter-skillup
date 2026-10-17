@@ -27,6 +27,12 @@ SOURCE = ROOT / "data/career-mapping/_audit/D078_ROLE_ITEM_PLACEMENT_RECONCILIAT
 PROGRAMME_EVIDENCE = ROOT / "data/career-mapping/_audit/programme_domain_evidence_2026-08-17.json"
 OUTPUT = ROOT / "data/career-mapping/_audit/D078_ROLE_ITEM_PLACEMENT_FINAL_DISPOSITION_2026_10_10.json"
 REPORT = ROOT / "docs/manual-review/D078_ROLE_ITEM_PLACEMENT_FINAL_DISPOSITION_2026_10_10.md"
+CURRENT_GRAPH = ROOT / "data/career-mapping/_audit/D078_PROGRAMME_TO_ROLE_LEARNING_PATH_GRAPH_2026_10_15.json"
+REPAIR_ARTIFACTS = (
+    ROOT / "data/career-mapping/_audit/D078_ROLE_ITEM_PLACEMENT_REPAIR_001-058_2026_10_09.json",
+    ROOT / "data/career-mapping/_audit/D078_ROLE_ITEM_PLACEMENT_REPAIR_059-116_2026_10_09.json",
+    ROOT / "data/career-mapping/_audit/D078_ROLE_ITEM_PLACEMENT_REPAIR_117-173_2026_10_09.json",
+)
 
 CANONICAL_ITEM_RE = re.compile(r"data\.europa\.eu/esco/(?:skill|knowledge|competence)/[0-9a-f-]{36}", re.I)
 ROLE_PROFILE_RE = re.compile(r"data\.europa\.eu/esco/occupation/[0-9a-f-]{36}", re.I)
@@ -103,6 +109,69 @@ def programme_backstop() -> dict[str, Any]:
     }
 
 
+def merge_repaired_contracts(records: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], dict[str, int]]:
+    """Restore contract fields from the three reviewed lane repairs.
+
+    The 2026-10-09 repair artifacts are the evidence-bearing source of the
+    completed item contracts. The 2026-10-09 reconciliation artifact omitted
+    fields from queue positions 59-116 when it was assembled. Merge only
+    explicitly empty fields, by both queue position and pair key, so this
+    cannot overwrite a later disposition or mix two similarly named items.
+    """
+    repaired: dict[int, dict[str, Any]] = {}
+    for path in REPAIR_ARTIFACTS:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        for item in payload.get("records", []):
+            position = int(item["queue_position"])
+            if position in repaired:
+                raise ValueError(f"Duplicate repair record for queue position {position}")
+            repaired[position] = item
+
+    if len(repaired) != 173:
+        raise ValueError(f"Expected 173 lane-repair records, found {len(repaired)}")
+
+    field_map = {
+        "plain_language_meaning": ("plain_language_meaning",),
+        "limits_nonreplacement": ("limits_nonreplacement", "limitations_nonreplacement"),
+        "source_locators": ("source_locators",),
+        "task_output": ("task_output_rationale", "task_output"),
+        "learning_link": ("learning_link",),
+        "evidence": ("evidence", "authoritative_evidence"),
+        "prerequisites": ("prerequisites",),
+        "valid_alternatives": ("valid_alternatives",),
+        "complements": ("complements",),
+        "role_application": ("role_application",),
+        "programme_meaning": ("programme_meaning",),
+        "domain_meaning": ("domain_meaning",),
+        "area_meaning": ("area_meaning",),
+        "nigeria_context": ("nigeria_context",),
+    }
+    restored = Counter()
+    merged_records: list[dict[str, Any]] = []
+    for source_record in records:
+        record = dict(source_record)
+        position = int(record["queue_position"])
+        repair = repaired.get(position)
+        if not repair or repair.get("pair_key") != record.get("pair_key"):
+            raise ValueError(f"Repair identity mismatch at queue position {position}")
+        for target_field, repair_fields in field_map.items():
+            if record.get(target_field):
+                continue
+            value = next((repair.get(field) for field in repair_fields if repair.get(field)), None)
+            if target_field == "source_locators" and not value:
+                evidence = repair.get("evidence") or repair.get("authoritative_evidence") or []
+                value = [
+                    f"{item.get('source') or 'Source'}: {item.get('locator')} ({item.get('url')})"
+                    for item in evidence
+                    if isinstance(item, dict) and item.get("locator") and item.get("url")
+                ]
+            if value:
+                record[target_field] = value
+                restored[target_field] += 1
+        merged_records.append(record)
+    return merged_records, dict(restored)
+
+
 def external_crosschecks() -> list[dict[str, str]]:
     """Keep the one non-ESCO role-context cross-check explicit and bounded."""
     return [
@@ -117,7 +186,48 @@ def external_crosschecks() -> list[dict[str, str]]:
     ]
 
 
-def disposition(record: dict[str, Any], backstop: dict[str, Any]) -> dict[str, Any]:
+def current_area_routed_roles() -> tuple[dict[str, str], set[str]]:
+    """Read the currently supported role labels from the area-to-role graph."""
+    graph = json.loads(CURRENT_GRAPH.read_text(encoding="utf-8-sig"))
+    nodes = {item.get("id"): item for item in graph.get("nodes", [])}
+    role_node_ids = {
+        str(edge.get("target"))
+        for edge in graph.get("edges", [])
+        if edge.get("relationship") == "area_to_role"
+        and edge.get("status") in {"reviewed_supported", "reviewed_conditional"}
+    }
+    labels = {
+        str(nodes[node_id].get("label", "")).strip().casefold()
+        for node_id in role_node_ids
+        if node_id in nodes and nodes[node_id].get("kind") == "role"
+    }
+    # Previously reviewed student-name mappings. These aliases do not create
+    # roles or change the underlying area/role-fit decision.
+    aliases = {
+        "media researcher": "media scientist",
+        "death and dying researcher": "thanatology researcher",
+    }
+    return aliases, labels
+
+
+def task_scope_is_explicitly_unsupported(record: dict[str, Any]) -> bool:
+    text = " ".join(str(record.get(field) or "") for field in ("task_output", "role_application")).casefold()
+    explicit_negative_patterns = (
+        "no task-specific physiological output is established",
+        "no d078 task is established",
+        "no forensic output should be assigned to this d078 role",
+        "without direct task evidence",
+        "do not support a d078 role application",
+    )
+    return any(pattern in text for pattern in explicit_negative_patterns)
+
+
+def disposition(
+    record: dict[str, Any],
+    backstop: dict[str, Any],
+    role_aliases: dict[str, str],
+    area_routed_roles: set[str],
+) -> dict[str, Any]:
     reasons = [str(item) for item in record.get("unresolved_reasons", [])]
     identity_status, identity_note = source_identity_status(record)
     evidence = record.get("evidence", [])
@@ -134,6 +244,16 @@ def disposition(record: dict[str, Any], backstop: dict[str, Any]) -> dict[str, A
     has_learning_link = has_http_learning_link(record.get("learning_link"))
     excluded = record.get("placement_decision") == "excluded_from_d078_hidden" or record.get("candidate_layer_if_revalidated") == "out_of_scope_exclusion"
     global_only = not bool((record.get("nigeria_context") or {}).get("sources"))
+    current_role_owners = sorted({
+        role_aliases.get(str(role).strip().casefold(), str(role).strip().casefold())
+        for role in record.get("roles_snapshot", [])
+        if role_aliases.get(str(role).strip().casefold(), str(role).strip().casefold()) in area_routed_roles
+    })
+    unmapped_role_snapshots = sorted({
+        str(role) for role in record.get("roles_snapshot", [])
+        if role_aliases.get(str(role).strip().casefold(), str(role).strip().casefold()) not in area_routed_roles
+    })
+    task_scope_failure = task_scope_is_explicitly_unsupported(record)
 
     gate_failures: list[str] = []
     if excluded:
@@ -150,6 +270,10 @@ def disposition(record: dict[str, Any], backstop: dict[str, Any]) -> dict[str, A
         gate_failures.append("programme_domain_area_or_role_scope_missing")
     if not has_learning_link:
         gate_failures.append("learning_link_missing")
+    if not current_role_owners:
+        gate_failures.append("no_current_area_routed_role_owner")
+    if task_scope_failure:
+        gate_failures.append("item_evidence_explicitly_disclaims_d078_role_task")
     if not backstop["active_d078_programme_domain_rows"]:
         gate_failures.append("programme_domain_backstop_missing")
 
@@ -202,6 +326,15 @@ def disposition(record: dict[str, Any], backstop: dict[str, Any]) -> dict[str, A
             "domain_inventory_scope": "bounded_route_candidate; not automatically a shared foundation",
         },
         "resolved_source_urls": evidence_sources(evidence),
+        "role_snapshot_reconciliation": {
+            "current_area_routed_role_owners": current_role_owners,
+            "unmapped_or_noncurrent_role_snapshots": unmapped_role_snapshots,
+            "role_area_membership_source": str(CURRENT_GRAPH.relative_to(ROOT)).replace("\\", "/"),
+            "documented_aliases_applied": {
+                source: target for source, target in role_aliases.items()
+                if any(str(role).strip().casefold() == source for role in record.get("roles_snapshot", []))
+            },
+        },
         "remaining_review_notes": retained_notes,
         "original_unresolved_reasons": reasons,
         "unresolved_reasons": retained_notes,
@@ -213,7 +346,9 @@ def disposition(record: dict[str, Any], backstop: dict[str, Any]) -> dict[str, A
 def main() -> None:
     source = json.loads(SOURCE.read_text(encoding="utf-8"))
     backstop = programme_backstop()
-    records = [disposition(record, backstop) for record in source["records"]]
+    source_records, restored_fields = merge_repaired_contracts(source["records"])
+    role_aliases, area_routed_roles = current_area_routed_roles()
+    records = [disposition(record, backstop, role_aliases, area_routed_roles) for record in source_records]
     records.sort(key=lambda item: item["queue_position"])
     counts = Counter(item["final_disposition_status"] for item in records)
     identity_counts = Counter(item["approval_basis"]["source_identity"] for item in records)
@@ -236,6 +371,10 @@ def main() -> None:
         "external_crosschecks": external_crosschecks(),
         "coverage": {
             "input_records": len(records),
+            "contract_fields_restored_from_repair_lanes": restored_fields,
+            "remaining_missing_plain_language_meaning": sum(not item.get("plain_language_meaning") for item in records),
+            "remaining_missing_limitations": sum(not item.get("limits_nonreplacement") for item in records),
+            "remaining_missing_source_locators": sum(not item.get("source_locators") for item in records),
             "approved_for_provisional_learning_path": counts["approved_for_provisional_d078_learning_path"],
             "hidden_unresolved": counts["hidden_unresolved"],
             "identity_resolved": identity_counts["resolved_exact_item_uri"],
