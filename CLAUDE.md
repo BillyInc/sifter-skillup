@@ -1225,3 +1225,91 @@ approved guidance status.
 After validation, commit the manifests, parts, generator changes, and
 documentation together. Push project changes to `origin/new-changes`. Leave
 machine-local files such as `.claude/settings.local.json` uncommitted.
+
+## Never let a merge silently drop work that already landed
+
+Long-running branches in this repo (`very-new`, `new-changes`, `json-seed`)
+accumulate for weeks and then land in bulk. When such a branch is merged into
+`main` and the conflicts are resolved **in favour of the branch**, every fix
+that landed on `main` in the meantime is discarded. This has now happened
+three times. It is the single most expensive recurring mistake in this
+repository, and it is silent.
+
+It is silent because history stays intact. The merge commits of the discarded
+PRs remain ancestors of `main`, so `gh pr view` still says "merged" and
+`git log --diff-filter=D -- <path>` finds **nothing** — there is no delete
+commit to point at. Only the *tree* changed. The only way to see it is to
+check whether the fix is still in the file.
+
+### What happened on 17 October 2026
+
+48 commits landed on `main` after PR #178 — ten `json-seed` merges (#183-#191)
+and two `very-new` merges (#180, #181). Afterwards `main` was red on CI,
+CodeQL and both deploy workflows, and the following had been reverted in the
+tree while still showing as merged:
+
+```text
+.github/workflows/semgrep.yml            (#177)  removed; codeql.yml restored
+__mocks__/starkzap.js                    (#170)  removed
+__tests__/useAuth-updateActiveField.test.tsx (#178) removed
+useAuth.tsx camelCase mirror fix         (#178)  removed
+test_career_resource_visibility dataState fixtures (#175) removed
+sanitizeRequirementText Direct Entry fix (#170)  removed
+e2e*.json gitignore                      (#176)  removed
+roster raises 500 instead of zeroed 200  (#169)  removed
+settings.DEBUG exception echo removal    (#169)  removed, 4 occurrences back
+```
+
+Two details matter more than the list:
+
+**A single PR was split in half.** #169's consent `HTTPException` guards and
+`StartingPointIn` `Literal` validation survived; its roster fix and both
+`settings.DEBUG` leak fixes did not. So the codebase claimed a security fix it
+no longer had: `main.py` was interpolating raw exception text into 500
+responses again while `backend/.env` had `DEBUG=true`.
+
+**A half-surviving change was worse than the bug it fixed.** #170 added a jest
+`moduleNameMapper` for `starkzap` *and* the `__mocks__/starkzap.js` it points
+at. The mapper survived and the mock file did not, so jest resolved `starkzap`
+to a file that does not exist — a harder failure than the original ESM
+resolution error.
+
+### Rules
+
+1. **Rebase a long-running branch onto `main`; do not merge `main` into it and
+   then merge it back.** A rebase forces each conflict to be resolved against
+   current `main` one commit at a time. A bulk merge invites one wholesale
+   resolution that discards everything else.
+2. **Never resolve a merge into `main` with `-X theirs`, `-X ours`, "accept
+   all incoming", or by checking out one side of a conflicted path wholesale.**
+   If a conflict is genuinely unclear, stop and ask; do not pick a side to make
+   the merge complete.
+3. **A merge diff that touches files your branch never edited is a red flag.**
+   Before pushing a merge to `main`, run `git diff --stat main@{1} main` and
+   account for every path. A workflow file, a `__mocks__` entry or a test
+   fixture you have never heard of appearing in your merge means you are
+   deleting someone else's work.
+4. **CI going red on `main` immediately after a large merge is evidence of
+   dropped work, not of new bugs.** Check for reverted fixes before debugging
+   the failures as if they were fresh.
+5. **"Merged" is not proof the code is on `main`.** Verify the file, not the
+   PR status.
+
+### Post-merge verification
+
+After any merge into `main`, confirm the landed fixes are still present. Each
+of these returned a non-zero count before the 17 October incident and zero
+after:
+
+```bash
+git show main:package.json            | grep -c starkzap
+git show main:__mocks__/starkzap.js   | head -1
+git show main:backend/main.py         | grep -c "settings.DEBUG"   # expect 0
+git show main:backend/routes/provisioning_routes.py | grep -c "Could not load the roster"
+git show main:backend/tests/test_career_resource_visibility.py | grep -c dataState
+git show main:.github/workflows/semgrep.yml | head -1
+```
+
+Add a line here whenever a fix is landed that a future bulk merge could
+plausibly discard. This list is the cheapest available defence, and it only
+works if it is kept current.
