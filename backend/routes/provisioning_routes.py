@@ -1028,11 +1028,13 @@ async def get_roster(current_user: dict = Depends(Auth.require_admin)):
             aggregate_only=total_affiliated - shared,
             shared_with_you=shared,
         ).model_dump())
+    except HTTPException:
+        raise
     except Exception as exc:  # noqa: BLE001
         log.error("provisioning: roster failed", error=str(exc))
-        return ResponseModel(data=RosterResponse(
-            students=[], total_affiliated=0, aggregate_only=0, shared_with_you=0,
-        ).model_dump())
+        # An all-zero 200 is indistinguishable from a school with no students,
+        # so a backend failure has to surface as a failure.
+        raise HTTPException(status_code=500, detail="Could not load the roster.")
 
 
 # ─────────────────────────────────────────────────────────────
