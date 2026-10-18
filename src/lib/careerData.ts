@@ -79,26 +79,45 @@ const DETAIL_TTL_MS = REFERENCE_TTL_MS;
 // Keep the longer budget scoped to these reference-detail reads only.
 const CAREER_DETAIL_TIMEOUT_MS = 90_000;
 
+const inFlight = new Map<string, Promise<DataState<unknown>>>();
+
 async function readThrough<T>(
   key: string,
   fetcher: () => Promise<DataState<T>>,
   unavailableMessage: string,
   ttlMs: number = REFERENCE_TTL_MS,
 ): Promise<DataState<T>> {
+  // getCached returns null past the TTL (careerCache.ts), so honouring it here
+  // is what makes REFERENCE_TTL_MS / SEARCH_TTL_MS mean anything. This used to
+  // read the cache and then fetch regardless, so every career screen hit the
+  // network on every mount and the TTLs only governed the outage fallback.
   const cached = await getCached<DataState<T>>(key);
-  const stale = await getCachedStale<DataState<T>>(key);
-  try {
-    const result = await fetcher();
-    if (result.status === "real") {
-      await setCached(key, result, ttlMs);
-      return result;
+  if (cached) return cached;
+
+  const existing = inFlight.get(key);
+  if (existing) return existing as Promise<DataState<T>>;
+
+  // Deferred to a microtask so inFlight is populated before the body can reach
+  // its finally, even if fetcher() throws synchronously.
+  const pending: Promise<DataState<T>> = Promise.resolve().then(async () => {
+    try {
+      const result = await fetcher();
+      if (result.status === "real") {
+        await setCached(key, result, ttlMs);
+        return result;
+      }
+      // Keep a previously verified reference result usable during a transient
+      // backend/Supabase outage; never replace it with a developer-facing stub.
+      return (await getCachedStale<DataState<T>>(key)) ?? result;
+    } catch {
+      return (await getCachedStale<DataState<T>>(key)) ?? error<T>(unavailableMessage);
+    } finally {
+      inFlight.delete(key);
     }
-    // Keep a previously verified reference result usable during a transient
-    // backend/Supabase outage; never replace it with a developer-facing stub.
-    return cached ?? stale ?? result;
-  } catch {
-    return stale ?? cached ?? error<T>(unavailableMessage);
-  }
+  });
+
+  inFlight.set(key, pending as Promise<DataState<unknown>>);
+  return pending;
 }
 
 async function updateSavedItemsCache(next: SavedItem[]): Promise<void> {
