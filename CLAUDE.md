@@ -141,47 +141,25 @@ The authoritative current migration and seed order is the dated
 slice; do not create a second order from this summary or reopen a content
 stage that has already passed.
 
-After the canonical career seed has created the Sociology programme, D078
-domain, roles and role IDs, confirm these D078 display migrations and seeds
-are applied (use the migration runbook to resolve any already-applied files):
+`backend/MIGRATION_RUNBOOK.md` is the single source of truth for the exact
+D078/Sociology migration and seed order, prerequisites, transport format,
+preflight and postflight checks. Do not maintain or invent a second ordered
+list here; if this summary conflicts with the runbook, stop and correct the
+summary/runbook before preparing a deployment.
 
-```text
-backend/migration_programme_domain_evidence_2026-09-17.sql
-backend/migration_programme_domain_review_corrections_2026-09-18.sql
-backend/migration_sociology_curriculum_contract_2026-09-17.sql
-backend/migration_programme_curriculum_contract_general_2026-09-18.sql
-backend/migration_contextual_career_items.sql
-backend/migration_career_context_claim_validation.sql
-backend/migration_career_item_relationships_2026-09-17.sql
-backend/migration_career_item_relationship_explanations_2026-10-12.sql
-backend/migration_career_item_sequence_policy_2026-10-12.sql
-backend/migration_career_item_relationship_target_context_2026-10-17.sql
-backend/migration_career_context_path_targets.sql
-backend/migration_guidance_programme_reading_and_market_scope_2026-09-12.sql
-backend/migration_guidance_ownership_and_sociology_resources_2026-09-11.sql
-backend/migration_domain_student_orientation_2026-09-18.sql
-backend/migration_sociology_domain_tool_path_2026-09-18.sql
-backend/migration_d078_specialization_taxonomy_2026-10-12.sql
-backend/migration_d078_role_item_contracts_2026-10-15.sql
-backend/migration_d078_requirement_lanes_2026-10-17.sql
-```
-
-Then apply the current D078 data in this order:
-
-```text
-backend/seed_programme_domain_evidence_2026-09-17.sql
-backend/seed_sociology_curriculum_contract_2026-09-17.sql
-backend/seed_sociology_programme_theme_guidance_2026-10-08.sql
-backend/seed_sociology_domain_guidance_2026-10-08.sql
-backend/migration_guidance_all_programmes_2026-09-12.sql
-backend/migration_guidance_global_2026-09-11.sql
-backend/seed_d078_specialization_taxonomy_2026-10-12.sql
-backend/migration_d078_role_route_visibility_2026-10-15.sql
-backend/seed_career_context_items_v1_parts/part-001.sql.gz ... part-035.sql.gz
-backend/seed_d078_guided_content_2026-10-12.sql
-backend/seed_d078_role_item_contracts_2026-10-15.sql
-backend/seed_d078_role_tools_2026-10-16.sql
-```
+Package gate: the runbook's four required additions must travel with it:
+`migration_career_item_relationship_target_context_2026-10-17.sql`,
+`migration_d078_role_item_contracts_2026-10-15.sql`,
+`migration_d078_requirement_lanes_2026-10-17.sql`, and
+`migration_d078_role_route_visibility_2026-10-15.sql`. The first three are
+schema migrations; route visibility is a post-taxonomy data recalculation.
+Before staging or pushing, verify every runbook-listed migration and selected
+compressed seed exists in the target-branch package, including contextual
+seed parts 001–035. Never publish a runbook that references absent files or
+push raw duplicate copies of a selected compressed seed. Keep the three final
+D078 seed transactions separate: guided content, role-item contracts/cards,
+then optional role tools. Decompress before SQL execution and never execute
+both compressed and raw copies.
 
 The role-item migration stores the complete 173-row backend ledger. The
 companion role-item seed also materializes approved, routed records as 202
