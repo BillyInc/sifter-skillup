@@ -558,12 +558,22 @@ order by relationship_status, relationship_type;
 
 ### Authoritative D078/Sociology apply order (15 October 2026)
 
+Last dependency and transport reconciliation: 19 October 2026. This section is
+the sole authoritative D078 order; `CLAUDE.md` points here and must not maintain
+a competing copy of the ordered list.
+
 This is the single authoritative order for the current D078 slice. It
 supersedes the abbreviated D078 seed order in older sections and in
 `COMPLETE_DATA_MIGRATION_2026-08-17.md`. For an existing database, run a
 read-only preflight and apply only missing files. The canonical career seed
 must already have created the Sociology programme, D078 domain and role rows.
 Do not use `migration_career_v2.sql` for this additive update.
+
+The canonical career taxonomy is a prerequisite, not part of the D078 overlay:
+apply the career base migrations and `backend/seed_career_pilot.sql` first, in
+the applicable career-seed runbook order. Then follow the D078-specific chain
+below. This keeps programme/domain/role identity creation distinct from the
+Sociology curriculum, area taxonomy and learning-content overlays.
 
 #### 1. Apply missing schemas in dependency order
 
@@ -590,6 +600,14 @@ backend/migration_d078_role_item_contracts_2026-10-15.sql
 backend/migration_d078_requirement_lanes_2026-10-17.sql
 ```
 
+The relationship-target-context, role-item-contract and requirement-lane
+files are required schema migrations; the role-route-visibility file is a
+post-taxonomy data recalculation, not an optional seed or a permanent
+hard-coded release gate. Before distributing this runbook, verify that all
+four plain-text migration files are present in the same branch/package as this
+document. A runbook that references a missing migration is an invalid,
+non-deployable package: stop rather than applying only the seeds.
+
 If preflight shows missing canonical programme/domain/role rows, stop: this
 additive sequence cannot create the base taxonomy. Relationship explanations
 and sequence policy follow the relationship table; the target-context
@@ -603,19 +621,42 @@ before loading the D078 content seed.
 After the schemas above exist, apply only missing data in this order:
 
 ```text
-backend/seed_programme_domain_evidence_2026-09-17.sql
-backend/seed_sociology_curriculum_contract_2026-09-17.sql
-backend/seed_sociology_programme_theme_guidance_2026-10-08.sql
-backend/seed_sociology_domain_guidance_2026-10-08.sql
+backend/seed_programme_domain_evidence_2026-09-17.sql.gz
+backend/seed_sociology_curriculum_contract_2026-09-17.sql.gz
+backend/seed_sociology_programme_theme_guidance_2026-10-08.sql.gz
+backend/seed_sociology_domain_guidance_2026-10-08.sql.gz
 backend/migration_guidance_all_programmes_2026-09-12.sql
 backend/migration_guidance_global_2026-09-11.sql
-backend/seed_d078_specialization_taxonomy_2026-10-12.sql
+backend/seed_d078_specialization_taxonomy_2026-10-12.sql.gz
 backend/migration_d078_role_route_visibility_2026-10-15.sql
 backend/seed_career_context_items_v1_parts/part-001.sql.gz ... part-035.sql.gz
-backend/seed_d078_guided_content_2026-10-12.sql
-backend/seed_d078_role_item_contracts_2026-10-15.sql
-backend/seed_d078_role_tools_2026-10-16.sql
+backend/seed_d078_guided_content_2026-10-12.sql.gz
+backend/seed_d078_role_item_contracts_2026-10-15.sql.gz
+backend/seed_d078_role_tools_2026-10-16.sql.gz
 ```
+
+Use the compressed files above as the canonical repository transport when
+their matching `.sql` files are present locally. They are three separate,
+ordered seed transactions—not one SQL file to concatenate: guided content
+builds the programme/domain/area layer, the role-item seed writes both the
+role-item audit ledger and approved role-owned contextual cards, and the role
+tools seed adds optional role-scoped tool cards. Keeping these generators and
+transactions separate prevents a later layer from overwriting an earlier
+layer's ownership or review decisions. Apply each gzip payload only after
+decompressing it, and never also execute its uncompressed counterpart.
+
+The order intentionally carries earlier data into the D078 overlay: the
+programme/domain evidence and Sociology curriculum/theme/domain seeds run
+first; all-programme and global guidance migrations follow the reviewed local
+slice; the taxonomy seed creates the seven canonical areas and their routes;
+the visibility recalculation follows those routes; the 35 generic contextual
+parts load before the D078-specific guided-content overlay; role-item contracts
+and role tools are last. Do not skip the generic contextual parts or reverse
+the D078 overlay order. Before packaging, verify that this branch contains all
+four migrations listed above, all compressed seed paths in this sequence, and
+exactly parts 001–035 of the generic contextual seed. Only include compressed
+seed artifacts that are absent from the target branch; do not resend already
+present files or include raw duplicates.
 
 The route-visibility recalculation follows the seven-area/26-route taxonomy
 seed. It repairs stale route visibility from current route evidence; it does
