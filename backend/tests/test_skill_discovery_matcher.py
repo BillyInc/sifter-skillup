@@ -132,6 +132,15 @@ def _role(key, name):
 
 
 def _python_competency(**overrides):
+    # `_student_context_item_visible` (routes.career_routes) fails closed
+    # without checkpoint-level claim review and a verified learning link, so
+    # a competency row that should pass the student visibility gate must
+    # carry the same claim/link shape as `_approved_context_row` in
+    # test_student_guidance_contract.py.
+    claims = {
+        key: {"source_references": ["source-1"], "source_locators": ["section 1"]}
+        for key in ("item_identity", "checkpoint_fit", "plain_meaning", "contextual_use", "expected_output")
+    }
     row = {
         "context_level": "domain",
         "context_key": DOMAIN_KEY,
@@ -148,6 +157,13 @@ def _python_competency(**overrides):
         "geographic_scope": "global",
         "guidance_owner": "domain",
         "data_state": "source_backed",
+        "claim_review_state": "approved",
+        "claim_evidence": {"claims": claims},
+        "link_state": "linked",
+        "link_url": "https://example.test/python",
+        "link_accessed_at": "2026-10-08",
+        "link_source_reference": {"title": "Python learning guide"},
+        "link_evidence": {"destination_checked": True},
     }
     row.update(overrides)
     return row
