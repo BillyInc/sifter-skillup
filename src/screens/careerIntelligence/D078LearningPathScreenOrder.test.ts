@@ -35,7 +35,7 @@ describe("D078 layer presentation order", () => {
       "Areas this role can connect to",
       "<ProgrammeOutcomeBridge connection={programmeConnection} nextLayer=\"role\"",
       "Earlier-stage learning and choices for this role",
-      "Capabilities needed for relevant role tasks",
+      "Role learning sequence for relevant work",
       "Options for particular tasks in this role",
     ]);
     const source = readFileSync(resolve(__dirname, "RoleDetailScreen.tsx"), "utf8");

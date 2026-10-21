@@ -851,9 +851,9 @@ isolates 1 orphan record, reports missing positions 136 and 147–173, and
 invented **0** records. It remains review-only/hidden; this is not a lane
 completion, canonical change, or dependency graph.
 
-## Local 137â€“173 continuation handoff (2026-10-09)
+## Local 137–173 continuation handoff (2026-10-09)
 
-The 137â€“173 lane was completed locally from read-only source artifacts after
+The 137–173 lane was completed locally from read-only source artifacts after
 the replacement agent could not produce a handoff. The builder is
 `data/career-mapping/_audit/build_d078_role_item_placement_continuation_137_173_2026_10_09.py`.
 
@@ -862,12 +862,12 @@ The output is:
 - `data/career-mapping/_audit/D078_ROLE_ITEM_PLACEMENT_CONTINUATION_137-173_2026_10_09.json`
 - `docs/manual-review/D078_ROLE_ITEM_PLACEMENT_CONTINUATION_137-173_2026_10_09.md`
 
-Validation passed for exactly **37 unique positions, 137â€“173**. The handoff
+Validation passed for exactly **37 unique positions, 137–173**. The handoff
 contains **0 missing positions**, **0 invented records**, **10 conflicting prior
 recovery records isolated as orphans**, and all 37 new records remain
 `hidden_review_required` with approval, checkpoint-placement and role-task
-verification flags false. Positions 137â€“144 come from the exact queue research
-checkpoint; positions 145â€“173 come from the merged source-backed enrichment
+verification flags false. Positions 137–144 come from the exact queue research
+checkpoint; positions 145–173 come from the merged source-backed enrichment
 artifact. The prior recovery rows were preserved rather than silently
 reassigned because their pair keys conflict with the authoritative queue order.
 
