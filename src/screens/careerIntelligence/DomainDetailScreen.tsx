@@ -51,6 +51,7 @@ import {
   LearningResourcesBlock,
   ExternalLinkGuard,
   ProgrammeCurriculumCarryForward,
+  GuidanceContinuation,
 } from "@/components/careerIntelligence";
 import { isStudentResource } from "@/components/careerIntelligence/resourceLinks";
 
@@ -585,6 +586,11 @@ function DomainBody({
         <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
         <ContextualItemList items={domainItems} itemTypes={["skill", "competency", "method", "knowledge", "tool", "certification"]} resources={domainResources} contextLevel="domain" itemScope="shared-foundation" title={`Compulsory domain foundations for ${domain.name}`} learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} domainName={domain.name} learningFocus targetStudentId={targetStudentId} />
       </View>
+      {/* Optional useful edges: GuidanceContinuation renders its own
+          "Optional useful edges" heading below when domainItems has any
+          non-compulsory rows. No separate heading here -- one would
+          duplicate GuidanceContinuation's own label on screen. */}
+      <GuidanceContinuation programmeName={studentConnection?.programmeName} connection={studentConnection} domainId={domain.id} domainName={domain.name} domainHasAreas={visibleAreas.length > 0} domainFoundation={domain.foundationSkills} domainItems={domainItems} />
       <View style={refinedStyles.sectionHeading}>
         <View style={refinedStyles.cardHeading}><Feather name="compass" size={17} color={colors.accentRole.action} /><Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Next in the domain sequence</Text></View>
         <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>After the shared foundations, follow the broad domain spine in order. Each card explains why it appears next; these additions remain skippable and do not block moving to an area.</Text>

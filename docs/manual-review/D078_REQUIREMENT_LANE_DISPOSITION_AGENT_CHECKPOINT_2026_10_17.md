@@ -1,4 +1,4 @@
-﻿# D078 Requirement Lane Disposition Agent Checkpoint
+# D078 Requirement Lane Disposition Agent Checkpoint
 
 Date: 2026-10-17
 
