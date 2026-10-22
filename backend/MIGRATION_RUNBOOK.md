@@ -313,6 +313,13 @@ testing login or finishing onboarding with the updated backend.
 
 ### Contextual career item transport
 
+> **Superseded ordering.** The sequence in this paragraph predates the
+> 2026-10-08 guidance files and places the 35 contextual parts after migrations
+> 12d/12e. Use the "Authoritative D078/Sociology apply order" section below
+> instead, which loads the parts earlier; see the note there on
+> `seed_sociology_domain_guidance`. The transport, manifest and checksum rules
+> in this paragraph still apply.
+
 After the local goal gate and after applying migrations **12a–12e**, including
 **12a-claim** and **12a-ia**, the
 Sociology curriculum contract, and the base career seed, load the 35 ordered
@@ -558,7 +565,7 @@ order by relationship_status, relationship_type;
 
 ### Authoritative D078/Sociology apply order (15 October 2026)
 
-Last dependency and transport reconciliation: 19 October 2026. This section is
+Last dependency and transport reconciliation: 20 October 2026. This section is
 the sole authoritative D078 order; `CLAUDE.md` points here and must not maintain
 a competing copy of the ordered list.
 
@@ -583,6 +590,7 @@ Run one whole SQL file/transaction at a time, stopping at the first error:
 backend/migration_programme_domain_evidence_2026-09-17.sql
 backend/migration_programme_domain_review_corrections_2026-09-18.sql
 backend/migration_sociology_curriculum_contract_2026-09-17.sql
+backend/migration_programme_theme_guidance_2026-10-08.sql
 backend/migration_programme_curriculum_contract_general_2026-09-18.sql
 backend/migration_contextual_career_items.sql
 backend/migration_career_context_claim_validation.sql
@@ -600,6 +608,16 @@ backend/migration_d078_role_item_contracts_2026-10-15.sql
 backend/migration_d078_requirement_lanes_2026-10-17.sql
 ```
 
+Both lists above name migration DDL by its bare `.sql` filename, but most of
+these files are committed only as `.sql.gz` transports — including
+`migration_programme_theme_guidance_2026-10-08.sql`,
+`migration_guidance_all_programmes_2026-09-12.sql` and
+`migration_guidance_global_2026-09-11.sql`. A bare name here is therefore not
+evidence that the file is absent from the package: check for both spellings
+before declaring a runbook non-deployable, and decompress before executing. The
+four files added in October 2026 are the exception and are committed as plain
+text.
+
 The relationship-target-context, role-item-contract and requirement-lane
 files are required schema migrations; the role-route-visibility file is a
 post-taxonomy data recalculation, not an optional seed or a permanent
@@ -609,7 +627,58 @@ document. A runbook that references a missing migration is an invalid,
 non-deployable package: stop rather than applying only the seeds.
 
 If preflight shows missing canonical programme/domain/role rows, stop: this
-additive sequence cannot create the base taxonomy. Relationship explanations
+additive sequence cannot create the base taxonomy.
+
+Run the preflight as the **same role that will apply the seeds**, and before
+reading anything into a row count of zero, check that role's `rolbypassrls`
+together with `pg_class.relrowsecurity` and `pg_policies` for the table. On the
+dev project (`xikcotwdgztaiksoylwg`) on 20 October 2026, row-level security was
+enabled on the career tables in two different shapes, and a loader role that is
+neither the table owner nor a `BYPASSRLS` holder fails differently under each:
+
+- `programmes`, `schools` and `school_programmes` had RLS enabled with **no
+  policies at all**, so every row was invisible and every write rejected.
+  Reads fail **silently**: `seed_sociology_curriculum_contract` and
+  `seed_sociology_programme_theme_guidance` are
+  `INSERT ... SELECT ... FROM skillup_dev.programmes p WHERE lower(p.name) =
+  lower('Sociology')`, so RLS filtered the *source* rows to zero and both
+  committed successfully having written nothing. Both reported success with 0
+  rows while `programmes` in fact held 244.
+- `career_context_items`, `career_item_relationships`,
+  `career_item_path_targets`, `career_areas_of_specialization` and
+  `career_role_area_routes` each had a public **`SELECT`-only** policy and no
+  write policy, so reads succeeded and writes failed loudly:
+  `new row violates row-level security policy for table
+  "career_context_items"` (observed applying `part-001`).
+
+Note that **no committed migration enables RLS on `programmes`, `schools` or
+`school_programmes`** — that state exists in the live dev project only, so a
+fresh staging database will not reproduce it and a dump-based comparison will
+not reveal it. The `SELECT`-only policies on the five career tables *are* in
+the committed migrations, spread across four files:
+`career_context_items_public_read` in `migration_contextual_career_items.sql`,
+`career_item_relationships_public_read` in
+`migration_career_item_relationships_2026-09-17.sql`,
+`career_item_path_targets_public_read` in
+`migration_career_context_path_targets.sql`, and both
+`career_areas_of_specialization_public_read` and
+`career_role_area_routes_public_read` in
+`migration_d078_specialization_taxonomy_2026-10-12.sql`.
+
+An apparently empty `programmes` is therefore not evidence that
+`backend/seed_career_pilot.sql` is missing, and re-running that seed to
+"repair" it does not work: it upserts `school_programme_requirement_exceptions`
+with `ON CONFLICT (id)` while the table also carries
+`UNIQUE (school_programme_id, exam_type, requirement_text)`, so an id-stable
+re-run aborts on the natural key. Grant the loader `BYPASSRLS` for the duration
+of the load and revoke it afterwards:
+
+```sql
+ALTER ROLE <loader> BYPASSRLS;    -- before
+ALTER ROLE <loader> NOBYPASSRLS;  -- after
+```
+
+Relationship explanations
 and sequence policy follow the relationship table; the target-context
 extension follows sequence policy. The role-contract schema must exist before
 `migration_d078_requirement_lanes_2026-10-17.sql`, because the lane migration
@@ -624,12 +693,12 @@ After the schemas above exist, apply only missing data in this order:
 backend/seed_programme_domain_evidence_2026-09-17.sql.gz
 backend/seed_sociology_curriculum_contract_2026-09-17.sql.gz
 backend/seed_sociology_programme_theme_guidance_2026-10-08.sql.gz
+backend/seed_career_context_items_v1_parts/part-001.sql.gz ... part-035.sql.gz
 backend/seed_sociology_domain_guidance_2026-10-08.sql.gz
 backend/migration_guidance_all_programmes_2026-09-12.sql
 backend/migration_guidance_global_2026-09-11.sql
 backend/seed_d078_specialization_taxonomy_2026-10-12.sql.gz
 backend/migration_d078_role_route_visibility_2026-10-15.sql
-backend/seed_career_context_items_v1_parts/part-001.sql.gz ... part-035.sql.gz
 backend/seed_d078_guided_content_2026-10-12.sql.gz
 backend/seed_d078_role_item_contracts_2026-10-15.sql.gz
 backend/seed_d078_role_tools_2026-10-16.sql.gz
@@ -646,12 +715,41 @@ layer's ownership or review decisions. Apply each gzip payload only after
 decompressing it, and never also execute its uncompressed counterpart.
 
 The order intentionally carries earlier data into the D078 overlay: the
-programme/domain evidence and Sociology curriculum/theme/domain seeds run
-first; all-programme and global guidance migrations follow the reviewed local
-slice; the taxonomy seed creates the seven canonical areas and their routes;
-the visibility recalculation follows those routes; the 35 generic contextual
-parts load before the D078-specific guided-content overlay; role-item contracts
-and role tools are last. Do not skip the generic contextual parts or reverse
+programme/domain evidence and Sociology curriculum/theme seeds run first; the
+35 generic contextual parts follow them; the Sociology domain-guidance seed
+then edits one of the rows those parts create; all-programme and global
+guidance migrations follow the reviewed local slice; the taxonomy seed creates
+the seven canonical areas and their routes; the visibility recalculation
+follows those routes; the contextual parts are in place before the
+D078-specific guided-content overlay; role-item contracts and role tools are
+last.
+
+`seed_sociology_domain_guidance_2026-10-08.sql.gz` must run **after** the 35
+contextual parts, not before them. It `UPDATE`s the single
+`('domain', 'D078', 'D078', 'skill', 'research-design')` row in
+`career_context_items` and raises `Expected exactly one existing D078
+research-design row to update; updated 0` when that row is absent. The row is
+created by `part-002`. Until 20 October 2026 this list placed the parts five
+steps later, so a clean run of the documented order always aborted here.
+
+Moving them earlier is safe, checked statement by statement against every file
+now ordered after them. None of those files deletes from any of the three
+tables the parts populate:
+
+| File | Writes to `career_context_items` / `career_item_path_targets` / `career_item_relationships` |
+|---|---|
+| `seed_sociology_domain_guidance` | one `UPDATE` of the research-design row (the dependency above) plus `INSERT` of two path targets |
+| `migration_guidance_all_programmes` | `INSERT` into `career_context_items` through `ON CONFLICT ... DO UPDATE` only |
+| `migration_guidance_global` | none — it writes `domains`, `career_learning_resources`, `domain_tools` and `career_guidance_foundations` |
+| `seed_d078_specialization_taxonomy` | none |
+| `migration_d078_role_route_visibility` | none |
+
+No `DELETE` against those three tables appears in any of them, so rows arriving
+sooner cannot be removed or clobbered. The three tables also carry no
+foreign-key constraints — true both of every committed migration and of the
+live dev project (`pg_constraint` returns nothing for them) — so there is no
+ordering requirement against the area taxonomy either. Do not skip the generic
+contextual parts or reverse
 the D078 overlay order. Before packaging, verify that this branch contains all
 four migrations listed above, all compressed seed paths in this sequence, and
 exactly parts 001–035 of the generic contextual seed. Only include compressed
@@ -918,6 +1016,12 @@ required by the 2026-09-12 seed.
 7. Apply the Sociology seed, then the four generic programme-curriculum parts,
    then `seed_career_context_items_v1_parts/part-001.sql.gz` through
    `part-035.sql.gz`, in numeric order, preserving each transaction.
+   **Superseded for the D078 slice:** this step runs the contextual parts last,
+   which aborts `seed_sociology_domain_guidance_2026-10-08.sql.gz`. For any
+   deployment that includes the D078/Sociology overlay, follow the
+   "Authoritative D078/Sociology apply order" section instead; this numbered
+   recovery order also predates the 2026-10-08 guidance files and the D078
+   taxonomy, visibility and role-item chain, and does not list them.
 8. Apply `migration_student_pipeline_live.sql`.
 9. Apply `migration_school_faculty_filter_2026-09-09.sql`.
 10. If the older 2026-08-31 or historical JAMB transport was used, apply
