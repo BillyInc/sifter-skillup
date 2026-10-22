@@ -283,6 +283,7 @@ substitute for production deployment verification.
 | 12a | `backend/migration_contextual_career_items.sql` | Adds the student-facing programme/domain/subgroup/role contextual evidence table. Each emitted skill, competency, tool and certification row carries its meaning, context-specific use, learning priority, connections, source links, source locator and evidence limitation. | #8, #9, #11a and #12 |
 | 12a-claim | `backend/migration_career_context_claim_validation.sql` | Adds method/knowledge/resource item types and claim-by-claim review state/evidence plus learning-link metadata. Existing rows remain review-required until the exact checkpoint claims and their external learning links have been reviewed. | 12a |
 | 12a-i | `backend/migration_career_item_relationships_2026-09-17.sql` | Adds normalized typed relationships between contextual skills, competencies, tools and certifications. It stores explicit source-backed `builds_on`/`works_with` edges and `not_established` coverage rows for every contextual tool/certification with no established cross-type edge. | #12a |
+| 12a-i-fix | `backend/migration_career_item_relationships_item_type_widen_2026-10-22.sql` | Widens `from_item_type`/`to_item_type` on this table from 4 values to the same 7 `career_context_items` already allows (adding `method`, `knowledge`, `resource`). The original 4-value check, never updated when 12a-claim widened the item table, silently rejected every relationship naming one of the three newer types -- confirmed zero such rows existed on dev while 187 `career_context_items` rows already used them. Apply before any seed that links a method/knowledge/resource item. | 12a-i, 12a-claim |
 | 12a-ia | `backend/migration_career_item_relationship_explanations_2026-10-12.sql` | Adds a separate learner-facing explanation field to typed item relationships. Existing relationships remain unchanged and stay out of learner relationship UI until a reviewed, non-empty explanation is present; source limitations are never used as positive explanations. | 12a-i |
 | 12a-ib | `backend/migration_career_item_sequence_policy_2026-10-12.sql` | Adds explicit sequence approval, policy, condition and route-scope fields. Existing source-backed relationships default to advisory/unapproved; relationship type alone cannot create a learner prerequisite. | 12a-ia |
 | 12a-ic | `backend/migration_career_item_relationship_target_context_2026-10-17.sql` | Adds target ownership context so an approved area route may explicitly point to an inherited domain item; the target must independently pass its student-content gate. | 12a-ib |
@@ -565,7 +566,7 @@ order by relationship_status, relationship_type;
 
 ### Authoritative D078/Sociology apply order (15 October 2026)
 
-Last dependency and transport reconciliation: 20 October 2026. This section is
+Last dependency and transport reconciliation: 22 October 2026. This section is
 the sole authoritative D078 order; `CLAUDE.md` points here and must not maintain
 a competing copy of the ordered list.
 
@@ -595,6 +596,7 @@ backend/migration_programme_curriculum_contract_general_2026-09-18.sql
 backend/migration_contextual_career_items.sql
 backend/migration_career_context_claim_validation.sql
 backend/migration_career_item_relationships_2026-09-17.sql
+backend/migration_career_item_relationships_item_type_widen_2026-10-22.sql
 backend/migration_career_item_relationship_explanations_2026-10-12.sql
 backend/migration_career_item_sequence_policy_2026-10-12.sql
 backend/migration_career_item_relationship_target_context_2026-10-17.sql
