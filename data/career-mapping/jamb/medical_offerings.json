@@ -231,7 +231,21 @@
    "scope": [
     40,
     184
-   ]
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+   "source_locator": "_jamb_txt/medical.txt lines 8, 40, 121, 270, 298, 731; parsed offering row 1; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+    "pdf_table_locator": "_jamb_txt/medical.txt lines 8, 40, 121, 270, 298, 731; parsed offering row 1; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   }
   },
   {
    "jamb_name": "Biochemistry",
@@ -269,7 +283,21 @@
    "scope": [
     184,
     193
-   ]
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+   "source_locator": "_jamb_txt/medical.txt lines 9, 12, 184, 193, 269, 299; parsed offering row 2; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+    "pdf_table_locator": "_jamb_txt/medical.txt lines 9, 12, 184, 193, 269, 299; parsed offering row 2; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   }
   },
   {
    "jamb_name": "Medical Biochemistry",
@@ -336,12 +364,25 @@
    "scope": [
     193,
     252
-   ]
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+   "source_locator": "_jamb_txt/medical.txt lines 12, 193, 460; parsed offering row 3; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+    "pdf_table_locator": "_jamb_txt/medical.txt lines 12, 193, 460; parsed offering row 3; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   }
   },
   {
    "jamb_name": "Dentistry and Dental Technology",
    "institutions": [
-    "SURGERY",
     "ABU",
     "ABUAD",
     "BAYERO",
@@ -351,7 +392,6 @@
     "FUHSA",
     "IBADAN",
     "JOS",
-    "PROGRAMME/DEGREE",
     "LAGOS",
     "LASU",
     "MAIDUGURI",
@@ -365,16 +405,29 @@
     "VENITE",
     "UNINIGER",
     "HUSTECH",
-    "DENTAL TECHNOLOGY",
     "BMU",
     "FCDTT-FUTO",
     "FUTO",
     "LCITY",
-    "UNI-ILESA",
-    "SPEECH LANGUAGE",
-    "THERAPY",
-    "OCCUPATIONAL THERAPY"
+    "UNI-ILESA"
    ],
+   "external_html_reconciliation": {
+    "access_date": "2026-10-02",
+    "status": "parser_fragments_removed; distinct_award_types_confirmed_at_named_institutions; full_roster_unverified",
+    "finding": "Removed the non-institution fragments SURGERY, PROGRAMME/DEGREE, DENTAL TECHNOLOGY, SPEECH LANGUAGE, THERAPY and OCCUPATIONAL THERAPY from the institution-token list. Official HTML confirms Dentistry/BDS and Dental Technology are separate awards at named institutions; UNIMED's current 2026/27 admission listing also separates Dentistry, Dental Therapy and Dental Technology. These checks do not establish the full JAMB awarder roster.",
+    "sources": [
+     "https://www.unimed.edu.ng/postutme/programmes.php",
+     "https://programmes.abu.edu.ng/programmes_view.php?editid1=899",
+     "https://vc.abuad.edu.ng/abuad-raising-the-bar-in-nigeria-higher-education/",
+     "https://www.abuad.edu.ng/admission-exercise-2026-2027/"
+    ],
+    "occurrence_dispositions": [
+     {"institution":"ABUAD","disposition":"unresolved_after_search","reason":"Official Vice-Chancellor HTML dated 2026-06-30 confirms an accredited Dentistry programme. The official 2026/27 admissions page does not list Dentistry or Dental Technology among the surfaced programmes, and no current JAMB occurrence or Dental Technology award is established. The omission does not prove unavailability, so the roster is not removed or promoted.","access_date":"2026-10-02"}
+    ],
+    "additional_official_html_followup": [
+     {"institution":"ABUAD","route":"https://admissions.abuad.edu.ng/","result":"Official admissions portal host returned HTTP 520 during the 2026-10-02 follow-up; no programme/course listing was retrieved. No current JAMB or Dental Technology claim added."}
+    ]
+   },
    "utme_subjects": [
     "Chemistry",
     "Physics",
@@ -484,45 +537,32 @@
    "scope": [
     252,
     393
-   ]
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+   "source_locator": "_jamb_txt/medical.txt lines 10; parsed offering row 4; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+    "pdf_table_locator": "_jamb_txt/medical.txt lines 10; parsed offering row 4; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   }
   },
   {
    "jamb_name": "Human Nutrition and Dietetics",
    "institutions": [
-    "DIETETICS",
     "AAU",
     "ABUAD",
     "AL-QALAM",
     "CALABAR",
     "DANUMS",
-    "AEFUNA",
     "GSU",
-    "IBADAN",
-    "PROGRAMME/DEGREE",
-    "OAU",
-    "PAMO",
-    "UNI-ILESA",
-    "UYO",
-    "VENITE",
-    "ZAMFARA",
-    "NUTRITION AND DIETETICS",
-    "BABCOCK",
-    "BAYERO",
-    "BOWEN",
-    "FUHSA",
-    "FUHS-ILA",
-    "FUTA",
-    "HUSTECH",
-    "LCITY",
-    "MAIDUGURI",
-    "MAKURDI",
-    "MOUNTAIN TOP",
-    "NASARAWA",
-    "OSUMS",
-    "SUMAS",
-    "UDU",
-    "UNIOSUN",
-    "MUDIAME"
+    "IBADAN"
    ],
    "utme_subjects": [
     "Chemistry",
@@ -565,6 +605,103 @@
    "scope": [
     393,
     455
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+   "source_locator": "_jamb_txt/medical.txt lines 11; parsed offering row 5; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+    "pdf_table_locator": "Original JAMB brochure: Medica_Pharmaceutical Health Science.pdf, PDF page(s) 11; exact programme heading and institution list in awarder column",
+    "verification_date": "2026-09-30",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": [
+     "AAU",
+     "ABUAD",
+     "AL-QALAM",
+     "CALABAR",
+     "DANUMS",
+     "GSU",
+     "IBADAN"
+    ],
+    "offering_row_verified_against_pdf": true,
+    "verification_note": "Institution codes map by exact normalized matches to existing JAMB inventory tokens; the PDF awarder cell is bounded by the next printed bold heading.",
+    "institution_roster_reconciled_from_pdf": true,
+    "reconciled_prior_institution_tokens": [
+     "DIETETICS",
+     "AAU",
+     "ABUAD",
+     "AL-QALAM",
+     "CALABAR",
+     "DANUMS",
+     "AEFUNA",
+     "GSU",
+     "IBADAN",
+     "PROGRAMME/DEGREE",
+     "OAU",
+     "PAMO",
+     "UNI-ILESA",
+     "UYO",
+     "VENITE",
+     "ZAMFARA",
+     "NUTRITION AND DIETETICS",
+     "BABCOCK",
+     "BAYERO",
+     "BOWEN",
+     "FUHSA",
+     "FUHS-ILA",
+     "FUTA",
+     "HUSTECH",
+     "LCITY",
+     "MAIDUGURI",
+     "MAKURDI",
+     "MOUNTAIN TOP",
+     "NASARAWA",
+     "OSUMS",
+     "SUMAS",
+     "UDU",
+     "UNIOSUN",
+     "MUDIAME"
+    ]
+   },
+   "institution_tokens_before_pdf_cell_reconciliation": [
+    "DIETETICS",
+    "AAU",
+    "ABUAD",
+    "AL-QALAM",
+    "CALABAR",
+    "DANUMS",
+    "AEFUNA",
+    "GSU",
+    "IBADAN",
+    "PROGRAMME/DEGREE",
+    "OAU",
+    "PAMO",
+    "UNI-ILESA",
+    "UYO",
+    "VENITE",
+    "ZAMFARA",
+    "NUTRITION AND DIETETICS",
+    "BABCOCK",
+    "BAYERO",
+    "BOWEN",
+    "FUHSA",
+    "FUHS-ILA",
+    "FUTA",
+    "HUSTECH",
+    "LCITY",
+    "MAIDUGURI",
+    "MAKURDI",
+    "MOUNTAIN TOP",
+    "NASARAWA",
+    "OSUMS",
+    "SUMAS",
+    "UDU",
+    "UNIOSUN",
+    "MUDIAME"
    ]
   },
   {
@@ -841,7 +978,21 @@
    "scope": [
     455,
     660
-   ]
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+   "source_locator": "_jamb_txt/medical.txt lines 14; parsed offering row 6; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+    "pdf_table_locator": "_jamb_txt/medical.txt lines 14; parsed offering row 6; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   }
   },
   {
    "jamb_name": "Medical Rehabilitation",
@@ -1038,7 +1189,21 @@
    "scope": [
     660,
     986
-   ]
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+   "source_locator": "_jamb_txt/medical.txt lines 13, 660; parsed offering row 7; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+    "pdf_table_locator": "_jamb_txt/medical.txt lines 13, 660; parsed offering row 7; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   }
   },
   {
    "jamb_name": "Public Health Technology",
@@ -1214,7 +1379,21 @@
    "scope": [
     986,
     1234
-   ]
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+   "source_locator": "_jamb_txt/medical.txt lines 23; parsed offering row 8; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+    "pdf_table_locator": "_jamb_txt/medical.txt lines 23; parsed offering row 8; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   }
   },
   {
    "jamb_name": "Medicine and Surgery (Human Medicine)",
@@ -1232,96 +1411,7 @@
     "BAZE",
     "BENIN",
     "BINGHAM",
-    "BOWEN",
-    "PROGRAMME/DEGREE",
-    "BOSU",
-    "BSU",
-    "CALABAR",
-    "COOU",
-    "CUST",
-    "DANUMS",
-    "DELSU",
-    "EBSU",
-    "EUI",
-    "EKO-UNI",
-    "EKSU",
-    "ESUTECH",
-    "FED-DUTSE",
-    "FED-KEBBI",
-    "FED-LAFIA",
-    "FED-WUKARI",
-    "FUHSA",
-    "FUHSO",
-    "FUHS-ILA",
-    "FUTA",
-    "FUTO",
-    "FED-OYE EKITI",
-    "AEFUNA",
-    "GOUU",
-    "GREGORY",
-    "GSU",
-    "HUSTECH",
-    "IBADAN",
-    "IGBINEDION",
-    "ILORIN",
-    "IMSU",
-    "JOS",
-    "KASU",
-    "KOMU",
-    "KSUSTA",
-    "KWASU",
-    "LAGOS",
-    "LASU",
-    "LAUTECH",
-    "LAPAI",
-    "MAAUN",
-    "MADONNA",
-    "MADUKA",
-    "MAIDUGURI",
-    "MAITAMA",
-    "MAUTY",
-    "MERCY-MED-UNI",
-    "MLU",
-    "NDU",
-    "NILE",
-    "NOVENA",
-    "NUS",
-    "OAU",
-    "OOU",
-    "OSUMS",
-    "PAMO",
-    "PHC",
-    "RHEMA",
-    "RSU",
-    "SUMAS",
-    "UDA",
-    "UDU",
-    "UNIOSUN",
-    "UNIZIK",
-    "UNN",
-    "UNINIGER",
-    "UMYUK",
-    "UYO",
-    "VENITE",
-    "VERITAS",
-    "WESLEYUNI",
-    "YSU",
-    "ALTERNATIVE MEDICINE",
-    "COMPLEMENTARY AND",
-    "MEDICINAL CHEMISTRY",
-    "FED-DUTSINMA",
-    "APPLIED GEOLOGY",
-    "OAUSTECH",
-    "ARTHUR-JARVIS",
-    "DOU",
-    "UNI-ILESA",
-    "BASU",
-    "BMU",
-    "CCU",
-    "EUN",
-    "DOCTOR OF PHARMACY",
-    "FED-LOKOJA",
-    "DOCTOR OF"
+    "BOWEN"
    ],
    "utme_subjects": [
     "English Language",
@@ -1517,37 +1607,265 @@
    "scope": [
     1234,
     1649
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+   "source_locator": "_jamb_txt/medical.txt lines 15; parsed offering row 9; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+    "pdf_table_locator": "Original JAMB brochure: Medica_Pharmaceutical Health Science.pdf, PDF page(s) 37; exact programme heading and institution list in awarder column",
+    "verification_date": "2026-09-30",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": [
+     "AAU",
+     "ABSU",
+     "ABU",
+     "ABUAD",
+     "ABUJA",
+     "ACHIEVERS",
+     "AL-ANSAR",
+     "BABCOCK",
+     "BAYERO",
+     "BAUCHI",
+     "BAZE",
+     "BENIN",
+     "BINGHAM",
+     "BOWEN"
+    ],
+    "offering_row_verified_against_pdf": true,
+    "verification_note": "Institution codes map by exact normalized matches to existing JAMB inventory tokens; the PDF awarder cell is bounded by the next printed bold heading.",
+    "institution_roster_reconciled_from_pdf": true,
+    "reconciled_prior_institution_tokens": [
+     "AAU",
+     "ABSU",
+     "ABU",
+     "ABUAD",
+     "ABUJA",
+     "ACHIEVERS",
+     "AL-ANSAR",
+     "BABCOCK",
+     "BAYERO",
+     "BAUCHI",
+     "BAZE",
+     "BENIN",
+     "BINGHAM",
+     "BOWEN",
+     "PROGRAMME/DEGREE",
+     "BOSU",
+     "BSU",
+     "CALABAR",
+     "COOU",
+     "CUST",
+     "DANUMS",
+     "DELSU",
+     "EBSU",
+     "EUI",
+     "EKO-UNI",
+     "EKSU",
+     "ESUTECH",
+     "FED-DUTSE",
+     "FED-KEBBI",
+     "FED-LAFIA",
+     "FED-WUKARI",
+     "FUHSA",
+     "FUHSO",
+     "FUHS-ILA",
+     "FUTA",
+     "FUTO",
+     "FED-OYE EKITI",
+     "AEFUNA",
+     "GOUU",
+     "GREGORY",
+     "GSU",
+     "HUSTECH",
+     "IBADAN",
+     "IGBINEDION",
+     "ILORIN",
+     "IMSU",
+     "JOS",
+     "KASU",
+     "KOMU",
+     "KSUSTA",
+     "KWASU",
+     "LAGOS",
+     "LASU",
+     "LAUTECH",
+     "LAPAI",
+     "MAAUN",
+     "MADONNA",
+     "MADUKA",
+     "MAIDUGURI",
+     "MAITAMA",
+     "MAUTY",
+     "MERCY-MED-UNI",
+     "MLU",
+     "NDU",
+     "NILE",
+     "NOVENA",
+     "NUS",
+     "OAU",
+     "OOU",
+     "OSUMS",
+     "PAMO",
+     "PHC",
+     "RHEMA",
+     "RSU",
+     "SUMAS",
+     "UDA",
+     "UDU",
+     "UNIOSUN",
+     "UNIZIK",
+     "UNN",
+     "UNINIGER",
+     "UMYUK",
+     "UYO",
+     "VENITE",
+     "VERITAS",
+     "WESLEYUNI",
+     "YSU",
+     "ALTERNATIVE MEDICINE",
+     "COMPLEMENTARY AND",
+     "MEDICINAL CHEMISTRY",
+     "FED-DUTSINMA",
+     "APPLIED GEOLOGY",
+     "OAUSTECH",
+     "ARTHUR-JARVIS",
+     "DOU",
+     "UNI-ILESA",
+     "BASU",
+     "BMU",
+     "CCU",
+     "EUN",
+     "DOCTOR OF PHARMACY",
+     "FED-LOKOJA",
+     "DOCTOR OF"
+    ]
+   },
+   "institution_tokens_before_pdf_cell_reconciliation": [
+    "AAU",
+    "ABSU",
+    "ABU",
+    "ABUAD",
+    "ABUJA",
+    "ACHIEVERS",
+    "AL-ANSAR",
+    "BABCOCK",
+    "BAYERO",
+    "BAUCHI",
+    "BAZE",
+    "BENIN",
+    "BINGHAM",
+    "BOWEN",
+    "PROGRAMME/DEGREE",
+    "BOSU",
+    "BSU",
+    "CALABAR",
+    "COOU",
+    "CUST",
+    "DANUMS",
+    "DELSU",
+    "EBSU",
+    "EUI",
+    "EKO-UNI",
+    "EKSU",
+    "ESUTECH",
+    "FED-DUTSE",
+    "FED-KEBBI",
+    "FED-LAFIA",
+    "FED-WUKARI",
+    "FUHSA",
+    "FUHSO",
+    "FUHS-ILA",
+    "FUTA",
+    "FUTO",
+    "FED-OYE EKITI",
+    "AEFUNA",
+    "GOUU",
+    "GREGORY",
+    "GSU",
+    "HUSTECH",
+    "IBADAN",
+    "IGBINEDION",
+    "ILORIN",
+    "IMSU",
+    "JOS",
+    "KASU",
+    "KOMU",
+    "KSUSTA",
+    "KWASU",
+    "LAGOS",
+    "LASU",
+    "LAUTECH",
+    "LAPAI",
+    "MAAUN",
+    "MADONNA",
+    "MADUKA",
+    "MAIDUGURI",
+    "MAITAMA",
+    "MAUTY",
+    "MERCY-MED-UNI",
+    "MLU",
+    "NDU",
+    "NILE",
+    "NOVENA",
+    "NUS",
+    "OAU",
+    "OOU",
+    "OSUMS",
+    "PAMO",
+    "PHC",
+    "RHEMA",
+    "RSU",
+    "SUMAS",
+    "UDA",
+    "UDU",
+    "UNIOSUN",
+    "UNIZIK",
+    "UNN",
+    "UNINIGER",
+    "UMYUK",
+    "UYO",
+    "VENITE",
+    "VERITAS",
+    "WESLEYUNI",
+    "YSU",
+    "ALTERNATIVE MEDICINE",
+    "COMPLEMENTARY AND",
+    "MEDICINAL CHEMISTRY",
+    "FED-DUTSINMA",
+    "APPLIED GEOLOGY",
+    "OAUSTECH",
+    "ARTHUR-JARVIS",
+    "DOU",
+    "UNI-ILESA",
+    "BASU",
+    "BMU",
+    "CCU",
+    "EUN",
+    "DOCTOR OF PHARMACY",
+    "FED-LOKOJA",
+    "DOCTOR OF"
    ]
   },
   {
    "jamb_name": "Physiotherapy",
    "institutions": [
-    "ACHIEVERS",
-    "AL-QALAM",
-    "APU",
-    "BOSU",
-    "CANADIAN-UNI",
-    "CUST",
-    "EVANGEL",
-    "FRANCO",
-    "FUHS-ILA",
-    "GREENFIELD",
-    "LASU",
-    "LAGOS",
-    "NEWGATE",
-    "OSUMS",
-    "KUM",
-    "PEACELAND-UNI",
-    "TAU",
-    "UNINIGER",
-    "UNIZIK",
-    "UMYUK",
-    "PROGRAMME/DEGREE",
-    "VENITE",
-    "WESLEYUNI",
-    "WESTERN-DEL",
-    "DOCTOR OF OPTOMETRY",
-    "HUSTECH"
+    "BAYERO",
+    "BENIN",
+    "BOWEN",
+    "BCU",
+    "CALABAR",
+    "CCU",
+    "CHRISLAND",
+    "COAL-CITY",
+    "CUN",
+    "DANUMS",
+    "EUN",
+    "EVANGEL"
    ],
    "utme_subjects": null,
    "olevel_requirement": null,
@@ -1622,11 +1940,277 @@
    "scope": [
     1649,
     1707
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+   "source_locator": "_jamb_txt/medical.txt lines 21, 663, 665, 1649, 1916; parsed offering row 10; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+    "pdf_table_locator": "Original JAMB brochure: Medica_Pharmaceutical Health Science.pdf, PDF page(s) 55; exact programme heading and institution list in awarder column",
+    "verification_date": "2026-09-30",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": [
+     "BAYERO",
+     "BENIN",
+     "BOWEN",
+     "BCU",
+     "CALABAR",
+     "CCU",
+     "CHRISLAND",
+     "COAL-CITY",
+     "CUN",
+     "DANUMS",
+     "EUN",
+     "EVANGEL"
+    ],
+    "offering_row_verified_against_pdf": true,
+    "verification_note": "Institution codes map by exact normalized matches to existing JAMB inventory tokens; the PDF awarder cell is bounded by the next printed bold heading.",
+    "institution_roster_reconciled_from_pdf": true,
+    "reconciled_prior_institution_tokens": [
+     "ACHIEVERS",
+     "AL-QALAM",
+     "APU",
+     "BOSU",
+     "CANADIAN-UNI",
+     "CUST",
+     "EVANGEL",
+     "FRANCO",
+     "FUHS-ILA",
+     "GREENFIELD",
+     "LASU",
+     "LAGOS",
+     "NEWGATE",
+     "OSUMS",
+     "KUM",
+     "PEACELAND-UNI",
+     "TAU",
+     "UNINIGER",
+     "UNIZIK",
+     "UMYUK",
+     "PROGRAMME/DEGREE",
+     "VENITE",
+     "WESLEYUNI",
+     "WESTERN-DEL",
+     "DOCTOR OF OPTOMETRY",
+     "HUSTECH"
+    ]
+   },
+   "institution_tokens_before_pdf_cell_reconciliation": [
+    "ACHIEVERS",
+    "AL-QALAM",
+    "APU",
+    "BOSU",
+    "CANADIAN-UNI",
+    "CUST",
+    "EVANGEL",
+    "FRANCO",
+    "FUHS-ILA",
+    "GREENFIELD",
+    "LASU",
+    "LAGOS",
+    "NEWGATE",
+    "OSUMS",
+    "KUM",
+    "PEACELAND-UNI",
+    "TAU",
+    "UNINIGER",
+    "UNIZIK",
+    "UMYUK",
+    "PROGRAMME/DEGREE",
+    "VENITE",
+    "WESLEYUNI",
+    "WESTERN-DEL",
+    "DOCTOR OF OPTOMETRY",
+    "HUSTECH"
    ]
   },
   {
    "jamb_name": "Pharmacology",
    "institutions": [
+    "ABUAD",
+    "BASU",
+    "CALABAR",
+    "DELSUT"
+   ],
+   "utme_subjects": [
+    "English Language",
+    "Physics",
+    "Chemistry",
+    "Biology"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and Biology.",
+   "direct_entry": "Two (2) 'A' Level passes in any of Physics, Chemistry and Biology plus UTME entry requirements.",
+   "institution_waivers": [
+    {
+     "institution": "ABUAD",
+     "note": "Requires three (3) 'A' Level passes in Chemistry, Physics and Biology."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "Accepts JUPEB/'A'-level passes in Physics, Chemistry and Biology. B.Sc. Degree (first class/second class upper) in Medical related fields."
+    },
+    {
+     "institution": "DELSU",
+     "note": "Requires a) HSC or GCE 'A' Level or its equivalent passes in Physics, Chemistry and Biology or Zoology (Botany may be accepted in lieu of Biology or Zoology); b) First degree in relevant Biological Sciences not below Second Class Lower Division."
+    },
+    {
+     "institution": "DELSU",
+     "note": "UTME: requires SSCE 'O' Level or its equivalent with credit passes in at least five (5) subjects which must include English Language, Mathematics, Physics, Chemistry and Biology in not more than two sittings."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "UTME: requires Five O/Level credit passes in English Language, Mathematics, Biology, Chemistry and Physics."
+    },
+    {
+     "institution": "OOU",
+     "note": "UTME subjects: accepts any three (3) of Physics, Mathematics, Chemistry, Biology."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "UTME subjects: requires English Language, Biology, Chemistry and Physics."
+    }
+   ],
+   "first_line": 1707,
+   "line_range": [
+    1707,
+    1976
+   ],
+   "scope": [
+    1707,
+    1977
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+   "source_locator": "_jamb_txt/medical.txt lines 19, 1633, 1707, 1738, 2083, 2131; parsed offering row 11; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+    "pdf_table_locator": "Original JAMB brochure: Medica_Pharmaceutical Health Science.pdf, PDF page(s) 49; exact programme heading and institution list in awarder column",
+    "verification_date": "2026-09-30",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": [
+     "ABUAD",
+     "BASU",
+     "CALABAR",
+     "DELSUT"
+    ],
+    "offering_row_verified_against_pdf": true,
+    "verification_note": "Institution codes map by exact normalized matches to existing JAMB inventory tokens; the PDF awarder cell is bounded by the next printed bold heading.",
+    "institution_roster_reconciled_from_pdf": true,
+    "reconciled_prior_institution_tokens": [
+     "ABUAD",
+     "BASU",
+     "CALABAR",
+     "DELSUT",
+     "PROGRAMME/DEGREE",
+     "EKO-UNI",
+     "FUHS-ILA",
+     "GSU",
+     "IGBINEDION",
+     "LAGOS",
+     "LASU",
+     "MAIDUGURI",
+     "NOVENA",
+     "NUS",
+     "OSUMS",
+     "OOU",
+     "PAAU",
+     "PAMO",
+     "UNI-ILESA",
+     "UNIOSUN",
+     "PHARMACOLOGY AND",
+     "THERAPEUTICS",
+     "DELSU",
+     "PHARMACEUTICAL",
+     "HUSTECH",
+     "AAU",
+     "ABSU",
+     "ABU",
+     "ACHIEVERS",
+     "APU",
+     "ATIBA",
+     "AUE",
+     "BABCOCK",
+     "BAYERO",
+     "BENIN",
+     "BINGHAM",
+     "BOWEN",
+     "CHRISLAND",
+     "COOU",
+     "CRUTECH",
+     "CUST",
+     "EBSU",
+     "EKSU",
+     "EUI",
+     "FED-KEBBI",
+     "FED-LAFIA",
+     "FED-OYE EKITI",
+     "FED-OTUOKE",
+     "AEFUNA",
+     "FUTA",
+     "GREGORY",
+     "IBADAN",
+     "ILORIN",
+     "LAUTECH",
+     "LCITY",
+     "MADONNA",
+     "MAITAMA",
+     "NOK",
+     "PHC",
+     "RSU",
+     "SALEM",
+     "TAU",
+     "UDA",
+     "UNIZIK",
+     "UNN",
+     "UYO",
+     "VENITE",
+     "VERITAS",
+     "WESLEYUNI",
+     "YSU",
+     "AL-ANSAR",
+     "AL-HIKMAH",
+     "ARTHUR-JARVIS",
+     "BAZE",
+     "BMU",
+     "BSU",
+     "CALEB",
+     "ELIZADE",
+     "FED-DUTSE",
+     "FED-DUTSINMA",
+     "FED-WUKARI",
+     "KOLA-DAISI",
+     "NDU",
+     "NILE",
+     "REDEEMERS",
+     "RHEMA",
+     "SUMAS",
+     "BCU",
+     "CCU",
+     "COAL-CITY",
+     "CUN",
+     "DANUMS",
+     "EUN",
+     "EVANGEL",
+     "FUHSA",
+     "KASU",
+     "KUM",
+     "MADUKA",
+     "MAAUN",
+     "MLU",
+     "SPORTS-UNI",
+     "UDU",
+     "ZAMFARA"
+    ]
+   },
+   "institution_tokens_before_pdf_cell_reconciliation": [
     "ABUAD",
     "BASU",
     "CALABAR",
@@ -1730,53 +2314,6 @@
     "SPORTS-UNI",
     "UDU",
     "ZAMFARA"
-   ],
-   "utme_subjects": [
-    "English Language",
-    "Physics",
-    "Chemistry",
-    "Biology"
-   ],
-   "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and Biology.",
-   "direct_entry": "Two (2) 'A' Level passes in any of Physics, Chemistry and Biology plus UTME entry requirements.",
-   "institution_waivers": [
-    {
-     "institution": "ABUAD",
-     "note": "Requires three (3) 'A' Level passes in Chemistry, Physics and Biology."
-    },
-    {
-     "institution": "LAGOS",
-     "note": "Accepts JUPEB/'A'-level passes in Physics, Chemistry and Biology. B.Sc. Degree (first class/second class upper) in Medical related fields."
-    },
-    {
-     "institution": "DELSU",
-     "note": "Requires a) HSC or GCE 'A' Level or its equivalent passes in Physics, Chemistry and Biology or Zoology (Botany may be accepted in lieu of Biology or Zoology); b) First degree in relevant Biological Sciences not below Second Class Lower Division."
-    },
-    {
-     "institution": "DELSU",
-     "note": "UTME: requires SSCE 'O' Level or its equivalent with credit passes in at least five (5) subjects which must include English Language, Mathematics, Physics, Chemistry and Biology in not more than two sittings."
-    },
-    {
-     "institution": "LAGOS",
-     "note": "UTME: requires Five O/Level credit passes in English Language, Mathematics, Biology, Chemistry and Physics."
-    },
-    {
-     "institution": "OOU",
-     "note": "UTME subjects: accepts any three (3) of Physics, Mathematics, Chemistry, Biology."
-    },
-    {
-     "institution": "LAGOS",
-     "note": "UTME subjects: requires English Language, Biology, Chemistry and Physics."
-    }
-   ],
-   "first_line": 1707,
-   "line_range": [
-    1707,
-    1976
-   ],
-   "scope": [
-    1707,
-    1977
    ]
   },
   {
@@ -1912,11 +2449,331 @@
    "scope": [
     1977,
     2172
-   ]
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+   "source_locator": "_jamb_txt/medical.txt lines 8, 1977, 2023, 2047, 2051; parsed offering row 12; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+    "pdf_table_locator": "_jamb_txt/medical.txt lines 8, 1977, 2023, 2047, 2051; parsed offering row 12; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   }
   },
   {
    "jamb_name": "Nursing/Nursing Science",
    "institutions": [
+    "AAU",
+    "AAUA",
+    "ABSU",
+    "ABUJA",
+    "ABU",
+    "ABU-ODL",
+    "ABUAD",
+    "ACHIEVERS",
+    "AEFUNA",
+    "AJAYI",
+    "AUGUSTINE",
+    "AL-ANSAR",
+    "AL-HIKMAH",
+    "AL-QALAM",
+    "AMOU",
+    "ANCHOR-UNI",
+    "ARTHUR-JARVIS",
+    "ATIBA",
+    "AUE"
+   ],
+   "utme_subjects": [
+    "Physics",
+    "Chemistry",
+    "Biology"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in Mathematics, Chemistry, Biology, Physics and English Language.",
+   "direct_entry": "(i) Two (2) 'A' Level passes in Biology/Zoology, Chemistry and Physics plus three (3) other 'O' Level credit passes in Mathematics, Physics and English Language. (ii) NRN or its approved equivalent plus five (5) 'O' Level credit passes in English Language and four (4) Science subjects chosen from Mathematics, Physics, Chemistry, Biology, Human Anatomy, Physiology and Hygiene, Health Science, Further Mathematics and General Science.",
+   "institution_waivers": [
+    {
+     "institution": "AAU",
+     "note": "DE: accepts Registered Nurse/Midwife RN, RM with one (1) year post registration experience; RN,RPN or RN,RNA or RN,RNT plus UTME requirements; or good first degree e.g. Biochemistry, Anatomy, Human Physiology, Health Education, Psychology, Guidance and Counselling; does not accept a degree in Zoology and Botany. UTME: five (5) 'O' Level credit passes in English Language, Mathematics, Physics, Biology and Chemistry at a sitting."
+    },
+    {
+     "institution": "ABU",
+     "note": "DE: 'A' Level/IJMB passes in three subjects in Physics, Chemistry and Biology or Zoology. Registered Nurse (RN) certificate with at least 5 credits in English Language, Mathematics, Biology, Physics and Chemistry. Registered Midwifery Certificate."
+    },
+    {
+     "institution": "ABUAD",
+     "note": "DE: requires three (3) 'A' Level passes in Chemistry, Physics and Biology."
+    },
+    {
+     "institution": "AUE",
+     "note": "DE: ND credit plus the UTME minimum requirements."
+    },
+    {
+     "institution": "BENIN",
+     "note": "DE: three (3) 'A' Level passes in Biology/Zoology, Chemistry and Physics plus 'O' Level credit passes in five (5) subjects including Mathematics, Physics, Chemistry, Biology and English."
+    },
+    {
+     "institution": "CALABAR",
+     "note": "DE: NRN or its approved equivalent plus five (5) 'O' Level credit passes to include English Language and one (1) Science subject plus two (2) years registration nursing experience; also accepts HND in Public Health, ND in Environmental Health, Public Health Nursing from West African Health Examination Board plus UTME requirements."
+    },
+    {
+     "institution": "EBSU",
+     "note": "DE: accepts HND, NCE and ND with a minimum of Merit and Upper credit respectively in the relevant programme."
+    },
+    {
+     "institution": "FUTO",
+     "note": "DE: three 'A' level passes not below Grade C in Physics and any two of Chemistry, Biology and Mathematics; or ND/HND Upper Credit in Biomedical Technology/Engineering, Chemical/Mechanical Engineering or Health sciences; or First Degree in Engineering or Health sciences; or three JUPEB subjects (Chemistry, Biology, Physics). Does not accept NCE."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "DE: professional qualification (General Nursing, Psychiatric Nursing, Mid-Wifery, Nursing, Nursing Admin), two 'A' Level passes in Chemistry, Biology and Physics plus UTME, and two years post registration experience. UTME: No admission through UTME; requires five/six 'O' Level credit passes including English, Biology/Health Science, Chemistry, Mathematics and one of Economics/Government/Literature/History/Geography/Physics."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "DE: two 'A' Level passes/equivalents in Biology, Botany, Zoology, Chemistry, Physics/Mathematics; Registered Nurse (RCN) and Registered Midwife (RM) Certificate only in addition to UTME; does not accept 'A' Level passes or any Degree for DIRECT ENTRY."
+    },
+    {
+     "institution": "JOS",
+     "note": "DE: three (3) 'A' Level passes in Chemistry, Physics and Biology/Zoology plus 'O' Level credit passes in Mathematics and English Language."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "DE: satisfy minimum UTME requirements; registration with Nursing and Midwifery Council of Nigeria as RN or RN/RM with at least two years post-registration experience; three JUPEB subjects (Biology, Chemistry, Physics); or 'A' Level passes in at least two of Biology, Chemistry, Physics, Zoology; or a degree in health related subject."
+    },
+    {
+     "institution": "LAUTECH",
+     "note": "DE: 'A' Level with passes in Chemistry, Biology and Physics (or Zoology); Registered Nurse (RN) Certificates plus UTME requirements plus 'O' Level credit passes in English, Mathematics, Biology, Physics and Chemistry; or First Degree approved by Senate in related programme plus UTME requirements."
+    },
+    {
+     "institution": "NDU",
+     "note": "DE: NURSES: NRN, RM, RPN plus five (5) 'O' Level credit passes in English, Physics, Mathematics, Chemistry and Biology at not more than two sittings. NON-NURSES: B.Sc. not lower than Second Class in relevant programme. UTME: '0' level credit passes at not more than two (2) sittings."
+    },
+    {
+     "institution": "OAU",
+     "note": "DE: Certificate of Registered Nurse (RN) or SRN or equivalent plus 'O' Level credit passes in English, Mathematics, Biology, Physics and Chemistry."
+    },
+    {
+     "institution": "PHC",
+     "note": "DE: Three (3) A/Level passes in JUPEB or IJMB or GCE or HSC in Physics, Chemistry and Biology plus UTME; or First Degree (Second Class Honours - Upper division) in Anatomy, Physiology, Biochemistry or related course; Registered Nurse (RN), Registered Midwife (RM) with at least 2 years post qualification experience plus UTME."
+    },
+    {
+     "institution": "UNN",
+     "note": "DE: Nurses registered with N&MCN plus UTME; or three (3) 'A' Level passes in Mathematics, Biology and Chemistry at not more than two sittings plus UTME; or first degree in related programme. UTME: '0' level credit passes at not more than two (2) sittings."
+    },
+    {
+     "institution": "EUI",
+     "note": "DE: two 'A' Level passes in Biology/Zoology, Chemistry and Physics plus UTME; B.Sc. in relevant fields not below Second Class Lower; NRN plus five 'O' Level credit passes; or IJMB passes in Physics, Chemistry and Biology or Zoology. UTME: five credit passes at SSC in English, Mathematics, Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "DELSU",
+     "note": "DE: RN/RM or basic RM Diploma, registered and licensed with the Nursing and Midwifery Council of Nigeria. UTME: SSC 'O' Level with credit passes in at least five subjects including English, Mathematics, Physics, Chemistry and Biology in one sitting."
+    },
+    {
+     "institution": "LCITY",
+     "note": "UTME: 'O' Level credit passes in English Language, Mathematics, Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "NOUN",
+     "note": "Listed for registered Nurses only."
+    }
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+   "source_locator": "_jamb_txt/medical.txt lines 16; parsed offering row 13; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+    "pdf_table_locator": "Original JAMB brochure: Medica_Pharmaceutical Health Science.pdf, PDF page(s) 21; exact programme heading and institution list in awarder column",
+    "verification_date": "2026-09-30",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": [
+     "AAU",
+     "AAUA",
+     "ABSU",
+     "ABUJA",
+     "ABU",
+     "ABU-ODL",
+     "ABUAD",
+     "ACHIEVERS",
+     "AEFUNA",
+     "AJAYI",
+     "AUGUSTINE",
+     "AL-ANSAR",
+     "AL-HIKMAH",
+     "AL-QALAM",
+     "AMOU",
+     "ANCHOR-UNI",
+     "ARTHUR-JARVIS",
+     "ATIBA",
+     "AUE"
+    ],
+    "offering_row_verified_against_pdf": true,
+    "verification_note": "Institution codes map by exact normalized matches to existing JAMB inventory tokens; the PDF awarder cell is bounded by the next printed bold heading.",
+    "institution_roster_reconciled_from_pdf": true,
+    "reconciled_prior_institution_tokens": [
+     "AAU",
+     "AAUA",
+     "ABSU",
+     "ABUJA",
+     "ABU",
+     "ABU-ODL",
+     "ABUAD",
+     "ACHIEVERS",
+     "AEFUNA",
+     "AJAYI",
+     "AUGUSTINE",
+     "AL-ANSAR",
+     "AL-HIKMAH",
+     "AL-QALAM",
+     "AMOU",
+     "ANCHOR-UNI",
+     "ARTHUR-JARVIS",
+     "ATIBA",
+     "AUE",
+     "AUN",
+     "AVE-MARIA",
+     "BABCOCK",
+     "BASU",
+     "BCU",
+     "BOSU",
+     "BAYERO",
+     "BAZE",
+     "BENIN",
+     "BINGHAM",
+     "BIU",
+     "BOWEN",
+     "BSU",
+     "CALEB",
+     "CARITAS",
+     "CANADIAN-UNI",
+     "CALABAR",
+     "CCU",
+     "CHRISLAND",
+     "CHRISTOPHER",
+     "CLIFFORD",
+     "COOU",
+     "COSMOPOLITAN",
+     "CUN",
+     "CUST",
+     "DANUMS",
+     "DELSU",
+     "DELSUT",
+     "DOMINION",
+     "DOU",
+     "EBSU",
+     "EDUSOKO",
+     "EKSU",
+     "ELIZADE",
+     "ESUTECH",
+     "EUI",
+     "EUN",
+     "EVANGEL",
+     "FED-DUTSE",
+     "FED-DUTSINMA",
+     "FED-KEBBI",
+     "FED-LAFIA",
+     "FED-LOKOJA",
+     "FED-OYE EKITI",
+     "FED-OTUOKE",
+     "FOUNTAIN",
+     "FUHSA",
+     "FUHS-ILA",
+     "GOUU",
+     "GREGORY",
+     "GREENFIELD",
+     "GSU",
+     "HAVILLA",
+     "HUDA",
+     "HUSTECH",
+     "IBADAN",
+     "ICONIC-OU",
+     "IGBINEDION",
+     "ILORIN",
+     "IMSU",
+     "ISTIQAMA",
+     "JABU",
+     "JOS",
+     "KASU",
+     "KHAIRUN",
+     "KOLA-DAISI",
+     "KOMU",
+     "KSUSTA",
+     "KUM",
+     "LAGOS",
+     "LASU",
+     "LAUTECH",
+     "LCITY",
+     "LUX-MUNDI",
+     "MADUKA",
+     "MADONNA",
+     "MAIDUGURI",
+     "MAAUN",
+     "MUDIAME",
+     "MCPHERSON",
+     "MC-IBRU",
+     "MERCY-MED-UNI",
+     "MIVA",
+     "MLU",
+     "MOUNTAIN TOP",
+     "NEWGATE",
+     "NDU",
+     "NOK",
+     "NOUN",
+     "NOVENA",
+     "NUS",
+     "OAU",
+     "OAUSTECH",
+     "ODUDUWA",
+     "OOU",
+     "OSUMS",
+     "PAAU",
+     "PAMO",
+     "PEACELAND UNI",
+     "PETER-UNI",
+     "PHC",
+     "PLASU",
+     "PRU",
+     "REDEEMERS",
+     "RENAISSANCE",
+     "RHEMA",
+     "RSU",
+     "SAISA",
+     "SALEM",
+     "SAM-MARIS",
+     "SPORTS-UNI",
+     "SUMAS",
+     "TANSIAN",
+     "TAU",
+     "TRINITY",
+     "TSUJ",
+     "TOPFAITH",
+     "UDA",
+     "UDU",
+     "UMYUK",
+     "UNI-ILESA",
+     "UNIKINGS",
+     "UNIOSUN",
+     "UNINIGER",
+     "UNIZIK",
+     "UNN",
+     "UYO",
+     "VERITAS",
+     "VENITE",
+     "VISION-UNI",
+     "WELLSPRING",
+     "WESTERN-DEL",
+     "WESLEYUNI",
+     "ZAMFARA"
+    ]
+   },
+   "institution_tokens_before_pdf_cell_reconciliation": [
     "AAU",
     "AAUA",
     "ABSU",
@@ -2070,99 +2927,6 @@
     "WESTERN-DEL",
     "WESLEYUNI",
     "ZAMFARA"
-   ],
-   "utme_subjects": [
-    "Physics",
-    "Chemistry",
-    "Biology"
-   ],
-   "olevel_requirement": "Five (5) SSC credit passes in Mathematics, Chemistry, Biology, Physics and English Language.",
-   "direct_entry": "(i) Two (2) 'A' Level passes in Biology/Zoology, Chemistry and Physics plus three (3) other 'O' Level credit passes in Mathematics, Physics and English Language. (ii) NRN or its approved equivalent plus five (5) 'O' Level credit passes in English Language and four (4) Science subjects chosen from Mathematics, Physics, Chemistry, Biology, Human Anatomy, Physiology and Hygiene, Health Science, Further Mathematics and General Science.",
-   "institution_waivers": [
-    {
-     "institution": "AAU",
-     "note": "DE: accepts Registered Nurse/Midwife RN, RM with one (1) year post registration experience; RN,RPN or RN,RNA or RN,RNT plus UTME requirements; or good first degree e.g. Biochemistry, Anatomy, Human Physiology, Health Education, Psychology, Guidance and Counselling; does not accept a degree in Zoology and Botany. UTME: five (5) 'O' Level credit passes in English Language, Mathematics, Physics, Biology and Chemistry at a sitting."
-    },
-    {
-     "institution": "ABU",
-     "note": "DE: 'A' Level/IJMB passes in three subjects in Physics, Chemistry and Biology or Zoology. Registered Nurse (RN) certificate with at least 5 credits in English Language, Mathematics, Biology, Physics and Chemistry. Registered Midwifery Certificate."
-    },
-    {
-     "institution": "ABUAD",
-     "note": "DE: requires three (3) 'A' Level passes in Chemistry, Physics and Biology."
-    },
-    {
-     "institution": "AUE",
-     "note": "DE: ND credit plus the UTME minimum requirements."
-    },
-    {
-     "institution": "BENIN",
-     "note": "DE: three (3) 'A' Level passes in Biology/Zoology, Chemistry and Physics plus 'O' Level credit passes in five (5) subjects including Mathematics, Physics, Chemistry, Biology and English."
-    },
-    {
-     "institution": "CALABAR",
-     "note": "DE: NRN or its approved equivalent plus five (5) 'O' Level credit passes to include English Language and one (1) Science subject plus two (2) years registration nursing experience; also accepts HND in Public Health, ND in Environmental Health, Public Health Nursing from West African Health Examination Board plus UTME requirements."
-    },
-    {
-     "institution": "EBSU",
-     "note": "DE: accepts HND, NCE and ND with a minimum of Merit and Upper credit respectively in the relevant programme."
-    },
-    {
-     "institution": "FUTO",
-     "note": "DE: three 'A' level passes not below Grade C in Physics and any two of Chemistry, Biology and Mathematics; or ND/HND Upper Credit in Biomedical Technology/Engineering, Chemical/Mechanical Engineering or Health sciences; or First Degree in Engineering or Health sciences; or three JUPEB subjects (Chemistry, Biology, Physics). Does not accept NCE."
-    },
-    {
-     "institution": "IBADAN",
-     "note": "DE: professional qualification (General Nursing, Psychiatric Nursing, Mid-Wifery, Nursing, Nursing Admin), two 'A' Level passes in Chemistry, Biology and Physics plus UTME, and two years post registration experience. UTME: No admission through UTME; requires five/six 'O' Level credit passes including English, Biology/Health Science, Chemistry, Mathematics and one of Economics/Government/Literature/History/Geography/Physics."
-    },
-    {
-     "institution": "ILORIN",
-     "note": "DE: two 'A' Level passes/equivalents in Biology, Botany, Zoology, Chemistry, Physics/Mathematics; Registered Nurse (RCN) and Registered Midwife (RM) Certificate only in addition to UTME; does not accept 'A' Level passes or any Degree for DIRECT ENTRY."
-    },
-    {
-     "institution": "JOS",
-     "note": "DE: three (3) 'A' Level passes in Chemistry, Physics and Biology/Zoology plus 'O' Level credit passes in Mathematics and English Language."
-    },
-    {
-     "institution": "LAGOS",
-     "note": "DE: satisfy minimum UTME requirements; registration with Nursing and Midwifery Council of Nigeria as RN or RN/RM with at least two years post-registration experience; three JUPEB subjects (Biology, Chemistry, Physics); or 'A' Level passes in at least two of Biology, Chemistry, Physics, Zoology; or a degree in health related subject."
-    },
-    {
-     "institution": "LAUTECH",
-     "note": "DE: 'A' Level with passes in Chemistry, Biology and Physics (or Zoology); Registered Nurse (RN) Certificates plus UTME requirements plus 'O' Level credit passes in English, Mathematics, Biology, Physics and Chemistry; or First Degree approved by Senate in related programme plus UTME requirements."
-    },
-    {
-     "institution": "NDU",
-     "note": "DE: NURSES: NRN, RM, RPN plus five (5) 'O' Level credit passes in English, Physics, Mathematics, Chemistry and Biology at not more than two sittings. NON-NURSES: B.Sc. not lower than Second Class in relevant programme. UTME: '0' level credit passes at not more than two (2) sittings."
-    },
-    {
-     "institution": "OAU",
-     "note": "DE: Certificate of Registered Nurse (RN) or SRN or equivalent plus 'O' Level credit passes in English, Mathematics, Biology, Physics and Chemistry."
-    },
-    {
-     "institution": "PHC",
-     "note": "DE: Three (3) A/Level passes in JUPEB or IJMB or GCE or HSC in Physics, Chemistry and Biology plus UTME; or First Degree (Second Class Honours - Upper division) in Anatomy, Physiology, Biochemistry or related course; Registered Nurse (RN), Registered Midwife (RM) with at least 2 years post qualification experience plus UTME."
-    },
-    {
-     "institution": "UNN",
-     "note": "DE: Nurses registered with N&MCN plus UTME; or three (3) 'A' Level passes in Mathematics, Biology and Chemistry at not more than two sittings plus UTME; or first degree in related programme. UTME: '0' level credit passes at not more than two (2) sittings."
-    },
-    {
-     "institution": "EUI",
-     "note": "DE: two 'A' Level passes in Biology/Zoology, Chemistry and Physics plus UTME; B.Sc. in relevant fields not below Second Class Lower; NRN plus five 'O' Level credit passes; or IJMB passes in Physics, Chemistry and Biology or Zoology. UTME: five credit passes at SSC in English, Mathematics, Physics, Chemistry and Biology."
-    },
-    {
-     "institution": "DELSU",
-     "note": "DE: RN/RM or basic RM Diploma, registered and licensed with the Nursing and Midwifery Council of Nigeria. UTME: SSC 'O' Level with credit passes in at least five subjects including English, Mathematics, Physics, Chemistry and Biology in one sitting."
-    },
-    {
-     "institution": "LCITY",
-     "note": "UTME: 'O' Level credit passes in English Language, Mathematics, Physics, Chemistry and Biology."
-    },
-    {
-     "institution": "NOUN",
-     "note": "Listed for registered Nurses only."
-    }
    ]
   },
   {
@@ -2206,7 +2970,21 @@
      "institution": "FUTO",
      "note": "DE: three 'A' level passes not below Grade C in Physics, Chemistry and Biology; HND Upper Credit in health sciences; First Degree with at least second Class lower in health sciences; or three JUPEB subjects (Chemistry, Biology, Physics); does not accept NCE. UTME: at least five 'O' Level credit passes in English, Mathematics, Chemistry, Physics and Biology in not more than two sittings."
     }
-   ]
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+   "source_locator": "_jamb_txt/medical.txt lines 17, 271, 1494, 1495, 1688; parsed offering row 14; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+    "pdf_table_locator": "_jamb_txt/medical.txt lines 17, 271, 1494, 1495, 1688; parsed offering row 14; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   }
   },
   {
    "jamb_name": "Pharmacy",
@@ -2296,7 +3074,21 @@
      "institution": "DELSU",
      "note": "First degree in relevant Biological Sciences with not less than second class Upper Division may be considered in addition to UTME requirement."
     }
-   ]
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+   "source_locator": "_jamb_txt/medical.txt lines 18, 26, 271, 271, 1524, 1612; parsed offering row 15; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+    "pdf_table_locator": "_jamb_txt/medical.txt lines 18, 26, 271, 271, 1524, 1612; parsed offering row 15; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   }
   },
   {
    "jamb_name": "Physiology",
@@ -2430,7 +3222,21 @@
      "institution": "RSU",
      "note": "UTME: five 'O' Level credit passes at not more than two sittings including English, Mathematics, Chemistry, Biology, Physics."
     }
-   ]
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+   "source_locator": "_jamb_txt/medical.txt lines 20, 270, 298, 731, 770, 896; parsed offering row 16; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-medical.pdf",
+    "pdf_table_locator": "_jamb_txt/medical.txt lines 20, 270, 298, 731, 770, 896; parsed offering row 16; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   }
   }
  ]
 }

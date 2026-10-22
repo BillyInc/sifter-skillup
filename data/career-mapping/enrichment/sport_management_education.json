@@ -6,23 +6,204 @@
   "enrichment_basis": {
     "strategy": "official_university_curriculum",
     "note": "The JAMB name is a sport-management education variant, but the resolved CCMAS parent has no sport-specific curriculum. It uses the University of Nigeria Human Kinetics and Sports Studies curriculum and retains only management, pedagogy and sport-organisation content.",
-    "sources": ["https://humankinetics.unn.edu.ng/course-modules/"]
+    "sources": [
+      "https://humankinetics.unn.edu.ng/course-modules/"
+    ]
   },
   "external_domain_links": [
-    {"domain_id": "D071", "domain_name": "Sports Management", "match_type": "direct", "source": "official_sports_curriculum", "evidence": "Planning and management of intramural/interscholastic sport, competitive sport administration, supervision and sports marketing are explicit.", "source_url": "https://humankinetics.unn.edu.ng/course-modules/"},
-    {"domain_id": "D039", "domain_name": "Higher Education", "match_type": "functional", "source": "official_sports_curriculum", "evidence": "Curriculum planning, methods/resources for school programmes and teaching practice are explicit.", "source_url": "https://humankinetics.unn.edu.ng/course-modules/"},
-    {"domain_id": "D031", "domain_name": "Sales", "match_type": "functional", "source": "official_sports_curriculum", "evidence": "Sports marketing and sponsorship are explicit course areas.", "source_url": "https://humankinetics.unn.edu.ng/course-modules/"},
-    {"domain_id": "D032", "domain_name": "Project Management", "match_type": "functional", "source": "official_sports_curriculum", "evidence": "Planning and administration of sport programmes are explicit.", "source_url": "https://humankinetics.unn.edu.ng/course-modules/"}
+    {
+      "domain_id": "D071",
+      "domain_name": "Sports Management",
+      "match_type": "direct",
+      "source": "official_sports_curriculum",
+      "evidence": "Planning and management of intramural/interscholastic sport, competitive sport administration, supervision and sports marketing are explicit.",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/"
+    },
+    {
+      "domain_id": "D039",
+      "domain_name": "Higher Education",
+      "match_type": "functional",
+      "source": "official_sports_curriculum",
+      "evidence": "Curriculum planning, methods/resources for school programmes and teaching practice are explicit.",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/"
+    },
+    {
+      "domain_id": "D031",
+      "domain_name": "Sales",
+      "match_type": "functional",
+      "source": "official_sports_curriculum",
+      "evidence": "Sports marketing and sponsorship are explicit course areas.",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/"
+    },
+    {
+      "domain_id": "D032",
+      "domain_name": "Project Management",
+      "match_type": "functional",
+      "source": "official_sports_curriculum",
+      "evidence": "Planning and administration of sport programmes are explicit.",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/"
+    }
   ],
   "courses": [
-    {"level": 200, "code": "HKS 243", "title": "Curriculum Planning in Human Kinetics and Sports Programmes", "status": "C"},
-    {"level": 200, "code": "HKS 245", "title": "Methods and Resources for Conduct of Human Kinetics Programme in Schools", "status": "C"},
-    {"level": 300, "code": "HKS 341", "title": "Research Methods in Human Kinetics and Sports Studies", "status": "C"},
-    {"level": 300, "code": "HKS 342", "title": "Administration of Community Recreation and Tourism", "status": "C"},
-    {"level": 300, "code": "HKS 345", "title": "Planning and Management of Intramural and Interscholastic Sports Programme", "status": "C"},
-    {"level": 400, "code": "HKS 440", "title": "Planning and Administration of Competitive Sports", "status": "C"},
-    {"level": 400, "code": "HKS 442", "title": "Supervision in Human Kinetic and Sports Programme", "status": "C"},
-    {"level": 400, "code": "HKS 447", "title": "Sports Marketing and Sponsorship", "status": "C"},
-    {"level": 400, "code": "EDU 425", "title": "Professional Teaching Practice Experience II", "status": "C"}
+    {
+      "level": 200,
+      "code": "HKS 243",
+      "title": "Curriculum Planning in Human Kinetics and Sports Programmes",
+      "status": "C",
+      "content_summary": "Principles and procedures for planning Human Kinetics curricula and selecting curriculum content.",
+      "learning_outcomes": [
+        "Explain how to plan Human Kinetics curriculum content for a defined learner and programme context."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 241 in the course-description section; HKS 243 in the official course list — Curriculum Planning in Human Kinetics and Sports Programmes",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Management (Education) course list and course description; HKS 241 in the course-description section; HKS 243 in the official course list — Curriculum Planning in Human Kinetics and Sports Programmes",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 200,
+      "code": "HKS 245",
+      "title": "Methods and Resources for Conduct of Human Kinetics Programme in Schools",
+      "status": "C",
+      "content_summary": "Lesson planning, instructional methods, teaching resources, microteaching and audiovisual materials for Human Kinetics.",
+      "learning_outcomes": [
+        "Plan and deliver Human Kinetics lessons using suitable methods, resources and microteaching practice."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 245 — Methods and Resources for Conduct of Human Kinetics Programme in Schools",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Management (Education) course list and course description; HKS 245 — Methods and Resources for Conduct of Human Kinetics Programme in Schools",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 300,
+      "code": "HKS 341",
+      "title": "Research Methods in Human Kinetics and Sports Studies",
+      "status": "C",
+      "content_summary": "Research types, problem selection, data collection, treatment and computer-based analysis in Human Kinetics.",
+      "learning_outcomes": [
+        "Plan a basic Human Kinetics research study, collect data and select appropriate analysis methods."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 341 — Research Methods in Human Kinetics and Sports Studies",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Management (Education) course list and course description; HKS 341 — Research Methods in Human Kinetics and Sports Studies",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 300,
+      "code": "HKS 342",
+      "title": "Administration of Community Recreation and Tourism",
+      "status": "C",
+      "content_summary": "Management and public-administration principles applied to community recreation, parks and tourism.",
+      "learning_outcomes": [
+        "Apply basic management principles to community recreation, parks and tourism activities."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 342 — Administration of Community Recreation and Tourism",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Management (Education) course list and course description; HKS 342 — Administration of Community Recreation and Tourism",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 300,
+      "code": "HKS 345",
+      "title": "Planning and Management of Intramural and Interscholastic Sports Programme",
+      "status": "C",
+      "content_summary": "Planning and organisation of intramural, interscholastic, recreational and competitive sports programmes.",
+      "learning_outcomes": [
+        "Plan and organise school or club sports programmes using relevant rules and safety procedures."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 345 — Planning and Management of Intramural and Interscholastic Sports Programme",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Management (Education) course list and course description; HKS 345 — Planning and Management of Intramural and Interscholastic Sports Programme",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 400,
+      "code": "HKS 440",
+      "title": "Planning and Administration of Competitive Sports",
+      "status": "C",
+      "content_summary": "Classification, planning and organisation of competitive sports at educational and club levels in Nigeria.",
+      "learning_outcomes": [
+        "Plan and administer competitive sports activities in line with applicable rules and organisational needs."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 440 — Planning and Administration of Competitive Sports",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Management (Education) course list and course description; HKS 440 — Planning and Administration of Competitive Sports",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 400,
+      "code": "HKS 442",
+      "title": "Supervision in Human Kinetic and Sports Programme",
+      "status": "C",
+      "content_summary": "Supervisory techniques, clinical supervision principles and responsibilities in Human Kinetics programmes.",
+      "learning_outcomes": [
+        "Apply basic supervision techniques and explain the responsibilities of supervisory staff in sports programmes."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 442 — Supervision in Human Kinetic and Sports Programme",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Management (Education) course list and course description; HKS 442 — Supervision in Human Kinetic and Sports Programme",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 400,
+      "code": "HKS 447",
+      "title": "Sports Marketing and Sponsorship",
+      "status": "C",
+      "content_summary": "Concepts, strategies, responsibilities and procedures of sports marketing and sponsorship.",
+      "learning_outcomes": [
+        "Explain and apply basic sports-marketing and sponsorship strategies."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 447 — Sports Marketing and Sponsorship",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Management (Education) course list and course description; HKS 447 — Sports Marketing and Sponsorship",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 400,
+      "code": "EDU 425",
+      "title": "Professional Teaching Practice Experience II",
+      "status": "C",
+      "content_summary": "Professional teaching practice experience is listed in the official Human Kinetics curriculum as a supervised fourth-year teaching component.",
+      "learning_outcomes": [
+        "Reflect on and demonstrate supervised professional teaching practice in an appropriate education setting."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; EDU 425 — Professional Teaching Practice Experience II",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Management (Education) course list and course description; EDU 425 — Professional Teaching Practice Experience II",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    }
+  ],
+  "repair_notes": [
+    {
+      "date": "2026-09-29",
+      "repair": "external course content and source-derived outcomes hydrated",
+      "outcomes_basis": "published course description paraphrase; course-listing paraphrase only where no description is published"
+    }
   ]
 }

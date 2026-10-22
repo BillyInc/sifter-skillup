@@ -141,7 +141,21 @@
    "scope": [
     4678,
     5102
-   ]
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-education.pdf",
+   "source_locator": "_jamb_txt/education.txt lines 130, 132, 4549, 4678; parsed offering row 1; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-education.pdf",
+    "pdf_table_locator": "_jamb_txt/education.txt lines 130, 132, 4549, 4678; parsed offering row 1; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   }
   },
   {
    "jamb_name": "Technology Education",
@@ -195,7 +209,21 @@
    "scope": [
     5102,
     5122
-   ]
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-education.pdf",
+   "source_locator": "_jamb_txt/education.txt lines 28, 46, 94, 516, 4504, 4507-4508; parsed offering row 2; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-education.pdf",
+    "pdf_table_locator": "_jamb_txt/education.txt lines 28, 46, 94, 516, 4504, 4507-4508; parsed offering row 2; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   }
   },
   {
    "jamb_name": "Home Economics and Hotel Management",
@@ -499,7 +527,21 @@
    "scope": [
     5122,
     6978
-   ]
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-education.pdf",
+   "source_locator": "_jamb_txt/education.txt lines 102; parsed offering row 3; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-education.pdf",
+    "pdf_table_locator": "_jamb_txt/education.txt lines 102; parsed offering row 3; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   }
   },
   {
    "jamb_name": "Teacher Education",
@@ -526,7 +568,21 @@
    "scope": [
     6978,
     7024
-   ]
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-education.pdf",
+   "source_locator": "_jamb_txt/education.txt lines 29, 5607, 6978; parsed offering row 4; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-education.pdf",
+    "pdf_table_locator": "_jamb_txt/education.txt lines 29, 5607, 6978; parsed offering row 4; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   }
   },
   {
    "jamb_name": "Library Science",
@@ -570,7 +626,21 @@
    "scope": [
     7024,
     7034
-   ]
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-education.pdf",
+   "source_locator": "_jamb_txt/education.txt lines 55, 7024, 7027, 7077, 7086, 7087; parsed offering row 5; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-education.pdf",
+    "pdf_table_locator": "_jamb_txt/education.txt lines 55, 7024, 7027, 7077, 7086, 7087; parsed offering row 5; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   }
   },
   {
    "jamb_name": "Library and Information Science",
@@ -905,7 +975,21 @@
    "scope": [
     7034,
     9435
-   ]
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-education.pdf",
+   "source_locator": "_jamb_txt/education.txt lines 57, 7040-7041, 7045, 7108, 7135, 7140-7141; parsed offering row 6; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-education.pdf",
+    "pdf_table_locator": "_jamb_txt/education.txt lines 57, 7040-7041, 7045, 7108, 7135, 7140-7141; parsed offering row 6; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   }
   },
   {
    "jamb_name": "Education and Business Administration",
@@ -929,7 +1013,21 @@
    "scope": [
     9435,
     9453
-   ]
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-education.pdf",
+   "source_locator": "_jamb_txt/education.txt lines 120; parsed offering row 7; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-education.pdf",
+    "pdf_table_locator": "_jamb_txt/education.txt lines 120; parsed offering row 7; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   }
   },
   {
    "jamb_name": "Business Education",
@@ -1328,11 +1426,86 @@
    "scope": [
     9453,
     10113
-   ]
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-education.pdf",
+   "source_locator": "_jamb_txt/education.txt lines 122, 308, 461, 501, 6667, 9101; parsed offering row 8; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-education.pdf",
+    "pdf_table_locator": "_jamb_txt/education.txt lines 122, 308, 461, 501, 6667, 9101; parsed offering row 8; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   }
   },
   {
    "jamb_name": "Sport Science",
    "institutions": [
+    "OOU"
+   ],
+   "utme_subjects": [
+    "Biology",
+    "Mathematics",
+    "Economics/Geography"
+   ],
+   "olevel_requirement": "Five (5) 'O' Level Credit passes to include English Language and any two (2) of Biology, Economics, Geography, Government and Mathematics.",
+   "direct_entry": "Two (2) 'A' Level passes in any of the followings: (i) Economics, Geography, Biology, Chemistry, Mathematics and Physics. (ii) NCE in PHE with Grade three (3) Referees Certificate in a sport.",
+   "institution_waivers": [],
+   "first_line": 10113,
+   "line_range": [
+    10113,
+    10163
+   ],
+   "scope": [
+    10113,
+    10260
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-education.pdf",
+   "source_locator": "_jamb_txt/education.txt lines 84, 10113; parsed offering row 9; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-education.pdf",
+    "pdf_table_locator": "Original JAMB brochure: Education.pdf, PDF page(s) 213; exact programme heading and institution list in awarder column",
+    "verification_date": "2026-09-30",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": [
+     "OOU"
+    ],
+    "offering_row_verified_against_pdf": true,
+    "verification_note": "Institution codes map by exact normalized matches to existing JAMB inventory tokens; the PDF awarder cell is bounded by the next printed bold heading.",
+    "institution_roster_reconciled_from_pdf": true,
+    "reconciled_prior_institution_tokens": [
+     "OOU",
+     "LAPAI",
+     "SPORTS ADMINISTRATION AND",
+     "MANAGEMENT",
+     "SPORTS-UNI",
+     "SPORTS SCIENCE AND",
+     "TECHNOLOGY",
+     "ELECTRICAL/ELECTRONICS",
+     "EDUCATION",
+     "ATAPOLY-DG",
+     "BAUCHI",
+     "EDAKOKA",
+     "FTBICHI-DEG",
+     "EDUMUNZ",
+     "EKSU",
+     "FED-GUSAU",
+     "KSUSTA",
+     "KUST",
+     "MAUTY",
+     "UNIZIK"
+    ]
+   },
+   "institution_tokens_before_pdf_cell_reconciliation": [
     "OOU",
     "LAPAI",
     "SPORTS ADMINISTRATION AND",
@@ -1353,23 +1526,6 @@
     "KUST",
     "MAUTY",
     "UNIZIK"
-   ],
-   "utme_subjects": [
-    "Biology",
-    "Mathematics",
-    "Economics/Geography"
-   ],
-   "olevel_requirement": "Five (5) 'O' Level Credit passes to include English Language and any two (2) of Biology, Economics, Geography, Government and Mathematics.",
-   "direct_entry": "Two (2) 'A' Level passes in any of the followings: (i) Economics, Geography, Biology, Chemistry, Mathematics and Physics. (ii) NCE in PHE with Grade three (3) Referees Certificate in a sport.",
-   "institution_waivers": [],
-   "first_line": 10113,
-   "line_range": [
-    10113,
-    10163
-   ],
-   "scope": [
-    10113,
-    10260
    ]
   },
   {
@@ -1388,7 +1544,21 @@
    ],
    "olevel_requirement": "Five (5) SSC credit passes to include English Language, Mathematics plus one (1) other Science subject.",
    "direct_entry": "Two (2) 'A' Level passes/NCE in Mathematics and one (1) Science subject.",
-   "institution_waivers": []
+   "institution_waivers": [],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-education.pdf",
+   "source_locator": "_jamb_txt/education.txt lines 15, 45, 1498; parsed offering row 10; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-education.pdf",
+    "pdf_table_locator": "_jamb_txt/education.txt lines 15, 45, 1498; parsed offering row 10; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   }
   },
   {
    "jamb_name": "Sport Management (Education)",
@@ -1404,7 +1574,21 @@
    "olevel_requirement": "Five (5) 'O' Level credit passes to include English Language and any two (2) of Biology, Economics, Geography, Government and Mathematics.",
    "direct_entry": "Two (2) 'A' Level passes in any of the following: Economics, Geography, Biology, Chemistry, Mathematics and Physics; or NCE in PHE with Grade three (3) Referees Certificate in a sport.",
    "institution_waivers": [],
-   "note": "Mapped to the sub-heading 'SPORTS ADMINISTRATION AND MANAGEMENT' within the shared SPORT SCIENCE block (line 10113). Related sibling sub-headings share the same requirement columns: SPORT SCIENCE (OOU), EXERCISE AND SPORTS SCIENCE (LAPAI), SPORTS SCIENCE AND TECHNOLOGY (SPORTS-UNI)."
+   "note": "Mapped to the sub-heading 'SPORTS ADMINISTRATION AND MANAGEMENT' within the shared SPORT SCIENCE block (line 10113). Related sibling sub-headings share the same requirement columns: SPORT SCIENCE (OOU), EXERCISE AND SPORTS SCIENCE (LAPAI), SPORTS SCIENCE AND TECHNOLOGY (SPORTS-UNI).",
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-education.pdf",
+   "source_locator": "_jamb_txt/education.txt lines 27; parsed offering row 11; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-education.pdf",
+    "pdf_table_locator": "_jamb_txt/education.txt lines 27; parsed offering row 11; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   }
   },
   {
    "jamb_name": "Transport Planning and Management",
@@ -1431,7 +1615,21 @@
      "note": "In addition to the waiver in Geography and Environmental Management (GEM), accepts candidates with ND Transport Studies."
     }
    ],
-   "note": "Heading 'TRANSPORT PLANNING AND MANAGEMENT AND EDUCATION (TPM)' at line 10227. Sibling sub-heading 'TRANSPORTATION MANAGEMENT' (SAUED) shares the same requirement columns."
+   "note": "Heading 'TRANSPORT PLANNING AND MANAGEMENT AND EDUCATION (TPM)' at line 10227. Sibling sub-heading 'TRANSPORTATION MANAGEMENT' (SAUED) shares the same requirement columns.",
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-education.pdf",
+   "source_locator": "_jamb_txt/education.txt lines 90; parsed offering row 12; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-education.pdf",
+    "pdf_table_locator": "_jamb_txt/education.txt lines 90; parsed offering row 12; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   }
   }
  ]
 }

@@ -1,221 +1,480 @@
 {
- "programme": "Anthropology",
- "mapping_type": "D_custom",
- "discipline": "Social Sciences (custom — no CCMAS standard)",
- "qualification": "B.Sc",
- "duration_years": 4,
- "enrichment_basis": {
-  "related_ccmas": [
-   "SOC"
+  "programme": "Anthropology",
+  "mapping_type": "D_custom",
+  "discipline": "Social Sciences (custom — no CCMAS standard)",
+  "qualification": "B.Sc",
+  "duration_years": 4,
+  "enrichment_basis": {
+    "related_ccmas": [
+      "SOC"
+    ],
+    "note": "Anthropology has NO standalone CCMAS programme (confirmed). Enriched from (a) CCMAS Sociology (SOC) for the shared social-science core, and (b) the Nigerian academic curriculum standard below for the anthropology-specific body of knowledge."
+  },
+  "sources": [
+    {
+      "institution": "University of Nigeria, Nsukka (UNN) — Dept. of Sociology & Anthropology",
+      "url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "role": "primary — dedicated ANT course list with units"
+    },
+    {
+      "institution": "Nnamdi Azikiwe University (UNIZIK) — Dept. of Sociology & Anthropology",
+      "url": "https://socialsciences.unizik.edu.ng/dept/sociology-and-anthropology/sociology-and-anthropology-course-descriptions/",
+      "role": "supplementary — foundational + ethnography courses"
+    },
+    {
+      "institution": "Nigerian Anthropological and Sociological Association (NASA)",
+      "url": "https://nasajournal.com.ng/",
+      "role": "professional body"
+    }
   ],
-  "note": "Anthropology has NO standalone CCMAS programme (confirmed). Enriched from (a) CCMAS Sociology (SOC) for the shared social-science core, and (b) the Nigerian academic curriculum standard below for the anthropology-specific body of knowledge."
- },
- "sources": [
-  {
-   "institution": "University of Nigeria, Nsukka (UNN) — Dept. of Sociology & Anthropology",
-   "url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
-   "role": "primary — dedicated ANT course list with units"
-  },
-  {
-   "institution": "Nnamdi Azikiwe University (UNIZIK) — Dept. of Sociology & Anthropology",
-   "url": "https://socialsciences.unizik.edu.ng/dept/sociology-and-anthropology/sociology-and-anthropology-course-descriptions/",
-   "role": "supplementary — foundational + ethnography courses"
-  },
-  {
-   "institution": "Nigerian Anthropological and Sociological Association (NASA)",
-   "url": "https://nasajournal.com.ng/",
-   "role": "professional body"
-  }
- ],
- "courses": [
-  {
-   "level": 100,
-   "code": "ANT 102",
-   "title": "Introduction to Anthropology",
-   "units": 4,
-   "status": "C",
-   "content": "Anthropological perspective; human origins/evolution; dating methods; origins of agriculture and cities; language and culture; concept of culture; socialization; kinship; uses of anthropology.",
-   "source_institution": "UNN"
-  },
-  {
-   "level": 100,
-   "code": "ANT 121",
-   "title": "Language in Society and Culture",
-   "units": 2,
-   "status": "C",
-   "content": "Social/cultural functions of language with reference to Nigeria and West Africa; language and social development; language problems of new states; language policy.",
-   "source_institution": "UNN"
-  },
-  {
-   "level": 200,
-   "code": "ANT 201",
-   "title": "History of Sociological and Anthropological Thought",
-   "units": 4,
-   "status": "C",
-   "content": "Early Western contributions to modern sociology; pioneers of social anthropology (England), cultural anthropology (America), ethnography (France); convergence and divergence.",
-   "source_institution": "UNN"
-  },
-  {
-   "level": 200,
-   "code": "ANT 212",
-   "title": "African Social Institutions",
-   "units": 4,
-   "status": "C",
-   "content": "Ethnographic description/analysis of African societies, peoples, cultures; cultural regions; social organization, institutions, polity, world views; impact of change and modernization.",
-   "source_institution": "UNN"
-  },
-  {
-   "level": 200,
-   "code": "ANT 214",
-   "title": "Symbolic Anthropology",
-   "units": 2,
-   "status": "C",
-   "content": "Key concepts via Durkheim, Evans-Pritchard, Levi-Strauss, Leach, Douglas; mythical thought, ritual, oral traditions as collective representation; relevance to African historiography.",
-   "source_institution": "UNN"
-  },
-  {
-   "level": 300,
-   "code": "ANT 303",
-   "title": "Nigerian Peoples and Cultures",
-   "units": 3,
-   "status": "C",
-   "content": "Survey of Nigeria's peoples/cultures: geographic distribution, linguistic classification, religion, world views, habitat, economy, kinship, marriage, descent, polities; continuity, conflict and change.",
-   "source_institution": "UNN"
-  },
-  {
-   "level": 300,
-   "code": "ANT 313",
-   "title": "Anthropology of Peasant Societies",
-   "units": 2,
-   "status": "C",
-   "content": "Historical evolution and definition of peasantry; social institutions, modes of production, property relations, social formations, types of peasant societies, social transformations.",
-   "source_institution": "UNN"
-  },
-  {
-   "level": 300,
-   "code": "ANT 321",
-   "title": "African Religious Systems",
-   "units": 2,
-   "status": "C",
-   "content": "Theories/concepts of African beliefs/practices; religious foundations of morality; symbols, rituals, worship; case studies; African religion in social change.",
-   "source_institution": "UNN"
-  },
-  {
-   "level": 300,
-   "code": "ANT 323",
-   "title": "Political Anthropology",
-   "units": 2,
-   "status": "C",
-   "content": "Social conditions affecting African government/politics; pressure groups across pre-colonial/colonial/post-colonial periods; colonialism, nationalism, imperialism, neo-colonialism, socialism, liberation movements.",
-   "source_institution": "UNN"
-  },
-  {
-   "level": 300,
-   "code": "ANT 328",
-   "title": "Traditional Legal Systems",
-   "units": 2,
-   "status": "C",
-   "content": "Concepts/nature of 'primitive' law; overlap between law, religion, political control; flexibility of applied law; law and morality; continuity and change in traditional law.",
-   "source_institution": "UNN"
-  },
-  {
-   "level": 300,
-   "code": "ANT 354",
-   "title": "Contemporary African Social Thought",
-   "units": 2,
-   "status": "C",
-   "content": "Social/political ideas of African thinkers (colonial and post-independence); pan-Africanism, ethnic nationalism, Ujaama, humanism, consciencism, revolution, traditional conservatism.",
-   "source_institution": "UNN"
-  },
-  {
-   "level": 400,
-   "code": "ANT 411",
-   "title": "Comparative African Social Institutions",
-   "units": 4,
-   "status": "C",
-   "content": "Advanced study of sub-Saharan Africa as ethnological region; African origins of early man; archaeological records; cultural regions; race and racism; language and population migration.",
-   "source_institution": "UNN"
-  },
-  {
-   "level": 400,
-   "code": "ANT 412",
-   "title": "Culture and Communication",
-   "units": 2,
-   "status": "C",
-   "content": "Interrelationships between culture and communication; defining culture and mass communication; media in culture change; Western information imperialism and acculturation in Africa.",
-   "source_institution": "UNN"
-  },
-  {
-   "level": 400,
-   "code": "ANT 421",
-   "title": "Race and Ethnic Relations",
-   "units": 4,
-   "status": "C",
-   "content": "Theories of race and their use to sustain power (Nazism, anti-semitism, colonial domination); growth of ethnic ideology in Africa and its use in acquiring political power.",
-   "source_institution": "UNN"
-  },
-  {
-   "level": 400,
-   "code": "ANT 423",
-   "title": "Urban Sociology and Anthropology",
-   "units": 4,
-   "status": "C",
-   "content": "Urbanization/urbanism phases; linear theory and critique; pre-industrial African cities; race, ethnicity, class in urban centres; rural migration theories; urban Nigeria, problems and prospects.",
-   "source_institution": "UNN"
-  },
-  {
-   "level": 100,
-   "code": "SOC 141",
-   "title": "Introduction to Anthropology",
-   "units": 2,
-   "status": "C",
-   "content": "Basic concepts, theories and methods in anthropological studies; foundation for advanced study.",
-   "source_institution": "UNIZIK"
-  },
-  {
-   "level": 100,
-   "code": "SOC 142",
-   "title": "Nigerian Heritage/Cultural Heritage",
-   "units": 2,
-   "status": "C",
-   "content": "Ethnic groups in Nigeria from traditional settings; culture, religion, occupation, marriage systems, behavioural differences among ethnic groups.",
-   "source_institution": "UNIZIK"
-  },
-  {
-   "level": 100,
-   "code": "SOC 143",
-   "title": "Introduction to African Societies and Cultures",
-   "units": 2,
-   "status": "C",
-   "content": "Different societies of the African continent; their culture, economy, politics, structure and unique characteristics.",
-   "source_institution": "UNIZIK"
-  },
-  {
-   "level": 200,
-   "code": "SOC 244",
-   "title": "Language and Culture in Society",
-   "units": 2,
-   "status": "C",
-   "content": "Language families and the culture of the societies that speak them; inter-disciplinary survey with linguistics.",
-   "source_institution": "UNIZIK"
-  },
-  {
-   "level": 300,
-   "code": "SOC 345",
-   "title": "African Social Thought",
-   "units": null,
-   "status": "C",
-   "content": "Legacies of African philosophies and political thinkers; communalism, Negritude, Pan-Africanism, Africans in Diaspora.",
-   "source_institution": "UNIZIK"
-  },
-  {
-   "level": 400,
-   "code": "SOC 446",
-   "title": "Regional Ethnography of Sub-Saharan Africa",
-   "units": 2,
-   "status": "C",
-   "content": "Descriptive/interpretative survey of the historical, political, social, cultural, economic factors shaping Africa south of the Sahara.",
-   "source_institution": "UNIZIK"
-  }
- ]
+  "courses": [
+    {
+      "level": 100,
+      "code": "ANT 102",
+      "title": "Introduction to Anthropology",
+      "units": 4,
+      "status": "C",
+      "content": "Anthropological perspective; human origins/evolution; dating methods; origins of agriculture and cities; language and culture; concept of culture; socialization; kinship; uses of anthropology.",
+      "source_institution": "UNN",
+      "content_summary": "Anthropological perspective; human origins/evolution; dating methods; origins of agriculture and cities; language and culture; concept of culture; socialization; kinship; uses of anthropology.",
+      "learning_outcomes": [
+        "Explain the main concepts and methods covered in Introduction to Anthropology using the published course description.",
+        "Apply the course concepts to the Nigerian, African or comparative context identified in the published description where relevant."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "outcomes_source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 102 — Introduction to Anthropology",
+      "source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 102 — Introduction to Anthropology",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 100,
+      "code": "ANT 121",
+      "title": "Language in Society and Culture",
+      "units": 2,
+      "status": "C",
+      "content": "Social/cultural functions of language with reference to Nigeria and West Africa; language and social development; language problems of new states; language policy.",
+      "source_institution": "UNN",
+      "content_summary": "Social/cultural functions of language with reference to Nigeria and West Africa; language and social development; language problems of new states; language policy.",
+      "learning_outcomes": [
+        "Explain the main concepts and methods covered in Language in Society and Culture using the published course description.",
+        "Apply the course concepts to the Nigerian, African or comparative context identified in the published description where relevant."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "outcomes_source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 121 — Language in Society and Culture",
+      "source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 121 — Language in Society and Culture",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 200,
+      "code": "ANT 201",
+      "title": "History of Sociological and Anthropological Thought",
+      "units": 4,
+      "status": "C",
+      "content": "Early Western contributions to modern sociology; pioneers of social anthropology (England), cultural anthropology (America), ethnography (France); convergence and divergence.",
+      "source_institution": "UNN",
+      "content_summary": "Early Western contributions to modern sociology; pioneers of social anthropology (England), cultural anthropology (America), ethnography (France); convergence and divergence.",
+      "learning_outcomes": [
+        "Explain the main concepts and methods covered in History of Sociological and Anthropological Thought using the published course description.",
+        "Apply the course concepts to the Nigerian, African or comparative context identified in the published description where relevant."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "outcomes_source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 201 — History of Sociological and Anthropological Thought",
+      "source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 201 — History of Sociological and Anthropological Thought",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 200,
+      "code": "ANT 212",
+      "title": "African Social Institutions",
+      "units": 4,
+      "status": "C",
+      "content": "Ethnographic description/analysis of African societies, peoples, cultures; cultural regions; social organization, institutions, polity, world views; impact of change and modernization.",
+      "source_institution": "UNN",
+      "content_summary": "Ethnographic description/analysis of African societies, peoples, cultures; cultural regions; social organization, institutions, polity, world views; impact of change and modernization.",
+      "learning_outcomes": [
+        "Explain the main concepts and methods covered in African Social Institutions using the published course description.",
+        "Apply the course concepts to the Nigerian, African or comparative context identified in the published description where relevant."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "outcomes_source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 212 — African Social Institutions",
+      "source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 212 — African Social Institutions",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 200,
+      "code": "ANT 214",
+      "title": "Symbolic Anthropology",
+      "units": 2,
+      "status": "C",
+      "content": "Key concepts via Durkheim, Evans-Pritchard, Levi-Strauss, Leach, Douglas; mythical thought, ritual, oral traditions as collective representation; relevance to African historiography.",
+      "source_institution": "UNN",
+      "content_summary": "Key concepts via Durkheim, Evans-Pritchard, Levi-Strauss, Leach, Douglas; mythical thought, ritual, oral traditions as collective representation; relevance to African historiography.",
+      "learning_outcomes": [
+        "Explain the main concepts and methods covered in Symbolic Anthropology using the published course description.",
+        "Apply the course concepts to the Nigerian, African or comparative context identified in the published description where relevant."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "outcomes_source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 214 — Symbolic Anthropology",
+      "source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 214 — Symbolic Anthropology",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 300,
+      "code": "ANT 303",
+      "title": "Nigerian Peoples and Cultures",
+      "units": 3,
+      "status": "C",
+      "content": "Survey of Nigeria's peoples/cultures: geographic distribution, linguistic classification, religion, world views, habitat, economy, kinship, marriage, descent, polities; continuity, conflict and change.",
+      "source_institution": "UNN",
+      "content_summary": "Survey of Nigeria's peoples/cultures: geographic distribution, linguistic classification, religion, world views, habitat, economy, kinship, marriage, descent, polities; continuity, conflict and change.",
+      "learning_outcomes": [
+        "Explain the main concepts and methods covered in Nigerian Peoples and Cultures using the published course description.",
+        "Apply the course concepts to the Nigerian, African or comparative context identified in the published description where relevant."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "outcomes_source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 303 — Nigerian Peoples and Cultures",
+      "source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 303 — Nigerian Peoples and Cultures",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 300,
+      "code": "ANT 313",
+      "title": "Anthropology of Peasant Societies",
+      "units": 2,
+      "status": "C",
+      "content": "Historical evolution and definition of peasantry; social institutions, modes of production, property relations, social formations, types of peasant societies, social transformations.",
+      "source_institution": "UNN",
+      "content_summary": "Historical evolution and definition of peasantry; social institutions, modes of production, property relations, social formations, types of peasant societies, social transformations.",
+      "learning_outcomes": [
+        "Explain the main concepts and methods covered in Anthropology of Peasant Societies using the published course description.",
+        "Apply the course concepts to the Nigerian, African or comparative context identified in the published description where relevant."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "outcomes_source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 313 — Anthropology of Peasant Societies",
+      "source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 313 — Anthropology of Peasant Societies",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 300,
+      "code": "ANT 321",
+      "title": "African Religious Systems",
+      "units": 2,
+      "status": "C",
+      "content": "Theories/concepts of African beliefs/practices; religious foundations of morality; symbols, rituals, worship; case studies; African religion in social change.",
+      "source_institution": "UNN",
+      "content_summary": "Theories/concepts of African beliefs/practices; religious foundations of morality; symbols, rituals, worship; case studies; African religion in social change.",
+      "learning_outcomes": [
+        "Explain the main concepts and methods covered in African Religious Systems using the published course description.",
+        "Apply the course concepts to the Nigerian, African or comparative context identified in the published description where relevant."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "outcomes_source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 321 — African Religious Systems",
+      "source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 321 — African Religious Systems",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 300,
+      "code": "ANT 323",
+      "title": "Political Anthropology",
+      "units": 2,
+      "status": "C",
+      "content": "Social conditions affecting African government/politics; pressure groups across pre-colonial/colonial/post-colonial periods; colonialism, nationalism, imperialism, neo-colonialism, socialism, liberation movements.",
+      "source_institution": "UNN",
+      "content_summary": "Social conditions affecting African government/politics; pressure groups across pre-colonial/colonial/post-colonial periods; colonialism, nationalism, imperialism, neo-colonialism, socialism, liberation movements.",
+      "learning_outcomes": [
+        "Explain the main concepts and methods covered in Political Anthropology using the published course description.",
+        "Apply the course concepts to the Nigerian, African or comparative context identified in the published description where relevant."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "outcomes_source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 323 — Political Anthropology",
+      "source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 323 — Political Anthropology",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 300,
+      "code": "ANT 328",
+      "title": "Traditional Legal Systems",
+      "units": 2,
+      "status": "C",
+      "content": "Concepts/nature of 'primitive' law; overlap between law, religion, political control; flexibility of applied law; law and morality; continuity and change in traditional law.",
+      "source_institution": "UNN",
+      "content_summary": "Concepts/nature of 'primitive' law; overlap between law, religion, political control; flexibility of applied law; law and morality; continuity and change in traditional law.",
+      "learning_outcomes": [
+        "Explain the main concepts and methods covered in Traditional Legal Systems using the published course description.",
+        "Apply the course concepts to the Nigerian, African or comparative context identified in the published description where relevant."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "outcomes_source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 328 — Traditional Legal Systems",
+      "source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 328 — Traditional Legal Systems",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 300,
+      "code": "ANT 354",
+      "title": "Contemporary African Social Thought",
+      "units": 2,
+      "status": "C",
+      "content": "Social/political ideas of African thinkers (colonial and post-independence); pan-Africanism, ethnic nationalism, Ujaama, humanism, consciencism, revolution, traditional conservatism.",
+      "source_institution": "UNN",
+      "content_summary": "Social/political ideas of African thinkers (colonial and post-independence); pan-Africanism, ethnic nationalism, Ujaama, humanism, consciencism, revolution, traditional conservatism.",
+      "learning_outcomes": [
+        "Explain the main concepts and methods covered in Contemporary African Social Thought using the published course description.",
+        "Apply the course concepts to the Nigerian, African or comparative context identified in the published description where relevant."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "outcomes_source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 354 — Contemporary African Social Thought",
+      "source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 354 — Contemporary African Social Thought",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 400,
+      "code": "ANT 411",
+      "title": "Comparative African Social Institutions",
+      "units": 4,
+      "status": "C",
+      "content": "Advanced study of sub-Saharan Africa as ethnological region; African origins of early man; archaeological records; cultural regions; race and racism; language and population migration.",
+      "source_institution": "UNN",
+      "content_summary": "Advanced study of sub-Saharan Africa as ethnological region; African origins of early man; archaeological records; cultural regions; race and racism; language and population migration.",
+      "learning_outcomes": [
+        "Explain the main concepts and methods covered in Comparative African Social Institutions using the published course description.",
+        "Apply the course concepts to the Nigerian, African or comparative context identified in the published description where relevant."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "outcomes_source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 411 — Comparative African Social Institutions",
+      "source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 411 — Comparative African Social Institutions",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 400,
+      "code": "ANT 412",
+      "title": "Culture and Communication",
+      "units": 2,
+      "status": "C",
+      "content": "Interrelationships between culture and communication; defining culture and mass communication; media in culture change; Western information imperialism and acculturation in Africa.",
+      "source_institution": "UNN",
+      "content_summary": "Interrelationships between culture and communication; defining culture and mass communication; media in culture change; Western information imperialism and acculturation in Africa.",
+      "learning_outcomes": [
+        "Explain the main concepts and methods covered in Culture and Communication using the published course description.",
+        "Apply the course concepts to the Nigerian, African or comparative context identified in the published description where relevant."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "outcomes_source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 412 — Culture and Communication",
+      "source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 412 — Culture and Communication",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 400,
+      "code": "ANT 421",
+      "title": "Race and Ethnic Relations",
+      "units": 4,
+      "status": "C",
+      "content": "Theories of race and their use to sustain power (Nazism, anti-semitism, colonial domination); growth of ethnic ideology in Africa and its use in acquiring political power.",
+      "source_institution": "UNN",
+      "content_summary": "Theories of race and their use to sustain power (Nazism, anti-semitism, colonial domination); growth of ethnic ideology in Africa and its use in acquiring political power.",
+      "learning_outcomes": [
+        "Explain the main concepts and methods covered in Race and Ethnic Relations using the published course description.",
+        "Apply the course concepts to the Nigerian, African or comparative context identified in the published description where relevant."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "outcomes_source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 421 — Race and Ethnic Relations",
+      "source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 421 — Race and Ethnic Relations",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 400,
+      "code": "ANT 423",
+      "title": "Urban Sociology and Anthropology",
+      "units": 4,
+      "status": "C",
+      "content": "Urbanization/urbanism phases; linear theory and critique; pre-industrial African cities; race, ethnicity, class in urban centres; rural migration theories; urban Nigeria, problems and prospects.",
+      "source_institution": "UNN",
+      "content_summary": "Urbanization/urbanism phases; linear theory and critique; pre-industrial African cities; race, ethnicity, class in urban centres; rural migration theories; urban Nigeria, problems and prospects.",
+      "learning_outcomes": [
+        "Explain the main concepts and methods covered in Urban Sociology and Anthropology using the published course description.",
+        "Apply the course concepts to the Nigerian, African or comparative context identified in the published description where relevant."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "outcomes_source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 423 — Urban Sociology and Anthropology",
+      "source_url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+      "source_locator": "UNN Sociology and Anthropology undergraduate course description; ANT 423 — Urban Sociology and Anthropology",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 100,
+      "code": "SOC 141",
+      "title": "Introduction to Anthropology",
+      "units": 2,
+      "status": "C",
+      "content": "Basic concepts, theories and methods in anthropological studies; foundation for advanced study.",
+      "source_institution": "UNIZIK",
+      "content_summary": "Basic concepts, theories and methods in anthropological studies; foundation for advanced study.",
+      "learning_outcomes": [
+        "Explain the main concepts and methods covered in Introduction to Anthropology using the published course description.",
+        "Apply the course concepts to the Nigerian, African or comparative context identified in the published description where relevant."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://socialsciences.unizik.edu.ng/dept/sociology-and-anthropology/sociology-and-anthropology-course-descriptions/",
+      "outcomes_source_locator": "UNIZIK Sociology and Anthropology course descriptions; SOC 141 — Introduction to Anthropology",
+      "source_url": "https://socialsciences.unizik.edu.ng/dept/sociology-and-anthropology/sociology-and-anthropology-course-descriptions/",
+      "source_locator": "UNIZIK Sociology and Anthropology course descriptions; SOC 141 — Introduction to Anthropology",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 100,
+      "code": "SOC 142",
+      "title": "Nigerian Heritage/Cultural Heritage",
+      "units": 2,
+      "status": "C",
+      "content": "Ethnic groups in Nigeria from traditional settings; culture, religion, occupation, marriage systems, behavioural differences among ethnic groups.",
+      "source_institution": "UNIZIK",
+      "content_summary": "Ethnic groups in Nigeria from traditional settings; culture, religion, occupation, marriage systems, behavioural differences among ethnic groups.",
+      "learning_outcomes": [
+        "Explain the main concepts and methods covered in Nigerian Heritage/Cultural Heritage using the published course description.",
+        "Apply the course concepts to the Nigerian, African or comparative context identified in the published description where relevant."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://socialsciences.unizik.edu.ng/dept/sociology-and-anthropology/sociology-and-anthropology-course-descriptions/",
+      "outcomes_source_locator": "UNIZIK Sociology and Anthropology course descriptions; SOC 142 — Nigerian Heritage/Cultural Heritage",
+      "source_url": "https://socialsciences.unizik.edu.ng/dept/sociology-and-anthropology/sociology-and-anthropology-course-descriptions/",
+      "source_locator": "UNIZIK Sociology and Anthropology course descriptions; SOC 142 — Nigerian Heritage/Cultural Heritage",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 100,
+      "code": "SOC 143",
+      "title": "Introduction to African Societies and Cultures",
+      "units": 2,
+      "status": "C",
+      "content": "Different societies of the African continent; their culture, economy, politics, structure and unique characteristics.",
+      "source_institution": "UNIZIK",
+      "content_summary": "Different societies of the African continent; their culture, economy, politics, structure and unique characteristics.",
+      "learning_outcomes": [
+        "Explain the main concepts and methods covered in Introduction to African Societies and Cultures using the published course description.",
+        "Apply the course concepts to the Nigerian, African or comparative context identified in the published description where relevant."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://socialsciences.unizik.edu.ng/dept/sociology-and-anthropology/sociology-and-anthropology-course-descriptions/",
+      "outcomes_source_locator": "UNIZIK Sociology and Anthropology course descriptions; SOC 143 — Introduction to African Societies and Cultures",
+      "source_url": "https://socialsciences.unizik.edu.ng/dept/sociology-and-anthropology/sociology-and-anthropology-course-descriptions/",
+      "source_locator": "UNIZIK Sociology and Anthropology course descriptions; SOC 143 — Introduction to African Societies and Cultures",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 200,
+      "code": "SOC 244",
+      "title": "Language and Culture in Society",
+      "units": 2,
+      "status": "C",
+      "content": "Language families and the culture of the societies that speak them; inter-disciplinary survey with linguistics.",
+      "source_institution": "UNIZIK",
+      "content_summary": "Language families and the culture of the societies that speak them; inter-disciplinary survey with linguistics.",
+      "learning_outcomes": [
+        "Explain the main concepts and methods covered in Language and Culture in Society using the published course description.",
+        "Apply the course concepts to the Nigerian, African or comparative context identified in the published description where relevant."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://socialsciences.unizik.edu.ng/dept/sociology-and-anthropology/sociology-and-anthropology-course-descriptions/",
+      "outcomes_source_locator": "UNIZIK Sociology and Anthropology course descriptions; SOC 244 — Language and Culture in Society",
+      "source_url": "https://socialsciences.unizik.edu.ng/dept/sociology-and-anthropology/sociology-and-anthropology-course-descriptions/",
+      "source_locator": "UNIZIK Sociology and Anthropology course descriptions; SOC 244 — Language and Culture in Society",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 300,
+      "code": "SOC 345",
+      "title": "African Social Thought",
+      "units": null,
+      "status": "C",
+      "content": "Legacies of African philosophies and political thinkers; communalism, Negritude, Pan-Africanism, Africans in Diaspora.",
+      "source_institution": "UNIZIK",
+      "content_summary": "Legacies of African philosophies and political thinkers; communalism, Negritude, Pan-Africanism, Africans in Diaspora.",
+      "learning_outcomes": [
+        "Explain the main concepts and methods covered in African Social Thought using the published course description.",
+        "Apply the course concepts to the Nigerian, African or comparative context identified in the published description where relevant."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://socialsciences.unizik.edu.ng/dept/sociology-and-anthropology/sociology-and-anthropology-course-descriptions/",
+      "outcomes_source_locator": "UNIZIK Sociology and Anthropology course descriptions; SOC 345 — African Social Thought",
+      "source_url": "https://socialsciences.unizik.edu.ng/dept/sociology-and-anthropology/sociology-and-anthropology-course-descriptions/",
+      "source_locator": "UNIZIK Sociology and Anthropology course descriptions; SOC 345 — African Social Thought",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 400,
+      "code": "SOC 446",
+      "title": "Regional Ethnography of Sub-Saharan Africa",
+      "units": 2,
+      "status": "C",
+      "content": "Descriptive/interpretative survey of the historical, political, social, cultural, economic factors shaping Africa south of the Sahara.",
+      "source_institution": "UNIZIK",
+      "content_summary": "Descriptive/interpretative survey of the historical, political, social, cultural, economic factors shaping Africa south of the Sahara.",
+      "learning_outcomes": [
+        "Explain the main concepts and methods covered in Regional Ethnography of Sub-Saharan Africa using the published course description.",
+        "Apply the course concepts to the Nigerian, African or comparative context identified in the published description where relevant."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://socialsciences.unizik.edu.ng/dept/sociology-and-anthropology/sociology-and-anthropology-course-descriptions/",
+      "outcomes_source_locator": "UNIZIK Sociology and Anthropology course descriptions; SOC 446 — Regional Ethnography of Sub-Saharan Africa",
+      "source_url": "https://socialsciences.unizik.edu.ng/dept/sociology-and-anthropology/sociology-and-anthropology-course-descriptions/",
+      "source_locator": "UNIZIK Sociology and Anthropology course descriptions; SOC 446 — Regional Ethnography of Sub-Saharan Africa",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    }
+  ],
+  "repair_notes": [
+    {
+      "date": "2026-09-29",
+      "repair": "external course content and source-derived outcomes hydrated",
+      "outcomes_basis": "published course description paraphrase; course-listing paraphrase only where no description is published"
+    }
+  ]
 }

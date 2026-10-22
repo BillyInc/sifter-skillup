@@ -1098,7 +1098,19 @@
    "ccmas_discipline": "Sciences",
    "mapping_note": "override->Biotechnology",
    "enrichment": null,
-   "_m": "override"
+   "_m": "override",
+   "ccmas_supporting_components": [
+    {
+     "ccmas_code": "BIO",
+     "ccmas_discipline": "Sciences",
+     "ccmas_name": "Biology",
+     "basis": "The JAMB title explicitly names Molecular Biology; add only the source-verified BIO 414 Molecular Biology course as a narrow supporting component, not the full Biology package."
+    }
+   ],
+   "ccmas_component_refs": [
+    "Sciences::Biotechnology",
+    "Sciences::Biology"
+   ]
   },
   {
    "jamb_name": "Industrial Chemistry",
@@ -1946,7 +1958,7 @@
    "mapping_type": "B_granular",
    "ccmas_code": "IMT",
    "ccmas_discipline": "Sciences",
-   "mapping_note": "override->Computer Science [adversarial-verify corrected]",
+   "mapping_note": "JAMB Sciences p. 493 lists the REDEEMERS offering as Industrial Mathematics and Computer Science; retain Industrial Mathematics as primary and Computer Science as a separate supporting CCMAS component in the held reference union.",
    "enrichment": null,
    "_m": "override"
   },
@@ -1994,11 +2006,12 @@
    "jamb_name": "Industrial Chemistry and Chemical Entrepreneurship",
    "jamb_faculty": "Sciences",
    "mapping_type": "B_granular",
-   "ccmas_code": "ENP",
-   "ccmas_discipline": "Administration and Management",
-   "mapping_note": "override->Entrepreneurship",
+   "ccmas_code": "ICH",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "exact CCMAS Industrial Chemistry component; entrepreneurship is included in ICH course structure",
    "enrichment": null,
-   "_m": "override"
+   "_m": "override",
+   "ccmas_name": "Industrial Chemistry"
   },
   {
    "jamb_name": "Industrial and Environmental Chemistry",
@@ -2136,9 +2149,21 @@
    "mapping_type": "B_granular",
    "ccmas_code": "MCB",
    "ccmas_discipline": "Sciences",
-   "mapping_note": "override->Microbiology",
+   "mapping_note": "Primary CCMAS Microbiology plus supporting Botany component for the named Plant Science facet; bounded Botany courses only, not a full-component union. Exact JAMB awarder-row verification remains open.",
    "enrichment": null,
-   "_m": "override"
+   "_m": "override",
+   "ccmas_supporting_components": [
+    {
+     "ccmas_code": "BOT",
+     "ccmas_discipline": "Sciences",
+     "ccmas_name": "Botany",
+     "basis": "named Plant Science facet; bounded plant-specific CCMAS courses"
+    }
+   ],
+   "ccmas_component_refs": [
+    "Sciences::Microbiology",
+    "Sciences::Botany"
+   ]
   },
   {
    "jamb_name": "Biotechnology and Food Technology",
@@ -2390,9 +2415,21 @@
    "ccmas_code": "ANA",
    "ccmas_discipline": "Medicine and Dentistry",
    "ccmas_name": "Bachelor of Dental Surgery (BDS/BChD)",
-   "mapping_note": "dental surgery (primary=dentistry) -> Bachelor of Dental Surgery (BDS/BChD)",
+   "mapping_note": "Combined JAMB label covers distinct Dentistry and Dental Technology awards; retain BDS as primary and add the separate CCMAS Dental Technology curriculum as a supporting component.",
    "enrichment": null,
-   "_m3": "medical"
+   "_m3": "medical",
+   "ccmas_supporting_components": [
+    {
+     "ccmas_code": "DNT",
+     "ccmas_discipline": "Allied Health Sciences",
+     "ccmas_name": "Dental Technology",
+     "basis": "The JAMB display name explicitly includes Dental Technology. Official UNIMED 2026/27 admissions lists Dentistry, Dental Therapy and Dental Technology as distinct undergraduate programmes; Bayelsa Medical University also lists separate undergraduate Dentistry and Dental Technology awards. Sources: https://www.unimed.edu.ng/postutme/programmes.php ; https://www.bmu.edu.ng/programs/ ; https://www.bmu.edu.ng/programs/5/ ."
+    }
+   ],
+   "ccmas_component_refs": [
+    "Medicine and Dentistry::Bachelor of Dental Surgery (BDS/BChD)",
+    "Allied Health Sciences::Dental Technology"
+   ]
   },
   {
    "jamb_name": "Human Nutrition and Dietetics",
@@ -2621,9 +2658,21 @@
    "ccmas_code": "FWM",
    "ccmas_discipline": "Agricultural Science",
    "ccmas_name": "Forest Resources and Wildlife Management",
-   "mapping_note": "forestry (primary) + fisheries -> Forest Resources and Wildlife Management",
+   "mapping_note": "Combined JAMB facets require both Forest Resources and Wildlife Management and Fisheries and Aquaculture CCMAS curricula; do not treat the forestry package alone as complete.",
    "enrichment": null,
-   "_m3": "agriculture"
+   "_m3": "agriculture",
+   "ccmas_supporting_components": [
+    {
+     "ccmas_code": "FAA",
+     "ccmas_discipline": "Agricultural Science",
+     "ccmas_name": "Fisheries and Aquaculture",
+     "basis": "The JAMB title names both forestry and fisheries. Official FUTA pages identify a Forestry and Wood Technology undergraduate programme and a separate Fisheries and Aquaculture programme/course area, confirming both curriculum facets. Sources: https://fwt.futa.edu.ng/home/828 ; https://fat.futa.edu.ng/home/courses/200 ."
+    }
+   ],
+   "ccmas_component_refs": [
+    "Agricultural Science::Forest Resources and Wildlife Management",
+    "Agricultural Science::Fisheries and Aquaculture"
+   ]
   },
   {
    "jamb_name": "Forestry, Wildlife & Fisheries",
@@ -2632,9 +2681,21 @@
    "ccmas_code": "FWM",
    "ccmas_discipline": "Agricultural Science",
    "ccmas_name": "Forest Resources and Wildlife Management",
-   "mapping_note": "forest resources & wildlife -> Forest Resources and Wildlife Management",
+   "mapping_note": "The named forestry/wildlife and fisheries facets map to distinct CCMAS curricula; do not treat Forest Resources and Wildlife Management alone as complete.",
    "enrichment": null,
-   "_m3": "agriculture"
+   "_m3": "agriculture",
+   "ccmas_supporting_components": [
+    {
+     "ccmas_code": "FAA",
+     "ccmas_discipline": "Agricultural Science",
+     "ccmas_name": "Fisheries and Aquaculture",
+     "basis": "The JAMB title explicitly includes fisheries. Official FUTA pages describe separate undergraduate Forestry and Wood Technology and Fisheries and Aquaculture programmes/course areas. Sources: https://fwt.futa.edu.ng/home/828 ; https://fat.futa.edu.ng/home/courses/200 ."
+    }
+   ],
+   "ccmas_component_refs": [
+    "Agricultural Science::Forest Resources and Wildlife Management",
+    "Agricultural Science::Fisheries and Aquaculture"
+   ]
   },
   {
    "jamb_name": "Plant Breeding and Seed Technology",
@@ -2815,46 +2876,65 @@
   {
    "jamb_name": "French",
    "jamb_faculty": "Arts and Humanities",
-   "mapping_type": "D_custom",
-   "ccmas_code": null,
-   "ccmas_discipline": null,
-   "ccmas_name": null,
-   "mapping_note": "No French-specific CCMAS curriculum is present in the resolved repository programme; use the source-backed French curriculum enrichment.",
-   "enrichment": "enrichment/french.json",
-   "_m3": "arts_hum"
-  },
-  {
-      "jamb_name": "Portuguese/English",
-   "jamb_faculty": "Arts and Humanities",
    "mapping_type": "B_granular",
    "ccmas_code": "FRE",
    "ccmas_discipline": "Arts",
-      "ccmas_name": "Modern European Languages B.A (French)",
-   "mapping_note": "portuguese ~ modern euro lang -> Modern European Languages B.A",
+   "ccmas_name": "Modern European Languages B.A (French)",
+   "mapping_note": "The NUC Arts CCMAS contains a distinct Modern European Languages B.A (French) package. Use that CCMAS package as the curriculum anchor; retain provider-specific external French material only as separately evidenced comparator/gap evidence.",
    "enrichment": null,
    "_m3": "arts_hum"
   },
   {
-      "jamb_name": "German",
+   "jamb_name": "Portuguese/English",
    "jamb_faculty": "Arts and Humanities",
    "mapping_type": "B_granular",
-      "ccmas_code": "GER",
+   "ccmas_code": "LIT",
    "ccmas_discipline": "Arts",
-      "ccmas_name": "Modern European Languages B.A (German)",
+   "ccmas_name": "English Language and Literature",
+   "mapping_note": "Partial CCMAS bridge for the English facet only; Portuguese is not represented by this CCMAS component and requires distinct external curriculum evidence. Do not map to French.",
+   "enrichment": null,
+   "_m3": "arts_hum"
+  },
+  {
+   "jamb_name": "German",
+   "jamb_faculty": "Arts and Humanities",
+   "mapping_type": "B_granular",
+   "ccmas_code": "GER",
+   "ccmas_discipline": "Arts",
+   "ccmas_name": "Modern European Languages B.A (German)",
    "mapping_note": "german -> Modern European Languages B.A",
    "enrichment": null,
    "_m3": "arts_hum"
   },
   {
-      "jamb_name": "French and German/Russian",
+   "jamb_name": "French and German/Russian",
    "jamb_faculty": "Arts and Humanities",
    "mapping_type": "B_granular",
-      "ccmas_code": "FRE",
+   "ccmas_code": "FRE",
    "ccmas_discipline": "Arts",
-      "ccmas_name": "Modern European Languages B.A (French)",
-   "mapping_note": "french/german ~ modern euro lang -> Modern European Languages B.A",
+   "ccmas_name": "Modern European Languages B.A (French)",
+   "mapping_note": "The combined-honours options are French/German, French/Russian, and German/Russian; include all three corresponding CCMAS language curricula rather than French alone.",
    "enrichment": null,
-   "_m3": "arts_hum"
+   "_m3": "arts_hum",
+   "ccmas_supporting_components": [
+    {
+     "ccmas_code": "GER",
+     "ccmas_discipline": "Arts",
+     "ccmas_name": "Modern European Languages B.A (German)",
+     "basis": "UNN's official Foreign Languages programme page lists combined-honours degrees in French and German, French and Russian, and German and Russian. Source: https://foreignlanguages.unn.edu.ng/programmes/ ."
+    },
+    {
+     "ccmas_code": "RUS",
+     "ccmas_discipline": "Arts",
+     "ccmas_name": "Modern European Languages (Russian)",
+     "basis": "UNN's official Foreign Languages programme page lists combined-honours degrees in French and German, French and Russian, and German and Russian. Source: https://foreignlanguages.unn.edu.ng/programmes/ ."
+    }
+   ],
+   "ccmas_component_refs": [
+    "Arts::Modern European Languages B.A (French)",
+    "Arts::Modern European Languages B.A (German)",
+    "Arts::Modern European Languages (Russian)"
+   ]
   },
   {
    "jamb_name": "International Studies and",
@@ -2901,13 +2981,13 @@
    "_m3": "arts_hum"
   },
   {
-   "jamb_name": "African and Asian Studies",
-   "jamb_faculty": "Arts and Humanities",
-   "mapping_type": "B_granular",
-   "ccmas_code": "HIS",
-   "ccmas_discipline": "Arts",
-   "ccmas_name": "History/History and Diplomatic Studies",
-   "mapping_note": "area studies ~ history/humanities -> History/History and Diplomatic Studies",
+    "jamb_name": "African and Asian Studies",
+    "jamb_faculty": "Arts and Humanities",
+    "mapping_type": "B_granular",
+    "ccmas_code": "IGB",
+    "ccmas_discipline": "Arts",
+    "ccmas_name": "Igbo",
+    "mapping_note": "UNIZIK's official undergraduate listing identifies the award as Igbo, African and Asian Studies (BA) with Chinese Language and Igbo Language options. Use the distinct CCMAS Igbo and Chinese Studies packages as option-branch reference curricula; do not substitute a generic History slice or imply these are a university-specific course schedule. Sources: https://unizik.edu.ng/undergraduate-programme and JAMB Arts brochure.",
    "enrichment": null,
    "_m3": "arts_hum"
   },
@@ -3061,9 +3141,21 @@
    "ccmas_code": "POL",
    "ccmas_discipline": "Social Sciences",
    "ccmas_name": "Political Science",
-   "mapping_note": "political science (primary) -> Political Science",
+   "mapping_note": "Retain both the Political Science and Conflict Resolution CCMAS curriculum facets; the JAMB display omits 'Resolution' in this occurrence, while Al-Hikmah lists the full undergraduate programme title.",
    "enrichment": null,
-   "_m3": "arts_hum"
+   "_m3": "arts_hum",
+   "ccmas_supporting_components": [
+    {
+     "ccmas_code": "PCR",
+     "ccmas_discipline": "Social Sciences",
+     "ccmas_name": "Peace Studies and Conflict Resolution",
+     "basis": "The JAMB title explicitly names Conflict; Al-Hikmah's official programmes page confirms the full undergraduate programme name Political Science and Conflict Resolution. Source: https://alhikmahuniversity.edu.ng/programmes/ ."
+    }
+   ],
+   "ccmas_component_refs": [
+    "Social Sciences::Political Science",
+    "Social Sciences::Peace Studies and Conflict Resolution"
+   ]
   },
   {
    "jamb_name": "Sociology",
@@ -3342,12 +3434,12 @@
   },
   {
    "jamb_name": "Environmental Science and Technology",
-   "jamb_faculty": null,
-   "mapping_type": "B_granular",
-   "ccmas_code": "EHS",
-   "ccmas_discipline": "Allied Health Sciences",
-   "ccmas_name": "Environmental Health Science",
-   "mapping_note": "env sci & tech ~ env health -> Environmental Health Science",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "D_custom",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "ccmas_name": null,
+    "mapping_note": "The JAMB Sciences brochure lists Environmental Science and Technology for WESLEYUNI. External source review is closed with no exact current course curriculum found: Wesley's official CEDM programme page lists Urban and Regional Planning, Estate Management, and Surveying and Geoinformatics, while its available CEDM prospectus is specifically an Urban and Regional Planning curriculum. Keep D_custom, assign no CCMAS package, no external course rows, and no student domain paths. Do not substitute Environmental Management, Environmental Standards, Environmental Health Science, or a different university's curriculum by name similarity. See _build_jamb_curriculum_scopes.py EXTERNAL_SCOPE_VERIFIED_NO_CURRICULUM for the source record.",
    "enrichment": null,
    "_m3": "_rescue"
   },
@@ -3893,9 +3985,21 @@
    "ccmas_code": "EHO",
    "ccmas_discipline": "Education",
    "ccmas_name": "Home Economics",
-   "mapping_note": "home economics education -> Home Economics",
+   "mapping_note": "Combined Home Economics and Hotel Management title: retain Home Economics as primary and Hospitality and Tourism Management as a supporting CCMAS curriculum facet; this is a reference curriculum union, not a claim that every institution uses the full union as its exact course schedule.",
    "enrichment": null,
-   "_m3": "education"
+   "_m3": "education",
+   "ccmas_supporting_components": [
+    {
+     "ccmas_code": "HTM",
+     "ccmas_discipline": "Administration and Management",
+     "ccmas_name": "Hospitality and Tourism Management",
+     "basis": "TASUED official undergraduate programme is titled Home Economics & Hotel Management and its published course list includes home-economics content as well as hotel management/costing, food-and-beverage service, and hotel guest care. This supports retaining the distinct CCMAS Hospitality and Tourism Management curriculum alongside Home Economics. Source: https://tasued.edu.ng/home-economics-and-hotel-management/ ."
+    }
+   ],
+   "ccmas_component_refs": [
+    "Education::Home Economics",
+    "Administration and Management::Hospitality and Tourism Management"
+   ]
   },
   {
    "jamb_name": "Teacher Education",
@@ -4164,12 +4268,12 @@
    "_supp": true
   },
   {
-      "jamb_name": "Modern Language and Translation",
+   "jamb_name": "Modern Language and Translation",
    "jamb_faculty": "Arts",
    "mapping_type": "B_granular",
    "ccmas_code": "GER",
    "ccmas_discipline": "Arts",
-      "ccmas_name": "Modern European Languages B.A (German)",
+   "ccmas_name": "Modern European Languages B.A (German)",
    "mapping_note": "supplement extraction -> Modern European Languages B.A",
    "_supp": true
   },
@@ -4224,14 +4328,26 @@
    "_supp": true
   },
   {
-   "jamb_name": "Farm Management & Agric. Extension",
+    "jamb_name": "Farm Management & Agric. Extension",
    "jamb_faculty": "Agricultural Science",
    "mapping_type": "B_granular",
    "ccmas_code": "AGX",
    "ccmas_discipline": "Agricultural Science",
    "ccmas_name": "Agricultural Extension",
-   "mapping_note": "supplement extraction -> Agricultural Extension",
-   "_supp": true
+    "mapping_note": "Combined JAMB facets require Agricultural Economics and Agricultural Extension CCMAS curricula; do not map the title to Agricultural Extension alone.",
+    "_supp": true,
+    "ccmas_supporting_components": [
+     {
+      "ccmas_code": "AGE",
+      "ccmas_discipline": "Agricultural Science",
+      "ccmas_name": "Agricultural Economics",
+      "basis": "The JAMB title explicitly names Farm Management, represented in CCMAS by Agricultural Economics; the official FUNAAB admission page lists Agricultural Economics and Farm Management as a separate department/programme alongside Agricultural Extension and Rural Development. Source: https://funaab.edu.ng/admission-procedure/ ."
+     }
+    ],
+    "ccmas_component_refs": [
+     "Agricultural Science::Agricultural Economics",
+     "Agricultural Science::Agricultural Extension"
+    ]
   },
   {
    "jamb_name": "Eco-Tourism and Wildlife Management",
@@ -4275,14 +4391,17 @@
    "_supp": true
   },
   {
-   "jamb_name": "Transport Planning and Management",
-   "jamb_faculty": "Administration and Management",
-   "mapping_type": "B_granular",
-   "ccmas_code": "HTM",
-   "ccmas_discipline": "Administration and Management",
-   "ccmas_name": "Hospitality and Tourism Management",
-   "mapping_note": "supplement extraction -> Hospitality and Tourism Management",
-   "_supp": true
+    "jamb_name": "Transport Planning and Management",
+    "jamb_faculty": null,
+    "mapping_type": "B_granular",
+    "ccmas_code": "TPM",
+    "ccmas_discipline": "Administration and Management",
+    "ccmas_name": "Transport Management",
+    "mapping_note": "The prior Hospitality and Tourism Management component and its tourism-led course slice are unrelated to the named Transport Planning and Management curriculum and are removed from confirmed student paths. NUC Administration and Management CCMAS has a distinct B.Sc. Transport Management programme; the selected TPM-coded courses provide a named-facet candidate scope. JAMB also has an Education-faculty TASUED offering and a distinct Social Sciences brochure context with the same display name. TASUED distinguishes its B.Sc. and B.Sc. (Ed.) variants. The single name-keyed row cannot yet represent those award/context differences or the Education-specific curriculum. Keep the Transport Management scope and previous links audit-only; keep all student domain paths closed until offering variants and any Education component are reconciled from item-specific sources.",
+    "_supp": true,
+    "ccmas_component_refs": [
+      "Administration and Management::Transport Management"
+    ]
   }
  ],
  "verification": "Adversarially reviewed; C_reclassified reserved for programmes whose PRIMARY CCMAS target is in another discipline (Administration). In-pilot-primary blends are B_granular with the out-of-discipline part noted secondary."

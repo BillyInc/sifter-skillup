@@ -25,8 +25,8 @@ class SociologyTransportIntegrityTests(unittest.TestCase):
         seed_path = root.parent.parent / "backend" / "seed_sociology_curriculum_contract_2026-09-17.sql"
         contract = json.loads(contract_path.read_text(encoding="utf-8"))
         expected = {
-            "SSC 302": "Original CCMAS source: Sociology; SSC 302; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed p. 333",
-            "SOC 301": "Original CCMAS source: Sociology; SOC 301; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed pp. 334–335",
+            "SSC 302": "Original CCMAS source: Sociology; SSC 302; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed p. 334",
+            "SOC 301": "Original CCMAS source: Sociology; SOC 301; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed pp. 334-335",
             "SSC 401": "Original CCMAS source: Sociology; SSC 401; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed p. 337",
             "SOC 408": "Original CCMAS source: Sociology; SOC 408; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed p. 338",
         }

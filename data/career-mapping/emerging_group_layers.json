@@ -1768,6 +1768,7 @@
   {
    "domain_id": "D078",
    "isco_submajor": "21",
+   "label": "Social Data & Quantitative Methods",
    "source": "global_esco",
    "source_ids": [
     "global_esco",
@@ -1790,17 +1791,9 @@
     "social network analysis"
    ],
    "tools": [
-    "Microsoft Excel",
-    "Microsoft Office software",
-    "Python",
-    "R",
-    "IBM SPSS Statistics",
-    "SAS",
-    "C",
-    "Atlassian JIRA",
-    "C#",
-    "Eclipse IDE"
-   ]
+   ],
+   "tool_ownership": "review_only_role_aggregate",
+   "tool_review_note": "Role-derived software observations remain in the audit inventory; no subgroup tool is student-owned until a subgroup-specific purpose and source contract is approved."
   },
   {
    "domain_id": "D078",
@@ -1825,13 +1818,19 @@
     "game theory"
    ],
    "tools": [
-    "R",
-    "Python",
-    "SAS",
-    "IBM SPSS Statistics",
-    "Structured query language SQL",
-    "ESRI ArcGIS software"
-   ]
+   ],
+   "tool_ownership": "review_only_role_aggregate",
+   "tool_review_note": "Role-derived software observations remain in the audit inventory; no subgroup tool is student-owned until a subgroup-specific purpose and source contract is approved."
+  },
+  {
+   "domain_id": "D145",
+   "isco_submajor": "21",
+   "source": "nih_nimh",
+   "source_ids": ["nih_nimh"],
+   "skills": [],
+   "tools": [],
+   "tool_ownership": "review_only_role_aggregate",
+   "tool_review_note": "No role-aggregated software is promoted as a student requirement; source-backed computational method knowledge is recorded separately."
   },
   {
    "domain_id": "D138",
