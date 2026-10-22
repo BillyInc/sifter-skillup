@@ -123,11 +123,43 @@ def test_jamb_detail_uses_registry_when_optional_detail_view_is_empty(monkeypatc
     monkeypatch.setattr(spr, "_programme_context_items_for_student", lambda *args: [])
     monkeypatch.setattr(spr, "_programme_resources_for_student", lambda *args: [])
 
-    response = asyncio.run(spr.get_jamb_programme("jp1"))
+    response = spr.get_jamb_programme("jp1")
 
     assert response.data["status"] == "real"
     assert response.data["data"]["jambName"] == "Library Science"
     assert response.data["data"]["requirements"]["requirementStatus"] == "source_missing"
+
+
+def test_jamb_detail_resolves_missing_view_programme_id_from_exact_mapping(monkeypatch):
+    tables = {
+        "v_jamb_programme_details": [{
+            "jamb_programme_id": "jp-sociology",
+            "jamb_name": "Sociology",
+            "jamb_faculty": "Social/Management Sciences",
+            "degree_type": "B.Sc",
+            "programme_id": None,
+            "is_blend": False,
+        }],
+        "programme_mapping": [{
+            "jamb_programme_id": "jp-sociology",
+            "programme_id": "canonical-sociology",
+            "mapping_type": "A_exact",
+        }],
+        "programme_subject_requirements": [],
+    }
+    resolved_ids = []
+    monkeypatch.setattr(spr, "_svc", lambda: _FakeSvc(tables))
+    monkeypatch.setattr(spr, "_programme_curriculum_contract_for_student", lambda _svc, pid: resolved_ids.append(pid) or {"status": "available", "outcomes": [], "abilities": []})
+    monkeypatch.setattr(spr, "_programme_context_items_for_student", lambda _svc, pid: [])
+    monkeypatch.setattr(spr, "_programme_resources_for_student", lambda _svc, pid: [{"programmeId": pid, "targetName": "approved theme resource"}])
+    monkeypatch.setattr(spr, "_jamb_programme_resources_for_student", lambda *_args: [])
+
+    response = spr.get_jamb_programme("jp-sociology")
+
+    assert response.data["data"]["programmeId"] == "canonical-sociology"
+    assert response.data["data"]["curriculumContract"]["status"] == "available"
+    assert response.data["data"]["resources"][0]["programmeId"] == "canonical-sociology"
+    assert resolved_ids == ["canonical-sociology"]
 
 
 def test_one_of_only_option_counts_group_matches(monkeypatch):
@@ -956,6 +988,52 @@ def test_combined_university_alternatives_must_share_the_same_university(monkeyp
 
     assert result.data["status"] == "real"
     assert result.data["data"] == []
+
+
+def test_combined_match_merges_national_and_verified_local_rules_for_one_university(monkeypatch):
+    monkeypatch.setattr(spr, "_svc", lambda: _FakeSvc({}))
+
+    def national_match(_selected, limit, exam_type="utme", require_full=True):
+        return [{
+            "jambProgrammeId": "jp-sociology",
+            "matchedSubjectCount": 4 if exam_type == "utme" else 5,
+            "matchedSubjects": ["Use of English", "Mathematics", "Government", "Economics"]
+            if exam_type == "utme"
+            else ["English Language", "Mathematics", "Government", "Economics", "History"],
+            "missingSubjects": [],
+            "requirementText": f"National {exam_type} rule",
+            "matchBasis": exam_type,
+        }]
+
+    def local_match(_selected, exam_type, school_id=None, limit=2000):
+        return [{
+            "jambProgrammeId": "jp-sociology",
+            "matchedSubjectCount": 3,
+            "matchedSubjects": ["Mathematics", "Government", "Economics"],
+            "missingSubjects": [],
+            "requirementText": f"Verified local {exam_type} rule",
+            "matchBasis": "university_specific",
+            "universityMatchSchoolId": "school-a",
+            "examType": exam_type,
+        }]
+
+    monkeypatch.setattr(spr, "_match_structured_subject_options", national_match)
+    monkeypatch.setattr(spr, "_match_verified_school_subject_options", local_match)
+    monkeypatch.setattr(spr, "_attach_school_context", lambda rows, *_args: rows)
+
+    result = asyncio.run(spr.programmes_by_subjects(
+        subjects="Use of English, Mathematics, Government, Economics",
+        olevel_subjects="English Language, Mathematics, Government, Economics, History",
+        exam_type="combined",
+    ))
+
+    assert result.data["status"] == "real"
+    row = result.data["data"][0]
+    assert row["jambProgrammeId"] == "jp-sociology"
+    assert row["eligibilityStatus"] == "eligible"
+    assert row["matchBasis"] == "national_and_university_specific"
+    assert row["universitySpecificMatchSchoolIds"] == ["school-a"]
+    assert {match["examType"] for match in row["universitySpecificMatches"]} == {"utme", "olevel"}
 
 
 def test_university_partial_or_unreviewed_rule_cannot_add_a_match(monkeypatch):

@@ -1,0 +1,125 @@
+{
+  "format": "sql-statement-parts-v1",
+  "source": "seed_career_v2_domain_subgroup_labels.sql",
+  "source_sha256": "5db9d7b30a696f610fc09481d385df9e3aaf1c9528d8a94598ef851549b21d94",
+  "max_part_bytes": 40000000,
+  "compressed": true,
+  "parts": [
+    {
+      "path": "part-001.sql.gz",
+      "bytes": 4187687,
+      "sha256": "2ab74c3ddc1dde3f288dc1c6f1dc3aef1ee07a61d4a13febfca648249f05d839"
+    },
+    {
+      "path": "part-002.sql.gz",
+      "bytes": 2738364,
+      "sha256": "1f9d75db2769509a9f7cd005d0c3d940acc3b601029b81780964ae2a2658ea83"
+    },
+    {
+      "path": "part-003.sql.gz",
+      "bytes": 2228754,
+      "sha256": "b2360691847bb62c38fa2f716db073d6a79e1c472bb44f8c3b336e1a019df18d"
+    },
+    {
+      "path": "part-004.sql.gz",
+      "bytes": 4210019,
+      "sha256": "379b831aa0c46c91d3b4f0ea2ee04c6a3d60e6b2318527bc6e82959cb0879356"
+    },
+    {
+      "path": "part-005.sql.gz",
+      "bytes": 4339026,
+      "sha256": "503b98169e16cf39f105b066880572f7b49c46a83742874b56e77a8c9790c535"
+    },
+    {
+      "path": "part-006.sql.gz",
+      "bytes": 4401279,
+      "sha256": "1338797eb745c722c0aa51e10cac07637c6311fba572f8aeb4bc9f0eb82ab0eb"
+    },
+    {
+      "path": "part-007.sql.gz",
+      "bytes": 4458464,
+      "sha256": "3b9387c95883a80480d3dabf8138223516ca77b2949cf721e3c727f9196e5213"
+    },
+    {
+      "path": "part-008.sql.gz",
+      "bytes": 3563547,
+      "sha256": "a448b845747530c4dce90dea1d15e193566bfe483ad431faa9daf917d284385e"
+    },
+    {
+      "path": "part-009.sql.gz",
+      "bytes": 2906960,
+      "sha256": "38f5237f41f5445677d82610f5049601b2353ece8526d8037b75430fa342ac44"
+    },
+    {
+      "path": "part-010.sql.gz",
+      "bytes": 3397085,
+      "sha256": "1a92b601cf231514dbc19945cefa87f5f2b3f7d6265a27143eba1d18e37b9a1a"
+    },
+    {
+      "path": "part-011.sql.gz",
+      "bytes": 3450780,
+      "sha256": "79b76da8f8b5b24ef2f2e2a68313a9e77c201e1c4e33f3c34dfcb0778ff744d6"
+    },
+    {
+      "path": "part-012.sql.gz",
+      "bytes": 4678665,
+      "sha256": "b49b3ba9bddb533ec6f6ff2fd21a466cd19b1feddff5acac4dbce21b0d2c40c2"
+    },
+    {
+      "path": "part-013.sql.gz",
+      "bytes": 4715373,
+      "sha256": "c1a828612b43698c1917c58b3c37d6edb0da0d93ae20eb9d2eecc64b41b746b0"
+    },
+    {
+      "path": "part-014.sql.gz",
+      "bytes": 2505812,
+      "sha256": "bafd720879e4cfefe8b3d74e104704889d71b2fc733477347426ab4e353d2b32"
+    },
+    {
+      "path": "part-015.sql.gz",
+      "bytes": 2768434,
+      "sha256": "7d3d977c9ca67e9a7b1d73a049e9690d950ac3e44eef8f6ee00536fbd361ee86"
+    },
+    {
+      "path": "part-016.sql.gz",
+      "bytes": 3724947,
+      "sha256": "f682627cbd7e656afe25cde8163b655deec8d12fe74fca20e6f0bcbe2ac77920"
+    },
+    {
+      "path": "part-017.sql.gz",
+      "bytes": 3092988,
+      "sha256": "6c70fb93097f0f0427b7f6e01e622659302e3858b55175f0c60c5a3166c26d95"
+    },
+    {
+      "path": "part-018.sql.gz",
+      "bytes": 3170815,
+      "sha256": "7c97b9b5db71e2426d85a54ce600d9bb14a3b2f930dcc939131d75f9651d3650"
+    },
+    {
+      "path": "part-019.sql.gz",
+      "bytes": 3660893,
+      "sha256": "0a0c25b0fe766c64d91a1efa2082d46e67abeb1877f86fa99214c499eff8f3f8"
+    },
+    {
+      "path": "part-020.sql.gz",
+      "bytes": 4222855,
+      "sha256": "faa5ee5958419ca87ff82d03ad09fb5172fbaff5ab841be6e8c174a8b19ea2cb"
+    },
+    {
+      "path": "part-021.sql.gz",
+      "bytes": 4410372,
+      "sha256": "b1ed28bb146889243163dda581f927082e3c299fda303a8213a90950a3f6da35"
+    },
+    {
+      "path": "part-022.sql.gz",
+      "bytes": 6841481,
+      "sha256": "211d3e5730b38c857d5602fa3f062bc8d2ee75e4417a1b0e371d3ae1c4370dc3"
+    },
+    {
+      "path": "part-023.sql.gz",
+      "bytes": 937020,
+      "sha256": "c5e7acd4594176a24659710f9ee2013bfe81fd5fb39b63f7c50b6fdc5d30bc6a"
+    }
+  ],
+  "apply_order": "numeric filename order; each part is one transaction"
+}

@@ -291,6 +291,7 @@ substitute for production deployment verification.
 | 12b-i | `backend/migration_programme_curriculum_contract_general_2026-09-18.sql` | Generalizes the cleaned programme curriculum contract for every non-Sociology parsed programme; it does not replace the source reconciliation or the Sociology slice. | 12b and the `programmes` seed |
 | 12b-ii | `backend/migration_guidance_programme_reading_and_market_scope_2026-09-12.sql` | Allows lawful programme-reading references and records whether a credential has Nigerian, global, or both evidence scopes. | #12 |
 | 12c | `backend/migration_guidance_ownership_and_sociology_resources_2026-09-11.sql` | Explicit programme/domain/subgroup/role ownership, staged D078 foundations, reviewed Sociology learning links, programme reading references and programme context cards. | #8, #12, #12a and #12b |
+| 12c-i-a | `backend/migration_sociology_giddens_ideas_theme_2026-10-22.sql` | Existing-project, exact-ISBN update that maps the Sociology Giddens/Sutton 9th-edition reference only to Ideas and foundations using Wiley's edition-specific chapter 3 locator. Fails unless exactly one base row matches; no curriculum-prescription claim. | 12c |
 | 12c-ii | `backend/migration_domain_student_orientation_2026-09-18.sql` | Replaces the compressed D078 domain introduction with the reviewed student-orientation contract: what the field studies, what people do, questions, outputs, work sequence, programme fit and decision guidance. | #12c |
 | 12c-i | `backend/migration_sociology_domain_tool_path_2026-09-18.sql` | Promotes only repeatedly evidenced named D078 tools into an optional domain pathway, groups them by source purpose, attaches item-specific learning links, and records unestablished cross-type relationships honestly. | #12c and #12a-i |
 | 12d | `backend/migration_guidance_all_programmes_2026-09-12.sql` | Adds programme-owned CCMAS source locators, programme context cards and discipline-specific open foundation references for all 237 parsed programmes. | #12c and the `programmes` seed |
@@ -379,6 +380,16 @@ learning, then distinguishes additional domain, area and role capabilities.
 The graph is a local design/audit artifact; the dedicated Sociology curriculum
 contract seed remains the data source for course outcomes, so these graph nodes
 do not require a new SQL table or imply that the UI already displays them.
+
+The expanded method/area/role route graph is likewise currently a checked-in
+design artifact, not a Supabase runtime table. Its D078 domain overview copies
+the individually approved fields already persisted by
+`migration_domain_student_orientation_2026-09-18.sql`; do not regenerate or
+reapply the D078 guided-content seed solely because the graph now carries those
+same fields. No route-graph schema/seed is defined yet. Add one only if the
+accepted UI/API design requires the backend to fetch the graph dynamically;
+then define its schema, generator, seed and dependency order together. Do not
+load the graph JSON as SQL or claim that graph reconstruction updated Supabase.
 
 After the 35 generic contextual seed parts have been loaded, the scoped D078
 content seed may be applied to refresh the current locally approved Sociology
@@ -583,6 +594,7 @@ Run one whole SQL file/transaction at a time, stopping at the first error:
 backend/migration_programme_domain_evidence_2026-09-17.sql
 backend/migration_programme_domain_review_corrections_2026-09-18.sql
 backend/migration_sociology_curriculum_contract_2026-09-17.sql
+backend/migration_programme_theme_guidance_2026-10-08.sql
 backend/migration_programme_curriculum_contract_general_2026-09-18.sql
 backend/migration_contextual_career_items.sql
 backend/migration_career_context_claim_validation.sql
@@ -593,6 +605,7 @@ backend/migration_career_item_relationship_target_context_2026-10-17.sql
 backend/migration_career_context_path_targets.sql
 backend/migration_guidance_programme_reading_and_market_scope_2026-09-12.sql
 backend/migration_guidance_ownership_and_sociology_resources_2026-09-11.sql
+backend/migration_sociology_giddens_ideas_theme_2026-10-22.sql
 backend/migration_domain_student_orientation_2026-09-18.sql
 backend/migration_sociology_domain_tool_path_2026-09-18.sql
 backend/migration_d078_specialization_taxonomy_2026-10-12.sql
@@ -604,9 +617,11 @@ The relationship-target-context, role-item-contract and requirement-lane
 files are required schema migrations; the role-route-visibility file is a
 post-taxonomy data recalculation, not an optional seed or a permanent
 hard-coded release gate. Before distributing this runbook, verify that all
-four plain-text migration files are present in the same branch/package as this
-document. A runbook that references a missing migration is an invalid,
-non-deployable package: stop rather than applying only the seeds.
+required plain-text migration files are present in the same branch/package as
+this document. This includes the programme-theme schema and the exact-edition
+Giddens resource correction listed above, as well as the four D078 route and
+role-contract dependencies. A runbook that references a missing migration is
+an invalid, non-deployable package: stop rather than applying only the seeds.
 
 If preflight shows missing canonical programme/domain/role rows, stop: this
 additive sequence cannot create the base taxonomy. Relationship explanations
@@ -618,7 +633,9 @@ before loading the D078 content seed.
 
 #### 2. Apply the D078 data refresh in dependency order
 
-After the schemas above exist, apply only missing data in this order:
+After the schemas above exist, the Giddens correction above has run after the
+Sociology resource-ownership migration and before its theme seed. Then apply
+only missing data in this order:
 
 ```text
 backend/seed_programme_domain_evidence_2026-09-17.sql.gz

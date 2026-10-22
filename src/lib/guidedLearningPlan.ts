@@ -32,7 +32,9 @@ export type LearningPlanItemType =
 export type LearningPlanRelationshipType =
   | "requires"
   | "builds_on"
+  | "works_with"
   | "complements"
+  | "alternative"
   | "alternative_to"
   | "supports";
 
@@ -268,6 +270,15 @@ export interface LearningPlanSnapshot {
     selectedId: string;
     options: LearningPlanSnapshotItem[];
   }>;
+  /** D078 method-aware state is persisted with the saved plan, not in the URL alone. */
+  d078Selection?: {
+    methodIds: string[];
+    combinationIds: string[];
+    componentMethodIds: Record<string, string[]>;
+    areaId?: string;
+    roleId?: string;
+    addedItemIds: string[];
+  };
   dataVersion: string;
   createdAt: string;
   updatedAt: string;
@@ -281,6 +292,8 @@ export interface LearningPlanSnapshot {
 export interface LearningPlanReportSnapshot {
   snapshotId: string;
   stacks: LearningPlanSnapshot[];
+  /** The current D078 route selection is kept with the same saved snapshot as its stacks. */
+  d078SelectionsByRoute?: Record<string, LearningPlanSnapshot["d078Selection"]>;
   routeWarnings: LearningPlanRouteWarning[];
   dataVersion: string;
   createdAt: string;

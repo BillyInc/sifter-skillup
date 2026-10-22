@@ -27,12 +27,15 @@ type SkillPath = SkillDiscoveryResult["paths"][number];
 type ThemeColors = ReturnType<typeof useTheme>["colors"];
 
 const QUICK_STARTS = ["Python", "Excel", "Communication", "Data analysis"];
-type MatcherItemType = "skill" | "competency" | "tool" | "certification";
+type MatcherItemType = "skill" | "competency" | "tool" | "certification" | "method" | "knowledge" | "resource";
 const MATCHER_ITEM_TYPES: { type: MatcherItemType; label: string }[] = [
   { type: "skill", label: "Skill" },
   { type: "competency", label: "Competency" },
   { type: "tool", label: "Tool" },
   { type: "certification", label: "Certification" },
+  { type: "method", label: "Method" },
+  { type: "knowledge", label: "Knowledge" },
+  { type: "resource", label: "Resource" },
 ];
 const PRIORITY_LABEL: Record<string, string> = {
   start_here: "Start here",
@@ -91,7 +94,9 @@ function ItemTypeBadge({ type, colors }: { type: MatcherItemType; colors: ThemeC
       ? colors.accentRole.success
       : type === "tool"
         ? colors.textRole.secondary
-        : colors.textRole.primary;
+        : type === "certification"
+          ? colors.textRole.primary
+          : colors.accentRole.action;
   const label = MATCHER_ITEM_TYPES.find((item) => item.type === type)?.label ?? type;
   return (
     <View style={[styles.typeBadge, { borderColor: color, backgroundColor: colors.surface.subtle }]}>

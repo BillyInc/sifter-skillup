@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { CompassFonts, Radius, Spacing, useTheme } from "@/theme";
 import type { ProgrammeDomainConnection } from "@/types/career";
-import { SectionLabel } from "./RedesignPrimitives";
 
 /** Keeps the source-reviewed programme themes and outcomes available as
  * inherited context at the domain handoff without turning them into new
@@ -16,9 +15,9 @@ export function ProgrammeCurriculumCarryForward({ connection, fieldName = "this 
   return (
     <View style={[styles.container, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
       <View style={styles.headingBlock}>
-        <SectionLabel>Programme learning carried into this field</SectionLabel>
+        <Text accessibilityRole="header" style={[styles.sectionHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Programme learning carried into this field</Text>
         <Text style={[styles.copy, { color: colors.textRole.secondary }]}>
-          These are themes and outcomes from your selected programme. They are shown as learning you have covered or are studying—not as new domain requirements. The domain path below explains what to build next.
+          These are themes and outcomes from your selected programme. They describe learning you have covered or are studying. The field path below explains what to build next.
         </Text>
       </View>
       <View style={styles.themeList}>
@@ -37,16 +36,16 @@ export function ProgrammeCurriculumCarryForward({ connection, fieldName = "this 
 
           return (
             <View key={theme.themeKey} style={[styles.theme, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
-              <Text style={[styles.themeTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{theme.title}</Text>
+              <Text accessibilityRole="header" style={[styles.themeTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{theme.title}</Text>
               {theme.narration ? <Text style={[styles.copy, { color: colors.textRole.secondary }]}>{theme.narration}</Text> : null}
               <View style={styles.detail}>
-                <Text style={[styles.detailTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>
+              <Text accessibilityRole="header" style={[styles.detailTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>
                   {hasSpecificTransfer ? `What carries into ${fieldName}` : `How this theme relates to ${fieldName}`}
                 </Text>
                 {hasSpecificTransfer ? (
                   <>
                     <Text style={[styles.copy, { color: colors.textRole.secondary }]}>
-                      The reviewed programme-to-field evidence links this theme to {fieldName}. That gives you a starting point from your studies; it does not mean your programme covers every task or later learning option in the field.
+                      This part of your programme gives you a starting point for learning about {fieldName}. It does not cover every kind of work or later learning option in the field.
                     </Text>
                     {matchedCourseTitles.length ? <Text style={[styles.courseTitle, { color: colors.textRole.primary }]}>Course evidence: {matchedCourseTitles.join("; ")}</Text> : null}
                     {matchedOutcomes.map((outcome, index) => (
@@ -55,25 +54,25 @@ export function ProgrammeCurriculumCarryForward({ connection, fieldName = "this 
                         <Text style={[styles.copy, { color: colors.textRole.secondary }]}>{outcome.studentText}</Text>
                       </View>
                     ))}
-                    {!matchedCourseTitles.length && !matchedOutcomes.length ? <Text style={[styles.copy, { color: colors.textRole.muted }]}>The route records a theme-level connection, but does not identify a particular course outcome as the transfer evidence.</Text> : null}
+                    {!matchedCourseTitles.length && !matchedOutcomes.length ? <Text style={[styles.copy, { color: colors.textRole.muted }]}>This theme connects to {fieldName}, but no particular course outcome is listed here as the starting point.</Text> : null}
                   </>
                 ) : (
                   <Text style={[styles.copy, { color: colors.textRole.secondary }]}>
-                    This remains part of what you study in {connection.programmeName || "your selected programme"}. The reviewed evidence does not point to a specific course outcome here that explains how this theme connects to {fieldName}, so we show it as programme context—not as proof that you already have a particular field skill or as an extra domain requirement.
+                    This is part of what you study in {connection.programmeName || "your selected programme"}. No particular course outcome is listed here to explain how this theme connects to {fieldName}. Treat it as programme context, not proof that you already have a particular field skill.
                   </Text>
                 )}
               </View>
               <View style={styles.detail}>
-                <Text style={[styles.detailTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{hasSpecificTransfer ? "Other programme outcomes in this theme" : "Programme outcomes in this theme"}</Text>
+                <Text accessibilityRole="header" style={[styles.detailTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{hasSpecificTransfer ? "Other programme outcomes in this theme" : "Programme outcomes in this theme"}</Text>
                 {themeExpanded ? (
                   otherOutcomes.length ? otherOutcomes.map((outcome, index) => (
                     <View key={outcome.outcomeId || `${theme.themeKey}:outcome:${index}`} style={styles.outcome}>
                       {outcome.courseTitle ? <Text style={[styles.courseTitle, { color: colors.textRole.primary }]}>{outcome.courseTitle}</Text> : null}
                       <Text style={[styles.copy, { color: colors.textRole.secondary }]}>{outcome.studentText}</Text>
                     </View>
-                  )) : <Text style={[styles.copy, { color: colors.textRole.muted }]}>{hasSpecificTransfer ? "No other reviewed course outcomes are attached to this theme." : "No learner-friendly outcomes are attached to this theme in the current programme record."}</Text>
+                  )) : <Text style={[styles.copy, { color: colors.textRole.muted }]}>{hasSpecificTransfer ? "No other course outcomes are listed for this theme." : "No programme outcomes are listed for this theme yet."}</Text>
                 ) : (
-                  <Text style={[styles.copy, { color: colors.textRole.muted }]}>{otherOutcomes.length === 0 ? "No other reviewed course outcomes are attached to this theme." : `${otherOutcomes.length} additional reviewed course outcome${otherOutcomes.length === 1 ? " is" : "s are"} available in this theme.`}</Text>
+                  <Text style={[styles.copy, { color: colors.textRole.muted }]}>{otherOutcomes.length === 0 ? "No other course outcomes are listed for this theme." : `${otherOutcomes.length} more course outcome${otherOutcomes.length === 1 ? " is" : "s are"} available in this theme.`}</Text>
                 )}
                 {otherOutcomes.length ? <TouchableOpacity
                     accessibilityRole="button"
@@ -114,7 +113,7 @@ export function ProgrammeOutcomeBridge({
   return (
     <View style={[styles.container, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
       <View style={styles.headingBlock}>
-        <SectionLabel>{`Programme learning context for this ${nextLayer}`}</SectionLabel>
+        <Text accessibilityRole="header" style={[styles.sectionHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{`Programme learning context for this ${nextLayer}`}</Text>
         {connection.transferableLearningNarrative ? (
           <Text style={[styles.copy, { color: colors.textRole.secondary }]}>
             {connection.transferableLearningNarrative}
@@ -149,16 +148,17 @@ export function ProgrammeOutcomeBridge({
 const styles = StyleSheet.create({
   container: { borderWidth: 1, borderRadius: Radius.lg, padding: Spacing.lg, gap: Spacing.md },
   headingBlock: { gap: Spacing.xs },
-  themeList: { gap: Spacing.sm },
-  theme: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm },
-  themeTitle: { fontSize: 20, lineHeight: 27 },
-  detail: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: "rgba(128,128,128,0.35)", paddingTop: Spacing.sm, gap: Spacing.sm },
-  detailTitle: { fontSize: 18, lineHeight: 25 },
+  sectionHeading: { fontSize: 20, lineHeight: 26 },
+  themeList: { gap: 8 },
+  theme: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: 8 },
+  themeTitle: { fontSize: 16, lineHeight: 22 },
+  detail: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: "rgba(128,128,128,0.35)", paddingTop: Spacing.sm, gap: 8 },
+  detailTitle: { fontSize: 20, lineHeight: 26 },
   outcome: { gap: 2, paddingLeft: Spacing.sm },
-  courseTitle: { fontSize: 16, lineHeight: 24, fontWeight: "700" },
+  courseTitle: { fontSize: 16, lineHeight: 22, fontWeight: "700" },
   copy: { fontSize: 16, lineHeight: 24 },
   toggle: { minHeight: 44, alignSelf: "flex-start", justifyContent: "center" },
-  toggleText: { fontSize: 16, lineHeight: 23, ...CompassFonts.bodySemibold },
+  toggleText: { fontSize: 16, lineHeight: 20, ...CompassFonts.bodySemibold },
 });
 
 export default ProgrammeCurriculumCarryForward;

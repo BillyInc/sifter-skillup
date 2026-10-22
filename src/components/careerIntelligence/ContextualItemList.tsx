@@ -7,11 +7,10 @@ import type { CareerContextItem, CareerLearningResource, ComputationalMethodEvid
 import { SectionLabel } from "./RedesignPrimitives";
 import { isStudentResource, resourceForItem, studentItemLinkUrl } from "./resourceLinks";
 import { ExternalLinkGuard } from "./ExternalLinkGuard";
-import { ContextSourceLinks } from "./ContextSourceLinks";
 import { GuidanceReportButton } from "./GuidanceReportButton";
-import { ContextRelationshipChips, relationshipRecords } from "./ContextRelationshipSheet";
+import { relationshipRecords, sequenceGuidanceText } from "./ContextRelationshipSheet";
 import { learningPlanRouteKey, type LearningPlanRoute } from "@/lib/guidedLearningPlan";
-import { studentContextSections, studentFacingCopy, studentGeographicContext, studentItemLimitations, studentOutputCopy, studentReasonCopy, studentResourceRationale } from "@/lib/studentExplanation";
+import { studentContextSections, studentFacingCopy, studentOutputCopy, studentResourceRationale } from "@/lib/studentExplanation";
 import { useExploreNav } from "@/lib/exploreNav";
 
 const ITEM_TYPE_LABEL: Record<CareerContextItem["itemType"], string> = {
@@ -25,17 +24,6 @@ const ITEM_ICON: Record<CareerContextItem["itemType"], "check-circle" | "layers"
 
 function studentCopy(value?: string | null): string {
   return studentFacingCopy(value);
-}
-
-function studentReason(value?: string | null): string {
-  return studentReasonCopy(value);
-}
-
-function contextLabel(level: CareerContextItem["contextLevel"]): string {
-  if (level === "programme") return "this programme";
-  if (level === "subgroup") return "this area";
-  if (level === "role") return "this role";
-  return "this field";
 }
 
 function requirementLabel(item: CareerContextItem): string {
@@ -73,15 +61,11 @@ function itemResources(resources: CareerLearningResource[] | undefined, item: Ca
   });
 }
 
-function learningResourceKind(resource: CareerLearningResource): string {
-  if (["skill_reference", "competency_reference", "role_reference", "professional_body", "certification_exam", "domain_overview", "programme_reading"].includes(resource.resourceType)) {
-    return "Official or reference information";
-  }
-  if (/official|documentation|reference/i.test(`${resource.provider} ${resource.delivery ?? ""}`)) return "Product documentation/reference";
-  if (/video/i.test(resource.delivery ?? "")) return resource.accessType === "paid" ? "Paid video learning" : "Video learning";
-  if (resource.accessType === "paid") return "Paid learning alternative";
-  if (resource.accessType === "free") return "Free learning";
-  return "Additional learning option";
+function resourceButtonLabel(resource: { delivery?: string | null; title?: string | null; kind?: string | null; resourceType?: string | null }, itemName: string): string {
+  const format = `${resource.delivery ?? ""} ${resource.kind ?? ""} ${resource.resourceType ?? ""} ${resource.title ?? ""}`.toLowerCase();
+  if (/video|youtube|watch/.test(format)) return `Watch a video about ${itemName}`;
+  if (/pdf|download/.test(format)) return `Download a guide to ${itemName}`;
+  return `Learn more about ${itemName}`;
 }
 
 /** Apply only sequence edges explicitly approved as hard prerequisites. Ordinary
@@ -185,7 +169,7 @@ function isStudentItem(item: CareerContextItem, resources?: CareerLearningResour
  * each entry explains its job in this exact domain, subgroup or role and has
  * at most one verified destination attached to the item itself.
  */
-export function ContextualItemList({ items, itemTypes, title = "Your preparation path", resources, style, excludeNames, methods, contextLevel, itemScope, sequenceBand, learningFocus, learningRoute, domainName, areaName, roleName, routeRoleIds, targetStudentId }: {
+export function ContextualItemList({ items, itemTypes, title = "Your preparation path", resources, style, excludeNames, methods, contextLevel, itemScope, sequenceBand, learningFocus, learningRoute, domainName, areaName, roleName, routeRoleIds, targetStudentId, showCaption = true }: {
   items?: CareerContextItem[];
   itemTypes?: CareerContextItem["itemType"][];
   title?: string;
@@ -212,6 +196,8 @@ export function ContextualItemList({ items, itemTypes, title = "Your preparation
   routeRoleIds?: string[];
   /** Admin-guided save target, when the list is rendered for an administrator. */
   targetStudentId?: string;
+  /** Hide repeated section guidance when the parent screen already explains this layer. */
+  showCaption?: boolean;
 }) {
   const { colors } = useTheme();
   const router = useRouter();
@@ -267,15 +253,14 @@ export function ContextualItemList({ items, itemTypes, title = "Your preparation
   const visible = expanded ? ordered : ordered.slice(0, 5);
   return <View style={[styles.container, style]}>
     <SectionLabel>{title}</SectionLabel>
-    <Text style={[styles.caption, { color: colors.textRole.muted }]}>{contextLevel === "domain"
+    {showCaption ? <Text style={[styles.caption, { color: colors.textRole.muted }]}>{contextLevel === "domain"
       ? itemScope === "shared-foundation"
-        ? "These items are needed for this field route. Follow the displayed order before continuing. The useful edges section contains optional choices that support particular routes and can be skipped."
+        ? "These foundations give you a common base for exploring different areas of the field."
         : itemScope === "learning-options"
-          ? "This card shows the next displayed learning sequence. Alternatives are choices, while complementary items can be studied together; later additions remain skippable."
+          ? "Choose from these additional options when they fit the work or direction you want to explore."
           : "These named items can support specific work in this field. Open one to see how it fits, what it connects to and its verified learning link."
-      : "Open an item to see what it means, how it is used in this direction, what it connects to and its verified learning link."}</Text>
-    {learningFocus ? <Text style={[styles.caption, { color: colors.textRole.muted }]}>The order on these cards is the recommended learning flow. Use the relationship notes to see what comes next, what can be learned together and which options are alternatives.</Text> : null}
-    {visible.map((item) => {
+      : "Open an item to see what it means, how it is used in this direction, what it connects to and its verified learning link."}</Text> : null}
+    <View style={styles.itemsGrid}>{visible.map((item) => {
       const key = `${item.contextKey}:${item.itemType}:${item.itemKey}`;
       const isOpen = openKey === key;
       const resource = resourceForItem(resources, item.itemType, item.name);
@@ -293,26 +278,22 @@ export function ContextualItemList({ items, itemTypes, title = "Your preparation
       const itemUseMeaning = studentSections(item.contextualUse).meaning
         || "A description of how this item is used at this level has not been provided yet.";
       const expectedOutputCopy = studentCopy(studentOutputCopy(item.expectedOutput, item.contextualUse));
+      const practicalCopy = [
+        itemUseMeaning,
+        studentSections(item.contextualUse).task ? `For example, ${studentSections(item.contextualUse).task}` : "",
+        expectedOutputCopy ? `This work may result in: ${expectedOutputCopy}` : "",
+      ].filter(Boolean).join("\n\n");
        const roleContext = studentCopy(item.roleContext);
        const contextualUse = studentSections(item.contextualUse).meaning;
-      const itemLimitations = studentItemLimitations(item.evidenceLimitations);
        const hasDistinctRoleContext = Boolean(learningRoute?.roleId && roleName && roleContext && roleContext.toLocaleLowerCase() !== contextualUse.toLocaleLowerCase());
-        const inclusionReason = studentReason(item.requirementReason);
-       const linkEvidence = item.linkSourceReference as Record<string, unknown> | undefined;
-       const linkClaim = item.linkEvidence as Record<string, unknown> | undefined;
-       const linkKindNotice = item.linkKind === "reference_only"
-         ? "Reference page · useful to read about the topic, but not a complete course or qualification."
-         : item.linkKind === "verified_resource_with_access_caveat"
-           ? "Verified guide · direct access may vary; check the provider's access note."
-           : undefined;
-       const rawResourceReason = studentCopy((typeof linkClaim?.why_this_resource === "string" ? linkClaim.why_this_resource : undefined)
-         || (typeof linkClaim?.whyThisResource === "string" ? linkClaim.whyThisResource : undefined)
-         || (typeof linkEvidence?.evidence_use === "string" ? linkEvidence.evidence_use : undefined)
-         || (typeof linkEvidence?.evidenceUse === "string" ? linkEvidence.evidenceUse : undefined)
-         || (typeof linkEvidence?.supports === "string" ? linkEvidence.supports : undefined));
-       const resourceReason = explainResourceRationale(rawResourceReason, item);
-       const label = item.linkTitle?.trim() || (resource ? `Open ${resource.provider}` : `Open verified information for ${item.name}`);
-      return <View key={key} style={[styles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
+       const label = resource ? resourceButtonLabel(resource, item.name) : `Learn more about ${item.name}`;
+       const resourceButtons = [
+         ...(url ? [{ key: `primary:${url}`, url, label }] : []),
+         ...relatedResources.map((candidate) => ({ key: candidate.id, url: candidate.url, label: resourceButtonLabel(candidate, item.name) })),
+         ...(item.additionalLearningLinks ?? []).map((candidate) => ({ key: `additional:${candidate.url}`, url: candidate.url, label: resourceButtonLabel(candidate, item.name) })),
+       ];
+      const visibleRelationships = relationshipRecords(item, learningRoute).filter((relationship) => relationship.type !== "works_with" || item.contextLevel === "domain");
+      return <View key={key} style={[styles.card, styles.gridCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
         {relationshipReturn && isOpen ? <TouchableOpacity accessibilityRole="button" accessibilityLabel={`Return to ${relationshipReturn.name}`} onPress={() => { setOpenKey(relationshipReturn.key); setRelationshipReturn(null); }} style={[styles.returnToRelationship, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
           <Feather name="corner-up-left" size={15} color={colors.accentRole.action} />
           <Text style={[styles.returnToRelationshipText, { color: colors.accentRole.action }]}>Back to {relationshipReturn.name}</Text>
@@ -343,9 +324,9 @@ export function ContextualItemList({ items, itemTypes, title = "Your preparation
         </View> : null}
         <View style={styles.actions}>
           <TouchableOpacity accessibilityRole="button" accessibilityLabel={`${isOpen ? "Hide" : "Open"} details for ${item.name}`} accessibilityState={{ expanded: isOpen }} onPress={() => setOpenKey(isOpen ? null : key)} style={styles.actionButton}>
-            <Text style={[styles.more, { color: colors.accentRole.action }]}>{isOpen ? "Hide details" : "What this means and how it connects"}</Text>
+            <Text style={[styles.more, { color: colors.accentRole.action }]}>{isOpen ? "Show less" : "See more"}</Text>
           </TouchableOpacity>
-          {learningFocus ? <GuidanceReportButton
+          {learningFocus && item.requirementLevel !== "needed" ? <GuidanceReportButton
             targetStudentId={targetStudentId}
             selection={{
               kind: "learningFocus",
@@ -369,55 +350,40 @@ export function ContextualItemList({ items, itemTypes, title = "Your preparation
         </View>
         {isOpen ? <View style={styles.expandedContent}>
           <View style={[styles.itemSection, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><Text style={[styles.detailLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What it is</Text><Text style={[styles.copy, { color: colors.textRole.secondary }]}>{itemMeaning}</Text></View>
-          {item.programmeContext ? <View style={[styles.itemSection, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><Text style={[styles.detailLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>How it relates to your programme</Text><Text style={[styles.copy, { color: colors.textRole.secondary }]}>{studentCopy(item.programmeContext)}</Text></View> : null}
+          {item.programmeContext ? <View style={[styles.itemSection, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><Text style={[styles.detailLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>How this builds on your programme</Text><Text style={[styles.copy, { color: colors.textRole.secondary }]}>{studentCopy(item.programmeContext)}</Text></View> : null}
           {item.domainContext ? <View style={[styles.itemSection, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><Text style={[styles.detailLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Why it matters in this field</Text><Text style={[styles.copy, { color: colors.textRole.secondary }]}>{studentCopy(item.domainContext)}</Text></View> : null}
           {item.areaContext ? <View style={[styles.itemSection, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><Text style={[styles.detailLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>How it connects to the selected area</Text><Text style={[styles.copy, { color: colors.textRole.secondary }]}>{studentCopy(item.areaContext)}</Text></View> : null}
           {hasDistinctRoleContext ? <View style={[styles.itemSection, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><Text style={[styles.detailLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>How it connects to this role</Text><Text style={[styles.copy, { color: colors.textRole.secondary }]}>{roleContext}</Text></View> : null}
-          <View style={[styles.itemSection, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><Text style={[styles.detailLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{`How it is used in ${contextLabel(item.contextLevel)}`}</Text><Text style={[styles.copy, { color: colors.textRole.secondary }]}>{itemUseMeaning}</Text></View>
+          <View style={[styles.itemSection, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><Text style={[styles.detailLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>How you might use it</Text><Text style={[styles.copy, { color: colors.textRole.secondary }]}>{practicalCopy}</Text></View>
           {itemScope === "learning-options" && item.pathTargets?.length ? <View style={[styles.itemSection, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><Text style={[styles.detailLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Why it may help on this direction</Text>{item.pathTargets.map((target) => <View key={`${target.targetLevel}:${target.targetKey}:${target.useCaseKey ?? ""}`} style={styles.routeReason}><Text style={[styles.routeLabel, { color: colors.accentRole.action }]}>{target.targetLabel} · {routeContributionLabel(target.requirementLevel)}</Text>{studentCopy(target.pathReason) ? <Text style={[styles.copy, { color: colors.textRole.secondary }]}>{studentCopy(target.pathReason)}</Text> : null}{target.evidenceLimitations.map(studentCopy).filter(Boolean).map((limitation) => <Text key={limitation} style={[styles.limit, { color: colors.textRole.muted }]}>{limitation}</Text>)}</View>)}</View> : null}
-          {inclusionReason ? <View style={[styles.itemSection, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><Text style={[styles.detailLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Why it is included</Text><Text style={[styles.copy, { color: colors.textRole.secondary }]}>{inclusionReason}</Text></View> : null}
-          {studentSections(item.contextualUse).task ? <View style={[styles.itemSection, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><Text style={[styles.detailLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Example of the work</Text><Text style={[styles.copy, { color: colors.textRole.secondary }]}>{studentSections(item.contextualUse).task}</Text></View> : null}
-          {item.geographicScope ? <View style={[styles.itemSection, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><Text style={[styles.detailLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Evidence context</Text><Text style={[styles.copy, { color: colors.textRole.secondary }]}>{studentGeographicContext(item.geographicScope)}</Text></View> : null}
           {studentSections(item.contextualUse).guardrail ? <View style={[styles.itemSection, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><Text style={[styles.detailLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What to keep in mind</Text><Text style={[styles.copy, { color: colors.textRole.secondary }]}>{studentSections(item.contextualUse).guardrail}</Text></View> : null}
           {item.prerequisites?.length ? <View style={[styles.itemSection, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><Text style={[styles.detailLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What may help you prepare</Text><Text style={[styles.caption, { color: colors.textRole.muted }]}>These preparation notes do not create an automatic block or fixed learning order.</Text>{item.prerequisites.map(studentCopy).filter(Boolean).map((note) => <Text key={note} style={[styles.copy, { color: colors.textRole.secondary }]}>{note}</Text>)}</View> : null}
           {item.complements?.length ? <View style={[styles.itemSection, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><Text style={[styles.detailLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What can work alongside it</Text>{item.complements.map(studentCopy).filter(Boolean).map((note) => <Text key={note} style={[styles.copy, { color: colors.textRole.secondary }]}>{note}</Text>)}</View> : null}
           {item.validAlternatives?.length ? <View style={[styles.itemSection, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><Text style={[styles.detailLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Other approaches to consider</Text><Text style={[styles.caption, { color: colors.textRole.muted }]}>Choose based on the task; alternatives are not always equivalent or additional steps.</Text>{item.validAlternatives.map(studentCopy).filter(Boolean).map((note) => <Text key={note} style={[styles.copy, { color: colors.textRole.secondary }]}>{note}</Text>)}</View> : null}
-          <ContextRelationshipChips itemName={item.name} relationships={relationshipRecords(item, learningRoute)} onOpenTarget={(relationship) => {
-            if (relationship.targetItemKey) {
-              const target = ordered.find((candidate) => candidate.itemKey === relationship.targetItemKey);
-              if (target) {
-                setRelationshipReturn({ key, name: item.name });
-                setExpanded(true);
-                setOpenKey(`${target.contextKey}:${target.itemType}:${target.itemKey}`);
-                return true;
-              }
-            }
-            if (!relationship.targetRouteKey || !relationship.targetRouteLevel || !learningRoute?.domainId) return false;
-            const routeContext = {
-              programmeId: learningRoute.programmeId,
-              domainId: learningRoute.domainId,
-              ...(relationship.targetRouteLevel === "subgroup"
-                ? { areaId: relationship.targetRouteKey }
-                : { areaId: learningRoute.areaId, roleId: relationship.targetRouteKey }),
-              focused: true,
-              preserveHistory: true,
-            };
-            if (relationship.targetRouteLevel === "subgroup") {
-              exploreNav.subgroup(router, learningRoute.domainId, relationship.targetRouteKey, routeContext);
-              return true;
-            }
-            if (relationship.targetRouteLevel === "role") {
-              exploreNav.role(router, relationship.targetRouteKey, routeContext);
-              return true;
-            }
-            return false;
-          }} />
+          {visibleRelationships.length ? <View style={[styles.itemSection, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+            <Text style={[styles.detailLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>How it connects to other learning</Text>
+            {visibleRelationships.map((relationship, index) => <View key={`${relationship.type}:${relationship.target}:${index}`} style={styles.routeReason}>
+              <Text style={[styles.copy, { color: colors.textRole.secondary }]}>
+                {relationship.type === "works_with" || relationship.type === "complements"
+                  ? `${item.name} can be used with ${relationship.target} when the work calls for both. `
+                  : relationship.type === "alternative" || relationship.type === "alternative_to"
+                    ? `${relationship.target} is another approach to consider. `
+                    : relationship.type === "builds_on"
+                      ? `${item.name} builds on ${relationship.target}. `
+                      : `${item.name} connects with ${relationship.target}. `}
+                {relationship.explanation || sequenceGuidanceText(item.name, relationship)}
+              </Text>
+              {relationship.targetItemKey ? <TouchableOpacity accessibilityRole="button" accessibilityLabel={`See related learning: ${relationship.target}`} onPress={() => {
+                const target = ordered.find((candidate) => candidate.itemKey === relationship.targetItemKey);
+                if (target) { setRelationshipReturn({ key, name: item.name }); setExpanded(true); setOpenKey(`${target.contextKey}:${target.itemType}:${target.itemKey}`); }
+              }}><Text style={[styles.more, { color: colors.accentRole.action }]}>See {relationship.target}</Text></TouchableOpacity> : null}
+            </View>)}
+          </View> : null}
           {learningFocus && relationshipRecords(item, learningRoute).some((relationship) => relationship.label === "Choose one") ? <TouchableOpacity accessibilityRole="button" accessibilityLabel={`Compare alternatives for ${item.name}`} onPress={() => exploreNav.guided(router, { programmeId: learningRoute?.programmeId, domainId: learningRoute?.domainId, areaId: learningRoute?.areaId, roleId: learningRoute?.roleId, focused: true, openTray: true })} style={styles.actionButton}>
             <Text style={[styles.more, { color: colors.accentRole.action }]}>Compare valid alternatives in my learning tray</Text>
           </TouchableOpacity> : null}
         </View> : null}
         {isOpen ? <View style={[styles.detail, { borderTopColor: colors.borderRole.subtle }]}>
-          {expectedOutputCopy ? <Detail label="What you may produce" value={expectedOutputCopy} /> : null}
           {methodsForItem(methods, item).length ? <View style={styles.methodsInline}>
             <Text style={[styles.detailLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Methods used with this capability</Text>
             {methodsForItem(methods, item).map((method, methodIndex) => <View key={`${method.name}-${methodIndex}`} style={[styles.methodCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
@@ -431,44 +397,20 @@ export function ContextualItemList({ items, itemTypes, title = "Your preparation
               />
             </View>)}
           </View> : null}
-          <View style={[styles.resource, { borderTopColor: colors.borderRole.subtle }]}>
-            {resourceReason ? <View style={styles.summaryBlock}><Text style={[styles.detailLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Why this resource is here</Text><Text style={[styles.caption, { color: colors.textRole.secondary }]}>{resourceReason}</Text></View> : null}
-            {linkKindNotice ? <Text style={[styles.caption, { color: colors.textRole.muted }]}>{linkKindNotice}</Text> : null}
-            {typeof item.linkSourceReference?.locator === "string" ? <Text style={[styles.caption, { color: colors.textRole.muted }]}>Look for: {String(item.linkSourceReference.locator)}</Text> : null}
-             {url ? <ExternalLinkGuard url={url} label={label} description={resourceReason || `This opens the verified learning or reference page for ${item.name}.`} /> : <Text style={[styles.caption, { color: colors.textRole.muted }]}>No verified link is available yet.</Text>}
-            {relatedResources.length ? <View style={styles.resourceOptions}>
-              <Text style={[styles.detailLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Other verified ways to learn or read</Text>
-              {relatedResources.map((candidate) => <View key={candidate.id} style={styles.resourceOption}>
-                <Text style={[styles.resourceKind, { color: colors.accentRole.action }]}>{learningResourceKind(candidate)}</Text>
-                <Text style={[styles.detailLabel, { color: colors.textRole.primary }]}>Why this link may help</Text>
-                <Text style={[styles.caption, { color: colors.textRole.secondary }]}>{studentResourceRationale(candidate.description, item.name, item.contextualUse)}</Text>
-                <ExternalLinkGuard
-                  url={candidate.url}
-                  label={`Open ${candidate.provider} for ${item.name}`}
-                  description={studentResourceRationale(candidate.description, item.name, item.contextualUse)}
-                />
-              </View>)}
-            </View> : null}
-            {item.additionalLearningLinks?.length ? <View style={styles.resourceOptions}>
-              <Text style={[styles.detailLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Other checked guides for this item</Text>
-              {item.additionalLearningLinks.map((candidate) => <View key={`${candidate.url}:${candidate.locator ?? ""}`} style={styles.resourceOption}>
-                <Text style={[styles.resourceKind, { color: colors.accentRole.action }]}>{candidate.kind === "reference_only" ? "Reference" : "Additional learning link"}</Text>
-                <Text style={[styles.detailLabel, { color: colors.textRole.primary }]}>Why this link may help</Text>
-                <Text style={[styles.caption, { color: colors.textRole.secondary }]}>{studentResourceRationale(candidate.rationale, item.name, item.contextualUse)}</Text>
-                {candidate.locator ? <Text style={[styles.caption, { color: colors.textRole.muted }]}>Start at: {studentCopy(candidate.locator)}</Text> : null}
-                <ExternalLinkGuard url={candidate.url} label={`Open ${candidate.title} for ${item.name}`} description={studentResourceRationale(candidate.rationale, item.name, item.contextualUse)} />
-                {candidate.access ? <Text style={[styles.caption, { color: colors.textRole.muted }]}>{studentCopy(candidate.access)}</Text> : null}
-              </View>)}
-            </View> : null}
-          </View>
-          <ContextSourceLinks item={item} resource={resource} />
-          <View style={[styles.itemSection, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
-            <Text style={[styles.detailLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What it cannot prove or replace</Text>
-            {itemLimitations.map((limitation) => <Text key={limitation} style={[styles.limit, { color: colors.textRole.muted }]}>{limitation}</Text>)}
-          </View>
+          {resourceButtons.length ? <View style={[styles.resource, { borderTopColor: colors.borderRole.subtle }]}>
+            <Text style={[styles.detailLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Learn more about {item.name}</Text>
+            <View style={styles.resourceButtons}>{resourceButtons.map((link) => <ExternalLinkGuard
+              key={link.key}
+              url={link.url}
+              label={link.label}
+              description={`Open a learning resource for ${item.name}.`}
+              style={[styles.resourceButton, { borderColor: colors.accentRole.action, backgroundColor: colors.surface.subtle }]}
+              textStyle={[styles.more, { color: colors.accentRole.action }]}
+            />)}</View>
+          </View> : null}
         </View> : null}
       </View>;
-    })}
+    })}</View>
     {ordered.length > 5 ? <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded }} onPress={() => setExpanded((value) => !value)}><Text style={[styles.more, { color: colors.accentRole.action }]}>{expanded ? "Show fewer items" : `See all ${ordered.length} items`}</Text></TouchableOpacity> : null}
   </View>;
 }
@@ -502,15 +444,10 @@ function methodsForItem(
   );
 }
 
-function Detail({ label, value }: { label: string; value: string }) {
-  const { colors } = useTheme();
-  return <View style={styles.detailLine}><Text style={[styles.detailLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{label}</Text><Text style={[styles.copy, { color: colors.textRole.secondary }]}>{value}</Text></View>;
-}
-
 const styles = StyleSheet.create({
-  container: { gap: Spacing.md }, caption: { fontSize: 16, lineHeight: 24 }, summaryBlock: { gap: Spacing.xs }, itemSection: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm }, expandedContent: { gap: Spacing.md }, routeReason: { gap: Spacing.xs }, routeLabel: { fontSize: 16, lineHeight: 23, fontWeight: "700" }, resourceOptions: { gap: Spacing.sm, paddingTop: Spacing.sm }, resourceOption: { gap: Spacing.xs, paddingVertical: Spacing.xs }, resourceKind: { fontSize: FontSize.sm, fontWeight: "700" },
+  container: { gap: Spacing.md }, itemsGrid: { flexDirection: "row", flexWrap: "wrap", alignItems: "flex-start", gap: Spacing.md }, gridCard: { flexGrow: 1, flexBasis: "47%", minWidth: 290, maxWidth: "100%" }, caption: { fontSize: 16, lineHeight: 24 }, itemSection: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm }, expandedContent: { gap: Spacing.md }, routeReason: { gap: Spacing.xs }, routeLabel: { fontSize: 16, lineHeight: 23, fontWeight: "700" },
   emptyCard: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.xs },
-  card: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.md }, cardSummary: { borderLeftWidth: 3, paddingLeft: Spacing.md, paddingVertical: Spacing.xs }, returnToRelationship: { minHeight: 44, flexDirection: "row", alignItems: "center", gap: Spacing.xs, borderBottomWidth: 1, paddingHorizontal: Spacing.md, marginHorizontal: -Spacing.md, marginTop: -Spacing.md, marginBottom: Spacing.xs }, returnToRelationshipText: { fontSize: 16, lineHeight: 23, fontWeight: "700" }, header: { flexDirection: "row", alignItems: "flex-start", gap: Spacing.sm }, cardHeading: { flex: 1, gap: Spacing.sm }, badges: { flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: Spacing.xs }, typeBadge: { flexDirection: "row", alignItems: "center", gap: Spacing.xs }, levelBadge: { borderWidth: 1, borderRadius: Radius.full, paddingHorizontal: Spacing.sm, paddingVertical: 3 }, levelText: { fontSize: FontSize.sm, fontWeight: "700" }, actions: { flexDirection: "row", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: Spacing.sm }, actionButton: { minHeight: 44, justifyContent: "center", paddingVertical: Spacing.xs }, name: { fontSize: FontSize.xl, lineHeight: FontSize.xl * 1.25 }, type: { fontSize: FontSize.sm, fontWeight: "700" }, copy: { fontSize: 16, lineHeight: 25 }, more: { fontSize: 16, lineHeight: 23, fontWeight: "800" }, detail: { borderTopWidth: 1, paddingTop: Spacing.md, gap: Spacing.md }, detailLine: { gap: Spacing.xs }, detailLabel: { fontSize: 18, lineHeight: 25 }, resource: { borderTopWidth: 1, paddingTop: Spacing.md, gap: Spacing.md }, limit: { fontSize: 16, lineHeight: 24 }, methodsInline: { gap: Spacing.sm, paddingTop: Spacing.sm }, methodName: { fontSize: 16, lineHeight: 23 }, methodCard: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm },
+  card: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.md }, cardSummary: { borderLeftWidth: 3, paddingLeft: Spacing.md, paddingVertical: Spacing.xs }, returnToRelationship: { minHeight: 44, flexDirection: "row", alignItems: "center", gap: Spacing.xs, borderBottomWidth: 1, paddingHorizontal: Spacing.md, marginHorizontal: -Spacing.md, marginTop: -Spacing.md, marginBottom: Spacing.xs }, returnToRelationshipText: { fontSize: 16, lineHeight: 23, fontWeight: "700" }, header: { flexDirection: "row", alignItems: "flex-start", gap: Spacing.sm }, cardHeading: { flex: 1, gap: Spacing.sm }, badges: { flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: Spacing.xs }, typeBadge: { flexDirection: "row", alignItems: "center", gap: Spacing.xs }, levelBadge: { borderWidth: 1, borderRadius: Radius.full, paddingHorizontal: Spacing.sm, paddingVertical: 3 }, levelText: { fontSize: FontSize.sm, fontWeight: "700" }, actions: { flexDirection: "row", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: Spacing.sm }, actionButton: { minHeight: 44, justifyContent: "center", paddingVertical: Spacing.xs }, name: { fontSize: FontSize.xl, lineHeight: FontSize.xl * 1.25 }, type: { fontSize: FontSize.sm, fontWeight: "700" }, copy: { fontSize: 16, lineHeight: 25 }, more: { fontSize: 16, lineHeight: 23, fontWeight: "800" }, detail: { borderTopWidth: 1, paddingTop: Spacing.md, gap: Spacing.md }, detailLabel: { fontSize: 18, lineHeight: 25 }, resource: { borderTopWidth: 1, paddingTop: Spacing.md, gap: Spacing.md }, resourceButtons: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm }, resourceButton: { minHeight: 44, justifyContent: "center", borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm }, limit: { fontSize: 16, lineHeight: 24 }, methodsInline: { gap: Spacing.sm, paddingTop: Spacing.sm }, methodName: { fontSize: 16, lineHeight: 23 }, methodCard: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm },
 });
 
 export default ContextualItemList;

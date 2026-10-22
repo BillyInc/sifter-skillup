@@ -253,6 +253,7 @@ export function SearchResultsGroup({
   results: SearchResult[];
   query?: string;
   onResultPress?: (result: SearchResult) => void;
+  onOpenExplore?: (query: string, scope: SearchScope) => void;
   onMorePress?: () => void;
   maxRows?: number;
   style?: StyleProp<ViewStyle>;
@@ -409,6 +410,7 @@ interface SearchOverlayProps {
   onRecentPress?: (term: string) => void;
   suggestions?: string[];
   onSuggestionPress?: (term: string) => void;
+  onOpenExplore?: (query: string, scope: SearchScope) => void;
   isGuest?: boolean;
   onSignIn?: () => void;
 }
@@ -418,7 +420,7 @@ const SCOPE_OPTIONS: { value: SearchScope; label: string }[] = [
   { value: "programmes", label: "Programmes" },
   { value: "universities", label: "Universities" },
   { value: "domains", label: "Domains" },
-  { value: "subgroups", label: "Subgroups" },
+  { value: "subgroups", label: "Areas of specialisation" },
   { value: "roles", label: "Roles" },
   { value: "skills", label: "Skills" },
   { value: "tools", label: "Tools" },
@@ -449,6 +451,7 @@ export function SearchOverlay({
   error,
   results = [],
   onResultPress,
+  onOpenExplore,
   recentSearches = [],
   onRecentPress,
   suggestions = [],
@@ -506,6 +509,16 @@ export function SearchOverlay({
             </Text>
           </TouchableOpacity>
         </View>
+        {hasQuery && onOpenExplore ? (
+          <TouchableOpacity
+            accessibilityRole="button"
+            onPress={() => onOpenExplore(value, scope)}
+            style={styles.openExploreAction}
+          >
+            <Feather name="arrow-up-right" size={15} color={colors.accentRole.action} />
+            <Text style={[styles.openExploreText, CompassFonts.bodySemibold, { color: colors.accentRole.action }]}>See all results in Explore</Text>
+          </TouchableOpacity>
+        ) : null}
         {/* Choose the task first. Result groups then follow that task instead of
             making the user interpret unrelated programme/domain/role hits. */}
         <View style={styles.intentHeader}>
@@ -873,6 +886,8 @@ const styles = StyleSheet.create({
   overlaySearchBar: {
     flex: 1,
   },
+  openExploreAction: { alignSelf: "flex-start", minHeight: 36, flexDirection: "row", alignItems: "center", gap: 6, paddingHorizontal: 8 },
+  openExploreText: { fontSize: FontSize.sm },
   overlayClose: {
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.sm,

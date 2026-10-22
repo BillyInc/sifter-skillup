@@ -1,6 +1,7 @@
 import React, { createContext, useContext } from "react";
+import type { SearchScope } from "@/types/career";
 
-type SearchLauncher = (query?: string) => void;
+type SearchLauncher = (query?: string, scope?: SearchScope) => void;
 
 const SearchLauncherContext = createContext<SearchLauncher>(() => {});
 

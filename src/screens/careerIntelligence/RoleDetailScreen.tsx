@@ -28,6 +28,7 @@ import {
 } from "@/components/careerIntelligence";
 import { careerData } from "@/lib/careerData";
 import { useExploreNav } from "@/lib/exploreNav";
+import { guidanceContextQuery } from "@/lib/guidanceRouteContext";
 import type { GuidanceRouteContext } from "@/lib/guidanceRouteContext";
 import {
   pending,
@@ -49,6 +50,9 @@ import { isStudentResource, studentItemLinkUrl, studentSafeUrl } from "@/compone
 import { formatCareerLabel } from "@/lib/careerLabels";
 import { studentOptionalRoleLearningItems, studentRoleLearningItems } from "@/lib/roleLearningItems";
 import { ProgrammeOutcomeBridge } from "@/components/careerIntelligence/ProgrammeCurriculumCarryForward";
+import { D078RoleRoute, parseD078Selection } from "@/screens/careerIntelligence/D078MethodAwareJourney";
+import { resolveD078AreaId } from "@/lib/d078RouteProjection";
+import { parseD078RouteStacks } from "@/lib/d078RouteStacks";
 
 const SECTIONS = [
   { key: "overview", label: "Overview" },
@@ -66,16 +70,18 @@ export interface RoleDetailScreenProps {
 }
 
 export function RoleDetailScreen(props: RoleDetailScreenProps) {
-const params = useLocalSearchParams<{ id: string; area_id?: string | string[]; programme_id?: string | string[]; jamb_programme_id?: string | string[]; school_id?: string | string[]; user_type?: string | string[]; journey_mode?: string | string[]; guidance_student_id?: string | string[]; guidance_target?: string | string[]; guidance_entry?: string | string[]; focus?: string | string[] }>();
+const params = useLocalSearchParams<{ id: string; area_id?: string | string[]; domain_id?: string | string[]; d078_selection?: string | string[]; d078_route_stacks?: string | string[]; d078_role_id?: string | string[]; d078_from_area?: string | string[]; programme_id?: string | string[]; jamb_programme_id?: string | string[]; school_id?: string | string[]; user_type?: string | string[]; journey_mode?: string | string[]; guidance_student_id?: string | string[]; guidance_target?: string | string[]; guidance_entry?: string | string[]; focus?: string | string[] }>();
   const router = useRouter();
   const outerScrollRef = useRef<ScrollView>(null);
   const roleKey = props.roleId ?? String(params.id ?? "");
+  const isD078RoleKey = roleKey.trim().toLocaleLowerCase().startsWith("d078|");
   const targetStudentId = Array.isArray(params.guidance_student_id)
     ? params.guidance_student_id[0]
     : params.guidance_student_id;
   const focusedGuidance = (Array.isArray(params.focus) ? params.focus[0] : params.focus) === "guidance";
   const exploreNav = useExploreNav();
 const guidanceContext: GuidanceRouteContext = {
+    domainId: Array.isArray(params.domain_id) ? params.domain_id[0] : params.domain_id,
     areaId: Array.isArray(params.area_id) ? params.area_id[0] : params.area_id,
     programmeId: Array.isArray(params.programme_id) ? params.programme_id[0] : params.programme_id,
     jambProgrammeId: Array.isArray(params.jamb_programme_id) ? params.jamb_programme_id[0] : params.jamb_programme_id,
@@ -87,6 +93,19 @@ const guidanceContext: GuidanceRouteContext = {
   entryPath: Array.isArray(params.guidance_entry) ? params.guidance_entry[0] : params.guidance_entry,
   focused: focusedGuidance,
   };
+
+  useEffect(() => {
+    // A D078 role is downstream of an explicitly selected area. A direct or
+    // stale role URL without that context must return to the field picker,
+    // rather than opening a role-detail shell or trying to infer an area.
+    if (!isD078RoleKey || guidanceContext.areaId) return;
+    const contextQuery = guidanceContextQuery(guidanceContext, { includeProgrammeId: true });
+    const selection = Array.isArray(params.d078_selection) ? params.d078_selection[0] : params.d078_selection;
+    const query = [contextQuery, selection ? `d078_selection=${encodeURIComponent(selection)}` : ""]
+      .filter(Boolean)
+      .join("&");
+    router.replace(`${exploreNav.base}/domain/D078${query ? `?${query}` : ""}` as never);
+  }, [exploreNav.base, guidanceContext.areaId, isD078RoleKey, params.d078_selection, router]);
 
   const [state, setState] = useState<DataState<DomainRoleV2>>(() =>
     pending<DomainRoleV2>("Loading role details..."),
@@ -103,7 +122,12 @@ const guidanceContext: GuidanceRouteContext = {
     };
   }, [guidanceContext.areaId, guidanceContext.programmeId, roleKey]);
 
-  useEffect(() => loadRole(), [loadRole]);
+  useEffect(() => {
+    // A direct D078 role URL is not enough context to fetch or show a role.
+    // The method-aware path must first supply the selected area.
+    if (isD078RoleKey && !guidanceContext.areaId) return;
+    return loadRole();
+  }, [guidanceContext.areaId, isD078RoleKey, loadRole]);
 
   const onBack = useCallback(() => {
     const canGoBack = typeof (router as typeof router & { canGoBack?: () => boolean }).canGoBack === "function"
@@ -120,6 +144,18 @@ const guidanceContext: GuidanceRouteContext = {
       router.replace(`${exploreNav.base}/domains` as never);
     }
   }, [exploreNav.base, guidanceContext.areaId, router, state.data]);
+
+  if (isD078RoleKey && !guidanceContext.areaId) {
+    return <D078RoleRoute
+      roleId={Array.isArray(params.d078_role_id) ? params.d078_role_id[0] : params.d078_role_id}
+      roleName={roleKey.split("|").slice(1).join("|")}
+      roleKey={roleKey}
+      initialSelection={parseD078Selection(params.d078_selection)}
+      initialRouteStacks={parseD078RouteStacks(params.d078_route_stacks, parseD078Selection(params.d078_selection))}
+      roles={[]}
+      guidanceContext={guidanceContext}
+    />;
+  }
 
   return (
     <DetailScaffold
@@ -140,10 +176,24 @@ const guidanceContext: GuidanceRouteContext = {
       state={state}
       onRetry={loadRole}
       scrollRef={outerScrollRef}
+      wideContent={Boolean(state.data?.appearsIn.some((entry) => entry.domainId === "D078"))}
+      hideScreenTitle={Boolean(state.data?.appearsIn.some((entry) => entry.domainId === "D078"))}
+      hideEyebrow={Boolean(state.data?.appearsIn.some((entry) => entry.domainId === "D078"))}
       requiresAccountForDetails
       guestDescription={state.data?.description}
     >
-      {(role) => <RoleBody role={role} roleKey={roleKey} guidanceContext={guidanceContext} />}
+      {(role) => role.appearsIn.some((entry) => entry.domainId === "D078") ? <D078RoleRoute
+        areaId={guidanceContext.areaId ? resolveD078AreaId(guidanceContext.areaId) ?? guidanceContext.areaId : undefined}
+        roleId={Array.isArray(params.d078_role_id) ? params.d078_role_id[0] : params.d078_role_id}
+        roleName={role.name}
+        roleKey={role.key}
+        initialSelection={parseD078Selection(params.d078_selection)}
+        initialRouteStacks={parseD078RouteStacks(params.d078_route_stacks, parseD078Selection(params.d078_selection))}
+        returnToAreaOnBack={(Array.isArray(params.d078_from_area) ? params.d078_from_area[0] : params.d078_from_area) === "1"}
+        roles={[]}
+        guidanceContext={guidanceContext}
+        roleResources={role.resources}
+      /> : <RoleBody role={role} roleKey={roleKey} guidanceContext={guidanceContext} />}
     </DetailScaffold>
   );
 }

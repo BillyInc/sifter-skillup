@@ -30,13 +30,22 @@ export function resourceForItem(
   itemType: CareerContextItem["itemType"],
   itemName: string,
 ): CareerLearningResource | undefined {
+  return resourcesForItem(resources, itemType, itemName)[0];
+}
+
+/** Return every explicitly attached, approved resource for an item. */
+export function resourcesForItem(
+  resources: CareerLearningResource[] | undefined,
+  itemType: CareerContextItem["itemType"],
+  itemName: string,
+): CareerLearningResource[] {
   const name = itemName.trim().toLowerCase();
-  if (!name) return undefined;
+  if (!name) return [];
   const allowed = RESOURCE_TYPES[itemType];
-  return resources?.find((resource) => {
+  return (resources ?? []).filter((resource) => {
     if (!resource.url || !allowed.includes(resource.resourceType)) return false;
     if (!isStudentResource(resource)) return false;
     const target = resource.targetName.trim().toLowerCase();
     return target === name || target.startsWith(`${name} `) || target.startsWith(`${name}:`);
-  });
+  }).filter((resource, index, matches) => matches.findIndex((candidate) => candidate.url === resource.url) === index);
 }

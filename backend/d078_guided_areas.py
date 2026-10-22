@@ -16,15 +16,16 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG_PATH = ROOT / "data" / "career-mapping" / "domain_specialization_catalog.json"
-GRAPH_PATH = ROOT / "data" / "career-mapping" / "_audit" / "D078_PROGRAMME_TO_ROLE_LEARNING_PATH_GRAPH_2026_10_15.json"
+GRAPH_PATH = ROOT / "data" / "career-mapping" / "_audit" / "D078_METHOD_AREA_ROLE_ROUTE_GRAPH_2026_10_19.json"
 
 
 def _load(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8-sig"))
 
 
-def _role_key(label: str) -> str:
-    return re.sub(r"\s+", " ", label).strip().casefold()
+def _role_identity(value: Any) -> str:
+    """Normalize display labels while preserving the D078 role-key boundary."""
+    return re.sub(r"[^a-z0-9]+", " ", str(value or "").casefold()).strip()
 
 
 SOURCE_TITLES = {
@@ -97,96 +98,56 @@ def d078_guided_area_data() -> dict[str, Any]:
         for row in graph.get("nodes", [])
         if row.get("kind") == "role" and row.get("id")
     }
-    domain_routes: dict[str, dict[str, Any]] = {}
+    method_routes_by_area_role: dict[tuple[str, str], list[dict[str, Any]]] = {}
+    for method_route in graph.get("method_area_role_routes", []):
+        area_key = str(method_route.get("area_id") or "")
+        role_id = str(method_route.get("role_id") or "")
+        if area_key in area_nodes_by_key and role_id in roles:
+            method_routes_by_area_role.setdefault((area_key, role_id), []).append(method_route)
 
-    def _reviewed_condition(value: Any) -> str | None:
-        if not value:
-            return None
-        # Evidence ledgers append reconciliation history to the first reviewed
-        # statement. Keep that original scope explanation, not the staff notes.
-        condition = str(value)
-        for marker in (
-            " Local reconciliation of ",
-            " Role-agent exact-key review ",
-            " Second-pass ",
-        ):
-            condition = condition.split(marker, 1)[0]
-        if ": " in condition:
-            condition = condition.split(": ", 1)[1]
-        return condition.strip() or None
-
-    for edge in graph.get("edges", []):
-        if edge.get("relationship") != "domain_to_role":
-            continue
-        role_node = roles.get(edge.get("target"))
-        if not role_node:
-            continue
-        evidence = edge.get("evidence") or {}
-        condition = _reviewed_condition(
-            evidence.get("conditional_use_case") or evidence.get("basis")
-        )
-        domain_routes[_role_key(str(role_node.get("label") or ""))] = {
-            "status": edge.get("status"),
-            "condition": condition,
-            "rationale": evidence.get("basis"),
-            "positiveTaskEvidence": evidence.get("positive_task_evidence"),
-            "sourceReferences": [
-                {"url": ref}
-                for ref in evidence.get("source_refs", [])
-                if isinstance(ref, str) and ref.startswith("https://")
-            ],
-        }
     area_routes: dict[str, list[dict[str, Any]]] = {}
     role_areas: dict[str, list[dict[str, Any]]] = {}
+    role_areas_by_key: dict[str, list[dict[str, Any]]] = {}
     for edge in graph.get("edges", []):
-        if edge.get("relationship") != "area_to_role":
+        if edge.get("relationship") != "area_contains_supported_role":
             continue
         area_node = area_nodes_by_graph_id.get(edge.get("source"))
         role_node = roles.get(edge.get("target"))
         if not area_node or not role_node:
             continue
-        domain_route = domain_routes.get(
-            _role_key(str(role_node.get("label") or "")), {}
-        )
+        area_id = str(area_node["area_id"])
+        role_id = str(role_node["id"])
+        method_routes = method_routes_by_area_role.get((area_id, role_id), [])
         route = {
-            "areaId": area_node["area_id"],
+            "areaId": area_id,
             "areaName": area_node.get("label"),
-            "roleGraphId": role_node.get("id"),
+            "roleGraphId": role_id,
             "roleName": role_node.get("label"),
             "roleNumber": role_node.get("role_number"),
-            "domainRouteStatus": domain_route.get("status"),
-            "domainRouteCondition": domain_route.get("condition"),
-            "domainRouteReason": domain_route.get("rationale"),
-            "domainTaskEvidence": domain_route.get("positiveTaskEvidence"),
-            "domainRouteSources": domain_route.get("sourceReferences") or [],
-            "status": edge.get("status"),
-            "rationale": edge.get("rationale"),
-            # The reviewed graph stores conditional route boundaries in
-            # `scope_condition`; older consumers read only `condition`, which
-            # silently erased the explanation from cross-area role cards.
-            "condition": edge.get("scope_condition") or edge.get("condition"),
-            "positiveTaskEvidence": edge.get("positive_task_evidence"),
-            "sourceReferences": [
-                {"url": ref}
-                for ref in edge.get("source_refs", [])
-                if isinstance(ref, str) and ref.startswith("https://")
-            ],
+            "routeSource": edge.get("route_source"),
+            "methodSpecificFitClaim": edge.get("method_specific_fit_claim"),
+            "methodRouteCount": len(method_routes),
+            "methodRouteIds": sorted(str(item.get("route_node_id")) for item in method_routes if item.get("route_node_id")),
+            "roleItemIds": sorted({
+                item_id for method_route in method_routes
+                for item_id in method_route.get("role_item_ids", [])
+                if isinstance(item_id, str)
+            }),
+            "methodSpecificRoleItemIds": sorted({
+                item_id for method_route in method_routes
+                for item_id in method_route.get("method_specific_role_item_ids", [])
+                if isinstance(item_id, str)
+            }),
+            "methodToRoleFitClaim": sorted({
+                str(method_route.get("method_to_role_fit_claim"))
+                for method_route in method_routes
+                if method_route.get("method_to_role_fit_claim")
+            }),
         }
-        route["studentVisible"] = bool(
-            route["domainRouteStatus"] in {"reviewed_supported", "reviewed_conditional"}
-            and (route["domainRouteStatus"] == "reviewed_supported" or route["domainRouteCondition"])
-            and route["status"] in {"reviewed_supported", "reviewed_conditional"}
-            and route["rationale"]
-            and route["positiveTaskEvidence"]
-            and route["sourceReferences"]
-            and (
-                route["status"] == "reviewed_supported"
-                or route["condition"]
-            )
-        )
-        if route["studentVisible"]:
-            area_routes.setdefault(area_node["area_id"], []).append(route)
-            role_areas.setdefault(_role_key(str(role_node.get("label") or "")), []).append(route)
+        area_routes.setdefault(area_id, []).append(route)
+        normalized_name = _role_identity(role_node.get("label"))
+        role_areas.setdefault(normalized_name, []).append(route)
+        role_areas_by_key.setdefault(f"D078|{normalized_name}".casefold(), []).append(route)
 
     areas = []
     for index, row in enumerate(domain.get("areas", [])):
@@ -206,7 +167,7 @@ def d078_guided_area_data() -> dict[str, Any]:
             "sourceConfidence": "medium" if source_urls else "review_required",
             "dataState": "source_backed" if source_urls else "review_required",
             "displayOrder": index,
-            "roleRoutes": sorted(area_routes.get(area_id, []), key=lambda item: (item.get("areaName") or "", item.get("status") or "")),
+            "roleRoutes": sorted(area_routes.get(area_id, []), key=lambda item: (item.get("roleNumber") or 0, item.get("roleGraphId") or "")),
             "sources": [
                 {"id": source_ids[i] if i < len(source_ids) else None,
                  "title": SOURCE_TITLES.get(source_ids[i], source_ids[i]) if i < len(source_ids) else "Area source",
@@ -222,6 +183,8 @@ def d078_guided_area_data() -> dict[str, Any]:
     return {
         "areas": areas,
         "roleAreas": role_areas,
+        "roleAreasByKey": role_areas_by_key,
+        "rolesByGraphId": roles,
         "areaIds": {row["id"] for row in areas},
     }
 
@@ -230,18 +193,37 @@ def is_d078_area_id(value: str) -> bool:
     return value in d078_guided_area_data()["areaIds"]
 
 
-def d078_routed_role_keys(role_rows: list[dict[str, Any]]) -> set[str]:
-    """Return role keys whose current records have a source-backed area route.
+def d078_role_routes_for_key(role_key: str) -> list[dict[str, Any]]:
+    """Return routes only for the exact stable D078 API role key."""
+    return d078_guided_area_data()["roleAreasByKey"].get(str(role_key or "").strip().casefold(), [])
 
-    Role-card availability is derived from the current reviewed route graph,
-    not from stale `student_visible` or empty-item flags on a seed snapshot.
-    This makes route cards available as soon as their evidence contract passes,
-    while role learning items keep their own independent content gate.
+
+def d078_routed_role_keys(role_rows: list[dict[str, Any]]) -> set[str]:
+    """Return role keys with exact identities in the canonical area-role map.
+
+    This checks graph/API identity completeness only. It does not treat graph
+    membership as approval of any learning item, method fit, or route copy;
+    item-level content remains subject to its own ownership/evidence gate.
     """
-    routed_names = set(d078_guided_area_data()["roleAreas"])
-    return {
-        str(row.get("role_key") or "").strip().casefold()
-        for row in role_rows
-        if str(row.get("role_key") or "").strip()
-        and _role_key(str(row.get("role_name") or "")) in routed_names
-    }
+    data = d078_guided_area_data()
+    routed_names = set(data["roleAreas"])
+    role_keys = {name: f"D078|{name}" for name in routed_names}
+    seen: dict[str, list[dict[str, Any]]] = {}
+    for row in role_rows:
+        role_key = str(row.get("role_key") or "").strip().casefold()
+        if not role_key.startswith("d078|"):
+            continue
+        name = _role_identity(row.get("role_name"))
+        expected_key = role_keys.get(name)
+        key_name = _role_identity(role_key.split("|", 1)[1])
+        if expected_key:
+            if role_key != expected_key.casefold():
+                raise ValueError(f"D078 API role does not resolve to a canonical graph role: {row.get('role_key')!r}")
+            seen.setdefault(name, []).append(row)
+        elif key_name in routed_names:
+            raise ValueError(f"D078 API role does not resolve to a canonical graph role: {row.get('role_key')!r}")
+    missing = sorted(routed_names - seen.keys())
+    ambiguous = sorted(name for name in routed_names if len(seen.get(name, [])) > 1)
+    if missing or ambiguous:
+        raise ValueError(f"D078 role identity join incomplete: missing={missing}; ambiguous={ambiguous}")
+    return {role_keys[name].casefold() for name in seen}

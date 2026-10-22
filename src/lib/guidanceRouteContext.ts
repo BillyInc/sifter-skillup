@@ -48,7 +48,25 @@ export type GuidanceRouteContext = {
   /** Open the learning tray when returning from an item-level selection. */
   openTray?: boolean;
   viewOnly?: boolean;
+  /** Subject choices that produced a programme discovery result. */
+  subjectMatchOlevel?: string[];
+  subjectMatchUtme?: string[];
+  /** University offerings retained from that exact match result. */
+  subjectMatchSchoolIds?: string[];
+  subjectMatchBasis?: string;
+  subjectMatchScopeApplied?: boolean;
 };
+
+/** Keep a programme's university list within the offering set established by a subject match. */
+export function filterUniversityOfferingsBySubjectMatch<T extends { schoolId: string }>(
+  offerings: T[],
+  scopeApplied: boolean | undefined,
+  matchingSchoolIds: string[] | undefined,
+): T[] {
+  if (!scopeApplied) return offerings;
+  const matching = new Set(matchingSchoolIds ?? []);
+  return offerings.filter((offering) => matching.has(offering.schoolId));
+}
 
 /**
  * Checks the identity-bearing parts of a route before a restored/deep-linked
@@ -152,6 +170,11 @@ export function guidanceContextQuery(
   add("guidance_student_id", context.guidanceStudentId);
   add("resume", context.resumeStage);
   add("guidance_entry", context.entryPath);
+  if (context.subjectMatchOlevel?.length) add("olevel_subjects", context.subjectMatchOlevel.join(","));
+  if (context.subjectMatchUtme?.length) add("subjects", context.subjectMatchUtme.join(","));
+  if (context.subjectMatchSchoolIds?.length) add("university_match_ids", context.subjectMatchSchoolIds.join(","));
+  if (context.subjectMatchScopeApplied) pairs.push("university_match_filter=1");
+  add("subject_match_basis", context.subjectMatchBasis);
   if (context.focused) pairs.push("focus=guidance");
   if (context.openTray) pairs.push("open_tray=1");
   if (context.viewOnly) pairs.push("view_only=1");

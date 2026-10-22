@@ -34,8 +34,7 @@ function guidanceHref(
   return query ? `${path}?${query}` : path;
 }
 
-function nextHrefForStartingPoint(profile: StartingPointProfile): string {
-  const subjects = (profile.jambSubjects ?? []).filter(Boolean).join(",");
+export function nextHrefForStartingPoint(profile: StartingPointProfile): string {
   const olevelSubjects = (profile.olevelSubjects ?? []).filter(Boolean).join(",");
   const programme = profile.intendedProgramme || profile.programmeName || "";
   const programmeId = profile.intendedProgrammeId || profile.intendedJambProgrammeId;
@@ -46,27 +45,19 @@ function nextHrefForStartingPoint(profile: StartingPointProfile): string {
     userType: profile.userType,
     className: profile.ssClass,
     stream: profile.stream,
+    subjectMatchOlevel: profile.olevelSubjects,
+    subjectMatchUtme: profile.jambSubjects,
     entryPath: "/onboarding",
     focused: true,
   };
 
   if (profile.userType === "senior_secondary") {
-    if (profile.exploreIntent?.includes("have_programme") && programme) {
+    if (programmeId) {
       // The onboarding search already resolved the national JAMB identity.
       // Reopening the generic admission picker here caused the student to see
       // every variant and the programme/subject switch again. Go straight to
       // that identity's preview; its university list is the next decision.
-      if (programmeId) {
-        return guidanceHref(`/(tabs)/explore/programme/${encodeURIComponent(programmeId)}`, [], {
-          ...baseContext,
-          journeyMode: "programme_preview",
-          resumeStage: "programme_preview",
-        });
-      }
-      return guidanceHref("/(tabs)/explore/admission", [
-        "mode=programme",
-        `q=${encodeURIComponent(programme)}`,
-      ], {
+      return guidanceHref(`/(tabs)/explore/programme/${encodeURIComponent(programmeId)}`, [], {
         ...baseContext,
         journeyMode: "programme_preview",
         resumeStage: "programme_preview",
@@ -76,7 +67,6 @@ function nextHrefForStartingPoint(profile: StartingPointProfile): string {
       return guidanceHref("/(tabs)/explore/admission", [
         "mode=subjects",
         "exam_type=olevel",
-        `olevel_subjects=${encodeURIComponent(olevelSubjects)}`,
       ], {
         ...baseContext,
         journeyMode: "guided_subject_discovery",
@@ -94,8 +84,6 @@ function nextHrefForStartingPoint(profile: StartingPointProfile): string {
     if (profile.ssDoor === "unsure") {
       return guidanceHref("/(tabs)/explore/admission", [
         "mode=subjects",
-        ...(subjects ? [`subjects=${encodeURIComponent(subjects)}`] : []),
-        ...(olevelSubjects ? [`olevel_subjects=${encodeURIComponent(olevelSubjects)}`] : []),
       ], {
         ...baseContext,
         journeyMode: "guided_subject_discovery",

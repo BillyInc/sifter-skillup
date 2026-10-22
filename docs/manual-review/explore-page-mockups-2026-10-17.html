@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LevelUp Explore page mockups</title>
+  <style>
+    :root { color-scheme: light; --ink:#10233f; --muted:#64748b; --line:#d9e2ef; --paper:#f5f8fc; --card:#fff; --blue:#155eef; --blue-soft:#e8f0ff; --orange:#f97316; --green:#0f766e; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:15px/1.45 Inter, system-ui, sans-serif; }
+    .page { max-width:1400px; margin:0 auto; padding:28px; }
+    .intro { display:flex; justify-content:space-between; gap:24px; align-items:flex-end; margin-bottom:22px; }
+    h1,h2,h3,p { margin:0; }
+    h1 { font-size:30px; letter-spacing:-.03em; }
+    .intro p { max-width:680px; color:var(--muted); margin-top:7px; }
+    .legend { display:flex; gap:8px; flex-wrap:wrap; color:var(--muted); font-size:12px; }
+    .legend span { border:1px solid var(--line); border-radius:999px; padding:5px 9px; background:var(--card); }
+    .boards { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+    .board { background:var(--card); border:1px solid var(--line); border-radius:18px; overflow:hidden; box-shadow:0 8px 26px #18365e0e; }
+    .chrome { padding:15px 18px; border-bottom:1px solid var(--line); display:flex; align-items:center; gap:18px; }
+    .brand { font-weight:800; letter-spacing:-.02em; white-space:nowrap; }
+    .brand i { display:inline-block; width:10px; height:10px; border-radius:50%; background:linear-gradient(135deg,#13c7bd,#155eef,#8b5cf6); margin-right:6px; }
+    .nav { display:flex; gap:12px; color:var(--muted); font-size:12px; }
+    .nav b { color:var(--blue); }
+    .body { padding:22px; }
+    .eyebrow { color:var(--blue); text-transform:uppercase; font-size:11px; font-weight:800; letter-spacing:.12em; }
+    .title { font-size:25px; line-height:1.12; letter-spacing:-.035em; margin:7px 0; }
+    .copy { color:var(--muted); max-width:620px; }
+    .search { display:flex; align-items:center; gap:10px; border:1px solid #b7c7df; border-radius:12px; padding:11px 13px; margin:18px 0; color:var(--muted); background:#fbfdff; }
+    .search strong { color:var(--ink); font-weight:500; }
+    .doors { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin:18px 0; }
+    .door { border:1px solid var(--line); border-radius:12px; padding:13px; min-height:86px; }
+    .door h3 { font-size:14px; margin-bottom:4px; }
+    .door p { color:var(--muted); font-size:12px; }
+    .section { border-top:1px solid var(--line); padding-top:16px; margin-top:20px; }
+    .section-head { display:flex; justify-content:space-between; gap:12px; align-items:baseline; margin-bottom:10px; }
+    .section-head h2 { font-size:16px; }
+    .section-head a { color:var(--blue); font-size:12px; }
+    .chips { display:flex; gap:7px; flex-wrap:wrap; }
+    .chip { border:1px solid var(--line); border-radius:999px; padding:6px 9px; font-size:12px; background:#fbfdff; }
+    .chip.active { background:var(--blue-soft); border-color:#a9c3ff; color:var(--blue); }
+    .result { border:1px solid var(--line); border-radius:12px; padding:12px; margin-top:8px; display:flex; justify-content:space-between; gap:15px; }
+    .result h3 { font-size:14px; }
+    .result p { color:var(--muted); font-size:12px; margin-top:3px; }
+    .result button, .primary { border:0; border-radius:9px; padding:8px 11px; color:white; background:var(--blue); font-weight:700; white-space:nowrap; }
+    .admin-grid { display:grid; grid-template-columns:155px 1fr; gap:15px; }
+    .filters { border-right:1px solid var(--line); padding-right:14px; }
+    .filters h3 { font-size:12px; margin-bottom:9px; }
+    .filter { color:var(--muted); font-size:12px; padding:8px 0; border-bottom:1px solid #edf1f7; }
+    .filter b { color:var(--ink); display:block; font-size:11px; margin-bottom:3px; }
+    .catalog { min-width:0; }
+    .catalog .doors { margin-top:0; }
+    .admin-intro { display:flex; justify-content:space-between; gap:12px; align-items:start; }
+    .admin-badge { color:var(--green); background:#e7f7f4; border:1px solid #b6e6dd; border-radius:999px; padding:5px 9px; font-size:11px; white-space:nowrap; }
+    .search-overlay { margin-top:20px; border:2px solid #8eb1ff; border-radius:14px; padding:15px; background:#fafdff; }
+    .search-overlay .search { margin:0 0 12px; }
+    .search-overlay .result { background:white; }
+    .rule { margin-top:20px; color:var(--muted); font-size:12px; border-left:3px solid var(--orange); padding-left:12px; }
+    @media (max-width:900px) { .boards { grid-template-columns:1fr; } .intro { display:block; } .legend { margin-top:14px; } }
+    @media (max-width:560px) { .page { padding:15px; } .body { padding:16px; } .doors { grid-template-columns:1fr; } .admin-grid { grid-template-columns:1fr; } .filters { border-right:0; border-bottom:1px solid var(--line); padding:0 0 10px; display:flex; gap:8px; flex-wrap:wrap; } .filter { border:1px solid var(--line); border-radius:999px; padding:6px 8px; } .filter b { display:inline; margin-right:4px; } .nav { display:none; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="intro">
+      <div>
+        <div class="eyebrow">Pre-implementation design review</div>
+        <h1>Two Explore pages, one connected catalogue</h1>
+        <p>Student Explore helps a learner discover and understand routes. Admin Explore is a catalogue and intelligence workbench. They share data and search behavior, not the same page composition.</p>
+      </div>
+      <div class="legend"><span>Student discovery</span><span>Admin reference</span><span>Shared search contract</span></div>
+    </header>
+
+    <section class="boards" aria-label="Explore page alternatives">
+      <article class="board">
+        <div class="chrome"><div class="brand"><i></i>levelup</div><div class="nav"><b>Explore</b><span>Opportunities</span><span>My World</span><span>Profile</span></div></div>
+        <div class="body">
+          <div class="eyebrow">Student Explore</div>
+          <h2 class="title">Find something to learn about</h2>
+          <p class="copy">Browse freely. Choose a result when you are ready to understand its route and what you can build next.</p>
+          <div class="search"><span>⌕</span><strong>Search programmes, careers, skills, or universities…</strong></div>
+          <div class="chips"><span class="chip active">Programmes</span><span class="chip">Domains</span><span class="chip">Areas of specialisation</span><span class="chip">Roles</span><span class="chip">Skills</span></div>
+          <div class="doors">
+            <div class="door"><h3>Find a programme</h3><p>See what is offered and where it can lead.</p></div>
+            <div class="door"><h3>Explore a field</h3><p>Understand a domain before choosing a focused area.</p></div>
+            <div class="door"><h3>Explore roles</h3><p>See the work and preparation behind a role.</p></div>
+            <div class="door"><h3>Match your skills</h3><p>Connect what you know to possible routes.</p></div>
+          </div>
+          <div class="section"><div class="section-head"><h2>Recently viewed and saved</h2><a>See all</a></div>
+            <div class="result"><div><h3>Sociology</h3><p>Programme · Social Sciences</p></div><button>Open route</button></div>
+            <div class="result"><div><h3>Social Sciences</h3><p>Domain · 7 canonical areas</p></div><button>Understand field</button></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="board">
+        <div class="chrome"><div class="brand"><i></i>levelup</div><div class="nav"><b>Explore</b><span>Cohort</span><span>Intelligence</span><span>Students</span></div><span class="admin-badge">Admin workspace</span></div>
+        <div class="body">
+          <div class="admin-intro"><div><div class="eyebrow">Admin Explore</div><h2 class="title">National catalogue and reference workspace</h2><p class="copy">Search and compare programmes, universities and the career taxonomy. Institution-specific figures stay separate from national reference data.</p></div></div>
+          <div class="search"><span>⌕</span><strong>Search programmes, universities, domains, roles, or skills…</strong></div>
+          <div class="admin-grid">
+            <aside class="filters"><h3>FILTERS</h3><div class="filter"><b>Faculty</b>All faculties</div><div class="filter"><b>State</b>All states</div><div class="filter"><b>University type</b>Federal · State · Private</div><div class="filter"><b>Domain</b>Any domain</div><div class="filter"><b>Area</b>Any area</div><div class="filter"><b>Role</b>Any role</div></aside>
+            <div class="catalog">
+              <div class="doors">
+                <div class="door"><h3>JAMB programmes</h3><p>Browse faculty, subjects, duration and offerings.</p></div>
+                <div class="door"><h3>Universities</h3><p>Search type, location and programme offerings.</p></div>
+                <div class="door"><h3>Domains → areas → roles</h3><p>Drill through the canonical taxonomy.</p></div>
+                <div class="door"><h3>Skills and tools</h3><p>Find where an item is used and what it supports.</p></div>
+              </div>
+              <div class="section"><div class="section-head"><h2>Results</h2><a>Save search</a></div>
+                <div class="result"><div><h3>Sociology</h3><p>JAMB programme · Social Sciences · 12 universities matched</p></div><button>Programme intelligence</button></div>
+                <div class="result"><div><h3>Social Sciences</h3><p>Domain · 7 areas · canonical role links available</p></div><button>Open domain map</button></div>
+              </div>
+            </div>
+          </div>
+          <div class="search-overlay"><div class="eyebrow">Shared search handoff</div><div class="search"><span>⌕</span><strong>social researcher</strong></div><div class="chips"><span class="chip active">All</span><span class="chip">Domains</span><span class="chip">Roles</span><span class="chip">Skills</span></div><div class="result"><div><h3>Social researcher</h3><p>Role · Social Sciences · Open role context and next steps</p></div><button>Open role</button></div></div>
+        </div>
+      </article>
+    </section>
+    <p class="rule"><strong>Design rule:</strong> the two pages can share query parsing, result adapters and detail routes, but the student page must never expose admin facets/provenance, and the admin page must not be reduced to student cards with different introductory text.</p>
+  </main>
+</body>
+</html>

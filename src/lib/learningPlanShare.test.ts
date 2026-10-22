@@ -46,4 +46,16 @@ describe("guided learning-plan share copy", () => {
     expect(input.focusNames).toEqual(["Research design"]);
     expect(JSON.stringify(input)).not.toContain("Unselected tool");
   });
+
+  it("includes the complete selected D078 route context in share copy", () => {
+    const copy = buildLearningPlanShareMessage("generic", {
+      routeLabel: "Sociology · Social Sciences & Behavioural Research",
+      focusNames: ["Interviews", "Social Research and Evaluation", "Statistician"],
+      routeDetails: ["Methods and designs: Interviews, Exploratory Sequential Mixed Methods, Surveys", "Area: Social Research and Evaluation", "Role: Statistician", "Items added: Research question design"],
+    });
+    expect(copy.message).toContain("Exploratory Sequential Mixed Methods");
+    expect(copy.message).toContain("Area: Social Research and Evaluation");
+    expect(copy.message).toContain("Role: Statistician");
+    expect(copy.message).toContain("Items added: Research question design");
+  });
 });

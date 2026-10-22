@@ -25,3 +25,24 @@ export function rolesForArea(
     : domainRoles.filter((role) => role.subgroupId === area?.id && role.guidanceAvailable === true);
   return [...candidates].sort(compareCareerRoles);
 }
+
+/**
+ * Pathways hub role options. D078 has no direct domain-to-role routes, so its
+ * roles must remain absent until a canonical area is explicitly selected.
+ * Other domains preserve their existing direct/domain and subgroup behavior.
+ */
+export function rolesForPathwaySelection(
+  domain: Pick<DomainV2, "id" | "subgroups" | "roles"> | undefined,
+  selectedSubgroupId: string | null,
+): DomainRoleSummary[] {
+  if (!domain) return [];
+  if (domain.id === "D078") {
+    if (!selectedSubgroupId) return [];
+    const selectedArea = domain.subgroups.find((area) => area.id === selectedSubgroupId);
+    return rolesForArea("D078", selectedArea, domain.roles);
+  }
+  return [...domain.roles]
+    .filter((role) => role.guidanceAvailable !== false
+      && (!selectedSubgroupId || role.subgroupId === selectedSubgroupId))
+    .sort(compareCareerRoles);
+}

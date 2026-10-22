@@ -4,7 +4,7 @@
  * title/eyebrow header, and a scrollable body that renders a DataState
  * gracefully (Coming Soon / Pending / Error) before showing content.
  */
-import React, { type ReactNode, type RefObject } from "react";
+import React, { useCallback, useRef, useState, type ReactNode, type RefObject } from "react";
 import {
   View,
   Text,
@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
   type NativeSyntheticEvent,
   type NativeScrollEvent,
+  useWindowDimensions,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Feather } from "@expo/vector-icons";
@@ -32,6 +33,7 @@ import { ShareExportButton } from "./ShareExportButton";
 import { CareerDisclaimer } from "./CareerDisclaimer";
 import { GuidanceReportButton, type GuidanceReportSelection } from "./GuidanceReportButton";
 import { useAuth } from "@/hooks/useAuth";
+import { DetailScrollProvider, DetailViewportOverlayProvider } from "./DetailScrollContext";
 
 export interface DetailScaffoldProps<T> {
   eyebrow?: string;
@@ -71,6 +73,16 @@ export interface DetailScaffoldProps<T> {
   /** Gate the full entity body behind an account while leaving a useful preview. */
   requiresAccountForDetails?: boolean;
   guestDescription?: string | null;
+  /** Let the D078 method-aware journey use its three-column desktop layout. */
+  wideContent?: boolean;
+  /** The D078 body supplies its own full-size screen heading. */
+  hideScreenTitle?: boolean;
+  /** Hide staff-style entity eyebrows on the D078 learning journey. */
+  hideEyebrow?: boolean;
+}
+
+export function d078ContentGutter(width: number): number {
+  return width < 768 ? 16 : 24;
 }
 
 export function DetailScaffold<T>({
@@ -95,11 +107,26 @@ export function DetailScaffold<T>({
   onScroll,
   requiresAccountForDetails = false,
   guestDescription,
+  wideContent = false,
+  hideScreenTitle = false,
+  hideEyebrow = false,
 }: DetailScaffoldProps<T>) {
   const router = useRouter();
   const { colors } = useTheme();
   const { user } = useAuth();
+  const { width } = useWindowDimensions();
   const isGuest = !user || user.auth_provider === "guest";
+  const fallbackScrollRef = useRef<ScrollView>(null);
+  const activeScrollRef = scrollRef ?? fallbackScrollRef;
+  const [viewportOverlay, setViewportOverlay] = useState<(() => ReactNode) | null>(null);
+  const setViewportOverlayRenderer = useCallback((renderOverlay: (() => ReactNode) | null) => {
+    setViewportOverlay(() => renderOverlay);
+  }, []);
+  const scrollOffsetRef = useRef(0);
+  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    scrollOffsetRef.current = event.nativeEvent.contentOffset.y;
+    onScroll?.(event);
+  };
   const goBack = () => {
     if (onBack) {
       onBack();
@@ -115,11 +142,20 @@ export function DetailScaffold<T>({
   };
 
   return (
-    <ScrollView
-      ref={scrollRef}
-      onScroll={onScroll}
+    <DetailScrollProvider value={{ scrollRef: activeScrollRef, scrollOffsetRef }}>
+      <DetailViewportOverlayProvider value={{ setOverlay: setViewportOverlayRenderer }}>
+      <View style={styles.viewport}>
+      <ScrollView
+      ref={activeScrollRef}
+      onScroll={handleScroll}
       style={{ flex: 1, backgroundColor: colors.surface.base }}
-      contentContainerStyle={[styles.scroll, webContainer as object]}
+      contentContainerStyle={[
+        styles.scroll,
+        webContainer as object,
+        wideContent ? styles.wideWebContainer : null,
+        wideContent ? { paddingHorizontal: d078ContentGutter(width) } : null,
+        viewportOverlay ? styles.scrollWithViewportOverlay : null,
+      ]}
       showsVerticalScrollIndicator={false}
       scrollEventThrottle={16}
     >
@@ -130,24 +166,30 @@ export function DetailScaffold<T>({
         ]}
       >
         <View style={styles.breadcrumbRow}>
-          <TouchableOpacity onPress={goBack} hitSlop={10} style={styles.back}>
+          <TouchableOpacity
+            onPress={goBack}
+            hitSlop={10}
+            style={[styles.back, wideContent ? styles.d078Back : null]}
+          >
             <Feather name="arrow-left" size={15} color={colors.textRole.secondary} />
-            <Text style={[styles.backText, { color: colors.textRole.secondary }]}>
+            <Text style={[styles.backText, wideContent ? styles.d078BackText : null, { color: colors.textRole.secondary }]}>
               {backLabel}
             </Text>
           </TouchableOpacity>
-          <Text style={[styles.crumbSep, { color: colors.textRole.muted }]}>/</Text>
-          <Text
-            style={[styles.backText, CompassFonts.data, { color: colors.textRole.muted }]}
-            numberOfLines={1}
-          >
-            {eyebrow ?? "DETAIL"}
-          </Text>
+          {!hideEyebrow ? <>
+            <Text style={[styles.crumbSep, { color: colors.textRole.muted }]}>/</Text>
+            <Text
+              style={[styles.backText, CompassFonts.data, { color: colors.textRole.muted }]}
+              numberOfLines={1}
+            >
+              {eyebrow ?? "DETAIL"}
+            </Text>
+          </> : null}
         </View>
 
         <View style={styles.titleRow}>
-          <View style={styles.titleBlock}>
-            {eyebrow ? (
+          {!hideScreenTitle ? <View style={styles.titleBlock}>
+            {eyebrow && !hideEyebrow ? (
               <Text style={[styles.eyebrow, { color: colors.textRole.muted }]}>
                 {eyebrow}
               </Text>
@@ -155,7 +197,7 @@ export function DetailScaffold<T>({
             <Text style={[styles.title, CompassFonts.displaySemi, { color: colors.textRole.primary }]}>
               {title}
             </Text>
-          </View>
+          </View> : null}
           <View style={styles.actions}>
             {save ? (
               <SaveButton
@@ -189,7 +231,11 @@ export function DetailScaffold<T>({
       </View>
 
       {disclaimer ? <CareerDisclaimer variant="footer" /> : null}
-    </ScrollView>
+      </ScrollView>
+      {viewportOverlay ? <View pointerEvents="box-none" style={styles.viewportOverlay}>{viewportOverlay()}</View> : null}
+      </View>
+      </DetailViewportOverlayProvider>
+    </DetailScrollProvider>
   );
 }
 
@@ -222,6 +268,10 @@ function GuestDetailPreview({
 }
 
 const styles = StyleSheet.create({
+  viewport: { flex: 1, backgroundColor: "transparent" },
+  viewportOverlay: { ...StyleSheet.absoluteFillObject },
+  scrollWithViewportOverlay: { paddingBottom: 112 },
+  wideWebContainer: { maxWidth: 1440 },
   scroll: {
     paddingVertical: Spacing.lg,
     paddingHorizontal: Spacing.lg,
@@ -239,7 +289,9 @@ const styles = StyleSheet.create({
     gap: Spacing.xs,
   },
   back: { minHeight: 28, justifyContent: "center" },
+  d078Back: { minHeight: 44 },
   backText: { fontSize: FontSize.xs, fontWeight: "600" },
+  d078BackText: { fontSize: 16, lineHeight: 20 },
   crumbSep: { fontSize: FontSize.xs },
   titleRow: {
     flexDirection: "row",

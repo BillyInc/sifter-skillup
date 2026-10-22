@@ -486,7 +486,7 @@ def test_domain_items_expose_only_evidenced_downstream_path_targets():
     assert python_item["pathTargets"] == [{
         "targetLevel": "subgroup", "targetKey": "D001|quantitative-finance",
         "targetLabel": "Quantitative Finance", "useCaseKey": "data-analysis",
-        "requirementLevel": "useful",
+        "requirementLevel": "useful", "requirementScope": {},
         "pathReason": "Supports data analysis used in this specialization.",
         "relationshipStatus": "source_backed", "sourceIds": ["src-1"],
         "sourceReferences": [{"title": "Primary source", "url": "https://example.org/source"}],

@@ -67,9 +67,7 @@ export async function getOnboardingDraft(
   if (!userId) return local;
 
   try {
-    const remote = await request<OnboardingDraft | null>("/api/users/onboarding-draft", {
-      timeoutMs: 5000,
-    });
+    const remote = await request<OnboardingDraft | null>("/api/users/onboarding-draft");
     if (remote && (!local || String(remote.updatedAt ?? "") >= String(local.updatedAt ?? ""))) {
       await AsyncStorage.setItem(keyFor(userId), JSON.stringify(remote));
       return remote;

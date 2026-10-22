@@ -54,7 +54,7 @@ describe("studentRoleLearningItems", () => {
     const wrongOwner = { ...approvedRoleItem("tool", "SPSS"), guidanceOwner: "domain" as const };
     const unapproved = { ...approvedRoleItem("method", "interviews"), claimReviewState: "review_required" as const };
     const missingLink = { ...approvedRoleItem("knowledge", "social theory"), linkState: "no_link" as const, linkUrl: null };
-    const legacyOnly = { ...approvedRoleItem("tool", "legacy spreadsheet"), dataState: "review_only" as const };
+    const legacyOnly = { ...approvedRoleItem("tool", "legacy spreadsheet"), dataState: "review_only" as const } as unknown as CareerContextItem;
 
     expect(studentRoleLearningItems([valid, wrongOwner, unapproved, missingLink, legacyOnly])).toEqual([valid]);
   });

@@ -93,7 +93,25 @@ type GuidanceResumeSnapshot = {
 };
 
 function candidateDisplayName(candidate: Candidate): string {
-  return candidate.studentName || candidate.jambName || "Programme";
+  const matchedOffering = candidate.schoolOfferings?.find(
+    (offering) => offering.studentName?.trim() || offering.programmeName?.trim(),
+  );
+  return candidate.jambName
+    || candidate.studentName
+    || matchedOffering?.studentName
+    || matchedOffering?.programmeName
+    || "Programme";
+}
+
+function candidateStudySummary(candidate: Candidate): string | null {
+  const contract = candidate.curriculumContract;
+  if (!contract || contract.status !== "available") return null;
+  const outcome = contract.outcomes.find((row) => row.dataState === "source_backed" && (row.courseSummary?.trim() || row.studentText?.trim()));
+  const ability = contract.abilities.find((row) => row.dataState === "source_backed" && row.studentText?.trim());
+  const theme = contract.programmeThemes?.find((row) => row.summary.trim());
+  const sourceText = outcome?.courseSummary?.trim() || outcome?.studentText?.trim() || ability?.studentText?.trim() || theme?.summary.trim();
+  if (!sourceText) return null;
+  return sourceText.length > 150 ? `${sourceText.slice(0, 147).trimEnd()}...` : sourceText;
 }
 
 function readParam(value: string | string[] | undefined): string {
@@ -116,6 +134,15 @@ function matchSummary(item: SubjectProgrammeMatch): string {
   }
   if (item.matchBasis === "olevel") {
     return "O-level requirement matches your selected subjects. Check the UTME subjects before applying.";
+  }
+  if (item.matchBasis === "university_specific") {
+    return "Your subjects match a verified university-specific requirement for this programme.";
+  }
+  if (item.matchBasis === "national_and_university_specific") {
+    const count = item.universitySpecificMatchSchoolIds?.length ?? item.universitySpecificMatchCount ?? 0;
+    return "Your subjects match the national programme rule and verified university-specific rules"
+      + (count ? " at " + count + " " + (count === 1 ? "university" : "universities") : "")
+      + ".";
   }
   return "UTME subjects match where requirements are parsed. Check O-level subjects before deciding.";
 }
@@ -507,7 +534,9 @@ export default function AdmissionBrowseScreen() {
       setCandidates(nextCandidates);
       setNotice(
         nextCandidates.length === 0 && matcherAvailable
-          ? "No programmes match this subject combination yet. Try a different valid combination, or use programme search if you already have a programme in mind."
+          ? earlySecondary
+            ? "None of the stored programme rules accept this subject combination. You can change a subject, or type a programme name above."
+            : "No programmes match this subject combination yet. Try a different valid combination, or use programme search if you already have a programme in mind."
           : state.status === "fallback"
           ? "We found possible programmes from the published requirement text. Confirm each university's current requirements before deciding."
           : state.meta?.notice ?? null,
@@ -771,6 +800,25 @@ export default function AdmissionBrowseScreen() {
     setUniversityQuery("");
     const id = candidate.jambProgrammeId || candidate.id;
     if (!id) return;
+    const subjectMatch = "matchedSubjectCount" in candidate ? candidate : null;
+    const attachedOfferings = subjectMatch?.schoolOfferings;
+    const specificMatchIds = new Set(subjectMatch?.universitySpecificMatchSchoolIds ?? []);
+    const matchedOfferingIds = attachedOfferings?.filter((offering) => {
+      if (subjectMatch?.matchBasis === "university_specific") {
+        return specificMatchIds.has(String(offering.schoolId ?? ""));
+      }
+      // A national match must not make a university with a verified, unmet
+      // full local rule look like a subject match. Conditional/partial local
+      // records remain visible for review and are not turned into blockers.
+      return offering.universityEligibilityStatus !== "local_rule_gap";
+    }).map((offering) => offering.schoolId).filter((schoolId): schoolId is string => Boolean(schoolId));
+    const matchRouteContext = subjectMatch ? {
+      subjectMatchOlevel: olevelSubjects,
+      subjectMatchUtme: subjects,
+      subjectMatchBasis: subjectMatch.matchBasis,
+      subjectMatchScopeApplied: Array.isArray(attachedOfferings),
+      subjectMatchSchoolIds: matchedOfferingIds,
+    } : {};
     if (dedicatedProgrammeAndUniversity) {
       // A programme result establishes the national programme identity. It
       // must not expand university offerings inside this search surface. The
@@ -788,6 +836,7 @@ export default function AdmissionBrowseScreen() {
         focused: isFocusedGuidance,
         journeyMode: journeyMode || "programme_preview",
         resumeStage: "programme_preview",
+        ...matchRouteContext,
       });
       return;
     }
@@ -810,6 +859,7 @@ export default function AdmissionBrowseScreen() {
       focused: isFocusedGuidance,
       journeyMode: journeyMode || (isFocusedGuidance ? "programme_preview" : undefined),
       resumeStage: "programme_preview",
+      ...matchRouteContext,
     });
     return;
   };
@@ -1404,9 +1454,9 @@ export default function AdmissionBrowseScreen() {
         </View>
       ) : null}
 
-      {mode === "subjects" && !loading && subjectMatchAttempted && subjectMatchStatus !== "unavailable" && !candidates.length && !subjectLimitExceeded ? (
+      {mode === "subjects" && !loading && subjectMatchAttempted && subjectMatchStatus !== "unavailable" && !candidates.length && !subjectLimitExceeded && !notice ? (
         <View style={[styles.notice, { backgroundColor: colors.surface.subtle, borderColor: colors.border }]}>
-          <Text style={[styles.noticeText, { color: colors.text }]}>No programme matches were found for these subjects. You can adjust the subjects and try again.</Text>
+          <Text style={[styles.noticeText, { color: colors.text }]}>{earlySecondary ? "None of the stored programme rules accept this subject combination. You can change a subject, or type a programme name above." : "No programme matches were found for these subjects. You can adjust the subjects and try again."}</Text>
         </View>
       ) : null}
 
@@ -1428,6 +1478,11 @@ export default function AdmissionBrowseScreen() {
               <Text style={[styles.cardTitle, { color: active ? colors.textInverse : colors.text }]}>
                 {candidateDisplayName(item)}
               </Text>
+              {"matchedSubjectCount" in item && candidateStudySummary(item) ? (
+                <Text numberOfLines={2} style={[styles.cardMeta, { color: active ? colors.textInverse : colors.textMuted }]}>
+                  {candidateStudySummary(item)}
+                </Text>
+              ) : null}
               {/* In the programme-search door, university options belong to
                   the next programme-preview step. In the known-programme+
                   known-university door, they are intentionally rendered in
@@ -1448,18 +1503,23 @@ export default function AdmissionBrowseScreen() {
                       O-level gaps: {item.olevelMissingSubjects.slice(0, 2).join("; ")}
                     </Text>
                   ) : null}
+                  {item.universitySpecificMatchSchoolIds?.length ? (
+                    <Text style={[styles.cardMeta, { color: active ? colors.textInverse : colors.textMuted }]}>
+                      University-specific matches: {item.schoolOfferings?.filter((school) => item.universitySpecificMatchSchoolIds?.includes(String(school.schoolId ?? ""))).map((school) => school.officialName || school.schoolName).join(", ") || item.universitySpecificMatchSchoolIds.length + " university offerings"}
+                    </Text>
+                  ) : null}
                 </View>
               ) : null}
               </View>
               <TouchableOpacity
-                accessibilityRole="radio"
-                accessibilityState={{ checked: active }}
-                accessibilityLabel={`${active ? "Selected" : "Select"} ${candidateDisplayName(item)}`}
+                accessibilityRole="button"
+                accessibilityState={{ selected: active }}
+                accessibilityLabel={`${mode === "subjects" ? "See this programme" : active ? "Selected" : "Select"} ${candidateDisplayName(item)}`}
                 onPress={() => selectCandidate(item)}
                 style={styles.selectionControl}
               >
                 <Feather name={active ? "check-circle" : "circle"} size={22} color={active ? colors.textInverse : Brand.primary} />
-                <Text style={[styles.selectionLabel, { color: active ? colors.textInverse : Brand.primaryDeep }]}>{active ? "Selected" : "Select"}</Text>
+                <Text style={[styles.selectionLabel, { color: active ? colors.textInverse : Brand.primaryDeep }]}>{mode === "subjects" ? "See this programme" : active ? "Selected" : "Select"}</Text>
               </TouchableOpacity>
             </View>
           );
@@ -1487,7 +1547,7 @@ export default function AdmissionBrowseScreen() {
              })}
              style={[styles.actionBtn, { backgroundColor: Brand.primary, alignSelf: "flex-start" }]}
            >
-             <Text style={styles.actionText}>Open programme preview</Text>
+             <Text style={styles.actionText}>See this programme</Text>
            </TouchableOpacity> : null}
          </View>
        ) : null}

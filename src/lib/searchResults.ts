@@ -210,7 +210,7 @@ export function toSearchGroups(
     groups.push({ label: "Domains", items: domainRows(result) });
   }
   if (wants("subgroups")) {
-    groups.push({ label: "Subgroups", items: subgroupRows(result) });
+    groups.push({ label: "Areas of specialisation", items: subgroupRows(result) });
   }
   if (wants("roles")) {
     groups.push({ label: "Roles", items: roleRows(result) });

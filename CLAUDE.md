@@ -151,8 +151,15 @@ Package gate: the runbook's four required additions must travel with it:
 `migration_career_item_relationship_target_context_2026-10-17.sql`,
 `migration_d078_role_item_contracts_2026-10-15.sql`,
 `migration_d078_requirement_lanes_2026-10-17.sql`, and
-`migration_d078_role_route_visibility_2026-10-15.sql`. The first three are
-schema migrations; route visibility is a post-taxonomy data recalculation.
+  `migration_d078_role_route_visibility_2026-10-15.sql`,
+  `migration_programme_theme_guidance_2026-10-08.sql`, and
+  `migration_sociology_giddens_ideas_theme_2026-10-22.sql`. The D078 role,
+  lane, and relationship-context files are required schema dependencies;
+  route visibility is a post-taxonomy data recalculation. The programme-theme
+  migration creates the tables required by its seed. The Giddens migration is
+  an exact-edition data correction: run it after the Sociology resource-
+  ownership migration and before the theme-guidance seed. The authoritative
+  runbook lists the complete order; do not infer a separate order here.
 Before staging or pushing, verify every runbook-listed migration and selected
 compressed seed exists in the target-branch package, including contextual
 seed parts 001–035. Never publish a runbook that references absent files or

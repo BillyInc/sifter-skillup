@@ -28,5 +28,34 @@ export const TurboModuleRegistry = {
 };
 export const NativeModules: Record<string, unknown> = {};
 export const Platform = Web.Platform;
-export const AccessibilityInfo = { isReduceMotionEnabled: async () => false, addEventListener: () => ({ remove() {} }) };
+function announceForAccessibility(message: string) {
+  if (typeof document === "undefined") return;
+  let region = document.getElementById("sifter-accessibility-announcements");
+  if (!region) {
+    region = document.createElement("div");
+    region.id = "sifter-accessibility-announcements";
+    region.setAttribute("role", "status");
+    region.setAttribute("aria-live", "polite");
+    Object.assign(region.style, {
+      position: "absolute",
+      width: "1px",
+      height: "1px",
+      padding: "0",
+      margin: "-1px",
+      overflow: "hidden",
+      clip: "rect(0, 0, 0, 0)",
+      whiteSpace: "nowrap",
+      border: "0",
+    });
+    document.body.appendChild(region);
+  }
+  region.textContent = "";
+  requestAnimationFrame(() => { if (region) region.textContent = message; });
+}
+
+export const AccessibilityInfo = {
+  isReduceMotionEnabled: async () => window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false,
+  addEventListener: () => ({ remove() {} }),
+  announceForAccessibility,
+};
 export default Web;

@@ -8,11 +8,13 @@ import { hasGuidanceReportContextForRoute, isGuidanceReportReadyForRoute } from 
 import { careerData, type GuidanceDomainSelection, type GuidanceReportPath } from "@/lib/careerData";
 import { openStudentDocument, provisioningData, shareTextSummary } from "@/lib/provisioningData";
 import { useExploreNav } from "@/lib/exploreNav";
-import type { GuidanceRouteContext } from "@/lib/guidanceRouteContext";
+import { guidanceContextQuery, type GuidanceRouteContext } from "@/lib/guidanceRouteContext";
 import { careerRoleTierLabel, compareCareerRoles } from "@/lib/careerRoleOrdering";
 import { rolesForArea, type AreaRoleOption } from "@/lib/areaRoleOptions";
 import { currentAreaRoleSelections, studentDomainAreas } from "@/lib/studentDomainAreas";
 import { studentSummary } from "@/lib/careerLabels";
+import { d078RouteStacksFromSnapshot, d078SelectionFromSnapshot } from "@/lib/d078Snapshot";
+import { serializeD078RouteStacks } from "@/lib/d078RouteStacks";
 import { contextItemsToLearningCandidates } from "@/lib/guidedLearningPlanAdapter";
 import { addToLearningPlan, buildLearningPlanStackSet, createLearningPlanReportSnapshot, learningPlanRouteKey, reorderLearningPlan, replaceAlternativeChoice, type LearningPlanCandidate, type LearningPlanRoute, type LearningPlanRouteSelection } from "@/lib/guidedLearningPlan";
 import type { LearningPlanShareCopy, LearningPlanShareInput } from "@/lib/learningPlanShare";
@@ -20,6 +22,8 @@ import { GuidedLearningTray } from "@/components/careerIntelligence/GuidedLearni
 import { LearningPlanShareSheet } from "@/components/careerIntelligence/LearningPlanShareSheet";
 import { comingSoon, pending, real, type DataState, type DomainMatchType, type DomainRoleSummary, type DomainRoleV2, type DomainV2, type GuidanceEvidence, type GuidanceEvidenceState } from "@/types/career";
 import { CompassFonts, FontSize, Radius, Spacing, useTheme, type ColorPalette } from "@/theme";
+import { FlowCue } from "@/components/guidance/FlowCue";
+import { guidanceStepCue } from "@/lib/studentFlowCopy";
 
 type Step = "domains" | "subgroups" | "roles" | "review";
 type Snapshot = Record<string, unknown>;
@@ -248,6 +252,32 @@ export default function GuidedFieldSelectionScreen() {
   const selectedSubgroupIds = useMemo(() => new Set((path.subgroups ?? []).map((entry) => String(entry.id ?? ""))), [path.subgroups]);
   const selectedRoleSelections = useMemo(() => currentAreaRoleSelections(path.roles ?? [], domains), [domains, path.roles]);
   const selectedRoleIds = useMemo(() => new Set(selectedRoleSelections.map((entry) => String(entry.id ?? ""))), [selectedRoleSelections]);
+  const viewDomain = async (domain: DomainV2) => {
+    const snapshot = path.learningPlanSnapshot as Snapshot | undefined;
+    const savedD078 = d078SelectionFromSnapshot(snapshot, programmeId);
+    const savedD078Stacks = d078RouteStacksFromSnapshot(snapshot, programmeId);
+    // The D078 screen's existing resume loader reads learningPlanSnapshot, so
+    // make this explicitly reopened archive version the current editable copy.
+    // History remains intact and the next save creates a separate version.
+    if (domain.id === "D078" && savedD078 && typeof snapshot?.snapshotId === "string") {
+      const reopened = await careerData.saveGuidancePath({
+        source: "explore",
+        path: { ...path, learningPlanSnapshot: snapshot },
+      });
+      if (reopened.status !== "real" && reopened.status !== "pending") {
+        setNotice("This saved Sociology route could not be reopened yet. Try again when you are online.");
+        return;
+      }
+    }
+    const contextQuery = guidanceContextQuery({ ...guidanceContext, focused: true }, { includeProgrammeId: true });
+    const query = [
+      contextQuery,
+      domain.id === "D078" && savedD078 ? `d078_selection=${encodeURIComponent(JSON.stringify(savedD078))}` : "",
+      domain.id === "D078" && savedD078Stacks ? `d078_route_stacks=${encodeURIComponent(serializeD078RouteStacks(savedD078Stacks))}` : "",
+    ]
+      .filter(Boolean).join("&");
+    router.push(`${exploreNav.base}/domain/${domain.id}${query ? `?${query}` : ""}` as never);
+  };
   const primaryDomainId = String(path.domains?.find((entry) => entry.intent === "primary")?.id ?? path.domains?.[0]?.id ?? "");
   const selectedDomains = domains.filter((domain) => selectedDomainIds.has(domain.id));
   const selectedSubgroups = selectedDomains.flatMap((domain) => studentDomainAreas(domain).filter((subgroup) => selectedSubgroupIds.has(subgroup.id)).map((subgroup) => ({ domain, subgroup })));
@@ -743,6 +773,7 @@ export default function GuidedFieldSelectionScreen() {
       {() => (
         <View style={styles.body}>
            <Text style={[styles.lead, { color: colors.textRole.secondary }]}>Start with the domains connected to your programme. Choose one primary route; add a secondary domain only when you want to compare or plan a pivot. Ticks change your selections on this screen. Your route is saved when you continue or complete Review.</Text>
+           <FlowCue {...guidanceStepCue(displayedStep)} />
            <RouteLine variant="spine" stations={showSubgroupStep ? [{ state: displayedStep === "domains" ? "you" : "bridge", label: "Domains" }, { state: displayedStep === "subgroups" ? "you" : displayedStep === "domains" ? "target" : "bridge", label: "Areas" }, { state: displayedStep === "roles" ? "you" : displayedStep === "review" ? "bridge" : "target", label: "Roles" }, { state: displayedStep === "review" ? "you" : "target", label: "Review" }] : [{ state: displayedStep === "domains" ? "you" : "bridge", label: "Domains" }, { state: displayedStep === "roles" ? "you" : displayedStep === "review" ? "bridge" : "target", label: "Roles" }, { state: displayedStep === "review" ? "you" : "target", label: "Review" }]} edges={showSubgroupStep ? ["solid", "dashed", "dashed"] : ["solid", "dashed"]} style={styles.route} />
            <View style={styles.steps}>{visibleSteps.map((name, index) => <TouchableOpacity key={name} accessibilityRole="button" accessibilityState={{ selected: displayedStep === name }} onPress={() => index === 0 || selectedDomainIds.size > 0 ? updateStep(name) : undefined} style={[styles.step, { borderColor: displayedStep === name ? colors.accentRole.action : colors.borderRole.subtle, backgroundColor: displayedStep === name ? colors.surface.subtle : colors.surface.raised }]}><Text style={[styles.stepNumber, { color: colors.accentRole.action }]}>{index + 1}</Text><Text style={[styles.stepText, { color: colors.textRole.primary }]}>{name === "domains" ? "Domains" : name === "subgroups" ? "Areas" : name === "roles" ? "Roles" : "Review"}</Text></TouchableOpacity>)}</View>
            {guidedPlan.stackSet.stacks.length ? <GuidedLearningTray
@@ -767,7 +798,7 @@ export default function GuidedFieldSelectionScreen() {
              onShare={shareSelectedCopy}
              onCopy={copySelectedShareCopy}
            />
-            {displayedStep === "domains" ? <DomainStepRefined colors={colors} domains={domains} selected={selectedDomainIds} primaryId={primaryDomainId} onToggle={toggleDomain} onSetPrimary={setPrimaryDomain} onView={(domain) => exploreNav.domain(router, domain.id, { ...guidanceContext, focused: true }, domain.programmeMatchType)} onNext={() => updateStep(showSubgroupStep ? "subgroups" : "roles")} onBack={() => { if (router.canGoBack()) router.back(); else router.replace("/(tabs)/explore" as never); }} nextLabel={showSubgroupStep ? "Review areas" : "Choose roles"} /> : null}
+            {displayedStep === "domains" ? <DomainStepRefined colors={colors} domains={domains} selected={selectedDomainIds} primaryId={primaryDomainId} onToggle={toggleDomain} onSetPrimary={setPrimaryDomain} onView={viewDomain} onNext={() => updateStep(showSubgroupStep ? "subgroups" : "roles")} onBack={() => { if (router.canGoBack()) router.back(); else router.replace("/(tabs)/explore" as never); }} nextLabel={showSubgroupStep ? "Review areas" : "Choose roles"} /> : null}
            {displayedStep === "subgroups" ? <SubgroupStepRefined colors={colors} domains={selectedDomains} primaryId={primaryDomainId} selected={selectedSubgroupIds} onToggle={toggleSubgroup} onView={(domain, subgroup) => exploreNav.subgroup(router, domain.id, subgroup.id, { ...guidanceContext, focused: true })} onNext={() => updateStep("roles")} onBack={() => updateStep("domains")} /> : null}
              {displayedStep === "roles" ? <RoleStepRefined colors={colors} entries={roleEntries} selected={selectedRoleIds} onToggle={toggleRole} onView={(role, areaId) => exploreNav.role(router, role.key, { ...guidanceContext, ...(areaId ? { areaId } : {}), focused: true })} onNext={() => updateStep("review")} onBack={() => updateStep(showSubgroupStep ? "subgroups" : "domains")} /> : null}
             {displayedStep === "review" ? <ReviewStep colors={colors} domains={selectedDomains} primaryId={primaryDomainId} programmeName={String((path.programme as Snapshot | undefined)?.name ?? "")} universityName={String((path.university as Snapshot | undefined)?.name ?? "")} subgroups={selectedSubgroups} roles={selectedRoleSelections} saving={saving} notice={notice} reviewComplete={reviewComplete} canComplete={reportContextReady} onComplete={completeReview} onBack={() => updateStep("roles")} /> : null}

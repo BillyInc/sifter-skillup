@@ -22,15 +22,20 @@ import { CompassFonts, FontSize, Radius, Spacing, useTheme } from "@/theme";
 import { studentFacingCopy } from "@/lib/studentExplanation";
 import { isStudentResource } from "@/components/careerIntelligence/resourceLinks";
 import { ProgrammeOutcomeBridge } from "@/components/careerIntelligence/ProgrammeCurriculumCarryForward";
+import { D078AreaRoute, parseD078Selection } from "@/screens/careerIntelligence/D078MethodAwareJourney";
+import { resolveD078AreaId } from "@/lib/d078RouteProjection";
+import { parseD078RouteStacks } from "@/lib/d078RouteStacks";
 
 export default function SubgroupDetailScreen() {
-  const params = useLocalSearchParams<{ id?: string; subgroupId?: string; programme_id?: string | string[]; jamb_programme_id?: string | string[]; school_id?: string | string[]; user_type?: string | string[]; journey_mode?: string | string[]; guidance_student_id?: string | string[]; guidance_target?: string | string[]; guidance_entry?: string | string[]; focus?: string | string[] }>();
+  const params = useLocalSearchParams<{ id?: string; subgroupId?: string; programme_id?: string | string[]; jamb_programme_id?: string | string[]; school_id?: string | string[]; user_type?: string | string[]; journey_mode?: string | string[]; guidance_student_id?: string | string[]; guidance_target?: string | string[]; guidance_entry?: string | string[]; focus?: string | string[]; d078_selection?: string | string[]; d078_route_stacks?: string | string[]; d078_from_field?: string | string[] }>();
   const nestedRoute = Boolean(params.subgroupId);
   const domainId = nestedRoute ? String(params.id ?? "") : "";
   const subgroupId = String(params.subgroupId ?? params.id ?? "");
   const targetStudentId = Array.isArray(params.guidance_student_id) ? params.guidance_student_id[0] : params.guidance_student_id;
   const focusedGuidance = (Array.isArray(params.focus) ? params.focus[0] : params.focus) === "guidance";
   const guidanceContext: GuidanceRouteContext = {
+    domainId: nestedRoute ? domainId : undefined,
+    areaId: nestedRoute ? subgroupId : undefined,
     programmeId: Array.isArray(params.programme_id) ? params.programme_id[0] : params.programme_id,
     jambProgrammeId: Array.isArray(params.jamb_programme_id) ? params.jamb_programme_id[0] : params.jamb_programme_id,
     schoolId: Array.isArray(params.school_id) ? params.school_id[0] : params.school_id,
@@ -81,10 +86,23 @@ export default function SubgroupDetailScreen() {
       targetStudentId={targetStudentId}
       state={state}
       onRetry={loadDomain}
+      wideContent={state.data?.id === "D078"}
+      hideScreenTitle={state.data?.id === "D078"}
+      hideEyebrow={state.data?.id === "D078"}
       requiresAccountForDetails
       guestDescription={subgroup?.whatPeopleDo || subgroup?.description}
     >
-      {() => subgroup ? <SubgroupBody subgroup={subgroup} domain={state.data} roles={roles} programmeConnection={programmeConnection} guidanceContext={guidanceContext} router={router} exploreNav={exploreNav} targetStudentId={targetStudentId} /> : (
+      {() => subgroup ? (state.data?.id === "D078" ? <D078AreaRoute
+        domainKey={domainId || "D078"}
+        areaId={resolveD078AreaId(subgroup.id) ?? subgroup.id}
+        initialSelection={parseD078Selection(params.d078_selection)}
+        initialRouteStacks={parseD078RouteStacks(params.d078_route_stacks, parseD078Selection(params.d078_selection))}
+        returnToFieldOnBack={(Array.isArray(params.d078_from_field) ? params.d078_from_field[0] : params.d078_from_field) === "1"}
+        roles={roles}
+        guidanceContext={guidanceContext}
+        areaResources={subgroup.resources}
+        domainResources={state.data?.resources}
+      /> : <SubgroupBody subgroup={subgroup} domain={state.data} roles={roles} programmeConnection={programmeConnection} guidanceContext={guidanceContext} router={router} exploreNav={exploreNav} targetStudentId={targetStudentId} />) : (
         <EntityUnavailableCard
           entityLabel="focused area"
           parentLabel={state.data?.name ?? "the domain"}
@@ -227,15 +245,6 @@ function SubgroupBody({ subgroup, domain, roles, programmeConnection, guidanceCo
         </> : null}
         {selectedAreaDomainTools.length ? <ToolGroupsBlock tools={{ common: [], distinctive: [] }} resources={domain?.resources} contextItems={selectedAreaDomainTools} contextLevel="domain" title="Field tools connected to this area or its roles" explanation="Only tools with an explicit reviewed connection to this area or one of its roles appear here. Open a tool to understand the work it supports, what it does not replace and how it relates to the selected route." learningFocus targetStudentId={targetStudentId} learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain?.id, areaId: subgroup.id }} areaName={subgroup.name} /> : null}
       </View> : null}
-      <TouchableOpacity
-        accessibilityRole="button"
-        accessibilityLabel="Open my learning tray"
-        onPress={() => exploreNav.guided(router, { ...guidanceContext, programmeId: guidanceContext.programmeId, areaId: subgroup.id, focused: true, openTray: true })}
-        style={[styles.trayAction, { borderColor: colors.accentRole.action, backgroundColor: colors.surface.subtle }]}
-      >
-        <Feather name="briefcase" size={17} color={colors.accentRole.action} />
-        <Text style={[styles.moreText, { color: colors.accentRole.action }]}>View my learning tray</Text>
-      </TouchableOpacity>
       <View style={styles.section}>
         <View style={styles.badgeRow}><Feather name="layers" size={18} color={colors.accentRole.action} /><SectionLabel>What this area adds</SectionLabel></View>
         <Text style={[styles.copy, { color: colors.textRole.secondary }]}>The domain learning above carries into this area. These are this area’s own additions, shown in their reviewed order. Skills, tools, methods, knowledge, competencies and credentials stay together; optional useful edges can be skipped when you continue to a role.</Text>
@@ -297,7 +306,6 @@ const styles = StyleSheet.create({
   copy: { fontSize: 16, lineHeight: 24 },
   more: { alignSelf: "flex-start", borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
   moreText: { fontSize: 16, lineHeight: 23, fontWeight: "800" },
-  trayAction: { alignSelf: "flex-start", minHeight: 44, flexDirection: "row", alignItems: "center", gap: Spacing.sm, borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
   detail: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm },
   skillList: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.xs },
   skill: { borderWidth: 1, borderRadius: Radius.full, paddingHorizontal: Spacing.sm, paddingVertical: Spacing.xs, fontSize: FontSize.xs },

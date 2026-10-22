@@ -1,6 +1,6 @@
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react-native";
-import { StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { ThemeProvider } from "@/theme";
 import { buildLearningPlanStackSet, learningPlanRouteKey, type LearningPlanCandidate } from "@/lib/guidedLearningPlan";
 import { GuidedLearningTray } from "./GuidedLearningTray";
@@ -74,7 +74,251 @@ function stackSet() {
 }
 
 describe("GuidedLearningTray", () => {
-  it("separates embedded task, output and guardrail copy in the tray details", () => {
+  it("gives Full a viewport-filling scroll area while Mid remains bounded", () => {
+    const d078Route = {
+      routeLabel: "Sociology · Social Sciences",
+      choices: [{ id: "interviews", label: "Interviews", kind: "method" as const }],
+      foundations: ["Frame a researchable social question"],
+      selectedItems: [],
+      onRemoveChoice: jest.fn(),
+      onRemoveItem: jest.fn(),
+    };
+    const rendered = render(<ThemeProvider><GuidedLearningTray
+      stackSet={buildLearningPlanStackSet({ routes: [], domainItems: [] })}
+      d078Route={d078Route}
+      initialMode="mid"
+    /></ThemeProvider>);
+    const routeScroll = () => rendered.UNSAFE_getByType(ScrollView);
+    expect(StyleSheet.flatten(routeScroll().props.style).maxHeight).toBe(360);
+
+    fireEvent.press(screen.getByRole("button", { name: "Show learning plan full size" }));
+    const fullStyle = StyleSheet.flatten(routeScroll().props.style);
+    expect(fullStyle.flex).toBe(1);
+    expect(fullStyle.minHeight).toBe(0);
+    expect(fullStyle.maxHeight).toBeUndefined();
+  });
+
+  it("keeps tray collapse, remove, reorder, and add controls at 44px or larger", () => {
+    const d078Route = {
+      routeLabel: "Sociology · Social Sciences",
+      choices: [{ id: "interviews", label: "Interviews", kind: "method" as const }],
+      foundations: ["Frame a researchable question"],
+      selectedItems: [{ id: "interview-guide", label: "Prepare an interview guide", lane: "Useful for interviews", contextLevel: "domain" }],
+      onRemoveChoice: jest.fn(),
+      onRemoveItem: jest.fn(),
+    };
+    render(<ThemeProvider><GuidedLearningTray
+      stackSet={stackSet()}
+      d078Route={d078Route}
+      initialMode="full"
+      onRemove={jest.fn()}
+      onReorder={jest.fn()}
+      onSelectCandidate={jest.fn()}
+    /></ThemeProvider>);
+    fireEvent.press(screen.getByRole("button", { name: "Show explanation for Survey design" }));
+
+    const controls = [
+      screen.getByRole("button", { name: "Collapse learning plan tray to icon" }),
+      screen.getByRole("button", { name: "Remove Interviews from your selected approaches" }),
+      screen.getByRole("button", { name: "Remove Prepare an interview guide from your learning" }),
+      screen.getByRole("button", { name: "Move Research foundations later in this plan" }),
+      screen.getByRole("button", { name: "Add Survey design to this learning plan" }),
+    ];
+    controls.forEach((control) => {
+      const style = StyleSheet.flatten(control.props.style);
+      expect(style.minHeight ?? style.height).toBeGreaterThanOrEqual(44);
+    });
+    controls.slice(0, 4).forEach((control) => {
+      const style = StyleSheet.flatten(control.props.style);
+      expect(style.minWidth ?? style.width).toBeGreaterThanOrEqual(44);
+    });
+  });
+
+  it("summarizes the D078 route and renders only the supplied route items", () => {
+    const d078Route = {
+      routeLabel: "Sociology · Social Sciences",
+      choices: [
+        { id: "interviews", label: "Interviews", kind: "method" as const },
+        { id: "interview-observation", label: "Interviews + observation", kind: "combination" as const, combinationId: "interview-observation" },
+      ],
+      foundations: [
+        "Frame a researchable social question",
+        "Evaluate evidence and its limits",
+        "Communicate findings for the intended audience",
+      ],
+      areaLabel: "Sociology and Social Anthropology",
+      roleLabel: "Social Researcher",
+      // These are the route-projection-filtered selections supplied by the journey.
+      selectedItems: [
+        { id: "interview-guide", label: "Prepare an interview guide", lane: "Useful for interviews", contextLevel: "domain" },
+        { id: "field-notes", label: "Keep structured field notes", lane: "Useful with observation", contextLevel: "area" },
+      ],
+      onRemoveChoice: jest.fn(),
+      onRemoveItem: jest.fn(),
+    };
+    const stacks = buildLearningPlanStackSet({
+      routes: [{ route: { programmeId: "sociology", domainId: "D078" }, selectedIds: [] }],
+      domainItems: [],
+    });
+
+    render(<ThemeProvider><GuidedLearningTray stackSet={stacks} d078Route={d078Route} initialMode="full" /></ThemeProvider>);
+
+    expect(screen.getByText("Sociology · Social Sciences")).toBeTruthy();
+    expect(screen.getByText("2 selected method/designs · 2 added items")).toBeTruthy();
+    expect(screen.getByText("Your selected approaches")).toBeTruthy();
+    expect(screen.getByText("Interviews")).toBeTruthy();
+    expect(screen.getByText("Interviews + observation")).toBeTruthy();
+    expect(screen.getByText("Foundations carried on this route")).toBeTruthy();
+    expect(screen.getByText("1. Frame a researchable social question")).toBeTruthy();
+    expect(screen.getByText("2. Evaluate evidence and its limits")).toBeTruthy();
+    expect(screen.getByText("3. Communicate findings for the intended audience")).toBeTruthy();
+    expect(screen.getByText("Area selected: Sociology and Social Anthropology")).toBeTruthy();
+    expect(screen.getByText("Role selected: Social Researcher")).toBeTruthy();
+    expect(screen.getByText("Prepare an interview guide")).toBeTruthy();
+    expect(screen.getByText("Keep structured field notes")).toBeTruthy();
+    expect(screen.queryByText("Unselected survey questionnaire")).toBeNull();
+    expect(screen.queryByText(/approved|student-approved/i)).toBeNull();
+  });
+
+  it("calls D078 remove-choice and remove-item callbacks with their selected values", () => {
+    const choice = { id: "interviews", label: "Interviews", kind: "method" as const };
+    const item = { id: "interview-guide", label: "Prepare an interview guide", lane: "Useful for interviews", contextLevel: "domain" as const };
+    const onRemoveChoice = jest.fn();
+    const onRemoveItem = jest.fn();
+    const stacks = buildLearningPlanStackSet({
+      routes: [{ route: { programmeId: "sociology", domainId: "D078" }, selectedIds: [] }],
+      domainItems: [],
+    });
+    render(<ThemeProvider><GuidedLearningTray
+      stackSet={stacks}
+      d078Route={{
+        routeLabel: "Sociology · Social Sciences",
+        choices: [choice],
+        foundations: ["Frame a researchable social question"],
+        selectedItems: [item],
+        onRemoveChoice,
+        onRemoveItem,
+      }}
+      initialMode="full"
+    /></ThemeProvider>);
+
+    fireEvent.press(screen.getByRole("button", { name: "Remove Interviews from your selected approaches" }));
+    fireEvent.press(screen.getByRole("button", { name: "Remove Prepare an interview guide from your learning" }));
+
+    expect(onRemoveChoice).toHaveBeenCalledTimes(1);
+    expect(onRemoveChoice).toHaveBeenCalledWith(choice);
+    expect(onRemoveItem).toHaveBeenCalledTimes(1);
+    expect(onRemoveItem).toHaveBeenCalledWith("interview-guide");
+  });
+
+  it("keeps D078 route stacks independently labeled and only edits the active stack", () => {
+    const activate = jest.fn();
+    const removeStack = jest.fn();
+    const route = (stackId: string, active: boolean, method: string): any => ({
+      stackId,
+      active,
+      routeLabel: "Sociology · Social Sciences",
+      choices: [{ id: method, label: method, kind: "method" as const }],
+      foundations: ["Frame a researchable social question"],
+      selectedItems: [],
+      onRemoveChoice: jest.fn(),
+      onRemoveItem: jest.fn(),
+      onActivate: activate,
+      onRemoveStack: removeStack,
+    });
+    render(<ThemeProvider><GuidedLearningTray
+      stackSet={buildLearningPlanStackSet({ routes: [], domainItems: [] })}
+      d078Routes={[route("d078-route-1", true, "Interviews"), route("d078-route-2", false, "Spatial analysis")]}
+      initialMode="full"
+    /></ThemeProvider>);
+
+    expect(screen.getByText(/Route 1/)).toBeTruthy();
+    expect(screen.getByText(/Route 2/)).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Use this route" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Remove Interviews from your selected approaches" })).toBeTruthy();
+    expect(screen.queryByRole("button", { name: "Remove Spatial analysis from your selected approaches" })).toBeNull();
+    fireEvent.press(screen.getByRole("button", { name: "Use this route" }));
+    expect(activate).toHaveBeenCalledTimes(1);
+  });
+
+  it("keeps foundations visible without selected methods and shows safe empty added-items copy", () => {
+    const stacks = buildLearningPlanStackSet({
+      routes: [{ route: { programmeId: "sociology", domainId: "D078" }, selectedIds: [] }],
+      domainItems: [],
+    });
+    render(<ThemeProvider><GuidedLearningTray
+      stackSet={stacks}
+      d078Route={{
+        routeLabel: "Sociology · Social Sciences",
+        choices: [],
+        foundations: ["Frame a researchable social question", "Evaluate evidence and its limits"],
+        selectedItems: [],
+        onRemoveChoice: jest.fn(),
+        onRemoveItem: jest.fn(),
+      }}
+      initialMode="full"
+    /></ThemeProvider>);
+
+    expect(screen.getByText("Foundations carried on this route")).toBeTruthy();
+    expect(screen.getByText("1. Frame a researchable social question")).toBeTruthy();
+    expect(screen.getByText("2. Evaluate evidence and its limits")).toBeTruthy();
+    expect(screen.getByText("Your selected learning, by route level")).toBeTruthy();
+    expect(screen.getByText("No additional items selected. The foundations and selected methods remain part of this route.")).toBeTruthy();
+    expect(screen.queryByText("Your selected approaches")).toBeNull();
+  });
+
+  it("uses the available height in full tray mode instead of the mid-size scroll cap", () => {
+    const stacks = buildLearningPlanStackSet({
+      routes: [{ route: { programmeId: "sociology", domainId: "D078" }, selectedIds: [] }],
+      domainItems: [],
+    });
+    render(<ThemeProvider><GuidedLearningTray stackSet={stacks} d078Route={{
+      routeLabel: "Sociology · Social Sciences",
+      choices: [],
+      foundations: ["Frame a researchable question"],
+      selectedItems: [],
+      onRemoveChoice: jest.fn(),
+      onRemoveItem: jest.fn(),
+    }} initialMode="full" /></ThemeProvider>);
+
+    const tray = screen.getByTestId("guided-learning-tray");
+    const trayStyle = StyleSheet.flatten(tray.props.style);
+    const routeScroll = screen.UNSAFE_getAllByType(ScrollView).find((view) => {
+      const style = StyleSheet.flatten(view.props.style);
+      return style.flex === 1 && style.maxHeight === undefined;
+    });
+    expect(trayStyle).toMatchObject({ flex: 1, height: "100%", minHeight: 0 });
+    expect(routeScroll).toBeTruthy();
+  });
+
+  it("counts D078 methods/designs and added items in the collapsed tray icon", () => {
+    const stacks = buildLearningPlanStackSet({
+      routes: [{ route: { programmeId: "sociology", domainId: "D078" }, selectedIds: [] }],
+      domainItems: [],
+    });
+    render(<ThemeProvider><GuidedLearningTray
+      stackSet={stacks}
+      d078Route={{
+        routeLabel: "Sociology · Social Sciences",
+        choices: [
+          { id: "interviews", label: "Interviews", kind: "method" },
+          { id: "interview-observation", label: "Interviews + observation", kind: "combination", combinationId: "interview-observation" },
+        ],
+        foundations: ["Frame a researchable social question"],
+        selectedItems: [
+          { id: "interview-guide", label: "Prepare an interview guide", lane: "Useful for interviews", contextLevel: "domain" },
+          { id: "field-notes", label: "Keep structured field notes", lane: "Useful with observation", contextLevel: "role" },
+        ],
+        onRemoveChoice: jest.fn(),
+        onRemoveItem: jest.fn(),
+      }}
+      initialMode="icon"
+    /></ThemeProvider>);
+
+    expect(screen.getByRole("button", { name: "Open learning plan tray with 6 selected route details or learning choices" })).toBeTruthy();
+  });
+
+  it("separates the task example and likely output within the learner explanation", () => {
     const embedded = candidate({
       ...available,
       id: "embedded-output",
@@ -87,11 +331,12 @@ describe("GuidedLearningTray", () => {
     });
     render(<ThemeProvider><GuidedLearningTray stackSet={stackSetWithEmbedded} initialMode="full" /></ThemeProvider>);
     fireEvent.press(screen.getByRole("button", { name: "Show explanation for Survey design" }));
-    expect(screen.getByText("How it is used in this route")).toBeTruthy();
-    expect(screen.getByText("Example of the work")).toBeTruthy();
+    expect(screen.getByText("How you might use it")).toBeTruthy();
+    expect(screen.getByText("Example task")).toBeTruthy();
     expect(screen.getByText("Compare two sources.")).toBeTruthy();
-    expect(screen.getByText("What you may produce")).toBeTruthy();
+    expect(screen.getByText("Possible result")).toBeTruthy();
     expect(screen.getByText("A cited comparison that states one limitation.")).toBeTruthy();
+    expect(screen.queryByText("What you may produce")).toBeNull();
     expect(screen.getByText("What to keep in mind")).toBeTruthy();
     expect(screen.queryByText("A cited comparison that states one limitation. Guardrail: Do not infer causes from a single association.")).toBeNull();
     expect(screen.queryByText(/Output:|Task:|Guardrail:/)).toBeNull();
@@ -117,7 +362,7 @@ describe("GuidedLearningTray", () => {
 
     expect(screen.getByText("What it is")).toBeTruthy();
     expect(screen.getByText(plainMeaning)).toBeTruthy();
-    expect(screen.getByText("How it is used in this route")).toBeTruthy();
+    expect(screen.getByText("How you might use it")).toBeTruthy();
     expect(screen.getByText(contextualUse)).toBeTruthy();
     expect(screen.queryByText("A little more context")).toBeNull();
   });
@@ -141,14 +386,15 @@ describe("GuidedLearningTray", () => {
 
     expect(screen.getByText(/This item is part of the recommended learning for the selected route/)).toBeTruthy();
     expect(screen.getByText("Evidence review is a way to check a claim.")).toBeTruthy();
+    expect(screen.getByText("Example task")).toBeTruthy();
     expect(screen.getByText("Compare the claim with its source.")).toBeTruthy();
     expect(screen.queryByText(/candidate|Route note:/i)).toBeNull();
   });
 
-  it("opens from the icon, expands item details, and forwards relationship evidence", () => {
+  it("shows relationships inline without opening a generic relationship sheet", () => {
     render(<ThemeProvider><GuidedLearningTray stackSet={stackSet()} initialMode="icon" /></ThemeProvider>);
 
-    fireEvent.press(screen.getByRole("button", { name: "Open learning plan tray with 2 selected items" }));
+    fireEvent.press(screen.getByRole("button", { name: "Open learning plan tray with 4 selected route details or learning choices" }));
     fireEvent.press(screen.getByRole("button", { name: "Small" }));
     expect(screen.queryByText("Choose learning focus")).toBeNull();
     fireEvent.press(screen.getByRole("button", { name: "Mid" }));
@@ -172,35 +418,33 @@ describe("GuidedLearningTray", () => {
     expect(screen.getByText("How it applies to this role")).toBeTruthy();
     expect(screen.getByText("Why this optional item may help")).toBeTruthy();
     expect(screen.getByText(/you can add it alongside the compulsory learning for an additional advantage/)).toBeTruthy();
-    expect(screen.getByText("What you may produce")).toBeTruthy();
-    expect(screen.getByText("Evidence context")).toBeTruthy();
-    expect(screen.getByText(/The evidence is international/)).toBeTruthy();
-    expect(screen.getByText("Learning and reference links")).toBeTruthy();
+    expect(screen.queryByText("What you may produce")).toBeNull();
+    expect(screen.queryByText("Evidence context")).toBeNull();
+    expect(screen.getByText("Learning resources")).toBeTruthy();
     expect(screen.getByText("A little more context")).toBeTruthy();
     expect(screen.getAllByText(available.explanation!).length).toBe(1);
-    expect(screen.getByRole("link", { name: "Open Survey design: official learning guide" })).toBeTruthy();
-    expect(screen.getByText("Why this resource is attached")).toBeTruthy();
-    expect(screen.getByText(/It teaches the same survey-planning steps described in this route/)).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Open guide: Survey design: official learning guide for Survey design" })).toBeTruthy();
+    expect(screen.queryByText("Why this resource is attached")).toBeNull();
     expect(screen.getByRole("link", { name: "Open evidence source Survey design guide" })).toBeTruthy();
     expect(screen.getByText("Where to look: Chapter 3, section 2")).toBeTruthy();
-    fireEvent.press(screen.getByRole("button", { name: "Builds on: Research foundations" }));
+    expect(screen.getByText("How it connects to other learning")).toBeTruthy();
     expect(screen.getByText(/A research question states what the study is trying to find out and sets a boundary for the survey\./)).toBeTruthy();
-    expect(screen.getByRole("link", { name: "Open relationship evidence: Research methods guide" })).toBeTruthy();
-    expect(screen.queryByRole("link", { name: "Open relationship evidence: Insecure reference" })).toBeNull();
+    expect(screen.getByText(/Research foundations:.*helpful background/i)).toBeTruthy();
+    expect(screen.queryByText("How the connection works")).toBeNull();
   });
 
   it("opens a mounted collapsed tray when an item card requests tray visibility", () => {
     const stacks = stackSet();
     const { rerender } = render(<ThemeProvider><GuidedLearningTray stackSet={stacks} initialMode="icon" /></ThemeProvider>);
 
-    expect(screen.getByRole("button", { name: "Open learning plan tray with 2 selected items" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Open learning plan tray with 4 selected route details or learning choices" })).toBeTruthy();
     rerender(<ThemeProvider><GuidedLearningTray stackSet={stacks} initialMode="mid" /></ThemeProvider>);
 
     expect(screen.getByText("Choose learning focus")).toBeTruthy();
-    expect(screen.getByText(/2 selected items/)).toBeTruthy();
+    expect(screen.getByText(/4 selected route details or learning choices/)).toBeTruthy();
   });
 
-  it("shows a learner-facing resource reason when the attached link has no rationale field", () => {
+  it("shows direct resource buttons without exposing internal resource-rationale copy", () => {
     const withoutRationale = candidate({
       ...available,
       id: "survey-guide-without-rationale",
@@ -213,9 +457,28 @@ describe("GuidedLearningTray", () => {
     render(<ThemeProvider><GuidedLearningTray stackSet={stacks} initialMode="full" /></ThemeProvider>);
     fireEvent.press(screen.getByRole("button", { name: "Show explanation for Survey design" }));
 
-    expect(screen.getByText("Why this resource is attached")).toBeTruthy();
-    expect(screen.getByText(/This resource is attached as a place to learn or read more about Survey design/)).toBeTruthy();
-    expect(screen.getByText(/may cover only part of that work/)).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Open guide: Survey planning guide for Survey design" })).toBeTruthy();
+    expect(screen.queryByText("Why this resource is attached")).toBeNull();
+  });
+
+  it("leaves the resource area blank when every destination is unsafe for the student view", () => {
+    const noStudentDestination = candidate({
+      ...available,
+      id: "unsafe-resource-only",
+      name: "Unsafe resource example",
+      learningLinks: [{ title: "Unencrypted guide", url: "http://example.org/guide" }],
+      sourceReferences: [{ id: "unsafe-source", title: "Unencrypted source", url: "http://example.org/source" }],
+    });
+    const stacks = buildLearningPlanStackSet({
+      routes: [{ route: { programmeId: "sociology", domainId: "D078" }, selectedIds: [noStudentDestination.id] }],
+      domainItems: [noStudentDestination],
+    });
+    render(<ThemeProvider><GuidedLearningTray stackSet={stacks} initialMode="full" /></ThemeProvider>);
+    fireEvent.press(screen.getByRole("button", { name: "Show explanation for Unsafe resource example" }));
+
+    expect(screen.queryByText("Learning resources")).toBeNull();
+    expect(screen.queryByText("Evidence for this item")).toBeNull();
+    expect(screen.queryByText("No verified link is available yet.")).toBeNull();
   });
 
   it("keeps definition and route-use headings visible instead of leaving blank explanation sections", () => {
@@ -237,9 +500,9 @@ describe("GuidedLearningTray", () => {
 
     expect(screen.getByText("What it is")).toBeTruthy();
     expect(screen.getByText("A plain-language explanation has not been provided for this item yet.")).toBeTruthy();
-    expect(screen.getByText("How it is used in this route")).toBeTruthy();
-    expect(screen.getByText("A description of how this item is used on this route has not been provided yet.")).toBeTruthy();
-    expect(screen.getByText("What it cannot prove or replace")).toBeTruthy();
+    expect(screen.getByText("How you might use it")).toBeTruthy();
+    expect(screen.getByText(/Use it when it fits the work described for this route/)).toBeTruthy();
+    expect(screen.queryByText("What it cannot prove or replace")).toBeNull();
     expect(screen.getByText(/No item-specific limitation is recorded.*does not show that you have mastered it/)).toBeTruthy();
   });
 
@@ -366,7 +629,9 @@ describe("GuidedLearningTray", () => {
     const routeKey = learningPlanRouteKey({ programmeId: "sociology", domainId: "D078" });
     render(<ThemeProvider><GuidedLearningTray stackSet={stacks} initialMode="full" onSelectAlternative={onSelectAlternative} /></ThemeProvider>);
 
-    fireEvent.press(screen.getByRole("button", { name: "Compare analysis-tool options" }));
+    const compareButton = screen.getByRole("button", { name: "Compare analysis-tool options" });
+    expect(StyleSheet.flatten(compareButton.props.style).minHeight).toBeGreaterThanOrEqual(44);
+    fireEvent.press(compareButton);
     expect(screen.getAllByText(/Alternative choice/).length).toBeGreaterThanOrEqual(2);
     expect(screen.getByText(/Python is a programming language: a way to write instructions that tell a computer how to work with information and repeat steps consistently\./)).toBeTruthy();
     expect(screen.getAllByText(/In Sociology, a learner might use Python to organise survey responses, check for missing values, and summarise patterns across a dataset\./).length).toBeGreaterThan(0);

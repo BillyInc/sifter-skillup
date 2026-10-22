@@ -16,6 +16,7 @@ import React, { useEffect, useMemo, useRef, useState, type ReactNode } from "rea
 import {
   View,
   Text,
+  TextInput,
   Image,
   StyleSheet,
   TouchableOpacity,
@@ -124,6 +125,7 @@ export function AdminShell({
   const [profile, setProfile] = useState<EducatorProfile | null>(null);
   const [accountAction, setAccountAction] = useState<"sign-out" | "delete" | null>(null);
   const [actionBusy, setActionBusy] = useState(false);
+  const [adminSearch, setAdminSearch] = useState("");
 
   const wide = Platform.OS === "web" && width >= WIDE_BREAKPOINT;
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -228,6 +230,13 @@ export function AdminShell({
     item.go(router as Nav);
   };
 
+  const submitAdminSearch = () => {
+    const query = adminSearch.trim();
+    if (!query) return;
+    setDrawerOpen(false);
+    adminNav.explore(router as Nav, query);
+  };
+
   const completeSignOut = async () => {
     await signOut();
     router.replace("/(auth)/sign-in" as never);
@@ -299,6 +308,9 @@ export function AdminShell({
         actionBusy={actionBusy}
         onCancelAction={() => setAccountAction(null)}
         onRunAction={() => void runAccountAction()}
+        adminSearch={adminSearch}
+        onAdminSearchChange={setAdminSearch}
+        onAdminSearchSubmit={submitAdminSearch}
       />
     );
   }
@@ -370,6 +382,24 @@ export function AdminShell({
           {actions ? <View style={styles.actions}>{actions}</View> : null}
         </View>
 
+        {!focusedGuidance ? (
+          <View style={[styles.adminSearchRow, { backgroundColor: colors.surface.raised, borderBottomColor: colors.borderRole.subtle }]}>
+            <TextInput
+              value={adminSearch}
+              onChangeText={setAdminSearch}
+              onSubmitEditing={submitAdminSearch}
+              placeholder="Search the admin catalogue…"
+              placeholderTextColor={colors.textRole.placeholder}
+              returnKeyType="search"
+              accessibilityLabel="Search the admin catalogue"
+              style={[styles.adminSearchInput, { color: colors.textRole.primary, borderColor: colors.borderRole.subtle }]}
+            />
+            <TouchableOpacity onPress={submitAdminSearch} accessibilityRole="button" style={[styles.adminSearchButton, { backgroundColor: colors.accentRole.action }]}>
+              <Text style={[CompassFonts.bodySemibold, { color: colors.textRole.inverse }]}>Search</Text>
+            </TouchableOpacity>
+          </View>
+        ) : null}
+
         {focusedGuidance ? (
           <GuidanceContextBanner
             studentClass={readParam(searchParams?.student_class) || readParam(searchParams?.class_name) || readParam(searchParams?.student_type)}
@@ -435,6 +465,9 @@ function WebAdminShell({
   actionBusy,
   onCancelAction,
   onRunAction,
+  adminSearch,
+  onAdminSearchChange,
+  onAdminSearchSubmit,
 }: {
   title: string;
   eyebrow?: string;
@@ -458,6 +491,9 @@ function WebAdminShell({
   actionBusy: boolean;
   onCancelAction: () => void;
   onRunAction: () => void;
+  adminSearch: string;
+  onAdminSearchChange: (value: string) => void;
+  onAdminSearchSubmit: () => void;
 }) {
   const workspaceName = profile?.organizationName || adminAudienceLabel(audience);
   const nav = (
@@ -506,6 +542,17 @@ function WebAdminShell({
             {eyebrow ? <span>{eyebrow}</span> : null}
             <h1>{focusedGuidance ? "Guidance workspace" : title}</h1>
           </div>
+          {!focusedGuidance ? (
+            <form className="web-admin-global-search" onSubmit={(event) => { event.preventDefault(); onAdminSearchSubmit(); }}>
+              <input
+                value={adminSearch}
+                onChange={(event) => onAdminSearchChange(event.target.value)}
+                placeholder="Search the admin catalogue…"
+                aria-label="Search the admin catalogue"
+              />
+              <button type="submit">Search</button>
+            </form>
+          ) : null}
           {actions ? <div className="web-admin-actions">{actions}</div> : null}
         </header>
         {focusedGuidance ? <div className="web-admin-context" role="status"><strong>Focused guidance workspace</strong><span>{guidancePathLabel ? `Route context: ${guidancePathLabel}. ` : ""}Navigation is collapsed while you work. Your target and resume context remain attached to this route.</span></div> : null}
@@ -738,6 +785,9 @@ const styles = StyleSheet.create({
   },
   title: { fontSize: FontSize.lg },
   actions: { flexDirection: "row", alignItems: "center", gap: Spacing.sm },
+  adminSearchRow: { flexDirection: "row", alignItems: "center", gap: Spacing.sm, paddingHorizontal: Spacing.lg, paddingVertical: Spacing.sm, borderBottomWidth: StyleSheet.hairlineWidth },
+  adminSearchInput: { flex: 1, minHeight: 42, borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, fontSize: FontSize.sm },
+  adminSearchButton: { minHeight: 42, borderRadius: Radius.md, paddingHorizontal: Spacing.lg, alignItems: "center", justifyContent: "center" },
 
   // Brand
   brand: {
