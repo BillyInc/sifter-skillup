@@ -1,8 +1,62 @@
+import gzip
+import shutil
 import sys
+from pathlib import Path
 
 import pytest
 from unittest.mock import MagicMock, patch
 from fastapi.testclient import TestClient
+
+
+# ---------------------------------------------------------------------------
+# D078 / career-mapping gz transport materialization
+#
+# Repository transport rule (see CLAUDE.md): generated audit JSON and
+# generated seed SQL are committed only as `.json.gz` / `.sql.gz` transport
+# artifacts; the raw counterparts are not part of the push package. The
+# D078 guided-learning tests (and the production modules they import, e.g.
+# `d078_guided_areas.py` / `d078_guided_content.py`) read the plain file
+# directly, so a clean checkout needs those transports decompressed once
+# before the suite runs. This mirrors the repo's existing decompress-before-
+# use convention (see `data/career-mapping/split_large_artifacts.py` and
+# `data/career-mapping/_role_tools_loader.py`), just automated for tests.
+#
+# The materialized files are written next to their `.gz` source (the exact
+# path the production code expects) and are gitignored -- never commit them.
+ROOT_DIR = Path(__file__).resolve().parents[2]
+_GZ_TRANSPORT_PATHS = [
+    ROOT_DIR / "data/career-mapping/domain_specialization_catalog.json",
+    ROOT_DIR / "data/career-mapping/_audit/D078_PROGRAMME_TO_ROLE_LEARNING_PATH_GRAPH_2026_10_15.json",
+    ROOT_DIR / "data/career-mapping/_audit/D078_PROGRAMME_TO_ROLE_LEARNING_PATH_GRAPH_2026_10_15.rebuilt.json",
+    ROOT_DIR / "data/career-mapping/_audit/D078_MASTER_GUIDED_EXPERIENCE_RECONCILIATION_2026_10_12.json",
+    ROOT_DIR / "data/career-mapping/_audit/D078_STUDENT_PROMOTION_GATE_2026_10_10.json",
+    ROOT_DIR / "data/career-mapping/_audit/D078_ROLE_TOOL_ROUTE_ENRICHMENT_2026_10_16.json",
+    ROOT_DIR / "data/career-mapping/_audit/D078_REQUIREMENT_LANE_DISPOSITION_2026_10_17.json",
+    ROOT_DIR / "backend/seed_d078_guided_content_2026-10-12.sql",
+    ROOT_DIR / "backend/seed_d078_specialization_taxonomy_2026-10-12.sql",
+    ROOT_DIR / "backend/seed_d078_role_tools_2026-10-16.sql",
+    ROOT_DIR / "backend/seed_d078_role_item_contracts_2026-10-15.sql",
+]
+
+
+def _materialize_gz_transport(path: Path) -> None:
+    """Decompress ``path``'s committed ``.gz`` transport, always overwriting
+    any existing plain file. A session only runs this once per path, but a
+    stale plain file can otherwise outlive the session that wrote it --
+    gitignored, so it is never cleaned by git, and a later `.gz` regeneration
+    would then be silently shadowed by old content. No-op if the `.gz` is
+    absent (lets the caller's own FileNotFoundError surface normally)."""
+    gz_path = path.with_name(path.name + ".gz")
+    if not gz_path.exists():
+        return
+    with gzip.open(gz_path, "rb") as source, path.open("wb") as destination:
+        shutil.copyfileobj(source, destination)
+
+
+@pytest.fixture(scope="session", autouse=True)
+def _d078_gz_transports():
+    for path in _GZ_TRANSPORT_PATHS:
+        _materialize_gz_transport(path)
 
 
 @pytest.fixture(autouse=True)
