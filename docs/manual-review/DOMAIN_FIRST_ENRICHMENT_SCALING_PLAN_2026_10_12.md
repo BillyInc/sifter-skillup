@@ -5,6 +5,12 @@
 **Scope:** Planning and repository evidence only. This document does not edit canonical taxonomy, item data, application code, seeds, or SQL.  
 **Status:** Proposed operating plan; D078 decisions already recorded in the 2026-10-12 master reconciliation remain closed and are not reopened by this plan.
 
+## 2026-10-22 calibration update: source index first, route architecture per domain
+
+The D078 graph is the benchmark for **evidence depth, item context, explicit relationships, route coverage and validation**. Its research-method choice is specific to D078 and must not be copied as the universal branch for other domains. Before enriching a pilot domain, first create a bounded source-universe index for it; then map the domain's work and build its learning sequence from the evidence. “Index sources first” means cataloguing the authoritative source families and the known relevant repositories/standards/curricula for the domain, including scope and gaps. It does not mean pretending that every possible internet source can be enumerated in advance. The indexed source universe is then expanded by reference-chasing from findings and closed by logged saturation/counter-search, as specified below.
+
+This update adds two calibration pilots: D011 Quantitative Finance and Financial Engineering and D166 Autonomous Vehicles and Self-Driving Systems. They are different enough to test whether the process discovers a domain-specific progression instead of forcing a research-method selector. The pilot evidence below is a **planning/research calibration**, not approval of item records, areas, role fit, student routes, or graph edges. Do not change canonical taxonomy or student visibility from this document alone.
+
 ## Decision in brief
 
 Enrich the **domain first, then its current areas of specialization, then its already-supported role routes**. Treat an area of specialization as the one and only intermediate area layer. Do not use legacy subgroup records as an enrichment queue, a second taxonomy, a student-facing concept, or a source of current area ownership. Once domain/area/role enrichment is locally verified and the domain learning graph passes its checks, begin programme-to-domain and programme-specific curriculum mapping as a separate phase.
@@ -182,16 +188,28 @@ is a required anti-loop rule for every scaled domain.
 
 The search is not complete because an agent found a few plausible tools, copied a role profile, or filled every item field for the initial inventory. The agent must search for **missing work and missing items**, verify the current items, and record what source families and routes were actually checked. The coverage unit is each **domain × current area × in-scope role × item category × maturity tier**. Every cell must end with one of: one or more evidenced findings, an evidence-backed `not_applicable`, or a documented no-hit/exhausted-search result. A blank cell is a gap, not “nothing to add.”
 
+#### 0. Build a source-universe index before item discovery
+
+Create the index before doing the broad item sweep so the search does not depend on whichever item names are already in the inventory. It is a **finite map of relevant source families and known primary repositories**, not a claim that all possible web pages have been listed. For each domain, identify candidate sources for: (a) official curricula and learning outcomes; (b) professional bodies and practice analyses; (c) regulators, standards bodies and safety/ethics guidance; (d) occupational task/skill datasets; (e) maintained technical standards, reference architectures and implementation documentation; (f) peer-reviewed reviews, handbooks and primary research; (g) current tools, libraries, datasets and their official documentation; (h) learning instruction; and (i) local jurisdictional practice where applicable.
+
+For every source family, record why it is relevant, which claim types it can and cannot support, geographic scope, currency/version, access status and the exact search path. Search the source itself rather than relying on its search-result snippet. Follow standards, bibliographies, curriculum references and linked technical documents when they materially support the domain. Add newly found sources to the index immediately and preserve their discovery trail. Record a family as `not_applicable` only with a reason; record inaccessible sources as blocked, not searched. A source registry indexes sources; a separate claim ledger states what each source actually supports.
+
+Before accepting the source index, check that it contains independent evidence for both the stable core and the domain's changing edge. An official tool page can identify tool functions but cannot establish that every learner needs the tool; a professional exam outline can show a credential's syllabus but cannot define all work in the domain; a standard can define terminology or safeguards but may not prescribe a student sequence. Keep these limits in the index so later item placement cannot overreach the source.
+
 #### 1. Build the complete work map before searching for tools
 
 For the domain, then independently for each area and each in-scope role:
 
 1. Read the current boundary/definition, approved route, existing item inventory, task profiles, and previous lane findings. Record the exact stable IDs and the scope of the work being researched.
 2. Extract each distinct work activity into a task record with: **action verb + object/material + purpose/context + output/decision + boundary/limitation**. Split tasks when they require materially different evidence, methods, outputs, or safeguards; combine them only when the work and learning outcome genuinely match. Avoid vague buckets such as “data analysis” when the evidence supports distinct activities such as cleaning a survey file, estimating a model, checking uncertainty, mapping locations, coding interviews, or explaining findings.
-3. Build a task-to-item map for every task. Test for missing knowledge, skill, competency, method, framework/standard, tool/ecosystem, certification, and learning resource. A task may need no dedicated tool or credential; record that result rather than inventing one.
+3. Build a task-to-item map for every task. Test for missing knowledge, skill, competency, method, framework/standard, tool/ecosystem, certification, and learning resource. For analytical/statistical domains, expand each broad method family into its named procedures, assumptions/diagnostics, outputs and valid alternatives (for example, do not stop at “quantitative analysis” when sources specify chi-square tests, t-tests, ANOVA, regression variants, correlation measures, time-series models or machine-learning approaches). For engineering domains, decompose the system lifecycle and interfaces into requirements, design, implementation, integration, test/validation, operation and assurance where sources support them. A task may need no dedicated tool or credential; record that result rather than inventing one.
 4. Record negative/boundary checks: plausible neighbouring tasks/items that do **not** belong at this checkpoint, why they do not, and whether they belong in a sibling area, another domain, or no supported route. Use the current approved taxonomy; never revive a retired subgroup to make a candidate fit.
 
 The domain search asks which tasks and capabilities genuinely span its areas and roles. Each area search independently asks what its distinctive tasks, outputs, methods and tools add beyond the domain layer. Each role search independently checks the actual tasks for that role against the already-approved domain/area route. The same item may appear at multiple layers only with an explicit relationship/inheritance rationale; duplicates must not make it look like multiple requirements.
+
+The item-category matrix is a **coverage control, not a quota**. It must expose leaf techniques and submethods under each broad method family, alternatives and complementary choices, and newer/experimental variants. A familiar umbrella label or several generic tools do not close that cell. “No item” is acceptable only after the source families and task/output coverage have been checked and the no-hit is recorded.
+
+**Source volume is also evidence-led, not quota-led.** Do not require 15 sources for every item category at every layer. That would multiply duplicate or weak citations and can obscure the actual claim. Instead, index every relevant source family for the domain, each area, and each in-scope role; then retain the sources that support or challenge specific claims. For high-impact or disputed claims, seek independent corroboration across the source types appropriate to that claim and run a counter-search. Reuse a source across layers only when its exact evidence supports each layer's task claim. A source count never substitutes for task coverage, source independence, exact locators, claim limits, or a recorded saturation check.
 
 #### 2. Search every item family with expanded terminology
 
@@ -219,6 +237,7 @@ For each domain package, the search ledger must show whether these relevant fami
 | Academic curricula, handbooks, authoritative texts and review literature | Established concepts, methods, disciplinary practice, emerging research and counter-evidence | Exact chapters/sections/pages, methods/results/limitations, not title or abstract alone; distinguish education examples from universal job requirements |
 | Official tool/framework/project documentation and maintained repositories | What a tool does, versions, supported inputs/outputs, dependencies, access and known limitations | Current documentation, tutorial/API/workflow pages, release/version and licensing/access terms; distinguish official feature claims from independent validation |
 | Professional/practice reports, field manuals and maintained datasets | Real workflows, outputs, operational constraints, data availability and practice examples | Exact workflow/metadata/terms; check sample/population, date, coverage and reuse restrictions |
+| Grey literature and industry evidence (technical reports, white papers, safety cases, employer role descriptions, conference materials and project documentation) | Emerging or operational practice, implementation context, employer-specific task examples, known constraints and leads to underlying evidence | Classify publisher, purpose, review process, date/version, jurisdiction and conflicts of interest. Use employer postings as role examples, vendor/project documents for their own system, and grey literature as bounded corroboration or discovery leads; do not treat any one as an independent standard or general prevalence proof. Chase cited standards, datasets and peer-reviewed/official evidence when they support material claims. |
 | Job/task-market sources, where used | Current demand signals and naming variants | Use multiple dated postings or a transparent labour-market source for trend/prevalence discovery only; postings do not alone define a profession, task standard, or universal requirement |
 | Instructional sources, including video | Whether and how a learner can practice the named task | Open the actual course/video and inspect syllabus, chapters, prerequisites, access/cost, teaching level and task match; do not count a landing page or generic playlist as instruction |
 | Nigerian sources | Nigerian laws, institutions, bodies, datasets, language/context and local practice | Inspect primary Nigerian sources when they add relevant local context; state “global only/no local claim” when no supported Nigerian claim applies. Nigerian-source absence never vetoes globally established work. |
@@ -394,12 +413,52 @@ domain requirement.
 
 ## Stage ledger for this scaling plan
 
+### 2026-10-22 pilot reconciliation: specialization areas vs legacy ISCO groups
+
+The pilot exposed an active taxonomy/display mismatch that must be resolved before a learner route can be called area-based. `DomainDetailScreen`, `GuidedFieldSelectionScreen`, `PathwaysHubScreen`, and `studentDomainAreas()` currently consume `domain.subgroups` for non-D078 domains. Those rows are still ISCO-derived occupational clusters in `domain_structure.json`; the separately stored `areas_of_specialization` records are not what those general screens project. Therefore a title change or a blind copy from one list to the other would not reconcile the route.
+
+| Pilot domain | New specialization area proposals | Current legacy subgroup rows still available to student projection | Current evidence/route gate |
+| --- | ---: | ---: | --- |
+| D011 Quantitative Finance and Financial Engineering | 3 | 4 (ISCO submajors 21, 24, 25 and 33) | All 3 area records are `review_required_pending_role_route_and_evidence_gate`; recommendation catalog marks them not student-visible. The role library has 28 domain role rows, but its area-fit states are mixed (11 supported candidates, 7 conditional, 9 unreviewed/null, 1 direct-domain route). These counts do not establish final area ownership. |
+| D166 Autonomous Vehicles and Self-Driving Systems | 4 | 4 (ISCO submajors 21, 25, 31 and 75) | All 4 area records are `review_required_pending_role_route_and_evidence_gate`; recommendation catalog marks them not student-visible. `domain_structure.json` says 14 roles while the cleaned role library has 9 records, all with unsupported domain fit. Resolve the role identity/denominator and independently source each role before area routes can be approved. |
+
+The normalized catalog is also not a global display-ready source: it contains 708 area candidates across 168 domains, of which 700 remain `recommendation_needs_role_and_context_integration`; 184 area records lack an area-specific source match in the current index. Captured source cards or a source-linked area description alone do not satisfy the domain, area, and role evidence contract.
+
+#### Source-index seed from the first external pass
+
+This is a **starter index**, not the completed exhaustive index. Each source below has a limited claim role; it does not by itself settle the area map or any individual role route.
+
+| Pilot | Source family | Checked source and use | Scope/limit to preserve |
+| --- | --- | --- | --- |
+| D011 | Professional curriculum/practice analysis | [CFA Institute Candidate Body of Knowledge](https://www.cfainstitute.org/programs/cfa-program/candidate-resources/cbok) and [2027 curriculum changes](https://www.cfainstitute.org/about/press-room/2026/cfa-institute-announces-updates-to-cfa-program-curriculum) identify quantitative methods, regression, time series, volatility models, simulation/scenario analysis, model validation, AI/ML and portfolio optimization in investment education. | CFA represents investment-profession practice and curriculum, not every quantitative-finance engineering role or universal prerequisites. 2027 content has a dated effective cohort. |
+| D011 | Risk curriculum/professional body | [GARP FRM exam topics](https://www.garp.org/frm/program-exams) separates quantitative analysis/markets/valuation-risk models from applied market, credit, operational, liquidity/treasury and investment risk. | Credential syllabus is evidence for risk-domain coverage, not a claim that FRM is required or that it exhausts quantitative risk work. |
+| D011 | Occupational tasks | [O*NET Financial Quantitative Analysts](https://www.onetonline.org/link/summary/13-2099.01) describes work involving quantitative/statistical techniques, pricing, valuation, risk, portfolio optimization and interpretation. | US occupational evidence; do not treat one US occupation as the global or Nigerian role taxonomy. Map claims to canonical role identities individually. |
+| D011 | Official technical tool documentation | [QuantLib](https://www.quantlib.org/) is an implementation/library source for quantitative finance modeling. | Establishes functions and implementation context, not that it is a required or exclusive tool. Index other current official packages only when tasks justify them. |
+| D166 | Regulator/safety guidance | [NHTSA Automated Driving Systems](https://www.nhtsa.gov/vehicle-manufacturers/automated-driving-systems) covers system safety, ODD, OEDR, fallback and other safety elements. | US guidance is explicitly voluntary; do not generalize its legal force to other jurisdictions. |
+| D166 | Standards | [ISO 26262](https://www.iso.org/publication/PUB200262.html), [ISO 21448](https://www.iso.org/standard/77490.html), and [ISO 34502](https://www.iso.org/standard/78951.html) are source leads for functional safety, SOTIF, and scenario-based ADS safety evaluation. | Standards have distinct scope and may be paid; record edition, availability, jurisdictional adoption, and which lifecycle claims each supports. Do not imply that buying/holding a standard is a learner credential. |
+| D166 | Reference architecture/implementation | [Autoware architecture overview](https://docs.autoware.org/pr-803/design/autoware-architecture-v1/) documents sensing, map, localization, perception, planning, control, and vehicle-interface components; [Autoware 2.0 architecture](https://docs.autoware.org/main/design/autoware-architecture-v2/) describes generator/selector and learned end-to-end approaches but is marked under construction. | A software reference architecture is not a complete industry taxonomy. Under-construction concepts are emerging evidence, not settled baseline. Validate component inputs/outputs and safety claims against additional sources. |
+| D166 | Official project/tool documentation | [Autoware](https://docs.autoware.org/main/home/) and [CARLA simulator](https://carla.readthedocs.io/en/latest/start_introduction/) can support implementation/simulation task context. | Tool documentation establishes what the software supports, not certification, roadworthiness, or the completeness of a vehicle validation case. |
+
+The D011 leaf-technique source pass has begun descending below “quantitative analysis.” It now indexes official references for correlation measures, chi-square and Fisher exact tests, linear models and binary GLMs; maintained regression/discrete-model and time-series validation documentation; and peer-reviewed finance evidence about ML asset pricing and backtest overfit. The index records comparisons and claim limits, but still needs broader family coverage, exact finance task/area/role mapping and counter-search before sequence or graph decisions. Do not import a technique just because it appears in social-science research; require a finance-specific task/source. For D166, the evidence supports a component/lifecycle organizer rather than a method selector, while safety and verification remain cross-cutting. Neither conclusion is a role map.
+
+The initial per-role source index now covers all 28 current D011 roles and all 9 current D166 roles; each has at least one claim-inspected occupational or employer task source. This closes source presence, not route proof. D011's stored area dispositions remain hypotheses to verify against exact role tasks. The D166 canonical roles remain distinct from disposed historical snapshot titles and task-gated candidates; do not add titles or route them into areas without identity/task evidence. A source family may support multiple roles only when its task evidence actually matches each role. Exact role-to-area conditions and counter-evidence review remain open.
+
+#### Required reconciliation operation
+
+1. For each pilot, finish the source-universe index, then build a domain work map and independently source the proposed area boundaries and tasks. Record evidence for the domain and every area, not only evidence copied from an occupational classifier.
+2. Create a role reconciliation ledger keyed by canonical role ID. Verify the role identity and work against authoritative occupational/task sources and, where available, current professional or regulatory sources. For each role, record `supported_area_ids`, `direct_domain_route`, `conditional`, or `unsupported` with source-backed reasons. A legacy ISCO cluster is useful as a provenance/search lead only; it is never proof of specialization fit.
+3. Reconcile each old group to the new area set for audit purposes using explicit dispositions such as `split_across_areas`, `folded_into_area`, `not_equivalent`, `direct_domain_role`, or `retired_out_of_scope`. This relationship can be many-to-many or absent. Do not force a one-to-one conversion and do not use subgroup membership to auto-assign a role.
+4. Keep the new area and role routes unavailable to students until the per-domain, per-area, and per-role source/ownership gates pass. At that point, make the canonical area records the sole intermediate route layer, retain approved direct domain-to-role paths, and remove legacy subgroup labels/IDs from active student responses, route selectors, reports, seeds, and workload counts. Preserve their provenance in audit-only history.
+5. If an area has not passed its evidence gate, show an honest domain-only or direct-domain-role path. Do not fill the gap with an ISCO cluster under an “area” heading. Do not suppress a role that has a supported direct-domain route merely because it has no area route.
+
+The D011/D166 area proposals are therefore **reconciliation queues, not approved replacements yet**. The next pilot work is to complete source indexing and role-by-role evidence, resolve D166's 14-versus-9 role discrepancy, and only then publish an area manifest. A later code/data task must wire that manifest into the API and selectors and test that no non-D078 student payload exposes legacy ISCO group labels as specialization areas. This plan edit does not modify canonical area, subgroup, role, or UI data.
+
 | Stage | Owner | Output | Completion evidence | State/transition |
 | --- | --- | --- | --- | --- |
 | Document D078 method and scale plan | Local | This plan | Repository paths and current counts above; no code/taxonomy edits | Complete as a plan |
-| Normalize one-area-layer inputs | Local implementation task | Active catalog/API/graph contract; legacy subgroup provenance archival only | Exact domain/area ID manifest and tests proving no legacy subgroup output | Required before enrichment waves |
+| Normalize one-area-layer inputs | Local | Per-domain sourced area manifest plus canonical role-to-area/direct-route ledger; legacy ISCO provenance audit-only | Source gate for domain, every area and each role; role count reconciled; API/selector/report tests prove no legacy subgroup display | Blocking prerequisite; D011/D166 audit now documents the concrete mismatch |
 | Produce assignment baseline | Local | Versioned disjoint 168-domain manifest | D078 frozen; remaining 167 assigned; all IDs once; weighted work/risk fields | Required before agent deployment |
-| Calibrate workflow | Three agents in disjoint pilot lanes; local verifies once | Complete domain packages and calibrated acceptance/time estimate | All required evidence contract fields, agent verification and one local pass | Required before main waves |
+| Calibrate workflow | Local | D011 and D166 pilot source indexes, task maps, area/role reconciliation, sequence proposal and route tests | Complete evidence coverage for the domain, each area and each role; no ISCO-derived area fit; source saturation and route-closure results | Active; source indexes and per-role reconciliation remain incomplete |
 | Parallel domain/area/role enrichment | Three disjoint agent lanes | Complete evidence and disposition package per assigned domain IDs | Exact coverage, no overlap, agent verification, all records final-dispositioned | Repeat bounded waves until 167 close |
 | One local verification and reconciliation per wave | Local | Locally verified merged domain packages and updated manifest | `thoroughly_verified`; approved/unapproved; exact conflicts resolved; checkpoint synchronized | No repeat absent anti-loop trigger |
 | Rebuild and validate domain graph | Local | Approved domain → area → role graph | Coverage/ownership/edge/sequence tests and versioned closeout | Required before programme mapping |
@@ -420,3 +479,575 @@ The controlling references are the guided-experience specification and implement
 - Approved sequencing and graph correctness: `docs/manual-review/D078_FULL_PATH_SEQUENCE_DESIGN_2026_10_12.md`, `docs/manual-review/D078_SEQUENCE_DIRECTION_REVIEW_2026_10_12.md`, and `docs/manual-review/D078_COMPLETE_LEARNING_PATH_NAVIGATION_AND_CORRECTNESS_CHECKPOINT_2026_10_09.md` (use design rules; its older gate counts are superseded where the 2026-10-12 master differs).
 
 This plan is a process contract, not a claim that the other 167 domains are already enriched, locally verified, canonicalized, student-visible, or seeded.
+
+## 2026-10-23 pilot reconciliation result: D011 and D166
+
+This section supersedes the 2026-10-22 pilot snapshot above for the area and
+role reconciliation state. The work is data-only; no frontend files, SQL, or
+migrations were changed.
+
+The canonical D011 and D166 structures now contain only their source-backed
+specialization areas. Legacy ISCO group rows have been removed from those two
+canonical area structures and preserved in the audit crosswalk. The old groups
+were synthesized into the new area set only where area tasks, skills, and
+activities supported that mapping. A generic ISCO group is not a student area
+and does not assign an individual role by itself.
+
+Evidence is kept at two separate levels: area definitions and legacy-group
+crosswalks use area-level task, skill, and activity evidence; role-level sources
+support only the conditions for routing an individual role into one or more
+already defined areas. A role source cannot create an area or serve as evidence
+for merging a legacy group into an area.
+
+| Domain | Canonical areas | Canonical roles routed to an area | Area routes | Reconciliation outcome |
+| --- | ---: | ---: | ---: | --- |
+| D011 Quantitative Finance and Financial Engineering | 3 | 28/28 | 51: pricing/engineering 6, risk modeling 22, systematic investment/trading 23 | Existing supported and conditional role routes were made explicit in the catalog. Twenty roles span multiple areas; overlaps remain multi-area. |
+| D166 Autonomous Vehicles and Self-Driving Systems | 8 | 9/9 | 20 conditional routes | Seven separately documented system components plus cross-cutting safety/V&V. Each broad role route names the AV work condition and has source references. |
+
+D011's former groups are now represented by area activity, with the role route
+stored separately: quantitative/statistical modeling spans pricing, risk, and
+systematic investment where the relevant models and workflows apply;
+investment/risk work separates into risk measurement and systematic investment
+activities; trader activities map to systematic investment only when the work
+is quantitative or rules-based; generic brokerage alone does not establish
+that area. The generic ISCO placeholder group 25 had no task/skill boundary
+and was not converted into an area.
+
+D166 now separates sensing and sensor calibration, perception/scene
+understanding, high-definition mapping, localization/state estimation,
+automated-driving planning, vehicle control/dynamics, vehicle interface/system
+integration, and ADS safety/verification/validation. The Autoware component
+documents support these distinct tasks and interfaces; ISO 26262, ISO 21448,
+and NHTSA ADS guidance support the safety/V&V area across components. Safety
+is cross-cutting, not a universal final prerequisite. The former broad vehicle
+engineering and self-driving software groups are split across these functions
+based on the area activities; the generic associate-professional grade is not
+an area; the old craft/trades group had no current matching role or ADS task
+and was removed from the canonical D166 structure.
+
+Role routes are conditional when the occupation is cross-domain and its fit
+depends on actual assignment. For example, powertrain engineering routes to
+vehicle control and integration only when it implements autonomous-driving
+requests; software development routes follow the ADS component being built;
+homologation routes to safety/V&V only when it concerns ADAS/ADS approval and
+verification. Each condition is recorded on the D166 role's domain and area
+routes. These are task-context routes, not claims that every person with that
+general job title works in autonomy. All nine cleaned D166 role identities
+now have at least one such source-backed conditional route; the stale declared
+count of 14 is corrected to 9.
+
+The reconciliation evidence and machine-checkable crosswalk are in
+`data/career-mapping/_audit/D011_D166_AREA_ROLE_RECONCILIATION_2026_10_22.json`.
+The reproducible data update is
+`data/career-mapping/_audit/reconcile_D011_D166_areas_and_roles_2026_10_22.py`.
+External sources include [Autoware's architecture](https://docs.autoware.org/pr-803/design/autoware-architecture-v1/),
+its [sensing](https://docs.autoware.org/main/design/autoware-architecture-v1/components/sensing/),
+[perception](https://docs.autoware.org/main/design/autoware-architecture-v1/components/perception/),
+[mapping](https://docs.autoware.org/main/design/autoware-architecture-v1/components/map/),
+[localization](https://docs.autoware.org/main/design/autoware-architecture-v1/components/localization/),
+[planning](https://docs.autoware.org/pr-803/design/autoware-architecture-v1/components/planning/),
+[control](https://docs.autoware.org/1.6.0/design/autoware-architecture-v1/components/control/),
+and [vehicle interface](https://autowarefoundation.github.io/autoware-documentation/latest/design/autoware-architecture/vehicle/)
+design pages; [ISO 26262](https://www.iso.org/publication/PUB200262.html),
+[ISO 21448](https://www.iso.org/standard/77490.html), and [NHTSA ADS guidance](https://www.nhtsa.gov/document/automated-driving-systems-20-voluntary-guidance).
+D011's area distinctions are backed by [CFA Institute's curriculum and CBOK](https://www.cfainstitute.org/programs/cfa-program/candidate-resources/cbok),
+[GARP's FRM topics](https://www.garp.org/frm/program-exams),
+[Oxford Mathematical and Computational Finance](https://courses.maths.ox.ac.uk/mod/book/view.php?chapterid=1411&id=70515),
+[Columbia Mathematics of Finance](https://www.math.columbia.edu/mafn/our-curriculum/),
+and [MIT's Analytics of Finance course](https://ocw.mit.edu/courses/15-450-analytics-of-finance-fall-2010/pages/syllabus/).
+Role-specific D166 sources (NVIDIA, Tesla, Daimler Truck, Rivian, Aeva, GM,
+Humble Robotics, Avaron, and the Automotive Skills Alliance) are retained with
+the corresponding role entries and in the audit artifact.
+
+The source record update is complete, but D011 and D166 areas remain
+`student_visible: false` pending the student contract and local's separate UI
+approval. No frontend changes are included in this reconciliation. This pilot
+does not mark the other 166 domains complete and does not replace the planned
+domain, area, and role source-index pass.
+
+### 2026-10-23 title-disposition and source-index checkpoint
+
+The historical D011/D166 snapshot titles have now been crosswalked against the
+current role library. Thirteen unmatched D011 titles and 21 unmatched D166
+titles have individual source-backed dispositions. In particular, the old
+D166 snapshot's food production engineer (food engineer alias), food and
+beverage packaging technologist, and packaging production manager are excluded
+from D166: their described work is food processing/packaging or manufacturing,
+not a task supported by the eight road-ADS specialization areas. None appears
+as a current canonical D011 or D166 role. No role or route was added by this
+audit; the canonical area and role structures were not changed.
+
+The in-depth source index is an explicit ongoing artifact at
+`data/career-mapping/_audit/D011_D166_IN_DEPTH_SOURCE_INDEX_2026_10_23.md`
+and its JSON counterpart. It covers all 3 D011 areas, 28 D011 roles and 51
+role-area routes, plus all 8 D166 areas, 9 D166 roles and 20 conditional
+role-area routes. After the expanded 2026-10-23 source passes, the registry has
+315 unique source records. The generated index validation confirms that every
+current area and role is included and that learning resources remain separate
+from area/role-fit evidence. This is still an evidence index, not an approval
+of items, routes, or sequence dependencies.
+
+Grey literature is included when it adds inspectable practice or discovery
+evidence. Each source is assessed for accountable publisher/authorship,
+date/version, transparency of methods and references, claim scope, conflicts
+and access, plus independent corroboration. Its evidential strength is stated
+claim by claim: for example, an employer posting can show that one employer
+assigns a task, while a vendor page can describe its own product; neither by
+itself establishes a universal job requirement or method dependency.
+
+The new D011 records add source-backed learning/research discovery resources
+(QuantStart, QuantEcon, arXiv q-fin, SSRN, Quantpedia and its strategy
+dictionary, Quant Memo and its learning roadmaps, the community-curated
+open-MFE map, Finance & Quant Society, Quantitative Finance Stack
+Exchange, QuantNet, Wilmott, and QuantConnect/LEAN); current GARP FRM
+curriculum; IOSCO's AI-in-capital-markets consultation; FINRA algorithmic
+strategy controls; SEC market-access controls; current CFA 2026 hypothesis
+testing and simple-regression material plus the announced 2027 curriculum
+update; statsmodels and SciPy method APIs; and employer examples from Jane
+Street and Two Sigma. The 12 learning/reference platforms are discovery or
+instruction leads, not interchangeable validation evidence. Quantpedia's
+dictionary is limited to strategy keyword families; Quant Memo's concept map
+and learning paths are promising but relatively new and still need item-level
+review. The open-MFE map is a community-curated crosswalk, not an endorsement
+or official syllabus; verify its mappings against the named universities'
+current curricula. SSRN, Wilmott and QuantStart had access/fetch limits
+recorded in the index. Sources distinguish current 2026 content from 2027
+announced content.
+
+A further D011 leaf-technique pass added official R references for Pearson,
+Spearman and Kendall correlation; chi-square and Fisher exact tests; linear
+models including ANOVA/ANCOVA framing; and binomial generalized linear models.
+It also added maintained statsmodels references for regression and discrete
+response families, scikit-learn references for model selection and time-series
+splits, and finance research/reviews on machine learning for asset pricing and
+backtest overfitting. The initial comparison set records eleven source-backed comparison
+notes: correlation estimands; chi-square versus Fisher; regression/ANOVA/
+ANCOVA; model choice by outcome form including binary logistic, probit and
+count models; where ML can extend regression baselines; and distinct but
+complementary time-aware validation and backtest-selection checks. These notes
+explain method context and limits; they are not approved graph edges, sequence
+dependencies, item selections or proof of area/role fit. Exact method-to-task
+mapping, additional technique alternatives, and area/role applicability still
+need source review.
+
+A second D011 method pass now adds stable `arch` documentation for ARCH/GARCH,
+asymmetric and long-memory variants, EWMA/RiskMetrics and forecast procedures;
+the statsmodels time-series API and CFA 2026 learning outcomes are cross-checked
+with financial research. New records distinguish daily return-based
+conditional-volatility models, latent stochastic volatility, option-implied
+volatility, high-frequency realized volatility and HAR-RV. It includes the
+classic HAR-RV specification, a peer-reviewed GARCH/implied/realized comparison,
+a Chicago Fed conceptual review, NBER-to-journal realized-volatility research,
+a September 2026 revised Federal Reserve forecasting paper and an independent
+2024 peer-reviewed study of ML against HAR. The expanded method notes now
+separate mean dynamics from conditional variance, compare volatility-model
+families and measures, and describe horizon-dependent econometric/ML results.
+They preserve the preliminary status of Fed working-paper research and the
+sample/market limits of individual studies. These sources do not establish a
+universal method winner, item ordering or graph dependency; price/rates/credit,
+multivariate covariance, optimization and further method families still need
+similar source coverage and task mapping.
+
+An additional D011 portfolio-risk pass adds peer-reviewed and method-source coverage
+for the sample covariance baseline, linear/nonlinear/quadratic shrinkage,
+factor covariance using PCA/PLS, portfolio-level regularization and
+cross-validation, strategy-specific eigenvector shrinkage, and learned or
+reinforcement-learning shrinkage intensity. The method comparisons distinguish
+covariance estimators from allocation objectives and connect returns to risk
+estimation, portfolio weights, and cost-aware out-of-sample assessment. Results
+are study-bound; they do not establish one best estimator or an automatic
+learning order. The new sources are attached as task-context evidence to the
+D011 quantitative financial risk-modeling and systematic-investment areas,
+without altering either area definition or any route.
+
+That pass also indexed role-task sources for statistical assistants, actuarial
+insurance pricing, investment analytics, and investment-risk work. These remain
+bounded examples: O*NET's statistical-assistant occupation includes actuarial
+clerks but does not itself establish investment strategy work; AAA's role is
+an adjacent actuarial pricing title with an unreadable direct page; the Ford
+Foundation investment-analytics posting had a passed application deadline and
+an unreadable direct page; BlackRock's accessible risk page describes one
+employer's career function. Each limit is retained in the source index.
+
+Role-citation coverage needs a stricter reading than “every role has a task
+source.” The latest index counts 344 D011 role-reference rows across 121 unique
+URLs. A review of the six most repeated curriculum/framework/database URLs
+reclassified those cards as bounded learning-context or provenance evidence;
+they are not role-task proof. Four CFA career/CIPM pages were also inspected
+and classified as broad occupational or learning context with explicit limits.
+The number of generic, uninspected D011 cards is now 0; all 37 formerly
+generic cards were assigned a named evidence/scope decision. D166 has 28 rows
+across 25 unique URLs; six original
+employer pages are stale/unavailable, three official NVIDIA posting texts have
+been inspected from official search results while direct rendering remains
+limited, and all other listed URLs have been reopened. The 28/28 and 9/9 counts only mean that each current
+role has at least one inspected occupational/employer task source. They do not
+mean every source proves its attached role claim or that conditional role-area
+routes are resolved. Exact task-to-area review and counter-evidence remain open.
+
+A third D011 pass now indexes derivative-pricing and financial-engineering
+relationships. CFA Institute's 2026 materials distinguish no-arbitrage
+contingent-claim models (binomial, Black–Scholes–Merton and Black) from
+real-world return forecasting, and connect fixed-income curves, calibrated
+interest-rate trees, backward induction and forward-rate simulation to
+embedded-option valuation. OpenGamma Strata documentation maps products to
+implemented models (including Black/normal/SABR and tree approaches), lists
+market instruments used for curve calibration, and documents root-finder
+calibration to reference-trade quotes. QuantLib documentation/examples expose
+term structures and alternative analytic, lattice, finite-difference and
+Monte Carlo engines; a QuantLib maintainer-authored guide demonstrates CDS
+default-curve construction alongside discounting and recovery assumptions.
+These project/practitioner sources are included as credible grey evidence only
+for their inspectable implementation or teaching claims, with explicit
+publisher, version/access, claim-scope and generalization limits; they do not
+prove market-wide adoption, model validity, or a universal learner order.
+The pricing and credit notes bring the indexed method-comparison total to
+nineteen, covering pricing
+measure versus physical forecasting, alternative numerical engines,
+calibration versus validation, fixed-income branching by optionality/rate
+dynamics, discount/default inputs in credit valuation, structural versus
+reduced-form credit models, and the separation of CVA market-implied default
+inputs from historical default prediction. Broader model and
+source-family counter-search, finance-task/output mapping, and role-specific
+context remain open; no graph edges or sequence dependencies are approved.
+
+A portfolio-construction pass adds current CFA Institute coverage of strategic
+asset allocation, active-equity construction, and real-world investor
+constraints. It distinguishes asset-only MVO from liability-relative/surplus
+allocation, goals-based and factor allocation, risk budgeting, and
+implementation/portfolio review; it records the limits of MVO inputs and
+extensions such as Black–Litterman, constraints, resampling, robust
+optimization, covariance shrinkage, risk parity, and downside-risk objectives.
+The source index links these methods to outputs (target weights, exposures,
+risk budgets, turnover/costs and rebalancing) without implying they form a
+single compulsory ladder. Current CVXPY docs show constrained quadratic
+optimization; PyPortfolioOpt docs list available method modules; QuantConnect
+LEAN docs make signal → portfolio targets → risk adjustment → execution
+interfaces explicit. These are implementation sources, not validity proof.
+The QuantConnect, PyPortfolioOpt, MSCI, BIS and related execution-practice sources are grey literature with
+individual credibility notes and scoped claims; MSCI's full 2026 paper remains
+gated and only its public preview is indexed. The execution comparison and two
+financial-econometrics/ML comparison notes bring the generated index to 27
+method-relationship notes. More independent evidence, specific task/role
+mapping, covariance and transaction-cost method counter-search, and source
+saturation remain open; no graph dependencies are approved.
+
+The new transaction-cost/execution pass adds eight inspected sources: CFA's
+2026 treatment-cost reading, a BIS FX-market report, classical Bertsimas–Lo
+expected-cost control and Almgren–Chriss risk/cost optimization, limit-versus-
+market order research, and research on offline RL generalization, deep-learning
+surrogates for transient impact, and 2026 actor-critic RL built on the
+Almgren–Chriss model. The source note separates implementation-shortfall/VWAP
+measurement from algorithms, schedules from adaptive execution, and classical
+models from ML/RL extensions. It links the material to systematic-investment
+area evidence and a conditional quantitative-trader task example; the source
+index does not imply every trader owns execution or approve learning blockers.
+The cited comparisons are bounded by their market, calibration, data and
+simulator assumptions. The latest index generator validates 315 unique source
+records; seven broad source-coverage checks remain open.
+
+A following D011 financial-econometrics pass added official course evidence
+from Birmingham, York and NHH, maintained `linearmodels` documentation, the
+Fama–MacBeth publisher record, an international event-study review and the
+peer-reviewed double/debiased ML paper. Two comparison notes separate
+estimator choices (OLS/MLE/GMM, panel estimators and Fama–MacBeth) from
+identification designs (IV, DiD, RDD and randomized/selection-on-observables),
+and distinguish event studies of abnormal market responses from causal
+experiments. A second note distinguishes predictive asset-pricing ML from
+ML-assisted causal inference through orthogonal scores and cross-fitting. It
+links these to the systematic-investment and risk-modeling area evidence and
+conditional quantitative analyst/researcher task context. These methods need
+design-specific assumptions and data; no method is made compulsory or assigned
+a graph dependency from curriculum inclusion alone. Direct source limits are
+retained: Birmingham's search result was readable but its page returned 502;
+York's was indexed but its direct URL missed cache; Fama–MacBeth full text is
+gated; PubMed metadata/abstract is accessible while PMC text remained
+bot-blocked. Econometric alternatives, causal-design counter-search, exact
+task-to-role evidence and area saturation remain open.
+
+The expanded D166 records include NVIDIA Drive/DriveWorks technical and
+safety-architecture evidence; NHTSA's current ADS crash-reporting order and
+data limitations; UNECE UN Regulation 157 for its narrower ALKS scope; and
+Waymo, Argoverse 2, and nuScenes/nuPlan dataset and benchmark evidence across
+sensing, perception, mapping, localization, planning and evaluation. New grey
+role/task evidence includes current Waymo perception/continuous-learning and
+perception-evaluation postings, Mobileye validation/integration/algorithm
+postings, GM autonomy evaluation, and the AVSC's voluntary, dated industry
+best practices on ADS safety metrics (2021) and core safety information (2024).
+The 2024 source is indexed from the official abstract only; the full report is
+still needed before relying on its detailed recommendations. AVSC is a
+traceable industry-consortium source useful for practice context, not
+regulation or independent proof of safety; it is cross-checked against current
+standards, regulators and research.
+
+A further D166 area pass added first-party Apollo documentation for the
+software-component architecture and current localization, planning-component,
+and control interfaces, plus the dated ASAM OpenDRIVE 1.9.0 scope for static
+road-network data in simulation. These records make inputs, outputs and
+component handoffs more inspectable across sensing/perception, localization,
+mapping, planning, control and integration. Apollo 2.0 architecture is
+explicitly historical and platform-specific; current Apollo documents describe
+that project's implementation, not a universal stack. ASAM's specification is
+authoritative for its own exchange format and version, while adoption claims
+remain bounded. Two independent university course pages were also indexed as
+curriculum evidence only; they are kept out of area-fit evidence and do not
+establish mandatory content or prerequisite order. The refreshed index now
+records 7–14 source cards per D166 area, but that count is not saturation:
+exact task evidence, citation-level currency, route conditions and
+counter-search remain open.
+Employer and vendor sources are marked as examples with their own scope;
+dataset/benchmark success is not real-world safety proof. D166 has 21 original
+canonical role-reference URLs and 25 distinct URLs in the refreshed role index
+after supplementary task cards. Sixteen were reopened and inspected; three
+NVIDIA posting texts were inspected from official careers search results while
+direct-page rendering remains limited; six original pages remain
+stale/unavailable. New task evidence includes an autonomous heavy-duty
+powertrain engineer posting, NVIDIA's official AV fleet-integration search
+result, a Rivian integration posting mirrored by Indeed while the canonical
+page returned 403, and Mobileye's official ADAS-homologation listing. Each has
+an access/credibility limit recorded; the underlying original URLs were not
+misrepresented as reopened. D011 now has 127 unique role-reference URLs. The
+latest D011 role ledger retains 350 reference rows. New employer examples
+include Citadel GQS and Data Strategies quantitative research, Jane Street's
+quantitative-trader interview, and Citi derivatives-pricing/risk analyst and
+quantitative technology developer postings. They document distinct research,
+trading, pricing, model-risk and research-to-production workflows; each is
+employer- and role-specific. CFA/GARP curriculum, CFA
+career/CIPM and O*NET database references now have explicit support and claim
+limits; curriculum pages remain distinct from employer task evidence. The
+mathematician's two IFT food-science references are reviewed as non-supportive
+for D011, and O*NET physics/family and OECD Frascati references are bounded to
+adjacent or classification context. The old Citi C13 link returns 404; its
+2026-07 posting copy is separately retained as medium-credibility third-party
+historical evidence. The 37 formerly generic existing-reference cards have
+now been individually reviewed and given named evidence/scope decisions; none
+remains without a locator or explicit access/scope limitation. Current
+claim-inspected task coverage is now 28/28 D011 roles and 9/9 D166 roles,
+including role-specific M&A valuation, insurance pricing, middle-office
+derivative controls, mathematical modeling, credit analysis, quantitative
+securities-underwriting, and AV connectivity examples. Adjacent or specialized
+postings are explicitly limited to the duties they document. This does not
+mean every route is validated: exact task-to-area mapping and counter-evidence
+review remain open. Role names and routes were not changed by this source pass.
+
+One stale self-driving software-QA citation was also counter-searched. The old
+Tesla job page redirects to generic careers; an accessible Waymo Staff Software
+Quality Safety Operations Specialist page now supplies an adjacent task
+example for AV event triage, QA/ML validation, edge cases and statistical
+metrics. It is a staff-level safety-operations posting, not an exact title
+match or universal software-analyst definition.
+
+Four additional current GM postings plus three D166 candidates found while
+dispositioning the old title snapshot are recorded as task-gated candidate
+evidence only. They have not been inserted into the canonical role library or
+routes. The earlier 16-URL D166 checkpoint was expanded with two inspected
+connectivity-role postings; the current 21-URL access count is recorded above.
+Six original pages remain stale or unavailable; three NVIDIA posting texts are
+verified from official indexed search results although direct fetch is limited;
+one role URL has not been reopened. Exact source recovery
+and route-task verification remain open. Area-by-area source saturation,
+D011 technique alternatives and relationships, broader tool/dataset coverage,
+learning resources, peer-reviewed/handbook sources and Nigerian task context
+also remain open. The source index intentionally remains
+`in_progress_not_saturated`; this is not completion of D011/D166 enrichment or
+of the other 166 domains.
+
+The 2026-10-23 HD-map source pass adds four records to D166's high-definition
+mapping area: the Lanelet2 open-source map framework (semantic road topology,
+traffic rules, routing, authoring and validation), an ISPRS production paper
+with a concrete survey-to-quality-assurance workflow, and two 2024 survey
+leads covering general generation/maintenance and camera-based/offline/online
+map construction. The ISPRS paper is full-text accessible; MDPI and IEEE
+survey pages were rate-limited (HTTP 429 and 418), so only bibliographic and
+indexed abstract material is recorded for those surveys. Their full-text
+inspection remains open. These records broaden the area evidence but do not
+establish one universal HD-map format or map-production sequence. The
+generated source registry now contains 315 records; broader area saturation,
+per-role route checks, technical alternatives, tools, learning resources and
+regional sourcing remain open.
+
+The same 2026-10-23 pass expanded vehicle-interface/system-integration context
+with the current AUTOSAR Adaptive platform overview, ASAM SOVD, the published
+2026 ISO 14229-1 UDS abstract, and ASAM OSI simulation interfaces. It records
+UDS and SOVD as complementary diagnostic paths—ECU-centric diagnostic
+services versus API-based access to dynamic software/HPC systems—rather than
+claiming SOVD universally replaces UDS. AUTOSAR describes a platform and
+interfaces, not an AV stack; OSI applies to simulator-model interoperability,
+not production vehicle command wiring. The ISO full text is paid, and the
+ASAM SOVD 1.2 update remains in development, so those currency/access limits
+are preserved. The four records support conditional area context and do not
+settle the exact role-to-area routes.
+
+### 2026-10-23 D166 vehicle-control and dynamics source pass
+
+Added source-backed method and role context for trajectory tracking and
+vehicle-motion control. Current Autoware documentation makes the task flow
+concrete: reference trajectory and vehicle state enter tracking controllers;
+lateral control can use Pure Pursuit or MPC in the documented node, while its
+longitudinal implementation uses feed-forward plus PID and requires a
+vehicle-specific downstream interface. Apollo supplies a separate LQR-based
+lateral implementation example. These are implementation examples, not a
+universal method ladder. A peer-reviewed 2023 review describes MPC's predictive
+model and explicit state/input constraints; its suitability still depends on
+model quality, compute, latency and vehicle operating limits.
+
+The emerging-method pass distinguishes Autoware's experimental Smart MPC,
+which learns vehicle-model residuals from recorded driving data and validates
+against held-out data/simulation, from the 2024 reinforcement-learning review
+of tactical highway lane changes, merges and platooning. Learning-based
+residuals can augment a model-based tracker; tactical RL outputs connect to
+low-level tracking only when a specific architecture documents that handoff.
+Control-barrier-function safety filters and safety constraints embedded in MPC
+are recorded as complementary safety mechanisms, not standalone proof of a
+safe vehicle. The 2026 AV safety-MPC review is indexed at abstract level only
+because its publisher page was rate-limited; full-text and cited-study review
+remain open.
+
+Current Lucid and Tesla employer postings add concrete, bounded role context
+for specialist control/software tasks, including controller families,
+vehicle-dynamics models, simulation, SIL/HIL and vehicle testing. The records
+are mapped to existing software-developer, mechanical-engineer and powertrain
+role evidence only as conditional task examples; no canonical role fit, route,
+or item was changed. Generator validation confirms all source and role-task
+IDs resolve and grey role cards include credibility assessments. The registry
+now contains 325 unique source records; D166 has 32 role-reference rows across
+27 URLs, with 18 reopened/inspected, 3 official NVIDIA excerpts limited to
+search-result access, and 6 original references stale/unavailable. Seven open
+checks remain; the index is still `in_progress_not_saturated`.
+
+### 2026-10-23 D166 sensing, calibration and fusion source pass
+
+The sensing/calibration area now has 19 indexed area sources (up from 8).
+Added NIST's peer-reviewed static automotive LiDAR evaluation methods; ROS
+REP 145's IMU frame, units, timestamp and covariance conventions (explicitly
+Draft/Informational and not an automotive standard); peer-reviewed research on
+camera-LiDAR temporal misalignment and radar-camera/transformer fusion; and a
+2026 Measurement survey abstract covering target-based/targetless, learned,
+cooperative V2X and online calibration families. The 2024 IEEE fusion sources
+were only inspected at abstract/metadata level because direct access was
+blocked; the 2026 calibration survey is paywalled, so its detailed synthesis
+is still open. NIST's specific study concerns static LiDAR testing and cannot
+be read as on-road system validation or a universal sensor acceptance limit.
+
+Current GM, Rivian, Mobileye, Wayve, Woven and Aeva postings add task context
+for sensor characterization, test requirements, calibration, synchronization,
+data validation and sensor-to-perception/localization handoffs. Five new role
+source references are attached conditionally to existing mechatronics and
+optomechanical roles; D166 now has 37 role-reference rows across 31 URLs.
+These are employer-specific tasks, not role-title equivalence, route changes,
+or universal requirements. Three new relationship notes explain (1) frames,
+intrinsic/extrinsic and temporal calibration before fusion, (2) complementary
+sensor measurements and ODD-specific selection, and (3) classical geometric
+fusion versus learned feature/transformer approaches and their compute and
+alignment limits. The notes are source-backed review context, not graph edges
+or student prerequisites. Generator validation passes and the registry now
+contains 335 unique records; seven broader source-closure checks remain open.
+
+### 2026-10-23 D166 localization and vehicle-state estimation source pass
+
+Expanded the localization area to 22 indexed area sources. The pass inspected
+current Autoware localization interfaces and launch choices, EKF localizer,
+NDT scan matching and the covariance modifier; Apollo's current multi-sensor
+fusion implementation and run guide; GTSAM factor-graph materials and
+LIO-SAM; a full 2024 LiDAR-odometry survey and open 2026 robotics localization
+survey; and current Aurora, Waabi and Kodiak localization postings. AV-specific
+2024/2023 survey records and an author-hosted 2024 LiDAR survey PDF were also
+indexed with their access limits clearly recorded.
+
+Four relationship notes explain: (1) relative odometry versus global GNSS
+anchoring and map matching, including when they complement or conditionally
+substitute for one another; (2) recursive EKF filtering versus factor-graph
+smoothing and joint optimization; (3) pose, covariance, status and health
+signals consumed downstream; and (4) learned localization options as
+component-level emerging approaches rather than an assumed replacement for
+calibration, measurement models or conventional baselines. Three employer
+postings add conditional software-developer task context. No role fit, area,
+route or graph edge was changed.
+
+Validation confirms every localization relationship source and role-task
+reference resolves, all area supplemental source IDs resolve, and grey-source
+cards have credibility assessments. The total registry now contains 351
+unique source records. Seven broader source-closure checks remain open; the
+index continues to state that it is in progress and not saturated. Search
+closure will not be inferred from absence of official sources: credible grey
+sources are included where they substantiate the claim, while a claim remains
+explicitly unresolved only when the documented search cannot establish it.
+
+### 2026-10-23 D166 automated-driving planning source pass
+
+Expanded the planning area from 9 to 24 sources. Added current Autoware
+planning-component and module documentation; Apollo's current planning
+component and plugin catalog; 2024 surveys of ADS path planning, hybrid
+motion planning and sampling-based planning; the open 2026 review of learned
+interactive prediction/planning; an end-to-end planning review record; the
+original RSS paper and IEEE 2846 working-group scope/status; and nuPlan's
+first-party benchmark and evaluation protocol. Direct-page or full-text access
+limits for ScienceDirect, PMC and PubMed are recorded; their inaccessible
+full-text claims remain open rather than being treated as confirmed findings.
+
+Four relationship notes now explain: (1) the typical mission route → behavior
+choice → path/drivable region → time-based trajectory → validation/control
+handoffs, including architectures that combine stages; (2) search, sampling,
+optimization and interpolation families as conditional alternatives or hybrid
+components; (3) rule-based, learned, end-to-end and interactive
+prediction/planning approaches and their stack-specific contracts; and (4) the
+scope of safety assumptions and the difference between open-loop and
+closed-loop evaluation. Apollo's E2E planner is described by its own repository
+as exploratory and not road-tested; learned/future approaches are not treated
+as proven production replacements. Safety-model and benchmark sources do not
+establish whole-vehicle safety.
+
+Five current employer postings from Aurora, Waabi, Gatik, Torc and DiDi add
+conditional planning-task evidence to the existing software-developer role;
+they illustrate behaviors, path/velocity reasoning, algorithm choices and
+simulation/vehicle validation without changing role ownership or fit. The
+generator passes all source, role-task, area-ID and relationship-reference
+checks. Registry total: 370 unique sources. Seven broader source-closure checks
+remain open, and the overall index remains in progress/not saturated. The
+family-coverage summary now reflects the expanded role-source counts and
+planning, safety and benchmark source families.
+
+### 2026-10-23 D166 mapping source pass
+
+Expanded high-definition mapping coverage to 23 area sources. Added current
+Autoware map-creation/interface guidance, Lanelet2 routing and validation
+documentation, Argoverse 2 map/schema and map-change materials, Apollo's lane
+schema, ASAM OpenCRG/OpenSCENARIO distinctions, and recent HD-map generation,
+maintenance and quality-review sources. Abstract-only or publisher-blocked
+papers remain limited to metadata/scope claims. The evidence distinguishes
+point-cloud geometry, semantic lane/topology maps and simulation road/scenario
+formats; they can complement one another, but are not interchangeable.
+
+Four relationship notes describe map representation, acquisition-to-QA
+production stages, change/freshness and controlled release, and downstream
+consumer contracts for localization, perception, planning and simulation.
+Conditional employer task references remain attached to the existing software
+developer record. One mapping job posting is explicitly expired and mining
+ODD-specific; it is historical task evidence only. No roles, areas, fit,
+routes or graph edges were changed.
+
+### 2026-10-23 D166 vehicle-interface and integration source pass
+
+Expanded the integration area from 11 to 15 area sources. Added the current
+Autoware Vehicle Interface architecture and Raw Vehicle Command Converter,
+Apollo's typed ChassisCommand schema, and ITU-T F.749.17 for its narrow
+purpose-built ADS-dedicated vehicle scope. The source records distinguish
+normalized ADS commands/status from platform-specific actuation feedback,
+capability/diagnostic reporting, command identity, conversion latency and
+degraded/manual-mode concerns. ITU numerical examples are not treated as
+universal thresholds or as proof of regulatory adoption.
+
+Two relationship notes connect those contracts to control, localization,
+vehicle bring-up and integration testing. Conditional role context uses the
+already indexed NVIDIA integration posting excerpt, Rivian secondary mirror,
+and software-quality evidence with access limitations preserved. No role fit,
+area, route or graph edge was changed.
+
+The generator passes all 28 source-index checks. Registry total: 394 unique
+source records. Current area counts are D011 19/34/42, and D166
+19/11/23/22/24/15/15/15; the two D011 quantitative-finance area coverage
+gaps and D166 perception/safety gaps still need further area-specific searches.
+Seven broader source-closure checks remain open, including area-by-area
+saturation, source-family sweeps, exact role-task/route counterchecks and
+D011 technique alternatives. The index remains in progress and explicitly
+does not claim saturation.

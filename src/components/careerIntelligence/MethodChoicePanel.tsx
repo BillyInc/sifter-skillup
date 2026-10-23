@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { StyleSheet, Text, TextInput, useWindowDimensions, View } from "react-native";
+import { StyleSheet, Text, useWindowDimensions, View } from "react-native";
 import { CompassFonts, Radius, Spacing, useTheme } from "@/theme";
 import {
   d078GraphDataForTests,
@@ -9,29 +9,27 @@ import {
   type CombinationCard,
 } from "@/lib/d078RouteProjection";
 import { RouteButton } from "./RouteButton";
+import { explainTechnicalTerms, studentFacingCopy } from "@/lib/studentExplanation";
 
 const data = d078GraphDataForTests();
 const PARTICIPATORY_ID = "combo:participatory-method-choice";
+const QUANTITATIVE_METHOD_ID = "domain-item:d078-quantitative-approach";
+const QUALITATIVE_METHOD_ID = "domain-item:d078-qualitative-approach";
+const MIXED_METHOD_ID = "domain-item:d078-mixed-methods";
 
 function learnerCopy(value: string): string {
-  return value
+  return explainTechnicalTerms(value
     .replace(/D078/g, "this field")
     .replace(/shared domain foundations/gi, "foundations for this field")
     .replace(/useful edges/gi, "useful options")
     .replace(/domain sequence/gi, "learning sequence")
-    .trim();
-}
-
-function firstSentence(value: unknown): string {
-  if (typeof value !== "string") return "";
-  const clean = learnerCopy(value);
-  const boundary = clean.search(/[.!?](?:\s|$)/);
-  return boundary >= 0 ? clean.slice(0, boundary + 1) : clean;
+    .trim());
 }
 
 function methodLine(id: string): string {
   const node = d078Node(id);
-  return firstSentence(node?.meaning ?? node?.plain_language_meaning ?? node?.meaning_in_domain);
+  const meaning = node?.meaning ?? node?.plain_language_meaning ?? node?.meaning_in_domain;
+  return explainTechnicalTerms(studentFacingCopy(typeof meaning === "string" ? meaning : ""));
 }
 
 function methodSkipCopy(reason?: string): { chip?: string; line?: string } {
@@ -53,27 +51,39 @@ function MethodCard({ id, label, selected, onToggle }: {
   onToggle: () => void;
 }) {
   const { colors } = useTheme();
+  const [expanded, setExpanded] = useState(false);
   const node = d078Node(id);
   const skip = methodSkipCopy(typeof node?.requirement_reason === "string" ? node.requirement_reason : undefined);
   const programmeContext = data.programme_method_context?.[id];
+  const hasDetails = Boolean(methodLine(id) || programmeContext || skip.chip || skip.line);
   return (
-    <View style={[styles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
-      <Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{label}</Text>
-      {methodLine(id) ? <Text style={[styles.body, { color: colors.textRole.secondary }]}>{methodLine(id)}</Text> : null}
-      {programmeContext ? <View style={[styles.programmeContext, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
-        <Text style={[styles.subheading, { color: colors.textRole.primary }]}>How this connects to your programme</Text>
-        <Text style={[styles.meta, { color: colors.textRole.secondary }]}>{programmeContext.student_note}</Text>
-        <Text style={[styles.meta, { color: colors.textRole.muted }]}>Curriculum evidence: {programmeContext.course_refs.map((course) => `${course.course_code} · ${course.course_title}`).filter((course, index, all) => all.indexOf(course) === index).join("; ")}</Text>
+    <View testID={`d078-method-card-${id}`} style={[styles.card, expanded && styles.cardExpanded, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
+      <Text numberOfLines={3} ellipsizeMode="tail" style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{label}</Text>
+      <View style={styles.cardActions}>
+        {hasDetails ? <RouteButton
+          label={expanded ? "See less" : "See more"}
+          accessibilityLabel={`${expanded ? "See less about" : "See more about"} ${label}`}
+          onPress={() => setExpanded((value) => !value)}
+          variant="secondary"
+          style={styles.action}
+        /> : <View />}
+        <RouteButton
+          label={selected ? "Selected" : "Select"}
+          accessibilityLabel={`${selected ? "Deselect" : "Select"} ${label}`}
+          onPress={onToggle}
+          variant={selected ? "selected" : "quiet"}
+          style={styles.action}
+        />
+      </View>
+      {expanded ? <View style={styles.expandedDetails}>
+        {methodLine(id) ? <Text style={[styles.body, { color: colors.textRole.secondary }]}>{methodLine(id)}</Text> : null}
+        {programmeContext ? <View style={[styles.programmeContext, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+          <Text style={[styles.subheading, { color: colors.textRole.primary }]}>How this fits your programme</Text>
+          <Text style={[styles.meta, { color: colors.textRole.secondary }]}>{explainTechnicalTerms(programmeContext.student_note)}</Text>
+        </View> : null}
+        {skip.chip ? <Text style={[styles.chip, { color: colors.textRole.muted }]}>{skip.chip}</Text> : null}
+        {skip.line ? <Text style={[styles.meta, { color: colors.textRole.secondary }]}>{skip.line}</Text> : null}
       </View> : null}
-      {skip.chip ? <Text style={[styles.chip, { color: colors.textRole.muted }]}>{skip.chip}</Text> : null}
-      {skip.line ? <Text style={[styles.meta, { color: colors.textRole.secondary }]}>{skip.line}</Text> : null}
-      <RouteButton
-        label={selected ? "Selected" : "Select"}
-        accessibilityLabel={`${selected ? "Deselect" : "Select"} ${label}`}
-        onPress={onToggle}
-        variant={selected ? "selected" : "quiet"}
-        style={styles.action}
-      />
     </View>
   );
 }
@@ -189,32 +199,34 @@ export function MethodChoicePanel({ selection, onToggleMethod, onToggleCombinati
 }) {
   const { colors } = useTheme();
   const { width: viewportWidth } = useWindowDimensions();
-  const cardWidth = viewportWidth >= 980 ? "48%" : viewportWidth >= 640 ? "48%" : "100%";
-  const [search, setSearch] = useState("");
-  const methods = useMemo(() => data.method_node_ids.map((id) => ({ id, label: d078Node(id)?.label ?? id }))
-    .filter((item) => item.label.toLocaleLowerCase().includes(search.trim().toLocaleLowerCase())), [search]);
+  // The method panel now occupies the complete reading surface. Use a compact
+  // 4-up grid on desktop, 3-up on tablets, and two-up on wider phones.
+  const cardWidth = viewportWidth >= 1100 ? "24%" : viewportWidth >= 760 ? "32%" : viewportWidth >= 420 ? "48.5%" : "100%";
+  const mixedMethodsReady = selection.methodIds.includes(QUANTITATIVE_METHOD_ID)
+    && selection.methodIds.includes(QUALITATIVE_METHOD_ID);
+  const methods = useMemo(() => {
+    const preferred = [QUANTITATIVE_METHOD_ID, QUALITATIVE_METHOD_ID];
+    return data.method_node_ids
+    .filter((id) => id !== MIXED_METHOD_ID || mixedMethodsReady)
+    .sort((left, right) => {
+      const leftRank = preferred.indexOf(left);
+      const rightRank = preferred.indexOf(right);
+      return (leftRank < 0 ? preferred.length : leftRank) - (rightRank < 0 ? preferred.length : rightRank);
+    })
+    .map((id) => ({ id, label: d078Node(id)?.label ?? id }));
+  }, [mixedMethodsReady]);
   const projection = useMemo(() => projectD078Route(selection), [selection]);
-  const combinations = useMemo(() => {
-    const q = search.trim().toLocaleLowerCase();
-    return projection.combinations.filter((combo) => combo.matchStatus !== "hidden" && (!q || combo.label.toLocaleLowerCase().includes(q)));
-  }, [search, projection]);
+  const combinations = useMemo(() => projection.combinations.filter((combo) => combo.matchStatus !== "hidden"), [projection]);
   const hasMultiSelection = selection.methodIds.length >= 2;
   const hasExactCombination = combinations.some((combo) => combo.matchStatus === "exact" || combo.matchStatus === "selected");
   const hasPartialCombination = combinations.some((combo) => combo.matchStatus === "partial");
 
   return (
     <View style={styles.panel}>
-      <Text ref={headingRef} accessibilityRole="header" style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Methods of investigation/research</Text>
-      <TextInput
-        accessibilityLabel="Search methods and combined designs"
-        placeholder="Search methods and designs"
-        placeholderTextColor={colors.textRole.muted}
-        value={search}
-        onChangeText={setSearch}
-        style={[styles.search, { color: colors.textRole.primary, borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}
-      />
+      <Text ref={headingRef} accessibilityRole="header" style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Methods of research</Text>
+      <Text style={[styles.body, { color: colors.textRole.secondary }]}>A method of research is a planned way of gathering and making sense of evidence. Different questions need different kinds of evidence, so you choose the method that fits the question you want to answer.</Text>
       <Text style={[styles.groupTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Choose a method</Text>
-      <Text style={[styles.body, { color: colors.textRole.secondary }]}>You can select one method and follow its own route. If your question needs more than one method, select the additional method too; we will show a combined route only when a reviewed design explains how they work together.</Text>
+      <Text style={[styles.body, { color: colors.textRole.secondary }]}>Choose one method to follow its own route, or select more than one when your question needs different kinds of evidence. Mixed methods appears after you select both quantitative and qualitative methods; other combined designs appear only when the graph supports that exact selection.</Text>
       <View style={styles.list}>
         {methods.map((method) => (
           <View key={method.id} style={{ width: cardWidth }}>
@@ -254,20 +266,22 @@ export function MethodChoicePanel({ selection, onToggleMethod, onToggleCombinati
 }
 
 const styles = StyleSheet.create({
-  panel: { gap: Spacing.md },
+  panel: { width: "100%", alignSelf: "stretch", gap: Spacing.md },
   sectionTitle: { fontSize: 20, lineHeight: 26 },
   groupTitle: { fontSize: 18, lineHeight: 24, marginTop: Spacing.sm },
-  search: { minHeight: 44, paddingHorizontal: Spacing.md, borderWidth: 1, borderRadius: Radius.md, fontSize: 16, lineHeight: 22 },
-  list: { gap: Spacing.sm, flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" },
+  list: { width: "100%", gap: 10, flexDirection: "row", flexWrap: "wrap", justifyContent: "flex-start", alignItems: "stretch" },
   grid: { gap: Spacing.sm },
   combinationSection: { gap: Spacing.sm },
-  card: { padding: 12, gap: Spacing.sm, borderWidth: 1, borderRadius: Radius.md },
+  card: { height: 148, padding: 10, gap: 8, borderWidth: 1, borderRadius: Radius.md, alignSelf: "stretch" },
+  cardExpanded: { height: "auto" as any, minHeight: 148 },
+  cardActions: { marginTop: "auto", flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: Spacing.xs },
+  expandedDetails: { gap: Spacing.sm, paddingTop: Spacing.xs },
   programmeContext: { gap: Spacing.xs, marginTop: Spacing.xs, borderWidth: 1, borderRadius: Radius.md, padding: Spacing.sm },
-  cardTitle: { fontSize: 16, lineHeight: 22 },
-  body: { fontSize: 16, lineHeight: 24 },
+  cardTitle: { fontSize: 15, lineHeight: 20 },
+  body: { fontSize: 14, lineHeight: 20 },
   chip: { fontSize: 13, lineHeight: 18, fontWeight: "600" },
   meta: { fontSize: 14, lineHeight: 20 },
-  action: { alignSelf: "flex-start" },
+  action: { alignSelf: "flex-start", minHeight: 44, minWidth: 0, paddingHorizontal: Spacing.sm },
   detailSections: { gap: Spacing.sm },
   detailSection: { gap: 4, paddingTop: Spacing.xs },
   subheading: { fontSize: 16, lineHeight: 22, fontWeight: "600" },

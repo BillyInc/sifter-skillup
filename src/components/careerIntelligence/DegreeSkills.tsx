@@ -14,6 +14,7 @@ import { ExternalLinkGuard } from "./ExternalLinkGuard";
 import { isStudentResource } from "./resourceLinks";
 import { programmeThemeForCourse, type ProgrammeThemeKey } from "./programmeCurriculumThemes";
 import { programmePreviewUnavailableMessage } from "@/lib/programmePreview";
+import { explainTechnicalTerms } from "@/lib/studentExplanation";
 import sociologyThemeAbilityLedger from "../../../data/career-mapping/_audit/sociology_theme_student_abilities_2026_10_22.json";
 
 const INITIAL_THEMES = 5;
@@ -98,16 +99,16 @@ const THEME_META: Record<ThemeKey, Omit<Theme, "courses" | "narration">> = {
   shared_philosophy: { key: "shared_philosophy", title: "Philosophy and reasoning", icon: "book-open", description: "Learning about philosophical questions, logic and clear reasoning." },
   shared_peace_conflict: { key: "shared_peace_conflict", title: "Peace, conflict and security", icon: "users", description: "An introduction to peace, conflict, security and ways people respond to conflict." },
   shared_enterprise: { key: "shared_enterprise", title: "Entrepreneurship and venture creation", icon: "edit-3", description: "Learning to identify opportunities, develop ideas and understand how ventures are planned." },
-  people: { key: "people", title: "People, groups and society", icon: "users", description: "Courses in this part help you examine the people, groups, institutions, cultures or systems named in the programme record." },
-  ideas: { key: "ideas", title: "Ideas and foundations", icon: "book-open", description: "Courses in this part introduce the concepts, history and theories used to make sense of the programme’s subject area." },
-  research: { key: "research", title: "Research and evidence", icon: "search", description: "Courses in this part show how the programme asks questions, gathers information, examines evidence and communicates findings." },
-  technology: { key: "technology", title: "Technology and information", icon: "monitor", description: "Courses in this part cover the digital applications and information practices recorded for the programme." },
-  application: { key: "application", title: "Using what you learn", icon: "edit-3", description: "Courses in this part show how the programme expects you to apply, explain, present or create something." },
-  african_societies: { key: "african_societies", title: "African and Nigerian societies", icon: "users", description: "These courses examine African and Nigerian social structures, cultures, histories and regional settings." },
-  social_change: { key: "social_change", title: "Social change and development", icon: "edit-3", description: "These courses explore how societies change, what shapes development and how those changes affect people and institutions." },
-  social_issues: { key: "social_issues", title: "Inequality, gender and social problems", icon: "users", description: "These courses examine inequality, gender relations, crime and other social problems, including their causes and effects." },
-  governance: { key: "governance", title: "Politics and organisations", icon: "layers", description: "These courses examine political life, collective action, formal organisations and how institutions work with society." },
-  applied_practice: { key: "applied_practice", title: "Social work and practical change", icon: "edit-3", description: "These courses connect social-science knowledge with social work, community services, innovation and practical responses to social needs." },
+  people: { key: "people", title: "People, groups and society", icon: "users", description: "How people, groups, institutions and cultures shape one another." },
+  ideas: { key: "ideas", title: "Ideas and foundations", icon: "book-open", description: "The main ideas, history and theories used to make sense of social life." },
+  research: { key: "research", title: "Research and evidence", icon: "search", description: "How you ask a question, gather information, check evidence and explain what you found." },
+  technology: { key: "technology", title: "Technology and information", icon: "monitor", description: "How digital tools and information are used to study people and society." },
+  application: { key: "application", title: "Using what you learn", icon: "edit-3", description: "How you apply, explain, present or create something from what you have studied." },
+  african_societies: { key: "african_societies", title: "African and Nigerian societies", icon: "users", description: "African and Nigerian social life, cultures, histories and places." },
+  social_change: { key: "social_change", title: "Social change and development", icon: "edit-3", description: "How societies change, what shapes that change, and how it affects people and institutions." },
+  social_issues: { key: "social_issues", title: "Inequality, gender and social problems", icon: "users", description: "Inequality, gender, crime and other social problems, including why they happen and what they do to people." },
+  governance: { key: "governance", title: "Politics and organisations", icon: "layers", description: "Political life, people acting together, organisations, and how institutions work with society." },
+  applied_practice: { key: "applied_practice", title: "Social work and practical change", icon: "edit-3", description: "Using what you learn to support people, communities and practical responses to social needs." },
 };
 
 const SOCIOLOGY_THEME_NARRATION: Partial<Record<ThemeKey, string>> = {
@@ -186,6 +187,19 @@ function resourcesForTheme(resources: CareerLearningResource[] | undefined, them
   });
 }
 
+function plainAbilityClauses(line: string): string[] {
+  const body = line.replace(/^You will\s+/i, "").replace(/\.\s*$/, "").trim();
+  const chunks = body
+    .split(/;\s+|,\s+(?:and\s+)?(?=(?:identify|analyse|analyze|explain|discuss|describe|apply|construct|practise|practice|write|distinguish|compare|evaluate|demonstrate|outline|examine|assess|develop|prepare|collect|design|interpret|use|show|list|state|define|recognise|recognize|relate|illustrate|calculate|choose|select|present|communicate|review|critique|formulate|propose|recommend|summarise|summarize)\b)/i)
+    .map((part) => part.trim().replace(/^and\s+/i, ""))
+    .filter((part) => part.length > 8);
+  const parts = chunks.length ? chunks : [body];
+  return parts.map((part) => {
+    const sentence = part.charAt(0).toUpperCase() + part.slice(1);
+    return /[.!?]$/.test(sentence) ? sentence : `${sentence}.`;
+  });
+}
+
 function abilityLinesForTheme(theme: Theme): AbilityLine[] {
   const outcomes = theme.courses.flatMap((course) => course.outcomes)
     .filter((outcome) => outcome.dataState === "source_backed" && cleanText(outcome.studentText));
@@ -197,7 +211,11 @@ function abilityLinesForTheme(theme: Theme): AbilityLine[] {
     && coveredIds.length === outcomeIds.size
     && new Set(coveredIds).size === coveredIds.length
     && coveredIds.every((id) => outcomeIds.has(id));
-  if (complete) return candidates.map((line) => ({ id: line.lineId, text: line.studentLine, outcomeIds: line.outcomeIds }));
+  if (complete) return candidates.flatMap((line) => plainAbilityClauses(line.studentLine).map((text, index) => ({
+    id: `${line.lineId}:${index}`,
+    text: explainTechnicalTerms(text),
+    outcomeIds: line.outcomeIds,
+  })));
 
   const distinct = new Map<string, AbilityLine>();
   outcomes.forEach((outcome, index) => {
@@ -206,7 +224,7 @@ function abilityLinesForTheme(theme: Theme): AbilityLine[] {
     const current = distinct.get(key);
     const id = outcome.outcomeId || `${theme.key}-fallback-${index}`;
     if (current) current.outcomeIds.push(id);
-    else distinct.set(key, { id, text, outcomeIds: [id] });
+    else distinct.set(key, { id, text: explainTechnicalTerms(text), outcomeIds: [id] });
   });
   return Array.from(distinct.values());
 }
@@ -268,6 +286,60 @@ function mainSociologyReadings(resources: CareerLearningResource[] | undefined):
       && resource.resourceType === "programme_reading"
       && primaryBookNames.has(cleanText(resource.targetName).toLocaleLowerCase())),
     (resource) => resource.targetName,
+  );
+}
+
+function freeSociologyAlternatives(resources: CareerLearningResource[] | undefined): CareerLearningResource[] {
+  const freeTitles = new Set([
+    "introduction to sociology 3e",
+    "introduction to sociology (noun courseware)",
+  ]);
+  return unique(
+    (resources ?? []).filter((resource) => isStudentResource(resource)
+      && resource.resourceType === "programme_reading"
+      && resource.accessType === "free"
+      && freeTitles.has(cleanText(resource.targetName).toLocaleLowerCase())),
+    (resource) => resource.targetName,
+  );
+}
+
+export function ProgrammeBooksLink({ resources }: { resources?: CareerLearningResource[] }) {
+  const { colors } = useTheme();
+  const [expanded, setExpanded] = useState(false);
+  const books = mainSociologyReadings(resources);
+  const freeAlternatives = freeSociologyAlternatives(resources);
+  if (!books.length) return null;
+  return (
+    <View style={styles.booksLinkRow}>
+      <TouchableOpacity
+        accessibilityRole="button"
+        accessibilityLabel={expanded ? "Hide Sociology books" : "Show Sociology books"}
+        accessibilityState={{ expanded }}
+        onPress={() => setExpanded((value) => !value)}
+        style={styles.booksLinkTrigger}
+      >
+        <Text style={[styles.booksLabel, { color: colors.accentRole.action }, CompassFonts.bodySemibold]}>Books</Text>
+        <Feather name={expanded ? "chevron-up" : "chevron-down"} size={14} color={colors.accentRole.action} />
+      </TouchableOpacity>
+      {expanded ? <View style={styles.booksList}>
+        <Text style={[styles.booksGroupHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Optional reference books</Text>
+        <Text style={[styles.booksGroupNote, { color: colors.textRole.secondary }]}>These books are useful references, but may require purchase or library access. They are not required for every Sociology student.</Text>
+        {books.map((book) => <ExternalLinkGuard key={book.id} url={book.url}
+          label={book.targetName === "Sociology" ? "Sociology by Giddens and Sutton (9th edition) · publisher/library access" : `${book.targetName} · publisher/library access`}
+          description={book.description || "Optional Sociology reference book. It is not a confirmed required text for every university."}
+          hideUnavailable style={styles.booksLinkButton} textStyle={styles.booksLinkText} />)}
+        {freeAlternatives.length ? <View style={styles.freeAlternativeGroup}>
+          <Text style={[styles.booksGroupHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Free learning alternatives</Text>
+          <Text style={[styles.booksGroupNote, { color: colors.textRole.secondary }]}>These are separate, legally free learning materials covering many of the same introductory Sociology themes; they are not free copies of the books above.</Text>
+          {freeAlternatives.map((resource) => <View key={resource.id} style={styles.freeAlternativeRow}>
+            <ExternalLinkGuard url={resource.url} label={resource.targetName}
+              description={resource.description || "Free Sociology learning material. Open it to read the resource and its access terms."}
+              hideUnavailable style={styles.booksLinkButton} textStyle={styles.booksLinkText} />
+            {resource.description ? <Text style={[styles.booksGroupNote, { color: colors.textRole.secondary }]}>{resource.description}</Text> : null}
+          </View>)}
+        </View> : null}
+      </View> : null}
+    </View>
   );
 }
 
@@ -347,7 +419,6 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
   const dimensions = useWindowDimensions();
   const [openThemes, setOpenThemes] = useState<Set<ThemeKey>>(() => new Set());
   const [expandedAbilities, setExpandedAbilities] = useState<Set<ThemeKey>>(() => new Set());
-  const [expandedNarration, setExpandedNarration] = useState<Set<ThemeKey>>(() => new Set());
   const [expandedReadingWhy, setExpandedReadingWhy] = useState<Set<string>>(() => new Set());
   const [themeCardWidths, setThemeCardWidths] = useState<Record<string, number>>({});
   const themeTitleRefs = React.useRef<Record<string, Text | null>>({});
@@ -385,11 +456,10 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
   }
 
   const visibleThemes = themesExpanded ? themes : themes.slice(0, INITIAL_THEMES);
-  const mainReadings = mainSociologyReadings(resources);
   return (
     <View style={styles.block}>
       <Text accessibilityRole="header" style={[styles.sectionHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What you will study</Text>
-      <Text style={[styles.intro, { color: colors.textRole.secondary }]}>Below is a list of things you will learn in this programme, grouped by common themes.</Text>
+      <Text style={[styles.intro, { color: colors.textRole.secondary }]}>Each theme is one part of what this programme covers. The short line is the summary. The longer paragraph is the full explanation of that part. Under it are the abilities the programme aims to help you develop by the end. Every recorded outcome for that theme is included.</Text>
       <View style={styles.themeGrid}>
         {visibleThemes.map((theme) => {
           const open = openThemeExplanations.has(theme.key);
@@ -400,61 +470,64 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
           const readingRows = readingRowsForTheme(resources, theme, themeGuidance, themeRelationships);
           const wideCard = (themeCardWidths[theme.key] ?? dimensions.width) >= WIDE_THEME_CARD;
           const expandedLines = expandedAbilities.has(theme.key);
-          const expandedWords = expandedNarration.has(theme.key);
           const shownLines = expandedLines ? lines : lines.slice(0, INITIAL_ABILITIES);
           const titleRef = (node: Text | null) => { themeTitleRefs.current[theme.key] = node; };
           const toggle = (setter: React.Dispatch<React.SetStateAction<Set<ThemeKey>>>) => setter((current) => toggleTheme(current, theme.key));
           const heading = <Text ref={titleRef} accessibilityRole="header" style={[styles.themeTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{theme.title}</Text>;
           const narration = <View style={styles.narrationBlock}>
-            <Text numberOfLines={expandedWords ? undefined : 2} style={[styles.themeDescription, { color: colors.textRole.secondary }]}>{theme.narration}</Text>
-            {theme.narration.length > 120 ? <TouchableOpacity accessibilityRole="button" onPress={() => toggle(setExpandedNarration)} style={styles.smallTextButton}><Text style={[styles.smallTextButtonLabel, { color: colors.accentRole.action }]}>{expandedWords ? "See less" : "See more"}</Text></TouchableOpacity> : null}
+            <Text style={[styles.abilityNote, { color: colors.textRole.muted }]}>In short</Text>
+            <Text style={[styles.themeDescription, { color: colors.textRole.secondary }]}>{THEME_META[theme.key].description}</Text>
+            <Text style={[styles.abilityNote, { color: colors.textRole.muted }]}>The full explanation</Text>
+            <Text style={[styles.themeDescription, { color: colors.textRole.secondary }]}>{explainTechnicalTerms(theme.narration)}</Text>
           </View>;
           const readingBand = <View style={[styles.readingBand, { borderTopColor: colors.borderRole.subtle }]}>
-            <Text style={[styles.readingBandTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Reading</Text>
+            <Text style={[styles.readingBandTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Resources for this theme</Text>
             {readingRows.length ? readingRows.map((row) => <View key={row.id} style={styles.readingRow}>
               <Text style={[styles.resourceKind, styles.readingKind, { color: colors.textRole.muted }]}>{row.kind}</Text>
               <Text style={[styles.readingTitle, { color: colors.textRole.primary }]}>{row.title}</Text>
-              <ExternalLinkGuard url={row.url} label="Open" description={row.description} style={[styles.readingOpen, { borderColor: colors.borderRole.subtle }]} textStyle={{ color: colors.accentRole.action }} />
+              <ExternalLinkGuard url={row.url} label="Open" description={row.description} style={styles.readingOpen} textStyle={{ color: colors.accentRole.action, fontSize: 12, lineHeight: 17 }} />
               {row.why ? <>
                 <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: expandedReadingWhy.has(row.id) }} onPress={() => setExpandedReadingWhy((current) => {
                   const next = new Set(current); if (next.has(row.id)) next.delete(row.id); else next.add(row.id); return next;
                 })} style={styles.whyButton}><Text style={[styles.whyButtonLabel, { color: colors.accentRole.action }]}>{expandedReadingWhy.has(row.id) ? "Hide why" : "Why included?"}</Text></TouchableOpacity>
                 {expandedReadingWhy.has(row.id) ? <Text style={[styles.courseMeta, { color: colors.textRole.secondary }]}>{row.why}</Text> : null}
               </> : null}
-            </View>) : <Text style={[styles.courseMeta, { color: colors.textRole.muted }]}>No reviewed reading is stored for this theme yet.</Text>}
+            </View>) : null}
           </View>;
           const abilityList = <View style={styles.abilityList}>
-            <Text style={[styles.abilityListTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>You will be able to</Text>
+            <Text style={[styles.abilityListTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What this part aims to help you develop by the end</Text>
             {shownLines.map((line) => <View key={line.id} style={styles.abilityLine}>
               <Text style={[styles.abilityBullet, { color: colors.accentRole.action }]}>•</Text>
               <Text style={[styles.abilityLineText, { color: colors.textRole.secondary }]}>{line.text}</Text>
             </View>)}
             {lines.length > INITIAL_ABILITIES ? <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: expandedLines }} onPress={() => toggle(setExpandedAbilities)} style={styles.moreButton}>
-              <Text style={[styles.moreText, { color: colors.accentRole.action }]}>{expandedLines ? "Show fewer abilities" : "See the rest of what you will be able to do"}</Text>
+              <Text style={[styles.moreText, { color: colors.accentRole.action }]}>{expandedLines ? "Show fewer abilities" : "See every ability in this theme"}</Text>
             </TouchableOpacity> : null}
-            <Text style={[styles.abilityNote, { color: colors.textRole.muted }]}>These abilities are drawn from the programme record for this theme.</Text>
+            <Text style={[styles.abilityNote, { color: colors.textRole.muted }]}>These are the abilities this part of the programme aims to help you develop by the end. Each line comes from the programme record for this theme, and together they cover every recorded outcome here.</Text>
           </View>;
           return (
             <View key={theme.key} onLayout={(event) => {
               const width = event.nativeEvent.layout.width;
               if (width && themeCardWidths[theme.key] !== width) setThemeCardWidths((current) => ({ ...current, [theme.key]: width }));
             }} style={[styles.themeCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-              {!cardOpen ? <TouchableOpacity accessibilityRole="button" accessibilityLabel={`Open ${theme.title}`} accessibilityState={{ expanded: false }} onPress={() => {
+              {!cardOpen ? <View style={styles.closedThemeCard}><TouchableOpacity accessibilityRole="button" accessibilityLabel={`Open ${theme.title}`} accessibilityState={{ expanded: false }} onPress={() => {
                 setOpenThemes((current) => toggleTheme(current, theme.key));
                 requestAnimationFrame(() => {
                   const node = themeTitleRefs.current[theme.key];
                   const handle = node ? findNodeHandle(node) : null;
                   if (handle != null) AccessibilityInfo.setAccessibilityFocus(handle);
                 });
-              }} style={styles.closedThemeCard}>
+              }} style={styles.closedThemeContent}>
                 <Text accessibilityRole="header" style={[styles.themeTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{theme.title}</Text>
                 <Text numberOfLines={2} style={[styles.closedThemeDescription, { color: colors.textRole.secondary }]}>{THEME_META[theme.key].description}</Text>
-                <Text style={[styles.courseMeta, { color: colors.textRole.muted }]}>{lines.length} {lines.length === 1 ? "ability" : "abilities"} · {readingRows.length} {readingRows.length === 1 ? "reading" : "readings"}</Text>
-              </TouchableOpacity> : <>
+                <Text style={[styles.courseMeta, { color: colors.textRole.muted }]}>{lines.length} {lines.length === 1 ? "theme outcome" : "theme outcomes"} · {readingRows.length} {readingRows.length === 1 ? "reading" : "readings"}</Text>
+              </TouchableOpacity>{readingRows.length ? <TouchableOpacity accessibilityRole="button" accessibilityLabel={`View ${readingRows.length} resources for ${theme.title}`} onPress={() => setOpenThemes((current) => toggleTheme(current, theme.key))} style={styles.themeResourcesButton}>
+                <Text style={[styles.resourceTinyLink, { color: colors.accentRole.action }]}>{`View ${readingRows.length} ${readingRows.length === 1 ? "resource" : "resources"}`}</Text>
+              </TouchableOpacity> : null}</View> : <>
                 {wideCard ? <View style={styles.openThemeWide}>
-                  <View style={styles.themeNarrationColumn}>{heading}{narration}{readingBand}</View>
+                  <View style={styles.themeNarrationColumn}>{heading}{narration}{readingRows.length ? readingBand : null}</View>
                   {abilityList}
-                </View> : <View style={styles.openThemeNarrow}>{heading}{narration}{readingBand}{abilityList}</View>}
+                </View> : <View style={styles.openThemeNarrow}>{heading}{narration}{readingRows.length ? readingBand : null}{abilityList}</View>}
                 <TouchableOpacity accessibilityRole="button" accessibilityLabel={`Close ${theme.title}`} accessibilityState={{ expanded: true }} onPress={() => setOpenThemes((current) => toggleTheme(current, theme.key))} style={styles.closeThemeButton}><Text style={[styles.smallTextButtonLabel, { color: colors.accentRole.action }]}>Close</Text></TouchableOpacity>
               {(guidanceForTheme(curriculumContract.themeGuidance, theme).length || relationshipsForTheme(curriculumContract.themeRelationships, theme).length) ? <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: open }} onPress={() => setOpenThemeExplanations((current) => toggleTheme(current, theme.key))} style={styles.moreButton}>
                  <Text style={[styles.moreText, { color: colors.accentRole.action }]}>{open ? "Hide theme explanations" : "Explore the ideas and connections"}</Text>
@@ -525,27 +598,6 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
       </View>
       {themes.length > INITIAL_THEMES ? <TouchableOpacity accessibilityRole="button" accessibilityLabel={themesExpanded ? "Show fewer learning areas" : `See all ${themes.length} learning areas`} accessibilityState={{ expanded: themesExpanded }} onPress={() => setThemesExpanded((value) => !value)} style={styles.moreButton}><Text style={[styles.moreText, { color: colors.accentRole.action }]}>{themesExpanded ? "Show fewer learning areas" : `See all ${themes.length} learning areas`}</Text></TouchableOpacity> : null}
 
-      {mainReadings.length ? (
-        <View style={[styles.mainReadingCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-          <Text accessibilityRole="header" style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Main Sociology books</Text>
-          <Text style={[styles.courseMeta, { color: colors.textRole.secondary }]}>Optional reference books for exploring Sociology beyond the programme overview. Use a library or publisher copy.</Text>
-          {mainReadings.map((resource) => {
-            const giddensBook = cleanText(resource.targetName).toLocaleLowerCase() === "sociology";
-            return (
-              <View key={resource.id} style={[styles.mainReadingRow, { borderTopColor: colors.borderRole.subtle }]}>
-                <View style={styles.resourceCopy}>
-                  <Text style={[styles.courseTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{giddensBook ? "Sociology — Anthony Giddens and Philip W. Sutton" : resource.targetName}</Text>
-                  {giddensBook ? <Text style={[styles.mainReadingTheme, { color: colors.accentRole.action }]}>Theme: Ideas and foundations</Text> : null}
-                  <Text style={[styles.courseMeta, { color: colors.textRole.secondary }]}>{resource.description || "Optional Sociology reference book."}</Text>
-                  <Text style={[styles.courseMeta, { color: colors.textRole.muted }]}>Paid or library access · optional reading, not a programme requirement</Text>
-                </View>
-                <ExternalLinkGuard url={resource.url} label="Open publisher page" description={`${resource.targetName}. Optional publisher reference.`} style={[styles.resourceButton, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]} textStyle={{ color: colors.accentRole.action }} />
-              </View>
-            );
-          })}
-        </View>
-      ) : null}
-
       {/* Course outcomes already carry the programme's learning abilities and
           are shown in their relevant theme above. The separate ability list is
           only a fallback for contracts that have abilities but no course
@@ -585,6 +637,9 @@ const styles = StyleSheet.create({
   themeGrid: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
   themeCard: { flex: 1, minWidth: 280, borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.md, padding: 12, gap: 8 },
   closedThemeCard: { minHeight: 72, justifyContent: "center", gap: 3 },
+  closedThemeContent: { gap: 3 },
+  themeResourcesButton: { minHeight: 44, alignSelf: "flex-start", justifyContent: "center", paddingHorizontal: 2 },
+  resourceTinyLink: { fontSize: 15, lineHeight: 22, ...CompassFonts.bodySemibold },
   closedThemeDescription: { fontSize: 14, lineHeight: 20 },
   openThemeWide: { flexDirection: "row", alignItems: "flex-start", gap: 16 },
   openThemeNarrow: { flexDirection: "column", gap: 8 },
@@ -593,11 +648,11 @@ const styles = StyleSheet.create({
   smallTextButton: { alignSelf: "flex-start", minHeight: 36, justifyContent: "center", paddingVertical: 4 },
   smallTextButtonLabel: { fontSize: 14, lineHeight: 20, ...CompassFonts.bodySemibold },
   readingBand: { borderTopWidth: StyleSheet.hairlineWidth, paddingTop: 8, gap: 6, marginTop: 4 },
-  readingBandTitle: { fontSize: 15, lineHeight: 21 },
-  readingRow: { minHeight: 44, flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: 6, paddingVertical: 4 },
-  readingKind: { fontSize: 12, lineHeight: 18, paddingHorizontal: 6, paddingVertical: 2, borderRadius: 8, backgroundColor: "rgba(120,120,120,0.10)" },
-  readingTitle: { flex: 1, minWidth: 120, fontSize: 14, lineHeight: 20 },
-  readingOpen: { minHeight: 44, minWidth: 52, alignItems: "center", justifyContent: "center", borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.sm, paddingHorizontal: 8 },
+  readingBandTitle: { fontSize: 15, lineHeight: 22 },
+  readingRow: { minHeight: 44, flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: 4, paddingVertical: 2 },
+  readingKind: { fontSize: 12, lineHeight: 17, paddingHorizontal: 5, paddingVertical: 2, borderRadius: 6, backgroundColor: "rgba(120,120,120,0.08)" },
+  readingTitle: { flex: 1, minWidth: 120, fontSize: 15, lineHeight: 22 },
+  readingOpen: { minHeight: 44, minWidth: 44, alignItems: "center", justifyContent: "center", paddingHorizontal: 2 },
   whyButton: { minHeight: 40, justifyContent: "center", paddingHorizontal: 4 },
   whyButtonLabel: { fontSize: 12, lineHeight: 18, ...CompassFonts.bodySemibold },
   abilityList: { flex: 58, minWidth: 0, gap: 8 },
@@ -615,9 +670,9 @@ const styles = StyleSheet.create({
   linkHeading: { fontSize: 20, lineHeight: 26, ...CompassFonts.bodySemibold },
   linkRow: { flexDirection: "row", alignItems: "flex-start", gap: Spacing.sm },
   resourceCopy: { flex: 1, gap: 2 },
-  resourceButton: { minHeight: 44, justifyContent: "center", alignItems: "center", borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.sm, paddingHorizontal: Spacing.sm, paddingVertical: Spacing.xs },
-  resourceKind: { fontSize: 13, lineHeight: 19, fontWeight: "800" },
-  resourceProvider: { fontSize: 13, lineHeight: 19 },
+  resourceButton: { minHeight: 44, justifyContent: "center", alignItems: "center", paddingHorizontal: 2 },
+  resourceKind: { fontSize: 14, lineHeight: 20, fontWeight: "800" },
+  resourceProvider: { fontSize: 14, lineHeight: 20 },
   linkName: { fontSize: 16, lineHeight: 24 },
   moreButton: { alignSelf: "flex-start", minHeight: 44, justifyContent: "center", paddingVertical: Spacing.xs },
   moreText: { fontSize: 16, lineHeight: 20, ...CompassFonts.bodySemibold },
@@ -629,14 +684,24 @@ const styles = StyleSheet.create({
   outcomeCard: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.sm, padding: Spacing.sm },
   guidanceLabel: { fontSize: 16, lineHeight: 22, ...CompassFonts.bodySemibold },
   guidanceSources: { gap: 2, paddingTop: Spacing.xs },
-  guidanceSourceLink: { alignSelf: "flex-start", minHeight: 44, justifyContent: "center", paddingVertical: Spacing.xs },
+  guidanceSourceLink: { alignSelf: "flex-start", minHeight: 44, justifyContent: "center", paddingHorizontal: 2 },
   guidanceLearning: { flexDirection: "row", alignItems: "flex-start", gap: Spacing.sm, borderTopWidth: StyleSheet.hairlineWidth, paddingTop: Spacing.xs },
   courseTitle: { fontSize: 16, lineHeight: 22 },
   courseSummary: { fontSize: 16, lineHeight: 24 },
   abilitiesCard: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm },
   mainReadingCard: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm },
   mainReadingRow: { flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: Spacing.sm, borderTopWidth: StyleSheet.hairlineWidth, paddingTop: Spacing.sm },
-  mainReadingTheme: { fontSize: 13, lineHeight: 19, ...CompassFonts.bodySemibold },
+  mainReadingTheme: { fontSize: 14, lineHeight: 20, ...CompassFonts.bodySemibold },
+  booksLinkRow: { alignSelf: "flex-start", gap: Spacing.xs, paddingVertical: 2 },
+  booksLinkTrigger: { minHeight: 44, minWidth: 44, flexDirection: "row", alignItems: "center", justifyContent: "flex-start", gap: 4 },
+  booksLabel: { fontSize: 15, lineHeight: 22 },
+  booksList: { gap: 2, paddingLeft: Spacing.sm },
+  booksGroupHeading: { fontSize: 15, lineHeight: 22, marginTop: Spacing.xs },
+  booksGroupNote: { fontSize: 14, lineHeight: 20 },
+  freeAlternativeGroup: { gap: 4, marginTop: Spacing.sm, paddingTop: Spacing.sm, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: "#D7DCE4" },
+  freeAlternativeRow: { gap: 2 },
+  booksLinkButton: { minHeight: 44, minWidth: 44, alignSelf: "flex-start", paddingHorizontal: 0, paddingVertical: 0, borderWidth: 0, borderRadius: 0 },
+  booksLinkText: { fontSize: 15, lineHeight: 22 },
   detailHeading: { fontSize: 20, lineHeight: 26, ...CompassFonts.bodySemibold },
   abilitiesIntro: { fontSize: 16, lineHeight: 24 },
   abilityGrid: { flexDirection: "row", flexWrap: "wrap", gap: 8 },

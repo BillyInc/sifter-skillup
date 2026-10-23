@@ -51,7 +51,7 @@ type FilterKey = "all" | "elite" | string;
 
 // ─── Cluster identity map (from shared source) ─────────────
 
-export function DomainExplorerScreen() {
+export function DomainExplorerScreen({ intent = "explore" }: { intent?: "explore" | "build" }) {
   const { colors } = useTheme();
   const router = useRouter();
   const exploreNav = useExploreNav();
@@ -154,8 +154,8 @@ export function DomainExplorerScreen() {
             <DomainIcon cluster="Technology" size={22} rounded />
           </View>
           <Text style={[styles.eyebrow, { color: colors.accentRole.action }]}>CAREER MAP</Text>
-          <Text style={[styles.guestTitle, { color: colors.textRole.primary }]}>Explore fields, domains and roles</Text>
-          <Text style={[styles.guestBody, { color: colors.textRole.secondary }]}>Create an account to browse the full field map and save the domains, subgroups and roles that interest you.</Text>
+          <Text style={[styles.guestTitle, { color: colors.textRole.primary }]}>{intent === "build" ? "Things you can build in each domain" : "Explore fields, domains and roles"}</Text>
+          <Text style={[styles.guestBody, { color: colors.textRole.secondary }]}>{intent === "build" ? "Create an account to explore project, service and venture ideas connected to each field." : "Create an account to browse the full field map and save the domains, subgroups and roles that interest you."}</Text>
           <TouchableOpacity onPress={() => router.push("/(auth)/signup" as never)} style={styles.guestAction}>
             <Text style={[styles.guestActionText, { color: colors.accentRole.action }]}>Create account to start →</Text>
           </TouchableOpacity>
@@ -187,7 +187,7 @@ export function DomainExplorerScreen() {
           { color: colors.textRole.primary },
         ]}
       >
-        Choose a field to explore
+        {intent === "build" ? "Things you can build in each domain" : "Choose a field to explore"}
       </Text>
       <Text
         style={[
@@ -196,7 +196,7 @@ export function DomainExplorerScreen() {
           { color: colors.textRole.secondary },
         ]}
       >
-        Explore the domains, skills and roles inside each field. {counts}
+        {intent === "build" ? "Choose a domain to explore projects, services and ventures that could grow from its work." : "Explore the domains, skills and roles inside each field."} {counts}
       </Text>
 
       <SearchBar
@@ -285,7 +285,9 @@ export function DomainExplorerScreen() {
                         <View key={d.id} style={[styles.domainItem, { width: resp.isMobile ? "100%" : "48%" }]}>
                           <TouchableOpacity
                           activeOpacity={0.85}
-                          onPress={() => exploreNav.domain(router, d.id)}
+                          onPress={() => intent === "build"
+                            ? exploreNav.entrepreneurship(router, { domainId: d.id })
+                            : exploreNav.domain(router, d.id)}
                           style={[
                             styles.domainCard,
                             {
@@ -306,7 +308,7 @@ export function DomainExplorerScreen() {
                               <View style={[styles.domainIcon, { backgroundColor: getClusterColor(g.cluster) + "14" }]}>
                                 <Feather name="compass" size={16} color={getClusterColor(g.cluster)} />
                               </View>
-                              <Text style={[styles.domainCardAction, { color: colors.textRole.muted }]}>Explore field <Feather name="arrow-up-right" size={13} color={colors.textRole.muted} /></Text>
+                              <Text style={[styles.domainCardAction, { color: colors.textRole.muted }]}>{intent === "build" ? "Build in this domain" : "Explore field"} <Feather name="arrow-up-right" size={13} color={colors.textRole.muted} /></Text>
                             </View>
                             <Text
                               style={[

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import React, { createContext, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { AccessibilityInfo, Animated, Easing, findNodeHandle, Modal, Platform, Pressable, StyleSheet, Text, View, useWindowDimensions, type ViewStyle } from "react-native";
 import { useRouter } from "expo-router";
 import { CompassFonts, Radius, Spacing, useTheme } from "@/theme";
@@ -18,8 +18,6 @@ import type { DomainRoleSummary } from "@/types/career";
 import type { ProgrammeDomainConnection } from "@/types/career";
 import type { CareerLearningResource, DataState } from "@/types/career";
 import { CompactResourceRow } from "@/components/careerIntelligence/CompactResourceRow";
-import { FlowCue } from "@/components/guidance/FlowCue";
-import { D078_AREA_CUE, D078_AREA_LIST_CUE, D078_ROLE_CUE, d078FieldCue } from "@/lib/studentFlowCopy";
 import { D078RelationshipPanel } from "@/components/careerIntelligence/D078RelationshipPanel";
 import { resourcesForItem } from "@/components/careerIntelligence/resourceLinks";
 import { d078RouteStacksFromSnapshot, d078SelectionFromSnapshot } from "@/lib/d078Snapshot";
@@ -35,6 +33,7 @@ import {
   type D078RouteStackState,
 } from "@/lib/d078RouteStacks";
 import { useDetailScroll, useDetailViewportOverlay } from "@/components/careerIntelligence/DetailScrollContext";
+import { usePersistentLearningPlanDock } from "@/components/careerIntelligence/PersistentLearningPlanDock";
 import {
   INITIAL_D078_SELECTION,
   d078ApplicableLayerItems,
@@ -195,27 +194,32 @@ export function d078RelationshipScrollOffset(currentOffset: number, cardWindowY:
 }
 
 export function D078JourneyPage({ stage, tray, trayRevision, children }: { stage: "field" | "area" | "role"; tray: React.ReactNode; trayRevision?: string | number; children: React.ReactNode }) {
-  const { width } = useWindowDimensions();
-  const desktop = isWideD078Layout(width, Platform.OS);
   const viewportOverlay = useDetailViewportOverlay();
+  const persistentDock = usePersistentLearningPlanDock();
   const trayRef = useRef(tray);
   trayRef.current = tray;
   // The overlay is rendered by DetailScaffold, outside this subtree. A ref
   // keeps the latest tray content; the semantic revision asks the owner to
   // rerender only when the actual route selection changes (not every render).
-  const renderViewportDock = React.useCallback(() => <View style={Platform.OS === "web" ? styles.mobileTrayDockWeb : styles.mobileTrayDockNative}>{trayRef.current}</View>, [trayRevision]);
-  const useFixedViewportDock = shouldUseD078ViewportTrayDock(width, Platform.OS, Boolean(viewportOverlay));
-  useEffect(() => {
-    if (!useFixedViewportDock || !viewportOverlay) return;
-    viewportOverlay.setOverlay(renderViewportDock);
-    return () => viewportOverlay.setOverlay(null);
-  }, [useFixedViewportDock, viewportOverlay?.setOverlay, renderViewportDock, trayRevision]);
-  return <View style={[styles.journeyLayout, desktop && styles.journeyLayoutWide]} testID={`d078-full-screen-${stage}-stage`}>
-    <View style={[styles.readingColumn, desktop && styles.readingColumnWide]}>
+  const renderViewportDock = React.useCallback(() => trayRef.current, [trayRevision]);
+  useLayoutEffect(() => {
+    if (persistentDock) {
+      // Keep the same activation identity as the learner moves from field to
+      // area to role. Dismissing the tray must remain effective across those
+      // screens; a changed route selection (trayRevision) can reopen it.
+      persistentDock.register(renderViewportDock, `${trayRevision ?? "initial"}`);
+      return;
+    }
+    if (viewportOverlay) {
+      viewportOverlay.setOverlay(() => <View pointerEvents="box-none" style={Platform.OS === "web" ? styles.learningPlanDockWeb : styles.learningPlanDockNative}>{renderViewportDock()}</View>);
+      return () => viewportOverlay.setOverlay(null);
+    }
+  }, [persistentDock?.register, viewportOverlay?.setOverlay, renderViewportDock, stage, trayRevision]);
+  return <View style={styles.journeyLayout} testID={`d078-full-screen-${stage}-stage`}>
+    <View style={styles.readingColumn}>
       {children}
-      {!desktop && !useFixedViewportDock ? tray : null}
+      {!viewportOverlay && !persistentDock ? <View style={styles.learningPlanFallbackDock}>{tray}</View> : null}
     </View>
-    {desktop ? <View style={styles.trayRail}>{tray}</View> : null}
   </View>;
 }
 
@@ -224,7 +228,11 @@ export function isWideD078Layout(width: number, platform: string): boolean {
 }
 
 export function d078DefaultTrayMode(width: number, platform: string): GuidedLearningTrayMode {
-  return isWideD078Layout(width, platform) ? "mid" : "icon";
+  // Keep the plan dock compact on every viewport; the learner opens it when
+  // they need to inspect or manage the selected route.
+  void width;
+  void platform;
+  return "icon";
 }
 
 export function d078PrimaryActionStyle(width: number, platform: string): ViewStyle {
@@ -258,7 +266,7 @@ export function d078TraySheetStyle(width: number, mode: GuidedLearningTrayMode =
 }
 
 export function shouldUseD078ViewportTrayDock(width: number, platform: string, hasViewportOverlay: boolean): boolean {
-  return !isWideD078Layout(width, platform) && hasViewportOverlay;
+  return hasViewportOverlay;
 }
 
 function displayText(value: unknown): string {
@@ -551,7 +559,6 @@ export function D078AreaResults({ projection, onOpenArea, headingRef }: {
   }, []);
 
   return <View style={styles.section}>
-    <FlowCue {...D078_AREA_LIST_CUE} />
     <Text ref={headingRef} accessibilityRole="header" style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Areas for what you selected</Text>
     <Text style={[styles.body, { color: colors.textRole.secondary }]}>Only areas connected to your selected method or named combined research design appear here. The order reflects the reviewed route evidence for your selection.</Text>
     <View style={styles.areaCardList}>{renderedAreas.map((area) => {
@@ -631,13 +638,18 @@ function d078TrayContext(selection: D078Selection, projection: D078Projection, p
     active,
     routeLabel: [programmeName, "Social Sciences"].filter(Boolean).join(" · "),
     programmeLabel: programmeName,
+    programmeId: context.programmeId,
     institutionContextLabel: context.schoolId ? "Institution context selected" : undefined,
+    institutionId: context.schoolId,
     domainLabel: "Social Sciences",
+    domainId: context.domainId,
     choices,
     foundations: projection.foundations.map((foundation) => foundation.label),
     selectedItems,
     areaLabel: projection.visibleAreas.find((area) => area.areaId === selection.areaId)?.label,
+    areaId: selection.areaId,
     roleLabel: projection.visibleRoles.find((role) => role.roleId === selection.roleId)?.label,
+    roleId: selection.roleId,
     onRemoveChoice: () => undefined,
     onRemoveItem: () => undefined,
   };
@@ -671,13 +683,15 @@ function D078JourneyTray({ selection, setSelection, projection, context, program
   const { width } = useWindowDimensions();
   const insets = useSafeAreaInsets();
   const reducedMotion = useReducedMotion();
-  const desktopRail = isWideD078Layout(width, Platform.OS);
-  const [mode, setMode] = useState<GuidedLearningTrayMode>(() => (desktopRail ? "mid" : "icon"));
+  const persistentDock = usePersistentLearningPlanDock();
+  // The same small bottom dock is used on desktop and mobile. A permanent
+  // right rail consumed page width while the plan was collapsed.
+  const desktopRail = false;
+  const [mode, setMode] = useState<GuidedLearningTrayMode>(() => context.areaId || context.roleId ? "compact" : "icon");
   const [notice, setNotice] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
-  useEffect(() => {
-    setMode((current) => desktopRail ? (current === "icon" ? "mid" : current) : "icon");
-  }, [desktopRail]);
+  const draftSaveSequence = useRef(0);
+  const draftSaveQueue = useRef<Promise<void>>(Promise.resolve());
   const routeContexts = routeStackState.stacks.map((stack) => {
     const stackProjection = projectD078Route(stack.selection);
     const route = d078TrayContext(stack.selection, stackProjection, programmeName, context, stack.id, stack.id === routeStackState.activeStackId);
@@ -712,15 +726,49 @@ function D078JourneyTray({ selection, setSelection, projection, context, program
   });
   const choiceCount = selection.methodIds.length + selection.combinationIds.length + Object.values(selection.componentMethodIds).reduce((sum, methods) => sum + methods.length, 0);
   const dropKey = `${choiceCount}:${selection.addedItemIds.length}`;
+  const routeRevision = JSON.stringify(routeStackState);
+  const lastDraftRevision = useRef("");
+  useEffect(() => {
+    if (lastDraftRevision.current === routeRevision) return;
+    lastDraftRevision.current = routeRevision;
+    const hasSelection = routeStackState.stacks.some((stack) => {
+      const value = stack.selection;
+      return value.methodIds.length > 0 || value.combinationIds.length > 0
+        || Object.values(value.componentMethodIds).some((ids) => ids.length > 0)
+        || value.addedItemIds.length > 0 || Boolean(value.areaId || value.roleId);
+    });
+    if (!hasSelection) return;
+    const sequence = ++draftSaveSequence.current;
+    setNotice(null);
+    // Saving is deliberately detached from the selection render. The tray and
+    // check state are already visible before this queued write can begin.
+    draftSaveQueue.current = draftSaveQueue.current.catch(() => undefined).then(async () => {
+      try {
+        const result = await saveD078Selection(selection, context, programmeName, routeStackState);
+        if (sequence === draftSaveSequence.current && result !== "saved") {
+          setNotice("Held on this device. It will save when you are online.");
+        }
+      } catch {
+        if (sequence === draftSaveSequence.current) setNotice("Held on this device. It will save when you are online.");
+      }
+    });
+  }, [routeRevision, routeStackState, selection, context, programmeName]);
+  const previousDropKey = useRef(dropKey);
+  const displayMode = previousDropKey.current !== dropKey ? "compact" : mode;
+  useEffect(() => {
+    if (previousDropKey.current === dropKey) return;
+    previousDropKey.current = dropKey;
+    setMode("compact");
+  }, [dropKey]);
   const onSave = async () => {
     if (saving) return;
     setSaving(true);
     setNotice(null);
     try {
       const saved = await saveD078Selection(selection, context, programmeName, routeStackState);
-      setNotice(saved === "saved" ? "Saved this route to My World." : "Your route is held on this device until it can sync.");
+      setNotice(saved === "saved" ? "Saved this route to My World." : "Held on this device. It will save when you are online.");
     } catch {
-      setNotice("Could not save this route yet. Try again when you are online.");
+      setNotice("Held on this device. It will save when you are online.");
     } finally {
       setSaving(false);
     }
@@ -761,19 +809,20 @@ function D078JourneyTray({ selection, setSelection, projection, context, program
       dropKey={dropKey}
       pendingDropLabel="Added to your route"
       onModeChange={setMode}
-      style={initialMode === "full" ? styles.trayFull : undefined}
+      onDismiss={persistentDock?.dismiss}
+      style={initialMode === "full" ? styles.trayFull : initialMode === "mid" ? [styles.trayPanelMid, { width: Math.max(200, Math.min(420, width - 32)) }] : initialMode === "compact" ? [styles.trayPanelCompact, { width: Math.max(200, Math.min(340, width - 32)) }] : undefined}
       onSave={onSave}
       onPrint={onPrint}
       onShare={onShare}
     />;
   if (!desktopRail) return <>
     <View style={[styles.mobileTrayDock, Platform.OS === "web" ? styles.mobileTrayDockWeb : styles.mobileTrayDockNative]}>
-      {renderTray("icon", true)}
+      {renderTray(displayMode === "full" ? "icon" : displayMode, displayMode === "full")}
     </View>
-    <Modal transparent visible={mode !== "icon"} animationType={reducedMotion ? "none" : "slide"} onRequestClose={() => setMode("icon")}>
+    <Modal transparent visible={displayMode === "full"} animationType={reducedMotion ? "none" : "slide"} onRequestClose={() => setMode("icon")}>
       <View style={styles.mobileTrayBackdrop}>
         <Pressable accessibilityRole="button" accessibilityLabel="Close learning plan tray" onPress={() => setMode("icon")} style={StyleSheet.absoluteFill} />
-        <View style={[styles.mobileTraySheet, d078TraySheetStyle(width, mode), mode === "full" ? {
+        <View style={[styles.mobileTraySheet, d078TraySheetStyle(width, "full"), {
           borderTopWidth: 0,
           borderTopLeftRadius: 0,
           borderTopRightRadius: 0,
@@ -781,8 +830,8 @@ function D078JourneyTray({ selection, setSelection, projection, context, program
           paddingBottom: Math.max(insets.bottom, Spacing.md),
           paddingLeft: Math.max(insets.left, Spacing.md),
           paddingRight: Math.max(insets.right, Spacing.md),
-        } : null, { backgroundColor: colors.surface.base, borderColor: colors.borderRole.subtle }]}>
-          {renderTray(mode)}
+        }, { backgroundColor: colors.surface.base, borderColor: colors.borderRole.subtle }]}>
+          {renderTray("full")}
           {saving || notice ? <Text accessibilityLiveRegion="polite" style={styles.trayNotice}>{saving ? "Saving your route…" : notice}</Text> : null}
         </View>
       </View>
@@ -988,6 +1037,7 @@ export function D078MethodAwareJourney({ domainKey, programmeName, programmeConn
   const resultOpacity = useRef(new Animated.Value(1)).current;
   const resultOffset = useRef(new Animated.Value(0)).current;
   const [themesExpanded, setThemesExpanded] = useState(false);
+  const [outcomesExpanded, setOutcomesExpanded] = useState(false);
   const projection = useMemo(() => projectD078Route(selection), [selection]);
   useEffect(() => {
     if (!methodChangePending.current) {
@@ -1060,7 +1110,6 @@ export function D078MethodAwareJourney({ domainKey, programmeName, programmeConn
   }, [domainKey, guidanceContext.guidanceStudentId, guidanceContext.programmeId, initialSelection]);
   const overviewNode = d078Node("domain:D078");
   const societyKnowledge = d078Node("runtime-item:domain:d078:d078-society-and-social-world-knowledge");
-  const overviewEvidence = Array.isArray(overviewNode?.overview_evidence) ? overviewNode.overview_evidence as Array<{ title?: string; url?: string; locator?: string }> : [];
   const programmeThemes = programmeConnection?.programmeCurriculumThemes ?? [];
   const matchedThemeIds = new Set((graph.programme_transition.evidence_matched_theme_ids as string[] | undefined) ?? []);
   const matchedThemeKeys = new Set([...matchedThemeIds].map((id) => id.split(":").at(-1)?.toLocaleLowerCase()).filter((id): id is string => Boolean(id)));
@@ -1086,7 +1135,12 @@ export function D078MethodAwareJourney({ domainKey, programmeName, programmeConn
   const layer2 = graph.domain_learning_layers.find((layer) => layer.layer === 2);
   const layer3 = graph.domain_learning_layers.find((layer) => layer.layer === 3);
   const layerItemIds = new Set([...(layer2?.item_ids ?? []), ...(layer3?.item_ids ?? [])]);
-  const layer2Ids = d078ApplicableLayerItems(2, selection).filter((id) => Boolean(d078Node(id)));
+  const societyKnowledgeId = "runtime-item:domain:d078:d078-society-and-social-world-knowledge";
+  // Society/social-world knowledge is field orientation, not a method-gated
+  // preparation item. Show it before the method choice and keep the remaining
+  // Layer 2 items gated to the selected method/design.
+  const layer2Ids = d078ApplicableLayerItems(2, selection)
+    .filter((id) => id !== societyKnowledgeId && Boolean(d078Node(id)));
   const layer3Ids = d078ApplicableLayerItems(3, selection).filter((id) => Boolean(d078Node(id)));
   const allDomainIds = [...new Set([...projection.domainItemIds, ...projection.toolIds])].filter((id) => !layerItemIds.has(id));
   const neededDomainIds = allDomainIds.filter((id) => requirementLane(d078Node(id)) === "needed");
@@ -1139,23 +1193,9 @@ export function D078MethodAwareJourney({ domainKey, programmeName, programmeConn
   return <D078RelationshipNavigationProvider><Animated.View style={[styles.page, stageEntry.entryStyle]}>
     <D078JourneyPage stage="field" trayRevision={JSON.stringify(routeStackState)} tray={<D078JourneyTray selection={selection} setSelection={updateSelection} projection={projection} context={{ ...guidanceContext, domainId: domainKey }} programmeName={programmeName} routeStackState={routeStackState} setRouteStackState={setRouteStackState} />}>
     <View style={[styles.fieldEntryRow, width >= 700 && styles.fieldEntryRowWide]}>
-      <View style={[styles.buildEntryCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }, width >= 700 && styles.fieldEntryCardWide]} testID="d078-build-domain-entry">
-        <Text accessibilityRole="header" style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What can you build in this domain?</Text>
-        <Text style={[styles.body, { color: colors.textRole.secondary }]}>Explore Build as a separate space for projects, services and ventures connected to this field. It is independent of this learning path.</Text>
-        <RouteButton label="Open Build in this domain" variant="secondary" style={styles.buildEntryAction} onPress={() => exploreNav.entrepreneurship(router, { ...guidanceContext, domainId: domainKey })} />
-      </View>
       <View style={[styles.hero, styles.fieldOverviewCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }, width >= 700 && styles.fieldEntryCardWide]}>
-        <FlowCue {...d078FieldCue(selection.methodIds.length + selection.combinationIds.length > 0)} />
         <Text ref={stageEntry.titleRef} accessibilityRole="header" style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{FIELD_TITLE}</Text>
         <Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(graph.programme_transition.domain_overview ?? overviewNode?.overview)}</Text>
-        {societyKnowledge?.label ? <View style={[styles.domainKnowledgeNote, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
-          <Text accessibilityRole="header" style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Knowledge of society and the social world</Text>
-          <Text style={[styles.body, { color: colors.textRole.secondary }]}>{societyKnowledge.label}. This is field context for the methods and routes below, not a method choice or an extra compulsory checkpoint.</Text>
-        </View> : null}
-        {overviewEvidence.length ? <View style={styles.overviewSources}>
-          <Text style={[styles.meta, { color: colors.textRole.muted }]}>Sources for this field overview</Text>
-          {overviewEvidence.map((source) => source.url ? <ExternalLinkGuard key={`${source.title}:${source.url}`} url={source.url} label={source.title ?? "Open source"} description={source.locator ?? "Source supporting this field overview."} textStyle={[styles.sourceLink, { color: colors.accentRole.action }]} /> : null)}
-        </View> : null}
       </View>
     </View>
     <View style={[styles.handoff, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
@@ -1173,19 +1213,19 @@ export function D078MethodAwareJourney({ domainKey, programmeName, programmeConn
       </View>
       <View style={styles.detailSection}>
         <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What carries into this field</Text>
-        <Text style={[styles.body, { color: colors.textRole.secondary }]}>These course outcomes give you a starting point for learning in this field. They do not mean your programme has already covered every later item.</Text>
-        {matchedOutcomes.length ? matchedOutcomes.map((outcome) => <View key={outcome.outcomeId} style={[styles.themeRow, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
+        <Text style={[styles.compactContextCopy, { color: colors.textRole.secondary }]}>{matchedOutcomes.length
+          ? `${matchedOutcomes.length} reviewed course outcomes connect selected Sociology themes to this field. Open them to see the course and outcome wording; they are starting points, not proof that every later skill has already been taught.`
+          : "No individual course outcomes are available to show how your programme connects to this field."}</Text>
+        {matchedOutcomes.length ? <RouteButton accessibilityLabel={outcomesExpanded ? "Hide matched course outcomes" : `See ${matchedOutcomes.length} matched course outcomes`} label={outcomesExpanded ? "Hide course outcomes" : `See ${matchedOutcomes.length} matched course outcomes`} expanded={outcomesExpanded} onPress={() => setOutcomesExpanded((value) => !value)} variant="secondary" style={styles.accordionButton} /> : null}
+        {outcomesExpanded ? matchedOutcomes.map((outcome) => <View key={outcome.outcomeId} style={[styles.themeRow, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
           <Text style={[styles.meta, { color: colors.textRole.muted }]}>{outcome.themeTitle}</Text>
           {outcome.courseTitle ? <Text style={[styles.courseHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{outcome.courseTitle}</Text> : null}
           <Text style={[styles.body, { color: colors.textRole.secondary }]}>{outcome.studentText}</Text>
-        </View>) : <Text style={[styles.body, { color: colors.textRole.muted }]}>No individual course outcomes are available to show how your programme connects to this field.</Text>}
-      </View>
-      <View style={styles.detailSection}>
-        <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What this path does not establish</Text>
-        <Text style={[styles.body, { color: colors.textRole.secondary }]}>It does not claim that your degree has already taught the later additions or that every employer requires every item.</Text>
+        </View>) : null}
       </View>
     </View>
     <ItemLane title="Compulsory foundations" ids={foundations} selection={selection} foundations resources={domainResources} />
+    <ItemLane title="Knowledge of society and the social world" ids={societyKnowledge?.label ? [societyKnowledgeId] : []} selection={selection} onToggle={toggleItem} resources={domainResources} />
     <MethodChoicePanel
       selection={selection}
       onToggleMethod={(id) => methodsChanged(toggleD078Method(selection, id))}
@@ -1308,7 +1348,6 @@ export function D078AreaRoute({ domainKey, areaId, initialSelection, initialRout
 
   return <D078RelationshipNavigationProvider><Animated.View style={[styles.page, stageEntry.entryStyle]}>
     <D078JourneyPage stage="area" trayRevision={JSON.stringify(routeStackState)} tray={<D078JourneyTray selection={selection} setSelection={setSelection} onRemoveChoice={removeAreaChoice} projection={projection} context={{ ...guidanceContext, domainId: domainKey, areaId: normalizedAreaId }} routeStackState={routeStackState} setRouteStackState={setRouteStackState} onActivateRoute={(next, state) => router.replace(`${exploreNav.base}/domain/D078?${routeSelectionQuery(next, { ...guidanceContext, domainId: domainKey }, state)}` as never)} />}>
-    <FlowCue {...D078_AREA_CUE} />
     <RouteButton label="Back to Social Sciences domain" onPress={returnToField} variant="secondary" style={styles.hugSecondaryAction} />
     <View style={styles.hero}>
       <Text ref={stageEntry.titleRef} accessibilityRole="header" style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{area.label}</Text>
@@ -1450,7 +1489,6 @@ export function D078RoleRoute({ areaId, roleId, roleName, roleKey, initialSelect
 
   return <D078RelationshipNavigationProvider><Animated.View style={[styles.page, stageEntry.entryStyle]}>
     <D078JourneyPage stage="role" trayRevision={JSON.stringify(routeStackState)} tray={<D078JourneyTray selection={selection} setSelection={setSelection} onRemoveChoice={removeChoice} projection={projection} context={{ ...guidanceContext, domainId: "D078", areaId, roleId: resolvedRoleId }} routeStackState={routeStackState} setRouteStackState={setRouteStackState} onActivateRoute={(next, state) => router.replace(`${exploreNav.base}/domain/D078?${routeSelectionQuery(next, { ...guidanceContext, domainId: "D078" }, state)}` as never)} />}>
-    <FlowCue {...D078_ROLE_CUE} />
     <View style={styles.backActions}>
       <RouteButton label={`Back to ${projection.visibleAreas.find((area) => area.areaId === areaId)?.label ?? "area"}`} onPress={() => returnToArea()} variant="secondary" style={styles.hugSecondaryAction} />
       <RouteButton label="Back to Social Sciences domain" onPress={returnToDomain} variant="secondary" style={styles.hugSecondaryAction} />
@@ -1503,16 +1541,18 @@ function supportReason(area: D078Projection["visibleAreas"][number], projection:
 }
 
 const styles = StyleSheet.create({
-  page: { gap: 22, paddingBottom: Spacing.xxl },
+  page: { width: "100%", alignSelf: "stretch", gap: 22, paddingBottom: Spacing.xxl },
   journeyLayout: { width: "100%", gap: 22 },
-  journeyLayoutWide: { flexDirection: "row", alignItems: "flex-start", justifyContent: "center", gap: 22 },
-  readingColumn: { width: "100%", gap: 22 },
-  readingColumnWide: { width: 720, maxWidth: 720, minWidth: 440, flex: 1 },
-  trayRail: { width: 300, minWidth: 260, maxWidth: 320, flexShrink: 1, position: "sticky" as any, top: 24, maxHeight: "calc(100vh - 48px)" as any, overflow: "auto" as any },
+  readingColumn: { width: "100%", maxWidth: "100%", minWidth: 0, gap: 22 },
   backActions: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
+  learningPlanDockWeb: { position: "fixed" as any, right: 16, bottom: 16, zIndex: 50, alignItems: "flex-end" },
+  learningPlanDockNative: { position: "absolute", right: 16, bottom: 16, zIndex: 50, alignItems: "flex-end" },
+  learningPlanFallbackDock: { alignItems: "flex-end", paddingVertical: Spacing.sm },
   mobileTrayDock: { zIndex: 50, alignSelf: "flex-end" },
-  mobileTrayDockWeb: { position: "fixed" as any, right: 16, bottom: 16 },
-  mobileTrayDockNative: { position: "absolute", right: 16, bottom: 16, zIndex: 50 },
+  mobileTrayDockWeb: { alignSelf: "flex-end" },
+  mobileTrayDockNative: { alignSelf: "flex-end", zIndex: 50 },
+  trayPanelCompact: { maxHeight: 280, padding: Spacing.md },
+  trayPanelMid: { maxHeight: "65vh" as any, padding: Spacing.md },
   mobileTrayBackdrop: { flex: 1, justifyContent: "flex-end", backgroundColor: "rgba(5, 12, 28, 0.52)" },
   mobileTraySheet: { width: "100%", maxHeight: "85%" as any, padding: Spacing.md, paddingBottom: Spacing.xl, borderTopWidth: 1, borderTopLeftRadius: Radius.xl, borderTopRightRadius: Radius.xl },
   hero: { gap: Spacing.sm },
@@ -1530,6 +1570,7 @@ const styles = StyleSheet.create({
   itemLane: { gap: 8 },
   sectionTitle: { fontSize: 20, lineHeight: 26 },
   body: { fontSize: 16, lineHeight: 24 },
+  compactContextCopy: { fontSize: 13, lineHeight: 19 },
   meta: { fontSize: 13, lineHeight: 18 },
   sourceLink: { fontSize: 14, lineHeight: 20 },
   orderNote: { fontSize: 14, lineHeight: 20 },

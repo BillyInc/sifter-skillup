@@ -30,10 +30,12 @@ import { useSidebarNav } from '@/hooks/useResponsive';
 import type { CareerSearchResult, SearchIntent, SearchScope } from '@/types/career';
 import { getStartingPoint } from '@/lib/startingPoint';
 import { SearchLauncherProvider } from '@/components/shell/searchLauncher';
+import { PersistentLearningPlanDockProvider } from '@/components/careerIntelligence/PersistentLearningPlanDock';
 
 type NavId =
   | 'home'
   | 'explore'
+  | 'build'
   | 'opportunities'
   | 'myworld'
   | 'profile';
@@ -49,6 +51,7 @@ interface ShellNavItem {
 const PRIMARY_NAV: ShellNavItem[] = [
   { id: 'home',          label: 'Home',          icon: 'home', href: '/(tabs)/home',          sub: 'Your snapshot' },
   { id: 'explore',       label: 'Explore',       icon: 'compass', href: '/(tabs)/explore',       sub: 'Programmes, domains & roles' },
+  { id: 'build',         label: 'Build',          icon: 'layers', href: '/(tabs)/build',          sub: 'Things you can build in each domain' },
   { id: 'opportunities', label: 'Opportunities', icon: 'briefcase', href: '/(tabs)/opportunities', sub: 'Opportunities, scholarships & windows' },
   { id: 'myworld',       label: WORLD_NAV.label, icon: WORLD_NAV.icon, href: '/(tabs)/myworld', sub: WORLD_NAV.sub },
   { id: 'profile',       label: 'Profile',       icon: 'user', href: '/(tabs)/profile',       sub: 'Account & saved' },
@@ -66,13 +69,14 @@ const SEARCH_SUGGESTIONS = ['Law', 'Engineering', 'Accounting', 'Nursing'];
 const MOBILE_NAV: { id: NavId; label: string; icon: keyof typeof Feather.glyphMap; href: string }[] = [
   { id: 'home',          label: 'Home',    icon: 'home', href: '/(tabs)/home' },
   { id: 'explore',       label: 'Explore', icon: 'compass', href: '/(tabs)/explore' },
+  { id: 'build',         label: 'Build', icon: 'layers', href: '/(tabs)/build' },
   { id: 'opportunities', label: 'Opportunities', icon: 'briefcase', href: '/(tabs)/opportunities' },
   { id: 'myworld',       label: WORLD_NAV.label, icon: WORLD_NAV.icon, href: '/(tabs)/myworld' },
   { id: 'profile',       label: 'Profile', icon: 'user', href: '/(tabs)/profile' },
 ];
 
 function buildPrimaryNav(_trackContext: TrackContext): ShellNavItem[] {
-  // LevelUp uses a fixed 5-destination information architecture.
+  // LevelUp uses a fixed six-destination information architecture.
   return PRIMARY_NAV;
 }
 
@@ -86,6 +90,7 @@ function getPageMeta(_trackContext: TrackContext, _activeId: NavId, activeItem: 
 function getActiveNavId(pathname: string | null): NavId {
   if (!pathname) return 'home';
   if (pathname.includes('/profile') || pathname.includes('/settings')) return 'profile';
+  if (pathname === '/build' || pathname.startsWith('/build/')) return 'build';
   if (pathname.includes('/explore') || pathname.includes('/programme')
     || pathname.includes('/domain') || pathname.includes('/role')) return 'explore';
   if (pathname.includes('/opportunities') || pathname.includes('/opportunity')
@@ -318,6 +323,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
 
   return (
     <SearchLauncherProvider onOpen={(query, scope) => { if (query !== undefined) setSearchQuery(query); if (scope) setOverlayScope(scope); setOverlayVisible(true); }}>
+    <PersistentLearningPlanDockProvider>
     <View style={[styles.root, { backgroundColor: colors.surface.base }]}>
       {!focusedGuidance && isWide && (
         <View
@@ -582,6 +588,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
         }}
       />
     </View>
+    </PersistentLearningPlanDockProvider>
     </SearchLauncherProvider>
   );
 }
@@ -786,13 +793,15 @@ const styles = StyleSheet.create({
     minHeight: TOUCH_TARGET_MIN,
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'row',
-    gap: 6,
+    flexDirection: 'column',
+    gap: 2,
     borderRadius: Radius.full,
-    paddingHorizontal: 8,
+    paddingHorizontal: 2,
   },
   mobileTabLabel: {
-    fontSize: 11,
+    fontSize: 10,
+    lineHeight: 12,
+    textAlign: 'center',
     ...CompassFonts.bodySemibold,
   },
   drawerOverlay: {

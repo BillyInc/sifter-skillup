@@ -35,6 +35,15 @@ test("does not append a guardrail to an output stored in a combined expected-out
   )).toBe("A cited comparison with one limitation.");
 });
 
+test("explains a technical word the first time it appears", () => {
+  expect(studentFacingCopy("Computational work uses an algorithm."))
+    .toBe("computational (using a computer to study people and society) work uses an algorithm (a set of steps a computer follows).");
+  expect(studentFacingCopy("A chi-square check can sit beside ethnography."))
+    .toContain("chi-square (a check on whether counts in categories fit a pattern");
+  expect(studentFacingCopy("A chi-square check can sit beside ethnography."))
+    .toContain("ethnography (learning about a group by spending time with them");
+});
+
 test("removes staff-only placement notes while retaining learner explanation", () => {
   expect(studentFacingCopy("A useful method for comparing accounts. Route note: show only in the selected area. Task: Compare two accounts."))
     .toBe("A useful method for comparing accounts.");

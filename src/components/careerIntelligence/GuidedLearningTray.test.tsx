@@ -111,6 +111,7 @@ describe("GuidedLearningTray", () => {
       stackSet={stackSet()}
       d078Route={d078Route}
       initialMode="full"
+      onDismiss={jest.fn()}
       onRemove={jest.fn()}
       onReorder={jest.fn()}
       onSelectCandidate={jest.fn()}
@@ -119,6 +120,7 @@ describe("GuidedLearningTray", () => {
 
     const controls = [
       screen.getByRole("button", { name: "Collapse learning plan tray to icon" }),
+      screen.getByRole("button", { name: "Dismiss learning plan tray" }),
       screen.getByRole("button", { name: "Remove Interviews from your selected approaches" }),
       screen.getByRole("button", { name: "Remove Prepare an interview guide from your learning" }),
       screen.getByRole("button", { name: "Move Research foundations later in this plan" }),
@@ -172,8 +174,7 @@ describe("GuidedLearningTray", () => {
     expect(screen.getByText("1. Frame a researchable social question")).toBeTruthy();
     expect(screen.getByText("2. Evaluate evidence and its limits")).toBeTruthy();
     expect(screen.getByText("3. Communicate findings for the intended audience")).toBeTruthy();
-    expect(screen.getByText("Area selected: Sociology and Social Anthropology")).toBeTruthy();
-    expect(screen.getByText("Role selected: Social Researcher")).toBeTruthy();
+    expect(screen.getByText(/Area: Sociology and Social Anthropology · Role: Social Researcher/)).toBeTruthy();
     expect(screen.getByText("Prepare an interview guide")).toBeTruthy();
     expect(screen.getByText("Keep structured field notes")).toBeTruthy();
     expect(screen.queryByText("Unselected survey questionnaire")).toBeNull();
@@ -315,7 +316,7 @@ describe("GuidedLearningTray", () => {
       initialMode="icon"
     /></ThemeProvider>);
 
-    expect(screen.getByRole("button", { name: "Open learning plan tray with 6 selected route details or learning choices" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: /Open learning plan tray.*6 selected route details or learning choices/ })).toBeTruthy();
   });
 
   it("separates the task example and likely output within the learner explanation", () => {
@@ -394,7 +395,7 @@ describe("GuidedLearningTray", () => {
   it("shows relationships inline without opening a generic relationship sheet", () => {
     render(<ThemeProvider><GuidedLearningTray stackSet={stackSet()} initialMode="icon" /></ThemeProvider>);
 
-    fireEvent.press(screen.getByRole("button", { name: "Open learning plan tray with 4 selected route details or learning choices" }));
+    fireEvent.press(screen.getByRole("button", { name: /Open learning plan tray.*4 selected route details or learning choices/ }));
     fireEvent.press(screen.getByRole("button", { name: "Small" }));
     expect(screen.queryByText("Choose learning focus")).toBeNull();
     fireEvent.press(screen.getByRole("button", { name: "Mid" }));
@@ -437,7 +438,7 @@ describe("GuidedLearningTray", () => {
     const stacks = stackSet();
     const { rerender } = render(<ThemeProvider><GuidedLearningTray stackSet={stacks} initialMode="icon" /></ThemeProvider>);
 
-    expect(screen.getByRole("button", { name: "Open learning plan tray with 4 selected route details or learning choices" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: /Open learning plan tray.*4 selected route details or learning choices/ })).toBeTruthy();
     rerender(<ThemeProvider><GuidedLearningTray stackSet={stacks} initialMode="mid" /></ThemeProvider>);
 
     expect(screen.getByText("Choose learning focus")).toBeTruthy();
@@ -635,7 +636,7 @@ describe("GuidedLearningTray", () => {
     expect(screen.getAllByText(/Alternative choice/).length).toBeGreaterThanOrEqual(2);
     expect(screen.getByText(/Python is a programming language: a way to write instructions that tell a computer how to work with information and repeat steps consistently\./)).toBeTruthy();
     expect(screen.getAllByText(/In Sociology, a learner might use Python to organise survey responses, check for missing values, and summarise patterns across a dataset\./).length).toBeGreaterThan(0);
-    expect(screen.getByText(/Research methods: understand how a question, evidence and study design fit together before choosing computational steps\./)).toBeTruthy();
+    expect(screen.getByText(/Research methods: understand how a question, evidence and study design fit together before choosing computational.*steps\./)).toBeTruthy();
     expect(screen.getByText(/Python can carry out instructions consistently, but it cannot choose a suitable study design or repair biased or incomplete data on its own\./)).toBeTruthy();
     expect(screen.getByRole("link", { name: "Open learning destination for Python" })).toBeTruthy();
     fireEvent.press(screen.getByRole("button", { name: "Choose Python" }));

@@ -27,8 +27,6 @@ import type {
   SsDoor,
 } from "../../types/onboarding";
 import LocalLegalNotice from "../LocalLegalNotice";
-import { FlowCue } from "../guidance/FlowCue";
-import { admissionDoorCue } from "../../lib/studentFlowCopy";
 
 const DOORS: {
   value: SsDoor;
@@ -40,19 +38,19 @@ const DOORS: {
     value: "unsure",
     icon: "A",
     title: "I don’t know the programme yet",
-    subtitle: "Your subjects find programmes. You preview one, then open its universities.",
+    subtitle: "Use your O-level and UTME subjects to narrow the options",
   },
   {
     value: "know_what",
     icon: "B",
     title: "I know the programme, not the university",
-    subtitle: "See each university and its own O-level and UTME requirements. You can compare them.",
+    subtitle: "See universities, official programme names and requirements",
   },
   {
     value: "know_where",
     icon: "C",
     title: "I know the programme and the university",
-    subtitle: "Open that university's page, with its subjects and what the programme can lead to.",
+    subtitle: "Check the programme at a specific university",
   },
 ];
 
@@ -99,7 +97,6 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
           check your current combination or find options for you.
         </Text>
       </View>
-      <FlowCue {...admissionDoorCue(door, isSs3Student)} />
 
       {isSs3Student ? (
         <LiveAdmissionSearchField

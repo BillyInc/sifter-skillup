@@ -6,7 +6,7 @@
  * hand-off. Employment and a standalone Admission tab are deliberately not
  * user-facing concepts here.
  */
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { Modal, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, useWindowDimensions } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter, type Router } from "expo-router";
@@ -14,6 +14,7 @@ import {
   DataSourceBadge,
   ContextualItemList,
   DegreeSkills,
+  ProgrammeBooksLink,
   DetailScaffold,
   SectionLabel,
   TextTabs,
@@ -35,9 +36,8 @@ import { CompassFonts, FontSize, Radius, Spacing, useTheme, type ColorPalette } 
 import { useResponsive } from "@/hooks/useResponsive";
 import { GuidedLearningTray, type D078TrayContext, type GuidedLearningTrayMode } from "@/components/careerIntelligence/GuidedLearningTray";
 import { useDetailViewportOverlay } from "@/components/careerIntelligence/DetailScrollContext";
+import { usePersistentLearningPlanDock } from "@/components/careerIntelligence/PersistentLearningPlanDock";
 import { buildLearningPlanStackSet } from "@/lib/guidedLearningPlan";
-import { FlowCue } from "@/components/guidance/FlowCue";
-import { fieldHandoffCue, programmePreviewCue, UNDERGRADUATE_PROGRAMME_CUE, universityListCue, universitySelectedCue } from "@/lib/studentFlowCopy";
 
 export interface ProgrammeDetailRefinedScreenProps {
   programmeId: string;
@@ -160,9 +160,9 @@ function connectionGroupLabel(matchType: DomainLink["matchType"]): string {
 }
 
 function connectionExplanation(matchType: DomainLink["matchType"]): string {
-  if (matchType === "direct") return "Your programme covers several ideas or ways of working that are also used in this field. This is a close study connection, but it does not mean you are ready for every job in the field. Each card shows the courses behind the connection.";
-  if (matchType === "functional") return "Your course examples show specific things you learned that are used in some parts of this field. They do not cover everything you would need to learn about the field. Each card shows what carries over and which courses support the link.";
-  return "This is a step further from what you studied: the link is based on a related idea and abilities you can use in other settings, not a close match to the field's main work. You would have more new things to learn. Each card shows why it is listed and which courses support the link.";
+  if (matchType === "direct") return "What you study covers ideas and ways of working that this field also uses. That is why the programme can continue into the field. The connection is about your studies. It does not mean you are ready for every job.";
+  if (matchType === "functional") return "Some of what the programme helps you develop is used in parts of this field. You would still have more to learn about the field itself.";
+  return "This field is a step further from the main work of the programme. You can carry a related idea into a new setting, and you would have more to learn.";
 }
 
 function ProgrammeDomainTransition({
@@ -180,11 +180,9 @@ function ProgrammeDomainTransition({
     links: domains.filter((link) => link.matchType === matchType),
   })).filter((group) => group.links.length);
 
-  const hasSocialSciences = domains.some((link) => link.domainId === "D078");
   return <View style={styles.block}>
-    <FlowCue {...fieldHandoffCue(hasSocialSciences)} />
     <SectionLabel>What this programme can lead to</SectionLabel>
-    <Text style={[styles.body, { color: colors.textRole.secondary }]}>These groups show how closely what you studied connects to each field. They do not mean you already have every skill or are ready for a job.</Text>
+    <Text style={[styles.body, { color: colors.textRole.secondary }]}>What your programme covers is what you can carry into a field. A closer group means more of your studies already belong in that field. None of these groups means you already qualify for a job.</Text>
     {groups.length ? groups.map(({ matchType, links }) => {
       const isExpanded = Boolean(expanded[matchType]);
       const visible = isExpanded ? links : links.slice(0, 3);
@@ -198,7 +196,6 @@ function ProgrammeDomainTransition({
             {link.domainDescription ? <Text style={[styles.body, { color: colors.textRole.secondary }]}>{link.domainDescription}</Text> : null}
             <Text style={[styles.meta, { color: colors.textRole.muted }]}>Why this field is listed</Text>
             <Text style={[styles.body, { color: colors.textRole.secondary }]}>{link.explanation?.trim() || relationshipCopy(link)}</Text>
-            {link.courseAnchors?.length ? <Text style={[styles.meta, { color: colors.textRole.muted }]}>Courses that support this link: {link.courseAnchors.slice(0, 2).map((anchor) => anchor.title).join(" and ")}{link.courseAnchors.length > 2 ? " and others" : ""}.</Text> : null}
             <Text style={[styles.link, { color: colors.accentRole.action }]}>{link.domainId === "D078" ? "See how Sociology continues in this field" : "Open domain"}</Text>
           </TouchableOpacity>)}
         </View>
@@ -294,6 +291,9 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
   const [universityQuery, setUniversityQuery] = useState("");
   const [notice, setNotice] = useState<string | null>(null);
   const [savingSchool, setSavingSchool] = useState<string | null>(null);
+  const [programmeSelected, setProgrammeSelected] = useState(false);
+  const [programmeTrayMode, setProgrammeTrayMode] = useState<GuidedLearningTrayMode>("icon");
+  const [programmePlanNotice, setProgrammePlanNotice] = useState<string | null>(null);
 
   useEffect(() => {
     if (universitySelectionRoute) setTab("schools");
@@ -557,6 +557,58 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
     openUniversityOverview(school.schoolId);
   };
 
+  const toggleProgrammeSelection = () => {
+    const nextSelected = !programmeSelected;
+    setProgrammeSelected(nextSelected);
+    setProgrammeTrayMode("compact");
+    setProgrammePlanNotice(null);
+    void (async () => {
+      try {
+        const current = guidanceStudentId
+          ? await provisioningData.getGuidancePath(guidanceStudentId)
+          : sessionOnlyGuidance
+            ? null
+            : await careerData.getGuidancePath();
+        const currentPath = guidanceStudentId
+          ? (current?.path ?? {}) as GuidanceReportPath["path"]
+          : current?.status === "real" && current.data
+            ? current.data.path
+            : {};
+        let nextPath: GuidanceReportPath["path"];
+        if (nextSelected) {
+          nextPath = appendProgrammeChoice(currentPath, {
+            programme: { id: activeProgrammeId, name: programmeName, sourceName: jambProgrammeId ?? programmeName },
+            ...(traySelectedSchool ? { university: { id: traySelectedSchool.schoolId, name: institutionLabel(traySelectedSchool), address: institutionLocation(traySelectedSchool) } } : {}),
+          });
+        } else {
+          const previous = currentPath.programmes?.length
+            ? currentPath.programmes
+            : currentPath.programme
+              ? [{ programme: currentPath.programme, university: currentPath.university, requirements: currentPath.requirements, universityRequirements: currentPath.universityRequirements }]
+              : [];
+          const remaining = previous.filter((entry) => String((entry.programme as Record<string, unknown> | undefined)?.id ?? "") !== activeProgrammeId);
+          nextPath = { ...currentPath, programmes: remaining };
+          if (String((currentPath.programme as Record<string, unknown> | undefined)?.id ?? "") === activeProgrammeId) {
+            delete nextPath.programme;
+            delete nextPath.university;
+            delete nextPath.requirements;
+            delete nextPath.universityRequirements;
+          }
+        }
+        if (sessionOnlyGuidance || (!guidanceStudentId && (!user || user.auth_provider === "guest"))) {
+          setProgrammePlanNotice("Held on this device. It will save when you are online.");
+        } else if (guidanceStudentId) {
+          await provisioningData.saveGuidancePath(guidanceStudentId, nextPath as Record<string, unknown>);
+        } else {
+          const saved = await careerData.saveGuidancePath({ source: "explore", path: nextPath });
+          if (saved.status !== "real") setProgrammePlanNotice("Held on this device. It will save when you are online.");
+        }
+      } catch {
+        setProgrammePlanNotice("Held on this device. It will save when you are online.");
+      }
+    })();
+  };
+
   const header = universitySelectionRoute ? null : (
       <TextTabs
       value={tab}
@@ -573,6 +625,18 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
     <DetailScaffold
       eyebrow="PROGRAMME"
     title={programmeName}
+      titleAccessory={undergraduateContext && !universitySelectionAllowed && !universityOptionsOnly && !isViewOnly ? (
+        <TouchableOpacity
+          accessibilityRole="checkbox"
+          accessibilityState={{ checked: programmeSelected }}
+          accessibilityLabel={`Select ${programmeName} programme`}
+          accessibilityHint="Adds this programme to your learning plan and opens the tray"
+          onPress={toggleProgrammeSelection}
+          style={[styles.programmeSelectCheck, { backgroundColor: programmeSelected ? colors.accentRole.action : colors.surface.raised, borderColor: programmeSelected ? colors.accentRole.action : colors.borderRole.strong }]}
+        >
+          <Feather name={programmeSelected ? "check" : "square"} size={18} color={programmeSelected ? "#FFFFFF" : colors.textRole.muted} />
+        </TouchableOpacity>
+      ) : undefined}
       backLabel={universitySelectionRoute
         ? "Back to programme preview"
         : activeResumeStage === "university_context"
@@ -592,6 +656,10 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
           data={data}
           tab={tab}
           programmeName={programmeName}
+          programmeSelected={programmeSelected}
+          programmeTrayMode={programmeTrayMode}
+          onProgrammeTrayModeChange={setProgrammeTrayMode}
+          statusMessage={programmePlanNotice}
           requirements={requirements}
            schools={visibleSchools}
            universitySearchResults={universitySearchResults}
@@ -633,21 +701,26 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
 function ProgrammePageLearningTray({
   programmeId,
   programmeName,
+  programmeSelected,
+  programmeTrayMode,
+  onProgrammeTrayModeChange,
+  statusMessage,
   selectedSchool,
   comparisonSchools,
 }: {
   programmeId: string;
   programmeName: string;
+  programmeSelected: boolean;
+  programmeTrayMode: GuidedLearningTrayMode;
+  onProgrammeTrayModeChange: (mode: GuidedLearningTrayMode) => void;
+  statusMessage?: string | null;
   selectedSchool: JambProgrammeSchool | null;
   comparisonSchools: JambProgrammeSchool[];
 }) {
   const viewportOverlay = useDetailViewportOverlay();
+  const persistentDock = usePersistentLearningPlanDock();
   const { width } = useWindowDimensions();
-  const desktop = Platform.OS === "web" && width >= 1200;
-  const [mode, setMode] = useState<GuidedLearningTrayMode>(() => desktop ? "mid" : "icon");
-  useEffect(() => {
-    setMode((current) => desktop ? (current === "icon" ? "mid" : current) : "icon");
-  }, [desktop]);
+  const mode = programmeTrayMode;
 
   // Carry an institution whenever one was actually selected, regardless of
   // route type. Undergraduate pages do not require a university choice, but
@@ -664,6 +737,8 @@ function ProgrammePageLearningTray({
   const routeContext: D078TrayContext = {
     routeLabel: "Programme route",
     programmeLabel: programmeName,
+    programmeSelected,
+    programmeId,
     institutionContextLabel,
     choices: [],
     foundations: [],
@@ -677,35 +752,44 @@ function ProgrammePageLearningTray({
     stackSet={emptyStackSet}
     d078Route={routeContext}
     initialMode={mode}
-    onModeChange={setMode}
-    dropKey={`${programmeId}:${institutionNames.join("|")}`}
+    onModeChange={onProgrammeTrayModeChange}
+    onDismiss={persistentDock?.dismiss}
+    statusMessage={statusMessage}
+    style={mode === "full" ? styles.programmeTrayFull : mode === "mid" ? styles.programmeTrayMid : mode === "compact" ? styles.programmeTrayCompact : undefined}
+    dropKey={`${programmeId}:${programmeSelected}:${institutionNames.join("|")}`}
   />;
   const trayRef = React.useRef(tray);
   trayRef.current = tray;
-  const trayRevision = `${programmeId}:${mode}:${institutionNames.join("|")}`;
-  const renderViewportDock = React.useCallback(() => (
-    <View pointerEvents="box-none" style={styles.programmeTrayOverlay}>
-      <View style={[styles.programmeTrayDock, desktop ? styles.programmeTrayDockWide : null]}>{trayRef.current}</View>
-    </View>
-  ), [desktop, trayRevision]);
+  const trayRevision = `${programmeId}:${mode}:${programmeSelected}:${institutionNames.join("|")}`;
+  const renderViewportDock = React.useCallback(() => <View style={[styles.programmeTrayHost, { width: Math.max(200, Math.min(400, width - 32)) }]}>{trayRef.current}</View>, [trayRevision, width]);
 
-  useEffect(() => {
-    if (!viewportOverlay) return;
-    viewportOverlay.setOverlay(renderViewportDock);
-    return () => viewportOverlay.setOverlay(null);
-  }, [viewportOverlay?.setOverlay, renderViewportDock]);
+  useLayoutEffect(() => {
+    if (persistentDock) {
+      persistentDock.register(renderViewportDock, `programme:${programmeId}:${programmeSelected}:${institutionNames.join("|")}`);
+      return;
+    }
+    if (viewportOverlay) {
+      viewportOverlay.setOverlay(() => <View pointerEvents="box-none" style={styles.programmeTrayOverlay}>
+        {renderViewportDock()}
+      </View>);
+      return () => viewportOverlay.setOverlay(null);
+    }
+  }, [persistentDock?.register, viewportOverlay?.setOverlay, renderViewportDock, programmeId, programmeSelected, institutionNames.join("|")]);
 
   // The fallback keeps this component testable outside DetailScaffold; in the
   // live screen the one shared tray is portalled into the fixed viewport dock.
-  return viewportOverlay
+  return viewportOverlay || persistentDock
     ? null
-    : <View style={styles.programmeTrayDock}>{tray}</View>;
+    : <View style={styles.programmeTrayFallbackDock}>{tray}</View>;
 }
 
 export function ProgrammeDetailBody({
   data,
   tab,
   programmeName,
+  programmeSelected,
+  programmeTrayMode,
+  onProgrammeTrayModeChange,
   requirements,
   schools,
   universitySearchResults,
@@ -742,6 +826,9 @@ export function ProgrammeDetailBody({
   data: Programme;
   tab: ProgrammeTab;
   programmeName: string;
+  programmeSelected: boolean;
+  programmeTrayMode: GuidedLearningTrayMode;
+  onProgrammeTrayModeChange: (mode: GuidedLearningTrayMode) => void;
   requirements: JambProgrammeRequirements | null;
   schools: JambProgrammeSchool[];
   universitySearchResults: JambProgrammeSchool[];
@@ -803,6 +890,9 @@ export function ProgrammeDetailBody({
       {showCareerGuidance && !viewOnly ? <ProgrammePageLearningTray
         programmeId={String(data.id)}
         programmeName={programmeName}
+        programmeSelected={programmeSelected}
+        programmeTrayMode={programmeTrayMode}
+        onProgrammeTrayModeChange={onProgrammeTrayModeChange}
         selectedSchool={trayInstitution ?? selectedSchool}
         comparisonSchools={comparisonSchools}
       /> : null}
@@ -813,7 +903,6 @@ export function ProgrammeDetailBody({
           ) : null}
           {!selectedSchool ? (
             <View style={[styles.context, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
-              <FlowCue {...(undergraduateContext ? UNDERGRADUATE_PROGRAMME_CUE : programmePreviewCue(programmeName))} />
               <SectionLabel>{earlySecondary ? "Programme preview" : "Programme overview"}</SectionLabel>
               <Text style={[styles.body, { color: colors.textRole.secondary }]}>
                 {undergraduateContext
@@ -827,7 +916,6 @@ export function ProgrammeDetailBody({
           ) : null}
           {selectedSchool ? (
             <View style={[styles.context, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
-              <FlowCue {...universitySelectedCue(institutionLabel(selectedSchool))} />
               <Text style={[styles.contextLabel, { color: colors.textRole.muted }]}>Programme at this university</Text>
               <Text style={[styles.contextName, { color: colors.textRole.primary }]}>{institutionLabel(selectedSchool)}</Text>
               {institutionLocation(selectedSchool) ? <Text style={[styles.contextAddress, { color: colors.textRole.secondary }]}>{institutionLocation(selectedSchool)}</Text> : null}
@@ -849,6 +937,7 @@ export function ProgrammeDetailBody({
               </View>
             </View>
           ) : null}
+          {showCareerGuidance ? <ProgrammeBooksLink resources={data.resources} /> : null}
           {!selectedSchool ? (
             <>
               {undergraduateContext && !universitySelectionAllowed ? <DegreeSkills curriculumContract={displayCurriculum} resources={data.resources} /> : null}
@@ -1070,7 +1159,6 @@ export function ProgrammeDetailBody({
 
       {tab === "schools" ? (
         <View style={styles.section}>
-          <FlowCue {...universityListCue()} />
           <SectionLabel>{`${earlySecondary ? "Explore universities with this programme" : "Universities with this programme"}${schools.length ? ` (${schools.length})` : ""}`}</SectionLabel>
           <Text style={[styles.body, { color: colors.textRole.secondary }]}>{subjectMatchScopeApplied ? "These university offerings passed the subject check you completed." : earlySecondary ? "Open one university to view its requirements. Add others to compare their requirements before you decide." : "Choose one university to keep its programme name, address and requirements in your guidance path."}</Text>
           <View style={[styles.universitySearch, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
@@ -1225,8 +1313,11 @@ const styles = StyleSheet.create({
   tabs: { marginTop: Spacing.md },
   content: { gap: Spacing.lg, paddingBottom: Spacing.xxl },
   programmeTrayOverlay: { ...StyleSheet.absoluteFillObject, justifyContent: "flex-end", alignItems: "flex-end", padding: Spacing.md },
-  programmeTrayDock: { width: "100%", maxWidth: 440, height: "100%", justifyContent: "flex-end" },
-  programmeTrayDockWide: { maxWidth: 390 },
+  programmeTrayHost: { maxHeight: "78vh" as any, alignItems: "stretch", justifyContent: "flex-end" },
+  programmeTrayFull: { height: "78vh" as any, maxHeight: "78vh" as any, flex: 1 },
+  programmeTrayMid: { maxHeight: "58vh" as any },
+  programmeTrayCompact: { maxHeight: 280 },
+  programmeTrayFallbackDock: { width: "100%", alignItems: "flex-end" },
   section: { gap: Spacing.md },
   block: { gap: Spacing.sm },
   award: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
@@ -1235,6 +1326,7 @@ const styles = StyleSheet.create({
   contextLabel: { fontSize: FontSize.xs, textTransform: "uppercase", letterSpacing: 0.7 },
   contextName: { fontSize: 16, lineHeight: 23, ...CompassFonts.bodySemibold },
   contextAddress: { fontSize: FontSize.sm },
+  programmeSelectCheck: { width: 36, height: 36, borderRadius: Radius.sm, borderWidth: 1, alignItems: "center", justifyContent: "center" },
   inlineAction: { alignSelf: "flex-start", marginTop: Spacing.xs },
   contextActions: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.md },
   schoolActions: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.xs, alignItems: "center" },

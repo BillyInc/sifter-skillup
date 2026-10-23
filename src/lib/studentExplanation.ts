@@ -45,12 +45,51 @@ export function studentContextSections(value?: string | null) {
   return { meaning, task: sections.task, output: sections.output, guardrail: sections.guardrail };
 }
 
+const TECHNICAL_GLOSSES: Array<[RegExp, string]> = [
+  [/\bcomputational and digital social science\b/i, "computational and digital social science (using computers to study how people live, talk and organise)"],
+  [/\bnatural language processing\b/i, "natural language processing (a computer reading and sorting human language)"],
+  [/\bmachine learning\b/i, "machine learning (a computer finding patterns in examples, then using those patterns on new cases)"],
+  [/\blogistic regression\b/i, "logistic regression (a way to estimate the chance of a yes-or-no result)"],
+  [/\bparticipant observation\b/i, "participant observation (learning by joining the setting and watching what people do)"],
+  [/\bdiscourse analysis\b/i, "discourse analysis (studying how people use language in a particular setting)"],
+  [/\bstatistical significance\b/i, "statistical significance (a result that is unlikely to be only chance)"],
+  [/\bmixed methods\b/i, "mixed methods (using both numbers and people's accounts in one study)"],
+  [/\bfocus groups?\b/i, "focus group (a guided discussion with a small group)"],
+  [/\btriangulation\b/i, "triangulation (checking a finding with more than one kind of evidence)"],
+  [/\bchi-square\b/i, "chi-square (a check on whether counts in categories fit a pattern, or whether two groupings go together)"],
+  [/\bregression\b/i, "regression (a way to see how one measure moves when another measure changes)"],
+  [/\bethnography\b/i, "ethnography (learning about a group by spending time with them and watching everyday life)"],
+  [/\bcorrelation\b/i, "correlation (two things changing together, which does not by itself prove that one causes the other)"],
+  [/\bhypothesis\b/i, "hypothesis (a clear idea you can test)"],
+  [/\balgorithms?\b/i, "algorithm (a set of steps a computer follows)"],
+  [/\bANOVA\b/, "ANOVA (a check on whether the averages of several groups differ)"],
+  [/\bt-tests?\b/i, "t-test (a check on whether two group averages differ)"],
+  [/\bSPSS\b/, "SPSS (a computer program used to calculate statistics)"],
+  [/\bbig data\b/i, "big data (very large sets of digital records)"],
+  [/\bquantitative\b/i, "quantitative (working with numbers and counts)"],
+  [/\bqualitative\b/i, "qualitative (working with words, experiences and meaning)"],
+  [/\bcomputational\b/i, "computational (using a computer to study people and society)"],
+];
+
+/** The first time a technical word appears, add a short plain-English meaning. */
+export function explainTechnicalTerms(value: string): string {
+  let text = value;
+  for (const [pattern, gloss] of TECHNICAL_GLOSSES) {
+    text = text.replace(pattern, (match, offset: number, whole: string) => {
+      const after = whole.slice(offset + match.length);
+      if (/^\s*\(/.test(after) || /^\s+\S+\s*,\s*which\b/i.test(after)) return match;
+      return gloss;
+    });
+  }
+  return text;
+}
+
 /** Remove known staff-only placement language before narration is displayed.
  * This is a presentation safeguard, not a replacement for reviewed source copy.
  */
 export function studentFacingCopy(value?: string | null): string {
   if (!value) return "";
-  return value
+  return explainTechnicalTerms(value
     .split(/\s*(?:Route note|Task|Guardrail|No programme mapping claimed|Not claimed as programme outcome|Programme mapping is not asserted|No programme-specific transfer is asserted)\s*:/i)[0]
     .replace(/(?:No programme mapping claimed|Not claimed as programme outcome|Programme mapping is not asserted|No programme-specific transfer is asserted)[^.!?]*(?:[.!?]|$)/gi, "")
     .replace(/\b(?:shared foundation candidate|area[- ]specific enrichment candidate|domain learning option|deferred emerging conditional extension)\b[^.!?]*(?:[.!?]|$)/gi, "")
@@ -64,7 +103,7 @@ export function studentFacingCopy(value?: string | null): string {
     .replace(/^[\s\u00B7|\u2014\u2013-]+|[\s\u00B7|\u2014\u2013-]+$/g, "")
     .replace(/[\uFFFD\u00C2\u00E2]+/g, "")
     .replace(/\s+/g, " ")
-    .trim();
+    .trim());
 }
 
 /** Suppress an internal disposition explanation rather than showing it as

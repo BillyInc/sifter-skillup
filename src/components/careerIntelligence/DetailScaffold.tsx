@@ -38,6 +38,8 @@ import { DetailScrollProvider, DetailViewportOverlayProvider } from "./DetailScr
 export interface DetailScaffoldProps<T> {
   eyebrow?: string;
   title: string;
+  /** Compact action rendered alongside the title. */
+  titleAccessory?: ReactNode;
   /** Visible contextual back label. */
   backLabel?: string;
   /** A deterministic back transition for a focused guidance flow. */
@@ -88,6 +90,7 @@ export function d078ContentGutter(width: number): number {
 export function DetailScaffold<T>({
   eyebrow,
   title,
+  titleAccessory,
   backLabel = "Back",
   onBack,
   save,
@@ -194,9 +197,12 @@ export function DetailScaffold<T>({
                 {eyebrow}
               </Text>
             ) : null}
-            <Text style={[styles.title, CompassFonts.displaySemi, { color: colors.textRole.primary }]}>
-              {title}
-            </Text>
+            <View style={styles.titleContentRow}>
+              <Text style={[styles.title, CompassFonts.displaySemi, { color: colors.textRole.primary }]}>
+                {title}
+              </Text>
+              {titleAccessory}
+            </View>
           </View> : null}
           <View style={styles.actions}>
             {save ? (
@@ -301,6 +307,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   titleBlock: { flex: 1, minWidth: 220, gap: 3 },
+  titleContentRow: { flexDirection: "row", alignItems: "center", gap: Spacing.sm },
   actions: {
     flexDirection: "row",
     alignItems: "center",
@@ -326,6 +333,7 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
   title: {
+    flexShrink: 1,
     fontSize: FontSize.display,
     fontWeight: "600",
     lineHeight: FontSize.display * 1.15,

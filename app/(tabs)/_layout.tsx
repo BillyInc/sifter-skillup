@@ -12,7 +12,7 @@ export const unstable_settings = {
 // Navigation chrome (web sidebar + mobile bottom bar) is owned by ReferenceShell,
 // so the expo-router Tabs bar is hidden on every platform and every screen is
 // registered with `href: null`. The five LevelUp destinations (home, explore,
-// opportunities, myworld, profile) plus all preserved legacy learning routes
+// build, opportunities, myworld, profile) plus all preserved legacy learning routes
 // live behind the shell.
 export default function TabsLayout() {
   const router = useRouter();
@@ -53,6 +53,7 @@ export default function TabsLayout() {
           {/* LevelUp 5-tab IA */}
           <Tabs.Screen name="home" options={{ href: null }} />
           <Tabs.Screen name="explore" options={{ href: null }} />
+          <Tabs.Screen name="build" options={{ href: null }} />
           <Tabs.Screen name="opportunities" options={{ href: null }} />
           <Tabs.Screen name="myworld" options={{ href: null }} />
           <Tabs.Screen name="profile" options={{ href: null }} />

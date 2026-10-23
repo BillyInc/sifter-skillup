@@ -28,8 +28,6 @@ import EducatorOnboarding from "@/screens/admin/EducatorOnboarding";
 import type { StartingPointProfile, UserType } from "@/types/onboarding";
 import { useAuth } from "@/hooks/useAuth";
 import { clearOnboardingDraft, getOnboardingDraft, saveOnboardingDraft } from "@/lib/onboardingDraft";
-import { FlowCue } from "@/components/guidance/FlowCue";
-import { startingPointCue } from "@/lib/studentFlowCopy";
 
 type Choice =
   | "ss1_secondary"
@@ -51,7 +49,7 @@ const PERSONAS: {
     type: "ss1_secondary",
     icon: "map",
     title: "SS1 Student",
-    subtitle: "School, stream, and subjects. Next is a programme preview, then universities.",
+    subtitle: "Start broad: school, stream and early subject guidance",
     userType: "senior_secondary",
     preset: { userType: "senior_secondary", ssClass: "ss1" },
   },
@@ -59,7 +57,7 @@ const PERSONAS: {
     type: "ss2_secondary",
     icon: "map",
     title: "SS2 Student",
-    subtitle: "Check subjects before SS3. Next is a programme preview, then universities.",
+    subtitle: "Narrow subjects before SS3 and UTME decisions",
     userType: "senior_secondary",
     preset: { userType: "senior_secondary", ssClass: "ss2" },
   },
@@ -67,7 +65,7 @@ const PERSONAS: {
     type: "ss3_secondary",
     icon: "book",
     title: "SS3 Student",
-    subtitle: "Choose subjects, a programme, or both. A university shows its own requirements.",
+    subtitle: "School-based admission guidance for final-year secondary students",
     userType: "ss3_secondary",
     preset: { userType: "ss3_secondary", ssClass: "ss3" },
   },
@@ -75,7 +73,7 @@ const PERSONAS: {
     type: "jamb",
     icon: "book-open",
     title: "JAMB Candidate",
-    subtitle: "Same three choices as SS3, from a tutorial centre or on your own.",
+    subtitle: "Tutorial centre or self-taught UTME admission guidance",
     userType: "jamb",
     preset: { userType: "jamb" },
   },
@@ -83,7 +81,7 @@ const PERSONAS: {
     type: "student",
     icon: "users",
     title: "Undergraduate Student",
-    subtitle: "Your university and programme. Next is what it teaches and where it can lead.",
+    subtitle: "Start from your university and programme",
     userType: "student",
     preset: { userType: "student", institutionType: "university" },
   },
@@ -193,7 +191,6 @@ export default function AccountTypeGate() {
           This decides which questions, requirements and guidance you will see next.
           Choose the path that describes you today.
         </Text>
-        <FlowCue {...startingPointCue(choice)} />
 
         <Text style={[styles.fieldLabel, { color: colors.textRole.secondary }, CompassFonts.bodyBold]}>
           I am joining as
