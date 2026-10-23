@@ -49,7 +49,6 @@ import {
   MappingFeedbackButton,
   SectionLabel,
   ContextualItemList,
-  TextTabs,
   LearningResourcesBlock,
   ExternalLinkGuard,
   ProgrammeCurriculumCarryForward,
@@ -163,7 +162,6 @@ function LegacyDomainBody({
   // when there is nothing to say.
   // ── Section positions for nav scrolling ──────────────────────
   const [subgroupsExpanded, setSubgroupsExpanded] = useState(false);
-  const [domainTab, setDomainTab] = useState<"overview" | "build">("overview");
   const visibleSubgroups = subgroupsExpanded ? subgroups : subgroups.slice(0, 6);
 
   // ── Desktop layout: section nav + content side-by-side ───────
@@ -205,24 +203,6 @@ function LegacyDomainBody({
         </View>
       </View>
 
-      <TextTabs
-        value={domainTab}
-        onChange={setDomainTab}
-        tabs={[
-          { value: "overview" as const, label: "Overview" },
-          { value: "build" as const, label: "Build" },
-        ]}
-      />
-
-      {domainTab === "build" ? (
-        <View style={[styles.buildEntry, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
-          <SectionLabel>What can you build in this field?</SectionLabel>
-          <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>Build is a separate product for exploring projects, services and ventures connected to this domain. Your domain guidance stays unchanged while you explore it.</Text>
-          <TouchableOpacity onPress={() => exploreNav.entrepreneurship(router, { ...guidanceContext, domainId: domainKey })} style={[styles.buildButton, { borderColor: colors.accentRole.action }]}>
-            <Text style={[styles.buildButtonText, { color: colors.accentRole.action }]}>Open Build in this domain</Text>
-          </TouchableOpacity>
-        </View>
-      ) : (
       <>
 
       {programmeConnection ? (
@@ -410,7 +390,6 @@ function LegacyDomainBody({
       <NotesWidget entityType="domain" entityId={domainKey} />
 
       </>
-      )}
 
     </>
   );
@@ -470,7 +449,6 @@ function DomainBody({
   const { colors } = useTheme();
   const router = useRouter();
   const exploreNav = useExploreNav();
-  const [tab, setTab] = useState<"overview" | "build">("overview");
   const subgroups = domain.subgroups ?? [];
   // D078's historical subgroups are retired; expose only its current canonical
   // areas of specialization even if an older API payload still contains them.
@@ -504,25 +482,6 @@ function DomainBody({
         ? "Nearby direction"
         : "Connected field";
 
-  if (tab === "build") {
-    return (
-      <View style={refinedStyles.page}>
-        <TextTabs value={tab} onChange={setTab} tabs={[{ value: "overview", label: "Overview" }, { value: "build", label: "Build in this domain" }]} />
-        <View style={[refinedStyles.tabIntro, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
-          <Feather name="briefcase" size={22} color={colors.accentRole.action} />
-          <View style={refinedStyles.copyBlock}>
-            <Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What can you build in {domain.name}?</Text>
-            <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>This is a separate Build space for projects, services and ventures connected to this field. It is not a list of courses or a promise that one idea will work.</Text>
-            <TouchableOpacity accessibilityRole="button" onPress={() => exploreNav.entrepreneurship(router, { ...guidanceContext, domainId: domainKey })} style={[refinedStyles.action, { borderColor: colors.accentRole.action }]}>
-              <Feather name="arrow-up-right" size={15} color={colors.accentRole.action} />
-              <Text style={[refinedStyles.actionText, { color: colors.accentRole.action }]}>Open Build in this domain</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
-    );
-  }
-
   if (domain.id === "D078") {
     return <D078MethodAwareJourney
       domainKey={domainKey}
@@ -550,8 +509,6 @@ function DomainBody({
           {domain.descriptionSources?.map((source) => <ExternalLinkGuard key={`${source.title}:${source.locator}`} url={source.url} label={source.shortLabel || source.title} description={`This opens the source used to explain ${domain.name}.`} textStyle={[refinedStyles.meta, { color: colors.accentRole.action }]} />)}
         </View>
       </View>
-
-      <TextTabs value={tab} onChange={setTab} tabs={[{ value: "overview", label: "Overview" }, { value: "build", label: "Build in this domain" }]} />
 
       <View style={[refinedStyles.card, refinedStyles.orientationCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
         <View style={refinedStyles.cardHeading}>

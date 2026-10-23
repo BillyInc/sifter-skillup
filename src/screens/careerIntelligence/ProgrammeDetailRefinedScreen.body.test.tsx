@@ -17,6 +17,11 @@ jest.mock("@/components/careerIntelligence", () => ({
   DataSourceBadge: () => null,
   ContextualItemList: () => null,
   DegreeSkills: () => null,
+  ProgrammeBooksLink: () => {
+    const ReactActual = jest.requireActual("react");
+    const { Text } = jest.requireActual("react-native");
+    return ReactActual.createElement(Text, { testID: "programme-books-link" }, "Books");
+  },
   DetailScaffold: () => null,
   SectionLabel: ({ children }: any) => {
     const ReactActual = jest.requireActual("react");
@@ -109,6 +114,14 @@ describe("programme preview and university downstream", () => {
     expect(baseProps.onChooseSchool).toHaveBeenCalled();
   });
 
+  it("places the compact Books entry after the programme overview", () => {
+    const rendered = renderBody({ ...baseProps, undergraduateContext: true, universitySelectionAllowed: false });
+    expect(screen.getByTestId("programme-books-link")).toBeTruthy();
+    const renderedTree = JSON.stringify(rendered.toJSON());
+    expect(renderedTree.indexOf("Programme overview")).toBeGreaterThanOrEqual(0);
+    expect(renderedTree.indexOf("Programme overview")).toBeLessThan(renderedTree.indexOf("Books"));
+  });
+
   it("starts undergraduate tray with the programme and does not invent university context when none was selected", () => {
     renderBody({
       ...baseProps,
@@ -118,9 +131,10 @@ describe("programme preview and university downstream", () => {
       selectedSchool: null,
     });
 
-    fireEvent.press(screen.getByRole("button", { name: "Open learning plan tray with 1 selected route detail or learning choice" }));
-    expect(screen.getByText("Programme: Sociology")).toBeTruthy();
-    expect(screen.queryByText(/^Institution:/)).toBeNull();
+    fireEvent.press(screen.getByRole("button", { name: /Open learning plan tray/ }));
+    expect(screen.getByTestId("guided-learning-tray")).toBeTruthy();
+    expect(screen.getByText(/Programme: Sociology/)).toBeTruthy();
+    expect(screen.queryByText(/Institution:/)).toBeNull();
   });
 
   it("carries an earlier selected university into an undergraduate programme tray", () => {
@@ -141,9 +155,10 @@ describe("programme preview and university downstream", () => {
       trayInstitution: selectedSchool,
     });
 
-    fireEvent.press(screen.getByRole("button", { name: "Open learning plan tray with 2 selected route details or learning choices" }));
-    expect(screen.getByText("Programme: Sociology")).toBeTruthy();
-    expect(screen.getByText("Institution: University of Lagos")).toBeTruthy();
+    fireEvent.press(screen.getByRole("button", { name: /Open learning plan tray/ }));
+    expect(screen.getByTestId("guided-learning-tray")).toBeTruthy();
+    expect(screen.getByText(/Programme: Sociology/)).toBeTruthy();
+    expect(screen.getByText(/Institution: University of Lagos/)).toBeTruthy();
   });
 
   it("carries the selected/comparison institution into the programme-first tray on secondary routes", () => {
@@ -157,9 +172,10 @@ describe("programme preview and university downstream", () => {
     };
     renderBody({ ...baseProps, selectedSchool, selectedSchoolId: "unilag" });
 
-    fireEvent.press(screen.getByRole("button", { name: "Open learning plan tray with 2 selected route details or learning choices" }));
-    expect(screen.getByText("Programme: Sociology")).toBeTruthy();
-    expect(screen.getByText("Institution: University of Lagos")).toBeTruthy();
+    fireEvent.press(screen.getByRole("button", { name: /Open learning plan tray/ }));
+    expect(screen.getByTestId("guided-learning-tray")).toBeTruthy();
+    expect(screen.getByText(/Programme: Sociology/)).toBeTruthy();
+    expect(screen.getByText(/Institution: University of Lagos/)).toBeTruthy();
   });
 
   it("shows this university's requirements before D078 and carries route context", () => {

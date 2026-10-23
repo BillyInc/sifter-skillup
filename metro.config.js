@@ -65,12 +65,14 @@ const rootOnlyBlockList = [
   const escaped = absolute.replace(/\\/g, '\\\\').replace(/\./g, '\\.');
   return new RegExp(`^${escaped}(?:[/\\\\]|$)`);
 });
+const escapedWorkspaceRoot = __dirname.replace(/\\/g, '\\\\').replace(/\./g, '\\.');
 
 // Keep Metro focused on the frontend. These exact root-level trees are
 // backend, tooling, repository, or generated output and can add hundreds of
 // thousands of files to the initial Windows crawl.
 config.resolver.blockList = [
   /[/\\]\.pytest_cache[/\\]/,
+  new RegExp(`^${escapedWorkspaceRoot}[/\\\\]\\.pytest-tmp-[^/\\\\]+(?:[/\\\\]|$)`),
   ...rootOnlyBlockList,
 ];
 const previousResolveRequest = config.resolver.resolveRequest;

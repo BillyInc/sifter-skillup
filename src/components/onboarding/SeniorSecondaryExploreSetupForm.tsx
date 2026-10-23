@@ -17,8 +17,6 @@ import {
 } from "../../lib/waecSubjects";
 import type { SetupFormProps } from "../../types/onboarding";
 import LocalLegalNotice from "../LocalLegalNotice";
-import { FlowCue } from "../guidance/FlowCue";
-import { secondarySetupCue } from "../../lib/studentFlowCopy";
 
 export function SeniorSecondaryExploreSetupForm({
   value,
@@ -46,7 +44,6 @@ export function SeniorSecondaryExploreSetupForm({
             you compare universities.
         </Text>
       </View>
-      <FlowCue {...secondarySetupCue(classLabel)} />
       <LocalLegalNotice audience="student" />
 
       <View

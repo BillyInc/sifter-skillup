@@ -63,8 +63,6 @@ import { featureFlags } from "@/lib/featureFlags";
 // Same source of truth as the shell nav: this screen names itself what the
 // nav calls it, so "Saved" pre-launch and "My World" once the world is live.
 import { WORLD_NAV } from "@/lib/worldNav";
-import { FlowCue } from "@/components/guidance/FlowCue";
-import { savedReportCue } from "@/lib/studentFlowCopy";
 import { xpEngine, type XPSnapshot } from "@/lib/XPEngine";
 import { streakEngine, type StreakStatus } from "@/lib/StreakEngine";
 import { PdfExportButton } from "@/components/careerIntelligence";
@@ -843,7 +841,6 @@ function GuidanceReportCard() {
             ? "Your choices are saved, but printing requires a programme and a named university, secondary school, or tutorial centre to be attached."
             : "Your saved guidance is not complete enough to create a report yet. Add a programme and a named university, secondary school, or tutorial centre to print it."}
       </Text>
-      <FlowCue {...savedReportCue(ready)} />
       {hasSavedPlan ? <View style={[styles.reportPlanSummary, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
         <Text style={[styles.reportPlanTitle, CompassFonts.bodyBold, { color: colors.textRole.primary }]}>Focused learning plan saved</Text>
         <Text style={[styles.reportPlanBody, CompassFonts.body, { color: colors.textRole.secondary }]}>

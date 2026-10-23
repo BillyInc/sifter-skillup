@@ -183,3 +183,4 @@ export type { DomainIconProps } from "./DomainIcon";
 // ── What a degree teaches (CCMAS learning-outcome profile) ────
 export { DegreeSkills } from "./DegreeSkills";
 export type { DegreeSkillsProps } from "./DegreeSkills";
+export { ProgrammeBooksLink } from "./DegreeSkills";

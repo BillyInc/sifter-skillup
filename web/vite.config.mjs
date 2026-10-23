@@ -8,9 +8,28 @@ const projectRoot = path.resolve(webRoot, "..");
 const reactRoot = path.resolve(projectRoot, "node_modules/react");
 const reactDomRoot = path.resolve(projectRoot, "node_modules/react-dom");
 
+const freshLocalModules = {
+  name: "fresh-local-modules",
+  apply: "serve",
+  configureServer(server) {
+    // Windows browsers can fail to read their cached source-module body after
+    // Vite answers a conditional request with 304. Always send the module body
+    // from this local development server instead of asking the browser cache to
+    // restore it. This plugin is dev-server-only and has no production effect.
+    server.middlewares.use((req, res, next) => {
+      delete req.headers["if-none-match"];
+      delete req.headers["if-modified-since"];
+      res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+      res.setHeader("Pragma", "no-cache");
+      res.setHeader("Expires", "0");
+      next();
+    });
+  },
+};
+
 export default defineConfig(({ mode }) => ({
   root: webRoot,
-  plugins: [react()],
+  plugins: [react(), freshLocalModules],
   publicDir: path.resolve(webRoot, "public"),
   define: {
     __DEV__: mode !== "production",
@@ -29,6 +48,10 @@ export default defineConfig(({ mode }) => ({
     // dispatcher and fail with "Invalid hook call" at runtime.
     dedupe: ["react", "react-dom"],
     alias: [
+      // The shared learning-plan dock must portal out of scrolling route shells
+      // on web. Native keeps the same import path and resolves the platform-neutral
+      // fallback through Metro's platform extension rules.
+      { find: /^@\/components\/careerIntelligence\/PersistentLearningPlanDockPortal$/, replacement: path.resolve(webRoot, "../src/components/careerIntelligence/PersistentLearningPlanDockPortal.web.tsx") },
       // Resolve every React import to the workspace copy. The Expo-compatible
       // screen graph is lazy-loaded, so package-name deduplication alone can
       // still leave a second React dispatcher in the browser graph.

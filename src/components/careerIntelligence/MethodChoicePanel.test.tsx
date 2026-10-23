@@ -1,4 +1,5 @@
 import React from "react";
+import { Dimensions, StyleSheet } from "react-native";
 import { fireEvent, render, screen } from "@testing-library/react-native";
 import { ThemeProvider } from "@/theme";
 import { d078GraphDataForTests, d078Node, INITIAL_D078_SELECTION, projectD078Route, toggleD078Combination, toggleD078ComponentMethod, toggleD078Method } from "@/lib/d078RouteProjection";
@@ -14,7 +15,11 @@ describe("D078 method and combination picker", () => {
     return toggleD078Combination(selected, design.id);
   };
 
-  it("renders all methods but keeps combinations hidden until a compatible multi-selection exists", () => {
+  it("renders a full-width compact method grid, puts Quantitative and Qualitative first, and gates Mixed methods", () => {
+    const priorWindow = Dimensions.get("window");
+    const priorScreen = Dimensions.get("screen");
+    Dimensions.set({ window: { ...priorWindow, width: 1366 }, screen: { ...priorScreen, width: 1366 } });
+    try {
     render(<ThemeProvider><MethodChoicePanel
       selection={INITIAL_D078_SELECTION}
       onToggleMethod={() => undefined}
@@ -25,16 +30,48 @@ describe("D078 method and combination picker", () => {
 
     expect(graph.method_node_ids).toHaveLength(22);
     expect(graph.combination_designs).toHaveLength(9);
+    const methodButtons = screen.getAllByRole("button").filter((button) => String(button.props.accessibilityLabel ?? "").startsWith("Select "));
+    expect(methodButtons[0].props.accessibilityLabel).toContain("Quantitative methods");
+    expect(methodButtons[1].props.accessibilityLabel).toContain("Qualitative methods");
+    const firstFourWidths = graph.method_node_ids.slice(0, 4).map((id) => StyleSheet.flatten(screen.getByTestId(`d078-method-card-${id}`).parent?.props.style).width);
+    expect(firstFourWidths.every((width) => width === firstFourWidths[0])).toBe(true);
     for (const id of graph.method_node_ids) {
       const label = String(d078Node(id)?.label ?? id);
-      expect(screen.getByRole("button", { name: `Select ${label}` })).toBeTruthy();
+      if (id === "domain-item:d078-mixed-methods") {
+        expect(screen.queryByRole("button", { name: `Select ${label}` })).toBeNull();
+      } else {
+        expect(screen.getByRole("button", { name: `Select ${label}` })).toBeTruthy();
+      }
     }
-    expect(screen.getAllByText("How this connects to your programme").length).toBeGreaterThan(0);
-    expect(screen.getByText(/introduces quantitative research and expects you to apply appropriate statistics/i)).toBeTruthy();
-    expect(screen.getByText(/Curriculum evidence: SOC 301 · Methods of Social Research and Statistics; SSC 401 · Research Method II/)).toBeTruthy();
-    expect(screen.getByText("Methods of investigation/research")).toBeTruthy();
+    expect(screen.queryByLabelText("Search methods and combined designs")).toBeNull();
+    expect(screen.queryByText("How this fits your programme")).toBeNull();
+    expect(screen.queryByText(/introduces quantitative \(working with numbers and counts\) research and expects you to apply appropriate statistics/i)).toBeNull();
+    fireEvent.press(screen.getByRole("button", { name: "See more about Quantitative methods (working with numbers)" }));
+    expect(screen.getByText("How this fits your programme")).toBeTruthy();
+    expect(screen.getByText(/introduces quantitative \(working with numbers and counts\) research and expects you to apply appropriate statistics/i)).toBeTruthy();
+    expect(screen.queryByText(/Curriculum evidence/)).toBeNull();
+    expect(screen.queryByText("SOC 301")).toBeNull();
+    expect(screen.getByText("Methods of research")).toBeTruthy();
     expect(screen.queryByText("Ways these methods can work together")).toBeNull();
     expect(screen.getByRole("button", { name: "Clear selected methods" }).props.accessibilityState.disabled).toBe(true);
+    } finally {
+      Dimensions.set({ window: priorWindow, screen: priorScreen });
+    }
+  });
+
+  it("reveals Mixed methods only after both quantitative and qualitative methods are selected", () => {
+    const selection = toggleD078Method(
+      toggleD078Method(INITIAL_D078_SELECTION, "domain-item:d078-quantitative-approach"),
+      "domain-item:d078-qualitative-approach",
+    );
+    render(<ThemeProvider><MethodChoicePanel
+      selection={selection}
+      onToggleMethod={() => undefined}
+      onToggleCombination={() => undefined}
+      onToggleComponentMethod={() => undefined}
+      onClear={() => undefined}
+    /></ThemeProvider>);
+    expect(screen.getByRole("button", { name: /Select Mixed methods/ })).toBeTruthy();
   });
 
   it("keeps a selected design concise in the picker so its full explanation can travel with downstream", () => {
@@ -117,16 +154,4 @@ describe("D078 method and combination picker", () => {
     expect(screen.getAllByRole("button", { name: `Deselect ${label}` }).at(-1)).toBeTruthy();
   });
 
-  it("filters both methods and designs using the search field", () => {
-    render(<ThemeProvider><MethodChoicePanel
-      selection={INITIAL_D078_SELECTION}
-      onToggleMethod={() => undefined}
-      onToggleCombination={() => undefined}
-      onToggleComponentMethod={() => undefined}
-      onClear={() => undefined}
-    /></ThemeProvider>);
-    fireEvent.changeText(screen.getByLabelText("Search methods and combined designs"), "interview");
-    expect(screen.getByRole("button", { name: /Select Interviews/ })).toBeTruthy();
-    expect(screen.queryByRole("button", { name: "Select Spatial analysis" })).toBeNull();
-  });
 });

@@ -54,6 +54,7 @@ const CHI_SQUARE = "domain-item:d078-chi-square-tests";
 const INTERVIEW_OBSERVATION = "combo:interview-and-observation";
 const QUALITATIVE = "domain-item:d078-qualitative-approach";
 const SURVEY = "domain-item:d078-survey-method";
+const SOCIETY_KNOWLEDGE = "runtime-item:domain:d078:d078-society-and-social-world-knowledge";
 const PROGRAMME_KEY = "programme-1::D078";
 
 function JourneyHarness({ initial = INITIAL_D078_SELECTION }: { initial?: typeof INITIAL_D078_SELECTION }) {
@@ -108,6 +109,8 @@ describe("D078 method-aware journey UI acceptance", () => {
       guidanceContext={{ domainId: "D078" }}
     /></ThemeProvider>);
 
+    expect(screen.queryByText("Introduction to Sociology")).toBeNull();
+    fireEvent.press(screen.getByRole("button", { name: "See 1 matched course outcomes" }));
     const courseTitle = screen.getByText("Introduction to Sociology");
     expect(StyleSheet.flatten(courseTitle.props.style)).toMatchObject({ fontSize: 16, lineHeight: 22 });
   });
@@ -118,8 +121,8 @@ describe("D078 method-aware journey UI acceptance", () => {
     expect(isWideD078Layout(1280, "web")).toBe(true);
     expect(isWideD078Layout(1279, "web")).toBe(false);
     expect(isWideD078Layout(1600, "ios")).toBe(false);
-    expect(d078DefaultTrayMode(1600, "web")).toBe("mid");
-    expect(d078DefaultTrayMode(1366, "web")).toBe("mid");
+    expect(d078DefaultTrayMode(1600, "web")).toBe("icon");
+    expect(d078DefaultTrayMode(1366, "web")).toBe("icon");
     expect(d078DefaultTrayMode(390, "ios")).toBe("icon");
     expect(d078PrimaryActionStyle(390, "ios")).toEqual({ width: "100%" });
     expect(d078PrimaryActionStyle(1024, "web")).toEqual({ width: "100%" });
@@ -134,9 +137,9 @@ describe("D078 method-aware journey UI acceptance", () => {
     expect(shouldUseD078ViewportTrayDock(768, "web", true)).toBe(true);
     expect(shouldUseD078ViewportTrayDock(1024, "web", true)).toBe(true);
     expect(shouldUseD078ViewportTrayDock(1279, "web", true)).toBe(true);
-    expect(shouldUseD078ViewportTrayDock(1280, "web", true)).toBe(false);
-    expect(shouldUseD078ViewportTrayDock(1439, "web", true)).toBe(false);
-    expect(shouldUseD078ViewportTrayDock(1440, "web", true)).toBe(false);
+    expect(shouldUseD078ViewportTrayDock(1280, "web", true)).toBe(true);
+    expect(shouldUseD078ViewportTrayDock(1439, "web", true)).toBe(true);
+    expect(shouldUseD078ViewportTrayDock(1440, "web", true)).toBe(true);
     expect(shouldUseD078ViewportTrayDock(1440, "ios", true)).toBe(true);
     expect(shouldUseD078ViewportTrayDock(390, "web", false)).toBe(false);
     const priorWindow = Dimensions.get("window");
@@ -261,16 +264,17 @@ describe("D078 method-aware journey UI acceptance", () => {
       ...d078ApplicableLayerItems(3, toggleD078Method(INITIAL_D078_SELECTION, INTERVIEWS)),
     ]);
     const rendered = render(<ThemeProvider><D078MethodAwareJourney domainKey="D078" programmeName="Sociology" guidanceContext={{ domainId: "D078" }} /></ThemeProvider>);
-    const methodHeading = screen.getByText("Methods of investigation/research");
+    const methodHeading = screen.getByText("Methods of research");
     expect(methodHeading).toBeTruthy();
-    layerIds.forEach((id) => expect(screen.queryByText(d078Node(id)?.label ?? id)).toBeNull());
+    expect(screen.getByText(d078Node(SOCIETY_KNOWLEDGE)!.label)).toBeTruthy();
+    layerIds.filter((id) => id !== SOCIETY_KNOWLEDGE).forEach((id) => expect(screen.queryByText(d078Node(id)?.label ?? id)).toBeNull());
     expect(screen.getByText("Choose one or more ways to investigate. Areas and roles appear only for the methods or named design you select.")).toBeTruthy();
     expect(screen.queryByTestId("d078-intermediate-learning-layers")).toBeNull();
 
     fireEvent.press(screen.getByRole("button", { name: "Select Interviews" }));
     expect(screen.getByText("Preparation for your selected method")).toBeTruthy();
     expect(screen.getByText("Field-wide knowledge and useful learning")).toBeTruthy();
-    for (const id of layerIds) {
+    for (const id of layerIds.filter((candidate) => candidate !== SOCIETY_KNOWLEDGE)) {
       const label = d078Node(id)?.label ?? id;
       if (linkedToInterviews.has(id)) expect(screen.getByText(label)).toBeTruthy();
       else expect(screen.queryByText(label)).toBeNull();
@@ -278,23 +282,26 @@ describe("D078 method-aware journey UI acceptance", () => {
     const renderedText = rendered.UNSAFE_getAllByType(Text);
     const methodIndex = renderedText.findIndex((entry) => entry.props.children === methodHeading.props.children);
     const preparationIndex = renderedText.findIndex((entry) => entry.props.children === "Preparation for your selected method");
+    const societyIndex = renderedText.findIndex((entry) => entry.props.children === d078Node(SOCIETY_KNOWLEDGE)?.label);
     expect(preparationIndex).toBeGreaterThan(methodIndex);
+    expect(societyIndex).toBeLessThan(methodIndex);
     expect(screen.getByText("Areas for what you selected")).toBeTruthy();
 
     const chosenLayer2Id = layerIds.find((id) => graph.domain_learning_layers.find((layer) => layer.layer === 2)?.item_ids?.includes(id) && linkedToInterviews.has(id));
     expect(chosenLayer2Id).toBeTruthy();
     const chosenLayer2Label = d078Node(chosenLayer2Id!)?.label ?? chosenLayer2Id!;
     fireEvent.press(screen.getByRole("button", { name: `Add ${chosenLayer2Label} to your learning` }));
-    fireEvent.press(screen.getByRole("button", { name: "Open learning plan tray with 4 selected route details or learning choices" }));
+    fireEvent.press(screen.getByRole("button", { name: /Open learning plan tray.*4 selected route details or learning choices/ }));
     expect(screen.getByText("Domain learning")).toBeTruthy();
     expect(screen.getByText(chosenLayer2Label)).toBeTruthy();
   });
 
-  it("keeps Build as a separate sibling destination beside the domain overview", () => {
+  it("keeps Build out of the domain learning flow", () => {
     const rendered = render(<ThemeProvider><D078MethodAwareJourney domainKey="D078" programmeName="Sociology" guidanceContext={{ domainId: "D078" }} /></ThemeProvider>);
-    expect(rendered.getByTestId("d078-build-domain-entry")).toBeTruthy();
-    expect(screen.getByRole("button", { name: "Open Build in this domain" })).toBeTruthy();
+    expect(rendered.queryByTestId("d078-build-domain-entry")).toBeNull();
     expect(screen.getByText("Knowledge of society and the social world")).toBeTruthy();
+    expect(screen.queryByText("Sources for this field overview")).toBeNull();
+    expect(screen.queryByText("What this path does not establish")).toBeNull();
   });
 
   it("keeps every Layer 2/3-to-method gap unresolved until local and external evidence are searched", () => {
@@ -351,7 +358,7 @@ describe("D078 method-aware journey UI acceptance", () => {
     /></ThemeProvider>);
     try {
       fireEvent.press(screen.getByRole("button", { name: "Select Interviews" }));
-      const openTray = screen.getByRole("button", { name: "Open learning plan tray with 3 selected route details or learning choices" });
+      const openTray = screen.getByRole("button", { name: /Open learning plan tray.*3 selected route details or learning choices/ });
       expect(openTray).toBeTruthy();
       fireEvent.press(openTray);
       expect(screen.getByText("Your selected approaches")).toBeTruthy();
@@ -659,7 +666,7 @@ describe("D078 method-aware journey UI acceptance", () => {
       guidanceContext={{ domainId: "D078", areaId: role!.areaId }}
     /></ThemeProvider>);
 
-    fireEvent.press(screen.getByRole("button", { name: /Open learning plan tray with/ }));
+    fireEvent.press(screen.getByRole("button", { name: /Open learning plan tray/ }));
     fireEvent.press(screen.getAllByRole("button", { name: "Show learning plan mid size" }).at(-1)!);
     fireEvent.press(screen.getByRole("button", { name: "Remove Interviews from your selected approaches" }));
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import * as Clipboard from "expo-clipboard";
 import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -19,11 +19,10 @@ import { contextItemsToLearningCandidates } from "@/lib/guidedLearningPlanAdapte
 import { addToLearningPlan, buildLearningPlanStackSet, createLearningPlanReportSnapshot, learningPlanRouteKey, reorderLearningPlan, replaceAlternativeChoice, type LearningPlanCandidate, type LearningPlanRoute, type LearningPlanRouteSelection } from "@/lib/guidedLearningPlan";
 import type { LearningPlanShareCopy, LearningPlanShareInput } from "@/lib/learningPlanShare";
 import { GuidedLearningTray } from "@/components/careerIntelligence/GuidedLearningTray";
+import { usePersistentLearningPlanDock } from "@/components/careerIntelligence/PersistentLearningPlanDock";
 import { LearningPlanShareSheet } from "@/components/careerIntelligence/LearningPlanShareSheet";
 import { comingSoon, pending, real, type DataState, type DomainMatchType, type DomainRoleSummary, type DomainRoleV2, type DomainV2, type GuidanceEvidence, type GuidanceEvidenceState } from "@/types/career";
 import { CompassFonts, FontSize, Radius, Spacing, useTheme, type ColorPalette } from "@/theme";
-import { FlowCue } from "@/components/guidance/FlowCue";
-import { guidanceStepCue } from "@/lib/studentFlowCopy";
 
 type Step = "domains" | "subgroups" | "roles" | "review";
 type Snapshot = Record<string, unknown>;
@@ -112,6 +111,7 @@ export default function GuidedFieldSelectionScreen() {
   }>();
   const router = useRouter();
   const exploreNav = useExploreNav();
+  const persistentDock = usePersistentLearningPlanDock();
   const { colors } = useTheme();
   const targetStudentId = params.guidance_student_id ? String(params.guidance_student_id) : undefined;
   const programmeId = params.jamb_programme_id ? String(params.jamb_programme_id) : params.programme_id ? String(params.programme_id) : undefined;
@@ -135,6 +135,7 @@ export default function GuidedFieldSelectionScreen() {
   const [path, setPath] = useState<GuidanceReportPath["path"]>({});
   const [step, setStep] = useState<Step>("domains");
   const [saving, setSaving] = useState(false);
+  const [trayMode, setTrayMode] = useState<"icon" | "compact" | "mid" | "full">(params.open_tray === "1" ? "mid" : "icon");
   const [notice, setNotice] = useState<string | null>(null);
   const [shareSheetVisible, setShareSheetVisible] = useState(false);
   const [shareInput, setShareInput] = useState<LearningPlanShareInput>({});
@@ -252,23 +253,13 @@ export default function GuidedFieldSelectionScreen() {
   const selectedSubgroupIds = useMemo(() => new Set((path.subgroups ?? []).map((entry) => String(entry.id ?? ""))), [path.subgroups]);
   const selectedRoleSelections = useMemo(() => currentAreaRoleSelections(path.roles ?? [], domains), [domains, path.roles]);
   const selectedRoleIds = useMemo(() => new Set(selectedRoleSelections.map((entry) => String(entry.id ?? ""))), [selectedRoleSelections]);
-  const viewDomain = async (domain: DomainV2) => {
+  const viewDomain = (domain: DomainV2) => {
     const snapshot = path.learningPlanSnapshot as Snapshot | undefined;
     const savedD078 = d078SelectionFromSnapshot(snapshot, programmeId);
     const savedD078Stacks = d078RouteStacksFromSnapshot(snapshot, programmeId);
-    // The D078 screen's existing resume loader reads learningPlanSnapshot, so
-    // make this explicitly reopened archive version the current editable copy.
-    // History remains intact and the next save creates a separate version.
-    if (domain.id === "D078" && savedD078 && typeof snapshot?.snapshotId === "string") {
-      const reopened = await careerData.saveGuidancePath({
-        source: "explore",
-        path: { ...path, learningPlanSnapshot: snapshot },
-      });
-      if (reopened.status !== "real" && reopened.status !== "pending") {
-        setNotice("This saved Sociology route could not be reopened yet. Try again when you are online.");
-        return;
-      }
-    }
+    // Reopening a route is navigation, not a save action. Carry the selected
+    // route in the URL so the destination can render it immediately; never
+    // wait for a guidance-path write before opening the domain page.
     const contextQuery = guidanceContextQuery({ ...guidanceContext, focused: true }, { includeProgrammeId: true });
     const query = [
       contextQuery,
@@ -625,11 +616,33 @@ export default function GuidedFieldSelectionScreen() {
     });
   };
 
-  // Ticking a domain, area or role is only a local selection. Save the current
-  // draft when the learner explicitly continues or completes Review.
-  const updateDraft = (nextPath: GuidanceReportPath["path"]) => {
+  // Commit the visible draft first, then write it in the background. Selection
+  // never waits for the request and never shows a blocking spinner.
+  const persistQuietly = (nextPath: GuidanceReportPath["path"]) => {
+    const sequence = ++saveSequence.current;
     pathRef.current = nextPath;
     setPath(nextPath);
+    saveQueue.current = saveQueue.current.catch(() => undefined).then(async () => {
+      try {
+        if (targetStudentId) {
+          await provisioningData.saveGuidancePath(targetStudentId, nextPath as Record<string, unknown>);
+        } else if (!sessionOnlyGuidance) {
+          const saved = await careerData.saveGuidancePath({ source: "explore", path: nextPath });
+          if (sequence === saveSequence.current && saved.status !== "real") {
+            setNotice("Held on this device. It will save when you are online.");
+          }
+        } else if (sequence === saveSequence.current) {
+          setNotice("Held on this device. It will save when you are online.");
+        }
+      } catch {
+        if (sequence === saveSequence.current) setNotice("Held on this device. It will save when you are online.");
+      }
+    });
+  };
+
+  const updateDraft = (nextPath: GuidanceReportPath["path"]) => {
+    persistQuietly(nextPath);
+    setTrayMode("compact");
   };
 
   const updateStep = (next: Step) => {
@@ -758,6 +771,38 @@ export default function GuidedFieldSelectionScreen() {
     });
   };
 
+  const learningTray = guidedPlan.stackSet.stacks.length ? <GuidedLearningTray
+    stackSet={guidedPlan.stackSet}
+    initialMode={trayMode}
+    dropKey={guidedPlan.selectedIds.join("|")}
+    pendingDropLabel={guidedPlan.selectedIds.length ? "Updated learning plan" : null}
+    routeLabels={guidedPlan.routeLabels}
+    advisoryAreaLabels={guidedPlan.advisoryAreaLabels}
+    onRemove={removeLearningFocus}
+    onReorder={reorderLearningFocus}
+    onSelectCandidate={selectLearningFocus}
+    onSelectAlternative={selectAlternative}
+    onSave={reportContextReady ? completeReview : undefined}
+    onPrint={reviewComplete && !saving ? printLearningPlan : undefined}
+    onShare={reviewComplete && !saving ? shareLearningPlan : undefined}
+    onDismiss={persistentDock?.dismiss}
+    statusMessage={notice}
+  /> : null;
+  const learningTrayRef = useRef(learningTray);
+  learningTrayRef.current = learningTray;
+  const renderLearningTray = useCallback(() => <View style={styles.learningPlanDock}>{learningTrayRef.current}</View>, []);
+  const trayActivationKey = [
+    programmeId ?? "no-programme",
+    [...selectedDomainIds].sort().join(","),
+    [...selectedSubgroupIds].sort().join(","),
+    [...selectedRoleIds].sort().join(","),
+    guidedPlan.selectedIds.join(","),
+  ].join("|");
+  useLayoutEffect(() => {
+    if (!persistentDock || !learningTray) return;
+    persistentDock.register(renderLearningTray, `guided-field:${trayActivationKey}`);
+  }, [persistentDock?.register, renderLearningTray, trayActivationKey, Boolean(learningTray)]);
+
   return (
     <DetailScaffold
       eyebrow="GUIDANCE"
@@ -773,24 +818,9 @@ export default function GuidedFieldSelectionScreen() {
       {() => (
         <View style={styles.body}>
            <Text style={[styles.lead, { color: colors.textRole.secondary }]}>Start with the domains connected to your programme. Choose one primary route; add a secondary domain only when you want to compare or plan a pivot. Ticks change your selections on this screen. Your route is saved when you continue or complete Review.</Text>
-           <FlowCue {...guidanceStepCue(displayedStep)} />
            <RouteLine variant="spine" stations={showSubgroupStep ? [{ state: displayedStep === "domains" ? "you" : "bridge", label: "Domains" }, { state: displayedStep === "subgroups" ? "you" : displayedStep === "domains" ? "target" : "bridge", label: "Areas" }, { state: displayedStep === "roles" ? "you" : displayedStep === "review" ? "bridge" : "target", label: "Roles" }, { state: displayedStep === "review" ? "you" : "target", label: "Review" }] : [{ state: displayedStep === "domains" ? "you" : "bridge", label: "Domains" }, { state: displayedStep === "roles" ? "you" : displayedStep === "review" ? "bridge" : "target", label: "Roles" }, { state: displayedStep === "review" ? "you" : "target", label: "Review" }]} edges={showSubgroupStep ? ["solid", "dashed", "dashed"] : ["solid", "dashed"]} style={styles.route} />
            <View style={styles.steps}>{visibleSteps.map((name, index) => <TouchableOpacity key={name} accessibilityRole="button" accessibilityState={{ selected: displayedStep === name }} onPress={() => index === 0 || selectedDomainIds.size > 0 ? updateStep(name) : undefined} style={[styles.step, { borderColor: displayedStep === name ? colors.accentRole.action : colors.borderRole.subtle, backgroundColor: displayedStep === name ? colors.surface.subtle : colors.surface.raised }]}><Text style={[styles.stepNumber, { color: colors.accentRole.action }]}>{index + 1}</Text><Text style={[styles.stepText, { color: colors.textRole.primary }]}>{name === "domains" ? "Domains" : name === "subgroups" ? "Areas" : name === "roles" ? "Roles" : "Review"}</Text></TouchableOpacity>)}</View>
-           {guidedPlan.stackSet.stacks.length ? <GuidedLearningTray
-             stackSet={guidedPlan.stackSet}
-              initialMode={params.open_tray === "1" ? "mid" : "icon"}
-             dropKey={guidedPlan.selectedIds.join("|")}
-             pendingDropLabel={guidedPlan.selectedIds.length ? "Updated learning plan" : null}
-             routeLabels={guidedPlan.routeLabels}
-             advisoryAreaLabels={guidedPlan.advisoryAreaLabels}
-             onRemove={removeLearningFocus}
-             onReorder={reorderLearningFocus}
-              onSelectCandidate={selectLearningFocus}
-             onSelectAlternative={selectAlternative}
-             onSave={reportContextReady ? completeReview : undefined}
-             onPrint={reviewComplete && !saving ? printLearningPlan : undefined}
-             onShare={reviewComplete && !saving ? shareLearningPlan : undefined}
-           /> : null}
+           {!persistentDock ? learningTray : null}
            <LearningPlanShareSheet
              visible={shareSheetVisible}
              input={shareInput}
@@ -918,6 +948,7 @@ function ActionRow({ colors, onBack, onNext, nextLabel, disabled }: { colors: Co
 
 const styles = StyleSheet.create({
   body: { gap: Spacing.lg, paddingBottom: Spacing.xxl },
+  learningPlanDock: { width: "100%", maxWidth: 420, alignItems: "flex-end" },
   lead: { fontSize: FontSize.md, lineHeight: FontSize.md * 1.5 },
   route: { marginVertical: Spacing.xs },
   steps: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.xs },

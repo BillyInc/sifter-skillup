@@ -3,8 +3,7 @@ import { render } from "@testing-library/react-native";
 
 jest.mock("@/theme", () => ({
   Brand: { primary: "#f80" },
-  FontSize: { xs: 10, sm: 12, md: 14, lg: 15, xxl: 20 },
-  Radius: { md: 9 },
+  FontSize: { xs: 10, sm: 12, md: 14, xxl: 20 },
   Spacing: { xs: 3, sm: 6, md: 10, lg: 14, xl: 18 },
   useTheme: () => ({ colors: {
     text: "#111", textSoft: "#333", textMuted: "#666", border: "#ddd",

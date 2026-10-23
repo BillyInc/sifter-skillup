@@ -1,7 +1,7 @@
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react-native";
 import { StyleSheet, View } from "react-native";
-import { DegreeSkills } from "./DegreeSkills";
+import { DegreeSkills, ProgrammeBooksLink } from "./DegreeSkills";
 import { ThemeProvider } from "@/theme";
 import type { ProgrammeCurriculumContract } from "@/types/career";
 import { SOCIOLOGY_REVIEWED_THEME_BY_CODE } from "./programmeCurriculumThemes";
@@ -108,16 +108,17 @@ describe("DegreeSkills programme preview", () => {
     while (themeGrid && !(themeGrid.type === View && StyleSheet.flatten(themeGrid.props.style).flexWrap === "wrap")) themeGrid = themeGrid.parent;
     expect(themeGrid).toBeTruthy();
     expect(StyleSheet.flatten(themeGrid!.props.style).gap).toBe(8);
-    expect(screen.getByText(/1 ability · 0 readings/)).toBeTruthy();
+    expect(screen.getByText(/1 theme outcome · 0 readings/)).toBeTruthy();
     const narration = /You will move from forming a research question/;
     expect(screen.queryByText("Theme focus")).toBeNull();
     expect(screen.queryByText(narration)).toBeNull();
     fireEvent.press(themeButton);
-    expect(screen.getByText("Reading")).toBeTruthy();
-    expect(screen.getByText("You will be able to")).toBeTruthy();
+    expect(screen.queryByText("Resources for this theme")).toBeNull();
+    expect(screen.queryByText(/No reviewed reading is stored/)).toBeNull();
+    expect(screen.getByText("What this part aims to help you develop by the end")).toBeTruthy();
     expect(screen.getByText(narration)).toBeTruthy();
     expect(StyleSheet.flatten(screen.getByText(narration).props.style)).toMatchObject({ fontSize: 14, lineHeight: 20 });
-    expect(StyleSheet.flatten(screen.getByText("Compare quantitative and qualitative approaches to a research question.").props.style)).toMatchObject({ fontSize: 14, lineHeight: 20 });
+    expect(StyleSheet.flatten(screen.getByText("Compare quantitative (working with numbers and counts) and qualitative (working with words, experiences and meaning) approaches to a research question.").props.style)).toMatchObject({ fontSize: 14, lineHeight: 20 });
   });
 
   it("explains ungrouped programme courses without exposing review workflow language", () => {
@@ -208,7 +209,7 @@ describe("DegreeSkills programme preview", () => {
     expect(screen.queryByText("SOC 301")).toBeNull();
     expect(screen.queryByText("SSC 302")).toBeNull();
     expect(screen.getByRole("button", { name: "Close Research and evidence" })).toBeTruthy();
-    expect(screen.getByText("You will be able to")).toBeTruthy();
+    expect(screen.getByText("What this part aims to help you develop by the end")).toBeTruthy();
     expect(screen.queryByText("Methods of Social Research and Statistics")).toBeNull();
     expect(screen.queryByText("Research Method I")).toBeNull();
     expect(screen.queryByText("Research Method II")).toBeNull();
@@ -454,9 +455,9 @@ describe("DegreeSkills programme preview", () => {
 
     render(<ThemeProvider><DegreeSkills curriculumContract={curriculumContract} resources={resources} /></ThemeProvider>);
 
-    expect(screen.getByRole("button", { name: "Open Ideas and foundations" })).toBeTruthy();
-    fireEvent.press(screen.getByRole("button", { name: "Open Ideas and foundations" }));
-    expect(screen.getAllByText("Sociology: Themes and Perspectives (8th edition)")).toHaveLength(2);
+    expect(screen.getByRole("button", { name: "View 2 resources for Ideas and foundations" })).toBeTruthy();
+    fireEvent.press(screen.getByRole("button", { name: "View 2 resources for Ideas and foundations" }));
+    expect(screen.getAllByText("Sociology: Themes and Perspectives (8th edition)")).toHaveLength(1);
     expect(screen.getByText("OpenStax theoretical perspectives")).toBeTruthy();
     expect(screen.getAllByRole("link", { name: "Open" })).toHaveLength(2);
     fireEvent.press(screen.getAllByRole("link", { name: "Open" })[1]);
@@ -478,18 +479,30 @@ describe("DegreeSkills programme preview", () => {
         reading_scope: "recommended_reference",
       }),
       readingResource("haralambos-themes", "Sociology: Themes and Perspectives (8th edition)", "https://publisher.example/haralambos", { theme_keys: ["ideas"] }),
+      readingResource("openstax-free", "Introduction to Sociology 3e", "https://openstax.org/books/introduction-sociology-3e/pages/1-introduction", {
+        reading_scope: "free_foundation_reference",
+      }),
+      readingResource("noun-free", "Introduction to Sociology (NOUN courseware)", "https://nou.edu.ng/coursewarecontent/CSS111%20INTRODUCTION%20%20TO%20SOCIOLOGY.pdf", {
+        reading_scope: "nigerian_courseware_reference",
+      }),
     ];
 
-    render(<ThemeProvider><DegreeSkills curriculumContract={curriculumContract} resources={resources} /></ThemeProvider>);
+    render(<ThemeProvider><><DegreeSkills curriculumContract={curriculumContract} resources={resources} /><ProgrammeBooksLink resources={resources} /></></ThemeProvider>);
 
-    expect(screen.getByRole("header", { name: "Main Sociology books" })).toBeTruthy();
-    expect(screen.getByText("Sociology — Anthony Giddens and Philip W. Sutton")).toBeTruthy();
-    expect(screen.getByText("Sociology: Themes and Perspectives (8th edition)")).toBeTruthy();
-    expect(screen.getByText("Theme: Ideas and foundations")).toBeTruthy();
-    expect(screen.getAllByText(/optional reading, not a programme requirement/)).toHaveLength(2);
-    expect(screen.getAllByRole("link", { name: "Open publisher page" })).toHaveLength(2);
-    fireEvent.press(screen.getByRole("button", { name: "Open Ideas and foundations" }));
+    expect(screen.getByRole("button", { name: "Show Sociology books" })).toBeTruthy();
+    expect(StyleSheet.flatten(screen.getByText("Books").props.style).fontSize).toBe(15);
+    expect(screen.queryByRole("link", { name: "Sociology by Giddens and Sutton (9th edition) · publisher/library access" })).toBeNull();
+    fireEvent.press(screen.getByRole("button", { name: "Show Sociology books" }));
+    expect(screen.getByText("Optional reference books")).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Sociology by Giddens and Sutton (9th edition) · publisher/library access" })).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Sociology: Themes and Perspectives (8th edition) · publisher/library access" })).toBeTruthy();
+    expect(screen.getByText("Free learning alternatives")).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Introduction to Sociology 3e" })).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Introduction to Sociology (NOUN courseware)" })).toBeTruthy();
+    expect(screen.getByText(/not free copies of the books above/)).toBeTruthy();
+    fireEvent.press(screen.getByRole("button", { name: "View 2 resources for Ideas and foundations" }));
     expect(screen.getByText("Sociology")).toBeTruthy();
+    expect(screen.getAllByText("Sociology: Themes and Perspectives (8th edition)")).toHaveLength(2);
     fireEvent.press(screen.getAllByRole("button", { name: "Why included?" })[0]);
     expect(screen.getByText("Wiley identifies the stored ninth edition and chapter 3, Theories and Perspectives.")).toBeTruthy();
   });
@@ -649,7 +662,7 @@ describe("DegreeSkills programme preview", () => {
     render(<ThemeProvider><DegreeSkills curriculumContract={curriculumContract} /></ThemeProvider>);
     fireEvent.press(screen.getByRole("button", { name: "Open People, groups and society" }));
 
-    expect(screen.getByText("You will be able to")).toBeTruthy();
+    expect(screen.getByText("What this part aims to help you develop by the end")).toBeTruthy();
     expect(screen.getByText("You will learn to explain the historical and methodological perspectives of Social Anthropology.")).toBeTruthy();
     expect(screen.getByText("You will learn to discuss the biological foundations of human behaviour.")).toBeTruthy();
     expect(screen.queryByText(/SOC 102|SOC 104|Private source title/)).toBeNull();
@@ -665,21 +678,22 @@ describe("DegreeSkills programme preview", () => {
       abilities: [],
     };
 
-    const narrow = render(<ThemeProvider><DegreeSkills curriculumContract={curriculumContract} /></ThemeProvider>);
+    const resources = [readingResource("research-text", "Research methods reference", "https://example.org/research", { theme_keys: ["research"] })];
+    const narrow = render(<ThemeProvider><DegreeSkills curriculumContract={curriculumContract} resources={resources} /></ThemeProvider>);
     const narrowOpen = screen.getByRole("button", { name: "Open Research and evidence" });
     const narrowCard = narrowOpen.parent;
     fireEvent(narrowCard!, "layout", { nativeEvent: { layout: { width: 420, height: 240, x: 0, y: 0 } } });
     fireEvent.press(narrowOpen);
     const narrowText = treeText(narrow.toJSON());
-    expect(narrowText.indexOf("Reading")).toBeGreaterThanOrEqual(0);
-    expect(narrowText.indexOf("Reading")).toBeLessThan(narrowText.indexOf("You will be able to"));
+    expect(narrowText.indexOf("Resources for this theme")).toBeGreaterThanOrEqual(0);
+    expect(narrowText.indexOf("Resources for this theme")).toBeLessThan(narrowText.indexOf("What this part aims to help you develop by the end"));
     narrow.unmount();
 
-    const wide = render(<ThemeProvider><DegreeSkills curriculumContract={curriculumContract} /></ThemeProvider>);
+    const wide = render(<ThemeProvider><DegreeSkills curriculumContract={curriculumContract} resources={resources} /></ThemeProvider>);
     const wideOpen = screen.getByRole("button", { name: "Open Research and evidence" });
     fireEvent(wideOpen.parent!, "layout", { nativeEvent: { layout: { width: 720, height: 240, x: 0, y: 0 } } });
     fireEvent.press(wideOpen);
-    const abilityHeading = screen.getByText("You will be able to");
+    const abilityHeading = screen.getByText("What this part aims to help you develop by the end");
     let wideRow = abilityHeading.parent;
     while (wideRow && StyleSheet.flatten(wideRow.props.style).flexDirection !== "row") wideRow = wideRow.parent;
     expect(wideRow).toBeTruthy();
@@ -724,7 +738,7 @@ describe("DegreeSkills programme preview", () => {
     expect(screen.getByText("You will learn to identify research strategies.")).toBeTruthy();
     expect(screen.getByText("You will learn to explain method strengths and weaknesses.")).toBeTruthy();
     expect(screen.queryByText("You will learn to choose methods for a question about people or society.")).toBeNull();
-    fireEvent.press(screen.getByRole("button", { name: "See the rest of what you will be able to do" }));
+    fireEvent.press(screen.getByRole("button", { name: "See every ability in this theme" }));
     expect(screen.getByText("You will learn to choose methods for a question about people or society.")).toBeTruthy();
   });
 
@@ -790,7 +804,7 @@ describe("DegreeSkills programme preview", () => {
     ];
 
     render(<ThemeProvider><DegreeSkills curriculumContract={curriculumContract} resources={resources} /></ThemeProvider>);
-    expect(screen.getByText(/1 ability · 8 readings/)).toBeTruthy();
+    expect(screen.getByText(/1 theme outcome · 8 readings/)).toBeTruthy();
     fireEvent.press(screen.getByRole("button", { name: "Open Research and evidence" }));
 
     expect(screen.getByText("OpenStax research methods")).toBeTruthy();
