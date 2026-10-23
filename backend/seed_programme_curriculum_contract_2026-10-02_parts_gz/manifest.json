@@ -1,0 +1,30 @@
+{
+  "format": "sql-statement-parts-v1",
+  "source": "seed_programme_curriculum_contract_2026-10-02.sql",
+  "source_sha256": "e0451693f660c2c85535125ed66f43032cf4ca2bf29ddebb569824f646540c00",
+  "max_part_bytes": 40000000,
+  "compressed": true,
+  "parts": [
+    {
+      "path": "part-001.sql.gz",
+      "bytes": 2005943,
+      "sha256": "555febcb3fd7574d0ac542cf6d456e069f5f766defd9bc21aac5b60f1e192136"
+    },
+    {
+      "path": "part-002.sql.gz",
+      "bytes": 1820268,
+      "sha256": "4461ea6c1c72c058b16e8e37667c69202ba975bc0142b6468b837060899d85e2"
+    },
+    {
+      "path": "part-003.sql.gz",
+      "bytes": 2494510,
+      "sha256": "2f3a283d8476f49311bdb56b1962fc2620171231d5f0d5464f8b857fcf1b80a9"
+    },
+    {
+      "path": "part-004.sql.gz",
+      "bytes": 625490,
+      "sha256": "560221b0083a6155473b6ee8b4e54b3ed5fc7f077df7a6a093c816e19b502a79"
+    }
+  ],
+  "apply_order": "numeric filename order; each part is one transaction"
+}

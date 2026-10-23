@@ -1,0 +1,20 @@
+{
+  "format": "json-object-parts-v1",
+  "source": "domain_skill_provenance.json",
+  "source_sha256": "f632dd85da12adf40ffea878f9e2ead66694547346f2446e6fd6936757ad63be",
+  "max_part_bytes": 40000000,
+  "compressed": true,
+  "parts": [
+    {
+      "path": "part-001.json.gz",
+      "bytes": 5002397,
+      "sha256": "ee01b9d428e7428d3208bb138fdc9506ee9072474818a6f414a3b395f74326a2"
+    },
+    {
+      "path": "part-002.json.gz",
+      "bytes": 1250316,
+      "sha256": "23959d38979f4d3b0fa15b949c812d5ab52ba104444121750e35fd2fda3b4fba"
+    }
+  ],
+  "reassemble": "merge part files in numeric filename order as one top-level object"
+}

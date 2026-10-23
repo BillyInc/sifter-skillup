@@ -54,6 +54,37 @@ describe("guided programme navigation", () => {
     expect(target.push).toHaveBeenNthCalledWith(2, expect.stringContaining("/domain/D078/subgroup/D078%3Asociology-social-anthropology"));
   });
 
+  it("returns D078 role links without an area to the domain instead of opening a role", () => {
+    const nav = makeExploreNav("/(tabs)/explore");
+    const target = router();
+    nav.role(target, "D078|sociologist", { programmeId: "sociology-id", focused: true });
+
+    expect(target.replace).toHaveBeenCalledWith(
+      expect.stringContaining("/(tabs)/explore/domain/D078?programme_id=sociology-id"),
+    );
+    expect(target.push).not.toHaveBeenCalled();
+  });
+
+  it("opens a D078 role only when its area context is carried with the route", () => {
+    const nav = makeExploreNav("/(tabs)/explore");
+    const target = router();
+    nav.role(target, "D078|sociologist", { areaId: "D078:sociology-social-anthropology" });
+
+    expect(target.push).toHaveBeenCalledWith(
+      expect.stringContaining("/(tabs)/explore/role/D078|sociologist?area_id=D078%3Asociology-social-anthropology"),
+    );
+    expect(target.replace).not.toHaveBeenCalled();
+  });
+
+  it("preserves direct role navigation for other domains", () => {
+    const nav = makeExploreNav("/(tabs)/explore");
+    const target = router();
+    nav.role(target, "D001|financial analyst");
+
+    expect(target.push).toHaveBeenCalledWith("/(tabs)/explore/role/D001|financial analyst");
+    expect(target.replace).not.toHaveBeenCalled();
+  });
+
   it("keeps the Explore doors context-specific", () => {
     const nav = makeExploreNav("/(tabs)/explore");
     const knownWhere = router();

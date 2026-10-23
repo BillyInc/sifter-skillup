@@ -25,6 +25,7 @@ import type {
   AIScoreRequest, AIScoreResult, GitHubStatus, GitHubRepo, GitHubPushResult,
   CreateRepoResult, TrackType, FeedReaction, SocialPlatform, BadgeRarity, BadgeId,
 } from '../types/api';
+import { resolveRequestTimeout } from './requestTimeout';
 
 // Re-export types for call sites that import { UserProfile, Badge, FeedItem } from './api'
 export type { UserProfile, Badge, FeedItem } from '../types/api';
@@ -92,9 +93,16 @@ function getDeviceIdCached(): Promise<string | null> {
 
 type RequestOptions = RequestInit & { timeoutMs?: number };
 
+// A common policy prevents one screen's default timeout from expiring before
+// a slow but successful backend read. Writes can specify a route-specific
+// timeout where appropriate.
+export { API_READ_TIMEOUT_MS } from './requestTimeout';
+
 export async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
   const startTime = Date.now();
-  const { timeoutMs = 30000, ...fetchOptions } = options;
+  const { timeoutMs: requestedTimeoutMs, ...fetchOptions } = options;
+  const method = (fetchOptions.method ?? "GET").toUpperCase();
+  const timeoutMs = resolveRequestTimeout(method, requestedTimeoutMs);
   const token = await getToken();
   // Sent on EVERY request, not just authenticated ones. The auth endpoints
   // are where the session is created: _post_auth_device_register reads
@@ -109,17 +117,21 @@ export async function request<T>(path: string, options: RequestOptions = {}): Pr
 
   logger.debug('API request started', {
     endpoint: path,
-    method: options.method || 'GET',
+    method,
     hasAuthorization: !!token,
   });
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
+  const upstreamSignal = fetchOptions.signal;
+  const abortFromUpstream = () => controller.abort(upstreamSignal?.reason);
+  if (upstreamSignal?.aborted) abortFromUpstream();
+  else upstreamSignal?.addEventListener('abort', abortFromUpstream, { once: true });
 
   try {
     const res = await fetch(`${API_BASE}${path}`, {
       ...fetchOptions,
-      signal: fetchOptions.signal ?? controller.signal,
+      signal: controller.signal,
       headers: {
         ...(isFormDataBody ? {} : { 'Content-Type': 'application/json' }),
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -152,7 +164,7 @@ export async function request<T>(path: string, options: RequestOptions = {}): Pr
 
     logger.info('API request completed', {
       endpoint: path,
-      method: options.method || 'GET',
+      method,
       duration,
       status: res.status,
       success: true,
@@ -167,7 +179,7 @@ export async function request<T>(path: string, options: RequestOptions = {}): Pr
     logger.error('API request failed', error as Error);
     logger.info('API request completed with error', {
       endpoint: path,
-      method: options.method || 'GET',
+      method,
       duration,
       success: false,
       error: error instanceof Error ? error.message : String(error),
@@ -175,6 +187,7 @@ export async function request<T>(path: string, options: RequestOptions = {}): Pr
     throw error;
   } finally {
     clearTimeout(timeout);
+    upstreamSignal?.removeEventListener('abort', abortFromUpstream);
   }
 }
 

@@ -1,4 +1,5 @@
 import {
+  filterUniversityOfferingsBySubjectMatch,
   guidanceContextQuery,
   isGuidanceContextCompatible,
   guidanceRouteTelemetry,
@@ -6,6 +7,13 @@ import {
 } from "./guidanceRouteContext";
 
 describe("guidance route context telemetry", () => {
+  it("keeps the university list scoped to offerings returned by the subject match", () => {
+    const offerings = [{ schoolId: "uni-a" }, { schoolId: "uni-b" }, { schoolId: "uni-c" }];
+    expect(filterUniversityOfferingsBySubjectMatch(offerings, true, ["uni-b"])).toEqual([{ schoolId: "uni-b" }]);
+    expect(filterUniversityOfferingsBySubjectMatch(offerings, true, [])).toEqual([]);
+    expect(filterUniversityOfferingsBySubjectMatch(offerings, false, ["uni-b"])).toBe(offerings);
+  });
+
   it("keeps route diagnostics free of student and catalogue IDs", () => {
     const event = guidanceRouteTelemetry(
       "/(admin)/workspace-explore/programme",
@@ -88,6 +96,18 @@ describe("guidance route context telemetry", () => {
       openTray: true,
     }, { includeProgrammeId: true })).toBe(
       "programme_id=sociology&domain_id=D078&area_id=A01&role_id=D078%7Csociologist&focus=guidance&open_tray=1",
+    );
+  });
+
+  it("carries the selected subjects and verified university match scope into the programme route", () => {
+    expect(guidanceContextQuery({
+      subjectMatchOlevel: ["English Language", "Mathematics", "Biology"],
+      subjectMatchUtme: ["English Language", "Biology", "Chemistry", "Physics"],
+      subjectMatchSchoolIds: ["uni-a", "uni-b"],
+      subjectMatchScopeApplied: true,
+      subjectMatchBasis: "national_and_university_specific",
+    })).toBe(
+      "olevel_subjects=English%20Language%2CMathematics%2CBiology&subjects=English%20Language%2CBiology%2CChemistry%2CPhysics&university_match_ids=uni-a%2Cuni-b&university_match_filter=1&subject_match_basis=national_and_university_specific",
     );
   });
 

@@ -21,7 +21,12 @@ export type AdmissionSuggestion = {
   city?: string | null;
   state?: string | null;
   country?: string | null;
+  distinction?: string | null;
 };
+
+function programmeSearchTerm(value: string): string {
+  return value.trim().replace(/^(?:I\s+want\s+to\s+study|I\s+want\s+to\s+do|I\s+am\s+considering)\s+/i, "").trim();
+}
 
 export function LiveAdmissionSearchField({
   label,
@@ -61,14 +66,20 @@ export function LiveAdmissionSearchField({
   const [searchNotice, setSearchNotice] = React.useState<string | null>(null);
   const [registering, setRegistering] = React.useState(false);
   const [registerError, setRegisterError] = React.useState<string | null>(null);
+  const programmeQueryBeforeSelection = React.useRef("");
+  const onSelectRef = React.useRef(onSelect);
   const selected = Boolean(selectedId && value.trim());
+
+  React.useEffect(() => {
+    onSelectRef.current = onSelect;
+  }, [onSelect]);
 
   React.useEffect(() => {
     setQuery(value);
   }, [value]);
 
   React.useEffect(() => {
-    const q = query.trim();
+    const q = kind === "programme" ? programmeSearchTerm(query) : query.trim();
     if (selected) {
       setResults([]);
       setLoading(false);
@@ -90,7 +101,7 @@ export function LiveAdmissionSearchField({
     const t = setTimeout(async () => {
       const state =
         kind === "programme"
-          ? schoolId
+            ? schoolId
             ? await careerData.getSchoolProgrammes(schoolId, q, faculty)
             : await careerData.searchJambProgrammes(q)
           : await careerData.searchAdmissionSchools(q, institutionType);
@@ -98,15 +109,15 @@ export function LiveAdmissionSearchField({
       setLoading(false);
       setSearchStatus(state.status === "real" ? "real" : "unavailable");
       setSearchNotice(state.meta?.notice ?? null);
-      setResults(
+      const nextResults: AdmissionSuggestion[] =
         state.status === "real" && Array.isArray(state.data)
           ? state.data.map((r: any) => ({
               id: r.id || r.jambProgrammeId || r.schoolId || "",
               name:
-                typeof r.studentName === "string"
-                  ? r.studentName
-                  : typeof r.jambName === "string"
-                    ? r.jambName
+                typeof r.jambName === "string"
+                  ? r.jambName
+                  : typeof r.studentName === "string"
+                    ? r.studentName
                     : r.name,
               institutionType: r.institutionType,
               schoolNames: Array.isArray(r.schoolNames) ? r.schoolNames : [],
@@ -115,9 +126,17 @@ export function LiveAdmissionSearchField({
               city: r.city ?? null,
               state: r.state ?? null,
               country: r.country ?? null,
+              distinction: r.distinction ?? r.overview ?? r.requirementSummary ?? null,
             }))
-          : [],
-      );
+          : [];
+      setResults(nextResults);
+      if (kind === "programme" && nextResults.length === 1) {
+        const onlyProgramme = nextResults[0];
+        programmeQueryBeforeSelection.current = query.trim();
+        setQuery(onlyProgramme.name);
+        setOpen(false);
+        onSelectRef.current(onlyProgramme);
+      }
     }, 150);
     return () => {
       active = false;
@@ -159,10 +178,11 @@ export function LiveAdmissionSearchField({
             accessibilityRole="button"
             accessibilityLabel={`Change ${label.toLowerCase()}`}
             onPress={() => {
-              setQuery("");
-              setOpen(false);
+              const resumeQuery = kind === "programme" ? programmeQueryBeforeSelection.current : "";
+              setQuery(resumeQuery);
+              setOpen(Boolean(resumeQuery));
               setResults([]);
-              onSelect({ id: "", name: "" });
+              onSelect({ id: "", name: resumeQuery });
             }}
             style={styles.changeButton}
           >
@@ -194,7 +214,34 @@ export function LiveAdmissionSearchField({
             { backgroundColor: colors.card, borderColor: colors.border },
           ]}
         >
-          {results.slice(0, 6).map((r) => (
+          {kind === "programme" && results.length > 1 ? (
+            <View style={styles.variationIntro}>
+              <Text style={[styles.variationTitle, { color: colors.text }]}>
+                JAMB lists more than one programme under “{programmeSearchTerm(query)}”. Choose the one you mean. Each one has its own subjects and its own universities.
+              </Text>
+            </View>
+          ) : null}
+          {results.map((r) => kind === "programme" ? (
+            <View key={r.id} style={styles.suggestion}>
+              <Text style={[styles.suggestionText, { color: colors.text }]}>{r.name}</Text>
+              <Text numberOfLines={2} style={[styles.suggestionMeta, { color: colors.textMuted }]}>
+                {r.distinction?.trim() || "This is a separate JAMB programme. Its O-level subjects, UTME subjects, and universities are its own."}
+              </Text>
+              <TouchableOpacity
+                accessibilityRole="button"
+                onPress={() => {
+                  programmeQueryBeforeSelection.current = query.trim();
+                  setQuery(r.name);
+                  onSelect(r);
+                  setOpen(false);
+                  setResults([]);
+                }}
+                style={styles.chooseButton}
+              >
+                <Text style={[styles.chooseText, { color: colors.accentRole.action }]}>Choose this programme</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
             <TouchableOpacity
               key={r.id}
               activeOpacity={0.7}
@@ -207,9 +254,6 @@ export function LiveAdmissionSearchField({
               style={styles.suggestion}
             >
               <Text style={[styles.suggestionText, { color: colors.text }]}>{r.name}</Text>
-              {/* Onboarding search selects a programme identity. Keep the
-                  university list for the programme preview, where the student
-                  can compare it in context; do not imply a separate variant. */}
               {kind === "school" ? (
                 <Text style={[styles.suggestionMeta, { color: colors.textMuted }]}>
                   {[r.address, r.city, r.state, r.country].filter(Boolean).join(", ") || "Address not listed"}
@@ -224,7 +268,7 @@ export function LiveAdmissionSearchField({
           style={[styles.empty, { borderColor: colors.border, backgroundColor: colors.card }]}
         >
           <Text style={[styles.suggestionMeta, { color: colors.textMuted }]}>
-            {searchNotice ?? "We could not check this right now. Please try again."}
+          {kind === "programme" ? "Could not load programmes. Try again." : searchNotice ?? "We could not check this right now. Please try again."}
           </Text>
         </View>
       ) : null}
@@ -261,11 +305,15 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   suggestion: {
-    paddingVertical: Spacing.sm,
-    paddingHorizontal: Spacing.md,
+    paddingVertical: 12,
+    paddingHorizontal: 12,
   },
-  suggestionText: { fontSize: FontSize.sm },
-  suggestionMeta: { fontSize: FontSize.xs, marginTop: 2 },
+  suggestionText: { fontSize: 16, fontWeight: "700" },
+  variationIntro: { paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: "#CBD5E1" },
+  variationTitle: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.45, fontWeight: "700" },
+  chooseButton: { minHeight: 44, alignSelf: "flex-start", justifyContent: "center", paddingHorizontal: 10, marginTop: Spacing.xs },
+  chooseText: { fontSize: FontSize.sm, fontWeight: "800" },
+  suggestionMeta: { fontSize: 14, lineHeight: 19, marginTop: 2 },
   helper: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.4 },
   empty: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm },
   registerButton: { alignSelf: "flex-start", borderRadius: Radius.sm, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },

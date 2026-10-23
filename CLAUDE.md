@@ -147,12 +147,20 @@ preflight and postflight checks. Do not maintain or invent a second ordered
 list here; if this summary conflicts with the runbook, stop and correct the
 summary/runbook before preparing a deployment.
 
-Package gate: the runbook's four required additions must travel with it:
-`migration_career_item_relationship_target_context_2026-10-17.sql`,
-`migration_d078_role_item_contracts_2026-10-15.sql`,
-`migration_d078_requirement_lanes_2026-10-17.sql`, and
-`migration_d078_role_route_visibility_2026-10-15.sql`. The first three are
-schema migrations; route visibility is a post-taxonomy data recalculation.
+Package gate: every required addition listed in the runbook must travel with it:
+migration_career_item_relationship_target_context_2026-10-17.sql,
+migration_d078_role_item_contracts_2026-10-15.sql,
+migration_d078_requirement_lanes_2026-10-17.sql,
+migration_d078_role_route_visibility_2026-10-15.sql,
+migration_programme_theme_guidance_2026-10-08.sql,
+migration_sociology_giddens_ideas_theme_2026-10-22.sql, and
+migration_sociology_theme_resource_repair_2026-10-23.sql. The role, lane,
+and relationship-context files are schema dependencies; route visibility is
+a post-taxonomy recalculation. The Giddens file is an exact-edition resource
+correction after the Sociology resource-ownership migration. The theme-resource
+repair is a separate data correction that follows the Sociology programme-theme
+seed. The authoritative runbook gives the full sequence; do not create a
+competing order here.
 Before staging or pushing, verify every runbook-listed migration and selected
 compressed seed exists in the target-branch package, including contextual
 seed parts 001–035. Never publish a runbook that references absent files or

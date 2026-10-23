@@ -6,6 +6,17 @@
  "programmes": [
   {
    "jamb_name": "Building",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "evidence_hold": true,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "_jamb_txt/engineering.txt lines 22, 48, 49, 109, 532, 541; parsed offering row 1; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
    "institutions": [
     "AAU",
     "ABUJA",
@@ -209,10 +220,25 @@
    "scope": [
     559,
     1085
-   ]
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+   "source_locator": "_jamb_txt/engineering.txt lines 22, 48, 49, 109, 532, 541; parsed offering row 1; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification."
   },
   {
    "jamb_name": "Civil Engineering",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "evidence_hold": true,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "_jamb_txt/engineering.txt lines 28, 30, 586, 626, 635-636, 637; parsed offering row 2; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
    "institutions": [
     "AAU",
     "ABSU",
@@ -627,20 +653,33 @@
    "scope": [
     1085,
     1616
-   ]
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+   "source_locator": "_jamb_txt/engineering.txt lines 28, 30, 586, 626, 635-636, 637; parsed offering row 2; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification."
   },
   {
    "jamb_name": "Computer and Information Science",
-   "institutions": [
-    "COMMUNICATION",
-    "ENGINEERING",
-    "BAUCHI",
-    "SUMMIT"
-   ],
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "evidence_hold": true,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "_jamb_txt/engineering.txt lines 40; parsed offering row 3; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
+    "institutions": [
+     "BAUCHI",
+     "SUMMIT"
+    ],
    "utme_subjects": null,
    "olevel_requirement": null,
    "direct_entry": null,
-   "institution_waivers": [
+    "institution_waivers": [
     {
      "institution": "LAGOS",
      "note": "LAGOS accepts Very good passes in three JUPEB/A' Level subjects: Physics, Mathematics and Chemistry. 'A' level Cambridge HND/ND (Upper Credit) in related Engineering courses."
@@ -729,12 +768,33 @@
      "institution": "LAGOS",
      "note": "LAGOS requires English Language, Chemistry, Mathematics & Physics (UTME subjects)."
     },
-    {
-     "institution": "ABU",
-     "note": "ABU accepts Mathematics, Physics and Chemistry (UTME subjects)."
-    }
-   ],
-   "first_line": 1616,
+     {
+      "institution": "ABU",
+      "note": "ABU accepts Mathematics, Physics and Chemistry (UTME subjects)."
+     }
+    ],
+    "source_support_note": "HTML-only reconciliation on 2026-10-02 removed COMMUNICATION and ENGINEERING from the institution list as non-institution heading fragments. BAUCHI and SUMMIT remain unverified candidates, not confirmed JAMB awarders. The adjacent waiver entries name other institutions and remain evidence-held pending source-cell reconciliation; they are not promoted as verified requirements for these candidates.",
+    "source_html_review": {
+     "reviewed_on": "2026-10-02",
+     "sources": [
+      {
+       "institution_code": "BAUCHI",
+       "institution": "Sa'adu Zungur University",
+       "url": "https://sazu.edu.ng/faculty-of-science",
+       "page_title": "Faculty of Science – Sa'adu Zungur University",
+       "finding": "The university states that Computer Science was mounted as a programme in its Department of Mathematical Sciences; this does not confirm an exact standalone Computer and Information Science award or this JAMB source occurrence."
+      },
+      {
+       "institution_code": "SUMMIT",
+       "institution": "Summit University, Offa",
+       "url": "https://summituniversity.edu.ng/colleges.php?co=COICT",
+       "page_title": "COICT – Summit University",
+       "finding": "The university page lists four approved undergraduate programmes (Cyber Security, Data Science, Information Technology, Software Engineering); it does not establish the exact Computer and Information Science award or this JAMB source occurrence."
+      }
+     ],
+     "decision": "Keep BAUCHI and SUMMIT unresolved; do not mark either verified or unavailable. Retain evidence_hold and do not assign a CCMAS mapping from these records."
+    },
+    "first_line": 1616,
    "line_range": [
     1616,
     1747
@@ -742,27 +802,30 @@
    "scope": [
     1616,
     1748
-   ]
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+   "source_locator": "_jamb_txt/engineering.txt lines 40; parsed offering row 3; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification."
   },
   {
    "jamb_name": "Polymer and Textile Engineering",
+   "source_context_status": "source_text_confirmed",
+   "source_verification": {
+    "verified_against_pdf": true,
+    "evidence_hold": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "JAMB IBASS Engineering/Environmental/Technology brochure, printed p. 368; exact POLYMER AND TEXTILE ENGINEERING title-awarder row. Adjacent programme rows are separately titled.",
+    "verification_date": "2026-09-29",
+    "access_date": "2026-09-29",
+    "disposition": "confirmed_exact_source_cell_and_corrected_awarders",
+    "disposition_reason": "The exact source row names FUTO and UNIZIK only. OAUSTECH, LASU, FUTA, FED-DUTSINMA, BOUEDST, BENIN and EUI belong to separately titled adjacent programme rows; their labels/tokens were parser spill.",
+    "checkpoint": "jamb_ccmas_source_audit_lane_3_2026-09-28_increment_018",
+    "note": "Awarders corrected from the exact JAMB source row. UTME, O'Level and Direct Entry fields were not changed."
+   },
    "institutions": [
     "FUTO",
-    "UNIZIK",
-    "POLYMER ENGINEERING",
-    "OAUSTECH",
-    "CHEMICAL AND",
-    "LASU",
-    "TEXTILE DESIGN",
-    "TECHNOLOGY",
-    "FUTA",
-    "FED-DUTSINMA",
-    "FASHION DESIGN",
-    "BOUEDST",
-    "PRODUCTION",
-    "ENGINEERING",
-    "BENIN",
-    "EUI"
+    "UNIZIK"
    ],
    "utme_subjects": [
     "Physics",
@@ -805,35 +868,39 @@
   },
   {
    "jamb_name": "Water Resources and Environmental Engr",
+   "source_context_status": "source_text_confirmed",
+   "source_verification": {
+    "verified_against_pdf": true,
+    "evidence_hold": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "engineering.txt:1826-1836; printed p. 374; exact WATER RESOURCES AND ENVIROMENTAL ENGINEERING title-awarder cell",
+    "verification_date": "2026-09-28",
+    "access_date": "2026-09-28",
+    "disposition": "confirmed_exact_source_cell_and_corrected_awarders",
+    "disposition_reason": "The detailed source table prints WATER RESOURCES AND ENVIROMENTAL ENGINEERING and lists ABU, ILORIN, and KUST. UDA belongs to the separate WATER RESOURCES ENGINEERING row, UAGRIC-IMO to WATER AND IRRIGATION ENGINEERING, and the remaining parsed names/fragments came from unrelated environmental or petroleum engineering rows.",
+    "checkpoint": "jamb_source_repair_lane_a_incremental_checkpoint_2026-09-28_030",
+    "note": "The JAMB index shortens this title to Water Resources and Environmental Engr; its exact detail-table title and awarders are captured. Requirement fields were left unchanged."
+   },
    "institutions": [
-    "ENVIROMENTAL",
     "ABU",
     "ILORIN",
-    "KUST",
-    "ENGINEERING",
-    "UDA",
-    "WATER AND IRRIGATION",
-    "UAGRIC-IMO",
-    "PETROLEUM",
-    "ABUAD",
-    "AKSU",
-    "BAUCHI",
-    "BAYERO",
-    "BENIN",
-    "CALABAR",
-    "COVENANT",
-    "DELSU",
-    "AEFUNA",
-    "FUPRE",
-    "GREGORY",
-    "IBADAN",
-    "IGBINEDION",
-    "MADONNA",
-    "NDU",
-    "OAUSTECH",
-    "RSU",
-    "TECH-IBADAN",
-    "UYO"
+    "KUST"
+   ],
+   "source_offering_contexts": [
+    {
+     "source_title": "WATER RESOURCES AND ENVIROMENTAL ENGINEERING",
+     "institutions": [
+      "ABU",
+      "ILORIN",
+      "KUST"
+     ],
+     "source_faculty": "Engineering/Environmental/Technology",
+     "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+     "source_locator": "engineering.txt:1826-1836; printed p. 374",
+     "verification_date": "2026-09-28",
+     "source_text_verified": true,
+     "identity_with_jamb_title": "exact_source_title_with_index_abbreviation"
+    }
    ],
    "utme_subjects": [
     "Chemistry",
@@ -872,8 +939,20 @@
   },
   {
    "jamb_name": "Petroleum and Gas Engineering",
+   "source_context_status": "source_text_confirmed",
+   "source_verification": {
+    "verified_against_pdf": true,
+    "evidence_hold": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "engineering.txt:1929-1955; printed pp. 375-376; exact PETROLEUM AND GAS ENGINEERING awarder heading and continuation",
+    "verification_date": "2026-09-28",
+    "access_date": "2026-09-28",
+    "disposition": "confirmed_exact_source_cell_and_corrected_awarders",
+    "disposition_reason": "The detailed brochure distinguishes PETROLEUM ENGINEERING from PETROLEUM AND GAS ENGINEERING. The latter's awarders continue across the page break: BAZE, CUST, DELSUT, LAGOS, FED-OTUOKE, FUTIA, OAUSTECH, MAIDUGURI, MARITIME-UNI, NILE, PHC, and TOPFAITH. The stray ENGINEERING token was a title fragment, not an institution.",
+    "checkpoint": "jamb_source_repair_lane_a_incremental_checkpoint_2026-09-28_029",
+    "note": "Exact offering cell and continuation verified; requirements and waivers were left unchanged."
+   },
    "institutions": [
-    "ENGINEERING",
     "BAZE",
     "CUST",
     "DELSUT",
@@ -886,6 +965,31 @@
     "NILE",
     "PHC",
     "TOPFAITH"
+   ],
+   "source_offering_contexts": [
+    {
+     "source_title": "PETROLEUM AND GAS ENGINEERING",
+     "institutions": [
+      "BAZE",
+      "CUST",
+      "DELSUT",
+      "LAGOS",
+      "FED-OTUOKE",
+      "FUTIA",
+      "OAUSTECH",
+      "MAIDUGURI",
+      "MARITIME-UNI",
+      "NILE",
+      "PHC",
+      "TOPFAITH"
+     ],
+     "source_faculty": "Engineering/Environmental/Technology",
+     "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+     "source_locator": "engineering.txt:1929-1955; printed pp. 375-376",
+     "verification_date": "2026-09-28",
+     "source_text_verified": true,
+     "identity_with_jamb_title": "exact_source_title"
+    }
    ],
    "utme_subjects": [
     "Chemistry",
@@ -924,13 +1028,35 @@
   },
   {
    "jamb_name": "Gas Engineering",
+   "source_context_status": "source_text_confirmed",
+   "source_verification": {
+    "verified_against_pdf": true,
+    "evidence_hold": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "engineering.txt:1957-1958; printed p. 376; exact GAS ENGINEERING title-awarder cell",
+    "verification_date": "2026-09-28",
+    "access_date": "2026-09-28",
+    "disposition": "confirmed_exact_source_cell_and_corrected_awarders",
+    "disposition_reason": "The detail table lists GAS ENGINEERING — OAUSTECH. The immediately following NATURAL GAS ENGINEERING row lists FUPRE, PHC, and DELSUT; those are a distinct title-awarder context and were removed from the Gas Engineering record.",
+    "checkpoint": "jamb_source_repair_lane_a_incremental_checkpoint_2026-09-28_029",
+    "note": "Exact title-awarder cell confirmed; requirements and waivers remain unchanged."
+   },
    "institutions": [
-    "OAUSTECH",
-    "NATURAL GAS",
-    "ENGINEERING",
-    "FUPRE",
-    "PHC",
-    "DELSUT"
+    "OAUSTECH"
+   ],
+   "source_offering_contexts": [
+    {
+     "source_title": "GAS ENGINEERING",
+     "institutions": [
+      "OAUSTECH"
+     ],
+     "source_faculty": "Engineering/Environmental/Technology",
+     "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+     "source_locator": "engineering.txt:1957-1958; printed p. 376",
+     "verification_date": "2026-09-28",
+     "source_text_verified": true,
+     "identity_with_jamb_title": "exact_source_title"
+    }
    ],
    "utme_subjects": null,
    "olevel_requirement": null,
@@ -989,6 +1115,17 @@
   },
   {
    "jamb_name": "Computer Science",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "evidence_hold": true,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "_jamb_txt/engineering.txt lines 34, 36, 38, 132, 650, 653; parsed offering row 8; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
    "institutions": [
     "BELLS",
     "CRAWFORD",
@@ -1150,11 +1287,153 @@
    "scope": [
     2040,
     3143
-   ]
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+   "source_locator": "_jamb_txt/engineering.txt lines 34, 36, 38, 132, 650, 653; parsed offering row 8; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification."
   },
   {
    "jamb_name": "Systems Engineering",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "evidence_hold": true,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "Original JAMB brochure: Engineering _ Enviromental _ Technology.pdf, PDF page(s) 68; exact programme heading and institution list in awarder column",
+    "verification_date": "2026-09-30",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": [
+     "AUN",
+     "HUSTECH",
+     "LAGOS",
+     "DELSUT"
+    ],
+    "offering_row_verified_against_pdf": true,
+    "verification_note": "Institution codes map by exact normalized matches to existing JAMB inventory tokens; the PDF awarder cell is bounded by the next printed bold heading.",
+    "institution_roster_reconciled_from_pdf": true,
+    "reconciled_prior_institution_tokens": [
+     "AUN",
+     "HUSTECH",
+     "LAGOS",
+     "DELSUT",
+     "MECHANICAL/PRODUCTI",
+     "BAUCHI",
+     "ESUTECH",
+     "MECHATRONICS",
+     "ENGINEERING",
+     "ABU",
+     "ABUAD",
+     "ACHIEVERS",
+     "AFIT-DEG",
+     "AEFUNA",
+     "BAYERO",
+     "BAZE",
+     "BENIN",
+     "BELLS",
+     "BOWEN",
+     "CUST",
+     "EUI",
+     "FED-DUTSINMA",
+     "FED-OTUOKE",
+     "FED-OYE EKITI",
+     "FUT-DAURA",
+     "FUNAAB",
+     "FUTO",
+     "IGBINEDION",
+     "KHAIRUN",
+     "KUST",
+     "LANDMARK",
+     "LASUSTECH",
+     "LCITY",
+     "MADUKA",
+     "MINNA",
+     "NDA",
+     "NILE",
+     "PAN-ATLANTIC",
+     "PHC",
+     "SUMMIT",
+     "TECH-IBADAN",
+     "TOPFAITH",
+     "UDA",
+     "UNN",
+     "VENITE",
+     "WIGWE",
+     "MECHATRONICS AND",
+     "SYSTEM ENGINEERING",
+     "ROBOTICS ENGINEERING",
+     "AUTOMOBILE",
+     "AUTOMOTIVE",
+     "ELIZADE",
+     "IBADAN",
+     "AERONAUTIC AND",
+     "ASTRONAUTIC",
+     "ABUJA",
+     "LASU",
+     "MARITIME-UNI",
+     "AEROSPACE",
+     "FUTIA",
+     "AKSU",
+     "FUPRE",
+     "NDU",
+     "RSU",
+     "MARINE ECONOMICS"
+    ]
+   },
    "institutions": [
+    "AUN",
+    "HUSTECH",
+    "LAGOS",
+    "DELSUT"
+   ],
+   "utme_subjects": [
+    "Mathematics",
+    "Physics",
+    "Chemistry"
+   ],
+   "olevel_requirement": "Five (5) SSC credits including English Language, Mathematics, Further Mathematics, Physics and Chemistry.",
+   "direct_entry": "'A' Level passes in Pure/Applied or Pure and Mathematics, Physics and Chemistry.",
+   "institution_waivers": [
+    {
+     "institution": "FUTA",
+     "note": "UTME subjects: requires Mathematics, Chemistry and Physics."
+    },
+    {
+     "institution": "FUTO",
+     "note": "UTME subjects: requires Mathematics, Chemistry and Physics."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "UTME subjects: requires English Language, Chemistry, Mathematics and Physics."
+    },
+    {
+     "institution": "ABU",
+     "note": "UTME subjects: requires Mathematics, Physics and Chemistry."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "Direct Entry: Very good passes in JUPEB subjects: Physics, Mathematics and Chemistry. A' level Cambridge. HND/ND (Upper Credit) into 300L/200L includes engineering courses such as Chemical, Civil and Environmental, Computer, Electrical and Electronics, Metallurgical and Materials, Petroleum and Gas, Surveying and Geo-informatics."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "UTME: requires Five O/Level credit passes in English, Mathematics, Further Mathematics, Physics and Chemistry."
+    }
+   ],
+   "first_line": 3143,
+   "line_range": [
+    3143,
+    3370
+   ],
+   "scope": [
+    3143,
+    3371
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+   "source_locator": "_jamb_txt/engineering.txt lines 24, 172-173, 3143; parsed offering row 9; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "institution_tokens_before_pdf_cell_reconciliation": [
     "AUN",
     "HUSTECH",
     "LAGOS",
@@ -1220,63 +1499,44 @@
     "NDU",
     "RSU",
     "MARINE ECONOMICS"
-   ],
-   "utme_subjects": [
-    "Mathematics",
-    "Physics",
-    "Chemistry"
-   ],
-   "olevel_requirement": "Five (5) SSC credits including English Language, Mathematics, Further Mathematics, Physics and Chemistry.",
-   "direct_entry": "'A' Level passes in Pure/Applied or Pure and Mathematics, Physics and Chemistry.",
-   "institution_waivers": [
-    {
-     "institution": "FUTA",
-     "note": "UTME subjects: requires Mathematics, Chemistry and Physics."
-    },
-    {
-     "institution": "FUTO",
-     "note": "UTME subjects: requires Mathematics, Chemistry and Physics."
-    },
-    {
-     "institution": "LAGOS",
-     "note": "UTME subjects: requires English Language, Chemistry, Mathematics and Physics."
-    },
-    {
-     "institution": "ABU",
-     "note": "UTME subjects: requires Mathematics, Physics and Chemistry."
-    },
-    {
-     "institution": "LAGOS",
-     "note": "Direct Entry: Very good passes in JUPEB subjects: Physics, Mathematics and Chemistry. A' level Cambridge. HND/ND (Upper Credit) into 300L/200L includes engineering courses such as Chemical, Civil and Environmental, Computer, Electrical and Electronics, Metallurgical and Materials, Petroleum and Gas, Surveying and Geo-informatics."
-    },
-    {
-     "institution": "LAGOS",
-     "note": "UTME: requires Five O/Level credit passes in English, Mathematics, Further Mathematics, Physics and Chemistry."
-    }
-   ],
-   "first_line": 3143,
-   "line_range": [
-    3143,
-    3370
-   ],
-   "scope": [
-    3143,
-    3371
    ]
   },
   {
    "jamb_name": "Food Engineering",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "evidence_hold": true,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "Original JAMB brochure: Engineering _ Enviromental _ Technology.pdf, PDF page(s) 73; exact programme heading and institution list in awarder column",
+    "verification_date": "2026-09-30",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": [
+     "ILORIN",
+     "KWASU",
+     "UYO"
+    ],
+    "offering_row_verified_against_pdf": true,
+    "verification_note": "Institution codes map by exact normalized matches to existing JAMB inventory tokens; the PDF awarder cell is bounded by the next printed bold heading.",
+    "institution_roster_reconciled_from_pdf": true,
+    "reconciled_prior_institution_tokens": [
+     "ILORIN",
+     "KWASU",
+     "UYO",
+     "ABU",
+     "CUST",
+     "EUI",
+     "FUTA",
+     "JOS",
+     "GEOLOGY AND MINING",
+     "ABUJA"
+    ]
+   },
    "institutions": [
     "ILORIN",
     "KWASU",
-    "UYO",
-    "ABU",
-    "CUST",
-    "EUI",
-    "FUTA",
-    "JOS",
-    "GEOLOGY AND MINING",
-    "ABUJA"
+    "UYO"
    ],
    "utme_subjects": [
     "Chemistry",
@@ -1303,29 +1563,36 @@
    "scope": [
     3371,
     3458
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+   "source_locator": "_jamb_txt/engineering.txt lines 10, 3371; parsed offering row 10; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "institution_tokens_before_pdf_cell_reconciliation": [
+    "ILORIN",
+    "KWASU",
+    "UYO",
+    "ABU",
+    "CUST",
+    "EUI",
+    "FUTA",
+    "JOS",
+    "GEOLOGY AND MINING",
+    "ABUJA"
    ]
   },
   {
    "jamb_name": "Food Science and Engineering",
+   "source_context_status": "source_text_confirmed",
+   "source_verification": {
+    "verified_against_pdf": true,
+    "evidence_hold": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "Engineering/Environmental/Technology brochure printed p. 411, standalone FOOD SCIENCE AND ENGINEERING awarder cell",
+    "verification_date": "2026-09-28",
+    "note": "The exact printed heading lists LAUTECH as the awarder. The previous array mixed the adjacent FOOD SCIENCE AND TECHNOLOGY awarder cell and heading debris; narrowed to the exact standalone title cell."
+   },
    "institutions": [
-    "BAYERO",
-    "BELLS",
-    "BOUEDST",
-    "ESUTECH",
-    "IGBINEDION",
-    "KWASU",
-    "MADONNA",
-    "MAIDUGURI",
-    "MKAR",
-    "MOUNTAIN TOP",
-    "MUDIAME",
-    "OFFA-DEG",
-    "OAU",
-    "TECH-IBADAN",
-    "UAGRIC-IMO",
-    "UNN",
-    "WESLEYUNI",
-    "ENGINEERING",
     "LAUTECH"
    ],
    "utme_subjects": null,
@@ -1349,34 +1616,18 @@
   },
   {
    "jamb_name": "Food Technology",
+   "source_context_status": "source_text_confirmed",
+   "source_verification": {
+    "verified_against_pdf": true,
+    "evidence_hold": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "Engineering/Environmental/Technology brochure printed pp. 411-412, standalone FOOD TECHNOLOGY awarder cell",
+    "verification_date": "2026-09-28",
+    "note": "The exact printed FOOD TECHNOLOGY heading lists BELLS and IBADAN. The previous array mixed adjacent Food Science with Business, Industrial Production Engineering and other programme cells; narrowed to the exact named offering."
+   },
    "institutions": [
     "BELLS",
-    "IBADAN",
-    "FOOD SCIENCE WITH",
-    "BUSINESS",
-    "BIOTECHNOLOGY",
-    "TECH-IBADAN",
-    "ENTREPRENUERSHIP",
-    "FUTA",
-    "FED-DUTSINMA",
-    "MINNA",
-    "INDUSTRIAL",
-    "PRODUCTION",
-    "HUSTECH",
-    "OAUSTECH",
-    "UNIZIK",
-    "DELSUT",
-    "INDUSTRIAL AND",
-    "AAU",
-    "ELIZADE",
-    "LASU",
-    "ENGINEERING",
-    "BENIN",
-    "MATHEMATICS",
-    "WOOD PRODUCTION",
-    "CRUTECH",
-    "WOOD PRODUCTS",
-    "LCITY"
+    "IBADAN"
    ],
    "utme_subjects": null,
    "olevel_requirement": null,
@@ -1394,6 +1645,17 @@
   },
   {
    "jamb_name": "Architecture",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "evidence_hold": true,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "_jamb_txt/engineering.txt lines 16, 46, 586, 1155, 1160, 3643; parsed offering row 13; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
    "institutions": [
     "AAU",
     "AAUA",
@@ -1762,84 +2024,113 @@
    "scope": [
     3643,
     4094
-   ]
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+   "source_locator": "_jamb_txt/engineering.txt lines 16, 46, 586, 1155, 1160, 3643; parsed offering row 13; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification."
   },
   {
    "jamb_name": "Quantity Surveying",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "evidence_hold": true,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "Original JAMB brochure: Engineering _ Enviromental _ Technology.pdf, PDF page(s) 88; exact programme heading and institution list in awarder column",
+    "verification_date": "2026-09-30",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": [
+     "ABU",
+     "ABUJA",
+     "BAUCHI",
+     "BAYERO"
+    ],
+    "offering_row_verified_against_pdf": true,
+    "verification_note": "Institution codes map by exact normalized matches to existing JAMB inventory tokens; the PDF awarder cell is bounded by the next printed bold heading.",
+    "institution_roster_reconciled_from_pdf": true,
+    "reconciled_prior_institution_tokens": [
+     "ABU",
+     "ABUJA",
+     "BAUCHI",
+     "BAYERO",
+     "BAZE",
+     "BELLS",
+     "BENIN",
+     "BIDA-DEG",
+     "BINGHAM",
+     "BOUEDST",
+     "CALEB",
+     "DELSUT",
+     "DOU",
+     "ELIZADE",
+     "ESUTECH",
+     "FED-KEBBI",
+     "FEDPOBAU-DEG",
+     "FED-OYE EKITI",
+     "FUTA",
+     "FUTIA",
+     "FUTO",
+     "GREGORY",
+     "GSUST",
+     "IBADAN",
+     "ILORIN",
+     "IMSU",
+     "JOS",
+     "JEWEL",
+     "KASU",
+     "KSUSTA",
+     "KUST",
+     "LAGOS",
+     "LASU",
+     "LASUSTECH",
+     "MAAUN",
+     "MARANATHA",
+     "MINNA",
+     "NDU",
+     "NILE",
+     "NOK",
+     "OAU",
+     "OOU",
+     "ODUDUWA",
+     "REDEEMERS",
+     "RSU",
+     "SAM-MARIS",
+     "SUMAS",
+     "TECH-IBADAN",
+     "UNIOSUN",
+     "UNIZIK",
+     "UYO",
+     "SURVEYING AND GEO-",
+     "INFORMATICS",
+     "AAUA",
+     "ABSU",
+     "AJAYI",
+     "BOWEN",
+     "CALABAR",
+     "CUST",
+     "HENSARD",
+     "LAUTECH",
+     "MAIDUGURI",
+     "MAUTY",
+     "MLU",
+     "NAUB",
+     "UDA",
+     "UNN",
+     "LAND SURVEYING AND",
+     "GEOINFORMATICS",
+     "REMOTE SENSING AND",
+     "GEOSCIENCES",
+     "INFORMATION SYSTEM",
+     "ACHIEVERS"
+    ]
+   },
    "institutions": [
     "ABU",
     "ABUJA",
     "BAUCHI",
-    "BAYERO",
-    "BAZE",
-    "BELLS",
-    "BENIN",
-    "BIDA-DEG",
-    "BINGHAM",
-    "BOUEDST",
-    "CALEB",
-    "DELSUT",
-    "DOU",
-    "ELIZADE",
-    "ESUTECH",
-    "FED-KEBBI",
-    "FEDPOBAU-DEG",
-    "FED-OYE EKITI",
-    "FUTA",
-    "FUTIA",
-    "FUTO",
-    "GREGORY",
-    "GSUST",
-    "IBADAN",
-    "ILORIN",
-    "IMSU",
-    "JOS",
-    "JEWEL",
-    "KASU",
-    "KSUSTA",
-    "KUST",
-    "LAGOS",
-    "LASU",
-    "LASUSTECH",
-    "MAAUN",
-    "MARANATHA",
-    "MINNA",
-    "NDU",
-    "NILE",
-    "NOK",
-    "OAU",
-    "OOU",
-    "ODUDUWA",
-    "REDEEMERS",
-    "RSU",
-    "SAM-MARIS",
-    "SUMAS",
-    "TECH-IBADAN",
-    "UNIOSUN",
-    "UNIZIK",
-    "UYO",
-    "SURVEYING AND GEO-",
-    "INFORMATICS",
-    "AAUA",
-    "ABSU",
-    "AJAYI",
-    "BOWEN",
-    "CALABAR",
-    "CUST",
-    "HENSARD",
-    "LAUTECH",
-    "MAIDUGURI",
-    "MAUTY",
-    "MLU",
-    "NAUB",
-    "UDA",
-    "UNN",
-    "LAND SURVEYING AND",
-    "GEOINFORMATICS",
-    "REMOTE SENSING AND",
-    "GEOSCIENCES",
-    "INFORMATION SYSTEM",
-    "ACHIEVERS"
+    "BAYERO"
    ],
    "utme_subjects": [
     "Physics",
@@ -2066,11 +2357,190 @@
    "scope": [
     4094,
     4719
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+   "source_locator": "_jamb_txt/engineering.txt lines 16, 50, 585-586, 603, 636, 638; parsed offering row 14; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "institution_tokens_before_pdf_cell_reconciliation": [
+    "ABU",
+    "ABUJA",
+    "BAUCHI",
+    "BAYERO",
+    "BAZE",
+    "BELLS",
+    "BENIN",
+    "BIDA-DEG",
+    "BINGHAM",
+    "BOUEDST",
+    "CALEB",
+    "DELSUT",
+    "DOU",
+    "ELIZADE",
+    "ESUTECH",
+    "FED-KEBBI",
+    "FEDPOBAU-DEG",
+    "FED-OYE EKITI",
+    "FUTA",
+    "FUTIA",
+    "FUTO",
+    "GREGORY",
+    "GSUST",
+    "IBADAN",
+    "ILORIN",
+    "IMSU",
+    "JOS",
+    "JEWEL",
+    "KASU",
+    "KSUSTA",
+    "KUST",
+    "LAGOS",
+    "LASU",
+    "LASUSTECH",
+    "MAAUN",
+    "MARANATHA",
+    "MINNA",
+    "NDU",
+    "NILE",
+    "NOK",
+    "OAU",
+    "OOU",
+    "ODUDUWA",
+    "REDEEMERS",
+    "RSU",
+    "SAM-MARIS",
+    "SUMAS",
+    "TECH-IBADAN",
+    "UNIOSUN",
+    "UNIZIK",
+    "UYO",
+    "SURVEYING AND GEO-",
+    "INFORMATICS",
+    "AAUA",
+    "ABSU",
+    "AJAYI",
+    "BOWEN",
+    "CALABAR",
+    "CUST",
+    "HENSARD",
+    "LAUTECH",
+    "MAIDUGURI",
+    "MAUTY",
+    "MLU",
+    "NAUB",
+    "UDA",
+    "UNN",
+    "LAND SURVEYING AND",
+    "GEOINFORMATICS",
+    "REMOTE SENSING AND",
+    "GEOSCIENCES",
+    "INFORMATION SYSTEM",
+    "ACHIEVERS"
    ]
   },
   {
    "jamb_name": "Statistics",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "evidence_hold": true,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "Original JAMB brochure: Engineering _ Enviromental _ Technology.pdf, PDF page(s) 102; exact programme heading and institution list in awarder column",
+    "verification_date": "2026-09-30",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": [
+     "FUTO",
+     "OAUSTECH"
+    ],
+    "offering_row_verified_against_pdf": true,
+    "verification_note": "Institution codes map by exact normalized matches to existing JAMB inventory tokens; the PDF awarder cell is bounded by the next printed bold heading.",
+    "institution_roster_reconciled_from_pdf": true,
+    "reconciled_prior_institution_tokens": [
+     "FUTO",
+     "OAUSTECH",
+     "TRANSPORT",
+     "MANAGEMENT",
+     "ATIBA",
+     "FUT-DAURA",
+     "LAUTECH",
+     "LASU",
+     "TRANSPORT LOGISTICS",
+     "MARITIME-UNI",
+     "NDA",
+     "TRANSPORT AND MARINE",
+     "DELSUT",
+     "LOGISTICS AND SUPPLY",
+     "CHAIN MANAGEMENT",
+     "AVIATION MANAGEMENT",
+     "MARITIME TRANSPORT",
+     "FUPRE",
+     "RAILWAY ENGINEERING",
+     "GEOGRAPHY AND",
+     "UNIZIK",
+     "ENVIRONMENTAL",
+     "BAYERO",
+     "BINGHAM",
+     "BOUEDST",
+     "CUAB",
+     "EBSU",
+     "ESUTECH",
+     "HENSARD",
+     "KASU",
+     "NASARAWA",
+     "NAUB",
+     "NDU",
+     "NOK",
+     "RSU",
+     "MANAGEMENT AND",
+     "TOXICOLOGY",
+     "DOU",
+     "RESOURCES",
+     "ABSU",
+     "FED-DUTSINMA",
+     "UDU",
+     "SCIENCE RESOURCES",
+     "NOUN",
+     "SHIPPING AND MARITIME",
+     "TECHNOLOGY",
+     "MARITIME"
+    ]
+   },
    "institutions": [
+    "FUTO",
+    "OAUSTECH"
+   ],
+   "utme_subjects": [
+    "Mathematics",
+    "Physics",
+    "Chemistry"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes to include English Language, Mathematics, Physics and Chemistry",
+   "direct_entry": "Two (2) 'A' level passes in Mathematics, Physics or Chemistry",
+   "institution_waivers": [
+    {
+     "institution": "FUTO",
+     "note": "Direct Entry: a) at least two (2) 'A' level passes not below Grade C in Mathematics and Physics; b) ND/HND at Upper Credit level in Physics, Mathematics, Statistics, Chemistry, Geology, Computer Science or Engineering; c) First Degree in Physics, Mathematics, Statistics, Chemistry, Geology, Computer Science or Engineering; d) very good passes in three JUPEB subjects namely Chemistry, Physics and Mathematics. Does not accept NCE; candidates must also meet 'O' Level requirements."
+    },
+    {
+     "institution": "FUTO",
+     "note": "UTME: requires at least five (5) 'O' Level credit passes in English Language, Mathematics, Chemistry, Physics and any other science subject in not more than two sittings; at least a Pass required in Biology. UTME SUBJECTS: Mathematics, Chemistry and Physics."
+    }
+   ],
+   "first_line": 4719,
+   "line_range": [
+    4719,
+    4896
+   ],
+   "scope": [
+    4719,
+    4897
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+   "source_locator": "_jamb_txt/engineering.txt lines 26, 120, 130, 650, 652, 840; parsed offering row 15; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "institution_tokens_before_pdf_cell_reconciliation": [
     "FUTO",
     "OAUSTECH",
     "TRANSPORT",
@@ -2118,36 +2588,21 @@
     "SHIPPING AND MARITIME",
     "TECHNOLOGY",
     "MARITIME"
-   ],
-   "utme_subjects": [
-    "Mathematics",
-    "Physics",
-    "Chemistry"
-   ],
-   "olevel_requirement": "Five (5) SSC credit passes to include English Language, Mathematics, Physics and Chemistry",
-   "direct_entry": "Two (2) 'A' level passes in Mathematics, Physics or Chemistry",
-   "institution_waivers": [
-    {
-     "institution": "FUTO",
-     "note": "Direct Entry: a) at least two (2) 'A' level passes not below Grade C in Mathematics and Physics; b) ND/HND at Upper Credit level in Physics, Mathematics, Statistics, Chemistry, Geology, Computer Science or Engineering; c) First Degree in Physics, Mathematics, Statistics, Chemistry, Geology, Computer Science or Engineering; d) very good passes in three JUPEB subjects namely Chemistry, Physics and Mathematics. Does not accept NCE; candidates must also meet 'O' Level requirements."
-    },
-    {
-     "institution": "FUTO",
-     "note": "UTME: requires at least five (5) 'O' Level credit passes in English Language, Mathematics, Chemistry, Physics and any other science subject in not more than two sittings; at least a Pass required in Biology. UTME SUBJECTS: Mathematics, Chemistry and Physics."
-    }
-   ],
-   "first_line": 4719,
-   "line_range": [
-    4719,
-    4896
-   ],
-   "scope": [
-    4719,
-    4897
    ]
   },
   {
    "jamb_name": "Economics",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "evidence_hold": true,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "_jamb_txt/engineering.txt lines 30, 38, 52, 294, 345, 389; parsed offering row 16; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
    "institutions": [
     "FUPRE"
    ],
@@ -2166,21 +2621,46 @@
    "scope": [
     4897,
     4901
-   ]
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+   "source_locator": "_jamb_txt/engineering.txt lines 30, 38, 52, 294, 345, 389; parsed offering row 16; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification."
   },
   {
    "jamb_name": "Geography",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "evidence_hold": true,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "Original JAMB brochure: Engineering _ Enviromental _ Technology.pdf, PDF page(s) 106; exact programme heading and institution list in awarder column",
+    "verification_date": "2026-09-30",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": [
+     "KUST",
+     "MAUTY"
+    ],
+    "offering_row_verified_against_pdf": true,
+    "verification_note": "Institution codes map by exact normalized matches to existing JAMB inventory tokens; the PDF awarder cell is bounded by the next printed bold heading.",
+    "institution_roster_reconciled_from_pdf": true,
+    "reconciled_prior_institution_tokens": [
+     "KUST",
+     "MAUTY",
+     "GEOGRAPHY AND",
+     "PLANNING",
+     "JOS",
+     "REGIONAL PLANNING",
+     "BENIN",
+     "ENVIRONMENTAL",
+     "SCIENCE",
+     "CALABAR"
+    ]
+   },
    "institutions": [
     "KUST",
-    "MAUTY",
-    "GEOGRAPHY AND",
-    "PLANNING",
-    "JOS",
-    "REGIONAL PLANNING",
-    "BENIN",
-    "ENVIRONMENTAL",
-    "SCIENCE",
-    "CALABAR"
+    "MAUTY"
    ],
    "utme_subjects": null,
    "olevel_requirement": null,
@@ -2227,10 +2707,37 @@
    "scope": [
     4901,
     4983
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+   "source_locator": "_jamb_txt/engineering.txt lines 20, 22, 24, 26, 345, 379; parsed offering row 17; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "institution_tokens_before_pdf_cell_reconciliation": [
+    "KUST",
+    "MAUTY",
+    "GEOGRAPHY AND",
+    "PLANNING",
+    "JOS",
+    "REGIONAL PLANNING",
+    "BENIN",
+    "ENVIRONMENTAL",
+    "SCIENCE",
+    "CALABAR"
    ]
   },
   {
    "jamb_name": "Urban and Regional Planning",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "evidence_hold": true,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "_jamb_txt/engineering.txt lines 32, 4901, 4941-4942, 4992, 5059-5061, 5104; parsed offering row 18; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
    "institutions": [
     "AAUA",
     "ABUJA",
@@ -2482,10 +2989,25 @@
    "scope": [
     4983,
     5505
-   ]
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+   "source_locator": "_jamb_txt/engineering.txt lines 32, 4901, 4941-4942, 4992, 5059-5061, 5104; parsed offering row 18; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification."
   },
   {
    "jamb_name": "Industrial Design",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "evidence_hold": true,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "_jamb_txt/engineering.txt lines 38, 5505, 5508, 5514, 5519, 5590; parsed offering row 19; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
    "institutions": [
     "ABU",
     "ABUJA",
@@ -2585,10 +3107,25 @@
    "scope": [
     5505,
     5814
-   ]
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+   "source_locator": "_jamb_txt/engineering.txt lines 38, 5505, 5508, 5514, 5519, 5590; parsed offering row 19; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification."
   },
   {
    "jamb_name": "Estate Management",
+   "source_context_status": "source_text_located",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "evidence_hold": true,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "_jamb_txt/engineering.txt lines 49, 70, 4775, 4836, 4987, 5083; parsed offering row 20; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
    "institutions": [
     "AAUA",
     "ABUJA",
@@ -2856,10 +3393,27 @@
    "scope": [
     5814,
     6443
-   ]
+   ],
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+   "source_locator": "_jamb_txt/engineering.txt lines 49, 70, 4775, 4836, 4987, 5083; parsed offering row 20; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification."
   },
   {
    "jamb_name": "Software Engineering",
+   "source_original_title": "SOFTWARE ENGINEERING",
+   "source_locator": "Engineering/Environmental/Technology brochure, printed p. 474: exact SOFTWARE ENGINEERING title/awarder cell; the following HIGHWAY ENGINEERING heading starts a distinct offering.",
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+   "source_accessed_on": "2026-09-28",
+   "source_context_status": "source_text_confirmed",
+   "source_verification": {
+    "verified_against_pdf": true,
+    "evidence_hold": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "Engineering/Environmental/Technology brochure, printed p. 474, SOFTWARE ENGINEERING awarder cell.",
+    "verification_date": "2026-09-28",
+    "note": "The exact SOFTWARE ENGINEERING awarder cell lists the 14 retained institutions. HIGHWAY ENGINEERING and FUT-DAURA belong to the immediately following, separately titled offering; removed those two spillover values."
+   },
    "institutions": [
     "AUGUSTINE",
     "AUST",
@@ -2874,9 +3428,7 @@
     "MINNA",
     "MOUNTAIN TOP",
     "NILE",
-    "VERITAS",
-    "HIGHWAY ENGINEERING",
-    "FUT-DAURA"
+    "VERITAS"
    ],
    "utme_subjects": [
     "Mathematics",
@@ -2903,18 +3455,24 @@
   },
   {
    "jamb_name": "Meteorology",
+   "source_verification": {
+    "verified_against_pdf": true,
+    "evidence_hold": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "Engineering/Environmental/Technology brochure, printed p. 475, METEOROLOGY awarder cell; distinct METEOROLOGY AND CLIMATE CHANGE / MARITIME-UNI title follows.",
+    "verification_date": "2026-09-28",
+    "note": "FUTA, UMYUK and MINNA appear beneath the standalone METEOROLOGY heading. MARITIME-UNI is attached to the separately titled METEOROLOGY AND CLIMATE CHANGE offering and was not merged into this row."
+   },
    "institutions": [
     "FUTA",
     "UMYUK",
-    "MINNA",
-    "METEOROLOGY AND",
-    "CLIMATE CHANGE",
-    "MARITIME-UNI",
-    "NUTRITION",
-    "DIETETICS",
-    "LAUTECH",
-    "WESLEYUNI"
+    "MINNA"
    ],
+   "source_original_title": "METEOROLOGY",
+   "source_locator": "Engineering/Environmental/Technology brochure, printed p. 475, exact METEOROLOGY title and FUTA/UMYUK/MINNA awarder cell; separate METEOROLOGY AND CLIMATE CHANGE title follows.",
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+   "source_accessed_on": "2026-09-28",
+   "source_context_status": "source_text_confirmed",
    "utme_subjects": [
     "Mathematics",
     "Physics",
@@ -2948,10 +3506,22 @@
   },
   {
    "jamb_name": "Hotel Management and Tourism",
+   "source_verification": {
+    "verified_against_pdf": true,
+    "evidence_hold": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "Engineering/Environmental/Technology brochure, printed p. 476, HOTEL MANAGEMENT AND TOURISM awarder cell.",
+    "verification_date": "2026-09-28",
+    "note": "The exact named awarder cell lists WESLEYUNI. The adjacent Nutrition and Dietetics row is distinct."
+   },
    "institutions": [
-    "AND TOURISM",
     "WESLEYUNI"
    ],
+   "source_original_title": "HOTEL MANAGEMENT AND TOURISM",
+   "source_locator": "Engineering/Environmental/Technology brochure, printed p. 476, exact HOTEL MANAGEMENT AND TOURISM title and WESLEYUNI awarder cell.",
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+   "source_accessed_on": "2026-09-28",
+   "source_context_status": "source_text_confirmed",
    "utme_subjects": [
     "Biology",
     "Chemistry",
@@ -2972,15 +3542,21 @@
   },
   {
    "jamb_name": "Home Economics and Food Management",
+   "source_original_title": "HOME ECONOMICS AND FOOD MANAGEMENT",
+   "source_locator": "Engineering/Environmental/Technology brochure, printed p. 476, HOME ECONOMICS AND FOOD MANAGEMENT awarder cell.",
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+   "source_accessed_on": "2026-09-28",
+   "source_context_status": "source_text_confirmed",
+   "source_verification": {
+    "verified_against_pdf": true,
+    "evidence_hold": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "Engineering/Environmental/Technology brochure, printed p. 476, HOME ECONOMICS AND FOOD MANAGEMENT awarder cell.",
+    "verification_date": "2026-09-28",
+    "note": "The exact named cell lists WESLEYUNI. FOOD MANAGEMENT and the Electrical/Electronics Engineering, Mechanical Engineering and e-learning institution names in the previous array came from neighboring lines and were removed."
+   },
    "institutions": [
-    "FOOD MANAGEMENT",
-    "WESLEYUNI",
-    "ELECTRICAL/ELECTRONICS",
-    "ENGINEERING",
-    "UDU-ELUON",
-    "VENITE",
-    "MECHANICAL",
-    "BOUEDST"
+    "WESLEYUNI"
    ],
    "utme_subjects": [
     "Biology",
@@ -3002,6 +3578,19 @@
   },
   {
    "jamb_name": "Electrical Engineering",
+   "source_original_title": "ELECTRICAL ENGINEERING",
+   "source_locator": "Engineering/Environmental/Technology brochure, printed pp. 379-380, ELECTRICAL ENGINEERING title and continued awarder cell; next headings identify separate Electrical and Electronics, Electronics and Computer, and Electrical and Computer Engineering offerings.",
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+   "source_accessed_on": "2026-09-28",
+   "source_context_status": "source_text_confirmed",
+   "source_verification": {
+    "verified_against_pdf": true,
+    "evidence_hold": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "Engineering/Environmental/Technology brochure, printed pp. 379-380, ELECTRICAL ENGINEERING awarder cell and continuation.",
+    "verification_date": "2026-09-28",
+    "note": "The 19 ledger institutions align with the exact title's awarder list. Separately headed electrical/electronics and computer-engineering offerings were not folded into this row."
+   },
    "institutions": [
     "ABU",
     "ABUJA",
@@ -3067,6 +3656,19 @@
   },
   {
    "jamb_name": "Mechanical Engineering",
+   "source_original_title": "MECHANICAL ENGINEERING",
+   "source_locator": "Engineering/Environmental/Technology brochure, printed pp. 390-393, MECHANICAL ENGINEERING title and awarder-list continuation; separate programme headings are not merged.",
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+   "source_accessed_on": "2026-09-28",
+   "source_context_status": "source_text_confirmed",
+   "source_verification": {
+    "verified_against_pdf": true,
+    "evidence_hold": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "Engineering/Environmental/Technology brochure, printed pp. 390-393, MECHANICAL ENGINEERING awarder cell and continuation.",
+    "verification_date": "2026-09-28",
+    "note": "The full mechanical-engineering awarder cell was traced across its continuation pages. The source extraction spells one cell FED=DUTSINMA; that source spelling is preserved rather than silently normalized."
+   },
    "institutions": [
     "AAU",
     "ABSU",
@@ -3241,6 +3843,19 @@
   },
   {
    "jamb_name": "Chemical Engineering",
+   "source_original_title": "CHEMICAL ENGINEERING",
+   "source_locator": "Engineering/Environmental/Technology brochure, printed pp. 352-353, CHEMICAL ENGINEERING title and awarder cell.",
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+   "source_accessed_on": "2026-09-28",
+   "source_context_status": "source_text_confirmed",
+   "source_verification": {
+    "verified_against_pdf": true,
+    "evidence_hold": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "Engineering/Environmental/Technology brochure, printed pp. 352-353, CHEMICAL ENGINEERING awarder cell.",
+    "verification_date": "2026-09-28",
+    "note": "The 53 ledger institutions were compared with the awarder cell under the exact CHEMICAL ENGINEERING heading; no neighboring engineering programme list was substituted."
+   },
    "institutions": [
     "ABU",
     "ABUAD",
@@ -3388,6 +4003,19 @@
   },
   {
    "jamb_name": "Biomedical Engineering",
+   "source_original_title": "BIOMEDICAL ENGINEERING",
+   "source_locator": "Engineering/Environmental/Technology brochure, printed pp. 345-346, BIOMEDICAL ENGINEERING title and awarder cell.",
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+   "source_accessed_on": "2026-09-28",
+   "source_context_status": "source_text_confirmed",
+   "source_verification": {
+    "verified_against_pdf": true,
+    "evidence_hold": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "Engineering/Environmental/Technology brochure, printed pp. 345-346, BIOMEDICAL ENGINEERING awarder cell.",
+    "verification_date": "2026-09-28",
+    "note": "The 12 institutions listed beneath the exact BIOMEDICAL ENGINEERING heading match the ledger; neighboring Medical Laboratory Science and Chemical Engineering entries were not included."
+   },
    "institutions": [
     "ABUAD",
     "ACHIEVERS",
@@ -3426,6 +4054,19 @@
   },
   {
    "jamb_name": "Agricultural Engineering",
+   "source_original_title": "AGRICULTURAL ENGINEERING",
+   "source_locator": "Engineering/Environmental/Technology brochure, printed pp. 338-339, AGRICULTURAL ENGINEERING title and awarder cell; later agricultural engineering variants have separate headings.",
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+   "source_accessed_on": "2026-09-28",
+   "source_context_status": "source_text_confirmed",
+   "source_verification": {
+    "verified_against_pdf": true,
+    "evidence_hold": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "Engineering/Environmental/Technology brochure, printed pp. 338-339, AGRICULTURAL ENGINEERING awarder cell and continuation.",
+    "verification_date": "2026-09-28",
+    "note": "The institutions were matched to the standalone AGRICULTURAL ENGINEERING awarder cell. Agricultural and Bioresources, Biosystems, Environmental, and Bio-Environmental Engineering are separately headed offerings."
+   },
    "institutions": [
     "AAU",
     "ABU",
@@ -3513,6 +4154,19 @@
   },
   {
    "jamb_name": "Agricultural and Bio-Resources Engineering",
+   "source_original_title": "AGRICULTURAL AND BIORESOURCES ENGINEERING",
+   "source_locator": "Engineering/Environmental/Technology brochure, printed p. 339, AGRICULTURAL AND BIORESOURCES ENGINEERING title and awarder cell; the programme index on printed p. 336 uses the display spelling Agricultural and Bio-Resources Engineering.",
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+   "source_accessed_on": "2026-09-28",
+   "source_context_status": "source_text_confirmed",
+   "source_verification": {
+    "verified_against_pdf": true,
+    "evidence_hold": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-engineering.pdf",
+    "pdf_table_locator": "Engineering/Environmental/Technology brochure, printed p. 339, AGRICULTURAL AND BIORESOURCES ENGINEERING awarder cell; cross-checked against the programme index on p. 336.",
+    "verification_date": "2026-09-28",
+    "note": "The exact detailed awarder cell lists MINNA, TSUJ, UMUDIKE, UNIZIK and UNN. The brochure uses a hyphenated display name in its programme index and an unhyphenated detailed heading; these are the same source-context entry, not grounds to merge with the separate agricultural engineering variants."
+   },
    "institutions": [
     "MINNA",
     "TSUJ",
@@ -3536,6 +4190,20 @@
   },
   {
    "jamb_name": "Production Engineering",
+   "source_original_title": "PRODUCTION ENGINEERING",
+   "source_faculty": "Engineering/Environmental/Technology",
+   "source_locator": "IBASS Engineering/Environmental/Technology brochure, printed p. 374: exact PRODUCTION ENGINEERING title and awarding-institution cell.",
+   "source_url": "https://ibass.jamb.gov.ng/static/media/engineering2.a81443bb885b5e602704.pdf",
+   "source_accessed_on": "2026-09-28",
+   "source_context_status": "source_text_confirmed",
+   "source_verification": {
+    "verified_against_pdf": true,
+    "evidence_hold": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/static/media/engineering2.a81443bb885b5e602704.pdf",
+    "pdf_table_locator": "Printed p. 374, PRODUCTION ENGINEERING awarding-institution cell.",
+    "verification_date": "2026-09-28",
+    "note": "The exact title cell lists BENIN and EUI. The immediately following PRODUCTION TECHNOLOGY cell lists UNIZIK and is a distinct offering; it was not merged into Production Engineering."
+   },
    "institutions": [
     "BENIN",
     "EUI"
@@ -3556,6 +4224,20 @@
   },
   {
    "jamb_name": "Mechatronics Engineering",
+   "source_original_title": "MECHATRONICS ENGINEERING",
+   "source_faculty": "Engineering/Environmental/Technology",
+   "source_locator": "IBASS Engineering/Environmental/Technology brochure, printed pp. 404-405: exact MECHATRONICS ENGINEERING title and continued awarding-institution cell.",
+   "source_url": "https://ibass.jamb.gov.ng/static/media/engineering2.a81443bb885b5e602704.pdf",
+   "source_accessed_on": "2026-09-28",
+   "source_context_status": "source_text_confirmed",
+   "source_verification": {
+    "verified_against_pdf": true,
+    "evidence_hold": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/static/media/engineering2.a81443bb885b5e602704.pdf",
+    "pdf_table_locator": "Printed pp. 404-405, MECHATRONICS ENGINEERING awarding-institution cell.",
+    "verification_date": "2026-09-28",
+    "note": "The awarding-institution cell continues across pp. 404-405 and supports the 39 listed institutions. The adjacent MECHATRONICS AND SYSTEM ENGINEERING (BAUCHI) and MECHATRONICS AND ROBOTICS ENGINEERING (DELSUT) titles are separate offerings and were not merged."
+   },
    "institutions": [
     "ABU",
     "ABUAD",
@@ -3633,6 +4315,20 @@
   },
   {
    "jamb_name": "Electronics Engineering",
+   "source_original_title": "ELECTRONICS ENGINEERING",
+   "source_faculty": "Engineering/Environmental/Technology",
+   "source_locator": "IBASS Engineering/Environmental/Technology brochure, printed p. 385: exact ELECTRONICS ENGINEERING title and awarding-institution cell.",
+   "source_url": "https://ibass.jamb.gov.ng/static/media/engineering2.a81443bb885b5e602704.pdf",
+   "source_accessed_on": "2026-09-28",
+   "source_context_status": "source_text_confirmed",
+   "source_verification": {
+    "verified_against_pdf": true,
+    "evidence_hold": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/static/media/engineering2.a81443bb885b5e602704.pdf",
+    "pdf_table_locator": "Printed p. 385, ELECTRONICS ENGINEERING awarding-institution cell.",
+    "verification_date": "2026-09-28",
+    "note": "The exact title cell lists AUN, FUTO, PHC, UNIZIK and UNN; the separately headed Electrical and Information Engineering, Electronics and Telecommunications Engineering, and Electrical/Electronics Engineering offerings were not merged."
+   },
    "institutions": [
     "AUN",
     "FUTO",
@@ -3664,6 +4360,20 @@
   },
   {
    "jamb_name": "Electrical/Electronic Engineering",
+   "source_original_title": "ELECTRICAL/ELECTRONICS ENGINEERING",
+   "source_faculty": "Engineering/Environmental/Technology",
+   "source_locator": "IBASS Engineering/Environmental/Technology brochure, printed pp. 380-385: exact ELECTRICAL/ELECTRONICS ENGINEERING title and continued awarding-institution cell.",
+   "source_url": "https://ibass.jamb.gov.ng/static/media/engineering2.a81443bb885b5e602704.pdf",
+   "source_accessed_on": "2026-09-28",
+   "source_context_status": "source_text_confirmed",
+   "source_verification": {
+    "verified_against_pdf": true,
+    "evidence_hold": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/static/media/engineering2.a81443bb885b5e602704.pdf",
+    "pdf_table_locator": "Printed pp. 380-385, ELECTRICAL/ELECTRONICS ENGINEERING awarding-institution cell. The source heading continues across the page break.",
+    "verification_date": "2026-09-28",
+    "note": "Verified the full continued awarder sequence, 87 institutions, across pp. 380-385. The source heading uses ELECTRICAL/ELECTRONICS (plural); canonical jamb_name remains Electrical/Electronic Engineering. The adjacent Electrical and Electronics Engineering, Electronics and Computer Engineering, and Electrical and Computer Engineering entries remain distinct."
+   },
    "institutions": [
     "AAU",
     "ABSU",
@@ -3817,6 +4527,20 @@
   },
   {
    "jamb_name": "Communication Technology",
+   "source_original_title": "COMMUNICATION TECHNOLOGY",
+   "source_faculty": "Engineering/Environmental/Technology",
+   "source_locator": "IBASS Engineering/Environmental/Technology brochure, printed p. 470: exact COMMUNICATION TECHNOLOGY title and awarding-institution cell.",
+   "source_url": "https://ibass.jamb.gov.ng/static/media/engineering2.a81443bb885b5e602704.pdf",
+   "source_accessed_on": "2026-09-28",
+   "source_context_status": "source_text_confirmed",
+   "source_verification": {
+    "verified_against_pdf": true,
+    "evidence_hold": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/static/media/engineering2.a81443bb885b5e602704.pdf",
+    "pdf_table_locator": "Printed p. 470, COMMUNICATION TECHNOLOGY awarding-institution cell.",
+    "verification_date": "2026-09-28",
+    "note": "The exact title cell lists BELLS and TAU. The adjacent Telecommunication and Wireless Technology (AUN) and Telecommunication Engineering entries are distinct offerings."
+   },
    "institutions": [
     "BELLS",
     "TAU"
@@ -3845,11 +4569,22 @@
   },
   {
    "jamb_name": "ICT Engineering",
+   "source_original_title": "INFORMATION AND COMMUNICATION TECHNOLOGY ENGINEERING",
+   "source_faculty": "Engineering/Environmental/Technology",
+   "source_locator": "IBASS Engineering/Environmental/Technology brochure, printed pp. 471-472: exact INFORMATION AND COMMUNICATION TECHNOLOGY ENGINEERING title and adjacent distinct offering cells.",
+   "source_url": "https://ibass.jamb.gov.ng/static/media/engineering2.a81443bb885b5e602704.pdf",
+   "source_accessed_on": "2026-09-28",
+   "source_context_status": "source_text_confirmed",
+   "source_verification": {
+    "verified_against_pdf": true,
+    "evidence_hold": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/static/media/engineering2.a81443bb885b5e602704.pdf",
+    "pdf_table_locator": "Printed p. 471, INFORMATION AND COMMUNICATION TECHNOLOGY ENGINEERING (ELIZADE); continued adjacent cells on p. 472.",
+    "verification_date": "2026-09-28",
+    "note": "Only ELIZADE is listed under INFORMATION AND COMMUNICATION TECHNOLOGY ENGINEERING. COVENANT, NILE and UNIZIK belong to the next, separately titled INFORMATION AND COMMUNICATION ENGINEERING offering. ABSU, AFIT-DEG, AKSU, FUTA, KSUSTA and UDU belong to the following INFORMATION AND COMMUNICATION TECHNOLOGY offering. The three exact source-title contexts are kept distinct."
+   },
    "institutions": [
-    "ELIZADE",
-    "COVENANT",
-    "NILE",
-    "UNIZIK"
+    "ELIZADE"
    ],
    "utme_subjects": [
     "Mathematics",
@@ -3872,10 +4607,24 @@
      "note": "For Telecommunication Engineering: five (5) 'O' Level credit passes in English Language, Mathematics, Physics, Chemistry and any other Science subject; for Information and Media Technology: five (5) 'O' Level credit passes in English Language, Mathematics, Physics and two (2) other relevant Science subjects."
     }
    ],
-   "note": "Heading in brochure: 'INFORMATION AND COMMUNICATION TECHNOLOGY ENGINEERING' (TOC item 47 = ICT Engineering). ELIZADE under first heading block; COVENANT, NILE, UNIZIK under the second (adjacent) block. A separate non-Engineering heading 'INFORMATION AND COMMUNICATION TECHNOLOGY' (ABSU, AFIT-DEG, AKSU, FUTA, KSUSTA, UDU) sits immediately below and was not merged here."
+   "note": "Heading in brochure: 'INFORMATION AND COMMUNICATION TECHNOLOGY ENGINEERING' (TOC item 47 = ICT Engineering). The exact first-heading awarder is ELIZADE only. The next, separately titled 'INFORMATION AND COMMUNICATION ENGINEERING' cell lists COVENANT, NILE and UNIZIK; the following 'INFORMATION AND COMMUNICATION TECHNOLOGY' cell lists ABSU, AFIT-DEG, AKSU, FUTA, KSUSTA and UDU. Those distinct offering contexts must not be merged into ICT Engineering."
   },
   {
    "jamb_name": "Land Surveying",
+   "source_original_title": "LAND SURVEYING",
+   "source_faculty": "Engineering/Environmental/Technology",
+   "source_locator": "IBASS Engineering/Environmental/Technology brochure, printed p. 427: exact LAND SURVEYING sub-heading and awarding-institution cell.",
+   "source_url": "https://ibass.jamb.gov.ng/static/media/engineering2.a81443bb885b5e602704.pdf",
+   "source_accessed_on": "2026-09-28",
+   "source_context_status": "source_text_confirmed",
+   "source_verification": {
+    "verified_against_pdf": true,
+    "evidence_hold": false,
+    "official_source_url": "https://ibass.jamb.gov.ng/static/media/engineering2.a81443bb885b5e602704.pdf",
+    "pdf_table_locator": "Printed p. 427, LAND SURVEYING sub-heading and awarding-institution cell under the Surveying section.",
+    "verification_date": "2026-09-28",
+    "note": "The exact LAND SURVEYING cell lists ABU, ESUTECH, IMSU and RSU. The immediately following LAND SURVEYING AND GEOINFORMATICS cell lists UYO and remains distinct."
+   },
    "institutions": [
     "ABU",
     "ESUTECH",

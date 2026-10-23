@@ -69,7 +69,7 @@ export interface StartingPointProfile {
   /** Which senior-secondary class the explorer is currently in. */
   ssClass?: "ss1" | "ss2" | "ss3";
   /** School stream is a guidance hint, never an eligibility gate. */
-  stream?: "science" | "art" | "commercial";
+  stream?: "science" | "art" | "commercial" | "technical";
   /** Broad interest areas to explore (e.g. "Sciences", "Business"). */
   interestAreas?: string[];
   /** What the explorer wants to do (explore careers / choose subjects / ...). */

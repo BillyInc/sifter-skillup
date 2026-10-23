@@ -29,6 +29,8 @@ import { careerData } from "@/lib/careerData";
 import { formatCareerLabel, studentSummary } from "@/lib/careerLabels";
 import { visibleDomainAreas } from "@/lib/d078RoutePresentation";
 import { useExploreNav } from "@/lib/exploreNav";
+import { D078MethodAwareJourney, parseD078Selection } from "@/screens/careerIntelligence/D078MethodAwareJourney";
+import { parseD078RouteStacks } from "@/lib/d078RouteStacks";
 import type { GuidanceRouteContext } from "@/lib/guidanceRouteContext";
 import {
   pending,
@@ -61,7 +63,7 @@ export interface DomainDetailScreenProps {
 }
 
 export function DomainDetailScreen(props: DomainDetailScreenProps) {
-  const params = useLocalSearchParams<{ id: string; programme_id?: string | string[]; jamb_programme_id?: string | string[]; school_id?: string | string[]; user_type?: string | string[]; journey_mode?: string | string[]; guidance_student_id?: string | string[]; guidance_target?: string | string[]; guidance_entry?: string | string[]; focus?: string | string[] }>();
+  const params = useLocalSearchParams<{ id: string; programme_id?: string | string[]; jamb_programme_id?: string | string[]; school_id?: string | string[]; user_type?: string | string[]; journey_mode?: string | string[]; guidance_student_id?: string | string[]; guidance_target?: string | string[]; guidance_entry?: string | string[]; focus?: string | string[]; d078_selection?: string | string[]; d078_route_stacks?: string | string[]; d078_undo_selection?: string | string[] }>();
   const domainKey = props.domainId ?? String(params.id ?? "");
   const router = useRouter();
   const exploreNav = useExploreNav();
@@ -118,10 +120,13 @@ export function DomainDetailScreen(props: DomainDetailScreenProps) {
       state={state}
       onRetry={loadDomain}
       scrollRef={scrollRef}
+      wideContent={state.data?.id === "D078"}
+      hideScreenTitle={state.data?.id === "D078"}
+      hideEyebrow={state.data?.id === "D078"}
       requiresAccountForDetails
       guestDescription={state.data?.description}
     >
-      {(domain) => <DomainBody domain={domain} domainKey={domainKey} targetStudentId={targetStudentId} focusedGuidance={focusedGuidance} guidanceContext={guidanceContext} scrollRef={scrollRef} />}
+      {(domain) => <DomainBody domain={domain} domainKey={domainKey} targetStudentId={targetStudentId} focusedGuidance={focusedGuidance} guidanceContext={guidanceContext} scrollRef={scrollRef} initialD078Selection={parseD078Selection(params.d078_selection)} initialD078RouteStacks={parseD078RouteStacks(params.d078_route_stacks, parseD078Selection(params.d078_selection))} initialD078UndoSelection={params.d078_undo_selection ? parseD078Selection(params.d078_undo_selection) : undefined} />}
     </DetailScaffold>
   );
 }
@@ -448,6 +453,9 @@ function DomainBody({
   targetStudentId,
   guidanceContext,
   focusedGuidance,
+  initialD078Selection,
+  initialD078RouteStacks,
+  initialD078UndoSelection,
 }: {
   domain: DomainV2;
   domainKey: string;
@@ -455,6 +463,9 @@ function DomainBody({
   focusedGuidance: boolean;
   guidanceContext: GuidanceRouteContext;
   scrollRef: React.RefObject<ScrollView | null>;
+  initialD078Selection: ReturnType<typeof parseD078Selection>;
+  initialD078RouteStacks?: NonNullable<ReturnType<typeof parseD078RouteStacks>>;
+  initialD078UndoSelection?: ReturnType<typeof parseD078Selection>;
 }) {
   const { colors } = useTheme();
   const router = useRouter();
@@ -512,6 +523,20 @@ function DomainBody({
     );
   }
 
+  if (domain.id === "D078") {
+    return <D078MethodAwareJourney
+      domainKey={domainKey}
+      programmeName={connection?.programmeName}
+      programmeConnection={connection}
+      guidanceContext={guidanceContext}
+      initialSelection={initialD078Selection}
+      initialRouteStacks={initialD078RouteStacks}
+      initialUndoSelection={initialD078UndoSelection}
+      domainRoles={domain.roles}
+      domainResources={domain.resources}
+    />;
+  }
+
   return (
     <View style={refinedStyles.page}>
       <View style={[refinedStyles.hero, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
@@ -567,24 +592,14 @@ function DomainBody({
         </View>
       ) : null}
 
-      <TouchableOpacity
-        accessibilityRole="button"
-        accessibilityLabel="Open my learning tray"
-        onPress={() => exploreNav.guided(router, { ...guidanceContext, programmeId: guidanceContext.programmeId, focused: true, openTray: true })}
-        style={[refinedStyles.trayAction, { borderColor: colors.accentRole.action, backgroundColor: colors.surface.subtle }]}
-      >
-        <Feather name="briefcase" size={17} color={colors.accentRole.action} />
-        <Text style={[refinedStyles.actionText, { color: colors.accentRole.action }]}>View my learning tray</Text>
-      </TouchableOpacity>
-
-      {orientationResources.length ? <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>A guide to {domain.name}</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>Use this field-level reference to understand the subject before exploring its shared foundations and areas. It is orientation material, not a list of extra requirements.</Text><LearningResourcesBlock resources={orientationResources} title="Open the field guide" /></View> : null}
+      {orientationResources.length ? <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Understand {domain.name}</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>Read an introductory guide to the field before choosing an area.</Text><LearningResourcesBlock resources={orientationResources} presentation="buttons" title="Field guide" buttonLabel={`Understand ${domain.name}`} /></View> : null}
 
       <View style={refinedStyles.sectionHeading}>
-        <View style={refinedStyles.cardHeading}><Feather name="layers" size={17} color={colors.accentRole.action} /><Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Compulsory domain foundations</Text></View>
-        <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>After the programme connection above, complete the compulsory shared foundations shown here. They carry across the domain, areas and roles, and they are the only progression gate. Everything after them is an optional, route-supported learning choice unless a selected route states a condition.</Text>
+        <View style={refinedStyles.cardHeading}><Feather name="layers" size={17} color={colors.accentRole.action} /><Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Your shared starting point</Text></View>
+        <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>Your Sociology studies are the starting point. These field-wide foundations add ways to investigate social questions and assess evidence, and carry forward as you explore areas and roles.</Text>
       </View>
         <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
-        <ContextualItemList items={domainItems} itemTypes={["skill", "competency", "method", "knowledge", "tool", "certification"]} resources={domainResources} contextLevel="domain" itemScope="shared-foundation" title={`Compulsory domain foundations for ${domain.name}`} learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} domainName={domain.name} learningFocus targetStudentId={targetStudentId} />
+        <ContextualItemList items={domainItems} itemTypes={["skill", "competency", "method", "knowledge", "tool", "certification"]} resources={domainResources} contextLevel="domain" itemScope="shared-foundation" title="Foundations for this field" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} domainName={domain.name} learningFocus targetStudentId={targetStudentId} showCaption={false} />
       </View>
       {/* Optional useful edges: GuidanceContinuation renders its own
           "Optional useful edges" heading below when domainItems has any
@@ -592,24 +607,24 @@ function DomainBody({
           duplicate GuidanceContinuation's own label on screen. */}
       <GuidanceContinuation programmeName={studentConnection?.programmeName} connection={studentConnection} domainId={domain.id} domainName={domain.name} domainHasAreas={visibleAreas.length > 0} domainFoundation={domain.foundationSkills} domainItems={domainItems} />
       <View style={refinedStyles.sectionHeading}>
-        <View style={refinedStyles.cardHeading}><Feather name="compass" size={17} color={colors.accentRole.action} /><Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Next in the domain sequence</Text></View>
-        <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>After the shared foundations, follow the broad domain spine in order. Each card explains why it appears next; these additions remain skippable and do not block moving to an area.</Text>
+        <View style={refinedStyles.cardHeading}><Feather name="compass" size={17} color={colors.accentRole.action} /><Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Build further across the field</Text></View>
+        <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>The foundations above give you a shared base. These additional choices can deepen your learning for particular interests or tasks; choose the ones that fit the direction you want to explore.</Text>
       </View>
       <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
-        <ContextualItemList items={domainItems} itemTypes={["skill", "competency", "method", "knowledge"]} resources={domainResources} contextLevel="domain" itemScope="learning-options" sequenceBand="domain_core" title="Broad domain learning" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} domainName={domain.name} learningFocus targetStudentId={targetStudentId} />
+        <ContextualItemList items={domainItems} itemTypes={["skill", "competency", "method", "knowledge"]} resources={domainResources} contextLevel="domain" itemScope="learning-options" sequenceBand="domain_core" title="Optional field learning choices" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} domainName={domain.name} learningFocus targetStudentId={targetStudentId} showCaption={false} />
       </View>
       <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
-        <ContextualItemList items={domainItems} itemTypes={["skill", "competency", "method", "knowledge"]} resources={domainResources} contextLevel="domain" itemScope="learning-options" sequenceBand="cross_cutting" title="Cross-cutting safeguards and reproducibility" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} domainName={domain.name} learningFocus targetStudentId={targetStudentId} />
+        <ContextualItemList items={domainItems} itemTypes={["skill", "competency", "method", "knowledge"]} resources={domainResources} contextLevel="domain" itemScope="learning-options" sequenceBand="cross_cutting" title="Research practices that support different routes" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} domainName={domain.name} learningFocus targetStudentId={targetStudentId} showCaption={false} />
       </View>
       <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
-        <ContextualItemList items={domainItems} itemTypes={["method"]} resources={domainResources} contextLevel="domain" itemScope="learning-options" sequenceBand="method_routes" title="Method routes: choose or combine to fit the question" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} domainName={domain.name} learningFocus targetStudentId={targetStudentId} />
+        <ContextualItemList items={domainItems} itemTypes={["method"]} resources={domainResources} contextLevel="domain" itemScope="learning-options" sequenceBand="method_routes" title="Ways to investigate a social question" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} domainName={domain.name} learningFocus targetStudentId={targetStudentId} showCaption={false} />
       </View>
       <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
-        <ContextualItemList items={domainItems} itemTypes={["method"]} resources={domainResources} contextLevel="domain" itemScope="learning-options" sequenceBand="advanced_extensions" title="Advanced and specialist extensions" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} domainName={domain.name} learningFocus targetStudentId={targetStudentId} />
-        <ContextualItemList items={domainItems} itemTypes={["method"]} resources={domainResources} contextLevel="domain" itemScope="learning-options" sequenceBand="specialist_extensions" title="Computational, spatial and simulation branches" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} domainName={domain.name} learningFocus targetStudentId={targetStudentId} />
+        <ContextualItemList items={domainItems} itemTypes={["method"]} resources={domainResources} contextLevel="domain" itemScope="learning-options" sequenceBand="advanced_extensions" title="Advanced and specialist approaches" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} domainName={domain.name} learningFocus targetStudentId={targetStudentId} showCaption={false} />
+        <ContextualItemList items={domainItems} itemTypes={["method"]} resources={domainResources} contextLevel="domain" itemScope="learning-options" sequenceBand="specialist_extensions" title="Computational, spatial and simulation approaches" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} domainName={domain.name} learningFocus targetStudentId={targetStudentId} showCaption={false} />
       </View>
       <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
-        <ContextualItemList items={domainItems} itemTypes={["tool"]} resources={domainResources} contextLevel="domain" itemScope="learning-options" sequenceBand="tool_support" title="Tools supporting the selected method" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} domainName={domain.name} learningFocus targetStudentId={targetStudentId} />
+        <ContextualItemList items={domainItems} itemTypes={["tool"]} resources={domainResources} contextLevel="domain" itemScope="learning-options" sequenceBand="tool_support" title="Tools for the chosen approach" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} domainName={domain.name} learningFocus targetStudentId={targetStudentId} showCaption={false} />
         <ToolGroupsBlock tools={domain.tools} resources={domainResources} contextItems={domainItems} contextLevel="domain" title="Tool groups and alternatives" commonLabel="Used across this field" distinctiveLabel="Useful for particular work" explanation="Tools are embedded after the method choice. Choose one suitable option; complementary libraries can be learned together. No tool is a universal domain blocker." learningFocus targetStudentId={targetStudentId} learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} />
         <View style={refinedStyles.subsection}>
           <Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>Credentials and professional routes</Text>

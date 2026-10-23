@@ -63,9 +63,13 @@ import { featureFlags } from "@/lib/featureFlags";
 // Same source of truth as the shell nav: this screen names itself what the
 // nav calls it, so "Saved" pre-launch and "My World" once the world is live.
 import { WORLD_NAV } from "@/lib/worldNav";
+import { FlowCue } from "@/components/guidance/FlowCue";
+import { savedReportCue } from "@/lib/studentFlowCopy";
 import { xpEngine, type XPSnapshot } from "@/lib/XPEngine";
 import { streakEngine, type StreakStatus } from "@/lib/StreakEngine";
 import { PdfExportButton } from "@/components/careerIntelligence";
+import { d078AreaLabel as getD078AreaLabel, d078CombinationLabel, d078Node } from "@/lib/d078RouteProjection";
+import { d078ProgrammeIdFromSnapshot, d078RouteStacksFromSnapshot, d078SavedRouteHref, d078SelectionFromSnapshot, d078ShareInputForAllRoutesFromSnapshot, isD078Snapshot, selectSavedSnapshot } from "@/lib/d078Snapshot";
 
 /** Human-friendly glyphs / labels per saved entity type. */
 const ENTITY_META: Record<SavedEntityType, { icon: string; label: string }> = {
@@ -561,8 +565,8 @@ function LiveWorldHub() {
 /**
  * The completed guidance report belongs in the student's personal workspace,
  * not only on Explore detail screens. It is intentionally hidden until the
- * saved path contains both a programme and university: an unfinished path is
- * resumable, but it is not presented as a finished report.
+ * saved path contains a programme and a named, supported institution: an
+ * unfinished path is resumable, but it is not presented as a finished report.
  */
 function GuidanceReportCard() {
   const { colors } = useTheme();
@@ -593,17 +597,71 @@ function GuidanceReportCard() {
   const programme = path.programme;
   const university = path.university;
   const programmeName = typeof programme?.name === "string" ? programme.name : "your selected programme";
-  const universityName = typeof university?.name === "string" ? university.name : "your selected university";
-  const ready = Boolean(programme?.name && university?.name);
+  const reportPath = path as typeof path & {
+    attachedInstitution?: Record<string, unknown>;
+    institution?: Record<string, unknown>;
+    academicContext?: Record<string, unknown>;
+  };
+  const currentSnapshot = path.learningPlanSnapshot && typeof path.learningPlanSnapshot === "object"
+    ? path.learningPlanSnapshot as Record<string, unknown>
+    : {};
+  const reportPathContext = currentSnapshot.reportPathContext && typeof currentSnapshot.reportPathContext === "object"
+    ? currentSnapshot.reportPathContext as Record<string, unknown>
+    : {};
+  const savedInstitution = reportPathContext.attachedInstitution ?? reportPathContext.institution ?? reportPathContext.university;
+  const academicContext = reportPath.academicContext ?? {};
+  const institutionCandidate = [savedInstitution, reportPath.attachedInstitution, reportPath.institution, university]
+    .find((candidate) => candidate && typeof candidate === "object") as Record<string, unknown> | undefined;
+  const institutionType = String(
+    institutionCandidate?.institutionType ?? institutionCandidate?.institution_type ?? institutionCandidate?.type
+      ?? academicContext.institutionType ?? (university?.name ? "university" : ""),
+  ).trim().toLowerCase().replace(/[ -]+/g, "_");
+  const institutionName = String(
+    institutionCandidate?.name ?? institutionCandidate?.schoolName
+      ?? (institutionType === "tutorial_centre" || institutionType === "tutorial_center"
+        ? academicContext.tutorialCentreName
+        : academicContext.schoolName) ?? "",
+  ).trim();
+  const institutionLabels: Record<string, string> = {
+    university: "University",
+    secondary_school: "Secondary school",
+    school: "School",
+    tutorial_centre: "Tutorial centre",
+    tutorial_center: "Tutorial centre",
+  };
+  const reportInstitutionLabel = institutionLabels[institutionType];
+  const hasReportInstitution = Boolean(institutionName && reportInstitutionLabel);
+  const ready = Boolean(programme?.name && hasReportInstitution);
   const resumeInProgress = path.resume?.status === "in_progress";
   const savedSnapshots = (Array.isArray(path.learningPlanSnapshots) ? path.learningPlanSnapshots : [])
     .filter((entry): entry is Record<string, unknown> => Boolean(entry && typeof entry === "object" && typeof entry.snapshotId === "string"));
   const fallbackSnapshot = path.learningPlanSnapshot;
-  const selectedSavedSnapshot = savedSnapshots.find((entry) => entry.snapshotId === selectedSnapshotId)
-    ?? savedSnapshots[savedSnapshots.length - 1]
-    ?? (fallbackSnapshot && typeof fallbackSnapshot === "object" ? fallbackSnapshot : null);
+  const selectedSavedSnapshot = selectSavedSnapshot({
+    learningPlanSnapshots: savedSnapshots,
+    learningPlanSnapshot: savedSnapshots[savedSnapshots.length - 1]
+      ?? (fallbackSnapshot && typeof fallbackSnapshot === "object" ? fallbackSnapshot : null),
+  }, selectedSnapshotId);
+  const selectedSnapshotUnavailable = Boolean(selectedSnapshotId && !selectedSavedSnapshot);
   const activeSnapshotId = typeof selectedSavedSnapshot?.snapshotId === "string" ? selectedSavedSnapshot.snapshotId : null;
   const learningPlanSnapshot = selectedSavedSnapshot;
+  const d078ProgrammeId = d078ProgrammeIdFromSnapshot(learningPlanSnapshot)
+    ?? (typeof programme?.id === "string" ? programme.id : undefined);
+  const d078Selection = d078SelectionFromSnapshot(learningPlanSnapshot, d078ProgrammeId);
+  const d078RouteStacks = d078RouteStacksFromSnapshot(learningPlanSnapshot, d078ProgrammeId);
+  const d078Label = (id: unknown) => typeof id === "string" ? d078Node(id)?.label ?? id : "";
+  const d078RouteSummaries = (d078RouteStacks?.stacks ?? []).map((stack, index) => {
+    const selection = stack.selection;
+    const methodLabels = [
+      ...selection.methodIds.map(d078Label),
+      ...selection.combinationIds.map((id) => d078CombinationLabel(id) ?? id),
+      ...Object.values(selection.componentMethodIds).flat().map(d078Label),
+    ].filter(Boolean);
+    const area = selection.areaId ? getD078AreaLabel(selection.areaId) ?? selection.areaId : "";
+    const role = selection.roleId ? d078Label(selection.roleId).replace(/\b\w/g, (letter) => letter.toLocaleUpperCase()) : "";
+    const items = selection.addedItemIds.map(d078Label).filter(Boolean);
+    return { key: stack.id, number: index + 1, methods: methodLabels, area, role, items };
+  });
+  const hasD078Snapshot = isD078Snapshot(learningPlanSnapshot) && Boolean(d078Selection);
   const savedReportContext = selectedSavedSnapshot?.reportPathContext
     && typeof selectedSavedSnapshot.reportPathContext === "object"
     ? selectedSavedSnapshot.reportPathContext as Record<string, unknown>
@@ -611,6 +669,7 @@ function GuidanceReportCard() {
   const learningPlanStacks = learningPlanSnapshot && Array.isArray(learningPlanSnapshot.stacks)
     ? learningPlanSnapshot.stacks
     : [];
+  const hasSavedPlan = learningPlanStacks.length > 0 || hasD078Snapshot || savedSnapshots.length > 0;
   const learningPlanItemCount = learningPlanStacks.reduce((total, stack) => (
     total + (stack && typeof stack === "object" && Array.isArray((stack as { selectedIds?: unknown[] }).selectedIds)
       ? (stack as { selectedIds: unknown[] }).selectedIds.length
@@ -665,17 +724,35 @@ function GuidanceReportCard() {
   const savedReportUniversity = savedReportContext.university && typeof savedReportContext.university === "object"
     ? savedReportContext.university as Record<string, unknown>
     : university;
-  const savedProgrammeId = typeof savedReportProgramme?.jambProgrammeId === "string"
+  const savedJambProgrammeId = typeof savedReportProgramme?.jambProgrammeId === "string"
     ? savedReportProgramme.jambProgrammeId
     : typeof savedReportProgramme?.jamb_programme_id === "string"
       ? savedReportProgramme.jamb_programme_id
-      : typeof savedReportProgramme?.id === "string" ? savedReportProgramme.id : "";
+      : "";
+  const savedProgrammeId = typeof savedReportProgramme?.id === "string" && !savedJambProgrammeId ? savedReportProgramme.id : "";
   const savedUniversityId = typeof savedReportUniversity?.id === "string" ? savedReportUniversity.id : "";
   const editLearningPlan = () => {
+    if (selectedSnapshotUnavailable) return;
+    if (hasD078Snapshot && learningPlanSnapshot) {
+      const href = d078SavedRouteHref(learningPlanSnapshot, {
+        snapshotProgrammeId: d078ProgrammeId,
+        programmeId: savedProgrammeId || undefined,
+        jambProgrammeId: savedJambProgrammeId || undefined,
+        schoolId: savedUniversityId || undefined,
+        snapshotId: activeSnapshotId || undefined,
+      });
+      if (href) {
+        router.push(href as Href);
+        return;
+      }
+      setDownloadNotice("This saved Sociology route could not be restored from its saved details. Select another saved version or try again later.");
+      return;
+    }
     const params = [
       "guided=1",
       "focus=guidance",
-      ...(savedProgrammeId ? [`jamb_programme_id=${encodeURIComponent(savedProgrammeId)}`] : []),
+      ...(savedJambProgrammeId ? [`jamb_programme_id=${encodeURIComponent(savedJambProgrammeId)}`] : []),
+      ...(savedProgrammeId ? [`programme_id=${encodeURIComponent(savedProgrammeId)}`] : []),
       ...(savedUniversityId ? [`school_id=${encodeURIComponent(savedUniversityId)}`] : []),
       ...(activeSnapshotId ? [`snapshot_id=${encodeURIComponent(activeSnapshotId)}`] : []),
     ];
@@ -683,6 +760,7 @@ function GuidanceReportCard() {
   };
 
   const openLearningPlanShare = () => {
+    if (selectedSnapshotUnavailable) return;
     const shareStacks = learningPlanStacks.map((stack, index) => {
       const record = stack && typeof stack === "object" ? stack as {
         selectedIds?: unknown[];
@@ -698,7 +776,9 @@ function GuidanceReportCard() {
       programmeName,
       ...(path.domains ?? []).map((domain) => typeof domain.name === "string" ? domain.name : ""),
     ].filter(Boolean).join(" / ");
-    setShareInput(buildLearningPlanShareInputFromStacks(shareStacks, fallbackRoute));
+    setShareInput(hasD078Snapshot
+      ? d078ShareInputForAllRoutesFromSnapshot(learningPlanSnapshot, d078ProgrammeId) ?? {}
+      : buildLearningPlanShareInputFromStacks(shareStacks, fallbackRoute));
     setShareNotice(null);
     setShareSheetVisible(true);
   };
@@ -739,6 +819,7 @@ function GuidanceReportCard() {
   };
 
   const downloadEditableCopy = async () => {
+    if (selectedSnapshotUnavailable) return;
     setDownloadNotice(null);
     const reportPath = `/api/student/report.docx${activeSnapshotId ? `?snapshot_id=${encodeURIComponent(activeSnapshotId)}` : ""}`;
     const opened = await openStudentDocument(reportPath, {
@@ -752,17 +833,28 @@ function GuidanceReportCard() {
       <Text style={[styles.reportEyebrow, CompassFonts.bodyBold, { color: colors.accentRole.action }]}>YOUR GUIDANCE REPORT</Text>
       <Text style={[styles.reportTitle, CompassFonts.displaySemi, { color: colors.textRole.primary }]}>Keep your guidance together</Text>
       <Text style={[styles.reportBody, CompassFonts.body, { color: colors.textRole.secondary }]}>
-        {ready
-          ? `Your saved route connects ${programmeName} with ${universityName}. Open the report when you are ready to print, save or share it.`
+        {hasD078Snapshot
+          ? ready
+            ? `Your saved Sociology route is ready to print with ${reportInstitutionLabel}: ${institutionName}. University-specific admission requirements are included only when a university is selected.`
+            : "Your saved Sociology route can be reopened, but printing requires a named university, secondary school, or tutorial centre to be attached."
+          : ready
+          ? `Your saved route connects ${programmeName} with ${reportInstitutionLabel}: ${institutionName}. Open the report when you are ready to print, save or share it.`
           : resumeInProgress
-            ? "Your choices are saved, but the report is not ready until you select both a programme and a university."
-            : "Your saved guidance is not complete enough to create a report yet."}
+            ? "Your choices are saved, but printing requires a programme and a named university, secondary school, or tutorial centre to be attached."
+            : "Your saved guidance is not complete enough to create a report yet. Add a programme and a named university, secondary school, or tutorial centre to print it."}
       </Text>
-      {learningPlanStacks.length ? <View style={[styles.reportPlanSummary, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
+      <FlowCue {...savedReportCue(ready)} />
+      {hasSavedPlan ? <View style={[styles.reportPlanSummary, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
         <Text style={[styles.reportPlanTitle, CompassFonts.bodyBold, { color: colors.textRole.primary }]}>Focused learning plan saved</Text>
         <Text style={[styles.reportPlanBody, CompassFonts.body, { color: colors.textRole.secondary }]}>
-          {learningPlanStacks.length} route{learningPlanStacks.length === 1 ? "" : "s"} · {learningPlanItemCount} selected learning item{learningPlanItemCount === 1 ? "" : "s"}. Routes remain separate in the report.
+          {hasD078Snapshot ? `${d078RouteSummaries.length} separate Sociology · Social Sciences route${d078RouteSummaries.length === 1 ? "" : "s"}. Each route keeps its own methods, area, role and added learning choices in the report.` : `${learningPlanStacks.length} route${learningPlanStacks.length === 1 ? "" : "s"} · ${learningPlanItemCount} selected learning item${learningPlanItemCount === 1 ? "" : "s"}. Routes remain separate in the report.`}
         </Text>
+        {hasD078Snapshot ? d078RouteSummaries.map((route) => <View key={route.key} style={[styles.reportRouteRow, { borderColor: colors.borderRole.subtle }]}>
+          <Text style={[styles.reportRouteLabel, CompassFonts.bodyBold, { color: colors.textRole.primary }]}>Route {route.number}{route.area ? ` · ${route.area}` : " · Field only"}{route.role ? ` · ${route.role}` : ""}</Text>
+          <Text style={[styles.reportRouteMeta, CompassFonts.body, { color: colors.textRole.secondary }]}>
+            {route.methods.length ? route.methods.join(" · ") : "No method or design selected yet"}{route.items.length ? `\nAdded: ${route.items.join(" · ")}` : "\nNo extra items added"}
+          </Text>
+        </View>) : null}
         {savedSnapshots.length > 0 ? <View style={styles.reportRouteList} accessibilityLabel="Saved learning plan versions">
           <Text style={[styles.reportRouteLabel, CompassFonts.bodyBold, { color: colors.textRole.primary }]}>Saved versions</Text>
           {savedSnapshots.map((snapshot, index) => {
@@ -790,11 +882,11 @@ function GuidanceReportCard() {
             </Text>
           </View>)}
         </View>
-        <TouchableOpacity onPress={editLearningPlan} style={[styles.reportPlanEdit, { borderColor: colors.borderRole.subtle }]} accessibilityRole="button" accessibilityLabel="Edit saved learning plan">
+        <TouchableOpacity onPress={editLearningPlan} disabled={selectedSnapshotUnavailable} style={[styles.reportPlanEdit, { borderColor: colors.borderRole.subtle }]} accessibilityRole="button" accessibilityState={{ disabled: selectedSnapshotUnavailable }} accessibilityLabel="Edit saved learning plan">
           <Text style={[styles.reportLinkText, CompassFonts.bodyBold, { color: colors.accentRole.action }]}>Open this version as an editable copy</Text>
         </TouchableOpacity>
       </View> : null}
-      {ready ? (
+      {selectedSnapshotUnavailable ? null : ready ? (
         <View style={styles.reportActions}>
           <PdfExportButton title="Print / save report" documentPath={`/api/student/report.html${activeSnapshotId ? `?snapshot_id=${encodeURIComponent(activeSnapshotId)}` : ""}`} />
           <TouchableOpacity onPress={openLearningPlanShare} style={[styles.reportLink, { borderColor: colors.borderRole.subtle }]} accessibilityRole="button" accessibilityLabel="Share learning plan summary">
@@ -809,6 +901,8 @@ function GuidanceReportCard() {
           <Text style={[styles.reportLinkText, CompassFonts.bodyBold, { color: colors.accentRole.action }]}>Continue</Text>
         </TouchableOpacity>
       )}
+      {!ready && !selectedSnapshotUnavailable ? <Text accessibilityRole="alert" style={[styles.reportNotice, CompassFonts.body, { color: colors.textRole.muted }]}>Printing is unavailable until a named university, secondary school, or tutorial centre is attached.</Text> : null}
+      {selectedSnapshotUnavailable ? <Text accessibilityRole="alert" style={[styles.reportNotice, CompassFonts.body, { color: colors.textRole.muted }]}>That saved version is no longer available. Select another saved version to continue.</Text> : null}
       {downloadNotice ? <Text style={[styles.reportNotice, CompassFonts.body, { color: colors.textRole.muted }]}>{downloadNotice}</Text> : null}
       {shareNotice ? <Text style={[styles.reportNotice, CompassFonts.body, { color: colors.textRole.muted }]}>{shareNotice}</Text> : null}
       <LearningPlanShareSheet
@@ -1374,20 +1468,22 @@ const styles = StyleSheet.create({
     marginTop: Spacing.xs,
   },
   reportRouteRow: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: "column",
+    alignItems: "flex-start",
     borderWidth: 1,
     borderRadius: Radius.sm,
     padding: Spacing.sm,
-    gap: 2,
+    gap: Spacing.xs,
   },
   reportRouteLabel: {
     fontSize: FontSize.xs,
     lineHeight: FontSize.xs * 1.35,
+    flexShrink: 1,
   },
   reportRouteMeta: {
     fontSize: 10,
     lineHeight: 13,
+    flexShrink: 1,
   },
   reportPlanEdit: {
     alignSelf: "flex-start",

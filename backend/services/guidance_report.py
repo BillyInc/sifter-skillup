@@ -75,6 +75,34 @@ def _domain_foundation_labels(svc: Any, domain_id: Any) -> list[str]:
         return []
 
 
+_REPORT_INSTITUTION_LABELS = {
+    "university": "University",
+    "secondary_school": "Secondary school",
+    "school": "School",
+    "tutorial_centre": "Tutorial centre",
+    "tutorial_center": "Tutorial centre",
+}
+
+
+def _report_institution(candidate: Any, default_type: Optional[str] = None) -> Optional[dict]:
+    if not isinstance(candidate, dict):
+        return None
+    name = str(candidate.get("name") or candidate.get("schoolName") or "").strip()
+    institution_type = str(
+        candidate.get("institutionType") or candidate.get("institution_type")
+        or candidate.get("type") or default_type or ""
+    ).strip().lower().replace("-", "_").replace(" ", "_")
+    label = _REPORT_INSTITUTION_LABELS.get(institution_type)
+    if not name or not label:
+        return None
+    return {
+        "id": candidate.get("id") or candidate.get("schoolId"),
+        "name": name,
+        "institutionType": institution_type,
+        "institutionTypeLabel": label,
+    }
+
+
 def _owned_rows(rows: list[dict], owner: str) -> list[dict]:
     """Keep explicitly owned tools out of neighbouring student layers."""
     return [row for row in rows if row.get("guidance_owner") == owner]
@@ -121,7 +149,10 @@ def resolve_guidance_report_context(
     subjects = path.get("subjects") if isinstance(path.get("subjects"), dict) else {}
     programme = path.get("programme") if isinstance(path.get("programme"), dict) else {}
     university = path.get("university") if isinstance(path.get("university"), dict) else {}
+    route_university = dict(university)
     requirements = path.get("requirements") if isinstance(path.get("requirements"), dict) else {}
+    starting_point: dict = {}
+    raw_profile: dict = {}
 
     # A provisioned student may still have a live one-time claim code. Keep it
     # attached to the selected path only for the printable handoff output; do
@@ -144,12 +175,25 @@ def resolve_guidance_report_context(
             "user_id", user.get("id")
         ).limit(1).execute()
         start_row = (start.data or [None])[0] or {}
+        starting_point = start_row
+        raw_profile = start_row.get("raw_profile") if isinstance(start_row.get("raw_profile"), dict) else {}
+        preferred_institution_type = str(
+            start_row.get("preferred_institution_type")
+            or raw_profile.get("preferredInstitutionType")
+            or raw_profile.get("institutionType")
+            or ""
+        ).strip().lower().replace("-", "_").replace(" ", "_")
         academic = {
             "userType": start_row.get("user_type") or academic.get("userType"),
             "class": start_row.get("ss_class") or academic.get("class") or user.get("student_class"),
             "stream": start_row.get("stream") or academic.get("stream") or user.get("stream"),
-            "schoolName": start_row.get("preferred_school_name") or academic.get("schoolName") or school_name,
-            "tutorialCentreName": (start_row.get("raw_profile") or {}).get("tutorialCentreName") or academic.get("tutorialCentreName"),
+            "schoolName": (
+                start_row.get("preferred_school_name")
+                if preferred_institution_type in {"secondary_school", "school"}
+                else None
+            ) or academic.get("schoolName") or school_name,
+            "tutorialCentreName": raw_profile.get("tutorialCentreName") or academic.get("tutorialCentreName"),
+            "institutionType": preferred_institution_type or academic.get("institutionType"),
         }
         if not subjects:
             choices = svc.table("student_subject_choices").select(
@@ -165,14 +209,73 @@ def resolve_guidance_report_context(
                 "name": start_row.get("intended_programme_name"),
             }
         if not university:
-            university = {
-                "id": start_row.get("preferred_school_id"),
-                "name": start_row.get("preferred_school_name"),
-            }
+            university = (
+                {
+                    "id": start_row.get("preferred_school_id"),
+                    "name": start_row.get("preferred_school_name"),
+                }
+                if preferred_institution_type == "university"
+                else {}
+            )
     except Exception:
         academic.setdefault("class", user.get("student_class"))
         academic.setdefault("stream", user.get("stream"))
         academic.setdefault("schoolName", school_name)
+
+    institution_candidates = [
+        (path.get("attachedInstitution"), None),
+        (path.get("institution"), None),
+        (route_university, "university"),
+        ({
+            "id": starting_point.get("preferred_school_id"),
+            "name": starting_point.get("preferred_school_name"),
+            "institutionType": starting_point.get("preferred_institution_type")
+            or raw_profile.get("preferredInstitutionType")
+            or raw_profile.get("institutionType"),
+        }, None),
+        ({
+            "id": raw_profile.get("tutorialCentreId"),
+            "name": raw_profile.get("tutorialCentreName") or academic.get("tutorialCentreName"),
+            "institutionType": "tutorial_centre",
+        }, None),
+        ({
+            "id": raw_profile.get("secondarySchoolId"),
+            "name": raw_profile.get("secondarySchoolName"),
+            "institutionType": "secondary_school",
+        }, None),
+    ]
+    attached_institution = next(
+        (
+            institution
+            for candidate, default_type in institution_candidates
+            if (institution := _report_institution(candidate, default_type)) is not None
+        ),
+        None,
+    )
+    if attached_institution is None and user.get("provisioning_school_id"):
+        try:
+            school_rows = svc.table("schools").select(
+                "id, name, institution_type"
+            ).eq("id", user.get("provisioning_school_id")).limit(1).execute().data or []
+            if school_rows:
+                attached_institution = _report_institution(school_rows[0])
+        except Exception:
+            attached_institution = None
+    if attached_institution is None and user.get("id"):
+        try:
+            affiliation_rows = svc.table("student_affiliations").select(
+                "school_id, schools(id, name, institution_type)"
+            ).eq("student_id", user.get("id")).order("created_at", desc=True).limit(5).execute().data or []
+            attached_institution = next(
+                (
+                    institution
+                    for row in affiliation_rows
+                    if (institution := _report_institution(row.get("schools"))) is not None
+                ),
+                None,
+            )
+        except Exception:
+            attached_institution = None
 
     domain_choices = _selected_items(path, "domains")
     subgroup_choices = _selected_items(path, "subgroups")
@@ -298,19 +401,21 @@ def resolve_guidance_report_context(
             })
 
     return {
-        "studentName": user.get("username") or "Student",
+        "studentName": user.get("username") or None,
         "academicContext": academic,
         "subjects": subjects,
         "discoveryDoor": path.get("discoveryDoor"),
         "programme": programme,
         "programmes": path.get("programmes") if isinstance(path.get("programmes"), list) else [],
         "university": university,
+        "attachedInstitution": attached_institution,
         "requirements": requirements,
         "subjectMatch": path.get("subjectMatch") if isinstance(path.get("subjectMatch"), dict) else {"status": "not_checked"},
         "learningFocus": path.get("learningFocus") if isinstance(path.get("learningFocus"), list) else [],
         "learningPlanSnapshot": path.get("learningPlanSnapshot") if isinstance(path.get("learningPlanSnapshot"), dict) else None,
         "accessCode": access_code,
         "domains": domains,
+        "universityRequirements": path.get("universityRequirements") if isinstance(path.get("universityRequirements"), dict) else {},
         "selectedCounts": {
             "domains": len(domains),
             "subgroups": sum(len(item.get("subgroups") or []) for item in domains),

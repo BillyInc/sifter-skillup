@@ -6,54 +6,722 @@
   "enrichment_basis": {
     "strategy": "official_university_curriculum",
     "note": "The resolved CCMAS Human Kinetics/Physical Education record contains education courses but no sport-science course body. Sport Science is therefore enriched from the published Human Kinetics and Sports Studies curriculum of the University of Nigeria, Nsukka.",
-    "sources": ["https://humankinetics.unn.edu.ng/course-modules/"]
+    "sources": [
+      "https://humankinetics.unn.edu.ng/course-modules/"
+    ]
   },
   "external_domain_links": [
-    {"domain_id": "D154", "domain_name": "Exercise Science, Sports Therapy", "match_type": "direct", "source": "official_sports_curriculum", "evidence": "Human movement, exercise prescription, biomechanics, physiology, coaching, performance measurement and sports-injury courses.", "source_url": "https://humankinetics.unn.edu.ng/course-modules/"},
-    {"domain_id": "D071", "domain_name": "Sports Management", "match_type": "functional", "source": "official_sports_curriculum", "evidence": "Planning and management of intramural/interscholastic sport, competitive sport administration and sports programme supervision.", "source_url": "https://humankinetics.unn.edu.ng/course-modules/"},
-    {"domain_id": "D165", "domain_name": "Wellness Coaching, Lifestyle Medicine", "match_type": "functional", "source": "official_sports_curriculum", "evidence": "Fitness conditioning, exercise prescription and nutrition/ergogenic aids are explicit course areas.", "source_url": "https://humankinetics.unn.edu.ng/course-modules/"},
-    {"domain_id": "D039", "domain_name": "Higher Education", "match_type": "functional", "source": "official_sports_curriculum", "evidence": "The curriculum includes teaching practice, curriculum planning and methods/resources for conducting Human Kinetics programmes in schools.", "source_url": "https://humankinetics.unn.edu.ng/course-modules/"},
-    {"domain_id": "D074", "domain_name": "Occupational Health, Safety", "match_type": "adjacent", "source": "official_sports_curriculum", "evidence": "Common sports injuries, first aid care and safety education are included.", "source_url": "https://humankinetics.unn.edu.ng/course-modules/"}
+    {
+      "domain_id": "D154",
+      "domain_name": "Exercise Science, Sports Therapy",
+      "match_type": "direct",
+      "source": "official_sports_curriculum",
+      "evidence": "Human movement, exercise prescription, biomechanics, physiology, coaching, performance measurement and sports-injury courses.",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/"
+    },
+    {
+      "domain_id": "D071",
+      "domain_name": "Sports Management",
+      "match_type": "functional",
+      "source": "official_sports_curriculum",
+      "evidence": "Planning and management of intramural/interscholastic sport, competitive sport administration and sports programme supervision.",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/"
+    },
+    {
+      "domain_id": "D165",
+      "domain_name": "Wellness Coaching, Lifestyle Medicine",
+      "match_type": "functional",
+      "source": "official_sports_curriculum",
+      "evidence": "Fitness conditioning, exercise prescription and nutrition/ergogenic aids are explicit course areas.",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/"
+    },
+    {
+      "domain_id": "D039",
+      "domain_name": "Higher Education",
+      "match_type": "functional",
+      "source": "official_sports_curriculum",
+      "evidence": "The curriculum includes teaching practice, curriculum planning and methods/resources for conducting Human Kinetics programmes in schools.",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/"
+    },
+    {
+      "domain_id": "D074",
+      "domain_name": "Occupational Health, Safety",
+      "match_type": "adjacent",
+      "source": "official_sports_curriculum",
+      "evidence": "Common sports injuries, first aid care and safety education are included.",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/"
+    }
   ],
   "courses": [
-    {"level": 100, "code": "HKS 112", "title": "Basic Skills of Swimming and Water Safety", "status": "C"},
-    {"level": 100, "code": "HKS 113", "title": "Skills and Techniques of Track and Field Athletics", "status": "C"},
-    {"level": 100, "code": "HKS 114", "title": "Skills and Techniques Development in Team Sports", "status": "C"},
-    {"level": 100, "code": "HKS 116", "title": "Movement Education and Creative Dance", "status": "C"},
-    {"level": 100, "code": "HKS 120", "title": "Philosophical and Historical Foundations of Human Kinetics and Sports Studies", "status": "C"},
-    {"level": 100, "code": "HKS 131", "title": "Weight Training and Physical Fitness", "status": "C"},
-    {"level": 100, "code": "HKS 142", "title": "Introduction to Sports Journalism", "status": "C"},
-    {"level": 200, "code": "HKS 211", "title": "Skills and Techniques Development in Team Sports II", "status": "C"},
-    {"level": 200, "code": "HKS 212", "title": "Skills and Techniques Development in Racquet Games", "status": "C"},
-    {"level": 200, "code": "HKS 218", "title": "Gymnastics", "status": "C"},
-    {"level": 200, "code": "HKS 222", "title": "Sociological Basis of Human Kinetics and Sports Studies", "status": "C"},
-    {"level": 200, "code": "HKS 223", "title": "Principles of Recreation, Outdoor Pursuits and Tourism", "status": "C"},
-    {"level": 200, "code": "HKS 231", "title": "Human Anatomy and Physiology", "status": "C"},
-    {"level": 200, "code": "HKS 232", "title": "Motor Learning and Human Performance", "status": "C"},
-    {"level": 200, "code": "HKS 234", "title": "Psychology of Sports", "status": "C"},
-    {"level": 200, "code": "HKS 236", "title": "Principles and Methods of Exercise Prescription for Diverse Population", "status": "C"},
-    {"level": 200, "code": "HKS 243", "title": "Curriculum Planning in Human Kinetics and Sports Programmes", "status": "C"},
-    {"level": 200, "code": "HKS 244", "title": "Adapted Physical Education", "status": "C"},
-    {"level": 200, "code": "HKS 245", "title": "Methods and Resources for Conduct of Human Kinetics Programme in Schools", "status": "C"},
-    {"level": 300, "code": "HKS 313", "title": "Practical Sports Coaching, Officiating and Game Analysis", "status": "C"},
-    {"level": 300, "code": "HKS 331", "title": "Principles of Athletic and Fitness Conditioning", "status": "C"},
-    {"level": 300, "code": "HKS 332", "title": "Physiology of Human Activity and Biomechanics", "status": "C"},
-    {"level": 300, "code": "HKS 334", "title": "Scientific and Psychological Basis of Sports Coaching", "status": "C"},
-    {"level": 300, "code": "HKS 336", "title": "Statistical Application in Human Kinetics and Sports Studies", "status": "C"},
-    {"level": 300, "code": "HKS 341", "title": "Research Methods in Human Kinetics and Sports Studies", "status": "C"},
-    {"level": 300, "code": "HKS 342", "title": "Administration of Community Recreation and Tourism", "status": "C"},
-    {"level": 300, "code": "HKS 343", "title": "Practicum in Human Kinetics and Sports Studies", "status": "C"},
-    {"level": 300, "code": "HKS 344", "title": "Measurements and Evaluation of Human Performance Efficiency", "status": "C"},
-    {"level": 300, "code": "HKS 345", "title": "Planning and Management of Intramural and Interscholastic Sports Programme", "status": "C"},
-    {"level": 300, "code": "HKS 346", "title": "Common Sports Injuries, First Aid Care and Safety Education", "status": "C"},
-    {"level": 400, "code": "HKS 411", "title": "Practical Sports Coaching, Officiating and Game Analysis II", "status": "C"},
-    {"level": 400, "code": "HKS 413", "title": "ICT Utilization for Data Organization and Presentation in Human Kinetics and Sports Studies", "status": "C"},
-    {"level": 400, "code": "HKS 415", "title": "Kinesiology of Sports and Human Movement", "status": "C"},
-    {"level": 400, "code": "HKS 431", "title": "Nutrition and Ergogenic Aids in Sports", "status": "C"},
-    {"level": 400, "code": "HKS 440", "title": "Planning and Administration of Competitive Sports", "status": "C"},
-    {"level": 400, "code": "HKS 442", "title": "Supervision in Human Kinetic and Sports Programme", "status": "C"},
-    {"level": 400, "code": "HKS 445", "title": "Sports Law and Ethics", "status": "C"},
-    {"level": 400, "code": "HKS 447", "title": "Sports Marketing and Sponsorship", "status": "C"},
-    {"level": 400, "code": "HKS 451", "title": "Seminar in Human Kinetics and Sports Studies", "status": "C"}
+    {
+      "level": 100,
+      "code": "HKS 112",
+      "title": "Basic Skills of Swimming and Water Safety",
+      "status": "C",
+      "content_summary": "Swimming and water safety theory and practice, including water sports, rescue techniques and first aid.",
+      "learning_outcomes": [
+        "Demonstrate foundational swimming and water-safety techniques, including basic rescue and first-aid responses."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 112 — Basic Skills of Swimming and Water Safety",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 112 — Basic Skills of Swimming and Water Safety",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 100,
+      "code": "HKS 113",
+      "title": "Skills and Techniques of Track and Field Athletics",
+      "status": "C",
+      "content_summary": "Theory and practice of track and field events, including races, relays, throws and jumps.",
+      "learning_outcomes": [
+        "Perform and explain basic track-and-field techniques, event rules and safe practice."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 113 — Skills and Techniques of Track and Field Athletics",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 113 — Skills and Techniques of Track and Field Athletics",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 100,
+      "code": "HKS 114",
+      "title": "Skills and Techniques Development in Team Sports",
+      "status": "C",
+      "content_summary": "History, skills, coaching points, rules, officiating and equipment for soccer, volleyball, handball and basketball.",
+      "learning_outcomes": [
+        "Apply basic and intermediate team-sport skills and explain their rules, equipment and officiating."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 114 — Skills and Techniques Development in Team Sports",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 114 — Skills and Techniques Development in Team Sports",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 100,
+      "code": "HKS 116",
+      "title": "Movement Education and Creative Dance",
+      "status": "C",
+      "content_summary": "Movement education principles and expressive movement techniques used in creative dance.",
+      "learning_outcomes": [
+        "Use basic movement-education and creative-dance techniques to plan expressive physical activity."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 116 — Movement Education and Creative Dance",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 116 — Movement Education and Creative Dance",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 100,
+      "code": "HKS 120",
+      "title": "Philosophical and Historical Foundations of Human Kinetics and Sports Studies",
+      "status": "C",
+      "content_summary": "The history, philosophy and social importance of Human Kinetics and Sports, with emphasis on Nigeria.",
+      "learning_outcomes": [
+        "Explain the historical and philosophical foundations of Human Kinetics and Sports in Nigerian society."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 120 — Philosophical and Historical Foundations of Human Kinetics and Sports Studies",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 120 — Philosophical and Historical Foundations of Human Kinetics and Sports Studies",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 100,
+      "code": "HKS 131",
+      "title": "Weight Training and Physical Fitness",
+      "status": "C",
+      "content_summary": "Resistance exercises, multi-gym activities, fitness components and principles of fitness training.",
+      "learning_outcomes": [
+        "Apply basic resistance-training and fitness principles to structured physical-conditioning activities."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 131 — Weight Training and Physical Fitness",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 131 — Weight Training and Physical Fitness",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 100,
+      "code": "HKS 142",
+      "title": "Introduction to Sports Journalism",
+      "status": "C",
+      "content_summary": "Principles of sports journalism and the generation and management of sports information.",
+      "learning_outcomes": [
+        "Describe how sports information is gathered, managed and communicated through sports journalism."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 142 — Introduction to Sports Journalism",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 142 — Introduction to Sports Journalism",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 200,
+      "code": "HKS 211",
+      "title": "Skills and Techniques Development in Team Sports II",
+      "status": "C",
+      "content_summary": "Skills, techniques, strategies, development and improvised facilities for cricket and hockey.",
+      "learning_outcomes": [
+        "Apply fundamental cricket and hockey skills, strategies and safe facility practices."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 211 — Skills and Techniques Development in Team Sports II",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 211 — Skills and Techniques Development in Team Sports II",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 200,
+      "code": "HKS 212",
+      "title": "Skills and Techniques Development in Racquet Games",
+      "status": "C",
+      "content_summary": "Skills and techniques for badminton, squash, table tennis and tennis, including facility maintenance and improvisation.",
+      "learning_outcomes": [
+        "Apply core racquet-sport techniques and explain how equipment and facilities are maintained or adapted."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 212 — Skills and Techniques Development in Racquet Games",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 212 — Skills and Techniques Development in Racquet Games",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 200,
+      "code": "HKS 218",
+      "title": "Gymnastics",
+      "status": "C",
+      "content_summary": "Gymnastics floor and apparatus activities, teaching progressions and equipment care.",
+      "learning_outcomes": [
+        "Perform and teach introductory gymnastics activities while observing equipment and participant safety."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 218 — Gymnastics",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 218 — Gymnastics",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 200,
+      "code": "HKS 222",
+      "title": "Sociological Basis of Human Kinetics and Sports Studies",
+      "status": "C",
+      "content_summary": "Social elements of Human Kinetics and Sports, including culture, race, religion, gender, politics and economics.",
+      "learning_outcomes": [
+        "Explain how social factors shape participation, organisations and relationships in Human Kinetics and Sports."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 222 — Sociological Basis of Human Kinetics and Sports Studies",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 222 — Sociological Basis of Human Kinetics and Sports Studies",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 200,
+      "code": "HKS 223",
+      "title": "Principles of Recreation, Outdoor Pursuits and Tourism",
+      "status": "C",
+      "content_summary": "Recreation, camping, hiking, cycling, youth recreation skills and tourism development.",
+      "learning_outcomes": [
+        "Plan introductory recreation and outdoor activities while relating them to tourism and youth development."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 223 — Principles of Recreation, Outdoor Pursuits and Tourism",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 223 — Principles of Recreation, Outdoor Pursuits and Tourism",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 200,
+      "code": "HKS 231",
+      "title": "Human Anatomy and Physiology",
+      "status": "C",
+      "content_summary": "Musculoskeletal, cardiorespiratory and neurological structure and function in human performance.",
+      "learning_outcomes": [
+        "Relate basic anatomy and physiology to human movement, exercise and sports performance."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 231 — Human Anatomy and Physiology",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 231 — Human Anatomy and Physiology",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 200,
+      "code": "HKS 232",
+      "title": "Motor Learning and Human Performance",
+      "status": "C",
+      "content_summary": "Psychological principles, perception, movement behaviour and theories of motor learning.",
+      "learning_outcomes": [
+        "Explain how motor-learning principles and perception support the acquisition of physical skills."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 232 — Motor Learning and Human Performance",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 232 — Motor Learning and Human Performance",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 200,
+      "code": "HKS 234",
+      "title": "Psychology of Sports",
+      "status": "C",
+      "content_summary": "Psychological principles in coaching, athlete personality, mental skills, motivation and behaviour in sport.",
+      "learning_outcomes": [
+        "Apply basic sport-psychology concepts to coaching, motivation and athlete performance."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 234 — Psychology of Sports",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 234 — Psychology of Sports",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 200,
+      "code": "HKS 236",
+      "title": "Principles and Methods of Exercise Prescription for Diverse Population",
+      "status": "C",
+      "content_summary": "Exercise screening, population needs and the design of exercise prescriptions for diverse populations.",
+      "learning_outcomes": [
+        "Screen basic exercise needs and prepare appropriate introductory exercise prescriptions for diverse participants."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 236 — Principles and Methods of Exercise Prescription for Diverse Population",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 236 — Principles and Methods of Exercise Prescription for Diverse Population",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 200,
+      "code": "HKS 243",
+      "title": "Curriculum Planning in Human Kinetics and Sports Programmes",
+      "status": "C",
+      "content_summary": "Principles and procedures for planning Human Kinetics curricula and selecting curriculum content.",
+      "learning_outcomes": [
+        "Explain how to plan Human Kinetics curriculum content for a defined learner and programme context."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 241 in the course-description section; HKS 243 in the official course list — Curriculum Planning in Human Kinetics and Sports Programmes",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 241 in the course-description section; HKS 243 in the official course list — Curriculum Planning in Human Kinetics and Sports Programmes",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 200,
+      "code": "HKS 244",
+      "title": "Adapted Physical Education",
+      "status": "C",
+      "content_summary": "Developmental and corrective physical-education programmes adapted to individual special needs.",
+      "learning_outcomes": [
+        "Adapt physical-education activities to support learners with different physical or learning needs."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 244 — Adapted Physical Education",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 244 — Adapted Physical Education",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 200,
+      "code": "HKS 245",
+      "title": "Methods and Resources for Conduct of Human Kinetics Programme in Schools",
+      "status": "C",
+      "content_summary": "Lesson planning, instructional methods, teaching resources, microteaching and audiovisual materials for Human Kinetics.",
+      "learning_outcomes": [
+        "Plan and deliver Human Kinetics lessons using suitable methods, resources and microteaching practice."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 245 — Methods and Resources for Conduct of Human Kinetics Programme in Schools",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 245 — Methods and Resources for Conduct of Human Kinetics Programme in Schools",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 300,
+      "code": "HKS 313",
+      "title": "Practical Sports Coaching, Officiating and Game Analysis",
+      "status": "C",
+      "content_summary": "Practical coaching, officiating and game analysis for selected racquet sports and track-and-field events.",
+      "learning_outcomes": [
+        "Conduct basic coaching, officiating and game-analysis tasks for selected racquet and track-and-field activities."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 313 — Practical Sports Coaching, Officiating and Game Analysis",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 313 — Practical Sports Coaching, Officiating and Game Analysis",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 300,
+      "code": "HKS 331",
+      "title": "Principles of Athletic and Fitness Conditioning",
+      "status": "C",
+      "content_summary": "Conditioning exercises for endurance, stamina, skill performance and cardiovascular and respiratory efficiency.",
+      "learning_outcomes": [
+        "Design and apply basic athletic-conditioning activities for endurance, stamina and performance."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 331 — Principles of Athletic and Fitness Conditioning",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 331 — Principles of Athletic and Fitness Conditioning",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 300,
+      "code": "HKS 332",
+      "title": "Physiology of Human Activity and Biomechanics",
+      "status": "C",
+      "content_summary": "Human movement forces, muscular and nervous coordination, cardiorespiratory adaptation and exercise-intensity monitoring.",
+      "learning_outcomes": [
+        "Relate biomechanics and exercise physiology to movement efficiency and safe monitoring of exercise intensity."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 332 — Physiology of Human Activity and Biomechanics",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 332 — Physiology of Human Activity and Biomechanics",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 300,
+      "code": "HKS 334",
+      "title": "Scientific and Psychological Basis of Sports Coaching",
+      "status": "C",
+      "content_summary": "Biomechanical and psychological concepts, performance evaluation and their application to sports coaching.",
+      "learning_outcomes": [
+        "Use basic scientific and psychological evidence to evaluate and improve sports coaching decisions."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 334 — Scientific and Psychological Basis of Sports Coaching",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 334 — Scientific and Psychological Basis of Sports Coaching",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 300,
+      "code": "HKS 336",
+      "title": "Statistical Application in Human Kinetics and Sports Studies",
+      "status": "C",
+      "content_summary": "Descriptive and inferential statistics, data analysis and ICT applications in Human Kinetics and Sports Studies.",
+      "learning_outcomes": [
+        "Apply basic descriptive and inferential statistics and ICT tools to Human Kinetics data."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 336 — Statistical Application in Human Kinetics and Sports Studies",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 336 — Statistical Application in Human Kinetics and Sports Studies",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 300,
+      "code": "HKS 341",
+      "title": "Research Methods in Human Kinetics and Sports Studies",
+      "status": "C",
+      "content_summary": "Research types, problem selection, data collection, treatment and computer-based analysis in Human Kinetics.",
+      "learning_outcomes": [
+        "Plan a basic Human Kinetics research study, collect data and select appropriate analysis methods."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 341 — Research Methods in Human Kinetics and Sports Studies",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 341 — Research Methods in Human Kinetics and Sports Studies",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 300,
+      "code": "HKS 342",
+      "title": "Administration of Community Recreation and Tourism",
+      "status": "C",
+      "content_summary": "Management and public-administration principles applied to community recreation, parks and tourism.",
+      "learning_outcomes": [
+        "Apply basic management principles to community recreation, parks and tourism activities."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 342 — Administration of Community Recreation and Tourism",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 342 — Administration of Community Recreation and Tourism",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 300,
+      "code": "HKS 343",
+      "title": "Practicum in Human Kinetics and Sports Studies",
+      "status": "C",
+      "content_summary": "Supervised industrial attachment in sports councils, clubs, gyms, teams, academies or related establishments.",
+      "learning_outcomes": [
+        "Relate classroom learning to supervised day-to-day operations in a sports or recreation establishment."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 343 — Practicum in Human Kinetics and Sports Studies",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 343 — Practicum in Human Kinetics and Sports Studies",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 300,
+      "code": "HKS 344",
+      "title": "Measurements and Evaluation of Human Performance Efficiency",
+      "status": "C",
+      "content_summary": "Test construction, formative and summative evaluation, measurement and interpretation of Human Kinetics performance data.",
+      "learning_outcomes": [
+        "Construct and interpret basic performance measures and evaluations in Human Kinetics and Sports."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 344 — Measurements and Evaluation of Human Performance Efficiency",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 344 — Measurements and Evaluation of Human Performance Efficiency",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 300,
+      "code": "HKS 345",
+      "title": "Planning and Management of Intramural and Interscholastic Sports Programme",
+      "status": "C",
+      "content_summary": "Planning and organisation of intramural, interscholastic, recreational and competitive sports programmes.",
+      "learning_outcomes": [
+        "Plan and organise school or club sports programmes using relevant rules and safety procedures."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 345 — Planning and Management of Intramural and Interscholastic Sports Programme",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 345 — Planning and Management of Intramural and Interscholastic Sports Programme",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 300,
+      "code": "HKS 346",
+      "title": "Common Sports Injuries, First Aid Care and Safety Education",
+      "status": "C",
+      "content_summary": "Identification, assessment, prevention and first-aid management of common sports injuries.",
+      "learning_outcomes": [
+        "Recognise common sports injuries and apply basic prevention, first-aid and safety procedures."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 346 — Common Sports Injuries, First Aid Care and Safety Education",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 346 — Common Sports Injuries, First Aid Care and Safety Education",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 400,
+      "code": "HKS 411",
+      "title": "Practical Sports Coaching, Officiating and Game Analysis II",
+      "status": "C",
+      "content_summary": "Advanced coaching, game analysis and officiating for ball and stick sports, including programme development.",
+      "learning_outcomes": [
+        "Apply advanced coaching and officiating principles to ball and stick sports and develop a basic coaching programme."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 411 — Practical Sports Coaching, Officiating and Game Analysis II",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 411 — Practical Sports Coaching, Officiating and Game Analysis II",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 400,
+      "code": "HKS 413",
+      "title": "ICT Utilization for Data Organization and Presentation in Human Kinetics and Sports Studies",
+      "status": "C",
+      "content_summary": "ICT for data entry, organisation, analysis and presentation, including SPSS, Excel and internet research communication.",
+      "learning_outcomes": [
+        "Organise, analyse and present Human Kinetics data using suitable ICT and statistical tools."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 413 — ICT Utilization for Data Organization and Presentation in Human Kinetics and Sports Studies",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 413 — ICT Utilization for Data Organization and Presentation in Human Kinetics and Sports Studies",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 400,
+      "code": "HKS 415",
+      "title": "Kinesiology of Sports and Human Movement",
+      "status": "C",
+      "content_summary": "Physiological and mechanical components of movement, joint action, sporting implements, gravity and performance.",
+      "learning_outcomes": [
+        "Analyse basic physiological and mechanical factors affecting sport skills and human movement."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 415 — Kinesiology of Sports and Human Movement",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 415 — Kinesiology of Sports and Human Movement",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 400,
+      "code": "HKS 431",
+      "title": "Nutrition and Ergogenic Aids in Sports",
+      "status": "C",
+      "content_summary": "Nutrition, performance-enhancing foods and drugs, ergogenic aids and psychogenic factors in sports performance.",
+      "learning_outcomes": [
+        "Explain how nutrition and ergogenic aids affect sports performance and identify associated risks."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 431 — Nutrition and Ergogenic Aids in Sports",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 431 — Nutrition and Ergogenic Aids in Sports",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 400,
+      "code": "HKS 440",
+      "title": "Planning and Administration of Competitive Sports",
+      "status": "C",
+      "content_summary": "Classification, planning and organisation of competitive sports at educational and club levels in Nigeria.",
+      "learning_outcomes": [
+        "Plan and administer competitive sports activities in line with applicable rules and organisational needs."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 440 — Planning and Administration of Competitive Sports",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 440 — Planning and Administration of Competitive Sports",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 400,
+      "code": "HKS 442",
+      "title": "Supervision in Human Kinetic and Sports Programme",
+      "status": "C",
+      "content_summary": "Supervisory techniques, clinical supervision principles and responsibilities in Human Kinetics programmes.",
+      "learning_outcomes": [
+        "Apply basic supervision techniques and explain the responsibilities of supervisory staff in sports programmes."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 442 — Supervision in Human Kinetic and Sports Programme",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 442 — Supervision in Human Kinetic and Sports Programme",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 400,
+      "code": "HKS 445",
+      "title": "Sports Law and Ethics",
+      "status": "C",
+      "content_summary": "Legal and ethical principles guiding professional decisions and activities in Human Kinetics and Sports.",
+      "learning_outcomes": [
+        "Identify and apply basic legal and ethical principles in professional sports practice."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 445 — Sports Law and Ethics",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 445 — Sports Law and Ethics",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 400,
+      "code": "HKS 447",
+      "title": "Sports Marketing and Sponsorship",
+      "status": "C",
+      "content_summary": "Concepts, strategies, responsibilities and procedures of sports marketing and sponsorship.",
+      "learning_outcomes": [
+        "Explain and apply basic sports-marketing and sponsorship strategies."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 447 — Sports Marketing and Sponsorship",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 447 — Sports Marketing and Sponsorship",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    },
+    {
+      "level": 400,
+      "code": "HKS 451",
+      "title": "Seminar in Human Kinetics and Sports Studies",
+      "status": "C",
+      "content_summary": "Collecting information, writing and presenting a descriptive seminar paper on a Human Kinetics topic.",
+      "learning_outcomes": [
+        "Collect, structure and present evidence in a concise Human Kinetics seminar paper."
+      ],
+      "outcomes_basis": "source_description_paraphrase",
+      "outcomes_source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "outcomes_source_locator": "UNN Human Kinetics and Sports Studies course modules; HKS 451 — Seminar in Human Kinetics and Sports Studies",
+      "source_url": "https://humankinetics.unn.edu.ng/course-modules/",
+      "source_locator": "Sport Science course list and course description; HKS 451 — Seminar in Human Kinetics and Sports Studies",
+      "source_accessed_on": "2026-09-29",
+      "source_kind": "external_curriculum"
+    }
+  ],
+  "repair_notes": [
+    {
+      "date": "2026-09-29",
+      "repair": "external course content and source-derived outcomes hydrated",
+      "outcomes_basis": "published course description paraphrase; course-listing paraphrase only where no description is published"
+    }
   ]
 }

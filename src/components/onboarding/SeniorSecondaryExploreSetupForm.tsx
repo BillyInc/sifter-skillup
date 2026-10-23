@@ -10,18 +10,15 @@ import { useTheme, Spacing, FontSize, Brand } from "../../theme";
 import { SifterButton } from "../ui";
 import { LiveAdmissionSearchField } from "./LiveAdmissionSearchField";
 import { LiveSubjectMultiSelect, MAX_OLEVEL_SUBJECTS } from "./LiveSubjectMultiSelect";
-import { SelectField, type ChoiceOption } from "./primitives";
+import { SelectField } from "./primitives";
 import {
   STREAM_OPTIONS,
   type SchoolStream,
 } from "../../lib/waecSubjects";
 import type { SetupFormProps } from "../../types/onboarding";
 import LocalLegalNotice from "../LocalLegalNotice";
-
-const INTENTS: ChoiceOption[] = [
-  { label: "Help me choose subjects for future programmes", value: "choose_subjects" },
-  { label: "I already have a programme in mind", value: "have_programme" },
-];
+import { FlowCue } from "../guidance/FlowCue";
+import { secondarySetupCue } from "../../lib/studentFlowCopy";
 
 export function SeniorSecondaryExploreSetupForm({
   value,
@@ -32,10 +29,8 @@ export function SeniorSecondaryExploreSetupForm({
   const ssClass = value.ssClass;
   const stream = value.stream as SchoolStream | undefined;
   const hasSchool = Boolean(value.secondarySchoolId);
-  const selectedIntent = Array.isArray(value.exploreIntent)
-    ? value.exploreIntent[0]
-    : value.exploreIntent;
   const selectedSubjects = value.olevelSubjects ?? [];
+  const hasProgramme = Boolean(value.intendedJambProgrammeId);
   const classLabel =
     ssClass === "ss2" ? "SS2" : ssClass === "ss1" ? "SS1" : "Secondary student";
 
@@ -43,13 +38,15 @@ export function SeniorSecondaryExploreSetupForm({
     <View style={{ gap: Spacing.xl }}>
       <View style={{ gap: Spacing.xs }}>
         <Text style={[styles.heading, { color: colors.text }]}>
-          {classLabel} subject and programme plan
+          Plan your {classLabel} subjects
         </Text>
         <Text style={[styles.sub, { color: colors.textSoft }]}>
-          We will use your class, school, stream and choices to guide you toward
-          suitable programmes and the requirements to prepare for.
+            Choose subjects you take or are considering, and optionally choose a
+            programme. We will show the programme's general requirements before
+            you compare universities.
         </Text>
       </View>
+      <FlowCue {...secondarySetupCue(classLabel)} />
       <LocalLegalNotice audience="student" />
 
       <View
@@ -84,18 +81,13 @@ export function SeniorSecondaryExploreSetupForm({
       {ssClass && hasSchool ? (
         <>
           <SelectField
-            label="Your current stream"
+            label="Your subject stream"
             options={STREAM_OPTIONS}
             value={value.stream}
             placeholder="Choose your stream"
             onSelect={(v) =>
               onChange({
                 stream: v as SchoolStream,
-                exploreIntent: undefined,
-                jambSubjects: [],
-                olevelSubjects: [],
-                intendedProgramme: undefined,
-                intendedJambProgrammeId: undefined,
               })
             }
           />
@@ -107,45 +99,9 @@ export function SeniorSecondaryExploreSetupForm({
       ) : null}
 
       {stream ? (
-        <SelectField
-          label="What should LevelUp help you do first?"
-          options={INTENTS}
-          value={selectedIntent}
-          placeholder="Choose what you want to explore first"
-          onSelect={(v) =>
-            onChange({
-              exploreIntent: [v],
-              jambSubjects: [],
-              olevelSubjects: [],
-              intendedProgramme: undefined,
-              intendedJambProgrammeId: undefined,
-            })
-          }
-        />
-      ) : null}
-
-      {selectedIntent === "have_programme" ? (
-        <View style={{ gap: Spacing.lg }}>
-          <LiveAdmissionSearchField
-            label="Programme you are considering"
-            value={value.intendedProgramme ?? ""}
-            selectedId={value.intendedJambProgrammeId}
-            onSelect={(item) => onChange({
-              intendedProgramme: item.name,
-              intendedJambProgrammeId: item.id || undefined,
-            })}
-            placeholder="e.g. Nursing, Law, Computer Science"
-            kind="programme"
-          />
-          <Text style={[styles.note, { color: colors.textMuted }]}>
-             Search by the name you know. We will show the universities with
-             it and let you choose one before showing its full requirements.
-          </Text>
-        </View>
-      ) : selectedIntent === "choose_subjects" ? (
         <View style={{ gap: Spacing.lg }}>
           <LiveSubjectMultiSelect
-            label="WAEC/NECO subjects you take or are considering"
+            label={"Subjects in " + streamLabel(stream)}
             stream={stream}
             examType="olevel"
             value={value.olevelSubjects}
@@ -153,14 +109,26 @@ export function SeniorSecondaryExploreSetupForm({
             fixedSubjects={["English Language", "Mathematics"]}
             maxSelected={MAX_OLEVEL_SUBJECTS}
             minSelected={5}
-            showSearch={false}
-            helperText="English Language and Mathematics are shown first. Choose at least 3 more subjects. Your school stream only reorders the list; all WAEC/NECO catalogue subjects remain available. Each programme still uses its own exact requirements."
+            showSearch
+            streamScoped
+            helperText="Your stream shows the subjects usually taken on that path. A programme can still ask for a subject that is not in this list. We will show that when you open the programme."
           />
-          <Text style={[styles.note, { color: colors.textMuted }]}>
-            We will compare your subjects with programme requirements, then show
-            the UTME combination and university-specific checks before career
-            guidance.
-          </Text>
+        </View>
+      ) : null}
+
+      {stream ? (
+        <View style={{ gap: Spacing.lg }}>
+          <LiveAdmissionSearchField
+            label="Or type a programme you are considering"
+            value={value.intendedProgramme ?? ""}
+            selectedId={value.intendedJambProgrammeId}
+            onSelect={(item) => onChange({
+              intendedProgramme: item.name,
+              intendedJambProgrammeId: item.id || undefined,
+            })}
+            placeholder="Nursing, Law, Computer Science"
+            kind="programme"
+          />
         </View>
       ) : null}
 
@@ -171,9 +139,7 @@ export function SeniorSecondaryExploreSetupForm({
           !ssClass ||
           !hasSchool ||
           !stream ||
-          !selectedIntent ||
-          (selectedIntent === "choose_subjects" && selectedSubjects.length < 5) ||
-          (selectedIntent === "have_programme" && !value.intendedProgramme)
+          (selectedSubjects.length < 5 && !hasProgramme)
         }
         variant="track"
         color={Brand.primary}
@@ -191,7 +157,6 @@ const styles = StyleSheet.create({
     lineHeight: FontSize.xxl * 1.2,
   },
   sub: { fontSize: FontSize.md, lineHeight: FontSize.md * 1.5 },
-  note: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
   caption: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.5 },
   lockedContext: {
     borderWidth: 1,
@@ -205,3 +170,9 @@ const styles = StyleSheet.create({
 });
 
 export default SeniorSecondaryExploreSetupForm;
+
+function streamLabel(stream: SchoolStream): string {
+  if (stream === "art") return "Arts";
+  if (stream === "technical") return "Technical / vocational";
+  return stream[0].toUpperCase() + stream.slice(1);
+}

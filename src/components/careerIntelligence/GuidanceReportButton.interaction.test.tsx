@@ -5,6 +5,7 @@ import { GuidanceReportButton, invalidateGuidancePathCache, toggleGuidanceSelect
 
 const savedPaths: Record<string, unknown> = {};
 const mockGuidedOpen = jest.fn();
+type RouteAssertions = { learningFocus?: Array<{ routeKeys?: string[] }> };
 
 jest.mock("@/hooks/useAuth", () => ({ useAuth: () => ({ user: { id: "student-1" } }) }));
 jest.mock("../../lib/careerData", () => ({
@@ -75,7 +76,7 @@ describe("GuidanceReportButton learning-focus interaction", () => {
       roleName: "Sociologist",
       routeKey: "sociology|D078|A01|D078|sociologist",
     };
-    const firstRoute = toggleGuidanceSelectionPath({}, researchRoute);
+    const firstRoute = toggleGuidanceSelectionPath({}, researchRoute) as RouteAssertions & Record<string, unknown>;
     expect(firstRoute.learningFocus?.[0]).toMatchObject({
       id: researchRoute.id,
       routeKeys: [researchRoute.routeKey],
@@ -89,13 +90,13 @@ describe("GuidanceReportButton learning-focus interaction", () => {
       roleId: "D078|policy-analyst",
       roleName: "Policy analyst",
       routeKey: "sociology|D078|A02|D078|policy-analyst",
-    });
+    }) as RouteAssertions & Record<string, unknown>;
     expect(secondRoute.learningFocus?.[0]?.routeKeys).toEqual([
       researchRoute.routeKey,
       "sociology|D078|A02|D078|policy-analyst",
     ]);
 
-    const removedFromResearch = toggleGuidanceSelectionPath(secondRoute, researchRoute);
+    const removedFromResearch = toggleGuidanceSelectionPath(secondRoute, researchRoute) as RouteAssertions & Record<string, unknown>;
     expect(removedFromResearch.learningFocus?.[0]?.routeKeys).toEqual(["sociology|D078|A02|D078|policy-analyst"]);
   });
 
@@ -131,6 +132,6 @@ describe("GuidanceReportButton learning-focus interaction", () => {
     });
     expect(restored.learningFocus).toEqual(legacyPath.learningFocus);
     expect(restored.learningPlanRemovedIdsByRoute).toBeUndefined();
-    expect(restored.learningFocus?.[0]?.routeKeys).toBeUndefined();
+    expect((restored.learningFocus as Array<{ routeKeys?: string[] }> | undefined)?.[0]?.routeKeys).toBeUndefined();
   });
 });

@@ -24,7 +24,7 @@ from logger import log
 from models import ResponseModel
 from reference_cache import REFERENCE_TTL_SECONDS, SEARCH_TTL_SECONDS, clear_prefix, get_json, set_json
 from services.guidance_report import resolve_guidance_report_context
-from services.report_gen import ReportContext, build_report_docx, build_report_html
+from services.report_gen import ReportContext, _d078_saved_route, build_report_docx, build_report_html
 
 router = APIRouter(prefix="/api/student", tags=["student-pipeline"])
 
@@ -683,7 +683,7 @@ def _path_snapshot(path: dict[str, Any]) -> dict[str, Any]:
     checkpoint vocabulary is retained; arbitrary client payloads are dropped.
     """
     allowed_single = {
-        "academicContext", "subjects", "programme", "university", "requirements",
+        "academicContext", "subjects", "programme", "university", "requirements", "universityRequirements",
         "discoveryDoor", "notes", "learningPlanSnapshot",
     }
     allowed_lists = {"domains", "subgroups", "roles", "learningFocus"}
@@ -825,7 +825,7 @@ def _path_with_selected_learning_snapshot(path: dict[str, Any], snapshot_id: str
     if isinstance(context, dict):
         for key in (
             "academicContext", "subjects", "programme", "programmes", "university",
-            "requirements", "subjectMatch", "domains", "subgroups", "roles", "notes",
+            "requirements", "universityRequirements", "subjectMatch", "domains", "subgroups", "roles", "notes",
             "learningFocus", "learningPlanRemovedIds", "learningPlanRemovedIdsByRoute",
             "learningPlanOrderByRoute",
         ):
@@ -941,14 +941,39 @@ def _current_guidance_report_context(current_user: dict, snapshot_id: Optional[s
     full_path = resolve_guidance_report_context(_svc(), user, path_row)
     programme = full_path.get("programme") or {}
     university = full_path.get("university") or {}
-    if not programme.get("name") or not university.get("name"):
+    attached_institution = full_path.get("attachedInstitution") or {}
+    d078_route = _d078_saved_route(full_path) is not None
+    if not programme.get("name"):
+        raise HTTPException(
+            status_code=409,
+            detail="Choose a programme before printing your report.",
+        )
+    # D078 reports must carry an explicitly attached named institution. This
+    # is report context only: never infer it from the programme or make it a
+    # university selection in the Sociology learning route.
+    institution_attached = bool(attached_institution.get("name") and attached_institution.get("institutionTypeLabel"))
+    if d078_route and not institution_attached:
+        raise HTTPException(
+            status_code=409,
+            detail="Attach a named institution to your student profile before printing your D078 report.",
+        )
+    if not d078_route and not university.get("name"):
         raise HTTPException(
             status_code=409,
             detail="Choose a programme and university before printing your report.",
         )
+    # Identity comes from the authenticated user's persisted row. Saved path
+    # data and query parameters are route content, never identity authority.
+    student_name = str(user.get("username") or "").strip()
+    if not student_name:
+        raise HTTPException(
+            status_code=409,
+            detail="Add a student name or username before printing your report.",
+        )
     academic = full_path.get("academicContext") or {}
     return ReportContext(
-        student_name=full_path.get("studentName") or "Student",
+        student_name=student_name,
+        student_identity_label="Username",
         student_class=academic.get("class"),
         stream=academic.get("stream"),
         school_name=academic.get("schoolName"),
@@ -984,7 +1009,7 @@ async def get_my_guidance_report_docx(
     _require_career_report_exports_enabled()
     try:
         ctx = _current_guidance_report_context(current_user, snapshot_id)
-        safe = (ctx.student_name or "student").replace(" ", "_")[:40]
+        safe = re.sub(r"[^A-Za-z0-9._-]+", "_", ctx.student_name or "student").strip("._")[:40] or "student"
         return Response(
             content=build_report_docx(ctx),
             media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -1202,8 +1227,44 @@ async def search_jamb_programmes(q: Optional[str] = Query(None), limit: int = Qu
         return ResponseModel(data=_coming_soon("JAMB programme search is temporarily unavailable."))
 
 
+def _resolve_canonical_programme_id_for_jamb(svc: Any, jamb_programme_id: str) -> Optional[str]:
+    """Resolve the curriculum owner from the explicit JAMB↔CCMAS mapping.
+
+    Some deployments have a stale ``v_jamb_programme_details.programme_id``
+    projection even though ``programme_mapping`` is populated. The mapping
+    table is the authoritative identity bridge; use it only when it yields a
+    single canonical programme, or one unambiguous exact mapping.
+    """
+    try:
+        rows = (
+            svc.table("programme_mapping")
+            .select("programme_id, mapping_type")
+            .eq("jamb_programme_id", jamb_programme_id)
+            .execute()
+            .data
+            or []
+        )
+    except Exception as exc:  # noqa: BLE001
+        log.debug("canonical programme mapping lookup unavailable", error=str(exc))
+        return None
+
+    candidates = {
+        str(row.get("programme_id"))
+        for row in rows
+        if row.get("programme_id")
+    }
+    if len(candidates) == 1:
+        return next(iter(candidates))
+    exact_candidates = {
+        str(row.get("programme_id"))
+        for row in rows
+        if row.get("programme_id") and str(row.get("mapping_type") or "").casefold() == "a_exact"
+    }
+    return next(iter(exact_candidates)) if len(exact_candidates) == 1 else None
+
+
 @router.get("/jamb-programmes/{jamb_programme_id}", response_model=ResponseModel)
-async def get_jamb_programme(jamb_programme_id: str):
+def get_jamb_programme(jamb_programme_id: str):
     try:
         svc = _svc()
         detail_row: Optional[dict] = None
@@ -1211,7 +1272,15 @@ async def get_jamb_programme(jamb_programme_id: str):
             res = (
                 svc
                 .table("v_jamb_programme_details")
-                .select("*")
+                # The detail view also contains large legacy skills JSONB
+                # columns. This screen discards those fields and uses the
+                # reviewed curriculum contract below, so do not transfer them
+                # over PostgREST on every programme-page load.
+                .select(
+                    "jamb_programme_id, jamb_name, jamb_faculty, degree_type, "
+                    "is_blend, programme_id, institution_type, qualification, "
+                    "duration_years"
+                )
                 .eq("jamb_programme_id", jamb_programme_id)
                 .limit(1)
                 .execute()
@@ -1229,7 +1298,7 @@ async def get_jamb_programme(jamb_programme_id: str):
                 direct = (
                     svc
                     .table("jamb_programmes")
-                    .select("id, jamb_name, jamb_faculty, degree_type, is_blend, skills_technical, skills_transferable")
+                    .select("id, jamb_name, jamb_faculty, degree_type, is_blend")
                     .eq("id", jamb_programme_id)
                     .limit(1)
                     .execute()
@@ -1266,6 +1335,10 @@ async def get_jamb_programme(jamb_programme_id: str):
             "skillsTruncated",
         ):
             out.pop(legacy_key, None)
+        if not out.get("programmeId"):
+            canonical_programme_id = _resolve_canonical_programme_id_for_jamb(svc, jamb_programme_id)
+            if canonical_programme_id:
+                out["programmeId"] = canonical_programme_id
         out["curriculumContract"] = _programme_curriculum_contract_for_student(
             svc, out.get("programmeId")
         )
@@ -1739,7 +1812,7 @@ def _merge_student_resources(*groups: list[dict]) -> list[dict]:
 
 
 @router.get("/jamb-programmes/{jamb_programme_id}/domains", response_model=ResponseModel)
-async def get_jamb_programme_domains(jamb_programme_id: str):
+def get_jamb_programme_domains(jamb_programme_id: str):
     try:
         res = (
             _svc()
@@ -2010,7 +2083,7 @@ async def get_school_programmes(
 
 
 @router.get("/jamb-programmes/{jamb_programme_id}/schools", response_model=ResponseModel)
-async def get_jamb_programme_schools(jamb_programme_id: str, year: Optional[int] = Query(None)):
+def get_jamb_programme_schools(jamb_programme_id: str, year: Optional[int] = Query(None)):
     """Return recorded university offerings for one JAMB programme.
 
     Legacy admission-cycle data is deliberately not part of this student-facing

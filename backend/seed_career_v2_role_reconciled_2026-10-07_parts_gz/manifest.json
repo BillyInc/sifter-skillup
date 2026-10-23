@@ -1,0 +1,70 @@
+{
+  "format": "sql-statement-parts-v1",
+  "source": "seed_career_v2_role_reconciled_2026-10-07.sql",
+  "source_sha256": "5ccff47b4fbf17307c67c66ee4885cfeb98ef7887717b0388308658e596f5b90",
+  "max_part_bytes": 40000000,
+  "compressed": true,
+  "parts": [
+    {
+      "path": "part-001.sql.gz",
+      "bytes": 4183949,
+      "sha256": "910a6526be7ed0a216a62148ee7712575718cc6ea6324cf45b20143303c4b7dd"
+    },
+    {
+      "path": "part-002.sql.gz",
+      "bytes": 2727627,
+      "sha256": "0ec0e2cf2727cfce3a064fa3829b11fb28d3698787b8407c31f210a70bc7d2a7"
+    },
+    {
+      "path": "part-003.sql.gz",
+      "bytes": 4069386,
+      "sha256": "bd51e6d0d545b40fc6c3f914822d46b655798ebb893217ff8c354fe7b57bbd01"
+    },
+    {
+      "path": "part-004.sql.gz",
+      "bytes": 4101975,
+      "sha256": "15d4934f7329193a842a07ca6116fa67e9a1e2f70061014c48d2ef303f6c309c"
+    },
+    {
+      "path": "part-005.sql.gz",
+      "bytes": 1769664,
+      "sha256": "b61782974399181e95beb000802b072c61dd7d289d0285bb7d29066cc3ce64f4"
+    },
+    {
+      "path": "part-006.sql.gz",
+      "bytes": 3559400,
+      "sha256": "a1baab2c88de6a715e1574c41fe24f3dbc4ff1379b6cc4b8217bcc117c5e930a"
+    },
+    {
+      "path": "part-007.sql.gz",
+      "bytes": 4729180,
+      "sha256": "7aaf441e2aea97401f1773d34ad4ec7982aa6456629706322dccdcac0c75f2fa"
+    },
+    {
+      "path": "part-008.sql.gz",
+      "bytes": 5167608,
+      "sha256": "f2b69ccfb97da126071762d424f3af0c055bed22a864349aed1d5c2c94eaf106"
+    },
+    {
+      "path": "part-009.sql.gz",
+      "bytes": 3734327,
+      "sha256": "869e0c93bbcd5d802da5d8d22bcffd465adc8e30bd3660af733ec8e93c1acc0b"
+    },
+    {
+      "path": "part-010.sql.gz",
+      "bytes": 3270731,
+      "sha256": "62979b197f343a83ab98626c36efbae048ebe9dfb7fa4354d956d2b3529421c4"
+    },
+    {
+      "path": "part-011.sql.gz",
+      "bytes": 4581760,
+      "sha256": "c3575e24f8cb6803865140e71a6b51bafa6fa7e8a55a22e1850b34293844bcc8"
+    },
+    {
+      "path": "part-012.sql.gz",
+      "bytes": 5323004,
+      "sha256": "324d8536bd1dcee2e5e80f3550c8ab6fa1fc6fe1f89ab7a8493cca9513cf1d90"
+    }
+  ],
+  "apply_order": "numeric filename order; each part is one transaction"
+}

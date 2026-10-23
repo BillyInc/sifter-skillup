@@ -24,6 +24,7 @@ import { careerData } from '@/lib/careerData';
 // The fourth destination names itself the same way everywhere; see worldNav.
 import { WORLD_NAV } from '@/lib/worldNav';
 import { toSearchGroups, resolveSearchHref } from '@/lib/searchResults';
+import { exploreQueryHref } from '@/lib/exploreQuery';
 import { getRecentSearches, addRecentSearch } from '@/lib/recentSearches';
 import { useSidebarNav } from '@/hooks/useResponsive';
 import type { CareerSearchResult, SearchIntent, SearchScope } from '@/types/career';
@@ -316,7 +317,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <SearchLauncherProvider onOpen={(query) => { if (query !== undefined) setSearchQuery(query); setOverlayVisible(true); }}>
+    <SearchLauncherProvider onOpen={(query, scope) => { if (query !== undefined) setSearchQuery(query); if (scope) setOverlayScope(scope); setOverlayVisible(true); }}>
     <View style={[styles.root, { backgroundColor: colors.surface.base }]}>
       {!focusedGuidance && isWide && (
         <View
@@ -564,6 +565,11 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
           setOverlayVisible(false);
           setSearchQuery("");
           router.push(href as any);
+        }}
+        onOpenExplore={(query, scope) => {
+          void addRecentSearch(query);
+          setOverlayVisible(false);
+          router.push(exploreQueryHref('/(tabs)/explore', { text: query, scope: scope === 'subgroups' ? 'areas' : scope }) as any);
         }}
         recentSearches={recentSearches}
         onRecentPress={(term) => setSearchQuery(term)}

@@ -18,17 +18,36 @@ taxonomy it resolves to — never grades or source documents.
 """
 import html
 import io
+import json
 import zipfile
+from functools import lru_cache
+from pathlib import Path
 from urllib.parse import quote
 from typing import List, Optional
 
 from pydantic import BaseModel, Field
 
 
+def _clean_report_text(value: object) -> str:
+    """Remove characters forbidden in HTML/XML text and retain ordinary Unicode."""
+    return "".join(
+        character for character in str(value or "")
+        if character in "\t\n\r"
+        or "\x20" <= character <= "\ud7ff"
+        or "\ue000" <= character <= "\ufffd"
+        or "\U00010000" <= character <= "\U0010ffff"
+    )
+
+
+def _html_text(value: object) -> str:
+    return html.escape(_clean_report_text(value))
+
+
 class ReportContext(BaseModel):
     """Everything needed to render a report — resolved from the taxonomy, no PII
     beyond name/class and no academic record."""
     student_name: str
+    student_identity_label: Optional[str] = None
     student_class: Optional[str] = None
     stream: Optional[str] = None
     school_name: Optional[str] = None
@@ -404,6 +423,258 @@ def _learning_plan_html(path: dict) -> str:
     )
 
 
+@lru_cache(maxsize=1)
+def _d078_nodes() -> dict:
+    """Read display labels from the checked-in D078 route contract."""
+    source = Path(__file__).resolve().parents[2] / "src" / "data" / "d078MethodAwareUiData.json"
+    try:
+        payload = json.loads(source.read_text(encoding="utf-8"))
+        return payload.get("nodes_by_id") if isinstance(payload.get("nodes_by_id"), dict) else {}
+    except (OSError, json.JSONDecodeError):
+        return {}
+
+
+def _d078_saved_route(path: dict, selection: Optional[dict] = None) -> Optional[dict]:
+    snapshot = path.get("learningPlanSnapshot") if isinstance(path.get("learningPlanSnapshot"), dict) else {}
+    if snapshot.get("dataVersion") != "guided-experience-d078-v1":
+        return None
+    selections = snapshot.get("d078SelectionsByRoute")
+    if not isinstance(selections, dict):
+        return None
+    if selection is None:
+        entries = _d078_selection_entries(path)
+        active_id = snapshot.get("d078ActiveStackId")
+        selection = next((value for stack_id, value in entries if stack_id == active_id), None)
+        if selection is None and entries:
+            # A stale/missing active id must not make a valid multi-route
+            # snapshot fall back to legacy report rendering.
+            selection = entries[0][1]
+    if selection is None:
+        return None
+    data = _d078_route_data()
+    nodes = _d078_nodes()
+
+    def strings(values: object) -> list[str]:
+        return list(dict.fromkeys(value for value in values if isinstance(value, str))) if isinstance(values, list) else []
+
+    methods_by_id = {str(value) for value in data.get("method_node_ids", [])}
+    selected_methods = [value for value in strings(selection.get("methodIds")) if value in methods_by_id]
+    combo_rows = [row for row in data.get("combination_designs", []) if isinstance(row, dict) and isinstance(row.get("id"), str)]
+    combos_by_id = {row["id"]: row for row in combo_rows}
+    selected_combos = [value for value in strings(selection.get("combinationIds")) if value in combos_by_id]
+    raw_components = selection.get("componentMethodIds") if isinstance(selection.get("componentMethodIds"), dict) else {}
+    selected_components: dict[str, list[str]] = {}
+    for combo_id in selected_combos:
+        allowed = set(strings(combos_by_id[combo_id].get("selectable_component_method_ids")))
+        chosen = [value for value in strings(raw_components.get(combo_id)) if value in allowed]
+        if chosen:
+            selected_components[combo_id] = chosen
+
+    area_routes: list[dict] = []
+    role_routes: list[dict] = []
+    allowed_roles: set[tuple[str, str]] = set()
+    allowed_domain_items: set[str] = set()
+    allowed_tools: set[str] = set()
+    allowed_domain_items_by_area: dict[str, set[str]] = {}
+    allowed_tools_by_area: dict[str, set[str]] = {}
+    allowed_area_items: dict[str, set[str]] = {}
+    allowed_role_items: dict[tuple[str, str], set[str]] = {}
+
+    def add_route(route: dict) -> None:
+        area_id = route.get("area_id")
+        if not isinstance(area_id, str):
+            return
+        area_domain_items = allowed_domain_items_by_area.setdefault(area_id, set())
+        area_tools = allowed_tools_by_area.setdefault(area_id, set())
+        allowed_area_items.setdefault(area_id, set()).update(strings(route.get("area_item_ids")))
+        route_domain_items = strings(route.get("task_linked_domain_item_ids")) + strings(route.get("domain_downstream_item_ids")) + strings(route.get("available_item_ids"))
+        route_tools = strings(route.get("tool_ids")) + strings(route.get("domain_tool_ids"))
+        allowed_domain_items.update(route_domain_items)
+        allowed_tools.update(route_tools)
+        area_domain_items.update(route_domain_items)
+        area_tools.update(route_tools)
+        for role_id in strings(route.get("role_ids")):
+            if role_id in nodes:
+                allowed_roles.add((area_id, role_id))
+
+    method_routes = [row for row in data.get("method_area_routes", []) if isinstance(row, dict)]
+    method_role_routes = [row for row in data.get("method_area_role_routes", []) if isinstance(row, dict)]
+    combo_area_routes = [row for row in data.get("combination_area_routes", []) if isinstance(row, dict)]
+    combo_role_routes = [row for row in data.get("combination_area_role_routes", []) if isinstance(row, dict)]
+    for method_id in selected_methods:
+        for route in method_routes:
+            if route.get("method_id") == method_id:
+                add_route(route)
+                area_routes.append(route)
+        for route in method_role_routes:
+            if route.get("method_id") == method_id and isinstance(route.get("area_id"), str) and isinstance(route.get("role_id"), str):
+                allowed_roles.add((route["area_id"], route["role_id"]))
+                role_routes.append(route)
+
+    for combo_id in selected_combos:
+        combo = combos_by_id[combo_id]
+        explicit_routes = [row for row in combo_area_routes if row.get("combination_id") == combo_id]
+        if explicit_routes:
+            for route in explicit_routes:
+                add_route(route)
+                area_routes.append(route)
+            for route in combo_role_routes:
+                if route.get("combination_id") == combo_id and isinstance(route.get("area_id"), str) and isinstance(route.get("role_id"), str):
+                    allowed_roles.add((route["area_id"], route["role_id"]))
+                    role_routes.append(route)
+        else:
+            method_ids = strings(combo.get("required_method_ids")) + selected_components.get(combo_id, [])
+            for method_id in dict.fromkeys(method_ids):
+                for route in method_routes:
+                    if route.get("method_id") == method_id:
+                        add_route(route)
+                        area_routes.append(route)
+                for route in method_role_routes:
+                    if route.get("method_id") == method_id and isinstance(route.get("area_id"), str) and isinstance(route.get("role_id"), str):
+                        allowed_roles.add((route["area_id"], route["role_id"]))
+                        role_routes.append(route)
+
+    raw_area = selection.get("areaId")
+    area_nodes = {str(node.get("area_id")): str(node.get("id"))
+                  for node in nodes.values() if isinstance(node, dict) and node.get("kind") == "area_of_specialization"}
+    area_id = raw_area if isinstance(raw_area, str) and raw_area in allowed_area_items else None
+    if area_id is None and isinstance(raw_area, str):
+        area_id = next((key for key, node_id in area_nodes.items() if node_id == raw_area and key in allowed_area_items), None)
+    role_id = selection.get("roleId")
+    if not (area_id and isinstance(role_id, str) and (area_id, role_id) in allowed_roles):
+        role_id = None
+
+    allowed_items = (set(allowed_domain_items_by_area.get(area_id, set())) | set(allowed_tools_by_area.get(area_id, set()))
+                     if area_id else set(allowed_domain_items) | set(allowed_tools))
+    if area_id:
+        allowed_items.update(allowed_area_items.get(area_id, set()))
+    if area_id and isinstance(role_id, str):
+        for route in role_routes:
+            if route.get("area_id") == area_id and route.get("role_id") == role_id:
+                allowed_role_items.setdefault((area_id, role_id), set()).update(strings(route.get("role_item_ids")))
+        allowed_items.update(allowed_role_items.get((area_id, role_id), set()))
+    if raw_area and not area_id:
+        allowed_items.clear()
+    added_items = [item_id for item_id in strings(selection.get("addedItemIds"))
+                   if item_id in allowed_items and item_id in nodes]
+
+    def label(node_id: object) -> str:
+        if not isinstance(node_id, str):
+            return ""
+        node = nodes.get(node_id)
+        return str(node.get("label")) if isinstance(node, dict) and node.get("label") else ""
+    def labels(ids: object) -> list[str]:
+        return [value for item_id in strings(ids) if (value := label(item_id))]
+    methods = labels(selected_methods)
+    combinations = []
+    for combo_id in selected_combos:
+        combo_node = nodes.get(combo_id)
+        combinations.append(str(combo_node.get("label")) if isinstance(combo_node, dict) and combo_node.get("label") else str(combos_by_id[combo_id].get("design") or combo_id).replace("_", " ").title())
+    components = labels([item_id for ids in selected_components.values() for item_id in ids])
+    area_node_id = area_nodes.get(area_id or "")
+    area_node = nodes.get(area_node_id or "")
+    area = str(area_node.get("label")) if isinstance(area_node, dict) else ""
+    role = label(role_id)
+    if role:
+        role = role.title()
+    stop_point = role or area or "Field only"
+    return {
+        "foundations": labels(data.get("foundation_item_ids")),
+        "methods": methods,
+        "combinations": combinations,
+        "components": components,
+        "area": area,
+        "role": role,
+        "stop_point": stop_point,
+        "added_items": labels(added_items),
+    }
+
+
+def _d078_selection_entries(path: dict) -> list[tuple[str, dict]]:
+    snapshot = path.get("learningPlanSnapshot") if isinstance(path.get("learningPlanSnapshot"), dict) else {}
+    if snapshot.get("dataVersion") != "guided-experience-d078-v1":
+        return []
+    selections = snapshot.get("d078SelectionsByRoute")
+    if not isinstance(selections, dict):
+        return []
+    programme = path.get("programme") if isinstance(path.get("programme"), dict) else {}
+    programme_id = str(programme.get("jambProgrammeId") or programme.get("jamb_programme_id") or programme.get("id") or "programme-not-selected")
+    prefix = f"{programme_id}::D078"
+    rows: list[tuple[str, dict]] = []
+    legacy = selections.get(prefix)
+    if isinstance(legacy, dict):
+        rows.append(("d078-route-1", legacy))
+    explicit_ids = snapshot.get("d078RouteStackIds")
+    if isinstance(explicit_ids, list):
+        ordered_ids = [value for value in explicit_ids if isinstance(value, str) and value]
+    else:
+        ordered_ids = []
+    for stack_id in ordered_ids:
+        if stack_id == "d078-route-1":
+            continue
+        selection = selections.get(f"{prefix}::{stack_id}")
+        if isinstance(selection, dict):
+            rows.append((stack_id, selection))
+    if not rows:
+        for key, selection in selections.items():
+            if isinstance(key, str) and key.startswith(f"{prefix}::") and isinstance(selection, dict):
+                stack_id = key[len(prefix) + 2:]
+                if stack_id and not any(existing == stack_id for existing, _ in rows):
+                    rows.append((stack_id, selection))
+        if not rows:
+            candidates = [(str(key), value) for key, value in selections.items()
+                          if str(key).endswith("::D078") and isinstance(value, dict)]
+            if len(candidates) == 1:
+                rows.append(("d078-route-1", candidates[0][1]))
+    return rows
+
+
+def _d078_saved_routes(path: dict) -> list[tuple[str, dict]]:
+    return [(stack_id, route) for stack_id, selection in _d078_selection_entries(path)
+            if (route := _d078_saved_route(path, selection)) is not None]
+
+
+@lru_cache(maxsize=1)
+def _d078_route_data() -> dict:
+    source = Path(__file__).resolve().parents[2] / "src" / "data" / "d078MethodAwareUiData.json"
+    try:
+        return json.loads(source.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+
+
+def _d078_route_html(path: dict) -> str:
+    routes = _d078_saved_routes(path)
+    if not routes:
+        return ""
+    e = html.escape
+    sections = []
+    for index, (stack_id, route) in enumerate(routes, start=1):
+        lists = (
+            ("Field foundations", route["foundations"]),
+            ("Selected methods", route["methods"]),
+            ("Selected combinations", route["combinations"]),
+            ("Methods within selected combinations", route["components"]),
+            ("Items you added", route["added_items"]),
+        )
+        content = "".join(
+            f"<p><strong>{e(title)}:</strong> {e('; '.join(values) if values else 'None selected or recorded.')}</p>"
+            for title, values in lists
+        )
+        route_context = "".join(
+            f"<p><strong>{e(title)}:</strong> {e(value)}</p>"
+            for title, value in (("Area", route["area"]), ("Role", route["role"]), ("Stop point", route["stop_point"])) if value
+        )
+        sections.append(
+            "<section class='entity'><div class='entity-kicker'>"
+            f"Saved D078 route {index}</div>"
+            "<h3>Sociology to Social Sciences &amp; Behavioural Research</h3>"
+            "<p>This records your choices. Selection does not show mastery or make a method a job requirement.</p>"
+            f"{route_context}{content}</section>"
+        )
+    return "".join(sections)
+
+
 def _report_access_block(access_code: object) -> str:
     """Render a real provisioned-student handoff, when one exists."""
     if not access_code:
@@ -439,13 +710,16 @@ def _saved_programmes(path: dict) -> list[tuple[dict, dict]]:
 
 def build_full_guidance_report_html(ctx: ReportContext) -> str:
     """Render the complete selected path without importing unselected data."""
-    e = html.escape
+    e = _html_text
     path = ctx.full_path
     academic = path.get("academicContext") or {}
     subjects = path.get("subjects") or {}
     programme = path.get("programme") or {}
     university = path.get("university") or {}
-    domains = path.get("domains") or []
+    attached_institution = path.get("attachedInstitution") or {}
+    d078_route = _d078_saved_route(path)
+    d078_route_html = _d078_route_html(path)
+    domains = [] if d078_route else path.get("domains") or []
     watermark = "Sifter LevelUp" + (f" - {academic.get('schoolName')}" if academic.get("schoolName") else "")
     subject_rows = "".join(
         f"<div class='row'><strong>{e(label)}</strong><span>{e(', '.join(values or []) or 'None recorded')}</span></div>"
@@ -459,6 +733,12 @@ def build_full_guidance_report_html(ctx: ReportContext) -> str:
             ("Stream", academic.get("stream")),
             ("School", academic.get("schoolName")),
             ("Tutorial centre", academic.get("tutorialCentreName")),
+            (
+                "Attached institution",
+                f"{attached_institution.get('institutionTypeLabel')}: {attached_institution.get('name')}"
+                if attached_institution.get("name") and attached_institution.get("institutionTypeLabel")
+                else None,
+            ),
         )) if value
     )
     requirement_rows = "".join(
@@ -508,18 +788,24 @@ def build_full_guidance_report_html(ctx: ReportContext) -> str:
             {('<h4>Selected sub-groups</h4>' + ''.join(subgroup_blocks)) if subgroup_blocks else '<p class="muted">No sub-group was selected under this domain.</p>'}
             {('<h4>Selected roles</h4>' + ''.join(role_blocks)) if role_blocks else '<p class="muted">No role was selected under this domain.</p>'}
           </section>""")
-    domains_html = "".join(domain_blocks) or "<p class='muted'>No domain, sub-group, or role has been selected for this report yet.</p>"
-    learning_plan_html = _learning_plan_html(path)
+    domains_html = "".join(domain_blocks) or ("" if d078_route else "<p class='muted'>No domain, sub-group, or role has been selected for this report yet.</p>")
+    learning_plan_html = "" if d078_route else _learning_plan_html(path)
     discovery_door = path.get("discoveryDoor") or "Not recorded"
     data_notes_html = _guidance_data_notes(domains)
     school = academic.get("schoolName") or ctx.school_name
     access_block = _report_access_block(path.get("accessCode"))
     programme_blocks = []
-    for saved_programme, saved_university in _saved_programmes(path):
+    saved_programmes = [(programme, university)] if d078_route and programme else _saved_programmes(path)
+    for saved_programme, saved_university in saved_programmes:
         address = f"<p><strong>Address:</strong> {e(str(saved_university.get('address')))}</p>" if saved_university.get("address") else ""
+        university_copy = (
+            "<p>University-specific admission requirements are not included in this saved learning route.</p>"
+            if d078_route and not saved_university.get("name")
+            else f"<p><strong>University:</strong> {e(str(saved_university.get('name') or 'Not confirmed'))}</p>{address}"
+        )
         programme_blocks.append(
             f"<div class='entity'><h3>{e(str(saved_programme.get('name') or 'Programme not confirmed'))}</h3>"
-            f"<p><strong>University:</strong> {e(str(saved_university.get('name') or 'Not confirmed'))}</p>{address}</div>"
+            f"{university_copy}</div>"
         )
     programme_html = "".join(programme_blocks) or "<p class='muted'>No programme choice has been recorded yet.</p>"
     return f"""<!doctype html>
@@ -541,14 +827,14 @@ ul {{ margin:5px 0 10px; padding-left:22px; }} li {{ margin:3px 0; }} .muted {{ 
 .foot {{ margin-top:30px; padding-top:12px; border-top:1px solid #ddd; font-size:11px; color:#5f6368; }}
 </style></head><body><div class='toolbar'><button onclick='window.print()'>Print / save PDF</button></div>
 <div class='watermark'>{e(watermark)}</div><div class='content'>
-<header class='head'><div class='eyebrow'>{e(str(school or 'Sifter LevelUp'))}</div><h1>{e(ctx.student_name)}</h1><div class='muted'>{e(_report_title(academic))} - generated {e(ctx.generated_on)}</div></header>
+<header class='head'><div class='eyebrow'>{e(str(school or 'Sifter LevelUp'))}</div>{f"<div class='muted'>{e(ctx.student_identity_label)}:</div>" if ctx.student_identity_label else ''}<h1>{e(ctx.student_name)}</h1><div class='muted'>{e(_report_title(academic))} - generated {e(ctx.generated_on)}</div></header>
 <h2>Your guidance context</h2><div>{context_rows or '<p class="muted">No additional academic context was recorded.</p>'}</div>
 <h2>What you selected</h2><div class='row'><strong>Discovery door</strong><span>{e(str(discovery_door))}</span></div>
 <h2>Subjects you entered</h2><div>{subject_rows or '<p class="muted">No subjects were recorded.</p>'}</div>
-<h2>Programmes you saved</h2>{programme_html}<p class='muted'>Current guidance path: {e(str(programme.get('name') or 'Programme not confirmed'))} at {e(str(university.get('name') or 'Not confirmed'))}.</p>
-<h2>Admission requirements</h2><div>{requirement_rows}</div>
-<h2>Subject check status</h2><div>{subject_status_html}</div>
-<h2>Selected intelligence path</h2>{domains_html}
+<h2>Programmes you saved</h2>{programme_html}<p class='muted'>Current guidance path: {e(str(programme.get('name') or 'Programme not confirmed'))}{f" at {e(str(university.get('name')))}" if university.get('name') else ""}.</p>
+{'' if d078_route and not university.get('name') else f"<h2>Admission requirements</h2><div>{requirement_rows}</div><h2>Subject check status</h2><div>{subject_status_html}</div>"}
+{'' if d078_route else f"<h2>Selected intelligence path</h2>{domains_html}"}
+{d078_route_html}
 {learning_plan_html}
 <h2>Data notes</h2><ul>{data_notes_html}</ul>
 {access_block}
@@ -559,7 +845,7 @@ ul {{ margin:5px 0 10px; padding-left:22px; }} li {{ margin:3px 0; }} .muted {{ 
 def build_report_html(ctx: ReportContext) -> str:
     if ctx.full_path:
         return build_full_guidance_report_html(ctx)
-    e = html.escape
+    e = _html_text
     skills = "".join(f"<li>{e(s)}</li>" for s in ctx.foundation_skills[:12]) or "<li>No mapped foundation skills are available yet.</li>"
     roles = "".join(f"<li>{e(r)}</li>" for r in ctx.roles[:12]) or "<li>No mapped roles are available yet.</li>"
     direction = e(ctx.domain_name or "Career direction to be chosen")
@@ -612,6 +898,7 @@ def build_report_html(ctx: ReportContext) -> str:
   <div class="content">
   <div class="head">
     {school}
+    {f"<div class='sub'>{e(ctx.student_identity_label)}:</div>" if ctx.student_identity_label else ""}
     <h1>{e(ctx.student_name)}</h1>
     <div class="sub">Career pathway plan{cls}</div>
   </div>
@@ -721,9 +1008,11 @@ def _bullet(text: str) -> str:
 
 
 def _xml(text: str) -> str:
+    # XML 1.0 forbids most C0 control characters. Drop them before escaping so
+    # user-provided usernames and saved labels cannot make a DOCX unreadable.
+    text = _clean_report_text(text)
     return (
-        (text or "")
-        .replace("&", "&amp;")
+        text.replace("&", "&amp;")
         .replace("<", "&lt;")
         .replace(">", "&gt;")
     )
@@ -735,6 +1024,8 @@ def build_report_docx(ctx: ReportContext) -> bytes:
     body_parts: List[str] = []
     if ctx.school_name:
         body_parts.append(_p(ctx.school_name, size=18))
+    if ctx.student_identity_label:
+        body_parts.append(_p(f"{ctx.student_identity_label}:"))
     body_parts.append(_p(ctx.student_name, bold=True, size=36))
     meta = " / ".join(part for part in [ctx.student_class, ctx.stream] if part)
     sub = "Career pathway plan" + (f" / {meta}" if meta else "")
@@ -798,8 +1089,12 @@ def build_full_guidance_report_docx(ctx: ReportContext) -> bytes:
     subjects = path.get("subjects") or {}
     programme = path.get("programme") or {}
     university = path.get("university") or {}
+    attached_institution = path.get("attachedInstitution") or {}
+    d078_route = _d078_saved_route(path)
     parts: List[str] = []
     parts.append(_p("Sifter LevelUp", bold=True, size=30))
+    if ctx.student_identity_label:
+        parts.append(_p(f"{ctx.student_identity_label}:"))
     parts.append(_p(ctx.student_name, bold=True, size=36))
     parts.append(_p(_report_title(academic), size=22))
     parts.append(_p("Watermark: Sifter LevelUp" + (f" - {academic.get('schoolName')}" if academic.get("schoolName") else ""), size=16))
@@ -811,6 +1106,12 @@ def build_full_guidance_report_docx(ctx: ReportContext) -> bytes:
         ("Stream", academic.get("stream")),
         ("School", academic.get("schoolName")),
         ("Tutorial centre", academic.get("tutorialCentreName")),
+        (
+            "Attached institution",
+            f"{attached_institution.get('institutionTypeLabel')}: {attached_institution.get('name')}"
+            if attached_institution.get("name") and attached_institution.get("institutionTypeLabel")
+            else None,
+        ),
     )):
         if value:
             parts.append(_p(f"{label}: {value}"))
@@ -820,11 +1121,16 @@ def build_full_guidance_report_docx(ctx: ReportContext) -> bytes:
         parts.append(_p(label, bold=True, size=20))
         parts.extend(_bullet(str(value)) for value in (values or ["None recorded"]))
 
-    parts.append(_p("Programme and university", bold=True, size=26, heading=True))
-    saved_programmes = _saved_programmes(path)
+    parts.append(_p("Programme context" if d078_route and not university.get("name") else "Programme and university", bold=True, size=26, heading=True))
+    saved_programmes = [(programme, university)] if d078_route and programme else _saved_programmes(path)
     for saved_programme, saved_university in saved_programmes:
         parts.append(_p(f"Programme: {saved_programme.get('name') or 'Programme not confirmed'}"))
-        parts.append(_p(f"University: {saved_university.get('name') or 'Not confirmed'}"))
+        if saved_university.get("name"):
+            parts.append(_p(f"University: {saved_university.get('name')}"))
+        elif d078_route:
+            parts.append(_p("University-specific admission requirements are not included in this saved learning route."))
+        else:
+            parts.append(_p("University: Not confirmed"))
         if saved_university.get("address"):
             parts.append(_p(f"Address: {saved_university.get('address')}"))
 
@@ -833,20 +1139,35 @@ def build_full_guidance_report_docx(ctx: ReportContext) -> bytes:
         parts.append(_p(f"Access code: {path.get('accessCode')}"))
         parts.append(_p("Keep this code private. The printable HTML report also includes a QR link to the claim page."))
 
-    parts.append(_p("Admission requirements", bold=True, size=26, heading=True))
-    requirement_rows = _guidance_requirement_rows(path)
-    if requirement_rows:
-        for label, value in requirement_rows:
-            parts.append(_p(f"{label}: {value}"))
-    else:
-        parts.append(_p("Published requirement details were not available for this selection."))
+    if not (d078_route and not university.get("name")):
+        parts.append(_p("Admission requirements", bold=True, size=26, heading=True))
+        requirement_rows = _guidance_requirement_rows(path)
+        if requirement_rows:
+            for label, value in requirement_rows:
+                parts.append(_p(f"{label}: {value}"))
+        else:
+            parts.append(_p("Published requirement details were not available for this selection."))
 
-    subject_status, subject_status_text = _subject_match_status(path)
-    parts.append(_p("Subject check status", bold=True, size=26, heading=True))
-    parts.append(_p(f"{subject_status}: {subject_status_text}"))
+        subject_status, subject_status_text = _subject_match_status(path)
+        parts.append(_p("Subject check status", bold=True, size=26, heading=True))
+        parts.append(_p(f"{subject_status}: {subject_status_text}"))
 
     parts.append(_p("Selected intelligence path", bold=True, size=26, heading=True))
-    for domain in path.get("domains") or []:
+    if d078_route:
+        for index, (_stack_id, route) in enumerate(_d078_saved_routes(path), start=1):
+            parts.append(_p(f"Saved D078 route {index}: Sociology to Social Sciences & Behavioural Research", bold=True, size=24, heading=True))
+            parts.append(_p("This records your choices. Selection does not show mastery or make a method a job requirement."))
+            for title, key in (("Field foundations", "foundations"), ("Selected methods", "methods"), ("Selected combinations", "combinations"), ("Methods within selected combinations", "components"), ("Items you added", "added_items")):
+                parts.append(_p(title, bold=True, size=20))
+                parts.extend(_bullet(value) for value in route[key])
+                if not route[key]:
+                    parts.append(_p("None selected or recorded."))
+            if route["area"]:
+                parts.append(_p(f"Area: {route['area']}"))
+            if route["role"]:
+                parts.append(_p(f"Role: {route['role']}"))
+            parts.append(_p(f"Stop point: {route['stop_point']}"))
+    for domain in ([] if d078_route else path.get("domains") or []):
         parts.append(_p(
             f"{domain.get('name') or 'Selected domain'} ({domain.get('matchType') or 'selected'})",
             bold=True, size=24, heading=True,

@@ -8,147 +8,802 @@
     {
       "jamb_name": "Civil Law",
       "body_heading": "CIVIL LAW",
-      "institutions": ["ABU", "OOU", "UNIZIK", "LAW", "AAU", "AAUA", "ABSU", "ABUAD", "ABUJA", "ACHIEVERS", "ADSU", "AJAYI", "AL-ANSAR", "AL-HIKMAH", "ANCHOR-UNI", "ARTHUR-JARVIS", "ATIBA", "AUE", "AUN", "AVE-MARIA", "BABCOCK", "BASU", "BAZE", "BENIN", "BINGHAM", "BIU", "BOWEN", "BSU", "CALABAR", "CALEB", "CHRISLAND", "CHRISTOPHER", "CLIFFORD", "COOU", "CUAB", "CUST", "DELSU", "FED-DUTSINMA", "EBSU", "EUI", "EUN", "EDWIN CLARK", "EKSU", "EL-AMIN", "ELIZADE", "ESUTECH", "AEFUNA", "FED-LOKOJA", "FED-OTUOKE", "FED-OYE EKITI", "FED-WUKARI", "FOUNTAIN", "GOUU", "GREGORY", "GSU", "HAVILLA", "IBADAN", "IGBINEDION", "JABU", "JOS", "KHAIRUN", "KOLADAISI", "KOMU", "PAAU", "PAUL", "LAGOS", "LAPAI", "LASU", "LCITY", "LUX-MUNDI", "MAAUN", "MADONNA", "MADUKA", "MAIDUGURI", "MAITAMA", "MC-IBRU", "MCPHERSON", "MEWAR", "MLU", "NASARAWA", "NBU", "NOVENA", "NDU", "NOUN", "NILE", "NUS", "OAU", "ODUDUWA", "PETER-UNI", "PHC", "PHILOMATH", "POL-ACAD", "PRU", "PLASU", "REDEEMERS", "RENAISSANCE", "RSU", "SALEM", "SAM-MARIS", "SAU", "SPIRITAN", "SKYLINE", "TANSIAN", "TAU", "TOPFAITH", "TSUJ", "UDA", "UMYUK", "UNI-ILESA", "UNIOSUN", "UNINIGER", "UNN", "UYO", "VERITAS", "WESTERN-DEL", "WESLEYUNI", "YSU"],
+      "institutions": [
+        "ABU",
+        "OOU",
+        "UNIZIK",
+        "LAW",
+        "AAU",
+        "AAUA",
+        "ABSU",
+        "ABUAD",
+        "ABUJA",
+        "ACHIEVERS",
+        "ADSU",
+        "AJAYI",
+        "AL-ANSAR",
+        "AL-HIKMAH",
+        "ANCHOR-UNI",
+        "ARTHUR-JARVIS",
+        "ATIBA",
+        "AUE",
+        "AUN",
+        "AVE-MARIA",
+        "BABCOCK",
+        "BASU",
+        "BAZE",
+        "BENIN",
+        "BINGHAM",
+        "BIU",
+        "BOWEN",
+        "BSU",
+        "CALABAR",
+        "CALEB",
+        "CHRISLAND",
+        "CHRISTOPHER",
+        "CLIFFORD",
+        "COOU",
+        "CUAB",
+        "CUST",
+        "DELSU",
+        "FED-DUTSINMA",
+        "EBSU",
+        "EUI",
+        "EUN",
+        "EDWIN CLARK",
+        "EKSU",
+        "EL-AMIN",
+        "ELIZADE",
+        "ESUTECH",
+        "AEFUNA",
+        "FED-LOKOJA",
+        "FED-OTUOKE",
+        "FED-OYE EKITI",
+        "FED-WUKARI",
+        "FOUNTAIN",
+        "GOUU",
+        "GREGORY",
+        "GSU",
+        "HAVILLA",
+        "IBADAN",
+        "IGBINEDION",
+        "JABU",
+        "JOS",
+        "KHAIRUN",
+        "KOLADAISI",
+        "KOMU",
+        "PAAU",
+        "PAUL",
+        "LAGOS",
+        "LAPAI",
+        "LASU",
+        "LCITY",
+        "LUX-MUNDI",
+        "MAAUN",
+        "MADONNA",
+        "MADUKA",
+        "MAIDUGURI",
+        "MAITAMA",
+        "MC-IBRU",
+        "MCPHERSON",
+        "MEWAR",
+        "MLU",
+        "NASARAWA",
+        "NBU",
+        "NOVENA",
+        "NDU",
+        "NOUN",
+        "NILE",
+        "NUS",
+        "OAU",
+        "ODUDUWA",
+        "PETER-UNI",
+        "PHC",
+        "PHILOMATH",
+        "POL-ACAD",
+        "PRU",
+        "PLASU",
+        "REDEEMERS",
+        "RENAISSANCE",
+        "RSU",
+        "SALEM",
+        "SAM-MARIS",
+        "SAU",
+        "SPIRITAN",
+        "SKYLINE",
+        "TANSIAN",
+        "TAU",
+        "TOPFAITH",
+        "TSUJ",
+        "UDA",
+        "UMYUK",
+        "UNI-ILESA",
+        "UNIOSUN",
+        "UNINIGER",
+        "UNN",
+        "UYO",
+        "VERITAS",
+        "WESTERN-DEL",
+        "WESLEYUNI",
+        "YSU"
+      ],
       "utme_subjects": "Any three (3) Arts or Social Science subjects.",
       "olevel_requirement": "Five (5)'O' Level credit passes to include English Language, Literature in English and Mathematics.",
       "direct_entry": "(i) Two (2)'A' Level passes in Arts or Social Science subjects. (ii) NCE/ND/First Degree (Second Class Lower).",
       "institution_waivers": [
-        {"institutions": ["AAU"], "note": "DIRECT ENTRY: (i) AAU does not accept any Diploma and NCE but accepts only first degree second class lower plus the UTME requirements. AAUA requires 'O' Level credit passes in Literature in English and Mathematics."},
-        {"institutions": ["AAUA"], "note": "DIRECT ENTRY: (i) ... AAUA requires 'O' Level credit passes in Literature in English and Mathematics."},
-        {"institutions": ["ABU"], "note": "DIRECT ENTRY: (ii) ABU accepts Two `A' Level/IJMB Passes in English Literature and other Arts or Social Science subjects. ABU Diploma in Law with at least MERIT Grade. ABU Diploma in Shari'ah and Civil Law with at least Merit Grade."},
-        {"institutions": ["ABUAD"], "note": "DIRECT ENTRY: (iii) ABUAD accepts excellent passes in JUPEB subjects."},
-        {"institutions": ["BENIN"], "note": "DIRECT ENTRY: (iv) BENIN requires UTME requirements plus two (2) 'A' Level passes; HND Lower credit and NCE credit passes in two (2) teaching subjects; Degree with at least second class lower division."},
-        {"institutions": ["BIU"], "note": "DIRECT ENTRY: (v) BIU requires in addition to the UTME requirements a minimum of two (2) relevant passes at 'A' Level or NCE merits in three (3) subjects."},
-        {"institutions": ["BOWEN"], "note": "DIRECT ENTRY: (vi) BOWEN accepts a) three (3) 'A' Level passes together with 'O' Level credit passes at not less than five (5) other subjects including English Language and Literature in English or equivalents, b) a University degree of not less than a second class lower division plus 'O' Level credit passes in English Language and Literature in English, c) two (2) 'A' Level passes or equivalents plus three (3) 'O' Level credit passes including English Language and Literature in English."},
-        {"institutions": ["CALABAR"], "note": "DIRECT ENTRY: (vii) CALABAR accepts; a) Two (2) A Level passes in Arts or Social Science subjects. b) NCE/ND/First Degree (Second Class Lower)."},
-        {"institutions": ["COOU"], "note": "DIRECT ENTRY: (viii) COOU accepts GCE, 'A' Level or HSC passes in two (2) subjects plus 'O' Level credit passes in three (3) subjects including English Language and Mathematics, Literature in English plus UTME requirements, first degree at least second class lower. Does not require Literature in English for degree holders."},
-        {"institutions": ["ILORIN"], "note": "DIRECT ENTRY: (ix) ILORIN does not require Literature in English for degree holders."},
-        {"institutions": ["CUAB"], "note": "DIRECT ENTRY: (x) CUAB accepts a) degree b) Mature students with experience in related programmes who possess basic requirements in (a) shall be considered for admission."},
-        {"institutions": ["EBSU"], "note": "DIRECT ENTRY: (xi) EBSU accepts a) HND and ND with a minimum of upper credit from relevant programmes. b) NCE, ND or degree in Arts or Social Science subjects in addition to the UTME requirements."},
-        {"institutions": ["IBADAN"], "note": "DIRECT ENTRY: (xii) IBADAN accepts two (2) passes at 'A' Level plus 'O' Level credit passes in five (5) or six (6) other subjects including English Language and Literature in English. Accepts good first degree with 'O' Level credit pass in English Language."},
-        {"institutions": ["JOS"], "note": "DIRECT ENTRY: (xiii) JOS accepts any class of first degree but does not accept NCE, ND and HND."},
-        {"institutions": ["LAGOS"], "note": "DIRECT ENTRY: (xiv) LAGOS accepts Very good passes in JUPEB/A' Level Subjects: Literature-in-English and any two Arts or Social Sciences. First Degree with a minimum of Second Class Upper. \"Lagos does not accept JUPEB / A' level passes in Fine Arts, Accounting or Commerce\"."},
-        {"institutions": ["LASU"], "note": "DIRECT ENTRY: (xv) LASU requires a) two (2) 'A' Level passes with 'O' Level credit passes in English Language and Literature in English. b) first degree minimum of third class plus 'O' Level credit passes in five (5) subjects to include English Language and Literature in English."},
-        {"institutions": ["MAIDUGURI"], "note": "DIRECT ENTRY: (xvi) MAIDUGURI requires two (2) 'A' Level passes from Government, Literature in English and Religious Studies."},
-        {"institutions": ["NDU"], "note": "DIRECT ENTRY: (xvii) NDU accepts a) two (2) passes at 'A' Level in relevant subjects or its equivalents. b) 'O' Level credit passes or equivalents in five (5) subjects to include English Language, Literature in English and Mathematics plus second class honours degree of this University or any other University recognized by Senate."},
-        {"institutions": ["OAU"], "note": "DIRECT ENTRY: (xviii) OAU accepts first degree with a minimum of 2nd Class Honours plus the UTME requirements."},
-        {"institutions": ["OOU"], "note": "DIRECT ENTRY: (xix) OOU accepts a degree in Arts or Social Sciences not lower than a second class lower plus the basic UTME requirements."},
-        {"institutions": ["PHC"], "note": "DIRECT ENTRY: (xx) PHC accepts Diploma in Law Certificate from a recognised institution with a minimum of Upper Credit Level Pass, including UTME entry requirements. A first degree from a recognized University with a minimum of Second-Class Honours, including UTME entry requirements. Two (2) A/Level GCE or HSC or JUPEB or IJMB Passes in Arts or Social Science Subjects, including UTME entry requirements."},
-        {"institutions": ["RSU"], "note": "DIRECT ENTRY: (xxi) RSU accepts Candidates with First Degree from a recognized University with a minimum of Second-Class Honours (Lower) Division. However, preference shall be given to candidates with Second Class Honours (Upper) Division or higher degrees. OND/ND (Upper Credit) relevant to the discipline may be considered. In addition, such candidates must also satisfy the U.M.E. entry requirements."},
-        {"institutions": ["UMYUK"], "note": "DIRECT ENTRY: (xxii) UMYUK requires a minimum of 9 points in IJMB/HSC/GCE `A' Level/NCE in any Arts or Social Science subject. Candidates with a minimum of lower credit pass in Diploma in Law from any recognized College of Legal Studies in Nigeria may also be admitted."},
-        {"institutions": ["UNIOSUN"], "note": "DIRECT ENTRY: (xxiii) UNIOSUN accepts a) three (3) passes at 'A' Level together with 'O' Level credit passes at not less than five (5) other subjects including English Language and Literature in English or equivalents. b) a University degree of Osun State University, in a relevant programme - of not less than a second class lower division or any other recognised University in a relevant programme."},
-        {"institutions": ["UNIZIK"], "note": "DIRECT ENTRY: (xxiv) UNIZIK accepts a) HND with credits or distinction aggregates from recognised institution and at least five (5) 'O' Level credit passes which must include English Language, Mathematics, and/ or any other science subject. b) NCE/Degree plus the UTME requirements."},
-        {"institutions": ["UYO"], "note": "DIRECT ENTRY: (xxv) UYO does not accept IJMB Mathematics and/or any other Science subject."},
-        {"institutions": ["LAGOS"], "note": "DIRECT ENTRY: (xxvi) LAGOS requires Five O/Level credit passes in English Language, Mathematics, Literature in English and any two Arts or Social Sciences subjects."},
-        {"institutions": ["EUI"], "note": "DIRECT ENTRY: (xxvii) EUI accepts; a) Two (2) 'A' Level passes in Arts or Social Science subjects including Literature in English. b) NCE/OND/HND not below credit level. c) Very good passes in JUPEB/IJMB subjects: Literature in English and any two (2) Arts or Social Sciences. d) B.Sc. in relevant field not below Second Class Lower."},
-        {"institutions": ["DELSU"], "note": "DIRECT ENTRY: (xxviii) DELSU requires a) Candidate must possess GCE `A'Level passes in two (2) subjects one of which must include Literature in English b) Credit in DELSU Diploma in Law c) Degrees in the Humanities is accepted for Law."},
-        {"institutions": ["AAU", "NAU"], "note": "UTME: (i) AAU and NAU require 'O' Level credit pass in one (1) science subject and one (1) commercial subject and at least 'O' Level pass in Mathematics."},
-        {"institutions": ["ABUAD"], "note": "UTME: (ii) ABUAD accepts five (5) 'O' Level credit passes to include English Language, Literature in English, Mathematics and any two (2) Arts or Social Science subjects at one sitting."},
-        {"institutions": ["BOWEN"], "note": "UTME: (iii) BOWEN requires five (5)'O' Level credit passes to include English Language, Literature in English and three (3) other Arts subjects at not more than two (2) sittings."},
-        {"institutions": ["BSU"], "note": "UTME: (iv) BSU accepts any other three (3) Arts/Social Science subjects"},
-        {"institutions": ["CUAB"], "note": "UTME: (v) CUAB requires five (5) 'O' Level credits passes in English Language, Literature in English, Government and Economics at not more than two (2) sittings. Candidates with 'O' Level pass in Mathematics may be eligible for admission."},
-        {"institutions": ["EBSU"], "note": "UTME: (vi) EBSU requires any other two (2) Arts or Social Science Subjects."},
-        {"institutions": ["ESUTECH"], "note": "UTME: (vii) ESUTECH requires 'O' Level credit passes in Mathematics or Science subject."},
-        {"institutions": ["IBADAN"], "note": "UTME: (viii) IBADAN requires five (5)'O' Level credit passes at one sitting or six (6) 'O' Level credit passes at two (2) sittings to include English Language, Literature in English, any other subjects from Arts, Social Sciences or Sciences."},
-        {"institutions": ["ILORIN"], "note": "UTME: (xii) ILORIN requires Literature in English plus any two (2) subjects."},
-        {"institutions": ["JOS", "OOU"], "note": "UTME: (xiii) JOS and OOU; 'O' Level credit pass in Mathematics is not compulsory."},
-        {"institutions": ["PAAU"], "note": "UTME: (xiv) PAAU requires five (5) 'O' Level credit passes or equivalents in English Language, Literature in English and any other three (3) Sciences, Social Sciences or Arts subjects."},
-        {"institutions": ["LAGOS"], "note": "UTME: (xvii) LAGOS requires Five O/Level credit passes in English Language, Mathematics, Literature in English and any two Arts or Social Sciences subjects."},
-        {"institutions": ["NDU"], "note": "UTME: NDU requires five (5) 'O' Level credit passes in English Language, Mathematics, Literature in English and any other two (2) subjects at not more than two (2) sittings."},
-        {"institutions": ["OAU"], "note": "UTME: OAU requires five (5) 'O' Level credit passes to include English Language and Literature in English."},
-        {"institutions": ["OOU"], "note": "UTME: OOU requires 'O' Level credit pass in Literature in English and at least 'O' Level pass in Mathematics."},
-        {"institutions": ["PHC"], "note": "UTME: PHC requires Five (5) O Level Credits in English Language, Mathematics, Literature in English and two (2) other credits from Economics, Government, History, Geography, Commerce, CRK/IRK."},
-        {"institutions": ["UMYUK"], "note": "UTME: UMYUK requires five (5) 'O' Level credit passes or equivalents in English Language, Literature in English and any other three (3) Social Science or Arts subjects with 'O' Level credit pass in Mathematics at not more than two (2) sittings."},
-        {"institutions": ["UNN"], "note": "UTME: (xviii) UNN does not require Mathematics and does not accept Fine Art or Local languages."},
-        {"institutions": ["UYO", "MADONNA", "BIU", "BENIN"], "note": "UTME: (xix) UYO, MADONNA, BIU, and BENIN accept 'O' Level pass in Mathematics."},
-        {"institutions": ["EUI"], "note": "UTME: (xx) EUI requires five (5) credit passes at SSC or its equivalent to include English Language, Literature in English and Mathematics."},
-        {"institutions": ["DELSU"], "note": "UTME: (xxi) DELSU requires at least five (5) credit passes which must include English Language, Literature in English and Mathematics at not more than two (2) sittings and two (2) other subjects from Arts and Social Sciences."},
-        {"institutions": ["AAUA"], "note": "UTME: (xxii) AAUA requires five (5) `O' Level credit passes to include English Language, Literature in English, Mathematics and any other two subjects from, CRK /IRS, Igbo Language/Yoruba Language/Hausa Language, History, Economics, Geography, Commerce, Accounts/Book-keeping and Government."},
-        {"institutions": ["RSU"], "note": "UTME: (xxiii) RSU requires Five (5) WASC/SSCE/GCE/NECO O/L in at least credit passes from English Language, Mathematics, Literature in English and any two (2) Arts/Social Science subjects."},
-        {"institutions": ["CALABAR"], "note": "UTME: (xxiv) CALABAR accepts Five (5) `O' Level credit passes to include English Language, Literature in English and Mathematics."},
-        {"institutions": ["ABU"], "note": "UTME: (xxv) ABU requires Five `O' Level Credit passes which must include English Language, Literature in English and any other three Arts or Social Science Subjects."},
-        {"institutions": ["BOWEN", "ILORIN", "UNN", "BENIN", "AAU", "OAU"], "note": "UTME SUBJECTS: (i) BOWEN, ILORIN, UNN, BENIN, AAU and OAU require Literature in English plus any two (2) subjects."},
-        {"institutions": ["CUAB"], "note": "UTME SUBJECTS: (ii) CUAB require Literature in English and any other Arts or Social Science subjects."},
-        {"institutions": ["EBSU"], "note": "UTME SUBJECTS: (iii) EBSU requires Literature in English and either Government, History, CRS or Economics."},
-        {"institutions": ["IBADAN"], "note": "UTME SUBJECTS: (iv) IBADAN accepts Science subjects."},
-        {"institutions": ["LAGOS"], "note": "UTME SUBJECTS: (v) LAGOS requires English Language and any three Arts or Social Sciences subjects. Lagos does not accept Music, Fine Arts, and Principles of Accounting. Lagos accepts either Economics or Commerce but not both."},
-        {"institutions": ["OOU"], "note": "UTME SUBJECTS: (vi) OOU does not insist on Literature in English."},
-        {"institutions": ["PHC"], "note": "UTME SUBJECTS: (vii) PHC requires Literature in English and any two (2) subjects from Economics, Government, History, Geography, Commerce, CRK/IRK"},
-        {"institutions": ["RSU"], "note": "UTME SUBJECTS: (viii) RSU requires English Language, Literature in English, CRK, History/Government."},
-        {"institutions": ["DELSU"], "note": "UTME SUBJECTS: (ix) DELSU accepts Literature in English and any other two (2) subjects in Art/Social Science."},
-        {"institutions": ["AAUA"], "note": "UTME SUBJECTS: (x) AAUA accepts Literature in English and any two (2) subjects in Art/Social Science."},
-        {"institutions": ["MAIDUGURI"], "note": "UTME SUBJECTS: (xi) MAIDUGURI requires any three (3) from Government, Economics, Geography or Arts subjects."},
-        {"institutions": ["UMYUK"], "note": "UTME SUBJECTS: (xii) UMYUK requires Literature in English and any other two (2) Arts and Social Science subject."},
-        {"institutions": ["ABUAD"], "note": "UTME SUBJECTS: (xiii) ABUAD requires Literature in English and any two Arts or Social Science subjects."},
-        {"institutions": ["CALABAR"], "note": "UTME SUBJECTS: (xiv) CALABAR requires Literature in English and Christian Religious Knowledge, Govt./History or Economic or any other Arts or Social Science Subjects."},
-        {"institutions": ["ABU"], "note": "UTME SUBJECTS: (xv) ABU requires Use of English, Literature in English and any other two Arts or Social Science subjects."}
-      ]
+        {
+          "institutions": [
+            "AAU"
+          ],
+          "note": "DIRECT ENTRY: (i) AAU does not accept any Diploma and NCE but accepts only first degree second class lower plus the UTME requirements. AAUA requires 'O' Level credit passes in Literature in English and Mathematics."
+        },
+        {
+          "institutions": [
+            "AAUA"
+          ],
+          "note": "DIRECT ENTRY: (i) ... AAUA requires 'O' Level credit passes in Literature in English and Mathematics."
+        },
+        {
+          "institutions": [
+            "ABU"
+          ],
+          "note": "DIRECT ENTRY: (ii) ABU accepts Two `A' Level/IJMB Passes in English Literature and other Arts or Social Science subjects. ABU Diploma in Law with at least MERIT Grade. ABU Diploma in Shari'ah and Civil Law with at least Merit Grade."
+        },
+        {
+          "institutions": [
+            "ABUAD"
+          ],
+          "note": "DIRECT ENTRY: (iii) ABUAD accepts excellent passes in JUPEB subjects."
+        },
+        {
+          "institutions": [
+            "BENIN"
+          ],
+          "note": "DIRECT ENTRY: (iv) BENIN requires UTME requirements plus two (2) 'A' Level passes; HND Lower credit and NCE credit passes in two (2) teaching subjects; Degree with at least second class lower division."
+        },
+        {
+          "institutions": [
+            "BIU"
+          ],
+          "note": "DIRECT ENTRY: (v) BIU requires in addition to the UTME requirements a minimum of two (2) relevant passes at 'A' Level or NCE merits in three (3) subjects."
+        },
+        {
+          "institutions": [
+            "BOWEN"
+          ],
+          "note": "DIRECT ENTRY: (vi) BOWEN accepts a) three (3) 'A' Level passes together with 'O' Level credit passes at not less than five (5) other subjects including English Language and Literature in English or equivalents, b) a University degree of not less than a second class lower division plus 'O' Level credit passes in English Language and Literature in English, c) two (2) 'A' Level passes or equivalents plus three (3) 'O' Level credit passes including English Language and Literature in English."
+        },
+        {
+          "institutions": [
+            "CALABAR"
+          ],
+          "note": "DIRECT ENTRY: (vii) CALABAR accepts; a) Two (2) A Level passes in Arts or Social Science subjects. b) NCE/ND/First Degree (Second Class Lower)."
+        },
+        {
+          "institutions": [
+            "COOU"
+          ],
+          "note": "DIRECT ENTRY: (viii) COOU accepts GCE, 'A' Level or HSC passes in two (2) subjects plus 'O' Level credit passes in three (3) subjects including English Language and Mathematics, Literature in English plus UTME requirements, first degree at least second class lower. Does not require Literature in English for degree holders."
+        },
+        {
+          "institutions": [
+            "ILORIN"
+          ],
+          "note": "DIRECT ENTRY: (ix) ILORIN does not require Literature in English for degree holders."
+        },
+        {
+          "institutions": [
+            "CUAB"
+          ],
+          "note": "DIRECT ENTRY: (x) CUAB accepts a) degree b) Mature students with experience in related programmes who possess basic requirements in (a) shall be considered for admission."
+        },
+        {
+          "institutions": [
+            "EBSU"
+          ],
+          "note": "DIRECT ENTRY: (xi) EBSU accepts a) HND and ND with a minimum of upper credit from relevant programmes. b) NCE, ND or degree in Arts or Social Science subjects in addition to the UTME requirements."
+        },
+        {
+          "institutions": [
+            "IBADAN"
+          ],
+          "note": "DIRECT ENTRY: (xii) IBADAN accepts two (2) passes at 'A' Level plus 'O' Level credit passes in five (5) or six (6) other subjects including English Language and Literature in English. Accepts good first degree with 'O' Level credit pass in English Language."
+        },
+        {
+          "institutions": [
+            "JOS"
+          ],
+          "note": "DIRECT ENTRY: (xiii) JOS accepts any class of first degree but does not accept NCE, ND and HND."
+        },
+        {
+          "institutions": [
+            "LAGOS"
+          ],
+          "note": "DIRECT ENTRY: (xiv) LAGOS accepts Very good passes in JUPEB/A' Level Subjects: Literature-in-English and any two Arts or Social Sciences. First Degree with a minimum of Second Class Upper. \"Lagos does not accept JUPEB / A' level passes in Fine Arts, Accounting or Commerce\"."
+        },
+        {
+          "institutions": [
+            "LASU"
+          ],
+          "note": "DIRECT ENTRY: (xv) LASU requires a) two (2) 'A' Level passes with 'O' Level credit passes in English Language and Literature in English. b) first degree minimum of third class plus 'O' Level credit passes in five (5) subjects to include English Language and Literature in English."
+        },
+        {
+          "institutions": [
+            "MAIDUGURI"
+          ],
+          "note": "DIRECT ENTRY: (xvi) MAIDUGURI requires two (2) 'A' Level passes from Government, Literature in English and Religious Studies."
+        },
+        {
+          "institutions": [
+            "NDU"
+          ],
+          "note": "DIRECT ENTRY: (xvii) NDU accepts a) two (2) passes at 'A' Level in relevant subjects or its equivalents. b) 'O' Level credit passes or equivalents in five (5) subjects to include English Language, Literature in English and Mathematics plus second class honours degree of this University or any other University recognized by Senate."
+        },
+        {
+          "institutions": [
+            "OAU"
+          ],
+          "note": "DIRECT ENTRY: (xviii) OAU accepts first degree with a minimum of 2nd Class Honours plus the UTME requirements."
+        },
+        {
+          "institutions": [
+            "OOU"
+          ],
+          "note": "DIRECT ENTRY: (xix) OOU accepts a degree in Arts or Social Sciences not lower than a second class lower plus the basic UTME requirements."
+        },
+        {
+          "institutions": [
+            "PHC"
+          ],
+          "note": "DIRECT ENTRY: (xx) PHC accepts Diploma in Law Certificate from a recognised institution with a minimum of Upper Credit Level Pass, including UTME entry requirements. A first degree from a recognized University with a minimum of Second-Class Honours, including UTME entry requirements. Two (2) A/Level GCE or HSC or JUPEB or IJMB Passes in Arts or Social Science Subjects, including UTME entry requirements."
+        },
+        {
+          "institutions": [
+            "RSU"
+          ],
+          "note": "DIRECT ENTRY: (xxi) RSU accepts Candidates with First Degree from a recognized University with a minimum of Second-Class Honours (Lower) Division. However, preference shall be given to candidates with Second Class Honours (Upper) Division or higher degrees. OND/ND (Upper Credit) relevant to the discipline may be considered. In addition, such candidates must also satisfy the U.M.E. entry requirements."
+        },
+        {
+          "institutions": [
+            "UMYUK"
+          ],
+          "note": "DIRECT ENTRY: (xxii) UMYUK requires a minimum of 9 points in IJMB/HSC/GCE `A' Level/NCE in any Arts or Social Science subject. Candidates with a minimum of lower credit pass in Diploma in Law from any recognized College of Legal Studies in Nigeria may also be admitted."
+        },
+        {
+          "institutions": [
+            "UNIOSUN"
+          ],
+          "note": "DIRECT ENTRY: (xxiii) UNIOSUN accepts a) three (3) passes at 'A' Level together with 'O' Level credit passes at not less than five (5) other subjects including English Language and Literature in English or equivalents. b) a University degree of Osun State University, in a relevant programme - of not less than a second class lower division or any other recognised University in a relevant programme."
+        },
+        {
+          "institutions": [
+            "UNIZIK"
+          ],
+          "note": "DIRECT ENTRY: (xxiv) UNIZIK accepts a) HND with credits or distinction aggregates from recognised institution and at least five (5) 'O' Level credit passes which must include English Language, Mathematics, and/ or any other science subject. b) NCE/Degree plus the UTME requirements."
+        },
+        {
+          "institutions": [
+            "UYO"
+          ],
+          "note": "DIRECT ENTRY: (xxv) UYO does not accept IJMB Mathematics and/or any other Science subject."
+        },
+        {
+          "institutions": [
+            "LAGOS"
+          ],
+          "note": "DIRECT ENTRY: (xxvi) LAGOS requires Five O/Level credit passes in English Language, Mathematics, Literature in English and any two Arts or Social Sciences subjects."
+        },
+        {
+          "institutions": [
+            "EUI"
+          ],
+          "note": "DIRECT ENTRY: (xxvii) EUI accepts; a) Two (2) 'A' Level passes in Arts or Social Science subjects including Literature in English. b) NCE/OND/HND not below credit level. c) Very good passes in JUPEB/IJMB subjects: Literature in English and any two (2) Arts or Social Sciences. d) B.Sc. in relevant field not below Second Class Lower."
+        },
+        {
+          "institutions": [
+            "DELSU"
+          ],
+          "note": "DIRECT ENTRY: (xxviii) DELSU requires a) Candidate must possess GCE `A'Level passes in two (2) subjects one of which must include Literature in English b) Credit in DELSU Diploma in Law c) Degrees in the Humanities is accepted for Law."
+        },
+        {
+          "institutions": [
+            "AAU",
+            "NAU"
+          ],
+          "note": "UTME: (i) AAU and NAU require 'O' Level credit pass in one (1) science subject and one (1) commercial subject and at least 'O' Level pass in Mathematics."
+        },
+        {
+          "institutions": [
+            "ABUAD"
+          ],
+          "note": "UTME: (ii) ABUAD accepts five (5) 'O' Level credit passes to include English Language, Literature in English, Mathematics and any two (2) Arts or Social Science subjects at one sitting."
+        },
+        {
+          "institutions": [
+            "BOWEN"
+          ],
+          "note": "UTME: (iii) BOWEN requires five (5)'O' Level credit passes to include English Language, Literature in English and three (3) other Arts subjects at not more than two (2) sittings."
+        },
+        {
+          "institutions": [
+            "BSU"
+          ],
+          "note": "UTME: (iv) BSU accepts any other three (3) Arts/Social Science subjects"
+        },
+        {
+          "institutions": [
+            "CUAB"
+          ],
+          "note": "UTME: (v) CUAB requires five (5) 'O' Level credits passes in English Language, Literature in English, Government and Economics at not more than two (2) sittings. Candidates with 'O' Level pass in Mathematics may be eligible for admission."
+        },
+        {
+          "institutions": [
+            "EBSU"
+          ],
+          "note": "UTME: (vi) EBSU requires any other two (2) Arts or Social Science Subjects."
+        },
+        {
+          "institutions": [
+            "ESUTECH"
+          ],
+          "note": "UTME: (vii) ESUTECH requires 'O' Level credit passes in Mathematics or Science subject."
+        },
+        {
+          "institutions": [
+            "IBADAN"
+          ],
+          "note": "UTME: (viii) IBADAN requires five (5)'O' Level credit passes at one sitting or six (6) 'O' Level credit passes at two (2) sittings to include English Language, Literature in English, any other subjects from Arts, Social Sciences or Sciences."
+        },
+        {
+          "institutions": [
+            "ILORIN"
+          ],
+          "note": "UTME: (xii) ILORIN requires Literature in English plus any two (2) subjects."
+        },
+        {
+          "institutions": [
+            "JOS",
+            "OOU"
+          ],
+          "note": "UTME: (xiii) JOS and OOU; 'O' Level credit pass in Mathematics is not compulsory."
+        },
+        {
+          "institutions": [
+            "PAAU"
+          ],
+          "note": "UTME: (xiv) PAAU requires five (5) 'O' Level credit passes or equivalents in English Language, Literature in English and any other three (3) Sciences, Social Sciences or Arts subjects."
+        },
+        {
+          "institutions": [
+            "LAGOS"
+          ],
+          "note": "UTME: (xvii) LAGOS requires Five O/Level credit passes in English Language, Mathematics, Literature in English and any two Arts or Social Sciences subjects."
+        },
+        {
+          "institutions": [
+            "NDU"
+          ],
+          "note": "UTME: NDU requires five (5) 'O' Level credit passes in English Language, Mathematics, Literature in English and any other two (2) subjects at not more than two (2) sittings."
+        },
+        {
+          "institutions": [
+            "OAU"
+          ],
+          "note": "UTME: OAU requires five (5) 'O' Level credit passes to include English Language and Literature in English."
+        },
+        {
+          "institutions": [
+            "OOU"
+          ],
+          "note": "UTME: OOU requires 'O' Level credit pass in Literature in English and at least 'O' Level pass in Mathematics."
+        },
+        {
+          "institutions": [
+            "PHC"
+          ],
+          "note": "UTME: PHC requires Five (5) O Level Credits in English Language, Mathematics, Literature in English and two (2) other credits from Economics, Government, History, Geography, Commerce, CRK/IRK."
+        },
+        {
+          "institutions": [
+            "UMYUK"
+          ],
+          "note": "UTME: UMYUK requires five (5) 'O' Level credit passes or equivalents in English Language, Literature in English and any other three (3) Social Science or Arts subjects with 'O' Level credit pass in Mathematics at not more than two (2) sittings."
+        },
+        {
+          "institutions": [
+            "UNN"
+          ],
+          "note": "UTME: (xviii) UNN does not require Mathematics and does not accept Fine Art or Local languages."
+        },
+        {
+          "institutions": [
+            "UYO",
+            "MADONNA",
+            "BIU",
+            "BENIN"
+          ],
+          "note": "UTME: (xix) UYO, MADONNA, BIU, and BENIN accept 'O' Level pass in Mathematics."
+        },
+        {
+          "institutions": [
+            "EUI"
+          ],
+          "note": "UTME: (xx) EUI requires five (5) credit passes at SSC or its equivalent to include English Language, Literature in English and Mathematics."
+        },
+        {
+          "institutions": [
+            "DELSU"
+          ],
+          "note": "UTME: (xxi) DELSU requires at least five (5) credit passes which must include English Language, Literature in English and Mathematics at not more than two (2) sittings and two (2) other subjects from Arts and Social Sciences."
+        },
+        {
+          "institutions": [
+            "AAUA"
+          ],
+          "note": "UTME: (xxii) AAUA requires five (5) `O' Level credit passes to include English Language, Literature in English, Mathematics and any other two subjects from, CRK /IRS, Igbo Language/Yoruba Language/Hausa Language, History, Economics, Geography, Commerce, Accounts/Book-keeping and Government."
+        },
+        {
+          "institutions": [
+            "RSU"
+          ],
+          "note": "UTME: (xxiii) RSU requires Five (5) WASC/SSCE/GCE/NECO O/L in at least credit passes from English Language, Mathematics, Literature in English and any two (2) Arts/Social Science subjects."
+        },
+        {
+          "institutions": [
+            "CALABAR"
+          ],
+          "note": "UTME: (xxiv) CALABAR accepts Five (5) `O' Level credit passes to include English Language, Literature in English and Mathematics."
+        },
+        {
+          "institutions": [
+            "ABU"
+          ],
+          "note": "UTME: (xxv) ABU requires Five `O' Level Credit passes which must include English Language, Literature in English and any other three Arts or Social Science Subjects."
+        },
+        {
+          "institutions": [
+            "BOWEN",
+            "ILORIN",
+            "UNN",
+            "BENIN",
+            "AAU",
+            "OAU"
+          ],
+          "note": "UTME SUBJECTS: (i) BOWEN, ILORIN, UNN, BENIN, AAU and OAU require Literature in English plus any two (2) subjects."
+        },
+        {
+          "institutions": [
+            "CUAB"
+          ],
+          "note": "UTME SUBJECTS: (ii) CUAB require Literature in English and any other Arts or Social Science subjects."
+        },
+        {
+          "institutions": [
+            "EBSU"
+          ],
+          "note": "UTME SUBJECTS: (iii) EBSU requires Literature in English and either Government, History, CRS or Economics."
+        },
+        {
+          "institutions": [
+            "IBADAN"
+          ],
+          "note": "UTME SUBJECTS: (iv) IBADAN accepts Science subjects."
+        },
+        {
+          "institutions": [
+            "LAGOS"
+          ],
+          "note": "UTME SUBJECTS: (v) LAGOS requires English Language and any three Arts or Social Sciences subjects. Lagos does not accept Music, Fine Arts, and Principles of Accounting. Lagos accepts either Economics or Commerce but not both."
+        },
+        {
+          "institutions": [
+            "OOU"
+          ],
+          "note": "UTME SUBJECTS: (vi) OOU does not insist on Literature in English."
+        },
+        {
+          "institutions": [
+            "PHC"
+          ],
+          "note": "UTME SUBJECTS: (vii) PHC requires Literature in English and any two (2) subjects from Economics, Government, History, Geography, Commerce, CRK/IRK"
+        },
+        {
+          "institutions": [
+            "RSU"
+          ],
+          "note": "UTME SUBJECTS: (viii) RSU requires English Language, Literature in English, CRK, History/Government."
+        },
+        {
+          "institutions": [
+            "DELSU"
+          ],
+          "note": "UTME SUBJECTS: (ix) DELSU accepts Literature in English and any other two (2) subjects in Art/Social Science."
+        },
+        {
+          "institutions": [
+            "AAUA"
+          ],
+          "note": "UTME SUBJECTS: (x) AAUA accepts Literature in English and any two (2) subjects in Art/Social Science."
+        },
+        {
+          "institutions": [
+            "MAIDUGURI"
+          ],
+          "note": "UTME SUBJECTS: (xi) MAIDUGURI requires any three (3) from Government, Economics, Geography or Arts subjects."
+        },
+        {
+          "institutions": [
+            "UMYUK"
+          ],
+          "note": "UTME SUBJECTS: (xii) UMYUK requires Literature in English and any other two (2) Arts and Social Science subject."
+        },
+        {
+          "institutions": [
+            "ABUAD"
+          ],
+          "note": "UTME SUBJECTS: (xiii) ABUAD requires Literature in English and any two Arts or Social Science subjects."
+        },
+        {
+          "institutions": [
+            "CALABAR"
+          ],
+          "note": "UTME SUBJECTS: (xiv) CALABAR requires Literature in English and Christian Religious Knowledge, Govt./History or Economic or any other Arts or Social Science Subjects."
+        },
+        {
+          "institutions": [
+            "ABU"
+          ],
+          "note": "UTME SUBJECTS: (xv) ABU requires Use of English, Literature in English and any other two Arts or Social Science subjects."
+        }
+      ],
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-law.pdf",
+      "source_locator": "_jamb_txt/Law.txt lines 6, 25, 39, 401, 483, 483; parsed offering row 1; official IBASS brochure text locator",
+      "source_accessed_on": "2026-09-29",
+      "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+      "source_context_status": "source_text_located",
+      "source_verification": {
+        "verified_against_pdf": false,
+        "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-law.pdf",
+        "pdf_table_locator": "_jamb_txt/Law.txt lines 6, 25, 39, 401, 483, 483; parsed offering row 1; official IBASS brochure text locator",
+        "verification_date": "2026-09-29",
+        "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+        "verification_method": "deterministic_local_official_pdf_text_search",
+        "institution_codes_verified_from_pdf": []
+      }
     },
     {
       "jamb_name": "Islamic Law/Sharia Law",
       "body_heading": "ISLAMIC/SHARIA LAW",
-      "institutions": ["ABU", "KHAIRUN", "MAIDUGURI", "PAAU", "PRU"],
+      "institutions": [
+        "ABU",
+        "KHAIRUN",
+        "MAIDUGURI",
+        "PAAU",
+        "PRU"
+      ],
       "utme_subjects": "Any three (3) Arts or Social Science subjects including Arabic or Islamic Studies",
       "olevel_requirement": "Five (5)'O' Level credit passes in Arts or Social Sciences to include English Language and Islamic Studies or Arabic.",
       "direct_entry": "Two (2) A' level passes to include Islamic Studies or Arabic",
       "institution_waivers": [
-        {"institutions": ["ABU"], "note": "DIRECT ENTRY: (i) ABU accepts Two `A' Level/IJMB passes in IRK/Arabic and any other Arts or Social Science subjects ABU Diploma in Shari'ah and Civil Law with at least Merit Grade."}
-      ]
+        {
+          "institutions": [
+            "ABU"
+          ],
+          "note": "DIRECT ENTRY: (i) ABU accepts Two `A' Level/IJMB passes in IRK/Arabic and any other Arts or Social Science subjects ABU Diploma in Shari'ah and Civil Law with at least Merit Grade."
+        }
+      ],
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-law.pdf",
+      "source_locator": "_jamb_txt/Law.txt lines 9; parsed offering row 2; official IBASS brochure text locator",
+      "source_accessed_on": "2026-09-29",
+      "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+      "source_context_status": "source_text_located",
+      "source_verification": {
+        "verified_against_pdf": false,
+        "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-law.pdf",
+        "pdf_table_locator": "_jamb_txt/Law.txt lines 9; parsed offering row 2; official IBASS brochure text locator",
+        "verification_date": "2026-09-29",
+        "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+        "verification_method": "deterministic_local_official_pdf_text_search",
+        "institution_codes_verified_from_pdf": []
+      }
     },
     {
       "jamb_name": "Common and Islamic Law",
       "body_heading": "COMMON AND ISLAMIC LAW",
-      "institutions": ["ABUJA", "BAYERO", "FOUNTAIN", "ILORIN", "KWASU", "LASU", "NASARAWA", "UDU", "UNI-ILESA", "UNIOSUN"],
+      "institutions": [
+        "ABUJA",
+        "BAYERO",
+        "FOUNTAIN",
+        "ILORIN",
+        "KWASU",
+        "LASU",
+        "NASARAWA",
+        "UDU",
+        "UNI-ILESA",
+        "UNIOSUN"
+      ],
       "utme_subjects": "Any three (3) Arts or Social Science subjects including Arabic or Islamic Studies",
       "olevel_requirement": "Five (5)'O' Level credit passes in Arts or Social Sciences to include English Language and Islamic Studies or Arabic.",
       "direct_entry": "Two (2) A' level passes to include Islamic Studies or Arabic",
       "requirement_note": "ISLAMIC/SHARIA LAW and COMMON AND ISLAMIC LAW share the same REQUIREMENTS columns in the brochure (DIRECT ENTRY, UTME, UTME SUBJECTS printed once across both headings). The waiver block following them mixes remarks for both programmes.",
       "institution_waivers": [
-        {"institutions": ["BAYERO"], "note": "DIRECT ENTRY: (ii) BAYERO does not accept NCE."},
-        {"institutions": ["ILORIN"], "note": "DIRECT ENTRY: (iii) ILORIN accepts; a) At least, two (2) `A' Level passes in GCE/IJMB or its equivalent in Arts or Social Science subjects one of which must include Arabic or Islamic Studies b) Diploma in Law (Upper Credit) from recognized institutions c) First Degree from a recognized University d) The following qualifications may be considered in lieu of ``A`` Level Subjects for Direct Entry Admissions, HND., A.C.I.S., ACA, A.C.C., LL.B (Inter) of University of London and NCE e) Such candidate must meet the UTME entry requirements stipulated above. Where a diploma is graded as Distinction, Credit, Merit and Pass, Credit grade is accepted for direct admission."},
-        {"institutions": ["BAYERO"], "note": "UTME: (i) BAYERO requires Islamic Studies/Arabic and Literature-in-English for Common and Islamic Law."},
-        {"institutions": ["ILORIN"], "note": "UTME: (ii) ILORIN requires Five (5) `O' level (SSCE/GCE/NECO/NABTEB/ etc.) credit passes in Arts /Social Sciences subjects including English language, Arabic or Islamic Studies and Mathematics."},
-        {"institutions": ["PAAU"], "note": "UTME: (iii) PAAU requires five (5) 'O' Level credit passes in English Language, Literature in English and three (3) other relevant Arts, Social Science, or Science subjects."},
-        {"institutions": ["ABU"], "note": "UTME: (iv) ABU requires Five `O' Level Credit passes which must include English Language, Arabic Language/Islamic Studies and any other three Arts or Social Science Subjects."},
-        {"institutions": [], "note": "UTME SUBJECTS: (i) Any two (2) Arts or Social Science subjects including Literature in English."},
-        {"institutions": ["ABU"], "note": "UTME SUBJECTS: (ii) ABU require Use of English, IRK/Arabic and any other two Arts or Social Science subjects."},
-        {"institutions": ["UDU"], "note": "UTME SUBJECTS: (iii) UDU requires Arabic"},
-        {"institutions": ["MAIDUGURI"], "note": "UTME SUBJECTS: (iv) MAIDUGURI requires any three from Government, Economics, Geography or Arts subjects including Arabic or Islamic Studies."},
-        {"institutions": ["ILORIN"], "note": "UTME SUBJECTS: (v) ILORIN requires any three (3) Arts or Social Sciences Subjects which must include Arabic or Islamic Studies."}
-      ]
+        {
+          "institutions": [
+            "BAYERO"
+          ],
+          "note": "DIRECT ENTRY: (ii) BAYERO does not accept NCE."
+        },
+        {
+          "institutions": [
+            "ILORIN"
+          ],
+          "note": "DIRECT ENTRY: (iii) ILORIN accepts; a) At least, two (2) `A' Level passes in GCE/IJMB or its equivalent in Arts or Social Science subjects one of which must include Arabic or Islamic Studies b) Diploma in Law (Upper Credit) from recognized institutions c) First Degree from a recognized University d) The following qualifications may be considered in lieu of ``A`` Level Subjects for Direct Entry Admissions, HND., A.C.I.S., ACA, A.C.C., LL.B (Inter) of University of London and NCE e) Such candidate must meet the UTME entry requirements stipulated above. Where a diploma is graded as Distinction, Credit, Merit and Pass, Credit grade is accepted for direct admission."
+        },
+        {
+          "institutions": [
+            "BAYERO"
+          ],
+          "note": "UTME: (i) BAYERO requires Islamic Studies/Arabic and Literature-in-English for Common and Islamic Law."
+        },
+        {
+          "institutions": [
+            "ILORIN"
+          ],
+          "note": "UTME: (ii) ILORIN requires Five (5) `O' level (SSCE/GCE/NECO/NABTEB/ etc.) credit passes in Arts /Social Sciences subjects including English language, Arabic or Islamic Studies and Mathematics."
+        },
+        {
+          "institutions": [
+            "PAAU"
+          ],
+          "note": "UTME: (iii) PAAU requires five (5) 'O' Level credit passes in English Language, Literature in English and three (3) other relevant Arts, Social Science, or Science subjects."
+        },
+        {
+          "institutions": [
+            "ABU"
+          ],
+          "note": "UTME: (iv) ABU requires Five `O' Level Credit passes which must include English Language, Arabic Language/Islamic Studies and any other three Arts or Social Science Subjects."
+        },
+        {
+          "institutions": [],
+          "note": "UTME SUBJECTS: (i) Any two (2) Arts or Social Science subjects including Literature in English."
+        },
+        {
+          "institutions": [
+            "ABU"
+          ],
+          "note": "UTME SUBJECTS: (ii) ABU require Use of English, IRK/Arabic and any other two Arts or Social Science subjects."
+        },
+        {
+          "institutions": [
+            "UDU"
+          ],
+          "note": "UTME SUBJECTS: (iii) UDU requires Arabic"
+        },
+        {
+          "institutions": [
+            "MAIDUGURI"
+          ],
+          "note": "UTME SUBJECTS: (iv) MAIDUGURI requires any three from Government, Economics, Geography or Arts subjects including Arabic or Islamic Studies."
+        },
+        {
+          "institutions": [
+            "ILORIN"
+          ],
+          "note": "UTME SUBJECTS: (v) ILORIN requires any three (3) Arts or Social Sciences Subjects which must include Arabic or Islamic Studies."
+        }
+      ],
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-law.pdf",
+      "source_locator": "_jamb_txt/Law.txt lines 7, 441; parsed offering row 3; official IBASS brochure text locator",
+      "source_accessed_on": "2026-09-29",
+      "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+      "source_context_status": "source_text_located",
+      "source_verification": {
+        "verified_against_pdf": false,
+        "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-law.pdf",
+        "pdf_table_locator": "_jamb_txt/Law.txt lines 7, 441; parsed offering row 3; official IBASS brochure text locator",
+        "verification_date": "2026-09-29",
+        "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+        "verification_method": "deterministic_local_official_pdf_text_search",
+        "institution_codes_verified_from_pdf": []
+      }
     },
     {
       "jamb_name": "Public and International Law",
       "body_heading": "PUBLIC AND PRIVATE INTERNATIONAL LAW",
-      "institutions": ["AAUA", "MAIDUGURI (Pub)"],
+      "institutions": [
+        "AAUA",
+        "MAIDUGURI (Pub)"
+      ],
       "utme_subjects": "As in Civil Law",
       "olevel_requirement": "As in Civil Law",
       "direct_entry": "As in Civil Law",
       "requirement_note": "Body heading reads 'PUBLIC AND PRIVATE INTERNATIONAL LAW'; the REQUIREMENTS columns for this block state 'As in Civil Law' for DIRECT ENTRY, UTME and UTME SUBJECTS. A second inset under the same area lists 'i. Two (2) 'A' Level passes in Arts or Social Science subjects.' / 'ii. ND in Law, Criminal Justice, Public Administration with passes at lower credit or higher grade.' with O'level 'Five (5)SSC credit passes to include English Language.' and UTME SUBJECTS 'Any three (3) subjects' — these appear printed for AAUA/MAIDUGURI (Pub) and the adjacent CRIMINOLOGY AND SECURITY STUDIES (JOS) entry. This index name maps loosely; brochure has no separate 'International Law and Jurisprudence' or 'Private and Islamic Law' blocks.",
-      "institution_waivers": []
+      "institution_waivers": [],
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-law.pdf",
+      "source_locator": "_jamb_txt/Law.txt lines 11; parsed offering row 4; official IBASS brochure text locator",
+      "source_accessed_on": "2026-09-29",
+      "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+      "source_context_status": "source_text_located",
+      "source_verification": {
+        "verified_against_pdf": false,
+        "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-law.pdf",
+        "pdf_table_locator": "_jamb_txt/Law.txt lines 11; parsed offering row 4; official IBASS brochure text locator",
+        "verification_date": "2026-09-29",
+        "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+        "verification_method": "deterministic_local_official_pdf_text_search",
+        "institution_codes_verified_from_pdf": []
+      }
     },
     {
       "jamb_name": "Criminology and Security Studies (printed under Law faculty block)",
       "body_heading": "CRIMINOLOGY AND SECURITY STUDIES",
-      "institutions": ["JOS"],
+      "institutions": [
+        "JOS"
+      ],
       "utme_subjects": "Any three (3) subjects",
       "olevel_requirement": "Five (5)SSC credit passes to include English Language.",
       "direct_entry": "i. Two (2) 'A' Level passes in Arts or Social Science subjects. ii. ND in Law, Criminal Justice, Public Administration with passes at lower credit or higher grade.",
       "requirement_note": "CRIMINOLOGY AND SECURITY STUDIES (JOS) is printed in the body but is not one of the 8 indexed Law name-variations. Requirement columns shown above are shared/adjacent to the PUBLIC AND PRIVATE INTERNATIONAL LAW block; retained for faithfulness.",
-      "institution_waivers": []
+      "institution_waivers": [],
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-law.pdf",
+      "source_locator": "_jamb_txt/Law.txt lines 500, 501; parsed offering row 5; official IBASS brochure text locator",
+      "source_accessed_on": "2026-09-29",
+      "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+      "source_context_status": "source_text_located",
+      "source_verification": {
+        "verified_against_pdf": false,
+        "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-law.pdf",
+        "pdf_table_locator": "_jamb_txt/Law.txt lines 500, 501; parsed offering row 5; official IBASS brochure text locator",
+        "verification_date": "2026-09-29",
+        "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+        "verification_method": "deterministic_local_official_pdf_text_search",
+        "institution_codes_verified_from_pdf": []
+      }
     },
     {
       "jamb_name": "Common Law",
       "body_heading": "COMMON LAW",
-      "institutions": ["ILORIN", "KWASU"],
+      "institutions": [
+        "ILORIN",
+        "KWASU"
+      ],
       "utme_subjects": "Literature in English and any two (2) other Arts/or Social Science subjects.",
       "olevel_requirement": "Five (5)SSC credit passes to include English Language, Literature - in - English and any other three (3) Arts/Social Science subjects.",
       "direct_entry": "i. Two (2) 'A' Level passes in GCE/IJMB in Arts or Social Science subjects. ii. First degree (Second Class Lower) of an accredited University.",
       "institution_waivers": [
-        {"institutions": ["ILORIN"], "note": "DIRECT ENTRY: i) ILORIN accepts: a) At least, two (2) `A' Level passes in GCE/IJMB/JUPEP or its equivalent in Arts or Social Science subjects. b) Diploma in Law* (Upper Credit) from recognised institutions. c) First degree from a recognised University. d) The following qualifications may be considered in lieu of `A' Level subjects for Direct entry admission, H.N.D., A.C.I.S., ACA, A.C.C., LL. B (Inter) of University of London and N.C.E. e) Such Candidate must meet the UTME entry requirements stated above. Degree holders need not possess Literature in English."},
-        {"institutions": ["ILORIN"], "note": "UTME: i) ILORIN accepts five (5) `O' level (SSCE/GCE/NECO/NABTEB/ etc.) credit passes in Arts/Social Sciences/Commercial subjects including English language, Literature in English and Mathematics."},
-        {"institutions": ["ILORIN"], "note": "UTME SUBJECTS: i) ILORIN requires Arts or Social Science subjects including Literature in English."}
-      ]
+        {
+          "institutions": [
+            "ILORIN"
+          ],
+          "note": "DIRECT ENTRY: i) ILORIN accepts: a) At least, two (2) `A' Level passes in GCE/IJMB/JUPEP or its equivalent in Arts or Social Science subjects. b) Diploma in Law* (Upper Credit) from recognised institutions. c) First degree from a recognised University. d) The following qualifications may be considered in lieu of `A' Level subjects for Direct entry admission, H.N.D., A.C.I.S., ACA, A.C.C., LL. B (Inter) of University of London and N.C.E. e) Such Candidate must meet the UTME entry requirements stated above. Degree holders need not possess Literature in English."
+        },
+        {
+          "institutions": [
+            "ILORIN"
+          ],
+          "note": "UTME: i) ILORIN accepts five (5) `O' level (SSCE/GCE/NECO/NABTEB/ etc.) credit passes in Arts/Social Sciences/Commercial subjects including English language, Literature in English and Mathematics."
+        },
+        {
+          "institutions": [
+            "ILORIN"
+          ],
+          "note": "UTME SUBJECTS: i) ILORIN requires Arts or Social Science subjects including Literature in English."
+        }
+      ],
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-law.pdf",
+      "source_locator": "_jamb_txt/Law.txt lines 8, 503; parsed offering row 6; official IBASS brochure text locator",
+      "source_accessed_on": "2026-09-29",
+      "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+      "source_context_status": "source_text_located",
+      "source_verification": {
+        "verified_against_pdf": false,
+        "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-law.pdf",
+        "pdf_table_locator": "_jamb_txt/Law.txt lines 8, 503; parsed offering row 6; official IBASS brochure text locator",
+        "verification_date": "2026-09-29",
+        "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+        "verification_method": "deterministic_local_official_pdf_text_search",
+        "institution_codes_verified_from_pdf": []
+      }
     }
   ]
 }

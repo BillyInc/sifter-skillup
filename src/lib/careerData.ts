@@ -58,7 +58,7 @@ import {
   type MappingFeedback,
   type FeedbackType,
 } from "../types/career";
-import { request } from "./api";
+import { API_READ_TIMEOUT_MS, request } from "./api";
 import { getCached, getCachedStale, setCached, queueWrite, cancelQueuedSave, flushQueue } from "./careerCache";
 import type { StartingPointProfile } from "../types/onboarding";
 import {
@@ -77,7 +77,7 @@ const DETAIL_TTL_MS = REFERENCE_TTL_MS;
 // Supabase-backed development that fan-out can exceed the generic 30s API
 // timeout even though the route eventually returns a complete response.
 // Keep the longer budget scoped to these reference-detail reads only.
-const CAREER_DETAIL_TIMEOUT_MS = 90_000;
+const CAREER_DETAIL_TIMEOUT_MS = API_READ_TIMEOUT_MS;
 
 const inFlight = new Map<string, Promise<DataState<unknown>>>();
 
@@ -159,6 +159,9 @@ export interface GuidanceReportPath {
     /** Saved programme/university choices; `programme` remains the active one. */
     programmes?: Record<string, unknown>[];
     university?: Record<string, unknown>;
+    /** Institution required on every printable guidance report. */
+    attachedInstitution?: Record<string, unknown>;
+    institution?: Record<string, unknown>;
     /** Evidence state for the subject check used to reach the programme. */
     subjectMatch?: {
       status?: "verified" | "partial" | "unavailable" | "not_checked" | string;
@@ -360,7 +363,23 @@ export interface SubjectProgrammeMatch extends JambProgrammeSuggestion {
     | "utme_match_olevel_unparsed"
     | string;
   requirementText?: string | null;
-  matchBasis: "structured" | "text" | "utme" | "olevel" | "combined";
+  matchBasis:
+    | "structured"
+    | "text"
+    | "utme"
+    | "olevel"
+    | "combined"
+    | "university_specific"
+    | "national_and_university_specific";
+  universitySpecificMatch?: boolean;
+  universitySpecificMatchSchoolIds?: string[];
+  universitySpecificMatchCount?: number;
+  universitySpecificMatches?: Array<{
+    schoolId: string;
+    examType: "utme" | "olevel" | string;
+    matchedSubjects: string[];
+    requirementText?: string | null;
+  }>;
 }
 
 export interface JambProgrammeSchool {
@@ -572,6 +591,7 @@ export const careerData = {
       `jamb-programme:${jambProgrammeId}`,
       () => request<DataState<JambProgrammeDetail | null>>(
         `/api/student/jamb-programmes/${encodeURIComponent(jambProgrammeId)}`,
+        { timeoutMs: CAREER_DETAIL_TIMEOUT_MS },
       ),
       "Programme requirements are unavailable.",
       DETAIL_TTL_MS,
@@ -585,6 +605,7 @@ export const careerData = {
       `jamb-programme-schools:${jambProgrammeId}`,
       () => request<DataState<JambProgrammeSchool[]>>(
         `/api/student/jamb-programmes/${encodeURIComponent(jambProgrammeId)}/schools`,
+        { timeoutMs: CAREER_DETAIL_TIMEOUT_MS },
       ),
       "The university list for this programme is unavailable.",
       DETAIL_TTL_MS,
@@ -650,6 +671,7 @@ export const careerData = {
       `jamb-programme-domains:${jambProgrammeId}`,
       () => request<DataState<JambDomainResult>>(
         `/api/student/jamb-programmes/${encodeURIComponent(jambProgrammeId)}/domains`,
+        { timeoutMs: CAREER_DETAIL_TIMEOUT_MS },
       ),
       "Domain paths are unavailable.",
       DETAIL_TTL_MS,

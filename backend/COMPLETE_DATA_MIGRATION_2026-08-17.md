@@ -116,6 +116,7 @@ backend/migration_sociology_curriculum_contract_2026-09-17.sql
 backend/migration_programme_curriculum_contract_general_2026-09-18.sql
 backend/migration_guidance_programme_reading_and_market_scope_2026-09-12.sql
 backend/migration_guidance_ownership_and_sociology_resources_2026-09-11.sql
+backend/migration_sociology_giddens_ideas_theme_2026-10-22.sql
 backend/migration_domain_student_orientation_2026-09-18.sql
 backend/migration_sociology_domain_tool_path_2026-09-18.sql
 backend/migration_guidance_all_programmes_2026-09-12.sql

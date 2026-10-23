@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS skillup_dev.subject_catalog (
     aliases      TEXT[] NOT NULL DEFAULT '{}',
     exam_types   TEXT[] NOT NULL DEFAULT '{}', -- utme, olevel
     category     TEXT, -- science | commercial | art | general | language | technical
-    stream_tags  TEXT[] NOT NULL DEFAULT '{}', -- science | commercial | art
+    stream_tags  TEXT[] NOT NULL DEFAULT '{}', -- science | commercial | art | technical
     active       BOOLEAN NOT NULL DEFAULT true,
     created_at   TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -288,7 +288,9 @@ SELECT
     -- rejected with "cannot change name of view column".
     jp.skills_technical,
     jp.skills_transferable,
-    jp.skills_components
+    jp.skills_components,
+    p.qualification,
+    p.duration_years
 FROM skillup_dev.jamb_programmes jp
 LEFT JOIN skillup_dev.programme_mapping pm ON pm.jamb_programme_id = jp.id
 LEFT JOIN skillup_dev.programmes p ON p.id = pm.programme_id;

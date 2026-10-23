@@ -16,7 +16,7 @@
     "description": "Software engineering is the discipline of designing, building and testing computer programs and mobile applications. Practitioners write and debug code, analyse what a program should do, test software at different levels, and manage changes to systems, in roles such as software analyst, tester, mobile application developer and cloud engineer. They typically work in technology firms, banks, telecoms companies and government agencies."
   },
   "D002": {
-    "domain_name": "Data Engineering",
+    "domain_name": "Data Engineering and Architecture",
     "cluster": "Information & Communication Technology",
     "clusters": [
       "Information & Communication Technology"
@@ -32,7 +32,7 @@
     "description": "Data engineering focuses on building the systems that collect, store and move an organisation's information. People in the field design data warehouses, connect databases to other software, write queries, and plan how information is structured so others can use it. Employers include banks, telecoms companies, technology firms and any large organisation that keeps substantial records."
   },
   "D003": {
-    "domain_name": "Artificial Intelligence",
+    "domain_name": "Artificial Intelligence and Machine Learning",
     "cluster": "Information & Communication Technology",
     "clusters": [
       "Information & Communication Technology"
@@ -64,7 +64,7 @@
     "description": "Cybersecurity is the practice of protecting computers, networks and information from attack. Day to day, professionals administer security settings, investigate digital evidence after incidents, respond to cyber attacks, test defences as ethical hackers and manage security risks. They work in banks, telecoms companies, government agencies and any organisation that runs computer systems."
   },
   "D005": {
-    "domain_name": "Cloud Computing",
+    "domain_name": "Cloud Computing and DevOps",
     "cluster": "Information & Communication Technology",
     "clusters": [
       "Information & Communication Technology"
@@ -80,7 +80,7 @@
     "description": "Cloud computing deals with running software and storing information on remote servers reached through the internet rather than on one office machine. Cloud architects plan these systems, engineers build and program them, administrators keep networks and data centres running, and specialists monitor security and compliance. Common employers are technology firms, banks, telecoms companies and data centres."
   },
   "D006": {
-    "domain_name": "Internet of Things",
+    "domain_name": "Internet of Things and Embedded Systems",
     "cluster": "Information & Communication Technology",
     "clusters": [
       "Information & Communication Technology"
@@ -96,7 +96,7 @@
     "description": "The Internet of Things connects everyday devices such as sensors, meters and appliances to the internet so they can send and receive information. Specialists write the firmware inside these devices, design the networks that link them, plan complete solutions, secure them against attack, and test that everything works, documenting any faults. Manufacturers, telecoms companies and technology firms are typical employers."
   },
   "D007": {
-    "domain_name": "UI/UX Design",
+    "domain_name": "User Interface and User Experience Design",
     "cluster": "Information & Communication Technology",
     "clusters": [
       "Information & Communication Technology"
@@ -112,7 +112,7 @@
     "description": "UI/UX design is about how websites and apps look, feel and respond when people use them. Designers plan screens and web pages, create graphics, illustrations and animation, follow client briefs, and test digital products for ease of use and accessibility. They work in design studios, technology firms, media houses and marketing departments."
   },
   "D008": {
-    "domain_name": "Telecommunications",
+    "domain_name": "Telecommunications and Network Engineering",
     "cluster": "Information & Communication Technology",
     "clusters": [
       "Information & Communication Technology"
@@ -144,7 +144,7 @@
     "description": "Game design covers the creation of video games and animated worlds. Illustrators, animators and 3D artists build models, characters and visual environments; programmers code game mechanics and player-facing features; and directors lead the artistic and technical vision of a production. Most roles are based in game and animation studios."
   },
   "D140": {
-    "domain_name": "Robotics Engineering, Systems Design",
+    "domain_name": "Robotics Engineering and Systems Design",
     "cluster": "Information & Communication Technology",
     "clusters": [
       "Information & Communication Technology"
@@ -176,7 +176,7 @@
     "description": "Data science uses statistics and computer programming to draw useful conclusions from large collections of information. Some practitioners build data pipelines, artificial-intelligence models and software systems, while others model data with advanced mathematics, manage research information and write up findings in technical reports. Banks, telecoms companies, research bodies and government agencies all employ them."
   },
   "D010": {
-    "domain_name": "Business Intelligence",
+    "domain_name": "Business Intelligence and Analytics",
     "cluster": "Data & Analytics",
     "clusters": [
       "Data & Analytics"
@@ -192,7 +192,7 @@
     "description": "Business intelligence turns an organisation's records into information that managers can act on. Teams include engineers and architects who build analytics systems, analysts and consultants who study business processes and recommend improvements, and mathematicians and statisticians who build quantitative models from the numbers. Such roles exist in banks, telecoms companies, retailers and large organisations of every kind."
   },
   "D011": {
-    "domain_name": "Quantitative Finance",
+    "domain_name": "Quantitative Finance and Financial Engineering",
     "cluster": "Financial Services",
     "clusters": [
       "Financial Services"
@@ -224,7 +224,7 @@
     "description": "FinTech engineering builds the software that powers financial services such as payments, banking apps and blockchain systems. Developers write backend code, data engineers manage the information flowing through these systems, and testers run structured checks, record faults and document results so money-handling software works reliably. Banks, payment companies and technology firms employ these teams."
   },
   "D013": {
-    "domain_name": "Investment Analysis",
+    "domain_name": "Investment Analysis and Asset Management",
     "cluster": "Financial Services",
     "clusters": [
       "Financial Services"
@@ -272,7 +272,7 @@
     "description": "Accounting is the recording, checking and reporting of an organisation's money. Accountants prepare and interpret financial statements, audit records, advise on tax, control budgets, and handle billing, payroll and back-office processing. They work in accounting firms, banks, government agencies and businesses of all sizes; in Nigeria the chartered route runs through bodies such as ICAN or ANAN."
   },
   "D060": {
-    "domain_name": "Banking, Credit",
+    "domain_name": "Banking and Credit Services",
     "cluster": "Financial Services",
     "clusters": [
       "Financial Services"
@@ -321,7 +321,7 @@
     "description": "Trading is the buying and selling of financial assets such as currencies, shares, commodities and energy. Traders deal on markets throughout the day, securities analysts study market trends and financial products, and investment managers and planners advise clients on funds and risk. Banks, investment firms and brokerages are the typical employers."
   },
   "D158": {
-    "domain_name": "Corporate Finance, Investment Banking",
+    "domain_name": "Corporate Finance and Investment Banking",
     "cluster": "Financial Services",
     "clusters": [
       "Financial Services"
@@ -337,7 +337,7 @@
     "description": "Corporate finance and investment banking deal with how companies raise, invest and manage money. Securities and mergers analysts study company performance and financial statements, while controllers, budget analysts and bank managers oversee funds and financial processes. Banks, investment firms and large corporations are the main employers."
   },
   "D159": {
-    "domain_name": "Credit Analysis, Structured Finance",
+    "domain_name": "Credit Analysis and Structured Finance",
     "cluster": "Financial Services",
     "clusters": [
       "Financial Services"
@@ -353,7 +353,7 @@
     "description": "Credit analysis is the work of judging whether borrowers can repay what they owe. Credit analysts and advisers examine financial statements, analyse loans and assess borrower risk, while credit managers and mortgage brokers arrange and oversee lending. Banks and other lending institutions employ most people in this field."
   },
   "D016": {
-    "domain_name": "Electrical",
+    "domain_name": "Electrical Engineering",
     "cluster": "Engineering & Built Environment",
     "clusters": [
       "Engineering & Built Environment"
@@ -369,7 +369,7 @@
     "description": "Electrical engineering deals with electricity, circuits and electronic devices. Engineers design power systems, batteries, sensors and electronics for products ranging from medical devices to satellites, while technicians test, calibrate and maintain electrical equipment and lines. Power companies, manufacturers, telecoms companies and construction firms employ them, and practising engineers in Nigeria register with COREN."
   },
   "D017": {
-    "domain_name": "Mechanical",
+    "domain_name": "Mechanical Engineering",
     "cluster": "Engineering & Built Environment",
     "clusters": [
       "Engineering & Built Environment"
@@ -385,7 +385,7 @@
     "description": "Mechanical engineering is the design and production of machines and moving systems, from engines to heating, ventilation and cooling equipment. Practitioners draft technical drawings with CAD software, design machinery from scratch, and supervise production and assembly lines. Manufacturers, oil and gas companies and construction firms are typical employers, with COREN registration required to practise in Nigeria."
   },
   "D018": {
-    "domain_name": "Civil",
+    "domain_name": "Civil Engineering",
     "cluster": "Engineering & Built Environment",
     "clusters": [
       "Engineering & Built Environment"
@@ -433,7 +433,7 @@
     "description": "Environmental engineering tackles pollution, waste and water quality. Technicians operate water, wastewater and waste treatment plants, engineers design solutions to pollution, climate and sustainability problems, and inspectors check that organisations comply with environmental, health and safety laws. Water utilities, waste management companies, mining firms and government agencies employ people in this field."
   },
   "D021": {
-    "domain_name": "Architecture",
+    "domain_name": "Architecture and Urban Planning",
     "cluster": "Engineering & Built Environment",
     "clusters": [
       "Engineering & Built Environment"
@@ -449,7 +449,7 @@
     "description": "Architecture is the design of buildings, interiors and the spaces around them. Architects draw up designs that satisfy building codes and regulations, urban and transport planners shape how cities and land are used, and site staff inspect, survey and support construction on the ground. Architectural practices, construction firms and government planning agencies are typical workplaces; Nigerian architects register with ARCON."
   },
   "D022": {
-    "domain_name": "Mining",
+    "domain_name": "Mining and Geosciences",
     "cluster": "Engineering & Built Environment",
     "clusters": [
       "Engineering & Built Environment"
@@ -466,7 +466,7 @@
     "description": "Mining is the finding and extraction of minerals, oil and gas from the earth. Geologists and engineers explore and plan extraction sites, crews operate rigs, drills and underground machinery, managers run mines, quarries and production sites, and specialists survey ground, test metals and enforce safety rules. Mining companies, oil and gas producers and quarrying firms are the main employers."
   },
   "D069": {
-    "domain_name": "Aviation",
+    "domain_name": "Aviation and Aerospace Operations",
     "cluster": "Engineering & Built Environment",
     "clusters": [
       "Engineering & Built Environment"
@@ -483,7 +483,7 @@
     "description": "Aviation is the operation of aircraft and the systems that keep air travel safe. Pilots fly aeroplanes, helicopters and drones, air traffic controllers direct aircraft movements, technicians overhaul engines and service flight systems, and cabin crew look after passengers on board. Work is typically found with airlines, airports and civil aviation agencies."
   },
   "D072": {
-    "domain_name": "Geospatial Science",
+    "domain_name": "Geospatial Science and Geographic Information Systems",
     "cluster": "Engineering & Built Environment",
     "clusters": [
       "Engineering & Built Environment"
@@ -499,7 +499,7 @@
     "description": "Geospatial science involves measuring, mapping and studying the Earth's land, water and minerals. Surveyors take precise measurements of land, mines and seabeds for maps and property records, while geologists, hydrologists and oceanographers study rocks, groundwater and the sea using mathematics and geographic information systems. Typical employers include mining companies, construction firms and government agencies."
   },
   "D074": {
-    "domain_name": "Occupational Health, Safety",
+    "domain_name": "Occupational Health and Safety",
     "cluster": "Engineering & Built Environment",
     "clusters": [
       "Engineering & Built Environment"
@@ -515,7 +515,7 @@
     "description": "Occupational health and safety focuses on preventing accidents, illness and harmful conditions at work. Inspectors visit factories, building sites, food businesses and hospitals to check that health, hygiene and waste laws are being followed, carrying out audits and reporting hazards. Many are employed by government agencies, with others working for large industrial and transport companies."
   },
   "D146": {
-    "domain_name": "Building Services Engineering — Mechanical, Electrical",
+    "domain_name": "Building Services Engineering (Mechanical and Electrical Systems)",
     "cluster": "Engineering & Built Environment",
     "clusters": [
       "Engineering & Built Environment"
@@ -531,7 +531,7 @@
     "description": "Building services engineering deals with the mechanical and electrical systems that make buildings work, such as lighting, air conditioning, fire protection and automation. Engineers in this field design these systems from drawings, maintain them, and increasingly connect them to smart controls. Construction firms and engineering consultancies are the main employers."
   },
   "D147": {
-    "domain_name": "Process Automation, SCADA, PLC",
+    "domain_name": "Industrial Process Automation (SCADA and PLC Systems)",
     "cluster": "Engineering & Built Environment",
     "clusters": [
       "Engineering & Built Environment"
@@ -547,7 +547,7 @@
     "description": "Process automation keeps factories and plants running through computer-controlled systems. Control room operators monitor automated machines in refineries, gas plants and production lines, troubleshoot faults and write reports, while automation and instrumentation engineers design the control systems themselves. Manufacturing companies and oil and gas facilities employ most of these professionals."
   },
   "D156": {
-    "domain_name": "Land Surveying, Cadastral Mapping",
+    "domain_name": "Land Surveying and Cadastral Mapping",
     "cluster": "Engineering & Built Environment",
     "clusters": [
       "Engineering & Built Environment"
@@ -563,7 +563,7 @@
     "description": "Land surveying and cadastral mapping measure land and record its boundaries. Surveyors take precise measurements on building sites, mines and waterways, while cartographers, photogrammetrists and geographic information systems specialists turn those measurements into maps and digital records. Government agencies, construction firms and mining companies rely on their work."
   },
   "D164": {
-    "domain_name": "Urban Mobility, Smart City Systems",
+    "domain_name": "Urban Mobility and Smart City Systems",
     "cluster": "Engineering & Built Environment",
     "clusters": [
       "Engineering & Built Environment"
@@ -608,7 +608,16 @@
     "professional_ratio": 0.91,
     "trade_ratio": 0.0,
     "n_elite_roles": 2,
-    "description": "Nursing centres on the day-to-day care of patients. Specialist nurses and advanced practitioners deliver nursing, mental-health and midwifery care, paramedics and ambulance crews respond to emergencies, and support workers assist with procedures, records and hands-on personal care. Most work in hospitals, clinics, maternity units and community health services, and Nigerian practice requires registration with the Nursing and Midwifery Council."
+    "description": "Nursing is a regulated health profession focused on promoting health, preventing illness, and providing person-centred care to individuals, families and communities. Nurses assess needs, coordinate and provide care, support recovery and safety, contribute to public health, and may work in practice, education, research, leadership and service improvement across hospital, community and other settings. Scope, protected titles and authorization vary by jurisdiction.",
+    "jurisdiction_specific_context": [
+      {
+        "jurisdiction": "Nigeria",
+        "detail": "Nigeria-specific registration note: the Nursing and Midwifery Council of Nigeria maintains registration for qualified nurses, midwives and post-basic nursing programmes. This local authorization rule does not define the global nursing domain or its specialization count.",
+        "source_title": "NMCN Registration",
+        "source_url": "https://www.nmcn.gov.ng/unitreg.html",
+        "source_locator": "Registration Unit overview and list of nurse/midwife registers"
+      }
+    ]
   },
   "D025": {
     "domain_name": "Pharmacy",
@@ -643,7 +652,7 @@
     "description": "Public health protects the health of whole communities rather than one patient at a time. Inspectors enforce food, workplace and community health standards, officers and physicians coordinate emergency responses and prevention work, and scientists track diseases and analyse health statistics. Government agencies, hospitals and international health organisations are typical employers."
   },
   "D027": {
-    "domain_name": "Biomedical",
+    "domain_name": "Biomedical Science",
     "cluster": "Health & Biomedical",
     "clusters": [
       "Health & Biomedical"
@@ -659,7 +668,7 @@
     "description": "Biomedical science studies living things, from microbes to the human body, mainly through laboratory work. Microbiologists, pharmacologists and physiologists research organisms, medicines and how bodies function, while technicians run laboratory tests and support biology and agricultural science. Hospitals, research institutes, universities and pharmaceutical companies employ them; medical laboratory scientists in Nigeria are licensed by MLSCN."
   },
   "D064": {
-    "domain_name": "Psychology, Counselling",
+    "domain_name": "Psychology and Counselling",
     "cluster": "Health & Biomedical",
     "clusters": [
       "Health & Biomedical"
@@ -707,7 +716,7 @@
     "description": "Dentistry is the branch of medicine concerned with teeth, gums and the mouth. Dentists examine patients and diagnose oral health problems, dental technicians make models and appliances, hygienists and chairside assistants support treatment, and maxillofacial surgeons operate on the mouth and jaw. Most work in hospitals, dental clinics and laboratories, and practising in Nigeria requires registration with the Medical and Dental Council."
   },
   "D068": {
-    "domain_name": "Allied Health",
+    "domain_name": "Allied Health and Rehabilitation Therapies",
     "cluster": "Health & Biomedical",
     "clusters": [
       "Health & Biomedical"
@@ -723,7 +732,7 @@
     "description": "Allied health covers the healthcare professions that support diagnosis, treatment and recovery alongside doctors and nurses. Physiotherapists and occupational therapists help patients regain movement and daily skills, biomedical scientists analyse samples in laboratories, and radiographers produce medical images, supported by assistants and technicians. Hospitals, clinics, rehabilitation centres and sports organisations are the main employers."
   },
   "D154": {
-    "domain_name": "Exercise Science, Sports Therapy",
+    "domain_name": "Exercise Science and Sports Therapy",
     "cluster": "Health & Biomedical",
     "clusters": [
       "Health & Biomedical"
@@ -739,7 +748,7 @@
     "description": "Exercise science and sports therapy focus on how the body moves, performs and recovers. Physiotherapists and sport therapists treat injuries, kinesiologists assess physical condition, dietitians advise on nutrition, and instructors coach fitness and pilates. Hospitals, clinics, sports clubs and fitness centres employ most people in the field."
   },
   "D165": {
-    "domain_name": "Wellness Coaching, Lifestyle Medicine",
+    "domain_name": "Wellness Coaching and Lifestyle Medicine",
     "cluster": "Health & Biomedical",
     "clusters": [
       "Health & Biomedical"
@@ -787,7 +796,7 @@
     "description": "Human resources manages the people side of an organisation. Practitioners recruit staff, train and coach employees, analyse pay and benefits, handle labour relations under employment law, and guide careers, equality and inclusion programmes. HR roles exist wherever people are employed, from banks and manufacturers to government agencies, schools and charities."
   },
   "D030": {
-    "domain_name": "Marketing, Brand",
+    "domain_name": "Marketing and Brand Management",
     "cluster": "Business & Management",
     "clusters": [
       "Business & Management"
@@ -803,7 +812,7 @@
     "description": "Marketing builds brands and persuades customers to choose a product or service. Creatives and analysts research markets, run campaigns, manage online communities and sales channels, and shape how an organisation presents itself, while senior leaders steer overall marketing, sales and communication strategy. Marketing departments, advertising agencies and media houses are common workplaces."
   },
   "D031": {
-    "domain_name": "Sales",
+    "domain_name": "Sales and Business Development",
     "cluster": "Business & Management",
     "clusters": [
       "Business & Management"
@@ -819,7 +828,7 @@
     "description": "Sales is the business of getting goods and services to buyers. Some practitioners purchase, broker and trade goods and commodities, others sell machinery, energy and technical products to businesses, manage key customer accounts, or serve shoppers on the shop floor, while directors set commercial strategy. Retailers, wholesalers, manufacturers and trading companies employ them."
   },
   "D032": {
-    "domain_name": "Project Management",
+    "domain_name": "Project and Programme Management",
     "cluster": "Business & Management",
     "clusters": [
       "Business & Management"
@@ -851,7 +860,7 @@
     "description": "Product management is the work of guiding a product from idea to finished item and setting the direction a business takes with it. Product owners and development managers lead strategy, engineers and architects build the underlying technology, and analysts scope requirements, costs and processes. Most work in manufacturing companies, technology firms and other large businesses."
   },
   "D130": {
-    "domain_name": "Recruitment, Employment",
+    "domain_name": "Recruitment and Employment Services",
     "cluster": "Business & Management",
     "clusters": [
       "Business & Management"
@@ -884,7 +893,7 @@
     "description": "Supply chain management is about moving goods from where they are made to where they are needed, at the right time and cost. People in this field schedule freight, ships, rail and cargo movements, run warehouses and distribution, handle customs and sourcing, and analyse logistics costs. Employers include shipping lines, airlines, ports, manufacturers and trading companies."
   },
   "D035": {
-    "domain_name": "Logistics",
+    "domain_name": "Logistics and Transportation Operations",
     "cluster": "Supply Chain & Logistics",
     "clusters": [
       "Supply Chain & Logistics"
@@ -901,7 +910,7 @@
     "description": "Logistics deals with the practical movement of goods and people by road, rail, air and sea. Some workers drive buses, trucks and forklifts; others load and dispatch goods in warehouses and docks, manage fleets and ports, or coordinate shipping, customs and forwarding. Transport companies, warehouses, ports and event organisers are typical employers."
   },
   "D036": {
-    "domain_name": "Procurement",
+    "domain_name": "Procurement and Contract Management",
     "cluster": "Supply Chain & Logistics",
     "clusters": [
       "Supply Chain & Logistics"
@@ -917,7 +926,7 @@
     "description": "Procurement is the business of buying the goods and services an organisation needs to operate. Buyers identify suppliers, maintain supplier relationships and purchase goods or trade commodities, freight and imports, while analysts study costs and processes to improve purchasing decisions. Manufacturers, trading companies, wholesalers and government agencies employ most procurement staff."
   },
   "D076": {
-    "domain_name": "Maritime",
+    "domain_name": "Maritime and Naval Operations",
     "cluster": "Supply Chain & Logistics",
     "clusters": [
       "Supply Chain & Logistics"
@@ -934,7 +943,7 @@
     "description": "Maritime work covers life and labour at sea, from sailing and fishing to ship engineering and diving. Officers navigate and command vessels, deckhands and engine crew keep ships running, naval engineers design ships and marine structures, and divers work underwater on construction, harvesting and rescue. Shipping companies, ports, fishing fleets and offshore firms provide most of the work."
   },
   "D079": {
-    "domain_name": "Customs, Trade",
+    "domain_name": "Customs and International Trade",
     "cluster": "Supply Chain & Logistics",
     "clusters": [
       "Supply Chain & Logistics"
@@ -966,7 +975,7 @@
     "description": "Legal practice covers the making, interpretation and application of law. Lawyers and legal consultants advise clients and argue cases, judges and court clerks run court processes and enforce decisions, and legal assistants compile documents and carry out legal research. Typical workplaces include law firms, courts, companies and government agencies."
   },
   "D038": {
-    "domain_name": "Compliance, Regulation",
+    "domain_name": "Compliance, Regulation and Governance",
     "cluster": "Legal & Compliance",
     "clusters": [
       "Legal & Compliance"
@@ -982,7 +991,7 @@
     "description": "Compliance and regulation work makes sure people and organisations follow laws, rules and government policy. Officers inspect goods and borders, enforce tax and safety rules, shape public policy and programmes, and manage contracts, procurement and regulatory affairs inside organisations. Government agencies, banks and large companies employ most of them."
   },
   "D157": {
-    "domain_name": "Tax Advisory, Transfer Pricing",
+    "domain_name": "Tax Advisory and Transfer Pricing",
     "cluster": "Legal & Compliance",
     "clusters": [
       "Legal & Compliance"
@@ -998,7 +1007,7 @@
     "description": "Tax advisory helps people and organisations understand and follow tax law. Tax advisors and compliance officers interpret legislation, inspect tax returns and study financial statements, while auditors, budget analysts and financial controllers check that accounts are accurate. Accounting firms, government revenue agencies and large companies employ most practitioners, and chartered qualifications are required to practise."
   },
   "D162": {
-    "domain_name": "Immigration Law, Asylum",
+    "domain_name": "Immigration Law and Asylum",
     "cluster": "Legal & Compliance",
     "clusters": [
       "Legal & Compliance"
@@ -1014,7 +1023,7 @@
     "description": "Immigration law and asylum practice deal with the legal side of people moving between countries. Immigration lawyers and human rights officers represent migrants and asylum seekers, while advisers, clerks and legal assistants compile documents, conduct legal research and manage casework. Law firms, government agencies and charities are the main employers."
   },
   "D149": {
-    "domain_name": "Diplomacy, International Relations",
+    "domain_name": "Diplomacy and International Relations",
     "cluster": "Public Sector & Social Services",
     "clusters": [
       "Public Sector & Social Services"
@@ -1030,7 +1039,7 @@
     "description": "Diplomacy and international relations manage a country's dealings with other nations. Diplomats and ambassadors lead embassies and represent their nation abroad, while political affairs and intelligence officers handle foreign policy, trade, election observation and humanitarian issues. Ministries of foreign affairs, embassies and international organisations are the typical employers."
   },
   "D163": {
-    "domain_name": "Intellectual Property Law, Patents",
+    "domain_name": "Intellectual Property Law and Patent Practice",
     "cluster": "Legal & Compliance",
     "clusters": [
       "Legal & Compliance"
@@ -1046,7 +1055,7 @@
     "description": "Intellectual property law protects inventions, brand names and creative works. Patent and trademark attorneys prepare applications, present legal arguments and protect their clients' interests, while paralegals and administrators manage case files and paperwork. Most work is found in law firms, large companies and government registries, and practising as a lawyer requires being called to the Bar."
   },
   "D039": {
-    "domain_name": "Higher Education",
+    "domain_name": "Higher Education and Academic Research",
     "cluster": "Education & Research",
     "clusters": [
       "Education & Research"
@@ -1062,7 +1071,7 @@
     "description": "Higher education centres on teaching and leading colleges and universities, though the field also includes school-level teaching. Lecturers in subjects such as economics and medicine prepare lesson content, teach classes and assess students, while heads of institutions lead schools and faculties. Universities, colleges and other education institutions are the main employers."
   },
   "D040": {
-    "domain_name": "Vocational",
+    "domain_name": "Vocational and Technical Training",
     "cluster": "Education & Research",
     "clusters": [
       "Education & Research"
@@ -1094,7 +1103,7 @@
     "description": "Scientific research is the systematic study of the natural world through observation and experiment. Chemists, geologists and environmental scientists design studies and draft scientific papers, while technicians run laboratory tests, collect samples and support biology and agriculture research. Laboratories, research institutes, universities and government agencies are the usual workplaces."
   },
   "D078": {
-    "domain_name": "Social Sciences",
+    "domain_name": "Social Sciences & Behavioural Research",
     "cluster": "Education & Research",
     "clusters": [
       "Education & Research"
@@ -1107,10 +1116,10 @@
     "professional_ratio": 1.0,
     "trade_ratio": 0.0,
     "n_elite_roles": 0,
-    "description": "Social sciences study how people, societies and institutions behave and change over time. Researchers such as sociologists, historians, criminologists and archaeologists design studies, gather and analyse data, and write academic papers and policy reports, often using statistics. They commonly work in universities, research institutes and government agencies."
+    "description": "Social Sciences & Behavioural Research studies how people behave, how societies and institutions work, and how social, economic, political and environmental conditions affect people's lives. Researchers use evidence and social-science methods to understand these issues and help inform policy."
   },
   "D042": {
-    "domain_name": "Media Production",
+    "domain_name": "Media Production and Broadcasting",
     "cluster": "Creative & Media",
     "clusters": [
       "Creative & Media"
@@ -1126,7 +1135,7 @@
     "description": "Media production brings performances and broadcast content to audiences on stage and screen. Actors, dancers, musicians and directors lead artistic productions; crew handle staging, lighting, costumes and sets; and technicians operate camera, audio and broadcast equipment. Theatres, studios, broadcasting stations and event companies are typical employers."
   },
   "D043": {
-    "domain_name": "Journalism",
+    "domain_name": "Journalism and Digital Publishing",
     "cluster": "Creative & Media",
     "clusters": [
       "Creative & Media"
@@ -1158,7 +1167,7 @@
     "description": "Graphic design uses drawing and computer graphics to create visual work for clients. Illustrators, web designers and 3D modellers design graphics, interfaces and products to a brief; artistic painters create hand-drawn and painted art; and photographers capture images for news and commercial use. Design studios, advertising agencies and media houses are common employers."
   },
   "D065": {
-    "domain_name": "Translation, Interpretation",
+    "domain_name": "Translation, Interpretation and Linguistics",
     "cluster": "Creative & Media",
     "clusters": [
       "Creative & Media"
@@ -1190,7 +1199,7 @@
     "description": "Sports management is about training athletes and running the organisations, venues and competitions around them. Coaches plan sessions and lead teams, performance analysts study matches, talent scouts identify promising players and referees officiate games, while academy and athletic directors manage clubs and facilities. Jobs are usually with sports clubs, academies, schools and government sports bodies."
   },
   "D080": {
-    "domain_name": "Interior Design",
+    "domain_name": "Interior and Spatial Design",
     "cluster": "Creative & Media",
     "clusters": [
       "Creative & Media"
@@ -1206,7 +1215,7 @@
     "description": "Interior design shapes how indoor spaces and visual scenes look and function. Interior designers and planners arrange rooms, furniture and lighting for homes and businesses, while related roles build and paint sets, design stage lighting, dress shop displays or create illustrations and animations. Design firms, theatres, studios and retail companies are the usual employers."
   },
   "D152": {
-    "domain_name": "Museum Curation, Cultural Heritage, Archives",
+    "domain_name": "Museums, Cultural Heritage, Archives and Archaeology",
     "cluster": "Creative & Media",
     "clusters": [
       "Creative & Media"
@@ -1238,7 +1247,7 @@
     "description": "Music production is the craft of creating and recording music and sound. Sound engineers record, mix, edit and master audio for songs, media and games, while conductors, arrangers and music directors compose and lead performances. Recording studios, broadcasters and live event organisations are common workplaces."
   },
   "D160": {
-    "domain_name": "Fashion Styling, Image Consulting",
+    "domain_name": "Fashion Styling, Image Consulting and Personal Shopping",
     "cluster": "Creative & Media",
     "clusters": [
       "Creative & Media"
@@ -1255,7 +1264,7 @@
     "description": "Fashion styling and image consulting shape how people, products and brands look. Personal and fashion stylists put outfits together for clients, make-up artists and hair designers create complete looks, and visual merchandisers design shop displays and negotiate with suppliers. They work with fashion brands, retail stores, media productions and private clients."
   },
   "D045": {
-    "domain_name": "Public Administration",
+    "domain_name": "Public Administration and Policy",
     "cluster": "Public Sector & Social Services",
     "clusters": [
       "Public Sector & Social Services"
@@ -1271,7 +1280,7 @@
     "description": "Public administration is the running of government and public institutions. Civil registration officers, urban planners and policy officers develop policy and public programmes, inspectors enforce customs, tax and safety rules, and senior officials and ambassadors lead ministries and diplomacy. Nearly all work in government ministries, agencies, local councils and embassies."
   },
   "D046": {
-    "domain_name": "Social Work",
+    "domain_name": "Social Work and Community Development",
     "cluster": "Public Sector & Social Services",
     "clusters": [
       "Public Sector & Social Services"
@@ -1287,7 +1296,7 @@
     "description": "Social work supports people facing difficulty, from children in care to families in crisis. Qualified social workers and counsellors guide individuals through problems such as family planning and recovery from violence, frontline workers support vulnerable adults and children in residential settings, and nannies and day-care workers mind children. Employers include government social services, care homes, charities and schools."
   },
   "D063": {
-    "domain_name": "Economics",
+    "domain_name": "Economics and Policy Analysis",
     "cluster": "Public Sector & Social Services",
     "clusters": [
       "Public Sector & Social Services"
@@ -1303,7 +1312,7 @@
     "description": "Economics studies how money, markets and government policy shape a society. Economists and researchers analyse statistics and market trends, while advisers and policy analysts guide decisions on tax, trade and economic development, often working closely with local representatives. Government ministries, research bodies and banks are common employers."
   },
   "D073": {
-    "domain_name": "Library, Archive",
+    "domain_name": "Libraries, Archives and Information Management",
     "cluster": "Public Sector & Social Services",
     "clusters": [
       "Public Sector & Social Services"
@@ -1336,7 +1345,7 @@
     "description": "Security services protect people, property and public order. Security guards watch over buildings and events, lifeguards and industrial firefighters respond to emergencies, prison officers supervise inmates, and police detectives investigate crimes. Employment is found with private security companies, prisons, the police and other government agencies."
   },
   "D128": {
-    "domain_name": "Social Welfare, Youth Services",
+    "domain_name": "Social Welfare and Youth Services",
     "cluster": "Public Sector & Social Services",
     "clusters": [
       "Public Sector & Social Services"
@@ -1352,7 +1361,7 @@
     "description": "Social welfare and youth services support vulnerable people and young people in the community. Social workers and youth workers guide and assist individuals and families, while managers run public housing, elderly homes, youth centres and social services within legal and budget rules. Government agencies, charities and community organisations provide most roles."
   },
   "D143": {
-    "domain_name": "Forensic Science, Digital Forensics",
+    "domain_name": "Forensic Science, Digital Forensics and Criminal Investigation",
     "cluster": "Public Sector & Social Services",
     "clusters": [
       "Public Sector & Social Services"
@@ -1368,7 +1377,7 @@
     "description": "Forensic science applies science and computing to the investigation of crime. Digital forensics experts and security specialists recover evidence from computers and respond to cyber attacks, laboratory technicians run biological analyses, detectives gather evidence, and pathologists examine medical evidence. Employers include police services, government agencies and security firms."
   },
   "D150": {
-    "domain_name": "Religious Ministry, Theology",
+    "domain_name": "Religious Ministry, Theology and Interfaith Leadership",
     "cluster": "Public Sector & Social Services",
     "clusters": [
       "Public Sector & Social Services"
@@ -1384,7 +1393,7 @@
     "description": "Religious ministry and theology involve leading faith communities and studying religion. Ministers, chaplains and pastoral workers perform ceremonies, interpret religious texts, counsel people and provide charity services, while researchers and teachers study and teach religion. They serve in places of worship, schools, hospitals and charitable organisations."
   },
   "D151": {
-    "domain_name": "Criminology, Criminal Justice",
+    "domain_name": "Criminology, Criminal Justice and Corrections",
     "cluster": "Public Sector & Social Services",
     "clusters": [
       "Public Sector & Social Services"
@@ -1400,7 +1409,7 @@
     "description": "Criminology and criminal justice cover the study of crime and the running of the justice system. Police officers and detectives investigate offences and handle evidence, prison officers guard and manage correctional facilities, and criminologists study why crime happens and supervise offender rehabilitation. Police services, prisons and government agencies are the main employers."
   },
   "D161": {
-    "domain_name": "Humanitarian Aid, Emergency Response",
+    "domain_name": "Humanitarian Aid, Emergency Response and International Development",
     "cluster": "Public Sector & Social Services",
     "clusters": [
       "Public Sector & Social Services"
@@ -1483,7 +1492,7 @@
     "description": "Industrial automation focuses on the machines and control systems that run modern factories. PLC programmers and automation engineers design automated machinery, instrumentation technicians keep control systems working, and assemblers and supervisors build equipment and run automated production lines. Manufacturing plants and engineering firms are the usual employers."
   },
   "D075": {
-    "domain_name": "Fashion, Textiles",
+    "domain_name": "Fashion and Textiles",
     "cluster": "Advanced Manufacturing",
     "clusters": [
       "Advanced Manufacturing"
@@ -1532,7 +1541,7 @@
     "description": "Construction management is the planning and supervision of building work from start to finish. Quantity surveyors estimate costs, site managers and supervisors direct trades and enforce safety on site, bricklayers and plumbers carry out the building work, and engineers handle roads, water and structures. Construction firms, engineering companies and government agencies run most projects."
   },
   "D053": {
-    "domain_name": "Hospitality",
+    "domain_name": "Hospitality Services and Management",
     "cluster": "Hospitality & Tourism",
     "clusters": [
       "Hospitality & Tourism"
@@ -1549,7 +1558,7 @@
     "description": "Hospitality is the service of looking after guests in hotels, restaurants and tourism. Receptionists and concierges welcome visitors, chefs lead kitchens, waiters and guides serve guests directly, and managers run hotels, events and tour operations while handling budgets and complaints. Hotels, restaurants, resorts and event companies provide the work."
   },
   "D054": {
-    "domain_name": "Oil",
+    "domain_name": "Oil and Gas Operations",
     "cluster": "Energy & Resources",
     "clusters": [
       "Energy & Resources"
@@ -1583,7 +1592,7 @@
     "description": "Chemical engineering turns raw materials into chemicals, fuels, medicines and everyday products. Engineers design chemical, gas and pharmaceutical processes, operators run mixers, kilns and production machines, and plant staff control quality and handle hazardous waste safely. Chemical plants, refineries and manufacturing factories are where most of the work happens."
   },
   "D148": {
-    "domain_name": "Offshore, Subsea",
+    "domain_name": "Offshore and Subsea Engineering",
     "cluster": "Energy & Resources",
     "clusters": [
       "Energy & Resources"
@@ -1599,7 +1608,7 @@
     "description": "Offshore and subsea work centres on producing oil and gas at sea. Drilling and equipment engineers design wells, subsea structures and production systems, while operators run refineries, gas plants and remotely operated underwater vehicles. Oil and gas companies and offshore platforms are the usual workplaces, and safety training is required before anyone works offshore."
   },
   "D056": {
-    "domain_name": "Blockchain",
+    "domain_name": "Blockchain and Decentralised Systems",
     "cluster": "Emerging Technology",
     "clusters": [
       "Emerging Technology"
@@ -1615,7 +1624,7 @@
     "description": "Blockchain work involves building software that records transactions on shared computer networks rather than in one central place. Smart contract and blockchain developers write the programs, security auditors and cryptography engineers test them for weaknesses, and architects and analysts design the wider systems. Software companies and financial organisations offer most roles."
   },
   "D057": {
-    "domain_name": "Digital Health",
+    "domain_name": "Digital Health and Health Technology",
     "cluster": "Emerging Technology",
     "clusters": [
       "Emerging Technology"
@@ -1631,7 +1640,7 @@
     "description": "Digital health applies computers and data to the running of healthcare. Clinical coders and records staff manage patient records and coding, analysts study health data, engineers build health information systems and mobile health apps, and managers lead healthcare institutions and informatics teams. Hospitals, clinics, health agencies and technology firms are the main employers."
   },
   "D058": {
-    "domain_name": "EdTech",
+    "domain_name": "Education Technology and Learning Experience Design",
     "cluster": "Emerging Technology",
     "clusters": [
       "Emerging Technology"
@@ -1647,7 +1656,7 @@
     "description": "EdTech joins teaching with digital tools to help people learn. Instructional designers and e-learning developers build online courses and learning experiences, ICT trainers and digital literacy teachers deliver lessons, and administrators keep learning management systems running. Schools, training providers and organisations that train their own staff employ these specialists."
   },
   "D059": {
-    "domain_name": "Space Technology",
+    "domain_name": "Space Technology and Satellite Systems",
     "cluster": "Emerging Technology",
     "clusters": [
       "Emerging Technology"
@@ -1663,7 +1672,7 @@
     "description": "Space technology concerns the design and operation of spacecraft and satellites. Aerospace, avionics and satellite systems engineers design and test flight hardware, propulsion engineers work on spacecraft engines, and mission operations engineers run missions once craft are in orbit, drawing heavily on physics. Space agencies, aerospace companies and research organisations are the usual employers."
   },
   "D081": {
-    "domain_name": "Office Administration, Secretarial",
+    "domain_name": "Office Administration and Secretarial Services",
     "cluster": "Office & Administrative Services",
     "clusters": [
       "Office & Administrative Services"
@@ -1680,7 +1689,7 @@
     "description": "Office administration keeps organisations running through everyday paperwork and communication. Secretaries, clerks and typists file documents, handle mail and correspondence, type letters, keep records and enter data into computer systems. Almost every type of employer needs them, from companies and schools to hospitals and government offices."
   },
   "D082": {
-    "domain_name": "Customer Service, Contact Centre",
+    "domain_name": "Customer Service and Contact Centre Operations",
     "cluster": "Office & Administrative Services",
     "clusters": [
       "Office & Administrative Services"
@@ -1697,7 +1706,7 @@
     "description": "Customer service is the work of helping people by phone, at reception desks and at service counters. Representatives answer calls and handle complaints, receptionists and concierges greet and assist visitors, dispatchers take emergency calls, and medical administrative assistants manage patient records and appointments. Call centres, hotels, hospitals, banks and telecoms companies employ them."
   },
   "D083": {
-    "domain_name": "Travel, Tourism",
+    "domain_name": "Travel and Tourism",
     "cluster": "Office & Administrative Services",
     "clusters": [
       "Office & Administrative Services"
@@ -1714,7 +1723,7 @@
     "description": "Travel and tourism serves people on the move for holidays, business and leisure. Travel consultants plan trips and sell tickets, tour organisers and park guides lead visitors around attractions, and stewards look after passengers on flights, ships and trains. Airlines, travel agencies, hotels, parks and tour companies are the common employers."
   },
   "D084": {
-    "domain_name": "Payroll, Bookkeeping",
+    "domain_name": "Payroll and Bookkeeping",
     "cluster": "Office & Administrative Services",
     "clusters": [
       "Office & Administrative Services"
@@ -1731,7 +1740,7 @@
     "description": "Payroll and bookkeeping is the careful recording of an organisation's money, including wages, taxes, sales and payments. Clerks maintain records of financial transactions, prepare staff salaries, process insurance and tax paperwork, and support auditors and back-office operations using office software. Banks, insurance companies and businesses of every size employ them."
   },
   "D085": {
-    "domain_name": "Retail Sales, Shop Operations",
+    "domain_name": "Retail Sales and Shop Operations",
     "cluster": "Retail, Sales & Commerce",
     "clusters": [
       "Retail, Sales & Commerce"
@@ -1748,7 +1757,7 @@
     "description": "Retail sales is the selling of goods and services directly to customers. Cashiers operate tills, shop assistants help buyers find and understand products, specialised sellers advise on items such as vehicle parts, and rental and leasing agents arrange hire agreements. They work in shops, supermarkets, showrooms and call centres."
   },
   "D087": {
-    "domain_name": "Hairdressing, Barbering",
+    "domain_name": "Hairdressing, Barbering & Hair Technology",
     "cluster": "Beauty, Personal Care & Wellness",
     "clusters": [
       "Beauty, Personal Care & Wellness"
@@ -1764,7 +1773,7 @@
     "n_elite_roles": 0
   },
   "D088": {
-    "domain_name": "Beauty Therapy, Aesthetics",
+    "domain_name": "Beauty Therapy, Aesthetics & Spa Services",
     "cluster": "Beauty, Personal Care & Wellness",
     "clusters": [
       "Beauty, Personal Care & Wellness"
@@ -1780,7 +1789,7 @@
     "n_elite_roles": 0
   },
   "D089": {
-    "domain_name": "Funeral",
+    "domain_name": "Funeral and Mortuary Services",
     "cluster": "Beauty, Personal Care & Wellness",
     "clusters": [
       "Beauty, Personal Care & Wellness"
@@ -1796,7 +1805,7 @@
     "n_elite_roles": 0
   },
   "D090": {
-    "domain_name": "Animal Care, Grooming",
+    "domain_name": "Animal Care, Grooming and Pet Services",
     "cluster": "Beauty, Personal Care & Wellness",
     "clusters": [
       "Beauty, Personal Care & Wellness"
@@ -1830,7 +1839,7 @@
     "description": "Driving instruction is the teaching of people to drive safely and pass their licence tests. Instructors give practical lessons in cars, buses, trucks, motorcycles and even vessels, follow a set curriculum, guard each student's safety and explain the rules of the road. Most work for driving schools accredited by the road safety authorities or run their own."
   },
   "D092": {
-    "domain_name": "Culinary Arts, Catering",
+    "domain_name": "Culinary Arts, Catering and Food Service",
     "cluster": "Culinary Arts & Food Service",
     "clusters": [
       "Culinary Arts & Food Service"
@@ -1847,7 +1856,7 @@
     "description": "Culinary arts and catering is the preparation and serving of food and drink. Cooks and industrial cooks prepare meals, bartenders and sommeliers serve and recommend drinks, waiters and crew members attend to customers, and kitchen assistants support food preparation and hygiene. Restaurants, hotels, fast-food outlets and catering companies are the usual employers."
   },
   "D093": {
-    "domain_name": "Electrical Installation, Wiring",
+    "domain_name": "Electrical Installation, Wiring and Maintenance",
     "cluster": "Electrical & Electronics Trades",
     "clusters": [
       "Electrical & Electronics Trades"
@@ -1864,7 +1873,7 @@
     "description": "Electrical installation is the fitting and repair of wiring and electrical equipment in buildings, vehicles and industry. Electricians read wiring plans, install cables and equipment, inspect electrical supplies and resolve faults in homes, factories and vehicles. They work for construction firms, electricity companies and maintenance contractors, and contracting work in Nigeria requires a statutory licence."
   },
   "D094": {
-    "domain_name": "Electronics Servicing, ICT Equipment",
+    "domain_name": "Electronics and ICT Equipment Servicing, Smart Systems Installation",
     "cluster": "Electrical & Electronics Trades",
     "clusters": [
       "Electrical & Electronics Trades"
@@ -1881,7 +1890,7 @@
     "description": "Electronics servicing is the repair and maintenance of electronic devices and communication equipment. Technicians read circuit diagrams to repair phones, computers, alarms and telecoms equipment, install smart-home systems, and test microelectronics and hardware against quality standards. Telecoms companies, repair workshops and manufacturing firms are the typical employers."
   },
   "D095": {
-    "domain_name": "Motor Vehicle Mechanics, Repairs",
+    "domain_name": "Motor Vehicle Mechanics and Repairs",
     "cluster": "Mechanical & Automotive Trades",
     "clusters": [
       "Mechanical & Automotive Trades"
@@ -1898,7 +1907,7 @@
     "description": "Motor vehicle mechanics keep cars, trucks, motorcycles and even bicycles running. Mechanics and technicians service engines, repair vehicle electrical systems, restore and refurbish older vehicles and rebuild bodywork, while supervisors oversee maintenance workshops. Garages, vehicle workshops and transport companies provide most of the work."
   },
   "D096": {
-    "domain_name": "Agricultural",
+    "domain_name": "Agricultural Machinery and Farm Operations",
     "cluster": "Mechanical & Automotive Trades",
     "clusters": [
       "Mechanical & Automotive Trades"
@@ -1915,7 +1924,7 @@
     "description": "Agricultural work combines farming with the machinery that makes it possible. Farmers grow crops and raise livestock, operators drive tractors and forestry equipment, and technicians repair and maintain agricultural machines, often on site in the field. Farms, plantations, forestry companies and equipment dealers are the main employers."
   },
   "D097": {
-    "domain_name": "Welding, Fabrication, Blacksmithing",
+    "domain_name": "Welding, Fabrication and Blacksmithing",
     "cluster": "Metal, Welding & Fabrication Trades",
     "clusters": [
       "Metal, Welding & Fabrication Trades"
@@ -1932,7 +1941,7 @@
     "description": "Welding and fabrication is the shaping and joining of metal into useful products. Welders and solderers fuse metal parts together, operators run plasma cutters and forging presses, and craft workers such as farriers, riveters and gunsmiths make and repair metal items to quality standards. Workshops, factories and construction firms are the usual workplaces."
   },
   "D098": {
-    "domain_name": "Precision Engineering, Toolmaking",
+    "domain_name": "Precision Engineering and Toolmaking",
     "cluster": "Metal, Welding & Fabrication Trades",
     "clusters": [
       "Metal, Welding & Fabrication Trades"
@@ -1949,7 +1958,7 @@
     "description": "Precision engineering is the making, testing and repair of small, exact components and instruments. Watchmakers and instrument assemblers build and fix watches and optical devices, inspectors test electronics and other products for quality, and toolmakers craft moulds and precision metal parts using measuring equipment. Manufacturing plants, workshops and quality-control laboratories are the typical workplaces."
   },
   "D099": {
-    "domain_name": "Masonry, Bricklaying, Tiling, Plastering",
+    "domain_name": "Masonry, Bricklaying, Tiling and Plastering",
     "cluster": "Building & Construction Trades",
     "clusters": [
       "Building & Construction Trades"
@@ -1966,7 +1975,7 @@
     "description": "Masonry and its related trades build and finish the solid parts of buildings, such as walls, floors and ceilings. Bricklayers lay blocks, tile fitters and floor layers finish surfaces, ceiling and glass installers fit out interiors, and stone engravers carve decorative work, all under construction safety rules. Most work is with construction firms, and skills can be certified through government trade tests."
   },
   "D100": {
-    "domain_name": "Plumbing, Pipefitting",
+    "domain_name": "Plumbing, Pipefitting & HVAC Technology",
     "cluster": "Building & Construction Trades",
     "clusters": [
       "Building & Construction Trades"
@@ -1982,7 +1991,7 @@
     "n_elite_roles": 0
   },
   "D101": {
-    "domain_name": "Painting, Decorating",
+    "domain_name": "Painting, Decorating & Surface Treatment",
     "cluster": "Building & Construction Trades",
     "clusters": [
       "Building & Construction Trades"
@@ -1998,7 +2007,7 @@
     "n_elite_roles": 0
   },
   "D102": {
-    "domain_name": "Carpentry, Joinery, Wood Technology",
+    "domain_name": "Carpentry, Joinery, Wood Technology and Furniture Making",
     "cluster": "Wood, Furniture & Craft",
     "clusters": [
       "Wood, Furniture & Craft"
@@ -2015,7 +2024,7 @@
     "description": "Carpentry and wood technology is the craft of shaping wood into buildings, furniture and everyday objects. Carpenters build frames and install doors, windows and staircases, machine operators shape and dry timber, furniture makers craft tables and chairs, and artisans handcraft baskets, carvings and toys. Construction firms, furniture workshops and joinery factories are the usual employers."
   },
   "D103": {
-    "domain_name": "Jewellery Making, Goldsmithing",
+    "domain_name": "Jewellery Making and Goldsmithing",
     "cluster": "Wood, Furniture & Craft",
     "clusters": [
       "Wood, Furniture & Craft"
@@ -2032,7 +2041,7 @@
     "description": "Jewellery making and goldsmithing is the craft of shaping precious metals and stones into rings, chains and other ornaments. Goldsmiths, jewellers, engravers, stone cutters and setters create new pieces, mount and adjust stones, and repair damaged items using specialist equipment. Most practitioners work in small workshops, jewellery shops or craft studios."
   },
   "D104": {
-    "domain_name": "Pottery, Ceramics, Glass",
+    "domain_name": "Pottery, Ceramics and Glasswork",
     "cluster": "Wood, Furniture & Craft",
     "clusters": [
       "Wood, Furniture & Craft"
@@ -2049,7 +2058,7 @@
     "description": "Pottery, ceramics and glass covers the craft of forming clay, porcelain and glass into useful and decorative objects. Practitioners such as ceramic painters, glass-blowers, pottery casters, brick moulders and engravers mould, cast, blow, paint and engrave their pieces, often working from their own sketches. They typically work in potteries, glassworks, brickyards and craft studios."
   },
   "D105": {
-    "domain_name": "Handicraft, Basketry, Textile Craft",
+    "domain_name": "Handicrafts, Basketry and Textile Crafts",
     "cluster": "Wood, Furniture & Craft",
     "clusters": [
       "Wood, Furniture & Craft"
@@ -2066,7 +2075,7 @@
     "description": "Handicraft, basketry and textile craft is about making goods by hand from fibres, yarn, wicker and similar materials. Weavers, knitters, carpet makers, wicker furniture makers, brush makers, toymakers and artisan papermakers shape these materials using hand techniques and simple equipment they maintain themselves. Work is usually based in small workshops, craft centres and cottage industries."
   },
   "D106": {
-    "domain_name": "Garment Making, Tailoring, Dressmaking",
+    "domain_name": "Garment Making, Tailoring and Dressmaking",
     "cluster": "Textiles, Garments & Leather",
     "clusters": [
       "Textiles, Garments & Leather"
@@ -2083,7 +2092,7 @@
     "description": "Garment making, tailoring and dressmaking turns fabric into clothing and covered furnishings. Dressmakers, sewing machinists, patternmakers and embroiderers cut and sew garments, grade clothing sizes and work to standard sizing systems, while upholsterers cover seats for boats and railway cars. Typical workplaces include tailoring shops, garment factories and fashion houses."
   },
   "D107": {
-    "domain_name": "Leather Technology, Shoemaking",
+    "domain_name": "Leatherworking, Shoemaking and Leather Goods",
     "cluster": "Textiles, Garments & Leather",
     "clusters": [
       "Textiles, Garments & Leather"
@@ -2100,7 +2109,7 @@
     "description": "Leather technology and shoemaking covers turning hides into leather and making footwear, bags and other leather goods. Tanners process hides; makers and machine operators cut, stitch, last and finish shoes, including bespoke and orthopaedic footwear; technicians test quality while designers and managers develop products and run production. Employers include tanneries, footwear factories, workshops and leather goods shops."
   },
   "D108": {
-    "domain_name": "Printing Technology, Pre-press",
+    "domain_name": "Printing Technology, Pre-press and Print Finishing",
     "cluster": "Printing & Graphic Production",
     "clusters": [
       "Printing & Graphic Production"
@@ -2116,7 +2125,7 @@
     "n_elite_roles": 0
   },
   "D109": {
-    "domain_name": "Metal Processing, Foundry",
+    "domain_name": "Metal Processing, Foundry and Casting Operations",
     "cluster": "Manufacturing & Industrial Plant Operations",
     "clusters": [
       "Manufacturing & Industrial Plant Operations"
@@ -2133,7 +2142,7 @@
     "description": "Metal processing and foundry work is about shaping and finishing metal in industrial plants. Operators run casting, coating, drawing, grinding and abrasive blasting machines, load and remove workpieces, reject faulty ones and keep equipment running to quality standards. They are employed mainly by foundries, steel plants and metal manufacturing factories."
   },
   "D110": {
-    "domain_name": "Chemical, Rubber",
+    "domain_name": "Chemical, Rubber and Plastics Plant Operations",
     "cluster": "Manufacturing & Industrial Plant Operations",
     "clusters": [
       "Manufacturing & Industrial Plant Operations"
@@ -2150,7 +2159,7 @@
     "description": "Chemical and rubber processing involves running plants that convert raw materials into products such as soap, lime and other chemicals. Operators control distillation units, kilns, blenders and soap-making machines, adjust process settings, troubleshoot faults and follow strict safety rules with protective equipment. Common employers are chemical plants, soap factories and other process industries."
   },
   "D111": {
-    "domain_name": "Textile, Garment",
+    "domain_name": "Textile and Garment Machine Operations",
     "cluster": "Manufacturing & Industrial Plant Operations",
     "clusters": [
       "Manufacturing & Industrial Plant Operations"
@@ -2167,7 +2176,7 @@
     "description": "Textile and garment manufacturing runs the machinery that spins fibre into yarn and turns yarn into fabric and clothing. Spinning and twisting operators, knitting and finishing technicians and pattern-printing workers run machines, measure yarn, test fabric quality and inspect finished goods, with supervisors managing operations. Textile mills and garment factories are the usual workplaces."
   },
   "D112": {
-    "domain_name": "Wood Processing, Pulp",
+    "domain_name": "Wood, Pulp and Paper Processing",
     "cluster": "Manufacturing & Industrial Plant Operations",
     "clusters": [
       "Manufacturing & Industrial Plant Operations"
@@ -2184,7 +2193,7 @@
     "description": "Wood processing and pulp work converts logs into sawn timber, veneer, pellets, pulp and paper. Machine operators run saws, debarkers, planers, bleachers and paper machines, perform test runs, troubleshoot faults and work safely in protective gear, while supervisors oversee production lines. Sawmills, paper mills and wood products factories are the main employers."
   },
   "D113": {
-    "domain_name": "Glass, Ceramics, Building Materials",
+    "domain_name": "Glass, Ceramics, Building Materials and Boiler Plant Operations",
     "cluster": "Manufacturing & Industrial Plant Operations",
     "clusters": [
       "Manufacturing & Industrial Plant Operations"
@@ -2200,7 +2209,7 @@
     "n_elite_roles": 0
   },
   "D114": {
-    "domain_name": "Assembly, Packaging",
+    "domain_name": "Assembly and Packaging Operations",
     "cluster": "Manufacturing & Industrial Plant Operations",
     "clusters": [
       "Manufacturing & Industrial Plant Operations"
@@ -2217,7 +2226,7 @@
     "description": "Assembly and packaging is the factory work of putting products together and preparing them for sale. Assemblers build motorcycles, aircraft engines, medical devices and electronics by reading assembly drawings and aligning components, while other operators run cartoning, labelling and filling machines. This work happens in factories and assembly plants across many industries."
   },
   "D115": {
-    "domain_name": "Road Transport Operations (Drivers",
+    "domain_name": "Road Transport and Driving Operations",
     "cluster": "Transport & Driving Operations",
     "clusters": [
       "Transport & Driving Operations"
@@ -2234,7 +2243,7 @@
     "description": "Road transport operations covers moving people and goods by road. Bus, delivery, cargo and refuse vehicle drivers plan routes, obey traffic laws, communicate with customers and understand the basic mechanics of their vehicles. Employers include transport and logistics companies, government agencies and any organisation that runs its own vehicle fleet."
   },
   "D116": {
-    "domain_name": "Heavy Equipment, Earthmoving",
+    "domain_name": "Heavy Equipment and Earthmoving Operations",
     "cluster": "Transport & Driving Operations",
     "clusters": [
       "Transport & Driving Operations"
@@ -2268,7 +2277,7 @@
     "description": "Railway work keeps trains and rail yards running. Train drivers operate services, dispatchers and signalpersons control movements from signal boxes and level crossings, shunters and train preparers couple wagons and follow switching instructions, and conductors look after passengers. Most roles are with railway corporations and rail freight operators."
   },
   "D118": {
-    "domain_name": "Crop Production, Horticulture",
+    "domain_name": "Crop Production and Horticulture",
     "cluster": "Agriculture, Fishing & Natural Resources",
     "clusters": [
       "Agriculture, Fishing & Natural Resources"
@@ -2285,7 +2294,7 @@
     "description": "Crop production and horticulture is the growing of food crops, fruit, vegetables and garden plants. Managers and supervisors plan planting, fertilisation and pest control; workers pick produce, apply crop protection and operate vineyard machinery; inspectors check that farms follow agricultural and environmental rules. Farms, plantations, nurseries and agricultural agencies provide most of the work."
   },
   "D119": {
-    "domain_name": "Livestock, Poultry, Dairy",
+    "domain_name": "Livestock, Poultry and Dairy Production",
     "cluster": "Agriculture, Fishing & Natural Resources",
     "clusters": [
       "Agriculture, Fishing & Natural Resources"
@@ -2302,7 +2311,7 @@
     "description": "Livestock, poultry and dairy work is the rearing of animals for food and other products. Farmers and breeders raise cattle, poultry, sheep, horses and bees and run dairy farms, while livestock workers feed, handle and groom animals under animal-welfare rules. Work is based on farms, ranches and dairies."
   },
   "D120": {
-    "domain_name": "Fisheries, Aquaculture",
+    "domain_name": "Fisheries and Aquaculture",
     "cluster": "Agriculture, Fishing & Natural Resources",
     "clusters": [
       "Agriculture, Fishing & Natural Resources"
@@ -2319,7 +2328,7 @@
     "description": "Fisheries and aquaculture covers catching fish and farming aquatic stock. Managers run hatcheries and fish farms, technicians monitor fish health and mortality, and workers harvest stock, dive, moor cages and crew fishing boats, all within biosecurity and fisheries law. Fish farms, hatcheries and fishing companies are the main employers."
   },
   "D121": {
-    "domain_name": "Forestry, Wildlife Management",
+    "domain_name": "Forestry and Wildlife Management",
     "cluster": "Agriculture, Fishing & Natural Resources",
     "clusters": [
       "Agriculture, Fishing & Natural Resources"
@@ -2352,7 +2361,7 @@
     "description": "Medical laboratory technology is the testing of blood and other body samples to help doctors diagnose and treat illness. Phlebotomists collect blood, while technologists and technicians run clinical chemistry and molecular tests, classify blood types, maintain laboratory equipment and keep patient records. Hospitals, clinics and diagnostic laboratories employ most practitioners."
   },
   "D123": {
-    "domain_name": "Radiography, Medical Imaging",
+    "domain_name": "Radiography and Medical Imaging",
     "cluster": "Community Health & Paramedical",
     "clusters": [
       "Community Health & Paramedical"
@@ -2402,7 +2411,7 @@
     "description": "Medical secretarial work is the administration that keeps clinics and hospitals organised. Medical secretaries and receptionists book appointments, greet patients, answer their questions and transcribe notes, keeping health records accurate and confidential, while practice managers run the office. Hospitals, clinics and veterinary practices employ people in this line of work."
   },
   "D126": {
-    "domain_name": "Complementary, Alternative",
+    "domain_name": "Complementary, Alternative and Traditional Medicine",
     "cluster": "Community Health & Paramedical",
     "clusters": [
       "Community Health & Paramedical"
@@ -2418,7 +2427,7 @@
     "description": "Complementary and alternative medicine treats patients using therapies outside conventional hospital care, such as acupuncture, herbal medicine, homeopathy and aromatherapy. Practitioners including acupuncturists, herbal therapists, chiropractors and naturopaths assess clients, draw on knowledge of human anatomy and physiology, and give hands-on treatments. Many work in private clinics and wellness centres."
   },
   "D127": {
-    "domain_name": "Early Childhood Education, Nursery",
+    "domain_name": "Early Childhood Education, Nursery and Childcare",
     "cluster": "Childcare & Early Learning",
     "clusters": [
       "Childcare & Early Learning"
@@ -2435,7 +2444,7 @@
     "description": "Early childhood education and nursery work is the care and teaching of young children before primary school. Childcare workers and nannies play with children, help them develop personal skills and handle everyday problems, while coordinators and head teachers run nurseries and lead early-years teaching. Nursery schools, day-care centres and private homes are common workplaces."
   },
   "D129": {
-    "domain_name": "Military, Defence",
+    "domain_name": "Military and Armed Forces Careers",
     "cluster": "Defence & Military",
     "clusters": [
       "Defence & Military"
@@ -2467,7 +2476,7 @@
     "description": "Motorsport engineering applies mechanical and production engineering to high-performance vehicles. Powertrain, composites, welding and fluid power engineers design engines, aerodynamics and vehicle systems from technical drawings, while technicians and supervisors test parts and oversee manufacturing. Racing teams, engineering workshops and vehicle manufacturers offer the main opportunities."
   },
   "D132": {
-    "domain_name": "Space Science, Exploration",
+    "domain_name": "Space Science and Exploration",
     "cluster": "High-Performance Engineering",
     "clusters": [
       "High-Performance Engineering"
@@ -2483,7 +2492,7 @@
     "description": "Space science and exploration studies space and builds the craft that travel there. Aerospace and satellite systems engineers design spacecraft, flight and mission controllers monitor missions, and physicists, astrophysicists and astrobiologists carry out research using tools such as spectroscopy. Space agencies, research institutes and universities are the usual employers."
   },
   "D133": {
-    "domain_name": "Luxury",
+    "domain_name": "Luxury & Bespoke Specialist Interiors",
     "cluster": "High-Performance Engineering",
     "clusters": [
       "High-Performance Engineering"
@@ -2497,10 +2506,10 @@
     "professional_ratio": 0.27,
     "trade_ratio": 0.7,
     "n_elite_roles": 0,
-    "description": "Luxury craft and design covers the making and presentation of high-quality handmade goods. Craftspeople make jewellery, cut gems, engrave, sew bespoke clothing and restore antique furniture; designers create fashion, jewellery, furniture and perfumes; visual merchandisers and interior designers present the finished products. Workshops, fashion houses, design studios and upmarket shops provide the work."
+    "description": "Design, make, fit and restore bespoke interiors for aircraft, ships and vehicles. This specialist field concerns transport interiors, not luxury fashion or craft production generally."
   },
   "D134": {
-    "domain_name": "Naval Architecture, Marine Engineering",
+    "domain_name": "Naval Architecture and Marine Engineering",
     "cluster": "High-Performance Engineering",
     "clusters": [
       "High-Performance Engineering"
@@ -2516,7 +2525,7 @@
     "description": "Naval architecture and marine engineering is the design of ships and the running of their machinery. Naval architects design and survey vessels and offshore energy installations, while marine engineers operate and maintain ship engines and systems at sea, from assistant to chief engineer. Shipyards, shipping companies and offshore energy firms are typical employers."
   },
   "D166": {
-    "domain_name": "Autonomous Vehicles, Self-Driving Systems",
+    "domain_name": "Autonomous Vehicles and Self-Driving Systems",
     "cluster": "High-Performance Engineering",
     "clusters": [
       "High-Performance Engineering"
@@ -2532,7 +2541,7 @@
     "description": "Autonomous vehicle engineering develops cars and other vehicles that can drive themselves. Automotive and powertrain engineers design the vehicle's mechanical systems, while software, embedded systems and machine learning engineers build the computing that senses the road and controls the car. Vehicle manufacturers, engineering firms and technology companies employ these specialists."
   },
   "D135": {
-    "domain_name": "Nuclear Engineering, Radiation Science",
+    "domain_name": "Nuclear Engineering and Radiation Science",
     "cluster": "Advanced Science & Engineering",
     "clusters": [
       "Advanced Science & Engineering"
@@ -2548,7 +2557,7 @@
     "description": "Nuclear engineering and radiation science applies physics to nuclear energy and radiation. Nuclear engineers and reactor operators run and decommission reactors, health and medical physicists keep people safe from radiation and support radiotherapy, and radiochemists work in laboratories using mathematical modelling and spectroscopy. Power stations, hospitals, research institutes and regulators employ them."
   },
   "D136": {
-    "domain_name": "Aeronautical",
+    "domain_name": "Aeronautical and Aerospace Engineering",
     "cluster": "Advanced Science & Engineering",
     "clusters": [
       "Advanced Science & Engineering"
@@ -2564,7 +2573,7 @@
     "description": "Aeronautical engineering is the design, building and upkeep of aircraft. Aerodynamics engineers and engine designers develop new aircraft, flight test engineers prove them in the air, and avionics inspectors, maintenance engineers and assembly supervisors keep production and finished aircraft safe. Aircraft factories, airlines, maintenance organisations and air forces are the main employers."
   },
   "D137": {
-    "domain_name": "Medical Physics, Radiation Therapy",
+    "domain_name": "Medical Physics and Radiation Therapy",
     "cluster": "Advanced Science & Engineering",
     "clusters": [
       "Advanced Science & Engineering"
@@ -2596,7 +2605,7 @@
     "description": "Biomedical engineering combines engineering with biology and medicine to design equipment and materials used in healthcare. Biomedical engineers and biomaterials scientists develop and test medical devices, while research and robotics engineers work on new technologies for the body. They are employed by hospitals, medical device manufacturers and research laboratories."
   },
   "D142": {
-    "domain_name": "Bioinformatics, Computational Biology",
+    "domain_name": "Bioinformatics and Computational Biology",
     "cluster": "Advanced Science & Engineering",
     "clusters": [
       "Advanced Science & Engineering"
@@ -2612,7 +2621,7 @@
     "description": "Bioinformatics and computational biology use computers and data analysis to study living things, from microbes to human genes. Scientists such as geneticists, microbiologists and bioinformatics specialists run laboratory experiments, analyse biological data and write scientific papers. They generally work in research institutes, universities and hospitals."
   },
   "D144": {
-    "domain_name": "Climate Science, Meteorology",
+    "domain_name": "Climate Science and Meteorology",
     "cluster": "Advanced Science & Engineering",
     "clusters": [
       "Advanced Science & Engineering"
@@ -2628,7 +2637,7 @@
     "description": "Climate science and meteorology study the weather and the long-term behaviour of the atmosphere. Forecasters and meteorologists use instruments and specialised computer models to predict weather conditions, while climatologists, hydrologists and oceanographers analyse climate, water and ocean patterns. Typical employers are government weather agencies, aviation organisations and research institutes."
   },
   "D145": {
-    "domain_name": "Neuroscience, Cognitive Science",
+    "domain_name": "Neuroscience, Cognitive Science and Brain-Computer Interfaces",
     "cluster": "Advanced Science & Engineering",
     "clusters": [
       "Advanced Science & Engineering"
@@ -2644,7 +2653,7 @@
     "description": "Neuroscience and cognitive science investigate the brain, thought and behaviour. One side of the field involves scientists studying how the brain and mind work; the other involves psychologists and psychotherapists who assess and treat mental and behavioural health. They work in hospitals, clinics, schools and universities."
   },
   "D155": {
-    "domain_name": "Nanotechnology, Advanced Materials",
+    "domain_name": "Nanotechnology and Advanced Materials",
     "cluster": "Advanced Science & Engineering",
     "clusters": [
       "Advanced Science & Engineering"
@@ -2660,7 +2669,7 @@
     "description": "Nanotechnology and advanced materials involve studying and building substances at extremely small scales to give them new properties. Chemists, materials scientists and nanofabrication technicians run experiments, analyse chemical substances, make tiny components and write up their findings in technical papers. Research laboratories, universities and manufacturing companies are the usual employers."
   },
   "D141": {
-    "domain_name": "Quantum Computing, Quantum Information",
+    "domain_name": "Quantum Computing and Quantum Information",
     "cluster": "Advanced Science & Engineering",
     "clusters": [
       "Advanced Science & Engineering"
@@ -2676,7 +2685,7 @@
     "description": "Quantum computing builds a new kind of computer based on the physics of atoms and light. Some specialists write quantum software, algorithms and cryptography, while others engineer the hardware, sensors and devices that run them. Work in this field is usually found in research laboratories, universities and technology companies."
   },
   "D167": {
-    "domain_name": "XR & Immersive Technology",
+    "domain_name": "Extended Reality (XR) and Immersive Technology",
     "cluster": "Emerging Technology",
     "clusters": [
       "Emerging Technology",
@@ -2691,10 +2700,10 @@
     "professional_ratio": 1.0,
     "trade_ratio": 0.0,
     "n_elite_roles": 5,
-    "description": "Immersive technology, often called XR, creates virtual and augmented reality experiences that blend digital content with the real world. Developers code AR, VR and spatial computing applications, while hardware engineers design headsets, optics, haptics and motion capture systems. Technology companies, studios and research laboratories are where most of this work happens."
+    "description": "Design and build augmented-, virtual- and mixed-reality experiences and the systems that support them. Depending on the role, work may involve 3D software, interaction design, spatial computing, headsets, sensors or haptics."
   },
   "D168": {
-    "domain_name": "Esports & Creator Economy",
+    "domain_name": "Esports and Creator Economy",
     "cluster": "Creative & Media",
     "clusters": [
       "Creative & Media",
@@ -2711,10 +2720,10 @@
     "trade_ratio": 0.0,
     "n_elite_roles": 0,
     "note": "multi-cluster: competitive play(Sports), broadcast/streaming(Creative), tech(Computing); remote/global path",
-    "description": "Esports and the creator economy turn competitive gaming and online content into careers. Casters commentate on matches, coaches and analysts prepare teams, content creators build audiences and earn through sponsorships and subscriptions, and managers run events, teams and communities. Gaming organisations, media companies and marketing agencies offer most of the roles."
+    "description": "Explore work across competitive gaming and online content: playing, coaching, analysing, organising events, producing broadcasts, creating journalism or media, and managing communities or partnerships. These are related career pathways, not one standardized occupation."
   },
   "D070": {
-    "domain_name": "Performing Arts & Entertainment",
+    "domain_name": "Performing Arts and Entertainment",
     "cluster": "Creative & Media",
     "clusters": [
       "Creative & Media"
@@ -2730,9 +2739,13 @@
     "description": "Performing arts and entertainment covers live and recorded performance, including acting, music, dance and stage production. Performers such as dancers, musicians, conductors and presenters create the show itself, while technical crews run lighting, sound, props, costumes and stage machinery behind the scenes. Theatres, studios, broadcasters and event companies are the usual employers."
   },
   "D086": {
-    "domain_name": "Gaming, Betting & Lottery",
+    "domain_name": "Gaming, Betting and Lottery Operations",
     "excluded": true,
     "reason": "gambling — not appropriate for students",
-    "institution_type": []
+    "institution_type": [],
+    "cluster": "Retail, Sales & Commerce",
+    "clusters": [
+      "Retail, Sales & Commerce"
+    ]
   }
 }

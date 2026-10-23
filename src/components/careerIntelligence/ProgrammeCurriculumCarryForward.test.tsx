@@ -1,5 +1,6 @@
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react-native";
+import { StyleSheet, View } from "react-native";
 import { ThemeProvider } from "@/theme";
 import type { ProgrammeDomainConnection } from "@/types/career";
 import { ProgrammeCurriculumCarryForward, ProgrammeOutcomeBridge } from "./ProgrammeCurriculumCarryForward";
@@ -58,14 +59,28 @@ const connection = {
 test("explains programme-to-domain transfer by theme and expands outcomes independently without showing course codes", () => {
   render(<ThemeProvider><ProgrammeCurriculumCarryForward connection={connection} fieldName="Social Sciences" /></ThemeProvider>);
 
-  expect(screen.getByText("Research and evidence")).toBeTruthy();
-  expect(screen.getByText(/not as new domain requirements/)).toBeTruthy();
-  expect(screen.getByText(/reviewed programme-to-field evidence links this theme/)).toBeTruthy();
-  expect(screen.getByText("Choose suitable ways to collect and analyse evidence about social life.")).toBeTruthy();
-  expect(screen.getByText("No other reviewed course outcomes are attached to this theme.")).toBeTruthy();
+  expect(StyleSheet.flatten(screen.getByText("Programme learning carried into this field").props.style)).toMatchObject({ fontSize: 20, lineHeight: 26 });
+  const themeTitle = screen.getByText("Research and evidence");
+  expect(StyleSheet.flatten(themeTitle.props.style)).toMatchObject({ fontSize: 16, lineHeight: 22 });
+  let ancestor = themeTitle.parent;
+  const cardGaps: number[] = [];
+  while (ancestor) {
+    if (ancestor.type === View) {
+      const gap = StyleSheet.flatten(ancestor.props.style).gap;
+      if (typeof gap === "number") cardGaps.push(gap);
+    }
+    ancestor = ancestor.parent;
+  }
+  expect(cardGaps.filter((gap) => gap === 8).length).toBeGreaterThanOrEqual(2);
+  expect(screen.getByText(/They describe learning you have covered or are studying/)).toBeTruthy();
+  expect(screen.getByText(/This part of your programme gives you a starting point for learning about Social Sciences/)).toBeTruthy();
+  const matchedOutcome = screen.getByText("Choose suitable ways to collect and analyse evidence about social life.");
+  expect(StyleSheet.flatten(matchedOutcome.props.style)).toMatchObject({ fontSize: 16, lineHeight: 24 });
+  expect(screen.getByText("No other course outcomes are listed for this theme.")).toBeTruthy();
   expect(screen.getByText("Social theory and institutions")).toBeTruthy();
-  expect(screen.getByText(/does not point to a specific course outcome here that explains how this theme connects/)).toBeTruthy();
-  expect(screen.getByText(/not as proof that you already have a particular field skill or as an extra domain requirement/)).toBeTruthy();
+  expect(screen.getByText(/No particular course outcome is listed here to explain how this theme connects/)).toBeTruthy();
+  expect(screen.getByText(/Treat it as programme context, not proof that you already have a particular field skill/)).toBeTruthy();
+  expect(screen.queryByText(/reviewed evidence|route records/i)).toBeNull();
   expect(screen.queryByText("Compare sociological explanations of institutions and social change.")).toBeNull();
   fireEvent.press(screen.getByRole("button", { name: "See 2 other outcomes in Social theory and institutions" }));
   expect(screen.getByText("Compare sociological explanations of institutions and social change.")).toBeTruthy();
@@ -87,7 +102,8 @@ test("carries relevant programme outcomes into area and role explanations withou
   };
   render(<ThemeProvider><ProgrammeOutcomeBridge connection={routeConnection} nextLayer="area" /></ThemeProvider>);
 
-  expect(screen.getByText("Programme learning context for this area")).toBeTruthy();
+  const sectionHeading = screen.getByText("Programme learning context for this area");
+  expect(StyleSheet.flatten(sectionHeading.props.style)).toMatchObject({ fontSize: 20, lineHeight: 26 });
   expect(screen.getByText(/does not mean the programme teaches every area or role task/)).toBeTruthy();
   expect(screen.getByText("Choose ways to gather evidence for a social question.")).toBeTruthy();
   expect(screen.queryByText("Examine how policy responds to social needs.")).toBeNull();

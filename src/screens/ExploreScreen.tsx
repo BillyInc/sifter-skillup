@@ -15,7 +15,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { Feather } from "@expo/vector-icons";
 import {
   useTheme,
@@ -47,6 +47,7 @@ import { SkillDiscoveryPanel } from "@/components/careerIntelligence/SkillDiscov
 import { CareerDisclaimer } from "@/components/careerIntelligence/CareerDisclaimer";
 import { getStartingPoint } from "@/lib/startingPoint";
 import { useSearchLauncher } from "@/components/shell/searchLauncher";
+import { parseExploreQuery, searchScopeForExplore } from "@/lib/exploreQuery";
 import type { StartingPointProfile } from "@/types/onboarding";
 
 // ─── Cluster hero data ───────────────────────────────────────────
@@ -117,14 +118,15 @@ export default function ExploreScreen({
   const { colors } = useTheme();
   const { user } = useAuth();
   const router = useRouter();
+  const routeQuery = parseExploreQuery(useLocalSearchParams<Record<string, string | string[]>>());
   const exploreNav = useExploreNav();
   const responsive = useResponsive();
   const openSearch = useSearchLauncher();
-  const launchSearch = (term?: string) => {
+  const launchSearch = (term?: string, scope?: import("@/types/career").SearchScope) => {
     if (typeof window !== "undefined") {
       window.dispatchEvent(new CustomEvent("sifter:open-global-search", { detail: term ?? "" }));
     }
-    openSearch(term);
+    openSearch(term, scope);
   };
   const isGuest = !user || user.auth_provider === "guest";
   const hasSession = Boolean(user);
@@ -146,6 +148,11 @@ export default function ExploreScreen({
   const [results, setResults] = useState<DataState<CareerSearchResult> | null>(
     null,
   );
+
+  useEffect(() => {
+    if (routeQuery.text) setQuery(routeQuery.text);
+    if (routeQuery.scope) setFilter(searchScopeForExplore(routeQuery.scope) as ResultFilter);
+  }, [routeQuery.scope, routeQuery.text]);
 
   useEffect(() => {
     let active = true;
@@ -206,7 +213,7 @@ export default function ExploreScreen({
       { value: "programmes" as const, label: "Programmes" },
       { value: "universities" as const, label: "Universities" },
       { value: "domains" as const, label: "Domains" },
-      { value: "subgroups" as const, label: "Subgroups" },
+      { value: "subgroups" as const, label: "Areas of specialisation" },
       { value: "roles" as const, label: "Roles" },
       { value: "skills" as const, label: "Skills" },
       { value: "tools" as const, label: "Tools" },
@@ -305,6 +312,21 @@ export default function ExploreScreen({
             }
           }}
         />
+      ) : null}
+
+      {!adminAudience ? (
+        <View style={styles.section}>
+          <SectionLabel>Browse by type</SectionLabel>
+          <Text style={[styles.guestExploreIntro, { color: colors.textRole.secondary }]}>Choose a catalogue area to explore. Opening a result is optional; you can browse without starting a guidance workflow.</Text>
+          <View style={styles.filterRow}>
+            <FilterChip label="JAMB programmes" onPress={() => exploreNav.admissionHub(router, "programme")} />
+            <FilterChip label="Universities" onPress={() => exploreNav.admissionHub(router, "school")} />
+            <FilterChip label="Domains" onPress={() => exploreNav.domains(router)} />
+            <FilterChip label="Areas of specialisation" onPress={() => launchSearch("", "subgroups")} />
+            <FilterChip label="Roles" onPress={() => launchSearch("", "roles")} />
+            <FilterChip label="Skills and tools" onPress={() => launchSearch("", "skills")} />
+          </View>
+        </View>
       ) : null}
 
       {/* Skills Match is an independent optional tool. Keep the main search

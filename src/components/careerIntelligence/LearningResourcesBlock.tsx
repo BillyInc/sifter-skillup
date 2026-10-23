@@ -11,6 +11,9 @@ export interface LearningResourcesBlockProps {
   resources?: CareerLearningResource[];
   title?: string;
   style?: ViewStyle;
+  /** Compact, individual external-link buttons for orientation references. */
+  presentation?: "standard" | "buttons";
+  buttonLabel?: string;
 }
 
 const GROUPS: {
@@ -87,6 +90,8 @@ export function LearningResourcesBlock({
   resources,
   title = "Where to learn and go next",
   style,
+  presentation = "standard",
+  buttonLabel = "Learn more",
 }: LearningResourcesBlockProps) {
   const { colors } = useTheme();
   const [saved, setSaved] = React.useState<Record<string, boolean>>({});
@@ -129,6 +134,29 @@ export function LearningResourcesBlock({
   }, []);
 
   if (!grouped.length) return null;
+
+  if (presentation === "buttons") {
+    const buttonResources = grouped.flatMap((group) => group.resources);
+    return (
+      <View style={[styles.buttonList, style]}>
+        {buttonResources.map((resource, index) => {
+          const label = buttonResources.length > 1
+            ? `${buttonLabel}${index ? ` (${index + 1})` : ""}`
+            : buttonLabel;
+          return (
+            <ExternalLinkGuard
+              key={`${resource.resourceType}|${resource.targetName}|${resource.provider}`}
+              url={resource.url}
+              label={label}
+              description={`Open ${resourceTitle(resource)} from ${resource.provider}.`}
+              style={[styles.resourceButton, { borderColor: colors.accentRole.action, backgroundColor: colors.surface.subtle }]}
+              textStyle={[styles.resourceButtonText, { color: colors.accentRole.action }]}
+            />
+          );
+        })}
+      </View>
+    );
+  }
 
   return (
     <View style={[styles.container, style]}>
@@ -216,6 +244,9 @@ export default LearningResourcesBlock;
 
 const styles = StyleSheet.create({
   container: { gap: Spacing.md },
+  buttonList: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
+  resourceButton: { minHeight: 46, flexDirection: "row", alignItems: "center", justifyContent: "center", borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
+  resourceButtonText: { fontSize: FontSize.sm, fontWeight: "800", textDecorationLine: "none" },
   intro: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.45,

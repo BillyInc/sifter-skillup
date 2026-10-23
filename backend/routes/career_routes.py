@@ -30,7 +30,12 @@ from auth import Auth
 from database import db
 from logger import log
 from models import ResponseModel
-from d078_guided_areas import d078_guided_area_data, d078_routed_role_keys, is_d078_area_id
+from d078_guided_areas import (
+    d078_guided_area_data,
+    d078_role_routes_for_key,
+    d078_routed_role_keys,
+    is_d078_area_id,
+)
 from d078_guided_content import (
     d078_area_context_items,
     d078_area_tool_options,
@@ -2775,9 +2780,13 @@ async def get_domain(domain_id: str, programme_id: Optional[str] = Query(None)):
             and (
                 domain_id != "D078"
                 or str(row.get("role_key") or "").strip().casefold() in d078_routed_role_keys_set
-                or str(row.get("role_key") or "").strip().casefold() in reviewed_role_guidance_keys
             )
         ]
+        if d078_routes:
+            # A graph-linked card must resolve to a student-eligible API row.
+            # Do not let the area options below bypass the role-level data
+            # state gate by joining against the unfiltered taxonomy result.
+            d078_routed_role_keys(visible_role_rows)
         role_guidance_keys = set(reviewed_role_guidance_keys)
         if domain_id == "D078":
             # A reviewed route is enough to make the role selectable and its
@@ -2904,7 +2913,11 @@ async def get_domain(domain_id: str, programme_id: Optional[str] = Query(None)):
 
         tool_rows = tool_res.data or []
         cert_rows = cert_res.data or []
-        resource_rows = _career_resources(svc, domain_id=domain_uuid, include_role=False)
+        # Read all ownership levels for this domain; each row is sorted into
+        # its exact domain/subgroup/role bucket below and independently gated
+        # before serialization. Excluding role_id rows here made the role
+        # resource buckets permanently empty on the domain payload.
+        resource_rows = _career_resources(svc, domain_id=domain_uuid)
         reviewed_slice = domain_id == "D078"
         if reviewed_slice:
             resource_rows = _reviewed_guidance_resources(resource_rows)
@@ -3060,10 +3073,10 @@ async def get_domain(domain_id: str, programme_id: Optional[str] = Query(None)):
         # role-fit decisions are recomputed here.
         if d078_routes:
             current_areas = []
-            role_rows_by_name = {
-                re.sub(r"[^a-z0-9]+", " ", str(row.get("role_name") or "").casefold()).strip(): row
-                for row in (role_res.data or [])
-                if row.get("role_name")
+            role_rows_by_key = {
+                str(row.get("role_key") or "").strip().casefold(): row
+                for row in visible_role_rows
+                if row.get("role_key")
             }
             for area in d078_routes["areas"]:
                 area_key = area["id"]
@@ -3076,43 +3089,20 @@ async def get_domain(domain_id: str, programme_id: Optional[str] = Query(None)):
                 )
                 area_role_options = []
                 for route in area["roleRoutes"]:
-                    if not route.get("studentVisible"):
-                        continue
                     role_name = str(route.get("roleName") or "").strip()
-                    normalized_role_name = re.sub(r"[^a-z0-9]+", " ", role_name.casefold()).strip()
-                    role_row = role_rows_by_name.get(normalized_role_name, {})
-                    route_context = []
-                    if route.get("domainRouteStatus") == "reviewed_conditional" and route.get("domainRouteCondition"):
-                        route_context.append(
-                            f"This role connects to Social Sciences & Behavioural Research when {route['domainRouteCondition']}"
-                        )
-                    if route.get("status") == "reviewed_conditional" and route.get("condition"):
-                        route_context.append(
-                            f"Within {route.get('areaName')}, this route fits when {route['condition']}"
-                        )
-                    route_context.append(
-                        route.get("positiveTaskEvidence") or route.get("rationale") or ""
-                    )
-                    route_description = ". ".join(
-                        part.strip().rstrip(".")
-                        for part in route_context
-                        if isinstance(part, str) and part.strip()
-                    )
+                    canonical_role_key = f"D078|{re.sub(r'[^a-z0-9]+', ' ', role_name.casefold()).strip()}".casefold()
+                    role_row = role_rows_by_key.get(canonical_role_key)
+                    if not role_row:
+                        raise ValueError(f"D078 graph role has no exact API role row: {route.get('roleGraphId')}")
                     area_role_options.append({
                         "key": role_row.get("role_key") or f"D078|{role_name.casefold()}",
-                        "name": role_row.get("role_name") or role_name.title(),
-                        "description": route_description or role_row.get("description"),
+                        "name": role_row.get("role_name"),
+                        "description": role_row.get("description"),
                         "studentOrientation": (role_row.get("source_provenance") or {}).get("student_orientation") or {},
-                        "areaRouteStatus": route.get("status"),
-                        "areaRouteReason": route.get("rationale"),
-                        "areaRouteCondition": route.get("condition"),
-                        "areaTaskEvidence": route.get("positiveTaskEvidence"),
-                        "areaRouteSources": route.get("sourceReferences") or [],
-                        "domainRouteStatus": route.get("domainRouteStatus"),
-                        "domainRouteReason": route.get("domainRouteReason"),
-                        "domainRouteCondition": route.get("domainRouteCondition"),
-                        "domainTaskEvidence": route.get("domainTaskEvidence"),
-                        "domainRouteSources": route.get("domainRouteSources") or [],
+                        "roleGraphId": route.get("roleGraphId"),
+                        "areaId": route.get("areaId"),
+                        "methodRouteCount": route.get("methodRouteCount", 0),
+                        "roleItemIds": route.get("roleItemIds") or [],
                         "guidanceAvailable": str(role_row.get("role_key") or "").strip().casefold() in role_guidance_keys,
                     })
                 current_areas.append({
@@ -3147,12 +3137,12 @@ async def get_domain(domain_id: str, programme_id: Optional[str] = Query(None)):
                 "subgroupId": r.get("subgroup_id"),
                 **({
                     "areaRoutes": d078_routes["roleAreas"].get(
-                        str(r.get("role_key") or "").split("|", 1)[-1].strip().casefold(), []
+                        str(r.get("role_key") or "").strip().casefold(), []
                     ),
                     "areaIds": [
                         route["areaId"]
                         for route in d078_routes["roleAreas"].get(
-                            str(r.get("role_key") or "").split("|", 1)[-1].strip().casefold(), []
+                            str(r.get("role_key") or "").strip().casefold(), []
                         )
                     ],
                 } if d078_routes else {}),
@@ -3309,21 +3299,33 @@ async def get_role(
             svc.table("domain_roles")
             .select("*")
             .eq("role_key", role_id)
-            .limit(1)
+            .limit(2)
             .execute()
         )
         if not rres.data:
             return ResponseModel(data=_coming_soon("Role not found."))
+        if str(role_id or "").strip().casefold().startswith("d078|") and len(rres.data) != 1:
+            return ResponseModel(data=_coming_soon("This D078 role identity is ambiguous in the API records."))
         role = rres.data[0]
         d078_area_routes: list[dict] = []
         selected_d078_area: dict | None = None
         if str(role.get("role_key") or "").startswith("D078|"):
             d078_data = d078_guided_area_data()
-            d078_area_routes = d078_data["roleAreas"].get(
-                str(role.get("role_key") or "").split("|", 1)[-1].strip().casefold(), []
-            )
+            d078_area_routes = d078_role_routes_for_key(str(role.get("role_key") or ""))
+            if d078_area_routes and any(
+                re.sub(r"[^a-z0-9]+", " ", str(route.get("roleName") or "").casefold()).strip()
+                != re.sub(r"[^a-z0-9]+", " ", str(role.get("role_name") or "").casefold()).strip()
+                for route in d078_area_routes
+            ):
+                return ResponseModel(data=_coming_soon("This D078 role key does not match its canonical graph identity."))
             if not d078_area_routes:
                 return ResponseModel(data=_coming_soon("This role has no currently supported area route."))
+            # The current method-aware D078 graph has no direct domain-to-role
+            # routes: every role is downstream of at least one selected area.
+            # Do not infer an area for direct role URLs, even when the graph
+            # currently lists only one area for that role.
+            if not area_id:
+                return ResponseModel(data=_coming_soon("Choose a connected area before opening this role."))
             if area_id:
                 selected_d078_area = next(
                     (
@@ -3333,12 +3335,8 @@ async def get_role(
                     ),
                     None,
                 )
-            elif len(d078_area_routes) == 1:
-                sole_area_id = str(d078_area_routes[0].get("areaId") or "")
-                selected_d078_area = next(
-                    (area for area in d078_data["areas"] if area["id"] == sole_area_id),
-                    None,
-                )
+                if selected_d078_area is None:
+                    return ResponseModel(data=_coming_soon("This role is not connected to the selected area."))
         if str(role.get("data_state") or "").strip().lower() in {"review_only", "excluded", "audit_only"}:
             # Taxonomy/audit rows are not student guidance. Do not expose a
             # role merely because someone guessed its URL.
@@ -3452,6 +3450,12 @@ async def get_role(
         # text. Normalize once at the API boundary so every client receives the
         # contract promised by DomainRoleV2 and never crashes on `.map()`.
         essential, optional = _student_role_skill_lists(role)
+        if role_key.startswith("D078|"):
+            # D078 role learning is served by the reviewed context-item
+            # contract above. The taxonomy essential/optional arrays are
+            # legacy occupational data and have no item-level D078 ownership
+            # or requirement rationale, so do not silently serialize them.
+            essential, optional = [], []
         essential_uris = role.get("essential_skill_uris") or []
         optional_uris = role.get("optional_skill_uris") or []
 
@@ -3519,7 +3523,13 @@ async def get_role(
                     str(role_domain_key or ""),
                     programme_id=programme_id,
                 )
-                domain_data = getattr(domain_response, "data", None)
+                domain_envelope = getattr(domain_response, "data", None)
+                domain_data = (
+                    domain_envelope.get("data")
+                    if isinstance(domain_envelope, dict)
+                    and domain_envelope.get("status") == "real"
+                    else None
+                )
                 if isinstance(domain_data, dict):
                     programme_connection = domain_data.get("programmeConnection")
             except Exception as connection_exc:  # noqa: BLE001
@@ -3563,6 +3573,29 @@ async def get_role(
                 if domain_key and subgroup_parent and subgroup_parent.get("isco_submajor")
                 else None
             )
+            parent_domain_items = _career_context_items(
+                svc, context_level="domain", context_key=str(domain_key)
+            ) if domain_key else []
+            parent_subgroup_items = _career_context_items(
+                svc, context_level="subgroup", context_key=str(subgroup_context_key)
+            ) if subgroup_context_key else []
+            if str(role.get("role_key") or "").startswith("D078|"):
+                # The method-aware D078 contract is also materialized from
+                # reviewed local guidance artifacts. Keep inherited role
+                # context complete when database seed rows are absent, while
+                # preserving database-backed rows for review updates.
+                parent_domain_items = merge_d078_context_items(
+                    parent_domain_items, d078_domain_context_items()
+                )
+                if selected_d078_area:
+                    parent_subgroup_items = merge_d078_context_items(
+                        _career_context_items(
+                            svc,
+                            context_level="subgroup",
+                            context_key=selected_d078_area["id"],
+                        ),
+                        d078_area_context_items(selected_d078_area["id"]),
+                    )
             parent_context = {
                 "domainId": domain_key,
                 "domainName": (domain_parent or {}).get("name"),
@@ -3571,20 +3604,14 @@ async def get_role(
                 "domainFoundation": _domain_guidance_foundations(
                     svc, str(domain_parent.get("id"))
                 ) if domain_parent else [],
-                "domainItems": _career_context_items(
-                    svc, context_level="domain", context_key=str(domain_key)
-                ) if domain_key else [],
-                "subgroupItems": _career_context_items(
-                    svc, context_level="subgroup", context_key=str(subgroup_context_key)
-                ) if subgroup_context_key else [],
+                "domainItems": parent_domain_items,
+                "subgroupItems": parent_subgroup_items,
             }
             if selected_d078_area:
                 parent_context.update({
                     "subgroupId": selected_d078_area["id"],
                     "subgroupName": selected_d078_area["name"],
-                    "subgroupItems": _career_context_items(
-                        svc, context_level="subgroup", context_key=selected_d078_area["id"]
-                    ),
+                    "subgroupItems": parent_subgroup_items,
                 })
             elif str(role.get("role_key") or "").startswith("D078|"):
                 # Never expose either legacy ISCO bucket as the D078 area
@@ -3697,8 +3724,7 @@ async def get_role(
         role_area_routes = []
         role_area_tool_options: list[dict] = []
         if role_key.startswith("D078|"):
-            normalized_role_name = re.sub(r"[^a-z0-9]+", " ", str(role.get("role_name") or "").casefold()).strip()
-            role_area_routes = (d078_guided_area_data().get("roleAreas") or {}).get(normalized_role_name, [])
+            role_area_routes = d078_role_routes_for_key(role_key)
             if selected_d078_area:
                 selected_role_tool_ids = {
                     str(item.get("canonicalToolId") or "").casefold()

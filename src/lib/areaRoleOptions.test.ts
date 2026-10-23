@@ -1,4 +1,4 @@
-import { rolesForArea } from "./areaRoleOptions";
+import { rolesForArea, rolesForPathwaySelection } from "./areaRoleOptions";
 import type { DomainRoleSummary, DomainV2 } from "@/types/career";
 
 describe("rolesForArea", () => {
@@ -21,5 +21,24 @@ describe("rolesForArea", () => {
 
     expect(rolesForArea("D001", subgroup as DomainV2["subgroups"][number], roles).map((role) => role.key))
       .toEqual(["D001|available"]);
+  });
+
+  it("does not expose D078 roles until an area is selected, then uses only that area's graph routes", () => {
+    const sociologyRole = { key: "D078|sociologist", name: "Sociologist", areaRouteStatus: "reviewed_supported" as const };
+    const statistician = { key: "D078|statistician", name: "Statistician", areaRouteStatus: "reviewed_supported" as const };
+    const domain = {
+      id: "D078",
+      subgroups: [
+        { id: "D078:sociology-social-anthropology", areaRoleOptions: [sociologyRole] },
+        { id: "D078:social-research-evaluation", areaRoleOptions: [statistician] },
+      ],
+      roles: [sociologyRole, statistician],
+    } as unknown as DomainV2;
+
+    expect(rolesForPathwaySelection(domain, null)).toEqual([]);
+    expect(rolesForPathwaySelection(domain, "D078:sociology-social-anthropology").map((role) => role.key))
+      .toEqual(["D078|sociologist"]);
+    expect(rolesForPathwaySelection(domain, "D078:social-research-evaluation").map((role) => role.key))
+      .toEqual(["D078|statistician"]);
   });
 });

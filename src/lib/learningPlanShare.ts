@@ -20,6 +20,7 @@ export interface LearningPlanShareInput {
   referralUrl?: string | null;
   routeLabel?: string | null;
   focusNames?: string[];
+  routeDetails?: string[];
 }
 
 export interface LearningPlanShareCopy {
@@ -57,7 +58,9 @@ function contextLine(input: LearningPlanShareInput): string {
   const focus = safeFocusNames(input.focusNames);
   const routeLine = route ? ` My route starts with ${route}.` : "";
   const focusLine = focus.length ? ` I chose to focus on ${focus.join(", ")}.` : "";
-  return `${routeLine}${focusLine}`;
+  const detailLines = (input.routeDetails ?? []).map((value) => value.trim()).filter(Boolean);
+  const details = detailLines.length ? ` Saved route details: ${detailLines.join("; ")}.` : "";
+  return `${routeLine}${focusLine}${details}`;
 }
 
 /** Build a privacy-safe share payload from saved stacks, including selected items only. */

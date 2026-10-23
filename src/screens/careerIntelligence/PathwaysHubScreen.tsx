@@ -16,6 +16,7 @@ import { DetailScaffold } from "@/components/careerIntelligence";
 import CareerDisclaimer from "@/components/careerIntelligence/CareerDisclaimer";
 import { EntrepreneurshipPathwayScreen } from "@/screens/careerIntelligence/EntrepreneurshipPathwayScreen";
 import { careerData, type DomainClusterGroup } from "@/lib/careerData";
+import { rolesForPathwaySelection } from "@/lib/areaRoleOptions";
 import { NIGERIAN_USER_TYPES, type NigerianUserTypeKey } from "@/lib/elitePathwayPolicy";
 import {
   BRIDGE_LAYER_ORDER,
@@ -24,6 +25,7 @@ import {
   type CareerChangeType,
   type CareerChangerPath,
   type DataState,
+  type DomainRoleSummary,
   type DomainRoleV2,
   type DomainV2,
   type ElitePathway,
@@ -163,18 +165,31 @@ export function PathwaysHubScreen({
     setDomainState(await careerData.getDomainV2ForStudent(domainId));
   };
 
+  const selectedDomain = domainState.data;
+  const selectedSubgroup = selectedDomain?.subgroups.find((item) => item.id === selectedSubgroupId);
+  const availableRoles = rolesForPathwaySelection(selectedDomain, selectedSubgroupId);
+  const selectedRole = availableRoles.find((item) => item.key === selectedRoleKey);
+
+  const chooseSubgroup = (subgroupId: string) => {
+    setSelectedSubgroupId(subgroupId);
+    setSelectedRoleKey(null);
+    setRoleState(null);
+  };
+
   const chooseRole = async (roleKey: string) => {
+    if (!availableRoles.some((role) => role.key === roleKey)) return;
     setSelectedRoleKey(roleKey);
-    setRoleState(await careerData.getRoleV2ForStudent(roleKey));
+    setRoleState(await careerData.getRoleV2ForStudent(
+      roleKey,
+      undefined,
+      selectedDomain?.id === "D078" ? selectedSubgroupId ?? undefined : undefined,
+    ));
   };
 
   const selectedCareerRoutes = useMemo(
     () => careerState.data?.filter((route) => route.type === careerType) ?? [],
     [careerState.data, careerType],
   );
-  const selectedDomain = domainState.data;
-  const selectedSubgroup = selectedDomain?.subgroups.find((item) => item.id === selectedSubgroupId);
-  const selectedRole = selectedDomain?.roles.find((item) => item.key === selectedRoleKey);
   const selectedUserType = NIGERIAN_USER_TYPES.find((item) => item.key === startingPoint);
 
   return (
@@ -219,8 +234,9 @@ export function PathwaysHubScreen({
               onDomain={chooseDomain}
               domainState={domainState}
               selectedSubgroupId={selectedSubgroupId}
-              onSubgroup={setSelectedSubgroupId}
+              onSubgroup={chooseSubgroup}
               selectedRoleKey={selectedRoleKey}
+              availableRoles={availableRoles}
               onRole={chooseRole}
               roleState={roleState}
               userType={selectedUserType?.label ?? startingPoint}
@@ -285,7 +301,7 @@ function OverviewSection({ colors, onSelect }: { colors: ColorPalette; onSelect:
   );
 }
 
-function TargetPathSection({ colors, focus, onFocus, domainClusters, selectedDomainId, onDomain, domainState, selectedSubgroupId, onSubgroup, selectedRoleKey, onRole, roleState, userType, domain, subgroup, role, eliteState, eliteDetail, bridge, onElite }: {
+function TargetPathSection({ colors, focus, onFocus, domainClusters, selectedDomainId, onDomain, domainState, selectedSubgroupId, onSubgroup, selectedRoleKey, availableRoles, onRole, roleState, userType, domain, subgroup, role, eliteState, eliteDetail, bridge, onElite }: {
   colors: ColorPalette;
   focus: PathwayRequirementFocus;
   onFocus: (focus: PathwayRequirementFocus) => void;
@@ -296,6 +312,7 @@ function TargetPathSection({ colors, focus, onFocus, domainClusters, selectedDom
   selectedSubgroupId: string | null;
   onSubgroup: (id: string) => void;
   selectedRoleKey: string | null;
+  availableRoles: DomainRoleSummary[];
   onRole: (key: string) => void;
   roleState: DataState<DomainRoleV2> | null;
   userType: string;
@@ -327,7 +344,11 @@ function TargetPathSection({ colors, focus, onFocus, domainClusters, selectedDom
         <Text style={[styles.subsectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>2. Choose a subgroup</Text>
         {domain?.subgroups?.length ? <View style={styles.chips}>{domain.subgroups.map((item) => <TouchableOpacity key={item.id} onPress={() => onSubgroup(item.id)} style={[styles.chip, { borderColor: item.id === selectedSubgroupId ? colors.accentRole.action : colors.borderRole.subtle, backgroundColor: item.id === selectedSubgroupId ? colors.surface.subtle : colors.surface.raised }]}><Text style={[styles.chipText, { color: item.id === selectedSubgroupId ? colors.accentRole.action : colors.textRole.secondary }, CompassFonts.bodySemibold]}>{item.name}</Text></TouchableOpacity>)}</View> : <StateNote colors={colors} state={domainState} />}
         <Text style={[styles.subsectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>3. Choose a role</Text>
-        {domain?.roles?.filter((item) => item.guidanceAvailable !== false).length ? <View style={styles.cards}>{domain.roles.filter((item) => item.guidanceAvailable !== false && (!selectedSubgroupId || item.subgroupId === selectedSubgroupId)).map((item) => <TouchableOpacity key={item.key} onPress={() => onRole(item.key)} style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: item.key === selectedRoleKey ? colors.accentRole.action : colors.borderRole.subtle }]}><View style={styles.cardText}><Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{item.name}</Text><Text style={[styles.cardBody, { color: colors.textRole.muted }, CompassFonts.body]}>{item.tier ?? "Role"}{item.eliteStatus ? ` · ${item.eliteStatus}` : ""}</Text></View><Feather name="chevron-right" size={18} color={colors.textRole.muted} /></TouchableOpacity>)}</View> : <StateNote colors={colors} state={domainState} />}
+        {domain?.id === "D078" && !selectedSubgroupId ? (
+          <Text style={[styles.copy, { color: colors.textRole.secondary }, CompassFonts.body]}>Choose an area above to see only the roles connected to it.</Text>
+        ) : availableRoles.length ? <View style={styles.cards}>{availableRoles.map((item) => <TouchableOpacity key={item.key} onPress={() => onRole(item.key)} style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: item.key === selectedRoleKey ? colors.accentRole.action : colors.borderRole.subtle }]}><View style={styles.cardText}><Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{item.name}</Text><Text style={[styles.cardBody, { color: colors.textRole.muted }, CompassFonts.body]}>{item.tier ?? "Role"}{item.eliteStatus ? ` · ${item.eliteStatus}` : ""}</Text></View><Feather name="chevron-right" size={18} color={colors.textRole.muted} /></TouchableOpacity>)}</View> : domain?.id === "D078" ? (
+          <Text style={[styles.copy, { color: colors.textRole.muted }, CompassFonts.body]}>No role is currently connected to this area.</Text>
+        ) : <StateNote colors={colors} state={domainState} />}
       </> : null}
 
       {selectedRoleKey ? <RequirementPanel colors={colors} focus={focus} userType={userType} domain={domain} subgroup={subgroup} role={role} roleState={roleState} /> : null}

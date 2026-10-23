@@ -49,7 +49,7 @@ in the table remain part of the student copy and staff provenance.
 - Collins' official catalogue provides the 8th-edition contents, supporting the specific chapter references above. It is a paid/library reference. Do not imply that a catalogue page provides free access to the full book.
 - The NOUN GST 201 course guide directly names its aims and unit structure: Nigerian peoples and culture, Nigerian culture areas, political evolution, and related historical/social topics. It is local contextual support, not evidence of a nationwide prescribed reading list.
 - OpenLearn report writing, thinking skills, entrepreneurship, and computing pages are exact Open University learning sections/courses. Each is attached only to the part of a theme it actually teaches.
-- The Giddens/Sutton *Sociology* resource row is intentionally not mapped to any theme until an edition-specific contents list and exact relevant locators are verified. A familiar title alone is not evidence of theme fit.
+- The Giddens/Sutton *Sociology* resource is mapped only to **Ideas and foundations** using the exact stored ninth-edition identity (ISBN `978-1-5095-3922-2`). Wiley's product page lists chapter 3, “Theories and Perspectives,” which supports that optional theme association. Do not borrow the tenth edition's contents or chapter numbering, and do not imply that this publisher reference is prescribed by the Sociology curriculum. The same publisher page is used for the theme link; the theme-specific rationale and locator are stored in the resource provenance.
 - Some themes have only partial or introductory external resources. Those gaps are recorded above rather than filled with broad keyword matches or unsupported claims.
 
 ## Implementation and verification boundary

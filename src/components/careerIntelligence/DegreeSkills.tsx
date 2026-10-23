@@ -6,18 +6,24 @@
  * students see the meaning and progression before the source detail.
  */
 import React, { useMemo, useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { AccessibilityInfo, findNodeHandle, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import { CompassFonts, FontSize, Radius, Spacing, useTheme } from "@/theme";
+import { CompassFonts, Radius, Spacing, useTheme } from "@/theme";
 import type { ProgrammeCurriculumContract, ProgrammeCurriculumOutcome, CareerLearningResource, ProgrammeThemeGuidance, ProgrammeThemeRelationship } from "@/types/career";
-import { SectionLabel } from "./RedesignPrimitives";
 import { ExternalLinkGuard } from "./ExternalLinkGuard";
 import { isStudentResource } from "./resourceLinks";
 import { programmeThemeForCourse, type ProgrammeThemeKey } from "./programmeCurriculumThemes";
 import { programmePreviewUnavailableMessage } from "@/lib/programmePreview";
+import sociologyThemeAbilityLedger from "../../../data/career-mapping/_audit/sociology_theme_student_abilities_2026_10_22.json";
 
 const INITIAL_THEMES = 5;
 const INITIAL_ABILITIES = 4;
+const WIDE_THEME_CARD = 560;
+
+type AbilityLedgerLine = { themeKey: string; lineId: string; studentLine: string; outcomeIds: string[] };
+type AbilityLine = { id: string; text: string; outcomeIds: string[] };
+
+const LEDGER_LINES = sociologyThemeAbilityLedger.lines as AbilityLedgerLine[];
 
 function cleanText(value: string | null | undefined): string {
   return String(value ?? "").replace(/\s+/g, " ").trim();
@@ -37,13 +43,18 @@ function unique<T>(items: T[], key: (item: T) => string): T[] {
   });
 }
 
+function themeValue(value: unknown, theme: Theme): string | null {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  const entries = Object.entries(value as Record<string, unknown>);
+  const found = entries.find(([key]) => key.toLocaleLowerCase() === theme.key.toLocaleLowerCase())
+    ?? entries.find(([key]) => key.toLocaleLowerCase() === theme.title.toLocaleLowerCase());
+  return typeof found?.[1] === "string" && found[1].trim() ? found[1].trim() : null;
+}
+
 type CourseGroup = {
   code: string;
   title: string;
-  level?: number | null;
   displayGroup?: string;
-  courseSummary?: string | null;
-  sourceLocatorText?: string | null;
   outcomes: ProgrammeCurriculumOutcome[];
 };
 
@@ -53,24 +64,20 @@ function groupCourses(contract: ProgrammeCurriculumContract): CourseGroup[] {
     if (outcome.dataState !== "source_backed") continue;
     const code = cleanText(outcome.courseCode);
     const title = cleanText(outcome.courseTitle) || code || "Recorded course";
-    const locator = outcome.sourceLocator as { courseSummary?: unknown; sourceLocatorText?: unknown } | undefined;
-    const courseSummary = cleanText(
-      outcome.courseSummary ?? (typeof locator?.courseSummary === "string" ? locator.courseSummary : ""),
-    ) || null;
-    const sourceLocatorText = cleanText(typeof locator?.sourceLocatorText === "string" ? locator.sourceLocatorText : "") || null;
     const key = code || title;
     const current = groups.get(key);
     if (current) {
-      if (!current.courseSummary && courseSummary) current.courseSummary = courseSummary;
-      if (!current.sourceLocatorText && sourceLocatorText) current.sourceLocatorText = sourceLocatorText;
       current.outcomes.push(outcome);
     } else {
-      groups.set(key, { code, title, level: outcome.courseLevel, displayGroup: outcome.displayGroup, courseSummary, sourceLocatorText, outcomes: [outcome] });
+      groups.set(key, { code, title, displayGroup: outcome.displayGroup, outcomes: [outcome] });
     }
   }
   return Array.from(groups.values()).map((course) => ({
     ...course,
-    outcomes: unique(course.outcomes, (item) => item.studentText),
+    // Keep course ownership intact. Two courses can legitimately describe a
+    // similar ability; deduplicating by student wording would silently detach
+    // an outcome from its source course.
+    outcomes: unique(course.outcomes, (item) => item.outcomeId || `${course.code}:${item.outcomeIndex}:${item.studentText}`),
   }));
 }
 
@@ -86,11 +93,11 @@ type Theme = {
 
 const THEME_META: Record<ThemeKey, Omit<Theme, "courses" | "narration">> = {
   core: { key: "core", title: "Core programme learning", icon: "book-open", description: "The main ideas, knowledge and ways of working that define this programme." },
-  shared_communication: { key: "shared_communication", title: "Communication and academic writing", icon: "layers", description: "Shared university learning in clear English, reading, writing, reasoning and presenting ideas." },
-  shared_nigerian_culture: { key: "shared_nigerian_culture", title: "Nigerian peoples and culture", icon: "users", description: "A shared course on Nigerian peoples, history, culture and social life." },
-  shared_philosophy: { key: "shared_philosophy", title: "Philosophy and reasoning", icon: "book-open", description: "A shared course on philosophical questions, logic and clear reasoning." },
-  shared_peace_conflict: { key: "shared_peace_conflict", title: "Peace, conflict and security", icon: "users", description: "A shared course introducing peace, conflict, security and ways people respond to conflict." },
-  shared_enterprise: { key: "shared_enterprise", title: "Entrepreneurship and venture creation", icon: "edit-3", description: "Shared courses on identifying opportunities, developing ideas and understanding how ventures are planned." },
+  shared_communication: { key: "shared_communication", title: "Communication and academic writing", icon: "layers", description: "University learning in clear English, reading, writing, reasoning and presenting ideas." },
+  shared_nigerian_culture: { key: "shared_nigerian_culture", title: "Nigerian peoples and culture", icon: "users", description: "Learning about Nigerian peoples, history, culture and social life." },
+  shared_philosophy: { key: "shared_philosophy", title: "Philosophy and reasoning", icon: "book-open", description: "Learning about philosophical questions, logic and clear reasoning." },
+  shared_peace_conflict: { key: "shared_peace_conflict", title: "Peace, conflict and security", icon: "users", description: "An introduction to peace, conflict, security and ways people respond to conflict." },
+  shared_enterprise: { key: "shared_enterprise", title: "Entrepreneurship and venture creation", icon: "edit-3", description: "Learning to identify opportunities, develop ideas and understand how ventures are planned." },
   people: { key: "people", title: "People, groups and society", icon: "users", description: "Courses in this part help you examine the people, groups, institutions, cultures or systems named in the programme record." },
   ideas: { key: "ideas", title: "Ideas and foundations", icon: "book-open", description: "Courses in this part introduce the concepts, history and theories used to make sense of the programme’s subject area." },
   research: { key: "research", title: "Research and evidence", icon: "search", description: "Courses in this part show how the programme asks questions, gathers information, examines evidence and communicates findings." },
@@ -104,12 +111,12 @@ const THEME_META: Record<ThemeKey, Omit<Theme, "courses" | "narration">> = {
 };
 
 const SOCIOLOGY_THEME_NARRATION: Partial<Record<ThemeKey, string>> = {
-  core: "These courses are part of the programme curriculum. Their titles and outcomes below show the specific learning they cover, even when they do not sit under one of the named themes.",
-  shared_communication: "You will practise communicating clearly in speech and writing, understanding written information, and presenting ideas. These are shared university skills that support your Sociology studies; the course does not replace the discipline-specific research and reporting taught elsewhere in the programme.",
-  shared_nigerian_culture: "You will study Nigerian peoples and cultures through historical and social examples. This shared course adds Nigerian context to your university learning; it is not a complete account of every community or a substitute for the Sociology programme's own African and Nigerian society courses.",
-  shared_philosophy: "You will examine philosophical questions and practise logic—checking whether reasons support a conclusion. These are shared reasoning foundations, while sociological theory and evidence are developed in the Sociology courses.",
-  shared_peace_conflict: "You will learn key ways people describe peace, conflict and security, and consider how conflict can arise and be addressed. This shared course introduces broad concepts; the Sociology courses examine particular social institutions, inequalities and settings in greater depth.",
-  shared_enterprise: "You will explore how people identify an unmet need, develop an idea and plan a possible venture. These shared courses introduce entrepreneurship and venture creation; they do not promise that an idea will succeed or replace Sociology's study of social and economic conditions.",
+  core: "This learning is part of the official programme record. The outcomes below describe capabilities you are expected to develop, even when the record does not place them under a named theme.",
+  shared_communication: "You will practise communicating clearly in speech and writing, understanding written information, and presenting ideas. These abilities support your Sociology studies; they complement, rather than replace, the programme's research and reporting work.",
+  shared_nigerian_culture: "You will study Nigerian peoples and cultures through historical and social examples. This theme adds Nigerian context to your university learning; it is not a complete account of every community or a substitute for the programme's African and Nigerian societies theme.",
+  shared_philosophy: "You will examine philosophical questions and practise logic—checking whether reasons support a conclusion. This builds general reasoning, while the programme's Sociology themes apply ideas and evidence to social life.",
+  shared_peace_conflict: "You will learn key ways people describe peace, conflict and security, and consider how conflict can arise and be addressed. This introduces broad concepts; the Sociology themes examine particular institutions, inequalities and settings in greater depth.",
+  shared_enterprise: "You will explore how people identify an unmet need, develop an idea and plan a possible venture. This introduces entrepreneurship and venture creation; it does not promise that an idea will succeed or replace the programme's study of social and economic conditions.",
   people: "You will examine how people behave and relate to one another, and how families, groups, culture, language and social settings shape everyday life. The courses draw on Sociology, Anthropology and Psychology while keeping their different viewpoints distinct.",
   ideas: "You will learn how Sociology developed, explore key concepts and compare sociological theories. The programme uses these ideas to help explain social institutions, relationships and change.",
   research: "You will move from forming a research question and planning a study to choosing suitable methods, collecting and analysing information, and explaining what the evidence can—and cannot—show. The curriculum includes quantitative approaches, which work with numbers, and qualitative approaches, which examine words, experiences and meaning.",
@@ -131,45 +138,37 @@ function outcomeAction(text: string): string {
   return lowerFirst(withoutSourceLead);
 }
 
-function themeOverview(theme: Theme): string | null {
-  return theme.description || null;
-}
-
-function studentSourceLocator(sourceLocatorText: string | null): string | null {
-  if (!sourceLocatorText) return null;
-  const match = sourceLocatorText.match(/\bprinted\s+(pp?\.)?\s*([\d]+(?:\s*(?:[\u2013\u2014-]|,)\s*[\d]+)*)/i);
-  if (!match) return null;
-  const pages = match[2].replace(/[\u2013\u2014-]/g, "\u2013").replace(/\s+/g, " ").trim();
-  const pageMarker = match[1] || (/[\u2013\u2014,\-]/.test(pages) ? "pp." : "p.");
-  return `Curriculum source: printed ${pageMarker} ${pages}`;
-}
-
 function abilitySentence(text: string): string {
   const cleaned = cleanText(text).replace(/[.;]+$/, "");
   if (/^you will\b/i.test(cleaned)) return `${cleaned}.`;
   const action = outcomeAction(cleaned).replace(/^demonstrate\s+adequate knowledge/i, "demonstrate what you understand");
-  return `You will practise ${action}.`;
+  return `You will learn to ${action}.`;
 }
 
 function resourceMatchesTheme(resource: CareerLearningResource, theme: Theme): boolean {
   if (resource.resourceType !== "programme_reading" || !resource.url) return false;
   const provenance = resource.sourceProvenance ?? {};
-  const explicitThemes = [
-    provenance.theme_keys,
-    provenance.themeKeys,
-    provenance.theme_key,
-    provenance.themeKey,
-    provenance.display_group,
-  ].flatMap((value) => Array.isArray(value) ? value : value == null ? [] : [value])
-    .map((value) => String(value).trim().toLowerCase())
-    .filter(Boolean);
-  if (explicitThemes.length) return explicitThemes.includes(theme.key) || explicitThemes.includes(theme.title.toLowerCase());
-  const target = resource.targetName.trim().toLowerCase();
-  return theme.courses.some((course) => {
-    const title = course.title.trim().toLowerCase();
-    const code = course.code.trim().toLowerCase();
-    return Boolean(target && ((title && target === title) || (code && target === code)));
-  });
+  const parseThemeKeys = (value: unknown): string[] => {
+    if (Array.isArray(value)) return value.flatMap(parseThemeKeys);
+    if (typeof value !== "string" || !value.trim()) return [];
+    try {
+      const parsed = JSON.parse(value);
+      if (Array.isArray(parsed)) return parsed.flatMap(parseThemeKeys);
+    } catch {
+      // A plain key such as "research" is also a valid stored value.
+    }
+    return [value.trim().toLocaleLowerCase()];
+  };
+  const explicitThemes = [provenance.theme_keys, provenance.themeKeys, provenance.theme_key, provenance.themeKey]
+    .flatMap(parseThemeKeys);
+  const themeMap = (value: unknown): string[] => {
+    if (!value || typeof value !== "object" || Array.isArray(value)) return [];
+    return Object.keys(value as Record<string, unknown>).map((key) => key.toLocaleLowerCase());
+  };
+  return explicitThemes.includes(theme.key.toLocaleLowerCase())
+    || explicitThemes.includes(theme.title.toLocaleLowerCase())
+    || [...themeMap(provenance.theme_urls), ...themeMap(provenance.themeUrls)].includes(theme.key.toLocaleLowerCase())
+    || [...themeMap(provenance.theme_descriptions), ...themeMap(provenance.themeDescriptions)].includes(theme.key.toLocaleLowerCase());
 }
 
 function resourcesForTheme(resources: CareerLearningResource[] | undefined, theme: Theme): CareerLearningResource[] {
@@ -178,7 +177,98 @@ function resourcesForTheme(resources: CareerLearningResource[] | undefined, them
   // Do not attach an unrelated programme book merely because this theme has
   // no exact target match. A missing association is safer than a misleading
   // “learn more” link.
-  return unique(exact, (item) => item.targetName + ":" + item.url);
+  const seen = new Set<string>();
+  return exact.filter((item) => {
+    const url = programmeReadingUrl(item, theme).trim();
+    if (!url || seen.has(url)) return false;
+    seen.add(url);
+    return true;
+  });
+}
+
+function abilityLinesForTheme(theme: Theme): AbilityLine[] {
+  const outcomes = theme.courses.flatMap((course) => course.outcomes)
+    .filter((outcome) => outcome.dataState === "source_backed" && cleanText(outcome.studentText));
+  const outcomeIds = new Set(outcomes.map((outcome) => outcome.outcomeId).filter(Boolean) as string[]);
+  const candidates = LEDGER_LINES.filter((line) => line.themeKey.toLocaleLowerCase() === theme.key.toLocaleLowerCase());
+  const coveredIds = candidates.flatMap((line) => line.outcomeIds);
+  const complete = outcomeIds.size > 0
+    && outcomeIds.size === outcomes.length
+    && coveredIds.length === outcomeIds.size
+    && new Set(coveredIds).size === coveredIds.length
+    && coveredIds.every((id) => outcomeIds.has(id));
+  if (complete) return candidates.map((line) => ({ id: line.lineId, text: line.studentLine, outcomeIds: line.outcomeIds }));
+
+  const distinct = new Map<string, AbilityLine>();
+  outcomes.forEach((outcome, index) => {
+    const text = cleanText(outcome.studentText);
+    const key = text.toLocaleLowerCase();
+    const current = distinct.get(key);
+    const id = outcome.outcomeId || `${theme.key}-fallback-${index}`;
+    if (current) current.outcomeIds.push(id);
+    else distinct.set(key, { id, text, outcomeIds: [id] });
+  });
+  return Array.from(distinct.values());
+}
+
+type ReadingRow = { id: string; kind: string; title: string; url: string; description: string; why: string };
+
+function readingRowsForTheme(
+  resources: CareerLearningResource[] | undefined,
+  theme: Theme,
+  guidance: ProgrammeThemeGuidance[],
+  relationships: ProgrammeThemeRelationship[],
+): ReadingRow[] {
+  const rows: ReadingRow[] = resourcesForTheme(resources, theme).map((resource) => ({
+    id: `resource:${programmeReadingUrl(resource, theme)}`,
+    kind: programmeReadingLabel(resource),
+    title: resource.targetName,
+    url: programmeReadingUrl(resource, theme),
+    description: programmeReadingDescription(resource, theme) || "Optional reading to explore this theme.",
+    why: programmeReadingRationale(resource, theme),
+  }));
+  guidance.forEach((item) => {
+    if (!item.learningUrl) return;
+    rows.push({
+      id: `guidance:${item.itemKey}:${item.learningUrl}`,
+      kind: item.learningResourceType === "open_course" ? "Open course" : "Learning resource",
+      title: item.learningLabel,
+      url: item.learningUrl,
+      description: `${item.learningSourceReference.title || item.learningLabel}. Optional support, not a course requirement.`,
+      why: item.contextualUse,
+    });
+  });
+  relationships.forEach((item) => {
+    if (!item.learningUrl) return;
+    rows.push({
+      id: `relationship:${item.relationshipKey}:${item.learningUrl}`,
+      kind: item.learningResourceType === "open_course" ? "Open course" : "Learning resource",
+      title: item.learningLabel,
+      url: item.learningUrl,
+      description: `${item.learningSourceReference.title || item.learningLabel}. Optional support for understanding this connection.`,
+      why: item.learnerExplanation,
+    });
+  });
+  const seen = new Set<string>();
+  return rows.filter((row) => {
+    const url = row.url.trim();
+    if (!url || seen.has(url)) return false;
+    seen.add(url);
+    return true;
+  });
+}
+
+function mainSociologyReadings(resources: CareerLearningResource[] | undefined): CareerLearningResource[] {
+  const primaryBookNames = new Set([
+    "sociology",
+    "sociology: themes and perspectives (8th edition)",
+  ]);
+  return unique(
+    (resources ?? []).filter((resource) => isStudentResource(resource)
+      && resource.resourceType === "programme_reading"
+      && primaryBookNames.has(cleanText(resource.targetName).toLocaleLowerCase())),
+    (resource) => resource.targetName,
+  );
 }
 
 function programmeReadingLabel(resource: CareerLearningResource): string {
@@ -192,54 +282,24 @@ function programmeReadingLabel(resource: CareerLearningResource): string {
   return "Further reading";
 }
 
-function programmeReadingByline(resource: CareerLearningResource): string | null {
-  const provenance = resource.sourceProvenance ?? {};
-  const details = [
-    provenance.authors,
-    provenance.edition,
-    provenance.publication_year ?? provenance.publicationYear,
-    provenance.isbn,
-  ].map((value) => String(value ?? "").trim()).filter(Boolean);
-  return details.length ? details.join(" · ") : null;
-}
-
 function programmeReadingDescription(resource: CareerLearningResource, theme: Theme): string | null {
   const provenance = resource.sourceProvenance ?? {};
-  const descriptions = provenance.theme_descriptions ?? provenance.themeDescriptions;
-  if (descriptions && typeof descriptions === "object" && !Array.isArray(descriptions)) {
-    const byTheme = descriptions as Record<string, unknown>;
-    const specific = byTheme[theme.key] ?? byTheme[theme.title];
-    if (typeof specific === "string" && specific.trim()) return specific.trim();
-  }
-  return resource.description?.trim() || null;
+  const descriptions = themeValue(provenance.theme_descriptions, theme) ?? themeValue(provenance.themeDescriptions, theme);
+  return descriptions ?? (resource.description?.trim() || null);
 }
 
 function programmeReadingRationale(resource: CareerLearningResource, theme: Theme): string {
   const provenance = resource.sourceProvenance ?? {};
-  const rationales = provenance.theme_rationales ?? provenance.themeRationales;
-  if (rationales && typeof rationales === "object" && !Array.isArray(rationales)) {
-    const byTheme = rationales as Record<string, unknown>;
-    const specific = byTheme[theme.key] ?? byTheme[theme.title];
-    if (typeof specific === "string" && specific.trim()) return specific.trim();
-  }
-  return `This material is linked to the reviewed programme record for “${theme.title}”. It can help you explore this theme; the link alone does not mean your university prescribes it.`;
+  const descriptions = themeValue(provenance.theme_descriptions, theme) ?? themeValue(provenance.themeDescriptions, theme);
+  return themeValue(provenance.theme_rationales, theme) ?? themeValue(provenance.themeRationales, theme)
+    ?? descriptions ?? resource.description?.trim() ?? "";
 }
 
 function programmeReadingUrl(resource: CareerLearningResource, theme: Theme): string {
   const provenance = resource.sourceProvenance ?? {};
-  const urls = provenance.theme_urls ?? provenance.themeUrls;
-  if (urls && typeof urls === "object" && !Array.isArray(urls)) {
-    const byTheme = urls as Record<string, unknown>;
-    const specific = byTheme[theme.key] ?? byTheme[theme.title];
-    if (typeof specific === "string" && specific.trim()) return specific.trim();
-  }
+  const specific = themeValue(provenance.theme_urls, theme) ?? themeValue(provenance.themeUrls, theme);
+  if (specific) return specific;
   return resource.url;
-}
-
-function programmeReadingTerms(resource: CareerLearningResource): string | null {
-  const provenance = resource.sourceProvenance ?? {};
-  const terms = provenance.access_terms_note ?? provenance.accessTermsNote;
-  return typeof terms === "string" && terms.trim() ? terms.trim() : null;
 }
 
 function buildThemes(courses: CourseGroup[]): Theme[] {
@@ -256,17 +316,21 @@ function buildThemes(courses: CourseGroup[]): Theme[] {
 }
 
 function guidanceForTheme(items: ProgrammeThemeGuidance[] | undefined, theme: Theme): ProgrammeThemeGuidance[] {
-  return (items ?? []).filter((item) => item.themeKey === theme.key && item.selectionState === "fixed_programme_guidance_not_selectable");
+  return (items ?? []).filter((item) => item.themeKey.toLocaleLowerCase() === theme.key.toLocaleLowerCase()
+    && item.selectionState === "fixed_programme_guidance_not_selectable");
 }
 
 function relationshipsForTheme(items: ProgrammeThemeRelationship[] | undefined, theme: Theme): ProgrammeThemeRelationship[] {
-  return (items || []).filter((item) => item.themeKey === theme.key
+  return (items || []).filter((item) => item.themeKey.toLocaleLowerCase() === theme.key.toLocaleLowerCase()
     && item.selectionState === "fixed_programme_guidance_not_selectable"
     && Boolean(item.learnerExplanation && item.learningUrl && item.learningLabel));
 }
 
-function levelLabel(level?: number | null): string | null {
-  return typeof level === "number" ? "Level " + level : null;
+function toggleTheme(current: Set<ThemeKey>, key: ThemeKey): Set<ThemeKey> {
+  const next = new Set(current);
+  if (next.has(key)) next.delete(key);
+  else next.add(key);
+  return next;
 }
 
 export interface DegreeSkillsProps {
@@ -280,8 +344,14 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
   const { colors } = useTheme();
   const [themesExpanded, setThemesExpanded] = useState(false);
   const [abilitiesExpanded, setAbilitiesExpanded] = useState(false);
-  const [openTheme, setOpenTheme] = useState<ThemeKey | null>(null);
-  const [openCourseOutlines, setOpenCourseOutlines] = useState<Set<string>>(() => new Set());
+  const dimensions = useWindowDimensions();
+  const [openThemes, setOpenThemes] = useState<Set<ThemeKey>>(() => new Set());
+  const [expandedAbilities, setExpandedAbilities] = useState<Set<ThemeKey>>(() => new Set());
+  const [expandedNarration, setExpandedNarration] = useState<Set<ThemeKey>>(() => new Set());
+  const [expandedReadingWhy, setExpandedReadingWhy] = useState<Set<string>>(() => new Set());
+  const [themeCardWidths, setThemeCardWidths] = useState<Record<string, number>>({});
+  const themeTitleRefs = React.useRef<Record<string, Text | null>>({});
+  const [openThemeExplanations, setOpenThemeExplanations] = useState<Set<ThemeKey>>(() => new Set());
   const courses = useMemo(() => curriculumContract ? groupCourses(curriculumContract) : [], [curriculumContract]);
   const themes = useMemo(() => buildThemes(courses), [courses]);
   const abilities = useMemo(() => unique(
@@ -292,7 +362,7 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
   if (!curriculumContract || curriculumContract.status !== "available" || (!courses.length && !abilities.length)) {
     return (
       <View style={variant === "teaser" ? styles.teaserCard : styles.block}>
-        <View style={styles.headingLine}><Feather name="book-open" size={17} color={colors.accentRole.action} /><SectionLabel>What you will study</SectionLabel></View>
+        <View style={styles.headingLine}><Feather name="book-open" size={17} color={colors.accentRole.action} /><Text accessibilityRole="header" style={[styles.sectionHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What you will study</Text></View>
         <Text style={[styles.empty, { color: colors.textRole.muted }]}>{programmePreviewUnavailableMessage(curriculumContract?.status)}</Text>
       </View>
     );
@@ -315,51 +385,80 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
   }
 
   const visibleThemes = themesExpanded ? themes : themes.slice(0, INITIAL_THEMES);
+  const mainReadings = mainSociologyReadings(resources);
   return (
     <View style={styles.block}>
-      <SectionLabel>What you will study</SectionLabel>
-      <Text style={[styles.intro, { color: colors.textRole.secondary }]}>This is the curriculum your university programme teaches. These cards group its courses into themes and explain the outcomes in clear language; they are fixed programme learning, not a menu of extra learning choices. Open one to see the courses and original outcomes behind each explanation.</Text>
-      {curriculumContract.localSourcePreview ? <Text style={[styles.teaserMeta, { color: colors.textRole.muted }]}>Local preview from the reviewed Sociology curriculum source. This source-backed preview is not yet loaded in the database.</Text> : null}
+      <Text accessibilityRole="header" style={[styles.sectionHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What you will study</Text>
+      <Text style={[styles.intro, { color: colors.textRole.secondary }]}>Below is a list of things you will learn in this programme, grouped by common themes.</Text>
       <View style={styles.themeGrid}>
         {visibleThemes.map((theme) => {
-          const open = openTheme === theme.key;
-          const themeResources = resourcesForTheme(resources, theme);
+          const open = openThemeExplanations.has(theme.key);
+          const cardOpen = openThemes.has(theme.key);
+          const lines = abilityLinesForTheme(theme);
           const themeGuidance = guidanceForTheme(curriculumContract.themeGuidance, theme);
           const themeRelationships = relationshipsForTheme(curriculumContract.themeRelationships, theme);
+          const readingRows = readingRowsForTheme(resources, theme, themeGuidance, themeRelationships);
+          const wideCard = (themeCardWidths[theme.key] ?? dimensions.width) >= WIDE_THEME_CARD;
+          const expandedLines = expandedAbilities.has(theme.key);
+          const expandedWords = expandedNarration.has(theme.key);
+          const shownLines = expandedLines ? lines : lines.slice(0, INITIAL_ABILITIES);
+          const titleRef = (node: Text | null) => { themeTitleRefs.current[theme.key] = node; };
+          const toggle = (setter: React.Dispatch<React.SetStateAction<Set<ThemeKey>>>) => setter((current) => toggleTheme(current, theme.key));
+          const heading = <Text ref={titleRef} accessibilityRole="header" style={[styles.themeTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{theme.title}</Text>;
+          const narration = <View style={styles.narrationBlock}>
+            <Text numberOfLines={expandedWords ? undefined : 2} style={[styles.themeDescription, { color: colors.textRole.secondary }]}>{theme.narration}</Text>
+            {theme.narration.length > 120 ? <TouchableOpacity accessibilityRole="button" onPress={() => toggle(setExpandedNarration)} style={styles.smallTextButton}><Text style={[styles.smallTextButtonLabel, { color: colors.accentRole.action }]}>{expandedWords ? "See less" : "See more"}</Text></TouchableOpacity> : null}
+          </View>;
+          const readingBand = <View style={[styles.readingBand, { borderTopColor: colors.borderRole.subtle }]}>
+            <Text style={[styles.readingBandTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Reading</Text>
+            {readingRows.length ? readingRows.map((row) => <View key={row.id} style={styles.readingRow}>
+              <Text style={[styles.resourceKind, styles.readingKind, { color: colors.textRole.muted }]}>{row.kind}</Text>
+              <Text style={[styles.readingTitle, { color: colors.textRole.primary }]}>{row.title}</Text>
+              <ExternalLinkGuard url={row.url} label="Open" description={row.description} style={[styles.readingOpen, { borderColor: colors.borderRole.subtle }]} textStyle={{ color: colors.accentRole.action }} />
+              {row.why ? <>
+                <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: expandedReadingWhy.has(row.id) }} onPress={() => setExpandedReadingWhy((current) => {
+                  const next = new Set(current); if (next.has(row.id)) next.delete(row.id); else next.add(row.id); return next;
+                })} style={styles.whyButton}><Text style={[styles.whyButtonLabel, { color: colors.accentRole.action }]}>{expandedReadingWhy.has(row.id) ? "Hide why" : "Why included?"}</Text></TouchableOpacity>
+                {expandedReadingWhy.has(row.id) ? <Text style={[styles.courseMeta, { color: colors.textRole.secondary }]}>{row.why}</Text> : null}
+              </> : null}
+            </View>) : <Text style={[styles.courseMeta, { color: colors.textRole.muted }]}>No reviewed reading is stored for this theme yet.</Text>}
+          </View>;
+          const abilityList = <View style={styles.abilityList}>
+            <Text style={[styles.abilityListTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>You will be able to</Text>
+            {shownLines.map((line) => <View key={line.id} style={styles.abilityLine}>
+              <Text style={[styles.abilityBullet, { color: colors.accentRole.action }]}>•</Text>
+              <Text style={[styles.abilityLineText, { color: colors.textRole.secondary }]}>{line.text}</Text>
+            </View>)}
+            {lines.length > INITIAL_ABILITIES ? <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: expandedLines }} onPress={() => toggle(setExpandedAbilities)} style={styles.moreButton}>
+              <Text style={[styles.moreText, { color: colors.accentRole.action }]}>{expandedLines ? "Show fewer abilities" : "See the rest of what you will be able to do"}</Text>
+            </TouchableOpacity> : null}
+            <Text style={[styles.abilityNote, { color: colors.textRole.muted }]}>These abilities are drawn from the programme record for this theme.</Text>
+          </View>;
           return (
-            <View key={theme.key} style={[styles.themeCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-              <View style={styles.headingLine}><Feather name={theme.icon} size={17} color={colors.accentRole.action} /><Text style={[styles.themeTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{theme.title}</Text></View>
-              {themeOverview(theme) ? <View style={styles.themeCopyBlock}>
-                <Text accessibilityRole="header" style={[styles.guidanceLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Theme focus</Text>
-                <Text style={[styles.themeDescription, { color: colors.textRole.secondary }]}>{themeOverview(theme)}</Text>
-              </View> : null}
-              <View style={styles.themeCopyBlock}>
-                <Text accessibilityRole="header" style={[styles.guidanceLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>How these courses fit together</Text>
-                <Text style={[styles.themeDescription, { color: colors.textRole.secondary }]}>{theme.narration}</Text>
-              </View>
-              {themeResources.length ? (
-                <View style={[styles.learningLinks, { borderTopColor: colors.borderRole.subtle }]}>
-                <Text style={[styles.linkHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Materials that explain this part</Text>
-                  {themeResources.map((resource) => (
-                    <View key={resource.targetName + ":" + resource.url} style={styles.linkRow}>
-                      <View style={styles.resourceCopy}>
-                        <Text style={[styles.resourceKind, { color: colors.textRole.muted }]}>{programmeReadingLabel(resource)}</Text>
-                        <Text style={[styles.linkName, { color: colors.textRole.secondary }]}>{resource.targetName}</Text>
-                        {programmeReadingByline(resource) ? <Text style={[styles.resourceProvider, { color: colors.textRole.muted }]}>{programmeReadingByline(resource)}</Text> : null}
-                        <Text style={[styles.guidanceLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Why this material is here</Text>
-                        <Text style={[styles.courseSummary, { color: colors.textRole.secondary }]}>{programmeReadingRationale(resource, theme)}</Text>
-                        {programmeReadingDescription(resource, theme) ? <><Text style={[styles.guidanceLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What it covers</Text><Text style={[styles.courseSummary, { color: colors.textRole.secondary }]}>{programmeReadingDescription(resource, theme)}</Text></> : null}
-                        <Text style={[styles.resourceProvider, { color: colors.textRole.muted }]}>{resource.provider} · {resource.accessType === "free" ? "Free access" : resource.accessType === "paid" ? "May require payment" : resource.accessType === "mixed" ? "Access varies" : "Check current access"}</Text>
-                        {programmeReadingTerms(resource) ? <Text style={[styles.resourceProvider, { color: colors.textRole.muted }]}>{programmeReadingTerms(resource)}</Text> : null}
-                      </View>
-                      <ExternalLinkGuard url={programmeReadingUrl(resource, theme)} label="Open material" description={programmeReadingDescription(resource, theme) || "This opens the programme reading for " + resource.targetName + "."} style={[styles.resourceButton, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]} textStyle={{ color: colors.accentRole.action }} />
-                    </View>
-                  ))}
-                </View>
-              ) : null}
-              <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: open }} onPress={() => setOpenTheme(open ? null : theme.key)} style={styles.moreButton}>
-                 <Text style={[styles.moreText, { color: colors.accentRole.action }]}>{open ? "Hide courses and outcomes" : "See courses and outcomes"}</Text>
-              </TouchableOpacity>
+            <View key={theme.key} onLayout={(event) => {
+              const width = event.nativeEvent.layout.width;
+              if (width && themeCardWidths[theme.key] !== width) setThemeCardWidths((current) => ({ ...current, [theme.key]: width }));
+            }} style={[styles.themeCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+              {!cardOpen ? <TouchableOpacity accessibilityRole="button" accessibilityLabel={`Open ${theme.title}`} accessibilityState={{ expanded: false }} onPress={() => {
+                setOpenThemes((current) => toggleTheme(current, theme.key));
+                requestAnimationFrame(() => {
+                  const node = themeTitleRefs.current[theme.key];
+                  const handle = node ? findNodeHandle(node) : null;
+                  if (handle != null) AccessibilityInfo.setAccessibilityFocus(handle);
+                });
+              }} style={styles.closedThemeCard}>
+                <Text accessibilityRole="header" style={[styles.themeTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{theme.title}</Text>
+                <Text numberOfLines={2} style={[styles.closedThemeDescription, { color: colors.textRole.secondary }]}>{THEME_META[theme.key].description}</Text>
+                <Text style={[styles.courseMeta, { color: colors.textRole.muted }]}>{lines.length} {lines.length === 1 ? "ability" : "abilities"} · {readingRows.length} {readingRows.length === 1 ? "reading" : "readings"}</Text>
+              </TouchableOpacity> : <>
+                {wideCard ? <View style={styles.openThemeWide}>
+                  <View style={styles.themeNarrationColumn}>{heading}{narration}{readingBand}</View>
+                  {abilityList}
+                </View> : <View style={styles.openThemeNarrow}>{heading}{narration}{readingBand}{abilityList}</View>}
+                <TouchableOpacity accessibilityRole="button" accessibilityLabel={`Close ${theme.title}`} accessibilityState={{ expanded: true }} onPress={() => setOpenThemes((current) => toggleTheme(current, theme.key))} style={styles.closeThemeButton}><Text style={[styles.smallTextButtonLabel, { color: colors.accentRole.action }]}>Close</Text></TouchableOpacity>
+              {(guidanceForTheme(curriculumContract.themeGuidance, theme).length || relationshipsForTheme(curriculumContract.themeRelationships, theme).length) ? <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: open }} onPress={() => setOpenThemeExplanations((current) => toggleTheme(current, theme.key))} style={styles.moreButton}>
+                 <Text style={[styles.moreText, { color: colors.accentRole.action }]}>{open ? "Hide theme explanations" : "Explore the ideas and connections"}</Text>
+              </TouchableOpacity> : null}
               {open ? (
                 <View style={[styles.courseDetail, { borderTopColor: colors.borderRole.subtle }]}>
                   {themeGuidance.length ? (
@@ -418,61 +517,43 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
                       ))}
                     </View>
                   ) : null}
-                  <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Course areas behind this explanation</Text>
-                  {theme.courses.map((course) => (
-                    <View key={course.code || course.title} style={styles.courseRow}>
-                      <Text style={[styles.courseTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{course.title}</Text>
-                      {levelLabel(course.level) ? <Text style={[styles.courseMeta, { color: colors.textRole.muted }]}>{levelLabel(course.level)}</Text> : null}
-                      {studentSourceLocator(course.sourceLocatorText ?? null) ? <Text style={[styles.courseMeta, { color: colors.textRole.muted }]}>{studentSourceLocator(course.sourceLocatorText ?? null)}</Text> : null}
-                      {course.outcomes.length ? (
-                        <View style={styles.courseOutcomes}>
-                          <Text style={[styles.courseMeta, { color: colors.textRole.muted }]}>Course outcomes, in learner-friendly wording</Text>
-                          {course.outcomes.map((outcome) => (
-                            <View key={outcome.outcomeId} style={styles.courseOutcome}>
-                              <Text style={[styles.courseSummary, { color: colors.textRole.secondary }]}>{outcome.studentText}</Text>
-                            </View>
-                          ))}
-                        </View>
-                      ) : null}
-                      {course.courseSummary || course.outcomes.some((outcome) => outcome.sourceText && outcome.sourceText.trim() !== outcome.studentText.trim()) ? <View style={styles.sourceOutline}>
-                        <TouchableOpacity
-                          accessibilityRole="button"
-                          accessibilityState={{ expanded: openCourseOutlines.has(`${theme.key}:${course.code || course.title}`) }}
-                          accessibilityLabel={`${openCourseOutlines.has(`${theme.key}:${course.code || course.title}`) ? "Hide" : "View"} original course outline for ${course.title}`}
-                          onPress={() => setOpenCourseOutlines((current) => {
-                            const key = `${theme.key}:${course.code || course.title}`;
-                            const next = new Set(current);
-                            if (next.has(key)) next.delete(key);
-                            else next.add(key);
-                            return next;
-                          })}
-                          style={styles.moreButton}
-                        >
-                          <Text style={[styles.moreText, { color: colors.accentRole.action }]}>{openCourseOutlines.has(`${theme.key}:${course.code || course.title}`) ? "Hide original course outline" : "View original course outline"}</Text>
-                        </TouchableOpacity>
-                        {openCourseOutlines.has(`${theme.key}:${course.code || course.title}`) ? <View style={[styles.sourceOutlineContent, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
-                          <Text style={[styles.courseMeta, { color: colors.textRole.muted }]}>Original curriculum wording is preserved here for reference. It may be technical or compressed; the learner-friendly outcomes are shown above.</Text>
-                          {course.courseSummary ? <><Text style={[styles.guidanceLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Original course outline</Text><Text style={[styles.courseSummary, { color: colors.textRole.secondary }]}>{course.courseSummary}</Text></> : null}
-                          {course.outcomes.filter((outcome) => outcome.sourceText && outcome.sourceText.trim() !== outcome.studentText.trim()).map((outcome) => <View key={`${outcome.outcomeId}:source`} style={styles.sourceOutcomeBlock}>
-                            <Text style={[styles.guidanceLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Original curriculum outcome wording</Text>
-                            <Text style={[styles.courseSummary, { color: colors.textRole.secondary }]}>{outcome.sourceText}</Text>
-                          </View>)}
-                        </View> : null}
-                      </View> : null}
-                    </View>
-                  ))}
                 </View>
-              ) : null}
+              ) : null}</>}
             </View>
           );
         })}
       </View>
-      {themes.length > INITIAL_THEMES ? <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: themesExpanded }} onPress={() => setThemesExpanded((value) => !value)} style={styles.moreButton}><Text style={[styles.moreText, { color: colors.accentRole.action }]}>{themesExpanded ? "Show fewer learning areas" : "See all learning areas"}</Text></TouchableOpacity> : null}
+      {themes.length > INITIAL_THEMES ? <TouchableOpacity accessibilityRole="button" accessibilityLabel={themesExpanded ? "Show fewer learning areas" : `See all ${themes.length} learning areas`} accessibilityState={{ expanded: themesExpanded }} onPress={() => setThemesExpanded((value) => !value)} style={styles.moreButton}><Text style={[styles.moreText, { color: colors.accentRole.action }]}>{themesExpanded ? "Show fewer learning areas" : `See all ${themes.length} learning areas`}</Text></TouchableOpacity> : null}
 
-      {abilities.length ? (
+      {mainReadings.length ? (
+        <View style={[styles.mainReadingCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+          <Text accessibilityRole="header" style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Main Sociology books</Text>
+          <Text style={[styles.courseMeta, { color: colors.textRole.secondary }]}>Optional reference books for exploring Sociology beyond the programme overview. Use a library or publisher copy.</Text>
+          {mainReadings.map((resource) => {
+            const giddensBook = cleanText(resource.targetName).toLocaleLowerCase() === "sociology";
+            return (
+              <View key={resource.id} style={[styles.mainReadingRow, { borderTopColor: colors.borderRole.subtle }]}>
+                <View style={styles.resourceCopy}>
+                  <Text style={[styles.courseTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{giddensBook ? "Sociology — Anthony Giddens and Philip W. Sutton" : resource.targetName}</Text>
+                  {giddensBook ? <Text style={[styles.mainReadingTheme, { color: colors.accentRole.action }]}>Theme: Ideas and foundations</Text> : null}
+                  <Text style={[styles.courseMeta, { color: colors.textRole.secondary }]}>{resource.description || "Optional Sociology reference book."}</Text>
+                  <Text style={[styles.courseMeta, { color: colors.textRole.muted }]}>Paid or library access · optional reading, not a programme requirement</Text>
+                </View>
+                <ExternalLinkGuard url={resource.url} label="Open publisher page" description={`${resource.targetName}. Optional publisher reference.`} style={[styles.resourceButton, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]} textStyle={{ color: colors.accentRole.action }} />
+              </View>
+            );
+          })}
+        </View>
+      ) : null}
+
+      {/* Course outcomes already carry the programme's learning abilities and
+          are shown in their relevant theme above. The separate ability list is
+          only a fallback for contracts that have abilities but no course
+          outcomes; rendering both makes the same curriculum appear twice. */}
+      {abilities.length && !courses.length ? (
         <View style={[styles.abilitiesCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-          <SectionLabel>How you will use what you learn</SectionLabel>
-          <Text style={[styles.abilitiesIntro, { color: colors.textRole.secondary }]}>The programme is not only about knowing ideas. It also asks you to use them, explain them, communicate clearly and work through questions or problems.</Text>
+          <Text accessibilityRole="header" style={[styles.sectionHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>How you will use what you learn</Text>
+          <Text style={[styles.abilitiesIntro, { color: colors.textRole.secondary }]}>Across these themes, you do more than learn definitions. You practise using ideas to ask focused questions, choosing suitable ways to investigate them, checking what the evidence can and cannot show, and explaining your conclusions clearly. The abilities below describe the kinds of work your programme prepares you to practise; seeing them here does not mean you have already mastered them.</Text>
           <View style={styles.abilityGrid}>
             {(abilitiesExpanded ? abilities : abilities.slice(0, INITIAL_ABILITIES)).map((ability) => (
               <View key={ability.abilityId} style={[styles.abilityCard, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
@@ -493,50 +574,73 @@ export default DegreeSkills;
 const styles = StyleSheet.create({
   block: { gap: Spacing.sm },
   headingLine: { flexDirection: "row", alignItems: "center", gap: Spacing.xs },
+  sectionHeading: { fontSize: 20, lineHeight: 26 },
   empty: { fontSize: 16, lineHeight: 24 },
-  intro: { fontSize: 16, lineHeight: 25 },
+  intro: { fontSize: 16, lineHeight: 24 },
   teaserCard: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.xs },
   teaserAbilities: { gap: Spacing.xs },
-  teaserTitle: { fontSize: 19, lineHeight: 26 },
+  teaserTitle: { fontSize: 20, lineHeight: 26 },
   teaserText: { fontSize: 16, lineHeight: 24 },
   teaserMeta: { fontSize: 13, lineHeight: 19 },
-  themeGrid: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
-  themeCard: { flex: 1, minWidth: 280, borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm },
-  themeTitle: { flex: 1, fontSize: 19, lineHeight: 25 },
-  themeDescription: { fontSize: 16, lineHeight: 24 },
+  themeGrid: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
+  themeCard: { flex: 1, minWidth: 280, borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.md, padding: 12, gap: 8 },
+  closedThemeCard: { minHeight: 72, justifyContent: "center", gap: 3 },
+  closedThemeDescription: { fontSize: 14, lineHeight: 20 },
+  openThemeWide: { flexDirection: "row", alignItems: "flex-start", gap: 16 },
+  openThemeNarrow: { flexDirection: "column", gap: 8 },
+  themeNarrationColumn: { flex: 42, minWidth: 0, gap: 6 },
+  narrationBlock: { gap: 2 },
+  smallTextButton: { alignSelf: "flex-start", minHeight: 36, justifyContent: "center", paddingVertical: 4 },
+  smallTextButtonLabel: { fontSize: 14, lineHeight: 20, ...CompassFonts.bodySemibold },
+  readingBand: { borderTopWidth: StyleSheet.hairlineWidth, paddingTop: 8, gap: 6, marginTop: 4 },
+  readingBandTitle: { fontSize: 15, lineHeight: 21 },
+  readingRow: { minHeight: 44, flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: 6, paddingVertical: 4 },
+  readingKind: { fontSize: 12, lineHeight: 18, paddingHorizontal: 6, paddingVertical: 2, borderRadius: 8, backgroundColor: "rgba(120,120,120,0.10)" },
+  readingTitle: { flex: 1, minWidth: 120, fontSize: 14, lineHeight: 20 },
+  readingOpen: { minHeight: 44, minWidth: 52, alignItems: "center", justifyContent: "center", borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.sm, paddingHorizontal: 8 },
+  whyButton: { minHeight: 40, justifyContent: "center", paddingHorizontal: 4 },
+  whyButtonLabel: { fontSize: 12, lineHeight: 18, ...CompassFonts.bodySemibold },
+  abilityList: { flex: 58, minWidth: 0, gap: 8 },
+  abilityListTitle: { fontSize: 15, lineHeight: 21 },
+  abilityLine: { flexDirection: "row", alignItems: "flex-start", gap: 8, marginTop: 5 },
+  abilityBullet: { width: 12, fontSize: 14, lineHeight: 20 },
+  abilityLineText: { flex: 1, fontSize: 14, lineHeight: 20 },
+  abilityNote: { fontSize: 13, lineHeight: 19, marginTop: 2 },
+  closeThemeButton: { alignSelf: "flex-end", minHeight: 40, justifyContent: "center", paddingHorizontal: 8 },
+  themeTitle: { flex: 1, fontSize: 16, lineHeight: 22 },
+  themeDescription: { fontSize: 14, lineHeight: 20 },
   themeCopyBlock: { gap: Spacing.xs, paddingTop: Spacing.xs },
   courseMeta: { fontSize: 13, lineHeight: 19 },
   learningLinks: { borderTopWidth: StyleSheet.hairlineWidth, paddingTop: Spacing.sm, gap: Spacing.xs },
-  linkHeading: { fontSize: 20, lineHeight: 27, ...CompassFonts.bodySemibold },
+  linkHeading: { fontSize: 20, lineHeight: 26, ...CompassFonts.bodySemibold },
   linkRow: { flexDirection: "row", alignItems: "flex-start", gap: Spacing.sm },
   resourceCopy: { flex: 1, gap: 2 },
-  resourceButton: { minHeight: 34, justifyContent: "center", alignItems: "center", borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.sm, paddingHorizontal: Spacing.sm, paddingVertical: Spacing.xs },
+  resourceButton: { minHeight: 44, justifyContent: "center", alignItems: "center", borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.sm, paddingHorizontal: Spacing.sm, paddingVertical: Spacing.xs },
   resourceKind: { fontSize: 13, lineHeight: 19, fontWeight: "800" },
   resourceProvider: { fontSize: 13, lineHeight: 19 },
   linkName: { fontSize: 16, lineHeight: 24 },
-  moreButton: { alignSelf: "flex-start", minHeight: 32, justifyContent: "center", paddingTop: Spacing.xs },
-  moreText: { fontSize: 16, lineHeight: 23, ...CompassFonts.bodySemibold },
-  courseDetail: { borderTopWidth: StyleSheet.hairlineWidth, paddingTop: Spacing.sm, gap: Spacing.sm },
-  guidanceBlock: { gap: Spacing.sm },
+  moreButton: { alignSelf: "flex-start", minHeight: 44, justifyContent: "center", paddingVertical: Spacing.xs },
+  moreText: { fontSize: 16, lineHeight: 20, ...CompassFonts.bodySemibold },
+  courseDetail: { borderTopWidth: StyleSheet.hairlineWidth, paddingTop: Spacing.sm, gap: 8 },
+  courseOutcomeGroup: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.sm, padding: Spacing.sm, gap: Spacing.xs },
+  courseOutcomeTitle: { fontSize: 16, lineHeight: 22 },
+  guidanceBlock: { gap: 8 },
   guidanceCard: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.sm, padding: Spacing.sm, gap: Spacing.xs },
-  guidanceLabel: { fontSize: 16, lineHeight: 23, ...CompassFonts.bodySemibold },
+  outcomeCard: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.sm, padding: Spacing.sm },
+  guidanceLabel: { fontSize: 16, lineHeight: 22, ...CompassFonts.bodySemibold },
   guidanceSources: { gap: 2, paddingTop: Spacing.xs },
-  guidanceSourceLink: { alignSelf: "flex-start", paddingVertical: 2 },
+  guidanceSourceLink: { alignSelf: "flex-start", minHeight: 44, justifyContent: "center", paddingVertical: Spacing.xs },
   guidanceLearning: { flexDirection: "row", alignItems: "flex-start", gap: Spacing.sm, borderTopWidth: StyleSheet.hairlineWidth, paddingTop: Spacing.xs },
-  courseRow: { gap: 2 },
-  courseOutcomes: { gap: Spacing.xs, paddingTop: Spacing.xs },
-  sourceOutline: { gap: Spacing.xs, alignItems: "flex-start" },
-  sourceOutlineContent: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm, width: "100%" },
-  sourceOutcomeBlock: { gap: Spacing.xs, paddingTop: Spacing.xs },
-  courseOutcome: { gap: 2, paddingLeft: Spacing.sm },
-  sourceOutcome: { fontSize: 13, lineHeight: 19, fontStyle: "italic" },
-  courseTitle: { fontSize: 18, lineHeight: 25 },
+  courseTitle: { fontSize: 16, lineHeight: 22 },
   courseSummary: { fontSize: 16, lineHeight: 24 },
   abilitiesCard: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm },
-  detailHeading: { fontSize: 20, lineHeight: 27, ...CompassFonts.bodySemibold },
+  mainReadingCard: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm },
+  mainReadingRow: { flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: Spacing.sm, borderTopWidth: StyleSheet.hairlineWidth, paddingTop: Spacing.sm },
+  mainReadingTheme: { fontSize: 13, lineHeight: 19, ...CompassFonts.bodySemibold },
+  detailHeading: { fontSize: 20, lineHeight: 26, ...CompassFonts.bodySemibold },
   abilitiesIntro: { fontSize: 16, lineHeight: 24 },
-  abilityGrid: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
+  abilityGrid: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
   abilityCard: { flex: 1, minWidth: 230, borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.sm, padding: Spacing.sm, gap: Spacing.xs },
-  abilityTitle: { fontSize: 18, lineHeight: 25 },
+  abilityTitle: { fontSize: 16, lineHeight: 22 },
   outcome: { fontSize: 16, lineHeight: 24 },
 });

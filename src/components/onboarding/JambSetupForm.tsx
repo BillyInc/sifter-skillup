@@ -27,6 +27,8 @@ import type {
   SsDoor,
 } from "../../types/onboarding";
 import LocalLegalNotice from "../LocalLegalNotice";
+import { FlowCue } from "../guidance/FlowCue";
+import { admissionDoorCue } from "../../lib/studentFlowCopy";
 
 const DOORS: {
   value: SsDoor;
@@ -35,22 +37,22 @@ const DOORS: {
   subtitle: string;
 }[] = [
   {
-    value: "know_where",
+    value: "unsure",
     icon: "A",
-    title: "I know the programme and university",
-    subtitle: "Check the programme at a specific university",
+    title: "I don’t know the programme yet",
+    subtitle: "Your subjects find programmes. You preview one, then open its universities.",
   },
   {
     value: "know_what",
     icon: "B",
-    title: "I know the programme, but not the university",
-    subtitle: "See universities, official programme names and requirements",
+    title: "I know the programme, not the university",
+    subtitle: "See each university and its own O-level and UTME requirements. You can compare them.",
   },
   {
-    value: "unsure",
+    value: "know_where",
     icon: "C",
-    title: "I want help finding a programme",
-    subtitle: "Use your O-level and UTME subjects to narrow the options",
+    title: "I know the programme and the university",
+    subtitle: "Open that university's page, with its subjects and what the programme can lead to.",
   },
 ];
 
@@ -97,6 +99,7 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
           check your current combination or find options for you.
         </Text>
       </View>
+      <FlowCue {...admissionDoorCue(door, isSs3Student)} />
 
       {isSs3Student ? (
         <LiveAdmissionSearchField
@@ -179,19 +182,13 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
 
       {door && (door === "unsure" || showSubjectCheck) ? (
         <SelectField
-          label="Your school stream"
+          label="Your subject stream"
           options={STREAM_OPTIONS}
           value={value.stream}
           placeholder="Choose your stream"
           onSelect={(v) =>
             onChange({
               stream: v as SchoolStream,
-              jambSubjects: [],
-              olevelSubjects: [],
-              intendedProgramme: undefined,
-              intendedJambProgrammeId: undefined,
-              preferredSchool: undefined,
-              preferredSchoolId: undefined,
             })
           }
         />
@@ -211,7 +208,7 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
             style={[styles.subjectCheckButton, { borderColor: colors.borderRole.subtle }]}
           >
             <Text style={[styles.subjectCheckText, { color: colors.accentRole.action }]}>
-              {showSubjectCheck ? "Hide optional subject check" : "Check my subjects too (optional)"}
+              {showSubjectCheck ? "Hide optional subject check" : "Check my subjects against this programme"}
             </Text>
           </TouchableOpacity>
           <Text style={[styles.caption, { color: colors.textMuted }]}>
@@ -231,8 +228,9 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
           minSelected={5}
           maxSelected={MAX_OLEVEL_SUBJECTS}
           fixedSubjects={["English Language", "Mathematics"]}
-          showSearch={false}
-          helperText="Choose at least 5 subjects from your selected stream. Cross-listed subjects appear in every applicable stream. Exact programme and institution requirements are checked separately and take priority."
+          showSearch
+          streamScoped
+          helperText="Your stream shows the subjects usually taken on that path. A programme can still ask for a subject that is not in this list. We will show that when you open the programme."
         />
       ) : null}
 
@@ -245,7 +243,8 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
           onChange={(v) => onChange({ jambSubjects: v as string[] })}
           minSelected={4}
           maxSelected={4}
-          showSearch={false}
+          showSearch
+          streamScoped
           fixedSubjects={["English Language"]}
           helperText="Use of English is fixed. Choose 3 other UTME subjects from your selected stream. Cross-listed subjects appear in every applicable stream. Exact programme and institution combinations are checked separately and take priority."
         />
@@ -310,7 +309,7 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
 
       {door === "unsure" ? (
         <View style={{ gap: Spacing.lg }}>
-          <Text style={[styles.caption, { color: colors.textMuted }]}> 
+          <Text style={[styles.caption, { color: colors.textMuted }]}>
             We will show programmes that accept this combination, explain any
             missing O-level requirement, and then show the universities with
             the programme.

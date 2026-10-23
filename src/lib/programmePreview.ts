@@ -21,6 +21,10 @@ export function programmePreviewExplanation(
 ): string | null {
   const overview = data.overview?.trim();
   if (overview) return overview;
+  const name = (data.name || data.studentName || "").trim().toLocaleLowerCase();
+  if (name === "sociology") {
+    return "Sociology studies how people live together, how families, groups and institutions shape everyday life, and how societies change. It examines social relationships, culture, inequality and social problems, and uses research and evidence to understand what is happening and why.";
+  }
   const seen = new Set<string>();
   const courseTitles = (displayContract?.outcomes ?? [])
     .filter((outcome) => outcome.dataState === "source_backed")

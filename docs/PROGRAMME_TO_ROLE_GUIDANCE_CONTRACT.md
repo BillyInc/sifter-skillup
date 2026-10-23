@@ -102,9 +102,10 @@ After the career resource and contextual-item schemas exist, apply:
 
 1. `migration_guidance_programme_reading_and_market_scope_2026-09-12.sql`
 2. `migration_guidance_ownership_and_sociology_resources_2026-09-11.sql`
-3. `migration_guidance_all_programmes_2026-09-12.sql`
-4. `migration_guidance_global_2026-09-11.sql`
-5. the compressed contextual-item seed parts in numeric order
+3. `migration_sociology_giddens_ideas_theme_2026-10-22.sql` (existing projects; safe to run immediately after 12c because it updates only the exact Sociology/ISBN row; the current base migration also includes this mapping for fresh setups)
+4. `migration_guidance_all_programmes_2026-09-12.sql`
+5. `migration_guidance_global_2026-09-11.sql`
+6. the compressed contextual-item seed parts in numeric order
 
 The all-programme migration is additive and idempotent. It is not proof that
 Supabase has been seeded; the post-apply count and source-link checks in the

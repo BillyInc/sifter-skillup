@@ -1,12 +1,12 @@
 {
-  "sql_regeneration_allowed": true,
+  "sql_regeneration_allowed": false,
   "checks": {
     "domain_denominator_reconciled": true,
     "all_assigned_body_ids_are_catalogued": true,
     "all_assigned_body_ids_have_source_audit_evidence": true,
     "all_assigned_body_ids_have_source_audit_or_supplemental_evidence": true,
     "supplemental_direct_page_review_complete": true,
-    "all_domain_review_rows_are_structural_only": true,
+    "all_domain_review_rows_are_structural_only": false,
     "no_unsourced_roles": true,
     "mechanical_resource_validation": true,
     "all_visible_domains_have_role_resources": true,
@@ -23,12 +23,12 @@
     "assigned_body_ids_with_source_audit_evidence": 129,
     "assigned_body_ids_pending_supplemental_review": 0,
     "catalog_body_ids_unassigned_to_visible_domain": 22,
-    "domains_requiring_review": 0,
+    "domains_requiring_review": 142,
     "roles_without_source_signal": 0,
     "resource_rows": 160914,
     "resource_validation_errors": 0
   },
-  "blocked_reason": "All source and mechanical checks passed. Review the generated population before seeding.",
+  "blocked_reason": "Keep SQL generation blocked until every failed source and denominator check is reconciled.",
   "informational_open_items": {
     "assigned_body_ids_pending_supplemental_review": 0,
     "assigned_body_ids_reviewed_with_source_exception": 8,

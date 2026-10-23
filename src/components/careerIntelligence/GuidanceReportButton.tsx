@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Feather } from "@expo/vector-icons";
 import { useTheme, FontSize, Spacing } from "../../theme";
 import { SifterButton } from "../ui";
 import { careerData } from "../../lib/careerData";
@@ -12,7 +13,12 @@ type GuidanceListItem = {
   name?: string;
   programme?: { id?: string };
   domainId?: string;
+  domainName?: string;
   subgroupId?: string;
+  subgroupName?: string;
+  roleId?: string;
+  roleName?: string;
+  matchType?: string;
   routeKeys?: string[];
 };
 export type GuidancePathRecord = Record<string, GuidanceListItem[] | unknown>;
@@ -344,7 +350,9 @@ export function GuidanceReportButton({
         disabled={busy}
       />
       {busy ? <ActivityIndicator size="small" color={colors.textRole.muted} /> : null}
-      {selected && selection.kind === "learningFocus" && onOpenPlan ? <SifterButton label="Open my learning tray" onPress={onOpenPlan} variant="primary" size="sm" fullWidth={false} /> : null}
+      {selected && selection.kind === "learningFocus" && onOpenPlan ? <TouchableOpacity accessibilityRole="button" accessibilityLabel="Open my learning tray" onPress={onOpenPlan} style={[styles.trayIcon, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+        <Feather name="briefcase" size={17} color={colors.accentRole.action} />
+      </TouchableOpacity> : null}
       {notice ? <Text style={[styles.notice, { color: colors.textRole.muted }]}>{notice}</Text> : null}
     </View>
   );
@@ -352,6 +360,7 @@ export function GuidanceReportButton({
 
 const styles = StyleSheet.create({
   wrap: { alignItems: "flex-start", gap: Spacing.xs },
+  trayIcon: { width: 36, height: 36, borderWidth: 1, borderRadius: 18, alignItems: "center", justifyContent: "center" },
   notice: { fontSize: FontSize.xs, maxWidth: 230 },
 });
 

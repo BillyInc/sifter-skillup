@@ -21,7 +21,6 @@
     "FED-GASHUA",
     "FED-GUSAU",
     "FED-KASHERE",
-    "ARTS",
     "FED-LAFIA",
     "FED-LOKOJA",
     "FOUNTAIN",
@@ -96,10 +95,79 @@
    "scope": [
     68,
     137
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "verified",
+    "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "locator": "Arts/Humanities degree brochure, printed pp. 132-133, ARABIC STUDIES body row and continued awarding-institutions column",
+    "accessed_on": "2026-09-28",
+    "verified_institutions": [
+     "ABU",
+     "ABUJA",
+     "AL-ANSAR",
+     "AL-HIKMAH",
+     "AL-QALAM",
+     "BASU",
+     "BAYERO",
+     "EKSU",
+     "EL-TAYEB",
+     "EUI",
+     "FED-DUTSINMA",
+     "FED-GASHUA",
+     "FED-GUSAU",
+     "FED-KASHERE",
+     "FED-LAFIA",
+     "FED-LOKOJA",
+     "FOUNTAIN",
+     "ICONIC-OU",
+     "ILORIN",
+     "JOS",
+     "KASU",
+     "KWASU",
+     "LAPAI",
+     "LASU",
+     "LASUED",
+     "MAIDUGURI",
+     "MAITAMA",
+     "NASARAWA",
+     "NAUB",
+     "NOUN-ELUON",
+     "RUFAI-DEG",
+     "SLUK",
+     "SOSU",
+     "SUMMIT",
+     "TSUJ",
+     "UDU",
+     "UMYUK",
+     "UNI-ILESA",
+     "YSU",
+     "ZAMFARA"
+    ],
+    "evidence_note": "The exact ARABIC STUDIES body title and institution list were checked across the page break. Removed the parser token ARTS; it is a table-column heading, not an awarder.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "_jamb_txt/arts_hum.txt lines 11, 68, 110, 265, 280, 5174; parsed offering row 1; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 11, 68, 110, 265, 280, 5174; parsed offering row 1; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located"
   },
   {
-   "jamb_name": "Arabic Language and Literature Studies",
+  "jamb_name": "Arabic Language and Literature Studies",
+  "external_html_reconciliation": {
+   "access_date": "2026-10-02",
+   "status": "institution_specific_title_variant_verified; global_title_and_roster_unverified",
+   "finding": "University of Ibadan's official programme specification names a B.A. Arabic Language and Literature. This supports a title variant for that institution only; it does not establish a global canonical rename or the complete JAMB awarder roster.",
+   "sources": [
+    "https://arts.ui.edu.ng/academic-programme"
+   ]
+  },
    "institutions": [
     "CAILS",
     "ISTIQAMA",
@@ -140,7 +208,24 @@
    "scope": [
     137,
     300
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:137",
+    "hold_reason": "Exact official brochure programme/institution cell was not independently provable in this bounded local-window review; parser tokens remain discovery evidence and no URL, PDF locator, or verification date is promoted.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "_jamb_txt/arts_hum.txt lines 13; parsed offering row 2; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 13; parsed offering row 2; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located"
   },
   {
    "jamb_name": "Archaeology",
@@ -148,11 +233,7 @@
     "ABU",
     "IBADAN",
     "JOS",
-    "UNN",
-    "ARCHAEOLOGY/HISTORY",
-    "ARCHAEOLOGY AND",
-    "ARTS",
-    "HERITAGE STUDIES"
+    "UNN"
    ],
    "utme_subjects": [
     "Any two (2) subjects from Arts, Social Sciences and one of History, Religious Studies, Government and Geography"
@@ -185,7 +266,32 @@
    "scope": [
     300,
     373
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "verified",
+    "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "locator": "Arts/Humanities degree brochure, printed p. 137, ARCHAEOLOGY body row; adjacent Archaeology/History and Archaeology and Heritage Studies rows excluded",
+    "accessed_on": "2026-09-28",
+    "verified_institutions": [
+     "ABU",
+     "IBADAN",
+     "JOS",
+     "UNN"
+    ],
+    "evidence_note": "The official body separates the four-institution Archaeology row from the distinct Archaeology/History and Archaeology and Heritage Studies rows. Removed those adjacent titles from the canonical awarder list.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "_jamb_txt/arts_hum.txt lines 8, 17, 300, 306, 309, 327; parsed offering row 3; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 8, 17, 300, 306, 309, 327; parsed offering row 3; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located"
   },
   {
    "jamb_name": "Classical Studies",
@@ -206,12 +312,30 @@
    "scope": [
     373,
     385
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": true,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "Arts and Humanities brochure, extracted arts_hum.txt:375-384 (printed p. 138): the CLASSICAL STUDIES row lists IBADAN in the awarding-institutions cell.",
+    "verified_institution_codes": [
+     "IBADAN"
+    ],
+    "verification_date": "2026-09-26",
+    "note": "Lane B exact local extracted brochure-window verification. This records the offering occurrence only; it does not change mappings, curriculum, or admissions availability."
+   }
   },
   {
-   "jamb_name": "Christian Religious",
+  "jamb_name": "Christian Religious",
+  "external_html_reconciliation": {
+   "access_date": "2026-10-02",
+   "status": "institution_specific_title_variant_verified; global_title_and_roster_unverified",
+   "finding": "Official OOU undergraduate HTML identifies a B.A. Christian Religious Studies award, including a distinct B.A. (Ed.) variant. This supports expanding the abbreviated title for OOU only; it does not justify a global canonical rename or establish the complete JAMB awarder roster.",
+   "sources": [
+    "https://main.oouagoiwoye.edu.ng/colleges/faculties/arts/religious/b-a-christian/",
+    "https://main.oouagoiwoye.edu.ng/colleges/faculties/education/arts-social/b-a-ed-christian-religious-studies/"
+   ]
+  },
    "institutions": [
-    "STUDIES",
     "ANCHOR-UNI",
     "BABCOCK",
     "BIU",
@@ -228,7 +352,6 @@
     "FED-WUKARI",
     "GSU",
     "JOS",
-    "ARTS",
     "KASU",
     "KKU",
     "PAAU",
@@ -248,18 +371,7 @@
     "UDA",
     "UNIHEZ",
     "UNI-ILESA",
-    "UNIOSUN",
-    "STUDIES AND RELIGIOUS",
-    "COMMUNICATIONS",
-    "ABUJA",
-    "FINE ARTS/FINE AND",
-    "APPLIED ARTS",
-    "BENIN",
-    "DELSU",
-    "AEFUNA",
-    "IAUED",
-    "KWASU",
-    "UNN"
+    "UNIOSUN"
    ],
    "utme_subjects": [
     "CRS",
@@ -322,7 +434,64 @@
    "scope": [
     385,
     439
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "verified",
+    "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "locator": "Arts/Humanities degree brochure, printed pp. 139-140, CHRISTIAN RELIGIOUS STUDIES body row and continued awarding-institutions column",
+    "accessed_on": "2026-09-28",
+    "verified_institutions": [
+     "ANCHOR-UNI",
+     "BABCOCK",
+     "BIU",
+     "CALABAR",
+     "CALEB",
+     "CLIFFORD",
+     "DOMINICAN-UNI",
+     "ECWA",
+     "EUI",
+     "EKSU",
+     "FED-KASHERE",
+     "FED-LAFIA",
+     "FED-LOKOJA",
+     "FED-WUKARI",
+     "GSU",
+     "JOS",
+     "KASU",
+     "KKU",
+     "PAAU",
+     "LAGOS",
+     "LASU",
+     "LASUED",
+     "LTS",
+     "NASARAWA",
+     "OBONG",
+     "OOU",
+     "PACOT",
+     "REDEEMED",
+     "REDEEMERS",
+     "SPIRITAN",
+     "TASUED",
+     "TSUJ",
+     "UDA",
+     "UNIHEZ",
+     "UNI-ILESA",
+     "UNIOSUN"
+    ],
+    "evidence_note": "Compared the exact CHRISTIAN RELIGIOUS STUDIES institution column through its page continuation. Excluded the adjacent Christian Studies, Christian Religious Studies and Religious Communications, and Fine Arts rows.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "_jamb_txt/arts_hum.txt lines 16, 385, 436, 438, 444, 450; parsed offering row 5; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 16, 385, 436, 438, 444, 450; parsed offering row 5; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located"
   },
   {
    "jamb_name": "Christian Studies",
@@ -343,7 +512,19 @@
    "scope": [
     439,
     531
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": true,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "Arts and Humanities brochure, extracted arts_hum.txt:449-452: the CHRISTIAN STUDIES heading is followed by AJAYI, ILORIN and KWASU in the awarding-institutions column.",
+    "verified_institution_codes": [
+     "AJAYI",
+     "ILORIN",
+     "KWASU"
+    ],
+    "verification_date": "2026-09-26",
+    "note": "Lane B exact local extracted brochure-window verification. This records the offering occurrence only; it does not change mappings, curriculum, or admissions availability."
+   }
   },
   {
    "jamb_name": "Creative Arts",
@@ -352,88 +533,7 @@
     "LAGOS",
     "PHC",
     "UNN",
-    "TASUED",
-    "FINE ARTS AND DESIGN",
-    "LASU",
-    "ARTS",
-    "FED-LAFIA",
-    "LCITY",
-    "WIGWE",
-    "FINE ARTS AND",
-    "INDUSTRIAL DESIGN",
-    "DELSUT",
-    "CREATIVE AND VISUAL",
-    "ENVIRONMENTAL",
-    "SCIENCE",
-    "ABSU",
-    "VISUAL AND APPLIED",
-    "AEFUNA",
-    "ANIMATION AND VISUAL",
-    "DRAMA/DRAMATIC/PERF",
-    "ORMING ARTS",
-    "ABUJA",
-    "BENIN",
-    "DELSU",
-    "KASU",
-    "OAU",
-    "THEATRE AND",
-    "PERFORMING ARTS",
-    "ABU",
-    "BAYERO",
-    "LASUED",
-    "THEATRE AND FILM",
-    "STUDIES",
-    "FED-OTUOKE",
-    "JOS",
-    "TSUJ",
-    "THEATRE ARTS",
-    "ABUAD",
-    "ATIBA",
-    "BOWEN",
-    "BSU",
-    "BOUEDST",
-    "CALABAR",
-    "COOU",
-    "EKSU",
-    "EVANGEL",
-    "FED-LOKOJA",
-    "GREGORY",
-    "IAUED",
-    "IBADAN",
-    "IGBINEDION",
-    "IMSU",
-    "KASU-KABBA",
-    "LAUTECH",
-    "PAAU",
-    "MAIDUGURI",
-    "MC-IBRU",
-    "NASARAWA",
-    "NDU",
-    "PAUL",
-    "PLASU",
-    "REDEEMERS",
-    "RSU",
-    "UDA",
-    "UNI-AFRICA",
-    "UNI-ILESA",
-    "UNIOSUN",
-    "UNIZIK",
-    "UYO",
-    "WESLEYUNI",
-    "AAUA",
-    "AJAYI",
-    "AKSU",
-    "ELIZADE",
-    "ILORIN",
-    "KWASU",
-    "OOU",
-    "PERFORMING AND",
-    "HENSARD",
-    "THEATRE AND MEDIA",
-    "AAU",
-    "FED-OYE EKITI",
-    "FILM ARTS",
-    "NFI-DEG"
+    "TASUED"
    ],
    "utme_subjects": [
     "Fine Arts",
@@ -491,122 +591,40 @@
    "scope": [
     531,
     1224
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "verified",
+    "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "locator": "Arts/Humanities degree brochure, printed p. 142, CREATIVE ARTS body row and complete awarding-institutions column",
+    "accessed_on": "2026-09-28",
+    "source_body_title": "CREATIVE ARTS",
+    "source_faculty": "ARTS/HUMANITIES — FACULTY/SCHOOL/COLLEGE OF ARTS",
+    "verified_institutions": [
+     "DOU",
+     "LAGOS",
+     "PHC",
+     "UNN",
+     "TASUED"
+    ],
+    "evidence_note": "The exact body row lists five awarders; separate Fine Arts and other adjacent programme rows were excluded.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "_jamb_txt/arts_hum.txt lines 30, 531, 769, 914, 987; parsed offering row 7; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 30, 531, 769, 914, 987; parsed offering row 7; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located"
   },
   {
    "jamb_name": "Linguistics/Edo",
    "institutions": [
-    "BENIN",
-    "ENGLISH AND",
-    "INTERNATIONAL",
-    "ARTS",
-    "STUDIES",
-    "UNIOSUN",
-    "ENGLISH LANGUAGE",
-    "AAU",
-    "ABU",
-    "ABUAD",
-    "ADSU",
-    "AJAYI",
-    "AL-HIKMAH",
-    "AL-QALAM",
-    "ALETHEIA",
-    "APU",
-    "ARTSHUR-JARVIS",
-    "ATIBA",
-    "AUE",
-    "AUGUSTINE",
-    "BASU",
-    "BAYERO",
-    "BIU",
-    "BOSU",
-    "BOWEN",
-    "BSU",
-    "CARITAS",
-    "CHRISLAND",
-    "CHRISTOPHER",
-    "CLIFFORD",
-    "COOU",
-    "COVENANT",
-    "CROWN-HILL",
-    "EUI",
-    "EDWIN CLARK",
-    "EKSU",
-    "ELIZADE",
-    "EVANGEL",
-    "FED-DUTSE",
-    "FED-DUTSINMA",
-    "FED-GASHUA",
-    "FED-GUSAU",
-    "FED-KASHERE",
-    "FED-KEBBI",
-    "FED-LAFIA",
-    "FED-LOKOJA",
-    "AEFUNA",
-    "FOUNTAIN",
-    "GSU",
-    "IAUED",
-    "ICONIC-OU",
-    "ISTIQAMA",
-    "IGBINEDION",
-    "IJEBUODE-DEG",
-    "ILORIN",
-    "JOS",
-    "KOLADAISI",
-    "KWASU",
-    "LAGOS",
-    "LAPAI",
-    "LASUED",
-    "LEGACY",
-    "MADONNA",
-    "MCPHERSON",
-    "MKAR",
-    "MK-UNI",
-    "MOUNTAIN TOP",
-    "NASARAWA",
-    "MAITAMA",
-    "NDA",
-    "NAUB",
-    "NOUN",
-    "OAU",
-    "OOU",
-    "PAUL",
-    "PHC",
-    "PLASU",
-    "POL-ACAD",
-    "REDEEMERS",
-    "RITMAN",
-    "RSU",
-    "SALEM",
-    "SAU",
-    "SLUK",
-    "SOSU",
-    "SPIRITAN",
-    "TASUED",
-    "TSUJ",
-    "UAGRIC-IMO",
-    "UDU",
-    "UNI-ILESA",
-    "UMYUK",
-    "UNI-AFRICA",
-    "UNIKINGS",
-    "UYO",
-    "VISION-UNI",
-    "YSU",
-    "ZAMFARA",
-    "AND LITERATURE",
-    "ABSU",
-    "ASPOL-DEG",
-    "AUN",
-    "EBSU",
-    "FED-WUKARI",
-    "KASU-KABBA",
-    "IBADAN",
-    "NILE",
-    "UNIZIK",
-    "AND COMMUNICATION",
-    "FEDOTUOKE",
-    "LINGUISTICS/ENGLISH"
+    "BENIN"
    ],
    "utme_subjects": [
     "Two (2) relevant Arts subjects",
@@ -628,12 +646,35 @@
    "scope": [
     1224,
     1928
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "verified",
+    "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "locator": "Arts/Humanities degree brochure, printed p. 156, LINGUISTICS/EDO body row",
+    "accessed_on": "2026-09-28",
+    "source_body_title": "LINGUISTICS/EDO",
+    "source_faculty": "ARTS/HUMANITIES — FACULTY/SCHOOL/COLLEGE OF ARTS",
+    "verified_institutions": [
+     "BENIN"
+    ],
+    "evidence_note": "The body row has one awarder, BENIN. Parser spillover from English and Literary Studies, English Language and Linguistics/English rows was removed.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "_jamb_txt/arts_hum.txt lines 9, 1224; parsed offering row 8; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 9, 1224; parsed offering row 8; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located"
   },
   {
    "jamb_name": "English and Literary Studies",
    "institutions": [
-    "STUDIES",
     "ABUJA",
     "ADUN",
     "AKSU",
@@ -656,7 +697,6 @@
     "IMSU",
     "PAAU",
     "KWASU",
-    "ARTS",
     "LAUTECH",
     "LCITY",
     "LUX-MUNDI",
@@ -741,7 +781,66 @@
    "scope": [
     1928,
     1979
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "verified",
+    "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "locator": "Arts/Humanities degree brochure, printed pp. 171-172, ENGLISH AND LITERARY STUDIES body row and continued awarding-institutions column",
+    "accessed_on": "2026-09-28",
+    "source_body_title": "ENGLISH AND LITERARY STUDIES",
+    "source_faculty": "ARTS/HUMANITIES — FACULTY/SCHOOL/COLLEGE OF ARTS",
+    "verified_institutions": [
+     "ABUJA",
+     "ADUN",
+     "AKSU",
+     "AL-ANSAR",
+     "ANCHOR-UNI",
+     "BABCOCK",
+     "BINGHAM",
+     "BOUEDST",
+     "CALABAR",
+     "CALEB",
+     "COAL-CITY",
+     "DELSU",
+     "DOU",
+     "EKSU",
+     "KOMU",
+     "ESUTECH",
+     "FED-OYE EKITI",
+     "GOUU",
+     "GREGORY",
+     "IMSU",
+     "PAAU",
+     "KWASU",
+     "LAUTECH",
+     "LCITY",
+     "LUX-MUNDI",
+     "MAIDUGURI",
+     "MC-IBRU",
+     "NDU",
+     "OBONG",
+     "SUMMIT",
+     "TAU",
+     "TRINITY",
+     "UDA",
+     "UNIHEZ",
+     "UNN",
+     "VERITAS"
+    ],
+    "evidence_note": "Removed the parser tokens STUDIES and ARTS, which were heading spillover rather than awarders. The complete body list contains 36 distinct institution codes.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "_jamb_txt/arts_hum.txt lines 39; parsed offering row 9; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 39; parsed offering row 9; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located"
   },
   {
    "jamb_name": "English Studies",
@@ -762,7 +861,33 @@
    "scope": [
     1979,
     1984
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "verified",
+    "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "locator": "Arts/Humanities degree brochure, printed p. 172, ENGLISH STUDIES body row",
+    "accessed_on": "2026-09-28",
+    "source_body_title": "ENGLISH STUDIES",
+    "source_faculty": "ARTS/HUMANITIES — FACULTY/SCHOOL/COLLEGE OF ARTS",
+    "verified_institutions": [
+     "AAUA",
+     "BABCOCK",
+     "KASU"
+    ],
+    "evidence_note": "The English Studies body cell is a distinct three-institution occurrence, separate from English and Literary Studies and Literature in English.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "_jamb_txt/arts_hum.txt lines 38, 1275, 1979; parsed offering row 10; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 38, 1275, 1979; parsed offering row 10; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located"
   },
   {
    "jamb_name": "Literature in English",
@@ -847,7 +972,24 @@
    "scope": [
     1984,
     2136
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:1984",
+    "hold_reason": "Exact official brochure programme/institution cell was not independently provable in this bounded local-window review; parser tokens remain discovery evidence and no URL, PDF locator, or verification date is promoted.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "_jamb_txt/arts_hum.txt lines 11, 344-345, 475-476, 498, 514, 531; parsed offering row 11; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 11, 344-345, 475-476, 498, 514, 531; parsed offering row 11; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located"
   },
   {
    "jamb_name": "French",
@@ -967,7 +1109,26 @@
    "scope": [
     2136,
     2222
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": true,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:2136",
+    "hold_reason": "Exact official brochure programme/institution cell was not independently provable in this bounded local-window review; parser tokens remain discovery evidence and no URL, PDF locator, or verification date is promoted.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "arts_hum.txt:2136 onward; exact FRENCH programme heading and awarding-institution table.",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
+   "source_original_title": "French",
+   "source_faculty": "Arts and Humanities",
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "arts_hum.txt:2136 onward; exact FRENCH programme heading and awarding-institution table.",
+   "source_accessed_on": "2026-09-29",
+   "source_context_status": "source_text_confirmed",
+   "source_support_note": "Exact programme heading and awarder context retained as one offering-specific source record."
   },
   {
    "jamb_name": "Portuguese/English",
@@ -991,7 +1152,26 @@
    "scope": [
     2222,
     2232
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": true,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:2222",
+    "hold_reason": "Exact official brochure programme/institution cell was not independently provable in this bounded local-window review; parser tokens remain discovery evidence and no URL, PDF locator, or verification date is promoted.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "arts_hum.txt:2222 and programme index p. 1; exact PORTUGUESE/ENGLISH programme and LASU context.",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
+   "source_original_title": "Portuguese/English",
+   "source_faculty": "Arts and Humanities",
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "arts_hum.txt:2222 and programme index p. 1; exact PORTUGUESE/ENGLISH programme and LASU context.",
+   "source_accessed_on": "2026-09-29",
+   "source_context_status": "source_text_confirmed",
+   "source_support_note": "Exact programme heading and awarder context retained as one offering-specific source record."
   },
   {
    "jamb_name": "German",
@@ -1015,13 +1195,37 @@
    "scope": [
     2232,
     2251
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:2232",
+    "hold_reason": "Exact official brochure programme/institution cell was not independently provable in this bounded local-window review; parser tokens remain discovery evidence and no URL, PDF locator, or verification date is promoted.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "_jamb_txt/arts_hum.txt lines 9, 14, 37, 2232, 2261, 2466; parsed offering row 14; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 9, 14, 37, 2232, 2261, 2466; parsed offering row 14; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located"
   },
   {
-   "jamb_name": "French and German/Russian",
-   "institutions": [
-    "INTERNATIONAL",
-    "RELATIONS",
+  "jamb_name": "French and German/Russian",
+  "external_html_reconciliation": {
+   "access_date": "2026-10-02",
+   "status": "combined_honours_options_confirmed_at_UNN; global_roster_unverified",
+   "finding": "UNN Foreign Languages official HTML lists three distinct combined-honours choices: French/German, French/Russian and German/Russian. Removed INTERNATIONAL and RELATIONS from the institution-token list because they are programme-heading fragments, not institution identifiers. This verifies a source-specific set of options, not the complete JAMB awarder roster.",
+   "sources": [
+    "https://foreignlanguages.unn.edu.ng/about-us/",
+    "https://foreignlanguages.unn.edu.ng/programmes/"
+   ]
+  },
+  "institutions": [
     "BABCOCK",
     "NOUN"
    ],
@@ -1037,10 +1241,36 @@
    "scope": [
     2251,
     2258
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:2251",
+    "hold_reason": "Exact official brochure programme/institution cell was not independently provable in this bounded local-window review; parser tokens remain discovery evidence and no URL, PDF locator, or verification date is promoted.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "_jamb_txt/arts_hum.txt lines 9; parsed offering row 15; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 9; parsed offering row 15; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located"
   },
   {
-   "jamb_name": "International Studies and",
+  "jamb_name": "International Studies and",
+  "external_html_reconciliation": {
+   "access_date": "2026-10-02",
+   "status": "institution_specific_title_completion_supported; canonical_title_and_roster_unverified",
+   "finding": "Official University of Benin HTML records the undergraduate award B.A. International Studies & Diplomacy. This supports completion of the title for the named Benin offering only; do not globally rename the truncated JAMB identity or infer its full institution roster from this single awarder.",
+   "sources": [
+    "https://waeup.uniben.edu/faculties/ART/HIS/certificates/BARTISD",
+    "https://news.uniben.edu/admission-into-part-time-degree-diploma-certificateprogrammes-of-the-university-of-benin2023-2024-session/"
+   ]
+  },
    "institutions": [
     "UNIOSUN",
     "FRENCH WITH GERMAN/",
@@ -1352,7 +1582,24 @@
    "scope": [
     2258,
     2757
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:2258",
+    "hold_reason": "Exact official brochure programme/institution cell was not independently provable in this bounded local-window review; parser tokens remain discovery evidence and no URL, PDF locator, or verification date is promoted.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "_jamb_txt/arts_hum.txt lines 31, 3237-3238; parsed offering row 16; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 31, 3237-3238; parsed offering row 16; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located"
   },
   {
    "jamb_name": "History",
@@ -1485,19 +1732,29 @@
    "scope": [
     2757,
     2809
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:2757",
+    "hold_reason": "Exact official brochure programme/institution cell was not independently provable in this bounded local-window review; parser tokens remain discovery evidence and no URL, PDF locator, or verification date is promoted.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "_jamb_txt/arts_hum.txt lines 16, 17, 19, 20, 21, 22; parsed offering row 17; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 16, 17, 19, 20, 21, 22; parsed offering row 17; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located"
   },
   {
    "jamb_name": "History and Strategic Studies",
    "institutions": [
-    "STUDIES",
-    "LAGOS",
-    "AND",
-    "DOU",
-    "MILITARY HISTORY",
-    "ARTS",
-    "NAUB",
-    "HISTORY AND"
+    "LAGOS"
    ],
    "utme_subjects": null,
    "olevel_requirement": null,
@@ -1624,6 +1881,48 @@
    "scope": [
     2809,
     3501
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:2809",
+    "hold_reason": "Exact official brochure programme/institution cell was not independently provable in this bounded local-window review; parser tokens remain discovery evidence and no URL, PDF locator, or verification date is promoted.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "Original JAMB brochure: Arts _ Humanities.pdf, PDF page(s) 61; exact programme heading and institution list in awarder column",
+    "verification_date": "2026-09-30",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": [
+     "LAGOS"
+    ],
+    "offering_row_verified_against_pdf": true,
+    "verification_note": "Institution codes map by exact normalized matches to existing JAMB inventory tokens; the PDF awarder cell is bounded by the next printed bold heading.",
+    "institution_roster_reconciled_from_pdf": true,
+    "reconciled_prior_institution_tokens": [
+     "STUDIES",
+     "LAGOS",
+     "AND",
+     "DOU",
+     "MILITARY HISTORY",
+     "ARTS",
+     "NAUB",
+     "HISTORY AND"
+    ]
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 22; parsed offering row 18; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "institution_tokens_before_pdf_cell_reconciliation": [
+    "STUDIES",
+    "LAGOS",
+    "AND",
+    "DOU",
+    "MILITARY HISTORY",
+    "ARTS",
+    "NAUB",
+    "HISTORY AND"
    ]
   },
   {
@@ -1634,22 +1933,7 @@
     "FED-KASHERE",
     "FED-LOKOJA",
     "FED-WUKARI",
-    "UMYUK",
-    "ARTS",
-    "ECONOMICS AND",
-    "DEVELOPMENT STUDIES",
-    "FEDOTUOKE",
-    "IGBO",
-    "ABSU",
-    "COOU",
-    "EBSU",
-    "AEFUNA",
-    "IBADAN",
-    "ILORIN",
-    "LAGOS",
-    "LASUED",
-    "NAUB",
-    "POL-ACAD"
+    "UMYUK"
    ],
    "utme_subjects": [
     "Economics",
@@ -1684,6 +1968,79 @@
    "scope": [
     3501,
     3631
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:3501",
+    "hold_reason": "Exact official brochure programme/institution cell was not independently provable in this bounded local-window review; parser tokens remain discovery evidence and no URL, PDF locator, or verification date is promoted.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "Original JAMB brochure: Arts _ Humanities.pdf, PDF page(s) 74; exact programme heading and institution list in awarder column",
+    "verification_date": "2026-09-30",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": [
+     "EVANGEL",
+     "FED-DUTSE",
+     "FED-KASHERE",
+     "FED-LOKOJA",
+     "FED-WUKARI",
+     "UMYUK"
+    ],
+    "offering_row_verified_against_pdf": true,
+    "verification_note": "Institution codes map by exact normalized matches to existing JAMB inventory tokens; the PDF awarder cell is bounded by the next printed bold heading.",
+    "institution_roster_reconciled_from_pdf": true,
+    "reconciled_prior_institution_tokens": [
+     "EVANGEL",
+     "FED-DUTSE",
+     "FED-KASHERE",
+     "FED-LOKOJA",
+     "FED-WUKARI",
+     "UMYUK",
+     "ARTS",
+     "ECONOMICS AND",
+     "DEVELOPMENT STUDIES",
+     "FEDOTUOKE",
+     "IGBO",
+     "ABSU",
+     "COOU",
+     "EBSU",
+     "AEFUNA",
+     "IBADAN",
+     "ILORIN",
+     "LAGOS",
+     "LASUED",
+     "NAUB",
+     "POL-ACAD"
+    ]
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 41, 309, 347, 495, 497, 533; parsed offering row 19; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "institution_tokens_before_pdf_cell_reconciliation": [
+    "EVANGEL",
+    "FED-DUTSE",
+    "FED-KASHERE",
+    "FED-LOKOJA",
+    "FED-WUKARI",
+    "UMYUK",
+    "ARTS",
+    "ECONOMICS AND",
+    "DEVELOPMENT STUDIES",
+    "FEDOTUOKE",
+    "IGBO",
+    "ABSU",
+    "COOU",
+    "EBSU",
+    "AEFUNA",
+    "IBADAN",
+    "ILORIN",
+    "LAGOS",
+    "LASUED",
+    "NAUB",
+    "POL-ACAD"
    ]
   },
   {
@@ -1708,7 +2065,24 @@
    "scope": [
     3631,
     3683
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:3631",
+    "hold_reason": "Exact official brochure programme/institution cell was not independently provable in this bounded local-window review; parser tokens remain discovery evidence and no URL, PDF locator, or verification date is promoted.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "_jamb_txt/arts_hum.txt lines 9; parsed offering row 20; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 9; parsed offering row 20; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located"
   },
   {
    "jamb_name": "Linguistics",
@@ -1844,14 +2218,29 @@
    "scope": [
     3683,
     3922
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:3754-4243",
+    "hold_reason": "The extracted Arts section contains multiple Linguistics variants and adjacent language headings; the parsed institution array includes programme/header tokens, so one exact source cell cannot be verified.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "_jamb_txt/arts_hum.txt lines 8, 9, 10, 30, 43, 45; parsed offering row 21; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 8, 9, 10, 30, 43, 45; parsed offering row 21; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located"
   },
   {
    "jamb_name": "Kanuri",
    "institutions": [
-    "MAIDUGURI",
-    "LINGUISTICS AND",
-    "LANGUAGES AND"
+    "MAIDUGURI"
    ],
    "utme_subjects": [
     "Literature in English",
@@ -1873,14 +2262,36 @@
    "scope": [
     3922,
     3994
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:4004-4015",
+    "hold_reason": "The KANURI row's institution array had adjacent-heading fragments. Those non-institution fragments were removed, leaving MAIDUGURI. The exact JAMB award title and complete offering-cell reconciliation remain unresolved.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "_jamb_txt/arts_hum.txt lines 38, 3922, 3924, 3926, 3926, 4116; parsed offering row 22; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": [],
+    "web_html_reconciliation": {
+     "accessed_on": "2026-10-02",
+     "url": "https://unimaid.edu.ng/home-department/Linguistic%20Kanuri/",
+     "finding": "Official UNIMAID HTML confirms a Linguistic Kanuri department and undergraduate context, but does not expose the exact degree title or JAMB source-cell roster.",
+     "change": "Removed LINGUISTICS AND and LANGUAGES AND from institutions because these are heading fragments, not institution codes; retained MAIDUGURI only.",
+     "remaining": "Exact award title and complete JAMB offering occurrence remain unverified; status stays evidence_hold."
+    }
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 38, 3922, 3924, 3926, 3926, 4116; parsed offering row 22; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located"
   },
   {
    "jamb_name": "Russian with French/German",
    "institutions": [
-    "FRENCH/GERMAN",
-    "IBADAN",
-    "ARTS"
+    "IBADAN"
    ],
    "utme_subjects": null,
    "olevel_requirement": null,
@@ -1927,6 +2338,38 @@
    "scope": [
     3994,
     4360
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:4054-4075",
+    "hold_reason": "The source heading is PORTUGUESE: RUSSIAN rather than the indexed name, and the parsed institution array includes non-institution/header tokens; exact occurrence identity is held.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "Original JAMB brochure: Arts _ Humanities.pdf, PDF page(s) 85; exact programme heading and institution list in awarder column",
+    "verification_date": "2026-09-30",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": [
+     "IBADAN"
+    ],
+    "offering_row_verified_against_pdf": true,
+    "verification_note": "Institution codes map by exact normalized matches to existing JAMB inventory tokens; the PDF awarder cell is bounded by the next printed bold heading.",
+    "institution_roster_reconciled_from_pdf": true,
+    "reconciled_prior_institution_tokens": [
+     "FRENCH/GERMAN",
+     "IBADAN",
+     "ARTS"
+    ]
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 37; parsed offering row 23; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "institution_tokens_before_pdf_cell_reconciliation": [
+    "FRENCH/GERMAN",
+    "IBADAN",
+    "ARTS"
    ]
   },
   {
@@ -2001,7 +2444,24 @@
    "scope": [
     4360,
     4412
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:4451-4465",
+    "hold_reason": "The exact MASS COMMUNICATION row is followed by INFORMATION AND MEDIA STUDIES in the same extracted block; the parsed institution array includes that adjacent heading.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "_jamb_txt/arts_hum.txt lines 13, 806, 808, 819-820, 829, 836-838; parsed offering row 24; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 13, 806, 808, 819-820, 829, 836-838; parsed offering row 24; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located"
   },
   {
    "jamb_name": "Music",
@@ -2100,7 +2560,24 @@
    "scope": [
     4412,
     4755
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:4504-4545",
+    "hold_reason": "The MUSIC table continues across a page break and the parsed institution array includes a page/header token; the complete institution cell is not independently clean.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "_jamb_txt/arts_hum.txt lines 16, 525, 529, 529, 529, 534; parsed offering row 25; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 16, 525, 529, 529, 529, 534; parsed offering row 25; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located"
   },
   {
    "jamb_name": "Peace Studies",
@@ -2122,7 +2599,17 @@
    "scope": [
     4755,
     4761
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": true,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "Arts and Humanities brochure, extracted arts_hum.txt:4854-4858 (printed p. 228): the PEACE STUDIES row lists LASU in the awarding-institutions cell; the next programme title PHILOSOPHY begins at line 4860.",
+    "verified_institution_codes": [
+     "LASU"
+    ],
+    "verification_date": "2026-09-26",
+    "note": "Lane B exact local extracted brochure-window verification. This records the offering occurrence only; it does not change mappings, curriculum, or admissions availability."
+   }
   },
   {
    "jamb_name": "Philosophy",
@@ -2287,24 +2774,30 @@
    "scope": [
     4761,
     4882
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:4860-4983",
+    "hold_reason": "The PHILOSOPHY block spans page continuations and the parsed institution array contains parser/header tokens; the complete exact source cell is not independently clean.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "_jamb_txt/arts_hum.txt lines 19, 20, 31, 4761, 4776, 4790; parsed offering row 27; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 19, 20, 31, 4761, 4776, 4790; parsed offering row 27; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located"
   },
   {
    "jamb_name": "Religious Studies",
    "institutions": [
-    "AAUA",
-    "ABUAD",
-    "BOUEDST",
-    "COAL-CITY",
-    "GOUU",
-    "HENSARD",
-    "RELIGIONS AND AFRICAN",
-    "CULTURE",
-    "AFRICAN TRADITIONAL",
-    "RELIGION",
-    "FED-WUKARI",
-    "ARTS",
     "AAU",
+    "AAUA",
     "ABSU",
     "AEFUNA",
     "AICI",
@@ -2315,67 +2808,7 @@
     "BABCOCK",
     "BCT-BENIN",
     "BENIN",
-    "BINGHAM",
-    "BSU",
-    "CALABAR",
-    "CALVARY",
-    "CIWA",
-    "COOU",
-    "CST-NDU",
-    "DELSU",
-    "DOU",
-    "EBSU",
-    "EKSU",
-    "EVANGEL",
-    "FED-OYE EKITI",
-    "GITS",
-    "HARVEST",
-    "IAUED",
-    "IBADAN",
-    "IMMANUEL",
-    "IMSU",
-    "JETS",
-    "JOS",
-    "KOMU",
-    "LCITY",
-    "MADONNA",
-    "MCPHERSON",
-    "MKAR",
-    "MOUNTAIN TOP",
-    "NASARAWA",
-    "NBTSO",
-    "NCBC",
-    "NDU",
-    "OAU",
-    "PAUL",
-    "PTC",
-    "RSU",
-    "SAMS",
-    "SAMUEL",
-    "SAU",
-    "SBS",
-    "ST PETER & PAUL",
-    "SUMMIT",
-    "SWSO",
-    "TANSIAN",
-    "TCNN",
-    "TTC",
-    "UDA",
-    "UMCA",
-    "UNIKINGS",
-    "UNINIGER",
-    "UUST-DEG",
-    "WATSI",
-    "RELIGION AND HUMAN",
-    "RELATIONS",
-    "UNIZIK",
-    "RELIGIOUS AND",
-    "CULTURAL STUDIES",
-    "PHC",
-    "UYO",
-    "RELIGIONS AND INTER-",
-    "VERITAS",
-    "ILORIN"
+    "BINGHAM"
    ],
    "utme_subjects": [
     "CRS/IRS",
@@ -2481,6 +2914,212 @@
    "scope": [
     4882,
     5287
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:5251-5395",
+    "hold_reason": "The RELIGIOUS STUDIES block is followed by related option/headings and the parsed institution array mixes adjacent programme text with awarding institutions.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "Original JAMB brochure: Arts _ Humanities.pdf, PDF page(s) 108; exact programme heading and institution list in awarder column",
+    "verification_date": "2026-09-30",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": [
+     "AAU",
+     "AAUA",
+     "ABSU",
+     "AEFUNA",
+     "AICI",
+     "AKSU",
+     "APOSTOLIC",
+     "AUE",
+     "AUGUSTINE",
+     "BABCOCK",
+     "BCT-BENIN",
+     "BENIN",
+     "BINGHAM"
+    ],
+    "offering_row_verified_against_pdf": true,
+    "verification_note": "Institution codes map by exact normalized matches to existing JAMB inventory tokens; the PDF awarder cell is bounded by the next printed bold heading.",
+    "institution_roster_reconciled_from_pdf": true,
+    "reconciled_prior_institution_tokens": [
+     "AAUA",
+     "ABUAD",
+     "BOUEDST",
+     "COAL-CITY",
+     "GOUU",
+     "HENSARD",
+     "RELIGIONS AND AFRICAN",
+     "CULTURE",
+     "AFRICAN TRADITIONAL",
+     "RELIGION",
+     "FED-WUKARI",
+     "ARTS",
+     "AAU",
+     "ABSU",
+     "AEFUNA",
+     "AICI",
+     "AKSU",
+     "APOSTOLIC",
+     "AUE",
+     "AUGUSTINE",
+     "BABCOCK",
+     "BCT-BENIN",
+     "BENIN",
+     "BINGHAM",
+     "BSU",
+     "CALABAR",
+     "CALVARY",
+     "CIWA",
+     "COOU",
+     "CST-NDU",
+     "DELSU",
+     "DOU",
+     "EBSU",
+     "EKSU",
+     "EVANGEL",
+     "FED-OYE EKITI",
+     "GITS",
+     "HARVEST",
+     "IAUED",
+     "IBADAN",
+     "IMMANUEL",
+     "IMSU",
+     "JETS",
+     "JOS",
+     "KOMU",
+     "LCITY",
+     "MADONNA",
+     "MCPHERSON",
+     "MKAR",
+     "MOUNTAIN TOP",
+     "NASARAWA",
+     "NBTSO",
+     "NCBC",
+     "NDU",
+     "OAU",
+     "PAUL",
+     "PTC",
+     "RSU",
+     "SAMS",
+     "SAMUEL",
+     "SAU",
+     "SBS",
+     "ST PETER & PAUL",
+     "SUMMIT",
+     "SWSO",
+     "TANSIAN",
+     "TCNN",
+     "TTC",
+     "UDA",
+     "UMCA",
+     "UNIKINGS",
+     "UNINIGER",
+     "UUST-DEG",
+     "WATSI",
+     "RELIGION AND HUMAN",
+     "RELATIONS",
+     "UNIZIK",
+     "RELIGIOUS AND",
+     "CULTURAL STUDIES",
+     "PHC",
+     "UYO",
+     "RELIGIONS AND INTER-",
+     "VERITAS",
+     "ILORIN"
+    ]
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 20, 24, 35, 36, 345-347, 391; parsed offering row 28; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "institution_tokens_before_pdf_cell_reconciliation": [
+    "AAUA",
+    "ABUAD",
+    "BOUEDST",
+    "COAL-CITY",
+    "GOUU",
+    "HENSARD",
+    "RELIGIONS AND AFRICAN",
+    "CULTURE",
+    "AFRICAN TRADITIONAL",
+    "RELIGION",
+    "FED-WUKARI",
+    "ARTS",
+    "AAU",
+    "ABSU",
+    "AEFUNA",
+    "AICI",
+    "AKSU",
+    "APOSTOLIC",
+    "AUE",
+    "AUGUSTINE",
+    "BABCOCK",
+    "BCT-BENIN",
+    "BENIN",
+    "BINGHAM",
+    "BSU",
+    "CALABAR",
+    "CALVARY",
+    "CIWA",
+    "COOU",
+    "CST-NDU",
+    "DELSU",
+    "DOU",
+    "EBSU",
+    "EKSU",
+    "EVANGEL",
+    "FED-OYE EKITI",
+    "GITS",
+    "HARVEST",
+    "IAUED",
+    "IBADAN",
+    "IMMANUEL",
+    "IMSU",
+    "JETS",
+    "JOS",
+    "KOMU",
+    "LCITY",
+    "MADONNA",
+    "MCPHERSON",
+    "MKAR",
+    "MOUNTAIN TOP",
+    "NASARAWA",
+    "NBTSO",
+    "NCBC",
+    "NDU",
+    "OAU",
+    "PAUL",
+    "PTC",
+    "RSU",
+    "SAMS",
+    "SAMUEL",
+    "SAU",
+    "SBS",
+    "ST PETER & PAUL",
+    "SUMMIT",
+    "SWSO",
+    "TANSIAN",
+    "TCNN",
+    "TTC",
+    "UDA",
+    "UMCA",
+    "UNIKINGS",
+    "UNINIGER",
+    "UUST-DEG",
+    "WATSI",
+    "RELIGION AND HUMAN",
+    "RELATIONS",
+    "UNIZIK",
+    "RELIGIOUS AND",
+    "CULTURAL STUDIES",
+    "PHC",
+    "UYO",
+    "RELIGIONS AND INTER-",
+    "VERITAS",
+    "ILORIN"
    ]
   },
   {
@@ -2517,7 +3156,24 @@
    "scope": [
     5287,
     5546
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:5397-5444",
+    "hold_reason": "The THEOLOGY block is adjacent to CHRISTIAN THEOLOGY and related programme headings; the parsed institution array cannot be verified as one exact source cell.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "_jamb_txt/arts_hum.txt lines 36, 39, 396, 437, 438, 440; parsed offering row 29; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 36, 39, 396, 437, 438, 440; parsed offering row 29; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located"
   },
   {
    "jamb_name": "Yoruba",
@@ -2612,7 +3268,24 @@
    "scope": [
     5546,
     5626
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:5661-5687",
+    "hold_reason": "The YORUBA institution cell continues across a page break and the parsed array includes an ARTS header token; the complete exact source cell is held.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "_jamb_txt/arts_hum.txt lines 8, 40, 41, 42, 348, 494; parsed offering row 30; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 8, 40, 41, 42, 348, 494; parsed offering row 30; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located"
   },
   {
    "jamb_name": "Anthropology",
@@ -2642,14 +3315,22 @@
    "scope": [
     5626,
     5629
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": true,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "Arts and Humanities brochure, extracted arts_hum.txt:5743-5745 (printed p. 247): the ANTHROPOLOGY row lists IBADAN; the next programme FULFULDE begins at line 5746.",
+    "verified_institution_codes": [
+     "IBADAN"
+    ],
+    "verification_date": "2026-09-26",
+    "note": "Lane B exact local extracted brochure-window verification. This records the offering occurrence only; it does not change mappings, curriculum, or admissions availability."
+   }
   },
   {
    "jamb_name": "Fulfulde",
    "institutions": [
-    "MAIDUGURI",
-    "ARTS",
-    "LINGUISTICS AND"
+    "MAIDUGURI"
    ],
    "utme_subjects": [
     "Any three (3) Arts subjects"
@@ -2670,6 +3351,38 @@
    "scope": [
     5629,
     5652
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:5766-5770",
+    "hold_reason": "The source heading is LINGUISTICS AND FULFULDE, not a standalone FULFULDE row; exact indexed occurrence identity is held.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "Original JAMB brochure: Arts _ Humanities.pdf, PDF page(s) 118; exact programme heading and institution list in awarder column",
+    "verification_date": "2026-09-30",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": [
+     "MAIDUGURI"
+    ],
+    "offering_row_verified_against_pdf": true,
+    "verification_note": "Institution codes map by exact normalized matches to existing JAMB inventory tokens; the PDF awarder cell is bounded by the next printed bold heading.",
+    "institution_roster_reconciled_from_pdf": true,
+    "reconciled_prior_institution_tokens": [
+     "MAIDUGURI",
+     "ARTS",
+     "LINGUISTICS AND"
+    ]
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 10, 4120, 4124, 5629, 5637, 5638; parsed offering row 32; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "institution_tokens_before_pdf_cell_reconciliation": [
+    "MAIDUGURI",
+    "ARTS",
+    "LINGUISTICS AND"
    ]
   },
   {
@@ -2697,34 +3410,23 @@
    "scope": [
     5652,
     5655
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": true,
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "Arts and Humanities brochure, extracted arts_hum.txt:5770-5772: the EFIK-IBIBIO row lists UYO in the awarding-institutions cell; the next programme COMMUNICATION ARTS begins at line 5773.",
+    "verified_institution_codes": [
+     "UYO"
+    ],
+    "verification_date": "2026-09-26",
+    "note": "Lane B exact local extracted brochure-window verification. This records the offering occurrence only; it does not change mappings, curriculum, or admissions availability."
+   }
   },
   {
    "jamb_name": "Communication Arts",
    "institutions": [
     "BOWEN",
-    "UYO",
-    "COMMUNICATION AND",
-    "LANGUAGE ARTS",
-    "IBADAN",
-    "COMMUNICATION",
-    "STUDIES",
-    "CIWA",
-    "ARTS",
-    "MODERN LANGUAGES",
-    "UNN",
-    "PROGRAMME A",
-    "PROGRAMME B",
-    "CHINESE STUDIES",
-    "KASU",
-    "LAGOS",
-    "UNIZIK",
-    "LASU",
-    "GEOGRAPHY",
-    "FED-KASHERE",
-    "FED- LAFIA",
-    "FED-LOKOJA",
-    "AEFUNA"
+    "UYO"
    ],
    "utme_subjects": [
     "Any three (3) Arts or Social Science subjects"
@@ -2765,6 +3467,79 @@
    "scope": [
     5655,
     5832
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:5770-5784",
+    "hold_reason": "The COMMUNICATION ARTS row is adjacent to COMMUNICATION AND LANGUAGE ARTS, COMMUNICATION STUDIES and later blocks; the parsed institution array mixes those headings.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "Original JAMB brochure: Arts _ Humanities.pdf, PDF page(s) 119; exact programme heading and institution list in awarder column",
+    "verification_date": "2026-09-30",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": [
+     "BOWEN",
+     "UYO"
+    ],
+    "offering_row_verified_against_pdf": true,
+    "verification_note": "Institution codes map by exact normalized matches to existing JAMB inventory tokens; the PDF awarder cell is bounded by the next printed bold heading.",
+    "institution_roster_reconciled_from_pdf": true,
+    "reconciled_prior_institution_tokens": [
+     "BOWEN",
+     "UYO",
+     "COMMUNICATION AND",
+     "LANGUAGE ARTS",
+     "IBADAN",
+     "COMMUNICATION",
+     "STUDIES",
+     "CIWA",
+     "ARTS",
+     "MODERN LANGUAGES",
+     "UNN",
+     "PROGRAMME A",
+     "PROGRAMME B",
+     "CHINESE STUDIES",
+     "KASU",
+     "LAGOS",
+     "UNIZIK",
+     "LASU",
+     "GEOGRAPHY",
+     "FED-KASHERE",
+     "FED- LAFIA",
+     "FED-LOKOJA",
+     "AEFUNA"
+    ]
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 21, 884, 3667, 5655, 5745; parsed offering row 34; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "institution_tokens_before_pdf_cell_reconciliation": [
+    "BOWEN",
+    "UYO",
+    "COMMUNICATION AND",
+    "LANGUAGE ARTS",
+    "IBADAN",
+    "COMMUNICATION",
+    "STUDIES",
+    "CIWA",
+    "ARTS",
+    "MODERN LANGUAGES",
+    "UNN",
+    "PROGRAMME A",
+    "PROGRAMME B",
+    "CHINESE STUDIES",
+    "KASU",
+    "LAGOS",
+    "UNIZIK",
+    "LASU",
+    "GEOGRAPHY",
+    "FED-KASHERE",
+    "FED- LAFIA",
+    "FED-LOKOJA",
+    "AEFUNA"
    ]
   },
   {
@@ -2776,10 +3551,7 @@
     "FED-OTUOKE",
     "FED-WUKARI",
     "PLASU",
-    "CONFLICT RESOLUTION",
     "AL-HIKMAH",
-    "ARTS",
-    "PSYCHOLOGY",
     "COVENANT",
     "MKAR"
    ],
@@ -2835,7 +3607,31 @@
    "scope": [
     5832,
     5939
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:5954-5964",
+    "hold_reason": "The source title is POLITICAL SCIENCE AND CONFLICT RESOLUTION and the parsed array includes the preceding POLITICAL SCIENCE institutions plus adjacent programme text.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "_jamb_txt/arts_hum.txt lines 21; parsed offering row 35; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": [],
+    "web_html_reconciliation": {
+     "accessed_on": "2026-10-02",
+     "url": "https://alhikmahuniversity.edu.ng/programmes/",
+     "finding": "Al-Hikmah University's official undergraduate programme page lists B.Sc. (Hons) Political Science and Conflict Resolution.",
+     "change": "Removed CONFLICT RESOLUTION, ARTS, and PSYCHOLOGY from the institution array as non-institution title/category fragments; retained AL-HIKMAH and all other institution-code tokens pending complete roster verification.",
+     "remaining": "The full JAMB awarder-cell roster remains unverified; status stays evidence_hold."
+    }
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 21; parsed offering row 35; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located"
   },
   {
    "jamb_name": "Sociology",
@@ -2844,14 +3640,7 @@
     "EVANGEL",
     "FED-KASHERE",
     "PLASU",
-    "SALEM",
-    "SOCIOLOGY AND",
-    "ANTHROPOLGY",
-    "FED-OTUOKE",
-    "ARTS",
-    "CRIMINOLOGY",
-    "SECURITY STUDIES",
-    "FED-DUTSE"
+    "SALEM"
    ],
    "utme_subjects": [
     "and any two (2) relevant subjects from Arts, Social Sciences or Sciences as specified by the institution"
@@ -2884,73 +3673,74 @@
    "scope": [
     5939,
     6005
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:6063-6072",
+    "hold_reason": "The SOCIOLOGY row is immediately followed by SOCIOLOGY AND ANTHROPOLOGY and then CRIMINOLOGY AND SECURITY STUDIES; the parsed array includes adjacent programme tokens.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "Original JAMB brochure: Arts _ Humanities.pdf, PDF page(s) 125; exact programme heading and institution list in awarder column",
+    "verification_date": "2026-09-30",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": [
+     "COVENANT",
+     "EVANGEL",
+     "FED-KASHERE",
+     "PLASU",
+     "SALEM"
+    ],
+    "offering_row_verified_against_pdf": true,
+    "verification_note": "Institution codes map by exact normalized matches to existing JAMB inventory tokens; the PDF awarder cell is bounded by the next printed bold heading.",
+    "institution_roster_reconciled_from_pdf": true,
+    "reconciled_prior_institution_tokens": [
+     "COVENANT",
+     "EVANGEL",
+     "FED-KASHERE",
+     "PLASU",
+     "SALEM",
+     "SOCIOLOGY AND",
+     "ANTHROPOLGY",
+     "FED-OTUOKE",
+     "ARTS",
+     "CRIMINOLOGY",
+     "SECURITY STUDIES",
+     "FED-DUTSE"
+    ]
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 38, 3169, 5629, 5939, 5946, 5984; parsed offering row 36; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "institution_tokens_before_pdf_cell_reconciliation": [
+    "COVENANT",
+    "EVANGEL",
+    "FED-KASHERE",
+    "PLASU",
+    "SALEM",
+    "SOCIOLOGY AND",
+    "ANTHROPOLGY",
+    "FED-OTUOKE",
+    "ARTS",
+    "CRIMINOLOGY",
+    "SECURITY STUDIES",
+    "FED-DUTSE"
    ]
   },
   {
    "jamb_name": "Drama/Dramatic Arts/Performing Arts",
    "institutions": [
-    "ABUJA",
-    "BENIN",
-    "DELSU",
-    "KASU",
-    "LASU",
-    "OAU",
-    "PHC",
-    "ABU",
-    "BAYERO",
-    "FED-OTUOKE",
-    "UNN",
-    "JOS",
-    "TSUJ",
-    "ABUAD",
-    "AEFUNA",
-    "ATIBA",
-    "BOWEN",
-    "BSU",
-    "BOUEDST",
-    "CALABAR",
-    "COOU",
-    "EKSU",
-    "EVANGEL",
-    "FED-LAFIA",
-    "FED-LOKOJA",
-    "GREGORY",
-    "IAUED",
-    "IBADAN",
-    "IGBINEDION",
-    "IMSU",
-    "KASU-KABBA",
-    "LAUTECH",
-    "PAAU",
-    "MAIDUGURI",
-    "MC-IBRU",
-    "NASARAWA",
-    "NDU",
-    "PAUL",
-    "PLASU",
-    "REDEEMERS",
-    "RSU",
-    "UDA",
-    "UNI-AFRICA",
-    "UNI-ILESA",
-    "UNIOSUN",
-    "UNIZIK",
-    "UYO",
-    "WESLEYUNI",
-    "WIGWE",
-    "LASUED",
     "AAUA",
+    "ABUAD",
     "AJAYI",
     "AKSU",
     "ELIZADE",
     "ILORIN",
     "KWASU",
     "LCITY",
-    "OOU",
-    "HENSARD",
-    "AAU",
-    "FED-OYE EKITI",
-    "NFI-DEG"
+    "OOU"
    ],
    "utme_subjects": [
     "Literature in English",
@@ -3051,6 +3841,164 @@
      "institution": "RSU",
      "note": "Admission into Year III: Degree/HND (Upper Credit) relevant; Year II: OND/ND (Upper Credit) or HND (Lower Credit) relevant, plus UME requirements."
     }
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:no separately indexed row window",
+    "hold_reason": "This manually indexed occurrence has no row-indexed local extracted brochure window in the current Arts artifact, so exact programme/institution context is held.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "Original JAMB brochure: Arts _ Humanities.pdf, PDF page(s) 21; exact programme heading and institution list in awarder column",
+    "verification_date": "2026-09-30",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": [
+     "AAUA",
+     "ABUAD",
+     "AJAYI",
+     "AKSU",
+     "ELIZADE",
+     "ILORIN",
+     "KWASU",
+     "LCITY",
+     "OOU"
+    ],
+    "offering_row_verified_against_pdf": true,
+    "verification_note": "Institution codes map by exact normalized matches to existing JAMB inventory tokens; the PDF awarder cell is bounded by the next printed bold heading.",
+    "institution_roster_reconciled_from_pdf": true,
+    "reconciled_prior_institution_tokens": [
+     "ABUJA",
+     "BENIN",
+     "DELSU",
+     "KASU",
+     "LASU",
+     "OAU",
+     "PHC",
+     "ABU",
+     "BAYERO",
+     "FED-OTUOKE",
+     "UNN",
+     "JOS",
+     "TSUJ",
+     "ABUAD",
+     "AEFUNA",
+     "ATIBA",
+     "BOWEN",
+     "BSU",
+     "BOUEDST",
+     "CALABAR",
+     "COOU",
+     "EKSU",
+     "EVANGEL",
+     "FED-LAFIA",
+     "FED-LOKOJA",
+     "GREGORY",
+     "IAUED",
+     "IBADAN",
+     "IGBINEDION",
+     "IMSU",
+     "KASU-KABBA",
+     "LAUTECH",
+     "PAAU",
+     "MAIDUGURI",
+     "MC-IBRU",
+     "NASARAWA",
+     "NDU",
+     "PAUL",
+     "PLASU",
+     "REDEEMERS",
+     "RSU",
+     "UDA",
+     "UNI-AFRICA",
+     "UNI-ILESA",
+     "UNIOSUN",
+     "UNIZIK",
+     "UYO",
+     "WESLEYUNI",
+     "WIGWE",
+     "LASUED",
+     "AAUA",
+     "AJAYI",
+     "AKSU",
+     "ELIZADE",
+     "ILORIN",
+     "KWASU",
+     "LCITY",
+     "OOU",
+     "HENSARD",
+     "AAU",
+     "FED-OYE EKITI",
+     "NFI-DEG"
+    ]
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 782; parsed offering row 37; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located",
+   "institution_tokens_before_pdf_cell_reconciliation": [
+    "ABUJA",
+    "BENIN",
+    "DELSU",
+    "KASU",
+    "LASU",
+    "OAU",
+    "PHC",
+    "ABU",
+    "BAYERO",
+    "FED-OTUOKE",
+    "UNN",
+    "JOS",
+    "TSUJ",
+    "ABUAD",
+    "AEFUNA",
+    "ATIBA",
+    "BOWEN",
+    "BSU",
+    "BOUEDST",
+    "CALABAR",
+    "COOU",
+    "EKSU",
+    "EVANGEL",
+    "FED-LAFIA",
+    "FED-LOKOJA",
+    "GREGORY",
+    "IAUED",
+    "IBADAN",
+    "IGBINEDION",
+    "IMSU",
+    "KASU-KABBA",
+    "LAUTECH",
+    "PAAU",
+    "MAIDUGURI",
+    "MC-IBRU",
+    "NASARAWA",
+    "NDU",
+    "PAUL",
+    "PLASU",
+    "REDEEMERS",
+    "RSU",
+    "UDA",
+    "UNI-AFRICA",
+    "UNI-ILESA",
+    "UNIOSUN",
+    "UNIZIK",
+    "UYO",
+    "WESLEYUNI",
+    "WIGWE",
+    "LASUED",
+    "AAUA",
+    "AJAYI",
+    "AKSU",
+    "ELIZADE",
+    "ILORIN",
+    "KWASU",
+    "LCITY",
+    "OOU",
+    "HENSARD",
+    "AAU",
+    "FED-OYE EKITI",
+    "NFI-DEG"
    ]
   },
   {
@@ -3122,7 +4070,24 @@
      "institution": "ABSU",
      "note": "'O' Level credit pass in English Language provided Fine Art grade is not below B3; 'O' Level credit passes in Mathematics and any three (3) subjects from Arts, Social Sciences and Sciences."
     }
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:no separately indexed row window",
+    "hold_reason": "This manually indexed occurrence has no row-indexed local extracted brochure window in the current Arts artifact, so exact programme/institution context is held.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "_jamb_txt/arts_hum.txt lines 42; parsed offering row 38; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 42; parsed offering row 38; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located"
   },
   {
    "jamb_name": "Psychology",
@@ -3138,7 +4103,24 @@
    ],
    "olevel_requirement": "Five (5) SSC credit passes to include English Language, Mathematics, Biology and any two (2) relevant subjects from Arts, Social Sciences or Sciences as specified by the institution.",
    "direct_entry": "",
-   "institution_waivers": []
+   "institution_waivers": [],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:psychology occurrence requires exact body-cell recheck",
+    "hold_reason": "Previous verification metadata pointed to the separate CREATIVE ARTS body cell and its awarders, not to an exact Psychology source cell. Keep the occurrence unverified until its own authoritative title and complete institution cell are established.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "_jamb_txt/arts_hum.txt lines 24, 26, 5933; parsed offering row 39; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 24, 26, 5933; parsed offering row 39; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located"
   },
   {
    "jamb_name": "Hausa",
@@ -3202,7 +4184,50 @@
      "institution": "FED-DUTSINMA",
      "note": "Two `A' level passes in Hausa and one other Arts subject; ND/NCE with good grades in the relevant area."
     }
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "verified",
+    "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "locator": "Arts/Humanities degree brochure, printed p. 186, HAUSA: body row and complete awarding-institutions column (continued on next page)",
+    "accessed_on": "2026-09-28",
+    "verified_institutions": [
+     "ABU",
+     "AL-QALAM",
+     "BASU",
+     "BAYERO",
+     "FED-DUTSINMA",
+     "FED-GUSAU",
+     "FED-KASHERE",
+     "FED-LAFIA",
+     "ILORIN",
+     "KASU",
+     "LASUED",
+     "MAIDUGURI",
+     "MAITAMA",
+     "NASARAWA",
+     "NAUB",
+     "POL-ACAD",
+     "SLUK",
+     "SOSU",
+     "TSUJ",
+     "UDU",
+     "UMYUK",
+     "YSU"
+    ],
+    "evidence_note": "The official body row is titled HAUSA and lists the same 22 unique institution codes as this occurrence. The list continues across the page break; no neighboring Linguistics/Hausa cell was included.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "_jamb_txt/arts_hum.txt lines 15, 348, 475, 494, 497, 679; parsed offering row 40; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 15, 348, 475, 494, 497, 679; parsed offering row 40; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located"
   },
   {
    "jamb_name": "Igbo",
@@ -3251,7 +4276,24 @@
      "institution": "UNIZIK",
      "note": "Accepts Chinese in lieu of Igbo (UTME subject)."
     }
-   ]
+   ],
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:3696-3710",
+    "hold_reason": "The IGBO source row is followed by the adjacent AFRICAN AND ASIAN STUDIES heading within the extracted table; the parsed institution array includes that adjacent programme text and cannot be verified as one exact source cell.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "_jamb_txt/arts_hum.txt lines 26, 30, 348, 494, 524, 527; parsed offering row 41; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 26, 30, 348, 494, 524, 527; parsed offering row 41; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located"
   },
   {
    "jamb_name": "Modern Language and Translation",
@@ -3259,7 +4301,8 @@
     "UNN",
     "KASU",
     "LAGOS",
-    "UNIZIK"
+    "UNIZIK",
+    "CALABAR"
    ],
    "utme_subjects": [
     "Programme A: French and any other two (2) subjects",
@@ -3281,7 +4324,31 @@
      "note": "Accepts any three (3) Arts or Social Science subjects (UTME)."
     }
    ],
-   "note": "Best-match extraction from the 'B.A. (SINGLE AND COMBINED HONS) IN MODERN LANGUAGES' block (with CHINESE STUDIES sub-programme). The index distinguishes item 58 'Modern European Languages' and item 59 'Modern Language and Translation'; neither appears with a discrete heading, so institutions are taken from the MODERN LANGUAGES / CHINESE STUDIES block. Naming discrepancy noted."
+   "note": "The existing parsed roster came from the broader 'B.A. (SINGLE AND COMBINED HONS) IN MODERN LANGUAGES' block and remains held as incomplete/uncertain. CALABAR is separately corroborated by UNICAL's official HTML as offering a B.A. in Modern Languages & Translation; this institution-specific evidence does not verify the complete JAMB awarder roster or the curriculum components.",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:5820-5846",
+    "hold_reason": "The extracted brochure heading is MODERN LANGUAGES with UNN and French/German/Russian options, not the indexed Modern Language and Translation title; exact occurrence identity is held.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "_jamb_txt/arts_hum.txt lines 15; parsed offering row 42; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": [],
+    "web_html_reconciliation": {
+     "accessed_on": "2026-10-02",
+     "url": "https://www.unical.edu.ng/department_details.php?id=24",
+     "finding": "UNICAL's official Modern Languages and Translation Studies page explicitly lists an undergraduate Bachelor of Arts (B.A.) in Modern Languages & Translation.",
+     "change": "Added CALABAR as an institution-specific, externally corroborated offering for this JAMB title variant.",
+     "remaining": "This does not verify the full JAMB awarder roster, whether the current JAMB occurrence uses this exact title variant, or the curriculum components. Keep the source-verification hold."
+    }
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 15; parsed offering row 42; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located"
   },
   {
    "jamb_name": "Geography and Environmental Studies",
@@ -3307,7 +4374,24 @@
      "note": "Three `A' Level credit passes in Geography and any two of Economics, Biology, Physics, Mathematics or Chemistry; or ND in Urban & Regional Planning, Town Planning, Geo-informatics/Land Surveying, Estate Mgt. at Upper Credit."
     }
    ],
-   "note": "Heading in source text is 'GEOGRAPHY'; index item 30 names it 'Geography and Environmental'."
+   "note": "Heading in source text is 'GEOGRAPHY'; index item 30 names it 'Geography and Environmental'.",
+   "source_verification": {
+    "verified_against_pdf": false,
+    "status": "evidence_hold",
+    "local_extracted_window": "arts_hum.txt:5879-5884",
+    "hold_reason": "The extracted brochure has a GEOGRAPHY row listing FED-KASHERE, FED-LAFIA, FED-LOKOJA and AEFUNA, but no exact Geography and Environmental Studies title in this Arts window; exact occurrence identity is held.",
+    "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "pdf_table_locator": "_jamb_txt/arts_hum.txt lines 11; parsed offering row 43; official IBASS brochure text locator",
+    "verification_date": "2026-09-29",
+    "note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+    "verification_method": "deterministic_local_official_pdf_text_search",
+    "institution_codes_verified_from_pdf": []
+   },
+   "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+   "source_locator": "_jamb_txt/arts_hum.txt lines 11; parsed offering row 43; official IBASS brochure text locator",
+   "source_accessed_on": "2026-09-29",
+   "source_support_note": "Automated local extraction located the exact programme title or a documented source-title variant in the official IBASS brochure text. The parsed faculty and institution array were preserved; this pass does not claim independent PDF awarder-cell verification.",
+   "source_context_status": "source_text_located"
   }
  ]
 }

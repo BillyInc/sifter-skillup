@@ -73,6 +73,15 @@ export function makeExploreNav(base: string) {
       const context: GuidanceRouteContext = typeof contextOrStudentId === "string"
         ? { guidanceStudentId: contextOrStudentId, focused }
         : { ...(contextOrStudentId ?? {}), focused: contextOrStudentId?.focused ?? focused };
+      // D078 has no direct domain-to-role routes in the current route contract.
+      // A generic search, saved-item, or legacy card must not open a D078 role
+      // without the learner first selecting an area in the method-aware path.
+      if (roleId.trim().toLocaleLowerCase().startsWith("d078|") && !context.areaId) {
+        const query = guidanceContextQuery(context, { includeProgrammeId: true });
+        logGuidanceRoute(`${base}/domain`, context, "domains");
+        router.replace(`${base}/domain/D078${query ? `?${query}` : ""}` as never);
+        return;
+      }
       const query = guidanceContextQuery(context, { includeProgrammeId: true });
       router.push(`${base}/role/${roleId}${query ? `?${query}` : ""}` as never);
     },

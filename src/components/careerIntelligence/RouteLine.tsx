@@ -25,7 +25,7 @@
  * sequence. Respects reduce-motion (fades only, no draw).
  */
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, type ViewStyle } from 'react-native';
+import { View, Text, StyleSheet, type TextStyle, type ViewStyle } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -46,6 +46,10 @@ export interface RouteStation {
   caption?: string;
   /** Override the accent for this station (e.g. semantic colour). */
   color?: string;
+  /** Optional label typography for a consumer-specific spine. */
+  labelStyle?: TextStyle;
+  /** Optional line count for longer labels in a compact horizontal spine. */
+  labelNumberOfLines?: number;
 }
 
 export interface RouteLineProps {
@@ -167,8 +171,8 @@ export function RouteLine({
               <Node station={s} index={i} />
               {s.label ? (
                 <Text
-                  style={[styles.spineLabel, { color: colors.textSoft }]}
-                  numberOfLines={1}
+                  style={[styles.spineLabel, { color: colors.textSoft }, s.labelStyle]}
+                  numberOfLines={s.labelNumberOfLines ?? 1}
                 >
                   {s.label}
                 </Text>

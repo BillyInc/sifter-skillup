@@ -161,7 +161,7 @@ describe("ContextualItemList", () => {
   });
 
   it("never renders empty definition or route-use sections when an approved payload is incomplete", () => {
-    const incomplete = { ...item, plainMeaning: undefined, contextualUse: undefined, evidenceLimitations: [] };
+    const incomplete = { ...item, plainMeaning: undefined, contextualUse: undefined, evidenceLimitations: [] } as unknown as CareerContextItem;
     render(<ThemeProvider><ContextualItemList items={[incomplete]} contextLevel="domain" itemScope="learning-options" /></ThemeProvider>);
 
     expect(screen.getByText("A plain-language explanation has not been provided for this item yet.")).toBeTruthy();

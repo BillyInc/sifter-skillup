@@ -133,7 +133,7 @@ These categories are intentionally not hidden behind a generic `ready` label:
 - O-level layers needing requirement-structure review: **84**; empty layers: **172**; no-source-candidate layers: **40**.
 - Direct Entry layers with no catalogue rule: **178**; no-source-candidate layers: **40**.
 - Source-blank variants: **17**.
-- University-specific exception rows in the generated seed: **3896**; structured subject options: **1789**; exception statuses: `{'not_subject_rule': 1272, 'parsed': 1775, 'needs_review': 849}`.
+- University-specific exception rows in the generated seed: **4011**; structured subject options: **1904**; exception statuses: `{'not_subject_rule': 1272, 'parsed': 1890, 'needs_review': 849}`.
 - Generated offering seed check: **8117** rows and university UTME/O-level/Direct Entry columns emitted: **True**.
 - Active programme-domain links failing the evidence gate: **58**; active links needing semantic review: **1**.
 - Unverified programme-domain links retained outside active guidance: **714**.
@@ -180,7 +180,7 @@ These are review candidates only; they require semantic confirmation before prom
 - `Education::Guidance and Counselling` → **Social Welfare, Youth Services** (D128), score 1.192; passes_course_outcome_gate; anchors: social justice, youth.
 - `Education::Early Childhood Education` → **Investment Analysis** (D013), score 1.191; passes_count_but_needs_semantic_review; anchors: economics.
 - `Education::Technology Education` → **Marketing, Brand** (D030), score 1.182; passes_course_outcome_gate; anchors: advertising, brand, consumer, customer, market, market research.
-- `Education::Early Childhood Education` → **Social Sciences** (D078), score 1.181; passes_course_outcome_gate; anchors: economics, geography, mathematics, research design, social science, social sciences.
+- `Education::Early Childhood Education` → **Social Sciences** (D078), score 1.181; passes_course_outcome_gate; anchors: economics, geography, mathematics, research design, social science, sociology.
 - `Education::Adult and Continuing Education` → **Human Resources** (D029), score 1.177; passes_course_outcome_gate; anchors: adult education, human resource management, human resources, personnel management.
 - `Education::Creative Arts Education` → **Economics** (D063), score 1.177; passes_course_outcome_gate; anchors: economic, economics, finance, market, policy, politics.
 - `Education::Social Studies and Civic Education` → **Economics** (D063), score 1.177; passes_course_outcome_gate; anchors: economic, economics, finance, market, policy, politics.

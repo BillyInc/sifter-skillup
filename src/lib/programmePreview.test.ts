@@ -29,9 +29,10 @@ describe("programmePreviewExplanation", () => {
     } as Programme;
 
     expect(sociologyCurriculumPreview(programme)).toBeUndefined();
+    expect(programmePreviewExplanation(programme)).toBeNull();
   });
 
-  it("uses the displayed local reviewed curriculum when the API contract is not seeded", () => {
+  it("uses an explanatory Sociology overview instead of reducing it to a course-title list", () => {
     const programme = {
       id: "sociology",
       name: "Sociology",
@@ -55,8 +56,6 @@ describe("programmePreviewExplanation", () => {
       abilities: [],
     };
 
-    expect(programmePreviewExplanation(programme, reviewedPreview)).toContain(
-      "Methods of Social Research and Statistics",
-    );
+    expect(programmePreviewExplanation(programme, reviewedPreview)).toContain("Sociology studies how people live together");
   });
 });
