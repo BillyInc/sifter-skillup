@@ -613,7 +613,7 @@ The theme-resource repair is a required final data correction for the current
 Sociology theme links. It runs after the Sociology programme-theme seed below
 and before checking that all 14 themes expose their reviewed resources.
 
-#### 1. Apply missing schemas in dependency order
+#### 1. Apply missing schemas and prerequisite corrections in dependency order
 
 Run one whole SQL file/transaction at a time, stopping at the first error:
 
@@ -648,8 +648,9 @@ these files are committed only as `.sql.gz` transports — including
 `migration_guidance_global_2026-09-11.sql`. A bare name here is therefore not
 evidence that the file is absent from the package: check for both spellings
 before declaring a runbook non-deployable, and decompress before executing. The
-four files added in October 2026 are the exception and are committed as plain
-text.
+new additive files may be plain text while older migration files may be
+compressed. Verify each exact migration path in the branch package; never infer
+that a dependency is absent from its extension alone.
 
 The relationship-target-context, role-item-contract and requirement-lane
 files are required schema migrations; the role-route-visibility file is a
@@ -722,9 +723,9 @@ before loading the D078 content seed.
 
 #### 2. Apply the D078 data refresh in dependency order
 
-After the schemas above exist, the Giddens correction above has run after the
-Sociology resource-ownership migration and before its theme seed. Then apply
-only missing data in this order:
+After the prerequisite migrations above exist, the Giddens correction has
+run after the Sociology resource-ownership migration and before the theme
+resource repair. Then apply only missing data in this order:
 
 ```text
 backend/seed_programme_domain_evidence_2026-09-17.sql.gz
@@ -740,6 +741,37 @@ backend/migration_d078_role_route_visibility_2026-10-15.sql
 backend/seed_d078_guided_content_2026-10-12.sql.gz
 backend/seed_d078_role_item_contracts_2026-10-15.sql.gz
 backend/seed_d078_role_tools_2026-10-16.sql.gz
+```
+
+After the theme-resource repair runs, execute this read-only postflight. It
+should return 18 approved reading rows, 18 rows with theme links, and 14
+distinct theme keys. If any value differs, stop and inspect the source rows;
+do not replay the broad insert-only resource migration to conceal the mismatch.
+
+```sql
+WITH sociology_readings AS (
+    SELECT r.id, r.source_provenance -> 'theme_keys' AS theme_keys
+    FROM skillup_dev.career_learning_resources AS r
+    JOIN skillup_dev.programmes AS p ON p.id = r.programme_id
+    WHERE lower(p.name) = 'sociology'
+      AND r.resource_type = 'programme_reading'
+      AND r.ownership_scope = 'programme'
+      AND r.review_status = 'approved_guidance_v1'
+      AND r.data_state = 'source_backed'
+      AND r.source_provenance ->> 'guidance_layer' = 'sociology_programme_v1'
+), sociology_themes AS (
+    SELECT r.id, theme.theme_key
+    FROM sociology_readings AS r
+    CROSS JOIN LATERAL jsonb_array_elements_text(
+        CASE WHEN jsonb_typeof(r.theme_keys) = 'array' THEN r.theme_keys ELSE '[]'::jsonb END
+    ) AS theme(theme_key)
+)
+SELECT
+    (SELECT count(*) FROM sociology_readings) AS approved_reading_rows,
+    (SELECT count(*) FROM sociology_readings
+     WHERE jsonb_typeof(theme_keys) = 'array' AND jsonb_array_length(theme_keys) > 0)
+        AS rows_with_theme_links,
+    (SELECT count(DISTINCT theme_key) FROM sociology_themes) AS distinct_theme_keys;
 ```
 
 Use the compressed files above as the canonical repository transport when
