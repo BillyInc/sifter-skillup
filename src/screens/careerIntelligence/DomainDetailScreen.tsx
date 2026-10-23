@@ -53,6 +53,7 @@ import {
   LearningResourcesBlock,
   ExternalLinkGuard,
   ProgrammeCurriculumCarryForward,
+  GuidanceContinuation,
 } from "@/components/careerIntelligence";
 import { isStudentResource } from "@/components/careerIntelligence/resourceLinks";
 
@@ -600,6 +601,11 @@ function DomainBody({
         <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
         <ContextualItemList items={domainItems} itemTypes={["skill", "competency", "method", "knowledge", "tool", "certification"]} resources={domainResources} contextLevel="domain" itemScope="shared-foundation" title="Foundations for this field" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} domainName={domain.name} learningFocus targetStudentId={targetStudentId} showCaption={false} />
       </View>
+      {/* Optional useful edges: GuidanceContinuation renders its own
+          "Optional useful edges" heading below when domainItems has any
+          non-compulsory rows. No separate heading here -- one would
+          duplicate GuidanceContinuation's own label on screen. */}
+      <GuidanceContinuation programmeName={studentConnection?.programmeName} connection={studentConnection} domainId={domain.id} domainName={domain.name} domainHasAreas={visibleAreas.length > 0} domainFoundation={domain.foundationSkills} domainItems={domainItems} />
       <View style={refinedStyles.sectionHeading}>
         <View style={refinedStyles.cardHeading}><Feather name="compass" size={17} color={colors.accentRole.action} /><Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Build further across the field</Text></View>
         <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>The foundations above give you a shared base. These additional choices can deepen your learning for particular interests or tasks; choose the ones that fit the direction you want to explore.</Text>

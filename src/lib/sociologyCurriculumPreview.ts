@@ -1,4 +1,3 @@
-import sourceContract from "../../data/career-mapping/_audit/sociology_curriculum_contract_2026-09-17.json";
 import type { DomainLink, Programme, ProgrammeCurriculumContract } from "@/types/career";
 
 type SourceOutcome = {
@@ -26,7 +25,35 @@ type SourceContract = {
   programme: { name: string };
 };
 
-const contract = sourceContract as unknown as SourceContract;
+// The checked-in audit contract is stored gzipped (it is ~940KB uncompressed)
+// and lives outside the Metro-bundled `src/` tree, so it cannot be a static
+// `import`. It is loaded lazily, via Node's `fs`/`zlib`, only when this
+// dev-only preview actually runs -- which keeps it out of the app bundle
+// entirely and means a missing/corrupt file degrades to "no preview"
+// instead of crashing the module for every caller.
+let cachedContract: SourceContract | null | undefined;
+
+function loadContract(): SourceContract | undefined {
+  if (!__DEV__) return undefined;
+  if (cachedContract !== undefined) return cachedContract ?? undefined;
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const fs = require("fs");
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const zlib = require("zlib");
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const path = require("path");
+    const file = path.join(
+      __dirname,
+      "../../data/career-mapping/_audit/sociology_curriculum_contract_2026-09-17.json.gz",
+    );
+    const raw = zlib.gunzipSync(fs.readFileSync(file));
+    cachedContract = JSON.parse(raw.toString("utf8")) as SourceContract;
+  } catch {
+    cachedContract = null;
+  }
+  return cachedContract ?? undefined;
+}
 
 /**
  * Local-only display fallback for the checked-in Sociology curriculum contract.
@@ -34,7 +61,8 @@ const contract = sourceContract as unknown as SourceContract;
  * it never replaces a populated API contract or exposes other programmes' data.
  */
 export function sociologyCurriculumPreview(programme: Programme): ProgrammeCurriculumContract | undefined {
-  if (!__DEV__ || programme.name.trim().toLocaleLowerCase() !== contract.programme.name.trim().toLocaleLowerCase()) {
+  const contract = loadContract();
+  if (!contract || programme.name.trim().toLocaleLowerCase() !== contract.programme.name.trim().toLocaleLowerCase()) {
     return undefined;
   }
   const courses = new Map<string, { displayGroup?: string }>();
@@ -82,7 +110,8 @@ export function sociologyCurriculumPreview(programme: Programme): ProgrammeCurri
 }
 
 export function sociologyDomainLinkPreview(programme: Programme): DomainLink | undefined {
-  if (!__DEV__ || programme.name.trim().toLocaleLowerCase() !== contract.programme.name.trim().toLocaleLowerCase()) return undefined;
+  const contract = loadContract();
+  if (!contract || programme.name.trim().toLocaleLowerCase() !== contract.programme.name.trim().toLocaleLowerCase()) return undefined;
   return {
     domainId: "D078",
     domainName: "Social Sciences & Behavioural Research",

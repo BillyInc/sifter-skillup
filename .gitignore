@@ -88,9 +88,29 @@ data/career-mapping/role_tools.json
 # Raw audit/build outputs are reconstructed from tracked compressed parts.
 data/career-mapping/nigerian_entity_extraction_audit_2026-08-25.json
 data/career-mapping/role_tools_malformed_2026-08-26.json
+# D078 audit JSON and seed SQL are committed only as .json.gz/.sql.gz
+# transport artifacts (see CLAUDE.md "Repository transport rule"). The
+# backend test suite decompresses them on demand (backend/tests/conftest.py);
+# never commit the plain reconstructions.
+data/career-mapping/domain_specialization_catalog.json
+data/career-mapping/_audit/D078_PROGRAMME_TO_ROLE_LEARNING_PATH_GRAPH_2026_10_15.json
+data/career-mapping/_audit/D078_PROGRAMME_TO_ROLE_LEARNING_PATH_GRAPH_2026_10_15.rebuilt.json
+data/career-mapping/_audit/D078_MASTER_GUIDED_EXPERIENCE_RECONCILIATION_2026_10_12.json
+data/career-mapping/_audit/D078_STUDENT_PROMOTION_GATE_2026_10_10.json
+data/career-mapping/_audit/D078_ROLE_TOOL_ROUTE_ENRICHMENT_2026_10_16.json
+data/career-mapping/_audit/D078_REQUIREMENT_LANE_DISPOSITION_2026_10_17.json
+backend/seed_d078_guided_content_2026-10-12.sql
+backend/seed_d078_specialization_taxonomy_2026-10-12.sql
+backend/seed_d078_role_tools_2026-10-16.sql
+backend/seed_d078_role_item_contracts_2026-10-15.sql
 # Large generated career preview SQL is reconstructed locally from the tracked
 # gzip parts; never add the monolithic output to GitHub.
 backend/seed_career_v2_preview_*.sql
+# Same rule for the dated transports, which the pattern above does not match.
+# These reconstructions run 600-670 MB and are rebuilt on demand from the
+# tracked *_parts_gz directories by split_large_artifacts.py join-sql.
+backend/seed_career_v2_20*.sql
+backend/seed_career_canonical_*.sql
 nul
 
 # Ephemeral Claude Code agent worktrees. These were committed as bare gitlinks
@@ -102,3 +122,8 @@ nul
 # Unrelated local tool checkouts, likewise committed as stray gitlinks.
 /claude-code-proxy/
 /free-claude-code/
+
+# Live E2E run reports. They carry the test account emails and up to 800
+# characters of raw backend error bodies, and land in whatever directory the
+# script was run from.
+e2e*.json

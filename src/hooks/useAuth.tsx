@@ -495,7 +495,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     await API.updateMe(updates);
-    setUser((prev) => (prev ? { ...prev, ...updates } : prev));
+
+    // _normalise emits BOTH key shapes for these fields — active_field_id and
+    // activeFieldId, current_track_id and currentTrackId — and consumers read
+    // the camelCase mirrors. The three track screens guard on
+    // user.currentTrackId before calling this, so merging only the snake_case
+    // keys left that mirror stale: the guard never became true, and because
+    // updateActiveField is a fresh identity on every render and sits in those
+    // effects' dependency arrays, setUser re-rendered and re-fired the effect.
+    // Two requests per iteration, for as long as the screen stayed mounted.
+    // Keep this in step with the camelCase fields _normalise returns.
+    const mirrors: Partial<UserProfile> = {
+      activeFieldId: fieldId,
+      activeFieldColor: color,
+      ...(trackId ? { currentTrackId: trackId } : {}),
+      ...(trackName ? { currentTrackName: trackName } : {}),
+    };
+
+    setUser((prev) => (prev ? { ...prev, ...updates, ...mirrors } : prev));
 
     try {
       await (API as any).post('/api/users/active-field', updates);

@@ -449,7 +449,7 @@ COMMIT;
                 sql(edge["relationship_type"]), sql("source_backed"),
                 "ARRAY[" + ", ".join(sql(value) for value in edge["source_ids"]) + "]::text[]",
                 json_sql(edge["source_references"]), json_sql(edge["evidence_limitations"]),
-                sql("high"), sql("source_backed"), sql("source_backed"), sql(edge["guidance_owner"]),
+                sql("high"), sql("source_backed"), sql(edge["guidance_owner"]),
                 sql(edge["verified_at"]), sql(edge["learner_explanation"]), "TRUE",
                 sql(edge["sequence_policy"]), sql(edge["sequence_condition"]), json_sql(edge["sequence_scope"]),
             ]) + ")")
