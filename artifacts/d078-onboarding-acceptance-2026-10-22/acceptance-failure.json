@@ -1,0 +1,10 @@
+{
+  "generatedAt": "2026-10-22T09:31:09.572Z",
+  "error": "Error: Isolated Edge did not start its debugging endpoint. Exit=null stderr=[83620:86300:1022/103101.129:ERROR:chrome\\installer\\util\\google_update_settings_win.cc:544] Failed opening key Software\\Microsoft\\EdgeUpdate\\ClientStateMedium\\{56EB18F8-B008-4CBD-B6D2-8C97FE7E9062} to set usagestats; result: 5\r\n[83620:86300:1022/103101.133:ERROR:chrome\\installer\\util\\google_update_settings_win.cc:587] Failed opening key Software\\Microsoft\\EdgeUpdate\\ClientStateMedium\\{56EB18F8-B008-4CBD-B6D2-8C97FE7E9062} to set urlstats; result: 5\r\n\n    at main (C:\\Users\\USER\\Documents\\sifter-skillup-integrated\\scripts\\d078BrowserAcceptance.cjs:628:23)\n    at runNextTicks (node:internal/process/task_queues:64:5)\n    at process.processTimers (node:internal/timers:538:9)",
+  "browserState": null,
+  "savedPathKeys": [],
+  "browserExit": null,
+  "browserStderr": "[83620:86300:1022/103101.129:ERROR:chrome\\installer\\util\\google_update_settings_win.cc:544] Failed opening key Software\\Microsoft\\EdgeUpdate\\ClientStateMedium\\{56EB18F8-B008-4CBD-B6D2-8C97FE7E9062} to set usagestats; result: 5\r\n[83620:86300:1022/103101.133:ERROR:chrome\\installer\\util\\google_update_settings_win.cc:587] Failed opening key Software\\Microsoft\\EdgeUpdate\\ClientStateMedium\\{56EB18F8-B008-4CBD-B6D2-8C97FE7E9062} to set urlstats; result: 5\r\n",
+  "savedSnapshot": null,
+  "apiRequestsIntercepted": []
+}

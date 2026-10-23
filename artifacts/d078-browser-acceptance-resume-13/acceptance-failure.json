@@ -1,0 +1,107 @@
+{
+  "generatedAt": "2026-10-22T10:28:48.797Z",
+  "error": "Error: Timed out waiting for rendered text Why your Sociology studies connect; last value=false\n    at waitFor (C:\\Users\\USER\\Documents\\sifter-skillup-integrated\\scripts\\d078BrowserAcceptance.cjs:443:9)\n    at async main (C:\\Users\\USER\\Documents\\sifter-skillup-integrated\\scripts\\d078BrowserAcceptance.cjs:659:3)",
+  "browserState": "{\"url\":\"http://127.0.0.1:5174/explore/domain/D078?programme_id=87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e&user_type=student&journey_mode=undergraduate_career\",\"title\":\"Sifter LevelUp\",\"readyState\":\"complete\",\"body\":\"Home\\nExplore\\nOpportunities\\nMy World\\nProfile\\namina.okafor\\nSign out\\n← Back\\n⌕\\nSearch\\n←\\nBack to programme\\n/\\nDOMAIN\\nDOMAIN\\nDomain\\n☆\\ncheck-circle\\nSelected\\nCareer guidance is indicative, based on public data and mappings — not a guarantee of admission, employment, salary, immigration, legal or professional outcome. Check official Nigerian institution and regulator sources before acting.\"}",
+  "savedPathKeys": [],
+  "browserExit": null,
+  "browserStderr": "\r\nDevTools listening on ws://127.0.0.1:9449/devtools/browser/06e50e96-d75c-427c-b90c-579903396fe3\r\n[92244:88920:1022/112733.765:ERROR:chrome\\browser\\task_manager\\providers\\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a \"Renderer\" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/40528867.\r\n[92244:88920:1022/112737.591:ERROR:chrome\\browser\\task_manager\\providers\\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a \"Renderer\" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/40528867.\r\n",
+  "savedSnapshot": null,
+  "apiRequestsIntercepted": [
+    {
+      "method": "OPTIONS",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/programmes/87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/programmes/87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/programmes/87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/programmes/87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/jamb-programmes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/jamb-programmes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    }
+  ]
+}

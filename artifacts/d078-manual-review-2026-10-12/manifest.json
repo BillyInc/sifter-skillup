@@ -1,0 +1,74 @@
+{
+  "package": "D078 Sociology guided-experience manual verification",
+  "generated_on": "2026-10-12",
+  "taxonomy": {
+    "areas": 7,
+    "area_role_routes": 26,
+    "supported": 18,
+    "conditional": 8
+  },
+  "contextual_learning_items": {
+    "approved_domain": 52,
+    "distinct_approved_area_cards": 138,
+    "total": 190
+  },
+  "deployment_status": "local_artifacts_only_not_applied_to_supabase",
+  "files": [
+    {
+      "file": "migration_d078_specialization_taxonomy_2026-10-12.sql.gz",
+      "source": "backend/migration_d078_specialization_taxonomy_2026-10-12.sql",
+      "source_bytes": 4049,
+      "source_sha256": "451ed5cdf34f8f87266e861d7d5f151608b79c2a785e0dba2311ddc002c16847",
+      "compressed_bytes": 1174,
+      "sha256": "a512679fbf8f9d8f342032728efa5928c8f16d1957827c469c52e3951db512e9"
+    },
+    {
+      "file": "seed_d078_specialization_taxonomy_2026-10-12.sql.gz",
+      "source": "backend/seed_d078_specialization_taxonomy_2026-10-12.sql",
+      "source_bytes": 140056,
+      "source_sha256": "ef42107005bb68eab2cc778ce3d86bb47b66ef8d2a0b8a3dc39b722f00b5f7c0",
+      "compressed_bytes": 9752,
+      "sha256": "a19d389a7c181318b1a94545f3d1b2094d769a2459f264a1c96674218e4dcef8"
+    },
+    {
+      "file": "seed_d078_guided_content_2026-10-12.sql.gz",
+      "source": "backend/seed_d078_guided_content_2026-10-12.sql",
+      "source_bytes": 2338528,
+      "source_sha256": "dc82e6123342135bc8b1921d973c5e068c31d08491987e79ccbb2cb20838b4c0",
+      "compressed_bytes": 173201,
+      "sha256": "b33012ef38a84160b769eac7b043da9fd462bcbc9695b38905764a7906a4c686"
+    },
+    {
+      "file": "D078_MASTER_GUIDED_EXPERIENCE_RECONCILIATION_2026_10_12.json.gz",
+      "source": "data/career-mapping/_audit/D078_MASTER_GUIDED_EXPERIENCE_RECONCILIATION_2026_10_12.json",
+      "source_bytes": 57071617,
+      "source_sha256": "10c908cfffc01dcd3c884704fd55c1ffa13ade5c0d20a95dc2e3138bbc8a2969",
+      "compressed_bytes": 8139986,
+      "sha256": "d8fb8fe0c6727251f75fb12685887f0d32d8157188c3444fca5c29c6cca85572"
+    },
+    {
+      "file": "D078_PROGRAMME_TO_ROLE_LEARNING_PATH_GRAPH_2026_10_10.json.gz",
+      "source": "data/career-mapping/_audit/D078_PROGRAMME_TO_ROLE_LEARNING_PATH_GRAPH_2026_10_10.json",
+      "source_bytes": 47779273,
+      "source_sha256": "1f75eb13d85844c1853e2f784dd9c858cc352646a82b8e9b31cf1eb11a4a6717",
+      "compressed_bytes": 7412686,
+      "sha256": "49ce4845c589d1ff9d7d662b928d88871b0a68f98073b1d5d2356266fed3ce37"
+    },
+    {
+      "file": "D078_STUDENT_PROMOTION_GATE_2026_10_10.json.gz",
+      "source": "data/career-mapping/_audit/D078_STUDENT_PROMOTION_GATE_2026_10_10.json",
+      "source_bytes": 3104,
+      "source_sha256": "4ff724ffaa64e489ee98d8e47b5648c522fe82b9fa8b369fe6adc7c3325e34f0",
+      "compressed_bytes": 1199,
+      "sha256": "60a105dd0eaa2bdd4f72b3435551c2fdff347ec9bb65507b8afa58e18cdc33be"
+    },
+    {
+      "file": "D078_PROGRAMME_TO_ROLE_GUIDED_IMPLEMENTATION_VERIFICATION_2026_10_10.json.gz",
+      "source": "data/career-mapping/_audit/D078_PROGRAMME_TO_ROLE_GUIDED_IMPLEMENTATION_VERIFICATION_2026_10_10.json",
+      "source_bytes": 4687,
+      "source_sha256": "56f0c76d3d81f89681dd85c37b8e111868e9beabad18791396920386ba96d4e3",
+      "compressed_bytes": 1775,
+      "sha256": "f7cd1a7a0ecc8787df304d2776bfa3b680c7e4828c77fcd3f8cf1504089a0fd4"
+    }
+  ]
+}

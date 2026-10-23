@@ -1,0 +1,608 @@
+{
+  "generatedAt": "2026-10-22T09:36:13.564Z",
+  "error": "Error: Timed out waiting for CDP response to Page.navigate.\n    at Timeout._onTimeout (C:\\Users\\USER\\Documents\\sifter-skillup-integrated\\scripts\\d078BrowserAcceptance.cjs:335:12)\n    at listOnTimeout (node:internal/timers:605:17)\n    at process.processTimers (node:internal/timers:541:7)",
+  "browserState": "{\"url\":\"http://127.0.0.1:5174/explore/domain/D078?programme_id=87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e&user_type=student&journey_mode=undergraduate_career\",\"title\":\"Sifter LevelUp\",\"readyState\":\"interactive\",\"body\":\"\"}",
+  "savedPathKeys": [
+    "programme",
+    "university",
+    "domains",
+    "learningPlanSnapshot",
+    "learningPlanSnapshots",
+    "resume"
+  ],
+  "browserExit": null,
+  "browserStderr": "\r\nDevTools listening on ws://127.0.0.1:9447/devtools/browser/a33e48d4-8c0b-4ea6-8110-d326d441ecf1\r\n[88728:91336:1022/103221.472:ERROR:chrome\\browser\\task_manager\\providers\\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a \"Renderer\" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/40528867.\r\n[88728:91336:1022/103221.472:ERROR:chrome\\browser\\task_manager\\providers\\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a \"Renderer\" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/40528867.\r\n[88728:91336:1022/103221.472:ERROR:chrome\\browser\\task_manager\\providers\\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a \"Renderer\" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/40528867.\r\n[88728:91336:1022/103221.656:ERROR:chrome\\browser\\task_manager\\providers\\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a \"Renderer\" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/40528867.\r\n[88728:91336:1022/103222.254:ERROR:chrome\\browser\\task_manager\\providers\\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a \"Renderer\" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/40528867.\r\n[88728:91336:1022/103222.254:ERROR:chrome\\browser\\task_manager\\providers\\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a \"Renderer\" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/40528867.\r\n[88728:91336:1022/103222.478:ERROR:chrome\\browser\\task_manager\\providers\\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a \"Renderer\" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/40528867.\r\n[88728:91336:1022/103241.667:ERROR:chrome\\browser\\task_manager\\providers\\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a \"Renderer\" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/40528867.\r\n[88728:91336:1022/103241.876:ERROR:chrome\\browser\\task_manager\\providers\\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a \"Renderer\" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/40528867.\r\n",
+  "savedSnapshot": {
+    "snapshotId": "guided-d078-1792661681813",
+    "dataVersion": "guided-experience-d078-v1",
+    "reportProgramme": {
+      "id": "87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e",
+      "name": "Sociology"
+    },
+    "routeKeys": [
+      "87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e::D078"
+    ],
+    "routeStackIds": [
+      "d078-route-1"
+    ],
+    "activeStackId": "d078-route-1",
+    "selections": {
+      "87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e::D078": {
+        "methodIds": [
+          "domain-item:d078-interviews"
+        ],
+        "combinationIds": [],
+        "componentMethodIds": {},
+        "areaId": "D078:sociology-social-anthropology",
+        "roleId": "role:D078:3:sociologist",
+        "addedItemIds": []
+      }
+    }
+  },
+  "apiRequestsIntercepted": [
+    {
+      "method": "OPTIONS",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/programmes/87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/programmes/87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/programmes/87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/jamb-programmes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/jamb-programmes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/notes"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/notes"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/notes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/notes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    }
+  ]
+}

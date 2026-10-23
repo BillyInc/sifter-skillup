@@ -1,0 +1,406 @@
+{
+  "generatedAt": "2026-10-21T12:58:53.551Z",
+  "error": "Error: Timed out waiting for rendered text Choose the route from where you are; last value=false\n    at waitFor (C:\\Users\\USER\\Documents\\sifter-skillup-integrated\\scripts\\d078BrowserAcceptance.cjs:419:9)\n    at async main (C:\\Users\\USER\\Documents\\sifter-skillup-integrated\\scripts\\d078BrowserAcceptance.cjs:848:3)",
+  "browserState": "{\"url\":\"http://127.0.0.1:5174/explore/role/D078%7Csociologist?programme_id=87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e&school_id=26ce26b0-5eac-5286-b8b5-179e56a6b320&user_type=student&journey_mode=undergraduate_career&focus=guidance&snapshot_id=guided-d078-1792587497511&domain_id=D078&area_id=D078%3Asociology-social-anthropology&d078_selection=%7B%22methodIds%22%3A%5B%22domain-item%3Ad078-interviews%22%5D%2C%22combinationIds%22%3A%5B%5D%2C%22componentMethodIds%22%3A%7B%7D%2C%22areaId%22%3A%22D078%3Asociology-social-anthropology%22%2C%22roleId%22%3A%22role%3AD078%3A3%3Asociologist%22%2C%22addedItemIds%22%3A%5B%5D%7D&d078_route_stacks=%7B%22stacks%22%3A%5B%7B%22id%22%3A%22d078-route-1%22%2C%22selection%22%3A%7B%22methodIds%22%3A%5B%22domain-item%3Ad078-interviews%22%5D%2C%22combinationIds%22%3A%5B%5D%2C%22componentMethodIds%22%3A%7B%7D%2C%22areaId%22%3A%22D078%3Asociology-social-anthropology%22%2C%22roleId%22%3A%22role%3AD078%3A3%3Asociologist%22%2C%22addedItemIds%22%3A%5B%5D%7D%7D%5D%2C%22activeStackId%22%3A%22d078-route-1%22%7D&d078_role_id=role%3AD078%3A3%3Asociologist&d078_from_area=1\",\"title\":\"Sifter LevelUp\",\"readyState\":\"complete\",\"body\":\"← Exit guidance\\nFOCUSED GUIDANCE WORKSPACE\\nFollow your selected path\\n←\\nBack to subgroup\\ncircle\\nSelect\\nWhat you study\\nThe field\\nHow you will investigate\\nAn area\\nA role\\nBack to Sociology and Social Anthropology\\nSociologist\\nAvailable with the method you selected. This does not make the method a requirement of the role.\\nFrom your route\\nHow your learning may apply in this role\\nThese items show ways your selected learning may support work associated with this role. Actual duties vary by employer and position; this is not a checklist of tasks every employer assigns or proof that you are job-ready. “Needed” and “Useful” describe this learning route, not a universal job requirement.\\nUseful. You can skip it\\nLearning item\\nReligious Studies\\nUseful. You can skip it\\nSee more\\nAdd this\\nLearning item\\nInterpret Current Data\\nUseful. You can skip it\\nSee more\\nAdd this\\nLearning item\\nLegal Studies\\nUseful. You can skip it\\nSee more\\nAdd this\\nLearning item\\nHistory\\nUseful. You can skip it\\nSee more\\nAdd this\\nLearning item\\nEuropean Integration\\nUseful. You can skip it\\nSee more\\nAdd this\\nLearning item\\nGather Data\\nUseful. You can skip it\\nSee more\\nAdd this\\nLearning item\\nPolitical Science\\nUseful. You can skip it\\nSee more\\nAdd this\\nLearning item\\nInterview Techniques\\nUseful. You can skip it\\nSee more\\nAdd this\\nLearning item\\nSocial Network Analysis\\nUseful. You can skip it\\nSee more\\nAdd this\\nLearning item\\nSpatial Planning\\nUseful. You can skip it\\nSee more\\nAdd this\\nAdded to your route\\nLearning plan\\nSocial Sciences\\n1 selected item · 1 route\\n•\\nSocial Sciences · Route 1\\n1 selected method/design · 0 added items\\nYour selected approaches\\nInterviews\\n×\\nFoundations carried on this route\\n1. Frame a researchable social question and choose a fitting design\\n2. Evaluate evidence and explain what it can and cannot show\\n3. Communic\"}",
+  "savedPathKeys": [
+    "programme",
+    "university",
+    "domains",
+    "learningPlanSnapshot",
+    "learningPlanSnapshots",
+    "resume"
+  ],
+  "savedSnapshot": {
+    "snapshotId": "guided-d078-1792587497511",
+    "dataVersion": "guided-experience-d078-v1",
+    "reportProgramme": {
+      "id": "87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e",
+      "name": "Sociology"
+    },
+    "routeKeys": [
+      "87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e::D078"
+    ],
+    "routeStackIds": [
+      "d078-route-1"
+    ],
+    "activeStackId": "d078-route-1",
+    "selections": {
+      "87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e::D078": {
+        "methodIds": [
+          "domain-item:d078-interviews"
+        ],
+        "combinationIds": [],
+        "componentMethodIds": {},
+        "areaId": "D078:sociology-social-anthropology",
+        "roleId": "role:D078:3:sociologist",
+        "addedItemIds": []
+      }
+    }
+  },
+  "apiRequestsIntercepted": [
+    {
+      "method": "OPTIONS",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/programmes/87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/programmes/87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/programmes/87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/programmes/87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/jamb-programmes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/jamb-programmes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/notes"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/notes"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/notes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/notes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "generatedAt": "2026-10-22T10:36:19.540Z",
+  "error": "Error: Isolated Edge did not start its debugging endpoint. Exit=null stderr=\r\nDevTools listening on ws://127.0.0.1:9439/devtools/browser/cb3aa0f8-4089-418e-a212-0cb4547ffc89\r\n\n    at main (C:\\Users\\USER\\Documents\\sifter-skillup-integrated\\scripts\\d078BrowserAcceptance.cjs:631:23)",
+  "browserState": null,
+  "savedPathKeys": [],
+  "browserExit": null,
+  "browserStderr": "\r\nDevTools listening on ws://127.0.0.1:9439/devtools/browser/cb3aa0f8-4089-418e-a212-0cb4547ffc89\r\n",
+  "savedSnapshot": null,
+  "apiRequestsIntercepted": []
+}

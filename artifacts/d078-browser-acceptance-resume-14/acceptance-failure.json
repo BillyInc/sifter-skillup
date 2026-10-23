@@ -1,0 +1,10 @@
+{
+  "generatedAt": "2026-10-22T10:34:41.152Z",
+  "error": "Error: Timed out waiting for CDP response to Page.enable.\n    at Timeout._onTimeout (C:\\Users\\USER\\Documents\\sifter-skillup-integrated\\scripts\\d078BrowserAcceptance.cjs:335:12)\n    at listOnTimeout (node:internal/timers:605:17)\n    at process.processTimers (node:internal/timers:541:7)",
+  "browserState": "{\"url\":\"about:blank\",\"title\":\"\",\"readyState\":\"complete\",\"body\":\"\"}",
+  "savedPathKeys": [],
+  "browserExit": null,
+  "browserStderr": "\r\nDevTools listening on ws://127.0.0.1:9475/devtools/browser/04111504-c09e-48c6-9e76-9223c0aeffdf\r\n[79576:84868:1022/113425.210:ERROR:chrome\\browser\\task_manager\\providers\\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a \"Renderer\" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/40528867.\r\n[79576:84868:1022/113426.909:ERROR:chrome\\browser\\task_manager\\providers\\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a \"Renderer\" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/40528867.\r\n",
+  "savedSnapshot": null,
+  "apiRequestsIntercepted": []
+}
