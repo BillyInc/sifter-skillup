@@ -1,0 +1,147 @@
+{
+  "generatedAt": "2026-10-22T09:28:50.761Z",
+  "error": "Error: Timed out waiting for CDP response to Runtime.evaluate.\n    at Timeout._onTimeout (C:\\Users\\USER\\Documents\\sifter-skillup-integrated\\scripts\\d078BrowserAcceptance.cjs:335:12)\n    at listOnTimeout (node:internal/timers:605:17)\n    at process.processTimers (node:internal/timers:541:7)",
+  "browserState": "{\"url\":\"http://127.0.0.1:5174/explore/domain/D078/subgroup/D078:sociology-social-anthropology?programme_id=87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e&domain_id=D078&area_id=D078%3Asociology-social-anthropology&user_type=student&journey_mode=undergraduate_career&d078_selection=%7B%22methodIds%22%3A%5B%22domain-item%3Ad078-interviews%22%5D%2C%22combinationIds%22%3A%5B%5D%2C%22componentMethodIds%22%3A%7B%7D%2C%22areaId%22%3A%22D078%3Asociology-social-anthropology%22%2C%22addedItemIds%22%3A%5B%5D%7D&d078_route_stacks=%7B%22stacks%22%3A%5B%7B%22id%22%3A%22d078-route-1%22%2C%22selection%22%3A%7B%22methodIds%22%3A%5B%22domain-item%3Ad078-interviews%22%5D%2C%22combinationIds%22%3A%5B%5D%2C%22componentMethodIds%22%3A%7B%7D%2C%22addedItemIds%22%3A%5B%5D%7D%7D%5D%2C%22activeStackId%22%3A%22d078-route-1%22%7D&d078_from_field=1\",\"title\":\"Sifter LevelUp\",\"readyState\":\"complete\",\"body\":\"Home\\nExplore\\nOpportunities\\nMy World\\nProfile\\namina.okafor\\nSign out\\n← Back\\n⌕\\nSearch\\n←\\nBack to domain\\n/\\nAREA\\nAREA\\nArea\\n☆\\ncircle\\nSelect\\nCareer guidance is indicative, based on public data and mappings — not a guarantee of admission, employment, salary, immigration, legal or professional outcome. Check official Nigerian institution and regulator sources before acting.\"}",
+  "savedPathKeys": [],
+  "browserExit": null,
+  "browserStderr": "\r\nDevTools listening on ws://127.0.0.1:9426/devtools/browser/c2e8cbeb-13ad-4a6d-bf35-bb235397a117\r\n[83180:91280:1022/102557.411:ERROR:chrome\\browser\\task_manager\\providers\\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a \"Renderer\" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/40528867.\r\n",
+  "savedSnapshot": null,
+  "apiRequestsIntercepted": [
+    {
+      "method": "OPTIONS",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/programmes/87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/programmes/87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/programmes/87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/jamb-programmes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/jamb-programmes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    }
+  ]
+}

@@ -1,0 +1,484 @@
+{
+  "generatedAt": "2026-10-21T15:39:48.287Z",
+  "error": "Error: Timed out waiting for rendered text Why your Sociology studies connect; last value=false\n    at waitFor (C:\\Users\\USER\\Documents\\sifter-skillup-integrated\\scripts\\d078BrowserAcceptance.cjs:440:9)\n    at async main (C:\\Users\\USER\\Documents\\sifter-skillup-integrated\\scripts\\d078BrowserAcceptance.cjs:952:3)",
+  "browserState": "{\"url\":\"http://127.0.0.1:5174/explore/domain/D078?programme_id=87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e&user_type=student&journey_mode=undergraduate_career\",\"title\":\"Sifter LevelUp\",\"readyState\":\"complete\",\"body\":\"Home\\nExplore\\nOpportunities\\nMy World\\nProfile\\namina.okafor\\nSign out\\n← Back\\n⌕\\nSearch\\n←\\nBack to programme\\n☆\\ncheck-circle\\nSelected\\nWhat you study\\nThe field\\nHow you will investigate\\nAn area\\nA role\\nSocial Sciences & Behavioural Research\\nSocial Sciences helps you understand how people live together, how groups and institutions shape everyday life, and how societies change. It connects questions about culture, family, work, inequality, crime, policy and community life to evidence gathered through research. The field looks at individual behaviour as well as the relationships between people, institutions, the environment and wider social systems. Different disciplines study these questions from different viewpoints: Sociology is one route into Social Sciences, not another name for the whole field. In Nigeria, the NUC places Sociology alongside programmes such as Economics, Political Science and Psychology within Social Sciences. Researchers use concepts, comparison and evidence to describe patterns, examine explanations and consider social responses. What a particular study can conclude depends on its question, evidence and method.\\nSources for this field overview\\nNUC, Social Sciences Core Curriculum and Minimum Academic Standards (CCMAS), 2023\\nILO, International Standard Classification of Occupations (ISCO-08), Volume I\\nInternational Sociological Association, Social Distancing: The Relevance of Sociology\\nWhy your Sociology studies connect\\nSociology → Social Sciences\\nYour Sociology studies introduce you to analysing social structures and society's dynamics, using ideas about culture and socialisation, and examining human behaviour. These are relevant starting points for Social Sciences-not the whole set of capabilities used across the field. Beyond the programme, the path shows thr\"}",
+  "savedPathKeys": [
+    "programme",
+    "university",
+    "domains",
+    "learningPlanSnapshot",
+    "learningPlanSnapshots",
+    "resume"
+  ],
+  "browserExit": null,
+  "browserStderr": "\r\nDevTools listening on ws://127.0.0.1:9516/devtools/browser/6f353e08-8f68-4d48-9184-346857e82f76\r\n[87076:76592:1021/163726.998:ERROR:chrome\\browser\\task_manager\\providers\\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a \"Renderer\" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/40528867.\r\n[87076:76592:1021/163727.045:ERROR:chrome\\browser\\task_manager\\providers\\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a \"Renderer\" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/40528867.\r\n[87076:76592:1021/163735.700:ERROR:chrome\\browser\\task_manager\\providers\\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a \"Renderer\" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/40528867.\r\n[87076:76592:1021/163735.831:ERROR:chrome\\browser\\task_manager\\providers\\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a \"Renderer\" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/40528867.\r\n",
+  "savedSnapshot": {
+    "snapshotId": "guided-d078-1792597122612",
+    "dataVersion": "guided-experience-d078-v1",
+    "reportProgramme": {
+      "id": "87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e",
+      "name": "Sociology"
+    },
+    "routeKeys": [
+      "87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e::D078"
+    ],
+    "routeStackIds": [
+      "d078-route-1"
+    ],
+    "activeStackId": "d078-route-1",
+    "selections": {
+      "87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e::D078": {
+        "methodIds": [
+          "domain-item:d078-interviews"
+        ],
+        "combinationIds": [],
+        "componentMethodIds": {},
+        "areaId": "D078:sociology-social-anthropology",
+        "roleId": "role:D078:3:sociologist",
+        "addedItemIds": []
+      }
+    }
+  },
+  "apiRequestsIntercepted": [
+    {
+      "method": "OPTIONS",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/programmes/87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/programmes/87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/programmes/87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/programmes/87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/jamb-programmes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/jamb-programmes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/notes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/notes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/notes"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "generatedAt": "2026-10-22T09:21:51.145Z",
+  "error": "Error: Rendered button not found: See how Sociology continues in this field\n    at clickButton (C:\\Users\\USER\\Documents\\sifter-skillup-integrated\\scripts\\d078BrowserAcceptance.cjs:495:21)\n    at async main (C:\\Users\\USER\\Documents\\sifter-skillup-integrated\\scripts\\d078BrowserAcceptance.cjs:655:3)",
+  "browserState": "{\"url\":\"http://127.0.0.1:5174/explore/programme/87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e?user_type=student&journey_mode=undergraduate_career\",\"title\":\"Sifter LevelUp\",\"readyState\":\"complete\",\"body\":\"Home\\nExplore\\nOpportunities\\nMy World\\nProfile\\namina.okafor\\nSign out\\n← Back\\n⌕\\nSearch\\n←\\nBack to programme choices\\n/\\nPROGRAMME\\nPROGRAMME\\nSociology\\n☆\\ncircle\\nSelect programme\\nOverview\\nB.Sc  ·  4 years\\nPROGRAMME OVERVIEW\\nA source-backed Sociology programme preview for local browser acceptance.\\nWhat you will study\\nBelow is a list of things you will learn in this programme, grouped by common themes.\\n•\\nCommunication and academic writing\\nHow this theme fits your programme\\nYou will practise communicating clearly in speech and writing, understanding written information, and presenting ideas. These abilities support your Sociology studies; they complement, rather than replace, the programme's research and reporting work.\\nWhat you will be able to do\\n•\\nNigerian peoples and culture\\nHow this theme fits your programme\\nYou will study Nigerian peoples and cultures through historical and social examples. This theme adds Nigerian context to your university learning; it is not a complete account of every community or a substitute for the programme's African and Nigerian societies theme.\\nWhat you will be able to do\\n▤\\nPhilosophy and reasoning\\nHow this theme fits your programme\\nYou will examine philosophical questions and practise logic—checking whether reasons support a conclusion. This builds general reasoning, while the programme's Sociology themes apply ideas and evidence to social life.\\nWhat you will be able to do\\n•\\nPeace, conflict and security\\nHow this theme fits your programme\\nYou will learn key ways people describe peace, conflict and security, and consider how conflict can arise and be addressed. This introduces broad concepts; the Sociology themes examine particular institutions, inequalities and settings in greater depth.\\nWhat you will be able to do\\n•\\nEntrepreneurship and venture creati\"}",
+  "savedPathKeys": [],
+  "browserExit": null,
+  "browserStderr": "\r\nDevTools listening on ws://127.0.0.1:9351/devtools/browser/7405ddd0-24e5-4681-8df8-9860067bd449\r\n[88828:89116:1022/102132.388:ERROR:chrome\\browser\\task_manager\\providers\\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a \"Renderer\" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/40528867.\r\n[88828:89116:1022/102132.388:ERROR:chrome\\browser\\task_manager\\providers\\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a \"Renderer\" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/40528867.\r\n[88828:89116:1022/102132.408:ERROR:chrome\\browser\\task_manager\\providers\\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a \"Renderer\" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/40528867.\r\n[88828:89116:1022/102132.408:ERROR:chrome\\browser\\task_manager\\providers\\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a \"Renderer\" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/40528867.\r\n[88828:89116:1022/102132.413:ERROR:chrome\\browser\\task_manager\\providers\\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a \"Renderer\" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/40528867.\r\n[88828:89116:1022/102132.414:ERROR:chrome\\browser\\task_manager\\providers\\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a \"Renderer\" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/40528867.\r\n[88828:89116:1022/102132.414:ERROR:chrome\\browser\\task_manager\\providers\\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a \"Renderer\" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/40528867.\r\n[88828:89116:1022/102132.570:ERROR:chrome\\browser\\task_manager\\providers\\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a \"Renderer\" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/40528867.\r\n",
+  "savedSnapshot": null,
+  "apiRequestsIntercepted": [
+    {
+      "method": "OPTIONS",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/programmes/87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/programmes/87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/programmes/87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/programmes/87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/jamb-programmes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/jamb-programmes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/starting-point"
+    }
+  ]
+}

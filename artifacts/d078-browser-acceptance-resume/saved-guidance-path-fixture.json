@@ -1,0 +1,100 @@
+{
+  "programme": {
+    "id": "87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e",
+    "name": "Sociology"
+  },
+  "university": {
+    "id": "26ce26b0-5eac-5286-b8b5-179e56a6b320",
+    "name": "University of Lagos"
+  },
+  "domains": [
+    {
+      "id": "D078",
+      "name": "Social Sciences"
+    }
+  ],
+  "learningPlanSnapshot": {
+    "snapshotId": "guided-d078-1792597122612",
+    "stacks": [],
+    "routeWarnings": [],
+    "d078SelectionsByRoute": {
+      "87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e::D078": {
+        "methodIds": [
+          "domain-item:d078-interviews"
+        ],
+        "combinationIds": [],
+        "componentMethodIds": {},
+        "areaId": "D078:sociology-social-anthropology",
+        "roleId": "role:D078:3:sociologist",
+        "addedItemIds": []
+      }
+    },
+    "d078RouteStackIds": [
+      "d078-route-1"
+    ],
+    "d078ActiveStackId": "d078-route-1",
+    "dataVersion": "guided-experience-d078-v1",
+    "createdAt": "2026-10-21T15:38:42.606Z",
+    "updatedAt": "2026-10-21T15:38:42.606Z",
+    "share": {
+      "visibility": "private"
+    },
+    "reportPathContext": {
+      "programme": {
+        "id": "87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e",
+        "name": "Sociology"
+      },
+      "domains": [
+        {
+          "id": "D078",
+          "name": "Social Sciences"
+        }
+      ]
+    }
+  },
+  "learningPlanSnapshots": [
+    {
+      "snapshotId": "guided-d078-1792597122612",
+      "stacks": [],
+      "routeWarnings": [],
+      "d078SelectionsByRoute": {
+        "87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e::D078": {
+          "methodIds": [
+            "domain-item:d078-interviews"
+          ],
+          "combinationIds": [],
+          "componentMethodIds": {},
+          "areaId": "D078:sociology-social-anthropology",
+          "roleId": "role:D078:3:sociologist",
+          "addedItemIds": []
+        }
+      },
+      "d078RouteStackIds": [
+        "d078-route-1"
+      ],
+      "d078ActiveStackId": "d078-route-1",
+      "dataVersion": "guided-experience-d078-v1",
+      "createdAt": "2026-10-21T15:38:42.606Z",
+      "updatedAt": "2026-10-21T15:38:42.606Z",
+      "share": {
+        "visibility": "private"
+      },
+      "reportPathContext": {
+        "programme": {
+          "id": "87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e",
+          "name": "Sociology"
+        },
+        "domains": [
+          {
+            "id": "D078",
+            "name": "Social Sciences"
+          }
+        ]
+      }
+    }
+  ],
+  "resume": {
+    "status": "in_progress",
+    "stage": "roles"
+  }
+}

@@ -1,0 +1,1314 @@
+{
+  "generatedAt": "2026-10-22T08:22:17.382Z",
+  "browser": "Edg/155.0.4283.62",
+  "origin": "http://127.0.0.1:5174",
+  "fixtureMode": "isolated browser API interception; canonical current D078 graph and reviewed Sociology curriculum contract",
+  "liveApiVerified": false,
+  "liveApiBlocker": "This harness intercepts API responses with isolated fixture data and does not verify live API or database payloads; live-backend verification remains separate.",
+  "isolatedProfile": true,
+  "accountCreated": false,
+  "testContext": {
+    "student": "Amina Okafor",
+    "username": "amina.okafor",
+    "university": "University of Lagos",
+    "syntheticIsolatedFixture": true
+  },
+  "graphFixtureCounts": {
+    "areas": 7,
+    "roles": 19,
+    "methods": 22,
+    "combinations": 9,
+    "themes": 14
+  },
+  "checklist": [
+    {
+      "id": 1,
+      "name": "Sociology themes and programme-to-field transition",
+      "result": "PASS",
+      "evidence": {
+        "transition": "Programme page Continue into Social Sciences button navigated to the rendered field journey.",
+        "themesVisible": [
+          "African and Nigerian societies",
+          "Social work and practical change",
+          "Politics and organisations",
+          "Ideas and foundations",
+          "People, groups and society",
+          "Research and evidence",
+          "Communication and academic writing",
+          "Entrepreneurship and venture creation",
+          "Nigerian peoples and culture",
+          "Peace, conflict and security",
+          "Philosophy and reasoning",
+          "Social change and development",
+          "Inequality, gender and social problems",
+          "Technology and information"
+        ],
+        "screenshots": [
+          "desktop-01-field-themes.png"
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "name": "No areas before method/design selection",
+      "result": "PASS",
+      "evidence": {
+        "areas": [],
+        "screenshots": [
+          "desktop-01-field-themes.png"
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "name": "Interviews exact areas",
+      "result": "PASS",
+      "evidence": {
+        "areas": [
+          "Politics, Governance and Public Policy",
+          "Social Behaviour and Interaction",
+          "Social Research and Evaluation",
+          "Sociology and Social Anthropology"
+        ],
+        "screenshots": [
+          "desktop-02-interviews.png"
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "name": "Deselect Interviews removes its areas",
+      "result": "PASS",
+      "evidence": {
+        "areas": [],
+        "screenshots": [
+          "desktop-02-interviews-deselected.png"
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "name": "Spatial exact areas",
+      "result": "PASS",
+      "evidence": {
+        "areas": [
+          "Computational and Digital Social Science",
+          "Human Geography and Population Studies"
+        ],
+        "screenshots": [
+          "desktop-03-spatial.png"
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "name": "Interviews + Spatial union without unsupported areas",
+      "result": "PASS",
+      "evidence": {
+        "areas": [
+          "Computational and Digital Social Science",
+          "Human Geography and Population Studies",
+          "Politics, Governance and Public Policy",
+          "Social Behaviour and Interaction",
+          "Social Research and Evaluation",
+          "Sociology and Social Anthropology"
+        ],
+        "economicsAbsent": true,
+        "screenshots": [
+          "desktop-04-interviews-spatial-union.png"
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "name": "Clear returns to State A",
+      "result": "PASS",
+      "evidence": {
+        "areas": [],
+        "pickerPromptVisible": true,
+        "clearButtonActivated": true,
+        "fallback": null,
+        "screenshots": [
+          "desktop-04-clear-to-no-selection.png"
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "name": "Named combination uses its declared areas without selecting component method toggles",
+      "result": "PASS",
+      "evidence": {
+        "combination": "Compare what people say with situated observation",
+        "areas": [
+          "Human Geography and Population Studies",
+          "Politics, Governance and Public Policy",
+          "Social Behaviour and Interaction",
+          "Social Research and Evaluation",
+          "Sociology and Social Anthropology"
+        ],
+        "memberMethodIds": [
+          "domain-item:d078-interviews",
+          "domain-item:d078-observation-ethnography"
+        ],
+        "methodTogglesOff": true,
+        "screenshots": [
+          "desktop-05-interview-observation-combination.png"
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "name": "Open a supported role from its selected area",
+      "result": "PASS",
+      "evidence": {
+        "role": "Sociologist",
+        "area": "Sociology and Social Anthropology",
+        "visibleAreaRole": "Sociologist",
+        "unsupportedRoleAbsent": "Statistician",
+        "screenshots": [
+          "desktop-06-sociology-area.png",
+          "desktop-07-sociologist-role.png"
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "name": "Removing the last supporting method returns to picker with Undo",
+      "result": "PASS",
+      "evidence": {
+        "undoVisible": true,
+        "undoButton": {
+          "text": "Undo",
+          "ariaLabel": "Undo route change",
+          "role": "button",
+          "tag": "BUTTON"
+        },
+        "pickerReturned": true,
+        "clearedSelection": true,
+        "observedUrl": "http://127.0.0.1:5174/explore/domain/D078?programme_id=87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e&domain_id=D078&user_type=student&journey_mode=undergraduate_career&d078_selection=%7B%22methodIds%22%3A%5B%5D%2C%22combinationIds%22%3A%5B%5D%2C%22componentMethodIds%22%3A%7B%7D%2C%22addedItemIds%22%3A%5B%5D%7D&d078_route_stacks=%7B%22stacks%22%3A%5B%7B%22id%22%3A%22d078-route-1%22%2C%22selection%22%3A%7B%22methodIds%22%3A%5B%22domain-item%3Ad078-interviews%22%5D%2C%22combinationIds%22%3A%5B%5D%2C%22componentMethodIds%22%3A%7B%7D%2C%22areaId%22%3A%22D078%3Asociology-social-anthropology%22%2C%22roleId%22%3A%22role%3AD078%3A3%3Asociologist%22%2C%22addedItemIds%22%3A%5B%5D%7D%7D%5D%2C%22activeStackId%22%3A%22d078-route-1%22%7D&d078_undo_selection=%7B%22methodIds%22%3A%5B%22domain-item%3Ad078-interviews%22%5D%2C%22combinationIds%22%3A%5B%5D%2C%22componentMethodIds%22%3A%7B%7D%2C%22areaId%22%3A%22D078%3Asociology-social-anthropology%22%2C%22roleId%22%3A%22role%3AD078%3A3%3Asociologist%22%2C%22addedItemIds%22%3A%5B%5D%7D",
+        "limitation": null,
+        "screenshots": [
+          "desktop-08-undo-notice.png"
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "name": "Undo restores the same role route",
+      "result": "PASS",
+      "evidence": {
+        "role": "Sociologist",
+        "area": "Sociology and Social Anthropology",
+        "routeRestored": true,
+        "screenshots": [
+          "desktop-09-role-route-after-undo-gap.png"
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "name": "Save, leave and reopen restores the same route",
+      "result": "PASS",
+      "evidence": {
+        "snapshotId": "guided-d078-1792657259763",
+        "routeSummaryVisibleInMyWorld": true,
+        "editableCopyOpened": true,
+        "d078JourneyRestoredByMyWorldAction": true,
+        "restoredStopPoint": "role",
+        "restoredMethodIds": [
+          "domain-item:d078-interviews"
+        ],
+        "restoredAreaId": "D078:sociology-social-anthropology",
+        "restoredRoleId": "role:D078:3:sociologist",
+        "university": "University of Lagos",
+        "student": "Amina Okafor (amina.okafor; synthetic isolated fixture)",
+        "blocker": null,
+        "screenshots": [
+          "desktop-10-my-world-saved-route.png",
+          "desktop-11-editable-copy-opened-from-my-world.png",
+          "desktop-12-saved-role-route-query-restored.png"
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "name": "Select/Open/Back/Save/resource Open target sizes and keyboard focus",
+      "result": "PASS",
+      "evidence": {
+        "minimumTargetSize": "44 x 44 CSS px",
+        "metrics": {
+          "select": {
+            "width": 61.984375,
+            "height": 44,
+            "tag": "BUTTON",
+            "tabIndex": 0,
+            "aria": "Select Interviews"
+          },
+          "openArea": {
+            "width": 160,
+            "height": 44,
+            "tag": "BUTTON",
+            "tabIndex": 0,
+            "aria": "Open area Sociology and Social Anthropology"
+          },
+          "back": {
+            "width": 135.78125,
+            "height": 44,
+            "tag": "BUTTON",
+            "tabIndex": 0,
+            "aria": "Back to methods"
+          },
+          "save": {
+            "width": 54,
+            "height": 44,
+            "tag": "BUTTON",
+            "tabIndex": 0,
+            "aria": "Save"
+          },
+          "resourceOpen": {
+            "width": 73.578125,
+            "height": 44,
+            "tag": "BUTTON",
+            "tabIndex": 0,
+            "aria": "Tool guide. NVivo for organizing and coding substantial qualitative material. Open: Essential qualitative coding techniques in NVivo. Free to access. Open."
+          }
+        },
+        "focus": {
+          "select": {
+            "label": "Select Interviews",
+            "tag": "BUTTON",
+            "tabIndex": 0,
+            "focused": true,
+            "outline": "solid",
+            "evidenceMode": "direct-focus",
+            "passed": true
+          },
+          "openArea": {
+            "label": "Open area Sociology and Social Anthropology",
+            "text": "Open area",
+            "tag": "BUTTON",
+            "visible": true,
+            "passed": true
+          },
+          "back": {
+            "label": "Back to methods",
+            "text": "Back to methods",
+            "tag": "BUTTON",
+            "visible": true,
+            "passed": true
+          },
+          "resourceOpen": {
+            "label": "Tool guide. NVivo for organizing and coding substantial qualitative material. Open: Essential qualitative coding techniques in NVivo. Free to access. Open.",
+            "tag": "BUTTON",
+            "tabIndex": 0,
+            "focused": true,
+            "outline": "solid",
+            "evidenceMode": "direct-focus",
+            "passed": true
+          },
+          "roleOpen": {
+            "label": "Open role Sociologist",
+            "tag": "BUTTON",
+            "tabIndex": 0,
+            "focused": true,
+            "outline": "solid",
+            "evidenceMode": "direct-focus",
+            "passed": true
+          }
+        },
+        "screenshots": [
+          "desktop-02-interviews.png",
+          "desktop-06-sociology-area.png",
+          "desktop-07-sociologist-role.png",
+          "desktop-11-resource-row.png"
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "name": "Learning resource uses one compact row with type chip beside title",
+      "result": "PASS",
+      "evidence": {
+        "fixtureResourceCount": 7,
+        "fixtureResourceUrls": [
+          "https://lumivero.com/resources/blog/essential-qualitative-coding-techniques-nvivo/",
+          "https://www.taguette.org/getting-started.html",
+          "https://lumivero.com/products/nvivo/",
+          "https://open.ed.ac.uk/nvivo-11-video-tutorial/",
+          "https://www.youtube.com/watch?v=Ulfu8jPTGUk",
+          "https://community.lumivero.com/s/article/NV15Win-Content-coding-coding?language=en_US",
+          "https://community.lumivero.com/s/article/NV15Win-Content-coding-coding?language=en_US"
+        ],
+        "renderedRow": {
+          "text": "Tool guide\nNVivo for organizing and coding substantial qualitative material\nOpen",
+          "width": 435,
+          "height": 58,
+          "display": "flex",
+          "chipY": 489,
+          "titleY": 491,
+          "titleX": 669.203125,
+          "chipRight": 661.203125,
+          "openButtonWidth": 75.578125,
+          "openButtonHeight": 44,
+          "viewportWidth": 1440
+        },
+        "renderedDiagnostics": {
+          "titleVisible": true,
+          "seeMoreButton": "Tool guide. NVivo for organizing and coding substantial qualitative material. Open: Essential qualitative coding techniques in NVivo. Free to access. Open.",
+          "cardText": "Tool guide\nNVivo for organizing and coding substantial qualitative material\nOpen\nTool guide\nNVivo for organizing and coding substantial qualitative material\nOpen\nTool guide\nNVivo for organizing and coding substantial qualitative material\nOpen\nTool guide\nNVivo for organizing and coding substantial qualitative material\nOpen\nTool guide\nNVivo for organizing and coding substantial qualitative material\nOpen\nTool guide\nNVivo for organizing and coding substantial qualitative material\nOpen",
+          "learningResourcesVisible": true,
+          "openButtons": [
+            "Tool guide. NVivo for organizing and coding substantial qualitative material. Open: Essential qualitative coding techniques in NVivo. Free to access. Open.",
+            "Tool guide. NVivo for organizing and coding substantial qualitative material. Open: Getting started with Taguette. Free to access. Open.",
+            "Tool guide. NVivo for organizing and coding substantial qualitative material. Lumivero. Free to access. Open.",
+            "Tool guide. NVivo for organizing and coding substantial qualitative material. University of Edinburgh Open.Ed. Free to access. Open.",
+            "Tool guide. NVivo for organizing and coding substantial qualitative material. Surviving Research / Prairie View A&M University workshop recording. Free to access. Open.",
+            "Tool guide. NVivo for organizing and coding substantial qualitative material. Official provider/project documentation. Free to access. Open."
+          ]
+        },
+        "error": null,
+        "screenshots": [
+          "desktop-11-resource-row.png"
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "name": "Student-facing text follows section 14 exclusions",
+      "result": "PASS",
+      "evidence": {
+        "forbiddenPhrasesAbsent": [
+          "D078",
+          "route node",
+          "shared foundation",
+          "evidence-file note"
+        ],
+        "sourceTextsChecked": "full rendered role-page document text",
+        "screenshots": [
+          "desktop-07-sociologist-role.png"
+        ]
+      }
+    },
+    {
+      "id": "mobile",
+      "name": "Mobile tray placement and responsive overflow",
+      "result": "FAIL",
+      "evidence": {
+        "initial": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "document": {
+            "scrollWidth": 390,
+            "clientWidth": 390,
+            "scrollHeight": 9373
+          },
+          "body": {
+            "scrollWidth": 390,
+            "clientWidth": 390
+          },
+          "horizontalOverflow": false,
+          "tray": [
+            {
+              "x": 322,
+              "y": 772,
+              "width": 52,
+              "height": 52
+            }
+          ]
+        },
+        "selectedRoute": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "document": {
+            "scrollWidth": 390,
+            "clientWidth": 390,
+            "scrollHeight": 19103
+          },
+          "body": {
+            "scrollWidth": 390,
+            "clientWidth": 390
+          },
+          "horizontalOverflow": false,
+          "tray": [
+            {
+              "x": 322,
+              "y": 772,
+              "width": 52,
+              "height": 52
+            }
+          ]
+        },
+        "selectedMethodState": {
+          "selectedMethodButtons": [
+            "Deselect Interviews"
+          ],
+          "selectedApproachText": true,
+          "trayTrigger": "Open learning plan tray with 0 selected items",
+          "allTrayTriggers": [
+            {
+              "label": "Open learning plan tray with 0 selected items",
+              "x": 322,
+              "y": 772,
+              "width": 52,
+              "height": 52,
+              "visible": true
+            }
+          ]
+        },
+        "visibleTriggerState": {
+          "label": "Open learning plan tray with 0 selected items",
+          "x": 322,
+          "y": 772,
+          "width": 52,
+          "height": 52
+        },
+        "trayExpanded": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "document": {
+            "scrollWidth": 390,
+            "clientWidth": 390,
+            "scrollHeight": 19103
+          },
+          "body": {
+            "scrollWidth": 390,
+            "clientWidth": 390
+          },
+          "horizontalOverflow": false,
+          "tray": [
+            {
+              "x": 322,
+              "y": 772,
+              "width": 52,
+              "height": 52
+            },
+            {
+              "x": 321,
+              "y": 671,
+              "width": 44,
+              "height": 44
+            }
+          ]
+        },
+        "trayPanel": null,
+        "modalOpened": false,
+        "trigger": "Open learning plan tray with 0 selected items",
+        "selectedApproachVisible": false,
+        "screenshots": [
+          "mobile-01-field.png",
+          "mobile-02-learning-tray.png"
+        ]
+      }
+    },
+    {
+      "id": "motion",
+      "name": "Reduced-motion preference disables route transition animation",
+      "result": "PASS",
+      "evidence": {
+        "activeAnimations": [],
+        "media": "prefers-reduced-motion: reduce",
+        "screenshots": [
+          "desktop-11-reduced-motion.png"
+        ]
+      }
+    }
+  ],
+  "screenshots": [
+    "desktop-01-field-themes.png",
+    "desktop-02-interviews.png",
+    "desktop-02-interviews-deselected.png",
+    "desktop-03-spatial.png",
+    "desktop-04-interviews-spatial-union.png",
+    "desktop-04-clear-to-no-selection.png",
+    "desktop-05-interview-observation-combination.png",
+    "desktop-06-sociology-area.png",
+    "desktop-07-sociologist-role.png",
+    "desktop-08-undo-notice.png",
+    "desktop-09-undo-restores-role.png",
+    "desktop-10-my-world-saved-route.png",
+    "desktop-11-editable-copy-opened-from-my-world.png",
+    "desktop-12-saved-role-route-query-restored.png",
+    "desktop-11-resource-row.png",
+    "mobile-01-field.png",
+    "mobile-02-learning-tray.png",
+    "desktop-11-reduced-motion.png"
+  ],
+  "apiRequestsIntercepted": [
+    {
+      "method": "OPTIONS",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/programmes/87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/programmes/87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/programmes/87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/programmes/87c25d7f-86fb-5f4e-85f6-c0fd1fd4222e"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/jamb-programmes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/jamb-programmes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/notes"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/notes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/notes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/notes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "GET",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/roles/D078%7Csociologist"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/api/users/me"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/guidance-path"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/domains/D078"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/domains/D078"
+    }
+  ],
+  "unmockedApiCalls": [
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/student/jamb-programmes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/jamb-programmes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/student/starting-point"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/notes"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/notes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/notes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/notes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    },
+    {
+      "method": "GET",
+      "path": "/api/career/saved"
+    }
+  ]
+}
