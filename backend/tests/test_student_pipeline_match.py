@@ -205,6 +205,72 @@ def test_one_of_only_option_counts_group_matches(monkeypatch):
     assert row["matchBasis"] == "utme"
 
 
+def test_sociology_olevel_rule_keeps_math_as_pass_condition_and_never_claims_grade_verified(monkeypatch):
+    source_text = (
+        "Five (5) SSC credit passes in Government or History, English Language and three (3) other subjects. "
+        "A pass in Mathematics is required."
+    )
+    option_items = [
+        {"option_id": "socio-olevel", "requirement_role": "required", "group_key": None,
+         "min_from_group": None, "distinct_group_key": None,
+         "subject_catalog": {"name": "English Language", "code": "ENG"}},
+    ]
+    for name, code in [("Government", "GOV"), ("History", "HIS")]:
+        option_items.append({
+            "option_id": "socio-olevel", "requirement_role": "one_of", "group_key": "gov-history",
+            "min_from_group": 1, "distinct_group_key": "five-credits",
+            "subject_catalog": {"name": name, "code": code},
+        })
+    for name, code in [
+        ("Mathematics", "MATH"), ("Economics", "ECON"), ("Literature in English", "LIT"),
+        ("Geography", "GEO"), ("Biology", "BIO"),
+    ]:
+        option_items.append({
+            "option_id": "socio-olevel", "requirement_role": "one_of", "group_key": "other-three",
+            "min_from_group": 3, "distinct_group_key": "five-credits",
+            "subject_catalog": {"name": name, "code": code},
+        })
+    tables = {
+        "programme_subject_options": [{
+            "id": "socio-olevel", "jamb_programme_id": "jp-sociology", "exam_type": "olevel",
+            "requirement_id": "req-sociology", "option_label": "5 credit passes", "min_required": 5,
+            "source_text": source_text,
+        }],
+        "programme_subject_option_items": option_items,
+        "programme_subject_rule_records": [{
+            "jamb_programme_id": "jp-sociology", "requirement_id": "req-sociology", "exam_type": "olevel",
+            "rule_status": "matchable", "source_text": source_text,
+            "rule_json": {"passRequiredCodes": ["MATH"]},
+        }],
+        "subject_catalog": [
+            {"id": f"sub-{code.lower()}", "name": name, "code": code}
+            for name, code in [
+                ("English Language", "ENG"), ("Mathematics", "MATH"), ("Government", "GOV"),
+                ("History", "HIS"), ("Economics", "ECON"), ("Literature in English", "LIT"),
+                ("Geography", "GEO"), ("Biology", "BIO"),
+            ]
+        ],
+        "v_jamb_programme_details": [{"jamb_programme_id": "jp-sociology", "jamb_name": "Sociology"}],
+    }
+    monkeypatch.setattr(spr, "_svc", lambda: _FakeSvc(tables))
+
+    # A five-subject set without Mathematics cannot satisfy the separate pass condition.
+    assert spr._match_structured_subject_options(
+        {"english language", "government", "economics", "literature in english", "geography"},
+        limit=10, exam_type="olevel",
+    ) == []
+
+    result = spr._match_structured_subject_options(
+        {"english language", "government", "mathematics", "economics", "literature in english"},
+        limit=10, exam_type="olevel",
+    )
+    assert len(result) == 1
+    assert result[0]["jambName"] == "Sociology"
+    assert result[0]["eligibilityStatus"] == "olevel_grade_check_required"
+    assert result[0]["gradeVerificationRequired"] is True
+    assert "not grades" in result[0]["verificationNotes"][0]
+
+
 def test_required_and_one_of_matches_are_deduped(monkeypatch):
     tables = {
         "programme_subject_options": [
@@ -929,6 +995,43 @@ def test_verified_university_rule_can_add_a_discovery_match(monkeypatch):
     assert rows[0]["jambProgrammeId"] == "jp1"
     assert rows[0]["matchBasis"] == "university_specific"
     assert rows[0]["universityMatchSchoolId"] == "s1"
+
+
+def test_university_pass_only_subject_is_required_but_not_counted_as_a_credit():
+    option = {
+        "exam_type": "olevel",
+        "min_required": 4,
+        "pass_required_codes": ["MATH"],
+    }
+    items = [
+        {"requirement_role": "required", "subject_catalog": {"name": "English Language", "code": "ENG"}},
+        {"requirement_role": "required", "subject_catalog": {"name": "Mathematics", "code": "MATH"}},
+        *[
+            {"requirement_role": "one_of", "group_key": "arts_social", "min_from_group": 3,
+             "distinct_group_key": "olevel_distinct_credit_subjects",
+             "subject_catalog": {"name": name, "code": code}}
+            for name, code in [
+                ("Economics", "ECON"), ("Government", "GOV"), ("Literature in English", "LIT"),
+                ("Geography", "GEO"),
+            ]
+        ],
+    ]
+
+    selected = {"english language", "mathematics", "economics", "government", "literature in english"}
+    result = spr._evaluate_school_subject_option(option, items, selected)
+    assert result["passes"] is True
+    assert result["gradeVerificationRequired"] is True
+    assert "not grades" in result["verificationNotes"][0]
+
+    # Mathematics is a required pass condition, not one of the four credits.
+    without_math = selected - {"mathematics"}
+    result = spr._evaluate_school_subject_option(option, items, without_math)
+    assert result["passes"] is False
+
+    # Mathematics cannot make up for a missing fourth credit subject.
+    short_credits = {"english language", "mathematics", "economics", "government"}
+    result = spr._evaluate_school_subject_option(option, items, short_credits)
+    assert result["passes"] is False
 
 
 def test_subject_route_surfaces_verified_university_alternative(monkeypatch):

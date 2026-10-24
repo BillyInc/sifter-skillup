@@ -102,6 +102,7 @@ CREATE TABLE IF NOT EXISTS skillup_dev.school_programme_subject_options (
     min_required        SMALLINT NOT NULL DEFAULT 0,
     source_text         TEXT NOT NULL,
     condition_text      TEXT,
+      pass_required_codes JSONB NOT NULL DEFAULT '[]'::jsonb CHECK (jsonb_typeof(pass_required_codes) = 'array'),
     created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 -- A cross-reference can inherit one UTME rule and one O-level rule from the

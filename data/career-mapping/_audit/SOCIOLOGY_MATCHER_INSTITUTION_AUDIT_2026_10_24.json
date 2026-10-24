@@ -1,0 +1,226 @@
+{
+  "audit_date": "2026-10-24",
+  "status": "passed",
+  "scope": "Local generated/source records only; no live Supabase claim.",
+  "exact_sociology_rosters": {
+    "social_sciences_brochure_count": 94,
+    "arts_humanities_brochure_count": 5,
+    "overlap_count": 1,
+    "unique_institution_count": 98,
+    "institution_codes": [
+      "AAU",
+      "AAUA",
+      "ABSU",
+      "ABU",
+      "ABU-ODL",
+      "ABUAD",
+      "ABUJA",
+      "ACHIEVERS",
+      "ADSU",
+      "AEFUNA",
+      "AL-HIKMAH",
+      "AL-QALAM",
+      "ARTHUR-JARVIS",
+      "ATIBA",
+      "BASU",
+      "BAUK",
+      "BAYERO",
+      "BINGHAM",
+      "BOSU",
+      "BOWEN",
+      "BSU",
+      "CALABAR",
+      "CARITAS",
+      "CHRISTOPHER",
+      "COAL-CITY",
+      "COOU",
+      "COVENANT",
+      "CRAWFORD",
+      "CRUTECH",
+      "DELSU",
+      "EDWIN CLARK",
+      "EKSU",
+      "ELIZADE",
+      "EUI",
+      "EVANGEL",
+      "FED-DUTSINMA",
+      "FED-GASHUA",
+      "FED-GUSAU",
+      "FED-KASHERE",
+      "FED-KEBBI",
+      "FED-LAFIA",
+      "FED-LOKOJA",
+      "FED-OYE EKITI",
+      "FED-WUKARI",
+      "FOUNTAIN",
+      "GOUU",
+      "GREGORY",
+      "GSU",
+      "HALLMARK",
+      "IAUED",
+      "IBADAN",
+      "ILORIN",
+      "IMSU",
+      "ISTIQAMA",
+      "JABU",
+      "JOS",
+      "KASU",
+      "KOMU",
+      "KWARARAFA",
+      "KWASU",
+      "LAGOS",
+      "LANDMARK",
+      "LAPAI",
+      "LASU",
+      "LAUTECH",
+      "LCITY",
+      "LEGACY",
+      "MADONNA",
+      "MKAR",
+      "MLU",
+      "NASARAWA",
+      "NAUB",
+      "NILE",
+      "NOVENA",
+      "OBONG",
+      "OOU",
+      "PAAU",
+      "PAUL",
+      "PHC",
+      "PLASU",
+      "POL-ACAD",
+      "REDEEMERS",
+      "RHEMA",
+      "RITMAN",
+      "RSU",
+      "SALEM",
+      "SOSU",
+      "TSUJ",
+      "UDA",
+      "UDU",
+      "UMYUK",
+      "UNI-ILESA",
+      "UNIHEZ",
+      "UNIOSUN",
+      "UNIZIK",
+      "WESLEYUNI",
+      "WESTERN-DEL",
+      "YSU"
+    ],
+    "generated_offering_count": 98,
+    "generated_offerings_equal_exact_rosters": true,
+    "excluded_cross_reference_only_institution": "IGBINEDION"
+  },
+  "national_matcher": {
+    "olevel_status": "matchable",
+    "olevel_credit_minimum": 5,
+    "olevel_pass_only_codes": [
+      "MATH"
+    ],
+    "utme_status": "matchable",
+    "utme_three_subject_pool_codes": [
+      "ARA",
+      "ART",
+      "COMM",
+      "CRS",
+      "ECON",
+      "FRE",
+      "GEO",
+      "GOV",
+      "HAU",
+      "HIS",
+      "IGB",
+      "IRS",
+      "LIT",
+      "MUS",
+      "YOR"
+    ],
+    "local_option_rule_examples_checked": 11,
+    "local_option_rules": [
+      {
+        "institution": "FED-KASHERE",
+        "exam": "olevel",
+        "credit_minimum": 5,
+        "pass_required_codes": []
+      },
+      {
+        "institution": "FED-KASHERE",
+        "exam": "utme",
+        "credit_minimum": 3,
+        "pass_required_codes": []
+      },
+      {
+        "institution": "PLASU",
+        "exam": "olevel",
+        "credit_minimum": 4,
+        "pass_required_codes": [
+          "MATH"
+        ]
+      },
+      {
+        "institution": "ABUJA",
+        "exam": "utme",
+        "credit_minimum": 4,
+        "pass_required_codes": []
+      },
+      {
+        "institution": "COVENANT",
+        "exam": "utme",
+        "credit_minimum": 3,
+        "pass_required_codes": []
+      },
+      {
+        "institution": "EVANGEL",
+        "exam": "utme",
+        "credit_minimum": 3,
+        "pass_required_codes": []
+      },
+      {
+        "institution": "PLASU",
+        "exam": "utme",
+        "credit_minimum": 3,
+        "pass_required_codes": []
+      },
+      {
+        "institution": "SALEM",
+        "exam": "utme",
+        "credit_minimum": 3,
+        "pass_required_codes": []
+      },
+      {
+        "institution": "COVENANT",
+        "exam": "olevel",
+        "credit_minimum": 5,
+        "pass_required_codes": []
+      },
+      {
+        "institution": "EVANGEL",
+        "exam": "olevel",
+        "credit_minimum": 5,
+        "pass_required_codes": []
+      },
+      {
+        "institution": "SALEM",
+        "exam": "olevel",
+        "credit_minimum": 5,
+        "pass_required_codes": []
+      }
+    ]
+  },
+  "PLASU_grade_condition": {
+    "mathematics_subject_is_required": true,
+    "absence_is_rejected": true,
+    "grade_is_not_inferred_from_subject_selection": true
+  },
+  "programme_domain": {
+    "programme_key": "Social Sciences::Sociology",
+    "domain_id": "D078",
+    "match_type": "direct",
+    "course_anchor_count": 19
+  },
+  "source_urls": [
+    "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-social-sciences.pdf",
+    "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf",
+    "https://eligibility.jamb.gov.ng/"
+  ]
+}

@@ -71,10 +71,11 @@ are missing, one file at a time, with `ON_ERROR_STOP` enabled:
 1. `backend/migration_career_base_registry.sql`
 2. `backend/migration_subject_catalog.sql`
 3. `backend/migration_career_pilot.sql`
-4. `backend/migration_subject_rule_records.sql`
-5. `backend/migration_student_pipeline_live.sql`
-6. `backend/migration_school_faculty_filter_2026-09-09.sql`
-7. Requested additive migrations, after their prerequisites exist, in this
+4. `backend/migration_school_subject_pass_conditions_2026-10-24.sql`
+5. `backend/migration_subject_rule_records.sql`
+6. `backend/migration_student_pipeline_live.sql`
+7. `backend/migration_school_faculty_filter_2026-09-09.sql`
+8. Requested additive migrations, after their prerequisites exist, in this
    dependency order when those flows are in scope:
    `migration_provisioning.sql`, `migration_school_identity.sql`,
    `migration_institution_team_access.sql`,
@@ -90,13 +91,13 @@ Then apply the data files in exactly this order:
 3. `backend/seed_subject_rule_records.sql`
 4. `backend/seed_subject_options.sql`
 
-`seed_career_pilot.sql` is the current generated programme/offering load. Its
-latest local artifact contains 243 CCMAS programmes, 861 institutions, 420
-JAMB identities, 9,130 university offerings, 420 national requirement rows,
-2,706 requirement-source rows, 3,884 university exception rows, 1,998
-structured university option rows, and 12,813 structured option items. The
-exact live counts must be confirmed after deployment; local generation is not
-proof that Supabase was seeded.
+`seed_career_pilot.sql` is the current generated programme/offering load. The
+latest local generation contains 244 programme rows, 690 institutions, 420
+JAMB identities, 8,116 university offerings, 4,012 university exception
+rows, 1,916 structured university option rows, and 22,257 structured option
+items. These replace older counts in this runbook; the exact live counts must
+still be confirmed after deployment. Local generation is not proof that
+Supabase was seeded.
 
 `seed_subject_options.sql` is a replacement transaction for the national
 matcher tables. Back up the affected tables before running it. Do not apply it
@@ -111,6 +112,28 @@ source rows, and do not add Direct Entry back to current responses as a
 workaround. No extra SQL migration is required for that API filtering change.
 
 Do not treat a local seed count or a REST read as proof that SQL was applied.
+The pass-condition migration must be present before `seed_career_pilot.sql`;
+that seed now writes institution-scoped `pass_required_codes` for rules such as
+PLASU Sociology. The matcher requires the named subject and tells students to
+verify its grade separately; subject selection never proves a pass.
+
+The current Sociology subject-matcher reconciliation is recorded in
+`data/career-mapping/_audit/SOCIOLOGY_MATCHER_INSTITUTION_AUDIT_2026_10_24.json`.
+The exact JAMB Sociology awarder lists contain 94 Social Sciences institutions
+and five Arts & Humanities institutions, with one overlap: 98 unique
+institutions. The generated offering seed contains exactly those 98 Sociology
+offerings. Its national O-level rule is five SSC credits in Government or
+History, English Language and three other subjects, plus a separate pass in
+Mathematics. Its national UTME rule is three subjects from the 15 JAMB-listed
+Arts/Social Science choices. The 11 fully parsed university-specific rules
+remain additional checks for their named institutions, including the PLASU
+Mathematics-pass rule and Federal Kashere subject rules. The matcher checks
+selected subjects, not grades. `IGBINEDION` is not in the exact Sociology
+awarder roster; its “as in” note is not treated as an offering. The local
+programme-domain evidence links Sociology directly to Social Sciences (D078)
+with 19 course anchors. These are local seed/audit results, not live deployment
+proof.
+
 After the four seeds succeed, run the post-apply queries below, then the
 exhaustive matcher audit and the student-pipeline smoke test. If a migration or
 seed fails, stop at that file and report the database error.

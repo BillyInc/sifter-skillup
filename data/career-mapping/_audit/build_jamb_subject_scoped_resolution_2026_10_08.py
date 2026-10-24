@@ -27,6 +27,8 @@ sys.path.insert(0, str(CAREER))
 
 import _jamb_source_rules as source_rules  # noqa: E402
 from _parse_subject_options import (  # noqa: E402
+    ARTS,
+    SOCIAL,
     OLEVEL_CODES,
     olevel_parts_are_matchable,
     parse_olevel,
@@ -253,6 +255,23 @@ def _offering_codes_in_cell(cell: str, known_codes: set[str]) -> list[str]:
     )
 
 
+_SOURCE_TITLE_ALIASES = {
+    # The official Arts PDF extraction spells the neighbouring canonical
+    # programme "Sociology and Anthropology" as "Sociology and Anthropolgy".
+    # Use it only as a title boundary/locator alias.
+    "sociology and anthropology": (
+        re.compile(r"\bSOCIOLOGY\s*AND\s*ANTHROPOLGY\b", re.I),
+    ),
+}
+
+
+def _programme_title_spans(name: str, cell: str):
+    spans = [match.span() for match in _title_pattern(name).finditer(cell)]
+    for pattern in _SOURCE_TITLE_ALIASES.get(str(name).casefold(), ()):
+        spans.extend(match.span() for match in pattern.finditer(cell))
+    return sorted(set(spans))
+
+
 def _exact_course_identity(name: str, cell: str, known_names: set[str]) -> tuple[bool, str]:
     """Require a distinct catalogue title, not a substring of a compound title.
 
@@ -260,14 +279,13 @@ def _exact_course_identity(name: str, cell: str, known_names: set[str]) -> tuple
     extracted table cell alone does not establish which institution codes
     belong to which title.
     """
-    target_pattern = _title_pattern(name)
-    target_spans = [match.span() for match in target_pattern.finditer(cell)]
+    target_spans = _programme_title_spans(name, cell)
     if not target_spans:
         return False, "course_cell_does_not_match_canonical_programme"
     all_title_spans = []
     for candidate in known_names:
-        for match in _title_pattern(candidate).finditer(cell):
-            all_title_spans.append((candidate, match.span()))
+        for span in _programme_title_spans(candidate, cell):
+            all_title_spans.append((candidate, span))
 
     def is_embedded(candidate: str, span: tuple[int, int]) -> bool:
         start, end = span
@@ -315,8 +333,7 @@ def _institution_codes_for_identity(
     run, then the next distinct programme title. A repeated short title also
     terminates the prior run (e.g. Sociology followed by Sociology and X).
     """
-    target = _title_pattern(name)
-    spans = [match.span() for match in target.finditer(cell)]
+    spans = _programme_title_spans(name, cell)
     valid_targets = []
     for start, end in spans:
         prefix = cell[:start]
@@ -345,17 +362,23 @@ def _institution_codes_for_identity(
         for other in known_names:
             if other.lower() == name.lower() or len(other) <= 3:
                 continue
-            for match in _title_pattern(other).finditer(cell, end):
+            for other_start, other_end in _programme_title_spans(other, cell):
+                if other_start < end:
+                    continue
                 if not any(
                     longer.lower() != other.lower()
                     and len(longer) > len(other)
-                    and (larger := _title_pattern(longer).search(cell))
-                    and larger.start() <= match.start()
-                    and match.end() <= larger.end()
+                    and any(
+                        larger_start <= other_start and other_end <= larger_end
+                        for larger_start, larger_end in _programme_title_spans(longer, cell)
+                    )
                     for longer in known_names
                 ):
-                    next_title_starts.append(match.start())
-                    break
+                    next_title_starts.append(other_start)
+            for alias_pattern in _SOURCE_TITLE_ALIASES.get(str(other).casefold(), ()):
+                alias_match = alias_pattern.search(cell, end)
+                if alias_match:
+                    next_title_starts.append(alias_match.start())
         cutoff = min(next_title_starts, default=len(cell))
         segment = cell[end:cutoff]
         associated.update(set(_offering_codes_in_cell(segment, known_codes)) & allowed_codes)
@@ -536,6 +559,78 @@ def _safe_exact_variant(row, source_row, variant, known_names, known_codes):
     if parsed_by_local_exception:
         candidate["parser_basis"] = "strict_full_local_exception_fallback"
     return candidate, None
+
+
+def _sociology_arts_continuation_candidates():
+    """Resolve PLASU's exact O-level exception from the Sociology row on IBASS p.125.
+
+    Federal Kashere's separately printed O-level and UTME clauses are already
+    reconciled from its source-linked waiver records by the general resolver.
+    """
+    source_file = "Arts _ Humanities.pdf"
+    source_url = _official_pdf_url(source_file)
+    pages = _official_page_lookup()
+    # The extracted page index uses an ampersand in this display filename;
+    # source audit locators retain the original underscore spelling.
+    page_125 = pages.get(("Arts & Humanities.pdf", 125), {}).get("normalized_text", "")
+    if not all(fragment in page_125 for fragment in (
+        "plasurequiresolevelcreditpassesin",
+        "englishlanguageandthree3socialsciencesorartssubjects",
+        "passinmathematics",
+    )):
+        return []
+    course_cell = (
+        "SOCIOLOGY COVENANT EVANGEL FED-KASHERE PLASU SALEM "
+        "SOCIOLOGYAND ANTHROPOLGY FED-OTUOKE"
+    )
+    arts_social_pool = sorted(set(ARTS + SOCIAL) & set(OLEVEL_CODES))
+    candidates = []
+    plasu_note = (
+        "PLASU requires O Level credit passes in English Language and three "
+        "Social Sciences or Arts subjects, plus at least an O Level pass in Mathematics."
+    )
+    for programme_path in sorted(glob.glob(str(CAREER / "jamb" / "*_offerings.json"))):
+        package = json.loads(Path(programme_path).read_text(encoding="utf-8"))
+        for programme in package.get("programmes", []):
+            if programme.get("jamb_name") != "Sociology":
+                continue
+            if not any(
+                str(waiver.get("institution") or "").upper() == "PLASU"
+                and "three (3) social sciences or arts subjects" in _clean(waiver.get("note")).lower()
+                for waiver in programme.get("institution_waivers") or []
+            ):
+                continue
+            candidates.append({
+                "scope": "institution_programme_offering",
+                "jamb_programme": "Sociology",
+                "exam_type": "olevel",
+                "raw_source_text": plasu_note,
+                "parsed_rule": {
+                    "examType": "olevel",
+                    "creditMinimum": 4,
+                    "parts": [
+                        ["required", "ENG"],
+                        ["one_of", 3, arts_social_pool, "olevel_distinct_credit_subjects"],
+                    ],
+                    "passRequiredCodes": ["MATH"],
+                },
+                "source_url": source_url,
+                "source_locator": {
+                    "source_file": source_file,
+                    "pdf_page": 125,
+                    "table_row": 5,
+                    "course_cell": course_cell,
+                    "evidence_text": plasu_note,
+                    "locator_basis": "PLASU's institution-specific O-level condition is printed in the official IBASS Sociology row.",
+                },
+                "institution_codes": ["PLASU"],
+                "source_accessed_date": "2026-10-24",
+                "evidence_kind": "exact_sociology_arts_row_institution_waiver",
+                "national_promotion": False,
+            })
+            break
+
+    return candidates
 
 
 def _existing_local_waiver_evidence(queue_rows, report, known_names, known_codes):
@@ -873,14 +968,85 @@ def main() -> int:
     for source_row in report.get("rows") or []:
         source_rows[(source_row.get("jamb_name"), source_row.get("layer"))].append(source_row)
 
+    queue_rows = list(queue.get("rows") or [])
+    queue_keys = {
+        (row.get("jamb_programme"), row.get("exam_type"))
+        for row in queue_rows
+    }
+    # The canonical Sociology baseline parses successfully, so the older
+    # unresolved-wording queue does not contain its exact Arts-brochure
+    # O'level variation. Include that exact offering variant explicitly.
+    sociology_olevel_key = ("Sociology", "olevel")
+    sociology_arts_locator = ("Arts _ Humanities.pdf", 125, 5)
+    if sociology_olevel_key not in queue_keys:
+        sociology_programme = None
+        sociology_arts_institutions = []
+        sociology_arts_url = None
+        for path in sorted(glob.glob(str(CAREER / "jamb" / "*_offerings.json"))):
+            package = json.loads(Path(path).read_text(encoding="utf-8"))
+            for programme in package.get("programmes", []):
+                if programme.get("jamb_name") != "Sociology":
+                    continue
+                if path.endswith("arts_hum_offerings.json") and programme.get("institutions"):
+                    sociology_arts_institutions = list(programme["institutions"])
+                    sociology_arts_url = programme.get("source_url")
+                if not sociology_programme or (
+                    programme.get("olevel_requirement")
+                    and not sociology_programme.get("olevel_requirement")
+                ):
+                    sociology_programme = programme
+        matching_variant = any(
+            source_row.get("jamb_name") == "Sociology"
+            and source_row.get("layer") == "olevel"
+            and any(
+                (variant.get("source_variant") or {}).get("status") == "exact"
+                and (
+                    (variant.get("source_variant") or {}).get("source") or {}
+                ).get("source_file") == sociology_arts_locator[0]
+                and (
+                    (variant.get("source_variant") or {}).get("source") or {}
+                ).get("pdf_page") == sociology_arts_locator[1]
+                and (
+                    (variant.get("source_variant") or {}).get("source") or {}
+                ).get("table_row") == sociology_arts_locator[2]
+                for variant in source_row.get("source_variants") or []
+            )
+            for source_row in report.get("rows") or []
+        )
+        if sociology_programme and matching_variant:
+            queue_rows.append({
+                "jamb_programme": "Sociology",
+                "exam_type": "olevel",
+                "source_text": sociology_programme.get("olevel_requirement"),
+                "source_url": sociology_arts_url or sociology_programme.get("source_url"),
+                "source_locator": sociology_programme.get("source_locator"),
+                "offering_institutions": [
+                    code for code in (
+                        sociology_arts_institutions
+                        or sociology_programme.get("institutions")
+                        or []
+                    )
+                    if code not in {"PLASU", "FED-KASHERE"}
+                ],
+                "_source_variant_locator_allowlist": [sociology_arts_locator],
+            })
+
     resolved = []
     residual = []
     rejection_counts = Counter()
-    for row in queue.get("rows") or []:
+    for row in queue_rows:
         candidates = []
         row_reasons = Counter()
         for source_row in source_rows.get((row["jamb_programme"], row["exam_type"]), []):
             for variant in source_row.get("source_variants") or []:
+                allowed_locators = row.get("_source_variant_locator_allowlist")
+                variant_source = (variant.get("source_variant") or {}).get("source") or {}
+                if allowed_locators and (
+                    variant_source.get("source_file"),
+                    variant_source.get("pdf_page"),
+                    variant_source.get("table_row"),
+                ) not in {tuple(locator) for locator in allowed_locators}:
+                    continue
                 candidate, reason = _safe_exact_variant(
                     row, source_row, variant, known_names, known_codes
                 )
@@ -888,6 +1054,8 @@ def main() -> int:
                     candidates.append(candidate)
                 else:
                     row_reasons[reason] += 1
+        if (row["jamb_programme"], row["exam_type"]) == ("Sociology", "olevel"):
+            candidates.extend(_sociology_arts_continuation_candidates())
         # Deduplicate identical executable rules while preserving every source
         # locator. Conflicting exact cells remain scoped-conflict, never national.
         unique_rules = {}
@@ -924,14 +1092,14 @@ def main() -> int:
             residual.append({**row, "residual_reason": reason})
 
     local_waivers = _existing_local_waiver_evidence(
-        queue.get("rows") or [], report, known_names, known_codes
+        queue_rows, report, known_names, known_codes
     )
     waiver_candidates = _exact_scoped_waiver_candidates(
-        queue.get("rows") or [], known_names, local_waivers
+        queue_rows, known_names, local_waivers
     )
     queue_by_key = {
         (row["jamb_programme"], row["exam_type"]): row
-        for row in queue.get("rows") or []
+        for row in queue_rows
     }
     resolved_keys = {(row["jamb_programme"], row["exam_type"]) for row in resolved}
     residual_by_key = {
@@ -981,10 +1149,10 @@ def main() -> int:
     ]
     payload = {
         "generated_by": str(Path(__file__).relative_to(ROOT)).replace("\\", "/"),
-        "scope": "Exact IBASS source-cell resolution for the unresolved subject-wording queue",
+        "scope": "Exact IBASS source-cell resolution for unresolved wording plus the explicitly included matchable Sociology O'level offering variant",
         "national_promotion_policy": "never promote offering_variant evidence into a national rule",
         "counts": {
-            "input_rows": len(queue.get("rows") or []),
+            "input_rows": len(queue_rows),
             "scoped_exact_rows": sum(r["resolution_status"] == "scoped_exact" for r in resolved),
             "scoped_conflict_rows": sum(r["resolution_status"] == "scoped_conflict" for r in resolved),
             "residual_rows": len(residual),

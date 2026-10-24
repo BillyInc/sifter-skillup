@@ -11,6 +11,7 @@ if str(PARSER_DIR) not in sys.path:
     sys.path.insert(0, str(PARSER_DIR))
 
 import _parse_subject_options as parser
+from _gen_subject_rule_records import load_programmes, source_rule, source_rule_with_variants
 from _parse_local_subject_exceptions import parse_local_exception
 from _jamb_source_rules import apply_brochure_subject_overrides
 from _gen_subject_rule_records import resolve_contextual_rules
@@ -44,6 +45,83 @@ def test_utme_catalogue_matches_current_jamb_approved_subject_set():
     }
     assert {"FMATH", "CIV", "CAT", "TD", "IT", "CSC", "PHE"}.isdisjoint(parser.UTME_CODES)
     assert {"FMATH", "CIV", "CAT", "TD", "IT"}.issubset(parser.OLEVEL_CODES)
+
+
+def test_exact_sociology_brochure_rule_is_matchable_without_turning_math_pass_into_credit():
+    source_file = Path(__file__).parents[2] / "data" / "career-mapping" / "jamb" / "social_management_offerings.json"
+    source = json.loads(source_file.read_text(encoding="utf-8"))
+    sociology = next(row for row in source["programmes"] if row["jamb_name"] == "Sociology")
+
+    parsed = parser.parse_olevel(sociology["olevel_requirement"])
+    assert parsed is not None
+    minimum, parts = parsed
+    assert minimum == 5
+    assert ("required", "ENG") in parts
+    gov_history = next(part for part in parts if part[0] == "one_of" and set(part[2]) == {"GOV", "HIS"})
+    other_three = next(part for part in parts if part[0] == "one_of" and part[1] == 3)
+    assert "ENG" not in other_three[2] and "GOV" not in other_three[2] and "HIS" not in other_three[2]
+    assert gov_history[3] == other_three[3]
+    assert parser.olevel_parts_are_matchable(sociology["olevel_requirement"], parsed)
+    assert parser.olevel_pass_conditions(sociology["olevel_requirement"]) == ["MATH"]
+
+    typed = source_rule(sociology["olevel_requirement"], "olevel")
+    assert typed["rule_status"] == "matchable"
+    assert typed["rule_json"]["creditMinimum"] == 5
+    assert typed["rule_json"]["passRequiredCodes"] == ["MATH"]
+
+    utme = parser.parse_utme(sociology["utme_subjects"])
+    assert utme == [("one_of", 3, ["ARA", "ART", "COMM", "CRS", "ECON", "FRE", "GEO", "GOV", "HAU", "HIS", "IGB", "IRS", "LIT", "MUS", "YOR"])]
+    assert source_rule(sociology["utme_subjects"], "utme")["rule_status"] == "matchable"
+
+
+def test_effective_sociology_national_rules_remain_matchable_with_source_variants():
+    programmes = load_programmes()
+    sociology = programmes["Sociology"]
+    source_report = json.loads(Path(parser.SOURCE_RULES_PATH).read_text(encoding="utf-8"))
+    contextual = resolve_contextual_rules(programmes)["Sociology"]
+
+    for layer, field in (("olevel", "olevel_requirement"), ("utme", "utme_subjects")):
+        typed = source_rule_with_variants(
+            sociology[field],
+            layer,
+            contextual[layer],
+            parser.source_variant_texts(source_report, "Sociology", layer),
+        )
+        assert typed["rule_status"] == "matchable"
+
+    utme = parser.parse_utme(sociology["utme_subjects"])
+    assert utme == [("one_of", 3, ["ARA", "ART", "COMM", "CRS", "ECON", "FRE", "GEO", "GOV", "HAU", "HIS", "IGB", "IRS", "LIT", "MUS", "YOR"])]
+
+
+def test_sociology_arts_offerings_have_distinct_exact_and_university_rules():
+    arts_rule = parser.parse_olevel(
+        "Five (5) SSC credit passes to include English Language, Mathematics, "
+        "History/Government/Ec onomics one Science subject and any Arts or Social Science subject"
+    )
+    assert arts_rule is not None and arts_rule[0] == 5
+    assert ("required", "ENG") in arts_rule[1]
+    assert ("required", "MATH") in arts_rule[1]
+    assert any(part[0] == "one_of" and part[1] == 1 and set(part[2]) == {"GOV", "HIS", "ECON"} for part in arts_rule[1])
+    assert any(part[0] == "one_of" and part[1] == 1 and set(parser.ARTS + parser.SOCIAL).issuperset(part[2]) for part in arts_rule[1])
+
+    kashere = parse_local_exception(
+        "UTME: requires Five credit passes at SSCE (or its equivalent) in English, "
+        "Mathematics, Government/History and two other Arts or Social Sciences subjects."
+    )
+    assert kashere["status"] == "parsed"
+    assert kashere["exam_type"] == "olevel"
+    assert kashere["min_required"] == 5
+    assert ("one_of", 2) == next((part[0], part[1]) for part in kashere["parts"] if part[0] == "one_of" and part[1] == 2)
+
+    plasu = parse_local_exception(
+        "UTME: requires 'O' Level credit passes in English Language and three (3) "
+        "Social Sciences or Arts subjects plus at least 'O' Level pass in Mathematics."
+    )
+    assert plasu["status"] == "parsed"
+    assert plasu["exam_type"] == "olevel"
+    assert plasu["min_required"] == 4
+    assert plasu["pass_required_codes"] == ["MATH"]
+    assert ("one_of", 3) == next((part[0], part[1]) for part in plasu["parts"] if part[0] == "one_of")
 
 
 def test_subject_seed_exam_memberships_match_parser_catalogues():

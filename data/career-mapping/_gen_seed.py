@@ -123,6 +123,30 @@ def corrected_brochure_offering(pr):
     if institutions:
         corrected["institutions"] = institutions
     waivers = list(corrected.get("institution_waivers") or [])
+    excluded_waiver_institutions = {
+        norm_code(code) for code in override.get("exclude_waiver_only_institutions", [])
+    }
+    if excluded_waiver_institutions:
+        listed_institutions = {norm_code(code) for code in institutions}
+        def waiver_is_excluded(waiver):
+            waiver_codes = {
+                norm_code(code)
+                for code in (waiver.get("institutions") or [])
+            }
+            if waiver.get("institution"):
+                waiver_codes.add(norm_code(waiver.get("institution")))
+            return any(
+                code in excluded_waiver_institutions and code not in listed_institutions
+                for code in waiver_codes
+            )
+        corrected["institution_waivers"] = [
+            waiver for waiver in waivers
+            if not waiver_is_excluded(waiver)
+        ]
+        # A source-confirmed awarder exclusion must also suppress waiver-only
+        # institution codes from the offering roster. Keep any waiver for an
+        # institution still explicitly listed in the verified roster.
+        waivers = corrected["institution_waivers"]
     for waiver in override.get("add_institution_waivers", []):
         if not any(
             existing.get("institution") == waiver.get("institution")
@@ -234,6 +258,7 @@ def ingest_offerings(path, faculty, degree):
                             local_rule["min_required"],
                             local_rule["rule_text"],
                             local_rule.get("condition_text"),
+                            json.dumps(local_rule.get("pass_required_codes") or []),
                         )
                     )
                     group_index = 0
@@ -296,6 +321,49 @@ _local_options_by_exception = {
 _local_items_by_option = {}
 for _item in rows["school_programme_subject_option_items"]:
     _local_items_by_option.setdefault(str(_item[1]), []).append(_item)
+
+def _local_subject_option_signature(option):
+    """Canonical semantics used to merge a scoped source locator into an equivalent local rule."""
+    option_id = str(option[0])
+    required = []
+    grouped = {}
+    for item in _local_items_by_option.get(option_id, []):
+        _item_id, _option_id, code, role, group_key, minimum, distinct = item
+        if role == "required":
+            required.append(str(code))
+        elif group_key:
+            key = str(group_key)
+            grouped.setdefault(key, {"minimum": int(minimum or 1), "distinct": distinct, "codes": []})
+            grouped[key]["codes"].append(str(code))
+    groups = tuple(sorted(
+        (value["minimum"], str(value["distinct"] or ""), tuple(sorted(value["codes"])))
+        for value in grouped.values()
+    ))
+    try:
+        pass_codes = tuple(sorted(json.loads(option[11] or "[]")))
+    except (IndexError, TypeError, json.JSONDecodeError):
+        pass_codes = ()
+    return (
+        str(option[5]), str(option[6]), int(option[8] or 0),
+        tuple(sorted(required)), groups, pass_codes,
+    )
+
+def _parsed_local_rule_signature(local_rule):
+    required = []
+    grouped = []
+    group_number = 0
+    for part in local_rule.get("parts") or []:
+        if part[0] == "required":
+            required.append(str(part[1]))
+        else:
+            _kind, minimum, codes, *tail = part
+            group_number += 1
+            grouped.append((int(minimum or 1), str(tail[0] if tail else ""), tuple(sorted(map(str, codes)))))
+    return (
+        str(local_rule.get("exam_type")), str(local_rule.get("rule_scope")),
+        int(local_rule.get("min_required") or 0), tuple(sorted(required)),
+        tuple(sorted(grouped)), tuple(sorted(local_rule.get("pass_required_codes") or [])),
+    )
 
 def _cross_reference_target(note):
     m = re.search(
@@ -361,6 +429,7 @@ for _exception_index, _exception in enumerate(rows["school_programme_requirement
                 _target_option[8],
                 _target_option[9],
                 _target_option[10],
+                _target_option[11],
             )
         )
         for _item in _local_items_by_option.get(str(_target_option[0]), []):
@@ -554,6 +623,31 @@ if os.path.exists(_scoped_resolution_path):
             _raw_text = (_candidate.get("raw_source_text") or "").strip()
             _note = f"{_exam_type.upper()}: {_raw_text}"
             _local_rule = parse_local_exception(_note)
+            # Exact source-cell candidates have already passed the stricter
+            # scoped resolver, which serializes its fully parsed rule. Use
+            # that structured result when the legacy local-waiver grammar
+            # cannot parse the official brochure's compact Sociology syntax.
+            if (
+                _local_rule.get("status") != "parsed"
+                and _candidate.get("scope") == "institution_programme_offering"
+                and _candidate.get("parsed_rule", {}).get("examType") == _exam_type
+            ):
+                _parsed_source_rule = _candidate["parsed_rule"]
+                _credit_minimum = _parsed_source_rule.get(
+                    "creditMinimum", _parsed_source_rule.get("minimumRequired")
+                )
+                _source_parts = _parsed_source_rule.get("parts") or []
+                if _exam_type == "olevel" and isinstance(_credit_minimum, int) and _source_parts:
+                    _local_rule = {
+                        "status": "parsed",
+                        "exam_type": _exam_type,
+                        "rule_scope": "full",
+                        "min_required": _credit_minimum,
+                        "rule_text": _raw_text,
+                        "parts": [tuple(part) for part in _source_parts],
+                        "condition_text": None,
+                        "pass_required_codes": _parsed_source_rule.get("passRequiredCodes") or [],
+                    }
             if _local_rule.get("status") != "parsed" or _local_rule.get("exam_type") != _exam_type:
                 continue
             _locator = _candidate.get("source_locator") or {}
@@ -575,6 +669,21 @@ if os.path.exists(_scoped_resolution_path):
                 _jid = uid("jamb", _jname)
                 _spid = uid("sp", _code, _jname)
                 if _code not in rows["schools"] or _spid not in school_programme_by_id:
+                    continue
+                _candidate_signature = _parsed_local_rule_signature(_local_rule)
+                _equivalent_option = next((option for option in rows["school_programme_subject_options"]
+                    if str(option[2]) == str(_spid)
+                    and str(option[5]) == str(_exam_type)
+                    and _local_subject_option_signature(option) == _candidate_signature), None)
+                if _equivalent_option is not None:
+                    # Keep one executable option, but upgrade its provenance
+                    # with the exact institution/programme source locator.
+                    for _existing_index, _existing_exception in enumerate(rows["school_programme_requirement_exceptions"]):
+                        if str(_existing_exception[0]) == str(_equivalent_option[1]):
+                            rows["school_programme_requirement_exceptions"][_existing_index] = (
+                                *_existing_exception[:6], _source_file, _source_label, "parsed"
+                            )
+                            break
                     continue
                 _duplicate_key = (str(_spid), str(_exam_type), _note)
                 if _duplicate_key in _existing_exception_keys:
@@ -598,6 +707,7 @@ if os.path.exists(_scoped_resolution_path):
                         f"Institution-specific {_exam_type.upper()} rule (IBASS)",
                         _local_rule["min_required"], _local_rule["rule_text"],
                         _local_rule.get("condition_text"),
+                        json.dumps(_local_rule.get("pass_required_codes") or []),
                     )
                 )
                 _group_index = 0
@@ -740,9 +850,9 @@ emit("school_programme_requirement_exceptions",
 
 emit("school_programme_subject_options",
      ["id","exception_id","school_programme_id","school_id","jamb_programme_id",
-      "exam_type","rule_scope","option_label","min_required","source_text","condition_text"],
-     [[q(a),q(b),q(c),q(d),q(e),q(f),q(g),q(h),str(i),q(j),q(k)]
-      for (a,b,c,d,e,f,g,h,i,j,k) in rows["school_programme_subject_options"]])
+      "exam_type","rule_scope","option_label","min_required","source_text","condition_text","pass_required_codes"],
+     [[q(a),q(b),q(c),q(d),q(e),q(f),q(g),q(h),str(i),q(j),q(k),q(l)+"::jsonb"]
+      for (a,b,c,d,e,f,g,h,i,j,k,l) in rows["school_programme_subject_options"]])
 
 # Subject ids are resolved by code at seed time so this file remains portable
 # across environments whose UUIDs were generated independently.
