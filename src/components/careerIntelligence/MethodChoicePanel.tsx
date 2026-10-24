@@ -140,10 +140,10 @@ function CombinationCardView({
         </Text>
       ) : null}
       {combo.matchStatus === "exact" ? (
-        <Text style={[styles.meta, { color: colors.textRole.secondary }]}>This exact selection fits this named design. Choose it to see only its supported downstream route.</Text>
+        <Text style={[styles.meta, { color: colors.textRole.secondary }]}>{isParticipatory ? "This selection fits the participatory frame. Choose it to review the methods, then select the evidence methods you plan to use." : "This exact selection fits this named design. Choose it to see only its supported downstream route."}</Text>
       ) : null}
       {combo.matchStatus === "exact" && !combo.selected ? <CombinationDetails combo={combo} /> : null}
-      {combo.selected ? <Text style={[styles.meta, { color: colors.accentRole.action }]}>This named design now controls the route below. Its sequence, method contributions, matching preparation and supported areas appear together there.</Text> : null}
+      {combo.selected ? <Text style={[styles.meta, { color: colors.accentRole.action }]}>{isParticipatory ? "The participatory frame is active. Choose one or more evidence methods below; the areas and roles will update to the routes supported by all your choices." : "This named design now controls the route below. Its sequence, method contributions, matching preparation and supported areas appear together there."}</Text> : null}
       {combo.matchStatus === "exact" && !combo.selected && combo.methodContributions.length ? (
         <View style={styles.detailSections}>
           <Text style={[styles.subheading, { color: colors.textRole.primary }]}>What each method contributes</Text>
@@ -158,7 +158,7 @@ function CombinationCardView({
       {isParticipatory && combo.selected ? (
         <View style={styles.components}>
           <Text style={[styles.subheading, { color: colors.textRole.primary }]}>Choose evidence methods inside this design</Text>
-          <Text style={[styles.body, { color: colors.textRole.secondary }]}>Interviews, focus groups, surveys, and observation are options inside this combination. You do not have to use all of them.</Text>
+          <Text style={[styles.body, { color: colors.textRole.secondary }]}>Participatory research is the way decisions are shared with people affected by the issue; interviews, focus groups, surveys and observation are ways to gather evidence within that approach. One evidence method may be enough, or you can combine several when your question and community agreement call for it. The next step keeps only areas and roles supported by every method you selected and explains each method's contribution. This route comparison does not mean every combination suits every study.</Text>
           {combo.requiredMethodIds.map((id) => (
             <View key={id} style={[styles.requiredMethod, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
               <Text style={[styles.body, { color: colors.textRole.primary }]}>{d078Node(id)?.label ?? id}</Text>

@@ -78,6 +78,7 @@ type CombinationMethodContribution = {
   area_item_ids?: string[];
   task_linked_domain_item_ids?: string[];
   available_item_ids?: string[];
+  explanatory_item_ids?: string[];
   domain_downstream_item_ids?: string[];
   tool_ids?: string[];
   domain_tool_ids?: string[];
@@ -99,6 +100,21 @@ type CombinationDesign = {
   selectable_component_method_ids: string[];
   area_routes: Array<{ area_id: string; task_family_ids: string[]; role_ids: string[]; method_contributions?: CombinationMethodContribution[] }>;
   integration_contract?: Record<string, unknown>;
+  component_route_variants?: Array<{
+    id: string;
+    selected_component_method_ids: string[];
+    active_method_ids: string[];
+    area_routes: Array<{
+      area_id: string;
+      method_contributions: CombinationMethodContribution[];
+      role_ids: string[];
+      role_contributions_by_id?: Record<string, Array<{
+        method_id: string;
+        role_item_ids: string[];
+        method_specific_role_item_ids: string[];
+      }>>;
+    }>;
+  }>;
   method_contributions?: CombinationMethodContribution[];
   foundation_links?: string[];
   match_rule?: string;
@@ -224,6 +240,8 @@ export type D078Projection = {
   visibleRoles: VisibleRole[];
   domainItemIds: string[];
   toolIds: string[];
+  domainItemIdsByArea: Record<string, string[]>;
+  toolIdsByArea: Record<string, string[]>;
   areaItemIdsByArea: Record<string, string[]>;
   explanatoryItemIdsByArea: Record<string, string[]>;
   roleItemIds: string[];
@@ -299,8 +317,21 @@ function methodIdsForSelection(selection: D078Selection, combo: CombinationDesig
 export function projectD078Route(selection: D078Selection): D078Projection {
   const knownMethods = new Set(data.method_node_ids);
   const knownCombos = new Map(data.combination_designs.map((combo) => [combo.id, combo]));
-  const selectedMethods = unique(selection.methodIds.filter((id) => knownMethods.has(id)));
   const selectedCombos = unique(selection.combinationIds.filter((id) => knownCombos.has(id))).slice(0, 1);
+  // A named combination owns the combined route. Keep an additional standalone
+  // method only when the learner explicitly selected a method that belongs to
+  // that design; unrelated stale selections cannot broaden the route.
+  const requestedMethods = unique(selection.methodIds.filter((id) => knownMethods.has(id)));
+  const selectedCombo = selectedCombos.length ? knownCombos.get(selectedCombos[0]) : undefined;
+  const selectedComboMethods = selectedCombo
+    ? new Set([
+      ...selectedCombo.required_method_ids,
+      ...(selection.componentMethodIds[selectedCombo.id] ?? []).filter((id) => selectedCombo.selectable_component_method_ids.includes(id)),
+    ])
+    : undefined;
+  const selectedMethods = selectedComboMethods
+    ? requestedMethods.filter((id) => selectedComboMethods.has(id))
+    : requestedMethods;
 
   const areaSupports = new Map<string, { methods: Set<string>; combos: Set<string>; tasks: Set<string>; routes: Set<string>; methodContributions: Map<string, CombinationMethodContribution> }>();
   const roleSupports = new Map<string, { roleId: string; areaId: string; methods: Set<string>; combos: Set<string> }>();
@@ -309,6 +340,8 @@ export function projectD078Route(selection: D078Selection): D078Projection {
   const taskFamilies = new Map<string, Set<string>>();
   const domainItems = new Set<string>();
   const tools = new Set<string>();
+  const domainItemsByArea = new Map<string, Set<string>>();
+  const toolsByArea = new Map<string, Set<string>>();
   const roleItemsByRole = new Map<string, { items: Set<string>; methodItems: Set<string> }>();
   const roleItemKey = (roleId: string, areaId: string) => `${areaId}\u0000${roleId}`;
 
@@ -317,6 +350,8 @@ export function projectD078Route(selection: D078Selection): D078Projection {
     if (!areaItems.has(areaId)) areaItems.set(areaId, new Set());
     if (!explanatoryItems.has(areaId)) explanatoryItems.set(areaId, new Set());
     if (!taskFamilies.has(areaId)) taskFamilies.set(areaId, new Set());
+    if (!domainItemsByArea.has(areaId)) domainItemsByArea.set(areaId, new Set());
+    if (!toolsByArea.has(areaId)) toolsByArea.set(areaId, new Set());
     return areaSupports.get(areaId)!;
   };
   const addRole = (roleId: string, areaId: string, methodId?: string, combinationId?: string) => {
@@ -341,6 +376,7 @@ export function projectD078Route(selection: D078Selection): D078Projection {
       area_item_ids: [...((route.area_item_ids as string[] | undefined) ?? [])],
       task_linked_domain_item_ids: [...((route.task_linked_domain_item_ids as string[] | undefined) ?? [])],
       available_item_ids: [...((route.available_item_ids as string[] | undefined) ?? [])],
+        explanatory_item_ids: [...((route.explanatory_item_ids as string[] | undefined) ?? [])],
       domain_downstream_item_ids: [...((route.domain_downstream_item_ids as string[] | undefined) ?? [])],
       tool_ids: [...((route.tool_ids as string[] | undefined) ?? [])],
       domain_tool_ids: [...((route.domain_tool_ids as string[] | undefined) ?? [])],
@@ -359,18 +395,18 @@ export function projectD078Route(selection: D078Selection): D078Projection {
       ]
       : routeItemIds(route);
     for (const id of downstreamIds) {
-      if (isToolId(id)) tools.add(id);
+      if (isToolId(id)) { tools.add(id); toolsByArea.get(areaId)!.add(id); }
       else if (String(id).startsWith("area_enrichment_item:") || String(id).startsWith("area_learning_item:")) areaItems.get(areaId)!.add(id);
-      else domainItems.add(id);
+      else { domainItems.add(id); domainItemsByArea.get(areaId)!.add(id); }
     }
-    for (const id of routeToolIds(route)) tools.add(id);
+    for (const id of routeToolIds(route)) { tools.add(id); toolsByArea.get(areaId)!.add(id); }
   };
 
   // A single method is a complete individual route. Multi-selects do not
   // inherit the union of individual downstream routes: they wait for a named
   // design choice below.
-  if (selectedMethods.length === 1 && selectedCombos.length === 0) {
-    const methodId = selectedMethods[0];
+  if (selectedMethods.length === 1 && selectedCombos.length === 0 || selectedCombos.length > 0 && selectedMethods.length > 0) {
+    for (const methodId of selectedMethods) {
     for (const route of data.method_area_routes.filter((row) => row.method_id === methodId)) addMethodRoute(methodId, route);
     for (const route of data.method_area_role_routes.filter((row) => row.method_id === methodId)) {
       addRole(route.role_id, route.area_id, methodId);
@@ -380,32 +416,46 @@ export function projectD078Route(selection: D078Selection): D078Projection {
       route.method_specific_role_item_ids.forEach((id) => items.methodItems.add(id));
       roleItemsByRole.set(key, items);
     }
+    }
   }
 
   const addFrameCombinationRoutes = (combinationId: string, activeMethodIds: string[]) => {
-    const routesByMethod = activeMethodIds.map((methodId) => new Map(
-      data.method_area_routes.filter((route) => route.method_id === methodId).map((route) => [route.area_id, route]),
-    ));
-    if (!routesByMethod.length || routesByMethod.some((routes) => routes.size === 0)) return;
-    const commonAreas = [...routesByMethod[0].keys()].filter((areaId) => routesByMethod.every((routes) => routes.has(areaId)));
-    for (const areaId of commonAreas) {
-      for (let index = 0; index < activeMethodIds.length; index += 1) {
-        addMethodRoute(activeMethodIds[index], routesByMethod[index].get(areaId) as MethodAreaRoute as unknown as Record<string, unknown>, combinationId);
-      }
-      const roleSets = activeMethodIds.map((methodId) => new Set(
-        data.method_area_role_routes.filter((route) => route.method_id === methodId && route.area_id === areaId).map((route) => route.role_id),
-      ));
-      const commonRoles = [...(roleSets[0] ?? [])].filter((roleId) => roleSets.every((roles) => roles.has(roleId)));
-      for (const roleId of commonRoles) {
-        const roleRoutes = data.method_area_role_routes.filter((route) => route.area_id === areaId && route.role_id === roleId && activeMethodIds.includes(route.method_id));
-        for (const route of roleRoutes) {
-          addRole(roleId, areaId, undefined, combinationId);
-          const key = roleItemKey(roleId, areaId);
-          const items = roleItemsByRole.get(key) ?? { items: new Set<string>(), methodItems: new Set<string>() };
-          route.role_item_ids.forEach((id) => items.items.add(id));
-          route.method_specific_role_item_ids.forEach((id) => items.methodItems.add(id));
-          roleItemsByRole.set(key, items);
+    const combo = knownCombos.get(combinationId);
+    const selectedComponents = activeMethodIds.filter((id) => !combo?.required_method_ids.includes(id)).sort();
+    const exactVariant = combo?.component_route_variants?.find((variant) =>
+      [...variant.selected_component_method_ids].sort().join("\u0000") === selectedComponents.join("\u0000"),
+    );
+    if (!exactVariant) return;
+    for (const route of exactVariant.area_routes) {
+      const areaId = route.area_id;
+      if (!areaNode(areaId)) continue;
+      const support = ensureArea(areaId);
+      support.combos.add(combinationId);
+      support.routes.add(`${exactVariant.id}:${areaId}`);
+      for (const contribution of route.method_contributions) {
+        support.methodContributions.set(contribution.method_id, contribution);
+        for (const id of contribution.task_family_ids ?? []) {
+          support.tasks.add(id);
+          taskFamilies.get(areaId)!.add(id);
         }
+        for (const id of contribution.area_item_ids ?? []) areaItems.get(areaId)!.add(id);
+        for (const id of contribution.explanatory_item_ids ?? []) explanatoryItems.get(areaId)!.add(id);
+        for (const id of [...(contribution.task_linked_domain_item_ids ?? []), ...(contribution.available_item_ids ?? []), ...(contribution.domain_downstream_item_ids ?? [])]) {
+          if (isToolId(id)) { tools.add(id); toolsByArea.get(areaId)!.add(id); }
+          else if (id.startsWith("area_enrichment_item:") || id.startsWith("area_learning_item:")) areaItems.get(areaId)!.add(id);
+          else { domainItems.add(id); domainItemsByArea.get(areaId)!.add(id); }
+        }
+        for (const id of [...(contribution.tool_ids ?? []), ...(contribution.domain_tool_ids ?? [])]) { tools.add(id); toolsByArea.get(areaId)!.add(id); }
+      }
+      for (const roleId of route.role_ids) {
+        for (const methodId of activeMethodIds) addRole(roleId, areaId, methodId, combinationId);
+        const key = roleItemKey(roleId, areaId);
+        const items = roleItemsByRole.get(key) ?? { items: new Set<string>(), methodItems: new Set<string>() };
+        for (const contribution of route.role_contributions_by_id?.[roleId] ?? []) {
+          contribution.role_item_ids.forEach((id) => items.items.add(id));
+          contribution.method_specific_role_item_ids.forEach((id) => items.methodItems.add(id));
+        }
+        roleItemsByRole.set(key, items);
       }
     }
   };
@@ -426,11 +476,11 @@ export function projectD078Route(selection: D078Selection): D078Projection {
           for (const id of [
             ...(contribution.task_linked_domain_item_ids ?? []),
           ]) {
-            if (isToolId(id)) tools.add(id);
+            if (isToolId(id)) { tools.add(id); toolsByArea.get(areaId)!.add(id); }
             else if (id.startsWith("area_enrichment_item:") || id.startsWith("area_learning_item:")) areaItems.get(areaId)!.add(id);
-            else domainItems.add(id);
+            else { domainItems.add(id); domainItemsByArea.get(areaId)!.add(id); }
           }
-          for (const id of [...(contribution.tool_ids ?? []), ...(contribution.domain_tool_ids ?? [])]) tools.add(id);
+          for (const id of [...(contribution.tool_ids ?? []), ...(contribution.domain_tool_ids ?? [])]) { tools.add(id); toolsByArea.get(areaId)!.add(id); }
         }
         for (const id of route.explanatory_item_ids ?? []) explanatoryItems.get(areaId)!.add(id);
         for (const roleId of route.role_ids ?? []) addRole(roleId, areaId, undefined, combinationId);
@@ -455,7 +505,7 @@ export function projectD078Route(selection: D078Selection): D078Projection {
       areaId,
       nodeId: node.id,
       label: node.label,
-      supportingMethodIds: [...support.methods],
+        supportingMethodIds: [...new Set([...support.methods, ...[...support.methodContributions.keys()]])],
       supportingCombinationIds: [...support.combos],
       taskFamilyIds: [...support.tasks],
       routeCount: support.routes.size,
@@ -466,6 +516,7 @@ export function projectD078Route(selection: D078Selection): D078Projection {
         itemIds: unique([
           ...(contribution.area_item_ids ?? []),
           ...(contribution.task_linked_domain_item_ids ?? []),
+          ...(contribution.available_item_ids ?? []),
         ]),
         toolIds: unique([...(contribution.tool_ids ?? []), ...(contribution.domain_tool_ids ?? [])]),
       })),
@@ -562,6 +613,8 @@ export function projectD078Route(selection: D078Selection): D078Projection {
     visibleRoles,
     domainItemIds: [...domainItems],
     toolIds: [...tools],
+    domainItemIdsByArea: Object.fromEntries([...domainItemsByArea.entries()].map(([key, values]) => [key, [...values]])),
+    toolIdsByArea: Object.fromEntries([...toolsByArea.entries()].map(([key, values]) => [key, [...values]])),
     areaItemIdsByArea: Object.fromEntries([...areaItems.entries()].map(([key, values]) => [key, [...values]])),
     explanatoryItemIdsByArea: Object.fromEntries([...explanatoryItems.entries()].map(([key, values]) => [key, [...values]])),
     roleItemIds: selectedRole ? [...(roleItems?.items ?? [])] : [],

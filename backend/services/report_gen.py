@@ -469,6 +469,14 @@ def _d078_saved_route(path: dict, selection: Optional[dict] = None) -> Optional[
         chosen = [value for value in strings(raw_components.get(combo_id)) if value in allowed]
         if chosen:
             selected_components[combo_id] = chosen
+    # A named design owns its combined route. A separately selected method may
+    # add its own route only when it is one of that design's declared members;
+    # unrelated stale method IDs cannot broaden the saved route.
+    if selected_combos:
+        selected_combos = selected_combos[:1]
+        combo = combos_by_id[selected_combos[0]]
+        allowed_members = set(strings(combo.get("required_method_ids"))) | set(selected_components.get(selected_combos[0], []))
+        selected_methods = [method_id for method_id in selected_methods if method_id in allowed_members]
 
     area_routes: list[dict] = []
     role_routes: list[dict] = []
@@ -501,6 +509,7 @@ def _d078_saved_route(path: dict, selection: Optional[dict] = None) -> Optional[
     method_role_routes = [row for row in data.get("method_area_role_routes", []) if isinstance(row, dict)]
     combo_area_routes = [row for row in data.get("combination_area_routes", []) if isinstance(row, dict)]
     combo_role_routes = [row for row in data.get("combination_area_role_routes", []) if isinstance(row, dict)]
+    selected_component_variant: Optional[dict] = None
     for method_id in selected_methods:
         for route in method_routes:
             if route.get("method_id") == method_id:
@@ -523,16 +532,42 @@ def _d078_saved_route(path: dict, selection: Optional[dict] = None) -> Optional[
                     allowed_roles.add((route["area_id"], route["role_id"]))
                     role_routes.append(route)
         else:
-            method_ids = strings(combo.get("required_method_ids")) + selected_components.get(combo_id, [])
-            for method_id in dict.fromkeys(method_ids):
-                for route in method_routes:
-                    if route.get("method_id") == method_id:
-                        add_route(route)
-                        area_routes.append(route)
-                for route in method_role_routes:
-                    if route.get("method_id") == method_id and isinstance(route.get("area_id"), str) and isinstance(route.get("role_id"), str):
-                        allowed_roles.add((route["area_id"], route["role_id"]))
-                        role_routes.append(route)
+            variants = [row for row in combo.get("component_route_variants", []) if isinstance(row, dict)]
+            chosen = sorted(selected_components.get(combo_id, []))
+            variant = next((row for row in variants
+                            if sorted(strings(row.get("selected_component_method_ids"))) == chosen), None)
+            if variant and chosen:
+                selected_component_variant = variant
+                for variant_area in variant.get("area_routes", []):
+                    if not isinstance(variant_area, dict):
+                        continue
+                    contributions = [row for row in variant_area.get("method_contributions", []) if isinstance(row, dict)]
+                    combined_area = {"combination_id": combo_id, "area_id": variant_area.get("area_id")}
+                    for field in ("task_family_ids", "area_item_ids", "task_linked_domain_item_ids", "available_item_ids",
+                                  "domain_downstream_item_ids", "tool_ids", "domain_tool_ids"):
+                        combined_area[field] = list(dict.fromkeys(
+                            item for contribution in contributions for item in strings(contribution.get(field))))
+                    add_route(combined_area)
+                    area_routes.append(combined_area)
+                    area_id_for_route = combined_area.get("area_id")
+                    if not isinstance(area_id_for_route, str):
+                        continue
+                    for role_id_for_route in strings(variant_area.get("role_ids")):
+                        allowed_roles.add((area_id_for_route, role_id_for_route))
+                        role_contributions = (variant_area.get("role_contributions_by_id", {}) or {}).get(role_id_for_route, [])
+                        if not isinstance(role_contributions, list):
+                            continue
+                        role_routes.append({
+                            "combination_id": combo_id,
+                            "area_id": area_id_for_route,
+                            "role_id": role_id_for_route,
+                            "role_item_ids": list(dict.fromkeys(
+                                item for contribution in role_contributions if isinstance(contribution, dict)
+                                for item in strings(contribution.get("role_item_ids")))),
+                            "method_specific_role_item_ids": list(dict.fromkeys(
+                                item for contribution in role_contributions if isinstance(contribution, dict)
+                                for item in strings(contribution.get("method_specific_role_item_ids")))),
+                        })
 
     raw_area = selection.get("areaId")
     area_nodes = {str(node.get("area_id")): str(node.get("id"))
@@ -551,7 +586,9 @@ def _d078_saved_route(path: dict, selection: Optional[dict] = None) -> Optional[
     if area_id and isinstance(role_id, str):
         for route in role_routes:
             if route.get("area_id") == area_id and route.get("role_id") == role_id:
-                allowed_role_items.setdefault((area_id, role_id), set()).update(strings(route.get("role_item_ids")))
+                role_item_set = allowed_role_items.setdefault((area_id, role_id), set())
+                role_item_set.update(strings(route.get("role_item_ids")))
+                role_item_set.update(strings(route.get("method_specific_role_item_ids")))
         allowed_items.update(allowed_role_items.get((area_id, role_id), set()))
     if raw_area and not area_id:
         allowed_items.clear()
@@ -571,6 +608,16 @@ def _d078_saved_route(path: dict, selection: Optional[dict] = None) -> Optional[
         combo_node = nodes.get(combo_id)
         combinations.append(str(combo_node.get("label")) if isinstance(combo_node, dict) and combo_node.get("label") else str(combos_by_id[combo_id].get("design") or combo_id).replace("_", " ").title())
     components = labels([item_id for ids in selected_components.values() for item_id in ids])
+    method_context = []
+    if selected_component_variant and area_id:
+        variant_area = next((row for row in selected_component_variant.get("area_routes", [])
+                             if isinstance(row, dict) and row.get("area_id") == area_id), None)
+        for contribution in (variant_area or {}).get("method_contributions", []):
+            if isinstance(contribution, dict):
+                method_context.append({
+                    "method": label(contribution.get("method_id")),
+                    "contribution": str(contribution.get("contribution") or ""),
+                })
     area_node_id = area_nodes.get(area_id or "")
     area_node = nodes.get(area_node_id or "")
     area = str(area_node.get("label")) if isinstance(area_node, dict) else ""
@@ -583,6 +630,7 @@ def _d078_saved_route(path: dict, selection: Optional[dict] = None) -> Optional[
         "methods": methods,
         "combinations": combinations,
         "components": components,
+        "method_context": method_context,
         "area": area,
         "role": role,
         "stop_point": stop_point,
@@ -661,6 +709,13 @@ def _d078_route_html(path: dict) -> str:
             f"<p><strong>{e(title)}:</strong> {e('; '.join(values) if values else 'None selected or recorded.')}</p>"
             for title, values in lists
         )
+        if route.get("method_context"):
+            method_rows = "".join(
+                f"<li><strong>{e(row['method'])}</strong><br>{e(row['contribution'])}</li>"
+                for row in route["method_context"] if row.get("method") or row.get("contribution")
+            )
+            if method_rows:
+                content += f"<h4>How the selected methods contribute on this route</h4><ul>{method_rows}</ul>"
         route_context = "".join(
             f"<p><strong>{e(title)}:</strong> {e(value)}</p>"
             for title, value in (("Area", route["area"]), ("Role", route["role"]), ("Stop point", route["stop_point"])) if value
@@ -1162,6 +1217,10 @@ def build_full_guidance_report_docx(ctx: ReportContext) -> bytes:
                 parts.extend(_bullet(value) for value in route[key])
                 if not route[key]:
                     parts.append(_p("None selected or recorded."))
+            if route.get("method_context"):
+                parts.append(_p("How the selected methods contribute on this route", bold=True, size=20))
+                for row in route["method_context"]:
+                    parts.append(_bullet(f"{row['method']}: {row['contribution']}"))
             if route["area"]:
                 parts.append(_p(f"Area: {route['area']}"))
             if route["role"]:

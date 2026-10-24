@@ -389,15 +389,18 @@ The graph is a local design/audit artifact; the dedicated Sociology curriculum
 contract seed remains the data source for course outcomes, so these graph nodes
 do not require a new SQL table or imply that the UI already displays them.
 
-The expanded method/area/role route graph is likewise currently a checked-in
-design artifact, not a Supabase runtime table. Its D078 domain overview copies
-the individually approved fields already persisted by
+The expanded method/area/role route graph is a checked-in design artifact, not a
+Supabase runtime table. Its D078 domain overview copies the individually
+approved fields already persisted by
 `migration_domain_student_orientation_2026-09-18.sql`; do not regenerate or
-reapply the D078 guided-content seed solely because the graph now carries those
-same fields. No route-graph schema/seed is defined yet. Add one only if the
-accepted UI/API design requires the backend to fetch the graph dynamically;
-then define its schema, generator, seed and dependency order together. Do not
-load the graph JSON as SQL or claim that graph reconstruction updated Supabase.
+reapply the D078 guided-content seed solely because the graph carries those
+same fields. The participatory-method component routes are included in the
+compressed graph artifact and the app's generated runtime projection; they do
+not require a SQL schema or seed because the current app reads this checked-in
+projection rather than fetching the graph from Supabase. Do not load graph JSON
+as SQL or claim that graph reconstruction updated Supabase. Keep this runbook
+focused on SQL files, their dependency order, and database verification; local
+artifact-generation commands belong in `CLAUDE.md` or the source task notes.
 
 After the 35 generic contextual seed parts have been loaded, the scoped D078
 content seed may be applied to refresh the current locally approved Sociology

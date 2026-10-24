@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import gzip
 import sys
 import unittest
 from pathlib import Path
@@ -13,13 +14,18 @@ sys.path.insert(0, str(ROOT / "data/career-mapping/_audit"))
 from apply_d078_student_language_2026_10_20 import _clean as student_copy
 
 GRAPH_PATH = ROOT / "data/career-mapping/_audit/D078_METHOD_AREA_ROLE_ROUTE_GRAPH_2026_10_19.json"
+GRAPH_GZ_PATH = ROOT / "data/career-mapping/_audit/D078_METHOD_AREA_ROLE_ROUTE_GRAPH_2026_10_19.json.gz"
 DOMAIN_OVERVIEW_CONTRACT_PATH = ROOT / "data/career-mapping/_audit/D078_DOMAIN_OVERVIEW_CONTRACT_2026_10_19.json"
 
 
 class D078MethodAreaRoleRouteTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        cls.graph = json.loads(GRAPH_PATH.read_text(encoding="utf-8"))
+        if GRAPH_PATH.exists():
+            cls.graph = json.loads(GRAPH_PATH.read_text(encoding="utf-8"))
+        else:
+            with gzip.open(GRAPH_GZ_PATH, "rt", encoding="utf-8") as source:
+                cls.graph = json.load(source)
         cls.nodes = {node["id"]: node for node in cls.graph["nodes"]}
         cls.edges = cls.graph["edges"]
         cls.edge_pairs = {(edge["source"], edge["target"], edge["relationship"]) for edge in cls.edges}
@@ -56,7 +62,7 @@ class D078MethodAreaRoleRouteTests(unittest.TestCase):
             "whatItStudies", "whatPeopleDo", "questions", "outputs",
             "howWorkHappens", "whereProgrammeFits",
         }
-        self.assertEqual(self.graph["schema_version"], "2026-10-22.d078-method-area-role-route-graph.v5")
+        self.assertEqual(self.graph["schema_version"], "2026-10-22.d078-method-area-role-route-graph.v6")
         self.assertEqual(domain["overview_contract_id"], contract["schema_version"])
         self.assertEqual(domain["overview"], student_copy(contract["overview"]))
         self.assertEqual(set(domain["student_orientation"]), expected_fields)
@@ -223,6 +229,56 @@ class D078MethodAreaRoleRouteTests(unittest.TestCase):
             node = self.nodes[combo["id"]]
             for field in ("why_combine", "how_used", "condition", "limits", "foundation_links"):
                 self.assertTrue(node.get(field), (combo["id"], field))
+
+    def test_participatory_component_variants_are_exact_supported_intersections(self) -> None:
+        combo_id = "combo:participatory-method-choice"
+        combo = next(row for row in self.graph["combination_designs"] if row["id"] == combo_id)
+        self.assertEqual(combo.get("component_route_variant_count"), 15)
+        variants = combo.get("component_route_variants", [])
+        self.assertEqual(len(variants), 15)
+        self.assertTrue(combo.get("integration_contract", {}).get("framework_role"))
+        method_routes = self.graph["method_area_routes"]
+        role_routes = self.graph["method_area_role_routes"]
+        registry = self.graph["external_source_registry"]
+        for variant in variants:
+            components = set(variant["selected_component_method_ids"])
+            self.assertTrue(components)
+            active = set(combo["required_method_ids"]) | components
+            self.assertEqual(set(variant["active_method_ids"]), active)
+            self.assertTrue(set(variant["source_ids"]).issubset(registry))
+            expected_areas = set.intersection(*(
+                {row["area_id"] for row in method_routes if row["method_id"] == method_id}
+                for method_id in active
+            ))
+            self.assertEqual({row["area_id"] for row in variant["area_routes"]}, expected_areas)
+            for area_route in variant["area_routes"]:
+                expected_roles = set.intersection(*(
+                    {row["role_id"] for row in role_routes
+                     if row["method_id"] == method_id and row["area_id"] == area_route["area_id"]}
+                    for method_id in active
+                ))
+                self.assertEqual(set(area_route["role_ids"]), expected_roles)
+                for contribution in area_route["method_contributions"]:
+                    source_route = next(row for row in method_routes
+                                        if row["route_node_id"] == contribution["method_area_route_id"])
+                    for field in ("task_family_ids", "area_item_ids", "explanatory_item_ids",
+                                  "task_linked_domain_item_ids", "available_item_ids", "tool_ids",
+                                  "domain_downstream_item_ids", "domain_tool_ids"):
+                        self.assertEqual(contribution.get(field, []), source_route.get(field, []))
+                for role_id in area_route["role_ids"]:
+                    role_contributions = area_route["role_contributions_by_id"][role_id]
+                    self.assertEqual({row["method_id"] for row in role_contributions}, active)
+                    for contribution in role_contributions:
+                        source_route = next(row for row in role_routes
+                                            if row["route_node_id"] == contribution["method_role_route_id"])
+                        self.assertEqual(source_route["role_id"], role_id)
+                        self.assertEqual(source_route["area_id"], area_route["area_id"])
+                        self.assertEqual(contribution["role_item_ids"], source_route["role_item_ids"])
+                        self.assertEqual(contribution["method_specific_role_item_ids"], source_route["method_specific_role_item_ids"])
+                        self.assertIn(source_route["route_node_id"], variant["source_route_ids"])
+                variant_node = self.nodes[variant["id"]]
+                self.assertFalse(variant_node["student_visible"])
+                self.assertTrue(variant_node.get("source_refs"))
 
     def test_role_item_exposure_is_scoped_to_selected_role(self) -> None:
         owner_by_item: dict[str, set[str]] = {}

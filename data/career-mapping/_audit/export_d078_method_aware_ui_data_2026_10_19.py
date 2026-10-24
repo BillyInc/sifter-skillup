@@ -7,11 +7,13 @@ bundle for Metro/Vite instead of importing the full audit artifact at runtime.
 from __future__ import annotations
 
 import json
+import gzip
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[3]
 GRAPH = ROOT / "data/career-mapping/_audit/D078_METHOD_AREA_ROLE_ROUTE_GRAPH_2026_10_19.json"
+GRAPH_GZ = ROOT / "data/career-mapping/_audit/D078_METHOD_AREA_ROLE_ROUTE_GRAPH_2026_10_19.json.gz"
 OUT = ROOT / "src/data/d078MethodAwareUiData.json"
 
 NODE_FIELDS = {
@@ -41,7 +43,11 @@ NODE_FIELDS = {
 
 
 def main() -> None:
-    graph = json.loads(GRAPH.read_text(encoding="utf-8"))
+    if GRAPH.exists():
+        graph = json.loads(GRAPH.read_text(encoding="utf-8"))
+    else:
+        with gzip.open(GRAPH_GZ, "rt", encoding="utf-8") as source:
+            graph = json.load(source)
     nodes = {node["id"]: node for node in graph["nodes"]}
     all_node_ids = set(nodes)
     referenced: set[str] = set(graph["foundation_item_ids"])
@@ -133,7 +139,7 @@ def main() -> None:
         "method_choice_node_id": graph["method_choice_node_id"],
         "method_node_ids": graph["method_node_ids"],
         "combination_designs": [
-            {**combination, "integration_contract": nodes.get(combination["id"], {}).get("integration_contract"),
+            {**combination, "integration_contract": nodes.get(combination["id"], {}).get("integration_contract") or combination.get("integration_contract"),
              "method_contributions": nodes.get(combination["id"], {}).get("method_contributions", combination.get("method_contributions", [])),
              "match_rule": nodes.get(combination["id"], {}).get("match_rule", combination.get("match_rule")),
              "ambiguous_match_rule": nodes.get(combination["id"], {}).get("ambiguous_match_rule", combination.get("ambiguous_match_rule"))}

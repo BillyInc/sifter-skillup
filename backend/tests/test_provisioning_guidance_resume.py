@@ -237,6 +237,7 @@ def test_d078_report_exports_saved_route_without_university_or_empty_content():
     assert "Interviews" in html
     assert "Social Research and Evaluation" in html
     assert "Statistician" in html
+    assert "How the selected methods contribute on this route" in html
     assert "Frame a researchable social question" in html  # inherited foundation, not a learner-added item
     assert "Python" in html
     assert "Admission requirements" not in html
@@ -253,8 +254,30 @@ def test_d078_report_exports_saved_route_without_university_or_empty_content():
     assert "Frame a researchable social question" in document
     assert "Python" in document
     assert "Statistician" in document
+    assert "How the selected methods contribute on this route" in document
     assert "Admission requirements" not in document
     assert "University-specific admission requirements are not included" in document
+
+
+def test_d078_report_does_not_union_an_unselected_method_with_participatory_route():
+    snapshot = {
+        "dataVersion": "guided-experience-d078-v1",
+        "d078SelectionsByRoute": {"programme:social-sciences:sociology::D078": {
+            "methodIds": ["domain-item:d078-spatial-social-analysis"],
+            "combinationIds": ["combo:participatory-method-choice"],
+            "componentMethodIds": {"combo:participatory-method-choice": ["domain-item:d078-interviews"]},
+            "areaId": "D078:social-research-evaluation",
+            "roleId": "role:D078:18:statistician",
+            "addedItemIds": ["domain-item:d078-spatial-social-analysis"],
+        }},
+    }
+    ctx = ReportContext(student_name="Ada Student", full_path={
+        "programme": {"name": "Sociology"},
+        "learningPlanSnapshot": snapshot,
+    })
+    report = build_report_html(ctx)
+    assert "Interviews" in report
+    assert "Spatial analysis and mapping with suitable social data" not in report
 
 
 def test_d078_report_export_filters_items_and_generic_paths_outside_selected_route():
