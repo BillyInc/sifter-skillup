@@ -359,6 +359,7 @@ describe("D078 method-aware route projection", () => {
     const design = graph.combination_designs.find((combo) => combo.id === PARTICIPATORY)!;
     const components = design.selectable_component_method_ids;
     expect(components).toHaveLength(4);
+    expect(design.component_route_variants).toHaveLength(15);
     for (let mask = 0; mask < 2 ** components.length; mask += 1) {
       const selectedComponents = components.filter((_, index) => (mask & (1 << index)) !== 0);
       if (!selectedComponents.length) continue;
@@ -367,17 +368,30 @@ describe("D078 method-aware route projection", () => {
       let selection = toggleD078Combination(selectedMethods, PARTICIPATORY);
       const projection = projectD078Route(selection);
       const activeMethods = new Set([...design.required_method_ids, ...selectedComponents]);
-      const expectedAreaIds = new Set(graph.method_area_routes
-        .filter((route) => activeMethods.has(route.method_id))
-        .map((route) => route.area_id)
-        .filter((areaId) => [...activeMethods].every((methodId) => graph.method_area_routes.some((route) => route.method_id === methodId && route.area_id === areaId))));
-      const expectedRoleKeys = new Set(graph.method_area_role_routes
-        .filter((route) => activeMethods.has(route.method_id) && expectedAreaIds.has(route.area_id))
-        .map((route) => `${route.area_id}::${route.role_id}`));
-      const expectedRoleIntersection = new Set([...expectedRoleKeys].filter((key) => [...activeMethods].every((methodId) =>
-        graph.method_area_role_routes.some((route) => route.method_id === methodId && `${route.area_id}::${route.role_id}` === key))));
+      const variant = design.component_route_variants!.find((entry) =>
+        [...entry.selected_component_method_ids].sort().join("|") === [...selectedComponents].sort().join("|"));
+      expect(variant).toBeTruthy();
+      const expectedAreaIds = new Set(variant!.area_routes.map((route) => route.area_id));
+      const expectedRoleKeys = new Set(variant!.area_routes.flatMap((route) =>
+        route.role_ids.map((roleId) => `${route.area_id}::${roleId}`)));
       expect(new Set(projection.visibleAreas.map((area) => area.areaId))).toEqual(expectedAreaIds);
-      expect(new Set(projection.visibleRoles.map((role) => `${role.areaId}::${role.roleId}`))).toEqual(expectedRoleIntersection);
+      expect(new Set(projection.visibleRoles.map((role) => `${role.areaId}::${role.roleId}`))).toEqual(expectedRoleKeys);
+      for (const route of variant!.area_routes) {
+        const projected = projection.visibleAreas.find((area) => area.areaId === route.area_id)!;
+        expect(new Set(projected.supportingMethodIds)).toEqual(activeMethods);
+        for (const contribution of route.method_contributions) {
+          const shown = projected.methodContributions.find((entry) => entry.methodId === contribution.method_id);
+          expect(shown).toBeTruthy();
+          expect(shown?.itemIds).toEqual(expect.arrayContaining([
+            ...(contribution.area_item_ids ?? []),
+            ...(contribution.task_linked_domain_item_ids ?? []),
+            ...(contribution.available_item_ids ?? []),
+          ]));
+          expect(shown?.toolIds).toEqual(expect.arrayContaining([
+            ...(contribution.tool_ids ?? []), ...(contribution.domain_tool_ids ?? []),
+          ]));
+        }
+      }
       expect(projection.methods.every((method) => !method.selected)).toBe(true);
       expect(projection.combinations.find((combo) => combo.id === PARTICIPATORY)?.selectedComponentMethodIds)
         .toEqual(selectedComponents);

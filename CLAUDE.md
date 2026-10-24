@@ -205,6 +205,30 @@ buckets. Verify all seven areas and their role routes after seeding, and make
 sure programme themes are derived from the full source-backed outcome
 contract rather than a fixed three-theme sample.
 
+For participatory-method routing, treat participatory action research as a
+governance/orientation frame and interviews, focus groups, surveys and
+observation as the evidence methods selected within it. Rebuild the hidden
+component route variants and compact UI bundle locally, in this order:
+
+```powershell
+python.exe data/career-mapping/_audit/integrate_d078_participatory_component_routes_2026_10_24.py
+python.exe data/career-mapping/_audit/export_d078_method_aware_ui_data_2026_10_19.py
+```
+
+Each variant is a possible route configuration, not a universally suitable
+research design. Its areas and roles are intersections of the reviewed local
+method-to-area and method-to-role records. External sources support the frame,
+method-choice logic and cautions; they do not independently prove each D078
+area/role pairing. The UI projection, saved-selection sanitizer,
+tray and HTML/DOCX report must all use the exact selected variant: only shared
+area routes and same-area role routes supported by every selected method may
+appear, with each method's own contribution and items/tools retained. Never
+union unrelated individual-method routes or label every selection universally
+appropriate. This is a checked-in graph/UI-data change, not a Supabase row
+change: do not regenerate SQL or add a migration unless the graph becomes a
+database-fetched runtime contract or the underlying learning-item records
+change.
+
 After applying, confirm row counts and request programme, domain, area and
 role payloads again. Check that programme themes/outcomes, shared domain
 foundations, separately scoped domain options, named tools/methods/knowledge,

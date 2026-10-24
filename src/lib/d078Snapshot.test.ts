@@ -17,7 +17,7 @@ const INTERVIEWS = "domain-item:d078-interviews";
 
 function validFullSelection(): D078Selection {
   const selection: D078Selection = {
-    methodIds: ["domain-item:d078-spatial-social-analysis"],
+    methodIds: [],
     combinationIds: [PARTICIPATORY],
     componentMethodIds: { [PARTICIPATORY]: [INTERVIEWS] },
     addedItemIds: [],
@@ -29,23 +29,14 @@ function validFullSelection(): D078Selection {
   if (!area) throw new Error("Expected the selected role's supporting area.");
   const data = d078GraphDataForTests();
   const foundationIds = new Set(data.foundation_item_ids);
-  const routes = [
-    ...data.method_area_routes.filter((route) => route.method_id === selection.methodIds[0] && route.area_id === area.areaId),
-    ...data.method_area_routes.filter((route) => route.method_id === "domain-item:participatory-and-action-research" && route.area_id === area.areaId),
-    ...data.method_area_routes.filter((route) => route.method_id === INTERVIEWS && route.area_id === area.areaId),
-  ];
-  const routeItems = routes.flatMap((route) => [
-    ...route.area_item_ids,
-    ...route.task_linked_domain_item_ids,
-    ...route.available_item_ids,
-    ...route.domain_downstream_item_ids,
-    ...route.tool_ids,
-    ...route.domain_tool_ids,
-  ]);
-  const roleRouteItems = data.method_area_role_routes
-    .filter((route) => route.area_id === area.areaId && route.role_id === role.roleId)
-    .flatMap((route) => route.role_item_ids);
-  const addedItem = [...routeItems, ...roleRouteItems].find((id) => !foundationIds.has(id) && Boolean(data.nodes_by_id[id]));
+  const selectedRoute = projectD078Route({ ...selection, areaId: area.areaId, roleId: role.roleId });
+  const addedItem = [
+    ...selectedRoute.domainItemIds,
+    ...selectedRoute.toolIds,
+    ...(selectedRoute.areaItemIdsByArea[area.areaId] ?? []),
+    ...selectedRoute.roleItemIds,
+    ...selectedRoute.methodSpecificRoleItemIds,
+  ].find((id) => !foundationIds.has(id) && Boolean(data.nodes_by_id[id]));
   if (!addedItem) throw new Error("Expected a non-foundation item supported by the selected route.");
   return { ...selection, areaId: area.areaId, roleId: role.roleId, addedItemIds: [addedItem] };
 }
@@ -55,6 +46,22 @@ const saved = (snapshotId: string, selection: D078Selection) => ({
   stacks: [],
   dataVersion: "guided-experience-d078-v1",
   d078SelectionsByRoute: { [ROUTE_KEY]: selection },
+});
+
+test("does not retain a standalone method route beside a participatory component route", () => {
+  const invalidMixedSelection = {
+    methodIds: ["domain-item:d078-spatial-social-analysis"],
+    combinationIds: [PARTICIPATORY],
+    componentMethodIds: { [PARTICIPATORY]: [INTERVIEWS] },
+    addedItemIds: ["domain-item:d078-spatial-social-analysis"],
+  };
+  const selection = d078SelectionFromSnapshot({
+    dataVersion: "guided-experience-d078-v1",
+    d078SelectionsByRoute: { [ROUTE_KEY]: invalidMixedSelection },
+  }, PROGRAMME_ID) as D078Selection;
+  expect(selection.methodIds).toEqual([]);
+  expect(selection.combinationIds).toEqual([PARTICIPATORY]);
+  expect(selection.addedItemIds).not.toContain("domain-item:d078-spatial-social-analysis");
 });
 
 test("round-trips a valid full saved D078 selection through archive reopen", () => {

@@ -2,7 +2,6 @@ import {
   d078AreaLabel,
   d078CombinationLabel,
   d078Node,
-  d078GraphDataForTests,
   d078ApplicableLayerItems,
   projectD078Route,
   type D078Selection,
@@ -33,57 +32,16 @@ export function supportedD078Selection(value: unknown): D078Selection {
   const roleId = areaId && projection.visibleRoles.some((role) => role.roleId === base.roleId && role.areaId === areaId)
     ? base.roleId
     : undefined;
-  const data = d078GraphDataForTests();
   const supportedItems = new Set<string>();
-  const foundations = new Set(data.foundation_item_ids);
-  const addRouteItems = (route: Record<string, unknown>) => {
-    for (const key of ["area_item_ids", "task_linked_domain_item_ids", "available_item_ids", "domain_downstream_item_ids", "tool_ids", "domain_tool_ids"]) {
-      const ids = route[key];
-      if (Array.isArray(ids)) ids.forEach((id) => { if (typeof id === "string" && !foundations.has(id)) supportedItems.add(id); });
-    }
-  };
-  const allowedRoleIds = new Set<string>();
-  const methodIds = projection.methods.filter((method) => method.selected).map((method) => method.id);
-  const activeMethodIds = new Set<string>();
-  const addMethodRoutes = (methodId: string) => {
-    activeMethodIds.add(methodId);
-    for (const route of data.method_area_routes) {
-      if (route.method_id === methodId && (!areaId || route.area_id === areaId)) addRouteItems(route);
-    }
-  };
-  methodIds.forEach(addMethodRoutes);
-  for (const combination of projection.combinations.filter((entry) => entry.selected)) {
-    const design = data.combination_designs.find((entry) => entry.id === combination.id);
-    if (!design) continue;
-    const explicitRoutes = data.combination_area_routes.filter((route) => route.combination_id === combination.id);
-    if (explicitRoutes.length) {
-      explicitRoutes.filter((route) => !areaId || route.area_id === areaId).forEach(addRouteItems);
-      for (const route of data.combination_area_role_routes) {
-        if (route.combination_id === combination.id && (!areaId || route.area_id === areaId)) allowedRoleIds.add(route.role_id);
-      }
-      explicitRoutes.filter((route) => !areaId || route.area_id === areaId).forEach((route) => route.role_ids.forEach((id) => allowedRoleIds.add(id)));
-    } else {
-      const methods = [...design.required_method_ids, ...(base.componentMethodIds[combination.id] ?? [])];
-      methods.forEach(addMethodRoutes);
-    }
+  (areaId ? projection.domainItemIdsByArea[areaId] ?? [] : projection.domainItemIds).forEach((id) => supportedItems.add(id));
+  (areaId ? projection.toolIdsByArea[areaId] ?? [] : projection.toolIds).forEach((id) => supportedItems.add(id));
+  const visibleAreaIds = areaId ? [areaId] : projection.visibleAreas.map((area) => area.areaId);
+  for (const visibleAreaId of visibleAreaIds) {
+    projection.areaItemIdsByArea[visibleAreaId]?.forEach((id) => supportedItems.add(id));
   }
-  for (const route of data.method_area_role_routes) {
-    if (activeMethodIds.has(route.method_id) && (!areaId || route.area_id === areaId)) allowedRoleIds.add(route.role_id);
-  }
-  if (roleId && allowedRoleIds.has(roleId)) {
-    for (const route of data.method_area_role_routes) {
-      if (activeMethodIds.has(route.method_id) && route.role_id === roleId && (!areaId || route.area_id === areaId)) {
-        route.role_item_ids.forEach((id) => { if (!foundations.has(id)) supportedItems.add(id); });
-        route.method_specific_role_item_ids.forEach((id) => { if (!foundations.has(id)) supportedItems.add(id); });
-      }
-    }
-    for (const route of data.combination_area_role_routes) {
-      if (projection.combinations.some((entry) => entry.selected && entry.id === route.combination_id)
-        && route.role_id === roleId && (!areaId || route.area_id === areaId)) {
-        route.role_item_ids.forEach((id) => { if (!foundations.has(id)) supportedItems.add(id); });
-        route.method_specific_role_item_ids.forEach((id) => { if (!foundations.has(id)) supportedItems.add(id); });
-      }
-    }
+  if (roleId) {
+    projection.roleItemIds.forEach((id) => supportedItems.add(id));
+    projection.methodSpecificRoleItemIds.forEach((id) => supportedItems.add(id));
   }
   if (base.areaId && !areaId) supportedItems.clear();
   if (!base.areaId || areaId) {
