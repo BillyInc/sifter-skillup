@@ -4,7 +4,7 @@ Idempotent: deterministic uuid5 ids + ON CONFLICT (id) DO UPDATE.
 Scope: programmes (CCMAS canonical + custom enrichment), schools, jamb_programmes,
 programme_mapping, school_programmes, programme_subject_requirements.
 Does NOT touch programme_domain (domain phase)."""
-import json, re, uuid, os
+import gzip, json, re, uuid, os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 NS = uuid.UUID("5c1f7e00-0000-4000-8000-0000ca4ee401")  # fixed namespace for this dataset
@@ -606,8 +606,20 @@ _scoped_resolution_path = os.path.join(
     HERE, "_audit", "jamb_subject_scoped_resolution_2026_10_08.json"
 )
 _scoped_exceptions_added = 0
+_scoped_resolution_gz_path = _scoped_resolution_path + ".gz"
 if os.path.exists(_scoped_resolution_path):
-    _scoped_resolution = json.load(open(_scoped_resolution_path, encoding="utf-8"))
+    with open(_scoped_resolution_path, encoding="utf-8") as _scoped_source:
+        _scoped_resolution = json.load(_scoped_source)
+elif os.path.exists(_scoped_resolution_gz_path):
+    # Large audit artefacts are kept compressed in the repository. Read the
+    # same canonical JSON payload directly so seed regeneration does not
+    # silently omit source-confirmed, institution-specific matcher rules.
+    with gzip.open(_scoped_resolution_gz_path, "rt", encoding="utf-8") as _scoped_source:
+        _scoped_resolution = json.load(_scoped_source)
+else:
+    _scoped_resolution = None
+
+if _scoped_resolution is not None:
     _existing_exception_keys = {
         (str(row[1]), str(row[4]), str(row[5]))
         for row in rows["school_programme_requirement_exceptions"]

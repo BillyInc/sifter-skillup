@@ -138,7 +138,7 @@ The Sociology matcher audit dated 2026-10-24 is
 It verifies 98 unique exact Sociology awarders and matching generated offering
 rows; a matchable national O-level rule with Mathematics recorded as a separate
 pass condition; a matchable UTME rule requiring three of the 15 listed Arts or
-Social Science subjects; 11 parsed university-specific rule examples; and the
+Social Science subjects; 8 parsed university-specific full-rule examples; and the
 direct Sociology-to-Social-Sciences (D078) evidence link. Never infer a pass
 grade from subject selection, and do not treat IGBINEDION's 'as in' note as a
 a Sociology offering. This local audit does not prove that Supabase has been

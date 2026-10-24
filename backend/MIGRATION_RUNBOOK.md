@@ -93,9 +93,9 @@ Then apply the data files in exactly this order:
 
 `seed_career_pilot.sql` is the current generated programme/offering load. The
 latest local generation (2026-10-24) contains 244 programme rows, 690
-institutions, 420 JAMB identities, 8,116 university offerings, 3,895
-university exception rows, 1,799 structured university option rows, and
-16,873 structured option items. It contains 98 exact Sociology university
+institutions, 420 JAMB identities, 8,116 university offerings, 4,007
+university exception rows, 1,911 structured university option rows, and
+22,179 structured option items. It contains 98 exact Sociology university
 offerings. These replace older counts in this runbook; the exact live counts
 must still be confirmed after deployment. Local generation is not proof that
 Supabase was seeded.
