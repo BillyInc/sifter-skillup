@@ -1199,6 +1199,52 @@ After applying the SQL, verify the counts and foreign-key checks in
 run does not prove that Supabase has been updated; the SQL editor results are
 the deployment proof.
 
+### Known seed landmines found during the 2026-10-24 apply
+
+Two bugs surfaced applying the regenerated `seed_career_pilot.sql` and
+`seed_subject_options.sql` to dev on 2026-10-24. Fix the generator-side one
+before the next regeneration; the other is an apply-order gotcha to repeat
+every time.
+
+**1. `seed_career_pilot.sql` can contain duplicate natural keys that abort a
+raw re-apply.** `school_programme_requirement_exceptions` has
+`UNIQUE(school_programme_id, exam_type, requirement_text)` in addition to its
+`id` primary key, but the seed upserts with `ON CONFLICT (id) DO UPDATE` only.
+`_gen_seed.py` (or whichever generator emits this table) can emit two rows
+with different `id`s for the same `(school_programme_id, exam_type,
+requirement_text)` — found as 7 such pairs on 2026-10-24, present in both the
+pre- and post-regeneration file, so this is not new damage from that specific
+regeneration, just never previously hit by a raw full re-apply. One pair had
+a downstream child row in `school_programme_subject_options` (via
+`exception_id`), so dropping the losing duplicate also means dropping its
+child. Fix properly: have the generator de-duplicate on
+`(school_programme_id, exam_type, requirement_text)` before emitting VALUES
+rows, keeping one `id` per natural key. Until that lands, do not assume a
+previously-successful partial/incremental seed run proves the file is safe to
+run as one statement — check the live table on the host project with
+`GROUP BY school_programme_id, exam_type, requirement_text HAVING count(*) > 1`
+before applying.
+
+**2. `seed_subject_options.sql`'s own completeness assertion (`RAISE
+EXCEPTION 'Subject option seed contains an incomplete structured rule'`) can
+fire purely because `subject_catalog` is stale on the target project, not
+because the seed is wrong.** The seed's generator-side subject codes (e.g.
+`AGRIC`, a real, distinct code from `AGR` — see `seed_subject_catalog.sql`)
+only resolve if every code they reference already exists in `subject_catalog`
+on that project; a code that doesn't resolve silently drops its
+`programme_subject_option_items` row (`FROM subject_catalog sc WHERE
+sc.code = '...'` returns zero rows, so the `INSERT ... SELECT` inserts
+nothing), which can push an option's represented item count below
+`min_required` and trip the assertion. On 2026-10-24, dev's `subject_catalog`
+only had 46 of the 82 codes defined in the checked-in
+`seed_subject_catalog.sql` — stale from a much earlier partial seed, unrelated
+to that day's regeneration. Always apply the full `seed_subject_catalog.sql`
+(idempotent, `ON CONFLICT (code) DO UPDATE`) immediately before
+`seed_subject_options.sql`, every time, even if the catalog "should already
+be seeded" — don't assume the apply-order doc above was already followed on
+the target project; verify `SELECT count(*) FROM subject_catalog` against the
+file's own row count first.
+
 ## Career Resource SQL Migration
 
 This repository does not use monolithic career-resource JSON or SQL files.
