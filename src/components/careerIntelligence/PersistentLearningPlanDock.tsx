@@ -42,7 +42,7 @@ export function PersistentLearningPlanDockProvider({ children }: { children: Rea
         styles.dockLayer,
         Platform.OS === "web" ? styles.dockLayerWeb : styles.dockLayerNative,
         { bottom: width < 768 ? 82 : 16 },
-      ]}>{renderer()}</View> : null}
+      ]}>{renderer()}</View> : null;
   return <PersistentLearningPlanDockContext.Provider value={value}>
     <PersistentLearningPlanDockPortal dock={dock}>{children}</PersistentLearningPlanDockPortal>
   </PersistentLearningPlanDockContext.Provider>;

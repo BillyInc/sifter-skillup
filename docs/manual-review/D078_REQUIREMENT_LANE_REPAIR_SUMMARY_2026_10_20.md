@@ -74,7 +74,7 @@ The 10/17 detail rows contain four needed records and 261 conditional records, w
 
 ## Files and boundaries
 
-- Contract: `C:/Users/USER/Documents/sifter-skillup-integrated/data/career-mapping/_audit/D078_REQUIREMENT_LANE_DISPOSITION_2026_10_20.json`
-- Current route context: `C:/Users/USER/Documents/sifter-skillup-integrated/data/career-mapping/_audit/D078_METHOD_AREA_ROLE_ROUTE_GRAPH_2026_10_19.json`
-- Current handoff: `C:/Users/USER/Documents/sifter-skillup-integrated/docs/manual-review/D078_METHOD_AWARE_UI_HANDOFF_2026_10_19.md`
+- Contract: `/home/williams/Documents/sifter-repo/sifter-skillup/data/career-mapping/_audit/D078_REQUIREMENT_LANE_DISPOSITION_2026_10_20.json`
+- Current route context: `/home/williams/Documents/sifter-repo/sifter-skillup/data/career-mapping/_audit/D078_METHOD_AREA_ROLE_ROUTE_GRAPH_2026_10_19.json`
+- Current handoff: `/home/williams/Documents/sifter-repo/sifter-skillup/docs/manual-review/D078_METHOD_AWARE_UI_HANDOFF_2026_10_19.md`
 - No graph, route ordering, taxonomy, role-fit/ownership, explanation/UI, SQL, or migration changes.
