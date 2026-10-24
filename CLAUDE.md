@@ -140,7 +140,7 @@ rows; a matchable national O-level rule with Mathematics recorded as a separate
 pass condition; a matchable UTME rule requiring three of the 15 listed Arts or
 Social Science subjects; 11 parsed university-specific rule examples; and the
 direct Sociology-to-Social-Sciences (D078) evidence link. Never infer a pass
-grade from subject selection, and do not turn the IGBINEDION “as in” note into
+grade from subject selection, and do not treat IGBINEDION's 'as in' note as a
 a Sociology offering. This local audit does not prove that Supabase has been
 seeded.
 

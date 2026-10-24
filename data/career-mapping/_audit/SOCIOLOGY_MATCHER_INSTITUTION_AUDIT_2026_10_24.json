@@ -135,7 +135,7 @@
       "MUS",
       "YOR"
     ],
-    "local_option_rule_examples_checked": 11,
+    "local_option_rule_examples_checked": 4,
     "local_option_rules": [
       {
         "institution": "FED-KASHERE",
@@ -161,48 +161,6 @@
         "institution": "ABUJA",
         "exam": "utme",
         "credit_minimum": 4,
-        "pass_required_codes": []
-      },
-      {
-        "institution": "COVENANT",
-        "exam": "utme",
-        "credit_minimum": 3,
-        "pass_required_codes": []
-      },
-      {
-        "institution": "EVANGEL",
-        "exam": "utme",
-        "credit_minimum": 3,
-        "pass_required_codes": []
-      },
-      {
-        "institution": "PLASU",
-        "exam": "utme",
-        "credit_minimum": 3,
-        "pass_required_codes": []
-      },
-      {
-        "institution": "SALEM",
-        "exam": "utme",
-        "credit_minimum": 3,
-        "pass_required_codes": []
-      },
-      {
-        "institution": "COVENANT",
-        "exam": "olevel",
-        "credit_minimum": 5,
-        "pass_required_codes": []
-      },
-      {
-        "institution": "EVANGEL",
-        "exam": "olevel",
-        "credit_minimum": 5,
-        "pass_required_codes": []
-      },
-      {
-        "institution": "SALEM",
-        "exam": "olevel",
-        "credit_minimum": 5,
         "pass_required_codes": []
       }
     ]
