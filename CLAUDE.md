@@ -97,6 +97,7 @@ missing files, one transaction at a time, in this order:
 backend/migration_career_base_registry.sql
 backend/migration_subject_catalog.sql
 backend/migration_career_pilot.sql
+backend/migration_school_subject_pass_conditions_2026-10-24.sql
 backend/migration_jamb_programme_learning_resources_2026-09-23.sql
 backend/migration_subject_rule_records.sql
 backend/migration_student_pipeline_live.sql
@@ -120,11 +121,28 @@ backend/seed_subject_rule_records.sql
 backend/seed_subject_options.sql
 ```
 
+`migration_school_subject_pass_conditions_2026-10-24.sql` must precede the
+career-offering seed. The offering seed persists university-specific pass-only
+subject conditions separately from credit totals; the matcher can require the
+subject selection and flag that grades still need confirmation, but cannot
+verify a student's grade.
+
 `seed_subject_options.sql` is a controlled replacement of national matcher
 rows. It must be applied after both the career/offering seed and the typed
 rule-record seed. A successful local generation is not proof of a live
 deployment; rerun the post-apply counts and exhaustive matcher audit in
 `backend/COMPLETE_DATA_MIGRATION_2026-08-17.md`.
+
+The Sociology matcher audit dated 2026-10-24 is
+`data/career-mapping/_audit/SOCIOLOGY_MATCHER_INSTITUTION_AUDIT_2026_10_24.json`.
+It verifies 98 unique exact Sociology awarders and matching generated offering
+rows; a matchable national O-level rule with Mathematics recorded as a separate
+pass condition; a matchable UTME rule requiring three of the 15 listed Arts or
+Social Science subjects; 8 parsed university-specific full-rule examples; and the
+direct Sociology-to-Social-Sciences (D078) evidence link. Never infer a pass
+grade from subject selection, and do not treat IGBINEDION's 'as in' note as a
+a Sociology offering. This local audit does not prove that Supabase has been
+seeded.
 
 ### D078/Sociology student-display reseed gate (2026-10-14)
 
@@ -430,6 +448,7 @@ For the current 2026-09-11 refresh, the complete prerequisite order is:
 backend/migration_career_base_registry.sql
 backend/migration_subject_catalog.sql
 backend/migration_career_pilot.sql
+backend/migration_school_subject_pass_conditions_2026-10-24.sql
 backend/migration_subject_rule_records.sql
 backend/migration_student_pipeline_live.sql
 backend/migration_school_faculty_filter_2026-09-09.sql
@@ -1116,8 +1135,9 @@ Apply the schema in this dependency order:
 1. `backend/migration_career_base_registry.sql`
 2. `backend/migration_subject_catalog.sql`
 3. `backend/migration_career_pilot.sql`
-4. `backend/migration_subject_rule_records.sql`
-5. `backend/migration_student_pipeline_live.sql`
+4. `backend/migration_school_subject_pass_conditions_2026-10-24.sql`
+5. `backend/migration_subject_rule_records.sql`
+6. `backend/migration_student_pipeline_live.sql`
 
 Then apply the subject data in this order:
 

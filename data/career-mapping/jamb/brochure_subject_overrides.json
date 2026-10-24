@@ -292,5 +292,16 @@
         "source_label": "WIGWE Robotics (Artificial Intelligence) UTME Entry requirements; accessed 2026-10-02"
       }
     ]
+  },
+  "Sociology": {
+    "olevel_requirement": "Five (5) SSC credit passes in Government or History, English Language and three (3) other subjects. A pass in Mathematics is required.",
+    "utme_subjects": "Three (3) Social Science or Arts subjects.",
+    "exclude_waiver_only_institutions": [
+      "IGBINEDION"
+    ],
+    "source_file": "Social Management Science.pdf",
+    "source_page": "printed pp. 675-678",
+    "source_locator": "The verified exact Sociology row states three Social Science or Arts UTME subjects and the O-level rule: five SSC credits in Government or History, English Language and three other subjects, with a Mathematics pass. The exact awarder column lists 94 institutions and excludes IGBINEDION; its note is only a cross-reference, not an exact Sociology offering.",
+    "source_url": "https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-social-sciences.pdf"
   }
 }

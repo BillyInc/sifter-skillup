@@ -269,11 +269,15 @@ def _option_expected(
     selected_codes: set[str],
     *,
     full: bool = True,
+    typed_rule: dict[str, Any] | None = None,
 ) -> bool:
     """Independent oracle for the executable option/item representation."""
     items = items_by_opt[option["id"]]
     required = {item["code"] for item in items if item["requirement_role"] == "required"}
     if full and not required.issubset(selected_codes):
+        return False
+    pass_required = set((typed_rule or {}).get("rule_json", {}).get("passRequiredCodes") or [])
+    if full and not pass_required.issubset(selected_codes):
         return False
     if option["exam_type"] == "olevel" and full and len(selected_codes) < option["min_required"]:
         return False
@@ -316,6 +320,13 @@ def _option_expected(
         source_scope_text = re.sub(
             r"\banyother(?:arts?|social\s*sciences?)subjects?\b",
             "any other subjects",
+            source_scope_text,
+            flags=re.I,
+        )
+        source_scope_text = re.sub(
+            r"\b(any\s+)?(one|two|three|four|five|six|seven|\d+)\s*"
+            r"(?:\(\s*\d+\s*\))?\s*other\s*subjects\b",
+            lambda match: f"{match.group(1) or ''}{match.group(2)} other subjects",
             source_scope_text,
             flags=re.I,
         )
@@ -483,7 +494,8 @@ def main() -> int:
         # Every emitted option gets one satisfying case.
         for option, rule in active_options:
             selected_codes = _valid_option_codes(option, items_by_opt, catalog)
-            if not _option_expected(option, items_by_opt, selected_codes):
+            selected_codes.update(rule.get("rule_json", {}).get("passRequiredCodes") or [])
+            if not _option_expected(option, items_by_opt, selected_codes, typed_rule=rule):
                 raise AssertionError(f"Generated option cannot satisfy its typed rule: {option['id']}")
             cases[(option["exam_type"], frozenset(selected_codes))] = f"valid:{option['id']}"
 
@@ -518,8 +530,10 @@ def main() -> int:
             actual_ids = {row["jambProgrammeId"] for row in actual}
             expected_ids = {
                 option["jamb_programme_id"]
-                for option, _rule in active_options
-                if option["exam_type"] == exam_type and _option_expected(option, items_by_opt, set(selected_codes))
+                for option, rule in active_options
+                if option["exam_type"] == exam_type and _option_expected(
+                    option, items_by_opt, set(selected_codes), typed_rule=rule
+                )
             }
             if actual_ids != expected_ids:
                 failures.append({"label": label, "exam": exam_type, "actual": sorted(actual_ids), "expected": sorted(expected_ids)})

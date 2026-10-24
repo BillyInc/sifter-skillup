@@ -24,6 +24,7 @@ from _parse_subject_options import (
     UTME_CODES,
     parse_olevel,
     olevel_parts_are_matchable,
+    olevel_pass_conditions,
     parse_utme,
     source_variant_texts,
     uid,
@@ -205,7 +206,14 @@ def source_rule(text, exam_type, parsed_override=None):
             return {
                 "rule_status": "matchable",
                 "rule_kind": "subject_combination",
-                "rule_json": {**parts_json(parts), "examType": exam_type, "creditMinimum": minimum},
+                "rule_json": {
+                    **parts_json(parts),
+                    "examType": exam_type,
+                    "creditMinimum": minimum,
+                    **({"passRequiredCodes": olevel_pass_conditions(text)}
+                       if olevel_pass_conditions(text) else {}),
+                    "hasCondition": bool(olevel_pass_conditions(text)),
+                },
             }
         return {
             "rule_status": "matchable",

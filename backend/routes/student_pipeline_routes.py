@@ -2139,6 +2139,12 @@ def _evaluate_school_subject_option(option: dict, item_rows: list[dict], selecte
             "matchedSubjects": [],
             "missingSubjects": [str(option.get("condition_text"))],
         }
+    pass_codes = {
+        str(code).strip().upper()
+        for code in (option.get("pass_required_codes") or [])
+        if str(code).strip()
+    }
+    pass_required = []
     required = []
     grouped: dict[str, list[dict]] = {}
     group_min: dict[str, int] = {}
@@ -2147,6 +2153,10 @@ def _evaluate_school_subject_option(option: dict, item_rows: list[dict], selecte
         catalog = row.get("subject_catalog") or {}
         name = catalog.get("name") or ""
         norm = _normalise_subject(name)
+        code = str(catalog.get("code") or "").strip().upper()
+        if code in pass_codes:
+            pass_required.append({"name": name, "norm": norm})
+            continue
         if row.get("requirement_role") == "required":
             required.append({"name": name, "norm": norm})
         elif row.get("group_key"):
@@ -2157,6 +2167,7 @@ def _evaluate_school_subject_option(option: dict, item_rows: list[dict], selecte
                 group_distinct[key] = str(row["distinct_group_key"])
 
     missing = [row["name"] for row in required if row["norm"] and row["norm"] not in selected_norm]
+    missing.extend(row["name"] for row in pass_required if row["norm"] and row["norm"] not in selected_norm)
     distinct_scopes: dict[str, list[tuple[str, list[dict]]]] = {}
     for key, names in grouped.items():
         scope = group_distinct.get(key)
@@ -2186,7 +2197,9 @@ def _evaluate_school_subject_option(option: dict, item_rows: list[dict], selecte
 
     minimum_required = int(option.get("min_required") or 0)
     exam_type = str(option.get("exam_type") or "")
-    minimum_gap = max(0, minimum_required - len(selected_norm)) if exam_type == "olevel" else 0
+    pass_norms = {row["norm"] for row in pass_required if row["norm"]}
+    credit_subject_count = len(selected_norm - pass_norms)
+    minimum_gap = max(0, minimum_required - credit_subject_count) if exam_type == "olevel" else 0
     if minimum_gap:
         missing.append(f"{minimum_gap} more O-level subject(s)")
     return {
@@ -2196,6 +2209,12 @@ def _evaluate_school_subject_option(option: dict, item_rows: list[dict], selecte
             + [row["name"] for names in grouped.values() for row in names if row["norm"] in selected_norm]
         )),
         "missingSubjects": list(dict.fromkeys(missing)),
+        "gradeVerificationRequired": bool(pass_required and all(row["norm"] in selected_norm for row in pass_required)),
+        "verificationNotes": (
+            ["The university requires a pass in Mathematics. This matcher checks selected subjects, not grades, so confirm the grade with the university."]
+            if pass_required and all(row["norm"] in selected_norm for row in pass_required)
+            else []
+        ),
     }
 
 
@@ -2219,7 +2238,7 @@ def _match_verified_school_subject_options(
             svc.table("school_programme_subject_options")
             .select(
                 "id, exception_id, school_id, jamb_programme_id, exam_type, rule_scope, "
-                "option_label, min_required, source_text, condition_text"
+                "option_label, min_required, source_text, condition_text, pass_required_codes"
             )
             .eq("exam_type", exam_type)
             .eq("rule_scope", "full")
@@ -2299,6 +2318,8 @@ def _match_verified_school_subject_options(
                 "universityMatchSchoolId": school_key,
                 "universityRequirementScope": option.get("rule_scope"),
                 "universityRequirementOptionId": option.get("id"),
+                "gradeVerificationRequired": result.get("gradeVerificationRequired", False),
+                "verificationNotes": result.get("verificationNotes", []),
             }
             key = (school_key, programme_key)
             existing = best_by_pair.get(key)
@@ -2751,12 +2772,16 @@ async def programmes_by_subjects(
                 olevel = olevel_by_id.get(jid)
                 if olevel:
                     status = "eligible" if not olevel.get("missingSubjects") else "utme_match_olevel_gap"
+                    if status == "eligible" and olevel.get("gradeVerificationRequired"):
+                        status = "olevel_grade_check_required"
                     structured.append({
                         **match,
                         "olevelMatchedSubjectCount": olevel.get("matchedSubjectCount", 0),
                         "olevelMatchedSubjects": olevel.get("matchedSubjects", []),
                         "olevelMissingSubjects": olevel.get("missingSubjects", []),
                         "olevelRequirementText": olevel.get("requirementText"),
+                        "gradeVerificationRequired": olevel.get("gradeVerificationRequired", False),
+                        "verificationNotes": olevel.get("verificationNotes", []),
                         "eligibilityStatus": status,
                         "matchBasis": "combined",
                     })
@@ -2858,7 +2883,14 @@ async def programmes_by_subjects(
                     combined_row["olevelMatchedSubjectCount"] = olevel_source.get("matchedSubjectCount", 0)
                     combined_row["olevelMatchedSubjects"] = olevel_source.get("matchedSubjects", [])
                     combined_row["olevelRequirementText"] = olevel_source.get("requirementText")
-                combined_row["eligibilityStatus"] = "eligible"
+                combined_row["eligibilityStatus"] = (
+                    "olevel_grade_check_required"
+                    if olevel_source and olevel_source.get("gradeVerificationRequired")
+                    else "eligible"
+                )
+                if olevel_source:
+                    combined_row["gradeVerificationRequired"] = olevel_source.get("gradeVerificationRequired", False)
+                    combined_row["verificationNotes"] = olevel_source.get("verificationNotes", [])
                 combined_row["olevelMissingSubjects"] = []
                 combined_by_id[programme_key] = combined_row
             structured = list(combined_by_id.values())[: min(match_limit, 2000)]
@@ -2937,6 +2969,7 @@ def _match_structured_subject_options(
         {
             "id": row.get("id"),
             "name": row.get("name") or "",
+            "code": row.get("code") or "",
             "norm": _normalise_subject(row.get("name") or ""),
         }
         for row in catalog_rows
@@ -2976,7 +3009,7 @@ def _match_structured_subject_options(
     try:
         typed_rule_rows = (
             svc.table("programme_subject_rule_records")
-            .select("jamb_programme_id, requirement_id, exam_type, rule_status, source_text")
+            .select("jamb_programme_id, requirement_id, exam_type, rule_status, rule_json, source_text")
             .in_("jamb_programme_id", list({row.get("jamb_programme_id") for row in option_rows if row.get("jamb_programme_id")}))
             .eq("exam_type", exam_type)
             .limit(MAX_SUBJECT_MATCH_OPTIONS + 1)
@@ -3037,6 +3070,11 @@ def _match_structured_subject_options(
         by_option.setdefault(item["option_id"], []).append(item)
 
     scored: dict[str, dict] = {}
+    catalog_by_code = {
+        str(subject.get("code") or "").upper(): subject
+        for subject in catalog_subjects
+        if subject.get("code")
+    }
     for opt in option_rows:
         items = by_option.get(opt["id"], [])
         if not items:
@@ -3050,6 +3088,13 @@ def _match_structured_subject_options(
             if i.get("requirement_role") == "required"
         ]
         required = [s for s in required if s["norm"]]
+        typed_rule = typed_by_programme.get((str(opt.get("jamb_programme_id")), exam_type)) or {}
+        typed_json = typed_rule.get("rule_json") if isinstance(typed_rule.get("rule_json"), dict) else {}
+        pass_required = [
+            catalog_by_code[code]
+            for code in typed_json.get("passRequiredCodes", [])
+            if code in catalog_by_code
+        ]
         item_subject_norms = {
             _normalise_subject((i.get("subject_catalog") or {}).get("name") or "")
             for i in items
@@ -3098,7 +3143,7 @@ def _match_structured_subject_options(
         ]
         if unrepresented_source_subjects:
             continue
-        missing_required = [s["name"] for s in required if s["norm"] not in selected_norm]
+        missing_required = [s["name"] for s in [*required, *pass_required] if s["norm"] not in selected_norm]
         min_required = int(opt.get("min_required") or 0)
         # UTME options describe the named JAMB combination itself (the UI also
         # gates the student's four-subject selection, including English). O-level
@@ -3144,6 +3189,16 @@ def _match_structured_subject_options(
             maxsplit=1,
             flags=re.I,
         )[0]
+        # Some JAMB PDF/OCR cells join the number marker to ``other subjects``
+        # (for example ``any three (3)othersubjects``). Normalize that spacing
+        # loss without broadening the subject rule or its explicit count.
+        source_scope_text = re.sub(
+            r"\b(any\s+)?(one|two|three|four|five|six|seven|\d+)\s*"
+            r"(?:\(\s*\d+\s*\))?\s*other\s*subjects\b",
+            lambda match: f"{match.group(1) or ''}{match.group(2)} other subjects",
+            source_scope_text,
+            flags=re.I,
+        )
         # A broad group may be a real explicit "any other subject" rule, but
         # it may also be a parser-expanded catalogue standing in for an
         # unresolved phrase such as "relevant subjects". Only the explicit
@@ -3245,6 +3300,12 @@ def _match_structured_subject_options(
             )
         if not require_full and matched_count == 0:
             continue
+        grade_verification_required = bool(pass_required)
+        verification_notes = (
+            ["The official rule requires a pass in Mathematics. This matcher records subject names, not grades, so confirm the Mathematics grade with JAMB and the institution."]
+            if grade_verification_required and all(s["norm"] in selected_norm for s in pass_required)
+            else []
+        )
         entry = scored.get(opt["jamb_programme_id"])
         if not entry or matched_count > entry["matchedSubjectCount"]:
             scored[opt["jamb_programme_id"]] = {
@@ -3256,6 +3317,10 @@ def _match_structured_subject_options(
                 "minimumGap": minimum_gap,
                 "requirementText": opt.get("source_text"),
                 "matchBasis": exam_type,
+                "gradeVerificationRequired": grade_verification_required,
+                "verificationNotes": verification_notes,
+                **({"eligibilityStatus": "olevel_grade_check_required"}
+                   if exam_type == "olevel" and verification_notes else {}),
             }
 
     if not scored:

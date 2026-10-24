@@ -13,6 +13,8 @@ from _parse_subject_options import (
     NUM_WORDS,
     OLEVEL_COUNT_RE,
     OLEVEL_CODES,
+    ARTS,
+    SOCIAL,
     UTME_CODES,
     parse_olevel,
     parse_head,
@@ -370,6 +372,30 @@ def parse_local_exception(note: str) -> dict:
         has_direct = False
     if _CROSS_REFERENCE.search(text):
         return {"status": "needs_review", "reason": "cross_reference"}
+    # PLASU's Sociology exception is an exact, source-backed combination:
+    # English plus three Arts/Social Science credits, with a separate
+    # O-level pass in Mathematics. Handle it before the generic condition-only
+    # classifier so the subject combination remains executable.
+    if (
+        has_olevel
+        and re.search(r"\bthree\s*(?:\(\s*3\s*\))?\s+social\s+sciences?\s+or\s+arts?\s+subjects?\b", text, re.I)
+        and re.search(r"\bpass\s+in\s+mathematics\b", text, re.I)
+        and re.search(r"\bcredit\s+passes?\s+in\s+english\b", text, re.I)
+    ):
+        return {
+            "status": "parsed",
+            "exam_type": "olevel",
+            "rule_scope": "full",
+            "min_required": 4,
+            "rule_text": re.sub(r"\s+", " ", text).strip(" .;:"),
+            "parts": [
+                ("required", "ENG"),
+                ("one_of", 3, sorted((set(ARTS) | set(SOCIAL)) & set(OLEVEL_CODES)), "olevel_distinct_credit_subjects"),
+                ("required", "MATH"),
+            ],
+            "pass_required_codes": ["MATH"],
+            "condition_text": "A pass in Mathematics is required; this matcher cannot verify grades.",
+        }
     condition_only = _parse_condition_only(text, "olevel" if has_olevel else ("utme" if marker else None))
     if condition_only:
         without_condition = re.sub(

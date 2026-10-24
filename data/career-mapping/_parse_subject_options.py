@@ -970,6 +970,24 @@ def parse_utme(text, allowed_codes=None, context_codes=None):
         return ("ref", ref.group(1).strip())
     if REJECT_MARKERS.search(clean_text) or len(clean_text) > 300:
         return None
+    sociology_offering_variant = re.fullmatch(
+        r"\s*government\s*(?:/\s*|\bor\b\s*)history\s+plus\s+"
+        r"two\s*(?:\(\s*2\s*\)\s*)?other\s+"
+        r"(?:social\s+sciences?\s*/\s*arts?|arts?\s+or\s+social\s+sciences?)"
+        r"(?:\s+subjects?)?\.?\s*",
+        clean_text,
+        re.I,
+    )
+    if sociology_offering_variant:
+        allowed = set(allowed_codes or UTME_CODES)
+        pool = sorted(set(ARTS + SOCIAL) & allowed)
+        distinct = "utme_distinct_subjects"
+        if {"GOV", "HIS"} <= allowed and len(pool) >= 2:
+            return [
+                ("one_of", 1, ["GOV", "HIS"], distinct),
+                ("one_of", 2, pool, distinct),
+            ]
+        return None
     parts = []
     for seg in re.split(r";", clean_text):
         r = parse_segment(seg, allowed_codes or UTME_CODES)
@@ -1009,6 +1027,32 @@ OLEVEL_COUNT_RE = re.compile(
     re.I,
 )
 
+OLEVEL_PASS_CONDITION_RE = re.compile(
+    r"\b(?:a|at\s+least\s+one)\s+(?:o['â€™]?\s*level\s+)?pass\s+in\s+"
+    r"(?P<subject>[A-Za-z][A-Za-z .&/-]*?)\s+"
+    r"(?:is\s+required|required|must\s+be\s+obtained)\b",
+    re.I,
+)
+
+
+def olevel_pass_conditions(text):
+    """Extract explicit pass-only subjects without upgrading them to credits."""
+    conditions = []
+    for match in OLEVEL_PASS_CONDITION_RE.finditer(str(text or "")):
+        subject = re.sub(r"\s+", " ", match.group("subject")).strip(" .,:;-")
+        code = subj_code(subject, OLEVEL_CODES)
+        if code and code not in conditions:
+            conditions.append(code)
+    return conditions
+
+
+def olevel_credit_text(text):
+    """Remove only explicitly separate pass-only clauses from credit prose."""
+    value = str(text or "")
+    for match in list(OLEVEL_PASS_CONDITION_RE.finditer(value))[::-1]:
+        value = value[:match.start()] + value[match.end():]
+    return re.sub(r"\s+", " ", value).strip(" .;,:-")
+
 
 def parse_olevel(text, context_codes=None):
     """Parse O'Level wording; legacy ``context_codes`` is intentionally ignored."""
@@ -1019,7 +1063,10 @@ def parse_olevel(text, context_codes=None):
     e.g. English + Mathematics + Economics + any two alternatives. Prose with
     institution-level exceptions stays on the text/manual-review path.
     """
-    if not text or len(text) > 500 or REJECT_MARKERS.search(text):
+    if not text:
+        return None
+    text = olevel_credit_text(text)
+    if len(text) > 500 or REJECT_MARKERS.search(text):
         inline_same_as = re.match(
             r"^\s*same\s+as\s+in\s+[^()]+\((?P<body>.+)\)\s*[.]?\s*$",
             text or "",
@@ -1050,6 +1097,14 @@ def parse_olevel(text, context_codes=None):
     if not n_min:
         return None
     tail = text[count.end():].strip(" .;,:-")
+    tail = re.sub(
+        r"^(?:credit\s+)?passes?\s+at\s+SSCE"
+        r"(?:\s*\(or\s+its\s+equivalent\))?\s+in\s+|"
+        r"^at\s+SSCE(?:\s*\(or\s+its\s+equivalent\))?\s+in\s+",
+        "",
+        tail,
+        flags=re.I,
+    )
     # Repair the specific joined phrase found in a source cell without
     # applying UTME segment cleanup to the full O'Level requirement tail.
     # Some IBASS table extractions concatenate the conjunction and quantifier,
@@ -1101,6 +1156,64 @@ def parse_olevel(text, context_codes=None):
     # option; retain its official text for display instead.
     if not tail:
         return None
+
+    sociology_fixed_pattern = re.fullmatch(
+        r"government\s+or\s+history\s*,\s*english\s+language\s+and\s+"
+        r"three\s*(?:\(\s*3\s*\))?\s+other\s+subjects?\.?",
+        tail,
+        re.I,
+    )
+    if sociology_fixed_pattern and n_min == 5:
+        used = {"ENG", "GOV", "HIS"}
+        distinct = "olevel_distinct_credit_subjects"
+        remaining = sorted(set(OLEVEL_CODES) - used)
+        return n_min, [
+            ("required", "ENG"),
+            ("one_of", 1, ["GOV", "HIS"], distinct),
+            ("one_of", 3, remaining, distinct),
+        ]
+
+    # Exact IBASS Sociology offering variant (Arts brochure, p.125):
+    # English + Mathematics + one of History/Government/Economics + one
+    # Science subject + one Arts or Social Science subject. The source text
+    # is compactly extracted without punctuation between several clauses, so
+    # parse only this complete, source-specific shape rather than guessing
+    # from a loose category phrase.
+    sociology_arts_variant = re.fullmatch(
+        r"(?:to\s+include\s+)?english\s+language\s*,?\s*"
+        r"mathematics\s*,?\s*"
+        r"history\s*/\s*government\s*/\s*ec\s*onomics\s+"
+        r"one\s*(?:\(\s*1\s*\)\s*)?science\s+subject\s+"
+        r"and\s+any\s+arts?\s+or\s+social\s*science\s*subject\.?",
+        tail,
+        re.I,
+    )
+    if sociology_arts_variant and n_min == 5:
+        distinct = "olevel_distinct_credit_subjects"
+        return n_min, [
+            ("required", "ENG"),
+            ("required", "MATH"),
+            ("one_of", 1, ["ECON", "GOV", "HIS"], distinct),
+            ("one_of", 1, sorted(set(SCIENCE) & set(OLEVEL_CODES)), distinct),
+            ("one_of", 1, sorted(set(ARTS + SOCIAL) & set(OLEVEL_CODES)), distinct),
+        ]
+
+    federal_kashere_sociology_variant = re.fullmatch(
+        r"(?:in\s+)?english\s*,?\s*mathematics\s*,?\s*"
+        r"government\s*/\s*history\s+and\s+"
+        r"two\s*(?:\(\s*2\s*\)\s*)?other\s+"
+        r"arts?\s+or\s+social\s+sciences?\s+subjects?\.?",
+        tail,
+        re.I,
+    )
+    if federal_kashere_sociology_variant and n_min == 5:
+        distinct = "olevel_distinct_credit_subjects"
+        return n_min, [
+            ("required", "ENG"),
+            ("required", "MATH"),
+            ("one_of", 1, ["GOV", "HIS"], distinct),
+            ("one_of", 2, sorted(set(ARTS + SOCIAL) & set(OLEVEL_CODES)), distinct),
+        ]
 
     # A fixed total and named head can safely be combined with an explicit
     # minimum number selected from a named source list.
@@ -1462,7 +1575,7 @@ def olevel_parts_are_matchable(text, parsed):
     return bool(re.search(
         r"\bany\s+(?:(?:other|remaining|additional)\s+)?"
         r"(?:(?:one|two|three|four|five|six|several)\s+(?:\(\d+\)\s*)?)?subjects?\b|"
-        r"\b(?:one|two|three|four|five|six|several)\s+"
+        r"\b(?:one|two|three|four|five|six|several)\s*(?:\(\d+\)\s*)?\s+"
         r"(?:other|remaining|additional)\s+(?:\(\d+\)\s*)?subjects?\b|"
         r"\bany\s+subject\b",
         source_scope_text,
@@ -1512,6 +1625,21 @@ def main():
     stats = Counter()
     parsed_names, review_names = [], []
 
+    # The picker seed must obey the exact same typed-rule status contract as
+    # seed_subject_rule_records.sql. A parseable phrase alone is insufficient:
+    # inherited/ambiguous source text can look like a valid combination while
+    # its typed record correctly remains review-only.
+    from _gen_subject_rule_records import resolve_contextual_rules, source_rule_with_variants
+    contextual_rules = resolve_contextual_rules(progs)
+
+    def typed_status(jname, exam_type, text):
+        return source_rule_with_variants(
+            text,
+            exam_type,
+            contextual_rules.get(jname, {}).get(exam_type),
+            source_variant_texts(source_report, jname, exam_type),
+        )["rule_status"]
+
     # ── pass 1: parse every programme's UTME text ────────────────
     utme_text, olevel_text, parsed, refs, olevel_refs = {}, {}, {}, {}, {}
     olevel_rules = {}
@@ -1521,13 +1649,13 @@ def main():
             utme = "; ".join(str(x) for x in utme)
         utme_text[jname] = (utme or "").strip()
         olevel_text[jname] = (p.get("olevel_requirement") or "").strip()
-        if utme_text[jname]:
+        if utme_text[jname] and typed_status(jname, "utme", utme_text[jname]) in {"matchable", "cross_reference"}:
             r = parse_utme(utme_text[jname])
             if isinstance(r, tuple) and r[0] == "ref":
                 refs[jname] = r[1]
             elif r:
                 parsed[jname] = r
-        if olevel_text[jname]:
+        if olevel_text[jname] and typed_status(jname, "olevel", olevel_text[jname]) in {"matchable", "cross_reference"}:
             candidate = parse_olevel(olevel_text[jname])
             if candidate and olevel_parts_are_matchable(olevel_text[jname], candidate):
                 olevel_rules[jname] = candidate
