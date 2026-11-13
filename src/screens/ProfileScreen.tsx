@@ -133,7 +133,7 @@ export default function ProfileScreen() {
       {isWide ? (
         <WebShell>
           <WebPageHeader title="Profile" subtitle={isGuest ? "Your guest account" : "Your account and guidance context"} accentColor={colors.accentRole.action} />
-          <WebRow><WebCol weight={1}>{content}</WebCol>{!isGuest ? <WebCol weight={1}><WebCard title="Career guidance" accentBar accentColor={colors.accentRole.action}><Text style={[styles.body, { color: colors.textRole.secondary }]}>Your guidance is kept here as a connected path: subjects, programmes, universities, domains, subgroups and roles.</Text><TouchableOpacity onPress={() => go("/(tabs)/explore")} style={styles.primaryAction}><Text style={styles.primaryActionText}>Open Explore</Text></TouchableOpacity></WebCard></WebCol> : null}</WebRow>
+          <WebRow><WebCol weight={1} style={{ gap: Spacing.md }}>{content}</WebCol>{!isGuest ? <WebCol weight={1}><WebCard title="Career guidance" accentBar accentColor={colors.accentRole.action}><Text style={[styles.body, { color: colors.textRole.secondary }]}>Your guidance is kept here as a connected path: subjects, programmes, universities, domains, subgroups and roles.</Text><TouchableOpacity onPress={() => go("/(tabs)/explore")} style={styles.primaryAction}><Text style={styles.primaryActionText}>Open Explore</Text></TouchableOpacity></WebCard></WebCol> : null}</WebRow>
         </WebShell>
       ) : (
         <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}><Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Profile</Text>{content}</ScrollView>
