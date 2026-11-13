@@ -87,6 +87,8 @@ function FieldCard({ field, onPress }: { field: Field; onPress: () => void }) {
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={0.88}
+      accessibilityRole="button"
+      accessibilityLabel={`${field.name}, ${isLive ? 'Live' : 'Locked'}`}
       style={[
         styles.fieldCard,
         {
@@ -130,6 +132,8 @@ function InlineTrackCard({
   return (
     <TouchableOpacity
       activeOpacity={isActionable ? 0.88 : 1}
+      accessibilityRole="button"
+      accessibilityState={{ disabled: !isActionable }}
       onPress={() => {
         if (href) router.push(href as any);
       }}
@@ -276,6 +280,8 @@ function FieldDetailModal({ field, onClose }: { field: Field; onClose: () => voi
             <TouchableOpacity
               key={item}
               onPress={() => setTab(item)}
+              accessibilityRole="tab"
+              accessibilityState={{ selected: tab === item }}
               style={[styles.tab, tab === item && { borderBottomColor: field.color, borderBottomWidth: 2 }]}
             >
               <Text style={[styles.tabText, { color: tab === item ? field.color : colors.textSoft }]}>
@@ -532,6 +538,7 @@ export default function SkillsScreen() {
             subtitle="Compact laptop workspace for fields, sub-tracks, and direct entry points."
             right={(
               <TouchableOpacity
+                accessibilityRole="button"
                 style={[styles.findPathButton, { backgroundColor: colors.card, borderColor: colors.border }]}
                 onPress={() => setShowQuiz(true)}
               >
@@ -551,7 +558,7 @@ export default function SkillsScreen() {
               onChangeText={setSearch}
             />
             {search.length ? (
-              <TouchableOpacity onPress={() => setSearch('')}>
+              <TouchableOpacity onPress={() => setSearch('')} accessibilityRole="button" accessibilityLabel="Clear search">
                 <Text style={[styles.searchClear, { color: colors.textMuted }]}>×</Text>
               </TouchableOpacity>
             ) : null}
@@ -639,7 +646,7 @@ export default function SkillsScreen() {
           <Text style={[styles.topBarTitle, { color: colors.text }]}>Skill Explorer</Text>
           <Text style={[styles.topBarSub, { color: colors.textSoft }]}>{ALL_FIELDS.length} fields • {SKILL_TRACKS.length} tracks</Text>
         </View>
-        <TouchableOpacity style={[styles.findPathButton, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]} onPress={() => setShowQuiz(true)}>
+        <TouchableOpacity accessibilityRole="button" style={[styles.findPathButton, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]} onPress={() => setShowQuiz(true)}>
           <Text style={[styles.findPathButtonText, { color: colors.text }]}>Find my path</Text>
         </TouchableOpacity>
       </View>
@@ -649,6 +656,8 @@ export default function SkillsScreen() {
           <TouchableOpacity
             key={item}
             onPress={() => setTab(item)}
+            accessibilityRole="tab"
+            accessibilityState={{ selected: tab === item }}
             style={[styles.tab, tab === item && { borderBottomColor: colors.accent, borderBottomWidth: 2 }]}
           >
             <Text style={[styles.tabText, { color: tab === item ? colors.accent : colors.textSoft }]}>
@@ -696,7 +705,7 @@ export default function SkillsScreen() {
                 autoFocus
               />
               {search.length ? (
-                <TouchableOpacity onPress={() => setSearch('')}>
+                <TouchableOpacity onPress={() => setSearch('')} accessibilityRole="button" accessibilityLabel="Clear search">
                   <Text style={[styles.searchClear, { color: colors.textMuted }]}>×</Text>
                 </TouchableOpacity>
               ) : null}
@@ -713,6 +722,7 @@ export default function SkillsScreen() {
                       key={field.id}
                       onPress={() => setSelected(field)}
                       activeOpacity={0.88}
+                      accessibilityRole="button"
                       style={[styles.searchRow, { backgroundColor: colors.card, borderColor: colors.border }]}
                     >
                       <Text style={styles.searchRowEmoji}>{field.emoji}</Text>
