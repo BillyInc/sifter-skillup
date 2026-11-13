@@ -313,7 +313,7 @@ const styles = StyleSheet.create({
   routeNote: { gap: Spacing.xs, borderLeftWidth: 2, borderLeftColor: "#64748B", paddingLeft: Spacing.sm },
   badgeRow: { flexDirection: "row", alignItems: "center", gap: Spacing.xs, flexWrap: "wrap" },
   roleGrid: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
-  role: { flexDirection: "row", alignItems: "center", gap: Spacing.sm, borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, flex: 1, minWidth: 260 },
+  role: { flexDirection: "row", alignItems: "flex-start", gap: Spacing.sm, borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, flex: 1, minWidth: 260 },
   roleTitle: { fontSize: 18, lineHeight: 25 },
   buildButton: { alignSelf: "flex-start", borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
 });
