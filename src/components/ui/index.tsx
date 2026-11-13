@@ -244,7 +244,7 @@ export function SifterButton({
           ...(variant === 'ghost' || variant === 'secondary' ? {} : Shadow.sm),
         }}
       >
-        {icon && (icon in Feather.glyphMap
+        {icon && (icon in (Feather.glyphMap ?? {})
           ? <Feather name={icon as keyof typeof Feather.glyphMap} size={fontSize + 2} color={txtColor} />
           : <Text style={{ fontSize: fontSize + 2 }}>{icon}</Text>)}
         <Text style={{
