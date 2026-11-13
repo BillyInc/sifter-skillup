@@ -838,7 +838,7 @@ const styles = StyleSheet.create({
   inlineInfoTitle: { fontSize: FontSize.xs, fontWeight: '900', marginBottom: 4 },
   inlineInfoText: { fontSize: FontSize.xs, lineHeight: 18 },
   inlineTrackGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
-  inlineTrackCard: { width: '48%', minWidth: 240, borderRadius: Radius.lg, borderWidth: 1, padding: 12, gap: 8 },
+  inlineTrackCard: { flexBasis: '48%', flexGrow: 1, minWidth: 240, borderRadius: Radius.lg, borderWidth: 1, padding: 12, gap: 8 },
   inlineTrackTop: { flexDirection: 'row', alignItems: 'flex-start', gap: 10 },
   inlineTrackIconWrap: { width: 34, height: 34, borderRadius: 10, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   inlineTrackIcon: { fontSize: 16 },
