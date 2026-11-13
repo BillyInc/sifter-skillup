@@ -63,9 +63,9 @@ export function RoleWorkEvidenceBlock({ profile }: Props) {
 }
 
 const styles = {
-  copy: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },
-  item: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },
-  label: { fontSize: FontSize.xs, letterSpacing: 0.6, textTransform: "uppercase" as const },
+  copy: { fontSize: FontSize.md, lineHeight: FontSize.md * 1.45, ...CompassFonts.body },
+  item: { fontSize: FontSize.md, lineHeight: FontSize.md * 1.45, ...CompassFonts.body },
+  label: { fontSize: FontSize.sm, letterSpacing: 0.6, textTransform: "uppercase" as const },
   moreButton: { alignSelf: "flex-start" as const, borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
   moreText: { fontSize: FontSize.sm, ...CompassFonts.bodySemibold },
 };
