@@ -231,7 +231,7 @@ export function WebCard({
 
   if (onPress) {
     return (
-      <TouchableOpacity onPress={onPress} activeOpacity={0.85} accessibilityRole="button">
+      <TouchableOpacity onPress={onPress} activeOpacity={0.85}>
         {inner}
       </TouchableOpacity>
     );
