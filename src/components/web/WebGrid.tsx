@@ -383,7 +383,7 @@ const styles = StyleSheet.create({
     marginBottom: GRID_GAP_SM,
   },
   sectionLabel: {
-    fontSize: 10,
+    fontSize: FontSize.sm,
     fontWeight: FontWeight.black,
     letterSpacing: 1,
   },
@@ -418,7 +418,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   cardTitle: {
-    fontSize: FontSize.xs,
+    fontSize: FontSize.md,
     fontWeight: FontWeight.bold,
   },
 
@@ -433,8 +433,8 @@ const styles = StyleSheet.create({
   },
   statTileEmoji:  { fontSize: 18 },
   statTileValue:  { fontSize: FontSize.lg, fontWeight: FontWeight.black, lineHeight: 20 },
-  statTileLabel:  { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
-  statTileSub:    { fontSize: 10, marginTop: 1 },
+  statTileLabel:  { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
+  statTileSub:    { fontSize: FontSize.sm, marginTop: 1 },
 
   divider: {
     height: 1,
@@ -447,7 +447,7 @@ const styles = StyleSheet.create({
     marginVertical: GRID_GAP_SM,
   },
   dividerLine: { flex: 1, height: 1 },
-  dividerLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, letterSpacing: 0.5 },
+  dividerLabel: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, letterSpacing: 0.5 },
 
   listRow: {
     flexDirection: 'row',
@@ -458,9 +458,9 @@ const styles = StyleSheet.create({
   },
   listRowIcon:      { fontSize: 16 },
   listRowTitle:     { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
-  listRowSub:       { fontSize: FontSize.xs, marginTop: 2 },
+  listRowSub:       { fontSize: FontSize.sm, marginTop: 2 },
   listRowBadge:     { minWidth: 18, height: 18, borderRadius: 9, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 5 },
-  listRowBadgeText: { fontSize: 10, fontWeight: FontWeight.black, color: '#fff' },
+  listRowBadgeText: { fontSize: FontSize.sm, fontWeight: FontWeight.black, color: '#fff' },
   listRowRight:     { marginLeft: Spacing.sm, alignItems: 'center', justifyContent: 'center' },
   listRowRightText: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
 
