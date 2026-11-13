@@ -1,8 +1,10 @@
-import type { ReactNode } from "react";
+import { createElement, type ReactNode } from "react";
 
 function element(tag: string) {
   return function SvgElement({ children, ...props }: { children?: ReactNode; [key: string]: unknown }) {
-    return <svg data-rn-svg-element={tag} {...props}>{children}</svg>;
+    // Render the real SVG child element (rect, polygon, ...). Wrapping each one in a
+    // nested <svg> gives it a 0x0 viewport, so every shape rendered invisibly.
+    return createElement(tag, props, children);
   };
 }
 export default function Svg({ children, width, height, ...props }: { children?: ReactNode; width?: number | string; height?: number | string; [key: string]: unknown }) {
