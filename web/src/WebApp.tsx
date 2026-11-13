@@ -12,6 +12,7 @@ import { adminAudienceForProfile } from "../../src/lib/adminAudience";
 import type { EducatorProfile } from "../../src/types/institution";
 import { AdminShell } from "../../src/screens/admin/AdminShell";
 import { LevelUpWebWordmark } from "../../src/components/brand/LevelUpWebWordmark";
+import { Search } from "lucide-react";
 import "./styles.css";
 
 const TOKEN_KEY = "sifter_auth_token_v2";
@@ -700,7 +701,7 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
         }} aria-label="Go back">← {focusedGuidance ? "Exit guidance" : "Back"}</button> : null}
         {focusedGuidance ? <div className="platform-guidance-title"><span className="platform-guidance-brand platform-guidance-brand-full"><LevelUpWebWordmark variant="light" width={126} height={34} /></span><span className="platform-guidance-brand platform-guidance-brand-compact"><LevelUpWebWordmark variant="light" width={34} height={34} compact /></span><span>Focused guidance workspace</span><strong>Follow your selected path</strong></div> : <div className="global-search-shell" ref={searchShellRef}>
         <form className="global-search" onSubmit={submitGlobalSearch} role="search">
-          <span aria-hidden="true">⌕</span>
+          <span aria-hidden="true" style={{ display: "inline-flex" }}><Search size={16} strokeWidth={2} /></span>
           <input value={globalQuery} onFocus={() => setSearchOpen(true)} onChange={(event) => { setGlobalQuery(event.target.value); setSearchOpen(true); }} placeholder="Search programmes, universities, domains, roles or skills" aria-label="Search Sifter" />
           <button type="submit">Search</button>
         </form>
