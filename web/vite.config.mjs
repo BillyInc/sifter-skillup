@@ -42,6 +42,10 @@ export default defineConfig(({ mode }) => ({
   },
   envPrefix: ["VITE_", "EXPO_PUBLIC_"],
   resolve: {
+    // Prefer *.web.* files, as Metro does for the web platform. Without this the
+    // shared privy.tsx (which calls require(), undefined in browser ES modules)
+    // was picked over privy.web.tsx and crashed /starknet-track.
+    extensions: [".web.tsx", ".web.ts", ".web.jsx", ".web.js", ".mjs", ".js", ".mts", ".ts", ".jsx", ".tsx", ".json"],
     // The web shell imports React through both the Vite entry and the
     // Expo-compatible screen graph. Keep those graphs on the exact same
     // React instances; otherwise a lazily loaded screen can see a different
