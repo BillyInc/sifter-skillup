@@ -175,7 +175,7 @@ export function DetailScaffold<T>({
             style={[styles.back, wideContent ? styles.d078Back : null]}
           >
             <Feather name="arrow-left" size={15} color={colors.textRole.secondary} />
-            <Text style={[styles.backText, wideContent ? styles.d078BackText : null, { color: colors.textRole.secondary }]}>
+            <Text style={[styles.backText, styles.backLabel, wideContent ? styles.d078BackText : null, { color: colors.textRole.secondary }]}>
               {backLabel}
             </Text>
           </TouchableOpacity>
@@ -294,9 +294,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: Spacing.xs,
   },
-  back: { minHeight: 28, justifyContent: "center" },
+  back: { minHeight: 28, flexDirection: "row", alignItems: "center", gap: Spacing.xs },
   d078Back: { minHeight: 44 },
   backText: { fontSize: FontSize.xs, fontWeight: "600" },
+  backLabel: { fontSize: FontSize.md },
   d078BackText: { fontSize: 16, lineHeight: 20 },
   crumbSep: { fontSize: FontSize.xs },
   titleRow: {
