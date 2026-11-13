@@ -344,13 +344,13 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   pageTitle: {
-    fontSize: 17,
+    fontSize: FontSize.xxxl,
     fontWeight: '800',
     letterSpacing: -0.4,
     marginBottom: 2,
   },
   pageSubtitle: {
-    fontSize: FontSize.xs,
+    fontSize: FontSize.md,
     fontWeight: FontWeight.medium,
   },
   pageHeaderRight: {
