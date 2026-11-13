@@ -300,7 +300,7 @@ function SubgroupBody({ subgroup, domain, roles, programmeConnection, guidanceCo
 const styles = StyleSheet.create({
   body: { gap: Spacing.md, paddingBottom: Spacing.xxl },
   pathPill: { paddingVertical: Spacing.xs },
-  pathText: { fontSize: FontSize.xs, letterSpacing: 0.35 },
+  pathText: { fontSize: FontSize.sm, letterSpacing: 0.35 },
   section: { gap: Spacing.md },
   heading: { fontSize: 22, lineHeight: 29, ...CompassFonts.displayBold },
   copy: { fontSize: 16, lineHeight: 24 },
@@ -309,7 +309,7 @@ const styles = StyleSheet.create({
   detail: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm },
   skillList: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.xs },
   skill: { borderWidth: 1, borderRadius: Radius.full, paddingHorizontal: Spacing.sm, paddingVertical: Spacing.xs, fontSize: FontSize.xs },
-  tierLabel: { fontSize: FontSize.xs, letterSpacing: 0.4, textTransform: "uppercase" },
+  tierLabel: { fontSize: FontSize.sm, letterSpacing: 0.4, textTransform: "uppercase" },
   routeNote: { gap: Spacing.xs, borderLeftWidth: 2, borderLeftColor: "#64748B", paddingLeft: Spacing.sm },
   badgeRow: { flexDirection: "row", alignItems: "center", gap: Spacing.xs, flexWrap: "wrap" },
   roleGrid: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
