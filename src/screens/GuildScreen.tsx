@@ -244,7 +244,7 @@ export default function GuildScreen() {
                         },
                       ]}
                     >
-                      <Text style={{ color: active ? colors.surface.inverse : colors.textRole.secondary, fontSize: 12, fontWeight: '700' }}>
+                      <Text style={{ color: active ? colors.textRole.inverse : colors.textRole.secondary, fontSize: 12, fontWeight: '700' }}>
                         {t.label}
                       </Text>
                     </TouchableOpacity>
