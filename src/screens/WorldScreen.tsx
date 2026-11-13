@@ -438,7 +438,7 @@ export default function WorldScreen() {
 }
 
 const styles = StyleSheet.create({
-  screen: { flex: 1 },
+  screen: { flex: 1, overflow: 'hidden' },
   safe: { flex: 1 },
   orbContainer: { position: 'absolute', left: -80, top: -60 },
   scrollContent: { ...webContainer, paddingBottom: Spacing.xxxl, gap: Spacing.md },
