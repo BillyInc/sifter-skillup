@@ -111,7 +111,7 @@ export function WebSectionLabel({ label, action, onAction }: {
     <View style={styles.sectionLabelRow}>
       <Text style={[styles.sectionLabel, { color: colors.textMuted }]}>{label.toUpperCase()}</Text>
       {action && (
-        <TouchableOpacity onPress={onAction} activeOpacity={0.7}>
+        <TouchableOpacity onPress={onAction} activeOpacity={0.7} accessibilityRole="button">
           <Text style={[styles.sectionAction, { color: colors.accent }]}>{action}</Text>
         </TouchableOpacity>
       )}
@@ -297,6 +297,7 @@ export function WebListRow({
       style={[styles.listRow, { borderBottomColor: colors.border }]}
       onPress={onPress}
       activeOpacity={0.75}
+      accessibilityRole={onPress ? 'button' : undefined}
     >
       <Text style={styles.listRowIcon}>{icon}</Text>
       <View style={{ flex: 1 }}>
