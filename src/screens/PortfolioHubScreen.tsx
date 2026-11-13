@@ -652,7 +652,7 @@ function ProgressionTab({
                 </Text>
               </View>
               <View style={[styles.remStatus, { backgroundColor: rs.cleared ? '#d1fae5' : '#fee2e2' }]}>
-                <Text style={{ fontSize: 10, fontWeight: '700', color: rs.cleared ? '#065f46' : '#7f1d1d' }}>
+                <Text style={{ fontSize: 11, fontWeight: '700', color: rs.cleared ? '#065f46' : '#7f1d1d' }}>
                   {rs.cleared ? 'CLEARED' : 'PENDING'}
                 </Text>
               </View>
@@ -905,7 +905,7 @@ export default function PortfolioHubScreen() {
                         paddingHorizontal: 8, paddingVertical: 3, borderRadius: 12,
                         backgroundColor: p.connected ? colors.xpGreen + '20' : colors.surface.subtle,
                       }}>
-                        <Text style={{ fontSize: 10, fontWeight: '700', color: p.connected ? colors.xpGreen : colors.textRole.muted }}>
+                        <Text style={{ fontSize: 11, fontWeight: '700', color: p.connected ? colors.xpGreen : colors.textRole.muted }}>
                           {p.connected ? 'Live' : 'Off'}
                         </Text>
                       </View>
@@ -1068,7 +1068,7 @@ const makeStyles = (colors: ColorPalette) => StyleSheet.create({
     color: colors.textRole.inverse,
   },
   xpStatLabel: {
-    fontSize: 10,
+    fontSize: 11,
     fontWeight: '600',
     color: 'rgba(255,255,255,0.8)',
     marginTop: 2,
@@ -1086,7 +1086,7 @@ const makeStyles = (colors: ColorPalette) => StyleSheet.create({
     borderBottomColor: colors.borderRole.subtle,
   },
   headerTitle: { fontSize: FontSize.lg, fontWeight: '800' },
-  headerSub: { fontSize: FontSize.xs, marginTop: 2, fontWeight: '700' },
+  headerSub: { fontSize: FontSize.sm, marginTop: 2, fontWeight: '700' },
 
   tabBar: {
     flexDirection: 'row',
@@ -1104,7 +1104,7 @@ const makeStyles = (colors: ColorPalette) => StyleSheet.create({
     alignItems: 'center',
   },
   tabActive: {},
-  tabText: { fontSize: 10, fontWeight: '700', textAlign: 'center' },
+  tabText: { fontSize: 11, fontWeight: '700', textAlign: 'center' },
   tabTextActive: { fontWeight: '800' },
 
   card: {
@@ -1114,19 +1114,19 @@ const makeStyles = (colors: ColorPalette) => StyleSheet.create({
     borderWidth: 1,
   },
   sectionLabel: {
-    fontSize: 10,
+    fontSize: 11,
     fontWeight: '800',
     color: colors.textRole.secondary,
     letterSpacing: 1,
     marginBottom: Spacing.sm,
   },
   body: { fontSize: FontSize.sm, color: colors.textRole.primary, lineHeight: 20, marginBottom: Spacing.sm },
-  subLabel: { fontSize: 10, fontWeight: '700', color: colors.textRole.secondary, letterSpacing: 0.5, marginBottom: 4 },
+  subLabel: { fontSize: 11, fontWeight: '700', color: colors.textRole.secondary, letterSpacing: 0.5, marginBottom: 4 },
 
   statsRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: Spacing.sm },
   statBox: { flex: 1, alignItems: 'center' },
   statValue: { fontSize: 18, fontWeight: '800' },
-  statLabel: { fontSize: 10, color: colors.textRole.secondary, marginTop: 2 },
+  statLabel: { fontSize: 11, color: colors.textRole.secondary, marginTop: 2 },
 
   alertBox: {
     backgroundColor: colors.accentRole.action + '22',
@@ -1166,7 +1166,7 @@ const makeStyles = (colors: ColorPalette) => StyleSheet.create({
     paddingHorizontal: 6,
     paddingVertical: 2,
   },
-  tagText: { fontSize: 9, fontWeight: '800', letterSpacing: 0.3 },
+  tagText: { fontSize: 11, fontWeight: '800', letterSpacing: 0.3 },
 
   credCard: { backgroundColor: '#0D0D0D' },
   credTitle: { fontSize: 11, fontWeight: '800', color: colors.accentRole.action, letterSpacing: 1, marginBottom: Spacing.sm },
@@ -1207,7 +1207,7 @@ const makeStyles = (colors: ColorPalette) => StyleSheet.create({
     borderTopColor: colors.borderRole.subtle,
   },
   pushPlatformName: { fontSize: FontSize.sm, fontWeight: '600', color: colors.textRole.primary },
-  pushCondition: { fontSize: 10, color: colors.textRole.secondary },
+  pushCondition: { fontSize: 11, color: colors.textRole.secondary },
   pushedLabel: { fontSize: 11, color: '#10b981', fontWeight: '700' },
 
   emptyTitle: { fontSize: FontSize.md, fontWeight: '700', color: colors.textRole.primary, marginBottom: Spacing.sm },
