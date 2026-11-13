@@ -496,7 +496,16 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
   const isAdminExplore = path.startsWith("/admin/explore") || path.startsWith("/admin/workspace-explore");
   const isAdminRoute = path.startsWith("/admin");
   const isRootPlatformRoute = path === "/" || path === "/home" || path === "/explore" || path === "/opportunities" || path === "/myworld" || path === "/profile";
-  const showPlatformBack = !isAdminRoute && (focusedGuidance || !isRootPlatformRoute);
+  // These detail screens render their own contextual back link (DetailScaffold:
+  // "Back to programme", "Back to student guidance", ...), so the shell's generic
+  // Back would show a second one. Focused guidance keeps the shell's "Exit guidance".
+  const routeHasOwnBack = !focusedGuidance && (
+    /^\/explore\/(programme|role)\/[^/]+/.test(route)
+    || /^\/explore\/domain\/[^/]+(\/subgroup\/[^/]+)?$/.test(route)
+    || /^\/opportunities\/(opportunity|organisation)\//.test(path)
+    || path === "/opportunities/scholarships"
+  );
+  const showPlatformBack = !isAdminRoute && !routeHasOwnBack && (focusedGuidance || !isRootPlatformRoute);
 
   function content() {
     if (route === "/" || route === "/home") return <CareerHomeScreen />;
