@@ -293,6 +293,7 @@ export default function GuildScreen() {
                             s.memberRow,
                             {
                               backgroundColor: colors.surface.raised,
+                              borderWidth: 0,
                               borderBottomWidth: i < 4 ? 1 : 0,
                               borderBottomColor: colors.borderRole.subtle,
                               borderRadius: 0,
@@ -497,7 +498,7 @@ export default function GuildScreen() {
 
                 <Text style={[s.section, { color: colors.textRole.primary }]}>TOP MEMBERS</Text>
                 {(myGuild.top_members || []).slice(0, 5).map((m: GuildMember, i: number) => (
-                  <View key={m.id} style={[s.memberRow, { backgroundColor: colors.surface.raised }]}>
+                  <View key={m.id} style={[s.memberRow, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
                     <Text style={[s.rank, { color: i < 3 ? myGuild.accent : colors.textRole.muted }]}>#{i + 1}</Text>
                     <View style={{ flex: 1 }}>
                       <Text style={[s.memberName, { color: colors.textRole.primary }]}>
