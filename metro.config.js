@@ -51,7 +51,6 @@ const rootOnlyBlockList = [
   'litellm-env',
   'free-claude-code',
   'claude-code-proxy',
-  'data',
   'design',
   'docs',
   'supabase',
@@ -65,6 +64,15 @@ const rootOnlyBlockList = [
   const escaped = absolute.replace(/\\/g, '\\\\').replace(/\./g, '\\.');
   return new RegExp(`^${escaped}(?:[/\\\\]|$)`);
 });
+// `data/` is blocked, except that one generated JSON (and its parent directories, which
+// Metro's crawler tests separately). CI unzips it before bundling.
+const escapedDataRoot = path
+  .resolve(__dirname, 'data')
+  .replace(/\\/g, '\\\\')
+  .replace(/\./g, '\\.');
+const dataBlock = new RegExp(
+  `^${escapedDataRoot}[/\\\\](?!career-mapping(?:[/\\\\]_audit(?:[/\\\\]sociology_theme_student_abilities_2026_10_22\\.json)?)?$)`,
+);
 const escapedWorkspaceRoot = __dirname.replace(/\\/g, '\\\\').replace(/\./g, '\\.');
 
 // Keep Metro focused on the frontend. These exact root-level trees are
@@ -74,6 +82,7 @@ config.resolver.blockList = [
   /[/\\]\.pytest_cache[/\\]/,
   new RegExp(`^${escapedWorkspaceRoot}[/\\\\]\\.pytest-tmp-[^/\\\\]+(?:[/\\\\]|$)`),
   ...rootOnlyBlockList,
+  dataBlock,
 ];
 const previousResolveRequest = config.resolver.resolveRequest;
 
