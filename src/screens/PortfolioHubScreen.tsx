@@ -137,6 +137,24 @@ const PLATFORM_CONFIG: Record<string, { name: string; emoji: string; isPrimary: 
   },
 };
 
+// Build the Platforms list from PLATFORM_CONFIG. The backend returns only the
+// user's connected accounts ({ platform_id, username, ... }); a platform is
+// connected when a row with its id exists. Non-arrays count as "no accounts".
+function buildPlatformStatuses(accounts: unknown): PlatformStatus[] {
+  const rows: any[] = Array.isArray(accounts) ? accounts : [];
+  return Object.entries(PLATFORM_CONFIG).map(([id, cfg]) => {
+    const row = rows.find(r => (r?.platform_id ?? r?.platformId) === id);
+    return {
+      id,
+      name: cfg.name,
+      emoji: cfg.emoji,
+      connected: Boolean(row),
+      username: row?.username ?? undefined,
+      isPrimary: cfg.isPrimary,
+    };
+  });
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Credential integrity statement
 // ─────────────────────────────────────────────────────────────────────────────
@@ -744,18 +762,10 @@ export default function PortfolioHubScreen() {
           API.getPortfolioPlatformStatuses(),
         ]);
         setArtifacts(arts);
-        setPlatformStatuses(statuses);
+        setPlatformStatuses(buildPlatformStatuses(statuses));
       } catch {
         setArtifacts([]);
-        setPlatformStatuses(
-          Object.entries(PLATFORM_CONFIG).map(([id, cfg]) => ({
-            id,
-            name: cfg.name,
-            emoji: cfg.emoji,
-            connected: false,
-            isPrimary: cfg.isPrimary,
-          }))
-        );
+        setPlatformStatuses(buildPlatformStatuses([]));
       } finally {
         setLoading(false);
       }
