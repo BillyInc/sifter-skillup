@@ -103,7 +103,7 @@ describe("GuidedLearningTray", () => {
       routeLabel: "Sociology · Social Sciences",
       choices: [{ id: "interviews", label: "Interviews", kind: "method" as const }],
       foundations: ["Frame a researchable question"],
-      selectedItems: [{ id: "interview-guide", label: "Prepare an interview guide", lane: "Useful for interviews", contextLevel: "domain" }],
+      selectedItems: [{ id: "interview-guide", label: "Prepare an interview guide", lane: "Useful for interviews", contextLevel: "domain" as const }],
       onRemoveChoice: jest.fn(),
       onRemoveItem: jest.fn(),
     };
@@ -152,8 +152,8 @@ describe("GuidedLearningTray", () => {
       roleLabel: "Social Researcher",
       // These are the route-projection-filtered selections supplied by the journey.
       selectedItems: [
-        { id: "interview-guide", label: "Prepare an interview guide", lane: "Useful for interviews", contextLevel: "domain" },
-        { id: "field-notes", label: "Keep structured field notes", lane: "Useful with observation", contextLevel: "area" },
+        { id: "interview-guide", label: "Prepare an interview guide", lane: "Useful for interviews", contextLevel: "domain" as const },
+        { id: "field-notes", label: "Keep structured field notes", lane: "Useful with observation", contextLevel: "area" as const },
       ],
       onRemoveChoice: jest.fn(),
       onRemoveItem: jest.fn(),
@@ -307,8 +307,8 @@ describe("GuidedLearningTray", () => {
         ],
         foundations: ["Frame a researchable social question"],
         selectedItems: [
-          { id: "interview-guide", label: "Prepare an interview guide", lane: "Useful for interviews", contextLevel: "domain" },
-          { id: "field-notes", label: "Keep structured field notes", lane: "Useful with observation", contextLevel: "role" },
+          { id: "interview-guide", label: "Prepare an interview guide", lane: "Useful for interviews", contextLevel: "domain" as const },
+          { id: "field-notes", label: "Keep structured field notes", lane: "Useful with observation", contextLevel: "role" as const },
         ],
         onRemoveChoice: jest.fn(),
         onRemoveItem: jest.fn(),

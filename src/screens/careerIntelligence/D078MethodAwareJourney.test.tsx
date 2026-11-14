@@ -223,7 +223,7 @@ describe("D078 method-aware journey UI acceptance", () => {
       routeLabel: "Sociology · Social Sciences",
       choices: [{ id: "interviews", label: "Interviews", kind: "method" as const }],
       foundations: ["Frame a researchable question", "Evaluate evidence", "Communicate findings"],
-      selectedItems: [{ id: "guide", label: "Prepare an interview guide", lane: "Useful for interviews", contextLevel: "domain" }],
+      selectedItems: [{ id: "guide", label: "Prepare an interview guide", lane: "Useful for interviews", contextLevel: "domain" as const }],
       onRemoveChoice: () => undefined,
       onRemoveItem: () => undefined,
     };
