@@ -63,7 +63,6 @@ const EcosystemTrackScreen = lazy(() => import("../../src/screens/EcosystemTrack
 const StarknetTrackScreen = lazy(() => import("../../src/screens/StarknetTrackScreen"));
 const CairoBuilderTrackScreen = lazy(() => import("../../src/screens/CairoBuilderTrackScreen"));
 const LeaderboardScreen = lazy(() => import("../../src/screens/LeaderboardScreen"));
-const InterviewModeScreen = lazy(() => import("../../src/screens/InterviewModeScreen"));
 const PathwaysHubScreen = lazy(() => import("../../src/screens/careerIntelligence/PathwaysHubScreen"));
 const EntrepreneurshipPathwayScreen = lazy(() => import("../../src/screens/careerIntelligence/EntrepreneurshipPathwayScreen"));
 const CareerChangerScreen = lazy(() => import("../../src/screens/careerIntelligence/CareerChangerScreen"));
@@ -546,7 +545,7 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
     if (path === "/leaderboard") return <LeaderboardScreen />;
     if (path === "/fields") return <FieldsScreen />;
     if (path === "/skills/quant-map") return <QuantMapScreen />;
-    if (path === "/skills/interview") return <InterviewModeScreen />;
+    if (path === "/skills/interview") return <DisabledLearningScreen area="Interview mode" />;
     if (path === "/skills/lesson") return <DisabledLearningScreen area="Lessons" />;
     if (path === "/skills") return <SkillsScreen />;
     if (path === "/streaks") return <StreaksScreen />;
