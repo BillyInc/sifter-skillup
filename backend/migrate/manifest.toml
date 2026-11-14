@@ -1,0 +1,839 @@
+# Ordered migration manifest (phase 1: plan only, nothing here is applied automatically yet).
+#
+# Entry order IS the apply order. `requires` lists documented hard dependencies and may only
+# point backwards. Orders come ONLY from backend/MIGRATION_RUNBOOK.md ("Authoritative
+# D078/Sociology apply order") and CLAUDE.md ("Canonical 2026-09-11 order", the additive
+# career-guidance list). Anything whose order the docs do not state unambiguously is in
+# [[unordered]] at the bottom, with the reason. Do not guess an order: ask the owner.
+#
+# Fields: id, kind (schema|seed|destructive), path | parts_glob (+expected_parts),
+#         requires, verify (phase 2: check queries; empty for now), down (undo script, optional),
+#         manual_only (never automatic), approval (required marker for destructive entries),
+#         note, source.
+# Paths are relative to backend/. A `.sql` file is preferred over its `.sql.gz` transport when
+# both are committed; both hash identically (checksums are over decompressed bytes).
+# kind = "seed" is also used for the four data-loading files that happen to be named migration_*.
+
+
+# ----------------------------------------------------------------------
+# A. Canonical subject / JAMB order (2026-09-11), schema files
+# ----------------------------------------------------------------------
+
+[[entry]]
+id = "migration_career_base_registry"
+kind = "schema"
+path = "migration_career_base_registry.sql"
+requires = []
+verify = []
+source = "CLAUDE.md 'Canonical 2026-09-11 order'"
+
+[[entry]]
+id = "migration_subject_catalog"
+kind = "schema"
+path = "migration_subject_catalog.sql"
+requires = []
+verify = []
+source = "CLAUDE.md 'Canonical 2026-09-11 order'"
+
+[[entry]]
+id = "migration_career_pilot"
+kind = "schema"
+path = "migration_career_pilot.sql"
+requires = [
+  "migration_career_base_registry",
+  "migration_subject_catalog",
+]
+verify = []
+note = "subject_catalog must precede career_pilot (runbook 'Subject-pipeline deployment order')."
+source = "CLAUDE.md 'Canonical 2026-09-11 order'"
+
+[[entry]]
+id = "migration_school_subject_pass_conditions_2026-10-24"
+kind = "schema"
+path = "migration_school_subject_pass_conditions_2026-10-24.sql"
+requires = [
+  "migration_career_pilot",
+]
+verify = []
+note = "Must precede seed_career_pilot."
+source = "CLAUDE.md 'Canonical 2026-09-11 order'"
+
+[[entry]]
+id = "migration_jamb_programme_learning_resources_2026-09-23"
+kind = "schema"
+path = "migration_jamb_programme_learning_resources_2026-09-23.sql"
+requires = [
+  "migration_career_pilot",
+]
+verify = []
+note = "Listed in CLAUDE.md's canonical order; the runbook's numbered list omits it."
+source = "CLAUDE.md 'Canonical 2026-09-11 order'"
+
+[[entry]]
+id = "migration_subject_rule_records"
+kind = "schema"
+path = "migration_subject_rule_records.sql"
+requires = [
+  "migration_career_pilot",
+]
+verify = []
+source = "CLAUDE.md 'Canonical 2026-09-11 order'"
+
+[[entry]]
+id = "migration_student_pipeline_live"
+kind = "schema"
+path = "migration_student_pipeline_live.sql"
+requires = [
+  "migration_career_pilot",
+  "migration_subject_rule_records",
+]
+verify = []
+note = "OWNER CHECK: runbook table A lists migration_provisioning (#13) as a dependency; the canonical order applies this file earlier, without it."
+source = "CLAUDE.md 'Canonical 2026-09-11 order'"
+
+[[entry]]
+id = "migration_school_faculty_filter_2026-09-09"
+kind = "schema"
+path = "migration_school_faculty_filter_2026-09-09.sql"
+requires = [
+  "migration_student_pipeline_live",
+]
+verify = []
+note = "Appends jamb_faculty to a view; must follow student_pipeline_live."
+source = "CLAUDE.md 'Canonical 2026-09-11 order'"
+
+[[entry]]
+id = "migration_career_v2"
+kind = "destructive"
+path = "migration_career_v2.sql"
+requires = [
+  "migration_career_pilot",
+  "migration_subject_rule_records",
+]
+verify = []
+manual_only = true
+approval = "explicit approved rebuild plus backup; staging or empty database only"
+note = "Drops and recreates the taxonomy tables. Staging/empty database only; never part of the automatic path."
+source = "CLAUDE.md fresh/staging order; runbook table A #5"
+
+
+# ----------------------------------------------------------------------
+# A. Canonical subject / JAMB order (2026-09-11), data files
+# ----------------------------------------------------------------------
+
+[[entry]]
+id = "seed_subject_catalog"
+kind = "seed"
+path = "seed_subject_catalog.sql"
+requires = [
+  "migration_subject_catalog",
+]
+verify = []
+source = "CLAUDE.md 'Canonical 2026-09-11 order'"
+
+[[entry]]
+id = "seed_career_pilot"
+kind = "seed"
+path = "seed_career_pilot.sql"
+requires = [
+  "migration_career_pilot",
+  "migration_school_subject_pass_conditions_2026-10-24",
+  "seed_subject_catalog",
+]
+verify = []
+source = "CLAUDE.md 'Canonical 2026-09-11 order'"
+
+[[entry]]
+id = "seed_jamb_programme_learning_resources_2026-09-23"
+kind = "seed"
+path = "seed_jamb_programme_learning_resources_2026-09-23.sql.gz"
+requires = [
+  "migration_jamb_programme_learning_resources_2026-09-23",
+  "seed_career_pilot",
+]
+verify = []
+note = "Review-only data until the separate approval gate passes."
+source = "CLAUDE.md 'Canonical 2026-09-11 order'"
+
+[[entry]]
+id = "seed_subject_rule_records"
+kind = "destructive"
+path = "seed_subject_rule_records.sql"
+requires = [
+  "migration_subject_rule_records",
+  "seed_career_pilot",
+]
+verify = []
+approval = "replacement seed: snapshot programme_subject_rule_records into _bak first, deploy together with seed_subject_options, explicit approval"
+note = "Replacement seed (DELETE FROM programme_subject_rule_records); CLAUDE.md: both replacement subject seeds must be deployed together."
+source = "CLAUDE.md 'Canonical 2026-09-11 order'"
+
+[[entry]]
+id = "seed_subject_options"
+kind = "destructive"
+path = "seed_subject_options.sql"
+requires = [
+  "migration_subject_rule_records",
+  "seed_career_pilot",
+  "seed_subject_rule_records",
+]
+verify = []
+approval = "replacement seed: snapshot the two matcher tables into _bak first, then explicit approval"
+note = "Documented replacement seed: DELETEs and rebuilds programme_subject_options and programme_subject_option_items."
+source = "CLAUDE.md 'Canonical 2026-09-11 order'"
+
+
+# ----------------------------------------------------------------------
+# B. Career guidance schema prerequisites of the D078 chain
+# ----------------------------------------------------------------------
+
+[[entry]]
+id = "migration_role_tools"
+kind = "schema"
+path = "migration_role_tools.sql"
+requires = [
+  "migration_career_v2",
+]
+verify = []
+source = "CLAUDE.md 'Career guidance ownership' additive list; runbook table A #7 (depends on #5)"
+
+[[entry]]
+id = "migration_source_backed_career_layers"
+kind = "schema"
+path = "migration_source_backed_career_layers.sql"
+requires = [
+  "migration_career_v2",
+  "migration_role_tools",
+]
+verify = []
+source = "CLAUDE.md 'Career guidance ownership' additive list; runbook table A #8"
+
+[[entry]]
+id = "migration_career_resources_v1"
+kind = "schema"
+path = "migration_career_resources_v1.sql"
+requires = [
+  "migration_career_v2",
+  "migration_source_backed_career_layers",
+]
+verify = []
+source = "CLAUDE.md 'Career guidance ownership' additive list; runbook table A #12"
+
+
+# ----------------------------------------------------------------------
+# C. D078 / Sociology chain, step 1: schemas (runbook order, 21 files)
+# ----------------------------------------------------------------------
+
+[[entry]]
+id = "migration_programme_domain_evidence_2026-09-17"
+kind = "schema"
+path = "migration_programme_domain_evidence_2026-09-17.sql"
+requires = [
+  "seed_career_pilot",
+]
+verify = []
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 1 #1"
+
+[[entry]]
+id = "migration_programme_domain_review_corrections_2026-09-18"
+kind = "schema"
+path = "migration_programme_domain_review_corrections_2026-09-18.sql"
+requires = [
+  "migration_programme_domain_evidence_2026-09-17",
+]
+verify = []
+note = "Removes 715 programme-domain edges (data deletion); not marked destructive by the docs - OWNER CHECK."
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 1 #2"
+
+[[entry]]
+id = "migration_sociology_curriculum_contract_2026-09-17"
+kind = "schema"
+path = "migration_sociology_curriculum_contract_2026-09-17.sql"
+requires = []
+verify = []
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 1 #3"
+
+[[entry]]
+id = "migration_programme_theme_guidance_2026-10-08"
+kind = "schema"
+path = "migration_programme_theme_guidance_2026-10-08.sql"
+requires = []
+verify = []
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 1 #4"
+
+[[entry]]
+id = "migration_programme_curriculum_contract_general_2026-09-18"
+kind = "schema"
+path = "migration_programme_curriculum_contract_general_2026-09-18.sql"
+requires = [
+  "migration_sociology_curriculum_contract_2026-09-17",
+]
+verify = []
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 1 #5"
+
+[[entry]]
+id = "migration_contextual_career_items"
+kind = "schema"
+path = "migration_contextual_career_items.sql"
+requires = []
+verify = []
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 1 #6"
+
+[[entry]]
+id = "migration_career_context_claim_validation"
+kind = "schema"
+path = "migration_career_context_claim_validation.sql"
+requires = [
+  "migration_contextual_career_items",
+]
+verify = []
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 1 #7"
+
+[[entry]]
+id = "migration_career_item_relationships_2026-09-17"
+kind = "schema"
+path = "migration_career_item_relationships_2026-09-17.sql"
+requires = [
+  "migration_contextual_career_items",
+]
+verify = []
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 1 #8"
+
+[[entry]]
+id = "migration_career_item_relationships_item_type_widen_2026-10-22"
+kind = "schema"
+path = "migration_career_item_relationships_item_type_widen_2026-10-22.sql"
+requires = [
+  "migration_career_item_relationships_2026-09-17",
+  "migration_career_context_claim_validation",
+]
+verify = []
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 1 #9"
+
+[[entry]]
+id = "migration_career_item_relationship_explanations_2026-10-12"
+kind = "schema"
+path = "migration_career_item_relationship_explanations_2026-10-12.sql"
+requires = [
+  "migration_career_item_relationships_2026-09-17",
+]
+verify = []
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 1 #10"
+
+[[entry]]
+id = "migration_career_item_sequence_policy_2026-10-12"
+kind = "schema"
+path = "migration_career_item_sequence_policy_2026-10-12.sql"
+requires = [
+  "migration_career_item_relationships_2026-09-17",
+]
+verify = []
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 1 #11"
+
+[[entry]]
+id = "migration_career_item_relationship_target_context_2026-10-17"
+kind = "schema"
+path = "migration_career_item_relationship_target_context_2026-10-17.sql"
+requires = [
+  "migration_career_item_sequence_policy_2026-10-12",
+]
+verify = []
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 1 #12"
+
+[[entry]]
+id = "migration_career_context_path_targets"
+kind = "schema"
+path = "migration_career_context_path_targets.sql"
+requires = []
+verify = []
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 1 #13"
+
+[[entry]]
+id = "migration_guidance_programme_reading_and_market_scope_2026-09-12"
+kind = "schema"
+path = "migration_guidance_programme_reading_and_market_scope_2026-09-12.sql"
+requires = [
+  "migration_career_resources_v1",
+]
+verify = []
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 1 #14"
+
+[[entry]]
+id = "migration_guidance_ownership_and_sociology_resources_2026-09-11"
+kind = "schema"
+path = "migration_guidance_ownership_and_sociology_resources_2026-09-11.sql"
+requires = [
+  "migration_guidance_programme_reading_and_market_scope_2026-09-12",
+]
+verify = []
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 1 #15"
+
+[[entry]]
+id = "migration_sociology_giddens_ideas_theme_2026-10-22"
+kind = "schema"
+path = "migration_sociology_giddens_ideas_theme_2026-10-22.sql"
+requires = [
+  "migration_guidance_ownership_and_sociology_resources_2026-09-11",
+]
+verify = []
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 1 #16"
+
+[[entry]]
+id = "migration_domain_student_orientation_2026-09-18"
+kind = "schema"
+path = "migration_domain_student_orientation_2026-09-18.sql"
+requires = [
+  "migration_source_backed_career_layers",
+  "migration_career_resources_v1",
+]
+verify = []
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 1 #17"
+
+[[entry]]
+id = "migration_sociology_domain_tool_path_2026-09-18"
+kind = "schema"
+path = "migration_sociology_domain_tool_path_2026-09-18.sql"
+requires = []
+verify = []
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 1 #18"
+
+[[entry]]
+id = "migration_d078_specialization_taxonomy_2026-10-12"
+kind = "schema"
+path = "migration_d078_specialization_taxonomy_2026-10-12.sql"
+requires = []
+verify = []
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 1 #19"
+
+[[entry]]
+id = "migration_d078_role_item_contracts_2026-10-15"
+kind = "schema"
+path = "migration_d078_role_item_contracts_2026-10-15.sql"
+requires = []
+verify = []
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 1 #20"
+
+[[entry]]
+id = "migration_d078_requirement_lanes_2026-10-17"
+kind = "schema"
+path = "migration_d078_requirement_lanes_2026-10-17.sql"
+requires = [
+  "migration_d078_role_item_contracts_2026-10-15",
+]
+verify = []
+note = "The role-contract schema must exist before this lane migration adds columns to it."
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 1 #21"
+
+
+# ----------------------------------------------------------------------
+# C. D078 / Sociology chain, step 2: data (runbook order)
+# ----------------------------------------------------------------------
+
+[[entry]]
+id = "seed_programme_domain_evidence_2026-09-17"
+kind = "seed"
+path = "seed_programme_domain_evidence_2026-09-17.sql.gz"
+requires = [
+  "migration_programme_domain_evidence_2026-09-17",
+  "migration_programme_domain_review_corrections_2026-09-18",
+]
+verify = []
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 2 #1"
+
+[[entry]]
+id = "seed_sociology_curriculum_contract_2026-09-17"
+kind = "seed"
+path = "seed_sociology_curriculum_contract_2026-09-17.sql.gz"
+requires = [
+  "migration_sociology_curriculum_contract_2026-09-17",
+  "migration_programme_curriculum_contract_general_2026-09-18",
+]
+verify = []
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 2 #2"
+
+[[entry]]
+id = "seed_sociology_programme_theme_guidance_2026-10-08"
+kind = "seed"
+path = "seed_sociology_programme_theme_guidance_2026-10-08.sql.gz"
+requires = [
+  "migration_programme_theme_guidance_2026-10-08",
+]
+verify = []
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 2 #3"
+
+[[entry]]
+id = "migration_sociology_theme_resource_repair_2026-10-23"
+kind = "seed"
+path = "migration_sociology_theme_resource_repair_2026-10-23.sql"
+requires = [
+  "seed_sociology_programme_theme_guidance_2026-10-08",
+  "migration_sociology_giddens_ideas_theme_2026-10-22",
+]
+verify = []
+note = "A data repair kept in a migration_ file; must run immediately after the programme-theme seed."
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 2 #4"
+
+[[entry]]
+id = "seed_career_context_items_v1_parts"
+kind = "seed"
+parts_glob = "seed_career_context_items_v1_parts/part-*.sql.gz"
+expected_parts = 35
+requires = [
+  "migration_contextual_career_items",
+  "migration_career_context_claim_validation",
+  "migration_career_item_relationships_2026-09-17",
+  "migration_career_item_relationships_item_type_widen_2026-10-22",
+  "migration_career_item_relationship_explanations_2026-10-12",
+  "migration_career_item_sequence_policy_2026-10-12",
+  "migration_career_item_relationship_target_context_2026-10-17",
+  "migration_career_context_path_targets",
+  "seed_programme_domain_evidence_2026-09-17",
+  "seed_sociology_curriculum_contract_2026-09-17",
+]
+verify = []
+note = "Parts 001-035 in numeric order; each part is its own transaction."
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 2 #5"
+
+[[entry]]
+id = "seed_sociology_domain_guidance_2026-10-08"
+kind = "seed"
+path = "seed_sociology_domain_guidance_2026-10-08.sql.gz"
+requires = [
+  "seed_career_context_items_v1_parts",
+]
+verify = []
+note = "Must run AFTER the 35 contextual parts: it UPDATEs a row part-002 creates."
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 2 #6"
+
+[[entry]]
+id = "migration_guidance_all_programmes_2026-09-12"
+kind = "seed"
+path = "migration_guidance_all_programmes_2026-09-12.sql"
+requires = [
+  "migration_guidance_ownership_and_sociology_resources_2026-09-11",
+  "seed_career_pilot",
+]
+verify = []
+note = "Data-loading migration_ file (inserts through ON CONFLICT DO UPDATE)."
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 2 #7"
+
+[[entry]]
+id = "migration_guidance_global_2026-09-11"
+kind = "seed"
+path = "migration_guidance_global_2026-09-11.sql"
+requires = [
+  "migration_guidance_all_programmes_2026-09-12",
+]
+verify = []
+note = "Data-loading migration_ file; replaces role-derived domain foundations - OWNER CHECK whether it deserves 'destructive'."
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 2 #8"
+
+[[entry]]
+id = "seed_d078_specialization_taxonomy_2026-10-12"
+kind = "seed"
+path = "seed_d078_specialization_taxonomy_2026-10-12.sql.gz"
+requires = [
+  "migration_d078_specialization_taxonomy_2026-10-12",
+]
+verify = []
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 2 #9"
+
+[[entry]]
+id = "migration_d078_role_route_visibility_2026-10-15"
+kind = "seed"
+path = "migration_d078_role_route_visibility_2026-10-15.sql"
+requires = [
+  "seed_d078_specialization_taxonomy_2026-10-12",
+]
+verify = []
+note = "Post-taxonomy recalculation (data), not schema."
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 2 #10"
+
+[[entry]]
+id = "seed_d078_guided_content_2026-10-12"
+kind = "seed"
+path = "seed_d078_guided_content_2026-10-12.sql.gz"
+requires = [
+  "seed_d078_specialization_taxonomy_2026-10-12",
+  "migration_d078_role_route_visibility_2026-10-15",
+  "migration_career_item_relationship_explanations_2026-10-12",
+  "migration_career_item_sequence_policy_2026-10-12",
+  "migration_career_item_relationship_target_context_2026-10-17",
+  "migration_career_context_path_targets",
+  "migration_d078_role_item_contracts_2026-10-15",
+  "migration_d078_requirement_lanes_2026-10-17",
+]
+verify = []
+note = "First of three separate final D078 transactions; keep them separate."
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 2 #11"
+
+[[entry]]
+id = "seed_d078_role_item_contracts_2026-10-15"
+kind = "seed"
+path = "seed_d078_role_item_contracts_2026-10-15.sql.gz"
+requires = [
+  "migration_d078_role_item_contracts_2026-10-15",
+  "migration_d078_requirement_lanes_2026-10-17",
+  "seed_d078_guided_content_2026-10-12",
+]
+verify = []
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 2 #12"
+
+[[entry]]
+id = "seed_d078_role_tools_2026-10-16"
+kind = "seed"
+path = "seed_d078_role_tools_2026-10-16.sql.gz"
+requires = [
+  "seed_d078_role_item_contracts_2026-10-15",
+]
+verify = []
+source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 2 #13"
+
+
+# ======================================================================
+# UNORDERED: order not stated unambiguously in the docs. Never applied automatically.
+# ======================================================================
+
+[[unordered]]
+path = "migration_account_lifecycle_patch.sql"
+reason = "Provisioning/auth/account group: runbook table A and CLAUDE.md's fresh list disagree on its position (e.g. migration_school_identity is #17 after the pipeline in table A but before it in CLAUDE.md; table A makes provisioning a dependency of the pipeline migration that the canonical order applies earlier)."
+
+[[unordered]]
+path = "migration_admin_access_grant.sql"
+reason = "Provisioning/auth/account group: runbook table A and CLAUDE.md's fresh list disagree on its position (e.g. migration_school_identity is #17 after the pipeline in table A but before it in CLAUDE.md; table A makes provisioning a dependency of the pipeline migration that the canonical order applies earlier)."
+
+[[unordered]]
+path = "migration_admission_intelligence.sql"
+reason = "Career add-on schema: runbook table A / fresh list give a relative order, but each is conditional ('when ... is used') and depends on migration_career_v2 (manual_only); not part of the documented D078 or canonical subject path."
+
+[[unordered]]
+path = "migration_auth_onboarding_security_patch.sql"
+reason = "Provisioning/auth/account group: runbook table A and CLAUDE.md's fresh list disagree on its position (e.g. migration_school_identity is #17 after the pipeline in table A but before it in CLAUDE.md; table A makes provisioning a dependency of the pipeline migration that the canonical order applies earlier)."
+
+[[unordered]]
+path = "migration_auth_profile.sql"
+reason = "Base-application group: CLAUDE.md orders it only for a fresh/staging database and it depends on supabase-schema.sql (not a migration_ file); where it sits relative to the career chain is not stated. Needs a ledger-baseline decision in phase 2."
+
+[[unordered]]
+path = "migration_career_intelligence.sql"
+reason = "Superseded; CLAUDE.md says never run it."
+
+[[unordered]]
+path = "migration_certification_lifecycle.sql"
+reason = "Career add-on schema: runbook table A / fresh list give a relative order, but each is conditional ('when ... is used') and depends on migration_career_v2 (manual_only); not part of the documented D078 or canonical subject path."
+
+[[unordered]]
+path = "migration_elite_evidence_gate.sql"
+reason = "Not mentioned in MIGRATION_RUNBOOK.md or CLAUDE.md, so no documented order."
+
+[[unordered]]
+path = "migration_enrichment_v1.sql"
+reason = "Career add-on schema: runbook table A / fresh list give a relative order, but each is conditional ('when ... is used') and depends on migration_career_v2 (manual_only); not part of the documented D078 or canonical subject path."
+
+[[unordered]]
+path = "migration_entrepreneurship_intelligence.sql"
+reason = "Not mentioned in MIGRATION_RUNBOOK.md or CLAUDE.md, so no documented order."
+
+[[unordered]]
+path = "migration_fcm_device_tokens.sql"
+reason = "Base-application group: CLAUDE.md orders it only for a fresh/staging database and it depends on supabase-schema.sql (not a migration_ file); where it sits relative to the career chain is not stated. Needs a ledger-baseline decision in phase 2."
+
+[[unordered]]
+path = "migration_feedback_storage.sql"
+reason = "Provisioning/auth/account group: runbook table A and CLAUDE.md's fresh list disagree on its position (e.g. migration_school_identity is #17 after the pipeline in table A but before it in CLAUDE.md; table A makes provisioning a dependency of the pipeline migration that the canonical order applies earlier)."
+
+[[unordered]]
+path = "migration_goal_apply_now.sql"
+reason = "Provisioning/auth/account group: runbook table A and CLAUDE.md's fresh list disagree on its position (e.g. migration_school_identity is #17 after the pipeline in table A but before it in CLAUDE.md; table A makes provisioning a dependency of the pipeline migration that the canonical order applies earlier)."
+
+[[unordered]]
+path = "migration_guidance_report_paths.sql"
+reason = "Provisioning/auth/account group: runbook table A and CLAUDE.md's fresh list disagree on its position (e.g. migration_school_identity is #17 after the pipeline in table A but before it in CLAUDE.md; table A makes provisioning a dependency of the pipeline migration that the canonical order applies earlier)."
+
+[[unordered]]
+path = "migration_institution_team_access.sql"
+reason = "Provisioning/auth/account group: runbook table A and CLAUDE.md's fresh list disagree on its position (e.g. migration_school_identity is #17 after the pipeline in table A but before it in CLAUDE.md; table A makes provisioning a dependency of the pipeline migration that the canonical order applies earlier)."
+
+[[unordered]]
+path = "migration_institution_verification_proof.sql"
+reason = "Provisioning/auth/account group: runbook table A and CLAUDE.md's fresh list disagree on its position (e.g. migration_school_identity is #17 after the pipeline in table A but before it in CLAUDE.md; table A makes provisioning a dependency of the pipeline migration that the canonical order applies earlier)."
+
+[[unordered]]
+path = "migration_internal_staff.sql"
+reason = "Provisioning/auth/account group: runbook table A and CLAUDE.md's fresh list disagree on its position (e.g. migration_school_identity is #17 after the pipeline in table A but before it in CLAUDE.md; table A makes provisioning a dependency of the pipeline migration that the canonical order applies earlier)."
+
+[[unordered]]
+path = "migration_jamb_domain_mapping_corrections_2026-09-08.sql"
+reason = "Conditional repair, only after loading an older (pre-2026-09-01) JAMB-domain seed; not part of a normal path."
+
+[[unordered]]
+path = "migration_jamb_programme_award_fields_2026-09-19.sql"
+reason = "Not mentioned in MIGRATION_RUNBOOK.md or CLAUDE.md, so no documented order."
+
+[[unordered]]
+path = "migration_jamb_skills_view.sql"
+reason = "Not mentioned in MIGRATION_RUNBOOK.md or CLAUDE.md, so no documented order."
+
+[[unordered]]
+path = "migration_market_intelligence_v1.sql"
+reason = "Career add-on schema: runbook table A / fresh list give a relative order, but each is conditional ('when ... is used') and depends on migration_career_v2 (manual_only); not part of the documented D078 or canonical subject path."
+
+[[unordered]]
+path = "migration_pending_account_type_patch.sql"
+reason = "Provisioning/auth/account group: runbook table A and CLAUDE.md's fresh list disagree on its position (e.g. migration_school_identity is #17 after the pipeline in table A but before it in CLAUDE.md; table A makes provisioning a dependency of the pipeline migration that the canonical order applies earlier)."
+
+[[unordered]]
+path = "migration_phase7_content.sql"
+reason = "Not mentioned in MIGRATION_RUNBOOK.md or CLAUDE.md, so no documented order."
+
+[[unordered]]
+path = "migration_provisioning.sql"
+reason = "Provisioning/auth/account group: runbook table A and CLAUDE.md's fresh list disagree on its position (e.g. migration_school_identity is #17 after the pipeline in table A but before it in CLAUDE.md; table A makes provisioning a dependency of the pipeline migration that the canonical order applies earlier)."
+
+[[unordered]]
+path = "migration_provisioning_guidance_variants.sql"
+reason = "Provisioning/auth/account group: runbook table A and CLAUDE.md's fresh list disagree on its position (e.g. migration_school_identity is #17 after the pipeline in table A but before it in CLAUDE.md; table A makes provisioning a dependency of the pipeline migration that the canonical order applies earlier)."
+
+[[unordered]]
+path = "migration_remove_postutme_from_cutoff_view.sql"
+reason = "Not mentioned in MIGRATION_RUNBOOK.md or CLAUDE.md, so no documented order."
+
+[[unordered]]
+path = "migration_role_detail_enrichment.sql"
+reason = "Career add-on schema: runbook table A / fresh list give a relative order, but each is conditional ('when ... is used') and depends on migration_career_v2 (manual_only); not part of the documented D078 or canonical subject path."
+
+[[unordered]]
+path = "migration_saved_resource_support.sql"
+reason = "Documented only as 'after saved_items exists' (runbook table A #5a), without a fixed position."
+
+[[unordered]]
+path = "migration_school_identity.sql"
+reason = "Provisioning/auth/account group: runbook table A and CLAUDE.md's fresh list disagree on its position (e.g. migration_school_identity is #17 after the pipeline in table A but before it in CLAUDE.md; table A makes provisioning a dependency of the pipeline migration that the canonical order applies earlier)."
+
+[[unordered]]
+path = "migration_signup_auth_apply_now_patch.sql"
+reason = "Provisioning/auth/account group: runbook table A and CLAUDE.md's fresh list disagree on its position (e.g. migration_school_identity is #17 after the pipeline in table A but before it in CLAUDE.md; table A makes provisioning a dependency of the pipeline migration that the canonical order applies earlier)."
+
+[[unordered]]
+path = "migration_ss3_secondary_starting_point_patch.sql"
+reason = "Provisioning/auth/account group: runbook table A and CLAUDE.md's fresh list disagree on its position (e.g. migration_school_identity is #17 after the pipeline in table A but before it in CLAUDE.md; table A makes provisioning a dependency of the pipeline migration that the canonical order applies earlier)."
+
+[[unordered]]
+path = "migration_student_consent_requests.sql"
+reason = "Provisioning/auth/account group: runbook table A and CLAUDE.md's fresh list disagree on its position (e.g. migration_school_identity is #17 after the pipeline in table A but before it in CLAUDE.md; table A makes provisioning a dependency of the pipeline migration that the canonical order applies earlier)."
+
+[[unordered]]
+path = "migration_user_feedback.sql"
+reason = "Provisioning/auth/account group: runbook table A and CLAUDE.md's fresh list disagree on its position (e.g. migration_school_identity is #17 after the pipeline in table A but before it in CLAUDE.md; table A makes provisioning a dependency of the pipeline migration that the canonical order applies earlier)."
+
+[[unordered]]
+path = "migration_v2.sql"
+reason = "Base-application group: CLAUDE.md orders it only for a fresh/staging database and it depends on supabase-schema.sql (not a migration_ file); where it sits relative to the career chain is not stated. Needs a ledger-baseline decision in phase 2."
+
+[[unordered]]
+path = "migration_v2_atomic.sql"
+reason = "Base-application group: CLAUDE.md orders it only for a fresh/staging database and it depends on supabase-schema.sql (not a migration_ file); where it sits relative to the career chain is not stated. Needs a ledger-baseline decision in phase 2."
+
+[[unordered]]
+path = "migration_v2_down.sql"
+reason = "Undo script for migration_v2: a future 'down' target, never a forward migration; never automatic."
+
+[[unordered]]
+path = "migration_v2_offline_idempotency.sql"
+reason = "Base-application group: CLAUDE.md orders it only for a fresh/staging database and it depends on supabase-schema.sql (not a migration_ file); where it sits relative to the career chain is not stated. Needs a ledger-baseline decision in phase 2."
+
+[[unordered]]
+path = "migration_v2_offline_streak.sql"
+reason = "Base-application group: CLAUDE.md orders it only for a fresh/staging database and it depends on supabase-schema.sql (not a migration_ file); where it sits relative to the career chain is not stated. Needs a ledger-baseline decision in phase 2."
+
+[[unordered]]
+path = "patch_subject_catalog_streams.sql"
+reason = "Listed last in CLAUDE.md's fresh data-seed list; its order relative to seed_subject_catalog in the canonical path is not stated."
+
+[[unordered]]
+path = "seed_career_resources_v1_parts"
+reason = "Documented as 'every file in the directory in numeric order' but only for the older resource path; position relative to the D078 chain is not stated."
+
+[[unordered]]
+path = "seed_career_v2_2026-08-29_parts_gz"
+reason = "Career taxonomy seed transport (staging/empty rebuild only per CLAUDE.md). Many dated transports exist (2026-08-25 ... 2026-10-07); the docs call 2026-09-12 'current' but later ones exist, so which one is authoritative is ambiguous."
+
+[[unordered]]
+path = "seed_career_v2_2026-08-31_parts_gz"
+reason = "Career taxonomy seed transport (staging/empty rebuild only per CLAUDE.md). Many dated transports exist (2026-08-25 ... 2026-10-07); the docs call 2026-09-12 'current' but later ones exist, so which one is authoritative is ambiguous."
+
+[[unordered]]
+path = "seed_career_v2_2026-09-01_parts_gz"
+reason = "Career taxonomy seed transport (staging/empty rebuild only per CLAUDE.md). Many dated transports exist (2026-08-25 ... 2026-10-07); the docs call 2026-09-12 'current' but later ones exist, so which one is authoritative is ambiguous."
+
+[[unordered]]
+path = "seed_career_v2_2026-09-12_parts_gz"
+reason = "Career taxonomy seed transport (staging/empty rebuild only per CLAUDE.md). Many dated transports exist (2026-08-25 ... 2026-10-07); the docs call 2026-09-12 'current' but later ones exist, so which one is authoritative is ambiguous."
+
+[[unordered]]
+path = "seed_career_v2_2026-09-25_domain_subgroup_labels_parts_gz"
+reason = "Career taxonomy seed transport (staging/empty rebuild only per CLAUDE.md). Many dated transports exist (2026-08-25 ... 2026-10-07); the docs call 2026-09-12 'current' but later ones exist, so which one is authoritative is ambiguous."
+
+[[unordered]]
+path = "seed_career_v2_2026-09-25_mapping_corrected_parts_gz"
+reason = "Career taxonomy seed transport (staging/empty rebuild only per CLAUDE.md). Many dated transports exist (2026-08-25 ... 2026-10-07); the docs call 2026-09-12 'current' but later ones exist, so which one is authoritative is ambiguous."
+
+[[unordered]]
+path = "seed_career_v2_2026-09-25_taxonomy_names_parts_gz"
+reason = "Career taxonomy seed transport (staging/empty rebuild only per CLAUDE.md). Many dated transports exist (2026-08-25 ... 2026-10-07); the docs call 2026-09-12 'current' but later ones exist, so which one is authoritative is ambiguous."
+
+[[unordered]]
+path = "seed_career_v2_2026-09-25_taxonomy_names_verified_parts_gz"
+reason = "Career taxonomy seed transport (staging/empty rebuild only per CLAUDE.md). Many dated transports exist (2026-08-25 ... 2026-10-07); the docs call 2026-09-12 'current' but later ones exist, so which one is authoritative is ambiguous."
+
+[[unordered]]
+path = "seed_career_v2_2026-09-25_uncertainty_resolved_final_parts_gz"
+reason = "Career taxonomy seed transport (staging/empty rebuild only per CLAUDE.md). Many dated transports exist (2026-08-25 ... 2026-10-07); the docs call 2026-09-12 'current' but later ones exist, so which one is authoritative is ambiguous."
+
+[[unordered]]
+path = "seed_career_v2_2026-09-25_uncertainty_resolved_parts_gz"
+reason = "Career taxonomy seed transport (staging/empty rebuild only per CLAUDE.md). Many dated transports exist (2026-08-25 ... 2026-10-07); the docs call 2026-09-12 'current' but later ones exist, so which one is authoritative is ambiguous."
+
+[[unordered]]
+path = "seed_career_v2_preview_2026-08-25_parts_gz"
+reason = "Career taxonomy seed transport (staging/empty rebuild only per CLAUDE.md). Many dated transports exist (2026-08-25 ... 2026-10-07); the docs call 2026-09-12 'current' but later ones exist, so which one is authoritative is ambiguous."
+
+[[unordered]]
+path = "seed_career_v2_preview_2026-08-26_parts_gz"
+reason = "Career taxonomy seed transport (staging/empty rebuild only per CLAUDE.md). Many dated transports exist (2026-08-25 ... 2026-10-07); the docs call 2026-09-12 'current' but later ones exist, so which one is authoritative is ambiguous."
+
+[[unordered]]
+path = "seed_career_v2_role_reconciled_2026-10-07.sql.gz"
+reason = "Not mentioned in MIGRATION_RUNBOOK.md or CLAUDE.md, so no documented order."
+
+[[unordered]]
+path = "seed_career_v2_role_reconciled_2026-10-07_parts_gz"
+reason = "Not mentioned in MIGRATION_RUNBOOK.md or CLAUDE.md, so no documented order."
+
+[[unordered]]
+path = "seed_certification_lifecycle.sql"
+reason = "Runbook: 'run after the career seed has completed' - which career seed transport that means is ambiguous."
+
+[[unordered]]
+path = "seed_contextual_career_items_parts_gz"
+reason = "Older 10-part contextual transport; the runbook's authoritative contextual seed is seed_career_context_items_v1_parts (35 parts)."
+
+[[unordered]]
+path = "seed_demand_baseline.sql"
+reason = "Mentioned only in COMPLETE_DATA_MIGRATION_2026-08-17.md; no stated position."
+
+[[unordered]]
+path = "seed_phase8_9_enrichment.sql"
+reason = "Historical admission/enrichment seed (runbook table B #16); depends on the legacy seed_career_v2 which is gitignored."
+
+[[unordered]]
+path = "seed_programme_curriculum_contract_2026-09-18_parts_gz"
+reason = "Optional all-programme curriculum refresh (older 4-part variant); two dated variants exist and the runbook does not say which applies."
+
+[[unordered]]
+path = "seed_programme_curriculum_contract_2026-10-02.sql.gz"
+reason = "Optional all-programme curriculum refresh; the runbook says the D078-only path does not need it."
+
+[[unordered]]
+path = "seed_programme_curriculum_contract_2026-10-02_parts_gz"
+reason = "Optional all-programme curriculum refresh; the runbook says the D078-only path does not need it."
