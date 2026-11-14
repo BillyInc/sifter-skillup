@@ -69,9 +69,9 @@ def test_empty_ledger_plans_everything_in_manifest_order(tmp_path):
     assert [r.id for r in plan.would_run] == [
         "migration_a",
         "migration_b",
-        "migration_c",
         "migration_d",
     ]
+    assert [r.id for r in plan.needs_approval] == ["migration_c"]
     assert statuses(plan)["migration_c"] == pl.APPROVAL
     assert not plan.has_drift
 
@@ -91,7 +91,8 @@ def test_partial_applied_set_only_plans_the_rest(tmp_path):
         "migration_c": pl.APPROVAL,
         "migration_d": pl.PENDING,
     }
-    assert [r.id for r in plan.would_run] == ["migration_c", "migration_d"]
+    assert [r.id for r in plan.would_run] == ["migration_d"]
+    assert [r.id for r in plan.needs_approval] == ["migration_c"]
 
 
 def test_drift_is_detected_when_an_applied_file_is_edited(tmp_path):

@@ -41,6 +41,14 @@ parts group hashes its `"<part> <sha256>"` lines in numeric order.
    reason instead. Never guess.
 3. `kind = "destructive"` (drops, deletes without WHERE, replacement seeds) needs
    `manual_only = true` or an `approval = "..."` marker.
+   A `requires` edge must be provable from the SQL (an ALTER/INSERT/REFERENCES on a table
+   another **earlier ordered** entry creates); cite the file and line in a comment. If the
+   dependency is an `[[unordered]]` file or an entry listed *later*, do not reorder: add
+   `external_requires = [{ ref = "...", evidence = "file:line ..." }]`. `verify-manifest` and
+   `plan` report it as an unresolved dependency (a warning; nothing is blocked or reordered).
+   If the linter flags a `schema`/`seed` entry as destructive (e.g. `DROP POLICY IF EXISTS`
+   before re-creating it), either mark it `destructive` or add `allow_destructive_reason`.
+   Manifest paths must stay inside `backend/` (no `..`, no absolute paths).
 4. `uv run pytest tests/test_migrate_repo_manifest.py` - it fails if any
    `migration_*.sql` (or seed/patch file or part directory) is in neither list.
 

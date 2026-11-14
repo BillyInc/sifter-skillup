@@ -36,8 +36,79 @@ _BEGIN = re.compile(r"^\s*(?:BEGIN|START\s+TRANSACTION)\b[^;\n]*;", re.I | re.M)
 _COMMIT = re.compile(r"^\s*COMMIT\b[^;\n]*;", re.I | re.M)
 _ROLLBACK = re.compile(r"^\s*ROLLBACK\b[^;\n]*;", re.I | re.M)
 _DROP_TABLE = re.compile(r"\bDROP\s+TABLE\b", re.I)
-_DROP_COLUMN = re.compile(r"\bDROP\s+COLUMN\b", re.I)
 _DROP_SCHEMA = re.compile(r"\bDROP\s+SCHEMA\b", re.I)
+_DROP_VIEW = re.compile(r"\bDROP\s+(?:MATERIALIZED\s+)?VIEW\b", re.I)
+_DROP_FUNCTION = re.compile(r"\bDROP\s+(?:FUNCTION|PROCEDURE|ROUTINE)\b", re.I)
+_DROP_POLICY = re.compile(r"\bDROP\s+POLICY\b", re.I)
+_DROP_TRIGGER = re.compile(r"\bDROP\s+TRIGGER\b", re.I)
+_DROP_INDEX = re.compile(r"\bDROP\s+INDEX\b", re.I)
+_DROP_CONSTRAINT = re.compile(r"\bDROP\s+CONSTRAINT\b", re.I)
+_DROP_TYPE = re.compile(r"\bDROP\s+TYPE\b", re.I)
+_DROP_DATABASE = re.compile(r"\bDROP\s+DATABASE\b", re.I)
+_DROP_OTHER = re.compile(
+    r"\bDROP\s+(?:SEQUENCE|EXTENSION|ROLE|USER|OWNED|RULE|AGGREGATE|DOMAIN|OPERATOR"
+    r"|COLLATION|CAST|PUBLICATION|SUBSCRIPTION|TABLESPACE|LANGUAGE|EVENT\s+TRIGGER)\b",
+    re.I,
+)
+_ALTER_TABLE = re.compile(r"\bALTER\s+TABLE\b", re.I)
+# ``DROP [COLUMN] [IF EXISTS] name`` inside an ALTER TABLE; property drops
+# (NOT NULL / DEFAULT / IDENTITY / EXPRESSION) and DROP CONSTRAINT are not column drops.
+_ALTER_DROP_COLUMN = re.compile(
+    r"\bDROP\s+(?:COLUMN\s+)?(?:IF\s+EXISTS\s+)?"
+    r"(?!NOT\s+NULL\b|DEFAULT\b|IDENTITY\b|EXPRESSION\b|CONSTRAINT\b)[A-Za-z_\"]",
+    re.I,
+)
+_CASCADE = re.compile(r"\bCASCADE\b", re.I)
+_FK_ACTION = re.compile(r"\bON\s+(?:DELETE|UPDATE)\s+$", re.I)
+_UPDATE_STMT = re.compile(
+    r"\bUPDATE\s+(?:ONLY\s+)?[\w.\"]+(?:\s+(?:AS\s+)?[A-Za-z_]\w*)?\s+SET\b", re.I
+)
+_DO_BEFORE = re.compile(r"\bDO\s+$", re.I)
+_AFTER_DO = re.compile(r"\bDO\s+(?:LANGUAGE\s+['\"]?\w+['\"]?\s+)?$", re.I)
+_EXECUTE = re.compile(r"\bEXECUTE\b", re.I)
+_STRING_OR_DOLLAR = re.compile(
+    r"""'[^']*(?:''[^']*)*'|(?P<tag>\$[A-Za-z_]*\$).*?(?P=tag)""", re.S
+)
+
+# Analysis counters that make a file "destructive" (also the table legend order).
+DESTRUCTIVE_FIELDS = (
+    "drop_table",
+    "drop_column",
+    "drop_schema",
+    "drop_view",
+    "drop_function",
+    "drop_policy",
+    "drop_trigger",
+    "drop_index",
+    "drop_constraint",
+    "drop_type",
+    "drop_database",
+    "drop_other",
+    "truncate",
+    "delete_without_where",
+    "update_without_where",
+    "cascade",
+    "dynamic_destructive",
+)
+_LEGEND = {
+    "drop_table": "DT",
+    "drop_column": "DC",
+    "drop_schema": "DS",
+    "drop_view": "DV",
+    "drop_function": "DF",
+    "drop_policy": "DP",
+    "drop_trigger": "DTG",
+    "drop_index": "DI",
+    "drop_constraint": "DK",
+    "drop_type": "DTY",
+    "drop_database": "DDB",
+    "drop_other": "DO",
+    "truncate": "TR",
+    "delete_without_where": "DEL",
+    "update_without_where": "UPD",
+    "cascade": "CAS",
+    "dynamic_destructive": "DYN",
+}
 _TRUNCATE = re.compile(r"\bTRUNCATE\b", re.I)
 _DELETE_FROM = re.compile(r"\bDELETE\s+FROM\b", re.I)
 _WHERE = re.compile(r"\bWHERE\b", re.I)
@@ -82,6 +153,102 @@ def _delete_without_where(flat: str) -> int:
     return count
 
 
+def _update_without_where(flat: str) -> int:
+    count = 0
+    for match in _UPDATE_STMT.finditer(flat):
+        if _DO_BEFORE.search(flat[max(0, match.start() - 12) : match.start()]):
+            continue  # ON CONFLICT ... DO UPDATE SET
+        end = flat.find(";", match.end())
+        statement = flat[match.start() : end if end != -1 else len(flat)]
+        if not _WHERE.search(statement):
+            count += 1
+    return count
+
+
+def _cascade_count(flat: str) -> int:
+    """``CASCADE`` that is not the ``ON DELETE|UPDATE CASCADE`` foreign-key action."""
+    return sum(
+        1
+        for match in _CASCADE.finditer(flat)
+        if not _FK_ACTION.search(flat[max(0, match.start() - 14) : match.start()])
+    )
+
+
+def _alter_drop_column(flat: str) -> int:
+    count = 0
+    for match in _ALTER_TABLE.finditer(flat):
+        end = flat.find(";", match.end())
+        statement = flat[match.end() : end if end != -1 else len(flat)]
+        count += len(_ALTER_DROP_COLUMN.findall(statement))
+    return count
+
+
+def _strip_comments_only(text: str) -> str:
+    def replace(match: re.Match[str]) -> str:
+        token = match.group(0)
+        return " " if token.startswith(("--", "/*")) else token
+
+    return _TOKEN.sub(replace, text)
+
+
+def _do_block_bodies(text: str) -> Iterable[str]:
+    """Bodies of ``DO $$ ... $$`` blocks (comments removed, strings kept)."""
+    for match in _TOKEN.finditer(text):
+        tag = match.groupdict().get("tag")
+        if tag and _AFTER_DO.search(text[max(0, match.start() - 40) : match.start()]):
+            yield _strip_comments_only(match.group(0)[len(tag) : -len(tag)])
+
+
+def _execute_literals(body: str) -> list[str]:
+    """String literals inside ``EXECUTE ...;`` statements of a DO body (dynamic SQL)."""
+    literals: list[str] = []
+    for execute in _EXECUTE.finditer(body):
+        position = execute.end()
+        while position < len(body) and body[position] != ";":
+            literal = _STRING_OR_DOLLAR.match(body, position)
+            if literal:
+                token = literal.group(0)
+                tag = literal.groupdict().get("tag")
+                if tag:
+                    literals.append(token[len(tag) : -len(tag)])
+                else:
+                    literals.append(token[1:-1].replace("''", "'"))
+                position = literal.end()
+            else:
+                position += 1
+    return literals
+
+
+def _destructive_counts(flat: str) -> dict[str, int]:
+    return {
+        "drop_table": len(_DROP_TABLE.findall(flat)),
+        "drop_column": _alter_drop_column(flat),
+        "drop_schema": len(_DROP_SCHEMA.findall(flat)),
+        "drop_view": len(_DROP_VIEW.findall(flat)),
+        "drop_function": len(_DROP_FUNCTION.findall(flat)),
+        "drop_policy": len(_DROP_POLICY.findall(flat)),
+        "drop_trigger": len(_DROP_TRIGGER.findall(flat)),
+        "drop_index": len(_DROP_INDEX.findall(flat)),
+        "drop_constraint": len(_DROP_CONSTRAINT.findall(flat)),
+        "drop_type": len(_DROP_TYPE.findall(flat)),
+        "drop_database": len(_DROP_DATABASE.findall(flat)),
+        "drop_other": len(_DROP_OTHER.findall(flat)),
+        "truncate": len(_TRUNCATE.findall(flat)),
+        "delete_without_where": _delete_without_where(flat),
+        "update_without_where": _update_without_where(flat),
+        "cascade": _cascade_count(flat),
+    }
+
+
+def _dynamic_destructive(text: str) -> int:
+    """Destructive statements hidden in ``EXECUTE '...'`` strings of ``DO`` blocks."""
+    total = 0
+    for body in _do_block_bodies(text):
+        for literal in _execute_literals(body):
+            total += sum(_destructive_counts(strip_sql(literal, True)).values())
+    return total
+
+
 @dataclass
 class Analysis:
     begin_count: int = 0
@@ -91,8 +258,20 @@ class Analysis:
     drop_table: int = 0
     drop_column: int = 0
     drop_schema: int = 0
+    drop_view: int = 0
+    drop_function: int = 0
+    drop_policy: int = 0
+    drop_trigger: int = 0
+    drop_index: int = 0
+    drop_constraint: int = 0
+    drop_type: int = 0
+    drop_database: int = 0
+    drop_other: int = 0
     truncate: int = 0
     delete_without_where: int = 0
+    update_without_where: int = 0
+    cascade: int = 0
+    dynamic_destructive: int = 0
     destructive: bool = False
     if_not_exists: int = 0
     if_exists: int = 0
@@ -113,18 +292,10 @@ def analyse_sql(text: str) -> Analysis:
     result.commit_count = len(_COMMIT.findall(top))
     result.rollback_count = len(_ROLLBACK.findall(top))
     result.explicit_transaction = result.begin_count > 0 and result.commit_count > 0
-    result.drop_table = len(_DROP_TABLE.findall(flat))
-    result.drop_column = len(_DROP_COLUMN.findall(flat))
-    result.drop_schema = len(_DROP_SCHEMA.findall(flat))
-    result.truncate = len(_TRUNCATE.findall(flat))
-    result.delete_without_where = _delete_without_where(flat)
-    result.destructive = bool(
-        result.drop_table
-        or result.drop_column
-        or result.drop_schema
-        or result.truncate
-        or result.delete_without_where
-    )
+    for name, value in _destructive_counts(flat).items():
+        setattr(result, name, value)
+    result.dynamic_destructive = _dynamic_destructive(text)
+    result.destructive = any(getattr(result, name) for name in DESTRUCTIVE_FIELDS)
     result.if_not_exists = len(_IF_NOT_EXISTS.findall(flat))
     result.if_exists = len(_IF_EXISTS.findall(flat))
     result.create_or_replace = len(_CREATE_OR_REPLACE.findall(flat))
@@ -166,12 +337,19 @@ def _role(name: str) -> str:
     return "other"
 
 
-def _compare_counterpart(plain: Path, gz: Path, plain_sha: str) -> str:
-    """``match``, ``crlf-only`` (same text, different line endings) or ``MISMATCH``."""
+def _compare_counterpart(
+    plain: Path, gz: Path, plain_sha: str, max_bytes: int = MAX_ANALYSE_BYTES
+) -> str:
+    """``match``, ``crlf-only`` (same text, different line endings), ``MISMATCH`` or
+    ``unverified`` (differs by hash and is too large to compare in memory)."""
     if sqlio.sha256_file(gz) == plain_sha:
         return "match"
+    plain_bytes = sqlio.read_capped(plain, max_bytes)
+    gz_bytes = sqlio.read_capped(gz, max_bytes)
+    if plain_bytes is None or gz_bytes is None:
+        return "unverified"
     normalise = lambda raw: raw.replace(b"\r\n", b"\n")  # noqa: E731
-    if normalise(sqlio.read_bytes(plain)) == normalise(sqlio.read_bytes(gz)):
+    if normalise(plain_bytes) == normalise(gz_bytes):
         return "crlf-only"
     return "MISMATCH"
 
@@ -195,7 +373,9 @@ def lint_file(path: Path, root: Path, max_bytes: int = MAX_ANALYSE_BYTES) -> Fil
     if path.suffix != ".gz":
         gz = path.with_name(path.name + ".gz")
         if gz.is_file():
-            report.counterpart = _compare_counterpart(path, gz, report.sha256)
+            report.counterpart = _compare_counterpart(
+                path, gz, report.sha256, max_bytes
+            )
     if data is None:
         report.analysed = False
         report.notes.append(
@@ -265,7 +445,8 @@ def summarise(reports: list[FileReport]) -> dict[str, Any]:
             "gz_counterpart_differs": sum(
                 1
                 for r in reports
-                if r.role == role and r.counterpart in ("MISMATCH", "crlf-only")
+                if r.role == role
+                and r.counterpart in ("MISMATCH", "crlf-only", "unverified")
             ),
             "gz_counterpart_content_mismatch": sum(
                 1 for r in reports if r.role == role and r.counterpart == "MISMATCH"
@@ -280,7 +461,7 @@ def to_json(report: dict[str, Any]) -> str:
 
 def format_table(report: dict[str, Any]) -> str:
     """Human readable table. Columns: transaction, destructive, idempotence, RLS."""
-    header = f"{'file':<78} {'KiB':>8} {'txn':<5} {'destructive':<18} {'idem':<5} {'rls?':<5}"
+    header = f"{'file':<78} {'KiB':>8} {'txn':<5} {'destructive':<24} {'idem':<5} {'rls?':<5}"
     lines = [header, "-" * len(header)]
     for row in report["files"]:
         analysis = row["analysis"]
@@ -293,15 +474,9 @@ def format_table(report: dict[str, Any]) -> str:
         if analysis["begin_count"] > 1:
             txn += f"x{analysis['begin_count']}"
         parts = []
-        for key, label in (
-            ("drop_table", "DT"),
-            ("drop_column", "DC"),
-            ("drop_schema", "DS"),
-            ("truncate", "TR"),
-            ("delete_without_where", "DEL"),
-        ):
-            if analysis[key]:
-                parts.append(f"{label}{analysis[key]}")
+        for key in DESTRUCTIVE_FIELDS:
+            if analysis.get(key):
+                parts.append(f"{_LEGEND[key]}{analysis[key]}")
         destructive = ",".join(parts) or "-"
         idem = "yes" if analysis["has_idempotence_hint"] else "NO"
         rls = (
@@ -312,13 +487,17 @@ def format_table(report: dict[str, Any]) -> str:
         flag = {
             "MISMATCH": "  !gz-CONTENT-MISMATCH",
             "crlf-only": "  gz-crlf-only",
+            "unverified": "  gz-UNVERIFIED(too large)",
         }.get(row["counterpart"], "")
         lines.append(
-            f"{row['path']:<78} {row['size_bytes'] / 1024:>8.0f} {txn:<5} {destructive:<18} {idem:<5} {rls:<5}{flag}"
+            f"{row['path']:<78} {row['size_bytes'] / 1024:>8.0f} {txn:<5} {destructive:<24} {idem:<5} {rls:<5}{flag}"
         )
     lines.append("")
     lines.append(
-        "destructive legend: DT drop table, DC drop column, DS drop schema, TR truncate, DEL delete without where"
+        "destructive legend: DT drop table, DC drop column, DS drop schema, DV view, DF function,"
+        " DP policy, DTG trigger, DI index, DK constraint, DTY type, DDB database, DO other drop,"
+        " TR truncate, DEL delete without where, UPD update without where, CAS cascade,"
+        " DYN destructive dynamic SQL in DO"
     )
     for role, stats in report["summary"].items():
         lines.append(
@@ -329,3 +508,41 @@ def format_table(report: dict[str, Any]) -> str:
             f" (content differs {stats['gz_counterpart_content_mismatch']})"
         )
     return "\n".join(lines)
+
+
+@dataclass
+class KindConflict:
+    entry_id: str
+    kind: str
+    constructs: dict[str, int]
+
+    def __str__(self) -> str:
+        found = ", ".join(f"{_LEGEND[k]}{v}" for k, v in self.constructs.items())
+        return f"{self.entry_id} (kind={self.kind}): {found}"
+
+
+def kind_conflicts(
+    manifest: mf.Manifest, root: Path, max_bytes: int = MAX_ANALYSE_BYTES
+) -> list[KindConflict]:
+    """Entries whose SQL looks destructive but are not ``kind = "destructive"``.
+
+    ``schema``/``seed`` entries that the linter reports as destructive conflict unless
+    they carry an explicit ``allow_destructive_reason``. Files over ``max_bytes`` are
+    not analysed and cannot conflict.
+    """
+    conflicts: list[KindConflict] = []
+    for entry in manifest.entries:
+        if entry.kind == "destructive" or entry.allow_destructive_reason:
+            continue
+        found: dict[str, int] = {}
+        for path in mf.entry_files(entry, root):
+            analysis = lint_file(path, root, max_bytes).analysis
+            if analysis is None:
+                continue
+            for name in DESTRUCTIVE_FIELDS:
+                value = getattr(analysis, name)
+                if value:
+                    found[name] = found.get(name, 0) + value
+        if found:
+            conflicts.append(KindConflict(entry.id, entry.kind, found))
+    return conflicts

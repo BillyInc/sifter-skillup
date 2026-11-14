@@ -51,13 +51,33 @@ def cmd_lint(args: argparse.Namespace) -> int:
 
 def cmd_plan(args: argparse.Namespace) -> int:
     manifest, root = _load(args)
-    ledger = load_applied_json(Path(args.applied)) if args.applied else InMemoryLedger()
-    plan = plan_mod.build_plan(
-        manifest,
-        ledger,
-        plan_mod.default_checksummer(root),
-        checksum_pending=args.checksums,
-    )
+    errors = [i for i in mf.validate(manifest, root) if i.severity == "error"]
+    if errors:
+        for issue in errors:
+            print(issue, file=sys.stderr)
+        print(
+            f"plan refused: the manifest has {len(errors)} error(s); "
+            "fix them (see 'verify-manifest') first",
+            file=sys.stderr,
+        )
+        return 1
+    try:
+        ledger = (
+            load_applied_json(Path(args.applied)) if args.applied else InMemoryLedger()
+        )
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        print(f"cannot read --applied file '{args.applied}': {exc}", file=sys.stderr)
+        return 1
+    try:
+        plan = plan_mod.build_plan(
+            manifest,
+            ledger,
+            plan_mod.default_checksummer(root),
+            checksum_pending=args.checksums,
+        )
+    except FileNotFoundError as exc:
+        print(f"plan failed: {exc}", file=sys.stderr)
+        return 1
     if args.json:
         print(json.dumps(plan_mod.plan_to_dict(plan), indent=2))
     else:

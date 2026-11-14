@@ -11,7 +11,7 @@ from __future__ import annotations
 import hashlib
 import tomllib
 from dataclasses import dataclass
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any
 
 from . import sqlio
@@ -28,6 +28,20 @@ class ManifestError(ValueError):
 
 
 @dataclass(frozen=True)
+class ExternalRequire:
+    """A dependency the manifest cannot express as an ordered ``requires`` edge.
+
+    ``ref`` is either the ``path`` of an ``[[unordered]]`` item, or the ``id`` of an
+    ordered entry that is listed *after* the requiring entry. It is reported as an
+    unresolved dependency by ``verify-manifest`` and ``plan``; it never reorders
+    anything. ``evidence`` must cite the SQL (file and line) that proves the need.
+    """
+
+    ref: str
+    evidence: str
+
+
+@dataclass(frozen=True)
 class Entry:
     id: str
     kind: str
@@ -35,6 +49,8 @@ class Entry:
     parts_glob: str | None = None
     expected_parts: int | None = None
     requires: tuple[str, ...] = ()
+    external_requires: tuple[ExternalRequire, ...] = ()
+    allow_destructive_reason: str | None = None
     verify: tuple[str, ...] = ()
     down: str | None = None
     manual_only: bool = False
@@ -79,6 +95,27 @@ def _str_list(value: Any, field_name: str, where: str) -> tuple[str, ...]:
     return tuple(value)
 
 
+def _external_requires(value: Any, where: str) -> tuple[ExternalRequire, ...]:
+    if value is None:
+        return ()
+    if not isinstance(value, list):
+        raise ManifestError(f"{where}: 'external_requires' must be an array of tables")
+    result: list[ExternalRequire] = []
+    for item in value:
+        if (
+            not isinstance(item, dict)
+            or not isinstance(item.get("ref"), str)
+            or not item["ref"]
+            or not isinstance(item.get("evidence"), str)
+            or not item["evidence"].strip()
+        ):
+            raise ManifestError(
+                f"{where}: each external_requires item needs a non-empty 'ref' and 'evidence'"
+            )
+        result.append(ExternalRequire(ref=item["ref"], evidence=item["evidence"]))
+    return tuple(result)
+
+
 def parse_manifest(data: dict[str, Any]) -> Manifest:
     """Build a ``Manifest`` from parsed TOML, raising ``ManifestError`` on bad shapes."""
     raw_entries = data.get("entry", [])
@@ -118,6 +155,13 @@ def parse_manifest(data: dict[str, Any]) -> Manifest:
         down = raw.get("down")
         if down is not None and not isinstance(down, str):
             raise ManifestError(f"{where}: 'down' must be a path string")
+        allow_reason = raw.get("allow_destructive_reason")
+        if allow_reason is not None and (
+            not isinstance(allow_reason, str) or not allow_reason.strip()
+        ):
+            raise ManifestError(
+                f"{where}: 'allow_destructive_reason' must be a non-empty string"
+            )
         entries.append(
             Entry(
                 id=entry_id,
@@ -126,6 +170,10 @@ def parse_manifest(data: dict[str, Any]) -> Manifest:
                 parts_glob=glob,
                 expected_parts=expected,
                 requires=_str_list(raw.get("requires"), "requires", where),
+                external_requires=_external_requires(
+                    raw.get("external_requires"), where
+                ),
+                allow_destructive_reason=allow_reason,
                 verify=_str_list(raw.get("verify"), "verify", where),
                 down=down,
                 manual_only=manual_only,
@@ -167,14 +215,41 @@ def load_manifest(path: Path = DEFAULT_MANIFEST) -> Manifest:
 # ---------------------------------------------------------------------------
 
 
+def is_contained(root: Path, rel: str) -> bool:
+    """True if manifest path ``rel`` stays inside ``root`` (the ``backend/`` directory).
+
+    Absolute paths and any ``..`` component are rejected outright; the resolved
+    location must also be inside ``root`` so a symlink cannot lead out of it.
+    """
+    pure = PurePosixPath(rel.replace("\\", "/"))
+    if pure.is_absolute() or rel.startswith(("/", "\\")) or ".." in pure.parts:
+        return False
+    if len(rel) > 1 and rel[1] == ":":  # Windows drive letter
+        return False
+    return (root / rel).resolve().is_relative_to(root.resolve())
+
+
 def entry_files(entry: Entry, root: Path) -> list[Path]:
-    """Existing files for an entry (a single file, or the numeric-ordered parts)."""
+    """Existing files for an entry (a single file, or the numeric-ordered parts).
+
+    Paths that escape ``root`` yield no files; ``validate`` reports them.
+    """
+    target = entry.path if entry.path is not None else entry.parts_glob
+    assert target is not None
+    if not is_contained(root, target):
+        return []
     if entry.path is not None:
         candidate = root / entry.path
         return [candidate] if candidate.is_file() else []
     assert entry.parts_glob is not None
+    root_resolved = root.resolve()
     return sorted(
-        (p for p in root.glob(entry.parts_glob) if p.is_file()), key=sqlio.part_sort_key
+        (
+            p
+            for p in root.glob(entry.parts_glob)
+            if p.is_file() and p.resolve().is_relative_to(root_resolved)
+        ),
+        key=sqlio.part_sort_key,
     )
 
 
@@ -271,15 +346,32 @@ def validate(manifest: Manifest, root: Path) -> list[Issue]:
 
     # Per-entry checks.
     for entry in manifest.entries:
+        for label, value in (
+            ("path", entry.path),
+            ("parts_glob", entry.parts_glob),
+            ("down", entry.down),
+        ):
+            if value is not None and not is_contained(root, value):
+                err(
+                    "PATH_ESCAPES_ROOT",
+                    f"{entry.id}: {label} '{value}' must stay inside the backend directory",
+                )
+        for check in entry.verify:
+            if check.endswith(".sql") and not is_contained(root, check):
+                err(
+                    "PATH_ESCAPES_ROOT",
+                    f"{entry.id}: verify file '{check}' must stay inside the backend directory",
+                )
         files = entry_files(entry, root)
-        if entry.path is not None and not files:
+        if entry.path is not None and not files and is_contained(root, entry.path):
             err("MISSING_PATH", f"{entry.id}: path '{entry.path}' does not exist")
         if entry.is_group:
             if not files:
-                err(
-                    "MISSING_PATH",
-                    f"{entry.id}: parts_glob '{entry.parts_glob}' matches no files",
-                )
+                if is_contained(root, entry.parts_glob or ""):
+                    err(
+                        "MISSING_PATH",
+                        f"{entry.id}: parts_glob '{entry.parts_glob}' matches no files",
+                    )
             else:
                 numbers = [sqlio.part_number(p) for p in files]
                 if None in numbers:
@@ -300,12 +392,20 @@ def validate(manifest: Manifest, root: Path) -> list[Issue]:
                         "PARTS_GAP",
                         f"{entry.id}: expected {entry.expected_parts} parts, found {len(files)}",
                     )
-        if entry.down is not None and not (root / entry.down).is_file():
+        if (
+            entry.down is not None
+            and is_contained(root, entry.down)
+            and not (root / entry.down).is_file()
+        ):
             err(
                 "MISSING_PATH", f"{entry.id}: down script '{entry.down}' does not exist"
             )
         for check in entry.verify:
-            if check.endswith(".sql") and not (root / check).is_file():
+            if (
+                check.endswith(".sql")
+                and is_contained(root, check)
+                and not (root / check).is_file()
+            ):
                 err("MISSING_PATH", f"{entry.id}: verify file '{check}' does not exist")
         if entry.kind == "destructive" and not (entry.manual_only or entry.approval):
             err(
@@ -323,6 +423,31 @@ def validate(manifest: Manifest, root: Path) -> list[Issue]:
                 err("UNKNOWN_REQUIRE", f"{entry.id} requires unknown id '{dep}'")
             elif positions[dep] > positions[entry.id]:
                 err("ORDER", f"{entry.id} requires '{dep}', which is listed after it")
+    unordered_paths = {item.path for item in manifest.unordered}
+    for entry in manifest.entries:
+        for ext in entry.external_requires:
+            if ext.ref == entry.id:
+                err("EXTERNAL_REQUIRE", f"{entry.id} lists itself in external_requires")
+            elif ext.ref in positions and positions[ext.ref] < positions[entry.id]:
+                err(
+                    "EXTERNAL_REQUIRE",
+                    f"{entry.id}: '{ext.ref}' is ordered earlier, express it in 'requires'",
+                )
+            elif ext.ref in positions or ext.ref in unordered_paths:
+                issues.append(
+                    Issue(
+                        "UNRESOLVED_DEPENDENCY",
+                        f"{entry.id} depends on '{ext.ref}', which has no earlier ordered "
+                        f"position ({ext.evidence})",
+                        severity="warning",
+                    )
+                )
+            else:
+                err(
+                    "EXTERNAL_REQUIRE",
+                    f"{entry.id}: external_requires '{ext.ref}' is neither an "
+                    "[[unordered]] path nor a later ordered id",
+                )
     graph = {entry.id: entry.requires for entry in manifest.entries}
     cycle = _find_cycle(graph)
     if cycle:
@@ -343,7 +468,12 @@ def validate(manifest: Manifest, root: Path) -> list[Issue]:
     for item in manifest.unordered:
         if not item.reason:
             err("UNORDERED_REASON", f"[[unordered]] '{item.path}' needs a reason")
-        if not (root / item.path).exists():
+        if not is_contained(root, item.path):
+            err(
+                "PATH_ESCAPES_ROOT",
+                f"[[unordered]] path '{item.path}' must stay inside the backend directory",
+            )
+        elif not (root / item.path).exists():
             err("MISSING_PATH", f"[[unordered]] path '{item.path}' does not exist")
         key = sqlio.stem(Path(item.path).name)
         if key in unordered_keys:
