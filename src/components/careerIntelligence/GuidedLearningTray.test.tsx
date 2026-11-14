@@ -174,7 +174,8 @@ describe("GuidedLearningTray", () => {
     expect(screen.getByText("1. Frame a researchable social question")).toBeTruthy();
     expect(screen.getByText("2. Evaluate evidence and its limits")).toBeTruthy();
     expect(screen.getByText("3. Communicate findings for the intended audience")).toBeTruthy();
-    expect(screen.getByText(/Area: Sociology and Social Anthropology · Role: Social Researcher/)).toBeTruthy();
+    expect(screen.getByText("Area: Sociology and Social Anthropology")).toBeTruthy();
+    expect(screen.getByText("Role: Social Researcher")).toBeTruthy();
     expect(screen.getByText("Prepare an interview guide")).toBeTruthy();
     expect(screen.getByText("Keep structured field notes")).toBeTruthy();
     expect(screen.queryByText("Unselected survey questionnaire")).toBeNull();

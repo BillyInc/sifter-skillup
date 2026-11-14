@@ -118,7 +118,9 @@ describe("D078 method and combination picker", () => {
       for (const detail of [combination.whyCombine, combination.howUsed, combination.condition, combination.limits, combination.selectionRule]) {
         expect(detail.trim()).not.toBe("");
       }
-      expect(screen.getByText("This named design now controls the route below. Its sequence, method contributions, matching preparation and supported areas appear together there.")).toBeTruthy();
+      expect(screen.getByText(design.id === "combo:participatory-method-choice"
+        ? "The participatory frame is active. Choose one or more evidence methods below; the areas and roles will update to the routes supported by all your choices."
+        : "This named design now controls the route below. Its sequence, method contributions, matching preparation and supported areas appear together there.")).toBeTruthy();
       expect(projectD078Route(selection).methods.filter((method) => method.selected)).toEqual([]);
     }
   });
