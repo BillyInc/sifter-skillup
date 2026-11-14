@@ -127,3 +127,8 @@ nul
 # characters of raw backend error bodies, and land in whatever directory the
 # script was run from.
 e2e*.json
+
+# Raw copies of generated JSON that the app imports. They are committed only as
+# .json.gz; CI and the deploy workflows gunzip them before building.
+data/career-mapping/_audit/sociology_theme_student_abilities_2026_10_22.json
+data/career-mapping/_audit/sociology_curriculum_contract_2026-09-17.json
