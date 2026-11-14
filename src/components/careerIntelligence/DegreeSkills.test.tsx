@@ -502,7 +502,7 @@ describe("DegreeSkills programme preview", () => {
     expect(screen.getByText(/not free copies of the books above/)).toBeTruthy();
     fireEvent.press(screen.getByRole("button", { name: "View 2 resources for Ideas and foundations" }));
     expect(screen.getByText("Sociology")).toBeTruthy();
-    expect(screen.getAllByText("Sociology: Themes and Perspectives (8th edition)")).toHaveLength(2);
+    expect(screen.getAllByText("Sociology: Themes and Perspectives (8th edition)")).toHaveLength(1);
     fireEvent.press(screen.getAllByRole("button", { name: "Why included?" })[0]);
     expect(screen.getByText("Wiley identifies the stored ninth edition and chapter 3, Theories and Perspectives.")).toBeTruthy();
   });

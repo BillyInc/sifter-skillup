@@ -122,6 +122,8 @@ describe("ReferenceShell accessibility", () => {
     expect(tabs.map((t: any) => t.props.accessibilityLabel)).toEqual([
       "Home",
       "Explore",
+      // d7dda1f added a deliberate sixth destination, /(tabs)/build.
+      "Build",
       // Renamed from "Jobs" in 237d074. The shell is self-consistent on
       // "Opportunities": both MOBILE_NAV and PRIMARY_NAV use that label, the
       // route is /(tabs)/opportunities, and the sub-copy reads "Opportunities,
