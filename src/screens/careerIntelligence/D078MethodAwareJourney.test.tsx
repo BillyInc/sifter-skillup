@@ -5,13 +5,16 @@ jest.mock("react-native-safe-area-context", () => ({
   useSafeAreaInsets: () => ({ top: 0, right: 0, bottom: 0, left: 0 }),
 }));
 import React, { useState } from "react";
-import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { fireEvent, render, screen } from "@testing-library/react-native";
+import { AccessibilityInfo, Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react-native";
+import { API } from "@/lib/api";
 import { ThemeProvider } from "@/theme";
+import { PersistentLearningPlanDockProvider } from "@/components/careerIntelligence/PersistentLearningPlanDock";
 import { pending, real } from "@/types/career";
 import type { GuidanceReportPath } from "@/lib/careerData";
 import type { CareerLearningResource } from "@/types/career";
 import { d078ShareInputFromSnapshot } from "@/lib/d078Snapshot";
+import type { GuidanceRouteContext } from "@/lib/guidanceRouteContext";
 import {
   D078AreaResults,
   D078AreaRoute,
@@ -26,6 +29,7 @@ import {
   d078PrimaryActionStyle,
   d078TraySheetStyle,
   d078ShareMessage,
+  d078SelectionAnalyticsDelta,
   d078MotionOffset,
   d078RelationshipScrollOffset,
   d078PickerSelection,
@@ -38,13 +42,17 @@ import {
 import { MethodChoicePanel } from "@/components/careerIntelligence/MethodChoicePanel";
 import { DetailScaffold } from "@/components/careerIntelligence/DetailScaffold";
 import {
+  D078_SOCIETY_KNOWLEDGE_ITEM_ID,
   INITIAL_D078_SELECTION,
   d078Node,
   d078ApplicableLayerItems,
   d078GraphDataForTests,
   projectD078Route,
+  isD078SelectableAlternativeEdge,
   selectD078Area,
   selectD078Role,
+  toggleD078TaskFamily,
+  toggleD078AddedItem,
   toggleD078Combination,
   toggleD078Method,
 } from "@/lib/d078RouteProjection";
@@ -53,7 +61,21 @@ const INTERVIEWS = "domain-item:d078-interviews";
 const CHI_SQUARE = "domain-item:d078-chi-square-tests";
 const INTERVIEW_OBSERVATION = "combo:interview-and-observation";
 const QUALITATIVE = "domain-item:d078-qualitative-approach";
+const QUANTITATIVE = "domain-item:d078-quantitative-approach";
 const SURVEY = "domain-item:d078-survey-method";
+const isToolItemNode = (node?: { item_type?: string; kind?: string }) =>
+  ["tool", "programming_language", "python_library", "computational_environment"].includes(node?.item_type ?? "")
+  || node?.kind === "area_tool_option" || node?.kind === "area_tool_application_reference";
+const hasReviewedAlternativeEvidence = isD078SelectableAlternativeEdge;
+const hasExplicitAlternativeEdge = (leftId: string, rightId: string) => d078GraphDataForTests().typed_relationship_edges.some((edge) =>
+  hasReviewedAlternativeEvidence(edge)
+  && ((edge.sourceId === leftId && edge.targetId === rightId) || (edge.sourceId === rightId && edge.targetId === leftId)),
+);
+const hasProgressiveEdge = (leftId: string, rightId: string) => d078GraphDataForTests().typed_relationship_edges.some((edge) =>
+  edge.status === "resolved_ready_for_use"
+  && ["builds_on", "complements", "supports", "useful_for", "tool_for", "specialist_extension_of", "method_contribution_reveals_domain_item", "method_contribution_reveals_tool", "domain_item_supports_area_task", "task_has_area_learning_item", "method_applies_to_area_task", "method_contribution_applies_to_area_task", "area_task_family_supports_role_task", "tool_supports_role_task"].includes(edge.relationship)
+  && ((edge.sourceId === leftId && edge.targetId === rightId) || (edge.sourceId === rightId && edge.targetId === leftId)),
+);
 const SOCIETY_KNOWLEDGE = "runtime-item:domain:d078:d078-society-and-social-world-knowledge";
 const PROGRAMME_KEY = "programme-1::D078";
 
@@ -75,6 +97,111 @@ function JourneyHarness({ initial = INITIAL_D078_SELECTION }: { initial?: typeof
 }
 
 describe("D078 method-aware journey UI acceptance", () => {
+  it("records removals with the resulting route context for current-interest analytics", () => {
+    const before = toggleD078Method(INITIAL_D078_SELECTION, INTERVIEWS);
+    const events = d078SelectionAnalyticsDelta(before, INITIAL_D078_SELECTION, {
+      programmeId: "sociology", schoolId: "unilag", domainId: "D078",
+    } satisfies GuidanceRouteContext, "stack-1");
+    const removal = events.find((event) => event.action === "selection_removed" && event.entity_id === INTERVIEWS);
+
+    expect(removal).toBeTruthy();
+    expect(removal?.context.method_ids).toEqual([]);
+    expect(removal?.context.route_label).not.toContain("Interviews");
+  });
+
+  it("tracks copied combined routes as current choices without counting copies as new add actions", () => {
+    const design = d078GraphDataForTests().combination_designs.find((entry) => entry.id === INTERVIEW_OBSERVATION)!;
+    const individualMethods = design.required_method_ids.reduce(
+      (selection, methodId) => toggleD078Method(selection, methodId),
+      INITIAL_D078_SELECTION,
+    );
+    const combined = toggleD078Combination(individualMethods, design.id);
+    const combineEvents = d078SelectionAnalyticsDelta(
+      individualMethods,
+      combined,
+      { programmeId: "sociology", schoolId: "unilag", domainId: "D078" },
+      "d078-route-1",
+    );
+    expect(combineEvents.filter((event) => event.entity_type === "method")).toHaveLength(0);
+    expect(combineEvents.map((event) => event.entity_type)).toEqual(["research_design"]);
+    const events = d078SelectionAnalyticsDelta(
+      INITIAL_D078_SELECTION,
+      combined,
+      { programmeId: "sociology", schoolId: "unilag", domainId: "D078" },
+      "d078-route-2",
+      "selection_copied",
+    );
+
+    expect(events.find((event) => event.entity_type === "research_design" && event.entity_id === design.id)?.action).toBe("selection_copied");
+    expect(events.filter((event) => event.entity_type === "method").map((event) => event.entity_id).sort()).toEqual([...design.required_method_ids].sort());
+    expect(events.every((event) => event.action === "selection_copied")).toBe(true);
+    expect(events.every((event) => event.context.selection_scope_id.endsWith(":d078-route-2"))).toBe(true);
+    expect(events[0]?.context.method_ids.sort()).toEqual([...design.required_method_ids].sort());
+    expect(events[0]?.context.design_ids).toEqual([design.id]);
+  });
+
+  it("records an area-item selection from the area page for current-interest analytics", async () => {
+    const analytics = jest.spyOn(API, "trackLearningInterest").mockResolvedValue(undefined as never);
+    const selection = toggleD078Method(INITIAL_D078_SELECTION, INTERVIEWS);
+    const projection = projectD078Route(selection);
+    const area = projection.visibleAreas.find((entry) => (projection.areaItemIdsByArea[entry.areaId] ?? []).length > 0)!;
+    const itemId = projection.areaItemIdsByArea[area.areaId][0];
+    const item = d078Node(itemId)!;
+
+    render(<ThemeProvider><D078AreaRoute
+      domainKey="D078"
+      areaId={area.areaId}
+      initialSelection={selection}
+      roles={[]}
+      guidanceContext={{ domainId: "D078", areaId: area.areaId }}
+    /></ThemeProvider>);
+
+    // Student-facing term expansion can add a short parenthetical to a title
+    // (for example, "participant observation"); match the unchanged title
+    // prefix instead of assuming the raw graph label is the whole accessible name.
+    const escapedItemWords = item.label.split(/\s+/).map((word) => word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+    fireEvent.press(screen.getByRole("button", {
+      name: new RegExp(`^Add ${escapedItemWords.join(".*?")}.*to your learning$`),
+    }));
+    await waitFor(() => expect(analytics).toHaveBeenCalledWith(expect.objectContaining({
+      action: "selection_added",
+      entity_id: itemId,
+      selection_scope_id: expect.stringContaining("d078:"),
+      area_id: area.areaId,
+    })));
+    analytics.mockRestore();
+  });
+
+  it("records a role-item selection from the role page for current-interest analytics", async () => {
+    const analytics = jest.spyOn(API, "trackLearningInterest").mockResolvedValue(undefined as never);
+    let selection = toggleD078Method(INITIAL_D078_SELECTION, INTERVIEWS);
+    const role = projectD078Route(selection).visibleRoles.find((entry) => entry.areaId === "D078:sociology-social-anthropology")!;
+    selection = selectD078Area(selection, role.areaId);
+    selection = selectD078Role(selection, role.roleId);
+    const itemId = projectD078Route(selection).roleItemIds[0];
+    const item = d078Node(itemId)!;
+
+    render(<ThemeProvider><D078RoleRoute
+      areaId={role.areaId}
+      roleId={role.roleId}
+      roleName={role.label}
+      roleKey={`D078|${role.label}`}
+      initialSelection={selection}
+      roles={[]}
+      guidanceContext={{ domainId: "D078", areaId: role.areaId, roleId: role.roleId }}
+    /></ThemeProvider>);
+
+    fireEvent.press(screen.getByRole("button", { name: `Add ${item.label} to your learning` }));
+    await waitFor(() => expect(analytics).toHaveBeenCalledWith(expect.objectContaining({
+      action: "selection_added",
+      entity_id: itemId,
+      selection_scope_id: expect.stringContaining("d078:"),
+      area_id: role.areaId,
+      role_id: role.roleId,
+    })));
+    analytics.mockRestore();
+  });
+
   it("renders carried programme course titles at the card-title scale", () => {
     const themeKey = "ideas";
     const outcomeId = "programme-outcome:sociology:SOC 101:11";
@@ -223,7 +350,7 @@ describe("D078 method-aware journey UI acceptance", () => {
       routeLabel: "Sociology · Social Sciences",
       choices: [{ id: "interviews", label: "Interviews", kind: "method" as const }],
       foundations: ["Frame a researchable question", "Evaluate evidence", "Communicate findings"],
-      selectedItems: [{ id: "guide", label: "Prepare an interview guide", lane: "Useful for interviews", contextLevel: "domain" }],
+      selectedItems: [{ id: "guide", label: "Prepare an interview guide", lane: "Useful for interviews", contextLevel: "domain" as const }],
       onRemoveChoice: () => undefined,
       onRemoveItem: () => undefined,
     };
@@ -266,6 +393,7 @@ describe("D078 method-aware journey UI acceptance", () => {
     const rendered = render(<ThemeProvider><D078MethodAwareJourney domainKey="D078" programmeName="Sociology" guidanceContext={{ domainId: "D078" }} /></ThemeProvider>);
     const methodHeading = screen.getByText("Methods of research");
     expect(methodHeading).toBeTruthy();
+    expect(screen.queryByRole("button", { name: "Continue to methods after reviewing the three compulsory foundations" })).toBeNull();
     expect(screen.getByText(d078Node(SOCIETY_KNOWLEDGE)!.label)).toBeTruthy();
     layerIds.filter((id) => id !== SOCIETY_KNOWLEDGE).forEach((id) => expect(screen.queryByText(d078Node(id)?.label ?? id)).toBeNull());
     expect(screen.getByText("Choose one or more ways to investigate. Areas and roles appear only for the methods or named design you select.")).toBeTruthy();
@@ -276,7 +404,7 @@ describe("D078 method-aware journey UI acceptance", () => {
     expect(screen.getByText("Field-wide knowledge and useful learning")).toBeTruthy();
     for (const id of layerIds.filter((candidate) => candidate !== SOCIETY_KNOWLEDGE)) {
       const label = d078Node(id)?.label ?? id;
-      if (linkedToInterviews.has(id)) expect(screen.getByText(label)).toBeTruthy();
+      if (linkedToInterviews.has(id)) expect(screen.getAllByText(label).length).toBeGreaterThan(0);
       else expect(screen.queryByText(label)).toBeNull();
     }
     const renderedText = rendered.UNSAFE_getAllByType(Text);
@@ -291,9 +419,196 @@ describe("D078 method-aware journey UI acceptance", () => {
     expect(chosenLayer2Id).toBeTruthy();
     const chosenLayer2Label = d078Node(chosenLayer2Id!)?.label ?? chosenLayer2Id!;
     fireEvent.press(screen.getByRole("button", { name: `Add ${chosenLayer2Label} to your learning` }));
-    fireEvent.press(screen.getByRole("button", { name: /Open learning plan tray.*4 selected route details or learning choices/ }));
-    expect(screen.getByText("Domain learning")).toBeTruthy();
-    expect(screen.getByText(chosenLayer2Label)).toBeTruthy();
+    expect(screen.getByText("Domain learning you added")).toBeTruthy();
+    expect(screen.getAllByText(chosenLayer2Label).length).toBeGreaterThan(1);
+    const otherLayer2Ids = layerIds.filter((id) => graph.domain_learning_layers.find((layer) => layer.layer === 2)?.item_ids?.includes(id)
+      && linkedToInterviews.has(id) && id !== chosenLayer2Id);
+    otherLayer2Ids.forEach((id) => {
+      const label = d078Node(id)?.label ?? id;
+      if (hasProgressiveEdge(chosenLayer2Id!, id) && !hasExplicitAlternativeEdge(chosenLayer2Id!, id)) {
+        expect(screen.getByRole("button", { name: `Add ${label} to your learning` })).toBeTruthy();
+      } else {
+        const unexpectedSelectableButton = screen.queryByRole("button", { name: `Add ${label} to your learning` });
+        if (unexpectedSelectableButton) throw new Error(`Unexpectedly selectable outside the selected work context: ${id} (${label})`);
+      }
+    });
+    fireEvent.press(screen.getByRole("button", { name: `Remove ${chosenLayer2Label} from your learning` }));
+    otherLayer2Ids.forEach((id) => {
+      const label = d078Node(id)?.label ?? id;
+      expect(screen.getByRole("button", { name: `Add ${label} to your learning` })).toBeTruthy();
+    });
+  });
+
+  it("focuses a selected item on graph-connected choices and restores the full lane when deselected", () => {
+    const graph = d078GraphDataForTests();
+    const selection = toggleD078Method(INITIAL_D078_SELECTION, QUANTITATIVE);
+    const projection = projectD078Route(selection);
+    const layerItemIds = new Set(graph.domain_learning_layers.flatMap((layer) => layer.item_ids ?? []));
+    const candidateIds = new Set(projection.domainItemIds.filter((id) => !layerItemIds.has(id)));
+    const laneFor = (id: string) => String(d078Node(id)?.requirement_lane ?? d078Node(id)?.requirement_level ?? "useful").toLowerCase();
+    const pair = graph.typed_relationship_edges.find((edge) =>
+      hasReviewedAlternativeEvidence(edge)
+      && candidateIds.has(edge.sourceId)
+      && candidateIds.has(edge.targetId)
+      && laneFor(edge.sourceId) === laneFor(edge.targetId),
+    );
+    expect(pair).toBeTruthy();
+    const sourceLabel = d078Node(pair!.sourceId)!.label;
+    const targetLabel = d078Node(pair!.targetId)!.label;
+    const alternativeButtonLabel = laneFor(pair!.sourceId) === "needed"
+      ? "Show other items in Needed for what you selected and compare alternatives"
+      : laneFor(pair!.sourceId) === "conditional"
+        ? "Show other items in Use when this condition applies and compare alternatives"
+        : laneFor(pair!.sourceId) === "optional"
+          ? "Show other items in Optional. Open it if this question fits and compare alternatives"
+          : "Show other items in Useful. You can skip it and compare alternatives";
+
+    render(<ThemeProvider><D078MethodAwareJourney
+      domainKey="D078"
+      initialSelection={selection}
+      guidanceContext={{ domainId: "D078" }}
+    /></ThemeProvider>);
+    expect(screen.getByRole("button", { name: `Add ${sourceLabel} to your learning` })).toBeTruthy();
+    expect(screen.getByRole("button", { name: `Add ${targetLabel} to your learning` })).toBeTruthy();
+    fireEvent.press(screen.getByRole("button", { name: `Add ${sourceLabel} to your learning` }));
+    expect(screen.getByRole("button", { name: `Remove ${sourceLabel} from your learning` })).toBeTruthy();
+    expect(screen.queryByRole("button", { name: `Add ${targetLabel} to your learning` })).toBeNull();
+    expect(screen.getAllByText(/Your selection is in focus across this stage/).length).toBeGreaterThan(0);
+    const unrelated = [...candidateIds].find((id) => id !== pair!.sourceId && id !== pair!.targetId
+      && laneFor(id) === laneFor(pair!.sourceId) && !hasProgressiveEdge(pair!.sourceId, id));
+    expect(unrelated).toBeTruthy();
+    expect(screen.queryByRole("button", { name: `Add ${d078Node(unrelated!)!.label} to your learning` })).toBeNull();
+    fireEvent.press(screen.getByRole("button", { name: `See more about ${sourceLabel}` }));
+    expect(screen.getByRole("button", { name: `Compare ${sourceLabel} with ${targetLabel}` })).toBeTruthy();
+    fireEvent.press(screen.getByRole("button", { name: alternativeButtonLabel }));
+    expect(screen.getByRole("button", { name: `Add ${targetLabel} to your learning` })).toBeTruthy();
+    expect(screen.getByRole("button", { name: `Add ${d078Node(unrelated!)!.label} to your learning` })).toBeTruthy();
+    fireEvent.press(screen.getByRole("button", { name: `Add ${d078Node(unrelated!)!.label} to your learning` }));
+    expect(screen.getByRole("button", { name: `Remove ${sourceLabel} from your learning` })).toBeTruthy();
+    expect(screen.getByRole("button", { name: `Remove ${d078Node(unrelated!)!.label} from your learning` })).toBeTruthy();
+    expect(screen.queryByRole("button", { name: `Add ${targetLabel} to your learning` })).toBeNull();
+    fireEvent.press(screen.getByRole("button", { name: alternativeButtonLabel }));
+    fireEvent.press(screen.getByRole("button", { name: `Add ${targetLabel} to your learning` }));
+    expect(screen.getByRole("button", { name: `Remove ${sourceLabel} from your learning` })).toBeTruthy();
+    expect(screen.getByRole("button", { name: `Remove ${targetLabel} from your learning` })).toBeTruthy();
+    fireEvent.press(screen.getByRole("button", { name: `Remove ${targetLabel} from your learning` }));
+    expect(screen.queryByRole("button", { name: `Add ${targetLabel} to your learning` })).toBeNull();
+    fireEvent.press(screen.getByRole("button", { name: `Remove ${d078Node(unrelated!)!.label} from your learning` }));
+    fireEvent.press(screen.getByRole("button", { name: `Remove ${sourceLabel} from your learning` }));
+    expect(screen.getByRole("button", { name: `Add ${targetLabel} to your learning` })).toBeTruthy();
+    expect(screen.getByRole("button", { name: `Add ${d078Node(unrelated!)!.label} to your learning` })).toBeTruthy();
+  });
+
+  it("carries area-item focus across the area learning and tool groups", () => {
+    const selection = toggleD078Method(INITIAL_D078_SELECTION, QUANTITATIVE);
+    const projection = projectD078Route(selection);
+    const areaId = "D078:economics-applied-analysis";
+    const area = projection.visibleAreas.find((entry) => entry.areaId === areaId);
+    const areaItemId = projection.areaItemIdsByArea[areaId]?.find((id) => id === "area_enrichment_item:d078-econ-time-series-analysis-and-forecasting");
+    const toolId = projection.visibleAreas.find((entry) => entry.areaId === areaId)?.methodContributions.flatMap((entry) => entry.toolIds).find((id) => id === "domain-item:d078-eviews-tool");
+    expect(area).toBeTruthy();
+    expect(areaItemId).toBeTruthy();
+    expect(toolId).toBeTruthy();
+    const toolLabel = d078Node(toolId!)!.label;
+    const unrelatedToolId = area!.methodContributions.flatMap((entry) => entry.toolIds).find((id) => id !== toolId && !hasProgressiveEdge(areaItemId!, id));
+    expect(unrelatedToolId).toBeTruthy();
+    const hasToolAction = (verb: "Add" | "Remove") => screen.getAllByRole("button").some((button) =>
+      String(button.props.accessibilityLabel ?? "").startsWith(`${verb} ${d078Node(unrelatedToolId!)!.label.split(" for ")[0]}`),
+    );
+
+    render(<ThemeProvider><D078AreaRoute
+      domainKey="D078"
+      areaId={areaId}
+      initialSelection={selection}
+      roles={[]}
+      guidanceContext={{ domainId: "D078", areaId }}
+    /></ThemeProvider>);
+
+    expect(screen.getByRole("button", { name: `Add ${toolLabel} to your learning` })).toBeTruthy();
+    fireEvent.press(screen.getByRole("button", { name: `Add ${d078Node(areaItemId!)!.label} to your learning` }));
+    expect(screen.getByRole("button", { name: `Add ${toolLabel} to your learning` })).toBeTruthy();
+    expect(hasToolAction("Add")).toBe(false);
+    fireEvent.press(screen.getByRole("button", { name: `Remove ${d078Node(areaItemId!)!.label} from your learning` }));
+    expect(hasToolAction("Add")).toBe(true);
+  });
+
+  it("focuses role-owned learning choices on the selected role item and restores them when removed", () => {
+    let selection = toggleD078Method(INITIAL_D078_SELECTION, INTERVIEWS);
+    const areaId = "D078:sociology-social-anthropology";
+    const areaSelection = selectD078Area(selection, areaId);
+    const taskFamilyIds = projectD078Route(areaSelection).taskFamilyIdsByArea[areaId] ?? [];
+    let routedRole: ReturnType<typeof projectD078Route>["visibleRoles"][number] | undefined;
+    let roleItemIds: string[] = [];
+    for (const taskFamilyId of taskFamilyIds) {
+      const candidateSelection = toggleD078TaskFamily(areaSelection, areaId, taskFamilyId);
+      const candidateRole = projectD078Route(candidateSelection).visibleRoles.find((entry) =>
+        entry.areaId === areaId && entry.taskContexts.some((task) => task.roleItemIds.length > 1),
+      );
+      if (candidateRole) {
+        selection = candidateSelection;
+        routedRole = candidateRole;
+        roleItemIds = [...new Set(candidateRole.taskContexts.flatMap((task) => task.roleItemIds))];
+        break;
+      }
+    }
+    expect(routedRole).toBeTruthy();
+    expect(roleItemIds.length).toBeGreaterThan(1);
+    const role = routedRole!;
+    selection = selectD078Role(selection, role.roleId);
+    const selectedId = roleItemIds[0];
+    const selectedLabel = d078Node(selectedId)!.label;
+    const routeTaskItemIds = new Set(role.taskContexts.flatMap((task) => task.roleItemIds));
+    const unlinkedRoleItemLabels = projectD078Route(selection).roleItemIds
+      .filter((id) => !routeTaskItemIds.has(id))
+      .map((id) => d078Node(id)?.label)
+      .filter((label): label is string => Boolean(label));
+
+    render(<ThemeProvider><D078RoleRoute
+      areaId={areaId}
+      roleId={role.roleId}
+      roleName={role.label}
+      roleKey={`D078|${role.label}`}
+      initialSelection={selection}
+      roles={[]}
+      guidanceContext={{ domainId: "D078", areaId, roleId: role!.roleId }}
+    /></ThemeProvider>);
+
+    expect(screen.getByRole("button", { name: `Add ${selectedLabel} to your learning` })).toBeTruthy();
+    fireEvent.press(screen.getByRole("button", { name: `Add ${selectedLabel} to your learning` }));
+    expect(screen.getByRole("button", { name: `Remove ${selectedLabel} from your learning` })).toBeTruthy();
+    fireEvent.press(screen.getByRole("button", { name: `Remove ${selectedLabel} from your learning` }));
+    expect(screen.getByRole("button", { name: `Add ${selectedLabel} to your learning` })).toBeTruthy();
+    for (const label of unlinkedRoleItemLabels) {
+      expect(screen.queryByRole("button", { name: `Add ${label} to your learning` })).toBeNull();
+    }
+  });
+
+  it("checks the field into the bottom-right tray and expands that same tray", () => {
+    render(<ThemeProvider><PersistentLearningPlanDockProvider><D078MethodAwareJourney domainKey="D078" programmeName="Sociology" guidanceContext={{ domainId: "D078" }} /></PersistentLearningPlanDockProvider></ThemeProvider>);
+    fireEvent.press(screen.getByRole("checkbox", { name: "Select Social Sciences & Behavioural Research" }));
+    expect(screen.getByText("Field: Social Sciences")).toBeTruthy();
+    expect(screen.getAllByTestId("guided-learning-tray")).toHaveLength(1);
+    fireEvent.press(screen.getByRole("button", { name: "Expand learning plan tray" }));
+    expect(screen.getAllByTestId("guided-learning-tray")).toHaveLength(1);
+    expect(StyleSheet.flatten(screen.getByTestId("guided-learning-tray").props.style).height).toBe("78vh");
+    expect(screen.queryByLabelText("Close full-size learning plan tray")).toBeNull();
+  });
+
+  it("checks an area into the same bottom-right tray", () => {
+    const selection = toggleD078Method(INITIAL_D078_SELECTION, INTERVIEWS);
+    const area = projectD078Route(selection).visibleAreas[0];
+    render(<ThemeProvider><PersistentLearningPlanDockProvider><D078AreaRoute
+      domainKey="D078"
+      areaId={area.areaId}
+      initialSelection={selection}
+      roles={[]}
+      guidanceContext={{ domainId: "D078", areaId: area.areaId }}
+    /></PersistentLearningPlanDockProvider></ThemeProvider>);
+    fireEvent.press(screen.getByRole("checkbox", { name: `Select ${area.label}` }));
+    expect(screen.getByText(`Area: ${area.label}`)).toBeTruthy();
+    expect(screen.getAllByTestId("guided-learning-tray")).toHaveLength(1);
+    fireEvent.press(screen.getByRole("button", { name: "Expand learning plan tray" }));
+    expect(screen.getAllByTestId("guided-learning-tray")).toHaveLength(1);
   });
 
   it("keeps Build out of the domain learning flow", () => {
@@ -304,20 +619,46 @@ describe("D078 method-aware journey UI acceptance", () => {
     expect(screen.queryByText("What this path does not establish")).toBeNull();
   });
 
-  it("keeps every Layer 2/3-to-method gap unresolved until local and external evidence are searched", () => {
+  it("lets the learner select and remove the pre-method society knowledge item", () => {
+    const item = d078Node(D078_SOCIETY_KNOWLEDGE_ITEM_ID)!;
+    expect(item.student_visible).toBe(true);
+    const selected = toggleD078AddedItem(INITIAL_D078_SELECTION, D078_SOCIETY_KNOWLEDGE_ITEM_ID);
+    expect(selected.addedItemIds).toContain(D078_SOCIETY_KNOWLEDGE_ITEM_ID);
+    const removed = toggleD078AddedItem(selected, D078_SOCIETY_KNOWLEDGE_ITEM_ID);
+    expect(removed.addedItemIds).not.toContain(D078_SOCIETY_KNOWLEDGE_ITEM_ID);
+  });
+
+  it("disposes every Layer 2/3-to-method candidate for all 23 methods, including the later Scenario Analysis route", () => {
     const audit = d078GraphDataForTests().method_item_fit_audit;
     expect(audit).toBeDefined();
     expect(audit?.candidate_item_count).toBe(10);
-    expect(audit?.method_count).toBe(22);
-    expect(audit?.pair_count).toBe(220);
-    expect(audit?.dispositions).toHaveLength(220);
-    expect(audit?.dispositions.every((entry) => entry.disposition !== "no_supported_fit")).toBe(true);
+    expect(audit?.method_count).toBe(23);
+    expect(audit?.pair_count).toBe(230);
+    expect(audit?.dispositions).toHaveLength(230);
+    expect(audit?.dispositions.every((entry) => entry.disposition !== "unresolved_search_required")).toBe(true);
     expect(audit?.dispositions.every((entry) => entry.no_fit_allowed === false)).toBe(true);
     const conditional = audit?.dispositions.filter((entry) => entry.disposition === "externally_supported_conditional_fit") ?? [];
-    expect(conditional).toHaveLength(71);
+    expect(conditional).toHaveLength(80);
     expect(conditional.every((entry) => Boolean(entry.condition) && entry.external_search_status === "recorded" && entry.external_sources?.length)).toBe(true);
     expect(conditional.flatMap((entry) => entry.external_sources ?? []).every((sourceId) => Boolean(d078GraphDataForTests().external_source_registry?.[sourceId]?.url))).toBe(true);
-    expect(audit?.dispositions.filter((entry) => entry.disposition === "domain_orientation_context_not_method_item")).toHaveLength(22);
+    expect(audit?.dispositions.filter((entry) => entry.disposition === "domain_orientation_context_not_method_item")).toHaveLength(23);
+    expect(audit?.dispositions.filter((entry) => entry.method_id === "domain-item:d078-scenario-analysis")).toHaveLength(10);
+  });
+
+  it("reveals only the conditionally supported Layer 2/3 preparation for Scenario Analysis", () => {
+    const graph = d078GraphDataForTests();
+    const scenarioMethodId = "domain-item:d078-scenario-analysis";
+    const selectedLayerItems = graph.domain_learning_layers
+      .filter((layer) => layer.layer === 2 || layer.layer === 3)
+      .flatMap((layer) => layer.item_ids.filter((id) => layer.route_applicability_by_item?.[id]?.includes(scenarioMethodId)));
+
+    expect(selectedLayerItems).toHaveLength(9);
+    expect(new Set(selectedLayerItems).size).toBe(9);
+    for (const id of selectedLayerItems) {
+      const entry = graph.method_item_fit_audit?.dispositions.find((row) => row.item_id === id && row.method_id === scenarioMethodId);
+      expect(entry?.disposition).toBe("externally_supported_conditional_fit");
+      expect(entry?.condition).toBeTruthy();
+    }
   });
 
   it("waits for a named design before revealing Layer 2/3 for a multi-method selection", () => {
@@ -334,6 +675,10 @@ describe("D078 method-aware journey UI acceptance", () => {
   it("carries the selected named design explanation and its own route into downstream", () => {
     render(<ThemeProvider><D078MethodAwareJourney domainKey="D078" programmeName="Sociology" guidanceContext={{ domainId: "D078" }} /></ThemeProvider>);
     fireEvent.press(screen.getByRole("button", { name: `Select ${d078Node(QUALITATIVE)?.label}` }));
+    expect(screen.getByRole("button", { name: `Add another method to ${d078Node(QUALITATIVE)?.label}` })).toBeTruthy();
+    expect(screen.queryByRole("button", { name: `Select ${d078Node(SURVEY)?.label}` })).toBeNull();
+    fireEvent.press(screen.getByRole("button", { name: `Add another method to ${d078Node(QUALITATIVE)?.label}` }));
+    expect(screen.getByRole("button", { name: `Select ${d078Node(SURVEY)?.label}` })).toBeTruthy();
     fireEvent.press(screen.getByRole("button", { name: `Select ${d078Node(SURVEY)?.label}` }));
     fireEvent.press(screen.getByRole("button", { name: "Select Explore first, measure next" }));
 
@@ -358,10 +703,7 @@ describe("D078 method-aware journey UI acceptance", () => {
     /></ThemeProvider>);
     try {
       fireEvent.press(screen.getByRole("button", { name: "Select Interviews" }));
-      const openTray = screen.getByRole("button", { name: /Open learning plan tray.*3 selected route details or learning choices/ });
-      expect(openTray).toBeTruthy();
-      fireEvent.press(openTray);
-      expect(screen.getByText("Your selected approaches")).toBeTruthy();
+      expect(screen.getByText("Your selected method")).toBeTruthy();
       expect(screen.getAllByText("Interviews").length).toBeGreaterThan(1);
       expect(screen.getByText("1 selected method/design · 0 added items")).toBeTruthy();
     } finally {
@@ -370,27 +712,69 @@ describe("D078 method-aware journey UI acceptance", () => {
     }
   });
 
-  it("does not merge separate method routes until the learner selects a named combined design", () => {
-    const { rerender } = render(<ThemeProvider><JourneyHarness key="spatial" /></ThemeProvider>);
-    fireEvent.press(screen.getByRole("button", { name: /Select Spatial/ }));
-    expect(screen.getByText("Computational and Digital Social Science")).toBeTruthy();
-    expect(screen.getByText("Human Geography and Population Studies")).toBeTruthy();
-    fireEvent.press(screen.getByRole("button", { name: "Select Interviews" }));
-    expect(screen.getByText("Choose one or more ways to investigate. Areas and roles appear only for the methods or named design you select.")).toBeTruthy();
-    expect(screen.queryByText("Areas for what you selected")).toBeNull();
-
+  it("keeps only graph-compatible methods after the first choice and waits for a named design", () => {
     const design = d078GraphDataForTests().combination_designs.find((entry) => entry.id === INTERVIEW_OBSERVATION)!;
+    const firstMethodId = design.required_method_ids[0];
+    const secondMethodId = design.required_method_ids[1];
+    const firstMethodLabel = d078Node(firstMethodId)!.label;
+    const secondMethodLabel = d078Node(secondMethodId)!.label;
+    const { rerender } = render(<ThemeProvider><JourneyHarness /></ThemeProvider>);
+
+    fireEvent.press(screen.getByRole("button", { name: `Select ${firstMethodLabel}` }));
+    expect(screen.getByRole("button", { name: `Add another method to ${firstMethodLabel}` })).toBeTruthy();
+    expect(screen.queryByRole("button", { name: `Select ${secondMethodLabel}` })).toBeNull();
+    fireEvent.press(screen.getByRole("button", { name: `Add another method to ${firstMethodLabel}` }));
+    expect(screen.getByRole("button", { name: `Select ${secondMethodLabel}` })).toBeTruthy();
+    expect(screen.queryByRole("button", { name: "Select Spatial analysis and mapping with suitable social data" })).toBeNull();
+    fireEvent.press(screen.getByRole("button", { name: `Select ${secondMethodLabel}` }));
+    expect(screen.queryByText("Areas for what you selected")).toBeNull();
+    expect(screen.getByText("Combined designs that fit these choices")).toBeTruthy();
+
     const exactMethods = design.required_method_ids.reduce((state, methodId) => toggleD078Method(state, methodId), INITIAL_D078_SELECTION);
-    rerender(<ThemeProvider><JourneyHarness key="combination" initial={toggleD078Combination(exactMethods, INTERVIEW_OBSERVATION)} /></ThemeProvider>);
+    rerender(<ThemeProvider><JourneyHarness key="combination" initial={exactMethods} /></ThemeProvider>);
+    const designLabel = projectD078Route(exactMethods).combinations.find((combo) => combo.id === INTERVIEW_OBSERVATION)!.label;
+    fireEvent.press(screen.getByRole("button", { name: `Select ${designLabel}` }));
     expect(screen.getByText("Areas for what you selected")).toBeTruthy();
-    expect(screen.queryByRole("button", { name: "Deselect Interviews" })).toBeNull();
-    expect(screen.queryByRole("button", { name: "Deselect Observation" })).toBeNull();
+    expect(screen.queryByRole("button", { name: `Deselect ${firstMethodLabel}` })).toBeNull();
+    expect(screen.queryByRole("button", { name: `Deselect ${secondMethodLabel}` })).toBeNull();
   });
 
-  it("groups area task-family text in a readable section without rewriting the stored labels", () => {
-    const selection = toggleD078Method(INITIAL_D078_SELECTION, INTERVIEWS);
-    const area = projectD078Route(selection).visibleAreas.find((entry) => entry.taskFamilyIds.length > 0);
-    expect(area).toBeTruthy();
+  it("groups area task-family text and preserves its meaning while defining unfamiliar terms", () => {
+    const announce = jest.spyOn(AccessibilityInfo, "announceForAccessibility").mockImplementation(() => {});
+    const methodSelection = toggleD078Method(INITIAL_D078_SELECTION, INTERVIEWS);
+    const firstProjection = projectD078Route(methodSelection);
+    const graphForContext = d078GraphDataForTests();
+    const domainContextChoice = [...firstProjection.domainItemIds, ...firstProjection.toolIds].flatMap((itemId) => {
+      const candidateSelection = { ...methodSelection, addedItemIds: [itemId] };
+      const selectedProjection = projectD078Route(candidateSelection);
+      return selectedProjection.visibleAreas.flatMap((entry) => entry.selectedDomainContextFamilyIds.length > 0
+        && [...new Set(entry.taskFamilyIds.flatMap((familyId) => entry.areaItemIdsByTaskFamily[familyId] ?? []))]
+          .some((areaItemId) => !new Set(entry.selectedDomainContextFamilyIds.flatMap((familyId) => entry.areaItemIdsByTaskFamily[familyId] ?? [])).has(areaItemId))
+        && entry.methodContributions.some((contribution) => contribution.toolIds.some((id) =>
+          contribution.toolIds.some((otherId) => otherId !== id && hasExplicitAlternativeEdge(id, otherId)),
+        ))
+        && selectedProjection.visibleRoles.some((role) => role.areaId === entry.areaId
+          && role.taskContexts.some((task) => task.selectionBasis === "selected_domain_learning")
+          && role.contextualRoleItemIds.length > 0)
+        ? [{ itemId, area: entry, selection: candidateSelection, projection: selectedProjection }]
+        : []);
+    })[0];
+    expect(domainContextChoice).toBeTruthy();
+    const selection = domainContextChoice!.selection;
+    const area = domainContextChoice!.area;
+    expect(area!.methodContributions.map((contribution) => contribution.methodId)).toEqual([INTERVIEWS]);
+    const carriedDomainItemId = domainContextChoice!.itemId;
+    const selectedProjection = domainContextChoice!.projection;
+    const baselineArea = firstProjection.visibleAreas.find((entry) => entry.areaId === area!.areaId);
+    expect(baselineArea?.selectedDomainContextFamilyIds).toEqual([]);
+    expect(area!.selectedDomainContextFamilyIds.length).toBeLessThan(area!.taskFamilyIds.length);
+    const graphContextAreaItems = new Set(area!.selectedDomainContextFamilyIds.flatMap((familyId) => area!.areaItemIdsByTaskFamily[familyId] ?? []));
+    const allTaskFamilyAreaItems = new Set(area!.taskFamilyIds.flatMap((familyId) => area!.areaItemIdsByTaskFamily[familyId] ?? []));
+    expect(graphContextAreaItems.size).toBeGreaterThan(0);
+    expect([...allTaskFamilyAreaItems].some((id) => !graphContextAreaItems.has(id))).toBe(true);
+    expect(selectedProjection.visibleRoles.some((role) => role.areaId === area!.areaId
+      && role.taskContexts.some((task) => task.selectionBasis === "selected_domain_learning")
+      && role.contextualRoleItemIds.length > 0)).toBe(true);
     const areaRoles = projectD078Route(selection).visibleRoles.filter((role) => role.areaId === area!.areaId);
     expect(areaRoles.length).toBeGreaterThan(0);
 
@@ -404,15 +788,33 @@ describe("D078 method-aware journey UI acceptance", () => {
 
     const areaTitle = screen.getByRole("header", { name: area!.label });
     expect(StyleSheet.flatten(areaTitle.props.style)).toMatchObject({ fontSize: 26, lineHeight: 32 });
+    expect(screen.getByText(/focuses on designing, carrying out and interpreting studies that answer social questions/i)).toBeTruthy();
     const backButton = screen.getByRole("button", { name: "Back to Social Sciences domain" });
     expect(StyleSheet.flatten(backButton.props.style)).toMatchObject({ alignSelf: "flex-start" });
     const routeContextButton = screen.getByRole("button", { name: `Show what carries into ${area!.label}` });
     expect(StyleSheet.flatten(routeContextButton.props.style)).toMatchObject({ alignSelf: "flex-start" });
-    const sectionHeading = screen.getByRole("header", { name: "What this area covers" });
+    expect(screen.getByRole("header", { name: "Carried forward from Social Sciences" })).toBeTruthy();
+    expect(screen.getByText("Domain items you selected that connect to this area")).toBeTruthy();
+    expect(screen.getAllByText(new RegExp(d078Node(carriedDomainItemId!)!.label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))).length).toBeGreaterThan(0);
+    const sectionHeading = screen.getByRole("header", { name: "Work contexts reached by your selected method or design" });
     expect(StyleSheet.flatten(sectionHeading.props.style)).toMatchObject({ fontSize: 16, lineHeight: 22 });
     const sequenceHeading = screen.getByText("Roles in this area for your selected methods");
     expect(StyleSheet.flatten(sequenceHeading.props.style)).toMatchObject({ fontSize: 20, lineHeight: 26 });
-    for (const taskFamilyId of area!.taskFamilyIds) {
+    expect(area!.selectedDomainContextFamilyIds.length).toBeGreaterThan(0);
+    for (const id of graphContextAreaItems) {
+      const label = d078Node(id)?.label;
+      if (label) expect(screen.getByRole("button", { name: `Add ${label} to your learning` })).toBeTruthy();
+    }
+    for (const id of allTaskFamilyAreaItems) {
+      if (graphContextAreaItems.has(id)) continue;
+      const label = d078Node(id)?.label;
+      if (label) {
+        const unexpectedSelectableButton = screen.queryByRole("button", { name: `Add ${label} to your learning` });
+        if (unexpectedSelectableButton) throw new Error(`Unexpectedly selectable outside the selected work context: ${id} (${label})`);
+        expect(screen.queryByText(`• ${label}`)).toBeNull();
+      }
+    }
+    for (const taskFamilyId of area!.selectedDomainContextFamilyIds) {
       const label = d078Node(taskFamilyId)?.label;
       if (label) {
         const taskFamily = screen.getByText(label);
@@ -420,6 +822,73 @@ describe("D078 method-aware journey UI acceptance", () => {
         expect(StyleSheet.flatten(taskFamily.props.style).lineHeight).toBeGreaterThanOrEqual(24);
       }
     }
+    const areaGraph = d078GraphDataForTests();
+    const focusedFamilyId = area!.selectedDomainContextFamilyIds.find((familyId) =>
+      areaGraph.typed_relationship_edges.some((edge) =>
+        edge.sourceId === familyId && edge.relationship === "task_has_area_learning_item"
+          && edge.status === "resolved_ready_for_use" && selectedProjection.areaItemIdsByArea[area!.areaId]?.includes(edge.targetId)
+          && !isToolItemNode(d078Node(edge.targetId)),
+      ),
+    );
+    expect(focusedFamilyId).toBeTruthy();
+    const focusedFamilyLabel = d078Node(focusedFamilyId!)!.label;
+    const selectedFamilyPreparation = d078Node(focusedFamilyId!)?.task_preparation_context as { learning_to_review?: string[] } | undefined;
+    if (selectedFamilyPreparation?.learning_to_review?.length) {
+      expect(screen.queryByText("Learning to review for this work")).toBeNull();
+    }
+    fireEvent.press(screen.getByRole("button", { name: `Select work focus: ${focusedFamilyLabel}` }));
+    expect(announce).toHaveBeenCalledWith(`Work focus updated to ${focusedFamilyLabel}. Showing linked learning and task context.`);
+    expect(screen.getByRole("button", { name: `Remove work focus: ${focusedFamilyLabel}` })).toBeTruthy();
+    expect(screen.getByText("Selected work focus")).toBeTruthy();
+    if (selectedFamilyPreparation?.learning_to_review?.length) {
+      expect(screen.getByText("Learning to review for this work")).toBeTruthy();
+    }
+    const otherWorkFocusIds = area!.taskFamilyIds.filter((id) => id !== focusedFamilyId);
+    otherWorkFocusIds.forEach((id) => {
+      const label = d078Node(id)?.label;
+      if (label) expect(screen.queryByRole("button", { name: `Select work focus: ${label}` })).toBeNull();
+    });
+    if (otherWorkFocusIds.length) {
+      fireEvent.press(screen.getByRole("button", { name: "Add another work focus" }));
+      const otherLabel = d078Node(otherWorkFocusIds[0])!.label;
+      expect(screen.getByRole("button", { name: `Select work focus: ${otherLabel}` })).toBeTruthy();
+    }
+    const focusedContributionToolIds = new Set(area!.methodContributions
+      .filter((contribution) => contribution.taskFamilyIds.length === 0 || contribution.taskFamilyIds.includes(focusedFamilyId!))
+      .flatMap((contribution) => contribution.toolIds));
+    const toolsOutsideSelectedWorkFocus = [...new Set(area!.methodContributions
+      .filter((contribution) => contribution.taskFamilyIds.length > 0 && !contribution.taskFamilyIds.includes(focusedFamilyId!))
+      .flatMap((contribution) => contribution.toolIds))]
+      .filter((id) => !focusedContributionToolIds.has(id));
+    toolsOutsideSelectedWorkFocus.forEach((id) => {
+      const label = d078Node(id)?.label;
+      if (label) expect(screen.queryByRole("button", { name: `Add ${label} to your learning` })).toBeNull();
+    });
+    const familyLinkedIds = areaGraph.typed_relationship_edges
+      .filter((edge) => edge.sourceId === focusedFamilyId && edge.relationship === "task_has_area_learning_item" && edge.status === "resolved_ready_for_use")
+      .map((edge) => edge.targetId)
+      .filter((id) => selectedProjection.areaItemIdsByArea[area!.areaId]?.includes(id) && !isToolItemNode(d078Node(id)));
+    expect(familyLinkedIds.length).toBeGreaterThan(0);
+    familyLinkedIds.forEach((id) => {
+      const label = d078Node(id)?.label;
+      if (label) expect(screen.getByRole("button", { name: `Add ${label} to your learning` })).toBeTruthy();
+    });
+    fireEvent.press(screen.getByRole("button", { name: `Remove work focus: ${focusedFamilyLabel}` }));
+    expect(screen.queryByText("Selected work focus")).toBeNull();
+    expect(screen.getByRole("button", { name: `Select work focus: ${focusedFamilyLabel}` })).toBeTruthy();
+    const domainContextToolIds = new Set(area!.selectedDomainContextFamilyIds.flatMap((familyId) =>
+      area!.areaItemIdsByTaskFamily[familyId] ?? [],
+    ));
+    const methodToolIds = [...new Set(area!.methodContributions.flatMap((contribution) => contribution.toolIds))];
+    methodToolIds.forEach((id) => {
+      const label = d078Node(id)?.label;
+      if (!label) return;
+      if (domainContextToolIds.has(id)) {
+        expect(screen.getByRole("button", { name: `Add ${label} to your learning` })).toBeTruthy();
+      } else {
+        expect(screen.queryByRole("button", { name: `Add ${label} to your learning` })).toBeNull();
+      }
+    });
     const openRoleButtons = screen.getAllByRole("button", { name: /^Select role/ });
     expect(openRoleButtons.length).toBe(areaRoles.length);
     openRoleButtons.forEach((button) => expect(StyleSheet.flatten(button.props.style)).toMatchObject({ width: "100%" }));
@@ -461,11 +930,42 @@ describe("D078 method-aware journey UI acceptance", () => {
     fireEvent.press(screen.getByRole("button", { name: /^See more about Chi-square tests/ }));
 
     expect(screen.getByText("How this relates to your Sociology curriculum")).toBeTruthy();
-    expect(screen.getByText(/introduces research statistics and expects you to apply appropriate analysis/i)).toBeTruthy();
+    expect(screen.getByText(/introduces research .* statistics and expects you to apply appropriate analysis/i)).toBeTruthy();
     expect(screen.getByText(/published curriculum record available here confirms the broader statistics foundation, not coverage or mastery of this exact procedure/i)).toBeTruthy();
     expect(screen.getByText("SSC 401 · Research Method II")).toBeTruthy();
     expect(screen.getByText("SOC 301 · Methods of Social Research and Statistics")).toBeTruthy();
     expect(node.programme_learning_context).toBeDefined();
+  });
+
+  it("shows non-tool area alternatives and boundaries in the item detail", () => {
+    const itemId = "area_enrichment_item:d078-a04-competency-audit-ai-qualitative-coding";
+    const note = d078Node(itemId)!.valid_alternatives as string[];
+    let selection = toggleD078Method(INITIAL_D078_SELECTION, INTERVIEWS);
+    selection = selectD078Area(selection, "D078:sociology-social-anthropology");
+    render(<ThemeProvider><ItemCard id={itemId} selection={selection} contextLevel="subgroup" /></ThemeProvider>);
+
+    fireEvent.press(screen.getByRole("button", { name: /^See more about Audit AI suggestions against qualitative source material/ }));
+    expect(screen.getByText("Other approaches and boundaries")).toBeTruthy();
+    expect(screen.getByText(/These notes may describe another skill, method, tool or way to handle the task/)).toBeTruthy();
+    for (const line of note) {
+      const firstPhrase = line.split(" (")[0];
+      const escapedPhrase = firstPhrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      expect(screen.getByText(new RegExp(`^${escapedPhrase}`, "i"))).toBeTruthy();
+    }
+  });
+
+  it("shows non-tool role alternatives without turning them into tool comparisons", () => {
+    const itemId = "role-item:110:conduct-qualitative-research-essential";
+    const node = d078Node(itemId)!;
+    const note = (node.valid_alternatives as string[])[0];
+    let selection = toggleD078Method(INITIAL_D078_SELECTION, INTERVIEWS);
+    selection = selectD078Area(selection, "D078:sociology-social-anthropology");
+    render(<ThemeProvider><ItemCard id={itemId} selection={selection} contextLevel="role" roleItem /></ThemeProvider>);
+
+    fireEvent.press(screen.getByRole("button", { name: /^See more about conduct qualitative research/ }));
+    expect(screen.getByText("Other approaches and boundaries")).toBeTruthy();
+    expect(screen.getByText(/Documentary analysis.*question-dependent alternatives\/complements\./i)).toBeTruthy();
+    expect(screen.queryByRole("button", { name: /Compare .* with/ })).toBeNull();
   });
 
   it("omits the learning-resource section when no approved item resource exists", () => {
@@ -520,6 +1020,46 @@ describe("D078 method-aware journey UI acceptance", () => {
     expect(screen.getByText("An interview is a planned conversation for learning how someone understands or experiences an issue. It can add depth, but does not automatically measure how common an experience is.")).toBeTruthy();
     fireEvent.press(screen.getByRole("button", { name: "Back to NVivo for organizing and coding substantial qualitative material" }));
     expect(screen.queryByText("Connected option")).toBeNull();
+  });
+
+  it("compares the Psychology-area NVivo and Taguette choices from their area cards", () => {
+    let selection = toggleD078Method(INITIAL_D078_SELECTION, INTERVIEWS);
+    selection = selectD078Area(selection, "D078:psychology-social-behaviour");
+    const onToggle = jest.fn();
+    render(<ThemeProvider><ItemCard
+      id="area_tool_option:d078-a04-tool-nvivo"
+      selection={selection}
+      onToggle={onToggle}
+      contextLevel="subgroup"
+    /></ThemeProvider>);
+
+    fireEvent.press(screen.getByRole("button", { name: /^See more about NVivo/ }));
+    fireEvent.press(screen.getByRole("button", { name: "Compare NVivo with Taguette" }));
+    expect(screen.getAllByText(/Taguette focuses on highlighting and tagging text documents/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/NVivo provides a broader set of coding workflows/).length).toBeGreaterThan(0);
+    fireEvent.press(screen.getByRole("button", { name: "Use Taguette" }));
+    expect(onToggle).toHaveBeenCalledWith("area_tool_option:d078-a04-tool-taguette");
+  });
+
+  it.each([
+    ["D078:sociology-social-anthropology", "Sociology and Social Anthropology"],
+    ["D078:social-research-evaluation", "Social Research and Evaluation"],
+  ])("compares canonical NVivo and Taguette choices only through the %s area route", (areaId) => {
+    let selection = toggleD078Method(INITIAL_D078_SELECTION, INTERVIEWS);
+    selection = selectD078Area(selection, areaId);
+    const onToggle = jest.fn();
+    render(<ThemeProvider><ItemCard
+      id="domain-item:d078-nvivo-tool"
+      selection={selection}
+      onToggle={onToggle}
+      contextLevel="subgroup"
+    /></ThemeProvider>);
+
+    fireEvent.press(screen.getByRole("button", { name: /^See more about NVivo/ }));
+    fireEvent.press(screen.getByRole("button", { name: "Compare options" }));
+    expect(screen.getAllByText(/Taguette supports focused document highlighting and coding|Taguette offers a focused way to highlight and tag text documents/).length).toBeGreaterThan(0);
+    fireEvent.press(screen.getByRole("button", { name: /^Use Taguette/ }));
+    expect(onToggle).toHaveBeenCalledWith("domain-item:d078-qualitative-coding-tool");
   });
 
   it("opens the actual projected relationship target card and returns to the source card", () => {
@@ -580,6 +1120,7 @@ describe("D078 method-aware journey UI acceptance", () => {
     expect(resolveD078RoleRouteId(selection, role!.areaId, role!.roleId, role!.label)).toBe(role!.roleId);
 
     selection = selectD078Area(selection, role!.areaId);
+    selection = selectD078Role(selection, role!.roleId);
     expect(resolveD078RoleRouteId(selection, "D078:unselected-area", role!.roleId, role!.label)).toBeUndefined();
   });
 
@@ -607,6 +1148,12 @@ describe("D078 method-aware journey UI acceptance", () => {
     let selection = toggleD078Method(INITIAL_D078_SELECTION, INTERVIEWS);
     const role = projectD078Route(selection).visibleRoles.find((entry) => entry.areaId === "D078:sociology-social-anthropology");
     expect(role).toBeTruthy();
+    const roleRouteProjection = projectD078Route(selection);
+    const carriedDomainItemId = roleRouteProjection.domainItemIdsByArea[role!.areaId]?.find((id) => d078Node(id));
+    const carriedAreaItemId = roleRouteProjection.areaItemIdsByArea[role!.areaId]?.find((id) => d078Node(id));
+    expect(carriedDomainItemId).toBeTruthy();
+    expect(carriedAreaItemId).toBeTruthy();
+    selection = { ...selection, addedItemIds: [carriedDomainItemId!, carriedAreaItemId!] };
 
     render(<ThemeProvider><D078RoleRoute
       areaId="D078:economics-applied-analysis"
@@ -623,6 +1170,22 @@ describe("D078 method-aware journey UI acceptance", () => {
     expect(screen.queryByText(new RegExp(`^${role!.label}$`, "i"))).toBeNull();
 
     selection = selectD078Area(selection, role!.areaId);
+    const graph = d078GraphDataForTests();
+    const taskFamilyId = projectD078Route(selection).taskFamilyIdsByArea[role!.areaId]?.find((familyId) =>
+      graph.typed_relationship_edges.some((edge) => {
+        if (edge.sourceId !== familyId || edge.relationship !== "area_task_family_supports_role_task" || edge.status !== "resolved_ready_for_use") return false;
+        const task = graph.nodes_by_id[edge.targetId];
+        return task?.kind === "role_task_family" && task.role_id === role!.roleId
+          && Array.isArray(task.area_ids) && task.area_ids.includes(role!.areaId);
+      }),
+    );
+    expect(taskFamilyId).toBeTruthy();
+    selection = toggleD078TaskFamily(selection, role!.areaId, taskFamilyId!);
+    const focusedProjection = projectD078Route(selection);
+    const focusedAreaItemId = focusedProjection.areaItemIdsByArea[role!.areaId]?.find((id) => d078Node(id));
+    expect(focusedAreaItemId).toBeTruthy();
+    selection = { ...selection, addedItemIds: [carriedDomainItemId!, focusedAreaItemId!] };
+    selection = selectD078Role(selection, role!.roleId);
     const { unmount } = render(<ThemeProvider><D078RoleRoute
       areaId={role!.areaId}
       roleId={role!.roleId}
@@ -634,14 +1197,57 @@ describe("D078 method-aware journey UI acceptance", () => {
     /></ThemeProvider>);
     const roleTitle = screen.getByRole("header", { name: new RegExp(`^${role!.label}$`, "i") });
     expect(StyleSheet.flatten(roleTitle.props.style)).toMatchObject({ fontSize: 26, lineHeight: 32 });
+    expect(screen.getAllByText(/all aspects of life pertaining to humans/i).length).toBeGreaterThan(0);
     const roleAreaLabel = projectD078Route(selection).visibleAreas.find((area) => area.areaId === role!.areaId)?.label ?? "area";
     const roleBackButton = screen.getByRole("button", { name: `Back to ${roleAreaLabel}` });
     expect(StyleSheet.flatten(roleBackButton.props.style)).toMatchObject({ alignSelf: "flex-start" });
     expect(screen.getByRole("button", { name: "Back to Social Sciences domain" })).toBeTruthy();
-    const roleRouteContextButton = screen.getByRole("button", { name: /Show what carries into/ });
-    expect(StyleSheet.flatten(roleRouteContextButton.props.style)).toMatchObject({ alignSelf: "flex-start" });
+    expect(screen.queryByRole("button", { name: /Show what carries into/ })).toBeNull();
+    expect(screen.getByText("Work contexts connected to this role")).toBeTruthy();
+    expect(screen.getByText("Selected domain learning linked to this area")).toBeTruthy();
+    expect(screen.getByText("Selected learning from this area")).toBeTruthy();
+    expect(screen.getAllByText(d078Node(carriedDomainItemId!)!.label).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(d078Node(focusedAreaItemId!)!.label).length).toBeGreaterThan(0);
+    const selectedFamily = d078Node(taskFamilyId!);
+    expect(selectedFamily).toBeTruthy();
+    expect(screen.getAllByText(selectedFamily!.label).length).toBeGreaterThan(0);
+    expect(screen.getByText(/Each task below shows only the role learning and tools linked to that task\./)).toBeTruthy();
+    const linkedRoleTask = graph.typed_relationship_edges
+      .filter((edge) => edge.sourceId === taskFamilyId && edge.relationship === "area_task_family_supports_role_task" && edge.status === "resolved_ready_for_use")
+      .map((edge) => graph.nodes_by_id[edge.targetId])
+      .find((task) => task?.kind === "role_task_family" && task.role_id === role!.roleId
+        && Array.isArray(task.area_ids) && task.area_ids.includes(role!.areaId));
+    expect(linkedRoleTask).toBeTruthy();
+    expect(screen.getAllByText(linkedRoleTask!.label).length).toBeGreaterThan(0);
     const roleContext = screen.getByText("Available with the method you selected. This does not make the method a requirement of the role.");
     expect(StyleSheet.flatten(roleContext.props.style)).toMatchObject({ fontSize: 16, lineHeight: 24 });
+    const roleTaskIds = new Set(projectD078Route(selection).visibleRoles
+      .find((entry) => entry.roleId === role!.roleId && entry.areaId === role!.areaId)?.taskContexts.map((context) => context.taskId) ?? []);
+    const roleTools = d078GraphDataForTests().role_tool_routes.filter((route) =>
+      route.role_id === role!.roleId && route.area_ids.includes(role!.areaId) && roleTaskIds.has(route.task_node_id),
+    );
+    expect(roleTools.length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Optional tools for this task/).length).toBeGreaterThan(0);
+    const visibleRoleTool = roleTools.find((route) => route.name === "Zotero") ?? roleTools[0];
+    expect(screen.getByText(d078Node(visibleRoleTool.tool_node_id)!.label)).toBeTruthy();
+    expect(screen.getByText(visibleRoleTool.contextual_use)).toBeTruthy();
+    const roleToolLabel = d078Node(visibleRoleTool.tool_node_id)!.label;
+    fireEvent.press(screen.getByRole("button", { name: `Add ${roleToolLabel} to your learning` }));
+    expect(screen.getByRole("button", { name: `Remove ${roleToolLabel} from your learning` })).toBeTruthy();
+    const otherRoleTools = roleTools.filter((route) => route.tool_node_id !== visibleRoleTool.tool_node_id);
+    otherRoleTools.forEach((route) => {
+      const label = d078Node(route.tool_node_id)?.label;
+      if (!label) return;
+      if (hasProgressiveEdge(visibleRoleTool.tool_node_id, route.tool_node_id) && !hasExplicitAlternativeEdge(visibleRoleTool.tool_node_id, route.tool_node_id)) expect(screen.getByRole("button", { name: `Add ${label} to your learning` })).toBeTruthy();
+      else expect(screen.queryByRole("button", { name: `Add ${label} to your learning` })).toBeNull();
+    });
+    fireEvent.press(screen.getByRole("button", { name: `Remove ${roleToolLabel} from your learning` }));
+    otherRoleTools.forEach((route) => {
+      const label = d078Node(route.tool_node_id)?.label;
+      if (label) expect(screen.getByRole("button", { name: `Add ${label} to your learning` })).toBeTruthy();
+    });
+    const roleTaskLabel = d078Node(visibleRoleTool.task_node_id)?.label;
+    if (roleTaskLabel) expect(screen.getAllByText(roleTaskLabel).length).toBeGreaterThan(0);
     expect(screen.queryByText("This role is not in your selected route")).toBeNull();
     unmount();
   });
@@ -666,9 +1272,9 @@ describe("D078 method-aware journey UI acceptance", () => {
       guidanceContext={{ domainId: "D078", areaId: role!.areaId }}
     /></ThemeProvider>);
 
-    fireEvent.press(screen.getByRole("button", { name: /Open learning plan tray/ }));
-    fireEvent.press(screen.getAllByRole("button", { name: "Show learning plan mid size" }).at(-1)!);
-    fireEvent.press(screen.getByRole("button", { name: "Remove Interviews from your selected approaches" }));
+    fireEvent.press(screen.getByRole("button", { name: "Expand learning plan tray" }));
+    fireEvent.press(screen.getByRole("button", { name: "Delete Interviews from your selected approaches" }));
+    fireEvent.press(screen.getByRole("button", { name: "Delete selection" }));
 
     expect(router.replace).toHaveBeenCalledTimes(1);
     const destination = new URL(String(router.replace.mock.calls[0][0]), "http://localhost");
@@ -723,6 +1329,44 @@ describe("D078 method-aware journey UI acceptance", () => {
 
     view.rerender(<ThemeProvider><D078MethodAwareJourney {...props} /></ThemeProvider>);
     expect(screen.queryByRole("button", { name: "Undo route change" })).toBeNull();
+  });
+
+  it("reveals and keeps both role tools from an explicitly linked alternative pair", () => {
+    const graph = d078GraphDataForTests();
+    let selection = toggleD078Method(INITIAL_D078_SELECTION, INTERVIEWS);
+    const areaId = "D078:psychology-social-behaviour";
+    const role = projectD078Route(selection).visibleRoles.find((entry) =>
+      entry.roleId === "role:D078:9:behavioural-scientist" && entry.areaId === areaId,
+    );
+    expect(role).toBeTruthy();
+    selection = selectD078Area(selection, areaId);
+    selection = selectD078Role(selection, role!.roleId);
+    const routeTools = graph.role_tool_routes.filter((route) => route.role_id === role!.roleId && route.area_ids.includes(areaId));
+    const routeToolIds = new Set(routeTools.map((route) => route.tool_node_id));
+    const pair = graph.typed_relationship_edges.find((edge) =>
+      hasReviewedAlternativeEvidence(edge)
+      && routeToolIds.has(edge.sourceId)
+      && routeToolIds.has(edge.targetId),
+    );
+    expect(pair).toBeTruthy();
+    const sourceLabel = d078Node(pair!.sourceId)!.label;
+    const targetLabel = d078Node(pair!.targetId)!.label;
+
+    render(<ThemeProvider><D078RoleRoute
+      areaId={areaId}
+      roleId={role!.roleId}
+      roleName={role!.label}
+      roleKey={`D078|${role!.label}`}
+      initialSelection={selection}
+      roles={[]}
+      guidanceContext={{ domainId: "D078", areaId, roleId: role!.roleId }}
+    /></ThemeProvider>);
+    fireEvent.press(screen.getByRole("button", { name: `Add ${sourceLabel} to your learning` }));
+    expect(screen.queryByRole("button", { name: `Add ${targetLabel} to your learning` })).toBeNull();
+    fireEvent.press(screen.getByRole("button", { name: "Show other tools and compare alternatives" }));
+    fireEvent.press(screen.getByRole("button", { name: `Add ${targetLabel} to your learning` }));
+    expect(screen.getByRole("button", { name: `Remove ${sourceLabel} from your learning` })).toBeTruthy();
+    expect(screen.getByRole("button", { name: `Remove ${targetLabel} from your learning` })).toBeTruthy();
   });
 
   it("rehydrates a saved route and removes translation when reduced motion is enabled", () => {

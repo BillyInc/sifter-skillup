@@ -233,17 +233,17 @@ function ToolCard({
         {output ? <ToolDetail label="What you may produce" value={output} colors={colors} /> : null}
         {url ? <ToolDetail label="Why this learning link is here" value={resourceExplanation} colors={colors} /> : null}
         {relation?.requirementLevel ? <ToolDetail label="Why it appears in this route" value={`${requirement}.${relation.requirementReason ? ` ${studentReasonCopy(relation.requirementReason)}` : ""}`} colors={colors} /> : null}
-        {relation?.prerequisites?.length ? <ToolDetail label="What may help you prepare" value={`${relation.prerequisites.map(studentFacingCopy).filter(Boolean).join(" ")} These notes do not create an automatic block or fixed order.`} colors={colors} /> : null}
+        {relation?.prerequisites?.length ? <ToolDetail label="What may help you prepare" value={`${relation.prerequisites.map((value) => studentFacingCopy(value)).filter(Boolean).join(" ")} These notes do not create an automatic block or fixed order.`} colors={colors} /> : null}
         {backedRelationships.length ? <View style={styles.toolDetailGroup}>
           <Text style={[styles.toolDetailLabel, { color: colors.textRole.primary }]}>How this tool connects to other learning</Text>
           {backedRelationships.map((edge: CareerContextItemRelationship, index: number) => <Text key={`${edge.relationshipType}-${edge.toItemKey ?? edge.toName ?? index}`} style={[styles.toolNote, { color: colors.textRole.secondary }]}>
-            {relationshipDisplayLabel(edge.relationshipType)}: {edge.toName || edge.toItemKey || "related item"}. {studentFacingCopy(edge.learnerExplanation) || "The reviewed record connects this tool with the related learning for this kind of work."}{edge.evidenceLimitations?.length ? ` Limit: ${edge.evidenceLimitations.map(studentFacingCopy).filter(Boolean).join(" ")}` : ""}
+            {relationshipDisplayLabel(edge.relationshipType)}: {edge.toName || edge.toItemKey || "related item"}. {studentFacingCopy(edge.learnerExplanation) || "The reviewed record connects this tool with the related learning for this kind of work."}{edge.evidenceLimitations?.length ? ` Limit: ${edge.evidenceLimitations.map((value) => studentFacingCopy(value)).filter(Boolean).join(" ")}` : ""}
           </Text>)}
         </View> : null}
         {backedTargets.length ? <View style={styles.toolDetailGroup}>
           <Text style={[styles.toolDetailLabel, { color: colors.textRole.primary }]}>Routes this can support</Text>
           {backedTargets.map((target: CareerContextItemPathTarget) => <Text key={`${target.targetLevel}-${target.targetKey}`} style={[styles.toolNote, { color: colors.textRole.secondary }]}>
-            {target.targetLabel} · {routeContributionLabel(target.requirementLevel)}. {studentFacingCopy(target.pathReason)}{target.evidenceLimitations.length ? ` Limit: ${target.evidenceLimitations.map(studentFacingCopy).filter(Boolean).join(" ")}` : ""}
+            {target.targetLabel} · {routeContributionLabel(target.requirementLevel)}. {studentFacingCopy(target.pathReason)}{target.evidenceLimitations.length ? ` Limit: ${target.evidenceLimitations.map((value) => studentFacingCopy(value)).filter(Boolean).join(" ")}` : ""}
           </Text>)}
         </View> : null}
         {relation?.evidenceLimitations?.length ? <View style={styles.toolDetailGroup}>

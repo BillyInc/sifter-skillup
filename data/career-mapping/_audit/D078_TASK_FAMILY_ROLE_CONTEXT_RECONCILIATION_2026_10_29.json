@@ -1,0 +1,4003 @@
+{
+  "graph_schema_version": "2026-11-14.d078-method-area-role-route-graph.v12",
+  "passed": true,
+  "route_referenced_area_task_families_approved_for_optional_focus": 46,
+  "unrouted_family_candidates_retained_hidden": 17,
+  "area_task_candidate_dispositions": {
+    "date": "2026-11-08",
+    "source_artifact": "docs/manual-review/D078_AREA_TASK_CANDIDATE_DISPOSITIONS_2026_10_31.md",
+    "all_candidates_dispositioned": true,
+    "candidate_count": 16,
+    "decision_counts": {
+      "approved_merged": 13,
+      "approved_reclassified_foundation": 0,
+      "approved_routed_optional_family": 3
+    },
+    "pending_or_under_review_count": 0,
+    "student_release_gate_is_separate": true,
+    "records": {
+      "area-task:d078-econ-forecast-and-scenario-analysis": {
+        "approval": "approved_merge",
+        "decision": "merge_split_meaning_into_canonical_forecast_and_simulation_routes",
+        "targets": [
+          "area-task:econ-03",
+          "area-task:d078-econ-computational-economic-scenarios"
+        ],
+        "reason": "Forecast/nowcast and simulation scenarios are related but different work. Keep forecasting with ECON-03 and agent-based/computational scenarios with the existing simulation family; do not expose a duplicate umbrella card.",
+        "source_ids": [
+          "local:ECON-03",
+          "external:otexts-fpp3",
+          "external:bank-of-england-abm"
+        ]
+      },
+      "area-task:d078-econ-frame-economic-question": {
+        "approval": "approved_merge",
+        "decision": "merge_question_framing_into_domain_foundation_and_keep_economic_concepts_as_area_foundation",
+        "targets": [
+          "domain-item:d078-research-question-design",
+          "area-foundation:d078-economics-economic-concepts-and-indicators"
+        ],
+        "reason": "Generic question framing is already a shared Social Sciences foundation. Keep the economic subject concepts as the distinct area starting point; explain economic question framing inside the selected task rather than duplicating it as another area-foundation card.",
+        "source_ids": [
+          "local:D078-ECON-frame-economic-question",
+          "external:core-econ"
+        ]
+      },
+      "area-task:d078-economics-applied-analysis-core-task-family": {
+        "approval": "approved_merge",
+        "decision": "merge_into_area_overview",
+        "targets": [
+          "D078:economics-applied-analysis"
+        ],
+        "reason": "The record is a broad area-scope statement; its fallback item templates are explicitly reconciled to existing canonical Economics items, not independent learning items.",
+        "source_ids": [
+          "local:D078-economics-applied-analysis:core-task-family"
+        ]
+      },
+      "area-task:d078-politics-governance-public-policy-core-task-family": {
+        "approval": "approved_merge",
+        "decision": "merge_into_area_overview",
+        "targets": [
+          "D078:politics-governance-public-policy"
+        ],
+        "reason": "The broad scope duplicates the Politics, Governance and Public Policy area overview; the graph already contains distinct method-routed work families.",
+        "source_ids": [
+          "local:UNESCO_ISCED",
+          "local:ONET_POLSCI"
+        ]
+      },
+      "area-task:d078-politics-governance-public-policy-responsible-ai-assisted-opinion-survey-workflow": {
+        "approval": "approved_merge",
+        "decision": "merge_as_optional_extension_of_political_opinion_survey",
+        "targets": [
+          "area-task:d078-politics-governance-public-policy-political-survey-opinion"
+        ],
+        "reason": "AI assistance is a bounded optional extension of the established survey workflow, not a separate research design. Keep human review, disclosure, participant protection and real-sample requirements visible.",
+        "source_ids": [
+          "local:AAPOR_RESPONSIBLE_AI_SURVEY_2026",
+          "external:aapor-responsible-ai-survey-2026"
+        ]
+      },
+      "area-task:d078-politics-governance-public-policy-strategic-foresight-and-policy-scenarios": {
+        "approval": "approved_routed_optional_family",
+        "decision": "exact_scenario_analysis_route_materialized",
+        "targets": [
+          "domain-item:d078-scenario-analysis",
+          "area_enrichment_item:d078-a03-method-policy-foresight-scenarios",
+          "role:D078:10:political-scientist",
+          "role:D078:7:economic-policy-officer"
+        ],
+        "reason": "The optional foresight family is available only from the selected Scenario Analysis method in Politics, Governance and Public Policy. Its area learning item and two same-area role contexts are linked with sources; it is not a prediction, a universal policy task, or a progression blocker.",
+        "source_ids": [
+          "local:OECD_FORESIGHT_TOOLKIT",
+          "external:oecd-foresight-toolkit-2025"
+        ]
+      },
+      "area-task:d078-psychology-social-behaviour-core-task-family": {
+        "approval": "approved_merge",
+        "decision": "merge_into_area_overview",
+        "targets": [
+          "D078:psychology-social-behaviour"
+        ],
+        "reason": "The broad non-clinical area scope belongs in the overview; existing narrower research-task families represent the selectable work. Preserve the explicit exclusion of clinical assessment, counselling, diagnosis, treatment and licensure.",
+        "source_ids": [
+          "local:UNESCO_ISCED",
+          "local:APS_SOCIAL_BEHAVIOUR"
+        ]
+      },
+      "area-task:d078-social-anthro-design-bounded-inquiry": {
+        "approval": "approved_merge",
+        "decision": "merge_bounded_question_framing_into_domain_foundation_and_keep_social_concepts_as_area_foundation",
+        "targets": [
+          "domain-item:d078-research-question-design",
+          "area-foundation:d078-sociology-social-anthropology-social-concepts"
+        ],
+        "reason": "The shared Social Sciences foundation already teaches question framing. Keep the distinct Sociology and Social Anthropology concepts as the area starting point; task-specific question framing is explained in the chosen work context, not duplicated as another area-foundation card.",
+        "source_ids": [
+          "local:D078:SOCIAL_ANTHRO:design_bounded_inquiry",
+          "external:openstax-sociology-methods"
+        ]
+      },
+      "area-task:econ-01": {
+        "approval": "approved_merge",
+        "decision": "merge_into_exact_indicator_data_and_distribution_routes",
+        "targets": [
+          "area-task:d078-econ-official-statistics-sector-and-policy-analysis",
+          "area-task:d078-econ-construct-and-analyze-data",
+          "area-task:d078-econ-distribution-development-and-welfare"
+        ],
+        "reason": "Economic indicator description, data appraisal and distributional interpretation are already represented in specific routed families. Preserve the condition for distributional outcomes and do not duplicate the broad description card.",
+        "source_ids": [
+          "local:ECON-01",
+          "external:imf-weo-dataset"
+        ]
+      },
+      "area-task:econ-03": {
+        "approval": "approved_routed_optional_family",
+        "decision": "quantitative_economics_forecast_route_materialized",
+        "targets": [
+          "domain-item:d078-quantitative-approach",
+          "area_enrichment_item:d078-econ-time-series-analysis-and-forecasting",
+          "role:D078:12:economist",
+          "role:D078:4:economic-adviser"
+        ],
+        "reason": "The optional forecasting family is available on the Quantitative Economics route. It reuses the canonical time-series/forecast learning item and links only to same-area Economist and Economic Adviser contexts where forecasting is relevant; forecasts remain bounded by a stated target, horizon, baseline and uncertainty.",
+        "source_ids": [
+          "local:ECON-03",
+          "external:otexts-fpp3",
+          "external:imf-nowcasting-developing-economies"
+        ]
+      },
+      "area-task:econ-04": {
+        "approval": "approved_routed_optional_family",
+        "decision": "selected_ai_validation_option_gated_economic_measure_route_materialized",
+        "targets": [
+          "domain-emerging:d078-emerging-ai-use-validation-and-provenance",
+          "domain-item:d078-quantitative-approach",
+          "domain-item:d078-computational-social-research",
+          "area_enrichment_item:econ-a1",
+          "area_enrichment_item:econ-c2",
+          "role:D078:12:economist"
+        ],
+        "reason": "This optional Economics extension appears only after the learner selects the domain AI-use validation/provenance option and then selects Quantitative or Computational Social Research. It includes measure construction and validation, links to the Economist context only, and stays skippable; no generated variable is treated as valid by default.",
+        "source_ids": [
+          "local:ECON-04",
+          "external:aea-ai-ml-covariates-2026"
+        ]
+      },
+      "area-task:econ-05": {
+        "approval": "approved_merge",
+        "decision": "merge_as_optional_ai_support_not_a_task_family",
+        "targets": [
+          "area_enrichment_item:d078-econ-llm-evidence-synthesis"
+        ],
+        "reason": "Bounded AI microtasks can support several selected Economics tasks but do not constitute a research design or task family. Keep the capability optional and human-verified; do not expand its support item into every route without a task-specific link.",
+        "source_ids": [
+          "local:ECON-05",
+          "external:aea-generative-ai-economics-research"
+        ]
+      },
+      "area-task:soc-01": {
+        "approval": "approved_merge",
+        "decision": "merge_into_canonical_fieldwork_family",
+        "targets": [
+          "area-task:d078-social-anthro-fieldwork-and-community-evidence"
+        ],
+        "reason": "The task, output and method scope match the already routed bounded fieldwork family; no second family is needed.",
+        "source_ids": [
+          "local:SOC-01",
+          "local:ONET_SOCIOLOGISTS",
+          "local:OPENSTAX_SOCIOLOGY_METHODS"
+        ]
+      },
+      "area-task:soc-03": {
+        "approval": "approved_merge",
+        "decision": "merge_into_canonical_computational_social_inquiry_family",
+        "targets": [
+          "area-task:d078-social-anthro-computational-social-inquiry"
+        ],
+        "reason": "The same Sociology-area task already exists under the descriptive family ID. Preserve its distinct area context and the source limits on platform access, coverage and selection bias.",
+        "source_ids": [
+          "local:SOC-03",
+          "external:ukds-computational-social-science"
+        ]
+      },
+      "area-task:soc-04": {
+        "approval": "approved_merge",
+        "decision": "merge_as_optional_extension_of_qualitative_mixed_analysis",
+        "targets": [
+          "area-task:d078-social-anthro-qualitative-and-mixed-analysis",
+          "area_enrichment_item:d078-soc-llm-assisted-coding"
+        ],
+        "reason": "Keep human-led qualitative coding as the family and expose AI-assisted annotation only as an optional, human-validated extension. Do not duplicate the task family already present in another area under its own context.",
+        "source_ids": [
+          "local:SOC-04",
+          "external:ukds-quadra-ai",
+          "external:aapor-responsible-ai-survey-2026"
+        ]
+      },
+      "area-task:soc-06": {
+        "approval": "approved_merge",
+        "decision": "merge_as_optional_extension_of_social_survey_design",
+        "targets": [
+          "area-task:d078-social-anthro-survey-design-and-analysis",
+          "area_enrichment_item:d078-soc-ai-survey-question-drafting"
+        ],
+        "reason": "AI-assisted drafting/translation belongs within the established survey-design family as an optional branch with expert review and cognitive pretesting; it is not a second survey design.",
+        "source_ids": [
+          "local:SOC-06",
+          "external:aapor-best-practices",
+          "external:aapor-responsible-ai-survey-2026"
+        ]
+      }
+    }
+  },
+  "area_task_preparation_reconciliation": {
+    "date": "2026-11-09",
+    "source_artifact": "data/career-mapping/_audit/d078_area_role_task_sets_2026_10_09.json.gz",
+    "specialist_task_families_reviewed": 14,
+    "source_task_records_reviewed": 14,
+    "task_specific_preparation_contexts_attached": 14,
+    "selectable_task_families_dispositioned": 46,
+    "families_with_no_exact_learning_prerequisite_target": 0,
+    "families_without_specific_preparation_ids": [],
+    "creates_learning_items": false,
+    "creates_prerequisite_or_sequence_edges": false,
+    "task_context_count": 46,
+    "selectable_specialist_task_records_covered": true,
+    "display_policy": "only after the exact area task family is selected",
+    "families": [
+      {
+        "source_task_id": "D078:sociology-social-anthropology:qualitative-interview",
+        "family_id": "area-task:d078-sociology-social-anthropology-qualitative-interview"
+      },
+      {
+        "source_task_id": "D078:sociology-social-anthropology:interpret-social-evidence",
+        "family_id": "area-task:d078-sociology-social-anthropology-interpret-social-evidence"
+      },
+      {
+        "source_task_id": "D078:economics-applied-analysis:social-economic-data-analysis",
+        "family_id": "area-task:d078-econ-construct-and-analyze-data"
+      },
+      {
+        "source_task_id": "D078:economics-applied-analysis:policy-evaluation",
+        "family_id": "area-task:d078-econ-policy-and-program-evaluation"
+      },
+      {
+        "source_task_id": "D078:politics-governance-public-policy:policy-evidence-brief",
+        "family_id": "area-task:d078-politics-governance-public-policy-policy-evidence-brief"
+      },
+      {
+        "source_task_id": "D078:politics-governance-public-policy:political-survey-opinion",
+        "family_id": "area-task:d078-politics-governance-public-policy-political-survey-opinion"
+      },
+      {
+        "source_task_id": "D078:psychology-social-behaviour:behavioural-research-design",
+        "family_id": "area-task:d078-psychology-social-behaviour-behavioural-research-design"
+      },
+      {
+        "source_task_id": "D078:psychology-social-behaviour:group-identity-and-participation",
+        "family_id": "area-task:d078-psychology-social-behaviour-group-identity-and-participation"
+      },
+      {
+        "source_task_id": "D078:human-geography-population:spatial-patterns",
+        "family_id": "area-task:d078-human-geography-population-spatial-patterns"
+      },
+      {
+        "source_task_id": "D078:human-geography-population:population-change",
+        "family_id": "area-task:d078-human-geography-population-population-change"
+      },
+      {
+        "source_task_id": "D078:social-research-evaluation:design-social-study",
+        "family_id": "area-task:d078-social-research-evaluation-design-social-study"
+      },
+      {
+        "source_task_id": "D078:social-research-evaluation:programme-evaluation",
+        "family_id": "area-task:d078-social-research-evaluation-programme-evaluation"
+      },
+      {
+        "source_task_id": "D078:computational-digital-social-science:reproducible-social-data",
+        "family_id": "area-task:d078-computational-digital-social-science-reproducible-social-data"
+      },
+      {
+        "source_task_id": "D078:computational-digital-social-science:digital-trace-content-analysis",
+        "family_id": "area-task:d078-computational-digital-social-science-digital-trace-content-analysis"
+      }
+    ]
+  },
+  "candidate_route_materialization": {
+    "added_area_foundation_and_learning_nodes": 0,
+    "new_forecast_measure_and_foresight_route_family_ids": [
+      "area-task:econ-03",
+      "area-task:econ-04",
+      "area-task:d078-politics-governance-public-policy-strategic-foresight-and-policy-scenarios"
+    ],
+    "conditional_family_gate": {
+      "area-task:econ-04": [
+        "domain-emerging:d078-emerging-ai-use-validation-and-provenance"
+      ]
+    },
+    "scenario_method_added": true,
+    "area_foundation_ids_by_area": {
+      "D078:computational-digital-social-science": [
+        "area_enrichment_item:d078-computational-digital-social-science-computational-question-formulation"
+      ],
+      "D078:human-geography-population": [
+        "area_enrichment_item:d078-human-geography-population-spatial-concepts-and-place"
+      ],
+      "D078:politics-governance-public-policy": [
+        "area_enrichment_item:d078-a03-knowledge-institutions-policy"
+      ],
+      "D078:psychology-social-behaviour": [
+        "area_enrichment_item:d078-a04-knowledge-behavioural-constructs"
+      ],
+      "D078:economics-applied-analysis": [
+        "area-foundation:d078-economics-economic-concepts-and-indicators"
+      ],
+      "D078:sociology-social-anthropology": [
+        "area-foundation:d078-sociology-social-anthropology-social-concepts"
+      ]
+    }
+  },
+  "stata_tool_reconciliation": {
+    "decision": "approved_optional_tool_only_for_method_routes_that_use_compatible_structured_quantitative_data",
+    "methods": [
+      "domain-item:d078-computational-social-research",
+      "domain-item:d078-mixed-methods",
+      "domain-item:d078-quantitative-approach",
+      "domain-item:d078-survey-method",
+      "domain-item:experiments-quasi-experiments-and-causal-inference",
+      "domain-item:longitudinal-panel-and-multilevel-data",
+      "domain-item:programme-evaluation-and-theory-of-change",
+      "domain-item:psychometrics-and-scale-construction"
+    ],
+    "method_area_route_count": 47,
+    "unsupported_method_routes_removed": true,
+    "external_sources": [
+      "external:stata-why-use-stata-2026",
+      "external:stata-survey-methods-2026",
+      "external:stata-video-tutorials-2026",
+      "external:nuc-social-sciences-ccmas-2023"
+    ],
+    "does_not_claim": [
+      "universal requirement",
+      "Nigerian university software requirement",
+      "job qualification",
+      "software access included"
+    ],
+    "graph_release_gate_remains_separate": true
+  },
+  "r_tool_reconciliation": {
+    "decision": "approved_optional_tool_only_for_compatible_structured_quantitative_method_routes",
+    "methods": [
+      "domain-item:d078-computational-social-research",
+      "domain-item:d078-mixed-methods",
+      "domain-item:d078-quantitative-approach",
+      "domain-item:d078-survey-method",
+      "domain-item:experiments-quasi-experiments-and-causal-inference",
+      "domain-item:longitudinal-panel-and-multilevel-data",
+      "domain-item:programme-evaluation-and-theory-of-change",
+      "domain-item:psychometrics-and-scale-construction"
+    ],
+    "method_area_route_count": 47,
+    "unsupported_method_routes_removed": true,
+    "external_sources": [
+      "external:r-project-about-2026",
+      "external:r-project-manuals-2026"
+    ],
+    "graph_release_gate_remains_separate": true
+  },
+  "core_tool_scope_reconciliation": {
+    "date": "2026-10-31",
+    "tools": {
+      "domain-item:d078-qualitative-coding-tool": {
+        "methods": [
+          "domain-item:d078-document-analysis",
+          "domain-item:d078-interviews",
+          "domain-item:d078-mixed-methods",
+          "domain-item:d078-observation-ethnography",
+          "domain-item:d078-qualitative-approach",
+          "domain-item:discourse-and-conversation-analysis",
+          "domain-item:focus-groups-and-workshops",
+          "domain-item:participatory-and-action-research"
+        ],
+        "area_specific_methods": [
+          "domain-item:archival-and-historical-research",
+          "domain-item:case-study-and-comparative-case-design"
+        ],
+        "condition": "Use only when the selected task involves text documents, transcripts, field notes or other material suitable for manual tagging and retrieval."
+      },
+      "domain-item:d078-nvivo-tool": {
+        "methods": [
+          "domain-item:d078-document-analysis",
+          "domain-item:d078-interviews",
+          "domain-item:d078-mixed-methods",
+          "domain-item:d078-observation-ethnography",
+          "domain-item:d078-qualitative-approach",
+          "domain-item:discourse-and-conversation-analysis",
+          "domain-item:focus-groups-and-workshops",
+          "domain-item:participatory-and-action-research"
+        ],
+        "area_specific_methods": [
+          "domain-item:archival-and-historical-research",
+          "domain-item:case-study-and-comparative-case-design"
+        ],
+        "condition": "Use when a text, interview, focus-group, audio/video or mixed-methods project needs structured coding, queries or comparison, and the learner has access to the software."
+      },
+      "domain-item:d078-social-network-tool": {
+        "methods": [
+          "domain-item:d078-computational-social-research",
+          "domain-method:network-analysis",
+          "domain-method:social-network-analysis"
+        ],
+        "area_specific_methods": [],
+        "condition": "Use only when the question is about relationships represented as nodes and ties and the data can be responsibly represented as a network."
+      },
+      "domain-item:d078-spss-tool": {
+        "methods": [
+          "domain-item:d078-computational-social-research",
+          "domain-item:d078-mixed-methods",
+          "domain-item:d078-quantitative-approach",
+          "domain-item:d078-survey-method",
+          "domain-item:experiments-quasi-experiments-and-causal-inference",
+          "domain-item:longitudinal-panel-and-multilevel-data",
+          "domain-item:programme-evaluation-and-theory-of-change",
+          "domain-item:psychometrics-and-scale-construction"
+        ],
+        "area_specific_methods": [],
+        "condition": "Use for a selected quantitative task only when the method, data structure, assumptions and software access fit."
+      }
+    },
+    "all_are_optional_and_skippable": true,
+    "route_edges_are_method_and_task_contextual": true,
+    "no_route_claims_tool_is_a_role_or_programme_requirement": true,
+    "graph_release_gate_remains_separate": true
+  },
+  "role_task_nodes": 19,
+  "area_family_to_role_task_edges": 47,
+  "role_task_to_role_edges": 19,
+  "route_relationship_evidence_reconciliation": {
+    "domain_item_area_task_total": 260,
+    "domain_item_area_task_evidence_resolved": 255,
+    "domain_item_area_task_excluded_without_exact_crosswalk": 5,
+    "area_task_item_total": 125,
+    "area_task_item_evidence_resolved": 114,
+    "area_task_item_excluded_without_exact_source_membership": 11
+  },
+  "student_display_contract_reconciliation": {
+    "domain_items_promoted": 112,
+    "domain_items_unapproved": 0,
+    "approved_area_tool_options_promoted": 7,
+    "approved_area_tool_options_unapproved": 0,
+    "area_enrichment_dispositions": {
+      "approved": 228,
+      "unapproved": 3
+    },
+    "area_enrichment_missing_field_counts": {
+      "authoritative_source": 2,
+      "resolved_task_family_relationship": 3,
+      "task_specific_learning_resource": 2
+    },
+    "area_enrichment_item_dispositions": [
+      {
+        "id": "area_enrichment_item:d078-a03-competency-ai-transparency-and-impact",
+        "label": "Explain an algorithm-assisted public decision and its limits",
+        "area_id": "D078:politics-governance-public-policy",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a03-competency-evaluation-judgement",
+        "label": "Context-sensitive evaluation judgement",
+        "area_id": "D078:politics-governance-public-policy",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a03-competency-review-auditability",
+        "label": "Verify and document AI-assisted review decisions",
+        "area_id": "D078:politics-governance-public-policy",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a03-knowledge-institutions-policy",
+        "label": "Political institutions, public authority and policy process",
+        "area_id": "D078:politics-governance-public-policy",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a03-method-ai-assisted-evidence-synthesis",
+        "label": "AI-assisted evidence synthesis with human verification",
+        "area_id": "D078:politics-governance-public-policy",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a03-method-evaluate-ai-public-intervention",
+        "label": "Impact evaluation of AI-enabled public interventions",
+        "area_id": "D078:politics-governance-public-policy",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a03-method-policy-evidence-review",
+        "label": "Policy evidence review and options appraisal",
+        "area_id": "D078:politics-governance-public-policy",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a03-method-policy-foresight-scenarios",
+        "label": "Build policy scenarios and test a strategy against them",
+        "area_id": "D078:politics-governance-public-policy",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a03-method-policy-text-as-data",
+        "label": "Policy text-as-data analysis",
+        "area_id": "D078:politics-governance-public-policy",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a03-method-programme-evaluation",
+        "label": "Programme evaluation and theory of change",
+        "area_id": "D078:politics-governance-public-policy",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a03-method-survey-sampling",
+        "label": "Survey design, sampling and measurement",
+        "area_id": "D078:politics-governance-public-policy",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a03-skill-policy-brief-writing",
+        "label": "Policy brief and evidence communication",
+        "area_id": "D078:politics-governance-public-policy",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a03-skill-stakeholder-mapping",
+        "label": "Stakeholder and affected-group mapping",
+        "area_id": "D078:politics-governance-public-policy",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a03-skill-validate-text-measures",
+        "label": "Validate computational text labels against source context",
+        "area_id": "D078:politics-governance-public-policy",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a03-tool-kobotoolbox-survey",
+        "label": "KoboToolbox for field survey collection",
+        "area_id": "D078:politics-governance-public-policy",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a03-tool-rayyan-screening",
+        "label": "Rayyan for organizing and assisting review screening",
+        "area_id": "D078:politics-governance-public-policy",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a04-competency-audit-ai-qualitative-coding",
+        "label": "Audit AI suggestions against qualitative source material",
+        "area_id": "D078:psychology-social-behaviour",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a04-competency-digital-data-provenance",
+        "label": "Assess coverage, provenance and ethical risk in digital social data",
+        "area_id": "D078:psychology-social-behaviour",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a04-competency-ethical-cultural-reflexivity",
+        "label": "Ethical, cultural and reflexive judgement",
+        "area_id": "D078:psychology-social-behaviour",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a04-competency-measure-comparability-judgement",
+        "label": "Judge when social-behaviour scores can be compared across groups",
+        "area_id": "D078:psychology-social-behaviour",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a04-knowledge-behavioural-constructs",
+        "label": "Social-behavioural concepts and construct meaning",
+        "area_id": "D078:psychology-social-behaviour",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a04-knowledge-identity-groups-context",
+        "label": "Social identity, group processes and cultural context",
+        "area_id": "D078:psychology-social-behaviour",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a04-method-behavioural-research-design",
+        "label": "Behavioural research design and measurement",
+        "area_id": "D078:psychology-social-behaviour",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a04-method-comparative-mixed-analysis",
+        "label": "Comparative and mixed-method analysis of group patterns",
+        "area_id": "D078:psychology-social-behaviour",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a04-method-contextual-measure-adaptation",
+        "label": "Contextual adaptation and validation of social-behaviour measures",
+        "area_id": "D078:psychology-social-behaviour",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a04-method-digital-trace-inquiry",
+        "label": "Digital-trace and online-interaction research",
+        "area_id": "D078:psychology-social-behaviour",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a04-method-human-ai-social-interaction-study",
+        "label": "Research human behaviour in AI-mediated interactions",
+        "area_id": "D078:psychology-social-behaviour",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a04-method-human-in-loop-llm-qualitative-analysis",
+        "label": "Human-in-the-loop LLM support for qualitative analysis",
+        "area_id": "D078:psychology-social-behaviour",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a04-method-llm-social-agent-simulation-experimental",
+        "label": "LLM social-agent simulation for exploratory theory testing (experimental)",
+        "area_id": "D078:psychology-social-behaviour",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a04-method-qualitative-group-inquiry",
+        "label": "Qualitative interview, observation and document inquiry",
+        "area_id": "D078:psychology-social-behaviour",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a04-skill-cognitive-pretesting-and-equivalence",
+        "label": "Check how people understand a social-behaviour measure",
+        "area_id": "D078:psychology-social-behaviour",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a04-skill-group-pattern-interpretation",
+        "label": "Interpret group patterns without stereotyping individuals",
+        "area_id": "D078:psychology-social-behaviour",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a04-skill-measurement-analysis",
+        "label": "Operationalise, analyse and communicate behavioural measures",
+        "area_id": "D078:psychology-social-behaviour",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a04-tool-nvivo-tagging",
+        "label": "NVivo or Taguette for qualitative coding",
+        "area_id": "D078:psychology-social-behaviour",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a04-tools-quantitative-alternatives",
+        "label": "R, Python, SPSS or Stata as analysis alternatives",
+        "area_id": "D078:psychology-social-behaviour",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a34-a03-competency-inclusion-response-accountability",
+        "label": "Plan inclusive participation and close the feedback loop",
+        "area_id": "D078:politics-governance-public-policy",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a34-a03-competency-options-impact-analysis",
+        "label": "Compare regulatory options and affected-group impacts",
+        "area_id": "D078:politics-governance-public-policy",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a34-a03-knowledge-regulatory-policy-cycle",
+        "label": "Regulatory policy-cycle and implementation context",
+        "area_id": "D078:politics-governance-public-policy",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a34-a03-method-community-scorecard",
+        "label": "Community scorecard and social-accountability monitoring",
+        "area_id": "D078:politics-governance-public-policy",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a34-a03-method-participation-design",
+        "label": "Design, deliver and review a citizen participation process",
+        "area_id": "D078:politics-governance-public-policy",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a34-a03-method-ria",
+        "label": "Regulatory impact assessment and options analysis",
+        "area_id": "D078:politics-governance-public-policy",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a34-a03-skill-public-evidence-tracking",
+        "label": "Track public-service commitments against documentary and community evidence",
+        "area_id": "D078:politics-governance-public-policy",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a34-a03-tool-budget-imonitor",
+        "label": "Nigeria Budget Office I-Monitor project-feedback portal",
+        "area_id": "D078:politics-governance-public-policy",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a34-a04-competency-conflict-sensitivity",
+        "label": "Assess how programme choices may affect conflict dynamics",
+        "area_id": "D078:psychology-social-behaviour",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a34-a04-competency-contextual-intervention-evaluation",
+        "label": "Evaluate and adapt a behaviourally informed intervention in context",
+        "area_id": "D078:psychology-social-behaviour",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a34-a04-method-behavioural-insights-cycle",
+        "label": "Behavioural insights diagnosis and intervention cycle",
+        "area_id": "D078:psychology-social-behaviour",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-a34-a04-method-conflict-analysis",
+        "label": "Conflict and development context analysis",
+        "area_id": "D078:psychology-social-behaviour",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-computational-digital-social-science-agent-based-social-simulation",
+        "label": "Agent-based modelling for a stated social mechanism",
+        "area_id": "D078:computational-digital-social-science",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-computational-digital-social-science-computational-question-formulation",
+        "label": "Translate a social question into a computational task",
+        "area_id": "D078:computational-digital-social-science",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-computational-digital-social-science-content-analysis-and-text-classification",
+        "label": "Analyse digital text with human validation and error reporting",
+        "area_id": "D078:computational-digital-social-science",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-computational-digital-social-science-data-provenance-and-digital-ethics",
+        "label": "Track data provenance, permissions and digital-research risk",
+        "area_id": "D078:computational-digital-social-science",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-computational-digital-social-science-digital-trace-construct-and-sampling",
+        "label": "Define the construct, platform scope and sampling limits of digital traces",
+        "area_id": "D078:computational-digital-social-science",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-computational-digital-social-science-interpretable-statistical-modeling",
+        "label": "Interpretable statistical modelling when the question and design justify it",
+        "area_id": "D078:computational-digital-social-science",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-computational-digital-social-science-jupyter-reproducible-environment",
+        "label": "Jupyter for an explained, repeatable workflow",
+        "area_id": "D078:computational-digital-social-science",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-computational-digital-social-science-mesa-or-casevo",
+        "label": "Mesa, with Casevo as a specialist extension",
+        "area_id": "D078:computational-digital-social-science",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-computational-digital-social-science-network-analysis-method",
+        "label": "Analyse relationships as networks when ties are the evidence",
+        "area_id": "D078:computational-digital-social-science",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-computational-digital-social-science-networkx-or-gephi",
+        "label": "NetworkX or Gephi for relationship data",
+        "area_id": "D078:computational-digital-social-science",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-computational-digital-social-science-pandas-tabular-research-data",
+        "label": "pandas for cleaning and combining tabular research data",
+        "area_id": "D078:computational-digital-social-science",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-computational-digital-social-science-predictive-text-modeling",
+        "label": "Predict text only for a defined social question, with validation",
+        "area_id": "D078:computational-digital-social-science",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-computational-digital-social-science-python-social-data-workflow",
+        "label": "Python for a social-science data workflow",
+        "area_id": "D078:computational-digital-social-science",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-computational-digital-social-science-r-social-data-workflow",
+        "label": "R for social-science data analysis",
+        "area_id": "D078:computational-digital-social-science",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-computational-digital-social-science-reproducible-data-cleaning",
+        "label": "Clean and document a social-science dataset reproducibly",
+        "area_id": "D078:computational-digital-social-science",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-econ-agent-based-modeling",
+        "label": "Agent-based economic modelling (Python/Mesa or another justified platform)",
+        "area_id": "D078:economics-applied-analysis",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-econ-applied-econometrics",
+        "label": "Applied econometric analysis with assumptions and diagnostics",
+        "area_id": "D078:economics-applied-analysis",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-econ-casevo-llm-sim",
+        "label": "Casevo LLM-agent social/economic simulation (experimental research option)",
+        "area_id": "D078:economics-applied-analysis",
+        "approval": "unapproved",
+        "missing_fields": [
+          "authoritative_source",
+          "task_specific_learning_resource",
+          "resolved_task_family_relationship"
+        ]
+      },
+      {
+        "id": "area_enrichment_item:d078-econ-causal-evaluation",
+        "label": "Impact evaluation and causal-inference design",
+        "area_id": "D078:economics-applied-analysis",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-econ-causal-ml",
+        "label": "Machine learning for causal questions (double/debiased ML or heterogeneous effects when justified)",
+        "area_id": "D078:economics-applied-analysis",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-econ-distributional-analysis",
+        "label": "Inequality, poverty, and distributional analysis",
+        "area_id": "D078:economics-applied-analysis",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-econ-labour-statistics",
+        "label": "Labour-market measurement and interpretation",
+        "area_id": "D078:economics-applied-analysis",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-econ-llm-evidence-synthesis",
+        "label": "AI-assisted economic evidence discovery and synthesis with source verification",
+        "area_id": "D078:economics-applied-analysis",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-econ-national-accounts-measurement",
+        "label": "National-accounts concepts and indicator interpretation",
+        "area_id": "D078:economics-applied-analysis",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-econ-nigeria-microdata",
+        "label": "Use Nigerian official survey and macroeconomic data with design-aware interpretation",
+        "area_id": "D078:economics-applied-analysis",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-econ-public-finance-statistics",
+        "label": "Public-finance statistics and fiscal analysis concepts",
+        "area_id": "D078:economics-applied-analysis",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-econ-r-python-analysis",
+        "label": "Reproducible economic data analysis (R or Python; select a workflow)",
+        "area_id": "D078:economics-applied-analysis",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-econ-reproducible-research",
+        "label": "Reproducible research workflow and data documentation",
+        "area_id": "D078:economics-applied-analysis",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-econ-time-series-analysis-and-forecasting",
+        "label": "Econometric time-series analysis and forecasting",
+        "area_id": "D078:economics-applied-analysis",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-human-geography-geographical-random-forest",
+        "label": "Geographical random forest for spatially varying prediction",
+        "area_id": "D078:human-geography-population",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-human-geography-population-census-survey-admin-appraisal",
+        "label": "Appraise census, survey and administrative population data",
+        "area_id": "D078:human-geography-population",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-human-geography-population-demographic-estimation-projection",
+        "label": "Population estimation and projection with uncertainty",
+        "area_id": "D078:human-geography-population",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-human-geography-population-migration-urbanisation-interpretation",
+        "label": "Interpret migration and urbanisation patterns",
+        "area_id": "D078:human-geography-population",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-human-geography-population-population-measures",
+        "label": "Population measures and demographic change",
+        "area_id": "D078:human-geography-population",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-human-geography-population-qgis-spatial-tool",
+        "label": "QGIS for a human-geography spatial workflow",
+        "area_id": "D078:human-geography-population",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-human-geography-population-spatial-analysis-method",
+        "label": "Spatial analysis and map-based comparison",
+        "area_id": "D078:human-geography-population",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-human-geography-population-spatial-concepts-and-place",
+        "label": "Spatial patterns, place and scale",
+        "area_id": "D078:human-geography-population",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-human-geography-population-spatial-data-provenance-scale",
+        "label": "Spatial data provenance, geographic units and scale",
+        "area_id": "D078:human-geography-population",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-human-geography-population-spatial-pattern-communication",
+        "label": "Explain spatial patterns without overclaiming",
+        "area_id": "D078:human-geography-population",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-soc-ai-survey-question-drafting",
+        "label": "Human-reviewed AI assistance for survey question drafting",
+        "area_id": "D078:sociology-social-anthropology",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-soc-caqdas-taguette-nvivo",
+        "label": "Computer-assisted qualitative analysis (Taguette / NVivo as distinct options)",
+        "area_id": "D078:sociology-social-anthropology",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-soc-digital-trace-ethics",
+        "label": "Digital trace data provenance, access, and ethics",
+        "area_id": "D078:sociology-social-anthropology",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-soc-document-analysis",
+        "label": "Systematic document and media analysis",
+        "area_id": "D078:sociology-social-anthropology",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-soc-ethnographic-fieldwork",
+        "label": "Ethnographic fieldwork and participant observation",
+        "area_id": "D078:sociology-social-anthropology",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-soc-interview-focusgroup",
+        "label": "Qualitative interviewing and focus-group facilitation",
+        "area_id": "D078:sociology-social-anthropology",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-soc-kobo-survey-field",
+        "label": "Digital field-survey collection (KoboToolbox / KoboCollect or alternatives)",
+        "area_id": "D078:sociology-social-anthropology",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-soc-llm-assisted-coding",
+        "label": "Human-validated LLM-assisted qualitative coding and retrieval",
+        "area_id": "D078:sociology-social-anthropology",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-soc-llm-synthetic-pilot",
+        "label": "LLM-generated synthetic respondents for pilot testing (not human evidence)",
+        "area_id": "D078:sociology-social-anthropology",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-soc-quant-text-r",
+        "label": "Quantitative text analysis in R (quanteda) or Python (NLTK/spaCy alternatives)",
+        "area_id": "D078:sociology-social-anthropology",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-soc-secondary-qual-analysis",
+        "label": "Secondary qualitative-data analysis and provenance assessment",
+        "area_id": "D078:sociology-social-anthropology",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-soc-social-network-analysis",
+        "label": "Social network analysis (Gephi or R/Python alternatives)",
+        "area_id": "D078:sociology-social-anthropology",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-soc-survey-analysis-r",
+        "label": "Design-aware analysis of social survey data (R or documented alternatives)",
+        "area_id": "D078:sociology-social-anthropology",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-soc-survey-design",
+        "label": "Social survey design, sampling, and question pretesting",
+        "area_id": "D078:sociology-social-anthropology",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-soc-thematic-analysis",
+        "label": "Thematic/framework analysis with an auditable codebook",
+        "area_id": "D078:sociology-social-anthropology",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-social-research-evaluation-evaluation-design-and-evidence",
+        "label": "Select evaluation questions, design and credible evidence",
+        "area_id": "D078:social-research-evaluation",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-social-research-evaluation-field-and-document-method-choice",
+        "label": "Choose between surveys, interviews, focus groups and document methods",
+        "area_id": "D078:social-research-evaluation",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-social-research-evaluation-kobo-electronic-collection",
+        "label": "KoboToolbox for electronic form collection",
+        "area_id": "D078:social-research-evaluation",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-social-research-evaluation-programme-theory-and-logic",
+        "label": "Describe how a programme is expected to produce change",
+        "area_id": "D078:social-research-evaluation",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-social-research-evaluation-qualitative-coding-options",
+        "label": "NVivo or Taguette for documented qualitative coding",
+        "area_id": "D078:social-research-evaluation",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-social-research-evaluation-quantitative-analysis-choice",
+        "label": "Use a quantitative analysis workflow only when the design supports it",
+        "area_id": "D078:social-research-evaluation",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-social-research-evaluation-research-ethics-data-stewardship",
+        "label": "Protect participants and handle research data responsibly",
+        "area_id": "D078:social-research-evaluation",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-social-research-evaluation-sampling-and-measurement",
+        "label": "Sampling, measurement and representativeness",
+        "area_id": "D078:social-research-evaluation",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-social-research-evaluation-spss-quantitative-tool",
+        "label": "IBM SPSS for a justified social-data analysis",
+        "area_id": "D078:social-research-evaluation",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-social-research-evaluation-stakeholder-use-and-reporting",
+        "label": "Turn findings into usable, transparent recommendations",
+        "area_id": "D078:social-research-evaluation",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:d078-social-research-evaluation-study-question-design",
+        "label": "Turn a social question into a feasible study design",
+        "area_id": "D078:social-research-evaluation",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:econ-a1",
+        "label": "Construct an economic measure from text or other unstructured evidence",
+        "area_id": "D078:economics-applied-analysis",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:econ-c1",
+        "label": "Economic inference and policy-claim discipline",
+        "area_id": "D078:economics-applied-analysis",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:econ-c2",
+        "label": "Validate a generated measure and account for its possible error",
+        "area_id": "D078:economics-applied-analysis",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:soc-a2",
+        "label": "Casevo for an optional language-model social-simulation route",
+        "area_id": "D078:sociology-social-anthropology",
+        "approval": "unapproved",
+        "missing_fields": [
+          "resolved_task_family_relationship"
+        ]
+      },
+      {
+        "id": "area_enrichment_item:soc-c2",
+        "label": "Reflexive, auditable interpretation",
+        "area_id": "D078:sociology-social-anthropology",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:soc-m3",
+        "label": "Agent-based modelling of social mechanisms",
+        "area_id": "D078:sociology-social-anthropology",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "area_enrichment_item:soc-t2",
+        "label": "Mesa agent-based modelling framework",
+        "area_id": "D078:sociology-social-anthropology",
+        "approval": "unapproved",
+        "missing_fields": [
+          "authoritative_source",
+          "task_specific_learning_resource",
+          "resolved_task_family_relationship"
+        ]
+      },
+      {
+        "id": "domain-item:ai-assisted-and-digital-trace-research-ethics",
+        "label": "Ethics for AI-assisted and digital-trace research",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:archival-and-historical-research",
+        "label": "Archival and historical research",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:case-study-and-comparative-case-design",
+        "label": "Case-study and comparative-case design",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-agent-based-modeling",
+        "label": "Agent-based modelling of social processes",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-anova-and-repeated-measures",
+        "label": "ANOVA: group, factorial and repeated-measures comparisons",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-atlasti-tool",
+        "label": "ATLAS.ti for qualitative data coding and retrieval",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-barnard-exact-test",
+        "label": "Barnard's unconditional exact test for 2×2 tables",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-boschloo-exact-test",
+        "label": "Boschloo's unconditional exact test for 2×2 tables",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-care-for-research-data",
+        "label": "Organise and protect research information when a project uses data",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-casevo-tool",
+        "label": "Casevo for cognitive-agent social-simulation experiments",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-certification-boundaries",
+        "label": "No universal D078 professional certification established",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-chi-square-tests",
+        "label": "Chi-square tests for categorical counts and association",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-communicate-evidence",
+        "label": "Communicate findings for the intended audience",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-computational-social-research",
+        "label": "Computational and digital social-research methods",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-confirmatory-factor-analysis",
+        "label": "Confirmatory factor analysis (CFA)",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-conversation-analysis",
+        "label": "Conversation analysis (CA) of talk-in-interaction",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-count-regression",
+        "label": "Count regression: Poisson and negative binomial models",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-critical-discourse-analysis",
+        "label": "Critical discourse analysis (CDA)",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-dedoose-tool",
+        "label": "Dedoose for collaborative qualitative and mixed-methods analysis",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-document-analysis",
+        "label": "Document and content analysis",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-evaluate-evidence-and-limits",
+        "label": "Evaluate evidence and explain what it can and cannot show",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-eviews-tool",
+        "label": "EViews for econometric time-series analysis",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-exploratory-factor-analysis",
+        "label": "Exploratory factor analysis (EFA)",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-exponential-random-graph-models",
+        "label": "Exponential-family random graph models (ERGMs)",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-fisher-exact-test",
+        "label": "Fisher's exact test for categorical counts",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-friedman-test",
+        "label": "Friedman rank test for matched or blocked groups",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-huggingface-transformers-tool",
+        "label": "Hugging Face Transformers for pretrained NLP models",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-igraph-tool",
+        "label": "R/igraph for social network analysis",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-interpretative-phenomenological-analysis",
+        "label": "Interpretative phenomenological analysis (IPA)",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-interviews",
+        "label": "Interviews",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-item-response-theory",
+        "label": "Item response theory (IRT) and differential item functioning",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-jamovi-tool",
+        "label": "jamovi for introductory quantitative social-science analysis",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-jasp-tool",
+        "label": "JASP, menu-based software for statistical analysis",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-jupyter",
+        "label": "Jupyter",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-kendall-rank-correlation",
+        "label": "Kendall rank correlation",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-kruskal-wallis-test",
+        "label": "Kruskal–Wallis rank test for independent groups",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-linear-regression-ols",
+        "label": "Simple and multiple linear regression (ordinary least squares)",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-llm-assisted-text-construct-measurement",
+        "label": "LLM-assisted measurement of constructs in social text",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-logistic-regression",
+        "label": "Logistic regression for binary outcomes",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-matplotlib-tool",
+        "label": "Matplotlib for creating Python charts",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-maxqda-tool",
+        "label": "MAXQDA for qualitative and mixed-methods analysis",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-mesa-tool",
+        "label": "Mesa for building agent-based social simulations in Python",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-mixed-methods",
+        "label": "Mixed methods (combining numerical and qualitative evidence when justified)",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-ml-survey-nonresponse-adjustment",
+        "label": "Machine learning for survey nonresponse adjustment",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-multinomial-logistic-regression",
+        "label": "Multinomial logistic regression for unordered categorical outcomes",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-netlogo-tool",
+        "label": "NetLogo for agent-based social simulation",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-networkx-tool",
+        "label": "NetworkX for analysing relationship data as a graph",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-nlp-and-text-mining",
+        "label": "Natural language processing and computational text mining",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-nltk-tool",
+        "label": "NLTK for teaching and prototyping language-data analysis",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-nvivo-tool",
+        "label": "NVivo for organizing and coding substantial qualitative material",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-observation-ethnography",
+        "label": "Observation and ethnographic approaches",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-odd-agent-model-documentation",
+        "label": "ODD protocol for documenting agent-based models",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-odk-tool",
+        "label": "ODK for offline-capable field data collection",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-ordinal-regression",
+        "label": "Ordinal regression for ordered categorical outcomes",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-pandas-tool",
+        "label": "pandas for cleaning and combining tabular research data",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-pearson-correlation",
+        "label": "Pearson product-moment correlation",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-probit-regression",
+        "label": "Probit regression for binary outcomes",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-process-tracing",
+        "label": "Process tracing for within-case causal mechanisms",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-python",
+        "label": "Python",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-qualcoder-tool",
+        "label": "QualCoder for open-source qualitative analysis",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-qualitative-approach",
+        "label": "Qualitative methods (working with words, observations and meaning)",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-qualitative-coding-tool",
+        "label": "Taguette for highlighting and coding documents",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-qualtrics-tool",
+        "label": "Qualtrics for online survey design and response management",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-quanteda-tool",
+        "label": "quanteda for quantitative text analysis in R",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-quantitative-approach",
+        "label": "Quantitative methods (working with numbers)",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-r-mirt-tool",
+        "label": "R mirt package for item response theory",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-r-psych-tool",
+        "label": "R psych package for reliability and factor analysis",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-regularized-linear-regression",
+        "label": "Regularized linear regression: ridge, LASSO and elastic net",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-reliability-estimation-alpha-omega",
+        "label": "Scale reliability estimation: alpha, omega and alternatives",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-research-question-design",
+        "label": "Frame a researchable social question and choose a fitting design",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-responsible-research",
+        "label": "Plan research responsibly when people or sensitive data are involved",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-sas-stat-tool",
+        "label": "SAS/STAT for statistical modelling and survey analysis",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-scenario-analysis",
+        "label": "Scenario analysis across plausible futures",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-scikit-learn",
+        "label": "scikit-learn",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-secondary-data",
+        "label": "Find and assess existing social data",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-sensitivity-and-robustness-analysis",
+        "label": "Sensitivity and robustness analysis for quantitative findings",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-social-network-tool",
+        "label": "Gephi for visualising relationship data",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-spacy-tool",
+        "label": "spaCy for natural-language processing",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-spatial-autocorrelation-moran-lisa",
+        "label": "Spatial autocorrelation: Moran's I and local indicators (LISA)",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-spatial-regression-models",
+        "label": "Spatial regression: spatial lag and spatial error models",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-spatial-social-analysis",
+        "label": "Spatial analysis and mapping with suitable social data",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-spearman-rank-correlation",
+        "label": "Spearman rank correlation",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-spss-tool",
+        "label": "SPSS for statistical analysis when the project calls for it",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-statnet-ergm-tool",
+        "label": "Statnet ergm for social network models",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-statsmodels",
+        "label": "statsmodels",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-supervised-machine-learning",
+        "label": "Supervised machine learning for social-research prediction and classification",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-survey-data-collection-tool",
+        "label": "KoboToolbox for electronic form collection",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-survey-method",
+        "label": "Surveys and questionnaire design",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-t-tests",
+        "label": "One-sample, independent-samples and paired t-tests",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-tree-ensemble-prediction",
+        "label": "Tree-ensemble machine learning for prediction and classification",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-tropy-archival-material-manager",
+        "label": "Tropy for organizing photographs of archival material",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-wilcoxon-rank-tests",
+        "label": "Wilcoxon rank-sum and signed-rank tests",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:d078-zotero-reference-manager",
+        "label": "Zotero for collecting and citing research sources",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:discourse-and-conversation-analysis",
+        "label": "Discourse and conversation analysis",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:experiments-quasi-experiments-and-causal-inference",
+        "label": "Experiments, quasi-experiments and causal inference",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:focus-groups-and-workshops",
+        "label": "Focus groups and workshops",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:longitudinal-panel-and-multilevel-data",
+        "label": "Longitudinal, panel and multilevel data",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:measurement-and-operationalisation",
+        "label": "Turning ideas into observable measures",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:open-science-preregistration-and-reproducibility",
+        "label": "Keeping a clear, repeatable research record",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:participatory-and-action-research",
+        "label": "Participatory and action research",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:pilot-and-cognitive-pretesting",
+        "label": "Piloting questions before fieldwork",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:programme-evaluation-and-theory-of-change",
+        "label": "Programme evaluation and theory of change",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:psychometrics-and-scale-construction",
+        "label": "Psychometrics and scale construction",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:r-statistical-computing",
+        "label": "R for statistical computing and data analysis",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:reference-and-literature-management",
+        "label": "Finding and organising research sources",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:reliability-validity-and-uncertainty",
+        "label": "Checking reliability, validity and uncertainty",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:sampling-recruitment-and-representativeness",
+        "label": "Sampling and knowing what evidence represents",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:stata-quantitative-social-science-workflow",
+        "label": "Stata for quantitative social-science workflows",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-item:systematic-and-scoping-evidence-synthesis",
+        "label": "Evidence synthesis: systematic reviews and scoping reviews",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-knowledge:graph-theory-concepts-for-networks",
+        "label": "Graph concepts for network data",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-method:network-analysis",
+        "label": "Network analysis",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      },
+      {
+        "id": "domain-method:social-network-analysis",
+        "label": "Social network analysis",
+        "kind": "domain_learning_item",
+        "approval": "approved",
+        "missing_fields": []
+      }
+    ],
+    "generic_area_learning_placeholders_removed": 0,
+    "generic_area_learning_placeholder_nodes_remaining": 0,
+    "visible_selectable_node_counts_by_kind": {
+      "area_enrichment_item": 116,
+      "area_foundation": 2,
+      "area_of_specialization": 7,
+      "area_task_family": 46,
+      "area_tool_application_reference": 2,
+      "area_tool_option": 14,
+      "domain_emerging_learning_item": 8,
+      "domain_learning_item": 112,
+      "domain_route": 1,
+      "programme_context": 1,
+      "programme_outcome": 236,
+      "programme_theme": 14,
+      "role": 19,
+      "role_item_candidate": 164,
+      "role_task_family": 19,
+      "runtime_learning_item": 10,
+      "tool": 13
+    }
+  },
+  "area_task_item_link_addenda": {
+    "date": "2026-11-07",
+    "status": "locally_reconciled_from_existing_task_and_item_contracts",
+    "applied_count": 3,
+    "links": [
+      {
+        "edge_id": "reviewed-local-task-item:area-task:d078-sociology-social-anthropology-qualitative-interview->area_enrichment_item:d078-soc-interview-focusgroup",
+        "family_id": "area-task:d078-sociology-social-anthropology-qualitative-interview",
+        "item_id": "area_enrichment_item:d078-soc-interview-focusgroup"
+      },
+      {
+        "edge_id": "reviewed-local-task-item:area-task:d078-sociology-social-anthropology-interpret-social-evidence->area_enrichment_item:d078-soc-thematic-analysis",
+        "family_id": "area-task:d078-sociology-social-anthropology-interpret-social-evidence",
+        "item_id": "area_enrichment_item:d078-soc-thematic-analysis"
+      },
+      {
+        "edge_id": "reviewed-local-task-item:area-task:d078-sociology-social-anthropology-interpret-social-evidence->area_enrichment_item:soc-c2",
+        "family_id": "area-task:d078-sociology-social-anthropology-interpret-social-evidence",
+        "item_id": "area_enrichment_item:soc-c2"
+      }
+    ],
+    "creates_new_learning_items": false,
+    "creates_prerequisites_or_order": false,
+    "external_search_needed": false
+  },
+  "method_area_task_family_reconciliation": {
+    "date": "2026-11-07",
+    "status": "applied_exact_method_area_family_reconciliations",
+    "decision_count": 6,
+    "matched_route_count": 107,
+    "unrouted_family_count_retained_hidden": 17,
+    "unrouted_family_ids_retained_hidden": [
+      "area-task:d078-econ-forecast-and-scenario-analysis",
+      "area-task:d078-econ-frame-economic-question",
+      "area-task:d078-economics-applied-analysis-core-task-family",
+      "area-task:d078-economics-applied-analysis-policy-evaluation",
+      "area-task:d078-economics-applied-analysis-social-economic-data-analysis",
+      "area-task:d078-human-geography-population-core-task-family",
+      "area-task:d078-politics-governance-public-policy-core-task-family",
+      "area-task:d078-politics-governance-public-policy-responsible-ai-assisted-opinion-survey-workflow",
+      "area-task:d078-psychology-social-behaviour-core-task-family",
+      "area-task:d078-social-anthro-design-bounded-inquiry",
+      "area-task:d078-sociology-social-anthropology-core-task-family",
+      "area-task:econ-01",
+      "area-task:econ-05",
+      "area-task:soc-01",
+      "area-task:soc-03",
+      "area-task:soc-04",
+      "area-task:soc-06"
+    ],
+    "new_learning_items_created": 0,
+    "prerequisites_or_order_edges_created": 0,
+    "decisions": [
+      {
+        "area_id": "D078:sociology-social-anthropology",
+        "method_ids": [
+          "domain-item:participatory-and-action-research"
+        ],
+        "removed_family_id": "area-task:d078-sociology-social-anthropology-core-task-family",
+        "canonical_family_id": null,
+        "decision": "remove_broad_area_overview_duplicate_keep_fieldwork_family",
+        "matched_route_count": 45,
+        "matched_route_ids": [
+          "participatory-component-route:d078-interviews-d078-observation-ethnography:area:sociology-social-anthropology",
+          "participatory-component-route:d078-interviews-d078-survey-method-d078-observation-ethnography:area:sociology-social-anthropology",
+          "participatory-component-route:d078-interviews-d078-survey-method:area:sociology-social-anthropology",
+          "participatory-component-route:d078-interviews-focus-groups-and-workshops-d078-observation-ethnography:area:sociology-social-anthropology",
+          "participatory-component-route:d078-interviews-focus-groups-and-workshops-d078-survey-method-d078-observation-ethnography:area:sociology-social-anthropology",
+          "participatory-component-route:d078-interviews-focus-groups-and-workshops-d078-survey-method:area:sociology-social-anthropology",
+          "participatory-component-route:d078-interviews-focus-groups-and-workshops:area:sociology-social-anthropology",
+          "participatory-component-route:d078-interviews:area:sociology-social-anthropology",
+          "participatory-component-route:d078-observation-ethnography:area:sociology-social-anthropology",
+          "participatory-component-route:d078-survey-method-d078-observation-ethnography:area:sociology-social-anthropology",
+          "participatory-component-route:d078-survey-method:area:sociology-social-anthropology",
+          "participatory-component-route:focus-groups-and-workshops-d078-observation-ethnography:area:sociology-social-anthropology",
+          "participatory-component-route:focus-groups-and-workshops-d078-survey-method-d078-observation-ethnography:area:sociology-social-anthropology",
+          "participatory-component-route:focus-groups-and-workshops-d078-survey-method:area:sociology-social-anthropology",
+          "participatory-component-route:focus-groups-and-workshops:area:sociology-social-anthropology"
+        ],
+        "changed_method_edge_ids": [
+          "domain_item_supports_area_task:domain-item:participatory-and-action-research->area-task:d078-sociology-social-anthropology-core-task-family"
+        ],
+        "source_references": [
+          {
+            "id": "internal:D078_AREA_TASK_CANDIDATE_DISPOSITIONS_2026_10_31#soc-01",
+            "title": "D078 area-task candidate disposition: merge SOC-01 into canonical fieldwork",
+            "url": "",
+            "locator": "SOC-01 is merged into area-task:d078-social-anthro-fieldwork-and-community-evidence; it must not remain as a second general task card.",
+            "source_role": "area_task_route_evidence"
+          }
+        ],
+        "status": "already_applied"
+      },
+      {
+        "area_id": "D078:sociology-social-anthropology",
+        "method_ids": [
+          "domain-method:network-analysis",
+          "domain-method:social-network-analysis"
+        ],
+        "removed_family_id": "area-task:d078-sociology-social-anthropology-core-task-family",
+        "canonical_family_id": "area-task:d078-social-anthro-computational-social-inquiry",
+        "decision": "network_methods_route_to_computational_social_inquiry",
+        "matched_route_count": 2,
+        "matched_route_ids": [
+          "method-area-route:network-analysis:sociology-social-anthropology",
+          "method-area-route:social-network-analysis:sociology-social-anthropology"
+        ],
+        "changed_method_edge_ids": [],
+        "source_references": [
+          {
+            "id": "internal:D078_AREA_TASK_CANDIDATE_DISPOSITIONS_2026_10_31#soc-03",
+            "title": "D078 area-task candidate disposition: merge SOC-03 into computational social inquiry",
+            "url": "",
+            "locator": "SOC-03 is merged into the canonical Sociology computational-social-inquiry task family; platform access, representativeness and language-coverage limits remain explicit.",
+            "source_role": "area_task_route_evidence"
+          }
+        ]
+      },
+      {
+        "area_id": "D078:human-geography-population",
+        "method_ids": [
+          "domain-item:d078-observation-ethnography",
+          "domain-item:focus-groups-and-workshops",
+          "domain-item:participatory-and-action-research"
+        ],
+        "removed_family_id": "area-task:d078-human-geography-population-core-task-family",
+        "canonical_family_id": "area-task:d078-human-geography-population-spatial-patterns",
+        "decision": "place_based_methods_offer_spatial_patterns_task",
+        "matched_route_count": 51,
+        "matched_route_ids": [
+          "combo:focus-group-to-survey:human-geography-population",
+          "combo:survey-followup-focus-group:human-geography-population",
+          "method-area-route:d078-observation-ethnography:human-geography-population",
+          "method-area-route:focus-groups-and-workshops:human-geography-population",
+          "method-area-route:participatory-and-action-research:human-geography-population",
+          "participatory-component-route:d078-observation-ethnography:area:human-geography-population",
+          "participatory-component-route:d078-survey-method-d078-observation-ethnography:area:human-geography-population",
+          "participatory-component-route:d078-survey-method:area:human-geography-population",
+          "participatory-component-route:focus-groups-and-workshops-d078-observation-ethnography:area:human-geography-population",
+          "participatory-component-route:focus-groups-and-workshops-d078-survey-method-d078-observation-ethnography:area:human-geography-population",
+          "participatory-component-route:focus-groups-and-workshops-d078-survey-method:area:human-geography-population",
+          "participatory-component-route:focus-groups-and-workshops:area:human-geography-population"
+        ],
+        "changed_method_edge_ids": [],
+        "source_references": []
+      },
+      {
+        "area_id": "D078:economics-applied-analysis",
+        "method_ids": [
+          "domain-item:d078-quantitative-approach",
+          "domain-item:d078-survey-method",
+          "domain-item:longitudinal-panel-and-multilevel-data"
+        ],
+        "removed_family_id": "area-task:d078-economics-applied-analysis-social-economic-data-analysis",
+        "canonical_family_id": "area-task:d078-econ-construct-and-analyze-data",
+        "decision": "economic_data_analysis_route_uses_canonical_construct_analyze_family",
+        "matched_route_count": 3,
+        "matched_route_ids": [
+          "method-area-route:d078-quantitative-approach:economics-applied-analysis",
+          "method-area-route:d078-survey-method:economics-applied-analysis",
+          "method-area-route:longitudinal-panel-and-multilevel-data:economics-applied-analysis"
+        ],
+        "changed_method_edge_ids": [],
+        "source_references": [
+          {
+            "id": "internal:d078_area_role_task_sets_2026_10_09#ECON-01/ECON-02",
+            "title": "D078 local Economics task-set and canonical item reconciliation",
+            "url": "",
+            "locator": "The local task set distinguishes descriptive measurement, data appraisal and econometric inference; the canonical construct-and-analyze-data family carries the reviewed learning links.",
+            "source_role": "area_task_route_evidence"
+          }
+        ]
+      },
+      {
+        "area_id": "D078:economics-applied-analysis",
+        "method_ids": [
+          "domain-item:case-study-and-comparative-case-design",
+          "domain-item:d078-mixed-methods",
+          "domain-item:experiments-quasi-experiments-and-causal-inference",
+          "domain-item:programme-evaluation-and-theory-of-change",
+          "domain-item:systematic-and-scoping-evidence-synthesis"
+        ],
+        "removed_family_id": "area-task:d078-economics-applied-analysis-policy-evaluation",
+        "canonical_family_id": "area-task:d078-econ-policy-and-program-evaluation",
+        "decision": "economic_policy_evaluation_route_uses_canonical_evaluation_family",
+        "matched_route_count": 5,
+        "matched_route_ids": [
+          "method-area-route:case-study-and-comparative-case-design:economics-applied-analysis",
+          "method-area-route:d078-mixed-methods:economics-applied-analysis",
+          "method-area-route:experiments-quasi-experiments-and-causal-inference:economics-applied-analysis",
+          "method-area-route:programme-evaluation-and-theory-of-change:economics-applied-analysis",
+          "method-area-route:systematic-and-scoping-evidence-synthesis:economics-applied-analysis"
+        ],
+        "changed_method_edge_ids": [],
+        "source_references": [
+          {
+            "id": "internal:D078_AREA_TASK_CANDIDATE_DISPOSITIONS_2026_10_31#econ-02",
+            "title": "D078 area-task candidate disposition: canonical Economics evaluation family",
+            "url": "",
+            "locator": "ECON-02 is the reviewed source family for policy/program evaluation; causal effects are not inferred from descriptive or qualitative evidence alone.",
+            "source_role": "area_task_route_evidence"
+          }
+        ]
+      },
+      {
+        "area_id": "D078:social-research-evaluation",
+        "method_ids": [
+          "domain-item:discourse-and-conversation-analysis"
+        ],
+        "removed_family_id": "area-task:d078-social-research-evaluation-core-task-family",
+        "canonical_family_id": "area-task:d078-social-research-evaluation-design-social-study",
+        "decision": "discourse_analysis_routes_to_document_and_qualitative_study_design",
+        "matched_route_count": 1,
+        "matched_route_ids": [
+          "method-area-route:discourse-and-conversation-analysis:social-research-evaluation"
+        ],
+        "changed_method_edge_ids": [],
+        "source_references": [
+          {
+            "id": "internal:d078_area_role_task_sets_2026_10_09#social-research-evaluation-design-social-study",
+            "title": "D078 Social Research and Evaluation task-set",
+            "url": "",
+            "locator": "The canonical design-social-study family explicitly offers field/document method choice and qualitative coding options for a bounded social question.",
+            "source_role": "area_task_route_evidence"
+          }
+        ]
+      }
+    ]
+  },
+  "area_sequence_reconciliation": {
+    "date": "2026-11-08",
+    "approved_conditional_prerequisites_applied": 3,
+    "externally_supported_recommended_workflows_applied": 5,
+    "additional_route_scoped_workflows_applied": 7,
+    "workflow_approval_source_artifact": "data/career-mapping/_audit/D078_ROUTE_SEQUENCE_WORKFLOW_APPROVALS_2026_11_08.json",
+    "area_sequence_edges_total": 15,
+    "cycle_check_passed": true,
+    "other_area_relationship_dispositions_remain_non_sequence": 22,
+    "source_artifact": "data/career-mapping/_audit/D078_SEQUENCE_DISPOSITION_2026_10_17.json.gz",
+    "non_workflow_relationships_are_not_sequence_edges": true
+  },
+  "role_sequence_reconciliation": {
+    "date": "2026-11-03",
+    "source_artifact": "data/career-mapping/_audit/d078_area_role_task_sets_2026_10_09.json.gz",
+    "role_sequence_contract": {
+      "version": "d078-role-sequence-contract-2026-11-14-v2",
+      "role_context_order": [
+        "carry the selected D078 domain and method or named design into a supported area",
+        "show any reviewed area foundation before that area's task-family choices",
+        "show the selected area's task-family context and only roles linked to that context",
+        "inside each selected role, show role items under their reviewed role task family or an evidence-backed role foundation",
+        "keep role tools under the role task they support; never surface role items as a detached pool"
+      ],
+      "role_item_lane_counts": {
+        "conditional": 94,
+        "useful_optional": 70
+      },
+      "eligible_role_item_count": 164,
+      "approved_role_item_dependency_edges": 0,
+      "role_items_are_method_specific": false,
+      "item_order_policy": "Role progression is ordered by selected area route -> role choice -> reviewed role-task context -> that context's role items and tools. Within one role-task group, only exact reviewed sequence edges order item pairs; all other items are skippable choices in that ordered context. Zero item-pair edges is an explicit source-reviewed disposition, not a missing role route or a stale route-order flag.",
+      "role_task_context_policy": "A selected area work focus may explain a role task only through a reviewed family-to-role-task edge. Every visible role item must continue through the selected domain -> method/design -> area -> role -> reviewed role task/foundation path. Role-task context is not a qualification, job-readiness finding or universal employer task list.",
+      "role_item_placement_policy": "Embed a role item under its reviewed role task family. Use a role foundation only when evidence shows it applies across the relevant role tasks. If neither route is supported, keep the item out of student selection; do not create a general standalone role-item lane.",
+      "role_foundation_node_count": 0,
+      "all_role_items_skippable": true,
+      "role_path_complete_without_optional_role_item": true,
+      "role_foundation_audit_status": "reviewed_role_foundation_and_item_preparation_notes_dispositioned",
+      "role_prerequisite_note_count": 405,
+      "role_prerequisite_note_policy": "Preparation notes are preserved under the exact role item as context, not turned into a universal order or blocker. Add a typed prerequisite/workflow edge only with an exact target, route condition and source that supports the relationship."
+    },
+    "role_route_edges_remain_contextual_not_prerequisites": true,
+    "prerequisite_audit_status": "reviewed_role_foundation_and_item_preparation_notes_dispositioned"
+  },
+  "role_task_item_reconciliation": {
+    "date": "2026-10-31",
+    "source_artifact": "data/career-mapping/_audit/D078_ROLE_ITEM_RECONCILIATION_LOCAL_2026_10_10.json.gz",
+    "ledger_records": 173,
+    "verified_role_task_item_records_exposed": 164,
+    "typed_role_task_item_context_edges": 220,
+    "hidden_by_final_no_area_route_disposition": 7,
+    "hidden_by_item_scope_conflict": 2,
+    "unresolved_owner_or_task_join": 0,
+    "relationship_semantics": "contextual_support_not_prerequisite",
+    "out_of_scope_records_keep_explicit_reasons": true
+  },
+  "role_prerequisite_reconciliation": {
+    "status": "reviewed_role_foundation_and_item_preparation_notes_dispositioned",
+    "current_d078_roles_reviewed": 19,
+    "role_item_records_reviewed": 173,
+    "role_item_preparation_notes_preserved": 405,
+    "approved_role_learning_dependency_edges": 0
+  },
+  "alternative_relationship_reconciliation": {
+    "date": "2026-11-03",
+    "status": "all_typed_alternative_edges_and_prose_notes_dispositioned",
+    "typed_alternative_edge_count": 164,
+    "approved_selectable_typed_edge_count": 164,
+    "unapproved_typed_edge_count": 0,
+    "typed_edge_decisions": [
+      {
+        "edge_id": "alternative_tool_option:domain-item:d078-statistical-tool-choice->domain-item:d078-jamovi-tool",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 10
+      },
+      {
+        "edge_id": "alternative_tool_option:domain-item:d078-statistical-tool-choice->domain-item:d078-spss-tool",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 10
+      },
+      {
+        "edge_id": "alternative_tool_option:domain-item:d078-statistical-tool-choice->domain-item:r-statistical-computing",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 10
+      },
+      {
+        "edge_id": "alternative_tool_option:domain-item:d078-statistical-tool-choice->domain-item:stata-quantitative-social-science-workflow",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 14
+      },
+      {
+        "edge_id": "alternative_to:domain-emerging:d078-experimental-synthetic-respondent-and-llm-agent-testing->domain-item:d078-scenario-analysis",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 3
+      },
+      {
+        "edge_id": "alternative_tool_option:domain-item:d078-mesa-tool->domain-item:d078-netlogo-tool",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 13
+      },
+      {
+        "edge_id": "alternative_tool_option:domain-item:d078-casevo-tool->domain-item:d078-netlogo-tool",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 15
+      },
+      {
+        "edge_id": "alternative_tool_option:domain-item:d078-networkx-tool->domain-item:d078-igraph-tool",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 12
+      },
+      {
+        "edge_id": "alternative_tool_option:domain-item:d078-social-network-tool->domain-item:d078-igraph-tool",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 8
+      },
+      {
+        "edge_id": "d078-method-resolution:11769",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 12
+      },
+      {
+        "edge_id": "d078-method-resolution:11770",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 12
+      },
+      {
+        "edge_id": "d078-method-resolution:11771",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 12
+      },
+      {
+        "edge_id": "d078-method-resolution:11772",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 12
+      },
+      {
+        "edge_id": "d078-method-resolution:11773",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 12
+      },
+      {
+        "edge_id": "d078-method-resolution:11774",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 10
+      },
+      {
+        "edge_id": "d078-method-resolution:11775",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 15
+      },
+      {
+        "edge_id": "d078-method-resolution:11776",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 10
+      },
+      {
+        "edge_id": "d078-method-resolution:11777",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 6
+      },
+      {
+        "edge_id": "d078-method-resolution:11778",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 6
+      },
+      {
+        "edge_id": "d078-method-resolution:11779",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 6
+      },
+      {
+        "edge_id": "d078-method-resolution:11780",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 10
+      },
+      {
+        "edge_id": "d078-method-resolution:11781",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 10
+      },
+      {
+        "edge_id": "d078-method-resolution:11782",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 8
+      },
+      {
+        "edge_id": "d078-method-resolution:11787",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 10
+      },
+      {
+        "edge_id": "d078-method-resolution:12048",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 6
+      },
+      {
+        "edge_id": "d078-method-resolution:12049",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 10
+      },
+      {
+        "edge_id": "d078-method-resolution:12050",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 11
+      },
+      {
+        "edge_id": "d078-method-resolution:12051",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 6
+      },
+      {
+        "edge_id": "d078-method-resolution:12052",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 6
+      },
+      {
+        "edge_id": "d078-method-resolution:12053",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 4
+      },
+      {
+        "edge_id": "d078-method-resolution:12054",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 7
+      },
+      {
+        "edge_id": "d078-method-resolution:12055",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 4
+      },
+      {
+        "edge_id": "d078-method-resolution:12056",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 5
+      },
+      {
+        "edge_id": "d078-method-resolution:12057",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 13
+      },
+      {
+        "edge_id": "d078-method-resolution:12058",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 14
+      },
+      {
+        "edge_id": "d078-method-resolution:12059",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 14
+      },
+      {
+        "edge_id": "d078-method-resolution:12060",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 15
+      },
+      {
+        "edge_id": "d078-method-resolution:12061",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 18
+      },
+      {
+        "edge_id": "d078-method-resolution:12062",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 13
+      },
+      {
+        "edge_id": "d078-method-resolution:12063",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 10
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-1-criminologist:d078-tool-excel:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 10
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-3-sociologist:d078-tool-nvivo:d078-tool-taguette",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 13
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-3-sociologist:d078-tool-taguette:d078-tool-nvivo",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 13
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-4-business-economics-researcher:d078-tool-excel:d078-tool-stata",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 15
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-4-business-economics-researcher:d078-tool-excel:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 11
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-4-business-economics-researcher:d078-tool-stata:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 19
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-4-business-economics-researcher:d078-tool-r:d078-tool-stata",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 19
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-4-business-economics-researcher:d078-tool-pandas:d078-tool-stata",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 21
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-4-business-economics-researcher:d078-tool-pandas:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 17
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-4-business-economics-researcher:d078-tool-power-bi:d078-tool-excel",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 6
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-4-business-economics-researcher:d078-tool-power-bi:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 11
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-5-media-scientist:d078-tool-nvivo:d078-tool-taguette",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 13
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-5-media-scientist:d078-tool-taguette:d078-tool-nvivo",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 13
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-6-archaeologist:d078-tool-opendronemap:d078-tool-qgis",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 5
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-6-archaeologist:d078-tool-tropy:d078-tool-zotero",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 5
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-7-economic-policy-officer:d078-tool-excel:d078-tool-stata",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 15
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-7-economic-policy-officer:d078-tool-excel:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 11
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-7-economic-policy-officer:d078-tool-stata:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 19
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-7-economic-policy-officer:d078-tool-r:d078-tool-stata",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 19
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-7-economic-policy-officer:d078-tool-power-bi:d078-tool-excel",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 6
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-7-economic-policy-officer:d078-tool-power-bi:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 11
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-7-economic-policy-officer:d078-tool-pandas:d078-tool-stata",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 21
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-7-economic-policy-officer:d078-tool-pandas:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 17
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-8-social-work-researcher:d078-tool-kobo:d078-tool-redcap",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 8
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-8-social-work-researcher:d078-tool-redcap:d078-tool-kobo",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 8
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-8-social-work-researcher:d078-tool-spss:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 15
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-8-social-work-researcher:d078-tool-r:d078-tool-spss",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 15
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-9-behavioural-scientist:d078-tool-psychopy:d078-tool-opensesame",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 16
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-9-behavioural-scientist:d078-tool-psychopy:d078-tool-psytoolkit",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 16
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-9-behavioural-scientist:d078-tool-opensesame:d078-tool-psychopy",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 16
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-9-behavioural-scientist:d078-tool-opensesame:d078-tool-psytoolkit",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 16
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-9-behavioural-scientist:d078-tool-psytoolkit:d078-tool-psychopy",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 16
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-9-behavioural-scientist:d078-tool-psytoolkit:d078-tool-opensesame",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 16
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-9-behavioural-scientist:d078-tool-spss:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 15
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-9-behavioural-scientist:d078-tool-r:d078-tool-spss",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 15
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-10-political-scientist:d078-tool-r:d078-tool-stata",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 20
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-10-political-scientist:d078-tool-r:d078-tool-spss",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 16
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-10-political-scientist:d078-tool-stata:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 20
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-10-political-scientist:d078-tool-stata:d078-tool-spss",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 20
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-10-political-scientist:d078-tool-spss:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 16
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-10-political-scientist:d078-tool-spss:d078-tool-stata",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 20
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-11-economic-adviser:d078-tool-excel:d078-tool-stata",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 15
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-11-economic-adviser:d078-tool-excel:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 11
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-11-economic-adviser:d078-tool-stata:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 19
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-11-economic-adviser:d078-tool-r:d078-tool-stata",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 19
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-11-economic-adviser:d078-tool-power-bi:d078-tool-excel",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 6
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-11-economic-adviser:d078-tool-power-bi:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 11
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-11-economic-adviser:d078-tool-pandas:d078-tool-stata",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 21
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-11-economic-adviser:d078-tool-pandas:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 17
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-12-genealogist:d078-tool-tropy:d078-tool-zotero",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 5
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-15-thanatology-researcher:d078-tool-nvivo:d078-tool-taguette",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 13
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-15-thanatology-researcher:d078-tool-taguette:d078-tool-nvivo",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 13
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-15-thanatology-researcher:d078-tool-spss:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 15
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-15-thanatology-researcher:d078-tool-r:d078-tool-spss",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 15
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-16-economist:d078-tool-excel:d078-tool-stata",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 15
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-16-economist:d078-tool-excel:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 11
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-16-economist:d078-tool-stata:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 19
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-16-economist:d078-tool-r:d078-tool-stata",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 19
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-16-economist:d078-tool-pandas:d078-tool-stata",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 21
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-16-economist:d078-tool-pandas:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 17
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-16-economist:d078-tool-power-bi:d078-tool-excel",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 6
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-16-economist:d078-tool-power-bi:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 11
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-17-economic-development-coordinator:d078-tool-excel:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 10
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-17-economic-development-coordinator:d078-tool-power-bi:d078-tool-excel",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 6
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-17-economic-development-coordinator:d078-tool-power-bi:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 11
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-18-statistician:d078-tool-r:d078-tool-spss",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 16
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-18-statistician:d078-tool-r:d078-tool-stata",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 20
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-18-statistician:d078-tool-pandas:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 18
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-18-statistician:d078-tool-pandas:d078-tool-spss",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 18
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-18-statistician:d078-tool-pandas:d078-tool-stata",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 22
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-18-statistician:d078-tool-spss:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 16
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-18-statistician:d078-tool-spss:d078-tool-stata",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 20
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-18-statistician:d078-tool-stata:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 20
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-18-statistician:d078-tool-stata:d078-tool-spss",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 20
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-19-anthropologist:d078-tool-nvivo:d078-tool-taguette",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 13
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-19-anthropologist:d078-tool-taguette:d078-tool-nvivo",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 13
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-19-anthropologist:d078-tool-tropy:d078-tool-zotero",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 5
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-21-tax-policy-analyst:d078-tool-excel:d078-tool-stata",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 15
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-21-tax-policy-analyst:d078-tool-excel:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 11
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-21-tax-policy-analyst:d078-tool-stata:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 19
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-21-tax-policy-analyst:d078-tool-r:d078-tool-stata",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 19
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-21-tax-policy-analyst:d078-tool-pandas:d078-tool-stata",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 21
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-21-tax-policy-analyst:d078-tool-pandas:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 17
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-21-tax-policy-analyst:d078-tool-power-bi:d078-tool-excel",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 6
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-21-tax-policy-analyst:d078-tool-power-bi:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 11
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-22-geographer:d078-tool-qgis:d078-tool-geoda",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 11
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-22-geographer:d078-tool-qgis:d078-tool-arcgis",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 11
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-22-geographer:d078-tool-geoda:d078-tool-qgis",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 12
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-22-geographer:d078-tool-geoda:d078-tool-geopandas",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 17
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-22-geographer:d078-tool-geoda:d078-tool-pysal-esda",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 17
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-22-geographer:d078-tool-geopandas:d078-tool-qgis",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 11
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-22-geographer:d078-tool-geopandas:d078-tool-arcgis",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 16
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-22-geographer:d078-tool-pysal-esda:d078-tool-geoda",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 15
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-22-geographer:d078-tool-arcgis:d078-tool-qgis",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 11
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-22-geographer:d078-tool-arcgis:d078-tool-geoda",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 16
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-24-demographer:d078-tool-r:d078-tool-stata",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 20
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-24-demographer:d078-tool-r:d078-tool-spss",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 16
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-24-demographer:d078-tool-stata:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 20
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-24-demographer:d078-tool-stata:d078-tool-spss",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 20
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-24-demographer:d078-tool-spss:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 16
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-24-demographer:d078-tool-spss:d078-tool-stata",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 20
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-24-demographer:d078-tool-excel:d078-tool-r",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 12
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-24-demographer:d078-tool-excel:d078-tool-stata",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 16
+      },
+      {
+        "edge_id": "role-tool-alternative:role-d078-24-demographer:d078-tool-excel:d078-tool-spss",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 12
+      },
+      {
+        "edge_id": "alternative_reviewed:area_enrichment_item:d078-computational-digital-social-science-r-social-data-workflow->area_enrichment_item:d078-computational-digital-social-science-python-social-data-workflow",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 5
+      },
+      {
+        "edge_id": "alternative_reviewed:domain-item:d078-quantitative-approach->domain-item:d078-qualitative-approach",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 17
+      },
+      {
+        "edge_id": "alternative_reviewed:domain-item:d078-qualitative-approach->domain-item:d078-quantitative-approach",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 17
+      },
+      {
+        "edge_id": "alternative_reviewed:domain-item:d078-survey-method->domain-item:d078-interviews",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 16
+      },
+      {
+        "edge_id": "alternative_reviewed:domain-item:d078-survey-method->domain-item:d078-observation-ethnography",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 19
+      },
+      {
+        "edge_id": "alternative_reviewed:domain-item:d078-survey-method->domain-item:d078-secondary-data",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 16
+      },
+      {
+        "edge_id": "alternative_reviewed:domain-item:d078-document-analysis->domain-item:d078-interviews",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 9
+      },
+      {
+        "edge_id": "alternative_reviewed:domain-item:d078-document-analysis->domain-item:d078-survey-method",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 16
+      },
+      {
+        "edge_id": "alternative_reviewed:domain-item:d078-document-analysis->domain-item:d078-observation-ethnography",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 12
+      },
+      {
+        "edge_id": "alternative_reviewed:domain-item:d078-observation-ethnography->domain-item:d078-survey-method",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 19
+      },
+      {
+        "edge_id": "alternative_reviewed:domain-item:d078-observation-ethnography->domain-item:d078-interviews",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 12
+      },
+      {
+        "edge_id": "alternative_reviewed:area_tool_option:d078-a04-tool-r->area_tool_option:d078-a04-tool-python",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 7
+      },
+      {
+        "edge_id": "alternative_reviewed:area_tool_option:d078-a04-tool-r->area_tool_option:d078-a04-tool-spss",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 11
+      },
+      {
+        "edge_id": "alternative_reviewed:area_tool_option:d078-a04-tool-r->area_tool_option:d078-a04-tool-stata",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 9
+      },
+      {
+        "edge_id": "alternative_reviewed:area_tool_option:d078-a04-tool-python->area_tool_option:d078-a04-tool-spss",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 9
+      },
+      {
+        "edge_id": "alternative_reviewed:area_tool_option:d078-a04-tool-python->area_tool_option:d078-a04-tool-stata",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 7
+      },
+      {
+        "edge_id": "alternative_reviewed:area_tool_option:d078-a04-tool-spss->area_tool_option:d078-a04-tool-stata",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 11
+      },
+      {
+        "edge_id": "alternative_reviewed:area_tool_option:d078-a04-tool-nvivo->area_tool_option:d078-a04-tool-taguette",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 7
+      },
+      {
+        "edge_id": "alternative_reviewed:domain-item:d078-nvivo-tool->domain-item:d078-qualitative-coding-tool:area:sociology-social-anthropology",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 9
+      },
+      {
+        "edge_id": "alternative_reviewed:domain-item:d078-nvivo-tool->domain-item:d078-qualitative-coding-tool:area:social-research-evaluation",
+        "decision": "approved_selectable_alternative",
+        "reference_count": 9
+      }
+    ],
+    "prose_alternative_note_count": 419,
+    "notes_with_one_exact_target_candidate": 0,
+    "notes_without_one_exact_target": 419,
+    "notes_covered_by_approved_typed_groups": 5,
+    "approved_typed_group_note_dispositions": [
+      {
+        "note_id": "area_enrichment_item:d078-a04-tools-quantitative-alternatives:valid_alternatives:0",
+        "owner_node_id": "area_enrichment_item:d078-a04-tools-quantitative-alternatives",
+        "area_id": "D078:computational-digital-social-science",
+        "target_node_ids": [
+          "area_tool_option:d078-a04-tool-r",
+          "area_tool_option:d078-a04-tool-python",
+          "area_tool_option:d078-a04-tool-spss",
+          "area_tool_option:d078-a04-tool-stata"
+        ],
+        "typed_edge_ids": [
+          "alternative_reviewed:area_tool_option:d078-a04-tool-r->area_tool_option:d078-a04-tool-python",
+          "alternative_reviewed:area_tool_option:d078-a04-tool-r->area_tool_option:d078-a04-tool-spss",
+          "alternative_reviewed:area_tool_option:d078-a04-tool-r->area_tool_option:d078-a04-tool-stata",
+          "alternative_reviewed:area_tool_option:d078-a04-tool-python->area_tool_option:d078-a04-tool-spss",
+          "alternative_reviewed:area_tool_option:d078-a04-tool-python->area_tool_option:d078-a04-tool-stata",
+          "alternative_reviewed:area_tool_option:d078-a04-tool-spss->area_tool_option:d078-a04-tool-stata"
+        ]
+      },
+      {
+        "note_id": "area_enrichment_item:d078-a04-method-human-in-loop-llm-qualitative-analysis:valid_alternatives:1",
+        "owner_node_id": "area_enrichment_item:d078-a04-method-human-in-loop-llm-qualitative-analysis",
+        "area_id": "D078:psychology-social-behaviour",
+        "target_node_ids": [
+          "area_tool_option:d078-a04-tool-nvivo",
+          "area_tool_option:d078-a04-tool-taguette"
+        ],
+        "typed_edge_ids": [
+          "alternative_reviewed:area_tool_option:d078-a04-tool-nvivo->area_tool_option:d078-a04-tool-taguette"
+        ]
+      },
+      {
+        "note_id": "area_enrichment_item:d078-soc-caqdas-taguette-nvivo:valid_alternatives:1",
+        "owner_node_id": "area_enrichment_item:d078-soc-caqdas-taguette-nvivo",
+        "area_id": "D078:sociology-social-anthropology",
+        "target_node_ids": [
+          "domain-item:d078-nvivo-tool",
+          "domain-item:d078-qualitative-coding-tool"
+        ],
+        "typed_edge_ids": [
+          "alternative_reviewed:domain-item:d078-nvivo-tool->domain-item:d078-qualitative-coding-tool:area:sociology-social-anthropology"
+        ]
+      },
+      {
+        "note_id": "area_enrichment_item:d078-soc-caqdas-taguette-nvivo:valid_alternatives:2",
+        "owner_node_id": "area_enrichment_item:d078-soc-caqdas-taguette-nvivo",
+        "area_id": "D078:sociology-social-anthropology",
+        "target_node_ids": [
+          "domain-item:d078-nvivo-tool",
+          "domain-item:d078-qualitative-coding-tool"
+        ],
+        "typed_edge_ids": [
+          "alternative_reviewed:domain-item:d078-nvivo-tool->domain-item:d078-qualitative-coding-tool:area:sociology-social-anthropology"
+        ]
+      },
+      {
+        "note_id": "area_enrichment_item:d078-social-research-evaluation-qualitative-coding-options:valid_alternatives:0",
+        "owner_node_id": "area_enrichment_item:d078-social-research-evaluation-qualitative-coding-options",
+        "area_id": "D078:social-research-evaluation",
+        "target_node_ids": [
+          "domain-item:d078-nvivo-tool",
+          "domain-item:d078-qualitative-coding-tool"
+        ],
+        "typed_edge_ids": [
+          "alternative_reviewed:domain-item:d078-nvivo-tool->domain-item:d078-qualitative-coding-tool:area:social-research-evaluation"
+        ]
+      }
+    ],
+    "structured_alternative_relationship_note_count": 42,
+    "structured_notes_with_exact_target_candidates": 4,
+    "structured_relationship_notes": [
+      {
+        "note_id": "area_enrichment_item:d078-a04-method-human-ai-social-interaction-study:relationships:1",
+        "owner_node_id": "area_enrichment_item:d078-a04-method-human-ai-social-interaction-study",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "simulation-only exploratory work"
+        ],
+        "target_node_id": null,
+        "explanation": "When claims concern actual human behaviour, direct human/observational evidence is usually the relevant route; simulation is a distinct exploratory option.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "area_enrichment_item:d078-computational-digital-social-science-agent-based-social-simulation:relationships:0",
+        "owner_node_id": "area_enrichment_item:d078-computational-digital-social-science-agent-based-social-simulation",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "D078:computational-digital-social-science:mesa-or-casevo",
+          "mesa-or-casevo"
+        ],
+        "target_node_id": null,
+        "explanation": "NetworkX/Gephi implement relationship analysis; they are not simulation frameworks.",
+        "decision": "unapproved_source_record_relationship_mismatch",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "area_enrichment_item:d078-computational-digital-social-science-networkx-or-gephi:relationships:0",
+        "owner_node_id": "area_enrichment_item:d078-computational-digital-social-science-networkx-or-gephi",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "D078:computational-digital-social-science:reproducible-data-cleaning",
+          "reproducible-data-cleaning"
+        ],
+        "target_node_id": null,
+        "explanation": "Simulation is an alternative specialist route, not a replacement for empirical data preparation in every project.",
+        "decision": "unapproved_source_record_relationship_mismatch",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "area_enrichment_item:d078-computational-digital-social-science-r-social-data-workflow:relationships:0",
+        "owner_node_id": "area_enrichment_item:d078-computational-digital-social-science-r-social-data-workflow",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "D078:computational-digital-social-science:python-social-data-workflow",
+          "python-social-data-workflow"
+        ],
+        "target_node_id": "area_enrichment_item:d078-computational-digital-social-science-python-social-data-workflow",
+        "explanation": "R is an alternative computational/statistical route, not an additional universal requirement.",
+        "decision": "covered_by_approved_typed_edge",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "area_enrichment_item:d078-econ-casevo-llm-sim:relationships:1",
+        "owner_node_id": "area_enrichment_item:d078-econ-casevo-llm-sim",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "Mesa_non-LLM_ABM"
+        ],
+        "target_node_id": null,
+        "explanation": "Choose only if language-model behavior is central to the research question; otherwise simpler agent rules are more interpretable.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "area_enrichment_item:d078-econ-causal-evaluation:relationships:1",
+        "owner_node_id": "area_enrichment_item:d078-econ-causal-evaluation",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "descriptive_or_process_evaluation"
+        ],
+        "target_node_id": null,
+        "explanation": "When causal identification is not credible, report descriptive/process findings rather than force a causal estimate.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "area_enrichment_item:d078-soc-caqdas-taguette-nvivo:relationships:1",
+        "owner_node_id": "area_enrichment_item:d078-soc-caqdas-taguette-nvivo",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "manual_spreadsheet_coding"
+        ],
+        "target_node_id": null,
+        "explanation": "Choice depends on corpus size, workflow, collaboration, access, and budget.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "area_enrichment_item:d078-soc-interview-focusgroup:relationships:1",
+        "owner_node_id": "area_enrichment_item:d078-soc-interview-focusgroup",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "participant_observation"
+        ],
+        "target_node_id": null,
+        "explanation": "Choose based on whether the question concerns reported accounts or observed practice.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "area_enrichment_item:d078-soc-social-network-analysis:relationships:1",
+        "owner_node_id": "area_enrichment_item:d078-soc-social-network-analysis",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "Gephi_visual_analysis"
+        ],
+        "target_node_id": null,
+        "explanation": "R/Python libraries allow scripted, reproducible workflows; tool choice depends on task and scale.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "area_enrichment_item:d078-social-research-evaluation-spss-quantitative-tool:relationships:0",
+        "owner_node_id": "area_enrichment_item:d078-social-research-evaluation-spss-quantitative-tool",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "D078:social-research-evaluation:quantitative-analysis-choice",
+          "quantitative-analysis-choice"
+        ],
+        "target_node_id": null,
+        "explanation": "The named products offer alternative implementations of qualitative coding, not a quantitative route.",
+        "decision": "unapproved_source_record_relationship_mismatch",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-agent-based-modeling:relationships:3",
+        "owner_node_id": "domain-item:d078-agent-based-modeling",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "observational, survey, interview or statistical approaches"
+        ],
+        "target_node_id": null,
+        "explanation": "Use a simulation when the question concerns interactions or mechanisms that can be represented and explored; it does not replace empirical evidence.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-computational-social-research:relationships:1",
+        "owner_node_id": "domain-item:d078-computational-social-research",
+        "relationship_type": "has_alternatives",
+        "target_text": [
+          "non-computational qualitative, survey and secondary-data routes"
+        ],
+        "target_node_id": null,
+        "explanation": "Choose by question and evidence, not prestige.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-document-analysis:relationships:0",
+        "owner_node_id": "domain-item:d078-document-analysis",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "interview, survey or observation"
+        ],
+        "target_node_id": null,
+        "explanation": "Different evidence source; may complement other methods.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-jamovi-tool:relationships:1",
+        "owner_node_id": "domain-item:d078-jamovi-tool",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "SPSS, R, Stata or another appropriate statistical workflow"
+        ],
+        "target_node_id": null,
+        "explanation": "Choose a suitable workflow based on the analysis, access, reproducibility and institutional context; do not imply that learners must study every package or that all packages support identical workflows.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-jupyter:relationships:4",
+        "owner_node_id": "domain-item:d078-jupyter",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "versioned scripts, R Markdown, Quarto or another documented workflow"
+        ],
+        "target_node_id": null,
+        "explanation": "Choose the documentation format that fits the work and audience.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-matplotlib-tool:relationships:2",
+        "owner_node_id": "domain-item:d078-matplotlib-tool",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "spreadsheet charts or another suitable visualization tool"
+        ],
+        "target_node_id": null,
+        "explanation": "Select a method based on audience, data and reproducibility.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-mesa-tool:relationships:1",
+        "owner_node_id": "domain-item:d078-mesa-tool",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "NetLogo, Repast, MASON or another suitable ABM environment"
+        ],
+        "target_node_id": null,
+        "explanation": "Choose one environment for the project; alternatives are not cumulative.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-mesa-tool:relationships:6",
+        "owner_node_id": "domain-item:d078-mesa-tool",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "Casevo for its narrower cognitive/social-evolution workflow"
+        ],
+        "target_node_id": null,
+        "explanation": null,
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-mesa-tool:relationships:7",
+        "owner_node_id": "domain-item:d078-mesa-tool",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "NetLogo or other ABM tools"
+        ],
+        "target_node_id": null,
+        "explanation": null,
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-mesa-tool:relationships:8",
+        "owner_node_id": "domain-item:d078-mesa-tool",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "Statistical/qualitative empirical methods where simulation is not warranted"
+        ],
+        "target_node_id": null,
+        "explanation": null,
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-networkx-tool:relationships:3",
+        "owner_node_id": "domain-item:d078-networkx-tool",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "R network packages or specialist visual/network software such as Gephi, where method and data fit"
+        ],
+        "target_node_id": null,
+        "explanation": "These are alternative implementations, not a checklist to learn together.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-networkx-tool:relationships:7",
+        "owner_node_id": "domain-item:d078-networkx-tool",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "R/igraph, Gephi or hand-calculated/network-specific analysis tools depending on workflow"
+        ],
+        "target_node_id": null,
+        "explanation": null,
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-nvivo-tool:relationships:0",
+        "owner_node_id": "domain-item:d078-nvivo-tool",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "manual coding, Taguette or another suitable qualitative analysis tool"
+        ],
+        "target_node_id": null,
+        "explanation": "Select one workflow appropriate to project scale, collaboration and access; alternatives are not cumulative.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-nvivo-tool:relationships:4",
+        "owner_node_id": "domain-item:d078-nvivo-tool",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "Manual coding with a documented codebook"
+        ],
+        "target_node_id": null,
+        "explanation": null,
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-nvivo-tool:relationships:5",
+        "owner_node_id": "domain-item:d078-nvivo-tool",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "Taguette or other qualitative-analysis software where its features and licensing fit"
+        ],
+        "target_node_id": null,
+        "explanation": null,
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-nvivo-tool:relationships:6",
+        "owner_node_id": "domain-item:d078-nvivo-tool",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "A different qualitative method/software only after task-specific comparison"
+        ],
+        "target_node_id": null,
+        "explanation": null,
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-observation-ethnography:relationships:0",
+        "owner_node_id": "domain-item:d078-observation-ethnography",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "survey or interview"
+        ],
+        "target_node_id": null,
+        "explanation": "A different evidence route; observation can complement them when the question needs context about what happens, not only what people report.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-pandas-tool:relationships:1",
+        "owner_node_id": "domain-item:d078-pandas-tool",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "Excel, Jamovi, SPSS, R or SQL for suitable tabular tasks"
+        ],
+        "target_node_id": null,
+        "explanation": "Choose based on dataset, task, reproducibility, access and learner route; do not make all tools cumulative.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-pandas-tool:relationships:6",
+        "owner_node_id": "domain-item:d078-pandas-tool",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "R data-frame workflows, spreadsheet/SQL tools or SPSS data management depending on scale and reproducibility needs"
+        ],
+        "target_node_id": null,
+        "explanation": null,
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-python:relationships:4",
+        "owner_node_id": "domain-item:d078-python",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "R, SPSS, Stata, spreadsheet or manual workflows"
+        ],
+        "target_node_id": null,
+        "explanation": "Choose a task-appropriate workflow rather than treating programming languages and packages as a cumulative checklist.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-qualitative-approach:relationships:0",
+        "owner_node_id": "domain-item:d078-qualitative-approach",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "quantitative approach"
+        ],
+        "target_node_id": null,
+        "explanation": "Not cumulative.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-qualitative-coding-tool:relationships:0",
+        "owner_node_id": "domain-item:d078-qualitative-coding-tool",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "manual coding or another suitable qualitative tool"
+        ],
+        "target_node_id": null,
+        "explanation": "No need to adopt a tool for small/simple tasks.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-quantitative-approach:relationships:0",
+        "owner_node_id": "domain-item:d078-quantitative-approach",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "qualitative approach"
+        ],
+        "target_node_id": null,
+        "explanation": "Different evidence needs; not a sequence.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-scikit-learn:relationships:4",
+        "owner_node_id": "domain-item:d078-scikit-learn",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "human coding, dictionary/rule-based coding, R tidymodels/quanteda or another justified workflow"
+        ],
+        "target_node_id": null,
+        "explanation": "Prediction is not automatically better than a transparent or interpretive alternative.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-secondary-data:relationships:0",
+        "owner_node_id": "domain-item:d078-secondary-data",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "collecting new survey/interview data"
+        ],
+        "target_node_id": null,
+        "explanation": "Existing data may reduce collection but may not answer the question or be reusable.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-spss-tool:relationships:0",
+        "owner_node_id": "domain-item:d078-spss-tool",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "Jamovi, R or another package supported by the project/institution"
+        ],
+        "target_node_id": null,
+        "explanation": "SPSS is one software option; do not require it alongside alternatives.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-spss-tool:relationships:3",
+        "owner_node_id": "domain-item:d078-spss-tool",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "R, Python, jamovi or other documented statistical workflows depending on methods, access and reproducibility needs"
+        ],
+        "target_node_id": null,
+        "explanation": null,
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-statistical-tool-choice:relationships:0",
+        "owner_node_id": "domain-item:d078-statistical-tool-choice",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "another suitable statistical package or non-computational analysis"
+        ],
+        "target_node_id": null,
+        "explanation": "Alternatives are choices, not cumulative requirements.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-statsmodels:relationships:4",
+        "owner_node_id": "domain-item:d078-statsmodels",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "R, Stata, SPSS or another implementation of the justified model"
+        ],
+        "target_node_id": null,
+        "explanation": "Software equivalence must be checked method by method.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:d078-survey-method:relationships:0",
+        "owner_node_id": "domain-item:d078-survey-method",
+        "relationship_type": "alternative_to_or_complements",
+        "target_text": [
+          "interviews, observation or existing data"
+        ],
+        "target_node_id": null,
+        "explanation": "Choose based on the question; combination must be justified.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:r-statistical-computing:relationships:0",
+        "owner_node_id": "domain-item:r-statistical-computing",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "d078-statistical-tool-choice"
+        ],
+        "target_node_id": null,
+        "explanation": "R is one conditional quantitative-computing route among alternatives.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      },
+      {
+        "note_id": "domain-item:stata-quantitative-social-science-workflow:relationships:0",
+        "owner_node_id": "domain-item:stata-quantitative-social-science-workflow",
+        "relationship_type": "alternative_to",
+        "target_text": [
+          "d078-statistical-tool-choice"
+        ],
+        "target_node_id": null,
+        "explanation": "Stata is a conditional software route, not a second universal foundation.",
+        "decision": "prose_only_unresolved_or_ambiguous_target",
+        "selection_effect": "none_without_approved_typed_edge"
+      }
+    ],
+    "additional_same_area_tool_pairs_materialized": [
+      {
+        "source_id": "area_tool_option:d078-a04-tool-r",
+        "target_id": "area_tool_option:d078-a04-tool-python",
+        "note_owner": "area_enrichment_item:d078-a04-tools-quantitative-alternatives",
+        "note_pointers": [
+          "valid_alternatives/0"
+        ],
+        "area_id": "D078:computational-digital-social-science"
+      },
+      {
+        "source_id": "area_tool_option:d078-a04-tool-r",
+        "target_id": "area_tool_option:d078-a04-tool-spss",
+        "note_owner": "area_enrichment_item:d078-a04-tools-quantitative-alternatives",
+        "note_pointers": [
+          "valid_alternatives/0"
+        ],
+        "area_id": "D078:computational-digital-social-science"
+      },
+      {
+        "source_id": "area_tool_option:d078-a04-tool-r",
+        "target_id": "area_tool_option:d078-a04-tool-stata",
+        "note_owner": "area_enrichment_item:d078-a04-tools-quantitative-alternatives",
+        "note_pointers": [
+          "valid_alternatives/0"
+        ],
+        "area_id": "D078:computational-digital-social-science"
+      },
+      {
+        "source_id": "area_tool_option:d078-a04-tool-python",
+        "target_id": "area_tool_option:d078-a04-tool-spss",
+        "note_owner": "area_enrichment_item:d078-a04-tools-quantitative-alternatives",
+        "note_pointers": [
+          "valid_alternatives/0"
+        ],
+        "area_id": "D078:computational-digital-social-science"
+      },
+      {
+        "source_id": "area_tool_option:d078-a04-tool-python",
+        "target_id": "area_tool_option:d078-a04-tool-stata",
+        "note_owner": "area_enrichment_item:d078-a04-tools-quantitative-alternatives",
+        "note_pointers": [
+          "valid_alternatives/0"
+        ],
+        "area_id": "D078:computational-digital-social-science"
+      },
+      {
+        "source_id": "area_tool_option:d078-a04-tool-spss",
+        "target_id": "area_tool_option:d078-a04-tool-stata",
+        "note_owner": "area_enrichment_item:d078-a04-tools-quantitative-alternatives",
+        "note_pointers": [
+          "valid_alternatives/0"
+        ],
+        "area_id": "D078:computational-digital-social-science"
+      },
+      {
+        "source_id": "area_tool_option:d078-a04-tool-nvivo",
+        "target_id": "area_tool_option:d078-a04-tool-taguette",
+        "note_owner": "area_enrichment_item:d078-a04-method-human-in-loop-llm-qualitative-analysis",
+        "note_pointers": [
+          "valid_alternatives/1"
+        ],
+        "area_id": "D078:psychology-social-behaviour"
+      },
+      {
+        "source_id": "domain-item:d078-nvivo-tool",
+        "target_id": "domain-item:d078-qualitative-coding-tool",
+        "note_owner": "area_enrichment_item:d078-soc-caqdas-taguette-nvivo",
+        "note_pointers": [
+          "valid_alternatives/1",
+          "valid_alternatives/2"
+        ],
+        "area_id": "D078:sociology-social-anthropology"
+      },
+      {
+        "source_id": "domain-item:d078-nvivo-tool",
+        "target_id": "domain-item:d078-qualitative-coding-tool",
+        "note_owner": "area_enrichment_item:d078-social-research-evaluation-qualitative-coding-options",
+        "note_pointers": [
+          "valid_alternatives/0"
+        ],
+        "area_id": "D078:social-research-evaluation"
+      }
+    ],
+    "non_pairwise_candidate_dispositions": [
+      {
+        "edge_id": "alternative_to:domain-item:d078-computational-social-research->concept:relationship_target:non-computational-qualitative-survey-and-secondary-data-routes",
+        "source_id": "domain-item:d078-computational-social-research",
+        "proposed_target": "non-computational qualitative, survey and secondary-data routes",
+        "decision": "excluded_not_a_pairwise_alternative",
+        "reason": "The proposed target combines several methods and data sources, not one canonical learning node. Computational techniques can be used with qualitative text, surveys and secondary data, so treating this umbrella as the opposite of computational research would mislead learners.",
+        "student_effect": "No selectable alternative edge; the source node's question-and-evidence choice guidance remains as explanatory context."
+      },
+      {
+        "edge_id": "alternative_to:domain-item:d078-agent-based-modeling->concept:relationship_target:observational-survey-interview-or-statistical-approaches",
+        "source_id": "domain-item:d078-agent-based-modeling",
+        "proposed_target": "observational, survey, interview or statistical approaches",
+        "decision": "excluded_not_a_pairwise_alternative",
+        "reason": "The proposed target bundles distinct empirical approaches. Agent-based models can use empirical information, inform data collection and be assessed against evidence; they are not generally an either/or replacement for observation, surveys, interviews or statistical analysis.",
+        "student_effect": "No selectable alternative edge; the source node's statement that simulation does not replace empirical evidence remains as explanatory context.",
+        "evidence": [
+          {
+            "title": "Agent-Based Models in Empirical Social Research",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4430112/",
+            "locator": "Abstract and sections on empirically grounded models and validation: describes ways to incorporate empirical population/behavior data, guide data collection and assess model assumptions and output."
+          }
+        ]
+      }
+    ],
+    "non_pairwise_candidate_count": 2,
+    "note_policy": "Preserve every prose alternative or boundary note; it does not become a separate selectable item unless an exact canonical target and approved typed relationship are recorded.",
+    "no_fuzzy_target_creation": true,
+    "selection_gate": "isD078SelectableAlternativeEdge requires approved relationship evidence, exact resolved endpoints and the expected evidence basis/source role; a resolved_ready_for_use string alone is insufficient."
+  },
+  "selection_progression_contract_summary": {
+    "version": "d078-selection-progression-contract-2026-11-14-v9",
+    "method_area_routes": 117,
+    "named_design_area_routes": 31,
+    "component_variant_area_routes": 59,
+    "selected_domain_item_area_task_edges": 243,
+    "task_family_area_item_edges": 123,
+    "area_task_role_paths": 47,
+    "role_item_context_edges": 220
+  },
+  "area_role_overview_reconciliation": {
+    "date": "2026-11-02",
+    "area_overviews_enriched": 7,
+    "role_overviews_enriched": 19,
+    "source_artifacts": [
+      "data/career-mapping/domain_specialization_catalog.json",
+      "data/career-mapping/role_library_v3_cleaned.json"
+    ],
+    "role_area_membership_basis": "reviewed method/design area-role routes and resolved area-task-family to role-task context edges",
+    "overview_text_does_not_create_item_requirements_or_item_order": true
+  },
+  "route_context_edge_counts": {
+    "method_applies_to_area_task": 187,
+    "method_contribution_applies_to_area_task": 112,
+    "domain_item_supports_area_task": 248,
+    "task_has_area_learning_item": 125
+  },
+  "multiple_family_selection": true,
+  "zero_family_selection_keeps_area_route": true,
+  "selection_and_family_edges_block_progression": false,
+  "student_visible_graph_projection_ready": true,
+  "student_ui_gate_closed": true,
+  "sql_changed": false,
+  "non_selectable_dispositioned_candidate_ids": [
+    "area-task:d078-econ-forecast-and-scenario-analysis",
+    "area-task:d078-econ-frame-economic-question",
+    "area-task:d078-economics-applied-analysis-core-task-family",
+    "area-task:d078-economics-applied-analysis-policy-evaluation",
+    "area-task:d078-economics-applied-analysis-social-economic-data-analysis",
+    "area-task:d078-human-geography-population-core-task-family",
+    "area-task:d078-politics-governance-public-policy-core-task-family",
+    "area-task:d078-politics-governance-public-policy-responsible-ai-assisted-opinion-survey-workflow",
+    "area-task:d078-psychology-social-behaviour-core-task-family",
+    "area-task:d078-social-anthro-design-bounded-inquiry",
+    "area-task:d078-sociology-social-anthropology-core-task-family",
+    "area-task:econ-01",
+    "area-task:econ-05",
+    "area-task:soc-01",
+    "area-task:soc-03",
+    "area-task:soc-04",
+    "area-task:soc-06"
+  ]
+}

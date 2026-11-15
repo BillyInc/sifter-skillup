@@ -1,0 +1,490 @@
+{
+  "schemaVersion": 1,
+  "sourceContract": "data/career-mapping/_audit/sociology_curriculum_contract_2026-09-17.json",
+  "sourceCount": 236,
+  "lineCount": 35,
+  "coverageNote": "Each of the 236 source-backed outcomes is assigned exactly once to a concise theme ability line. Repeated wording is grouped into a single student-facing line; line text uses the source outcome vocabulary.",
+  "lines": [
+    {
+      "themeKey": "shared_communication",
+      "lineId": "communication-clear-expression",
+      "studentLine": "You will identify English language skills and word formation processes, construct simple and fairly complex sentences, apply logical and critical reasoning skills in presentations, practise speaking clearly and listening carefully, and write simple and technical reports.",
+      "outcomeIds": [
+        "GST 111:1",
+        "GST 111:2",
+        "GST 111:3",
+        "GST 111:4",
+        "GST 111:5",
+        "GST 111:6"
+      ]
+    },
+    {
+      "themeKey": "shared_nigerian_culture",
+      "lineId": "nigerian-culture-and-history",
+      "studentLine": "You will analyse the historical foundation of Nigerian culture and arts in pre-colonial times, identify major linguistic groups and acceptable norms and values, and explain the gradual evolution of Nigeria as a political unit.",
+      "outcomeIds": [
+        "GST 112:1",
+        "GST 112:2",
+        "GST 112:3",
+        "GST 112:7"
+      ]
+    },
+    {
+      "themeKey": "shared_nigerian_culture",
+      "lineId": "nigerian-society-and-development",
+      "studentLine": "You will analyse trade, economic and self-reliance status towards national development, enumerate challenges towards nation building, analyse the role of the Judiciary in upholding fundamental rights, and suggest solutions to Nigerian environmental, moral and value problems.",
+      "outcomeIds": [
+        "GST 112:4",
+        "GST 112:5",
+        "GST 112:6",
+        "GST 112:8"
+      ]
+    },
+    {
+      "themeKey": "shared_philosophy",
+      "lineId": "reasoning-and-humanity",
+      "studentLine": "You will discuss the features and branches of philosophy, explain elementary rules of reasoning, distinguish valid and invalid arguments, think critically and assess arguments and human conduct, and analyse humanity, its origin, philosophy and cosmic environment.",
+      "outcomeIds": [
+        "GST 212:1",
+        "GST 212:2",
+        "GST 212:3",
+        "GST 212:4",
+        "GST 212:5",
+        "GST 212:6",
+        "GST 212:7",
+        "GST 212:8",
+        "GST 212:9",
+        "GST 212:10"
+      ]
+    },
+    {
+      "themeKey": "shared_philosophy",
+      "lineId": "science-and-environment",
+      "studentLine": "You will identify the roles of science and technology, describe Nigerian environmental resources, identify resource conservation tools and techniques, analyse environmental effects of plastics and other wastes, and suggest management techniques and solutions to environmental challenges and unethical behaviour.",
+      "outcomeIds": [
+        "GST 212:11",
+        "GST 212:12",
+        "GST 212:13",
+        "GST 212:14",
+        "GST 212:15",
+        "GST 212:16"
+      ]
+    },
+    {
+      "themeKey": "shared_peace_conflict",
+      "lineId": "peace-conflict-and-security",
+      "studentLine": "You will analyse peace, conflict and security; list forms, types and root causes of conflict and violence; differentiate conflict and terrorism; enumerate security and peace building strategies; and describe roles of international organisations, media and traditional institutions.",
+      "outcomeIds": [
+        "GST 312:1",
+        "GST 312:2",
+        "GST 312:3",
+        "GST 312:4",
+        "GST 312:5"
+      ]
+    },
+    {
+      "themeKey": "shared_enterprise",
+      "lineId": "entrepreneurship-and-opportunity",
+      "studentLine": "You will explain theories of entrepreneurship, opportunity seeking, value creation and risk taking; state the characteristics of an entrepreneur; analyse the importance of small businesses in wealth creation, employment and financial independence; engage in entrepreneurial thinking and identify innovation.",
+      "outcomeIds": [
+        "ENT 211:1",
+        "ENT 211:2",
+        "ENT 211:3",
+        "ENT 211:4",
+        "ENT 211:5"
+      ]
+    },
+    {
+      "themeKey": "shared_enterprise",
+      "lineId": "enterprise-planning-and-creation",
+      "studentLine": "You will describe stages in enterprise formation and the key steps in venture creation, spot opportunities, state how products and ideas are developed, develop business concepts, identify finance, implement requirements for small enterprises, conduct marketing and e-commerce, apply technological solutions, and appreciate why ventures fail.",
+      "outcomeIds": [
+        "ENT 211:6",
+        "ENT 211:7",
+        "ENT 211:8",
+        "ENT 312:1",
+        "ENT 312:2",
+        "ENT 312:3",
+        "ENT 312:4",
+        "ENT 312:5",
+        "ENT 312:6",
+        "ENT 312:7",
+        "ENT 312:8",
+        "ENT 312:9"
+      ]
+    },
+    {
+      "themeKey": "people",
+      "lineId": "anthropology-and-social-settings",
+      "studentLine": "You will explain the historical and methodological perspectives of Social Anthropology, identify the relationship between Anthropology and other social science disciplines, survey human origins and cultural achievement, and examine the cultural, historical and social setting of anthropological work, racist ideas and colonial assumptions.",
+      "outcomeIds": [
+        "SOC 102:1",
+        "SOC 102:2",
+        "SOC 102:3",
+        "SOC 102:4",
+        "SOC 102:5",
+        "SOC 102:6",
+        "SOC 102:7",
+        "SOC 102:8",
+        "SOC 102:9"
+      ]
+    },
+    {
+      "themeKey": "people",
+      "lineId": "psychology-and-behaviour",
+      "studentLine": "You will study the biological foundations of human behaviour, identify knowledge, attitude, personality and perception, compare Psychology with related fields, trace how Psychology developed, recognise methods and theories, and consider its development in Nigeria.",
+      "outcomeIds": [
+        "SOC 104:1",
+        "SOC 104:2",
+        "SOC 104:3",
+        "SOC 104:4",
+        "SOC 104:5",
+        "SOC 104:6",
+        "SOC 104:7",
+        "SOC 104:8",
+        "SOC 104:9",
+        "SOC 104:10"
+      ]
+    },
+    {
+      "themeKey": "people",
+      "lineId": "social-psychology",
+      "studentLine": "You will define social psychology, outline the aims, discuss the history of social psychology and research methods, discuss the relationship between social psychology and other social sciences, critically evaluate the theories of social psychology, and study how attitudes form or change, people interpret one another, groups influence behaviour and people help others.",
+      "outcomeIds": [
+        "PSY 204:1",
+        "PSY 204:2",
+        "PSY 204:3",
+        "PSY 204:4",
+        "PSY 204:5",
+        "PSY 204:6",
+        "PSY 204:7"
+      ]
+    },
+    {
+      "themeKey": "people",
+      "lineId": "kinship-and-family",
+      "studentLine": "You will analyse the principles of kinship classification, list types and functions of groups formed on kinship principles, describe marriage as a social institution, examine the family as the basic social unit and identify how family functions have changed over the years.",
+      "outcomeIds": [
+        "SOC 203:1",
+        "SOC 203:2",
+        "SOC 203:3",
+        "SOC 203:4",
+        "SOC 203:5",
+        "SOC 203:6",
+        "SOC 203:7",
+        "SOC 203:8",
+        "SOC 203:9",
+        "SOC 203:10"
+      ]
+    },
+    {
+      "themeKey": "people",
+      "lineId": "language-and-society",
+      "studentLine": "You will discuss the social and cultural functions of language in Nigeria and other West African societies, explain language communication, societal development and language policy, identify language problems of new states, and explain strengths and weaknesses of diversity in languages and cultures.",
+      "outcomeIds": [
+        "SOC 209:1",
+        "SOC 209:2",
+        "SOC 209:3",
+        "SOC 209:4"
+      ]
+    },
+    {
+      "themeKey": "ideas",
+      "lineId": "sociology-emergence-and-thought",
+      "studentLine": "You will examine the emergence of Sociology and the Industrial and political revolutions, discuss founding fathers and contributors to social thought, and trace social thought from Greek City States, the Middle Age, Renaissance and Reformation through the development of sociological theory.",
+      "outcomeIds": [
+        "SOC 101:1",
+        "SOC 101:2",
+        "SOC 101:7",
+        "SOC 101:8",
+        "SOC 105:1",
+        "SOC 105:2",
+        "SOC 105:7",
+        "SOC 105:8",
+        "SOC 201:1",
+        "SOC 201:2",
+        "SOC 201:3",
+        "SOC 201:4",
+        "SOC 201:5",
+        "SOC 401:5",
+        "SOC 401:6"
+      ]
+    },
+    {
+      "themeKey": "ideas",
+      "lineId": "concepts-and-social-structure",
+      "studentLine": "You will describe social structure and dynamics of human society, define sociological terms, culture and socialisation, explain relationships between Sociology and other social sciences, and discuss social groups and institutions.",
+      "outcomeIds": [
+        "SOC 101:3",
+        "SOC 101:4",
+        "SOC 101:5",
+        "SOC 101:6",
+        "SOC 101:9",
+        "SOC 101:10",
+        "SOC 101:11",
+        "SOC 105:3",
+        "SOC 105:4",
+        "SOC 105:5",
+        "SOC 105:6",
+        "SOC 106:1",
+        "SOC 106:2"
+      ]
+    },
+    {
+      "themeKey": "ideas",
+      "lineId": "sociology-as-science",
+      "studentLine": "You will assess the basis of claim of Sociology as science, discuss elements and methods of science, evaluate the scientific worth and parameters of theories, identify methods of social investigation and logic in sociological analysis, and discuss scientific theory and social order.",
+      "outcomeIds": [
+        "SOC 105:9",
+        "SOC 105:10",
+        "SOC 105:11",
+        "SOC 105:12",
+        "SOC 105:13",
+        "SOC 106:3",
+        "SOC 201:6",
+        "SOC 401:4",
+        "SOC 401:8"
+      ]
+    },
+    {
+      "themeKey": "ideas",
+      "lineId": "contemporary-theories-and-order",
+      "studentLine": "You will identify major theories and schools of thought, analyse contemporary sociological theories and the application of these theories to contemporary problems, and identify theories evolved out of debates and ideas on how societies can be organised to enjoy social order.",
+      "outcomeIds": [
+        "SOC 401:1",
+        "SOC 401:2",
+        "SOC 401:3",
+        "SOC 401:7"
+      ]
+    },
+    {
+      "themeKey": "research",
+      "lineId": "research-procedures-and-types",
+      "studentLine": "You will explain the concept and scope of research methods, discuss procedures and principles for conducting research, and discuss experimental, non-experimental, quasi-experimental, descriptive and historical research.",
+      "outcomeIds": [
+        "SSC 302:1",
+        "SSC 302:2",
+        "SSC 302:3",
+        "SSC 302:4",
+        "SOC 301:1"
+      ]
+    },
+    {
+      "themeKey": "research",
+      "lineId": "methods-and-evidence",
+      "studentLine": "You will describe types of research methods, explain their strengths and weaknesses, distinguish quantitative and qualitative methods, choose and justify methods in relation to a question about people or society, and apply integrity and ethics in research.",
+      "outcomeIds": [
+        "SOC 301:2",
+        "SOC 301:3",
+        "SOC 301:4",
+        "SOC 301:5",
+        "SOC 301:6",
+        "SOC 301:7",
+        "SOC 301:8"
+      ]
+    },
+    {
+      "themeKey": "research",
+      "lineId": "data-and-analysis",
+      "studentLine": "You will prepare and present a research proposal, collect and organise meaningful data, conduct a pilot study, write a research report and apply appropriate statistics in data analysis.",
+      "outcomeIds": [
+        "SSC 401:1",
+        "SSC 401:2",
+        "SSC 401:3",
+        "SSC 401:4"
+      ]
+    },
+    {
+      "themeKey": "research",
+      "lineId": "research-projects-and-writing",
+      "studentLine": "You will identify research methods as practical guides, conceptualise projects, identify feasible projects, develop a proposal and gauge its feasibility and implementation, manage assignment using methods, write a short paper and a long essay, and prepare the final-year essay.",
+      "outcomeIds": [
+        "SOC 408:1",
+        "SOC 408:2",
+        "SOC 408:3",
+        "SOC 408:4",
+        "SOC 408:5",
+        "SOC 408:6",
+        "SOC 408:7",
+        "SOC 408:8"
+      ]
+    },
+    {
+      "themeKey": "research",
+      "lineId": "explanations-and-data",
+      "studentLine": "You will discuss major types of explanations used in Sociology; identify types of data used in constructing these explanations; assess a sociologist’s approach in any empirical area.",
+      "outcomeIds": [
+        "SOC 406:1",
+        "SOC 406:2",
+        "SOC 406:3"
+      ]
+    },
+    {
+      "themeKey": "african_societies",
+      "lineId": "african-peoples-and-cultures",
+      "studentLine": "You will survey African societies and associated cultures in traditional, colonial and contemporary settings; identify social organisation, language, polity, economy and world view; and describe peoples, cultures, family life, beliefs and occupational life in Nigeria and Africa.",
+      "outcomeIds": [
+        "SOC 103:1",
+        "SOC 103:2",
+        "SOC 103:3",
+        "SOC 103:4",
+        "SOC 103:5",
+        "SOC 103:6",
+        "SOC 103:7",
+        "SOC 103:8",
+        "SOC 103:9",
+        "SOC 103:10",
+        "SOC 103:11",
+        "SOC 103:12"
+      ]
+    },
+    {
+      "themeKey": "african_societies",
+      "lineId": "nigerian-history-and-society",
+      "studentLine": "You will adopt institutional or class analysis to study Nigerian society, analyse traditional political structures, comprehend contact with Europe through slave trade, legitimate trade and colonisation, and explain contemporary systems, diversity and changes in the country.",
+      "outcomeIds": [
+        "SOC 206:1",
+        "SOC 206:2",
+        "SOC 206:3",
+        "SOC 206:4",
+        "SOC 206:5",
+        "SOC 206:6",
+        "SOC 206:7",
+        "SOC 206:8",
+        "SOC 206:9",
+        "SOC 206:10"
+      ]
+    },
+    {
+      "themeKey": "african_societies",
+      "lineId": "sociological-explanations",
+      "studentLine": "You will list major types of explanations used in Sociology, identify types of data used in constructing these explanations and assess a sociologist’s approach in any empirical area.",
+      "outcomeIds": [
+        "SOC 403:1",
+        "SOC 403:2"
+      ]
+    },
+    {
+      "themeKey": "social_change",
+      "lineId": "social-change-theories-and-sources",
+      "studentLine": "You will apply theoretical perspective and institutional analysis of social change, assess social change in Africa, identify sources and dimensions of social change, and describe change in the family and legal system.",
+      "outcomeIds": [
+        "SOC 202:1",
+        "SOC 202:3",
+        "SOC 202:4",
+        "SOC 202:5",
+        "SOC 202:6"
+      ]
+    },
+    {
+      "themeKey": "social_change",
+      "lineId": "development-and-rapid-change",
+      "studentLine": "You will describe how modernisation is used to describe social and economic change, including industrialisation and institutions; discuss problems associated with rapid social change in Africa; and compare the questions economic development and Sociology of Development ask.",
+      "outcomeIds": [
+        "SOC 202:2",
+        "SOC 202:7",
+        "SOC 407:1"
+      ]
+    },
+    {
+      "themeKey": "social_issues",
+      "lineId": "gender-and-inequality",
+      "studentLine": "You will differentiate between sex and gender, compare explanations of gender inequality, examine inequalities in work, the economy, politics, religion and education, and evaluate strategies for narrowing the gender gap.",
+      "outcomeIds": [
+        "SOC 210:1",
+        "SOC 210:2",
+        "SOC 210:3",
+        "SOC 210:4",
+        "SOC 210:5"
+      ]
+    },
+    {
+      "themeKey": "social_issues",
+      "lineId": "stratification-and-social-inequality",
+      "studentLine": "You will analyse forms and functions of social inequality, describe theories of stratification, identify social mobility and its impacts, explain inequality in Nigeria, distinguish stratification from social class and equity, discuss determinants and consequences, and link contributions of Marx and Weber and response of critics of Marxian theory.",
+      "outcomeIds": [
+        "SOC 302:1",
+        "SOC 302:2",
+        "SOC 302:3",
+        "SOC 302:4",
+        "SOC 302:5",
+        "SOC 302:6",
+        "SOC 302:7",
+        "SOC 302:8",
+        "SOC 302:9"
+      ]
+    },
+    {
+      "themeKey": "social_issues",
+      "lineId": "crime-and-social-response",
+      "studentLine": "You will explain the nature and extent of crime, discuss theories of crime, analyse traditional control of crime and deviancy, explain its application to contemporary administration of justice, identify factors that account for crime, analyse different types of crimes, identify the difference between crime and delinquency, analyse how society responds, and list punishment for crimes in a society.",
+      "outcomeIds": [
+        "SOC 303:1",
+        "SOC 303:2",
+        "SOC 303:3",
+        "SOC 303:4",
+        "SOC 303:5",
+        "SOC 303:6",
+        "SOC 303:7",
+        "SOC 303:8",
+        "SOC 303:9",
+        "SOC 303:10"
+      ]
+    },
+    {
+      "themeKey": "governance",
+      "lineId": "politics-and-participation",
+      "studentLine": "You will discuss the social and cultural contexts of political activity and behaviour, describe political organisations, trade unions, elite groups and the development of movement for political change, and analyse political participation and socialisation.",
+      "outcomeIds": [
+        "SOC 305:1",
+        "SOC 305:2",
+        "SOC 305:3"
+      ]
+    },
+    {
+      "themeKey": "governance",
+      "lineId": "organisations-and-community",
+      "studentLine": "You will identify structural properties of organisations and their consequences, explain bureaucracies and complex formal organisations, analyse the relationship between organisation and community, list problems in studying organisations, and assess organisations and their environments.",
+      "outcomeIds": [
+        "SOC 306:1",
+        "SOC 306:2",
+        "SOC 306:3",
+        "SOC 306:4",
+        "SOC 306:5"
+      ]
+    },
+    {
+      "themeKey": "applied_practice",
+      "lineId": "social-work-and-social-problems",
+      "studentLine": "You will examine social causes and effects of poverty, delinquency and crime, identify causes and possible solutions, and discuss theories of social work relevant to social work practices.",
+      "outcomeIds": [
+        "SOC 205:1",
+        "SOC 205:2",
+        "SOC 205:3"
+      ]
+    },
+    {
+      "themeKey": "applied_practice",
+      "lineId": "welfare-and-community-development",
+      "studentLine": "You will enumerate innovative ideas that border on societal problems, apply social science knowledge to research on public and private sectors, design techniques for proposal writing, appreciate social and human welfare services, and analyse models for family and community development.",
+      "outcomeIds": [
+        "SSC 301:1",
+        "SSC 301:2",
+        "SSC 301:3",
+        "SSC 301:4",
+        "SSC 301:5"
+      ]
+    },
+    {
+      "themeKey": "technology",
+      "lineId": "computing-and-information",
+      "studentLine": "You will explain the history of computing sciences, discuss different computing programs and their characteristics, evaluate different computer applications, and apply search engines to source on-line resources.",
+      "outcomeIds": [
+        "SSC 202:1",
+        "SSC 202:2",
+        "SSC 202:3",
+        "SSC 202:4"
+      ]
+    }
+  ]
+}

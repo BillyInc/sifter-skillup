@@ -22,13 +22,14 @@ import {
   ExternalLinkGuard,
 } from "@/components/careerIntelligence";
 import { careerData, type GuidanceReportPath, type JambProgrammeRequirements, type JambProgrammeSchool } from "@/lib/careerData";
+import { recordLearningInterest } from "@/lib/learningInterest";
 import { ADMIN_EXPLORE_BASE, useExploreNav } from "@/lib/exploreNav";
 import { filterUniversityOfferingsBySubjectMatch, type GuidanceRouteContext } from "@/lib/guidanceRouteContext";
 import { provisioningData } from "@/lib/provisioningData";
 import { getStartingPoint } from "@/lib/startingPoint";
 import { useAuth } from "@/hooks/useAuth";
 import { awardLine } from "@/lib/programmeAward";
-import { hasStudentDisplayableProgrammeLearning, programmePreviewExplanation, programmePreviewUnavailableMessage } from "@/lib/programmePreview";
+import { hasStudentDisplayableProgrammeLearning, programmePreviewExplanation, programmePreviewSections, programmePreviewUnavailableMessage } from "@/lib/programmePreview";
 import { programmeCurriculumForDisplay, programmeDomainsForDisplay } from "@/lib/sociologyCurriculumPreview";
 import { sanitizeRequirementText, type RequirementField } from "@/lib/sanitizeRequirementText";
 import { comingSoon, pending, real, type DataState, type DomainLink, type Programme } from "@/types/career";
@@ -60,7 +61,7 @@ type ProgrammeTab = "overview" | "requirements" | "schools";
 function displayRequirement(field: RequirementField, value?: string | null): string {
   const result = sanitizeRequirementText(value ?? null);
   if (result.displayable) return result.cleaned;
-  if (field === "utme_subjects") return "No verified UTME subject requirement is recorded for this programme yet.";
+  if (field === "utme_subjects") return "No verified subject requirement for the Unified Tertiary Matriculation Examination (UTME) is recorded for this programme yet.";
   if (field === "olevel_requirement") return "No verified O-Level requirement is recorded for this programme yet.";
   return "No verified Direct Entry requirement is recorded for this programme yet.";
 }
@@ -112,7 +113,7 @@ function relationshipCopy(link: DomainLink): string {
     case "adjacent":
       return `This is a related direction near ${link.domainName}, but you may need extra learning before moving into it.${anchorText}`;
     default:
-      return `This area is connected to the programme through its recorded learning content.${anchorText}`;
+      return `Some recorded course outcomes connect this area to your programme.${anchorText}`;
   }
 }
 
@@ -235,6 +236,7 @@ function appendProgrammeChoice(
 
 export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgrammeId, initialSchoolId, userType, guidanceStudentId, guidanceTarget, guidanceEntry, viewOnly, journeyMode, yearOfStudy }: ProgrammeDetailRefinedScreenProps) {
   const router = useRouter();
+  const persistentDock = usePersistentLearningPlanDock();
   const routeParams = useLocalSearchParams<{ focus?: string | string[]; guidance_target?: string | string[]; guidance_entry?: string | string[]; view_only?: string | string[]; journey_mode?: string | string[]; resume?: string | string[]; user_type?: string | string[]; class_name?: string | string[]; stream?: string | string[]; year_of_study?: string | string[]; olevel_subjects?: string | string[]; subjects?: string | string[]; university_match_ids?: string | string[]; university_match_filter?: string | string[]; subject_match_basis?: string | string[] }>();
   const routeUserType = Array.isArray(routeParams.user_type) ? routeParams.user_type[0] : routeParams.user_type;
   const activeUserType = userType || routeUserType;
@@ -541,9 +543,27 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
       }
       if (saved) {
         invalidateGuidancePathCache();
-      const exceptionText = school.universityNote
-        || school.universityRequirementExceptions?.find((row) => row.text)?.text;
-      setNotice(exceptionText
+        if (traySelectedSchool?.schoolId && traySelectedSchool.schoolId !== school.schoolId) {
+          recordLearningInterest("selection_removed", "institution", traySelectedSchool.schoolId, institutionLabel(traySelectedSchool), {
+            learner_stage: activeUserType,
+            programme_id: activeProgrammeId,
+            institution_id: traySelectedSchool.schoolId,
+            selection_scope_id: `programme:${activeProgrammeId}:institution:${traySelectedSchool.schoolId}`,
+            route_label: `${programmeName} → ${institutionLabel(traySelectedSchool)}`,
+          });
+        }
+        if (traySelectedSchool?.schoolId !== school.schoolId) {
+          recordLearningInterest("selection_added", "institution", school.schoolId, institutionLabel(school), {
+            learner_stage: activeUserType,
+            programme_id: activeProgrammeId,
+            institution_id: school.schoolId,
+            selection_scope_id: `programme:${activeProgrammeId}:institution:${school.schoolId}`,
+            route_label: `${programmeName} → ${institutionLabel(school)}`,
+          });
+        }
+        const exceptionText = school.universityNote
+          || school.universityRequirementExceptions?.find((row) => row.text)?.text;
+        setNotice(exceptionText
           ? `${institutionLabel(school)}: ${exceptionText}`
           : `${institutionLabel(school)} is saved in your guidance path.`);
       } else {
@@ -559,9 +579,25 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
 
   const toggleProgrammeSelection = () => {
     const nextSelected = !programmeSelected;
+    if (!nextSelected && traySelectedSchool?.schoolId) {
+      recordLearningInterest("selection_removed", "institution", traySelectedSchool.schoolId, institutionLabel(traySelectedSchool), {
+        learner_stage: activeUserType,
+        programme_id: activeProgrammeId,
+        institution_id: traySelectedSchool.schoolId,
+        selection_scope_id: `programme:${activeProgrammeId}:institution:${traySelectedSchool.schoolId}`,
+        route_label: `${programmeName} → ${institutionLabel(traySelectedSchool)}`,
+      });
+    }
+    recordLearningInterest(nextSelected ? "selection_added" : "selection_removed", "programme", activeProgrammeId, programmeName, {
+      learner_stage: activeUserType,
+      programme_id: activeProgrammeId,
+      institution_id: traySelectedSchool?.schoolId,
+      selection_scope_id: `programme:${activeProgrammeId}`,
+      route_label: programmeName,
+    });
     setProgrammeSelected(nextSelected);
     setProgrammeTrayMode("compact");
-    setProgrammePlanNotice(null);
+    setProgrammePlanNotice(nextSelected ? "Saving to My World…" : "Updating My World…");
     void (async () => {
       try {
         const current = guidanceStudentId
@@ -596,12 +632,17 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
           }
         }
         if (sessionOnlyGuidance || (!guidanceStudentId && (!user || user.auth_provider === "guest"))) {
-          setProgrammePlanNotice("Held on this device. It will save when you are online.");
+          setProgrammePlanNotice(nextSelected
+            ? "Added to your learning plan on this device. It will sync when you are online."
+            : "Removed from your learning plan on this device. It will sync when you are online.");
         } else if (guidanceStudentId) {
           await provisioningData.saveGuidancePath(guidanceStudentId, nextPath as Record<string, unknown>);
+          setProgrammePlanNotice(nextSelected ? `${programmeName} saved to My World.` : `${programmeName} removed from My World.`);
         } else {
           const saved = await careerData.saveGuidancePath({ source: "explore", path: nextPath });
-          if (saved.status !== "real") setProgrammePlanNotice("Held on this device. It will save when you are online.");
+          setProgrammePlanNotice(saved.status === "real"
+            ? `${programmeName} ${nextSelected ? "saved to" : "removed from"} My World.`
+            : saved.meta?.notice ?? "Held on this device. It will save when you are online.");
         }
       } catch {
         setProgrammePlanNotice("Held on this device. It will save when you are online.");
@@ -622,10 +663,22 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
   );
 
   return (
+    <>
+    {persistentDock && !universityOptionsOnly && !isViewOnly ? <ProgrammePageLearningTray
+      programmeId={activeProgrammeId}
+      programmeName={programmeName}
+      programmeSelected={programmeSelected}
+      programmeTrayMode={programmeTrayMode}
+      onProgrammeTrayModeChange={setProgrammeTrayMode}
+      onRemoveProgramme={toggleProgrammeSelection}
+      statusMessage={programmePlanNotice}
+      selectedSchool={traySelectedSchool}
+      comparisonSchools={comparisonSchools}
+    /> : null}
     <DetailScaffold
       eyebrow="PROGRAMME"
     title={programmeName}
-      titleAccessory={undergraduateContext && !universitySelectionAllowed && !universityOptionsOnly && !isViewOnly ? (
+      titleAccessory={!universityOptionsOnly && !isViewOnly ? (
         <TouchableOpacity
           accessibilityRole="checkbox"
           accessibilityState={{ checked: programmeSelected }}
@@ -644,7 +697,6 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
           : focusedGuidance ? "Back to home" : "Back to programme choices"}
       onBack={backToProgrammeChoices}
       save={focusedGuidance || isViewOnly ? undefined : { entityType: "programme", entityId: activeProgrammeId }}
-      reportSelection={!selectedSchoolId ? { kind: "programmes", id: activeProgrammeId, name: programmeName } : undefined}
        state={state}
       onRetry={loadProgramme}
       header={header}
@@ -659,6 +711,7 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
           programmeSelected={programmeSelected}
           programmeTrayMode={programmeTrayMode}
           onProgrammeTrayModeChange={setProgrammeTrayMode}
+          onRemoveProgramme={toggleProgrammeSelection}
           statusMessage={programmePlanNotice}
           requirements={requirements}
            schools={visibleSchools}
@@ -695,6 +748,7 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
            />
       )}
     </DetailScaffold>
+    </>
   );
 }
 
@@ -704,6 +758,7 @@ function ProgrammePageLearningTray({
   programmeSelected,
   programmeTrayMode,
   onProgrammeTrayModeChange,
+  onRemoveProgramme,
   statusMessage,
   selectedSchool,
   comparisonSchools,
@@ -713,12 +768,14 @@ function ProgrammePageLearningTray({
   programmeSelected: boolean;
   programmeTrayMode: GuidedLearningTrayMode;
   onProgrammeTrayModeChange: (mode: GuidedLearningTrayMode) => void;
+  onRemoveProgramme: () => void;
   statusMessage?: string | null;
   selectedSchool: JambProgrammeSchool | null;
   comparisonSchools: JambProgrammeSchool[];
 }) {
   const viewportOverlay = useDetailViewportOverlay();
   const persistentDock = usePersistentLearningPlanDock();
+  const [fallbackDismissed, setFallbackDismissed] = useState(false);
   const { width } = useWindowDimensions();
   const mode = programmeTrayMode;
 
@@ -739,6 +796,7 @@ function ProgrammePageLearningTray({
     programmeLabel: programmeName,
     programmeSelected,
     programmeId,
+    onRemoveProgramme,
     institutionContextLabel,
     choices: [],
     foundations: [],
@@ -753,7 +811,7 @@ function ProgrammePageLearningTray({
     d078Route={routeContext}
     initialMode={mode}
     onModeChange={onProgrammeTrayModeChange}
-    onDismiss={persistentDock?.dismiss}
+    onDismiss={persistentDock?.dismiss ?? (() => setFallbackDismissed(true))}
     statusMessage={statusMessage}
     style={mode === "full" ? styles.programmeTrayFull : mode === "mid" ? styles.programmeTrayMid : mode === "compact" ? styles.programmeTrayCompact : undefined}
     dropKey={`${programmeId}:${programmeSelected}:${institutionNames.join("|")}`}
@@ -766,21 +824,22 @@ function ProgrammePageLearningTray({
   useLayoutEffect(() => {
     if (persistentDock) {
       persistentDock.register(renderViewportDock, `programme:${programmeId}:${programmeSelected}:${institutionNames.join("|")}`);
+      viewportOverlay?.setOverlay(null);
       return;
     }
     if (viewportOverlay) {
-      viewportOverlay.setOverlay(() => <View pointerEvents="box-none" style={styles.programmeTrayOverlay}>
+      viewportOverlay.setOverlay(() => fallbackDismissed ? null : <View pointerEvents="box-none" style={styles.programmeTrayOverlay}>
         {renderViewportDock()}
       </View>);
       return () => viewportOverlay.setOverlay(null);
     }
-  }, [persistentDock?.register, viewportOverlay?.setOverlay, renderViewportDock, programmeId, programmeSelected, institutionNames.join("|")]);
+  }, [persistentDock?.register, viewportOverlay?.setOverlay, renderViewportDock, programmeId, programmeSelected, institutionNames.join("|"), fallbackDismissed]);
 
   // The fallback keeps this component testable outside DetailScaffold; in the
   // live screen the one shared tray is portalled into the fixed viewport dock.
   return viewportOverlay || persistentDock
     ? null
-    : <View style={styles.programmeTrayFallbackDock}>{tray}</View>;
+    : fallbackDismissed ? null : <View style={styles.programmeTrayFallbackDock}>{tray}</View>;
 }
 
 export function ProgrammeDetailBody({
@@ -790,6 +849,7 @@ export function ProgrammeDetailBody({
   programmeSelected,
   programmeTrayMode,
   onProgrammeTrayModeChange,
+  onRemoveProgramme,
   requirements,
   schools,
   universitySearchResults,
@@ -829,6 +889,7 @@ export function ProgrammeDetailBody({
   programmeSelected: boolean;
   programmeTrayMode: GuidedLearningTrayMode;
   onProgrammeTrayModeChange: (mode: GuidedLearningTrayMode) => void;
+  onRemoveProgramme: () => void;
   requirements: JambProgrammeRequirements | null;
   schools: JambProgrammeSchool[];
   universitySearchResults: JambProgrammeSchool[];
@@ -863,6 +924,7 @@ export function ProgrammeDetailBody({
   guidedAdmissionJourney: boolean;
 }) {
   const exploreNav = useExploreNav();
+  const persistentDock = usePersistentLearningPlanDock();
   const resp = useResponsive();
   const [evidenceOpen, setEvidenceOpen] = useState(false);
   const requirementCards = [
@@ -884,15 +946,32 @@ export function ProgrammeDetailBody({
   );
   const displayCurriculum = programmeCurriculumForDisplay(data);
   const hasProgrammeLearningPreview = hasStudentDisplayableProgrammeLearning(displayCurriculum);
+  const programmeOverviewSections = programmePreviewSections(data, displayCurriculum);
+  const renderProgrammeOverviewCopy = (fallback?: string) => {
+    if (!programmeOverviewSections?.length) {
+      return fallback ? <Text style={[styles.body, { color: colors.textRole.secondary }]}>{fallback}</Text> : null;
+    }
+    return (
+      <View style={styles.previewCopy}>
+        {programmeOverviewSections.map((section, index) => (
+          <View key={`${section.heading ?? "programme-overview"}-${index}`} style={styles.previewSection}>
+            {section.heading ? <Text accessibilityRole="header" style={[styles.previewHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{section.heading}</Text> : null}
+            <Text style={[styles.body, { color: colors.textRole.secondary }]}>{section.body}</Text>
+          </View>
+        ))}
+      </View>
+    );
+  };
 
   return (
     <View style={styles.content}>
-      {showCareerGuidance && !viewOnly ? <ProgrammePageLearningTray
+      {showCareerGuidance && !viewOnly && !persistentDock ? <ProgrammePageLearningTray
         programmeId={String(data.id)}
         programmeName={programmeName}
         programmeSelected={programmeSelected}
         programmeTrayMode={programmeTrayMode}
         onProgrammeTrayModeChange={onProgrammeTrayModeChange}
+        onRemoveProgramme={onRemoveProgramme}
         selectedSchool={trayInstitution ?? selectedSchool}
         comparisonSchools={comparisonSchools}
       /> : null}
@@ -904,13 +983,11 @@ export function ProgrammeDetailBody({
           {!selectedSchool ? (
             <View style={[styles.context, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
               <SectionLabel>{earlySecondary ? "Programme preview" : "Programme overview"}</SectionLabel>
-              <Text style={[styles.body, { color: colors.textRole.secondary }]}>
-                {undergraduateContext
-                  ? programmePreviewExplanation(data, displayCurriculum) || ("The themes below explain what " + programmeName + " studies and what you will learn.")
-                  : earlySecondary
-                  ? "Start by understanding what this programme covers. When you are ready, choose a university to see its requirements."
-                    : "This is the programme identity. Choose a university to see this programme at that university, what you will study, and its requirements."}
-              </Text>
+              {undergraduateContext
+                ? renderProgrammeOverviewCopy(`The themes below explain what ${programmeName} studies and what you will learn.`)
+                : earlySecondary
+                  ? <Text style={[styles.body, { color: colors.textRole.secondary }]}>Start by understanding what this programme covers. When you are ready, choose a university to see its requirements.</Text>
+                  : <Text style={[styles.body, { color: colors.textRole.secondary }]}>This is the programme identity. Choose a university to see this programme at that university, what you will study, and its requirements.</Text>}
               {undergraduateContext && studentYearOfStudy ? <Text style={[styles.meta, { color: colors.textRole.muted }]}>Year of study: {studentYearOfStudy}</Text> : null}
             </View>
           ) : null}
@@ -944,10 +1021,10 @@ export function ProgrammeDetailBody({
               {secondaryUniversityFlow && hasProgrammeLearningPreview ? (
                 <DegreeSkills curriculumContract={displayCurriculum} resources={data.resources} variant={earlySecondary ? "teaser" : undefined} />
               ) : null}
-              {secondaryUniversityFlow && programmePreviewExplanation(data, displayCurriculum) ? (
+              {secondaryUniversityFlow && programmeOverviewSections?.length ? (
                 <View style={styles.block}>
                   <SectionLabel>What this programme is about</SectionLabel>
-                  <Text style={[styles.body, { color: colors.textRole.secondary }]}>{programmePreviewExplanation(data)}</Text>
+                  {renderProgrammeOverviewCopy()}
                 </View>
               ) : null}
               {secondaryUniversityFlow && !programmePreviewExplanation(data, displayCurriculum) && !hasProgrammeLearningPreview && !data.contextItems?.length ? (
@@ -959,6 +1036,7 @@ export function ProgrammeDetailBody({
               {secondaryUniversityFlow ? (
                 <View style={[styles.context, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
                   <SectionLabel>Before you choose a university</SectionLabel>
+                  <Text style={[styles.body, { color: colors.textRole.secondary }]}>JAMB means the Joint Admissions and Matriculation Board. UTME means the Unified Tertiary Matriculation Examination. The subjects below are admission requirements; they are separate from what you study in the programme.</Text>
                   {requirementCards.map((card) => (
                     <View key={"preview-" + card.field} style={styles.requirementItem}>
                       <Text style={[styles.requirementLabel, { color: colors.textRole.muted }]}>
@@ -993,7 +1071,7 @@ export function ProgrammeDetailBody({
                {selectedSchool ? (
                 <View style={[styles.context, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
                   <SectionLabel>{`Admission information for ${institutionLabel(selectedSchool)}`}</SectionLabel>
-                  <Text style={[styles.body, { color: colors.textRole.secondary }]}>The programme name is the same national JAMB identity. The university-specific subjects appear first, followed by the general programme subjects.</Text>
+                  <Text style={[styles.body, { color: colors.textRole.secondary }]}>JAMB means the Joint Admissions and Matriculation Board, and UTME means the Unified Tertiary Matriculation Examination. The programme name uses the same national identity in JAMB records; university-specific subjects appear before the general programme subjects.</Text>
                   <View style={styles.requirement}>
                     <Text style={[styles.label, { color: colors.textRole.primary }]}>Requirements recorded for {institutionLabel(selectedSchool)}</Text>
                     <Text style={[styles.body, { color: colors.textRole.secondary }]}>Use these university-specific details when you compare your subjects with this offering.</Text>
@@ -1020,10 +1098,10 @@ export function ProgrammeDetailBody({
                   </View>
                 </View>
               ) : null}
-               {programmePreviewExplanation(data, displayCurriculum) ? (
+               {programmeOverviewSections?.length ? (
                 <View style={styles.block}>
                   <SectionLabel>What this programme is about</SectionLabel>
-                  <Text style={[styles.body, { color: colors.textRole.secondary }]}>{programmePreviewExplanation(data, displayCurriculum)}</Text>
+                  {renderProgrammeOverviewCopy()}
                 </View>
               ) : null}
               <DegreeSkills curriculumContract={displayCurriculum} resources={data.resources} />
@@ -1032,7 +1110,7 @@ export function ProgrammeDetailBody({
                 resources={data.resources}
                 title="What the programme capabilities mean"
               /> : null}
-              {data.curriculumContract?.status === "available" ? <DataSourceBadge verification="verified" source="National curriculum and JAMB programme records" /> : null}
+              {data.curriculumContract?.status === "available" ? <DataSourceBadge verification="verified" source="National curriculum and admission programme records" /> : null}
               <View style={styles.block}>
                 {undergraduateContext ? <Text style={[styles.body, { color: colors.textRole.secondary }]}>This is your current programme. Follow what it teaches into the domains, subgroups, roles, skills, tools, and certifications that can help you plan what to learn next.</Text> : null}
                 {viewOnly ? <Text style={[styles.body, { color: colors.textRole.muted }]}>This is a read-only route because subject fit has not been confirmed. You can inspect the programme and requirements while keeping your current choices unchanged.</Text> : null}
@@ -1260,11 +1338,11 @@ function UniversityComparisonPanel({
 }) {
   const programmeIdentity = schools.find((school) => school.studentName || school.jambName)?.studentName
     ?? schools.find((school) => school.jambName)?.jambName
-    ?? "This JAMB programme";
+    ?? "This national programme";
   return (
     <View style={[styles.compareBlock, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
       <SectionLabel>Compare universities</SectionLabel>
-      <Text style={[styles.body, { color: colors.textRole.secondary }]}>You are comparing the same JAMB programme — {programmeIdentity} — at different universities. The programme identity stays the same; the university, address, requirements and exceptions may differ.</Text>
+      <Text style={[styles.body, { color: colors.textRole.secondary }]}>You are comparing the same national programme record — {programmeIdentity} — at different universities. The programme identity stays the same; the university, address, requirements and exceptions may differ.</Text>
       <View style={styles.compareGrid}>
         {schools.map((school) => (
           <View key={school.schoolId} style={[styles.compareCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
@@ -1322,6 +1400,9 @@ const styles = StyleSheet.create({
   block: { gap: Spacing.sm },
   award: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
   body: { fontSize: 16, lineHeight: 24 },
+  previewCopy: { gap: Spacing.md },
+  previewSection: { gap: Spacing.xs },
+  previewHeading: { fontSize: 15, lineHeight: 21 },
   context: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.md, padding: Spacing.md, gap: 3 },
   contextLabel: { fontSize: FontSize.xs, textTransform: "uppercase", letterSpacing: 0.7 },
   contextName: { fontSize: 16, lineHeight: 23, ...CompassFonts.bodySemibold },

@@ -21,6 +21,7 @@ from models import *
 from auth import Auth
 from logger import log
 from middleware.session_middleware import DeviceSessionMiddleware
+from legal_versions import CURRENT_PRIVACY_VERSION, CURRENT_TERMS_VERSION
 
 # App setup
 @asynccontextmanager
@@ -91,10 +92,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.add_middleware(DeviceSessionMiddleware)
-
-# Server-owned document versions. Clients must accept these exact versions.
-CURRENT_TERMS_VERSION = "2026-10-10"
-CURRENT_PRIVACY_VERSION = "2026-10-10"
 
 @app.middleware("http")
 async def logging_middleware(request: Request, call_next):
@@ -1147,6 +1144,9 @@ app.include_router(entrepreneurship_router)
 
 from routes.feedback_routes import router as feedback_router
 app.include_router(feedback_router)
+
+from routes.learning_analytics_routes import router as learning_analytics_router
+app.include_router(learning_analytics_router)
 
 if __name__ == "__main__":
     import uvicorn

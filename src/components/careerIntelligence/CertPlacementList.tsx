@@ -255,8 +255,8 @@ function CertRow({
         {detailsOpen ? <View style={[styles.certDetails, { borderTopColor: colors.border }]}>
           {requirement ? <CertDetail label="Why it appears in this route" value={[requirement, studentReasonCopy(relation?.requirementReason)].filter(Boolean).join(" ")} colors={colors} /> : null}
           {output ? <CertDetail label="What it can help you demonstrate" value={output} colors={colors} /> : null}
-          {relation?.prerequisites?.length ? <CertDetail label="What may help you prepare" value={`${relation.prerequisites.map(studentFacingCopy).filter(Boolean).join(", ")}. These are preparation notes, not an automatic block.`} colors={colors} /> : null}
-          {relation?.evidenceLimitations?.length ? <CertDetail label="What it cannot prove or replace" value={relation.evidenceLimitations.map(studentFacingCopy).filter(Boolean).join(" ")} colors={colors} /> : null}
+          {relation?.prerequisites?.length ? <CertDetail label="What may help you prepare" value={`${relation.prerequisites.map((value) => studentFacingCopy(value)).filter(Boolean).join(", ")}. These are preparation notes, not an automatic block.`} colors={colors} /> : null}
+          {relation?.evidenceLimitations?.length ? <CertDetail label="What it cannot prove or replace" value={relation.evidenceLimitations.map((value) => studentFacingCopy(value)).filter(Boolean).join(" ")} colors={colors} /> : null}
           <Text style={[styles.certBody, { color: colors.textMuted }]}>Holding a credential does not by itself prove practical competence or guarantee employment.</Text>
         </View> : null}
         <ExternalLinkGuard url={url} label={hasUrl ? `Open information for ${cert.name}` : `No verified link for ${cert.name}`} description={resourceRationale} textStyle={[styles.certBody, { color: colors.accent }]} />

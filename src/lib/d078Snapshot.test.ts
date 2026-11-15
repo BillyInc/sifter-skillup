@@ -78,6 +78,22 @@ test("round-trips a valid full saved D078 selection through archive reopen", () 
   expect(selection.addedItemIds).not.toEqual(expect.arrayContaining(d078GraphDataForTests().foundation_item_ids));
 });
 
+test("retains both endpoints of a graph-marked alternative pair in saved route state", () => {
+  const base: D078Selection = { methodIds: [INTERVIEWS], combinationIds: [], componentMethodIds: {}, addedItemIds: [] };
+  const projection = projectD078Route(base);
+  const routeItems = new Set([...projection.domainItemIds, ...projection.toolIds]);
+  const pair = d078GraphDataForTests().typed_relationship_edges.find((edge) =>
+    ["alternative_to", "alternative_tool_option"].includes(edge.relationship)
+    && edge.status === "resolved_ready_for_use"
+    && routeItems.has(edge.sourceId)
+    && routeItems.has(edge.targetId),
+  );
+  expect(pair).toBeTruthy();
+  const selection = { ...base, addedItemIds: [pair!.sourceId, pair!.targetId] };
+  const reopened = d078SelectionFromSnapshot(saved("d078-alternative-pair", selection), PROGRAMME_ID);
+  expect(reopened?.addedItemIds).toEqual(expect.arrayContaining([pair!.sourceId, pair!.targetId]));
+});
+
 test("builds a D078 My World resume URL at the saved domain, area, or role stop point", () => {
   const roleSelection = validFullSelection();
   const makeSnapshot = (selection: D078Selection) => ({

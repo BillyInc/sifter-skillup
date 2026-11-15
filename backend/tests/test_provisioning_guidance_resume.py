@@ -5,7 +5,7 @@ from routes.provisioning_routes import (
     _guidance_visibility_is_allowed,
 )
 from routes.student_pipeline_routes import _delete_learning_plan_snapshot, _merge_guidance_snapshot_history, _path_snapshot, _path_with_selected_learning_snapshot
-from services.report_gen import ReportContext, build_report_docx, build_report_html
+from services.report_gen import ReportContext, _d078_route_data, _d078_saved_route, build_report_docx, build_report_html
 
 
 def test_admin_resume_checkpoint_is_kept_with_report_context_fields():
@@ -257,6 +257,42 @@ def test_d078_report_exports_saved_route_without_university_or_empty_content():
     assert "How the selected methods contribute on this route" in document
     assert "Admission requirements" not in document
     assert "University-specific admission requirements are not included" in document
+
+
+def test_d078_report_keeps_selected_role_tool_only_on_its_declared_role_area_route():
+    data = _d078_route_data()
+    path = {"learningPlanSnapshot": {
+        "dataVersion": "guided-experience-d078-v1",
+        "d078SelectionsByRoute": {},
+    }}
+    routes_checked = 0
+    for tool_route in data["role_tool_routes"]:
+        role_route = next(
+            row for row in data["method_area_role_routes"]
+            if row["role_id"] == tool_route["role_id"]
+            and row["area_id"] in tool_route["area_ids"]
+        )
+        node = data["nodes_by_id"][tool_route["tool_node_id"]]
+        selection = {
+            "methodIds": [role_route["method_id"]],
+            "combinationIds": [],
+            "componentMethodIds": {},
+            "areaId": role_route["area_id"],
+            "roleId": role_route["role_id"],
+            "addedItemIds": [tool_route["tool_node_id"]],
+        }
+
+        saved = _d078_saved_route(path, selection)
+        assert saved is not None
+        assert node["label"] in saved["added_items"], (tool_route["role_id"], tool_route["tool_node_id"])
+
+        wrong_context = dict(selection, areaId="D078:area-not-in-this-route", roleId="role:not-the-selected-route")
+        rejected = _d078_saved_route(path, wrong_context)
+        assert rejected is not None
+        assert node["label"] not in rejected["added_items"], (tool_route["role_id"], tool_route["tool_node_id"])
+        routes_checked += 1
+
+    assert routes_checked == 95
 
 
 def test_d078_report_does_not_union_an_unselected_method_with_participatory_route():

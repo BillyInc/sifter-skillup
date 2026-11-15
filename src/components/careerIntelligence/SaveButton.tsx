@@ -115,7 +115,7 @@ export function SaveButton({
         onChange?.(next);
         if (result.status === "pending") {
           showHint(result.meta?.notice ?? "Saved on this device; it will sync when you reconnect.");
-        }
+        } else showHint(next ? "Saved to My World." : "Removed from My World.");
       } else {
         showHint(result.meta?.notice ?? "Saving comes online soon");
       }
@@ -171,7 +171,7 @@ export function SaveButton({
       </Animated.View>
 
       {hint ? (
-        <Text style={[styles.hint, { color: colors.textRole.muted }]}>{hint}</Text>
+        <Text accessibilityLiveRegion="polite" style={[styles.hint, { color: colors.textRole.muted }]}>{hint}</Text>
       ) : null}
     </View>
   );

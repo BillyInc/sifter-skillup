@@ -432,33 +432,10 @@ def main() -> None:
             task_family_node_count += 1
             edges.append({"source": area_node, "target": task_node, "relationship": "area_to_task_family", "status": "area_context_candidate"})
             area_route_edges += 1
-            for index, item in enumerate(as_list(task.get("learning_items")), start=1):
-                label = item.get("label") or f"unnamed item {index}"
-                item_node = f"area-item:{slug(area_id)}:{slug(task_id)}:{index}:{slug(label)}"
-                nodes[item_node] = {
-                    "id": item_node,
-                    "kind": "area_learning_item",
-                    "item_type": item.get("type"),
-                    "label": label,
-                    "area_id": area_id,
-                    "task_family_id": task_id,
-                    "student_visible": False,
-                    "approval": "area_candidate_not_student_approved",
-                    "source_ledger": "d078_area_role_task_sets",
-                    "what_it_is": item.get("what_it_is"),
-                    "programme_meaning": item.get("meaning_in_selected_programme"),
-                    "domain_and_area_meaning": item.get("meaning_in_domain_and_area"),
-                    "role_application": item.get("role_application"),
-                    "evidence_source_ids": item.get("evidence_source_ids", []),
-                    "explanatory_source_ids": item.get("explanatory_source_ids", []),
-                    "free_task_specific_learning_source_ids": item.get("free_task_specific_learning_source_ids", []),
-                    "resource_gate": item.get("resource_gate"),
-                    "prerequisites_relationships_and_limits": item.get("prerequisites_relationships_and_limits"),
-                }
-                area_item_node_count += 1
-                area_item_type_counts[str(item.get("type"))] += 1
-                edges.append({"source": task_node, "target": item_node, "relationship": "task_to_area_item", "status": "area_context_candidate"})
-                area_route_edges += 1
+            # The task-set ledger's `learning_items` are generic candidate
+            # templates, not independently reviewed learning records. Do not
+            # materialize them as graph cards; canonical area-owned items are
+            # added only from reviewed item records and exact task links.
             for prerequisite in as_list(task.get("prerequisites")):
                 target = concept_node(nodes, str(prerequisite), "area_prerequisite", "d078_area_role_task_sets")
                 edges.append({"source": target, "target": task_node, "relationship": "prerequisite_for", "status": "area_context_candidate"})

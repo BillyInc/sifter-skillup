@@ -87,6 +87,10 @@ function cloneSelection(selection: D078Selection): D078Selection {
     areaId: selection.areaId,
     roleId: selection.roleId,
     addedItemIds: [...(selection.addedItemIds ?? [])],
+    ...(selection.domainInPlan ? { domainInPlan: true } : {}),
+    ...(selection.planAreaId ? { planAreaId: selection.planAreaId } : {}),
+    ...(selection.planRoleId ? { planRoleId: selection.planRoleId } : {}),
+    ...(selection.taskFamilyIdsByArea ? { taskFamilyIdsByArea: Object.fromEntries(Object.entries(selection.taskFamilyIdsByArea).map(([areaId, ids]) => [areaId, [...ids]])) } : {}),
   };
 }
 

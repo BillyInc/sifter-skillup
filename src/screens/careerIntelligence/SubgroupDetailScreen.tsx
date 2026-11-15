@@ -27,7 +27,7 @@ import { resolveD078AreaId } from "@/lib/d078RouteProjection";
 import { parseD078RouteStacks } from "@/lib/d078RouteStacks";
 
 export default function SubgroupDetailScreen() {
-  const params = useLocalSearchParams<{ id?: string; subgroupId?: string; programme_id?: string | string[]; jamb_programme_id?: string | string[]; school_id?: string | string[]; user_type?: string | string[]; journey_mode?: string | string[]; guidance_student_id?: string | string[]; guidance_target?: string | string[]; guidance_entry?: string | string[]; focus?: string | string[]; d078_selection?: string | string[]; d078_route_stacks?: string | string[]; d078_from_field?: string | string[] }>();
+  const params = useLocalSearchParams<{ id?: string; subgroupId?: string; programme_id?: string | string[]; jamb_programme_id?: string | string[]; school_id?: string | string[]; user_type?: string | string[]; journey_mode?: string | string[]; guidance_student_id?: string | string[]; guidance_target?: string | string[]; guidance_entry?: string | string[]; focus?: string | string[]; d078_selection?: string | string[]; d078_route_stacks?: string | string[]; d078_from_field?: string | string[]; d078_domain_overview_seen?: string | string[] }>();
   const nestedRoute = Boolean(params.subgroupId);
   const domainId = nestedRoute ? String(params.id ?? "") : "";
   const subgroupId = String(params.subgroupId ?? params.id ?? "");
@@ -82,7 +82,7 @@ export default function SubgroupDetailScreen() {
       backLabel={`Back to ${state.data?.name ?? "domain"}`}
       onBack={onBack}
       save={focusedGuidance ? undefined : { entityType: "subgroup", entityId: subgroupId }}
-      reportSelection={{ kind: "subgroups", id: subgroupId, name: subgroup?.name ?? "Area", domainId: resolvedDomainId, domainName: state.data?.name }}
+      reportSelection={domainId === "D078" || state.data?.id === "D078" ? undefined : { kind: "subgroups", id: subgroupId, name: subgroup?.name ?? "Area", domainId: resolvedDomainId, domainName: state.data?.name }}
       targetStudentId={targetStudentId}
       state={state}
       onRetry={loadDomain}
@@ -98,6 +98,7 @@ export default function SubgroupDetailScreen() {
         initialSelection={parseD078Selection(params.d078_selection)}
         initialRouteStacks={parseD078RouteStacks(params.d078_route_stacks, parseD078Selection(params.d078_selection))}
         returnToFieldOnBack={(Array.isArray(params.d078_from_field) ? params.d078_from_field[0] : params.d078_from_field) === "1"}
+        domainOverviewAlreadyPresented={(Array.isArray(params.d078_domain_overview_seen) ? params.d078_domain_overview_seen[0] : params.d078_domain_overview_seen) === "1"}
         roles={roles}
         guidanceContext={guidanceContext}
         areaResources={subgroup.resources}

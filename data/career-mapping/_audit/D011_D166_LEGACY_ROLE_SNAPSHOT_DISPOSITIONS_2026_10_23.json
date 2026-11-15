@@ -1,0 +1,710 @@
+{
+  "schema_version": "2026-10-23.D011-D166-legacy-role-snapshot-dispositions.v1",
+  "review_date": "2026-10-23",
+  "status": "title_dispositions_complete_for_snapshot_mismatches; canonical_role_updates_not_applied",
+  "objective": "Determine why every role title in older D011 and D166 snapshots is absent from current canonical role records, using external task evidence and the current domain area boundaries.",
+  "authority_and_scope": {
+    "canonical_role_source": "role_library_v3_cleaned.json",
+    "historical_role_sources": [
+      "data/career-mapping/_audit/domains/D011.json",
+      "data/career-mapping/_audit/domains/D166.json"
+    ],
+    "method": "Compare normalized title identity, inspect title aliases, source-backed domain/area boundaries, official occupational task profiles, and relevant current industry roles. Titles remain out of active routes unless a task-specific route meets both the domain and an existing area boundary.",
+    "no_role_data_mutation": "This audit resolves historical title mismatches and records source-backed route candidates. It does not change the current canonical role library or area routes."
+  },
+  "counts": {
+    "D011": {
+      "historical_snapshot": 36,
+      "current_canonical": 28,
+      "name_matches": 23,
+      "unmatched_titles_disposed": 13
+    },
+    "D166": {
+      "historical_snapshot": 30,
+      "current_canonical": 9,
+      "name_matches": 9,
+      "unmatched_titles_disposed": 21
+    }
+  },
+  "disposition_rule": "A title is not retained merely because the general occupation operates in finance, engineering, manufacturing, or autonomous technology. Keep it only where source-backed tasks fit the domain and at least one existing area. Use explicit task conditions for broad occupations. Do not turn product-adjacency or sector employment into an area route.",
+  "dispositions": {
+    "D011": [
+      {
+        "legacy_role_title": "financial auditor",
+        "legacy_isco_code": "2411",
+        "legacy_aliases": "auditor  ·  finance auditor  ·  internal auditor  ·  audit manager  ·  chartered accountant",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D011",
+        "decision": "General financial statement, compliance and control audits are not the same work as quantitative model validation; the legacy aliases are general auditor/internal auditor.",
+        "source_key": "D011_ACCOUNTING",
+        "source_urls": [
+          "https://www.onetonline.org/link/details/13-2011.00"
+        ],
+        "source_finding": "O*NET 13-2011.00 describes accounting records, statements, reporting standards, reconciliations, audit findings, internal controls and tax compliance. It is a general accounting/audit occupation, not quantitative financial pricing, market-risk modeling, or systematic investment work.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "budget analyst",
+        "legacy_isco_code": "2411",
+        "legacy_aliases": "budget and policy analyst  ·  budget accountant  ·  budget officer  ·  cost and planning analyst",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D011",
+        "decision": "Program/organizational budget analysis does not fit market-risk modeling, instrument pricing, or systematic investment/trading.",
+        "source_key": "D011_BUDGET",
+        "source_urls": [
+          "https://www.onetonline.org/link/summary/13-2031.00"
+        ],
+        "source_finding": "O*NET 13-2031.00 covers fiscal allocation, operating budgets, cost analysis, program resources, budget controls and cost-benefit analysis. Cost Analyst is among its reported titles. These tasks concern organizational/program budgets, not the three D011 area boundaries.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "tax advisor",
+        "legacy_isco_code": "2411",
+        "legacy_aliases": "fiscal advisor  ·  tax specialist  ·  tax expert  ·  tax evaluator  ·  tax preparer",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D011",
+        "decision": "Tax law interpretation, return preparation and client tax planning are separate from the D011 specialization areas.",
+        "source_key": "D011_TAX",
+        "source_urls": [
+          "https://www.onetonline.org/link/summary/13-2082.00"
+        ],
+        "source_finding": "O*NET 13-2082.00 explicitly lists Tax Advisor among reported titles and describes tax return preparation, tax law, deductions, tax calculations and client tax planning.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "financial controller",
+        "legacy_isco_code": "2411",
+        "legacy_aliases": "finance manager  ·  financial administrator  ·  accounting supervisor  ·  financial accountant  ·  accountant",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D011",
+        "decision": "Corporate finance control, accounting, budgeting, cash management and financial reporting do not establish one of the D011 specialization area tasks.",
+        "source_key": "D011_TREASURY_CONTROL",
+        "source_urls": [
+          "https://www.onetonline.org/link/details/11-3031.01"
+        ],
+        "source_finding": "O*NET 11-3031.01 covers organization-level cash, reserves, budgeting, financial statements, investment of surpluses, accounting controls, procurement, tax and staff supervision. The role is corporate treasury/control rather than quantitative market modeling or financial engineering.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "public finance accountant",
+        "legacy_isco_code": "2411",
+        "legacy_aliases": "finance accountant  ·  public finance officer  ·  treasury accountant  ·  treasury officer  ·  public finance manager",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D011",
+        "decision": "Public-sector accounting and treasury/budget administration do not establish quantitative financial engineering or market/investment modeling.",
+        "source_key": "D011_ACCOUNTING",
+        "source_urls": [
+          "https://www.onetonline.org/link/details/13-2011.00"
+        ],
+        "source_finding": "O*NET 13-2011.00 describes accounting records, statements, reporting standards, reconciliations, audit findings, internal controls and tax compliance. It is a general accounting/audit occupation, not quantitative financial pricing, market-risk modeling, or systematic investment work.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "cost analyst",
+        "legacy_isco_code": "2411",
+        "legacy_aliases": "quantity surveyor  ·  cost accountant  ·  cost accounting clerk  ·  cost recovery estimator  ·  cost and budget analyst",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D011",
+        "decision": "The snapshot aliases include cost accountant and cost/budget analyst; O*NET groups Cost Analyst under budget analysis. Product/program costing is not financial-instrument pricing.",
+        "source_key": "D011_BUDGET",
+        "source_urls": [
+          "https://www.onetonline.org/link/summary/13-2031.00"
+        ],
+        "source_finding": "O*NET 13-2031.00 covers fiscal allocation, operating budgets, cost analysis, program resources, budget controls and cost-benefit analysis. Cost Analyst is among its reported titles. These tasks concern organizational/program budgets, not the three D011 area boundaries.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "grants management officer",
+        "legacy_isco_code": "2411",
+        "legacy_aliases": "grants officer  ·  proposals manager",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D011",
+        "decision": "Grant administration involves grant review, award, financial administration and compliance, not the D011 areas.",
+        "source_key": "D011_FUNDRAISING",
+        "source_urls": [
+          "https://www.samhsa.gov/grants/grants-management",
+          "https://www.onetonline.org/link/details/13-1131.00"
+        ],
+        "source_finding": "SAMHSA defines a Grant Management Officer's work as business management, review/negotiation/award/administration, compliance interpretation and authorizing grant expenditure. O*NET Fundraisers covers donor solicitation and funding proposals. Grant administration is not quantitative finance or financial engineering.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "financial fraud examiner",
+        "legacy_isco_code": "2411",
+        "legacy_aliases": "fraud analyst  ·  fraud examiner  ·  fraud prevention analyst  ·  fraud investigations manager  ·  financial fraud investigator",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D011",
+        "decision": "Fraud investigation and evidence gathering may analyze financial data, but that does not equal quantitative market/investment modeling. A fraud-analytics role would require a distinct assigned task and area record.",
+        "source_key": "D011_FRAUD",
+        "source_urls": [
+          "https://www.onetonline.org/link/custom/13-2099.04"
+        ],
+        "source_finding": "O*NET 13-2099.04 describes evidence gathering, interviews, reporting and fraud investigation/prevention. Related task records include examining financial data for irregularities and designing fraud-detection tools; this is fraud examination/analytics, not quantitative finance unless a distinct financial-modeling assignment is evidenced.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "accounting analyst",
+        "legacy_isco_code": "2411",
+        "legacy_aliases": "accounting systems analyst  ·  accounts analyst  ·  accounting specialist  ·  accounting methods analyst",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D011",
+        "decision": "Accounting systems, accounts, reconciliation and reporting do not establish quantitative financial modeling or investment research; the role-family ledger places it in accounting-related domains.",
+        "source_key": "D011_ACCOUNTING",
+        "source_urls": [
+          "https://www.onetonline.org/link/details/13-2011.00"
+        ],
+        "source_finding": "O*NET 13-2011.00 describes accounting records, statements, reporting standards, reconciliations, audit findings, internal controls and tax compliance. It is a general accounting/audit occupation, not quantitative financial pricing, market-risk modeling, or systematic investment work.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "audit supervisor",
+        "legacy_isco_code": "2411",
+        "legacy_aliases": "audit checker  ·  auditing supervisor  ·  audit leader  ·  audit inspector  ·  audit examiner",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D011",
+        "decision": "Supervising general financial/accounting audits is outside the D011 area boundaries. A specialist model-validation/audit role would require its own task record.",
+        "source_key": "D011_ACCOUNTING",
+        "source_urls": [
+          "https://www.onetonline.org/link/details/13-2011.00"
+        ],
+        "source_finding": "O*NET 13-2011.00 describes accounting records, statements, reporting standards, reconciliations, audit findings, internal controls and tax compliance. It is a general accounting/audit occupation, not quantitative financial pricing, market-risk modeling, or systematic investment work.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "bankruptcy trustee",
+        "legacy_isco_code": "2411",
+        "legacy_aliases": "insolvency practitioner  ·  insolvency trustee  ·  bankruptcy analyst  ·  trustees in bankruptcy  ·  trustee in bankruptcy",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D011",
+        "decision": "The role administers insolvency estates, creditor claims and court processes; it belongs with insolvency/legal-financial work, not D011.",
+        "source_key": "D011_BANKRUPTCY",
+        "source_urls": [
+          "https://www.uscourts.gov/court-programs/bankruptcy/bankruptcy-basics/chapter-11-bankruptcy-basics"
+        ],
+        "source_finding": "U.S. Courts describes bankruptcy trustee duties as administering/reorganizing an estate, accounting for property, reviewing claims and court reporting. This is insolvency administration, not an area in D011.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "dividend analyst",
+        "legacy_isco_code": "2411",
+        "legacy_aliases": "dividends clerk  ·  dividend and coupon analyst  ·  dividend calculation clerk  ·  dividends analyst  ·  dividend clerk",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D011_legacy_identity; require a distinct task-qualified role for investment work",
+        "decision": "Snapshot aliases and current employer evidence primarily indicate dividend/coupon processing and accounting. The ESCO-derived record also mentions stock valuation/forecasting, so the title is ambiguous. Keep this old identity out of D011; route a separately evidenced dividend-yield researcher/quantitative equity analyst only when the actual job forecasts/value securities and develops investment strategies.",
+        "source_key": "D011_DIVIDEND",
+        "source_urls": [
+          "https://altotrail.com/en/occupations/dividend-analyst/",
+          "https://jobs.scotiabank.com/job/Bogota-Analyst-Capital-Markets%2C-Corporate-Actions-%26-Dividend-and-Coupon-Income-Processing-DC/606968017/"
+        ],
+        "source_finding": "The snapshot's aliases include dividend clerk and dividend/coupon analyst. An ESCO-derived profile describes dividend calculation, recordkeeping and payment work, while a current Scotiabank capital-markets posting describes corporate-actions processing, reconciliations, exception queues and payment readiness. Neither supports a D011 quantitative investment route by title alone. A separately documented role that forecasts dividends, values securities and builds a systematic equity strategy could support the systematic-investment area, but it is a different, task-qualified role identity.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "accountant",
+        "legacy_isco_code": "2411",
+        "legacy_aliases": "accounting technician  ·  bookkeeper  ·  accounting supervisor  ·  accounting officer  ·  certified public accountant",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D011",
+        "decision": "Account preparation and reporting are not one of pricing/financial engineering, quantitative financial risk modeling, or systematic investment/trading; the cross-domain role-family ledger places this role in accounting-related domains.",
+        "source_key": "D011_ACCOUNTING",
+        "source_urls": [
+          "https://www.onetonline.org/link/details/13-2011.00"
+        ],
+        "source_finding": "O*NET 13-2011.00 describes accounting records, statements, reporting standards, reconciliations, audit findings, internal controls and tax compliance. It is a general accounting/audit occupation, not quantitative financial pricing, market-risk modeling, or systematic investment work.",
+        "current_canonical_route_added": false
+      }
+    ],
+    "D166": [
+      {
+        "legacy_role_title": "welding engineer",
+        "legacy_isco_code": "2144",
+        "legacy_aliases": "robotic welding inspector  ·  welding engineer supervisor  ·  welding engineering adviser  ·  engineering welding co-ordinator  ·  ultrasonic metal welder inspector",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D166",
+        "decision": "Welding process/design/inspection is manufacturing work and is not a task within the current D166 area set.",
+        "source_key": "D166_INDUSTRIAL",
+        "source_urls": [
+          "https://www.onetonline.org/link/summary/17-2112.00",
+          "https://www.onetonline.org/link/summary/17-2112.03"
+        ],
+        "source_finding": "O*NET describes industrial/manufacturing engineering as production systems, process improvement, quality, tooling, costs, layout and manufacturing. Tesla's Cybercab manufacturing posting shows such work can support an autonomous vehicle product launch, but the work remains manufacturing-process work; none of the current eight D166 areas is manufacturing.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "equipment engineer",
+        "legacy_isco_code": "2144",
+        "legacy_aliases": "equipment engineering expert  ·  equipment engineering consultant  ·  equipment technology engineering adviser  ·  equipment technology engineering expert  ·  equipment engineering adviser",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D166_on_current_evidence",
+        "decision": "Generic equipment design, installation or maintenance does not identify an ADS subsystem or any current D166 area; an exact road-ADS system task would be needed for a conditional route.",
+        "source_key": "D166_MECHANICAL",
+        "source_urls": [
+          "https://www.onetonline.org/link/summary/17-2141.00",
+          "https://www.onetonline.org/link/details/17-2141.02",
+          "https://esco.ec.europa.eu/en/classification/occupation?uri=http%3A%2F%2Fdata.europa.eu%2Fesco%2Foccupation%2F579254cf-6d69-4889-9000-9c79dc568644"
+        ],
+        "source_finding": "O*NET describes broad mechanical/automotive design, operation and maintenance; ESCO places several snapshot titles (including equipment, fluid-power, HVAC, engine, precision, rotating-equipment, tooling and welding specialisms) under the broad Mechanical Engineer concept. These classifications establish mechanical-engineering identity, not an ADS-area route. Require a specific road-ADS subsystem task before routing.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "heating, ventilation, air conditioning engineer",
+        "legacy_isco_code": "2144",
+        "legacy_aliases": "HVAC project engineer  ·  HVAC site engineer  ·  HVACR engineer  ·  HVAC engineer  ·  HVAC service engineer",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D166_on_current_evidence",
+        "decision": "Building HVAC is outside road-ADS subsystem work. The snapshot aliases describe HVAC project/site/service engineering; no vehicle thermal-management or ADS task is present.",
+        "source_key": "D166_MECHANICAL",
+        "source_urls": [
+          "https://www.onetonline.org/link/summary/17-2141.00",
+          "https://www.onetonline.org/link/details/17-2141.02",
+          "https://esco.ec.europa.eu/en/classification/occupation?uri=http%3A%2F%2Fdata.europa.eu%2Fesco%2Foccupation%2F579254cf-6d69-4889-9000-9c79dc568644"
+        ],
+        "source_finding": "O*NET describes broad mechanical/automotive design, operation and maintenance; ESCO places several snapshot titles (including equipment, fluid-power, HVAC, engine, precision, rotating-equipment, tooling and welding specialisms) under the broad Mechanical Engineer concept. These classifications establish mechanical-engineering identity, not an ADS-area route. Require a specific road-ADS subsystem task before routing.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "rotating equipment engineer",
+        "legacy_isco_code": "2144",
+        "legacy_aliases": "rotating equipment engineering specialist  ·  rotating equipment technology engineering adviser  ·  rotating equipment technology engineering consultant  ·  rotating equipment technology engineering specialist  ·  rotating equipment technology engineering expert",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D166_on_current_evidence",
+        "decision": "Rotating-equipment engineering principally concerns machinery, turbines and industrial/power equipment; no road-ADS subsystem task or area route is evidenced.",
+        "source_key": "D166_MECHANICAL",
+        "source_urls": [
+          "https://www.onetonline.org/link/summary/17-2141.00",
+          "https://www.onetonline.org/link/details/17-2141.02",
+          "https://esco.ec.europa.eu/en/classification/occupation?uri=http%3A%2F%2Fdata.europa.eu%2Fesco%2Foccupation%2F579254cf-6d69-4889-9000-9c79dc568644"
+        ],
+        "source_finding": "O*NET describes broad mechanical/automotive design, operation and maintenance; ESCO places several snapshot titles (including equipment, fluid-power, HVAC, engine, precision, rotating-equipment, tooling and welding specialisms) under the broad Mechanical Engineer concept. These classifications establish mechanical-engineering identity, not an ADS-area route. Require a specific road-ADS subsystem task before routing.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "food production engineer",
+        "legacy_isco_code": "2141",
+        "legacy_aliases": "food engineer",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D166",
+        "decision": "Food production engineering has no road-ADS task or area fit in the source record.",
+        "source_key": "D166_FOOD",
+        "source_urls": [
+          "https://www.onetonline.org/link/custom/19-1012.00"
+        ],
+        "source_finding": "O*NET 19-1012.00 lists Food Engineer as a reported title and describes food processing, preservation, packaging, storage and distribution. This work is in the food production context, not road-vehicle ADS.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "industrial engineer",
+        "legacy_isco_code": "2141",
+        "legacy_aliases": "industrial engineering consultant  ·  industrial engineering expert  ·  industrial technology engineering expert  ·  industrial technology engineer  ·  industrial engineering adviser",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D166",
+        "decision": "Industrial production systems and manufacturing flow do not fit the eight current D166 areas.",
+        "source_key": "D166_INDUSTRIAL",
+        "source_urls": [
+          "https://www.onetonline.org/link/summary/17-2112.00",
+          "https://www.onetonline.org/link/summary/17-2112.03"
+        ],
+        "source_finding": "O*NET describes industrial/manufacturing engineering as production systems, process improvement, quality, tooling, costs, layout and manufacturing. Tesla's Cybercab manufacturing posting shows such work can support an autonomous vehicle product launch, but the work remains manufacturing-process work; none of the current eight D166 areas is manufacturing.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "maintenance and repair engineer",
+        "legacy_isco_code": "2141",
+        "legacy_aliases": "manufacturing engineer  ·  production engineer  ·  manufacturing systems engineer  ·  mechanical engineer  ·  equipment engineer",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D166",
+        "decision": "The aliases point to manufacturing, production, mechanical and equipment maintenance. General vehicle maintenance is not ADS engineering, validation or sensor calibration.",
+        "source_key": "D166_MAINTENANCE",
+        "source_urls": [
+          "https://www.onetonline.org/link/details/49-3023.00"
+        ],
+        "source_finding": "O*NET 49-3023.00 describes routine automotive diagnosis, repair, adjustment and maintenance. It does not describe ADS engineering, validation, calibration or integration. Fleet-maintenance work would need a separately evidenced ADS subsystem assignment and a matching area.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "manufacturing engineer",
+        "legacy_isco_code": "2141",
+        "legacy_aliases": "manufacturing engineering consultant  ·  manufacturing technology engineering adviser  ·  batterie manufacturing engineer  ·  battery manufacturing engineer  ·  manufacturing engineering adviser",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D166",
+        "decision": "Manufacturing-process work can support production of an autonomous vehicle but does not fit a current D166 technical area. Tesla's Cybercab posting verifies product adjacency, not area fit.",
+        "source_key": "D166_INDUSTRIAL",
+        "source_urls": [
+          "https://www.onetonline.org/link/summary/17-2112.00",
+          "https://www.onetonline.org/link/summary/17-2112.03"
+        ],
+        "source_finding": "O*NET describes industrial/manufacturing engineering as production systems, process improvement, quality, tooling, costs, layout and manufacturing. Tesla's Cybercab manufacturing posting shows such work can support an autonomous vehicle product launch, but the work remains manufacturing-process work; none of the current eight D166 areas is manufacturing.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "tooling engineer",
+        "legacy_isco_code": "2144",
+        "legacy_aliases": "tooling engineering expert  ·  toolmaker/tooling engineer  ·  manufacturing tooling engineer  ·  tooling technology engineering adviser  ·  tooling development engineer",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D166",
+        "decision": "Manufacturing tooling, fixtures and machine-tool work are outside current D166 areas, even when performed on an autonomous-vehicle production line.",
+        "source_key": "D166_INDUSTRIAL",
+        "source_urls": [
+          "https://www.onetonline.org/link/summary/17-2112.00",
+          "https://www.onetonline.org/link/summary/17-2112.03"
+        ],
+        "source_finding": "O*NET describes industrial/manufacturing engineering as production systems, process improvement, quality, tooling, costs, layout and manufacturing. Tesla's Cybercab manufacturing posting shows such work can support an autonomous vehicle product launch, but the work remains manufacturing-process work; none of the current eight D166 areas is manufacturing.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "fluid power engineer",
+        "legacy_isco_code": "2144",
+        "legacy_aliases": "fluid power assembler  ·  fluid power engineering operator  ·  fluid power maintenance supervisor  ·  fluid power assembly engineer  ·  fluid power engineering specialist",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D166_on_current_evidence",
+        "decision": "General fluid-power/hydraulic design is not enough to establish an autonomous-driving route. No source found in this pass connects this role identity to ADS steer/brake actuation; the role should not be placed without that task-specific source.",
+        "source_key": "D166_MECHANICAL",
+        "source_urls": [
+          "https://www.onetonline.org/link/summary/17-2141.00",
+          "https://www.onetonline.org/link/details/17-2141.02",
+          "https://esco.ec.europa.eu/en/classification/occupation?uri=http%3A%2F%2Fdata.europa.eu%2Fesco%2Foccupation%2F579254cf-6d69-4889-9000-9c79dc568644"
+        ],
+        "source_finding": "O*NET describes broad mechanical/automotive design, operation and maintenance; ESCO places several snapshot titles (including equipment, fluid-power, HVAC, engine, precision, rotating-equipment, tooling and welding specialisms) under the broad Mechanical Engineer concept. These classifications establish mechanical-engineering identity, not an ADS-area route. Require a specific road-ADS subsystem task before routing.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "food and beverage packaging technologist",
+        "legacy_isco_code": "2141",
+        "legacy_aliases": "food and beverage packaging expert  ·  food and beverage packaging specialist  ·  food and drinks packaging technologist  ·  food and drinks packaging expert",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D166",
+        "decision": "Food/beverage packaging technology has no road-ADS task or area fit in the source record.",
+        "source_key": "D166_FOOD",
+        "source_urls": [
+          "https://www.onetonline.org/link/custom/19-1012.00"
+        ],
+        "source_finding": "O*NET 19-1012.00 lists Food Engineer as a reported title and describes food processing, preservation, packaging, storage and distribution. This work is in the food production context, not road-vehicle ADS.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "industrial tool design engineer",
+        "legacy_isco_code": "2144",
+        "legacy_aliases": "industrial tool technology engineering adviser  ·  industrial tool designer  ·  industrial tool technology engineering specialist  ·  industrial tool engineer  ·  industrial tool test engineer",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D166",
+        "decision": "Industrial tool and manufacturing-equipment design is outside the current D166 areas.",
+        "source_key": "D166_INDUSTRIAL",
+        "source_urls": [
+          "https://www.onetonline.org/link/summary/17-2112.00",
+          "https://www.onetonline.org/link/summary/17-2112.03"
+        ],
+        "source_finding": "O*NET describes industrial/manufacturing engineering as production systems, process improvement, quality, tooling, costs, layout and manufacturing. Tesla's Cybercab manufacturing posting shows such work can support an autonomous vehicle product launch, but the work remains manufacturing-process work; none of the current eight D166 areas is manufacturing.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "packaging production manager",
+        "legacy_isco_code": "2141",
+        "legacy_aliases": "assistant operations manager  ·  packaging consultant  ·  trainee operations manager  ·  graduate mail and packaging manager  ·  packaging manager",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D166",
+        "decision": "Packaging production management is not an ADS system function and no D166 area supports it.",
+        "source_key": "D166_PACKAGING",
+        "source_urls": [
+          "https://www.onetonline.org/link/summary/11-3051.00"
+        ],
+        "source_finding": "O*NET 11-3051.00 describes Industrial Production Managers as coordinating production activities, product standards, work procedures, inventory, staffing and manufacturing systems. This supports a manufacturing role, not an ADS function in the current eight areas.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "precision engineer",
+        "legacy_isco_code": "2144",
+        "legacy_aliases": "precision engineering expert  ·  precision engineering specialist  ·  precision engineering adviser  ·  precision engineers  ·  precision engineering consultant",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D166_as_named; add separate sensor-calibration role candidate",
+        "decision": "General precision engineering is not equivalent to AV sensor calibration. Direct AV employer evidence identifies Sensor Calibration Engineer as a distinct role working on camera/LiDAR/radar/IMU calibration, calibration error models and downstream perception/localization/control. Record that exact role candidate separately for the D166 sensing/calibration area.",
+        "source_key": "D166_MECHANICAL",
+        "source_urls": [
+          "https://www.onetonline.org/link/summary/17-2141.00",
+          "https://www.onetonline.org/link/details/17-2141.02",
+          "https://esco.ec.europa.eu/en/classification/occupation?uri=http%3A%2F%2Fdata.europa.eu%2Fesco%2Foccupation%2F579254cf-6d69-4889-9000-9c79dc568644"
+        ],
+        "source_finding": "O*NET describes broad mechanical/automotive design, operation and maintenance; ESCO places several snapshot titles (including equipment, fluid-power, HVAC, engine, precision, rotating-equipment, tooling and welding specialisms) under the broad Mechanical Engineer concept. These classifications establish mechanical-engineering identity, not an ADS-area route. Require a specific road-ADS subsystem task before routing.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "aerodynamics engineer",
+        "legacy_isco_code": "2144",
+        "legacy_aliases": "CFD engineer  ·  aerodynamics test engineer  ·  aerodynamic engineering consultant  ·  aerodynamics design engineer  ·  aerodynamics performance engineer",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D166_as_standalone; current automotive-engineer route covers only a specific ADS condition",
+        "decision": "Generic aerodynamics is not an autonomous-driving function. Where a road-vehicle aerodynamic model is explicitly used by an ADS vehicle-dynamics/control team, it can support Vehicle Control and Dynamics; use the existing Automotive Engineer route unless a distinct AV aerodynamics role record and task source are established.",
+        "source_key": "D166_AERODYNAMICS",
+        "source_urls": [
+          "https://www.onetonline.org/link/details/17-2141.02",
+          "https://nvidia.wd5.myworkdayjobs.com/NvidiaExternalCareerSite/job/US-CA-Santa-Clara/Senior-Software-Control-Integration-Engineer---Autonomous-Vehicles_JR2025121"
+        ],
+        "source_finding": "O*NET 17-2141.02 includes aerodynamics among automotive systems an Automotive Engineer may design or analyze. NVIDIA's AV control-integration posting links vehicle dynamics to trajectory tracking, control tuning and integration. This supports aerodynamics only when the work models road-vehicle behavior for an ADS control/dynamics assignment; generic aerodynamic work and aerospace aerodynamics do not establish D166 fit.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "process engineer",
+        "legacy_isco_code": "2141",
+        "legacy_aliases": "battery materials process engineer  ·  process technology engineering expert  ·  slitting process engineer  ·  industrial quality engineer  ·  manufacturing systems engineer",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D166",
+        "decision": "Snapshot aliases focus on battery materials, manufacturing systems, process technology and industrial quality. That production/process context does not fit the current D166 areas.",
+        "source_key": "D166_INDUSTRIAL",
+        "source_urls": [
+          "https://www.onetonline.org/link/summary/17-2112.00",
+          "https://www.onetonline.org/link/summary/17-2112.03"
+        ],
+        "source_finding": "O*NET describes industrial/manufacturing engineering as production systems, process improvement, quality, tooling, costs, layout and manufacturing. Tesla's Cybercab manufacturing posting shows such work can support an autonomous vehicle product launch, but the work remains manufacturing-process work; none of the current eight D166 areas is manufacturing.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "automation engineer",
+        "legacy_isco_code": "2141",
+        "legacy_aliases": "engineer in automation  ·  electric vehicles automation engineer  ·  automated systems engineer  ·  manufacturing engineer in automation  ·  mining automation engineer",
+        "current_role_name_match": false,
+        "disposition": "conditional_retain_candidate_for_D166",
+        "decision": "Retain only when the assigned work designs road-vehicle ADS/AV systems. O*NET directly includes this reported title under Robotics Engineers and lists autonomous-vehicle design, automatic vehicle control, advanced sensing, sensor-data processing, computer vision and robotic-system integration. Candidate area routes: sensing/calibration, perception, automated-driving planning (only path-planning work), vehicle control/dynamics, and vehicle interface/system integration as the specific task warrants; no blanket route to all areas.",
+        "source_key": "D166_AUTONOMY_ROBOTICS",
+        "source_urls": [
+          "https://www.onetonline.org/link/details/17-2199.08"
+        ],
+        "source_finding": "O*NET 17-2199.08 lists Automation Engineer and Autonomous Vehicle Design Engineer among reported titles. Its task list explicitly includes interpreting sensor signals, designing automatic vehicle control/autonomous-vehicle systems and advanced sensing/computer vision, integrating robotics and evaluating prototypes. This establishes a conditional D166 role fit when the person's assignment is the road-vehicle ADS stack.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "production engineer",
+        "legacy_isco_code": "2141",
+        "legacy_aliases": "downstream production engineer  ·  production engineering adviser  ·  planning and production support manager  ·  agricultural production engineer  ·  production engineering consultant",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D166",
+        "decision": "Production engineering and manufacturing support do not fit the current D166 areas.",
+        "source_key": "D166_INDUSTRIAL",
+        "source_urls": [
+          "https://www.onetonline.org/link/summary/17-2112.00",
+          "https://www.onetonline.org/link/summary/17-2112.03"
+        ],
+        "source_finding": "O*NET describes industrial/manufacturing engineering as production systems, process improvement, quality, tooling, costs, layout and manufacturing. Tesla's Cybercab manufacturing posting shows such work can support an autonomous vehicle product launch, but the work remains manufacturing-process work; none of the current eight D166 areas is manufacturing.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "aerospace engineer",
+        "legacy_isco_code": "2144",
+        "legacy_aliases": "aerospace design engineer  ·  aerostructures engineer  ·  missile designer  ·  missile design specialist  ·  aerospace engineering expert",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D166",
+        "decision": "Uncrewed aerospace autonomy is not road-vehicle self-driving. D166's current area taxonomy is road-vehicle ADS and provides no aerospace area.",
+        "source_key": "D166_AEROSPACE",
+        "source_urls": [
+          "https://www.onetonline.org/link/summary/17-2011.00"
+        ],
+        "source_finding": "O*NET 17-2011.00 describes aircraft, missiles and spacecraft engineering. Its autonomous-systems task explicitly concerns uncrewed aerospace vehicles; it does not establish a road self-driving route.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "engine designer",
+        "legacy_isco_code": "2144",
+        "legacy_aliases": "engine tool production designer  ·  engine design technician  ·  engine design engineer  ·  engine development engineer  ·  engine design technologist",
+        "current_role_name_match": false,
+        "disposition": "exclude_as_standalone; covered only by conditional powertrain-systems route",
+        "decision": "Engine design alone is vehicle/powertrain engineering. Retain in D166 only when the assignment develops/integrates autonomous-vehicle powertrain controls or interfaces; the current Powertrain Engineer role is the closer canonical role. Do not turn generic engine design into an ADS route.",
+        "source_key": "D166_POWERTRAIN",
+        "source_urls": [
+          "https://jobsearch.daimlertruck.com/index.php?ac=jobad&id=425236",
+          "https://nvidia.wd5.myworkdayjobs.com/NvidiaExternalCareerSite/job/US-CA-Santa-Clara/Senior-Software-Control-Integration-Engineer---Autonomous-Vehicles_JR2025121"
+        ],
+        "source_finding": "Daimler Truck's Autonomous Powertrain System Engineer posting covers powertrain requirements, ECU/software/hardware integration, validation, release readiness and autonomous vehicle programs. NVIDIA's AV control-integration posting connects vehicle dynamics/control and actuation. The source-backed D166 role is an autonomous powertrain systems/integration assignment; the generic Engine Designer title is not equivalent and should not be a separate route unless that condition is met. Current Powertrain Engineer is the closer canonical role family.",
+        "current_canonical_route_added": false
+      },
+      {
+        "legacy_role_title": "surface engineer",
+        "legacy_isco_code": "2141",
+        "legacy_aliases": "surface engineering adviser  ·  corrosion engineer  ·  surface engineers  ·  surface technology engineering consultant  ·  surface engineering technician",
+        "current_role_name_match": false,
+        "disposition": "exclude_from_D166_on_current_evidence",
+        "decision": "Surface engineering/corrosion/material treatment falls under materials engineering but does not fit a current ADS subsystem area based on the role snapshot or sources reviewed.",
+        "source_key": "D166_MATERIALS",
+        "source_urls": [
+          "https://www.onetonline.org/link/summary/17-2131.00"
+        ],
+        "source_finding": "O*NET 17-2131.00 describes materials engineering work such as evaluating materials, developing processing methods, and supervising testing or fabrication. This may include surface/material treatment, but does not establish a road-ADS subsystem task or fit within a current D166 area by itself.",
+        "current_canonical_route_added": false
+      }
+    ]
+  },
+  "new_role_candidates_discovered": [
+    {
+      "role_title": "Sensor Calibration Engineer",
+      "domain_id": "D166",
+      "candidate_areas": [
+        "D166:vehicle-sensing-and-sensor-calibration",
+        "D166:perception-and-scene-understanding",
+        "D166:localization-and-vehicle-state-estimation"
+      ],
+      "route_condition": "Role assignment develops, validates, or maintains calibration for sensors used by road ADS and produces calibrated transforms/error models consumed by the named downstream stack.",
+      "source_urls": [
+        "https://careers.mobileye.com/jobs/sensor-calibration-engineer/3e08463f-6b23-40bb-996c-c61fe1ad5e10",
+        "https://jobs.lever.co/woven-by-toyota/fce9aba6-af37-45c9-9263-503a9c01ef1b",
+        "https://job-boards.greenhouse.io/kodiak/jobs/4297363009"
+      ],
+      "evidence_summary": "Mobileye describes intrinsic/extrinsic and spatiotemporal calibration for cameras, LiDAR, IMU and other sensors, calibration pipelines, error analysis, and outputs used by perception/localization/control. Woven by Toyota describes an AD/ADAS Sensor & Calibration subteam and data validation pipelines. Kodiak describes autonomous-truck calibration linked to localization, mapping, perception, hardware and vehicle-fleet validation.",
+      "disposition": "source_backed_role_candidate_for_canonical_route_review"
+    },
+    {
+      "role_title": "Autonomous Powertrain System Engineer",
+      "domain_id": "D166",
+      "candidate_areas": [
+        "D166:vehicle-control-and-dynamics",
+        "D166:vehicle-interface-and-system-integration"
+      ],
+      "route_condition": "Role assignment owns autonomous/advanced vehicle powertrain requirements, ECU/software/hardware integration, validation, or release readiness.",
+      "source_urls": [
+        "https://jobsearch.daimlertruck.com/index.php?ac=jobad&id=425236"
+      ],
+      "evidence_summary": "Daimler Truck's current posting explicitly names this role and gives autonomous-program powertrain integration, validation, ECU compatibility, system readiness and release tasks.",
+      "disposition": "source_backed_role_candidate_for_canonical_route_review"
+    },
+    {
+      "role_title": "Autonomous Vehicle System Integration Engineer",
+      "domain_id": "D166",
+      "candidate_areas": [
+        "D166:vehicle-interface-and-system-integration",
+        "D166:ads-safety-verification-and-validation"
+      ],
+      "route_condition": "Role assignment integrates road-vehicle ADS hardware/software, sensor networks, control interfaces or fleet test systems, and validates end-to-end system behavior.",
+      "source_urls": [
+        "https://nvidia.wd5.myworkdayjobs.com/en-US/NvidiaExternalCareerSite/job/Korea-Seoul/Vehicle-Integration-Engineer--Autonomous-Vehicle-Test-Fleet_JR2020318",
+        "https://careers.mobileye.com/jobs?department=integration-operation-engineering"
+      ],
+      "evidence_summary": "NVIDIA's Vehicle Integration Engineer posting covers integration of AV subsystems into vehicle E/E architecture, cross-stack debug, test-fleet build/sign-off and component validation. Mobileye lists Autonomous Vehicle System Integrator work in hardware/software bring-up, sensor/computing/network integration and system validation.",
+      "disposition": "source_backed_role_candidate_for_canonical_route_review"
+    }
+  ],
+  "source_registry": [
+    {
+      "url": "https://www.onetonline.org/link/details/13-2011.00",
+      "source_key": "D011_ACCOUNTING",
+      "source_finding": "O*NET 13-2011.00 describes accounting records, statements, reporting standards, reconciliations, audit findings, internal controls and tax compliance. It is a general accounting/audit occupation, not quantitative financial pricing, market-risk modeling, or systematic investment work."
+    },
+    {
+      "url": "https://www.onetonline.org/link/summary/13-2031.00",
+      "source_key": "D011_BUDGET",
+      "source_finding": "O*NET 13-2031.00 covers fiscal allocation, operating budgets, cost analysis, program resources, budget controls and cost-benefit analysis. Cost Analyst is among its reported titles. These tasks concern organizational/program budgets, not the three D011 area boundaries."
+    },
+    {
+      "url": "https://www.onetonline.org/link/summary/13-2082.00",
+      "source_key": "D011_TAX",
+      "source_finding": "O*NET 13-2082.00 explicitly lists Tax Advisor among reported titles and describes tax return preparation, tax law, deductions, tax calculations and client tax planning."
+    },
+    {
+      "url": "https://www.onetonline.org/link/details/11-3031.01",
+      "source_key": "D011_TREASURY_CONTROL",
+      "source_finding": "O*NET 11-3031.01 covers organization-level cash, reserves, budgeting, financial statements, investment of surpluses, accounting controls, procurement, tax and staff supervision. The role is corporate treasury/control rather than quantitative market modeling or financial engineering."
+    },
+    {
+      "url": "https://www.samhsa.gov/grants/grants-management",
+      "source_key": "D011_FUNDRAISING",
+      "source_finding": "SAMHSA defines a Grant Management Officer's work as business management, review/negotiation/award/administration, compliance interpretation and authorizing grant expenditure. O*NET Fundraisers covers donor solicitation and funding proposals. Grant administration is not quantitative finance or financial engineering."
+    },
+    {
+      "url": "https://www.onetonline.org/link/details/13-1131.00",
+      "source_key": "D011_FUNDRAISING",
+      "source_finding": "SAMHSA defines a Grant Management Officer's work as business management, review/negotiation/award/administration, compliance interpretation and authorizing grant expenditure. O*NET Fundraisers covers donor solicitation and funding proposals. Grant administration is not quantitative finance or financial engineering."
+    },
+    {
+      "url": "https://www.onetonline.org/link/custom/13-2099.04",
+      "source_key": "D011_FRAUD",
+      "source_finding": "O*NET 13-2099.04 describes evidence gathering, interviews, reporting and fraud investigation/prevention. Related task records include examining financial data for irregularities and designing fraud-detection tools; this is fraud examination/analytics, not quantitative finance unless a distinct financial-modeling assignment is evidenced."
+    },
+    {
+      "url": "https://www.uscourts.gov/court-programs/bankruptcy/bankruptcy-basics/chapter-11-bankruptcy-basics",
+      "source_key": "D011_BANKRUPTCY",
+      "source_finding": "U.S. Courts describes bankruptcy trustee duties as administering/reorganizing an estate, accounting for property, reviewing claims and court reporting. This is insolvency administration, not an area in D011."
+    },
+    {
+      "url": "https://altotrail.com/en/occupations/dividend-analyst/",
+      "source_key": "D011_DIVIDEND",
+      "source_finding": "The snapshot's aliases include dividend clerk and dividend/coupon analyst. An ESCO-derived profile describes dividend calculation, recordkeeping and payment work, while a current Scotiabank capital-markets posting describes corporate-actions processing, reconciliations, exception queues and payment readiness. Neither supports a D011 quantitative investment route by title alone. A separately documented role that forecasts dividends, values securities and builds a systematic equity strategy could support the systematic-investment area, but it is a different, task-qualified role identity."
+    },
+    {
+      "url": "https://jobs.scotiabank.com/job/Bogota-Analyst-Capital-Markets%2C-Corporate-Actions-%26-Dividend-and-Coupon-Income-Processing-DC/606968017/",
+      "source_key": "D011_DIVIDEND",
+      "source_finding": "The snapshot's aliases include dividend clerk and dividend/coupon analyst. An ESCO-derived profile describes dividend calculation, recordkeeping and payment work, while a current Scotiabank capital-markets posting describes corporate-actions processing, reconciliations, exception queues and payment readiness. Neither supports a D011 quantitative investment route by title alone. A separately documented role that forecasts dividends, values securities and builds a systematic equity strategy could support the systematic-investment area, but it is a different, task-qualified role identity."
+    },
+    {
+      "url": "https://www.onetonline.org/link/summary/17-2112.00",
+      "source_key": "D166_INDUSTRIAL",
+      "source_finding": "O*NET describes industrial/manufacturing engineering as production systems, process improvement, quality, tooling, costs, layout and manufacturing. Tesla's Cybercab manufacturing posting shows such work can support an autonomous vehicle product launch, but the work remains manufacturing-process work; none of the current eight D166 areas is manufacturing."
+    },
+    {
+      "url": "https://www.onetonline.org/link/summary/17-2112.03",
+      "source_key": "D166_INDUSTRIAL",
+      "source_finding": "O*NET describes industrial/manufacturing engineering as production systems, process improvement, quality, tooling, costs, layout and manufacturing. Tesla's Cybercab manufacturing posting shows such work can support an autonomous vehicle product launch, but the work remains manufacturing-process work; none of the current eight D166 areas is manufacturing."
+    },
+    {
+      "url": "https://www.onetonline.org/link/summary/17-2141.00",
+      "source_key": "D166_MECHANICAL",
+      "source_finding": "O*NET describes broad mechanical/automotive design, operation and maintenance; ESCO places several snapshot titles (including equipment, fluid-power, HVAC, engine, precision, rotating-equipment, tooling and welding specialisms) under the broad Mechanical Engineer concept. These classifications establish mechanical-engineering identity, not an ADS-area route. Require a specific road-ADS subsystem task before routing."
+    },
+    {
+      "url": "https://www.onetonline.org/link/details/17-2141.02",
+      "source_key": "D166_AERODYNAMICS",
+      "source_finding": "O*NET 17-2141.02 includes aerodynamics among automotive systems an Automotive Engineer may design or analyze. NVIDIA's AV control-integration posting links vehicle dynamics to trajectory tracking, control tuning and integration. This supports aerodynamics only when the work models road-vehicle behavior for an ADS control/dynamics assignment; generic aerodynamic work and aerospace aerodynamics do not establish D166 fit."
+    },
+    {
+      "url": "https://esco.ec.europa.eu/en/classification/occupation?uri=http%3A%2F%2Fdata.europa.eu%2Fesco%2Foccupation%2F579254cf-6d69-4889-9000-9c79dc568644",
+      "source_key": "D166_MECHANICAL",
+      "source_finding": "O*NET describes broad mechanical/automotive design, operation and maintenance; ESCO places several snapshot titles (including equipment, fluid-power, HVAC, engine, precision, rotating-equipment, tooling and welding specialisms) under the broad Mechanical Engineer concept. These classifications establish mechanical-engineering identity, not an ADS-area route. Require a specific road-ADS subsystem task before routing."
+    },
+    {
+      "url": "https://www.onetonline.org/link/custom/19-1012.00",
+      "source_key": "D166_FOOD",
+      "source_finding": "O*NET 19-1012.00 lists Food Engineer as a reported title and describes food processing, preservation, packaging, storage and distribution. This work is in the food production context, not road-vehicle ADS."
+    },
+    {
+      "url": "https://www.onetonline.org/link/details/49-3023.00",
+      "source_key": "D166_MAINTENANCE",
+      "source_finding": "O*NET 49-3023.00 describes routine automotive diagnosis, repair, adjustment and maintenance. It does not describe ADS engineering, validation, calibration or integration. Fleet-maintenance work would need a separately evidenced ADS subsystem assignment and a matching area."
+    },
+    {
+      "url": "https://www.onetonline.org/link/summary/11-3051.00",
+      "source_key": "D166_PACKAGING",
+      "source_finding": "O*NET 11-3051.00 describes Industrial Production Managers as coordinating production activities, product standards, work procedures, inventory, staffing and manufacturing systems. This supports a manufacturing role, not an ADS function in the current eight areas."
+    },
+    {
+      "url": "https://nvidia.wd5.myworkdayjobs.com/NvidiaExternalCareerSite/job/US-CA-Santa-Clara/Senior-Software-Control-Integration-Engineer---Autonomous-Vehicles_JR2025121",
+      "source_key": "D166_POWERTRAIN",
+      "source_finding": "Daimler Truck's Autonomous Powertrain System Engineer posting covers powertrain requirements, ECU/software/hardware integration, validation, release readiness and autonomous vehicle programs. NVIDIA's AV control-integration posting connects vehicle dynamics/control and actuation. The source-backed D166 role is an autonomous powertrain systems/integration assignment; the generic Engine Designer title is not equivalent and should not be a separate route unless that condition is met. Current Powertrain Engineer is the closer canonical role family."
+    },
+    {
+      "url": "https://www.onetonline.org/link/details/17-2199.08",
+      "source_key": "D166_AUTONOMY_ROBOTICS",
+      "source_finding": "O*NET 17-2199.08 lists Automation Engineer and Autonomous Vehicle Design Engineer among reported titles. Its task list explicitly includes interpreting sensor signals, designing automatic vehicle control/autonomous-vehicle systems and advanced sensing/computer vision, integrating robotics and evaluating prototypes. This establishes a conditional D166 role fit when the person's assignment is the road-vehicle ADS stack."
+    },
+    {
+      "url": "https://www.onetonline.org/link/summary/17-2011.00",
+      "source_key": "D166_AEROSPACE",
+      "source_finding": "O*NET 17-2011.00 describes aircraft, missiles and spacecraft engineering. Its autonomous-systems task explicitly concerns uncrewed aerospace vehicles; it does not establish a road self-driving route."
+    },
+    {
+      "url": "https://jobsearch.daimlertruck.com/index.php?ac=jobad&id=425236",
+      "source_key": "D166_POWERTRAIN",
+      "source_finding": "Daimler Truck's Autonomous Powertrain System Engineer posting covers powertrain requirements, ECU/software/hardware integration, validation, release readiness and autonomous vehicle programs. NVIDIA's AV control-integration posting connects vehicle dynamics/control and actuation. The source-backed D166 role is an autonomous powertrain systems/integration assignment; the generic Engine Designer title is not equivalent and should not be a separate route unless that condition is met. Current Powertrain Engineer is the closer canonical role family."
+    },
+    {
+      "url": "https://www.onetonline.org/link/summary/17-2131.00",
+      "source_key": "D166_MATERIALS",
+      "source_finding": "O*NET 17-2131.00 describes materials engineering work such as evaluating materials, developing processing methods, and supervising testing or fabrication. This may include surface/material treatment, but does not establish a road-ADS subsystem task or fit within a current D166 area by itself."
+    }
+  ],
+  "validation": {
+    "all_unmatched_legacy_titles_have_dispositions": true,
+    "unmatched_legacy_titles_total": 34,
+    "no_unmatched_title_added_to_canonical_routes": true,
+    "conditional_role_candidate_is_task_gated": true,
+    "all_new_candidates_have_sources": true,
+    "no_food_or_packaging_roles_in_current_D011_or_D166_canonical_library": true,
+    "current_D011_D166_food_packaging_role_name_matches": {
+      "D011": [],
+      "D166": []
+    }
+  }
+}

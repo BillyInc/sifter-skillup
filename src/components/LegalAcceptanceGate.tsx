@@ -32,7 +32,8 @@ export default function LegalAcceptanceGate() {
     }
     setTermsRead(false);
     setPrivacyRead(false);
-    setAnalytics(Boolean(user?.settings?.legalAcceptance?.analyticsConsent));
+    setAnalytics(isCurrentLegalAcceptance(user?.settings?.legalAcceptance)
+      && user?.settings?.legalAcceptance?.analyticsConsent === true);
     setVisible(!isCurrentLegalAcceptance(user?.settings?.legalAcceptance));
   }, [user?.auth_provider, user?.id, user?.settings]);
 
@@ -117,14 +118,14 @@ export default function LegalAcceptanceGate() {
               <Text style={[styles.copy, { color: colors.textRole.secondary }, CompassFonts.body]}>I have read and agree to the current Terms and Privacy Policy.</Text>
             </Pressable>
             {checked ? (
-              <View>
+              <View style={{ gap: Spacing.xs }}>
               <Pressable onPress={() => setAnalytics((value) => !value)} style={styles.checkRow} accessibilityRole="checkbox" accessibilityState={{ checked: analytics }}>
               <View style={[styles.checkbox, { borderColor: analytics ? Brand.primary : colors.borderRole.subtle, backgroundColor: analytics ? Brand.primary : "transparent" }]}>
                 {analytics ? <Text style={styles.tick}>✓</Text> : null}
                 </View>
-                <Text style={[styles.copy, { color: colors.textRole.secondary }, CompassFonts.body]}>Allow anonymous product analytics (optional).</Text>
-                <Text style={[styles.analyticsHint, { color: colors.textRole.muted }, CompassFonts.body]}>This helps us understand which screens are useful and where people get stuck. It is optional and separate from the required legal agreement.</Text>
+                <Text style={[styles.copy, { color: colors.textRole.secondary }, CompassFonts.body]}>Allow optional aggregate learning-interest analytics.</Text>
               </Pressable>
+              <Text style={[styles.analyticsHint, { color: colors.textRole.muted }, CompassFonts.body]}>We count the programmes, domains, areas, roles, methods, tools and other choices you explicitly add or remove, and keep a private current-choice snapshot while your consent is valid. An account link helps count unique learners and honour withdrawal or deletion; authorised dashboards show aggregate counts, not names or individual histories. Small-group counts may still make a choice inferable. Your saved plan works even if you decline.</Text>
               </View>
             ) : null}
             {error ? <Text style={[styles.copy, { color: colors.accentRole.danger }, CompassFonts.body]}>{error}</Text> : null}

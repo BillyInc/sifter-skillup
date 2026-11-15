@@ -16,15 +16,23 @@ const tool: D078RelationshipItem = { id: "item:coding-tool", label: "Qualitative
 const projected = [current, method, option, tool];
 
 function edge(relationship: string, overrides: Partial<D078TypedRelationshipEdge> = {}): D078TypedRelationshipEdge {
+  const roleAlternative = relationship === "tool_alternative_for_role_task";
+  const alternative = roleAlternative || relationship === "alternative_to" || relationship === "alternative_tool_option";
   return {
     id: `edge:${relationship}`,
     sourceId: current.id,
     targetId: option.id,
     relationship,
-    status: "source_backed",
+    status: alternative ? "resolved_ready_for_use" : "source_backed",
     sourceResolved: true,
     targetResolved: true,
     explanation: "Graph-backed explanation for this connection.",
+    ...(alternative ? {
+      evidenceBasis: roleAlternative ? "source_backed_role_task_tool_alternative" : "source_backed_alternative_relationship",
+      sourceReferences: [{ source_role: roleAlternative ? "role_task_tool_alternative_evidence" : "alternative_relationship_evidence", url: "https://example.org/reviewed" }],
+      alternativeReviewDisposition: "approved" as const,
+      selectable: true,
+    } : {}),
     ...overrides,
   };
 }
@@ -94,6 +102,35 @@ describe("D078 relationship panel", () => {
     expect(screen.getByText("The connected learning is linked as background for this item. The relationship does not block your route.")).toBeTruthy();
   });
 
+  it("shows a reviewed non-blocking prerequisite in both directions and preserves its condition", () => {
+    const prerequisite = edge("prerequisite_for", {
+      sourceId: method.id,
+      targetId: option.id,
+      blockingPolicy: "never",
+      sequencePolicy: "conditional_prerequisite",
+      sequenceApproved: true,
+      condition: "Only when estimating causal effects.",
+    });
+    panel([prerequisite], { currentItem: method, projectedItems: [method, option] });
+    expect(screen.getByText("Review before the connected step when it applies")).toBeTruthy();
+    expect(screen.getByText(/Only when estimating causal effects\. Review this before Surveys/)).toBeTruthy();
+    expect(screen.queryByText("Learn this first")).toBeNull();
+  });
+
+  it("explains an approved workflow edge as recommended and non-blocking", () => {
+    const workflow = edge("builds_on", {
+      sourceId: method.id,
+      targetId: option.id,
+      sequencePolicy: "workflow",
+      sequenceApproved: true,
+      blockingPolicy: "never",
+      condition: "When interpreting a survey dataset.",
+    });
+    panel([workflow], { currentItem: option, projectedItems: [method, option] });
+    expect(screen.getByText("Recommended earlier in this route")).toBeTruthy();
+    expect(screen.getByText(/When interpreting a survey dataset\. review Research design before this one/i)).toBeTruthy();
+  });
+
   it("shows the approved hidden-target explanation without making the target selectable", () => {
     panel([edge("works_with")], { projectedItems: [current] });
     expect(screen.getByText("That item is hidden until you select a method that uses it.")).toBeTruthy();
@@ -137,6 +174,75 @@ describe("D078 relationship panel", () => {
     fireEvent.press(screen.getByRole("button", { name: "Use Surveys" }));
     expect(onUseTarget).toHaveBeenCalledWith(option, relationship);
     await waitFor(() => expect(screen.queryByRole("header", { name: "Compare learning options" })).toBeNull());
+  });
+
+  it("shows a tool-specific NVivo versus Taguette comparison before the learner chooses one", () => {
+    const nvivo: D078RelationshipItem = { id: "area_tool_option:d078-a04-tool-nvivo", label: "NVivo" };
+    const taguette: D078RelationshipItem = { id: "area_tool_option:d078-a04-tool-taguette", label: "Taguette" };
+    const comparison = edge("alternative_tool_option", {
+      sourceId: nvivo.id,
+      targetId: taguette.id,
+      explanation: "Both support qualitative coding, but their workflows differ: Taguette focuses on highlighting and tagging text documents, while NVivo provides a broader set of coding workflows, including manual and automatic coding into thematic nodes. Choose by the material you need to handle, project scale, collaboration needs, access and licensing; neither tool decides what a code means or replaces interpretation.",
+    });
+    const onUseTarget = jest.fn();
+    panel([comparison], { currentItem: nvivo, projectedItems: [nvivo, taguette], onUseTarget });
+    fireEvent.press(screen.getByRole("button", { name: "Compare NVivo with Taguette" }));
+    expect(screen.getAllByText(/Taguette focuses on highlighting and tagging text documents/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/NVivo provides a broader set of coding workflows/).length).toBeGreaterThan(0);
+    fireEvent.press(screen.getByRole("button", { name: "Use Taguette" }));
+    expect(onUseTarget).toHaveBeenCalledWith(taguette, comparison);
+  });
+
+  it("shows an area-scoped tool comparison only in its selected area", () => {
+    const nvivo: D078RelationshipItem = { id: "domain-item:d078-nvivo-tool", label: "NVivo" };
+    const taguette: D078RelationshipItem = { id: "domain-item:d078-qualitative-coding-tool", label: "Taguette" };
+    const comparison = edge("alternative_tool_option", {
+      sourceId: nvivo.id,
+      targetId: taguette.id,
+      areaId: "D078:sociology-social-anthropology",
+      explanation: "Choose by the material, project scale, collaboration needs, access and licensing.",
+    });
+    const view = panel([comparison], {
+      currentItem: nvivo,
+      projectedItems: [nvivo, taguette],
+      activeAreaId: "D078:social-research-evaluation",
+    });
+    expect(screen.queryByRole("button", { name: "Compare NVivo with Taguette" })).toBeNull();
+
+    view.rerender(<ThemeProvider><D078RelationshipPanel
+      currentItem={nvivo}
+      projectedItems={[nvivo, taguette]}
+      typedEdges={[comparison]}
+      onUseTarget={jest.fn()}
+      onOpenTarget={jest.fn()}
+      activeAreaId="D078:sociology-social-anthropology"
+    /></ThemeProvider>);
+    expect(screen.getByRole("button", { name: "Compare NVivo with Taguette" })).toBeTruthy();
+  });
+
+  it("keeps role-task tool alternatives scoped to the selected role and task and removes reciprocal duplicates", () => {
+    const nvivo: D078RelationshipItem = { id: "tool:nvivo", label: "NVivo" };
+    const taguette: D078RelationshipItem = { id: "tool:taguette", label: "Taguette" };
+    const context = { roleAreaIds: ["D078:sociology-social-anthropology"] };
+    const matching = edge("tool_alternative_for_role_task", {
+      sourceId: nvivo.id, targetId: taguette.id, roleId: "role:D078:3:sociologist", roleTaskId: "role-task:d078:sociologist", ...context,
+      explanation: "For this sociologist task, choose the tool whose coding and retrieval workflow fits the material and project.",
+    });
+    const reciprocal = edge("tool_alternative_for_role_task", {
+      sourceId: taguette.id, targetId: nvivo.id, roleId: "role:D078:3:sociologist", roleTaskId: "role-task:d078:sociologist", ...context,
+    });
+    const otherRole = edge("tool_alternative_for_role_task", {
+      sourceId: nvivo.id, targetId: taguette.id, roleId: "role:D078:19:anthropologist", roleTaskId: "role-task:d078:anthropologist", ...context,
+    });
+    panel([matching, reciprocal, otherRole], {
+      currentItem: nvivo,
+      projectedItems: [nvivo, taguette],
+      activeRoleId: "role:D078:3:sociologist",
+      activeRoleTaskId: "role-task:d078:sociologist",
+      activeAreaId: "D078:sociology-social-anthropology",
+    });
+    expect(screen.getAllByRole("button", { name: "Compare NVivo with Taguette" })).toHaveLength(1);
+    expect(screen.getByText(/For this sociologist task/)).toBeTruthy();
   });
 
   it("Close returns accessibility focus to the comparison trigger", async () => {

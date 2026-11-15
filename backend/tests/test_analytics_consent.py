@@ -8,7 +8,10 @@ from services import offline_sync
 def test_analytics_is_opt_in_only():
     assert not _analytics_consented({})
     assert not _analytics_consented({"settings": {"legalAcceptance": {"analyticsConsent": False}}})
-    assert _analytics_consented({"settings": {"legalAcceptance": {"analyticsConsent": True}}})
+    assert not _analytics_consented({"settings": {"legalAcceptance": {"analyticsConsent": True}}})
+    assert _analytics_consented({"settings": {"legalAcceptance": {
+        "termsVersion": "2026-10-29.1", "privacyVersion": "2026-10-29.1", "analyticsConsent": True,
+    }}})
 
 
 def test_queued_analytics_is_dropped_for_opted_out_user(monkeypatch):

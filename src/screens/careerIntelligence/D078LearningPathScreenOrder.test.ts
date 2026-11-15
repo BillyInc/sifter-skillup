@@ -18,33 +18,42 @@ describe("D078 layer presentation order", () => {
     assertInOrder("DomainDetailScreen.tsx", [
       "Understand {domain.name} before choosing an area",
       "Why your Sociology programme connects to this field",
-      "Compulsory domain foundations for ${domain.name}",
-      "Optional useful edges",
+      "Your shared starting point",
+      'title="Foundations for this field"',
+      "<GuidanceContinuation",
+      "Build further across the field",
       "Choose a focused area",
+    ]);
+    assertInOrder("../../components/careerIntelligence/GuidanceContinuation.tsx", [
+      "Compulsory domain foundations",
+      "Optional useful edges",
     ]);
     assertInOrder("D078MethodAwareJourney.tsx", [
       "const FIELD_TITLE = \"Social Sciences & Behavioural Research\"",
       "Why your Sociology studies connect",
-      'ItemLane title="Already on your route"',
+      'ItemLane title="Compulsory foundations"',
+      'ItemLane title="Knowledge of society and the social world"',
       "<MethodChoicePanel",
-      "For the methods you selected",
+      "Your selected method route",
+      'ItemLane title="Use when this condition applies"',
       "<D078AreaResults projection={projection}",
     ]);
   });
 
   it("shows the selected area before inherited domain context, area additions and roles", () => {
     assertInOrder("SubgroupDetailScreen.tsx", [
-      'level="area"',
       '<ProgrammeOutcomeBridge connection={studentConnection} nextLayer="area"',
       'What carries forward from ${domain?.name ?? "the field"}',
+      'title="Compulsory domain foundations carried forward"',
       "What this area adds",
+      'title="Area learning sequence"',
       "Roles inside this area",
     ]);
     assertInOrder("D078MethodAwareJourney.tsx", [
       '<D078JourneyPage stage="area"',
-      'Shown because you selected ${supports.join(" and ")}',
-      'ItemLane title="Needed for what you selected" ids={needed}',
-      'ItemLane title="Useful. You can skip it" ids={useful}',
+      'Shown because you selected ${supports.join(" and ")}.',
+      "{orderedAreaLaneKeys.map((key) =>",
+      "<ItemLane key={key} title={lane.title}",
       "Roles in this area for your selected methods",
     ]);
   });
@@ -64,8 +73,9 @@ describe("D078 layer presentation order", () => {
     assertInOrder("D078MethodAwareJourney.tsx", [
       '<D078JourneyPage stage="role"',
       "Available with the method you selected. This does not make the method a requirement of the role.",
-      "How your learning may apply in this role",
-      "Specific to the method you selected",
+      "Work contexts connected to this role",
+      "Learning linked to this role task",
+      "Other useful and conditional learning for this role task",
       "</D078JourneyPage>",
     ]);
   });

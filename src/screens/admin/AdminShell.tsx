@@ -92,11 +92,13 @@ interface AdminNavItem {
 function navGroupsFor(
   audience: AdminAudience,
   profile: EducatorProfile | null,
+  isInternalStaff: boolean,
 ): { title: string; items: AdminNavItem[] }[] {
   return getAdminNavGroups({
     organizationType: profile?.organizationType,
     providerSessionOnly: profile?.providerSessionOnly,
     role: profile?.role,
+    isInternalStaff,
   }) as { title: string; items: AdminNavItem[] }[];
 }
 
@@ -130,7 +132,7 @@ export function AdminShell({
   const wide = Platform.OS === "web" && width >= WIDE_BREAKPOINT;
   const [drawerOpen, setDrawerOpen] = useState(false);
   const audience = adminAudienceForProfile(profile);
-  const navGroups = navGroupsFor(audience, profile);
+  const navGroups = navGroupsFor(audience, profile, user?.is_internal_staff === true);
   // Universities land on the dashboard; advisory organisations land on
   // Explore (adminHomeForProfile). This drives whether the Back button shows.
   //

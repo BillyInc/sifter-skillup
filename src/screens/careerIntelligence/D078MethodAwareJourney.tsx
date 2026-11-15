@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import { AccessibilityInfo, Animated, Easing, findNodeHandle, Modal, Platform, Pressable, StyleSheet, Text, View, useWindowDimensions, type ViewStyle } from "react-native";
+import { AccessibilityInfo, Animated, Easing, findNodeHandle, LayoutAnimation, Platform, StyleSheet, Text, TouchableOpacity, View, useWindowDimensions, type ViewStyle } from "react-native";
 import { useRouter } from "expo-router";
+import { Feather } from "@expo/vector-icons";
 import { CompassFonts, Radius, Spacing, useTheme } from "@/theme";
 import { useReducedMotion } from "@/theme/motion";
 import { MethodChoicePanel } from "@/components/careerIntelligence/MethodChoicePanel";
@@ -8,18 +9,19 @@ import { RouteButton } from "@/components/careerIntelligence/RouteButton";
 import { ExternalLinkGuard } from "@/components/careerIntelligence/ExternalLinkGuard";
 import { GuidedLearningTray, type D078TrayChoice, type D078TrayContext, type GuidedLearningTrayMode } from "@/components/careerIntelligence/GuidedLearningTray";
 import { careerData, type GuidanceReportPath } from "@/lib/careerData";
+import { recordLearningInterest } from "@/lib/learningInterest";
 import { provisioningData, openStudentDocument, shareTextSummary } from "@/lib/provisioningData";
 import { buildLearningPlanStackSet } from "@/lib/guidedLearningPlan";
 import type { GuidanceRouteContext } from "@/lib/guidanceRouteContext";
 import { guidanceContextQuery } from "@/lib/guidanceRouteContext";
 import { useExploreNav } from "@/lib/exploreNav";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import type { DomainRoleSummary } from "@/types/career";
 import type { ProgrammeDomainConnection } from "@/types/career";
 import type { CareerLearningResource, DataState } from "@/types/career";
 import { CompactResourceRow } from "@/components/careerIntelligence/CompactResourceRow";
 import { D078RelationshipPanel } from "@/components/careerIntelligence/D078RelationshipPanel";
 import { resourcesForItem } from "@/components/careerIntelligence/resourceLinks";
+import { studentFacingCopy } from "@/lib/studentExplanation";
 import { d078RouteStacksFromSnapshot, d078SelectionFromSnapshot } from "@/lib/d078Snapshot";
 import {
   createD078SeparateRoute,
@@ -35,13 +37,18 @@ import {
 import { useDetailScroll, useDetailViewportOverlay } from "@/components/careerIntelligence/DetailScrollContext";
 import { usePersistentLearningPlanDock } from "@/components/careerIntelligence/PersistentLearningPlanDock";
 import {
+  D078_SOCIETY_KNOWLEDGE_ITEM_ID,
   INITIAL_D078_SELECTION,
   d078ApplicableLayerItems,
   d078GraphDataForTests,
   d078Node,
   d078TypedRelationshipEdges,
+  isD078SelectableAlternativeEdge,
+  orderD078ItemsByReviewedSequence,
   projectD078Route,
+  selectedD078ItemsForTray,
   selectD078Area,
+  toggleD078TaskFamily,
   toggleD078AddedItem,
   toggleD078Combination,
   toggleD078ComponentMethod,
@@ -77,6 +84,37 @@ function focusItemTitle(title: Text | null) {
   }
   const tag = findNodeHandle(title);
   if (tag != null) void AccessibilityInfo.setAccessibilityFocus(tag);
+}
+
+function configureD078SelectionTransition(reducedMotion: boolean) {
+  if (reducedMotion) return;
+  LayoutAnimation.configureNext({
+    duration: 180,
+    create: { type: "easeInEaseOut", property: "opacity" },
+    update: { type: "easeInEaseOut" },
+    delete: { type: "easeInEaseOut", property: "opacity" },
+  });
+}
+
+function announceD078FocusChange(
+  current: D078Selection,
+  next: D078Selection,
+  stage: "domain" | "area" | "role",
+  areaId?: string,
+) {
+  const beforeFamilies = current.taskFamilyIdsByArea?.[areaId ?? ""] ?? [];
+  const nextFamilies = next.taskFamilyIdsByArea?.[areaId ?? ""] ?? [];
+  if (beforeFamilies.join("|") !== nextFamilies.join("|")) {
+    const labels = nextFamilies.map((id) => d078Node(id)?.label).filter((label): label is string => Boolean(label));
+    AccessibilityInfo.announceForAccessibility(labels.length
+      ? `Work focus updated to ${labels.join(", ")}. Showing linked learning and task context.`
+      : "Work focus cleared. Showing the full area route again.");
+    return;
+  }
+  if ([...current.addedItemIds].sort().join("|") !== [...next.addedItemIds].sort().join("|")) {
+    const stageLabel = stage === "domain" ? "field" : stage === "area" ? "area" : "role";
+    AccessibilityInfo.announceForAccessibility(`${titleCase(stageLabel)} learning choices updated. Selected items remain available; related choices are shown.`);
+  }
 }
 
 function useD078StageEntry(direction: "vertical" | "horizontal", focusHeading = true) {
@@ -207,7 +245,10 @@ export function D078JourneyPage({ stage, tray, trayRevision, children }: { stage
       // Keep the same activation identity as the learner moves from field to
       // area to role. Dismissing the tray must remain effective across those
       // screens; a changed route selection (trayRevision) can reopen it.
+      // The page overlay must stay empty so a second, larger tray cannot sit
+      // behind the bottom-right dock.
       persistentDock.register(renderViewportDock, `${trayRevision ?? "initial"}`);
+      viewportOverlay?.setOverlay(null);
       return;
     }
     if (viewportOverlay) {
@@ -269,16 +310,89 @@ export function shouldUseD078ViewportTrayDock(width: number, platform: string, h
   return hasViewportOverlay;
 }
 
-function displayText(value: unknown): string {
+function displayText(value: unknown, previouslyExplained?: Set<string>): string {
+  return typeof value === "string"
+    ? studentFacingCopy(value.replace(/D078/g, "this field").replace(/\bESCO\b/g, "occupation classification").trim(), previouslyExplained)
+    : "";
+}
+
+function D078DomainOverviewStep({
+  destinationLabel,
+  continueLabel,
+  onContinue,
+  onBack,
+}: {
+  destinationLabel: string;
+  continueLabel: string;
+  onContinue: () => void;
+  onBack: () => void;
+}) {
+  const { colors } = useTheme();
+  const overviewNode = d078Node("domain:D078");
+  const orientation = overviewNode?.student_orientation as {
+    whatItStudies?: string;
+    whatPeopleDo?: string;
+    questions?: string[];
+    howWorkHappens?: string[];
+    outputs?: string[];
+  } | undefined;
+  const terms = new Set<string>();
+  const transition = graph.programme_transition as Record<string, unknown>;
+  const overview = displayText(transition.domain_overview ?? overviewNode?.overview, terms);
+
+  return <Animated.View style={styles.page}>
+    <RouteButton label="Back to Social Sciences domain" onPress={onBack} variant="secondary" style={styles.hugSecondaryAction} />
+    <View style={[styles.hero, styles.fieldOverviewCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
+      <Text accessibilityRole="header" style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Start with the Social Sciences field</Text>
+      <Text style={[styles.summary, { color: colors.textRole.secondary }]}>Before opening {destinationLabel}, read this overview of the questions and work that connect the field.</Text>
+      {overview ? <Text style={[styles.body, { color: colors.textRole.secondary }]}>{overview}</Text> : null}
+      {orientation?.whatItStudies ? <View style={styles.detailSection}>
+        <Text accessibilityRole="header" style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What the field studies</Text>
+        <Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(orientation.whatItStudies, terms)}</Text>
+      </View> : null}
+      {orientation?.whatPeopleDo ? <View style={styles.detailSection}>
+        <Text accessibilityRole="header" style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>How researchers investigate social questions</Text>
+        <Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(orientation.whatPeopleDo, terms)}</Text>
+      </View> : null}
+      {orientation?.howWorkHappens?.length ? <View style={styles.detailSection}>
+        <Text accessibilityRole="header" style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>How a study usually proceeds</Text>
+        {orientation.howWorkHappens.map((step, index) => <Text key={`overview-step-${index}`} style={[styles.body, { color: colors.textRole.secondary }]}>{index + 1}. {displayText(step, terms)}</Text>)}
+      </View> : null}
+      {orientation?.outputs?.length ? <View style={styles.detailSection}>
+        <Text accessibilityRole="header" style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What a study may produce</Text>
+        {orientation.outputs.map((output, index) => <Text key={`overview-output-${index}`} style={[styles.body, { color: colors.textRole.secondary }]}>• {displayText(output, terms)}</Text>)}
+      </View> : null}
+      {orientation?.questions?.length ? <View style={styles.detailSection}>
+        <Text accessibilityRole="header" style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Questions people investigate</Text>
+        {orientation.questions.map((question, index) => <Text key={`overview-question-${index}`} style={[styles.body, { color: colors.textRole.secondary }]}>• {displayText(question, terms)}</Text>)}
+      </View> : null}
+      <RouteButton label={continueLabel} onPress={onContinue} variant="primary" style={styles.hugSecondaryAction} />
+    </View>
+  </Animated.View>;
+}
+
+/** Keep card headings short. The visible explanation below them owns first use. */
+function displayLabel(value: unknown): string {
   return typeof value === "string"
     ? value.replace(/D078/g, "this field").replace(/\bESCO\b/g, "occupation classification").trim()
     : "";
 }
 
+function alternativeAndBoundaryNotes(node: ReturnType<typeof d078Node>, previouslyExplained?: Set<string>): string[] {
+  const raw = node?.valid_alternatives;
+  const entries = Array.isArray(raw) ? raw : typeof raw === "string" ? [raw] : [];
+  return entries.map((entry) => {
+    if (typeof entry === "string") return displayText(entry, previouslyExplained);
+    if (!entry || typeof entry !== "object") return "";
+    const record = entry as Record<string, unknown>;
+    return displayText(record.explanation ?? record.description ?? record.alternative ?? record.text ?? record.label, previouslyExplained);
+  }).filter(Boolean);
+}
+
 function itemKind(node: ReturnType<typeof d078Node>): string {
   if (!node) return "Learning item";
   const raw = String(node.item_type ?? node.kind ?? "").toLowerCase();
-  if (raw.includes("tool")) return "Tool";
+  if (raw.includes("tool") || ["programming_language", "python_library", "computational_environment"].includes(raw)) return "Tool";
   if (raw.includes("method")) return "Method";
   if (raw.includes("knowledge")) return "Knowledge";
   if (raw.includes("competenc")) return "Competency";
@@ -295,6 +409,14 @@ function requirementLane(node: ReturnType<typeof d078Node>): "needed" | "useful"
   return "useful";
 }
 
+/**
+ * Use reviewed graph sequence edges where both endpoints are present; leave
+ * unconstrained choices in their stable route order.
+ */
+function stableD078ItemOrder(ids: string[]): string[] {
+  return orderD078ItemsByReviewedSequence(ids);
+}
+
 function laneLabel(lane: "needed" | "useful" | "optional" | "conditional", condition?: string, methodSelected = true): string {
   if (lane === "needed") return !methodSelected && condition ? `Needed only when: ${displayText(condition)}` : "Needed for what you selected";
   if (lane === "optional") return "Optional. Open it if this question fits";
@@ -302,7 +424,7 @@ function laneLabel(lane: "needed" | "useful" | "optional" | "conditional", condi
   return "Useful. You can skip it";
 }
 
-export function ItemCard({ id, selection, onToggle, foundation = false, stepIndex, roleItem = false, resources, contextLevel }: {
+export function ItemCard({ id, selection, onToggle, foundation = false, stepIndex, roleItem = false, resources, contextLevel, roleRouteTaskId }: {
   id: string;
   selection: D078Selection;
   onToggle?: (id: string) => void;
@@ -311,6 +433,7 @@ export function ItemCard({ id, selection, onToggle, foundation = false, stepInde
   roleItem?: boolean;
   resources?: CareerLearningResource[];
   contextLevel: "domain" | "subgroup" | "role";
+  roleRouteTaskId?: string;
 }) {
   const { colors } = useTheme();
   const relationshipNavigation = useD078RelationshipNavigation();
@@ -333,8 +456,13 @@ export function ItemCard({ id, selection, onToggle, foundation = false, stepInde
       ? routeProjection.toolIds
       : routeProjection.toolIds.filter((itemId) => itemId.startsWith("domain-item:") || itemId.startsWith("domain-method:"))),
     ...(contextLevel !== "domain" && selection.areaId ? routeProjection.areaItemIdsByArea[selection.areaId] ?? [] : []),
+    ...(contextLevel !== "domain" && selection.areaId ? routeProjection.toolIdsByArea[selection.areaId] ?? [] : []),
+    ...(contextLevel !== "domain" && selection.areaId
+      ? routeProjection.visibleAreas.find((area) => area.areaId === selection.areaId)?.areaFoundationIds ?? []
+      : []),
     ...(contextLevel === "role" ? routeProjection.roleItemIds : []),
     ...(contextLevel === "role" ? routeProjection.methodSpecificRoleItemIds : []),
+    ...(contextLevel === "role" ? routeProjection.roleToolIds : []),
   ]);
   const projectedRelationshipItems = [...projectedIds].flatMap((itemId) => {
     const item = d078Node(itemId);
@@ -354,17 +482,29 @@ export function ItemCard({ id, selection, onToggle, foundation = false, stepInde
     : undefined;
   const hasMethodChoice = selection.methodIds.length + selection.combinationIds.length
     + Object.values(selection.componentMethodIds).reduce((count, values) => count + values.length, 0) > 0;
-  const meaning = displayText(node.meaning ?? node.plain_language_meaning ?? node.meaning_in_domain);
+  const itemLabel = displayLabel(node.label);
+  // The label is a heading, not an explanation. Start glossary handling in the
+  // visible meaning so a clipped title cannot consume or hide the definition.
+  const explainedTerms = new Set<string>();
+  const meaning = displayText(node.meaning ?? node.plain_language_meaning ?? node.meaning_in_domain ?? node.description, explainedTerms);
+  const approaches = displayText(node.what_it_is, explainedTerms);
+  const distinctApproaches = approaches.replace(/\s+/g, " ").trim().toLocaleLowerCase()
+    !== meaning.replace(/\s+/g, " ").trim().toLocaleLowerCase();
   const details = [
     ["What it is", meaning],
-    ["Why it matters in this field", displayText(node.why_it_matters ?? node.field_context ?? node.meaning_in_domain)],
-    ["How you might use it", displayText(node.contextual_use ?? node.how_used ?? node.use_case)],
-    ["What you might produce", displayText(node.learner_output)],
+    ["Examples and approaches", distinctApproaches ? approaches : ""],
+    ["Why it matters in this field", displayText(node.why_it_matters ?? node.field_context ?? node.meaning_in_domain, explainedTerms)],
+    ["How you might use it", displayText(node.contextual_use ?? node.how_used ?? node.use_case, explainedTerms)],
+    ["What you might produce", displayText(node.learner_output, explainedTerms)],
   ].filter((entry) => Boolean(entry[1]));
-  const limitations = Array.isArray(node.limitations) ? node.limitations.map(displayText).filter(Boolean) : [];
+  const limitations = Array.isArray(node.limitations) ? node.limitations.map((line) => displayText(line, explainedTerms)).filter(Boolean) : [];
+  const alternativeNotes = alternativeAndBoundaryNotes(node, explainedTerms);
   const rawItemType = String(node.item_type ?? "resource");
   const itemTypes: import("@/types/career").CareerContextItem["itemType"][] = ["skill", "competency", "tool", "certification", "method", "knowledge", "resource"];
-  const itemType = itemTypes.includes(rawItemType as typeof itemTypes[number]) ? rawItemType as typeof itemTypes[number] : "resource";
+  const normalizedItemType = ["programming_language", "python_library", "computational_environment"].includes(rawItemType)
+    ? "tool"
+    : rawItemType;
+  const itemType = itemTypes.includes(normalizedItemType as typeof itemTypes[number]) ? normalizedItemType as typeof itemTypes[number] : "resource";
   const allowedOwners: CareerLearningResource["ownershipScope"][] = contextLevel === "domain"
     ? ["domain"]
     : contextLevel === "subgroup" ? ["domain", "subgroup"] : ["domain", "subgroup", "role"];
@@ -386,14 +526,14 @@ export function ItemCard({ id, selection, onToggle, foundation = false, stepInde
         accessibilityRole="header"
         numberOfLines={2}
         style={[styles.itemTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}
-      >{roleItem ? titleCase(node.label) : node.label}</Text>
+      >{roleItem ? titleCase(itemLabel) : itemLabel}</Text>
       {stepIndex ? <Text style={[styles.meta, { color: colors.textRole.muted }]}>{`Step ${stepIndex} of 3`}</Text> : null}
       <Text style={[styles.lane, { color: lane === "needed" ? colors.accentRole.action : colors.textRole.muted }]}>{foundation ? "Compulsory foundation" : laneLabel(lane, scope?.condition, hasMethodChoice)}</Text>
       {!foundation && hasMethodChoice && projectedIds.has(id) ? <Text style={[styles.meta, { color: colors.accentRole.action }]}>Connected to the method or design you selected</Text> : null}
-      {meaning ? <Text numberOfLines={2} style={[styles.summary, { color: colors.textRole.secondary }]}>{meaning}</Text> : null}
+      {meaning ? <Text style={[styles.summary, { color: colors.textRole.secondary }]}>{meaning}</Text> : null}
       <View style={styles.actions}>
-        <RouteButton label={isExpanded ? "Hide" : "See more"} accessibilityLabel={`${isExpanded ? "Hide details for" : "See more about"} ${node.label}`} variant="secondary" onPress={() => setExpanded((value) => !value)} />
-        {!foundation && onToggle ? <RouteButton label={added ? "Added" : "Add this"} accessibilityLabel={`${added ? "Remove" : "Add"} ${node.label} ${added ? "from" : "to"} your learning`} variant={added ? "selected" : "quiet"} onPress={() => onToggle(id)} /> : null}
+        <RouteButton label={isExpanded ? "Hide" : "See more"} accessibilityLabel={`${isExpanded ? "Hide details for" : "See more about"} ${itemLabel}`} variant="secondary" onPress={() => setExpanded((value) => !value)} />
+        {!foundation && onToggle ? <RouteButton label={added ? "Added" : "Add this"} accessibilityLabel={`${added ? "Remove" : "Add"} ${itemLabel} ${added ? "from" : "to"} your learning`} variant={added ? "selected" : "quiet"} onPress={() => onToggle(id)} /> : null}
       </View>
       {isExpanded ? <View style={styles.detailSections}>
         {relationshipNavigation?.targetId === id && relationshipNavigation.sourceId ? <RouteButton
@@ -408,18 +548,26 @@ export function ItemCard({ id, selection, onToggle, foundation = false, stepInde
         </View>)}
         {programmeLearningContext?.student_note ? <View style={[styles.detailSection, { borderTopColor: colors.borderRole.subtle }]} testID={`d078-curriculum-context-${id}`}>
             <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>How this relates to your Sociology curriculum</Text>
-            <Text style={[styles.detailBody, { color: colors.textRole.secondary }]}>{displayText(programmeLearningContext.student_note)}</Text>
+            <Text style={[styles.detailBody, { color: colors.textRole.secondary }]}>{displayText(programmeLearningContext.student_note, explainedTerms)}</Text>
             {programmeLearningContext.course_refs?.map((course, index) => <View key={`${course.course_code}-${index}`} style={styles.contributionRow}>
               <Text style={[styles.meta, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{course.course_code} · {course.course_title}</Text>
-              <Text style={[styles.detailBody, { color: colors.textRole.secondary }]}>{displayText(course.evidence)}</Text>
+              <Text style={[styles.detailBody, { color: colors.textRole.secondary }]}>{displayText(course.evidence, explainedTerms)}</Text>
             </View>)}
           </View> : null}
         {limitations.length ? <View style={[styles.detailSection, { borderTopColor: colors.borderRole.subtle }]}><Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Keep in mind</Text>{limitations.map((line, index) => <Text key={`${id}-limit-${index}`} style={[styles.detailBody, { color: colors.textRole.secondary }]}>{line}</Text>)}</View> : null}
+        {alternativeNotes.length ? <View testID={`d078-alternatives-${id}`} style={[styles.detailSection, { borderTopColor: colors.borderRole.subtle }]}>
+          <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Other approaches and boundaries</Text>
+          <Text style={[styles.meta, { color: colors.textRole.secondary }]}>These notes may describe another skill, method, tool or way to handle the task—or explain why an option is not a substitute. They are context-specific, not extra requirements.</Text>
+          {alternativeNotes.map((line, index) => <Text key={`${id}-alternative-${index}`} style={[styles.detailBody, { color: colors.textRole.secondary }]}>{line}</Text>)}
+        </View> : null}
         <D078RelationshipPanel
           currentItem={{ id, label: node.label }}
           projectedItems={projectedRelationshipItems}
           typedEdges={d078TypedRelationshipEdges()}
           routeContextLabel={routeContextLabel}
+          activeRoleId={roleItem ? selection.roleId : undefined}
+          activeRoleTaskId={roleItem ? roleRouteTaskId : undefined}
+          activeAreaId={contextLevel === "domain" ? undefined : selection.areaId}
           onUseTarget={(target) => {
             if (!foundation && onToggle && projectedIds.has(target.id)) onToggle(target.id);
           }}
@@ -429,14 +577,14 @@ export function ItemCard({ id, selection, onToggle, foundation = false, stepInde
         />
         {!relationshipNavigation && relatedTarget ? <View style={styles.relatedPreview}>
           <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Connected option</Text>
-          <Text style={[styles.itemTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{relatedTarget.label}</Text>
+          <Text style={[styles.itemTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{displayLabel(relatedTarget.label)}</Text>
           {typeof relatedTarget.meaning === "string" ? <View style={styles.detailSection}>
             <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What it is</Text>
-            <Text style={[styles.detailBody, { color: colors.textRole.secondary }]}>{displayText(relatedTarget.meaning)}</Text>
+            <Text style={[styles.detailBody, { color: colors.textRole.secondary }]}>{displayText(relatedTarget.meaning, new Set<string>())}</Text>
           </View> : null}
           {typeof relatedTarget.contextual_use === "string" ? <View style={styles.detailSection}>
             <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>How it may be used</Text>
-            <Text style={[styles.detailBody, { color: colors.textRole.secondary }]}>{displayText(relatedTarget.contextual_use)}</Text>
+            <Text style={[styles.detailBody, { color: colors.textRole.secondary }]}>{displayText(relatedTarget.contextual_use, new Set<string>())}</Text>
           </View> : null}
           <RouteButton label={`Back to ${roleItem ? titleCase(node.label) : node.label}`} onPress={() => setRelatedTargetId(null)} variant="secondary" style={styles.hugSecondaryAction} />
         </View> : null}
@@ -456,7 +604,7 @@ export function ItemCard({ id, selection, onToggle, foundation = false, stepInde
   );
 }
 
-function ItemLane({ title, ids, selection, onToggle, foundations = false, roleItems = false, resources, contextLevel = "domain" }: {
+function ItemLane({ title, ids, selection, onToggle, foundations = false, roleItems = false, resources, contextLevel = "domain", stageChoiceIds }: {
   title: string;
   ids: string[];
   selection: D078Selection;
@@ -465,13 +613,110 @@ function ItemLane({ title, ids, selection, onToggle, foundations = false, roleIt
   roleItems?: boolean;
   resources?: CareerLearningResource[];
   contextLevel?: "domain" | "subgroup" | "role";
+  /** All selectable items/tools at this same journey stop, across requirement lanes. */
+  stageChoiceIds?: string[];
 }) {
   const { colors } = useTheme();
+  const candidates = stageChoiceIds ?? ids;
+  const [showOtherOptions, setShowOtherOptions] = useState(false);
+  const selectionKey = selection.addedItemIds.join("|");
+  useEffect(() => {
+    setShowOtherOptions(false);
+  }, [selectionKey, candidates.join("|")]);
   if (!ids.length) return null;
+  const selectedIds = candidates.filter((id) => selection.addedItemIds.includes(id));
+  const focusedIds = progressiveChoiceIds(candidates, selection.addedItemIds);
+  const hiddenAlternatives = graphAlternativeIds(selectedIds, candidates);
+  const visibleIds = ids.filter((id) => showOtherOptions || focusedIds.includes(id) && !hiddenAlternatives.has(id));
+  const hiddenByFocus = visibleIds.length < ids.length;
+  const hasHiddenAlternatives = hiddenAlternatives.size > 0;
   return <View style={styles.itemLane}>
     <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{title}</Text>
-    {ids.map((id, index) => <ItemCard key={id} id={id} selection={selection} onToggle={onToggle} foundation={foundations} stepIndex={foundations ? index + 1 : undefined} roleItem={roleItems} resources={resources} contextLevel={contextLevel} />)}
+    {!foundations && contextLevel !== "domain" ? <Text style={[styles.meta, { color: colors.textRole.secondary }]}>Items are grouped by what your selected route needs or may find useful. Where the graph gives this route a reviewed order, the item details explain what to review first; other choices remain parallel or skippable.</Text> : null}
+    {hiddenByFocus && !showOtherOptions ? <Text style={[styles.meta, { color: colors.textRole.secondary }]}>Your selection is in focus across this stage. This section shows items directly connected to it in the learning map. Those links explain context; they do not make another item a prerequisite.</Text> : null}
+    {hasHiddenAlternatives && !showOtherOptions ? <Text style={[styles.meta, { color: colors.textRole.secondary }]}>A related alternative is available to compare; alternatives are not automatically requirements or mutually exclusive.</Text> : null}
+    {showOtherOptions && selectedIds.length ? <Text style={[styles.meta, { color: colors.textRole.secondary }]}>Other choices are shown so you can compare or add another item. Select only what fits your route; links do not make an item compulsory.</Text> : null}
+    {visibleIds.map((id, index) => <ProgressiveReveal key={id}>
+      <ItemCard id={id} selection={selection} onToggle={onToggle} foundation={foundations} stepIndex={foundations ? index + 1 : undefined} roleItem={roleItems} resources={resources} contextLevel={contextLevel} />
+    </ProgressiveReveal>)}
+    {hiddenByFocus && !showOtherOptions ? <RouteButton
+      label={hasHiddenAlternatives ? `Show other items in ${title} and compare alternatives` : `Add another item in ${title}`}
+      accessibilityLabel={hasHiddenAlternatives ? `Show other items in ${title} and compare alternatives` : `Show more choices in ${title}`}
+      onPress={() => setShowOtherOptions(true)}
+      variant="secondary"
+      style={styles.hugSecondaryAction}
+    /> : null}
   </View>;
+}
+
+function ProgressiveReveal({ children }: { children: React.ReactNode }) {
+  const reducedMotion = useReducedMotion();
+  const opacity = useRef(new Animated.Value(reducedMotion ? 1 : 0)).current;
+  const offset = useRef(new Animated.Value(reducedMotion ? 0 : 8)).current;
+  useEffect(() => {
+    if (reducedMotion) {
+      opacity.setValue(1);
+      offset.setValue(0);
+      return;
+    }
+    Animated.parallel([
+      Animated.timing(opacity, { toValue: 1, duration: 160, easing: Easing.out(Easing.ease), useNativeDriver: true }),
+      Animated.timing(offset, { toValue: 0, duration: 160, easing: Easing.out(Easing.ease), useNativeDriver: true }),
+    ]).start();
+  }, [offset, opacity, reducedMotion]);
+  return <Animated.View style={{ opacity, transform: [{ translateY: offset }] }}>{children}</Animated.View>;
+}
+
+const progressiveRelationshipTypes = new Set([
+  "builds_on",
+  "requires",
+  "precedes",
+  "prerequisite_for",
+  "complements",
+  "supports",
+  "useful_for",
+  "tool_for",
+  "specialist_extension_of",
+  "method_contribution_reveals_domain_item",
+  "method_contribution_reveals_tool",
+  "domain_item_supports_area_task",
+  "task_has_area_learning_item",
+  "method_applies_to_area_task",
+  "method_contribution_applies_to_area_task",
+  "area_task_family_supports_role_task",
+  "tool_supports_role_task",
+]);
+
+/**
+ * Focus item choices on the selected node and explicitly connected options.
+ * This is a reveal rule only: graph relationships do not become prerequisites,
+ * and removing the selection restores the full candidate set.
+ */
+function progressiveChoiceIds(ids: string[], addedItemIds: string[]): string[] {
+  const candidates = new Set(ids);
+  const selected = new Set(ids.filter((id) => addedItemIds.includes(id)));
+  if (!selected.size) return ids;
+  const visible = new Set(selected);
+  for (const edge of graph.typed_relationship_edges) {
+    if (edge.status !== "resolved_ready_for_use" || !progressiveRelationshipTypes.has(edge.relationship)) continue;
+    if (selected.has(edge.sourceId) && candidates.has(edge.targetId)) visible.add(edge.targetId);
+    if (selected.has(edge.targetId) && candidates.has(edge.sourceId)) visible.add(edge.sourceId);
+  }
+  return ids.filter((id) => visible.has(id));
+}
+
+/** Hide only explicit graph alternatives; complementary or unrelated choices remain selectable. */
+function graphAlternativeIds(selectedIds: string[], candidates: string[]): Set<string> {
+  const selected = new Set(selectedIds);
+  const candidateSet = new Set(candidates);
+  const hidden = new Set<string>();
+  for (const edge of graph.typed_relationship_edges) {
+    if (!isD078SelectableAlternativeEdge(edge)) continue;
+    if (selected.has(edge.sourceId) && candidateSet.has(edge.targetId)) hidden.add(edge.targetId);
+    if (selected.has(edge.targetId) && candidateSet.has(edge.sourceId)) hidden.add(edge.sourceId);
+  }
+  for (const id of selected) hidden.delete(id);
+  return hidden;
 }
 
 export function d078MotionOffset(reducedMotion: boolean, distance: number): number {
@@ -560,16 +805,21 @@ export function D078AreaResults({ projection, onOpenArea, headingRef }: {
 
   return <View style={styles.section}>
     <Text ref={headingRef} accessibilityRole="header" style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Areas for what you selected</Text>
-    <Text style={[styles.body, { color: colors.textRole.secondary }]}>Only areas connected to your selected method or named combined research design appear here. The order reflects the reviewed route evidence for your selection.</Text>
+    <Text style={[styles.body, { color: colors.textRole.secondary }]}>The selected method or design always provides a route into its supported areas. Domain learning you selected can bring linked areas and work contexts forward; it never removes the general method route or makes an optional item compulsory.</Text>
     <View style={styles.areaCardList}>{renderedAreas.map((area) => {
       const transition = areaAnimations.current.get(area.areaId);
       const exiting = Boolean(transition?.exiting);
       return <Animated.View key={area.areaId} style={[styles.areaCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }, transition ? { opacity: transition.opacity, transform: [{ translateY: transition.offset }] } : null]}>
       <Text style={[styles.itemTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{area.label}</Text>
       <Text style={[styles.summary, { color: colors.textRole.secondary }]}>{supportReason(area, projection)}</Text>
-      {area.taskFamilyIds.map((id) => {
+      {[...area.taskFamilyIds].sort((left, right) =>
+        Number(area.selectedDomainContextFamilyIds.includes(right)) - Number(area.selectedDomainContextFamilyIds.includes(left)),
+      ).map((id) => {
         const label = d078Node(id)?.label;
-        return label ? <Text key={id} style={[styles.body, { color: colors.textRole.secondary }]}>{label}</Text> : null;
+        return label ? <View key={id} style={styles.detailSection}>
+          <Text style={[styles.body, { color: colors.textRole.secondary }]}>{label}</Text>
+          {area.selectedDomainContextFamilyIds.includes(id) ? <Text style={[styles.meta, { color: colors.textRole.muted }]}>Connects to domain learning you selected</Text> : null}
+        </View> : null;
       })}
       <Text style={[styles.meta, { color: colors.textRole.muted }]}>Selecting this area opens its full-screen details and the roles connected to your chosen method.</Text>
       <RouteButton label="Select area" accessibilityLabel={`Select area ${area.label}`} variant="primary" style={primaryActionStyle} disabled={exiting} onPress={() => onOpenArea(area.areaId)} />
@@ -602,6 +852,100 @@ function updateActiveD078Selection(
   });
 }
 
+function trackedD078Choices(selection: D078Selection): Map<string, { type: Parameters<typeof recordLearningInterest>[1]; label: string }> {
+  const choices = new Map<string, { type: Parameters<typeof recordLearningInterest>[1]; label: string }>();
+  const add = (type: Parameters<typeof recordLearningInterest>[1], id: string, label?: string) => {
+    choices.set(`${type}:${id}`, { type, label: label || d078Node(id)?.label || id });
+  };
+  selection.methodIds.forEach((id) => add("method", id));
+  selection.combinationIds.forEach((id) => add("research_design", id));
+  Object.values(selection.componentMethodIds).flat().forEach((id) => add("method", id));
+  selection.combinationIds.forEach((id) => {
+    const design = graph.combination_designs.find((entry) => entry.id === id);
+    design?.required_method_ids.forEach((methodId) => add("method", methodId));
+  });
+  selection.addedItemIds.forEach((id) => {
+    const node = d078Node(id);
+    const kind = String(node?.item_type ?? node?.kind ?? "").toLowerCase();
+    const type = kind.includes("tool") ? "tool"
+      : kind.includes("skill") ? "skill"
+        : kind.includes("competenc") ? "competency"
+          : kind.includes("knowledge") ? "knowledge"
+            : kind.includes("method") ? "method_item"
+              : kind.includes("certification") ? "certification" : "other_learning_item";
+    add(type, id, node?.label);
+  });
+  if (selection.areaId) add("area", selection.areaId);
+  if (selection.roleId) add("role", selection.roleId);
+  return choices;
+}
+
+export function d078SelectionAnalyticsDelta(
+  previous: D078Selection,
+  next: D078Selection,
+  context: GuidanceRouteContext,
+  stackId: string,
+  addedAction: "selection_added" | "selection_copied" = "selection_added",
+) {
+  const before = trackedD078Choices(previous);
+  const after = trackedD078Choices(next);
+  const selectedMethods = (selection: D078Selection) => {
+    const ids = new Set([
+      ...selection.methodIds,
+      ...Object.values(selection.componentMethodIds).flat(),
+      ...selection.combinationIds.flatMap((id) => graph.combination_designs.find((entry) => entry.id === id)?.required_method_ids ?? []),
+    ]);
+    return [...ids];
+  };
+  const contextFor = (selection: D078Selection) => ({
+    learner_stage: context.className || context.userType,
+    programme_id: context.programmeId,
+    institution_id: context.schoolId,
+    domain_id: context.domainId || "D078",
+    area_id: selection.areaId,
+    role_id: selection.roleId,
+    selection_scope_id: `d078:${context.programmeId ?? "programme-not-selected"}:${context.schoolId ?? "institution-not-selected"}:${stackId}`,
+    route_label: [
+      "Social Sciences",
+      ...selection.methodIds.map((id) => d078Node(id)?.label ?? id),
+      ...selection.combinationIds.map((id) => d078Node(id)?.label ?? id),
+      ...(selection.areaId ? [d078Node(selection.areaId)?.label ?? selection.areaId] : []),
+      ...(selection.roleId ? [d078Node(selection.roleId)?.label ?? selection.roleId] : []),
+    ].join(" → ").slice(0, 420),
+    method_ids: selectedMethods(selection),
+    design_ids: selection.combinationIds,
+  });
+  // Both additions and removals carry the resulting route state. The active
+  // snapshot uses it to refresh remaining choices after the toggle.
+  const resultingContext = contextFor(next);
+  const events: Array<{
+    action: "selection_added" | "selection_removed" | "selection_copied";
+    entity_type: Parameters<typeof recordLearningInterest>[1];
+    entity_id: string;
+    entity_label: string;
+    context: ReturnType<typeof contextFor>;
+  }> = [];
+  for (const [key, choice] of after) {
+    if (!before.has(key)) events.push({ action: addedAction, entity_type: choice.type, entity_id: key.slice(choice.type.length + 1), entity_label: choice.label, context: resultingContext });
+  }
+  for (const [key, choice] of before) {
+    if (!after.has(key)) events.push({ action: "selection_removed", entity_type: choice.type, entity_id: key.slice(choice.type.length + 1), entity_label: choice.label, context: resultingContext });
+  }
+  return events;
+}
+
+function recordD078SelectionDelta(
+  previous: D078Selection,
+  next: D078Selection,
+  context: GuidanceRouteContext,
+  stackId: string,
+  addedAction: "selection_added" | "selection_copied" = "selection_added",
+): void {
+  for (const event of d078SelectionAnalyticsDelta(previous, next, context, stackId, addedAction)) {
+    recordLearningInterest(event.action, event.entity_type, event.entity_id, event.entity_label, event.context);
+  }
+}
+
 function d078SnapshotKey(programmeId?: string): string {
   return `${programmeId || "programme-not-selected"}::D078`;
 }
@@ -616,22 +960,17 @@ function d078TrayContext(selection: D078Selection, projection: D078Projection, p
       kind: "component_method" as const,
       combinationId: comboId,
     }))),
+    ...Object.entries(selection.taskFamilyIdsByArea ?? {}).flatMap(([areaId, familyIds]) => familyIds.map((id) => ({
+      id,
+      label: d078Node(id)?.label ?? id,
+      kind: "task_family" as const,
+      areaId,
+    }))),
   ];
-  const itemIds = new Set([
-    ...projection.domainItemIds,
-    ...projection.toolIds,
-    ...d078ApplicableLayerItems(2, selection),
-    ...d078ApplicableLayerItems(3, selection),
-    ...(selection.areaId ? projection.areaItemIdsByArea[selection.areaId] ?? [] : []),
-    ...projection.roleItemIds,
-  ]);
-  const areaItemIds = new Set(selection.areaId ? projection.areaItemIdsByArea[selection.areaId] ?? [] : []);
-  const roleItemIds = new Set(projection.roleItemIds);
-  const selectedItems = selection.addedItemIds.filter((id) => itemIds.has(id)).map((id) => ({
-    id,
-    label: d078Node(id)?.label ?? id,
-    lane: laneLabel(requirementLane(d078Node(id))),
-    contextLevel: roleItemIds.has(id) ? "role" as const : areaItemIds.has(id) ? "area" as const : "domain" as const,
+  const selectedItems = selectedD078ItemsForTray(projection, selection).map((item) => ({
+    ...item,
+    label: d078Node(item.id)?.label ?? item.id,
+    lane: laneLabel(requirementLane(d078Node(item.id))),
   }));
   return {
     stackId,
@@ -641,15 +980,19 @@ function d078TrayContext(selection: D078Selection, projection: D078Projection, p
     programmeId: context.programmeId,
     institutionContextLabel: context.schoolId ? "Institution context selected" : undefined,
     institutionId: context.schoolId,
-    domainLabel: "Social Sciences",
-    domainId: context.domainId,
+    domainLabel: selection.domainInPlan ? "Social Sciences" : undefined,
+    domainId: selection.domainInPlan ? context.domainId ?? "D078" : undefined,
     choices,
     foundations: projection.foundations.map((foundation) => foundation.label),
     selectedItems,
-    areaLabel: projection.visibleAreas.find((area) => area.areaId === selection.areaId)?.label,
-    areaId: selection.areaId,
-    roleLabel: projection.visibleRoles.find((role) => role.roleId === selection.roleId)?.label,
-    roleId: selection.roleId,
+    areaLabel: selection.planAreaId
+      ? projection.visibleAreas.find((area) => area.areaId === selection.planAreaId)?.label ?? d078Node(selection.planAreaId)?.label
+      : undefined,
+    areaId: selection.planAreaId,
+    roleLabel: selection.planRoleId
+      ? projection.visibleRoles.find((role) => role.roleId === selection.planRoleId)?.label ?? d078Node(selection.planRoleId)?.label
+      : undefined,
+    roleId: selection.planRoleId,
     onRemoveChoice: () => undefined,
     onRemoveItem: () => undefined,
   };
@@ -679,15 +1022,9 @@ function D078JourneyTray({ selection, setSelection, projection, context, program
   setRouteStackState: (next: D078RouteStackState) => void;
   onActivateRoute?: (selection: D078Selection, routeState: D078RouteStackState) => void;
 }) {
-  const { colors } = useTheme();
   const { width } = useWindowDimensions();
-  const insets = useSafeAreaInsets();
-  const reducedMotion = useReducedMotion();
   const persistentDock = usePersistentLearningPlanDock();
-  // The same small bottom dock is used on desktop and mobile. A permanent
-  // right rail consumed page width while the plan was collapsed.
-  const desktopRail = false;
-  const [mode, setMode] = useState<GuidedLearningTrayMode>(() => context.areaId || context.roleId ? "compact" : "icon");
+  const [mode, setMode] = useState<GuidedLearningTrayMode>("compact");
   const [notice, setNotice] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const draftSaveSequence = useRef(0);
@@ -702,6 +1039,7 @@ function D078JourneyTray({ selection, setSelection, projection, context, program
     };
     route.onRemoveStack = routeStackState.stacks.length > 1
       ? () => {
+        recordD078SelectionDelta(stack.selection, INITIAL_D078_SELECTION, context, stack.id);
         const next = removeD078RouteStack(routeStackState, stack.id);
         setRouteStackState(next);
       }
@@ -711,7 +1049,9 @@ function D078JourneyTray({ selection, setSelection, projection, context, program
         ? toggleD078Method(stack.selection, choice.id)
         : choice.kind === "combination"
           ? toggleD078Combination(stack.selection, choice.id)
-          : choice.combinationId ? toggleD078ComponentMethod(stack.selection, choice.combinationId, choice.id) : stack.selection;
+          : choice.kind === "task_family" && choice.areaId
+            ? toggleD078TaskFamily(stack.selection, choice.areaId, choice.id)
+            : choice.combinationId ? toggleD078ComponentMethod(stack.selection, choice.combinationId, choice.id) : stack.selection;
       const next = updateD078RouteStackSelection(routeStackState, stack.id, nextSelection);
       setRouteStackState(next);
       if (stack.id === routeStackState.activeStackId) (onRemoveChoice ?? setSelection)(nextSelection);
@@ -725,7 +1065,8 @@ function D078JourneyTray({ selection, setSelection, projection, context, program
     return route;
   });
   const choiceCount = selection.methodIds.length + selection.combinationIds.length + Object.values(selection.componentMethodIds).reduce((sum, methods) => sum + methods.length, 0);
-  const dropKey = `${choiceCount}:${selection.addedItemIds.length}`;
+  const routeChoiceCount = choiceCount + Object.values(selection.taskFamilyIdsByArea ?? {}).reduce((sum, families) => sum + families.length, 0);
+  const dropKey = `${routeChoiceCount}:${selection.addedItemIds.length}`;
   const routeRevision = JSON.stringify(routeStackState);
   const lastDraftRevision = useRef("");
   useEffect(() => {
@@ -735,6 +1076,7 @@ function D078JourneyTray({ selection, setSelection, projection, context, program
       const value = stack.selection;
       return value.methodIds.length > 0 || value.combinationIds.length > 0
         || Object.values(value.componentMethodIds).some((ids) => ids.length > 0)
+        || Object.values(value.taskFamilyIdsByArea ?? {}).some((ids) => ids.length > 0)
         || value.addedItemIds.length > 0 || Boolean(value.areaId || value.roleId);
     });
     if (!hasSelection) return;
@@ -754,16 +1096,31 @@ function D078JourneyTray({ selection, setSelection, projection, context, program
     });
   }, [routeRevision, routeStackState, selection, context, programmeName]);
   const previousDropKey = useRef(dropKey);
-  const displayMode = previousDropKey.current !== dropKey ? "compact" : mode;
+  const displayMode = previousDropKey.current !== dropKey ? "mid" : mode;
   useEffect(() => {
     if (previousDropKey.current === dropKey) return;
     previousDropKey.current = dropKey;
-    setMode("compact");
+    setMode("mid");
   }, [dropKey]);
+  const planCount = routeStackState.stacks.reduce((sum, stack) => sum
+    + Number(Boolean(stack.selection.domainInPlan))
+    + Number(Boolean(stack.selection.planAreaId))
+    + Number(Boolean(stack.selection.planRoleId)), 0);
+  const previousPlanCount = useRef(planCount);
+  const planReady = useRef(false);
+  useEffect(() => {
+    if (!planReady.current) {
+      planReady.current = true;
+      previousPlanCount.current = planCount;
+      return;
+    }
+    if (planCount !== previousPlanCount.current) setMode("compact");
+    previousPlanCount.current = planCount;
+  }, [planCount]);
   const onSave = async () => {
     if (saving) return;
     setSaving(true);
-    setNotice(null);
+    setNotice("Saving this route to My World…");
     try {
       const saved = await saveD078Selection(selection, context, programmeName, routeStackState);
       setNotice(saved === "saved" ? "Saved this route to My World." : "Held on this device. It will save when you are online.");
@@ -797,66 +1154,39 @@ function D078JourneyTray({ selection, setSelection, projection, context, program
     const message = routeContexts.map((route, index) => `${routeContexts.length > 1 ? `Route ${index + 1}\n` : ""}${d078ShareMessage(route, programmeName)}`).join("\n\n");
     void shareTextSummary("My LevelUp learning route", message).then((shared) => setNotice(shared ? "Your route summary is ready to share." : "Sharing is unavailable right now. Save the route and try again."));
   };
-  const renderTray = (initialMode: GuidedLearningTrayMode, forceIcon = false) => <GuidedLearningTray
+  const trayWidth = Math.max(200, Math.min(displayMode === "compact" ? 340 : 520, width - 32));
+  const trayStyle = displayMode === "full"
+    ? [styles.trayExpanded, { width: trayWidth }]
+    : displayMode === "mid"
+      ? [styles.trayPanelMid, { width: Math.min(420, trayWidth) }]
+      : displayMode === "compact"
+        ? [styles.trayPanelCompact, { width: trayWidth }]
+        : undefined;
+  return <View style={[styles.mobileTrayDock, Platform.OS === "web" ? styles.mobileTrayDockWeb : styles.mobileTrayDockNative]}>
+    <GuidedLearningTray
       stackSet={buildLearningPlanStackSet({ routes: [] })}
       d078Routes={routeContexts}
       onCreateD078Route={() => {
-        const next = createD078SeparateRoute(routeStackState, nextD078RouteId(routeStackState));
+        const nextId = nextD078RouteId(routeStackState);
+        const active = routeStackState.stacks.find((stack) => stack.id === routeStackState.activeStackId);
+        const next = createD078SeparateRoute(routeStackState, nextId);
+        if (active && next.activeStackId === nextId) {
+          recordD078SelectionDelta(INITIAL_D078_SELECTION, active.selection, context, nextId, "selection_copied");
+        }
         setRouteStackState(next);
       }}
-      initialMode={initialMode}
-      forceIcon={forceIcon}
+      initialMode={displayMode}
       dropKey={dropKey}
       pendingDropLabel="Added to your route"
       onModeChange={setMode}
       onDismiss={persistentDock?.dismiss}
-      style={initialMode === "full" ? styles.trayFull : initialMode === "mid" ? [styles.trayPanelMid, { width: Math.max(200, Math.min(420, width - 32)) }] : initialMode === "compact" ? [styles.trayPanelCompact, { width: Math.max(200, Math.min(340, width - 32)) }] : undefined}
+      style={trayStyle}
       onSave={onSave}
       onPrint={onPrint}
       onShare={onShare}
-    />;
-  if (!desktopRail) return <>
-    <View style={[styles.mobileTrayDock, Platform.OS === "web" ? styles.mobileTrayDockWeb : styles.mobileTrayDockNative]}>
-      {renderTray(displayMode === "full" ? "icon" : displayMode, displayMode === "full")}
-    </View>
-    <Modal transparent visible={displayMode === "full"} animationType={reducedMotion ? "none" : "slide"} onRequestClose={() => setMode("icon")}>
-      <View style={styles.mobileTrayBackdrop}>
-        <Pressable accessibilityRole="button" accessibilityLabel="Close learning plan tray" onPress={() => setMode("icon")} style={StyleSheet.absoluteFill} />
-        <View style={[styles.mobileTraySheet, d078TraySheetStyle(width, "full"), {
-          borderTopWidth: 0,
-          borderTopLeftRadius: 0,
-          borderTopRightRadius: 0,
-          paddingTop: Math.max(insets.top, Spacing.md),
-          paddingBottom: Math.max(insets.bottom, Spacing.md),
-          paddingLeft: Math.max(insets.left, Spacing.md),
-          paddingRight: Math.max(insets.right, Spacing.md),
-        }, { backgroundColor: colors.surface.base, borderColor: colors.borderRole.subtle }]}>
-          {renderTray("full")}
-          {saving || notice ? <Text accessibilityLiveRegion="polite" style={styles.trayNotice}>{saving ? "Saving your route…" : notice}</Text> : null}
-        </View>
-      </View>
-    </Modal>
-  </>;
-  return <>
-    <View style={[styles.trayWrap, mode === "full" && styles.trayWrapFull]}>
-      {renderTray(mode === "full" ? "icon" : mode, mode === "full")}
-      {mode !== "full" && (saving || notice) ? <Text accessibilityLiveRegion="polite" style={styles.trayNotice}>{saving ? "Saving your route…" : notice}</Text> : null}
-    </View>
-    <Modal transparent visible={mode === "full"} animationType={reducedMotion ? "none" : "fade"} onRequestClose={() => setMode("icon")}>
-      <View style={styles.desktopFullTrayBackdrop}>
-        <Pressable accessibilityRole="button" accessibilityLabel="Close full-size learning plan tray" onPress={() => setMode("icon")} style={StyleSheet.absoluteFill} />
-        <View style={[styles.desktopFullTraySurface, { backgroundColor: colors.surface.base, borderColor: colors.borderRole.subtle }, {
-          marginTop: Math.max(insets.top, 12),
-          marginBottom: Math.max(insets.bottom, 12),
-          marginLeft: Math.max(insets.left, 12),
-          marginRight: Math.max(insets.right, 12),
-        }]}>
-          {renderTray("full")}
-          {saving || notice ? <Text accessibilityLiveRegion="polite" style={styles.trayNotice}>{saving ? "Saving your route…" : notice}</Text> : null}
-        </View>
-      </View>
-    </Modal>
-  </>;
+      statusMessage={notice}
+    />
+  </View>;
 }
 
 async function saveD078Selection(selection: D078Selection, context: GuidanceRouteContext, programmeName?: string, routeStackState?: D078RouteStackState): Promise<"saved" | "pending"> {
@@ -995,6 +1325,14 @@ export function parseD078Selection(value?: string | string[]): D078Selection {
       areaId: typeof parsed.areaId === "string" ? parsed.areaId : undefined,
       roleId: typeof parsed.roleId === "string" ? parsed.roleId : undefined,
       addedItemIds: Array.isArray(parsed.addedItemIds) ? parsed.addedItemIds.filter((id): id is string => typeof id === "string") : [],
+      ...(parsed.domainInPlan === true ? { domainInPlan: true } : {}),
+      ...(typeof parsed.planAreaId === "string" ? { planAreaId: parsed.planAreaId } : {}),
+      ...(typeof parsed.planRoleId === "string" ? { planRoleId: parsed.planRoleId } : {}),
+      ...(parsed.taskFamilyIdsByArea && typeof parsed.taskFamilyIdsByArea === "object"
+        ? { taskFamilyIdsByArea: Object.fromEntries(Object.entries(parsed.taskFamilyIdsByArea).flatMap(([areaId, ids]) => [
+          [areaId, Array.isArray(ids) ? ids.filter((id): id is string => typeof id === "string") : []],
+        ])) }
+        : {}),
     };
   } catch {
     return INITIAL_D078_SELECTION;
@@ -1018,7 +1356,14 @@ export function D078MethodAwareJourney({ domainKey, programmeName, programmeConn
   const exploreNav = useExploreNav();
   const [routeStackState, setRouteStackState] = useState<D078RouteStackState>(() => initialD078RouteStackState(initialSelection ?? INITIAL_D078_SELECTION, initialRouteStacks));
   const selection = routeStackState.stacks.find((stack) => stack.id === routeStackState.activeStackId)?.selection ?? INITIAL_D078_SELECTION;
-  const setSelection = (next: D078Selection | ((current: D078Selection) => D078Selection)) => updateActiveD078Selection(setRouteStackState, next);
+  const setSelection = (next: D078Selection | ((current: D078Selection) => D078Selection)) => {
+    const current = routeStackState.stacks.find((stack) => stack.id === routeStackState.activeStackId)?.selection ?? INITIAL_D078_SELECTION;
+    const resolved = typeof next === "function" ? next(current) : next;
+    if (JSON.stringify(current) !== JSON.stringify(resolved)) configureD078SelectionTransition(reducedMotion);
+    announceD078FocusChange(current, resolved, "domain");
+    recordD078SelectionDelta(current, resolved, guidanceContext, routeStackState.activeStackId);
+    updateActiveD078Selection(setRouteStackState, resolved);
+  };
   const selectionTouched = useRef(false);
   const methodChangePending = useRef(false);
   const clearMethodChangePending = useRef(false);
@@ -1039,6 +1384,8 @@ export function D078MethodAwareJourney({ domainKey, programmeName, programmeConn
   const [themesExpanded, setThemesExpanded] = useState(false);
   const [outcomesExpanded, setOutcomesExpanded] = useState(false);
   const projection = useMemo(() => projectD078Route(selection), [selection]);
+  const hasSelectedMethod = selection.methodIds.length + selection.combinationIds.length
+    + Object.values(selection.componentMethodIds).reduce((count, ids) => count + ids.length, 0) > 0;
   useEffect(() => {
     if (!methodChangePending.current) {
       previousChoiceCount.current = selection.methodIds.length + selection.combinationIds.length
@@ -1109,6 +1456,14 @@ export function D078MethodAwareJourney({ domainKey, programmeName, programmeConn
     return () => { active = false; };
   }, [domainKey, guidanceContext.guidanceStudentId, guidanceContext.programmeId, initialSelection]);
   const overviewNode = d078Node("domain:D078");
+  const domainOrientation = overviewNode?.student_orientation as {
+    whatItStudies?: string;
+    whatPeopleDo?: string;
+    whereProgrammeFits?: string;
+    questions?: string[];
+    howWorkHappens?: string[];
+    outputs?: string[];
+  } | undefined;
   const societyKnowledge = d078Node("runtime-item:domain:d078:d078-society-and-social-world-knowledge");
   const programmeThemes = programmeConnection?.programmeCurriculumThemes ?? [];
   const matchedThemeIds = new Set((graph.programme_transition.evidence_matched_theme_ids as string[] | undefined) ?? []);
@@ -1135,19 +1490,23 @@ export function D078MethodAwareJourney({ domainKey, programmeName, programmeConn
   const layer2 = graph.domain_learning_layers.find((layer) => layer.layer === 2);
   const layer3 = graph.domain_learning_layers.find((layer) => layer.layer === 3);
   const layerItemIds = new Set([...(layer2?.item_ids ?? []), ...(layer3?.item_ids ?? [])]);
-  const societyKnowledgeId = "runtime-item:domain:d078:d078-society-and-social-world-knowledge";
+  const societyKnowledgeId = D078_SOCIETY_KNOWLEDGE_ITEM_ID;
   // Society/social-world knowledge is field orientation, not a method-gated
   // preparation item. Show it before the method choice and keep the remaining
   // Layer 2 items gated to the selected method/design.
   const layer2Ids = d078ApplicableLayerItems(2, selection)
     .filter((id) => id !== societyKnowledgeId && Boolean(d078Node(id)));
   const layer3Ids = d078ApplicableLayerItems(3, selection).filter((id) => Boolean(d078Node(id)));
-  const allDomainIds = [...new Set([...projection.domainItemIds, ...projection.toolIds])].filter((id) => !layerItemIds.has(id));
+  const allDomainIds = stableD078ItemOrder([...new Set([...projection.domainItemIds, ...projection.toolIds])].filter((id) => !layerItemIds.has(id)));
   const neededDomainIds = allDomainIds.filter((id) => requirementLane(d078Node(id)) === "needed");
   const conditionalDomainIds = allDomainIds.filter((id) => requirementLane(d078Node(id)) === "conditional");
   const usefulDomainIds = allDomainIds.filter((id) => !["needed", "conditional"].includes(requirementLane(d078Node(id))));
+  const domainStageChoiceIds = stableD078ItemOrder([...new Set([
+    ...allDomainIds,
+    ...layer2Ids,
+    ...layer3Ids,
+  ])]);
   const selectedDesign = projection.combinations.find((combo) => combo.selected);
-  const hasSelectedMethod = selection.methodIds.length === 1 || selection.combinationIds.length > 0;
   const emptyText = projection.hiddenBecause === "choose_combination_design"
     ? "Your methods match more than one named combined research design. Choose the design that fits your question before the app shows areas, roles or downstream learning."
     : projection.hiddenBecause === "complete_combination_design"
@@ -1162,8 +1521,9 @@ export function D078MethodAwareJourney({ domainKey, programmeName, programmeConn
   const toggleItem = (id: string) => updateSelection(toggleD078AddedItem(selection, id));
   const navigateArea = (areaId: string) => {
     const next = selectD078Area(selection, areaId);
+    recordD078SelectionDelta(selection, next, { ...guidanceContext, domainId: domainKey, areaId }, routeStackState.activeStackId);
     const query = routeSelectionQuery({ ...next, areaId }, { ...guidanceContext, domainId: domainKey, areaId }, routeStackState);
-    router.push(`${exploreNav.base}/domain/${encodeURIComponent(domainKey)}/subgroup/${encodeURIComponent(areaId)}?${query}&d078_from_field=1` as never);
+    router.push(`${exploreNav.base}/domain/${encodeURIComponent(domainKey)}/subgroup/${encodeURIComponent(areaId)}?${query}&d078_from_field=1&d078_domain_overview_seen=1` as never);
   };
   const undoRoute = () => {
     if (!undoSelection) return;
@@ -1173,10 +1533,10 @@ export function D078MethodAwareJourney({ domainKey, programmeName, programmeConn
     const role = restored.visibleRoles.find((entry) => entry.roleId === previous.roleId && entry.areaId === previous.areaId);
     const apiRole = role && domainRoles.find((entry) => normalizeLabel(entry.name) === normalizeLabel(role.label));
     if (role && apiRole) {
-      const query = `${routeSelectionQuery(previous, { ...guidanceContext, domainId: domainKey, areaId: role.areaId }, routeStackState)}&d078_role_id=${encodeURIComponent(role.roleId)}`;
+      const query = `${routeSelectionQuery(previous, { ...guidanceContext, domainId: domainKey, areaId: role.areaId }, routeStackState)}&d078_role_id=${encodeURIComponent(role.roleId)}&d078_domain_overview_seen=1`;
       router.replace(`${exploreNav.base}/role/${encodeURIComponent(apiRole.key)}?${query}` as never);
     } else if (previous.areaId) {
-      const query = routeSelectionQuery({ ...previous, roleId: undefined }, { ...guidanceContext, domainId: domainKey, areaId: previous.areaId }, routeStackState);
+      const query = `${routeSelectionQuery({ ...previous, roleId: undefined }, { ...guidanceContext, domainId: domainKey, areaId: previous.areaId }, routeStackState)}&d078_domain_overview_seen=1`;
       router.replace(`${exploreNav.base}/domain/${encodeURIComponent(domainKey)}/subgroup/${encodeURIComponent(previous.areaId)}?${query}` as never);
     }
   };
@@ -1190,25 +1550,56 @@ export function D078MethodAwareJourney({ domainKey, programmeName, programmeConn
     updateSelection({ ...INITIAL_D078_SELECTION, addedItemIds: selection.addedItemIds });
   };
 
+  // Keep first-use explanations consistent across the domain overview rather
+  // than expanding the same technical term independently in every paragraph.
+  const domainOverviewTerms = new Set<string>();
+
   return <D078RelationshipNavigationProvider><Animated.View style={[styles.page, stageEntry.entryStyle]}>
     <D078JourneyPage stage="field" trayRevision={JSON.stringify(routeStackState)} tray={<D078JourneyTray selection={selection} setSelection={updateSelection} projection={projection} context={{ ...guidanceContext, domainId: domainKey }} programmeName={programmeName} routeStackState={routeStackState} setRouteStackState={setRouteStackState} />}>
+    <RouteTitleRow
+      titleRef={stageEntry.titleRef}
+      title={FIELD_TITLE}
+      checked={Boolean(selection.domainInPlan)}
+      checkLabel={`Select ${FIELD_TITLE}`}
+      onToggle={() => updateSelection(toggleDomainPlan(selection))}
+    />
     <View style={[styles.fieldEntryRow, width >= 700 && styles.fieldEntryRowWide]}>
       <View style={[styles.hero, styles.fieldOverviewCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }, width >= 700 && styles.fieldEntryCardWide]}>
-        <Text ref={stageEntry.titleRef} accessibilityRole="header" style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{FIELD_TITLE}</Text>
-        <Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(graph.programme_transition.domain_overview ?? overviewNode?.overview)}</Text>
+        <Text accessibilityRole="header" style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>What the social sciences study</Text>
+        <Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(graph.programme_transition.domain_overview ?? overviewNode?.overview, domainOverviewTerms)}</Text>
+        {domainOrientation?.whatItStudies ? <View style={styles.detailSection}>
+          <Text accessibilityRole="header" style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Different viewpoints in this field</Text>
+          <Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(domainOrientation.whatItStudies, domainOverviewTerms)}</Text>
+        </View> : null}
+        {domainOrientation?.whatPeopleDo ? <View style={styles.detailSection}>
+          <Text accessibilityRole="header" style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>How researchers study social questions</Text>
+          <Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(domainOrientation.whatPeopleDo, domainOverviewTerms)}</Text>
+        </View> : null}
+        {domainOrientation?.questions?.length ? <View style={styles.detailSection}>
+          <Text accessibilityRole="header" style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Questions people investigate</Text>
+          {domainOrientation.questions.map((question, index) => <Text key={`domain-question-${index}`} style={[styles.body, { color: colors.textRole.secondary }]}>• {displayText(question, domainOverviewTerms)}</Text>)}
+        </View> : null}
+        {domainOrientation?.howWorkHappens?.length ? <View style={styles.detailSection}>
+          <Text accessibilityRole="header" style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>How a study usually proceeds</Text>
+          {domainOrientation.howWorkHappens.map((step, index) => <Text key={`domain-work-step-${index}`} style={[styles.body, { color: colors.textRole.secondary }]}>{index + 1}. {displayText(step, domainOverviewTerms)}</Text>)}
+        </View> : null}
+        {domainOrientation?.outputs?.length ? <View style={styles.detailSection}>
+          <Text accessibilityRole="header" style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What a study may produce</Text>
+          {domainOrientation.outputs.map((output, index) => <Text key={`domain-output-${index}`} style={[styles.body, { color: colors.textRole.secondary }]}>• {displayText(output, domainOverviewTerms)}</Text>)}
+        </View> : null}
       </View>
     </View>
     <View style={[styles.handoff, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
       <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Why your Sociology studies connect</Text>
       {programmeName ? <Text style={[styles.meta, { color: colors.textRole.muted }]}>{programmeName} → Social Sciences</Text> : null}
-      <Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(graph.programme_transition.transfer_summary).replace("shared domain foundations, optional useful edges", "three foundations already on your route, useful options you can skip")}</Text>
+      <Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(graph.programme_transition.transfer_summary, domainOverviewTerms)}</Text>
       <View style={styles.detailSection}>
         <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What your programme covers</Text>
         <Text style={[styles.body, { color: colors.textRole.secondary }]}>Your programme brings together themes from its courses. They remain part of your degree context; they are not extra field requirements.</Text>
         {programmeThemes.length ? <RouteButton accessibilityLabel={themesExpanded ? "Hide programme themes" : `See all ${programmeThemes.length} programme themes`} label={themesExpanded ? "Hide programme themes" : `See all ${programmeThemes.length} programme themes`} expanded={themesExpanded} onPress={() => setThemesExpanded((value) => !value)} variant="secondary" style={styles.accordionButton} /> : null}
         {themesExpanded ? programmeThemes.map((theme) => <View key={theme.themeKey} style={[styles.themeRow, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
-          <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{theme.title}</Text>
-          <Text style={[styles.body, { color: colors.textRole.secondary }]}>{theme.summary || theme.narration}</Text>
+          <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{displayText(theme.title, domainOverviewTerms)}</Text>
+          <Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(theme.summary || theme.narration, domainOverviewTerms)}</Text>
         </View>) : null}
       </View>
       <View style={styles.detailSection}>
@@ -1218,14 +1609,14 @@ export function D078MethodAwareJourney({ domainKey, programmeName, programmeConn
           : "No individual course outcomes are available to show how your programme connects to this field."}</Text>
         {matchedOutcomes.length ? <RouteButton accessibilityLabel={outcomesExpanded ? "Hide matched course outcomes" : `See ${matchedOutcomes.length} matched course outcomes`} label={outcomesExpanded ? "Hide course outcomes" : `See ${matchedOutcomes.length} matched course outcomes`} expanded={outcomesExpanded} onPress={() => setOutcomesExpanded((value) => !value)} variant="secondary" style={styles.accordionButton} /> : null}
         {outcomesExpanded ? matchedOutcomes.map((outcome) => <View key={outcome.outcomeId} style={[styles.themeRow, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
-          <Text style={[styles.meta, { color: colors.textRole.muted }]}>{outcome.themeTitle}</Text>
-          {outcome.courseTitle ? <Text style={[styles.courseHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{outcome.courseTitle}</Text> : null}
-          <Text style={[styles.body, { color: colors.textRole.secondary }]}>{outcome.studentText}</Text>
+          <Text style={[styles.meta, { color: colors.textRole.muted }]}>{displayText(outcome.themeTitle, domainOverviewTerms)}</Text>
+          {outcome.courseTitle ? <Text style={[styles.courseHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{displayText(outcome.courseTitle, domainOverviewTerms)}</Text> : null}
+          <Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(outcome.studentText, domainOverviewTerms)}</Text>
         </View>) : null}
       </View>
     </View>
     <ItemLane title="Compulsory foundations" ids={foundations} selection={selection} foundations resources={domainResources} />
-    <ItemLane title="Knowledge of society and the social world" ids={societyKnowledge?.label ? [societyKnowledgeId] : []} selection={selection} onToggle={toggleItem} resources={domainResources} />
+    <ItemLane title="Knowledge of society and the social world" ids={societyKnowledge?.label ? [societyKnowledgeId] : []} selection={selection} onToggle={toggleItem} resources={domainResources} stageChoiceIds={societyKnowledge?.label ? [societyKnowledgeId] : []} />
     <MethodChoicePanel
       selection={selection}
       onToggleMethod={(id) => methodsChanged(toggleD078Method(selection, id))}
@@ -1239,11 +1630,11 @@ export function D078MethodAwareJourney({ domainKey, programmeName, programmeConn
       <Text style={[styles.body, { color: colors.textRole.secondary }]}>These field-wide knowledge and research-practice options appear here only when the evidence connects them to your selected method or named design. They are shown in that route’s context—not as a checklist for every student. You can continue without selecting a useful option unless its stated condition applies to your project.</Text>
       {layer2Ids.length ? <View style={styles.learningLayer}>
         <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Field-wide knowledge and useful learning</Text>
-        <ItemLane title={selectedDesign ? `Useful for ${selectedDesign.label}` : "Useful for the method you selected"} ids={layer2Ids} selection={selection} onToggle={toggleItem} resources={domainResources} />
+        <ItemLane title={selectedDesign ? `Useful for ${selectedDesign.label}` : "Useful for the method you selected"} ids={layer2Ids} selection={selection} onToggle={toggleItem} resources={domainResources} stageChoiceIds={domainStageChoiceIds} />
       </View> : null}
       {layer3Ids.length ? <View style={styles.learningLayer}>
         <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Research practices and conditional preparation</Text>
-        <ItemLane title={selectedDesign ? `Use when the condition applies within ${selectedDesign.label}` : "Use when the condition applies to your selected method"} ids={layer3Ids} selection={selection} onToggle={toggleItem} resources={domainResources} />
+        <ItemLane title={selectedDesign ? `Use when the condition applies within ${selectedDesign.label}` : "Use when the condition applies to your selected method"} ids={layer3Ids} selection={selection} onToggle={toggleItem} resources={domainResources} stageChoiceIds={domainStageChoiceIds} />
       </View> : null}
       {!layer2Ids.length && !layer3Ids.length ? <Text style={[styles.meta, { color: colors.textRole.muted }]}>No additional preparation is supported for this selected route. You can continue without inventing a prerequisite.</Text> : null}
     </View> : null}
@@ -1255,19 +1646,19 @@ export function D078MethodAwareJourney({ domainKey, programmeName, programmeConn
       <View accessibilityLiveRegion="polite" style={styles.section}>
         {selectedDesign ? <View style={[styles.combinedDesignCard, { borderColor: colors.accentRole.action, backgroundColor: colors.surface.subtle }]} testID="d078-selected-combined-design">
           <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Your combined research design</Text>
-          <Text accessibilityRole="header" style={[styles.itemTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{selectedDesign.label}</Text>
+          <Text accessibilityRole="header" style={[styles.itemTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{displayLabel(selectedDesign.label)}</Text>
           {selectedDesign.whyCombine ? <View style={styles.detailSection}><Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Why these methods fit together</Text><Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(selectedDesign.whyCombine)}</Text></View> : null}
           {selectedDesign.howUsed ? <View style={styles.detailSection}><Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>How the work proceeds</Text><Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(selectedDesign.howUsed)}</Text></View> : null}
-          {selectedDesign.methodContributions.length ? <View style={styles.detailSection}><Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What each method contributes</Text>{selectedDesign.methodContributions.map((contribution) => <View key={contribution.methodId} style={styles.contributionRow}><Text style={[styles.itemTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{d078Node(contribution.methodId)?.label ?? contribution.methodId}</Text><Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(contribution.contribution)}</Text></View>)}</View> : null}
+          {selectedDesign.methodContributions.length ? <View style={styles.detailSection}><Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What each method contributes</Text>{selectedDesign.methodContributions.map((contribution) => <View key={contribution.methodId} style={styles.contributionRow}><Text style={[styles.itemTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{displayLabel(d078Node(contribution.methodId)?.label ?? contribution.methodId)}</Text><Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(contribution.contribution)}</Text></View>)}</View> : null}
           {selectedDesign.condition ? <View style={styles.detailSection}><Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Use this design when</Text><Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(selectedDesign.condition)}</Text></View> : null}
           {selectedDesign.limits ? <View style={styles.detailSection}><Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Keep in mind</Text><Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(selectedDesign.limits)}</Text></View> : null}
         </View> : <View style={styles.section}>
           <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Your selected method route</Text>
           <Text style={[styles.body, { color: colors.textRole.secondary }]}>Your method choice determines which areas, roles and further learning are supported. If you selected more than one method, choose the named design above before a combined route can appear.</Text>
         </View>}
-        <ItemLane title="Needed for what you selected" ids={neededDomainIds} selection={selection} onToggle={toggleItem} resources={domainResources} />
-        <ItemLane title="Use when this condition applies" ids={conditionalDomainIds} selection={selection} onToggle={toggleItem} resources={domainResources} />
-        <ItemLane title="Useful. You can skip it" ids={usefulDomainIds} selection={selection} onToggle={toggleItem} resources={domainResources} />
+        <ItemLane title="Needed for what you selected" ids={neededDomainIds} selection={selection} onToggle={toggleItem} resources={domainResources} stageChoiceIds={domainStageChoiceIds} />
+        <ItemLane title="Use when this condition applies" ids={conditionalDomainIds} selection={selection} onToggle={toggleItem} resources={domainResources} stageChoiceIds={domainStageChoiceIds} />
+        <ItemLane title="Useful. You can skip it" ids={usefulDomainIds} selection={selection} onToggle={toggleItem} resources={domainResources} stageChoiceIds={domainStageChoiceIds} />
       </View>
       <D078AreaResults projection={projection} onOpenArea={navigateArea} headingRef={areaResultsHeadingRef} />
     </Animated.View>}
@@ -1275,7 +1666,7 @@ export function D078MethodAwareJourney({ domainKey, programmeName, programmeConn
   </Animated.View></D078RelationshipNavigationProvider>;
 }
 
-export function D078AreaRoute({ domainKey, areaId, initialSelection, initialRouteStacks, roles, guidanceContext, returnToFieldOnBack = false, areaResources = [], domainResources = [] }: {
+export function D078AreaRoute({ domainKey, areaId, initialSelection, initialRouteStacks, roles, guidanceContext, returnToFieldOnBack = false, domainOverviewAlreadyPresented = true, areaResources = [], domainResources = [] }: {
   domainKey: string;
   areaId: string;
   initialSelection: D078Selection;
@@ -1283,22 +1674,60 @@ export function D078AreaRoute({ domainKey, areaId, initialSelection, initialRout
   roles: DomainRoleSummary[];
   guidanceContext: GuidanceRouteContext;
   returnToFieldOnBack?: boolean;
+  domainOverviewAlreadyPresented?: boolean;
   areaResources?: CareerLearningResource[];
   domainResources?: CareerLearningResource[];
 }) {
   const { colors } = useTheme();
   const { width } = useWindowDimensions();
+  const [routeContextOpen, setRouteContextOpen] = useState(false);
   const primaryActionStyle = d078PrimaryActionStyle(width, Platform.OS);
   const router = useRouter();
   const exploreNav = useExploreNav();
+  const reducedMotion = useReducedMotion();
   const stageEntry = useD078StageEntry("horizontal");
-  const [routeContextOpen, setRouteContextOpen] = useState(false);
+  const [domainOverviewPresented, setDomainOverviewPresented] = useState(domainOverviewAlreadyPresented);
+  useEffect(() => {
+    setDomainOverviewPresented(domainOverviewAlreadyPresented);
+  }, [areaId, domainOverviewAlreadyPresented]);
   const [routeStackState, setRouteStackState] = useState<D078RouteStackState>(() => initialD078RouteStackState({ ...initialSelection, areaId, roleId: undefined }, initialRouteStacks));
   const selection = routeStackState.stacks.find((stack) => stack.id === routeStackState.activeStackId)?.selection ?? { ...initialSelection, areaId, roleId: undefined };
-  const setSelection = (next: D078Selection | ((current: D078Selection) => D078Selection)) => updateActiveD078Selection(setRouteStackState, next);
+  const setSelection = (next: D078Selection | ((current: D078Selection) => D078Selection)) => {
+    const active = routeStackState.stacks.find((stack) => stack.id === routeStackState.activeStackId);
+    const current = active?.selection ?? selection;
+    const resolved = typeof next === "function" ? next(current) : next;
+    if (JSON.stringify(current) !== JSON.stringify(resolved)) configureD078SelectionTransition(reducedMotion);
+    announceD078FocusChange(current, resolved, "area", normalizedAreaId);
+    recordD078SelectionDelta(current, resolved, { ...guidanceContext, domainId: domainKey, areaId: normalizedAreaId }, routeStackState.activeStackId);
+    updateActiveD078Selection(setRouteStackState, resolved);
+  };
   const projection = useMemo(() => projectD078Route(selection), [selection]);
   const area = projection.visibleAreas.find((entry) => entry.areaId === areaId || entry.nodeId === areaId);
   const normalizedAreaId = area?.areaId ?? areaId;
+  const selectedTaskFamilyIds = selection.taskFamilyIdsByArea?.[normalizedAreaId] ?? [];
+  const domainContextFamilyIds = new Set(area?.selectedDomainContextFamilyIds ?? []);
+  const areaContextFamilyIds = new Set(area?.selectedAreaContextFamilyIds ?? []);
+  const selectedContextFamilyIds = new Set([...domainContextFamilyIds, ...areaContextFamilyIds, ...selectedTaskFamilyIds]);
+  const selectedContextFamilyKey = [...selectedContextFamilyIds].sort().join("|");
+  const [showMoreTaskFamilies, setShowMoreTaskFamilies] = useState(() => selectedContextFamilyIds.size === 0);
+  const [showOtherAreaTools, setShowOtherAreaTools] = useState(false);
+  const [areaOverviewExpanded, setAreaOverviewExpanded] = useState(false);
+  useEffect(() => {
+    setShowMoreTaskFamilies(selectedContextFamilyIds.size === 0);
+  }, [normalizedAreaId, selectedTaskFamilyIds.join("|"), selectedContextFamilyKey]);
+  useEffect(() => {
+    setShowOtherAreaTools(false);
+  }, [selection.addedItemIds.join("|")]);
+  useEffect(() => {
+    setAreaOverviewExpanded(false);
+  }, [normalizedAreaId]);
+  const visibleTaskFamilyIds = selectedTaskFamilyIds.length && !showMoreTaskFamilies
+    ? selectedTaskFamilyIds
+    : selectedContextFamilyIds.size && !showMoreTaskFamilies
+      ? [...selectedContextFamilyIds]
+      : [...(area?.taskFamilyIds ?? [])].sort((left, right) =>
+        Number(selectedContextFamilyIds.has(right)) - Number(selectedContextFamilyIds.has(left)),
+      );
   const graphRoles = projection.visibleRoles.filter((role) => role.areaId === normalizedAreaId);
   const roleByGraphId = new Map<string, DomainRoleSummary>();
   graphRoles.forEach((role) => {
@@ -1313,25 +1742,98 @@ export function D078AreaRoute({ domainKey, areaId, initialSelection, initialRout
       return;
     }
     const next = { ...selection, areaId: undefined, roleId: undefined };
+    recordD078SelectionDelta(selection, next, { ...guidanceContext, domainId: domainKey }, routeStackState.activeStackId);
     const query = routeSelectionQuery(next, { ...guidanceContext, domainId: domainKey, areaId: undefined }, routeStackState);
     router.replace(`${exploreNav.base}/domain/${encodeURIComponent(domainKey)}?${query}` as never);
   };
+  if (!domainOverviewPresented) return <D078DomainOverviewStep
+    destinationLabel={area?.label ?? "this area"}
+    continueLabel="Continue to the area"
+    onBack={returnToField}
+    onContinue={() => setDomainOverviewPresented(true)}
+  />;
   if (!area) return <D078RelationshipNavigationProvider><Animated.View style={[styles.page, stageEntry.entryStyle]}>
     <Text ref={stageEntry.titleRef} accessibilityRole="header" style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>This area is not in your selected route</Text>
       <Text style={[styles.body, { color: colors.textRole.secondary }]}>Choose a method or named combined research design on the field page to see the areas it supports.</Text>
     <RouteButton label="Back to Social Sciences domain" onPress={returnToField} variant="primary" style={primaryActionStyle} />
   </Animated.View></D078RelationshipNavigationProvider>;
-  const areaItemIds = projection.areaItemIdsByArea[normalizedAreaId] ?? [];
+  const visibleAreaMethodContributions = selectedContextFamilyIds.size
+    ? area.methodContributions.filter((contribution) => contribution.taskFamilyIds.length === 0
+      || contribution.taskFamilyIds.some((id) => selectedContextFamilyIds.has(id)))
+    : area.methodContributions;
+  const taskLinkedAreaLearningIds = selectedContextFamilyIds.size
+    ? new Set([...selectedContextFamilyIds].flatMap((familyId) => area.areaItemIdsByTaskFamily[familyId] ?? []))
+    : undefined;
+  // A tool can have both a task-family relationship and a method-tool route.
+  // Keep it in the same ordered area-learning stream as its linked items;
+  // rendering a second, tool-only block can visually reverse a reviewed edge.
+  const allAreaToolIds = [...new Set(visibleAreaMethodContributions.flatMap((contribution) => contribution.toolIds))]
+    .filter((toolId) => !taskLinkedAreaLearningIds
+      || taskLinkedAreaLearningIds.has(toolId)
+      || graph.typed_relationship_edges.some((edge) => edge.status === "resolved_ready_for_use"
+        && progressiveRelationshipTypes.has(edge.relationship)
+        && ((edge.sourceId === toolId && taskLinkedAreaLearningIds.has(edge.targetId))
+          || (edge.targetId === toolId && taskLinkedAreaLearningIds.has(edge.sourceId)))));
+  const areaFoundationIdSet = new Set(area.areaFoundationIds ?? []);
+  const allAreaItemIds = stableD078ItemOrder([...new Set([
+    ...(projection.areaItemIdsByArea[normalizedAreaId] ?? []),
+    ...allAreaToolIds,
+  ])].filter((id) => !areaFoundationIdSet.has(id)));
+  const contextualAreaItemIds = selectedContextFamilyIds.size
+    ? new Set([...selectedContextFamilyIds].flatMap((familyId) => area?.areaItemIdsByTaskFamily[familyId] ?? []))
+    : null;
+  const areaItemIds = contextualAreaItemIds
+    ? allAreaItemIds.filter((id) => contextualAreaItemIds.has(id) || allAreaToolIds.includes(id))
+    : allAreaItemIds;
+  const areaFoundations = (area.areaFoundationIds ?? []).map((id) => d078Node(id)).filter((node) => Boolean(node));
+  const inheritedDomainItemIds = stableD078ItemOrder([...new Set([
+    ...(projection.domainItemIdsByArea[normalizedAreaId] ?? []),
+    ...(projection.toolIdsByArea[normalizedAreaId] ?? []).filter((id) => id.startsWith("domain-item:") || id.startsWith("domain-emerging:")),
+  ])].filter((id) => selection.addedItemIds.includes(id)));
   const needed = areaItemIds.filter((id) => requirementLane(d078Node(id)) === "needed");
-  const useful = areaItemIds.filter((id) => requirementLane(d078Node(id)) !== "needed");
+  const usefulAndConditional = stableD078ItemOrder(areaItemIds.filter((id) => requirementLane(d078Node(id)) !== "needed"));
+  const areaLaneDefinitions = [
+    { key: "needed", title: "Needed for what you selected", ids: needed },
+    { key: "useful", title: "Other useful and conditional learning for this route", ids: usefulAndConditional },
+  ];
+  const orderedAreaLaneKeys = areaLaneDefinitions.map((lane) => lane.key);
+  const areaLanesByKey = new Map(areaLaneDefinitions.map((lane) => [lane.key, lane]));
+  // Keep tools in the same selected work-focus context as the contribution
+  // cards. Contributions without a task-family link remain general area tools.
+  const areaStageChoiceIds = areaItemIds;
+  const selectedAreaStageIds = areaStageChoiceIds.filter((id) => selection.addedItemIds.includes(id));
+  const methodContributionToolIdsForSelection = visibleAreaMethodContributions
+    .filter((contribution) => contribution.itemIds.some((id) => selectedAreaStageIds.includes(id)))
+    .flatMap((contribution) => contribution.toolIds)
+    .filter((id) => areaStageChoiceIds.includes(id));
+  const focusedAreaStageIds = new Set([
+    ...progressiveChoiceIds(areaStageChoiceIds, selection.addedItemIds),
+    ...methodContributionToolIdsForSelection,
+  ]);
+  const hiddenAreaStageAlternatives = graphAlternativeIds(selectedAreaStageIds, areaStageChoiceIds);
+  const hiddenAreaToolAlternatives = new Set(allAreaToolIds.filter((id) => hiddenAreaStageAlternatives.has(id)));
   const supports = [...area.supportingMethodIds.map((id) => projection.methods.find((method) => method.id === id)?.label), ...area.supportingCombinationIds.map((id) => projection.combinations.find((combo) => combo.id === id)?.label)].filter((label): label is string => Boolean(label));
+  const areaNode = d078Node(area.nodeId);
+  const areaOrientation = areaNode?.student_orientation as {
+    shortIntro?: string;
+    whatItStudies?: string;
+    whatPeopleDo?: string;
+    approaches?: string[];
+    questions?: string[];
+    outputs?: string[];
+    howWorkHappens?: string[];
+    limits?: string;
+    ethicalCare?: string;
+  } | undefined;
   const addItem = (id: string) => setSelection((current) => toggleD078AddedItem(current, id));
+  const toggleTaskFamily = (familyId: string) => setSelection((current) => toggleD078TaskFamily(current, normalizedAreaId, familyId));
   const removeAreaChoice = (next: D078Selection) => {
     const remains = projectD078Route(next).visibleAreas.some((entry) => entry.areaId === normalizedAreaId);
     if (remains) {
       setSelection(next);
       return;
     }
+    recordD078SelectionDelta(selection, next, { ...guidanceContext, domainId: domainKey }, routeStackState.activeStackId);
     const fieldSelection = d078PickerSelection(next);
     const context = { ...guidanceContext, domainId: domainKey, areaId: undefined };
     const query = `${routeSelectionQuery(fieldSelection, context, routeStackState)}&d078_undo_selection=${encodeURIComponent(JSON.stringify(selection))}`;
@@ -1342,37 +1844,160 @@ export function D078AreaRoute({ domainKey, areaId, initialSelection, initialRout
     const role = projection.visibleRoles.find((entry) => entry.roleId === roleId && entry.areaId === normalizedAreaId);
     const apiRole = roleByGraphId.get(roleId);
     if (!role || !apiRole) return;
-    const query = `${routeSelectionQuery(next, { ...guidanceContext, domainId: domainKey, areaId: normalizedAreaId }, routeStackState)}&d078_role_id=${encodeURIComponent(roleId)}&d078_from_area=1`;
+    recordD078SelectionDelta(selection, next, { ...guidanceContext, domainId: domainKey, areaId: normalizedAreaId, roleId }, routeStackState.activeStackId);
+    const query = `${routeSelectionQuery(next, { ...guidanceContext, domainId: domainKey, areaId: normalizedAreaId }, routeStackState)}&d078_role_id=${encodeURIComponent(roleId)}&d078_from_area=1&d078_domain_overview_seen=1`;
     router.push(`${exploreNav.base}/role/${encodeURIComponent(apiRole.key)}?${query}` as never);
   };
+
+  // Each area can be opened directly, so its own visible overview must define
+  // terms on first use while avoiding repeated expansions in its later sections.
+  const areaOverviewTerms = new Set<string>();
 
   return <D078RelationshipNavigationProvider><Animated.View style={[styles.page, stageEntry.entryStyle]}>
     <D078JourneyPage stage="area" trayRevision={JSON.stringify(routeStackState)} tray={<D078JourneyTray selection={selection} setSelection={setSelection} onRemoveChoice={removeAreaChoice} projection={projection} context={{ ...guidanceContext, domainId: domainKey, areaId: normalizedAreaId }} routeStackState={routeStackState} setRouteStackState={setRouteStackState} onActivateRoute={(next, state) => router.replace(`${exploreNav.base}/domain/D078?${routeSelectionQuery(next, { ...guidanceContext, domainId: domainKey }, state)}` as never)} />}>
     <RouteButton label="Back to Social Sciences domain" onPress={returnToField} variant="secondary" style={styles.hugSecondaryAction} />
     <View style={styles.hero}>
-      <Text ref={stageEntry.titleRef} accessibilityRole="header" style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{area.label}</Text>
+      <RouteTitleRow
+        titleRef={stageEntry.titleRef}
+        title={area.label}
+        checked={selection.planAreaId === normalizedAreaId}
+        checkLabel={`Select ${area.label}`}
+        onToggle={() => setSelection(toggleAreaPlan(selection, normalizedAreaId))}
+      />
       <Text style={[styles.body, { color: colors.textRole.secondary }]}>{`Shown because you selected ${supports.join(" and ")}.`}</Text>
+      {typeof areaNode?.description === "string" ? <Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(areaNode.description, areaOverviewTerms)}</Text> : null}
+      {areaOrientation?.whatItStudies || areaOrientation?.whatPeopleDo ? <View style={[styles.areaContext, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+        {areaOrientation.whatItStudies ? <View style={styles.detailSection}>
+          <Text accessibilityRole="header" style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What this area studies</Text>
+          <Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(areaOrientation.whatItStudies, areaOverviewTerms)}</Text>
+        </View> : null}
+        {areaOrientation.whatPeopleDo ? <View style={styles.detailSection}>
+          <Text accessibilityRole="header" style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>How researchers work in this area</Text>
+          <Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(areaOrientation.whatPeopleDo, areaOverviewTerms)}</Text>
+        </View> : null}
+        <RouteButton
+          label={areaOverviewExpanded ? "Hide examples and limits" : "See examples, questions, study steps and limits"}
+          accessibilityLabel={areaOverviewExpanded ? "Hide area examples and limits" : "See area examples, questions, study steps and limits"}
+          expanded={areaOverviewExpanded}
+          onPress={() => setAreaOverviewExpanded((value) => !value)}
+          variant="secondary"
+          style={styles.accordionButton}
+        />
+        {areaOverviewExpanded ? <>
+          {areaOrientation.approaches?.length ? <View style={styles.detailSection}>
+            <Text accessibilityRole="header" style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Examples of approaches in this area</Text>
+            {areaOrientation.approaches.map((approach, index) => <Text key={`area-approach-${index}`} style={[styles.body, { color: colors.textRole.secondary }]}>• {displayText(approach, areaOverviewTerms)}</Text>)}
+          </View> : null}
+          {areaOrientation.questions?.length ? <View style={styles.detailSection}>
+            <Text accessibilityRole="header" style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Questions researchers might ask</Text>
+            {areaOrientation.questions.map((question, index) => <Text key={`area-question-${index}`} style={[styles.body, { color: colors.textRole.secondary }]}>• {displayText(question, areaOverviewTerms)}</Text>)}
+          </View> : null}
+          {areaOrientation.outputs?.length ? <View style={styles.detailSection}>
+            <Text accessibilityRole="header" style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What this work may produce</Text>
+            {areaOrientation.outputs.map((output, index) => <Text key={`area-output-${index}`} style={[styles.body, { color: colors.textRole.secondary }]}>• {displayText(output, areaOverviewTerms)}</Text>)}
+          </View> : null}
+          {areaOrientation.howWorkHappens?.length ? <View style={styles.detailSection}>
+            <Text accessibilityRole="header" style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>How a study proceeds</Text>
+            {areaOrientation.howWorkHappens.map((step, index) => <Text key={`area-work-step-${index}`} style={[styles.body, { color: colors.textRole.secondary }]}>{index + 1}. {displayText(step, areaOverviewTerms)}</Text>)}
+          </View> : null}
+          {areaOrientation.limits ? <View style={styles.detailSection}>
+            <Text accessibilityRole="header" style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Limits to keep in mind</Text>
+            <Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(areaOrientation.limits, areaOverviewTerms)}</Text>
+          </View> : null}
+          {areaOrientation.ethicalCare ? <View style={styles.detailSection}>
+            <Text accessibilityRole="header" style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Protecting people and their information</Text>
+            <Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(areaOrientation.ethicalCare, areaOverviewTerms)}</Text>
+          </View> : null}
+        </> : null}
+      </View> : null}
     </View>
+    <View style={[styles.handoff, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+      <Text accessibilityRole="header" style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Carried forward from Social Sciences</Text>
+      <Text style={[styles.body, { color: colors.textRole.secondary }]}>This area builds on the field foundations and the method or named design you selected. The domain choices below are shown here only when you selected them and the graph links them to this area. They are context carried forward—not repeated area requirements.</Text>
+      <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Field foundations</Text>
+      <Text style={[styles.body, { color: colors.textRole.secondary }]}>{projection.foundations.map((item) => item.label).join(" · ")}</Text>
+      <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Methods and designs selected</Text>
+      <Text style={[styles.body, { color: colors.textRole.secondary }]}>{supports.join(" · ")}</Text>
+      <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Domain items you selected that connect to this area</Text>
+      {inheritedDomainItemIds.length
+        ? inheritedDomainItemIds.map((id) => <Text key={id} style={[styles.body, { color: colors.textRole.secondary }]}>• {d078Node(id)?.label ?? id}</Text>)
+        : <Text style={[styles.body, { color: colors.textRole.secondary }]}>No optional domain item is selected for this area. Your foundations and selected method or design still carry forward.</Text>}
+    </View>
+    {areaFoundations.length ? <View style={styles.section}>
+      <Text accessibilityRole="header" style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Area-specific starting point</Text>
+      <Text style={[styles.summary, { color: colors.textRole.secondary }]}>This area has a source-backed foundation before its work-context choices. It is recommended and selectable, but you can skip it and continue; it is not a progression blocker.</Text>
+      {areaFoundations.map((foundation) => foundation ? <ProgressiveReveal key={foundation.id}>
+        <ItemCard id={foundation.id} selection={selection} onToggle={addItem} resources={areaResources} contextLevel="subgroup" />
+      </ProgressiveReveal> : null)}
+    </View> : null}
     {area.taskFamilyIds.length || area.methodContributions.length ? <View style={[styles.areaContext, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
-      <Text accessibilityRole="header" style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What this area covers</Text>
-      {area.taskFamilyIds.map((id) => {
-        const label = d078Node(id)?.label;
-        return label ? <Text key={id} style={[styles.taskFamily, { color: colors.textRole.secondary }]}>{label}</Text> : null;
+      <Text accessibilityRole="header" style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Work contexts reached by your selected method or design</Text>
+      <Text style={[styles.body, { color: colors.textRole.secondary }]}>These work contexts are part of learning about the area and may be your first area-level choice. They follow from your selected method or design; a domain option you selected can bring a related context forward. Choose one or more to see only their linked area learning and role-task context, or choose none and keep the general area route. The links guide your choices but do not make them compulsory.</Text>
+      {visibleTaskFamilyIds.map((id) => {
+        const familyNode = d078Node(id);
+        const familyTerms = new Set<string>();
+        const label = familyNode?.label;
+        const familyExplanation = displayText(familyNode?.task_evidence_text ?? familyNode?.meaning ?? familyNode?.description, familyTerms);
+        const familyOutputs = (Array.isArray(familyNode?.learner_output) ? familyNode.learner_output : [familyNode?.learner_output])
+          .map((output) => displayText(output, familyTerms)).filter(Boolean);
+        const preparation = familyNode?.task_preparation_context as {
+          heading?: string;
+          summary?: string;
+          learning_to_review?: string[];
+          project_checks?: string[];
+          display_when_selected?: boolean;
+        } | undefined;
+        const selected = selectedTaskFamilyIds.includes(id);
+        return label ? <ProgressiveReveal key={id}><View style={styles.taskFamilyChoice}>
+          <RouteButton
+            label={label}
+            accessibilityLabel={`${selected ? "Remove" : "Select"} work focus: ${label}`}
+            selected={selected}
+            onPress={() => toggleTaskFamily(id)}
+            variant={selected ? "selected" : "secondary"}
+            labelStyle={styles.taskFamilyLabel}
+            style={styles.taskFamilyAction}
+          />
+          {familyExplanation && familyExplanation !== label ? <Text style={[styles.body, { color: colors.textRole.secondary }]}>{familyExplanation}</Text> : null}
+          {familyOutputs.length ? <View style={styles.detailSection}>
+            <Text style={[styles.meta, { color: colors.textRole.muted }]}>A useful result from this work</Text>
+            {familyOutputs.map((output, index) => <Text key={`${id}:output:${index}`} style={[styles.meta, { color: colors.textRole.secondary }]}>{output}</Text>)}
+          </View> : null}
+          {selected ? <Text style={[styles.meta, { color: colors.textRole.secondary }]}>Selected work focus</Text> : null}
+          {selected && preparation && preparation.display_when_selected !== false ? <View style={styles.detailSection}>
+            <Text accessibilityRole="header" style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{preparation.heading ?? "Preparation and project checks"}</Text>
+            {preparation.summary ? <Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(preparation.summary, familyTerms)}</Text> : null}
+            {preparation.learning_to_review?.length ? <View style={styles.detailSection}>
+              <Text style={[styles.meta, { color: colors.textRole.muted }]}>Learning to review for this work</Text>
+              {preparation.learning_to_review.map((note, index) => <Text key={`${id}:prep:${index}`} style={[styles.body, { color: colors.textRole.secondary }]}>• {displayText(note, familyTerms)}</Text>)}
+            </View> : null}
+            {preparation.project_checks?.length ? <View style={styles.detailSection}>
+              <Text style={[styles.meta, { color: colors.textRole.muted }]}>Checks for your project</Text>
+              {preparation.project_checks.map((note, index) => <Text key={`${id}:check:${index}`} style={[styles.body, { color: colors.textRole.secondary }]}>• {displayText(note, familyTerms)}</Text>)}
+            </View> : null}
+          </View> : null}
+        </View></ProgressiveReveal> : null;
       })}
+      {selectedContextFamilyIds.size > 0 && !showMoreTaskFamilies ? <RouteButton
+        label={selectedTaskFamilyIds.length ? "Add another work focus" : "Show other work contexts"}
+        accessibilityLabel={selectedTaskFamilyIds.length ? "Add another work focus" : "Show other work contexts"}
+        onPress={() => setShowMoreTaskFamilies(true)}
+        variant="secondary"
+        style={styles.hugSecondaryAction}
+      /> : null}
       {area.methodContributions.length ? <View style={styles.detailSections}>
         <Text accessibilityRole="header" style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>How each method contributes to this route</Text>
-        {area.methodContributions.map((contribution) => <View key={contribution.methodId} style={[styles.themeRow, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
+        {hiddenAreaToolAlternatives.size ? <Text style={[styles.meta, { color: colors.textRole.secondary }]}>A tool explicitly marked as an alternative to your selected learning is hidden. Open the selected card’s connection details to compare it, or deselect your choice to restore the full set.</Text> : null}
+        {selectedTaskFamilyIds.length > 0 && !visibleAreaMethodContributions.length ? <Text style={[styles.meta, { color: colors.textRole.secondary }]}>The selected work focus has no separate method-contribution note. Its linked area items and roles are shown below.</Text> : null}
+        {visibleAreaMethodContributions.map((contribution) => <View key={contribution.methodId} style={[styles.themeRow, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
           <Text style={[styles.itemTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{d078Node(contribution.methodId)?.label ?? "Selected method"}</Text>
-          <Text style={[styles.body, { color: colors.textRole.secondary }]}>{contribution.contribution}</Text>
-          {contribution.taskFamilyIds.map((id) => d078Node(id)?.label ? <Text key={id} style={[styles.meta, { color: colors.textRole.secondary }]}>Work in this area: {d078Node(id)?.label}</Text> : null)}
-          {contribution.itemIds.length ? <View style={styles.detailSection}>
+          <Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(contribution.contribution)}</Text>
+          {contribution.taskFamilyIds.filter((id) => !selectedContextFamilyIds.size || selectedContextFamilyIds.has(id)).map((id) => d078Node(id)?.label ? <Text key={id} style={[styles.meta, { color: colors.textRole.secondary }]}>Work in this area: {d078Node(id)?.label}</Text> : null)}
+          {contribution.itemIds.filter((id) => !selectedContextFamilyIds.size || areaItemIds.includes(id)).length ? <View style={styles.detailSection}>
             <Text style={[styles.meta, { color: colors.textRole.muted }]}>Learning connected to this method in this area</Text>
-            {contribution.itemIds.map((id) => d078Node(id)?.label ? <Text key={id} style={[styles.meta, { color: colors.textRole.secondary }]}>• {d078Node(id)?.label}</Text> : null)}
+            {contribution.itemIds.filter((id) => !selectedContextFamilyIds.size || areaItemIds.includes(id)).map((id) => d078Node(id)?.label ? <Text key={id} style={[styles.meta, { color: colors.textRole.secondary }]}>• {d078Node(id)?.label}</Text> : null)}
           </View> : null}
-          {contribution.toolIds.length ? <View style={styles.detailSection}>
-            <Text style={[styles.meta, { color: colors.textRole.muted }]}>Tools that support this method here</Text>
-            {contribution.toolIds.map((id) => d078Node(id)?.label ? <Text key={id} style={[styles.meta, { color: colors.textRole.secondary }]}>• {d078Node(id)?.label}</Text> : null)}
-          </View> : null}
+          {contribution.toolIds.length ? <Text style={[styles.meta, { color: colors.textRole.secondary }]}>This method also connects to tools in the area learning choices below. Their cards appear there in the same selectable route list as area skills, knowledge, and methods.</Text> : null}
         </View>)}
         <Text style={[styles.meta, { color: colors.textRole.muted }]}>The learning items below stay attached to the method and work they support; they are not treated as one undifferentiated checklist.</Text>
       </View> : null}
@@ -1387,8 +2012,17 @@ export function D078AreaRoute({ domainKey, areaId, initialSelection, initialRout
         <Text style={[styles.meta, { color: colors.textRole.secondary }]}>{supports.join(" · ")}</Text>
       </View> : null}
     </View>
-    <ItemLane title="Needed for what you selected" ids={needed} selection={selection} onToggle={addItem} resources={[...domainResources, ...areaResources]} contextLevel="subgroup" />
-    <ItemLane title="Useful. You can skip it" ids={useful} selection={selection} onToggle={addItem} resources={[...domainResources, ...areaResources]} contextLevel="subgroup" />
+    {orderedAreaLaneKeys.map((key) => {
+      const lane = areaLanesByKey.get(key);
+      return lane?.ids.length ? <ItemLane key={key} title={lane.title} ids={lane.ids} selection={selection} onToggle={addItem} resources={[...domainResources, ...areaResources]} contextLevel="subgroup" stageChoiceIds={areaStageChoiceIds} /> : null;
+    })}
+    {selectedAreaStageIds.length > 0 && focusedAreaStageIds.size < areaStageChoiceIds.length && !showOtherAreaTools ? <RouteButton
+      label={hiddenAreaStageAlternatives.size ? "Show other area choices and compare alternatives" : "Show more area learning and tools"}
+      accessibilityLabel={hiddenAreaStageAlternatives.size ? "Show other area choices and compare alternatives" : "Show more area learning and tools"}
+      onPress={() => setShowOtherAreaTools(true)}
+      variant="secondary"
+      style={styles.hugSecondaryAction}
+    /> : null}
     <View style={styles.section}>
       <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Roles in this area for your selected methods</Text>
       {graphRoles.length ? <View style={styles.areaCardList}>{graphRoles.map((role) => {
@@ -1405,7 +2039,7 @@ export function D078AreaRoute({ domainKey, areaId, initialSelection, initialRout
   </Animated.View></D078RelationshipNavigationProvider>;
 }
 
-export function D078RoleRoute({ areaId, roleId, roleName, roleKey, initialSelection, initialRouteStacks, roles, guidanceContext, returnToAreaOnBack = false, roleResources = [], domainResources = [] }: {
+export function D078RoleRoute({ areaId, roleId, roleName, roleKey, initialSelection, initialRouteStacks, roles, guidanceContext, returnToAreaOnBack = false, domainOverviewAlreadyPresented = true, roleResources = [], domainResources = [] }: {
   areaId?: string;
   roleId?: string;
   roleName: string;
@@ -1415,6 +2049,7 @@ export function D078RoleRoute({ areaId, roleId, roleName, roleKey, initialSelect
   roles: DomainRoleSummary[];
   guidanceContext: GuidanceRouteContext;
   returnToAreaOnBack?: boolean;
+  domainOverviewAlreadyPresented?: boolean;
   roleResources?: CareerLearningResource[];
   domainResources?: CareerLearningResource[];
 }) {
@@ -1423,16 +2058,32 @@ export function D078RoleRoute({ areaId, roleId, roleName, roleKey, initialSelect
   const primaryActionStyle = d078PrimaryActionStyle(width, Platform.OS);
   const router = useRouter();
   const exploreNav = useExploreNav();
+  const reducedMotion = useReducedMotion();
   const stageEntry = useD078StageEntry("vertical");
-  const [routeContextOpen, setRouteContextOpen] = useState(false);
+  const [domainOverviewPresented, setDomainOverviewPresented] = useState(domainOverviewAlreadyPresented);
+  useEffect(() => {
+    setDomainOverviewPresented(domainOverviewAlreadyPresented);
+  }, [areaId, domainOverviewAlreadyPresented, roleId, roleName]);
   const normalizedRoleName = normalizeLabel(roleName);
   const resolvedRoleId = resolveD078RoleRouteId(initialSelection, areaId, roleId, normalizedRoleName);
   const [routeStackState, setRouteStackState] = useState<D078RouteStackState>(() => initialD078RouteStackState({ ...initialSelection, areaId, roleId: resolvedRoleId }, initialRouteStacks));
   const selection = routeStackState.stacks.find((stack) => stack.id === routeStackState.activeStackId)?.selection ?? { ...initialSelection, areaId, roleId: resolvedRoleId };
-  const setSelection = (next: D078Selection | ((current: D078Selection) => D078Selection)) => updateActiveD078Selection(setRouteStackState, next);
+  const setSelection = (next: D078Selection | ((current: D078Selection) => D078Selection)) => {
+    const active = routeStackState.stacks.find((stack) => stack.id === routeStackState.activeStackId);
+    const current = active?.selection ?? selection;
+    const resolved = typeof next === "function" ? next(current) : next;
+    if (JSON.stringify(current) !== JSON.stringify(resolved)) configureD078SelectionTransition(reducedMotion);
+    announceD078FocusChange(current, resolved, "role", areaId);
+    recordD078SelectionDelta(current, resolved, { ...guidanceContext, domainId: "D078", areaId, roleId: resolvedRoleId }, routeStackState.activeStackId);
+    updateActiveD078Selection(setRouteStackState, resolved);
+  };
   const projection = useMemo(() => projectD078Route(selection), [selection]);
   const routeRole = projection.visibleRoles.find((role) => role.roleId === resolvedRoleId && role.areaId === areaId);
   const visible = routeRole !== undefined && !projection.requestedRoleHidden;
+  const [showOtherRoleTools, setShowOtherRoleTools] = useState(false);
+  useEffect(() => {
+    setShowOtherRoleTools(false);
+  }, [selection.addedItemIds.join("|")]);
   const returnToArea = (nextSelection = selection) => {
     const canGoBack = typeof (router as typeof router & { canGoBack?: () => boolean }).canGoBack === "function"
       && (router as typeof router & { canGoBack: () => boolean }).canGoBack();
@@ -1441,8 +2092,9 @@ export function D078RoleRoute({ areaId, roleId, roleName, roleKey, initialSelect
       return;
     }
     const next = { ...nextSelection, areaId: areaId || undefined, roleId: undefined };
+    recordD078SelectionDelta(selection, next, { ...guidanceContext, domainId: "D078", areaId: areaId || undefined }, routeStackState.activeStackId);
     const context = { ...guidanceContext, domainId: "D078", areaId: areaId || undefined, roleId: undefined };
-    const query = routeSelectionQuery(next, context, routeStackState);
+    const query = `${routeSelectionQuery(next, context, routeStackState)}${areaId ? "&d078_domain_overview_seen=1" : ""}`;
     const destination = areaId
       ? `${exploreNav.base}/domain/D078/subgroup/${encodeURIComponent(areaId)}`
       : `${exploreNav.base}/domain/D078`;
@@ -1450,10 +2102,21 @@ export function D078RoleRoute({ areaId, roleId, roleName, roleKey, initialSelect
   };
   const returnToDomain = () => {
     const next = { ...d078PickerSelection(selection), areaId: undefined, roleId: undefined };
+    recordD078SelectionDelta(selection, next, { ...guidanceContext, domainId: "D078" }, routeStackState.activeStackId);
     const context = { ...guidanceContext, domainId: "D078", areaId: undefined, roleId: undefined };
     const query = routeSelectionQuery(next, context, routeStackState);
     router.replace(`${exploreNav.base}/domain/D078?${query}` as never);
   };
+  if (!domainOverviewPresented) return <D078DomainOverviewStep
+    destinationLabel={`the ${titleCase(roleName)} role`}
+    continueLabel={visible && resolvedRoleId && areaId ? "Continue to the role" : "Continue to method choices"}
+    onBack={() => areaId ? returnToArea() : returnToDomain()}
+    onContinue={() => {
+      if (visible && resolvedRoleId && areaId) setDomainOverviewPresented(true);
+      else if (areaId) returnToArea();
+      else returnToDomain();
+    }}
+  />;
   if (!visible || !resolvedRoleId || !areaId) return <D078RelationshipNavigationProvider><Animated.View style={[styles.page, stageEntry.entryStyle]}>
     <Text ref={stageEntry.titleRef} accessibilityRole="header" style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>This role is not in your selected route</Text>
     <Text style={[styles.body, { color: colors.textRole.secondary }]}>{areaId
@@ -1461,18 +2124,40 @@ export function D078RoleRoute({ areaId, roleId, roleName, roleKey, initialSelect
       : "Roles appear after you choose a method, open one of its areas, and select a role connected to that area."}</Text>
     <RouteButton label={areaId ? "Back to area" : "Back to Social Sciences domain"} onPress={() => returnToArea()} variant="primary" style={primaryActionStyle} />
   </Animated.View></D078RelationshipNavigationProvider>;
-  const roleItems = projection.roleItemIds;
-  const methodItems = projection.methodSpecificRoleItemIds.filter((id) => !roleItems.includes(id));
-  const needed = roleItems.filter((id) => requirementLane(d078Node(id)) === "needed");
-  const useful = roleItems.filter((id) => requirementLane(d078Node(id)) !== "needed");
-  const methodNeeded = methodItems.filter((id) => requirementLane(d078Node(id)) === "needed");
-  const methodUseful = methodItems.filter((id) => requirementLane(d078Node(id)) !== "needed");
+  const routeTaskRoleItemIds = new Set(routeRole.taskContexts.flatMap((context) => context.roleItemIds));
+  const roleItems = stableD078ItemOrder(projection.roleItemIds.filter((id) => routeTaskRoleItemIds.has(id)));
+  const methodItems = stableD078ItemOrder(projection.methodSpecificRoleItemIds.filter((id) => routeTaskRoleItemIds.has(id) && !roleItems.includes(id)));
+  const roleToolRoutes = projection.roleToolRoutes;
+  const hasSelectedRoleContext = routeRole.taskContexts.some((context) => context.selectionBasis !== "method_route");
+  const roleStageChoiceIds = [...new Set([...roleItems, ...methodItems, ...roleToolRoutes.map((route) => route.tool_node_id)])];
+  const selectedRoleStageIds = roleStageChoiceIds.filter((id) => selection.addedItemIds.includes(id));
+  const focusedRoleStageIds = new Set(progressiveChoiceIds(roleStageChoiceIds, selection.addedItemIds));
+  const hiddenRoleStageAlternatives = graphAlternativeIds(selectedRoleStageIds, roleStageChoiceIds);
+  const hiddenRoleToolAlternatives = new Set(roleToolRoutes.map((route) => route.tool_node_id).filter((id) => hiddenRoleStageAlternatives.has(id)));
+  const contextMatchedRoleTools = roleToolRoutes.filter((route) => route.contextualToSelection);
+  const contextualRoleToolFocus = hasSelectedRoleContext && contextMatchedRoleTools.length > 0;
+  const roleToolCandidates = showOtherRoleTools || !contextualRoleToolFocus ? roleToolRoutes : contextMatchedRoleTools;
+  const visibleRoleToolRoutes = roleToolCandidates.filter((route) => showOtherRoleTools
+    || focusedRoleStageIds.has(route.tool_node_id) && !hiddenRoleStageAlternatives.has(route.tool_node_id));
+  const visibleTaskIds = new Set(routeRole.taskContexts.map((context) => context.taskId));
+  const visibleRouteRoleToolRoutes = visibleRoleToolRoutes.filter((route) => Boolean(route.task_node_id && visibleTaskIds.has(route.task_node_id)));
+  const renderedRoleTaskItemIds = new Set<string>();
+  const renderedRoleTaskToolIds = new Set<string>();
   const addItem = (id: string) => setSelection((current) => toggleD078AddedItem(current, id));
+  const inheritedDomainItemIds = stableD078ItemOrder([...new Set([
+    ...(projection.domainItemIdsByArea[areaId] ?? []),
+    ...(projection.toolIdsByArea[areaId] ?? []).filter((id) => id.startsWith("domain-item:") || id.startsWith("domain-emerging:")),
+  ])].filter((id) => selection.addedItemIds.includes(id)));
+  const inheritedAreaItemIds = stableD078ItemOrder((projection.areaItemIdsByArea[areaId] ?? []).filter((id) => selection.addedItemIds.includes(id)));
+  const selectedWorkFocusLabels = routeRole.taskContexts
+    .filter((context) => context.selectionBasis !== "method_route")
+    .map((context) => context.familyLabel);
   const otherAreas = projection.visibleAreas.filter((area) => area.areaId !== areaId && projection.visibleRoles.some((role) => role.roleId === resolvedRoleId && role.areaId === area.areaId));
   const apiRole = roles.find((role) => normalizeLabel(role.name) === normalizedRoleName);
   const openOtherArea = (nextAreaId: string) => {
     const next = { ...selection, areaId: nextAreaId, roleId: resolvedRoleId };
-    const query = `${routeSelectionQuery(next, { ...guidanceContext, areaId: nextAreaId, roleId }, routeStackState)}&d078_role_id=${encodeURIComponent(resolvedRoleId)}`;
+    recordD078SelectionDelta(selection, next, { ...guidanceContext, domainId: "D078", areaId: nextAreaId, roleId: resolvedRoleId }, routeStackState.activeStackId);
+    const query = `${routeSelectionQuery(next, { ...guidanceContext, areaId: nextAreaId, roleId }, routeStackState)}&d078_role_id=${encodeURIComponent(resolvedRoleId)}&d078_domain_overview_seen=1`;
     router.push(`${exploreNav.base}/role/${encodeURIComponent(apiRole?.key ?? roleKey)}?${query}` as never);
   };
   const removeChoice = (next: D078Selection) => {
@@ -1481,6 +2166,7 @@ export function D078RoleRoute({ areaId, roleId, roleName, roleKey, initialSelect
       setSelection(next);
       return;
     }
+    recordD078SelectionDelta(selection, next, { ...guidanceContext, domainId: "D078" }, routeStackState.activeStackId);
     const fieldSelection = d078PickerSelection(next);
     const context = { ...guidanceContext, domainId: "D078", areaId: undefined, roleId: undefined };
     const query = `${routeSelectionQuery(fieldSelection, context, routeStackState)}&d078_undo_selection=${encodeURIComponent(JSON.stringify(selection))}`;
@@ -1494,30 +2180,107 @@ export function D078RoleRoute({ areaId, roleId, roleName, roleKey, initialSelect
       <RouteButton label="Back to Social Sciences domain" onPress={returnToDomain} variant="secondary" style={styles.hugSecondaryAction} />
     </View>
     <View style={styles.hero}>
-      <Text ref={stageEntry.titleRef} accessibilityRole="header" style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{titleCase(routeRole.label)}</Text>
+      <RouteTitleRow
+        titleRef={stageEntry.titleRef}
+        title={titleCase(routeRole.label)}
+        checked={selection.planRoleId === resolvedRoleId}
+        checkLabel={`Select ${titleCase(routeRole.label)}`}
+        onToggle={() => {
+          if (!areaId || !resolvedRoleId) return;
+          setSelection(toggleRolePlan(selection, areaId, resolvedRoleId));
+        }}
+      />
       <Text style={[styles.body, { color: colors.textRole.secondary }]}>Available with the method you selected. This does not make the method a requirement of the role.</Text>
+      {typeof d078Node(resolvedRoleId)?.description === "string" ? <View style={styles.detailSection}>
+        <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What this role does</Text>
+        <Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(d078Node(resolvedRoleId)?.description)}</Text>
+      </View> : null}
     </View>
     <View style={[styles.handoff, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
-      <RouteButton label="From your route" accessibilityLabel={`${routeContextOpen ? "Hide" : "Show"} what carries into ${titleCase(routeRole.label)}`} expanded={routeContextOpen} onPress={() => setRouteContextOpen((open) => !open)} variant="secondary" style={styles.hugSecondaryAction} />
-      {routeContextOpen ? <View style={styles.detailSections}>
+      <View style={styles.detailSections}>
         <Text style={[styles.body, { color: colors.textRole.secondary }]}>This role appears within {projection.visibleAreas.find((area) => area.areaId === areaId)?.label ?? "the selected area"} because it connects to the method or combination you chose. The method is a way to explore the work, not a claim that every person in the role uses it.</Text>
         <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Foundations carried forward</Text>
         <Text style={[styles.meta, { color: colors.textRole.secondary }]}>{projection.foundations.map((item) => item.label).join(" · ")}</Text>
         <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Methods and designs you selected</Text>
         <Text style={[styles.meta, { color: colors.textRole.secondary }]}>{projection.methods.filter((method) => selection.methodIds.includes(method.id)).map((method) => method.label).concat(projection.combinations.filter((combo) => selection.combinationIds.includes(combo.id)).map((combo) => combo.label)).join(" · ")}</Text>
-      </View> : null}
+        <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Work contexts connected to this role</Text>
+        <Text style={[styles.body, { color: colors.textRole.secondary }]}>These contexts are supported by your selected method or design and this area. Your optional domain, area, or work-focus choices bring matching contexts forward; they do not remove the general route or claim every task belongs to the role. If one learning choice supports more than one task, it appears once and the same saved selection applies to each context.</Text>
+        {selectedWorkFocusLabels.length ? <Text style={[styles.meta, { color: colors.textRole.secondary }]}>Your selected domain, area, or work context connects to: {selectedWorkFocusLabels.join(", ")}. Each task below shows only the role learning and tools linked to that task.</Text> : null}
+        {routeRole.taskContexts.length ? routeRole.taskContexts.map((taskContext) => {
+          const taskTerms = new Set<string>();
+          const taskRoleItems = taskContext.roleItemIds.filter((id) => (roleItems.includes(id) || methodItems.includes(id)) && !renderedRoleTaskItemIds.has(id));
+          taskRoleItems.forEach((id) => renderedRoleTaskItemIds.add(id));
+          const taskNeeded = stableD078ItemOrder(taskRoleItems.filter((id) => requirementLane(d078Node(id)) === "needed"));
+          const taskUsefulAndConditional = stableD078ItemOrder(taskRoleItems.filter((id) => requirementLane(d078Node(id)) !== "needed"));
+          const taskTools = visibleRouteRoleToolRoutes.filter((route) => route.task_node_id === taskContext.taskId
+            && !renderedRoleTaskToolIds.has(route.tool_node_id));
+          taskTools.forEach((route) => renderedRoleTaskToolIds.add(route.tool_node_id));
+          const allTaskTools = [...new Set(roleToolRoutes.filter((route) => route.task_node_id === taskContext.taskId).map((route) => route.tool_node_id))];
+          const outputs = (Array.isArray(taskContext.learnerOutput) ? taskContext.learnerOutput : [taskContext.learnerOutput])
+            .map((output) => displayText(output)).filter(Boolean);
+          return <View key={`${taskContext.familyId}:${taskContext.taskId}`} style={styles.detailSection}>
+            <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{taskContext.familyLabel}</Text>
+            <Text style={[styles.meta, { color: colors.textRole.muted }]}>{roleTaskContextBasisCopy(taskContext.selectionBasis)}</Text>
+            <Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(taskContext.explanation, taskTerms)}</Text>
+            <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Work this role may do in this context</Text>
+            <Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(taskContext.taskLabel, taskTerms)}</Text>
+            {outputs.length ? <>
+              <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Possible work products</Text>
+              {outputs.map((output, index) => <Text key={`${taskContext.taskId}:output:${index}`} style={[styles.body, { color: colors.textRole.secondary }]}>{output}</Text>)}
+            </> : null}
+            {taskContext.taskConditions?.length ? <View style={styles.detailSection}>
+              <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Checks that depend on the project</Text>
+              <Text style={[styles.meta, { color: colors.textRole.secondary }]}>These are not universal role prerequisites or a course checklist. They depend on the specific work, evidence and permissions involved.</Text>
+              {taskContext.taskConditions.map((condition, index) => <Text key={`${taskContext.taskId}:condition:${index}`} style={[styles.body, { color: colors.textRole.secondary }]}>• {displayText(condition, taskTerms)}</Text>)}
+            </View> : null}
+            {taskContext.condition ? <Text style={[styles.meta, { color: colors.textRole.secondary }]}>When it applies: {displayText(taskContext.condition, taskTerms)}</Text> : null}
+            {taskContext.fitClaimLimit ? <Text style={[styles.meta, { color: colors.textRole.muted }]}>{displayText(taskContext.fitClaimLimit, taskTerms)}</Text> : null}
+            {taskContext.limitations?.length ? <View style={styles.detailSection}>
+              <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Limits of this connection</Text>
+              {taskContext.limitations.map((limit, index) => <Text key={`${taskContext.taskId}:limit:${index}`} style={[styles.meta, { color: colors.textRole.muted }]}>{displayText(limit, taskTerms)}</Text>)}
+            </View> : null}
+            {taskNeeded.length || taskUsefulAndConditional.length ? <View style={styles.detailSection}>
+              <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Learning linked to this role task</Text>
+              <Text style={[styles.meta, { color: colors.textRole.secondary }]}>These are the role-owned learning options connected to this work context. Each card says whether it is needed for this selected route or is useful/conditional. None is a universal employer requirement or a progression blocker.</Text>
+              {taskNeeded.length ? <ItemLane title="Needed for what you selected" ids={taskNeeded} selection={selection} onToggle={addItem} roleItems resources={[...domainResources, ...roleResources]} contextLevel="role" stageChoiceIds={roleStageChoiceIds} /> : null}
+              {taskUsefulAndConditional.length ? <ItemLane title="Other useful and conditional learning for this role task" ids={taskUsefulAndConditional} selection={selection} onToggle={addItem} roleItems resources={[...domainResources, ...roleResources]} contextLevel="role" stageChoiceIds={roleStageChoiceIds} /> : null}
+            </View> : null}
+            {taskTools.length ? <View style={styles.detailSection}>
+              <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Optional tools for this task</Text>
+              <Text style={[styles.meta, { color: colors.textRole.secondary }]}>Each tool is attached to the task it supports. Choose one only if it fits your project; tools do not become prerequisites.</Text>
+              {taskTools.map((toolRoute) => <View key={`${toolRoute.role_id}:${toolRoute.tool_node_id}`} style={styles.detailSections}>
+                <ProgressiveReveal><ItemCard id={toolRoute.tool_node_id} selection={selection} onToggle={addItem} roleItem resources={[...domainResources, ...roleResources]} contextLevel="role" roleRouteTaskId={toolRoute.task_node_id} /></ProgressiveReveal>
+                <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>How this tool may help</Text>
+                <Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(toolRoute.contextual_use, new Set<string>())}</Text>
+                <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Possible result</Text>
+                <Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayText(toolRoute.expected_output, new Set<string>())}</Text>
+                {toolRoute.learning_resource?.why_this_resource ? <Text style={[styles.meta, { color: colors.textRole.secondary }]}>{toolRoute.learning_resource.why_this_resource}</Text> : null}
+                {toolRoute.official_reference?.url ? <ExternalLinkGuard url={toolRoute.official_reference.url} label="Open official tool page" description={`Official information about ${toolRoute.name}.`} controlRole="button" /> : null}
+                {toolRoute.learning_resource?.url ? <ExternalLinkGuard url={toolRoute.learning_resource.url} label={toolRoute.learning_resource.title ?? `Open ${toolRoute.name} learning guide`} description={toolRoute.learning_resource.access ?? `A learning guide selected for this ${titleCase(routeRole.label)} task.`} controlRole="button" /> : null}
+              </View>)}
+              {taskTools.length < allTaskTools.length ? <RouteButton
+                label={hiddenRoleToolAlternatives.size ? "Show other tools and compare alternatives" : "Show other tools for this task"}
+                accessibilityLabel={hiddenRoleToolAlternatives.size ? "Show other task tools and compare alternatives" : "Show more tools for this role task"}
+                onPress={() => setShowOtherRoleTools(true)}
+                variant="secondary"
+                style={styles.hugSecondaryAction}
+              /> : null}
+            </View> : null}
+          </View>;
+        }) : <Text style={[styles.body, { color: colors.textRole.secondary }]}>No task context is recorded for this role on the selected route. The role remains available because the graph links it to this area and method or design.</Text>}
+        <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Selected domain learning linked to this area</Text>
+        {inheritedDomainItemIds.length
+          ? inheritedDomainItemIds.map((id) => <Text key={id} style={[styles.body, { color: colors.textRole.secondary }]}>{d078Node(id)?.label ?? id}</Text>)
+          : <Text style={[styles.body, { color: colors.textRole.secondary }]}>No optional domain item is selected for this area.</Text>}
+        <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Selected learning from this area</Text>
+        {inheritedAreaItemIds.length
+          ? inheritedAreaItemIds.map((id) => <Text key={id} style={[styles.body, { color: colors.textRole.secondary }]}>{d078Node(id)?.label ?? id}</Text>)
+          : <Text style={[styles.body, { color: colors.textRole.secondary }]}>No optional area item is selected yet.</Text>}
+      </View>
     </View>
-    {needed.length || useful.length ? <View style={styles.section}>
-      <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>How your learning may apply in this role</Text>
-      <Text style={[styles.summary, { color: colors.textRole.secondary }]}>These items show ways your selected learning may support work associated with this role. Actual duties vary by employer and position; this is not a checklist of tasks every employer assigns or proof that you are job-ready. “Needed” and “Useful” describe this learning route, not a universal job requirement.</Text>
-      <ItemLane title="Needed for what you selected" ids={needed} selection={selection} onToggle={addItem} roleItems resources={[...domainResources, ...roleResources]} contextLevel="role" />
-      <ItemLane title="Useful. You can skip it" ids={useful} selection={selection} onToggle={addItem} roleItems resources={[...domainResources, ...roleResources]} contextLevel="role" />
-    </View> : null}
-    {methodItems.length ? <View style={styles.section}>
-      <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Specific to the method you selected</Text>
-      <Text style={[styles.summary, { color: colors.textRole.secondary }]}>These additional items appear only when the reviewed evidence connects this method to this role. They are options for that task context, not requirements for everyone in the role.</Text>
-      <ItemLane title="Needed for what you selected" ids={methodNeeded} selection={selection} onToggle={addItem} roleItems resources={[...domainResources, ...roleResources]} contextLevel="role" />
-      <ItemLane title="Useful. You can skip it" ids={methodUseful} selection={selection} onToggle={addItem} roleItems resources={[...domainResources, ...roleResources]} contextLevel="role" />
+    {selectedWorkFocusLabels.length && !routeRole.taskContexts.some((context) => context.selectionBasis !== "method_route") ? <View style={[styles.handoff, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+      <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Role learning for this selected context</Text>
+      <Text style={[styles.body, { color: colors.textRole.secondary }]}>The graph has not approved a direct link from this selected work context to an individual role-learning item. Any role learning shown below still belongs to this selected domain, method or design, area, and role path; it is not a detached choice or a claim that this particular task requires the item.</Text>
     </View> : null}
     {otherAreas.map((area) => <RouteButton key={area.areaId} label={`Also in ${area.label}`} onPress={() => openOtherArea(area.areaId)} variant="secondary" style={styles.hugSecondaryAction} />)}
     </D078JourneyPage>
@@ -1532,12 +2295,78 @@ function titleCase(value: string): string {
   return value.replace(/\b[\p{L}][\p{L}\p{M}'’-]*/gu, (part) => part.charAt(0).toLocaleUpperCase() + part.slice(1));
 }
 
+function withoutPlanKeys(selection: D078Selection, keys: Array<"domainInPlan" | "planAreaId" | "planRoleId">): D078Selection {
+  const next = { ...selection };
+  keys.forEach((key) => { delete next[key]; });
+  return next;
+}
+
+function toggleDomainPlan(selection: D078Selection): D078Selection {
+  return selection.domainInPlan
+    ? withoutPlanKeys(selection, ["domainInPlan", "planAreaId", "planRoleId"])
+    : { ...selection, domainInPlan: true };
+}
+
+function toggleAreaPlan(selection: D078Selection, areaId: string): D078Selection {
+  return selection.planAreaId === areaId
+    ? withoutPlanKeys(selection, ["planAreaId", "planRoleId"])
+    : { ...selection, planAreaId: areaId };
+}
+
+function toggleRolePlan(selection: D078Selection, areaId: string, roleId: string): D078Selection {
+  return selection.planRoleId === roleId
+    ? withoutPlanKeys(selection, ["planRoleId"])
+    : { ...selection, planAreaId: selection.planAreaId ?? areaId, planRoleId: roleId };
+}
+
+function RouteTitleRow({
+  title,
+  titleRef,
+  checked,
+  checkLabel,
+  onToggle,
+}: {
+  title: string;
+  titleRef?: React.Ref<Text>;
+  checked: boolean;
+  checkLabel: string;
+  onToggle: () => void;
+}) {
+  const { colors } = useTheme();
+  return <View style={styles.routeTitleRow}>
+    <Text ref={titleRef} accessibilityRole="header" style={[styles.title, styles.routeTitleText, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{title}</Text>
+    <TouchableOpacity
+      accessibilityRole="checkbox"
+      accessibilityState={{ checked }}
+      accessibilityLabel={checkLabel}
+      accessibilityHint="Adds this to your learning plan and opens the tray"
+      onPress={onToggle}
+      style={[styles.routeSelectCheck, {
+        backgroundColor: checked ? colors.accentRole.action : colors.surface.raised,
+        borderColor: checked ? colors.accentRole.action : colors.borderRole.strong,
+      }]}
+    >
+      <Feather name={checked ? "check" : "square"} size={18} color={checked ? "#FFFFFF" : colors.textRole.muted} />
+    </TouchableOpacity>
+  </View>;
+}
+
 function supportReason(area: D078Projection["visibleAreas"][number], projection: D078Projection): string {
   const labels = [
     ...area.supportingMethodIds.map((id) => projection.methods.find((method) => method.id === id)?.label),
     ...area.supportingCombinationIds.map((id) => projection.combinations.find((combo) => combo.id === id)?.label),
   ].filter((label): label is string => Boolean(label));
-  return `Shown because you selected ${labels.join(" and ")}.`;
+  const routeReason = `Shown because you selected ${labels.join(" and ")}.`;
+  return area.selectedDomainContextFamilyIds.length
+    ? `${routeReason} Your selected domain learning also connects to ${area.selectedDomainContextFamilyIds.length} work context${area.selectedDomainContextFamilyIds.length === 1 ? "" : "s"} in this area.`
+    : routeReason;
+}
+
+function roleTaskContextBasisCopy(basis: D078Projection["visibleRoles"][number]["taskContexts"][number]["selectionBasis"]): string {
+  if (basis === "selected_work_focus") return "You selected this area work focus.";
+  if (basis === "selected_domain_learning") return "Connected to domain learning you selected.";
+  if (basis === "selected_area_learning") return "Connected to area learning you selected.";
+  return "Supported by the method or design route you selected.";
 }
 
 const styles = StyleSheet.create({
@@ -1551,7 +2380,7 @@ const styles = StyleSheet.create({
   mobileTrayDock: { zIndex: 50, alignSelf: "flex-end" },
   mobileTrayDockWeb: { alignSelf: "flex-end" },
   mobileTrayDockNative: { alignSelf: "flex-end", zIndex: 50 },
-  trayPanelCompact: { maxHeight: 280, padding: Spacing.md },
+  trayPanelCompact: { maxHeight: "70vh" as any, padding: Spacing.md },
   trayPanelMid: { maxHeight: "65vh" as any, padding: Spacing.md },
   mobileTrayBackdrop: { flex: 1, justifyContent: "flex-end", backgroundColor: "rgba(5, 12, 28, 0.52)" },
   mobileTraySheet: { width: "100%", maxHeight: "85%" as any, padding: Spacing.md, paddingBottom: Spacing.xl, borderTopWidth: 1, borderTopLeftRadius: Radius.xl, borderTopRightRadius: Radius.xl },
@@ -1565,6 +2394,10 @@ const styles = StyleSheet.create({
   domainKnowledgeNote: { gap: Spacing.xs, borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, marginTop: Spacing.xs },
   overviewSources: { gap: Spacing.xs, paddingTop: Spacing.xs },
   title: { fontSize: 26, lineHeight: 32 },
+  routeTitleRow: { width: "100%", flexDirection: "row", alignItems: "flex-start", justifyContent: "space-between", gap: Spacing.md },
+  routeTitleText: { flex: 1, minWidth: 0 },
+  routeSelectCheck: { width: 36, height: 36, marginLeft: "auto", borderRadius: Radius.sm, borderWidth: 1, alignItems: "center", justifyContent: "center" },
+  trayExpanded: { height: "78vh" as any, maxHeight: "78vh" as any, minHeight: 320, flex: 0, alignSelf: "flex-end" },
   section: { gap: Spacing.sm },
   learningLayer: { gap: Spacing.sm, borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md },
   itemLane: { gap: 8 },
@@ -1596,6 +2429,9 @@ const styles = StyleSheet.create({
   areaCard: { gap: Spacing.sm, padding: 12, borderWidth: 1, borderRadius: Radius.md },
   areaContext: { gap: Spacing.sm, padding: Spacing.md, borderWidth: 1, borderRadius: Radius.md },
   taskFamily: { fontSize: 16, lineHeight: 24, paddingLeft: Spacing.sm, borderLeftWidth: 2, borderLeftColor: "rgba(100,116,139,0.4)" },
+  taskFamilyChoice: { gap: Spacing.xs, alignItems: "stretch" },
+  taskFamilyAction: { width: "100%", justifyContent: "flex-start" },
+  taskFamilyLabel: { fontSize: 16, lineHeight: 24, textAlign: "left", flex: 1 },
   trayWrap: { zIndex: 10 },
   trayWrapFull: { height: 56, maxHeight: 56 },
   desktopFullTrayBackdrop: { flex: 1, justifyContent: "center", alignItems: "stretch", backgroundColor: "rgba(5, 12, 28, 0.56)" },

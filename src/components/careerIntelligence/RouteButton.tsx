@@ -1,5 +1,5 @@
 import React, { forwardRef, useState, type ComponentRef, type ReactNode } from "react";
-import { Pressable, StyleSheet, Text, type AccessibilityRole, type StyleProp, type ViewStyle } from "react-native";
+import { Pressable, StyleSheet, Text, type AccessibilityRole, type StyleProp, type TextStyle, type ViewStyle } from "react-native";
 import { CompassFonts, Radius, Spacing, useTheme } from "@/theme";
 
 export type RouteButtonVariant = "primary" | "secondary" | "selected" | "quiet";
@@ -19,6 +19,7 @@ export const RouteButton = forwardRef<ComponentRef<typeof Pressable>, {
   disabled?: boolean;
   expanded?: boolean;
   selected?: boolean;
+  labelStyle?: StyleProp<TextStyle>;
   style?: StyleProp<ViewStyle>;
 }>(function RouteButton({
   label,
@@ -31,6 +32,7 @@ export const RouteButton = forwardRef<ComponentRef<typeof Pressable>, {
   disabled = false,
   expanded,
   selected,
+  labelStyle,
   style,
 }, ref) {
   const { colors } = useTheme();
@@ -60,7 +62,7 @@ export const RouteButton = forwardRef<ComponentRef<typeof Pressable>, {
       ]}
     >
       {icon}
-      {label ? <Text style={[styles.label, { color }, CompassFonts.bodySemibold]}>{label}</Text> : null}
+      {label ? <Text style={[styles.label, { color }, CompassFonts.bodySemibold, labelStyle]}>{label}</Text> : null}
       {children}
     </Pressable>
   );

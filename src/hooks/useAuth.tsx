@@ -36,6 +36,8 @@ export interface UserProfile {
    *  completed accounts may omit it until they choose a persona. */
   account_type?: 'pending' | 'student' | 'educator' | 'institution_admin';
   account_type_selected_at?: string | null;
+  /** Read-only server-provided flag; the API remains the authorization authority. */
+  is_internal_staff?: boolean;
   email: string;
   points: number;
   streak: number;
@@ -594,6 +596,7 @@ function _normalise(raw: any): UserProfile {
     auth_provider: raw.auth_provider ?? 'guest',
     account_type: raw.account_type,
     account_type_selected_at: raw.account_type_selected_at ?? null,
+    is_internal_staff: raw.is_internal_staff === true,
     email: raw.email ?? '',
     points: raw.points ?? 0,
     streak: raw.streak ?? 0,

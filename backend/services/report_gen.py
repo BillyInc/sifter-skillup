@@ -590,6 +590,14 @@ def _d078_saved_route(path: dict, selection: Optional[dict] = None) -> Optional[
                 role_item_set.update(strings(route.get("role_item_ids")))
                 role_item_set.update(strings(route.get("method_specific_role_item_ids")))
         allowed_items.update(allowed_role_items.get((area_id, role_id), set()))
+        allowed_items.update(
+            route.get("tool_node_id")
+            for route in data.get("role_tool_routes", [])
+            if isinstance(route, dict)
+            and route.get("role_id") == role_id
+            and area_id in strings(route.get("area_ids"))
+            and isinstance(route.get("tool_node_id"), str)
+        )
     if raw_area and not area_id:
         allowed_items.clear()
     added_items = [item_id for item_id in strings(selection.get("addedItemIds"))

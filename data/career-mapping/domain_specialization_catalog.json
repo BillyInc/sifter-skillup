@@ -13,19 +13,19 @@
     "domain_records": 168,
     "domains_with_areas": 164,
     "no_specialization_recommended_domains": 4,
-    "area_records": 708,
-    "student_area_candidates_before_role_gate": 708,
+    "area_records": 712,
+    "student_area_candidates_before_role_gate": 712,
     "excluded_area_candidates_folded_into_existing_areas": 1,
     "recommendation_area_statuses": {
-      "recommendation_needs_role_and_context_integration": 700,
-      "source_supported_internal_recommendation": 8
+      "recommendation_needs_role_and_context_integration": 696,
+      "source_supported_internal_recommendation": 16
     },
-    "domains_with_areas_missing_inline_citations": 85,
-    "areas_missing_inline_citations": 184,
+    "domains_with_areas_missing_inline_citations": 84,
+    "areas_missing_inline_citations": 180,
     "duplicate_key_conflicts": 0,
     "source_reported_count_variances": 53,
     "areas_missing_captured_source_cards": 0,
-    "domain_sources_without_area_specific_match": 184
+    "domain_sources_without_area_specific_match": 180
   },
   "domain_id_integrity": {
     "duplicate_domain_ids": [],
@@ -635,10 +635,6 @@
     "D164:public-transport-and-shared-mobility-systems",
     "D165:exercise-science-and-physical-activity-promotion",
     "D165:lifestyle-medicine-and-preventive-health-practice",
-    "D166:perception-sensing-and-scene-understanding",
-    "D166:localization-mapping-and-vehicle-state-estimation",
-    "D166:planning-control-and-automated-driving-software",
-    "D166:vehicle-integration-safety-and-verification",
     "D167:xr-experience-interaction-and-content-design",
     "D167:xr-software-and-real-time-application-development",
     "D167:xr-devices-tracking-and-platform-engineering",
@@ -742,7 +738,6 @@
     "D163",
     "D164",
     "D165",
-    "D166",
     "D167",
     "D168"
   ],
@@ -921,10 +916,6 @@
     "D164:public-transport-and-shared-mobility-systems",
     "D165:exercise-science-and-physical-activity-promotion",
     "D165:lifestyle-medicine-and-preventive-health-practice",
-    "D166:perception-sensing-and-scene-understanding",
-    "D166:localization-mapping-and-vehicle-state-estimation",
-    "D166:planning-control-and-automated-driving-software",
-    "D166:vehicle-integration-safety-and-verification",
     "D167:xr-experience-interaction-and-content-design",
     "D167:xr-software-and-real-time-application-development",
     "D167:xr-devices-tracking-and-platform-engineering",
@@ -4034,7 +4025,16 @@
           "recommendation_status": "recommendation_needs_role_and_context_integration",
           "student_visible": false,
           "nigerian_context": null,
-          "role_keys": []
+          "role_keys": [
+            "D011|financial analyst",
+            "D011|quantitative analyst",
+            "D011|quantitative developer",
+            "D011|quantitative researcher",
+            "D011|securities analyst",
+            "D011|securities underwriter"
+          ],
+          "role_route_count": 6,
+          "role_route_evidence_basis": "Derived from each canonical role's source-backed role_area_routes; route statuses and conditions remain in role_library_v3_cleaned.json."
         },
         {
           "area_key": "D011:quantitative-financial-risk-modeling",
@@ -4102,7 +4102,32 @@
           "recommendation_status": "recommendation_needs_role_and_context_integration",
           "student_visible": false,
           "nigerian_context": null,
-          "role_keys": []
+          "role_keys": [
+            "D011|Credit Analysts",
+            "D011|asset manager",
+            "D011|energy trader",
+            "D011|financial analyst",
+            "D011|financial broker",
+            "D011|financial risk specialist",
+            "D011|financial trader",
+            "D011|foreign exchange broker",
+            "D011|foreign exchange trader",
+            "D011|futures trader",
+            "D011|investment analyst",
+            "D011|mathematician",
+            "D011|mergers and acquisitions analyst",
+            "D011|middle office analyst",
+            "D011|mutual fund broker",
+            "D011|quantitative analyst",
+            "D011|quantitative developer",
+            "D011|securities analyst",
+            "D011|securities trader",
+            "D011|securities underwriter",
+            "D011|statistician",
+            "D011|stock trader"
+          ],
+          "role_route_count": 22,
+          "role_route_evidence_basis": "Derived from each canonical role's source-backed role_area_routes; route statuses and conditions remain in role_library_v3_cleaned.json."
         },
         {
           "area_key": "D011:systematic-investment-and-quantitative-trading",
@@ -4170,7 +4195,33 @@
           "recommendation_status": "recommendation_needs_role_and_context_integration",
           "student_visible": false,
           "nigerian_context": null,
-          "role_keys": []
+          "role_keys": [
+            "D011|asset manager",
+            "D011|energy trader",
+            "D011|financial analyst",
+            "D011|financial broker",
+            "D011|financial risk specialist",
+            "D011|financial trader",
+            "D011|foreign exchange broker",
+            "D011|foreign exchange trader",
+            "D011|futures trader",
+            "D011|insurance rating analyst",
+            "D011|investment analyst",
+            "D011|mergers and acquisitions analyst",
+            "D011|mutual fund broker",
+            "D011|quantitative analyst",
+            "D011|quantitative researcher",
+            "D011|quantitative trader",
+            "D011|securities analyst",
+            "D011|securities broker",
+            "D011|securities trader",
+            "D011|statistical assistant",
+            "D011|statistician",
+            "D011|stock broker",
+            "D011|stock trader"
+          ],
+          "role_route_count": 23,
+          "role_route_evidence_basis": "Derived from each canonical role's source-backed role_area_routes; route statuses and conditions remain in role_library_v3_cleaned.json."
         }
       ],
       "recommended_area_count_normalized": 3,
@@ -32612,80 +32663,874 @@
       "defensibility_and_rejected_alternatives": null,
       "areas": [
         {
-          "area_key": "D166:perception-sensing-and-scene-understanding",
-          "source_key": null,
-          "label": "Perception, Sensing and Scene Understanding",
-          "boundary": "Build and validate sensing systems and algorithms that detect, classify and track road users, objects and driving conditions.",
-          "boundary_reconciliation": null,
-          "source_support_claim": null,
-          "source_ids": [],
-          "source_urls": [],
-          "evidence": [],
-          "recommendation_status": "recommendation_needs_role_and_context_integration",
+          "label": "Vehicle Sensing and Sensor Calibration",
+          "description": "Acquire, synchronize, calibrate and preprocess sensor signals and maintain the sensor hardware/data interfaces used by automated-driving systems.",
+          "boundary": "Acquire, synchronize, calibrate and preprocess sensor signals and maintain the sensor hardware/data interfaces used by automated-driving systems.",
+          "source_ids": [
+            "D166-AUTOWARE-ARCH-2026-10-22",
+            "D166-AUTOWARE-SENSING-2026-10-22",
+            "D166-NHTSA-ADS-2026-10-22"
+          ],
+          "source_references": [
+            {
+              "source_id": "D166-AUTOWARE-ARCH-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Autoware Architecture Overview",
+              "url": "https://docs.autoware.org/pr-803/design/autoware-architecture-v1/",
+              "locator": "Architecture overview separates sensing, map, localization, perception, planning, control, and vehicle interface stacks; it describes replaceable modules and component boundaries.",
+              "supports": "Supports separate component areas and warns that this architecture is a technical system decomposition, not a universal curriculum sequence.",
+              "claim_limit": "Open-source reference architecture; implementations and required stacks vary by vehicle, operational design domain, and use case.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-AUTOWARE-SENSING-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Sensing Component Design",
+              "url": "https://docs.autoware.org/main/design/autoware-architecture-v1/components/sensing/",
+              "locator": "Sensing abstracts sensor data formats and performs primitive preprocessing; lists camera, lidar, radar, GNSS/INS, IMU and ultrasonic inputs.",
+              "supports": "Supports a distinct sensor systems, calibration, and data acquisition area upstream of perception and localization.",
+              "claim_limit": "Autoware-specific component design; other AV stacks may organize interfaces differently.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-NHTSA-ADS-2026-10-22",
+              "publisher": "NHTSA",
+              "title": "Automated Driving Systems 2.0: A Vision for Safety",
+              "url": "https://www.nhtsa.gov/document/automated-driving-systems-20-voluntary-guidance",
+              "locator": "Voluntary ADS guidance identifies system safety, ODD, object/event detection and response, fallback, human-machine interface, cybersecurity, validation and other safety elements.",
+              "supports": "Supports safety engineering and validation as a cross-cutting practice spanning ADS components.",
+              "claim_limit": "US voluntary guidance; it is not a global regulation or certification requirement.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            }
+          ],
+          "uncorroborated_source_urls": [],
+          "recommendation_status": "source_supported_internal_recommendation",
+          "area_status": "review_required_pending_student_contract_and_ui_approval",
           "student_visible": false,
           "nigerian_context": null,
-          "role_keys": []
+          "source_evidence_status": "source_linked",
+          "unresolved_source_ids": [],
+          "area_evidence_link_check": {
+            "checked_against_catalog_and_captured_review_sources": true,
+            "resolution_methods": [
+              "external_primary_source_review",
+              "official_component_architecture_review"
+            ],
+            "unresolved_catalog_source_ids": []
+          },
+          "area_key": "D166:vehicle-sensing-and-sensor-calibration",
+          "source_urls": [
+            "https://docs.autoware.org/main/design/autoware-architecture-v1/components/sensing/",
+            "https://docs.autoware.org/pr-803/design/autoware-architecture-v1/",
+            "https://www.nhtsa.gov/document/automated-driving-systems-20-voluntary-guidance"
+          ],
+          "evidence": [
+            {
+              "source_id": "D166-AUTOWARE-ARCH-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Autoware Architecture Overview",
+              "url": "https://docs.autoware.org/pr-803/design/autoware-architecture-v1/",
+              "locator": "Architecture overview separates sensing, map, localization, perception, planning, control, and vehicle interface stacks; it describes replaceable modules and component boundaries.",
+              "supports": "Supports separate component areas and warns that this architecture is a technical system decomposition, not a universal curriculum sequence.",
+              "claim_limit": "Open-source reference architecture; implementations and required stacks vary by vehicle, operational design domain, and use case.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-AUTOWARE-SENSING-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Sensing Component Design",
+              "url": "https://docs.autoware.org/main/design/autoware-architecture-v1/components/sensing/",
+              "locator": "Sensing abstracts sensor data formats and performs primitive preprocessing; lists camera, lidar, radar, GNSS/INS, IMU and ultrasonic inputs.",
+              "supports": "Supports a distinct sensor systems, calibration, and data acquisition area upstream of perception and localization.",
+              "claim_limit": "Autoware-specific component design; other AV stacks may organize interfaces differently.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-NHTSA-ADS-2026-10-22",
+              "publisher": "NHTSA",
+              "title": "Automated Driving Systems 2.0: A Vision for Safety",
+              "url": "https://www.nhtsa.gov/document/automated-driving-systems-20-voluntary-guidance",
+              "locator": "Voluntary ADS guidance identifies system safety, ODD, object/event detection and response, fallback, human-machine interface, cybersecurity, validation and other safety elements.",
+              "supports": "Supports safety engineering and validation as a cross-cutting practice spanning ADS components.",
+              "claim_limit": "US voluntary guidance; it is not a global regulation or certification requirement.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            }
+          ],
+          "role_keys": [
+            "D166|mechatronics engineer",
+            "D166|optomechanical engineer"
+          ],
+          "role_route_count": 2
         },
         {
-          "area_key": "D166:localization-mapping-and-vehicle-state-estimation",
-          "source_key": null,
-          "label": "Localization, Mapping and Vehicle State Estimation",
-          "boundary": "Estimate vehicle position and motion and maintain/use maps and localization systems for automated driving.",
-          "boundary_reconciliation": null,
-          "source_support_claim": null,
-          "source_ids": [],
-          "source_urls": [],
-          "evidence": [],
-          "recommendation_status": "recommendation_needs_role_and_context_integration",
+          "label": "Perception and Scene Understanding",
+          "description": "Interpret sensor and map inputs to detect, classify, track and predict road users, obstacles, traffic controls and relevant scene conditions.",
+          "boundary": "Interpret sensor and map inputs to detect, classify, track and predict road users, obstacles, traffic controls and relevant scene conditions.",
+          "source_ids": [
+            "D166-AUTOWARE-ARCH-2026-10-22",
+            "D166-AUTOWARE-PERCEPTION-2026-10-22",
+            "D166-NHTSA-ADS-2026-10-22",
+            "D166-ISO-21448-2026-10-22"
+          ],
+          "source_references": [
+            {
+              "source_id": "D166-AUTOWARE-ARCH-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Autoware Architecture Overview",
+              "url": "https://docs.autoware.org/pr-803/design/autoware-architecture-v1/",
+              "locator": "Architecture overview separates sensing, map, localization, perception, planning, control, and vehicle interface stacks; it describes replaceable modules and component boundaries.",
+              "supports": "Supports separate component areas and warns that this architecture is a technical system decomposition, not a universal curriculum sequence.",
+              "claim_limit": "Open-source reference architecture; implementations and required stacks vary by vehicle, operational design domain, and use case.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-AUTOWARE-PERCEPTION-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Perception Component Design",
+              "url": "https://docs.autoware.org/main/design/autoware-architecture-v1/components/perception/",
+              "locator": "Perception receives sensing, localization, and map inputs, adds semantic information such as object recognition, obstacle segmentation and traffic-light recognition, then passes outputs to planning.",
+              "supports": "Supports perception and scene understanding as distinct from sensor acquisition and preprocessing.",
+              "claim_limit": "Reference architecture; algorithm choices and boundaries vary across systems.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-NHTSA-ADS-2026-10-22",
+              "publisher": "NHTSA",
+              "title": "Automated Driving Systems 2.0: A Vision for Safety",
+              "url": "https://www.nhtsa.gov/document/automated-driving-systems-20-voluntary-guidance",
+              "locator": "Voluntary ADS guidance identifies system safety, ODD, object/event detection and response, fallback, human-machine interface, cybersecurity, validation and other safety elements.",
+              "supports": "Supports safety engineering and validation as a cross-cutting practice spanning ADS components.",
+              "claim_limit": "US voluntary guidance; it is not a global regulation or certification requirement.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-ISO-21448-2026-10-22",
+              "publisher": "International Organization for Standardization",
+              "title": "ISO 21448:2022 Safety of the Intended Functionality",
+              "url": "https://www.iso.org/standard/77490.html",
+              "locator": "Covers SOTIF risks from functional insufficiencies and provides design, verification and validation guidance for road-vehicle functions relying on situational awareness from complex sensors and processing algorithms, including driving automation levels 1–5.",
+              "supports": "Supports cross-cutting validation of sensing/perception performance and intended functionality.",
+              "claim_limit": "Distinct from ISO 26262 faults and cybersecurity; the ISO page notes the 2022 edition is under revision.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            }
+          ],
+          "uncorroborated_source_urls": [],
+          "recommendation_status": "source_supported_internal_recommendation",
+          "area_status": "review_required_pending_student_contract_and_ui_approval",
           "student_visible": false,
           "nigerian_context": null,
-          "role_keys": []
+          "source_evidence_status": "source_linked",
+          "unresolved_source_ids": [],
+          "area_evidence_link_check": {
+            "checked_against_catalog_and_captured_review_sources": true,
+            "resolution_methods": [
+              "external_primary_source_review",
+              "official_component_architecture_review"
+            ],
+            "unresolved_catalog_source_ids": []
+          },
+          "area_key": "D166:perception-and-scene-understanding",
+          "source_urls": [
+            "https://docs.autoware.org/main/design/autoware-architecture-v1/components/perception/",
+            "https://docs.autoware.org/pr-803/design/autoware-architecture-v1/",
+            "https://www.iso.org/standard/77490.html",
+            "https://www.nhtsa.gov/document/automated-driving-systems-20-voluntary-guidance"
+          ],
+          "evidence": [
+            {
+              "source_id": "D166-AUTOWARE-ARCH-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Autoware Architecture Overview",
+              "url": "https://docs.autoware.org/pr-803/design/autoware-architecture-v1/",
+              "locator": "Architecture overview separates sensing, map, localization, perception, planning, control, and vehicle interface stacks; it describes replaceable modules and component boundaries.",
+              "supports": "Supports separate component areas and warns that this architecture is a technical system decomposition, not a universal curriculum sequence.",
+              "claim_limit": "Open-source reference architecture; implementations and required stacks vary by vehicle, operational design domain, and use case.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-AUTOWARE-PERCEPTION-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Perception Component Design",
+              "url": "https://docs.autoware.org/main/design/autoware-architecture-v1/components/perception/",
+              "locator": "Perception receives sensing, localization, and map inputs, adds semantic information such as object recognition, obstacle segmentation and traffic-light recognition, then passes outputs to planning.",
+              "supports": "Supports perception and scene understanding as distinct from sensor acquisition and preprocessing.",
+              "claim_limit": "Reference architecture; algorithm choices and boundaries vary across systems.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-NHTSA-ADS-2026-10-22",
+              "publisher": "NHTSA",
+              "title": "Automated Driving Systems 2.0: A Vision for Safety",
+              "url": "https://www.nhtsa.gov/document/automated-driving-systems-20-voluntary-guidance",
+              "locator": "Voluntary ADS guidance identifies system safety, ODD, object/event detection and response, fallback, human-machine interface, cybersecurity, validation and other safety elements.",
+              "supports": "Supports safety engineering and validation as a cross-cutting practice spanning ADS components.",
+              "claim_limit": "US voluntary guidance; it is not a global regulation or certification requirement.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-ISO-21448-2026-10-22",
+              "publisher": "International Organization for Standardization",
+              "title": "ISO 21448:2022 Safety of the Intended Functionality",
+              "url": "https://www.iso.org/standard/77490.html",
+              "locator": "Covers SOTIF risks from functional insufficiencies and provides design, verification and validation guidance for road-vehicle functions relying on situational awareness from complex sensors and processing algorithms, including driving automation levels 1–5.",
+              "supports": "Supports cross-cutting validation of sensing/perception performance and intended functionality.",
+              "claim_limit": "Distinct from ISO 26262 faults and cybersecurity; the ISO page notes the 2022 edition is under revision.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            }
+          ],
+          "role_keys": [
+            "D166|software developer"
+          ],
+          "role_route_count": 1
         },
         {
-          "area_key": "D166:planning-control-and-automated-driving-software",
-          "source_key": null,
-          "label": "Planning, Control and Automated Driving Software",
-          "boundary": "Plan safe paths and control vehicle motion within system constraints and the operational design domain.",
-          "boundary_reconciliation": null,
-          "source_support_claim": null,
-          "source_ids": [],
-          "source_urls": [],
-          "evidence": [],
-          "recommendation_status": "recommendation_needs_role_and_context_integration",
+          "label": "High-Definition Mapping and Map Data",
+          "description": "Build, maintain and use road-network, lane-level, vector and point-cloud map data that supports localization, route planning and scene interpretation.",
+          "boundary": "Build, maintain and use road-network, lane-level, vector and point-cloud map data that supports localization, route planning and scene interpretation.",
+          "source_ids": [
+            "D166-AUTOWARE-ARCH-2026-10-22",
+            "D166-AUTOWARE-MAP-2026-10-22"
+          ],
+          "source_references": [
+            {
+              "source_id": "D166-AUTOWARE-ARCH-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Autoware Architecture Overview",
+              "url": "https://docs.autoware.org/pr-803/design/autoware-architecture-v1/",
+              "locator": "Architecture overview separates sensing, map, localization, perception, planning, control, and vehicle interface stacks; it describes replaceable modules and component boundaries.",
+              "supports": "Supports separate component areas and warns that this architecture is a technical system decomposition, not a universal curriculum sequence.",
+              "claim_limit": "Open-source reference architecture; implementations and required stacks vary by vehicle, operational design domain, and use case.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-AUTOWARE-MAP-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Map Component Design",
+              "url": "https://docs.autoware.org/main/design/autoware-architecture-v1/components/map/",
+              "locator": "Describes point-cloud and vector maps used for localization, route planning, traffic-light detection and trajectory prediction.",
+              "supports": "Supports map data and mapping as a distinct data product used by several downstream components.",
+              "claim_limit": "Autoware map formats and practices are not a universal industry standard.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            }
+          ],
+          "uncorroborated_source_urls": [],
+          "recommendation_status": "source_supported_internal_recommendation",
+          "area_status": "review_required_pending_student_contract_and_ui_approval",
           "student_visible": false,
           "nigerian_context": null,
-          "role_keys": []
+          "source_evidence_status": "source_linked",
+          "unresolved_source_ids": [],
+          "area_evidence_link_check": {
+            "checked_against_catalog_and_captured_review_sources": true,
+            "resolution_methods": [
+              "external_primary_source_review",
+              "official_component_architecture_review"
+            ],
+            "unresolved_catalog_source_ids": []
+          },
+          "area_key": "D166:high-definition-mapping",
+          "source_urls": [
+            "https://docs.autoware.org/main/design/autoware-architecture-v1/components/map/",
+            "https://docs.autoware.org/pr-803/design/autoware-architecture-v1/"
+          ],
+          "evidence": [
+            {
+              "source_id": "D166-AUTOWARE-ARCH-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Autoware Architecture Overview",
+              "url": "https://docs.autoware.org/pr-803/design/autoware-architecture-v1/",
+              "locator": "Architecture overview separates sensing, map, localization, perception, planning, control, and vehicle interface stacks; it describes replaceable modules and component boundaries.",
+              "supports": "Supports separate component areas and warns that this architecture is a technical system decomposition, not a universal curriculum sequence.",
+              "claim_limit": "Open-source reference architecture; implementations and required stacks vary by vehicle, operational design domain, and use case.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-AUTOWARE-MAP-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Map Component Design",
+              "url": "https://docs.autoware.org/main/design/autoware-architecture-v1/components/map/",
+              "locator": "Describes point-cloud and vector maps used for localization, route planning, traffic-light detection and trajectory prediction.",
+              "supports": "Supports map data and mapping as a distinct data product used by several downstream components.",
+              "claim_limit": "Autoware map formats and practices are not a universal industry standard.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            }
+          ],
+          "role_keys": [
+            "D166|software developer"
+          ],
+          "role_route_count": 1
         },
         {
-          "area_key": "D166:vehicle-integration-safety-and-verification",
-          "source_key": null,
-          "label": "Vehicle Integration, Safety and Verification",
-          "boundary": "Integrate automated-driving components with the vehicle and verify system performance, safety and operational constraints.",
-          "boundary_reconciliation": null,
-          "source_support_claim": null,
-          "source_ids": [],
-          "source_urls": [],
-          "evidence": [],
-          "recommendation_status": "recommendation_needs_role_and_context_integration",
+          "label": "Localization and Vehicle State Estimation",
+          "description": "Estimate vehicle pose, velocity, acceleration and uncertainty by combining sensors and map references within the intended operational design domain.",
+          "boundary": "Estimate vehicle pose, velocity, acceleration and uncertainty by combining sensors and map references within the intended operational design domain.",
+          "source_ids": [
+            "D166-AUTOWARE-ARCH-2026-10-22",
+            "D166-AUTOWARE-LOCALIZATION-2026-10-22",
+            "D166-AUTOWARE-MAP-2026-10-22"
+          ],
+          "source_references": [
+            {
+              "source_id": "D166-AUTOWARE-ARCH-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Autoware Architecture Overview",
+              "url": "https://docs.autoware.org/pr-803/design/autoware-architecture-v1/",
+              "locator": "Architecture overview separates sensing, map, localization, perception, planning, control, and vehicle interface stacks; it describes replaceable modules and component boundaries.",
+              "supports": "Supports separate component areas and warns that this architecture is a technical system decomposition, not a universal curriculum sequence.",
+              "claim_limit": "Open-source reference architecture; implementations and required stacks vary by vehicle, operational design domain, and use case.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-AUTOWARE-LOCALIZATION-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Localization Component Design",
+              "url": "https://docs.autoware.org/main/design/autoware-architecture-v1/components/localization/",
+              "locator": "Localization estimates vehicle pose, velocity and acceleration, diagnoses unreliable estimates, and fuses sensor configurations within a defined ODD.",
+              "supports": "Supports a separate localization and vehicle-state-estimation area.",
+              "claim_limit": "The source explicitly does not promise infallible localization or operation outside the defined ODD.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-AUTOWARE-MAP-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Map Component Design",
+              "url": "https://docs.autoware.org/main/design/autoware-architecture-v1/components/map/",
+              "locator": "Describes point-cloud and vector maps used for localization, route planning, traffic-light detection and trajectory prediction.",
+              "supports": "Supports map data and mapping as a distinct data product used by several downstream components.",
+              "claim_limit": "Autoware map formats and practices are not a universal industry standard.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            }
+          ],
+          "uncorroborated_source_urls": [],
+          "recommendation_status": "source_supported_internal_recommendation",
+          "area_status": "review_required_pending_student_contract_and_ui_approval",
           "student_visible": false,
           "nigerian_context": null,
-          "role_keys": []
+          "source_evidence_status": "source_linked",
+          "unresolved_source_ids": [],
+          "area_evidence_link_check": {
+            "checked_against_catalog_and_captured_review_sources": true,
+            "resolution_methods": [
+              "external_primary_source_review",
+              "official_component_architecture_review"
+            ],
+            "unresolved_catalog_source_ids": []
+          },
+          "area_key": "D166:localization-and-vehicle-state-estimation",
+          "source_urls": [
+            "https://docs.autoware.org/main/design/autoware-architecture-v1/components/localization/",
+            "https://docs.autoware.org/main/design/autoware-architecture-v1/components/map/",
+            "https://docs.autoware.org/pr-803/design/autoware-architecture-v1/"
+          ],
+          "evidence": [
+            {
+              "source_id": "D166-AUTOWARE-ARCH-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Autoware Architecture Overview",
+              "url": "https://docs.autoware.org/pr-803/design/autoware-architecture-v1/",
+              "locator": "Architecture overview separates sensing, map, localization, perception, planning, control, and vehicle interface stacks; it describes replaceable modules and component boundaries.",
+              "supports": "Supports separate component areas and warns that this architecture is a technical system decomposition, not a universal curriculum sequence.",
+              "claim_limit": "Open-source reference architecture; implementations and required stacks vary by vehicle, operational design domain, and use case.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-AUTOWARE-LOCALIZATION-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Localization Component Design",
+              "url": "https://docs.autoware.org/main/design/autoware-architecture-v1/components/localization/",
+              "locator": "Localization estimates vehicle pose, velocity and acceleration, diagnoses unreliable estimates, and fuses sensor configurations within a defined ODD.",
+              "supports": "Supports a separate localization and vehicle-state-estimation area.",
+              "claim_limit": "The source explicitly does not promise infallible localization or operation outside the defined ODD.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-AUTOWARE-MAP-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Map Component Design",
+              "url": "https://docs.autoware.org/main/design/autoware-architecture-v1/components/map/",
+              "locator": "Describes point-cloud and vector maps used for localization, route planning, traffic-light detection and trajectory prediction.",
+              "supports": "Supports map data and mapping as a distinct data product used by several downstream components.",
+              "claim_limit": "Autoware map formats and practices are not a universal industry standard.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            }
+          ],
+          "role_keys": [
+            "D166|software developer"
+          ],
+          "role_route_count": 1
+        },
+        {
+          "label": "Automated Driving Planning",
+          "description": "Select behaviors and generate feasible, rule-aware paths and trajectories using mission goals, maps, perceived objects, vehicle state and operating constraints.",
+          "boundary": "Select behaviors and generate feasible, rule-aware paths and trajectories using mission goals, maps, perceived objects, vehicle state and operating constraints.",
+          "source_ids": [
+            "D166-AUTOWARE-ARCH-2026-10-22",
+            "D166-AUTOWARE-PLANNING-2026-10-22",
+            "D166-NHTSA-ADS-2026-10-22"
+          ],
+          "source_references": [
+            {
+              "source_id": "D166-AUTOWARE-ARCH-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Autoware Architecture Overview",
+              "url": "https://docs.autoware.org/pr-803/design/autoware-architecture-v1/",
+              "locator": "Architecture overview separates sensing, map, localization, perception, planning, control, and vehicle interface stacks; it describes replaceable modules and component boundaries.",
+              "supports": "Supports separate component areas and warns that this architecture is a technical system decomposition, not a universal curriculum sequence.",
+              "claim_limit": "Open-source reference architecture; implementations and required stacks vary by vehicle, operational design domain, and use case.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-AUTOWARE-PLANNING-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Planning Component Design",
+              "url": "https://docs.autoware.org/pr-803/design/autoware-architecture-v1/components/planning/",
+              "locator": "Planning generates target trajectories; separates mission, behavior and motion planning, consumes map, perception and localization information, and sends trajectories to control.",
+              "supports": "Supports planning as a distinct function, with explicit outputs consumed by control.",
+              "claim_limit": "The documented modular system is an example architecture; specific behavior and interfaces depend on ODD and implementation.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-NHTSA-ADS-2026-10-22",
+              "publisher": "NHTSA",
+              "title": "Automated Driving Systems 2.0: A Vision for Safety",
+              "url": "https://www.nhtsa.gov/document/automated-driving-systems-20-voluntary-guidance",
+              "locator": "Voluntary ADS guidance identifies system safety, ODD, object/event detection and response, fallback, human-machine interface, cybersecurity, validation and other safety elements.",
+              "supports": "Supports safety engineering and validation as a cross-cutting practice spanning ADS components.",
+              "claim_limit": "US voluntary guidance; it is not a global regulation or certification requirement.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            }
+          ],
+          "uncorroborated_source_urls": [],
+          "recommendation_status": "source_supported_internal_recommendation",
+          "area_status": "review_required_pending_student_contract_and_ui_approval",
+          "student_visible": false,
+          "nigerian_context": null,
+          "source_evidence_status": "source_linked",
+          "unresolved_source_ids": [],
+          "area_evidence_link_check": {
+            "checked_against_catalog_and_captured_review_sources": true,
+            "resolution_methods": [
+              "external_primary_source_review",
+              "official_component_architecture_review"
+            ],
+            "unresolved_catalog_source_ids": []
+          },
+          "area_key": "D166:automated-driving-planning",
+          "source_urls": [
+            "https://docs.autoware.org/pr-803/design/autoware-architecture-v1/",
+            "https://docs.autoware.org/pr-803/design/autoware-architecture-v1/components/planning/",
+            "https://www.nhtsa.gov/document/automated-driving-systems-20-voluntary-guidance"
+          ],
+          "evidence": [
+            {
+              "source_id": "D166-AUTOWARE-ARCH-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Autoware Architecture Overview",
+              "url": "https://docs.autoware.org/pr-803/design/autoware-architecture-v1/",
+              "locator": "Architecture overview separates sensing, map, localization, perception, planning, control, and vehicle interface stacks; it describes replaceable modules and component boundaries.",
+              "supports": "Supports separate component areas and warns that this architecture is a technical system decomposition, not a universal curriculum sequence.",
+              "claim_limit": "Open-source reference architecture; implementations and required stacks vary by vehicle, operational design domain, and use case.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-AUTOWARE-PLANNING-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Planning Component Design",
+              "url": "https://docs.autoware.org/pr-803/design/autoware-architecture-v1/components/planning/",
+              "locator": "Planning generates target trajectories; separates mission, behavior and motion planning, consumes map, perception and localization information, and sends trajectories to control.",
+              "supports": "Supports planning as a distinct function, with explicit outputs consumed by control.",
+              "claim_limit": "The documented modular system is an example architecture; specific behavior and interfaces depend on ODD and implementation.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-NHTSA-ADS-2026-10-22",
+              "publisher": "NHTSA",
+              "title": "Automated Driving Systems 2.0: A Vision for Safety",
+              "url": "https://www.nhtsa.gov/document/automated-driving-systems-20-voluntary-guidance",
+              "locator": "Voluntary ADS guidance identifies system safety, ODD, object/event detection and response, fallback, human-machine interface, cybersecurity, validation and other safety elements.",
+              "supports": "Supports safety engineering and validation as a cross-cutting practice spanning ADS components.",
+              "claim_limit": "US voluntary guidance; it is not a global regulation or certification requirement.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            }
+          ],
+          "role_keys": [
+            "D166|software developer"
+          ],
+          "role_route_count": 1
+        },
+        {
+          "label": "Vehicle Control and Dynamics",
+          "description": "Translate target trajectories and driving requests into stable steering, braking, acceleration and other motion commands while accounting for vehicle dynamics and limits.",
+          "boundary": "Translate target trajectories and driving requests into stable steering, braking, acceleration and other motion commands while accounting for vehicle dynamics and limits.",
+          "source_ids": [
+            "D166-AUTOWARE-ARCH-2026-10-22",
+            "D166-AUTOWARE-CONTROL-2026-10-22",
+            "D166-NHTSA-ADS-2026-10-22"
+          ],
+          "source_references": [
+            {
+              "source_id": "D166-AUTOWARE-ARCH-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Autoware Architecture Overview",
+              "url": "https://docs.autoware.org/pr-803/design/autoware-architecture-v1/",
+              "locator": "Architecture overview separates sensing, map, localization, perception, planning, control, and vehicle interface stacks; it describes replaceable modules and component boundaries.",
+              "supports": "Supports separate component areas and warns that this architecture is a technical system decomposition, not a universal curriculum sequence.",
+              "claim_limit": "Open-source reference architecture; implementations and required stacks vary by vehicle, operational design domain, and use case.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-AUTOWARE-CONTROL-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Control Component Design",
+              "url": "https://docs.autoware.org/1.6.0/design/autoware-architecture-v1/components/control/",
+              "locator": "Defines the Control component separately from Planning in the Autoware stack; planning emits a trajectory that the controller follows.",
+              "supports": "Supports a distinct control and vehicle-dynamics area, not a merged planning/control label.",
+              "claim_limit": "Autoware's implementation is one reference and does not define all vehicle-control architectures.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-NHTSA-ADS-2026-10-22",
+              "publisher": "NHTSA",
+              "title": "Automated Driving Systems 2.0: A Vision for Safety",
+              "url": "https://www.nhtsa.gov/document/automated-driving-systems-20-voluntary-guidance",
+              "locator": "Voluntary ADS guidance identifies system safety, ODD, object/event detection and response, fallback, human-machine interface, cybersecurity, validation and other safety elements.",
+              "supports": "Supports safety engineering and validation as a cross-cutting practice spanning ADS components.",
+              "claim_limit": "US voluntary guidance; it is not a global regulation or certification requirement.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            }
+          ],
+          "uncorroborated_source_urls": [],
+          "recommendation_status": "source_supported_internal_recommendation",
+          "area_status": "review_required_pending_student_contract_and_ui_approval",
+          "student_visible": false,
+          "nigerian_context": null,
+          "source_evidence_status": "source_linked",
+          "unresolved_source_ids": [],
+          "area_evidence_link_check": {
+            "checked_against_catalog_and_captured_review_sources": true,
+            "resolution_methods": [
+              "external_primary_source_review",
+              "official_component_architecture_review"
+            ],
+            "unresolved_catalog_source_ids": []
+          },
+          "area_key": "D166:vehicle-control-and-dynamics",
+          "source_urls": [
+            "https://docs.autoware.org/1.6.0/design/autoware-architecture-v1/components/control/",
+            "https://docs.autoware.org/pr-803/design/autoware-architecture-v1/",
+            "https://www.nhtsa.gov/document/automated-driving-systems-20-voluntary-guidance"
+          ],
+          "evidence": [
+            {
+              "source_id": "D166-AUTOWARE-ARCH-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Autoware Architecture Overview",
+              "url": "https://docs.autoware.org/pr-803/design/autoware-architecture-v1/",
+              "locator": "Architecture overview separates sensing, map, localization, perception, planning, control, and vehicle interface stacks; it describes replaceable modules and component boundaries.",
+              "supports": "Supports separate component areas and warns that this architecture is a technical system decomposition, not a universal curriculum sequence.",
+              "claim_limit": "Open-source reference architecture; implementations and required stacks vary by vehicle, operational design domain, and use case.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-AUTOWARE-CONTROL-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Control Component Design",
+              "url": "https://docs.autoware.org/1.6.0/design/autoware-architecture-v1/components/control/",
+              "locator": "Defines the Control component separately from Planning in the Autoware stack; planning emits a trajectory that the controller follows.",
+              "supports": "Supports a distinct control and vehicle-dynamics area, not a merged planning/control label.",
+              "claim_limit": "Autoware's implementation is one reference and does not define all vehicle-control architectures.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-NHTSA-ADS-2026-10-22",
+              "publisher": "NHTSA",
+              "title": "Automated Driving Systems 2.0: A Vision for Safety",
+              "url": "https://www.nhtsa.gov/document/automated-driving-systems-20-voluntary-guidance",
+              "locator": "Voluntary ADS guidance identifies system safety, ODD, object/event detection and response, fallback, human-machine interface, cybersecurity, validation and other safety elements.",
+              "supports": "Supports safety engineering and validation as a cross-cutting practice spanning ADS components.",
+              "claim_limit": "US voluntary guidance; it is not a global regulation or certification requirement.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            }
+          ],
+          "role_keys": [
+            "D166|mechanical engineer",
+            "D166|powertrain engineer",
+            "D166|software developer"
+          ],
+          "role_route_count": 3
+        },
+        {
+          "label": "Vehicle Interface and System Integration",
+          "description": "Integrate sensing, compute, software and vehicle subsystems; adapt normalized commands and status to a specific vehicle platform and diagnose end-to-end behavior.",
+          "boundary": "Integrate sensing, compute, software and vehicle subsystems; adapt normalized commands and status to a specific vehicle platform and diagnose end-to-end behavior.",
+          "source_ids": [
+            "D166-AUTOWARE-ARCH-2026-10-22",
+            "D166-AUTOWARE-VEHICLE-INTERFACE-2026-10-22",
+            "D166-NHTSA-ADS-2026-10-22"
+          ],
+          "source_references": [
+            {
+              "source_id": "D166-AUTOWARE-ARCH-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Autoware Architecture Overview",
+              "url": "https://docs.autoware.org/pr-803/design/autoware-architecture-v1/",
+              "locator": "Architecture overview separates sensing, map, localization, perception, planning, control, and vehicle interface stacks; it describes replaceable modules and component boundaries.",
+              "supports": "Supports separate component areas and warns that this architecture is a technical system decomposition, not a universal curriculum sequence.",
+              "claim_limit": "Open-source reference architecture; implementations and required stacks vary by vehicle, operational design domain, and use case.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-AUTOWARE-VEHICLE-INTERFACE-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Vehicle Interface Design",
+              "url": "https://autowarefoundation.github.io/autoware-documentation/latest/design/autoware-architecture/vehicle/",
+              "locator": "Vehicle Interface converts Autoware control commands to vehicle-specific drive-by-wire commands and returns vehicle status in normalized messages.",
+              "supports": "Supports vehicle interface and system integration as distinct from planning or control algorithm design.",
+              "claim_limit": "Interface work is platform-specific; this page does not define regulatory approval requirements.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-NHTSA-ADS-2026-10-22",
+              "publisher": "NHTSA",
+              "title": "Automated Driving Systems 2.0: A Vision for Safety",
+              "url": "https://www.nhtsa.gov/document/automated-driving-systems-20-voluntary-guidance",
+              "locator": "Voluntary ADS guidance identifies system safety, ODD, object/event detection and response, fallback, human-machine interface, cybersecurity, validation and other safety elements.",
+              "supports": "Supports safety engineering and validation as a cross-cutting practice spanning ADS components.",
+              "claim_limit": "US voluntary guidance; it is not a global regulation or certification requirement.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            }
+          ],
+          "uncorroborated_source_urls": [],
+          "recommendation_status": "source_supported_internal_recommendation",
+          "area_status": "review_required_pending_student_contract_and_ui_approval",
+          "student_visible": false,
+          "nigerian_context": null,
+          "source_evidence_status": "source_linked",
+          "unresolved_source_ids": [],
+          "area_evidence_link_check": {
+            "checked_against_catalog_and_captured_review_sources": true,
+            "resolution_methods": [
+              "external_primary_source_review",
+              "official_component_architecture_review"
+            ],
+            "unresolved_catalog_source_ids": []
+          },
+          "area_key": "D166:vehicle-interface-and-system-integration",
+          "source_urls": [
+            "https://autowarefoundation.github.io/autoware-documentation/latest/design/autoware-architecture/vehicle/",
+            "https://docs.autoware.org/pr-803/design/autoware-architecture-v1/",
+            "https://www.nhtsa.gov/document/automated-driving-systems-20-voluntary-guidance"
+          ],
+          "evidence": [
+            {
+              "source_id": "D166-AUTOWARE-ARCH-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Autoware Architecture Overview",
+              "url": "https://docs.autoware.org/pr-803/design/autoware-architecture-v1/",
+              "locator": "Architecture overview separates sensing, map, localization, perception, planning, control, and vehicle interface stacks; it describes replaceable modules and component boundaries.",
+              "supports": "Supports separate component areas and warns that this architecture is a technical system decomposition, not a universal curriculum sequence.",
+              "claim_limit": "Open-source reference architecture; implementations and required stacks vary by vehicle, operational design domain, and use case.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-AUTOWARE-VEHICLE-INTERFACE-2026-10-22",
+              "publisher": "Autoware Foundation",
+              "title": "Vehicle Interface Design",
+              "url": "https://autowarefoundation.github.io/autoware-documentation/latest/design/autoware-architecture/vehicle/",
+              "locator": "Vehicle Interface converts Autoware control commands to vehicle-specific drive-by-wire commands and returns vehicle status in normalized messages.",
+              "supports": "Supports vehicle interface and system integration as distinct from planning or control algorithm design.",
+              "claim_limit": "Interface work is platform-specific; this page does not define regulatory approval requirements.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-NHTSA-ADS-2026-10-22",
+              "publisher": "NHTSA",
+              "title": "Automated Driving Systems 2.0: A Vision for Safety",
+              "url": "https://www.nhtsa.gov/document/automated-driving-systems-20-voluntary-guidance",
+              "locator": "Voluntary ADS guidance identifies system safety, ODD, object/event detection and response, fallback, human-machine interface, cybersecurity, validation and other safety elements.",
+              "supports": "Supports safety engineering and validation as a cross-cutting practice spanning ADS components.",
+              "claim_limit": "US voluntary guidance; it is not a global regulation or certification requirement.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            }
+          ],
+          "role_keys": [
+            "D166|automotive engineer",
+            "D166|mechanical engineer",
+            "D166|mechatronics engineer",
+            "D166|powertrain engineer",
+            "D166|software analyst",
+            "D166|software developer",
+            "D166|telecommunications engineer"
+          ],
+          "role_route_count": 7
+        },
+        {
+          "label": "ADS Safety, Verification and Validation",
+          "description": "Build safety arguments and test evidence across the operational design domain, including requirements, hazard analysis, simulation, hardware-in-the-loop, on-road evaluation, fallback and system-level validation.",
+          "boundary": "Build safety arguments and test evidence across the operational design domain, including requirements, hazard analysis, simulation, hardware-in-the-loop, on-road evaluation, fallback and system-level validation.",
+          "source_ids": [
+            "D166-NHTSA-ADS-2026-10-22",
+            "D166-ISO-26262-2026-10-22",
+            "D166-ISO-21448-2026-10-22"
+          ],
+          "source_references": [
+            {
+              "source_id": "D166-NHTSA-ADS-2026-10-22",
+              "publisher": "NHTSA",
+              "title": "Automated Driving Systems 2.0: A Vision for Safety",
+              "url": "https://www.nhtsa.gov/document/automated-driving-systems-20-voluntary-guidance",
+              "locator": "Voluntary ADS guidance identifies system safety, ODD, object/event detection and response, fallback, human-machine interface, cybersecurity, validation and other safety elements.",
+              "supports": "Supports safety engineering and validation as a cross-cutting practice spanning ADS components.",
+              "claim_limit": "US voluntary guidance; it is not a global regulation or certification requirement.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-ISO-26262-2026-10-22",
+              "publisher": "International Organization for Standardization",
+              "title": "ISO 26262 Road Vehicles Functional Safety",
+              "url": "https://www.iso.org/publication/PUB200262.html",
+              "locator": "The standard series covers safety lifecycle, concept, system, hardware and software development, production/operation, supporting processes and safety analyses for road-vehicle E/E systems.",
+              "supports": "Supports functional-safety engineering and lifecycle verification/validation within the road-vehicle context.",
+              "claim_limit": "A systems standard, not an individual certification; applicability is defined by the standard and vehicle context.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-ISO-21448-2026-10-22",
+              "publisher": "International Organization for Standardization",
+              "title": "ISO 21448:2022 Safety of the Intended Functionality",
+              "url": "https://www.iso.org/standard/77490.html",
+              "locator": "Covers SOTIF risks from functional insufficiencies and provides design, verification and validation guidance for road-vehicle functions relying on situational awareness from complex sensors and processing algorithms, including driving automation levels 1–5.",
+              "supports": "Supports cross-cutting validation of sensing/perception performance and intended functionality.",
+              "claim_limit": "Distinct from ISO 26262 faults and cybersecurity; the ISO page notes the 2022 edition is under revision.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            }
+          ],
+          "uncorroborated_source_urls": [],
+          "recommendation_status": "source_supported_internal_recommendation",
+          "area_status": "review_required_pending_student_contract_and_ui_approval",
+          "student_visible": false,
+          "nigerian_context": null,
+          "source_evidence_status": "source_linked",
+          "unresolved_source_ids": [],
+          "area_evidence_link_check": {
+            "checked_against_catalog_and_captured_review_sources": true,
+            "resolution_methods": [
+              "external_primary_source_review",
+              "official_component_architecture_review"
+            ],
+            "unresolved_catalog_source_ids": []
+          },
+          "area_key": "D166:ads-safety-verification-and-validation",
+          "source_urls": [
+            "https://www.iso.org/publication/PUB200262.html",
+            "https://www.iso.org/standard/77490.html",
+            "https://www.nhtsa.gov/document/automated-driving-systems-20-voluntary-guidance"
+          ],
+          "evidence": [
+            {
+              "source_id": "D166-NHTSA-ADS-2026-10-22",
+              "publisher": "NHTSA",
+              "title": "Automated Driving Systems 2.0: A Vision for Safety",
+              "url": "https://www.nhtsa.gov/document/automated-driving-systems-20-voluntary-guidance",
+              "locator": "Voluntary ADS guidance identifies system safety, ODD, object/event detection and response, fallback, human-machine interface, cybersecurity, validation and other safety elements.",
+              "supports": "Supports safety engineering and validation as a cross-cutting practice spanning ADS components.",
+              "claim_limit": "US voluntary guidance; it is not a global regulation or certification requirement.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-ISO-26262-2026-10-22",
+              "publisher": "International Organization for Standardization",
+              "title": "ISO 26262 Road Vehicles Functional Safety",
+              "url": "https://www.iso.org/publication/PUB200262.html",
+              "locator": "The standard series covers safety lifecycle, concept, system, hardware and software development, production/operation, supporting processes and safety analyses for road-vehicle E/E systems.",
+              "supports": "Supports functional-safety engineering and lifecycle verification/validation within the road-vehicle context.",
+              "claim_limit": "A systems standard, not an individual certification; applicability is defined by the standard and vehicle context.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            },
+            {
+              "source_id": "D166-ISO-21448-2026-10-22",
+              "publisher": "International Organization for Standardization",
+              "title": "ISO 21448:2022 Safety of the Intended Functionality",
+              "url": "https://www.iso.org/standard/77490.html",
+              "locator": "Covers SOTIF risks from functional insufficiencies and provides design, verification and validation guidance for road-vehicle functions relying on situational awareness from complex sensors and processing algorithms, including driving automation levels 1–5.",
+              "supports": "Supports cross-cutting validation of sensing/perception performance and intended functionality.",
+              "claim_limit": "Distinct from ISO 26262 faults and cybersecurity; the ISO page notes the 2022 edition is under revision.",
+              "access_date": "2026-10-22",
+              "review_date": "2026-10-22"
+            }
+          ],
+          "role_keys": [
+            "D166|automotive engineer",
+            "D166|homologation engineer",
+            "D166|software analyst",
+            "D166|software developer"
+          ],
+          "role_route_count": 4
         }
       ],
-      "recommended_area_count_normalized": 4,
+      "recommended_area_count_normalized": 8,
       "source_capture_complete": true,
       "source_capture_quality": {
-        "status": "complete_fields_in_captured_review",
-        "source_record_count": 3,
+        "status": "externally_reconciled_area_boundaries_and_role_contexts",
+        "source_record_count": 11,
         "all_sources_have_url_locator_claim_support_and_limit": true,
-        "note": "A captured citation is not independent verification of the linked source. Source IDs are null where the original review did not supply one; artifact locators identify the actual captured citation row without inventing source IDs."
+        "note": "The component architecture supports area boundaries; it does not imply a strict student sequence. Safety and V&V are cross-cutting. Student visibility remains off pending the existing student contract and local UI approval."
       },
       "evidence_artifact": "data\\career-mapping\\_audit\\specialization_lanes_2026_10_05\\STEP1_RECONCILIATION_2026_10_06\\AGENT_D113_D168\\d113_d168_step1_reconciliation_register_2026_10_06_v005.json",
       "open_items": [
-        "Do not use SAE levels as specialization names or course sequence. Do not create a branch for every sensor, vehicle type, autonomy level or software stack. Keep driver assistance, automated driving, robotics and conventional automotive engineering boundaries explicit."
+        "Keep SAE automation levels as capability descriptors, not specialization names or a learning ladder.",
+        "Keep the safety/V&V area cross-cutting; do not place it after every technical area as a universal prerequisite.",
+        "Student visibility remains off until the student-facing contract and local UI approval are completed."
       ],
       "nigerian_context_status": "not_started",
-      "canonical_status": "not_activated_pending_role_route_and_context_reconciliation"
+      "canonical_status": "area_and_conditional_role_routes_reconciled_pending_student_contract_and_ui_approval"
     },
     {
       "domain_id": "D167",

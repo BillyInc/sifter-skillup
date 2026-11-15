@@ -1,0 +1,81 @@
+{
+  "schema_version": "d078-route-workflow-approvals-2026-11-08.v1",
+  "status": "locally_reviewed_route_scoped_recommended_workflows",
+  "purpose": "Add only source-supported task workflow edges. These describe a recommended order when carrying out the named task; they are not compulsory course prerequisites and never block a learner who skips or already knows an item.",
+  "approvals": [
+    {
+      "id": "direct-area-order:15-reversed",
+      "source_item_id": "area_enrichment_item:d078-human-geography-population-census-survey-admin-appraisal",
+      "target_item_id": "area_enrichment_item:d078-human-geography-population-population-measures",
+      "condition": "When deriving a population measure from a census, survey, or administrative source, first check how that source was collected, defined, and covered. This is a task workflow, not a requirement to take a separate course first.",
+      "rationale": "The original declaration pointed from measures to appraisal, but the reviewed direction says source appraisal comes first. The graph encodes the corrected direction only for a task that derives measures from a selected source.",
+      "sources": [
+        {"id": "external:un-fundamental-principles-official-statistics", "title": "United Nations Statistics Division, Fundamental Principles of Official Statistics", "url": "https://unstats.un.org/fpos/", "locator": "Principles 2, 3, and 5: professional methods, transparent source/method information, and source choice based on quality. Applied narrowly as source/context appraisal before deriving or interpreting a population measure."},
+        {"id": "external:un-national-quality-assurance-framework", "title": "United Nations Statistics Division, National Quality Assurance Frameworks", "url": "https://unstats.un.org/UNSDWebsite/data-quality", "locator": "National quality assurance guidance includes assessment of administrative and other data sources; supports checking source quality before using derived measures."}
+      ]
+    },
+    {
+      "id": "direct-area-order:13-workflow",
+      "source_item_id": "area_enrichment_item:d078-human-geography-population-spatial-data-provenance-scale",
+      "target_item_id": "area_enrichment_item:d078-human-geography-population-spatial-analysis-method",
+      "condition": "When the chosen task uses mapped or spatially aggregated data, check the source, geographic unit, and scale before interpreting the spatial analysis. You may learn the concepts together.",
+      "rationale": "This is a project workflow for interpreting spatial results, not a prerequisite for learning spatial analysis as a method.",
+      "sources": [
+        {"id": "external:ons-choropleth-guidance", "title": "Office for National Statistics, Choropleth maps", "url": "https://service-manual.ons.gov.uk/data-visualisation/chart-types/choropleth-maps", "locator": "Guidance on geographic aggregation and choosing an appropriate geographic level for a choropleth; supports checking spatial unit and scale when interpreting mapped comparisons."},
+        {"id": "external:loc-gis-introduction", "title": "Library of Congress, Introduction to Geographic Information Systems", "url": "https://www.loc.gov/preservation/digital/formats/content/gis_intro.shtml", "locator": "GIS data discussion of scale, accuracy, and lineage; supports checking provenance and scale before interpreting spatial analysis."}
+      ]
+    },
+    {
+      "id": "direct-area-order:21-workflow",
+      "source_item_id": "area_enrichment_item:d078-social-research-evaluation-evaluation-design-and-evidence",
+      "target_item_id": "area_enrichment_item:d078-social-research-evaluation-quantitative-analysis-choice",
+      "condition": "When the selected evaluation design calls for quantitative analysis, choose an analysis that fits its question, comparison, data, and design. Skip this branch when quantitative analysis is not suitable.",
+      "rationale": "Analysis choice follows from the evaluation question and design; the link is conditional on choosing a quantitative evaluation route and does not imply every evaluation needs quantitative analysis.",
+      "sources": [
+        {"id": "external:uk-magenta-book", "title": "HM Treasury, The Magenta Book: Central Government guidance on evaluation", "url": "https://www.gov.uk/government/publications/the-magenta-book/magenta-book-central-government-guidance-on-evaluation-html", "locator": "Chapters 2 and 3: scope evaluation questions and design before selecting suitable evaluation approaches and methods; method choice must align with the question and available evidence."}
+      ]
+    },
+    {
+      "id": "direct-area-order:22-workflow",
+      "source_item_id": "area_enrichment_item:d078-computational-digital-social-science-computational-question-formulation",
+      "target_item_id": "area_enrichment_item:d078-computational-digital-social-science-data-provenance-and-digital-ethics",
+      "condition": "Before accessing, collecting, or reusing digital data for a computational question, check where it came from, whether the planned use is permitted, and what privacy or harm risks apply. This safeguard is specific to the project.",
+      "rationale": "Research design must include context, permissions, and data-subject considerations before the relevant data activity. This is an operational safeguard, not a general course prerequisite.",
+      "sources": [
+        {"id": "external:aoir-internet-research-ethics-3", "title": "Association of Internet Researchers, Internet Research: Ethical Guidelines 3.0", "url": "https://aoir.org/reports/ethics3.pdf", "locator": "Section 2.1, Initial Research Design, and the guideline's research-lifecycle framing: permissions, social context, data subjects, and risks are considered in research design and revisited as the project evolves."}
+      ]
+    },
+    {
+      "id": "direct-area-order:25-workflow",
+      "source_item_id": "area_enrichment_item:d078-computational-digital-social-science-digital-trace-construct-and-sampling",
+      "target_item_id": "area_enrichment_item:d078-computational-digital-social-science-content-analysis-and-text-classification",
+      "condition": "For a digital-text classification task, define what the text represents, which platform or records are in scope, and how the sample was selected before making classification claims. Keep a human or non-computational alternative available when classification is not suitable.",
+      "rationale": "The design/scope item informs the exact text-analysis route. This is a recommended task workflow; it does not make computational analysis compulsory.",
+      "sources": [
+        {"id": "external:aoir-internet-research-ethics-3", "title": "Association of Internet Researchers, Internet Research: Ethical Guidelines 3.0", "url": "https://aoir.org/reports/ethics3.pdf", "locator": "Sections on initial research design and AI/ML research: define the social context, data subjects, dataset accountability, and how data and models relate to the research question."}
+      ]
+    },
+    {
+      "id": "direct-area-order:26-workflow",
+      "source_item_id": "area_enrichment_item:d078-computational-digital-social-science-digital-trace-construct-and-sampling",
+      "target_item_id": "area_enrichment_item:d078-computational-digital-social-science-network-analysis-method",
+      "condition": "When using network analysis, define what counts as a node and a relationship, and which records are included, before interpreting network measures. You may learn the design and analysis concepts together.",
+      "rationale": "Network results depend on the chosen entities, ties, and source scope. This recommended workflow protects interpretation; it is not a blocker to learning the method.",
+      "sources": [
+        {"id": "external:sage-social-network-analysis-entry", "title": "SAGE Encyclopedia of Qualitative Research Methods, Social Network Analysis", "url": "https://methods.sagepub.com/ency/edvol/embed/sage-encyc-qualitative-research-methods/chpt/social-network-analysis", "locator": "Defines network analysis in terms of entities/nodes and relations/ties, which must be operationalized for the selected network question."},
+        {"id": "external:aoir-internet-research-ethics-3", "title": "Association of Internet Researchers, Internet Research: Ethical Guidelines 3.0", "url": "https://aoir.org/reports/ethics3.pdf", "locator": "Research-design and data-accountability guidance supports documenting the source and scope of digital-trace records used to define network nodes and ties."}
+      ]
+    },
+    {
+      "id": "direct-area-order:27-workflow",
+      "source_item_id": "area_enrichment_item:d078-computational-digital-social-science-digital-trace-construct-and-sampling",
+      "target_item_id": "area_enrichment_item:d078-computational-digital-social-science-predictive-text-modeling",
+      "condition": "For predictive text work, define the target and the records in scope before fitting a model, then validate it on data that did not train the model. Skip prediction when the question does not call for it.",
+      "rationale": "Prediction requires a defined target and an evaluation plan; the workflow prevents unsupported claims and data leakage without making machine learning a required learning route.",
+      "sources": [
+        {"id": "external:aoir-internet-research-ethics-3", "title": "Association of Internet Researchers, Internet Research: Ethical Guidelines 3.0", "url": "https://aoir.org/reports/ethics3.pdf", "locator": "Guidance on AI/ML in internet research: make data accountability, research scope, and the social context explicit."},
+        {"id": "external:scikit-learn-common-pitfalls", "title": "scikit-learn User Guide, Common pitfalls and recommended practices", "url": "https://scikit-learn.org/stable/common_pitfalls", "locator": "Section 11.2: split train/test data before preprocessing and never fit transformations on test data; supports the validation part of this task workflow."}
+      ]
+    }
+  ]
+}

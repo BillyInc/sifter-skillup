@@ -29,6 +29,7 @@ export interface AdminNavContext {
   organizationType?: OrganizationType;
   providerSessionOnly?: boolean;
   role?: OrgRole;
+  isInternalStaff?: boolean;
 }
 
 type AdminAudience = "university" | "school" | "provider";
@@ -71,6 +72,9 @@ export const adminNav = {
    */
   marketIntelligence(router: Nav) {
     router.push("/(admin)/market-intelligence" as never);
+  },
+  learningInterest(router: Nav) {
+    router.push("/(admin)/analytics" as never);
   },
   /** §5.1 View A — curriculum portfolio reach. Structural, NOT market data. */
   domainReach(router: Nav) {
@@ -277,6 +281,15 @@ export function getAdminNavGroups(
   }
 
   intelligenceItems.push(
+    ...(ctx?.isInternalStaff || (ctx?.role && ["owner", "admin", "institution_admin", "dean", "hod", "counsellor"].includes(ctx.role))
+      ? [{
+          key: "learning-interest",
+          label: "Learner interest",
+          icon: "◉",
+          match: "analytics",
+          go: (n: Nav) => adminNav.learningInterest(n),
+        }]
+      : []),
     {
       key: "market-intelligence",
       label:

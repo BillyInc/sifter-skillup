@@ -1,8 +1,11 @@
 # D078 granular learning-selection analytics and privacy plan
 
-Status: required post-D078 implementation workstream; selection persistence is
-already part of the current guided implementation, while cross-user analytics
-is deliberately queued until the D078 route and report flow are verified.
+Status: historical planning note. Its sequencing is superseded by the
+implementation and metric contract in
+`docs/manual-review/LEARNING_INTEREST_ANALYTICS_DESIGN_AND_METRIC_DICTIONARY_2026-10-27.md`.
+The dashboard work is now implemented locally; database deployment and live
+verification remain separate gates. This document must not be used to reopen
+the already-decided data model or to impose a small-cell suppression rule.
 
 ## Product decision
 
@@ -98,13 +101,17 @@ item-demand report, but the report must disclose that multi-selection rule.
 - External or ministry/public-interest exports contain aggregate results only;
   they must not contain names, emails, student IDs, raw route snapshots or
   free-text notes.
-- Apply minimum-cell suppression and combination before export. The product
-  default is to suppress external cells below 10 learners and internal
-  institution cells below 5, with a stricter configured threshold for minors
-  or sensitive combinations. Suppressed cells must not be recoverable by
-  subtracting overlapping report rows.
-- Do not expose a combination of item, school, class, state, route or time
-  window that could re-identify one learner. Coarsen, combine or suppress it.
+- **Current product decision: do not suppress small groups** in the authorised
+  internal product-team and verified institution-owner dashboards. Exact small
+  counts are useful for planning, including in small cohorts. Keep these views
+  aggregate-only, expose no direct identifiers or individual histories, and
+  show the disclosure that a small cohort count may be inferable to someone who
+  already knows the cohort. Do not silently reintroduce a minimum-cell rule.
+- This decision does not create a public or ministry export. Any future
+  external sharing is a separate product, legal-purpose, recipient-access and
+  data-sharing approval; it is not implemented by the current dashboard or its
+  CSV. Do not promise external access or reuse the old suppression thresholds
+  as if they were approved policy.
 - Keep the account-linked intent table separate from aggregate reporting views,
   use row-level access controls, log administrator exports, and delete or
   anonymise account-linked records when the learner's lawful deletion request
@@ -116,8 +123,11 @@ item-demand report, but the report must disclose that multi-selection rule.
 
 ## API/data shape to implement later
 
-The post-D078 migration should add an append-safe or replace-current intent
-store and an aggregate read surface, for example:
+The subsequent analytics implementation added an append-safe event store, a
+consent-gated current-selection snapshot, and aggregate read surfaces. The
+implemented contract and exact migration order are documented in the metric
+dictionary and `backend/MIGRATION_RUNBOOK.md`; the following names describe
+the earlier proposal, not the current endpoints:
 
 - `PUT /api/student/learning-intents` — replace the learner's current intent
   set for a versioned saved plan;
@@ -142,7 +152,8 @@ The order is:
 3. confirm that the backend preserves selected and removed item identities;
 4. add the intent migration, consent-aware write path and protected aggregate
    views;
-5. test unique-learner counts, multi-selection rules, suppression, deletion,
+5. test unique-learner counts, multi-selection rules, exact small-cohort
+   counts, deletion,
    school authorization and minor safeguards with synthetic fixtures;
 6. only then expose educator/admin demand summaries or prepare any external
    public-interest export.

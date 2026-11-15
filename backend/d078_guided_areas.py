@@ -8,6 +8,7 @@ Legacy ISCO subgroup labels are deliberately not used as D078 areas.
 from __future__ import annotations
 
 import json
+import gzip
 import re
 from functools import lru_cache
 from pathlib import Path
@@ -17,9 +18,13 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG_PATH = ROOT / "data" / "career-mapping" / "domain_specialization_catalog.json"
 GRAPH_PATH = ROOT / "data" / "career-mapping" / "_audit" / "D078_METHOD_AREA_ROLE_ROUTE_GRAPH_2026_10_19.json"
+GRAPH_GZ_PATH = GRAPH_PATH.with_suffix(GRAPH_PATH.suffix + ".gz")
 
 
 def _load(path: Path) -> dict[str, Any]:
+    if not path.exists() and path == GRAPH_PATH and GRAPH_GZ_PATH.exists():
+        with gzip.open(GRAPH_GZ_PATH, "rt", encoding="utf-8") as source:
+            return json.load(source)
     return json.loads(path.read_text(encoding="utf-8-sig"))
 
 

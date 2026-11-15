@@ -52,6 +52,7 @@ const baseProps: any = {
   },
   tab: "overview",
   programmeName: "Sociology",
+  programmeSelected: true,
   requirements: {
     olevelRequirement: "Five O-level credits.",
     utmeSubjects: "English and two other subjects.",
@@ -131,7 +132,6 @@ describe("programme preview and university downstream", () => {
       selectedSchool: null,
     });
 
-    fireEvent.press(screen.getByRole("button", { name: /Open learning plan tray/ }));
     expect(screen.getByTestId("guided-learning-tray")).toBeTruthy();
     expect(screen.getByText(/Programme: Sociology/)).toBeTruthy();
     expect(screen.queryByText(/Institution:/)).toBeNull();
@@ -155,7 +155,6 @@ describe("programme preview and university downstream", () => {
       trayInstitution: selectedSchool,
     });
 
-    fireEvent.press(screen.getByRole("button", { name: /Open learning plan tray/ }));
     expect(screen.getByTestId("guided-learning-tray")).toBeTruthy();
     expect(screen.getByText(/Programme: Sociology/)).toBeTruthy();
     expect(screen.getByText(/Institution: University of Lagos/)).toBeTruthy();
@@ -172,7 +171,6 @@ describe("programme preview and university downstream", () => {
     };
     renderBody({ ...baseProps, selectedSchool, selectedSchoolId: "unilag" });
 
-    fireEvent.press(screen.getByRole("button", { name: /Open learning plan tray/ }));
     expect(screen.getByTestId("guided-learning-tray")).toBeTruthy();
     expect(screen.getByText(/Programme: Sociology/)).toBeTruthy();
     expect(screen.getByText(/Institution: University of Lagos/)).toBeTruthy();

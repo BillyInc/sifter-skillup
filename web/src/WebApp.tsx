@@ -12,6 +12,7 @@ import { adminAudienceForProfile } from "../../src/lib/adminAudience";
 import type { EducatorProfile } from "../../src/types/institution";
 import { AdminShell } from "../../src/screens/admin/AdminShell";
 import { LevelUpWebWordmark } from "../../src/components/brand/LevelUpWebWordmark";
+import { PersistentLearningPlanDockProvider } from "../../src/components/careerIntelligence/PersistentLearningPlanDock";
 import "./styles.css";
 
 const TOKEN_KEY = "sifter_auth_token_v2";
@@ -494,13 +495,14 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
       : path;
   const isAdminExplore = path.startsWith("/admin/explore") || path.startsWith("/admin/workspace-explore");
   const isAdminRoute = path.startsWith("/admin");
-  const isRootPlatformRoute = path === "/" || path === "/home" || path === "/explore" || path === "/opportunities" || path === "/myworld" || path === "/profile";
+  const isRootPlatformRoute = path === "/" || path === "/home" || path === "/explore" || path === "/build" || path === "/explore/pathways/entrepreneurship" || path === "/opportunities" || path === "/myworld" || path === "/profile";
   const showPlatformBack = !isAdminRoute && (focusedGuidance || !isRootPlatformRoute);
 
   function content() {
     if (route === "/" || route === "/home") return <CareerHomeScreen />;
     if (route === "/onboarding") return <Suspense fallback={<RouteLoading />}><AccountTypeGate /></Suspense>;
     if (route === "/explore") return <ExploreScreen initialQuery={query.get("q") ?? ""} adminAudience={path.startsWith("/admin") ? adminAudienceForProfile(adminProfile) : undefined} adminType={path.startsWith("/admin") ? adminProfile?.organizationType : undefined} />;
+    if (route === "/build") return <DomainExplorerScreen intent="build" />;
     if (route === "/explore/admission") return <AdmissionBrowseScreen />;
     const legacyAdmission = route.match(/^\/explore\/admission\/([^/]+)$/)?.[1];
     if (legacyAdmission) return <LegacyAdmissionRedirect jambName={decodeURIComponent(legacyAdmission)} admin={path.startsWith("/admin/")} />;
@@ -656,8 +658,10 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
     }
   };
 
-  if (isAdminExplore) {
-    return (
+  // The learning-plan tray is a viewport dock, portaled to document.body.
+  // It has to sit outside this page shell. The Vite page scrolls the window,
+  // so a tray left inside the route content stays at the bottom of the page.
+  const shell = isAdminExplore ? (
       <AdminShell title="Explore programmes and domains">
         <ExploreBaseProvider base={ADMIN_EXPLORE_BASE}>
           <div className="admin-web-content">
@@ -665,17 +669,12 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
           </div>
         </ExploreBaseProvider>
       </AdminShell>
-    );
-  }
-
-  // Every native admin screen owns an AdminShell. Do not wrap it in the
-  // student platform shell on Vite: that produced two competing navigation
-  // systems and made browser admin pages look like student pages.
-  if (isAdminRoute) {
-    return <Suspense fallback={<RouteLoading />}>{content()}</Suspense>;
-  }
-
-  return <main className={`platform-shell${focusedGuidance ? " is-guidance-workspace" : ""}`}>
+    ) : isAdminRoute ? (
+    // Every native admin screen owns an AdminShell. Do not wrap it in the
+    // student platform shell on Vite: that produced two competing navigation
+    // systems and made browser admin pages look like student pages.
+    <Suspense fallback={<RouteLoading />}>{content()}</Suspense>
+  ) : <main className={`platform-shell${focusedGuidance ? " is-guidance-workspace" : ""}`}>
     {!focusedGuidance ? <aside className="platform-sidebar">
       <a className="brand" href="/home" onClick={(event) => { event.preventDefault(); go("/home"); }} aria-label="LevelUp home">
         <LevelUpWebWordmark variant="light" width={188} height={50} />
@@ -683,6 +682,7 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
       <nav className="platform-nav" aria-label="Main navigation">
         <a href="/home" onClick={(e) => { e.preventDefault(); go("/home"); }}>Home</a>
         <a href="/explore" onClick={(e) => { e.preventDefault(); go("/explore"); }}>Explore</a>
+        <a href="/build" onClick={(e) => { e.preventDefault(); go("/build"); }}>Build</a>
         <a href="/opportunities" onClick={(e) => { e.preventDefault(); go("/opportunities"); }}>Opportunities</a>
         <a href="/myworld" onClick={(e) => { e.preventDefault(); go("/myworld"); }}>My World</a>
         <a href="/profile" onClick={(e) => { e.preventDefault(); go("/profile"); }}>Profile</a>
@@ -710,6 +710,7 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
       <div className="platform-content"><Suspense fallback={<RouteLoading />}>{content()}</Suspense></div>
     </section>
   </main>;
+  return <PersistentLearningPlanDockProvider>{shell}</PersistentLearningPlanDockProvider>;
 }
 
 function PersonaChooser({ onChoose }: { onChoose: (value: string) => void }) {

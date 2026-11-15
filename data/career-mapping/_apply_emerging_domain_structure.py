@@ -216,6 +216,16 @@ def main():
         domain["subgroups"] = sorted(domain.get("subgroups") or [], key=lambda item: text(item.get("isco_submajor")))
         domain["has_subgroups"] = bool(domain["subgroups"])
         domain["role_count"] = len(roles_by_domain[domain_id])
+        # A source-reviewed specialization reconciliation can intentionally
+        # retire the legacy ISCO subgroup taxonomy. The domain structure is
+        # authoritative for that decision; do not regenerate subgroup rows
+        # from each role's broad ISCO code after they have been archived.
+        subgroup_status = text(domain.get("subgroup_reconciliation_status")).casefold()
+        if "legacy" in subgroup_status and "subgroup" in subgroup_status and any(
+            marker in subgroup_status for marker in ("retired", "archived")
+        ):
+            domain["subgroups"] = []
+            domain["has_subgroups"] = False
 
         # Add source-backed overlay skills to the existing field-level list while
         # preserving the existing structure-owned skills and their weights.

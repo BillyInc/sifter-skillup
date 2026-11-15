@@ -25,6 +25,7 @@ import type {
   AIScoreRequest, AIScoreResult, GitHubStatus, GitHubRepo, GitHubPushResult,
   CreateRepoResult, TrackType, FeedReaction, SocialPlatform, BadgeRarity, BadgeId,
 } from '../types/api';
+import type { LearningInterestAnalytics, LearningInterestFilterOption, LearningInterestSchoolOption } from '../types/learningAnalytics';
 import { resolveRequestTimeout } from './requestTimeout';
 
 // Re-export types for call sites that import { UserProfile, Badge, FeedItem } from './api'
@@ -426,6 +427,53 @@ export const API = {
     request<{ id: string }>('/api/analytics/event', {
       method: 'POST', body: JSON.stringify({ event_type, event_data, session_id }),
     }),
+  trackLearningInterest: (event: {
+    event_id: string; action: 'selection_added' | 'selection_removed' | 'selection_copied';
+    entity_type: string; entity_id: string; entity_label: string;
+    learner_stage?: string; programme_id?: string; institution_id?: string; domain_id?: string;
+    area_id?: string; role_id?: string; route_label?: string; selection_scope_id?: string; method_ids?: string[]; design_ids?: string[];
+  }) => request<{ tracked: boolean; reason?: string }>('/api/analytics/learning-interest/event', {
+    method: 'POST', body: JSON.stringify(event),
+  }),
+  getLearningInterestAnalytics: (params: {
+    days?: number; entity_type?: string; domain_id?: string; area_id?: string; learner_stage?: string; state?: string;
+    affiliation_school_id?: string;
+    programme_id?: string; institution_id?: string; role_id?: string; method_id?: string; design_id?: string;
+    item_type?: string; item_id?: string;
+    school_id?: string;
+    scope?: 'platform' | 'school';
+  } = {}) => {
+    const query = new URLSearchParams();
+    if (params.days) query.set('days', String(params.days));
+    if (params.entity_type) query.set('entity_type', params.entity_type);
+    if (params.domain_id) query.set('domain_id', params.domain_id);
+    if (params.area_id) query.set('area_id', params.area_id);
+    if (params.programme_id) query.set('programme_id', params.programme_id);
+    if (params.institution_id) query.set('institution_id', params.institution_id);
+    if (params.role_id) query.set('role_id', params.role_id);
+    if (params.method_id) query.set('method_id', params.method_id);
+    if (params.design_id) query.set('design_id', params.design_id);
+    if (params.learner_stage) query.set('learner_stage', params.learner_stage);
+    if (params.state) query.set('state', params.state);
+    if (params.affiliation_school_id) query.set('affiliation_school_id', params.affiliation_school_id);
+    if (params.item_type) query.set('item_type', params.item_type);
+    if (params.item_id) query.set('item_id', params.item_id);
+    if (params.school_id) query.set('school_id', params.school_id);
+    const endpoint = params.scope === 'school'
+      ? '/api/analytics/learning-interest/school'
+      : '/api/analytics/learning-interest';
+    return request<LearningInterestAnalytics>(`${endpoint}?${query.toString()}`);
+  },
+  getLearningInterestFilterOptions: (params: {
+    query: string; days?: number; school_id?: string;
+  }) => {
+    const query = new URLSearchParams({ q: params.query });
+    if (params.days) query.set('days', String(params.days));
+    if (params.school_id) query.set('school_id', params.school_id);
+    return request<{ options: LearningInterestFilterOption[] }>(`/api/analytics/learning-interest/options?${query.toString()}`);
+  },
+  getLearningInterestSchools: () =>
+    request<{ schools: LearningInterestSchoolOption[] }>('/api/analytics/learning-interest/schools'),
 
   // ─── Portfolio Hub ────────────────────────────────────────────────────────
 
