@@ -165,6 +165,55 @@ preflight and postflight checks. Do not maintain or invent a second ordered
 list here; if this summary conflicts with the runbook, stop and correct the
 summary/runbook before preparing a deployment.
 
+The opt-in learner-interest dashboard has its own additive schema migration,
+`backend/migration_learning_interest_analytics_2026-10-26.sql`. Apply it only
+after enabling Supabase Cron (`pg_cron`) and after the user/affiliation and
+institution-membership schema prerequisites in the runbook. It needs no seed.
+The migration fails closed if Cron is unavailable and schedules daily deletion
+of raw event rows older than 395 days. Do not expose raw event rows or use saved-route
+records as analytics; use the consent-gated capture endpoint and aggregate RPC.
+The dashboard's route filters must use the migration's aggregate-only searchable
+filter-options RPC so staff select programme/domain/item labels rather than
+typing record IDs. It must also make named route patterns searchable so a
+learner route beyond the 50-pattern preview can be inspected by its own label;
+selecting a route-pattern filter shows all matching items in that route. The
+backend must enforce scope before returning options.
+School admins with multiple verified institution memberships must explicitly
+choose the institution in the analytics UI. The schools-options endpoint may
+list only verified memberships, and each aggregate/options request must send
+the selected school ID for server-side membership validation; never infer or
+trust a client-supplied school scope without that check.
+The product owner explicitly requires exact small-cohort aggregates, so do not
+add minimum-cell suppression; keep individual identifiers and learner histories
+out of dashboard responses. The runbook remains the source
+of truth for application and verification steps. Its state filter uses the
+affiliated-school state snapshotted at selection time, not the university the
+learner is exploring.
+The aggregate measures include distinct people who added and removed choices,
+separately from action counts. They compare the selected window with the
+immediately preceding interval of equal duration using the same filters.
+Describe this only as recorded-activity change, never as current saved intent
+or learner growth.
+Current selection is a separate measure from that activity history. Apply
+`backend/migration_learning_interest_current_selections_2026-10-28.sql` after
+the 2026-10-26 analytics migration. It captures new explicit additions/removals
+into a route-scoped active snapshot; it does not backfill from old events or
+saved paths. Current snapshot counts are unwindowed; activity counts remain
+date-windowed. The current snapshot is cleared when analytics consent is
+withdrawn or must be renewed. Terms and Privacy versions are `2026-10-28.1`,
+so users must make a fresh analytics choice before new events/snapshots are captured.
+When the learner explicitly creates a separate D078 route by copying the active
+route, record its copied items as `selection_copied`: include them in the new
+current-selection scope but exclude them from add-action counts. A named
+combined design must also retain its required component methods in method-level
+analytics, even though the UI presents the named design as the selected route.
+The dashboard also returns current route-context patterns separately from
+recent event contexts; neither is proof of a completed/saved route. Route
+metadata refreshes after a choice changes, but each item's learner-stage and
+affiliated-school attribution remains from when that item was selected. Keep
+current intent, route contexts, and dated activity distinct in UI, CSV, metric
+text and staff interpretation.
+
 Package gate: every required addition listed in the runbook must travel with it:
 migration_career_item_relationship_target_context_2026-10-17.sql,
 migration_d078_role_item_contracts_2026-10-15.sql,

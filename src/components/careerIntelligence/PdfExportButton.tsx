@@ -60,7 +60,9 @@ export function PdfExportButton({
     }
     if (documentPath) {
       void openStudentDocument(documentPath).then((opened) => {
-        if (!opened) showHint("Create an account and confirm your guidance path before printing.");
+        showHint(opened
+          ? "Your report is ready to print or save."
+          : "Create an account and confirm your guidance path before printing.");
       });
       return;
     }
@@ -81,7 +83,7 @@ export function PdfExportButton({
         <Feather name="printer" size={18} color={colors.textRole.primary} />
       </TouchableOpacity>
       {hint ? (
-        <Text style={[styles.hint, { color: colors.textMuted }]}>{hint}</Text>
+        <Text accessibilityLiveRegion="polite" style={[styles.hint, { color: colors.textMuted }]}>{hint}</Text>
       ) : null}
     </View>
   );

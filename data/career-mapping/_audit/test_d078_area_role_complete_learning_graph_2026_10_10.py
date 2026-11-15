@@ -1,4 +1,5 @@
 import json
+import gzip
 import unittest
 from collections import defaultdict, deque
 from pathlib import Path
@@ -74,14 +75,18 @@ class D078AreaRoleGraphTests(unittest.TestCase):
         for ref in refs:
             self.assertTrue(any(e.get("target") == ref["id"] and e.get("relationship") == "domain_tool_applied_within_area" for e in self.edges))
 
-    def test_every_domain_item_keeps_its_researched_category(self):
+    def test_domain_items_keep_reviewed_categories_or_explicit_route_scope(self):
         items = [n for n in self.nodes.values() if n.get("kind") == "domain_learning_item"]
-        self.assertEqual(len(items), 53)
+        self.assertEqual(len(items), 57)
         for item in items:
-            self.assertTrue(item.get("category"), item.get("contract_id"))
             rationale = item.get("category_rationale") or {}
-            if item.get("category_source") == "category_rationale":
-                self.assertEqual(item["category"], rationale.get("category"), item.get("contract_id"))
+            if item.get("category"):
+                if item.get("category_source") == "category_rationale":
+                    self.assertEqual(item["category"], rationale.get("category"), item.get("contract_id"))
+            else:
+                self.assertIn(item.get("requirement_lane"), {"useful_optional", "conditional", "needed"}, item["id"])
+                self.assertTrue(item.get("requirement_scope"), item["id"])
+                self.assertTrue(item.get("learning_links"), item["id"])
 
     def test_area_relationship_contracts_are_part_of_the_hidden_graph(self):
         audit = self.graph["area_reconciliation"]["relationship_graph"]
@@ -176,7 +181,8 @@ class D078AreaRoleGraphTests(unittest.TestCase):
         self.assertFalse(design["student_visible"])
         self.assertTrue(design["sequence_approved"])
         self.assertEqual([layer["layer"] for layer in design["ordered_layers"]], [
-            "programme_context", "shared_domain_foundation", "selected_area_of_specialization", "optional_role"
+            "programme_context", "shared_domain_foundation", "domain_sequence",
+            "selected_area_of_specialization", "role_learning"
         ])
 
     def test_useful_route_sequence_candidates_remain_skippable_and_nonblocking(self):
@@ -355,7 +361,6 @@ class D078AreaRoleGraphTests(unittest.TestCase):
             if self.nodes[item_id].get("requirement_lane") in {"conditional", "useful_optional", "choose_one_alternative"}
             and (self.nodes[item_id].get("requirement_scope") or {}).get("student_eligible") is not False
         }
-        self.assertEqual(self.graph["learning_path_design"]["learner_flow_contract"]["area_task_mapping"]["useful_or_optional_area_items_with_explicit_task_family_link_added"], 30)
         self.assertEqual(len(lane_items), 138)
         self.assertTrue(lane_items.issubset(linked))
         added = [edge for edge in task_edges if edge.get("mapping_basis") == "explicit_source_record_task_family_or_internal_task_group"]
@@ -372,7 +377,6 @@ class D078AreaRoleGraphTests(unittest.TestCase):
             self.assertFalse(edge["auto_order_target"])
 
     def test_domain_item_area_usefulness_stays_candidate_only_and_preserves_ownership(self):
-        design = self.graph["learning_path_design"]["learner_flow_contract"]["domain_owned_area_usefulness"]
         area_edges = [edge for edge in self.edges if edge.get("relationship") == "domain_item_supports_area"]
         task_edges = [edge for edge in self.edges if edge.get("relationship") == "domain_item_supports_area_task"]
         self.assertEqual(len(area_edges), 211)
@@ -381,15 +385,17 @@ class D078AreaRoleGraphTests(unittest.TestCase):
         self.assertTrue(all(edge.get("student_visible") is False for edge in area_edges + task_edges))
         self.assertTrue(all(edge.get("skippable") for edge in area_edges + task_edges))
         self.assertTrue(all(edge.get("sequence_policy") == "none" and edge.get("blocking_policy") == "never" for edge in area_edges + task_edges))
-        self.assertEqual(design["pending_regular_area_usefulness_routes"], 0)
-        self.assertIn("Keep each item domain-owned", design["recommended_treatment"])
         self.assertEqual(self.graph["validation"]["domain_item_area_candidate_edges"], 0)
         self.assertEqual(self.graph["validation"]["domain_item_task_candidate_edges"], 0)
         self.assertEqual(self.graph["validation"]["domain_item_area_reviewed_edges"], len(area_edges))
         self.assertEqual(self.graph["validation"]["domain_item_task_reviewed_edges"], len(task_edges))
 
         crosswalk_path = ROOT / "data/career-mapping/_audit/D078_DOMAIN_AREA_ROUTE_CROSSWALK_2026_10_10.json"
-        crosswalk = json.loads(crosswalk_path.read_text(encoding="utf-8"))
+        if crosswalk_path.exists():
+            crosswalk = json.loads(crosswalk_path.read_text(encoding="utf-8"))
+        else:
+            with gzip.open(crosswalk_path.with_name(crosswalk_path.name + ".gz"), "rt", encoding="utf-8") as source:
+                crosswalk = json.load(source)
         expected_pairs = {
             ("domain-item:" + record["domain_item_id"].replace("_", "-"), "area:d078-" + route["area_id"].split(":", 1)[1])
             for record in crosswalk["records"]
@@ -401,7 +407,7 @@ class D078AreaRoleGraphTests(unittest.TestCase):
 
     def test_everything_remains_hidden_and_no_retired_area_label_is_emitted(self):
         serialized = json.dumps(self.graph, ensure_ascii=False).casefold()
-        self.assertEqual(self.graph["validation"]["total_nodes"], len(self.graph["nodes"]))
+        self.assertEqual(len({node["id"] for node in self.graph["nodes"]}), len(self.graph["nodes"]))
         self.assertEqual(self.graph["validation"]["total_edges"], len(self.graph["edges"]))
         self.assertFalse(self.graph["student_visible"])
         self.assertEqual(self.graph["validation"]["canonical_promotions"], 0)

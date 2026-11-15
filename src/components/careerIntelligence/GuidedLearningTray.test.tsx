@@ -5,6 +5,8 @@ import { ThemeProvider } from "@/theme";
 import { buildLearningPlanStackSet, learningPlanRouteKey, type LearningPlanCandidate } from "@/lib/guidedLearningPlan";
 import { GuidedLearningTray } from "./GuidedLearningTray";
 
+jest.mock("@/hooks/useAuth", () => ({ useAuth: () => ({ user: null }) }));
+
 function candidate(overrides: Partial<LearningPlanCandidate> & Pick<LearningPlanCandidate, "id" | "name" | "layer">): LearningPlanCandidate {
   return {
     visibility: "selectable",
@@ -91,11 +93,17 @@ describe("GuidedLearningTray", () => {
     const routeScroll = () => rendered.UNSAFE_getByType(ScrollView);
     expect(StyleSheet.flatten(routeScroll().props.style).maxHeight).toBe(360);
 
-    fireEvent.press(screen.getByRole("button", { name: "Show learning plan full size" }));
+    fireEvent.press(screen.getByRole("button", { name: "Expand learning plan tray" }));
     const fullStyle = StyleSheet.flatten(routeScroll().props.style);
     expect(fullStyle.flex).toBe(1);
     expect(fullStyle.minHeight).toBe(0);
     expect(fullStyle.maxHeight).toBeUndefined();
+
+    fireEvent.press(screen.getByRole("button", { name: "Restore learning plan tray" }));
+    expect(StyleSheet.flatten(routeScroll().props.style).maxHeight).toBe(360);
+    fireEvent.press(screen.getByRole("button", { name: "Minimize learning plan tray" }));
+    fireEvent.press(screen.getByRole("button", { name: /^Open learning plan tray for Sociology/ }));
+    expect(StyleSheet.flatten(routeScroll().props.style).maxHeight).toBe(360);
   });
 
   it("keeps tray collapse, remove, reorder, and add controls at 44px or larger", () => {
@@ -119,10 +127,11 @@ describe("GuidedLearningTray", () => {
     fireEvent.press(screen.getByRole("button", { name: "Show explanation for Survey design" }));
 
     const controls = [
-      screen.getByRole("button", { name: "Collapse learning plan tray to icon" }),
-      screen.getByRole("button", { name: "Dismiss learning plan tray" }),
-      screen.getByRole("button", { name: "Remove Interviews from your selected approaches" }),
-      screen.getByRole("button", { name: "Remove Prepare an interview guide from your learning" }),
+      screen.getByRole("button", { name: "Minimize learning plan tray" }),
+      screen.getByRole("button", { name: "Restore learning plan tray" }),
+      screen.getByRole("button", { name: "Close learning plan tray" }),
+      screen.getByRole("button", { name: "Delete Interviews from your selected approaches" }),
+      screen.getByRole("button", { name: "Delete Prepare an interview guide from your learning" }),
       screen.getByRole("button", { name: "Move Research foundations later in this plan" }),
       screen.getByRole("button", { name: "Add Survey design to this learning plan" }),
     ];
@@ -130,7 +139,7 @@ describe("GuidedLearningTray", () => {
       const style = StyleSheet.flatten(control.props.style);
       expect(style.minHeight ?? style.height).toBeGreaterThanOrEqual(44);
     });
-    controls.slice(0, 4).forEach((control) => {
+    controls.slice(0, 5).forEach((control) => {
       const style = StyleSheet.flatten(control.props.style);
       expect(style.minWidth ?? style.width).toBeGreaterThanOrEqual(44);
     });
@@ -204,13 +213,57 @@ describe("GuidedLearningTray", () => {
       initialMode="full"
     /></ThemeProvider>);
 
-    fireEvent.press(screen.getByRole("button", { name: "Remove Interviews from your selected approaches" }));
-    fireEvent.press(screen.getByRole("button", { name: "Remove Prepare an interview guide from your learning" }));
-
-    expect(onRemoveChoice).toHaveBeenCalledTimes(1);
-    expect(onRemoveChoice).toHaveBeenCalledWith(choice);
-    expect(onRemoveItem).toHaveBeenCalledTimes(1);
+    fireEvent.press(screen.getByRole("button", { name: "Delete Interviews from your selected approaches" }));
+    expect(screen.getByText("Delete this selection?")).toBeTruthy();
+    fireEvent.press(screen.getByRole("button", { name: "Keep it" }));
+    expect(onRemoveChoice).not.toHaveBeenCalled();
+    fireEvent.press(screen.getByRole("button", { name: "Delete Prepare an interview guide from your learning" }));
+    fireEvent.press(screen.getByRole("button", { name: "Delete selection" }));
     expect(onRemoveItem).toHaveBeenCalledWith("interview-guide");
+  });
+
+  it("hides an unselected programme and asks for confirmation before removing a selected one", () => {
+    const onRemoveProgramme = jest.fn();
+    const route = {
+      routeLabel: "Sociology programme",
+      programmeLabel: "Sociology",
+      programmeSelected: true,
+      choices: [],
+      foundations: [],
+      selectedItems: [],
+      onRemoveChoice: jest.fn(),
+      onRemoveItem: jest.fn(),
+      onRemoveProgramme,
+    };
+    const stacks = buildLearningPlanStackSet({ routes: [], domainItems: [] });
+    render(<ThemeProvider><GuidedLearningTray stackSet={stacks} d078Route={route} initialMode="compact" /></ThemeProvider>);
+
+    expect(screen.getByText("Programme: Sociology")).toBeTruthy();
+    fireEvent.press(screen.getByRole("button", { name: "Remove Sociology from your learning plan" }));
+    expect(screen.getByText("Remove programme?")).toBeTruthy();
+    expect(onRemoveProgramme).not.toHaveBeenCalled();
+    fireEvent.press(screen.getByRole("button", { name: "Keep programme" }));
+    expect(onRemoveProgramme).not.toHaveBeenCalled();
+
+    fireEvent.press(screen.getByRole("button", { name: "Remove Sociology from your learning plan" }));
+    fireEvent.press(screen.getByRole("button", { name: "Remove programme" }));
+    expect(onRemoveProgramme).toHaveBeenCalledTimes(1);
+  });
+
+  it("does not show a programme row when its selection has been cleared", () => {
+    const stacks = buildLearningPlanStackSet({ routes: [], domainItems: [] });
+    render(<ThemeProvider><GuidedLearningTray stackSet={stacks} d078Route={{
+      routeLabel: "Sociology programme",
+      programmeLabel: "Sociology",
+      programmeSelected: false,
+      choices: [],
+      foundations: [],
+      selectedItems: [],
+      onRemoveChoice: jest.fn(),
+      onRemoveItem: jest.fn(),
+    }} initialMode="compact" /></ThemeProvider>);
+    expect(screen.queryByText("Programme: Sociology")).toBeNull();
+    expect(screen.getByText("Your learning plan is empty")).toBeTruthy();
   });
 
   it("keeps D078 route stacks independently labeled and only edits the active stack", () => {
@@ -237,8 +290,8 @@ describe("GuidedLearningTray", () => {
     expect(screen.getByText(/Route 1/)).toBeTruthy();
     expect(screen.getByText(/Route 2/)).toBeTruthy();
     expect(screen.getByRole("button", { name: "Use this route" })).toBeTruthy();
-    expect(screen.getByRole("button", { name: "Remove Interviews from your selected approaches" })).toBeTruthy();
-    expect(screen.queryByRole("button", { name: "Remove Spatial analysis from your selected approaches" })).toBeNull();
+    expect(screen.getByRole("button", { name: "Delete Interviews from your selected approaches" })).toBeTruthy();
+    expect(screen.queryByRole("button", { name: "Delete Spatial analysis from your selected approaches" })).toBeNull();
     fireEvent.press(screen.getByRole("button", { name: "Use this route" }));
     expect(activate).toHaveBeenCalledTimes(1);
   });
@@ -269,7 +322,7 @@ describe("GuidedLearningTray", () => {
     expect(screen.queryByText("Your selected approaches")).toBeNull();
   });
 
-  it("uses the available height in full tray mode instead of the mid-size scroll cap", () => {
+  it("grows the same tray in full mode instead of using the mid-size scroll cap", () => {
     const stacks = buildLearningPlanStackSet({
       routes: [{ route: { programmeId: "sociology", domainId: "D078" }, selectedIds: [] }],
       domainItems: [],
@@ -289,7 +342,7 @@ describe("GuidedLearningTray", () => {
       const style = StyleSheet.flatten(view.props.style);
       return style.flex === 1 && style.maxHeight === undefined;
     });
-    expect(trayStyle).toMatchObject({ flex: 1, height: "100%", minHeight: 0 });
+    expect(trayStyle).toMatchObject({ alignSelf: "flex-end", height: "78vh", maxHeight: "78vh", minHeight: 320 });
     expect(routeScroll).toBeTruthy();
   });
 
@@ -397,11 +450,9 @@ describe("GuidedLearningTray", () => {
     render(<ThemeProvider><GuidedLearningTray stackSet={stackSet()} initialMode="icon" /></ThemeProvider>);
 
     fireEvent.press(screen.getByRole("button", { name: /Open learning plan tray.*4 selected route details or learning choices/ }));
-    fireEvent.press(screen.getByRole("button", { name: "Small" }));
-    expect(screen.queryByText("Choose learning focus")).toBeNull();
-    fireEvent.press(screen.getByRole("button", { name: "Mid" }));
     expect(screen.getByText("Choose learning focus")).toBeTruthy();
-    fireEvent.press(screen.getByRole("button", { name: "Full" }));
+    fireEvent.press(screen.getByRole("button", { name: "Expand learning plan tray" }));
+    expect(screen.getByText("Choose learning focus")).toBeTruthy();
     expect(screen.getByText("Compulsory learning path")).toBeTruthy();
     expect(screen.getByText("Required step 1 · Domain learning · Compulsory domain foundation")).toBeTruthy();
     expect(screen.getByText("Optional useful edges you chose")).toBeTruthy();

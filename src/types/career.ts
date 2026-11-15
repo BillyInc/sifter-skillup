@@ -881,14 +881,21 @@ export interface CareerContextItem {
   linkAccessedAt?: string | null;
   linkConfidence?: SourceConfidence;
   linkEvidence?: Record<string, unknown>;
+  linkMediaType?: "book" | "document" | "video" | "course" | "tutorial" | "dataset" | "software" | "webpage" | null;
+  linkLearningLevel?: "beginner" | "intermediate" | "advanced" | "expert" | "all_levels" | null;
+  linkSequenceOrder?: number | null;
   /** Other individually checked links attached to this same item. */
   additionalLearningLinks?: Array<{
+    sourceId?: string | null;
     title: string;
     url: string;
     locator?: string | null;
     access?: string | null;
     kind?: string | null;
     rationale?: string | null;
+    mediaType?: "book" | "document" | "video" | "course" | "tutorial" | "dataset" | "software" | "webpage" | null;
+    learningLevel?: "beginner" | "intermediate" | "advanced" | "expert" | "all_levels" | null;
+    sequenceOrder?: number | null;
   }>;
   linkKind?: string | null;
   linkLevel?: string | null;
@@ -1647,6 +1654,9 @@ export interface CareerLearningResource {
   region: "nigeria" | "global" | "global_proxy";
   accessType: "free" | "paid" | "mixed" | "dynamic";
   delivery?: string | null;
+  mediaType?: "book" | "document" | "video" | "course" | "tutorial" | "dataset" | "software" | "webpage" | null;
+  learningLevel?: "beginner" | "intermediate" | "advanced" | "expert" | "all_levels" | null;
+  sequenceOrder?: number | null;
   url: string;
   price?: number | null;
   currency?: string | null;

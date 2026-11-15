@@ -30,6 +30,10 @@ function cleanText(value: string | null | undefined): string {
   return String(value ?? "").replace(/\s+/g, " ").trim();
 }
 
+function learnerCopy(value: string | null | undefined, previouslyExplained?: Set<string>): string {
+  return explainTechnicalTerms(cleanText(value), previouslyExplained);
+}
+
 function lowerFirst(value: string): string {
   return value ? value.charAt(0).toLowerCase() + value.slice(1) : value;
 }
@@ -313,29 +317,29 @@ export function ProgrammeBooksLink({ resources }: { resources?: CareerLearningRe
     <View style={styles.booksLinkRow}>
       <TouchableOpacity
         accessibilityRole="button"
-        accessibilityLabel={expanded ? "Hide Sociology books" : "Show Sociology books"}
+        accessibilityLabel={expanded ? "Hide Sociology reading resources" : "Show Sociology reading resources"}
         accessibilityState={{ expanded }}
         onPress={() => setExpanded((value) => !value)}
         style={styles.booksLinkTrigger}
       >
-        <Text style={[styles.booksLabel, { color: colors.accentRole.action }, CompassFonts.bodySemibold]}>Books</Text>
+        <Text style={[styles.booksLabel, { color: colors.accentRole.action }, CompassFonts.bodySemibold]}>Reading resources</Text>
         <Feather name={expanded ? "chevron-up" : "chevron-down"} size={14} color={colors.accentRole.action} />
       </TouchableOpacity>
       {expanded ? <View style={styles.booksList}>
-        <Text style={[styles.booksGroupHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Optional reference books</Text>
-        <Text style={[styles.booksGroupNote, { color: colors.textRole.secondary }]}>These books are useful references, but may require purchase or library access. They are not required for every Sociology student.</Text>
+        <Text style={[styles.booksGroupHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Optional Sociology books</Text>
+        <Text style={[styles.booksGroupNote, { color: colors.textRole.secondary }]}>These books can deepen your understanding, but they are not required for every Sociology student. Access may depend on a library or purchase.</Text>
         {books.map((book) => <ExternalLinkGuard key={book.id} url={book.url}
           label={book.targetName === "Sociology" ? "Sociology by Giddens and Sutton (9th edition) · publisher/library access" : `${book.targetName} · publisher/library access`}
-          description={book.description || "Optional Sociology reference book. It is not a confirmed required text for every university."}
+          description={learnerCopy(book.description || "Optional Sociology reference book. It is not a confirmed required text for every university.")}
           hideUnavailable style={styles.booksLinkButton} textStyle={styles.booksLinkText} />)}
         {freeAlternatives.length ? <View style={styles.freeAlternativeGroup}>
-          <Text style={[styles.booksGroupHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Free learning alternatives</Text>
-          <Text style={[styles.booksGroupNote, { color: colors.textRole.secondary }]}>These are separate, legally free learning materials covering many of the same introductory Sociology themes; they are not free copies of the books above.</Text>
+          <Text style={[styles.booksGroupHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Free learning materials</Text>
+          <Text style={[styles.booksGroupNote, { color: colors.textRole.secondary }]}>These are separate free resources that cover some introductory Sociology themes. They are not free copies of the books listed above.</Text>
           {freeAlternatives.map((resource) => <View key={resource.id} style={styles.freeAlternativeRow}>
             <ExternalLinkGuard url={resource.url} label={resource.targetName}
-              description={resource.description || "Free Sociology learning material. Open it to read the resource and its access terms."}
+              description={learnerCopy(resource.description || "Free Sociology learning material. Open it to read the resource and its access terms.")}
               hideUnavailable style={styles.booksLinkButton} textStyle={styles.booksLinkText} />
-            {resource.description ? <Text style={[styles.booksGroupNote, { color: colors.textRole.secondary }]}>{resource.description}</Text> : null}
+            {resource.description ? <Text style={[styles.booksGroupNote, { color: colors.textRole.secondary }]}>{learnerCopy(resource.description)}</Text> : null}
           </View>)}
         </View> : null}
       </View> : null}
@@ -447,7 +451,7 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
           <Text style={[styles.teaserText, { color: colors.textRole.secondary }]}>{themes.slice(0, 3).map((theme) => theme.title.toLowerCase()).join(", ")}{themes.length > 3 ? " and more" : ""} are brought together so you can understand what this programme studies, how it investigates questions and how you may apply what you learn.</Text>
         ) : (
           <View style={styles.teaserAbilities}>
-            {abilities.slice(0, 3).map((ability) => <Text key={ability.abilityId} style={[styles.teaserText, { color: colors.textRole.secondary }]}>{abilitySentence(ability.studentText)}</Text>)}
+            {abilities.slice(0, 3).map((ability) => <Text key={ability.abilityId} style={[styles.teaserText, { color: colors.textRole.secondary }]}>{learnerCopy(abilitySentence(ability.studentText))}</Text>)}
           </View>
         )}
         <Text style={[styles.teaserMeta, { color: colors.textRole.muted }]}>Choose a university to see its own entry requirements and the fuller programme explanation.</Text>
@@ -459,9 +463,11 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
   return (
     <View style={styles.block}>
       <Text accessibilityRole="header" style={[styles.sectionHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What you will study</Text>
-      <Text style={[styles.intro, { color: colors.textRole.secondary }]}>Each theme is one part of what this programme covers. The short line is the summary. The longer paragraph is the full explanation of that part. Under it are the abilities the programme aims to help you develop by the end. Every recorded outcome for that theme is included.</Text>
+      <Text style={[styles.intro, { color: colors.textRole.secondary }]}>Each theme groups related courses. Open it to see what those courses cover, the abilities their recorded outcomes describe, and any relevant learning resources. These are goals for the programme; they do not show what a particular student has already mastered.</Text>
       <View style={styles.themeGrid}>
         {visibleThemes.map((theme) => {
+          const themeTerms = new Set<string>();
+          const closedThemeTerms = new Set<string>();
           const open = openThemeExplanations.has(theme.key);
           const cardOpen = openThemes.has(theme.key);
           const lines = abilityLinesForTheme(theme);
@@ -473,24 +479,24 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
           const shownLines = expandedLines ? lines : lines.slice(0, INITIAL_ABILITIES);
           const titleRef = (node: Text | null) => { themeTitleRefs.current[theme.key] = node; };
           const toggle = (setter: React.Dispatch<React.SetStateAction<Set<ThemeKey>>>) => setter((current) => toggleTheme(current, theme.key));
-          const heading = <Text ref={titleRef} accessibilityRole="header" style={[styles.themeTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{theme.title}</Text>;
+          const heading = <Text ref={titleRef} accessibilityRole="header" style={[styles.themeTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{learnerCopy(theme.title, themeTerms)}</Text>;
           const narration = <View style={styles.narrationBlock}>
             <Text style={[styles.abilityNote, { color: colors.textRole.muted }]}>In short</Text>
-            <Text style={[styles.themeDescription, { color: colors.textRole.secondary }]}>{THEME_META[theme.key].description}</Text>
+            <Text style={[styles.themeDescription, { color: colors.textRole.secondary }]}>{learnerCopy(THEME_META[theme.key].description, themeTerms)}</Text>
             <Text style={[styles.abilityNote, { color: colors.textRole.muted }]}>The full explanation</Text>
-            <Text style={[styles.themeDescription, { color: colors.textRole.secondary }]}>{explainTechnicalTerms(theme.narration)}</Text>
+            <Text style={[styles.themeDescription, { color: colors.textRole.secondary }]}>{learnerCopy(theme.narration, themeTerms)}</Text>
           </View>;
           const readingBand = <View style={[styles.readingBand, { borderTopColor: colors.borderRole.subtle }]}>
             <Text style={[styles.readingBandTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Resources for this theme</Text>
             {readingRows.length ? readingRows.map((row) => <View key={row.id} style={styles.readingRow}>
               <Text style={[styles.resourceKind, styles.readingKind, { color: colors.textRole.muted }]}>{row.kind}</Text>
-              <Text style={[styles.readingTitle, { color: colors.textRole.primary }]}>{row.title}</Text>
-              <ExternalLinkGuard url={row.url} label="Open" description={row.description} style={styles.readingOpen} textStyle={{ color: colors.accentRole.action, fontSize: 12, lineHeight: 17 }} />
+              <Text style={[styles.readingTitle, { color: colors.textRole.primary }]}>{learnerCopy(row.title, themeTerms)}</Text>
+              <ExternalLinkGuard url={row.url} label="Open" description={learnerCopy(row.description, themeTerms)} style={styles.readingOpen} textStyle={{ color: colors.accentRole.action, fontSize: 12, lineHeight: 17 }} />
               {row.why ? <>
                 <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: expandedReadingWhy.has(row.id) }} onPress={() => setExpandedReadingWhy((current) => {
                   const next = new Set(current); if (next.has(row.id)) next.delete(row.id); else next.add(row.id); return next;
                 })} style={styles.whyButton}><Text style={[styles.whyButtonLabel, { color: colors.accentRole.action }]}>{expandedReadingWhy.has(row.id) ? "Hide why" : "Why included?"}</Text></TouchableOpacity>
-                {expandedReadingWhy.has(row.id) ? <Text style={[styles.courseMeta, { color: colors.textRole.secondary }]}>{row.why}</Text> : null}
+                {expandedReadingWhy.has(row.id) ? <Text style={[styles.courseMeta, { color: colors.textRole.secondary }]}>{learnerCopy(row.why, themeTerms)}</Text> : null}
               </> : null}
             </View>) : null}
           </View>;
@@ -498,7 +504,7 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
             <Text style={[styles.abilityListTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What this part aims to help you develop by the end</Text>
             {shownLines.map((line) => <View key={line.id} style={styles.abilityLine}>
               <Text style={[styles.abilityBullet, { color: colors.accentRole.action }]}>•</Text>
-              <Text style={[styles.abilityLineText, { color: colors.textRole.secondary }]}>{line.text}</Text>
+              <Text style={[styles.abilityLineText, { color: colors.textRole.secondary }]}>{learnerCopy(line.text)}</Text>
             </View>)}
             {lines.length > INITIAL_ABILITIES ? <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: expandedLines }} onPress={() => toggle(setExpandedAbilities)} style={styles.moreButton}>
               <Text style={[styles.moreText, { color: colors.accentRole.action }]}>{expandedLines ? "Show fewer abilities" : "See every ability in this theme"}</Text>
@@ -518,8 +524,8 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
                   if (handle != null) AccessibilityInfo.setAccessibilityFocus(handle);
                 });
               }} style={styles.closedThemeContent}>
-                <Text accessibilityRole="header" style={[styles.themeTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{theme.title}</Text>
-                <Text numberOfLines={2} style={[styles.closedThemeDescription, { color: colors.textRole.secondary }]}>{THEME_META[theme.key].description}</Text>
+                <Text accessibilityRole="header" style={[styles.themeTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{learnerCopy(theme.title, closedThemeTerms)}</Text>
+                <Text numberOfLines={2} style={[styles.closedThemeDescription, { color: colors.textRole.secondary }]}>{learnerCopy(THEME_META[theme.key].description, closedThemeTerms)}</Text>
                 <Text style={[styles.courseMeta, { color: colors.textRole.muted }]}>{lines.length} {lines.length === 1 ? "theme outcome" : "theme outcomes"} · {readingRows.length} {readingRows.length === 1 ? "reading" : "readings"}</Text>
               </TouchableOpacity>{readingRows.length ? <TouchableOpacity accessibilityRole="button" accessibilityLabel={`View ${readingRows.length} resources for ${theme.title}`} onPress={() => setOpenThemes((current) => toggleTheme(current, theme.key))} style={styles.themeResourcesButton}>
                 <Text style={[styles.resourceTinyLink, { color: colors.accentRole.action }]}>{`View ${readingRows.length} ${readingRows.length === 1 ? "resource" : "resources"}`}</Text>
@@ -541,14 +547,14 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
                       {themeGuidance.map((item) => (
                         <View key={item.itemKey} style={[styles.guidanceCard, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
                           <Text style={[styles.resourceKind, { color: colors.textRole.muted }]}>{item.itemType === "knowledge" ? "Key idea" : item.itemType === "method" ? "A way to find out" : "A way to act responsibly"}</Text>
-                          <Text style={[styles.courseTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{item.title}</Text>
-                          <Text style={[styles.courseSummary, { color: colors.textRole.secondary }]}>{item.plainMeaning}</Text>
+                          <Text style={[styles.courseTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{learnerCopy(item.title, themeTerms)}</Text>
+                          <Text style={[styles.courseSummary, { color: colors.textRole.secondary }]}>{learnerCopy(item.plainMeaning, themeTerms)}</Text>
                           <Text style={[styles.guidanceLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>A simple example</Text>
-                          <Text style={[styles.courseSummary, { color: colors.textRole.secondary }]}>{item.everydayExample}</Text>
+                          <Text style={[styles.courseSummary, { color: colors.textRole.secondary }]}>{learnerCopy(item.everydayExample, themeTerms)}</Text>
                           <Text style={[styles.guidanceLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Why your programme covers it</Text>
-                          <Text style={[styles.courseSummary, { color: colors.textRole.secondary }]}>{item.contextualUse}</Text>
+                          <Text style={[styles.courseSummary, { color: colors.textRole.secondary }]}>{learnerCopy(item.contextualUse, themeTerms)}</Text>
                           <Text style={[styles.guidanceLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Optional way to practise</Text>
-                          <Text style={[styles.courseSummary, { color: colors.textRole.secondary }]}>{item.expectedOutput}</Text>
+                          <Text style={[styles.courseSummary, { color: colors.textRole.secondary }]}>{learnerCopy(item.expectedOutput, themeTerms)}</Text>
                           {item.sources.length ? (
                             <View style={styles.guidanceSources}>
                               <Text style={[styles.guidanceLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Sources behind this explanation</Text>
@@ -556,8 +562,8 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
                                 <ExternalLinkGuard
                                   key={`${item.itemKey}:${source.id}`}
                                   url={source.url}
-                                  label={`${source.title} — ${Object.values(source.locators).join("; ")}`}
-                                  description={`This source supports ${item.title}. ${source.jurisdiction} scope.`}
+                                  label={learnerCopy(`${source.title} — ${Object.values(source.locators).join("; ")}`, themeTerms)}
+                                  description={learnerCopy(`This source supports ${item.title}. ${source.jurisdiction} scope.`, themeTerms)}
                                   style={styles.guidanceSourceLink}
                                   textStyle={{ color: colors.accentRole.action, fontSize: 13, lineHeight: 19 }}
                                 />
@@ -567,12 +573,12 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
                           <View style={[styles.guidanceLearning, { borderTopColor: colors.borderRole.subtle }]}>
                             <View style={styles.resourceCopy}>
                               <Text style={[styles.guidanceLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Optional learning resource</Text>
-                              {item.learningLevel ? <Text style={[styles.courseMeta, { color: colors.textRole.muted }]}>{item.learningLevel}{item.learningDuration ? ` · ${item.learningDuration}` : ""}</Text> : null}
-                              {item.learningAccess ? <Text style={[styles.courseMeta, { color: colors.textRole.muted }]}>{item.learningAccess}</Text> : null}
+                              {item.learningLevel ? <Text style={[styles.courseMeta, { color: colors.textRole.muted }]}>{learnerCopy(item.learningLevel)}{item.learningDuration ? ` · ${item.learningDuration}` : ""}</Text> : null}
+                              {item.learningAccess ? <Text style={[styles.courseMeta, { color: colors.textRole.muted }]}>{learnerCopy(item.learningAccess)}</Text> : null}
                             </View>
                             <ExternalLinkGuard url={item.learningUrl} label={item.learningLabel} description={`${item.learningSourceReference.title || "External learning resource"}. This is optional support, not a course requirement.`} style={[styles.resourceButton, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]} textStyle={{ color: colors.accentRole.action }} />
                           </View>
-                          {item.limitations.map((limitation, index) => <Text key={`${item.itemKey}:limit:${index}`} style={[styles.courseMeta, { color: colors.textRole.muted }]}>Note: {limitation}</Text>)}
+                          {item.limitations.map((limitation, index) => <Text key={`${item.itemKey}:limit:${index}`} style={[styles.courseMeta, { color: colors.textRole.muted }]}>Note: {learnerCopy(limitation, themeTerms)}</Text>)}
                         </View>
                       ))}
                     </View>
@@ -582,9 +588,9 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
                       <Text style={[styles.detailHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>How these ideas connect</Text>
                       {themeRelationships.map((relationship) => (
                         <View key={relationship.relationshipKey} style={[styles.guidanceCard, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
-                          <Text style={[styles.resourceKind, { color: colors.textRole.muted }]}>{relationship.fromTitle} → {relationship.toTitle}</Text>
-                          <Text style={[styles.courseSummary, { color: colors.textRole.secondary }]}>{relationship.learnerExplanation}</Text>
-                          {relationship.limitations.map((limitation, index) => <Text key={`${relationship.relationshipKey}:limit:${index}`} style={[styles.courseMeta, { color: colors.textRole.muted }]}>Note: {limitation}</Text>)}
+                          <Text style={[styles.resourceKind, { color: colors.textRole.muted }]}>{learnerCopy(`${relationship.fromTitle} → ${relationship.toTitle}`, themeTerms)}</Text>
+                          <Text style={[styles.courseSummary, { color: colors.textRole.secondary }]}>{learnerCopy(relationship.learnerExplanation, themeTerms)}</Text>
+                          {relationship.limitations.map((limitation, index) => <Text key={`${relationship.relationshipKey}:limit:${index}`} style={[styles.courseMeta, { color: colors.textRole.muted }]}>Note: {learnerCopy(limitation, themeTerms)}</Text>)}
                           <ExternalLinkGuard url={relationship.learningUrl} label={relationship.learningLabel} description={`${relationship.learningSourceReference.title || "External learning resource"}. Optional support for understanding this connection.`} style={[styles.resourceButton, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]} textStyle={{ color: colors.accentRole.action }} />
                         </View>
                       ))}
@@ -605,12 +611,12 @@ export function DegreeSkills({ curriculumContract, resources, variant = "full" }
       {abilities.length && !courses.length ? (
         <View style={[styles.abilitiesCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
           <Text accessibilityRole="header" style={[styles.sectionHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>How you will use what you learn</Text>
-          <Text style={[styles.abilitiesIntro, { color: colors.textRole.secondary }]}>Across these themes, you do more than learn definitions. You practise using ideas to ask focused questions, choosing suitable ways to investigate them, checking what the evidence can and cannot show, and explaining your conclusions clearly. The abilities below describe the kinds of work your programme prepares you to practise; seeing them here does not mean you have already mastered them.</Text>
+          <Text style={[styles.abilitiesIntro, { color: colors.textRole.secondary }]}>Across your programme, you practise using ideas to ask focused questions, choosing suitable ways to investigate them, checking what the evidence can and cannot show, and explaining your conclusions clearly. The abilities below describe work your programme prepares you to practise; seeing them here does not mean you have already mastered them.</Text>
           <View style={styles.abilityGrid}>
             {(abilitiesExpanded ? abilities : abilities.slice(0, INITIAL_ABILITIES)).map((ability) => (
               <View key={ability.abilityId} style={[styles.abilityCard, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
-                <Text style={[styles.abilityTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{ability.displayTitle || "Use what you learn"}</Text>
-                <Text style={[styles.outcome, { color: colors.textRole.secondary }]}>{abilitySentence(ability.studentText)}</Text>
+                <Text style={[styles.abilityTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{learnerCopy(ability.displayTitle || "Use what you learn")}</Text>
+                <Text style={[styles.outcome, { color: colors.textRole.secondary }]}>{learnerCopy(abilitySentence(ability.studentText))}</Text>
               </View>
             ))}
           </View>

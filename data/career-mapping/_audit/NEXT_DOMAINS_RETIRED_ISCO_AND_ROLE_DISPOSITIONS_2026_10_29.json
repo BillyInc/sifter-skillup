@@ -1,0 +1,1534 @@
+{
+  "recorded_on": "2026-10-29",
+  "scope": [
+    "D006",
+    "D086",
+    "D139",
+    "D141",
+    "D167",
+    "D168"
+  ],
+  "purpose": "Legacy subgroup crosswalk plus role-route disposition audit; unsupported records remain preserved in canonical source files.",
+  "domains": [
+    {
+      "domain_id": "D006",
+      "legacy_subgroups": [
+        {
+          "record": {
+            "isco_submajor": "21",
+            "label": "Internet of Things Engineering & Sensing",
+            "role_count": 2,
+            "cluster_skills": [
+              "embedded C/C++; RTOS; microcontroller programming; hardware-software co-design",
+              "computer simulation",
+              "mathematics",
+              "physics",
+              "environmental legislation",
+              "environmental threats",
+              "control engineering",
+              "electricity",
+              "microsensors",
+              "integrate system components",
+              "hardware components",
+              "Internet of Things",
+              "engineering principles",
+              "computer technology",
+              "embedded systems"
+            ],
+            "description": "Design the engineering and sensing systems behind connected devices.",
+            "raw_isco_label": "Science and engineering professionals",
+            "source_provenance": {
+              "source": "global_sfia",
+              "sources": [
+                "global_sfia",
+                "global_esco",
+                "global_onet",
+                "ng_cpn",
+                "ng_engineering"
+              ],
+              "ownership": "subgroup",
+              "nigerian_context": {
+                "source_ids": [
+                  "ng_cpn",
+                  "ng_engineering"
+                ],
+                "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+                "salary": "excluded"
+              }
+            },
+            "display_order": 1
+          },
+          "disposition": "retired_from_active_specialization_taxonomy",
+          "mapped_area_ids": [
+            "D006:embedded-systems-and-firmware-engineering",
+            "D006:iot-architecture-and-systems-integration"
+          ],
+          "note": "ISCO family is retained as historical/provenance evidence only; area membership comes from role-task routes."
+        },
+        {
+          "record": {
+            "isco_submajor": "25",
+            "label": "Internet of Things Software & Systems",
+            "role_count": 14,
+            "cluster_skills": [
+              "utilise computer-aided software engineering tools",
+              "use software libraries",
+              "integrate system components",
+              "software architecture models",
+              "perform ICT security testing",
+              "Internet of Things",
+              "embedded systems",
+              "computer programming"
+            ],
+            "description": "Connect software, devices and data into working IoT systems.",
+            "raw_isco_label": "Information and communications technology professionals",
+            "source_provenance": {
+              "source": "global_sfia",
+              "sources": [
+                "global_sfia",
+                "global_esco",
+                "global_onet",
+                "ng_cpn",
+                "ng_engineering"
+              ],
+              "ownership": "subgroup",
+              "nigerian_context": {
+                "source_ids": [
+                  "ng_cpn",
+                  "ng_engineering"
+                ],
+                "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+                "salary": "excluded"
+              }
+            },
+            "display_order": 2
+          },
+          "disposition": "retired_from_active_specialization_taxonomy",
+          "mapped_area_ids": [
+            "D006:iot-architecture-and-systems-integration",
+            "D006:iot-edge-computing-systems"
+          ],
+          "note": "ISCO family is retained as historical/provenance evidence only; area membership comes from role-task routes."
+        },
+        {
+          "record": {
+            "isco_submajor": "31",
+            "label": "Science and engineering associate professionals",
+            "role_count": 1,
+            "cluster_skills": [
+              "interpret circuit diagrams",
+              "apply soldering techniques",
+              "inspect quality of products",
+              "solder electronics",
+              "assemble sensors",
+              "align components",
+              "meet deadlines",
+              "liaise with engineers",
+              "fasten components",
+              "assist scientific research"
+            ],
+            "description": "Science and engineering associate professionals perform technical tasks connected with research and operational methods in science and engineering. They supervise and control technical and operational aspects of mining, manufacturing, construction and other engineering operations, and operate technical equipment including aircraft and ships. Competent performance in most occupations in this sub-ma",
+            "raw_isco_label": "Science and engineering associate professionals",
+            "source_provenance": {
+              "source": "isco_submajor_derived",
+              "sources": [
+                "global_esco",
+                "global_isco",
+                "global_onet",
+                "global_sfia",
+                "global_wef"
+              ],
+              "ownership": "subgroup",
+              "mapping_method": "canonical_role_library_isco_submajor",
+              "evidence_role_count": 1
+            },
+            "display_order": 3
+          },
+          "disposition": "retired_from_active_specialization_taxonomy",
+          "mapped_area_ids": [],
+          "note": "ISCO family is retained as historical/provenance evidence only; area membership comes from role-task routes."
+        }
+      ],
+      "area_ids": [
+        "D006:embedded-systems-and-firmware-engineering",
+        "D006:iot-architecture-and-systems-integration",
+        "D006:iot-edge-computing-systems"
+      ],
+      "roles": {
+        "source_record_count": 17,
+        "routed_role_records": 17,
+        "unsupported_or_duplicate_records": 0,
+        "routed_role_keys": [
+          "D006|ICT test analyst",
+          "D006|software tester",
+          "D006|ICT system tester",
+          "D006|ICT integration tester",
+          "D006|Internet of Things Specialists",
+          "D006|IoT solutions architect",
+          "D006|IoT security specialist",
+          "D006|edge computing engineer",
+          "D006|IoT systems integrator",
+          "D006|embedded systems engineer",
+          "D006|IoT data analyst",
+          "D006|embedded system designer",
+          "D006|embedded systems security engineer",
+          "D006|embedded systems software developer",
+          "D006|sensor engineer",
+          "D006|sensor engineering technician",
+          "D006|IoT developer"
+        ],
+        "nonroute_dispositions": []
+      }
+    },
+    {
+      "domain_id": "D086",
+      "legacy_subgroups": [
+        {
+          "record": {
+            "isco_submajor": "12",
+            "label": "Administrative and commercial managers",
+            "role_count": 1,
+            "cluster_skills": [
+              "information security strategy",
+              "online gambling",
+              "gambling games",
+              "implement ICT security policies",
+              "manage gambling operation",
+              "ensure compliance with policies",
+              "handle game complaints"
+            ],
+            "description": "Administrative and commercial managers plan, organize, direct, control and coordinate the financial, administrative, human resource, policy, planning, research and development, advertising, public relations, and sales and marketing activities of enterprises and organizations, or of enterprises that provide such services to other enterprises and organizations. Competent performance in most occupati",
+            "raw_isco_label": "Administrative and commercial managers",
+            "source_provenance": {
+              "source": "isco_submajor_derived",
+              "sources": [
+                "global_esco"
+              ],
+              "ownership": "subgroup",
+              "mapping_method": "canonical_role_library_isco_submajor",
+              "evidence_role_count": 1
+            },
+            "display_order": 1
+          },
+          "disposition": "retired_from_active_specialization_taxonomy",
+          "mapped_area_ids": [
+            "D086:betting-and-wagering-operations",
+            "D086:lottery-bingo-and-draw-based-operations"
+          ],
+          "note": "ISCO family is retained as historical/provenance evidence only; area membership comes from role-task routes."
+        },
+        {
+          "record": {
+            "isco_submajor": "14",
+            "label": "Hospitality, retail and other services managers",
+            "role_count": 1,
+            "cluster_skills": [
+              "corporate social responsibility",
+              "manage supplies",
+              "represent the organisation",
+              "manage budgets",
+              "liaise with local authorities",
+              "supervise the work of staff on different shifts",
+              "recruit employees",
+              "follow betting strategies"
+            ],
+            "description": "Hospitality, retail and other services managers plan, organize and direct the operations of establishments which provide accommodation, hospitality, retail and other services. Competent performance in most occupations in this sub-major group requires skills at the third ISCO skill level.\nTasks performed by workers in this sub-major group usually include: planning and organizing special functions,",
+            "raw_isco_label": "Hospitality, retail and other services managers",
+            "source_provenance": {
+              "source": "isco_submajor_derived",
+              "sources": [
+                "global_esco"
+              ],
+              "ownership": "subgroup",
+              "mapping_method": "canonical_role_library_isco_submajor",
+              "evidence_role_count": 1
+            },
+            "display_order": 2
+          },
+          "disposition": "retired_from_active_specialization_taxonomy",
+          "mapped_area_ids": [
+            "D086:casino-and-venue-gaming-operations"
+          ],
+          "note": "ISCO family is retained as historical/provenance evidence only; area membership comes from role-task routes."
+        },
+        {
+          "record": {
+            "isco_submajor": "21",
+            "label": "Science and engineering professionals",
+            "role_count": 2,
+            "cluster_skills": [
+              "CryEngine",
+              "player logic",
+              "digital game creation systems",
+              "id Tech",
+              "Unreal Engine",
+              "Frostbite (digital game creation systems)",
+              "Source (digital game creation systems)",
+              "Unity (digital game creation systems)",
+              "develop gambling games",
+              "create gambling games concepts"
+            ],
+            "description": "Science and engineering professionals conduct research; improve or develop concepts, theories and operational methods; or apply scientific knowledge relating to fields such as physics, astronomy, meteorology, chemistry, geophysics, geology, biology, ecology, pharmacology, medicine, mathematics, statistics, architecture, engineering, design and technology. Competent performance in most occupations",
+            "raw_isco_label": "Science and engineering professionals",
+            "source_provenance": {
+              "source": "isco_submajor_derived",
+              "sources": [
+                "global_esco"
+              ],
+              "ownership": "subgroup",
+              "mapping_method": "canonical_role_library_isco_submajor",
+              "evidence_role_count": 2
+            },
+            "display_order": 3
+          },
+          "disposition": "retired_from_active_specialization_taxonomy",
+          "mapped_area_ids": [
+            "D086:gaming-products-and-systems"
+          ],
+          "note": "ISCO family is retained as historical/provenance evidence only; area membership comes from role-task routes."
+        },
+        {
+          "record": {
+            "isco_submajor": "42",
+            "label": "Customer services clerks",
+            "role_count": 9,
+            "cluster_skills": [],
+            "description": "Customer services clerks deal with clients in connection with money-handling operations, travel arrangements, requests for information, making appointments, operating telephone switchboards, and interviewing for surveys or to complete applications for eligibility for services. Competent performance in most occupations in this sub-major group requires skills at the second ISCO skill level.\nTasks pe",
+            "raw_isco_label": "Customer services clerks",
+            "source_provenance": {
+              "source": "isco_submajor_derived",
+              "sources": [
+                "global_esco"
+              ],
+              "ownership": "subgroup",
+              "mapping_method": "canonical_role_library_isco_submajor",
+              "evidence_role_count": 9
+            },
+            "display_order": 4
+          },
+          "disposition": "retired_from_active_specialization_taxonomy",
+          "mapped_area_ids": [
+            "D086:casino-and-venue-gaming-operations",
+            "D086:betting-and-wagering-operations",
+            "D086:lottery-bingo-and-draw-based-operations"
+          ],
+          "note": "ISCO family is retained as historical/provenance evidence only; area membership comes from role-task routes."
+        }
+      ],
+      "area_ids": [
+        "D086:casino-and-venue-gaming-operations",
+        "D086:betting-and-wagering-operations",
+        "D086:lottery-bingo-and-draw-based-operations",
+        "D086:gaming-products-and-systems"
+      ],
+      "roles": {
+        "source_record_count": 14,
+        "routed_role_records": 14,
+        "unsupported_or_duplicate_records": 0,
+        "routed_role_keys": [
+          "D086|bookmaker",
+          "D086|bingo caller",
+          "D086|odds compiler",
+          "D086|casino cashier",
+          "D086|casino pit boss",
+          "D086|lottery operator",
+          "D086|race track operator",
+          "D086|casino gaming manager",
+          "D086|gaming dealer",
+          "D086|gambling games developer",
+          "D086|gambling quality assurance engineer",
+          "D086|gambling manager",
+          "D086|director of compliance and information security in gambling",
+          "D086|gambling games designer"
+        ],
+        "nonroute_dispositions": []
+      }
+    },
+    {
+      "domain_id": "D139",
+      "legacy_subgroups": [
+        {
+          "record": {
+            "isco_submajor": "21",
+            "label": "Game Art & Animation",
+            "role_count": 22,
+            "cluster_skills": [
+              "labour legislation",
+              "intellectual property law",
+              "art history",
+              "copyright legislation",
+              "use markup languages",
+              "augmented reality",
+              "create 3D environments",
+              "create 3D characters",
+              "discuss artwork",
+              "adobe creative suite",
+              "develop an artistic framework",
+              "monitor developments in technology used for design",
+              "design graphics",
+              "study media sources",
+              "develop animations",
+              "computer graphics",
+              "graphic design",
+              "follow a brief",
+              "finish project within budget",
+              "follow work schedule",
+              "adapt to type of media",
+              "analyse a script"
+            ],
+            "description": "Create visual, animated and interactive assets for digital games.",
+            "raw_isco_label": "Science and engineering professionals",
+            "source_provenance": {
+              "source": "global_esco",
+              "sources": [
+                "global_esco",
+                "global_onet",
+                "global_game_dev",
+                "global_creative",
+                "ng_creative"
+              ],
+              "ownership": "subgroup",
+              "nigerian_context": {
+                "source_ids": [
+                  "ng_creative"
+                ],
+                "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+                "salary": "excluded"
+              }
+            },
+            "display_order": 1
+          },
+          "disposition": "retired_from_active_specialization_taxonomy",
+          "mapped_area_ids": [
+            "D139:game-art-animation-and-visual-development"
+          ],
+          "note": "ISCO family is retained as historical/provenance evidence only; area membership comes from role-task routes."
+        },
+        {
+          "record": {
+            "isco_submajor": "25",
+            "label": "Gameplay Programming",
+            "role_count": 13,
+            "cluster_skills": [
+              "report test findings",
+              "software architecture models",
+              "legal requirements of ICT products",
+              "software anomalies",
+              "application usability",
+              "World Wide Web Consortium standards",
+              "use an application-specific interface",
+              "web based collaborative platforms",
+              "style sheet languages",
+              "content development processes",
+              "web services",
+              "translate requirements into visual design",
+              "develop software prototype",
+              "define technical requirements",
+              "levels of software testing",
+              "provide software testing documentation",
+              "execute software tests",
+              "address problems critically",
+              "replicate customer software issues",
+              "web programming"
+            ],
+            "description": "Design, develop and test the software systems that make games work.",
+            "raw_isco_label": "Information and communications technology professionals",
+            "source_provenance": {
+              "source": "global_esco",
+              "sources": [
+                "global_esco",
+                "global_onet",
+                "global_game_dev",
+                "global_sfia",
+                "ng_cpn"
+              ],
+              "ownership": "subgroup",
+              "nigerian_context": {
+                "source_ids": [
+                  "ng_cpn"
+                ],
+                "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+                "salary": "excluded"
+              }
+            },
+            "display_order": 2
+          },
+          "disposition": "retired_from_active_specialization_taxonomy",
+          "mapped_area_ids": [
+            "D139:game-engineering-and-technology"
+          ],
+          "note": "ISCO family is retained as historical/provenance evidence only; area membership comes from role-task routes."
+        },
+        {
+          "record": {
+            "isco_submajor": "26",
+            "label": "Creative Direction",
+            "role_count": 7,
+            "cluster_skills": [
+              "theatre techniques",
+              "adapt designers’ work to the performance venue",
+              "manage staff",
+              "analyse the need for technical resources",
+              "provide input to collaborators to guide their work",
+              "develop design concept",
+              "organise rehearsals",
+              "manage budgets",
+              "finish project within budget",
+              "analyse a script"
+            ],
+            "description": "Shape the creative direction, production and experience of digital games.",
+            "raw_isco_label": "Legal, social and cultural professionals",
+            "source_provenance": {
+              "source": "global_esco",
+              "sources": [
+                "global_esco",
+                "global_onet",
+                "global_game_dev",
+                "global_creative",
+                "ng_creative"
+              ],
+              "ownership": "subgroup",
+              "nigerian_context": {
+                "source_ids": [
+                  "ng_creative"
+                ],
+                "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+                "salary": "excluded"
+              }
+            },
+            "display_order": 3
+          },
+          "disposition": "retired_from_active_specialization_taxonomy",
+          "mapped_area_ids": [
+            "D139:game-design-and-narrative",
+            "D139:game-production-and-team-delivery"
+          ],
+          "note": "ISCO family is retained as historical/provenance evidence only; area membership comes from role-task routes."
+        }
+      ],
+      "area_ids": [
+        "D139:game-design-and-narrative",
+        "D139:game-art-animation-and-visual-development",
+        "D139:game-engineering-and-technology",
+        "D139:game-audio",
+        "D139:game-production-and-team-delivery",
+        "D139:game-quality-user-research-and-accessibility"
+      ],
+      "roles": {
+        "source_record_count": 42,
+        "routed_role_records": 38,
+        "unsupported_or_duplicate_records": 4,
+        "routed_role_keys": [
+          "D139|technical director",
+          "D139|software analyst",
+          "D139|ICT test analyst",
+          "D139|software tester",
+          "D139|illustrator",
+          "D139|animation director",
+          "D139|web designer",
+          "D139|digital games tester",
+          "D139|stop-motion animator",
+          "D139|animator",
+          "D139|3D animator",
+          "D139|graphic designer",
+          "D139|animation layout artist",
+          "D139|user interface designer",
+          "D139|digital games developer",
+          "D139|special effects artist",
+          "D139|3D modeller",
+          "D139|web developer",
+          "D139|art director",
+          "D139|digital media designer",
+          "D139|digital artist",
+          "D139|digital games designer",
+          "D139|software developer",
+          "D139|Video Game Designers",
+          "D139|game producer",
+          "D139|game sound designer",
+          "D139|game designer",
+          "D139|level designer",
+          "D139|technical game designer",
+          "D139|gameplay programmer",
+          "D139|technical artist",
+          "D139|game concept artist",
+          "D139|game environment artist",
+          "D139|game character artist",
+          "D139|game animator",
+          "D139|game narrative designer",
+          "D139|game UI/UX designer",
+          "D139|game QA tester"
+        ],
+        "nonroute_dispositions": [
+          {
+            "role_name": "gambling games designer",
+            "status": "unsupported_in_this_domain",
+            "supported_elsewhere": {
+              "domain_id": "D086",
+              "area_id": "D086:gaming-products-and-systems"
+            },
+            "basis": "Global role-to-domain reconciliation 2026-10-06: this exact parent-domain link is not exposed as a student path (remove_link_only). The occupation/source record is retained for provenance; this does not adjudicate other parent links or role-to-specialization fit. Source-backed role-to-parent-domain review 2026-10-07: Designs betting, gambling and lottery games. That is not the video-game/animated-world scope of D139; the role belongs to gambling-game operations/design rather than this domain as described.",
+            "source_refs": [
+              "https://esco.ec.europa.eu/en/classification/occupation-main"
+            ],
+            "source_ids": [
+              "QUEUE_TASK_PROFILE",
+              "https://esco.ec.europa.eu/en/classification/occupation-main"
+            ],
+            "internal_review_records": [
+              "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D139_role_domain_fit_review_2026_10_05.json"
+            ]
+          },
+          {
+            "role_name": "production designer",
+            "status": "unsupported_in_this_domain",
+            "supported_elsewhere": null,
+            "basis": "Global role-to-domain reconciliation 2026-10-06: this exact parent-domain link is not exposed as a student path (remove_link_only). The occupation/source record is retained for provenance; this does not adjudicate other parent links or role-to-specialization fit. Source-backed role-to-parent-domain review 2026-10-07: Creates the visual concept, sets, lighting and locations for television, film and commercials; the recorded production medium is not games.",
+            "source_refs": [
+              "http://data.europa.eu/esco/occupation/4d4b243f-6c3b-48c3-a564-2e7f2d592a3c",
+              "https://data.europa.eu/esco/occupation/4d4b243f-6c3b-48c3-a564-2e7f2d592a3c",
+              "https://uis.unesco.org/sites/default/files/medias/fichiers/2025/04/international-standard-classification-of-education-fields-of-education-and-training-2013-detailed-field-descriptions-2015-en.pdf",
+              "https://www.onetcenter.org/database.html",
+              "https://www.onetonline.org/link/summary/27-1011.00",
+              "https://www.onetonline.org/link/summary/27-1027.00",
+              "https://www.screenskills.com/job-profiles/browse/film-and-tv-drama/craft/production-designer-film-and-tv-drama/",
+              "https://www.screenskills.com/media/iskiunqf/2756-film-and-tv-drama-career-map-interactive-feb25-final.pdf"
+            ],
+            "source_ids": [
+              "BLS_ANIMATION_AND_GAMES",
+              "QUEUE_TASK_PROFILE",
+              "https://www.screenskills.com/job-profiles/browse/film-and-tv-drama/craft/production-designer-film-and-tv-drama/"
+            ],
+            "internal_review_records": [
+              "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D139_role_domain_fit_review_2026_10_05.json"
+            ]
+          },
+          {
+            "role_name": "web content manager",
+            "status": "unsupported_in_this_domain",
+            "supported_elsewhere": null,
+            "basis": "Global role-to-domain reconciliation 2026-10-06: this exact parent-domain link is not exposed as a student path (remove_link_only). The occupation/source record is retained for provenance; this does not adjudicate other parent links or role-to-specialization fit. Source-backed role-to-parent-domain review 2026-10-07: Manages organizational web content, compliance and search optimization. This is not game design or animated-world production as described.",
+            "source_refs": [
+              "https://esco.ec.europa.eu/en/classification/occupation?uri=http%3A%2F%2Fdata.europa.eu%2Fesco%2Fisco%2FC2513"
+            ],
+            "source_ids": [
+              "BLS_WEB_AND_DIGITAL_DESIGN",
+              "QUEUE_TASK_PROFILE",
+              "https://esco.ec.europa.eu/en/classification/occupation?uri=http%3A%2F%2Fdata.europa.eu%2Fesco%2Fisco%2FC2513"
+            ],
+            "internal_review_records": [
+              "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D139_role_domain_fit_review_2026_10_05.json"
+            ]
+          },
+          {
+            "role_name": "performance video designer",
+            "status": "unsupported_in_this_domain",
+            "supported_elsewhere": null,
+            "basis": "Global role-to-domain reconciliation 2026-10-06: this exact parent-domain link is not exposed as a student path (remove_link_only). The occupation/source record is retained for provenance; this does not adjudicate other parent links or role-to-specialization fit. Source-backed role-to-parent-domain review 2026-10-07: Designs projected visuals for live performance. That is stage/performance media, not video-game design or animated-world production as scoped here.",
+            "source_refs": [
+              "https://treball.barcelonactiva.cat/en/cataleg-ocupacions?idFicha=c995fe34-0909-4ce3-b7b7-97945efede56"
+            ],
+            "source_ids": [
+              "QUEUE_TASK_PROFILE",
+              "https://treball.barcelonactiva.cat/en/cataleg-ocupacions?idFicha=c995fe34-0909-4ce3-b7b7-97945efede56"
+            ],
+            "internal_review_records": [
+              "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D139_role_domain_fit_review_2026_10_05.json"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "domain_id": "D141",
+      "legacy_subgroups": [
+        {
+          "record": {
+            "isco_submajor": "21",
+            "label": "Quantum Hardware & Sensing",
+            "role_count": 6,
+            "cluster_skills": [
+              "systems engineering",
+              "testing and validation",
+              "scientific communication",
+              "qubit fabrication",
+              "control electronics",
+              "cryogenic systems",
+              "signal processing",
+              "precision measurement",
+              "quantum metrology",
+              "sensor design",
+              "quantum chemistry applications",
+              "quantum optimisation",
+              "laboratory techniques, noise and shielding",
+              "cryogenic, vacuum and cleanroom technologies",
+              "control technologies",
+              "quantum state control",
+              "quantum sensors and imaging systems"
+            ],
+            "description": "Build and operate quantum hardware, sensors and control systems.",
+            "raw_isco_label": "Science and engineering professionals",
+            "source_provenance": {
+              "source": "qt_cfqt",
+              "sources": [
+                "qt_cfqt"
+              ],
+              "ownership": "subgroup",
+              "nigerian_context": {
+                "source_ids": [],
+                "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+                "salary": "excluded"
+              }
+            },
+            "display_order": 1
+          },
+          "disposition": "retired_from_active_specialization_taxonomy",
+          "mapped_area_ids": [
+            "D141:quantum-computing-hardware-and-devices",
+            "D141:quantum-sensing-and-metrology"
+          ],
+          "note": "ISCO family is retained as historical/provenance evidence only; area membership comes from role-task routes."
+        },
+        {
+          "record": {
+            "isco_submajor": "23",
+            "label": "Teaching professionals",
+            "role_count": 1,
+            "cluster_skills": [
+              "technical explanation"
+            ],
+            "description": "Teaching professionals teach the theory and practice of one or more disciplines at different educational levels; conduct research; improve or develop concepts, theories and operational methods pertaining to their particular discipline; and prepare scholarly papers and books. Competent performance in most occupations in this sub-major group requires skills at the fourth ISCO skill level.\nTasks perf",
+            "raw_isco_label": "Teaching professionals",
+            "source_provenance": {
+              "source": "isco_submajor_derived",
+              "sources": [
+                "global_esco",
+                "qt_cfqt"
+              ],
+              "ownership": "subgroup",
+              "mapping_method": "canonical_role_library_isco_submajor",
+              "evidence_role_count": 1
+            },
+            "display_order": 2
+          },
+          "disposition": "retired_from_active_specialization_taxonomy",
+          "mapped_area_ids": [],
+          "note": "ISCO family is retained as historical/provenance evidence only; area membership comes from role-task routes."
+        },
+        {
+          "record": {
+            "isco_submajor": "24",
+            "label": "Quantum Applications, Policy & Standards",
+            "role_count": 3,
+            "cluster_skills": [
+              "use-case analysis",
+              "technology roadmapping",
+              "quantum computing and simulation applications",
+              "industry landscape and market analysis",
+              "impact and responsibility",
+              "education and communication"
+            ],
+            "description": "Translate quantum technology into applications, policy and responsible use.",
+            "raw_isco_label": "Business and administration professionals",
+            "source_provenance": {
+              "source": "qt_cfqt",
+              "sources": [
+                "qt_cfqt"
+              ],
+              "ownership": "subgroup",
+              "nigerian_context": {
+                "source_ids": [],
+                "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+                "salary": "excluded"
+              }
+            },
+            "display_order": 3
+          },
+          "disposition": "retired_from_active_specialization_taxonomy",
+          "mapped_area_ids": [
+            "D141:quantum-algorithms-and-software",
+            "D141:quantum-communication-and-networks"
+          ],
+          "note": "ISCO family is retained as historical/provenance evidence only; area membership comes from role-task routes."
+        },
+        {
+          "record": {
+            "isco_submajor": "25",
+            "label": "Quantum Software & Algorithms",
+            "role_count": 8,
+            "cluster_skills": [
+              "technical problem solving",
+              "software development",
+              "technical documentation",
+              "mathematical optimisation",
+              "quantum algorithm design",
+              "quantum error mitigation",
+              "complexity theory",
+              "network security",
+              "quantum programming",
+              "quantum simulators",
+              "quantum algorithms",
+              "quantum computing subroutines",
+              "error correction"
+            ],
+            "description": "Build quantum software, algorithms and error-correction methods.",
+            "raw_isco_label": "Information and communications technology professionals",
+            "source_provenance": {
+              "source": "qt_cfqt",
+              "sources": [
+                "qt_cfqt"
+              ],
+              "ownership": "subgroup",
+              "nigerian_context": {
+                "source_ids": [],
+                "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+                "salary": "excluded"
+              }
+            },
+            "display_order": 4
+          },
+          "disposition": "retired_from_active_specialization_taxonomy",
+          "mapped_area_ids": [
+            "D141:quantum-algorithms-and-software"
+          ],
+          "note": "ISCO family is retained as historical/provenance evidence only; area membership comes from role-task routes."
+        },
+        {
+          "record": {
+            "isco_submajor": "31",
+            "label": "Quantum Technology Operations",
+            "role_count": 1,
+            "cluster_skills": [
+              "laboratory techniques, noise and shielding",
+              "cryogenic, vacuum and cleanroom technologies",
+              "control technologies",
+              "equipment calibration"
+            ],
+            "description": "Operate, maintain and calibrate quantum technology equipment.",
+            "raw_isco_label": "Science and engineering associate professionals",
+            "source_provenance": {
+              "source": "qt_cfqt",
+              "sources": [
+                "qt_cfqt"
+              ],
+              "ownership": "subgroup",
+              "nigerian_context": {
+                "source_ids": [],
+                "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+                "salary": "excluded"
+              }
+            },
+            "display_order": 5
+          },
+          "disposition": "retired_from_active_specialization_taxonomy",
+          "mapped_area_ids": [
+            "D141:quantum-computing-hardware-and-devices"
+          ],
+          "note": "ISCO family is retained as historical/provenance evidence only; area membership comes from role-task routes."
+        }
+      ],
+      "area_ids": [
+        "D141:quantum-computing-hardware-and-devices",
+        "D141:quantum-algorithms-and-software",
+        "D141:quantum-communication-and-networks",
+        "D141:quantum-sensing-and-metrology"
+      ],
+      "roles": {
+        "source_record_count": 19,
+        "routed_role_records": 19,
+        "unsupported_or_duplicate_records": 0,
+        "routed_role_keys": [
+          "D141|quantum software engineer",
+          "D141|quantum hardware engineer",
+          "D141|quantum algorithm developer",
+          "D141|quantum error correction specialist",
+          "D141|quantum cryptography engineer",
+          "D141|quantum systems architect",
+          "D141|quantum sensing specialist",
+          "D141|quantum machine learning specialist",
+          "D141|quantum simulation scientist",
+          "D141|quantum applications engineer",
+          "D141|quantum technician",
+          "D141|quantum policy and standards specialist",
+          "D141|quantum technology business analyst",
+          "D141|quantum technology product strategist",
+          "D141|quantum technology training specialist",
+          "D141|quantum technology practitioner",
+          "D141|quantum technology engineering professional",
+          "D141|quantum technology hardware and software specialist",
+          "D141|quantum technology core innovator"
+        ],
+        "nonroute_dispositions": []
+      }
+    },
+    {
+      "domain_id": "D167",
+      "legacy_subgroups": [
+        {
+          "record": {
+            "isco_submajor": "21",
+            "label": "Extended Reality Designers & Hardware Engineers",
+            "role_count": 5,
+            "cluster_skills": [
+              "augmented reality",
+              "create 3D environments",
+              "apply 3D imaging techniques",
+              "create 3D characters",
+              "discuss artwork",
+              "digital content creation",
+              "interactive media",
+              "digital systems",
+              "web programming",
+              "adobe creative suite",
+              "task algorithmisation",
+              "web based collaborative platforms",
+              "immersive experience design",
+              "3D content development",
+              "spatial thinking",
+              "user testing"
+            ],
+            "description": "Design immersive experiences and build XR hardware",
+            "raw_isco_label": "Science and engineering professionals",
+            "source_provenance": {
+              "source": "jff_xr",
+              "sources": [
+                "jff_xr"
+              ],
+              "ownership": "subgroup",
+              "nigerian_context": {
+                "source_ids": [],
+                "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+                "salary": "excluded"
+              }
+            },
+            "display_order": 1
+          },
+          "disposition": "retired_from_active_specialization_taxonomy",
+          "mapped_area_ids": [
+            "D167:xr-experience-interaction-and-content-design",
+            "D167:xr-devices-tracking-and-platform-engineering"
+          ],
+          "note": "ISCO family is retained as historical/provenance evidence only; area membership comes from role-task routes."
+        },
+        {
+          "record": {
+            "isco_submajor": "24",
+            "label": "Extended Reality Innovation & Solution Architecture",
+            "role_count": 1,
+            "cluster_skills": [
+              "innovation facilitation",
+              "requirements translation",
+              "immersive experience planning",
+              "cross-functional collaboration"
+            ],
+            "description": "Translate needs into workable immersive technology solutions.",
+            "raw_isco_label": "Business and administration professionals",
+            "source_provenance": {
+              "source": "jff_xr",
+              "sources": [
+                "jff_xr"
+              ],
+              "ownership": "subgroup",
+              "nigerian_context": {
+                "source_ids": [],
+                "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+                "salary": "excluded"
+              }
+            },
+            "display_order": 2
+          },
+          "disposition": "retired_from_active_specialization_taxonomy",
+          "mapped_area_ids": [
+            "D167:xr-experience-interaction-and-content-design",
+            "D167:xr-software-and-real-time-application-development",
+            "D167:xr-devices-tracking-and-platform-engineering"
+          ],
+          "note": "ISCO family is retained as historical/provenance evidence only; area membership comes from role-task routes."
+        },
+        {
+          "record": {
+            "isco_submajor": "25",
+            "label": "Augmented and Virtual Reality Software Developers",
+            "role_count": 3,
+            "cluster_skills": [
+              "XR technology evaluation",
+              "XR system design",
+              "XR application development",
+              "c# / c++ programming",
+              "real-time rendering",
+              "unreal engine",
+              "ar/vr sdks (openxr, arkit, arcore, openxr)",
+              "performance profiling and optimization",
+              "software development",
+              "interactive systems",
+              "testing and debugging"
+            ],
+            "description": "Code AR, VR, and spatial computing applications",
+            "raw_isco_label": "Information and communications technology professionals",
+            "source_provenance": {
+              "source": "jff_xr",
+              "sources": [
+                "jff_xr"
+              ],
+              "ownership": "subgroup",
+              "nigerian_context": {
+                "source_ids": [],
+                "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+                "salary": "excluded"
+              }
+            },
+            "display_order": 3
+          },
+          "disposition": "retired_from_active_specialization_taxonomy",
+          "mapped_area_ids": [
+            "D167:xr-software-and-real-time-application-development"
+          ],
+          "note": "ISCO family is retained as historical/provenance evidence only; area membership comes from role-task routes."
+        },
+        {
+          "record": {
+            "isco_submajor": "26",
+            "label": "Legal, social and cultural professionals",
+            "role_count": 1,
+            "cluster_skills": [
+              "graphic design",
+              "motion graphics",
+              "computer equipment",
+              "multimedia systems",
+              "manage technical resources stock",
+              "follow work schedule",
+              "manage budgets",
+              "follow a brief",
+              "manage staff",
+              "recruit employees",
+              "adapt to type of media",
+              "finish project within budget"
+            ],
+            "description": "Legal, social and cultural professionals conduct research; improve or develop concepts, theories and operational methods; or apply knowledge relating to the law, storage and retrieval of information and artefacts, psychology, social welfare, politics, economics, history, religion, languages, sociology, other social sciences, and arts and entertainment. Competent performance in most occupations in",
+            "raw_isco_label": "Legal, social and cultural professionals",
+            "source_provenance": {
+              "source": "isco_submajor_derived",
+              "sources": [
+                "global_esco",
+                "global_isco",
+                "global_onet",
+                "global_sfia",
+                "global_wef",
+                "global_xr",
+                "jff_xr"
+              ],
+              "ownership": "subgroup",
+              "mapping_method": "canonical_role_library_isco_submajor",
+              "evidence_role_count": 1
+            },
+            "display_order": 4
+          },
+          "disposition": "retired_from_active_specialization_taxonomy",
+          "mapped_area_ids": [
+            "D167:human-factors-accessibility-safety-and-evaluation"
+          ],
+          "note": "ISCO family is retained as historical/provenance evidence only; area membership comes from role-task routes."
+        },
+        {
+          "record": {
+            "isco_submajor": "31",
+            "label": "Science and engineering associate professionals",
+            "role_count": 1,
+            "cluster_skills": [
+              "3D printing process",
+              "printing on large scale machines",
+              "printing techniques",
+              "printing materials",
+              "maintenance operations",
+              "3D modelling",
+              "CAD software",
+              "digitization",
+              "maintenance of printing machines",
+              "create solutions to problems",
+              "adjust engineering designs",
+              "use technical drawing software"
+            ],
+            "description": "Science and engineering associate professionals perform technical tasks connected with research and operational methods in science and engineering. They supervise and control technical and operational aspects of mining, manufacturing, construction and other engineering operations, and operate technical equipment including aircraft and ships. Competent performance in most occupations in this sub-ma",
+            "raw_isco_label": "Science and engineering associate professionals",
+            "source_provenance": {
+              "source": "isco_submajor_derived",
+              "sources": [
+                "global_esco",
+                "global_isco",
+                "global_onet",
+                "global_sfia",
+                "global_wef",
+                "global_xr",
+                "jff_xr"
+              ],
+              "ownership": "subgroup",
+              "mapping_method": "canonical_role_library_isco_submajor",
+              "evidence_role_count": 1
+            },
+            "display_order": 5,
+            "data_state": "excluded",
+            "student_visibility_reason": "no_current_canonical_roles"
+          },
+          "disposition": "retired_from_active_specialization_taxonomy",
+          "mapped_area_ids": [
+            "D167:xr-software-and-real-time-application-development",
+            "D167:xr-devices-tracking-and-platform-engineering"
+          ],
+          "note": "ISCO family is retained as historical/provenance evidence only; area membership comes from role-task routes."
+        },
+        {
+          "record": {
+            "isco_submajor": "35",
+            "label": "Extended Reality Technical Support Specialists",
+            "role_count": 1,
+            "cluster_skills": [
+              "XR hardware support",
+              "XR software support",
+              "troubleshooting",
+              "user assistance"
+            ],
+            "description": "Help people use immersive hardware and software reliably.",
+            "raw_isco_label": "Information and communications technicians",
+            "source_provenance": {
+              "source": "jff_xr",
+              "sources": [
+                "jff_xr"
+              ],
+              "ownership": "subgroup",
+              "nigerian_context": {
+                "source_ids": [],
+                "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+                "salary": "excluded"
+              }
+            },
+            "display_order": 6
+          },
+          "disposition": "retired_from_active_specialization_taxonomy",
+          "mapped_area_ids": [
+            "D167:xr-devices-tracking-and-platform-engineering",
+            "D167:xr-software-and-real-time-application-development"
+          ],
+          "note": "ISCO family is retained as historical/provenance evidence only; area membership comes from role-task routes."
+        },
+        {
+          "record": {
+            "isco_submajor": "75",
+            "label": "Food processing, wood working, garment and other craft and related trades workers",
+            "role_count": 1,
+            "cluster_skills": [
+              "sustainable footwear materials and components",
+              "3D printing process",
+              "footwear industry",
+              "types of moulding",
+              "footwear materials",
+              "CAD for footwear",
+              "footwear creation process",
+              "footwear quality",
+              "ergonomics in footwear and leather goods design",
+              "footwear components",
+              "last types",
+              "create technical sketches for footwear"
+            ],
+            "description": "Food processing, woodworking, garment and other craft and related trades workers treat and process agricultural and fisheries raw materials into food and other products, and produce and repair goods made of wood, textiles, fur, leather or other materials. Competent performance in most occupations in this sub-major group requires skills at the second ISCO skill level.\nThe work is carried out by han",
+            "raw_isco_label": "Food processing, wood working, garment and other craft and related trades workers",
+            "source_provenance": {
+              "source": "isco_submajor_derived",
+              "sources": [
+                "global_esco",
+                "global_isco",
+                "global_onet",
+                "global_sfia",
+                "global_wef",
+                "global_xr",
+                "jff_xr"
+              ],
+              "ownership": "subgroup",
+              "mapping_method": "canonical_role_library_isco_submajor",
+              "evidence_role_count": 1
+            },
+            "display_order": 7,
+            "data_state": "excluded",
+            "student_visibility_reason": "no_current_canonical_roles"
+          },
+          "disposition": "retired_from_active_specialization_taxonomy",
+          "mapped_area_ids": [],
+          "note": "ISCO family is retained as historical/provenance evidence only; area membership comes from role-task routes."
+        }
+      ],
+      "area_ids": [
+        "D167:xr-experience-interaction-and-content-design",
+        "D167:xr-software-and-real-time-application-development",
+        "D167:xr-devices-tracking-and-platform-engineering",
+        "D167:human-factors-accessibility-safety-and-evaluation"
+      ],
+      "roles": {
+        "source_record_count": 13,
+        "routed_role_records": 12,
+        "unsupported_or_duplicate_records": 1,
+        "routed_role_keys": [
+          "D167|XR/IL technical support specialist",
+          "D167|XR/IL technology enabler",
+          "D167|XR/IL innovation facilitator",
+          "D167|XR/IL solution architect",
+          "D167|XR experience builder",
+          "D167|XR developer",
+          "D167|digital media designer",
+          "D167|3D animator",
+          "D167|3D modeller",
+          "D167|3D printing technician",
+          "D167|animation director",
+          "D167|animation layout artist"
+        ],
+        "nonroute_dispositions": [
+          {
+            "role_name": "footwear 3D developer",
+            "status": "unsupported_in_this_domain",
+            "supported_elsewhere": null,
+            "basis": "Global role-to-domain reconciliation 2026-10-06: this exact parent-domain link is not exposed as a student path (remove_link_only). The occupation/source record is retained for provenance; this does not adjudicate other parent links or role-to-specialization fit. Source-backed role-to-parent-domain review 2026-10-07: Uses CAD to develop footwear models, patterns and prototypes for product manufacture; digital 3D modelling alone is not immersive XR work.",
+            "source_refs": [
+              "http://data.europa.eu/esco/occupation/40d76b2c-b917-4bf1-95b3-191f11472e67",
+              "https://data.europa.eu/esco/occupation/40d76b2c-b917-4bf1-95b3-191f11472e67",
+              "https://shoedes.eu/Library/Uploads/R1-EN.pdf",
+              "https://www.onetcenter.org/database.html",
+              "https://www.onetonline.org/link/summary/27-1022.00"
+            ],
+            "source_ids": [
+              "OPENXR",
+              "QUEUE",
+              "https://shoedes.eu/Library/Uploads/R1-EN.pdf"
+            ],
+            "internal_review_records": [
+              "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D167_role_domain_fit_review_2026_10_05.json"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "domain_id": "D168",
+      "legacy_subgroups": [
+        {
+          "record": {
+            "isco_submajor": "12",
+            "label": "Esports Operations & Management",
+            "role_count": 1,
+            "cluster_skills": [
+              "tournament operations",
+              "scheduling",
+              "stakeholder coordination",
+              "risk management",
+              "event management"
+            ],
+            "description": "Coordinate the business and operational side of esports.",
+            "raw_isco_label": "Administrative and commercial managers",
+            "source_provenance": {
+              "source": "british_esports",
+              "sources": [
+                "british_esports"
+              ],
+              "ownership": "subgroup",
+              "nigerian_context": {
+                "source_ids": [],
+                "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+                "salary": "excluded"
+              }
+            },
+            "display_order": 1
+          },
+          "disposition": "retired_from_active_specialization_taxonomy",
+          "mapped_area_ids": [
+            "D168:esports-competition-and-event-operations"
+          ],
+          "note": "ISCO family is retained as historical/provenance evidence only; area membership comes from role-task routes."
+        },
+        {
+          "record": {
+            "isco_submajor": "24",
+            "label": "Esports Community & Partnerships",
+            "role_count": 2,
+            "cluster_skills": [
+              "social communication",
+              "digital communication and collaboration",
+              "keywords in digital content",
+              "web analytics",
+              "pricing strategies",
+              "corporate social responsibility",
+              "market research",
+              "brand marketing techniques",
+              "digital media",
+              "content marketing strategy",
+              "online moderation techniques",
+              "marketing mix",
+              "community management",
+              "audience engagement",
+              "content planning"
+            ],
+            "description": "Grow audiences, communities and commercial relationships.",
+            "raw_isco_label": "Business and administration professionals",
+            "source_provenance": {
+              "source": "british_esports",
+              "sources": [
+                "british_esports"
+              ],
+              "ownership": "subgroup",
+              "nigerian_context": {
+                "source_ids": [],
+                "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+                "salary": "excluded"
+              }
+            },
+            "display_order": 2
+          },
+          "disposition": "retired_from_active_specialization_taxonomy",
+          "mapped_area_ids": [
+            "D168:esports-broadcast-content-and-audience-partnerships",
+            "D168:digital-creator-and-platform-based-content-work"
+          ],
+          "note": "ISCO family is retained as historical/provenance evidence only; area membership comes from role-task routes."
+        },
+        {
+          "record": {
+            "isco_submajor": "26",
+            "label": "Esports Broadcast & Content Production",
+            "role_count": 4,
+            "cluster_skills": [
+              "storytelling",
+              "research",
+              "stream production",
+              "production scheduling",
+              "digital journalism",
+              "editorial standards",
+              "spelling",
+              "grammar",
+              "press law",
+              "copyright legislation",
+              "participate in editorial meetings",
+              "manage staff",
+              "broadcast production",
+              "live event workflow",
+              "content creation",
+              "journalism",
+              "live commentary"
+            ],
+            "description": "Create and deliver esports broadcast and editorial content.",
+            "raw_isco_label": "Legal, social and cultural professionals",
+            "source_provenance": {
+              "source": "british_esports",
+              "sources": [
+                "british_esports"
+              ],
+              "ownership": "subgroup",
+              "nigerian_context": {
+                "source_ids": [],
+                "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+                "salary": "excluded"
+              }
+            },
+            "display_order": 3
+          },
+          "disposition": "retired_from_active_specialization_taxonomy",
+          "mapped_area_ids": [
+            "D168:esports-broadcast-content-and-audience-partnerships"
+          ],
+          "note": "ISCO family is retained as historical/provenance evidence only; area membership comes from role-task routes."
+        },
+        {
+          "record": {
+            "isco_submajor": "33",
+            "label": "Esports Team & Player Management",
+            "role_count": 2,
+            "cluster_skills": [
+              "team coordination",
+              "relationship management",
+              "develop event topics",
+              "negotiate contracts with event providers",
+              "coordinate events",
+              "confer with event staff",
+              "review event bills",
+              "inspect event facilities",
+              "arrange event needs",
+              "organise event participants' registration",
+              "direct event administrative details",
+              "supervise event staff",
+              "player support",
+              "operations planning"
+            ],
+            "description": "Support teams and players through organised competition.",
+            "raw_isco_label": "Business and administration associate professionals",
+            "source_provenance": {
+              "source": "british_esports",
+              "sources": [
+                "british_esports"
+              ],
+              "ownership": "subgroup",
+              "nigerian_context": {
+                "source_ids": [],
+                "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+                "salary": "excluded"
+              }
+            },
+            "display_order": 4
+          },
+          "disposition": "retired_from_active_specialization_taxonomy",
+          "mapped_area_ids": [
+            "D168:esports-teams-players-and-performance"
+          ],
+          "note": "ISCO family is retained as historical/provenance evidence only; area membership comes from role-task routes."
+        },
+        {
+          "record": {
+            "isco_submajor": "34",
+            "label": "Competitive Performance & Analysis",
+            "role_count": 3,
+            "cluster_skills": [
+              "teamwork",
+              "strategic thinking",
+              "strategic planning",
+              "team communication",
+              "competitive game performance",
+              "performance analysis",
+              "coaching",
+              "fair play"
+            ],
+            "description": "Develop performance, coaching and fair competition.",
+            "raw_isco_label": "Legal, social, cultural and related associate professionals",
+            "source_provenance": {
+              "source": "pearson_esports",
+              "sources": [
+                "pearson_esports"
+              ],
+              "ownership": "subgroup",
+              "nigerian_context": {
+                "source_ids": [],
+                "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+                "salary": "excluded"
+              }
+            },
+            "display_order": 5
+          },
+          "disposition": "retired_from_active_specialization_taxonomy",
+          "mapped_area_ids": [
+            "D168:esports-teams-players-and-performance"
+          ],
+          "note": "ISCO family is retained as historical/provenance evidence only; area membership comes from role-task routes."
+        },
+        {
+          "record": {
+            "isco_submajor": "35",
+            "label": "Information and communications technicians",
+            "role_count": 1,
+            "cluster_skills": [
+              "broadcast equipment",
+              "electronics principles",
+              "media formats",
+              "audiovisual products",
+              "maintain electrical equipment",
+              "monitor quality of broadcasts",
+              "manage sound quality",
+              "select recording source",
+              "maintain audiovisual equipment",
+              "calibrate electronic instruments",
+              "coordinate activities in audio recording studio",
+              "operate electronic measuring instruments"
+            ],
+            "description": "Information and communications technicians provide support for the day-to-day running of computer systems, communications systems and networks, and perform technical tasks related to telecommunications, broadcast image and sound as well as other types of telecommunications signals on land, sea or in aircraft. Competent performance in most occupations in this sub-major group requires skills at the",
+            "raw_isco_label": "Information and communications technicians",
+            "source_provenance": {
+              "source": "isco_submajor_derived",
+              "sources": [
+                "british_esports",
+                "global_creative",
+                "global_esco",
+                "global_esports",
+                "global_game_dev",
+                "global_isco",
+                "global_music",
+                "global_onet",
+                "global_wef",
+                "pearson_esports"
+              ],
+              "ownership": "subgroup",
+              "mapping_method": "canonical_role_library_isco_submajor",
+              "evidence_role_count": 1
+            },
+            "display_order": 6
+          },
+          "disposition": "retired_from_active_specialization_taxonomy",
+          "mapped_area_ids": [
+            "D168:esports-broadcast-content-and-audience-partnerships"
+          ],
+          "note": "ISCO family is retained as historical/provenance evidence only; area membership comes from role-task routes."
+        }
+      ],
+      "area_ids": [
+        "D168:esports-competition-and-event-operations",
+        "D168:esports-teams-players-and-performance",
+        "D168:esports-broadcast-content-and-audience-partnerships",
+        "D168:digital-creator-and-platform-based-content-work"
+      ],
+      "roles": {
+        "source_record_count": 15,
+        "routed_role_records": 13,
+        "unsupported_or_duplicate_records": 2,
+        "routed_role_keys": [
+          "D168|professional esports player",
+          "D168|esports coach/analyst",
+          "D168|esports shoutcaster/host",
+          "D168|esports journalist/content creator",
+          "D168|esports broadcast/production crew",
+          "D168|esports event manager",
+          "D168|esports community manager",
+          "D168|esports team/player manager",
+          "D168|esports admin/referee",
+          "D168|event manager",
+          "D168|online community manager",
+          "D168|broadcast news editor",
+          "D168|broadcast technician"
+        ],
+        "nonroute_dispositions": [
+          {
+            "role_name": "Video Game Designers",
+            "status": "unsupported_in_this_domain",
+            "supported_elsewhere": null,
+            "basis": "Global role-to-domain reconciliation 2026-10-06: this exact parent-domain link is not exposed as a student path (remove_link_only). The occupation/source record is retained for provenance; this does not adjudicate other parent links or role-to-specialization fit. Source-backed role-to-parent-domain review 2026-10-07: Designs game mechanics, stories and product documentation. Game creation is related to gaming but is not one of this domain's stated competitive-play, event, broadcast, journalism or community pathways.",
+            "source_refs": [
+              "https://esco.ec.europa.eu/en/classification/occupation-main",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.onetonline.org/help/onet/",
+              "https://www.onetonline.org/link/details/15-1255.01",
+              "https://www.onetonline.org/link/summary/15-1255.01"
+            ],
+            "source_ids": [
+              "IESF",
+              "QUEUE",
+              "https://www.onetonline.org/link/details/15-1255.01"
+            ],
+            "internal_review_records": [
+              "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D168_role_domain_fit_review_2026_10_05.json"
+            ]
+          },
+          {
+            "role_name": "Broadcast Technicians",
+            "status": "duplicate_alias",
+            "canonical_role_name": "broadcast technician",
+            "basis": "Same occupational identity represented by the singular canonical record.",
+            "source_refs": [
+              "https://esco.ec.europa.eu/en/classification/occupation-main",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "source_ids": [
+              "QUEUE",
+              "IESF",
+              "https://esco.ec.europa.eu/en/classification/occupation-main",
+              "https://www.onetonline.org/help/onet/",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf"
+            ],
+            "internal_review_records": [
+              "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D168_role_domain_fit_review_2026_10_05.json"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

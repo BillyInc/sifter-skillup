@@ -48,7 +48,7 @@ function comparisonLimitCopy(option: LearningPlanCandidate): string {
   const limitations = studentItemLimitations(option.limitations);
   return [
     guardrail ? `What to keep in mind: ${studentFacingCopy(guardrail)}` : "",
-    limitations.length ? `What it cannot replace or prove: ${limitations.map(studentFacingCopy).filter(Boolean).join("; ")}` : "",
+    limitations.length ? `What it cannot replace or prove: ${limitations.map((value) => studentFacingCopy(value)).filter(Boolean).join("; ")}` : "",
   ].filter(Boolean).join("\n\n");
 }
 
@@ -66,7 +66,7 @@ const COMPARE_ROWS: CompareRow[] = [
       `${relation.targetName || relation.targetId}: ${studentFacingCopy(relation.explanation) || "This is an approved prerequisite for this route."}`,
     ).join("\n\n");
     return option.prerequisiteNames?.length
-      ? `${option.prerequisiteNames.map(studentFacingCopy).filter(Boolean).join(", ")}. These are preparation items recorded for this route.`
+      ? `${option.prerequisiteNames.map((value) => studentFacingCopy(value)).filter(Boolean).join(", ")}. These are preparation items recorded for this route.`
       : "No required learning-before relationship is recorded for this choice.";
   } },
   {

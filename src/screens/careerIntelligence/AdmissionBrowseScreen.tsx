@@ -1503,11 +1503,6 @@ export default function AdmissionBrowseScreen() {
                       O-level gaps: {item.olevelMissingSubjects.slice(0, 2).join("; ")}
                     </Text>
                   ) : null}
-                  {item.universitySpecificMatchSchoolIds?.length ? (
-                    <Text style={[styles.cardMeta, { color: active ? colors.textInverse : colors.textMuted }]}>
-                      University-specific matches: {item.schoolOfferings?.filter((school) => item.universitySpecificMatchSchoolIds?.includes(String(school.schoolId ?? ""))).map((school) => school.officialName || school.schoolName).join(", ") || item.universitySpecificMatchSchoolIds.length + " university offerings"}
-                    </Text>
-                  ) : null}
                 </View>
               ) : null}
               </View>

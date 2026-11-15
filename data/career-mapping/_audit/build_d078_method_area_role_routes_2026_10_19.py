@@ -418,7 +418,7 @@ METHOD_DOWNSTREAM_LINKS = {
         ("domain-item:d078-spss-tool", "alternative_tool_option", "A menu/syntax statistical workflow when the project or institution uses it."),
         ("domain-item:r-statistical-computing", "alternative_tool_option", "A code-based statistical workflow for repeatable analysis."),
         ("domain-item:stata-quantitative-social-science-workflow", "alternative_tool_option", "A statistical workflow for suitable social-science data and models."),
-        ("domain-item:d078-excel-data-tool", "lighter_tool_option", "Useful for bounded data organisation and summaries, not a substitute for every statistical method."),
+        ("runtime-item:domain:d078:d078-excel-data-tool", "lighter_tool_option", "Useful for bounded data organisation and summaries, not a substitute for every statistical method."),
     ],
     "domain-item:d078-qualitative-approach": [
         ("domain-item:d078-qualitative-coding-tool", "optional_tool_option", "Use for a lightweight, traceable text-coding workflow."),
@@ -907,6 +907,9 @@ def main() -> None:
                      requirement_reason=runtime_node.get("requirement_reason"),
                      blocks_progression=runtime_node.get("blocking_policy") not in {"never", None},
                      selection_means="include in the learner's focused route/report; not proof of knowledge or completion")
+        # A runtime learning item is itself the selectable canonical node when
+        # the older domain taxonomy has no matching record. Do not emit a
+        # dangling "resolves to" edge to a fabricated legacy ID.
     domain_overview_id = "domain:D078"
     programme_id = "programme:social-sciences:sociology"
     domain_orientation = {

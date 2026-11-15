@@ -1,0 +1,105 @@
+{
+  "date": "2026-11-03",
+  "purpose": "Resolve the five eligible role-owned items that had no reviewed role-task route. They must either appear inside an evidence-bounded task context or remain out of student selection.",
+  "selection_path_contract": [
+    "domain:D078",
+    "selected_method_or_named_design",
+    "supported_area",
+    "selected_role",
+    "supported_role_task_family",
+    "role_item"
+  ],
+  "decisions": [
+    {
+      "queue_position": 83,
+      "item": "conduct psychological research",
+      "decision": "conditional_task_route",
+      "role_id": "role:D078:15:thanatology-researcher",
+      "task_id": "role-task:d078:thanatology-researcher",
+      "condition": "Show only when the selected question concerns psychological aspects of death, dying, bereavement, or related practices and the chosen research method supports that question. This is research learning, not clinical psychology training or authorization to work with vulnerable participants.",
+      "explanation": "This item fits the thanatology research task when the learner studies a bounded psychological question using suitable evidence. The role description includes psychological aspects of death and dying, while the item record supplies research-method and participant-protection context.",
+      "evidence_urls": [
+        "http://data.europa.eu/esco/skill/19bf4fdc-c0aa-40c5-b531-35ed408067a8",
+        "https://data.europa.eu/esco/occupation/9851c83c-5670-4da0-964a-1ef0e682e30b",
+        "https://openstax.org/books/psychology-2e/pages/2-introduction",
+        "https://www.apa.org/ethics/code"
+      ],
+      "limits": "The role/item sources support a bounded research-learning connection, not clinical practice, universal job duties, or professional authorization."
+    },
+    {
+      "queue_position": 117,
+      "item": "ethics",
+      "decision": "conditional_task_route",
+      "role_id": "role:D078:15:thanatology-researcher",
+      "task_id": "role-task:d078:thanatology-researcher",
+      "condition": "Show only as research ethics and participant protection when the selected study involves people or sensitive experiences. Do not show it as a requirement for every route or as a substitute for the institution's ethics review. Keep subject-matter ethics as a separate interpretation, not the meaning of this card.",
+      "explanation": "For this role task, the selectable meaning is ethical planning for research involving people: consent, privacy, possible distress, and appropriate review. This narrows the otherwise ambiguous item to the research context actually selected.",
+      "evidence_urls": [
+        "https://data.europa.eu/esco/occupation/9851c83c-5670-4da0-964a-1ef0e682e30b",
+        "https://data.europa.eu/esco/skill/cef5c0f8-1e40-4c09-b6a7-aa7811849e5d",
+        "https://www.apa.org/ethics/code"
+      ],
+      "limits": "Conditional research-learning context only; not legal advice, clinical guidance, a universal prerequisite, or institutional approval."
+    },
+    {
+      "queue_position": 141,
+      "item": "history of literature",
+      "decision": "conditional_task_route",
+      "role_id": "role:D078:5:media-scientist",
+      "task_id": "role-task:d078:media-scientist",
+      "condition": "Show only when the learner chooses a historical print, literary-media, or publication-reception question. Keep the corpus, language, edition, and period explicit; do not imply that every media-research route studies literature.",
+      "explanation": "Literary history can support a bounded media-research route when the learner studies how print or literary forms relate to media institutions, audiences, or historical change. It is a conditional specialization within the media task, not a general media-research requirement.",
+      "evidence_urls": [
+        "https://data.europa.eu/esco/occupation/19db5ad1-ffbf-41a0-8746-d3878f0d5dbd",
+        "https://data.europa.eu/esco/skill/48fd824b-aedf-4613-9fde-3099d88feba7",
+        "https://www.bl.uk/discovering-literature"
+      ],
+      "limits": "The connection covers historical print/literary media only; it is not a universal media-science task or a claim about every language, literature, or audience."
+    },
+    {
+      "queue_position": 127,
+      "item": "forensic anthropology",
+      "decision": "exclude_from_d078_student_route",
+      "role_id": "role:D078:15:thanatology-researcher",
+      "reason": "The item describes biological/osteological work with human remains in medicolegal settings, while the supported thanatology task is social, cultural, or psychological research. The existing item contract explicitly says no forensic output is established for this D078 role.",
+      "evidence_urls": [
+        "https://data.europa.eu/esco/occupation/9851c83c-5670-4da0-964a-1ef0e682e30b",
+        "https://data.europa.eu/esco/skill/a0f9c46a-d712-4afd-afe0-1330b825f382",
+        "https://www.nist.gov/publications/development-standards-ethical-use-human-skeletal-remains-education-research-and"
+      ],
+      "limits": "Retain in the audit only. Do not expose as a selectable D078 role item or imply forensic authority.",
+      "rehome_target": {
+        "status": "destination_identified_not_yet_integrated",
+        "domain_id": "D143",
+        "domain_name": "Forensic Science, Digital Forensics and Criminal Investigation",
+        "area_proposal": "Forensic Anthropology and Human-Remains Analysis",
+        "role_proposal": "Forensic Anthropologist",
+        "area_fit": "A distinct specialist area: biological/physical anthropology and human osteology combined with archaeological recovery methods for medicolegal questions. Do not merge it into social anthropology, forensic pathology, digital forensics, or generic crime-scene examination.",
+        "route_shape": "D143 domain → Forensic Anthropology and Human-Remains Analysis area → Forensic Anthropologist role → task families for search/recovery and documentation, skeletal assessment/identification support, and evidence/report communication. These task families require their own reviewed source-backed contracts before student exposure.",
+        "curriculum_evidence": "The repository's original CCMAS source-text extract lists Forensic Anthropologist as a career prospect and FRS 304 Forensic Anthropology with outcomes covering evidence types, biological-profile estimates, skeletal trauma, molecular analysis, microscopy, isotope analysis, and facial imaging/reconstruction.",
+        "source_refs": [
+          "data/career-mapping/_audit/ccmas_original_source_text_2026-09-29/sciences.txt:11753",
+          "data/career-mapping/_audit/ccmas_original_source_text_2026-09-29/sciences.txt:12440-12457",
+          "https://www.aafs.org/careers-anthropology",
+          "https://www.theabfa.org/general-information",
+          "https://www.theabfa.org/frequently-asked-questions"
+        ],
+        "boundary": "Forensic anthropology is a specialist biological/physical-anthropology practice, not a transferable claim that a Sociology or Social Anthropology learner is qualified to examine human remains, perform casework, or testify. Professional preparation, case access, legal authority, and Nigerian practice/permission requirements need separate verification.",
+        "implementation_note": "Do not add this item to D078's student graph. Add it to D143 only after the proposed area and role are created in the canonical area/role inventories and their role tasks, evidence, resources, and local boundaries are reviewed."
+      }
+    },
+    {
+      "queue_position": 143,
+      "item": "human physiology",
+      "decision": "exclude_from_d078_student_route",
+      "role_id": "role:D078:15:thanatology-researcher",
+      "reason": "The source-backed role task establishes social, cultural, or psychological inquiry; the item record explicitly says no task-specific physiological output is established. A broad interdisciplinary profile mention is insufficient to create a selectable task route.",
+      "evidence_urls": [
+        "https://data.europa.eu/esco/occupation/9851c83c-5670-4da0-964a-1ef0e682e30b",
+        "https://data.europa.eu/esco/skill/51e53aff-6f8a-42ca-9cb9-47335130f4d7",
+        "https://openstax.org/details/books/anatomy-and-physiology-2e"
+      ],
+      "limits": "Retain in the audit only. Do not expose as a selectable D078 role item or imply medical/clinical training."
+    }
+  ]
+}

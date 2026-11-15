@@ -1,5 +1,6 @@
 """Protect D078 learning-inventory area references from retired labels."""
 
+import gzip
 import json
 from pathlib import Path
 
@@ -8,7 +9,12 @@ ROOT = Path(__file__).resolve().parents[3]
 
 
 def read_json(relative_path: str):
-    return json.loads((ROOT / relative_path).read_text(encoding="utf-8"))
+    path = ROOT / relative_path
+    if path.exists():
+        return json.loads(path.read_text(encoding="utf-8"))
+    compressed_path = path.with_name(path.name + ".gz")
+    with gzip.open(compressed_path, "rt", encoding="utf-8") as source:
+        return json.load(source)
 
 
 def test_inventory_uses_the_seven_current_d078_areas_not_legacy_subgroups():

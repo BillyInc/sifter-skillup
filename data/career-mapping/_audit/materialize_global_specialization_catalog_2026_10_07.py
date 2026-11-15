@@ -28,6 +28,7 @@ STEP1 = (
 )
 OUTPUT = ROOT / "domain_specialization_catalog.json"
 REPORT = AUDIT / "GLOBAL_SPECIALIZATION_CATALOG_MATERIALIZATION_2026_10_07.json"
+RECONCILED_DOMAIN_IDS = {"D006", "D086", "D139", "D141", "D166", "D167", "D168"}
 
 
 def read_json(path: Path) -> Any:
@@ -356,6 +357,20 @@ def main() -> None:
         })
         ids.add(domain_id)
 
+    # Do not rebuild manually reconciled domain slices from the older Step 1
+    # recommendation register. Their current catalog records are the reviewed
+    # area/role source of truth and must survive a catalog rematerialization.
+    existing_catalog = read_json(OUTPUT) if OUTPUT.exists() else {}
+    existing_by_id = {str(row.get("domain_id")): row for row in existing_catalog.get("domains", [])}
+    preserved_ids = set()
+    for index, row in enumerate(domains):
+        domain_id = str(row.get("domain_id"))
+        old = existing_by_id.get(domain_id)
+        if domain_id in RECONCILED_DOMAIN_IDS and old and old.get("canonical_status"):
+            domains[index] = old
+            preserved_ids.add(domain_id)
+    area_rows = [area for domain in domains for area in domain.get("areas", [])]
+    status_counts = Counter(str(area.get("recommendation_status") or "missing") for area in area_rows)
     document = {
         "schema_version": "2026-10-07.domain-specialization-catalog.v1",
         "status": "normalized_integration_catalog_not_student_active",
@@ -371,8 +386,8 @@ def main() -> None:
             "domain_records": len(domains),
             "domains_with_areas": sum(bool(item["areas"]) for item in domains),
             "no_specialization_recommended_domains": sum(not item["areas"] for item in domains),
-            "area_records": sum(len(item["areas"]) for item in domains),
-            "student_area_candidates_before_role_gate": sum(len(item["areas"]) for item in domains),
+            "area_records": len(area_rows),
+            "student_area_candidates_before_role_gate": len(area_rows),
             "excluded_area_candidates_folded_into_existing_areas": len(excluded_area_candidates),
             "recommendation_area_statuses": dict(sorted(status_counts.items())),
             "domains_with_areas_missing_inline_citations": len(set(domains_with_empty_citations)),
@@ -394,6 +409,7 @@ def main() -> None:
         "excluded_area_candidates": excluded_area_candidates,
         "domains_with_areas_missing_inline_citations": sorted(set(domains_with_empty_citations)),
         "areas_missing_inline_citations": areas_with_empty_citations,
+        "preserved_reconciled_domain_ids": sorted(preserved_ids),
         "domains": domains,
     }
     OUTPUT.write_text(json.dumps(document, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

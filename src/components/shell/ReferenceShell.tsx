@@ -36,6 +36,7 @@ type NavId =
   | 'home'
   | 'explore'
   | 'build'
+  | 'entrepreneurship'
   | 'opportunities'
   | 'myworld'
   | 'profile';
@@ -52,6 +53,7 @@ const PRIMARY_NAV: ShellNavItem[] = [
   { id: 'home',          label: 'Home',          icon: 'home', href: '/(tabs)/home',          sub: 'Your snapshot' },
   { id: 'explore',       label: 'Explore',       icon: 'compass', href: '/(tabs)/explore',       sub: 'Programmes, domains & roles' },
   { id: 'build',         label: 'Build',          icon: 'layers', href: '/(tabs)/build',          sub: 'Things you can build in each domain' },
+  { id: 'entrepreneurship', label: 'Entrepreneurship', icon: 'trending-up', href: '/(tabs)/explore/pathways/entrepreneurship', sub: 'Explore entrepreneurship pathways' },
   { id: 'opportunities', label: 'Opportunities', icon: 'briefcase', href: '/(tabs)/opportunities', sub: 'Opportunities, scholarships & windows' },
   { id: 'myworld',       label: WORLD_NAV.label, icon: WORLD_NAV.icon, href: '/(tabs)/myworld', sub: WORLD_NAV.sub },
   { id: 'profile',       label: 'Profile',       icon: 'user', href: '/(tabs)/profile',       sub: 'Account & saved' },
@@ -76,7 +78,7 @@ const MOBILE_NAV: { id: NavId; label: string; icon: keyof typeof Feather.glyphMa
 ];
 
 function buildPrimaryNav(_trackContext: TrackContext): ShellNavItem[] {
-  // LevelUp uses a fixed six-destination information architecture.
+  // LevelUp uses a fixed top-level information architecture.
   return PRIMARY_NAV;
 }
 
@@ -91,6 +93,7 @@ function getActiveNavId(pathname: string | null): NavId {
   if (!pathname) return 'home';
   if (pathname.includes('/profile') || pathname.includes('/settings')) return 'profile';
   if (pathname === '/build' || pathname.startsWith('/build/')) return 'build';
+  if (pathname.includes('/pathways/entrepreneurship')) return 'entrepreneurship';
   if (pathname.includes('/explore') || pathname.includes('/programme')
     || pathname.includes('/domain') || pathname.includes('/role')) return 'explore';
   if (pathname.includes('/opportunities') || pathname.includes('/opportunity')
@@ -111,7 +114,9 @@ function getActiveNavId(pathname: string | null): NavId {
 }
 
 function getActiveMobileNavId(activeId: NavId): NavId {
-  // The mobile bar mirrors the primary nav 1:1.
+  // Entrepreneurship has a first-class desktop/drawer destination but remains
+  // inside Explore on the compact bottom bar to keep all mobile targets usable.
+  if (activeId === 'entrepreneurship') return 'explore';
   return activeId;
 }
 
@@ -297,13 +302,13 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
   );
 
   const tabDotX = useSharedValue(0);
-  const tabW = (width - Spacing.md * 2 - Spacing.xs * 4) / 5;
+  const tabW = (width - Spacing.md * 2 - Spacing.xs * (MOBILE_NAV.length - 1)) / MOBILE_NAV.length;
   const stride = useSharedValue(tabW + Spacing.xs);
   const baseLeft = useSharedValue(Spacing.md + tabW / 2 - 8);
   const activeIdx = MOBILE_NAV.findIndex(n => n.id === activeMobileId);
 
   useEffect(() => {
-    const nextW = (width - Spacing.md * 2 - Spacing.xs * 4) / 5;
+    const nextW = (width - Spacing.md * 2 - Spacing.xs * (MOBILE_NAV.length - 1)) / MOBILE_NAV.length;
     stride.value = nextW + Spacing.xs;
     baseLeft.value = Spacing.md + nextW / 2 - 8;
   }, [width, stride, baseLeft]);
@@ -325,7 +330,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
     <SearchLauncherProvider onOpen={(query, scope) => { if (query !== undefined) setSearchQuery(query); if (scope) setOverlayScope(scope); setOverlayVisible(true); }}>
     <PersistentLearningPlanDockProvider>
     <View style={[styles.root, { backgroundColor: colors.surface.base }]}>
-      {!focusedGuidance && isWide && (
+      {isWide && (
         <View
           style={[
             styles.sidebar,
@@ -364,7 +369,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
           ]}
         >
           <View style={styles.topbarLeft}>
-            {!isWide && !focusedGuidance && (
+            {!isWide && (
               <TouchableOpacity
                 activeOpacity={0.85}
                 onPress={() => setDrawerOpen(true)}
@@ -438,9 +443,9 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
           </View>
         </View>
 
-        <View style={[styles.content, !isWide && !focusedGuidance && { paddingBottom: 18 }]}>{children}</View>
+        <View style={[styles.content, !isWide && { paddingBottom: 18 }]}>{children}</View>
 
-        {!isWide && !focusedGuidance && (() => {
+        {!isWide && (() => {
           const DOT_W = 16;
           const DOT_H = 3;
           return (

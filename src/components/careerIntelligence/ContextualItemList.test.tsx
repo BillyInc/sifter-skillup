@@ -5,6 +5,8 @@ import { ThemeProvider } from "@/theme";
 import type { CareerContextItem } from "@/types/career";
 import { ContextualItemList, explainResourceRationale, matchesItemScope } from "./ContextualItemList";
 
+jest.mock("@/hooks/useAuth", () => ({ useAuth: () => ({ user: null }) }));
+
 const mockGuided = jest.fn();
 const mockSubgroup = jest.fn();
 const mockRole = jest.fn();

@@ -34,6 +34,7 @@ from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
 
 from auth import Auth
 from database import db
+from legal_versions import analytics_consent_is_current
 from logger import log
 from models import (
     OfflineSyncRequest, OfflineSyncResponse,
@@ -494,9 +495,7 @@ async def _handle_streak_check(body: Dict[str, Any], user: dict, ctx: Dict[str, 
 
 
 async def _handle_analytics_event(body: Dict[str, Any], user: dict, ctx: Dict[str, Any]) -> dict:
-    settings = user.get("settings")
-    acceptance = settings.get("legalAcceptance") if isinstance(settings, dict) else None
-    if not (isinstance(acceptance, dict) and acceptance.get("analyticsConsent") is True):
+    if not analytics_consent_is_current(user):
         return {"tracked": False, "reason": "analytics_opt_out"}
     db.get_service_client().table("analytics_events").insert({
         "user_id":    user["id"],

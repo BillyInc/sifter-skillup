@@ -1,4 +1,5 @@
 import json
+import gzip
 from pathlib import Path
 import sys
 
@@ -19,10 +20,13 @@ from d078_guided_areas import (  # noqa: E402
 
 
 def _graph_roles():
-    graph = json.loads(
-        (ROOT / "data/career-mapping/_audit/D078_METHOD_AREA_ROLE_ROUTE_GRAPH_2026_10_19.json")
-        .read_text(encoding="utf-8-sig")
-    )
+    graph_path = ROOT / "data/career-mapping/_audit/D078_METHOD_AREA_ROLE_ROUTE_GRAPH_2026_10_19.json"
+    if graph_path.exists():
+        graph = json.loads(graph_path.read_text(encoding="utf-8-sig"))
+    else:
+        graph_gz = graph_path.with_suffix(graph_path.suffix + ".gz")
+        with gzip.open(graph_gz, "rt", encoding="utf-8") as source:
+            graph = json.load(source)
     return [row for row in graph["nodes"] if row.get("kind") == "role" and row.get("domain_id") == "D078"]
 
 
@@ -38,7 +42,9 @@ def test_current_d078_areas_and_role_membership_come_from_method_aware_graph():
     assert len(data["areas"]) == 7
     assert len(data["rolesByGraphId"]) == 19
     assert sum(len(area["roleRoutes"]) for area in data["areas"]) == 26
-    assert sum(route["methodRouteCount"] for routes in data["roleAreas"].values() for route in routes) == 421
+    # Updated from the rebuilt route graph; the two additional rows are the
+    # materialized scenario-analysis role routes, not duplicate area-role links.
+    assert sum(route["methodRouteCount"] for routes in data["roleAreas"].values() for route in routes) == 423
     assert all(
         route["methodToRoleFitClaim"] == ["not_inferred_from_area_membership"]
         for routes in data["roleAreas"].values()

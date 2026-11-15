@@ -489,14 +489,14 @@ describe("DegreeSkills programme preview", () => {
 
     render(<ThemeProvider><><DegreeSkills curriculumContract={curriculumContract} resources={resources} /><ProgrammeBooksLink resources={resources} /></></ThemeProvider>);
 
-    expect(screen.getByRole("button", { name: "Show Sociology books" })).toBeTruthy();
-    expect(StyleSheet.flatten(screen.getByText("Books").props.style).fontSize).toBe(15);
+    expect(screen.getByRole("button", { name: "Show Sociology reading resources" })).toBeTruthy();
+    expect(StyleSheet.flatten(screen.getByText("Reading resources").props.style).fontSize).toBe(15);
     expect(screen.queryByRole("link", { name: "Sociology by Giddens and Sutton (9th edition) · publisher/library access" })).toBeNull();
-    fireEvent.press(screen.getByRole("button", { name: "Show Sociology books" }));
-    expect(screen.getByText("Optional reference books")).toBeTruthy();
+    fireEvent.press(screen.getByRole("button", { name: "Show Sociology reading resources" }));
+    expect(screen.getByText("Optional Sociology books")).toBeTruthy();
     expect(screen.getByRole("link", { name: "Sociology by Giddens and Sutton (9th edition) · publisher/library access" })).toBeTruthy();
     expect(screen.getByRole("link", { name: "Sociology: Themes and Perspectives (8th edition) · publisher/library access" })).toBeTruthy();
-    expect(screen.getByText("Free learning alternatives")).toBeTruthy();
+    expect(screen.getByText("Free learning materials")).toBeTruthy();
     expect(screen.getByRole("link", { name: "Introduction to Sociology 3e" })).toBeTruthy();
     expect(screen.getByRole("link", { name: "Introduction to Sociology (NOUN courseware)" })).toBeTruthy();
     expect(screen.getByText(/not free copies of the books above/)).toBeTruthy();

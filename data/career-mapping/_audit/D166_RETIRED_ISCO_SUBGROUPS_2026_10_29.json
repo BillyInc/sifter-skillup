@@ -1,0 +1,139 @@
+{
+  "domain_id": "D166",
+  "recorded_on": "2026-10-29",
+  "disposition": "retired_isco_derived_subgroups_not_active_specialization_areas",
+  "records": [
+    {
+      "isco_submajor": "21",
+      "label": "Vehicle, Communications and Systems Engineering",
+      "role_count": 8,
+      "cluster_skills": [
+        "systems development life-cycle",
+        "ICT network routing",
+        "microwave principles",
+        "energy saving potential of automated shift systems",
+        "operation of different engines",
+        "electronic test procedures",
+        "electric motors",
+        "types of fuels",
+        "vehicle electrical systems",
+        "industrial engineering",
+        "hybrid vehicle architecture",
+        "manufacturing processes"
+      ],
+      "description": "Engineer vehicle systems, powertrains and telecommunications hardware.",
+      "raw_isco_label": "Science and engineering professionals",
+      "source_provenance": {
+        "source": "isco_submajor_derived",
+        "sources": [
+          "global_esco"
+        ],
+        "ownership": "subgroup",
+        "mapping_method": "canonical_role_library_isco_submajor",
+        "evidence_role_count": 7
+      },
+      "display_order": 1,
+      "data_state": "excluded",
+      "student_visibility_reason": "domain_uses_direct_domain_to_role_path_per_subgroup_contract"
+    },
+    {
+      "isco_submajor": "25",
+      "label": "Self-Driving Software Engineers",
+      "role_count": 2,
+      "cluster_skills": [
+        "software architecture models",
+        "software design methodologies",
+        "legal requirements of ICT products",
+        "translate requirements into visual design",
+        "develop software prototype",
+        "manage ICT legacy implication",
+        "ICT debugging tools",
+        "project management",
+        "integrated development environment software",
+        "tools for software configuration management",
+        "web services",
+        "use an application-specific interface",
+        "define technical requirements",
+        "business requirements techniques",
+        "data models",
+        "create software design",
+        "ICT system user requirements"
+      ],
+      "description": "Build and test the software, sensing and decision systems used by autonomous vehicles.",
+      "raw_isco_label": "Information and communications technology professionals",
+      "source_provenance": {
+        "source": "global_esco",
+        "sources": [
+          "global_esco",
+          "global_onet",
+          "global_sfia",
+          "global_xr",
+          "ng_cpn",
+          "ng_engineering"
+        ],
+        "ownership": "subgroup",
+        "nigerian_context": {
+          "source_ids": [
+            "ng_cpn",
+            "ng_engineering"
+          ],
+          "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+          "salary": "excluded"
+        }
+      },
+      "display_order": 2,
+      "data_state": "excluded",
+      "student_visibility_reason": "domain_uses_direct_domain_to_role_path_per_subgroup_contract"
+    },
+    {
+      "isco_submajor": "31",
+      "label": "Science and Engineering Associate Professionals",
+      "role_count": 1,
+      "cluster_skills": [],
+      "description": "Support scientific, technical and engineering work through practical application and measurement.",
+      "raw_isco_label": "Science and Engineering Associate Professionals",
+      "source_provenance": {
+        "source": "global_isco",
+        "sources": [
+          "global_isco"
+        ],
+        "ownership": "subgroup",
+        "mapping_method": "canonical_role_library_isco_submajor",
+        "source_url": "https://isco.ilo.org/en/isco-08/"
+      },
+      "data_state": "excluded",
+      "student_visibility_reason": "no_current_canonical_roles"
+    },
+    {
+      "isco_submajor": "75",
+      "label": "Food processing, wood working, garment and other craft and related trades workers",
+      "role_count": 1,
+      "cluster_skills": [
+        "health and safety measures in transportation",
+        "control the performance of the vehicle",
+        "work ergonomically",
+        "drive vehicles",
+        "wear appropriate protective gear"
+      ],
+      "description": "Food processing, woodworking, garment and other craft and related trades workers treat and process agricultural and fisheries raw materials into food and other products, and produce and repair goods made of wood, textiles, fur, leather or other materials. Competent performance in most occupations in this sub-major group requires skills at the second ISCO skill level.\nThe work is carried out by han",
+      "raw_isco_label": "Food processing, wood working, garment and other craft and related trades workers",
+      "source_provenance": {
+        "source": "isco_submajor_derived",
+        "sources": [
+          "global_esco",
+          "global_isco",
+          "global_onet",
+          "global_sfia",
+          "global_wef",
+          "global_xr"
+        ],
+        "ownership": "subgroup",
+        "mapping_method": "canonical_role_library_isco_submajor",
+        "evidence_role_count": 1
+      },
+      "display_order": 3,
+      "data_state": "excluded",
+      "student_visibility_reason": "no_current_canonical_roles"
+    }
+  ]
+}

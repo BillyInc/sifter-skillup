@@ -235,7 +235,7 @@ export function LearningResourcesBlock({
          </View>
          );
        })}
-      {saveNotice ? <Text style={[styles.saveNotice, { color: colors.textRole.muted }]}>{saveNotice}</Text> : null}
+      {saveNotice ? <Text accessibilityLiveRegion="polite" style={[styles.saveNotice, { color: colors.textRole.muted }]}>{saveNotice}</Text> : null}
     </View>
   );
 }
