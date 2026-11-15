@@ -432,9 +432,13 @@ describe("D078 method-aware route projection", () => {
     expect(projection.toolIds).toEqual(expect.arrayContaining([
       "domain-item:d078-nvivo-tool",
     ]));
-    // A technique that is merely a selectable extension of a component method
-    // is not silently promoted into the named design's core route.
-    expect(projection.domainItemIds).not.toContain(CHI_SQUARE);
+    // The selected design includes Survey as an active component, so its
+    // reviewed survey-analysis choices remain available in the method stage.
+    // This does not require the learner to select or master the technique.
+    expect(projection.domainItemIds).toContain(CHI_SQUARE);
+    expect(projection.visibleAreas.some((area) => area.methodContributions.some((contribution) =>
+      contribution.methodId === SURVEY && contribution.itemIds.includes(CHI_SQUARE),
+    ))).toBe(true);
     expect(projection.methods.every((method) => !method.selected)).toBe(true);
     expect(projection.combinations.find((combo) => combo.id === EXPLORATORY)?.selected).toBe(true);
 
@@ -446,7 +450,12 @@ describe("D078 method-aware route projection", () => {
     const graph = d078GraphDataForTests();
     expect(graph.combination_designs).toHaveLength(9);
     for (const combo of graph.combination_designs) {
-      const projection = projectD078Route(selectDesign(combo.id));
+      const selection = selectDesign(combo.id);
+      const projection = projectD078Route(selection);
+      const activeMethodIds = new Set([
+        ...combo.required_method_ids,
+        ...(selection.componentMethodIds[combo.id] ?? []),
+      ]);
       expect(projection.combinations.find((item) => item.id === combo.id)?.selected).toBe(true);
       expect(projection.methods.every((method) => !method.selected)).toBe(true);
       const routeRows = graph.combination_area_routes.filter((row) => row.combination_id === combo.id);
@@ -483,9 +492,29 @@ describe("D078 method-aware route projection", () => {
           expect(projected?.itemIds).toEqual(expect.arrayContaining([
             ...(contribution.area_item_ids ?? []),
             ...(contribution.task_linked_domain_item_ids ?? []),
+            ...(activeMethodIds.has(contribution.method_id)
+              ? [...(contribution.available_item_ids ?? []), ...(contribution.domain_downstream_item_ids ?? [])]
+              : []),
           ]));
-          expect(projected?.itemIds).not.toEqual(expect.arrayContaining(contribution.domain_downstream_item_ids ?? []));
         }
+        const explicitlyRoutedDomainIds = new Set([
+          ...(route.task_linked_domain_item_ids ?? []),
+          ...(route.available_item_ids ?? []),
+          ...(route.tool_ids ?? []),
+          ...(route.domain_tool_ids ?? []),
+          ...(route.method_contributions ?? []).filter((contribution) => activeMethodIds.has(contribution.method_id))
+            .flatMap((contribution) => [
+              ...(contribution.task_linked_domain_item_ids ?? []),
+              ...(contribution.available_item_ids ?? []),
+              ...(contribution.domain_downstream_item_ids ?? []),
+              ...(contribution.tool_ids ?? []),
+              ...(contribution.domain_tool_ids ?? []),
+            ]),
+        ]);
+        const aggregateOnlyIds = (route.domain_downstream_item_ids ?? [])
+          .filter((itemId) => !explicitlyRoutedDomainIds.has(itemId));
+        expect(projection.domainItemIdsByArea[route.area_id] ?? [])
+          .not.toEqual(expect.arrayContaining(aggregateOnlyIds));
       }
     }
   });
@@ -710,7 +739,7 @@ describe("D078 method-aware route projection", () => {
     expect(projectD078Route(toggleD078AddedItem(sociology, THEMATIC_CODEBOOK)).orphanedItemIds).toEqual([]);
   });
 
-  it("uses only an explicit combination route unless a member method is separately selected", () => {
+  it("keeps method learning before area-owned items on an explicit combination route", () => {
     const combination = selectDesign("combo:document-and-interview-elicitation");
     const selection = selectD078Area(combination, "D078:sociology-social-anthropology");
     const combinationOnly = projectD078Route(selection);
@@ -720,7 +749,19 @@ describe("D078 method-aware route projection", () => {
     const interviewContribution = combinationOnly.visibleAreas
       .find((area) => area.areaId === selection.areaId)?.methodContributions
       .find((item) => item.methodId === INTERVIEWS);
-    expect(interviewContribution?.itemIds).toContain(THEMATIC_CODEBOOK);
+    expect(interviewContribution?.itemIds).not.toContain(THEMATIC_CODEBOOK);
+    expect(combinationOnly.areaItemIdsByArea[selection.areaId!]).toContain(THEMATIC_CODEBOOK);
+    const graph = d078GraphDataForTests();
+    const sociologyRoute = graph.combination_designs
+      .find((design) => design.id === "combo:document-and-interview-elicitation")?.area_routes
+      .find((route) => route.area_id === selection.areaId);
+    expect(sociologyRoute?.task_family_ids.some((familyId) =>
+      graph.typed_relationship_edges.some((edge) =>
+        edge.relationship === "task_has_area_learning_item"
+        && edge.sourceId === familyId
+        && edge.targetId === THEMATIC_CODEBOOK,
+      ),
+    )).toBe(true);
 
     const explicitlySelectedMethod = toggleD078Method(combination, INTERVIEWS);
     const withMethodRoute = projectD078Route(selectD078Area(explicitlySelectedMethod, "D078:sociology-social-anthropology"));
