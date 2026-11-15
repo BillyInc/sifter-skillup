@@ -485,6 +485,37 @@ describe("D078 method-aware route projection", () => {
         }
         for (const itemId of [...(route.tool_ids ?? []), ...(route.domain_tool_ids ?? [])]) expect(projection.toolIds).toContain(itemId);
         for (const itemId of route.area_item_ids ?? []) expect(projection.areaItemIdsByArea[route.area_id]).toContain(itemId);
+        const routedFamilyIds = new Set([
+          ...(route.task_family_ids ?? []),
+          ...(route.method_contributions ?? []).flatMap((contribution) => contribution.task_family_ids ?? []),
+        ].filter((familyId) => projectedArea?.taskFamilyIds.includes(familyId)));
+        const acceptedAreaEvidence: Record<string, string[]> = {
+          reviewed_area_task_item_synthesis: ["area_task_evidence", "area_item_evidence"],
+          official_casevo_project_and_paper_plus_existing_abm_area_route: ["tool_capability_evidence", "area_task_route_context"],
+          reviewed_peer_method_paper_and_project_learning_material: ["area_item_evidence", "task_specific_learning_resource"],
+          reviewed_canonical_domain_tool_area_context: ["domain_item_evidence", "area_task_evidence"],
+          reviewed_internal_task_learning_concept_to_existing_canonical_item: ["internal_task_learning_concept", "canonical_area_item_evidence"],
+        };
+        for (const edge of graph.typed_relationship_edges.filter((candidate) => {
+          const target = graph.nodes_by_id[candidate.targetId];
+          const sourceRoles = acceptedAreaEvidence[candidate.evidenceBasis ?? ""] ?? [];
+          return candidate.relationship === "task_has_area_learning_item"
+            && candidate.status === "resolved_ready_for_use"
+            && routedFamilyIds.has(candidate.sourceId)
+            && sourceRoles.length > 0
+            && target?.area_id === route.area_id
+            && target.student_visible === true
+            && target.student_selectable !== false
+            && target.approval !== "unapproved"
+            && candidate.sourceReferences?.some((reference) => sourceRoles.includes(String(reference.source_role ?? ""))
+              && Boolean(String(reference.url ?? "").trim() || String(reference.locator ?? "").trim()));
+        })) {
+          const target = graph.nodes_by_id[edge.targetId];
+          const required = target.required_selected_domain_item_ids ?? [];
+          if (required.every((id: string) => selection.addedItemIds.includes(id))) {
+            expect(projection.areaItemIdsByArea[route.area_id] ?? []).toContain(edge.targetId);
+          }
+        }
         for (const contribution of route.method_contributions ?? []) {
           const projected = projectedArea?.methodContributions.find((item) => item.methodId === contribution.method_id);
           expect(projected).toBeTruthy();

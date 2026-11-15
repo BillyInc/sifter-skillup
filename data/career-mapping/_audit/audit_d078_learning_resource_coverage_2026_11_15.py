@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import sys
 import gzip
+import re
 from collections import Counter
 from datetime import date
 from pathlib import Path
@@ -24,6 +25,7 @@ from backend.d078_guided_content import (
 OUTPUT_PATH = Path(__file__).with_name("D078_RESOURCE_COVERAGE_BASELINE_2026_11_15.json")
 SOCIOLOGY_CURRICULUM_PATH = ROOT / "data/career-mapping/_audit/sociology_curriculum_contract_2026-09-17.json.gz"
 SOCIOLOGY_THEME_RESOURCE_AUDIT_PATH = ROOT / "data/career-mapping/_audit/sociology_programme_theme_resource_audit_2026_10_08.json.gz"
+SOCIOLOGY_THEME_RESOURCE_SQL_PATH = ROOT / "backend/migration_sociology_theme_resource_repair_2026-10-23.sql"
 RESOURCE_FIELDS = (
     "media_type",
     "learning_level",
@@ -104,6 +106,115 @@ def _item_record(
 
 
 def _programme_records() -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    with gzip.open(SOCIOLOGY_THEME_RESOURCE_AUDIT_PATH, "rt", encoding="utf-8") as source:
+        theme_resource_audit = json.load(source)
+    sql = SOCIOLOGY_THEME_RESOURCE_SQL_PATH.read_text(encoding="utf-8")
+    values_start = sql.index("CROSS JOIN (VALUES")
+    values_end = sql.index(") AS rows(resource_type, target_name, provider, delivery, url, description)", values_start)
+    values_sql = sql[values_start:values_end]
+    row_pattern = re.compile(
+        r"\('programme_reading',\s*'((?:''|[^'])*)',\s*'((?:''|[^'])*)',\s*'((?:''|[^'])*)',\s*'((?:''|[^'])*)',\s*'((?:''|[^'])*)',",
+        re.DOTALL,
+    )
+    reading_rows = [
+        tuple(value.replace("''", "'") for value in match.groups())
+        for match in row_pattern.finditer(values_sql)
+    ]
+    if len(reading_rows) != 18:
+        raise ValueError(f"Expected 18 canonical Sociology theme readings; found {len(reading_rows)}")
+
+    theme_key_start = sql.index("'theme_keys', CASE rows.target_name")
+    theme_key_end = sql.index("\n        END,\n        'theme_descriptions'", theme_key_start)
+    theme_key_sql = sql[theme_key_start:theme_key_end]
+    theme_pattern = re.compile(r"WHEN '((?:''|[^'])*)' THEN '(\[[^']*\])'::jsonb")
+    resource_theme_keys = {
+        match.group(1).replace("''", "'"): json.loads(match.group(2))
+        for match in theme_pattern.finditer(theme_key_sql)
+    }
+    prepared_resources = []
+    for title, provider, delivery, url, description in reading_rows:
+        prepared_resources.append({
+            "source_id": re.sub(r"[^a-z0-9]+", "_", title.casefold()).strip("_"),
+            "title": title,
+            "url": url,
+            "provider": provider,
+            "access": delivery,
+            "rationale": description,
+            "theme_keys": resource_theme_keys.get(title, []),
+            "source_artifact": str(SOCIOLOGY_THEME_RESOURCE_SQL_PATH.relative_to(ROOT)).replace("\\", "/"),
+            "database_status": "prepared_local_migration_not_live",
+            "external_review_status": "pending_current_link_and_item_fit_verification",
+        })
+
+    records: list[dict[str, Any]] = []
+    programme_resources = [
+        resource for resource in prepared_resources
+        if resource["title"] in {
+            "Sociology: Themes and Perspectives (8th edition)",
+            "Sociology",
+            "Introduction to Sociology 3e",
+            "Introduction to Sociology (NOUN courseware)",
+        }
+    ]
+    records.append({
+        "item_id": "Sociology:programme:overall",
+        "item_key": "Sociology",
+        "item_name": "Sociology programme and discipline",
+        "item_type": "programme_discipline",
+        "context_level": "programme",
+        "context_key": "Sociology",
+        "guidance_owner": "programme",
+        "student_resource_count": 0,
+        "resources": programme_resources,
+        "resource_metadata_gaps": ["current_external_verification", "resource_level_and_sequence", "first_click_locator"],
+        "external_review_status": "pending_programme_level_external_enrichment",
+        "terminal_disposition": None,
+        "curriculum_boundary": "Programme-wide resources and discipline orientation only; curriculum courses and outcomes are not separate resource targets.",
+    })
+    themes = d078_sociology_programme_themes()
+    for theme in themes:
+        theme_key = str(theme.get("themeKey") or "").strip()
+        if not theme_key:
+            continue
+        theme_resources = [resource for resource in prepared_resources if theme_key in resource["theme_keys"]]
+        records.append({
+            "item_id": f"Sociology:theme:{theme_key}",
+            "item_key": theme_key,
+            "item_name": theme.get("title"),
+            "item_type": "curriculum_theme_grouping",
+            "context_level": "programme",
+            "context_key": "Sociology",
+            "guidance_owner": "programme",
+            "theme_summary": theme.get("summary"),
+            "course_codes": theme.get("courseCodes") or [],
+            "course_anchors": theme.get("courseAnchors") or [],
+            "resources": theme_resources,
+            "student_resource_count": 0,
+            "prepared_candidate_resource_count": len(theme_resources),
+            "resource_metadata_gaps": ["current_external_verification", "resource_level_and_sequence", "first_click_locator"],
+            "external_review_status": "pending_current_external_verification_and_theme_fit_review",
+            "terminal_disposition": None,
+            "curriculum_boundary": "Theme is the resource-enrichment target; its already-classified courses/outcomes remain supporting anchors, not separate resource rows.",
+        })
+    resource_layer = {
+        "source_artifact": str(SOCIOLOGY_THEME_RESOURCE_AUDIT_PATH.relative_to(ROOT)).replace("\\", "/"),
+        "prepared_theme_seed_artifact": str(SOCIOLOGY_THEME_RESOURCE_SQL_PATH.relative_to(ROOT)).replace("\\", "/"),
+        "reviewed_on": theme_resource_audit.get("reviewed_on"),
+        "status": theme_resource_audit.get("status"),
+        "active_theme_count": theme_resource_audit.get("active_theme_count"),
+        "matrix_theme_row_count": theme_resource_audit.get("matrix_theme_row_count"),
+        "matrix_url_count": theme_resource_audit.get("matrix_url_count"),
+        "matrix_urls": theme_resource_audit.get("matrix_urls") or [],
+        "prepared_reading_count": len(prepared_resources),
+        "prepared_readings_mapped_theme_count": len({key for resource in prepared_resources for key in resource["theme_keys"]}),
+        "coverage_pass": theme_resource_audit.get("coverage_pass"),
+        "live_runtime_resource_count": 0,
+        "provenance_limit": "The prepared local migration maps reading candidates to themes, but it does not establish current link reachability, live database state, or completed item-by-item review. Course/outcome rows are anchors only.",
+    }
+    return records, resource_layer
+
+
+def _course_outcome_resource_targets_legacy() -> tuple[list[dict[str, Any]], dict[str, Any]]:
     with gzip.open(SOCIOLOGY_CURRICULUM_PATH, "rt", encoding="utf-8") as source:
         curriculum = json.load(source)
     with gzip.open(SOCIOLOGY_THEME_RESOURCE_AUDIT_PATH, "rt", encoding="utf-8") as source:
@@ -254,20 +365,19 @@ def build_ledger() -> dict[str, Any]:
         "audit_date": date.today().isoformat(),
         "source_artifact": str(MASTER_PATH.relative_to(ROOT)).replace("\\", "/"),
         "source_reviewed_on": master.get("reviewed_on"),
-        "scope": "Current runtime-visible D078 domain, area and approved role-context learning items.",
+        "scope": "Current runtime-visible D078 domain, area and approved role-context learning items, plus Sociology overall and its 14 programme themes.",
         "method_limit": "This baseline extracts current local runtime projections. It does not verify external URL reachability, item-resource fit, current access terms, video captions, or live Supabase state.",
         "counts": {
             "items_by_context": dict(sorted(counts.items())),
             "items_total": len(records),
             "sociology_programme_records": len(programme_records),
-            "sociology_programme_courses": sum(row["item_type"] == "course" for row in programme_records),
-            "sociology_programme_outcomes": sum(row["item_type"] == "curriculum_outcome" for row in programme_records),
-            "sociology_programme_abilities": sum(row["item_type"] == "programme_ability" for row in programme_records),
+            "sociology_programme_overall_targets": sum(row["item_type"] == "programme_discipline" for row in programme_records),
             "sociology_programme_themes": sum(row["item_type"] == "curriculum_theme_grouping" for row in programme_records),
             "items_without_learning_resource": sum(row["student_resource_count"] == 0 for row in records),
             "items_with_resource_metadata_gaps": sum(bool(row["resource_metadata_gaps"]) for row in records),
             "items_with_duplicate_resource_urls": sum(bool(row["duplicate_resource_urls"]) for row in records),
             "resource_records_total": sum(row["student_resource_count"] for row in records),
+            "prepared_sociology_candidate_resources": sum(row.get("prepared_candidate_resource_count", len(row.get("resources", []))) for row in programme_records),
             "resources_missing_learning_level": sum(not resource.get("learning_level") for row in records for resource in row["resources"]),
             "resources_missing_locator": sum(not resource.get("locator") for row in records for resource in row["resources"]),
             "resources_missing_explicit_media_type": sum(not resource.get("media_type") for row in records for resource in row["resources"]),
