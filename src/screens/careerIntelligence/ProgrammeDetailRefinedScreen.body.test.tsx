@@ -37,6 +37,7 @@ jest.mock("@expo/vector-icons", () => ({ Feather: () => null }));
 import { ProgrammeDetailBody } from "./ProgrammeDetailRefinedScreen";
 
 const baseProps: any = {
+  programmeTrayMode: "icon",
   data: {
     id: "jamb-sociology",
     name: "Sociology",

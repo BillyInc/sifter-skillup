@@ -265,7 +265,7 @@ function SubgroupBody({ subgroup, domain, roles, programmeConnection, guidanceCo
           targetStudentId={targetStudentId}
         />
         <ToolGroupsBlock tools={subgroup.tools} resources={subgroupResources} contextItems={subgroupItems} contextLevel="subgroup" title="Tools for work in this area" commonLabel="Used across this area" distinctiveLabel="Useful for particular work" explanation="These named tools are connected to reviewed work in this area. Open one for its purpose, route, relationships and limits; the list is not a requirement to learn every tool." learningFocus targetStudentId={targetStudentId} learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain?.id, areaId: subgroup.id }} areaName={subgroup.name} />
-        <View style={styles.detail}><SectionLabel>Credentials and professional routes</SectionLabel><CertPlacementList subgroup={subgroup.certifications} contextItems={subgroupItems} resources={subgroupResources} contextLevel="subgroup" learningFocus targetStudentId={targetStudentId} emptyMessage="No reviewed area-level credential is recorded here. A credential may apply only to a specific role." /></View>
+        <View style={[styles.detail, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}><SectionLabel>Credentials and professional routes</SectionLabel><CertPlacementList subgroup={subgroup.certifications} contextItems={subgroupItems} resources={subgroupResources} contextLevel="subgroup" learningFocus targetStudentId={targetStudentId} emptyMessage="No reviewed area-level credential is recorded here. A credential may apply only to a specific role." /></View>
       </View>
       <View style={styles.section}>
         <View style={styles.badgeRow}><Feather name="users" size={18} color={colors.accentRole.action} /><SectionLabel>Roles inside this area</SectionLabel></View>
@@ -301,7 +301,7 @@ function SubgroupBody({ subgroup, domain, roles, programmeConnection, guidanceCo
 const styles = StyleSheet.create({
   body: { gap: Spacing.md, paddingBottom: Spacing.xxl },
   pathPill: { paddingVertical: Spacing.xs },
-  pathText: { fontSize: FontSize.xs, letterSpacing: 0.35 },
+  pathText: { fontSize: FontSize.sm, letterSpacing: 0.35 },
   section: { gap: Spacing.md },
   heading: { fontSize: 22, lineHeight: 29, ...CompassFonts.displayBold },
   copy: { fontSize: 16, lineHeight: 24 },
@@ -310,11 +310,11 @@ const styles = StyleSheet.create({
   detail: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm },
   skillList: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.xs },
   skill: { borderWidth: 1, borderRadius: Radius.full, paddingHorizontal: Spacing.sm, paddingVertical: Spacing.xs, fontSize: FontSize.xs },
-  tierLabel: { fontSize: FontSize.xs, letterSpacing: 0.4, textTransform: "uppercase" },
+  tierLabel: { fontSize: FontSize.sm, letterSpacing: 0.4, textTransform: "uppercase" },
   routeNote: { gap: Spacing.xs, borderLeftWidth: 2, borderLeftColor: "#64748B", paddingLeft: Spacing.sm },
   badgeRow: { flexDirection: "row", alignItems: "center", gap: Spacing.xs, flexWrap: "wrap" },
   roleGrid: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
-  role: { flexDirection: "row", alignItems: "center", gap: Spacing.sm, borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, flex: 1, minWidth: 260 },
+  role: { flexDirection: "row", alignItems: "flex-start", gap: Spacing.sm, borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, flex: 1, minWidth: 260 },
   roleTitle: { fontSize: 18, lineHeight: 25 },
   buildButton: { alignSelf: "flex-start", borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
 });

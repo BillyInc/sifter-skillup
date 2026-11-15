@@ -562,9 +562,11 @@ export default function CareerHomeScreen() {
             { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
           ]}
         >
-          <Text style={styles.promptIcon}>Start</Text>
+          <View style={[styles.tileIconBox, { backgroundColor: colors.accentRole.action + "12" }]}>
+            <Feather name="flag" size={20} color={colors.accentRole.action} />
+          </View>
           <Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
-            {isGuest ? "Create an account to personalise LevelUp" : "Tell us where you&apos;re starting from"}
+            {isGuest ? "Create an account to personalise LevelUp" : "Tell us where you're starting from"}
           </Text>
           <Text style={[styles.cardMeta, { color: colors.textRole.secondary }, CompassFonts.body]}>
             {isGuest
@@ -713,7 +715,6 @@ const styles = StyleSheet.create({
   },
   contextTitle: { fontSize: FontSize.md },
   contextMeta: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },
-  promptIcon: { fontSize: 28 },
   cardActions: {
     flexDirection: "row",
     flexWrap: "wrap",

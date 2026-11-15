@@ -13,6 +13,7 @@ import type { EducatorProfile } from "../../src/types/institution";
 import { AdminShell } from "../../src/screens/admin/AdminShell";
 import { LevelUpWebWordmark } from "../../src/components/brand/LevelUpWebWordmark";
 import { PersistentLearningPlanDockProvider } from "../../src/components/careerIntelligence/PersistentLearningPlanDock";
+import { Search } from "lucide-react";
 import "./styles.css";
 
 const TOKEN_KEY = "sifter_auth_token_v2";
@@ -63,7 +64,6 @@ const EcosystemTrackScreen = lazy(() => import("../../src/screens/EcosystemTrack
 const StarknetTrackScreen = lazy(() => import("../../src/screens/StarknetTrackScreen"));
 const CairoBuilderTrackScreen = lazy(() => import("../../src/screens/CairoBuilderTrackScreen"));
 const LeaderboardScreen = lazy(() => import("../../src/screens/LeaderboardScreen"));
-const InterviewModeScreen = lazy(() => import("../../src/screens/InterviewModeScreen"));
 const PathwaysHubScreen = lazy(() => import("../../src/screens/careerIntelligence/PathwaysHubScreen"));
 const EntrepreneurshipPathwayScreen = lazy(() => import("../../src/screens/careerIntelligence/EntrepreneurshipPathwayScreen"));
 const CareerChangerScreen = lazy(() => import("../../src/screens/careerIntelligence/CareerChangerScreen"));
@@ -496,7 +496,16 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
   const isAdminExplore = path.startsWith("/admin/explore") || path.startsWith("/admin/workspace-explore");
   const isAdminRoute = path.startsWith("/admin");
   const isRootPlatformRoute = path === "/" || path === "/home" || path === "/explore" || path === "/build" || path === "/explore/pathways/entrepreneurship" || path === "/opportunities" || path === "/myworld" || path === "/profile";
-  const showPlatformBack = !isAdminRoute && (focusedGuidance || !isRootPlatformRoute);
+  // These detail screens render their own contextual back link (DetailScaffold:
+  // "Back to programme", "Back to student guidance", ...), so the shell's generic
+  // Back would show a second one. Focused guidance keeps the shell's "Exit guidance".
+  const routeHasOwnBack = !focusedGuidance && (
+    /^\/explore\/(programme|role)\/[^/]+/.test(route)
+    || /^\/explore\/domain\/[^/]+(\/subgroup\/[^/]+)?$/.test(route)
+    || /^\/opportunities\/(opportunity|organisation)\//.test(path)
+    || path === "/opportunities/scholarships"
+  );
+  const showPlatformBack = !isAdminRoute && !routeHasOwnBack && (focusedGuidance || !isRootPlatformRoute);
 
   function content() {
     if (route === "/" || route === "/home") return <CareerHomeScreen />;
@@ -538,7 +547,7 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
     if (path === "/leaderboard") return <LeaderboardScreen />;
     if (path === "/fields") return <FieldsScreen />;
     if (path === "/skills/quant-map") return <QuantMapScreen />;
-    if (path === "/skills/interview") return <InterviewModeScreen />;
+    if (path === "/skills/interview") return <DisabledLearningScreen area="Interview mode" />;
     if (path === "/skills/lesson") return <DisabledLearningScreen area="Lessons" />;
     if (path === "/skills") return <SkillsScreen />;
     if (path === "/streaks") return <StreaksScreen />;
@@ -700,7 +709,7 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
         }} aria-label="Go back">← {focusedGuidance ? "Exit guidance" : "Back"}</button> : null}
         {focusedGuidance ? <div className="platform-guidance-title"><span className="platform-guidance-brand platform-guidance-brand-full"><LevelUpWebWordmark variant="light" width={126} height={34} /></span><span className="platform-guidance-brand platform-guidance-brand-compact"><LevelUpWebWordmark variant="light" width={34} height={34} compact /></span><span>Focused guidance workspace</span><strong>Follow your selected path</strong></div> : <div className="global-search-shell" ref={searchShellRef}>
         <form className="global-search" onSubmit={submitGlobalSearch} role="search">
-          <span aria-hidden="true">⌕</span>
+          <span aria-hidden="true" style={{ display: "inline-flex" }}><Search size={16} strokeWidth={2} /></span>
           <input value={globalQuery} onFocus={() => setSearchOpen(true)} onChange={(event) => { setGlobalQuery(event.target.value); setSearchOpen(true); }} placeholder="Search programmes, universities, domains, roles or skills" aria-label="Search Sifter" />
           <button type="submit">Search</button>
         </form>

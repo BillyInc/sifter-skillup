@@ -600,16 +600,14 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
     setProgrammePlanNotice(nextSelected ? "Saving to My World…" : "Updating My World…");
     void (async () => {
       try {
-        const current = guidanceStudentId
-          ? await provisioningData.getGuidancePath(guidanceStudentId)
-          : sessionOnlyGuidance
-            ? null
-            : await careerData.getGuidancePath();
-        const currentPath = guidanceStudentId
-          ? (current?.path ?? {}) as GuidanceReportPath["path"]
-          : current?.status === "real" && current.data
-            ? current.data.path
-            : {};
+        let currentPath: GuidanceReportPath["path"] = {};
+        if (guidanceStudentId) {
+          const provisioned = await provisioningData.getGuidancePath(guidanceStudentId);
+          currentPath = (provisioned?.path ?? {}) as GuidanceReportPath["path"];
+        } else if (!sessionOnlyGuidance) {
+          const stored = await careerData.getGuidancePath();
+          if (stored.status === "real" && stored.data) currentPath = stored.data.path;
+        }
         let nextPath: GuidanceReportPath["path"];
         if (nextSelected) {
           nextPath = appendProgrammeChoice(currentPath, {
@@ -622,7 +620,7 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
             : currentPath.programme
               ? [{ programme: currentPath.programme, university: currentPath.university, requirements: currentPath.requirements, universityRequirements: currentPath.universityRequirements }]
               : [];
-          const remaining = previous.filter((entry) => String((entry.programme as Record<string, unknown> | undefined)?.id ?? "") !== activeProgrammeId);
+          const remaining = previous.filter((entry: Record<string, unknown>) => String((entry.programme as Record<string, unknown> | undefined)?.id ?? "") !== activeProgrammeId);
           nextPath = { ...currentPath, programmes: remaining };
           if (String((currentPath.programme as Record<string, unknown> | undefined)?.id ?? "") === activeProgrammeId) {
             delete nextPath.programme;
@@ -850,6 +848,7 @@ export function ProgrammeDetailBody({
   programmeTrayMode,
   onProgrammeTrayModeChange,
   onRemoveProgramme,
+  statusMessage,
   requirements,
   schools,
   universitySearchResults,
@@ -890,6 +889,7 @@ export function ProgrammeDetailBody({
   programmeTrayMode: GuidedLearningTrayMode;
   onProgrammeTrayModeChange: (mode: GuidedLearningTrayMode) => void;
   onRemoveProgramme: () => void;
+  statusMessage?: string | null;
   requirements: JambProgrammeRequirements | null;
   schools: JambProgrammeSchool[];
   universitySearchResults: JambProgrammeSchool[];
@@ -972,6 +972,7 @@ export function ProgrammeDetailBody({
         programmeTrayMode={programmeTrayMode}
         onProgrammeTrayModeChange={onProgrammeTrayModeChange}
         onRemoveProgramme={onRemoveProgramme}
+        statusMessage={statusMessage}
         selectedSchool={trayInstitution ?? selectedSchool}
         comparisonSchools={comparisonSchools}
       /> : null}

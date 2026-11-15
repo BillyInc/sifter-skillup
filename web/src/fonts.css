@@ -1,0 +1,54 @@
+/*
+ * Web font faces.
+ *
+ * On native, useCompassFonts() loads these through expo-font. The web build
+ * aliases expo-font to a stub whose loadAsync() is a no-op, so nothing ever
+ * registered the family names the screens ask for (Inter_400Regular, ...). The
+ * browser then fell back to its default serif for any Text using them.
+ *
+ * Same family names as src/theme/fonts.ts, so no screen changes. The weight is
+ * a range so the browser never synthesizes a faux bold on top of a face that is
+ * already the right weight (RN sets fontWeight alongside fontFamily).
+ */
+@font-face {
+  font-family: "Inter_400Regular";
+  src: url("../../node_modules/@expo-google-fonts/inter/400Regular/Inter_400Regular.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter_500Medium";
+  src: url("../../node_modules/@expo-google-fonts/inter/500Medium/Inter_500Medium.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter_600SemiBold";
+  src: url("../../node_modules/@expo-google-fonts/inter/600SemiBold/Inter_600SemiBold.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter_700Bold";
+  src: url("../../node_modules/@expo-google-fonts/inter/700Bold/Inter_700Bold.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SplineSansMono_400Regular";
+  src: url("../../node_modules/@expo-google-fonts/spline-sans-mono/400Regular/SplineSansMono_400Regular.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SplineSansMono_500Medium";
+  src: url("../../node_modules/@expo-google-fonts/spline-sans-mono/500Medium/SplineSansMono_500Medium.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}

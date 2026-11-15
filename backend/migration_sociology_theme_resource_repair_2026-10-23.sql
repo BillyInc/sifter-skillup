@@ -7,6 +7,13 @@ CREATE TEMP TABLE _sociology_theme_resource_seed
 ON COMMIT DROP AS
 SELECT * FROM skillup_dev.career_learning_resources WITH NO DATA;
 
+WITH parent AS (
+    SELECT id
+    FROM skillup_dev.programmes
+    WHERE lower(name) = 'sociology'
+    ORDER BY id
+    LIMIT 1
+)
 INSERT INTO _sociology_theme_resource_seed
     (id, programme_id, domain_id, subgroup_id, role_id, ownership_scope, review_status, resource_type,
      target_name, provider, region, access_type, delivery, url, source_url,
@@ -333,8 +340,8 @@ BEGIN
     IF mapped_rows <> 18 THEN
         RAISE EXCEPTION 'Expected 18 reviewed Sociology resource rows after repair; found %', mapped_rows;
     END IF;
-    IF mapped_themes <> 14 THEN
-        RAISE EXCEPTION 'Expected mapped resources for all 14 active Sociology themes; found %', mapped_themes;
+    IF mapped_themes <> 15 THEN
+        RAISE EXCEPTION 'Expected mapped resources for all 15 active Sociology themes; found %', mapped_themes;
     END IF;
 END $$;
 
