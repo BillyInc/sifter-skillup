@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import sys
 import gzip
+import csv
 import re
 from collections import Counter
 from datetime import date
@@ -112,14 +113,13 @@ def _programme_records() -> tuple[list[dict[str, Any]], dict[str, Any]]:
     values_start = sql.index("CROSS JOIN (VALUES")
     values_end = sql.index(") AS rows(resource_type, target_name, provider, delivery, url, description)", values_start)
     values_sql = sql[values_start:values_end]
-    row_pattern = re.compile(
-        r"\('programme_reading',\s*'((?:''|[^'])*)',\s*'((?:''|[^'])*)',\s*'((?:''|[^'])*)',\s*'((?:''|[^'])*)',\s*'((?:''|[^'])*)',",
-        re.DOTALL,
-    )
-    reading_rows = [
-        tuple(value.replace("''", "'") for value in match.groups())
-        for match in row_pattern.finditer(values_sql)
-    ]
+    reading_rows = []
+    for line in values_sql.splitlines():
+        row_text = line.strip()
+        if not row_text.startswith("('programme_reading',"):
+            continue
+        fields = next(csv.reader([row_text[1:-2]], delimiter=",", quotechar="'", doublequote=True, skipinitialspace=True))
+        reading_rows.append(tuple(fields[1:6]))
     if len(reading_rows) != 18:
         raise ValueError(f"Expected 18 canonical Sociology theme readings; found {len(reading_rows)}")
 
@@ -166,6 +166,7 @@ def _programme_records() -> tuple[list[dict[str, Any]], dict[str, Any]]:
         "guidance_owner": "programme",
         "student_resource_count": 0,
         "resources": programme_resources,
+        "duplicate_resource_urls": [],
         "resource_metadata_gaps": ["current_external_verification", "resource_level_and_sequence", "first_click_locator"],
         "external_review_status": "pending_programme_level_external_enrichment",
         "terminal_disposition": None,
@@ -190,6 +191,7 @@ def _programme_records() -> tuple[list[dict[str, Any]], dict[str, Any]]:
             "course_anchors": theme.get("courseAnchors") or [],
             "resources": theme_resources,
             "student_resource_count": 0,
+            "duplicate_resource_urls": [],
             "prepared_candidate_resource_count": len(theme_resources),
             "resource_metadata_gaps": ["current_external_verification", "resource_level_and_sequence", "first_click_locator"],
             "external_review_status": "pending_current_external_verification_and_theme_fit_review",
