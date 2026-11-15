@@ -26,6 +26,7 @@
  */
 
 import React, { useRef, useEffect, type ReactNode } from 'react';
+import { Feather } from '@expo/vector-icons';
 import {
   View, Text, TouchableOpacity,
   Animated, StyleSheet, ViewStyle, type StyleProp,
@@ -243,7 +244,9 @@ export function SifterButton({
           ...(variant === 'ghost' || variant === 'secondary' ? {} : Shadow.sm),
         }}
       >
-        {icon && <Text style={{ fontSize: fontSize + 2 }}>{icon}</Text>}
+        {icon && (icon in (Feather.glyphMap ?? {})
+          ? <Feather name={icon as keyof typeof Feather.glyphMap} size={fontSize + 2} color={txtColor} />
+          : <Text style={{ fontSize: fontSize + 2 }}>{icon}</Text>)}
         <Text style={{
           color: txtColor,
           fontSize,

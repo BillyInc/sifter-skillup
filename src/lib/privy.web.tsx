@@ -1,4 +1,6 @@
 import React from 'react';
+import { PrivyProvider, usePrivy, useLoginWithEmail, useLoginWithOAuth } from '@privy-io/react-auth';
+import { useSignRawHash } from '@privy-io/react-auth/extended-chains';
 import { PRIVY_APP_ID, PRIVY_WEB_CLIENT_ID } from './config';
 import type {
   AppLoginCallbacks,
@@ -10,7 +12,6 @@ import type {
 /** Web-only Privy adapter. The browser authentication package is intentionally
  * isolated so it cannot enter the native Expo bundle. */
 export function AppPrivyProvider({ children }: { children: React.ReactNode }) {
-  const { PrivyProvider } = require('@privy-io/react-auth') as typeof import('@privy-io/react-auth');
   const props: any = {
     appId: PRIVY_APP_ID,
     config: { appearance: { theme: 'light' } },
@@ -20,7 +21,6 @@ export function AppPrivyProvider({ children }: { children: React.ReactNode }) {
 }
 
 export function useAppPrivy(): AppPrivyLike {
-  const { usePrivy } = require('@privy-io/react-auth') as typeof import('@privy-io/react-auth');
   const privy = usePrivy();
   return {
     isReady: privy.ready,
@@ -31,7 +31,6 @@ export function useAppPrivy(): AppPrivyLike {
 }
 
 export function useAppLoginWithEmail(callbacks?: AppLoginCallbacks): AppLoginWithEmailLike {
-  const { useLoginWithEmail } = require('@privy-io/react-auth') as typeof import('@privy-io/react-auth');
   const email = useLoginWithEmail(callbacks as any);
   return {
     sendCode: ({ email: address }) => email.sendCode({ email: address }),
@@ -41,7 +40,6 @@ export function useAppLoginWithEmail(callbacks?: AppLoginCallbacks): AppLoginWit
 }
 
 export function useAppLoginWithOAuth(callbacks?: AppLoginCallbacks): AppLoginWithOAuthLike {
-  const { useLoginWithOAuth } = require('@privy-io/react-auth') as typeof import('@privy-io/react-auth');
   const oauth = useLoginWithOAuth(callbacks as any);
   return {
     login: ({ provider, disableSignup }) => oauth.initOAuth({ provider: provider as any, disableSignup }),
@@ -52,6 +50,5 @@ export function useAppLoginWithOAuth(callbacks?: AppLoginCallbacks): AppLoginWit
 export function useAppSignRawHash(): {
   signRawHash: (input: { address: string; chainType: 'starknet'; hash: `0x${string}` }) => Promise<{ signature: `0x${string}` }>;
 } {
-  const { useSignRawHash } = require('@privy-io/react-auth/extended-chains') as typeof import('@privy-io/react-auth/extended-chains');
   return useSignRawHash();
 }

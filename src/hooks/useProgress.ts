@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { API } from '../lib/api';
-import { useAuth } from './useAuth';
+import { useAuth } from '@/hooks/useAuth';
 
 function normalizeCompletionTrack(track: string): string {
   return track === 'starknet-islands' ? 'crypto' : track;

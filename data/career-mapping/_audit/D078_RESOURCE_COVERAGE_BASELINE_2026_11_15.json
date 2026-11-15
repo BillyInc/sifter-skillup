@@ -4,22 +4,68 @@
   "audit_date": "2026-11-15",
   "source_artifact": "data/career-mapping/_audit/D078_MASTER_GUIDED_EXPERIENCE_RECONCILIATION_2026_10_12.json",
   "source_reviewed_on": "2026-10-12",
-  "scope": "Current runtime-visible D078 domain, area and approved role-context learning items.",
+  "scope": "Current runtime-visible D078 domain, area and approved role-context learning items, plus Sociology overall and its 14 programme themes.",
   "method_limit": "This baseline extracts current local runtime projections. It does not verify external URL reachability, item-resource fit, current access terms, video captions, or live Supabase state.",
   "counts": {
     "items_by_context": {
       "area": 150,
       "domain": 52,
+      "programme": 15,
       "role": 297
     },
-    "items_total": 499,
-    "items_without_learning_resource": 0,
-    "items_with_resource_metadata_gaps": 499,
+    "items_total": 514,
+    "sociology_programme_records": 15,
+    "sociology_programme_overall_targets": 1,
+    "sociology_programme_themes": 14,
+    "items_without_learning_resource": 15,
+    "items_with_resource_metadata_gaps": 514,
     "items_with_duplicate_resource_urls": 0,
     "resource_records_total": 592,
-    "resources_missing_learning_level": 587,
-    "resources_missing_locator": 17,
-    "resources_missing_explicit_media_type": 0
+    "prepared_sociology_candidate_resources": 34,
+    "resources_missing_learning_level": 621,
+    "resources_missing_locator": 51,
+    "resources_missing_explicit_media_type": 34
+  },
+  "sociology_programme_existing_theme_resource_layer": {
+    "source_artifact": "data/career-mapping/_audit/sociology_programme_theme_resource_audit_2026_10_08.json.gz",
+    "prepared_theme_seed_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+    "reviewed_on": "2026-10-08",
+    "status": "local_coverage_audit",
+    "active_theme_count": 14,
+    "matrix_theme_row_count": 14,
+    "matrix_url_count": 25,
+    "matrix_urls": [
+      "https://collins.co.uk/products/9780007498826",
+      "https://nou.edu.ng/coursewarecontent/CSS111%20INTRODUCTION%20%20TO%20SOCIOLOGY.pdf",
+      "https://nou.edu.ng/coursewarecontent/GST%20201%20%20NIGERIAN%20PEOPLES%20AND%20CULTURE.pdf",
+      "https://nou.edu.ng/coursewarecontent/PCR331%20HISTORY%20OF%20CONFLICTS%20IN%20NIGERIA.pdf",
+      "https://openstax.org/books/introduction-sociology-3e/pages/1-3-theoretical-perspectives-in-sociology",
+      "https://openstax.org/books/introduction-sociology-3e/pages/12-2-gender-and-gender-inequality",
+      "https://openstax.org/books/introduction-sociology-3e/pages/17-1-power-and-authority",
+      "https://openstax.org/books/introduction-sociology-3e/pages/2-1-approaches-to-sociological-research",
+      "https://openstax.org/books/introduction-sociology-3e/pages/2-2-research-methods",
+      "https://openstax.org/books/introduction-sociology-3e/pages/21-3-social-change",
+      "https://openstax.org/books/introduction-sociology-3e/pages/3-1-what-is-culture",
+      "https://openstax.org/books/introduction-sociology-3e/pages/5-3-agents-of-socialization",
+      "https://openstax.org/books/introduction-sociology-3e/pages/6-1-types-of-groups",
+      "https://openstax.org/books/introduction-sociology-3e/pages/7-3-crime-and-the-law",
+      "https://openstax.org/books/introduction-sociology-3e/pages/9-1-what-is-social-stratification",
+      "https://www.aehnetwork.org/textbook/",
+      "https://www.aehnetwork.org/textbook/growing-cities-urbanization-in-africa/",
+      "https://www.aehnetwork.org/textbook/how-many-people-are-too-many-people/",
+      "https://www.aehnetwork.org/textbook/production-systems-in-pre-colonial-africa/",
+      "https://www.open.edu/openlearn/digital-computing/introducing-computing-and-it/content-section-1.3",
+      "https://www.open.edu/openlearn/education-development/extending-and-developing-your-thinking-skills/content-section-8",
+      "https://www.open.edu/openlearn/education-development/principles-and-practices-peace-education",
+      "https://www.open.edu/openlearn/health-sports-psychology/social-care-social-work/an-introduction-social-work/content-section-0?active-tab=content-tab",
+      "https://www.open.edu/openlearn/mod/oucontent/view.php?id=4398&section=4.2",
+      "https://www.open.edu/openlearn/money-business/entrepreneurship-ideas-reality?active-tab=content-tab"
+    ],
+    "prepared_reading_count": 18,
+    "prepared_readings_mapped_theme_count": 15,
+    "coverage_pass": true,
+    "live_runtime_resource_count": 0,
+    "provenance_limit": "The prepared local migration maps reading candidates to themes, but it does not establish current link reachability, live database state, or completed item-by-item review. Course/outcome rows are anchors only."
   },
   "records": [
     {
@@ -7999,6 +8045,1229 @@
       "duplicate_resource_urls": [],
       "external_review_status": "pending_item_by_item_external_verification",
       "terminal_disposition": null
+    },
+    {
+      "item_id": "Sociology:programme:overall",
+      "item_key": "Sociology",
+      "item_name": "Sociology programme and discipline",
+      "item_type": "programme_discipline",
+      "context_level": "programme",
+      "context_key": "Sociology",
+      "guidance_owner": "programme",
+      "student_resource_count": 0,
+      "resources": [
+        {
+          "source_id": "sociology_themes_and_perspectives_8th_edition",
+          "title": "Sociology: Themes and Perspectives (8th edition)",
+          "url": "https://collins.co.uk/products/9780007498826",
+          "provider": "Collins",
+          "access": "publisher reference; paid or library access",
+          "rationale": "A recognised Sociology reference text by Michael Haralambos and Martin Holborn. The catalogue does not claim it is a universal required text; use a legal library or publisher copy.",
+          "theme_keys": [
+            "people",
+            "ideas",
+            "research",
+            "social_issues",
+            "governance"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        },
+        {
+          "source_id": "sociology",
+          "title": "Sociology",
+          "url": "https://www.wiley-vch.de/en/areas-interest/humanities-social-sciences/sociology-12so/general-sociology-12so0/sociology-978-1-5095-3922-2",
+          "provider": "Wiley",
+          "access": "publisher reference; paid or library access",
+          "rationale": "Anthony Giddens Sociology reference text. Use it as a supporting theory and contemporary-society reference, not as a universal admission or course requirement.",
+          "theme_keys": [
+            "ideas"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        },
+        {
+          "source_id": "introduction_to_sociology_3e",
+          "title": "Introduction to Sociology 3e",
+          "url": "https://openstax.org/books/introduction-sociology-3e/pages/1-introduction",
+          "provider": "OpenStax",
+          "access": "free open textbook",
+          "rationale": "A legal, openly licensed free textbook for introductory concepts, theories, culture, institutions, research methods and social change.",
+          "theme_keys": [
+            "core",
+            "people",
+            "ideas",
+            "research",
+            "social_change",
+            "social_issues",
+            "governance"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        },
+        {
+          "source_id": "introduction_to_sociology_noun_courseware",
+          "title": "Introduction to Sociology (NOUN courseware)",
+          "url": "https://nou.edu.ng/coursewarecontent/CSS111%20INTRODUCTION%20%20TO%20SOCIOLOGY.pdf",
+          "provider": "National Open University of Nigeria",
+          "access": "NOUN courseware; educational-use terms apply",
+          "rationale": "NOUN courseware (published 2008; first printed 2004) covering foundational Sociology topics. Use it as an optional institution-specific reference, not a current national prescription; follow NOUN's stated use terms.",
+          "theme_keys": [
+            "people",
+            "ideas",
+            "social_change"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        }
+      ],
+      "duplicate_resource_urls": [],
+      "resource_metadata_gaps": [
+        "current_external_verification",
+        "resource_level_and_sequence",
+        "first_click_locator"
+      ],
+      "external_review_status": "pending_programme_level_external_enrichment",
+      "terminal_disposition": null,
+      "curriculum_boundary": "Programme-wide resources and discipline orientation only; curriculum courses and outcomes are not separate resource targets."
+    },
+    {
+      "item_id": "Sociology:theme:african_societies",
+      "item_key": "african_societies",
+      "item_name": "African and Nigerian societies",
+      "item_type": "curriculum_theme_grouping",
+      "context_level": "programme",
+      "context_key": "Sociology",
+      "guidance_owner": "programme",
+      "theme_summary": "These courses examine African and Nigerian social structures, cultures, histories and regional settings.",
+      "course_codes": [
+        "SOC 103",
+        "SOC 206",
+        "SOC 403"
+      ],
+      "course_anchors": [
+        {
+          "courseCode": "SOC 103",
+          "courseTitle": "Introduction to African Societies and Culture",
+          "courseSummary": "A survey of post -colonial African societies characterised by differences in economic or political organisations, the empires, and their socio -political administrations, then impacts of colonialism on these societies, and the contemporary structures of African societies – social organisation, polity, economy and world views. before imported religion like Christianity and Islam. The meaning of components of culture with examples. Peoples and cultures in Nigeria/Africa (such as, Nigeria has not less than 300 ethnic groups, each with its disctinct culture). An idea of the number of ethnic or tribal groups in Africa. Aspects of their social structure, such as, patrilineal and matrilineal, aspects of their traditional religion, before imported religion like Christianity and Islam; important aspects of family/family life, and their belief-system(s). Preoccupation with magic, witchcraft and many others which still co -exist side-by-side with science and imported belief -systems of Christainity and Islam;their main occupational life before westernisation/modernisation. Practicies like polygamy (polygyny and polyyandry), levirate (wife inheritance), food taboos and others targeted at women and children. Total understanding of the peoples of Nigeria/Africa.",
+          "sourceLocator": "Original CCMAS source: Sociology; SOC 103; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed pp. 324-325",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        },
+        {
+          "courseCode": "SOC 206",
+          "courseTitle": "Structure of the Nigerian Society",
+          "courseSummary": "Introduction to the building blocks of the structure of society – social institutions and classes: the structure of traditional societies before the existence of Nigeria – the Sokoto Caliphate, the Kanem -Bornu Empire, the Oyo Empire, the Benin Empire and village democracies: European contact with Africa and the establishment of trading parties in legitimate trade and slave trade: the colonial era and new class structure in Nigeria: Post - Colonial Nigeria – class structure, institutions such as education, economy, religion, politics and their contributions to the sustenance of the class structure. Consequences of the class structure – poverty, ethnicity, religious fanatics’, political instability and many others. To have an overview of the geography of the Nigerian state and her peoples; the diversity of social structure – marriage, family types, partilineal, matrilineal, bilateral and many others. Changes that have taken place in the country and factors accounting thereof. Idea of functional and dysfunctional traditional practices across the major as well as minor ethnic groups. A good understang of Nigeria society.",
+          "sourceLocator": "Original CCMAS source: Sociology; SOC 206; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed p. 331",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        },
+        {
+          "courseCode": "SOC 403",
+          "courseTitle": "Regional Ethnography",
+          "courseSummary": "Advanced study of sub-Saharan Africa as a major ethnological region. Human origins and early man. Physical anthropology and archaeology: race and racism. Cultural regions of Africa: language and population migration in history as well as peoples and cultures of sub-Saharan Africa. ---",
+          "sourceLocator": "Original CCMAS source: Sociology; SOC 403; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed p. 338",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        }
+      ],
+      "resources": [
+        {
+          "source_id": "nigerian_peoples_and_culture_noun_courseware",
+          "title": "Nigerian Peoples and Culture (NOUN courseware)",
+          "url": "https://nou.edu.ng/coursewarecontent/GST%20201%20%20NIGERIAN%20PEOPLES%20AND%20CULTURE.pdf",
+          "provider": "National Open University of Nigeria",
+          "access": "NOUN courseware; educational-use terms apply",
+          "rationale": "NOUN course guide pp. iv–vi and study units introduce Nigerian peoples, culture areas and national development. A Nigeria-specific optional reference, not a universal Nigerian university requirement or a survey of all African societies.",
+          "theme_keys": [
+            "shared_nigerian_culture",
+            "african_societies"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        },
+        {
+          "source_id": "the_history_of_african_development_aehn_open_textbook",
+          "title": "The History of African Development (AEHN open textbook)",
+          "url": "https://www.aehnetwork.org/textbook/",
+          "provider": "African Economic History Network",
+          "access": "free open textbook",
+          "rationale": "An open textbook for African university learners and teachers, with historical-development chapters. Selected chapters support examples about African societies; it is not comprehensive coverage of all African societies.",
+          "theme_keys": [
+            "african_societies"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        },
+        {
+          "source_id": "production_systems_in_pre_colonial_africa_aehn_chapter_3",
+          "title": "Production Systems in Pre-colonial Africa (AEHN, Chapter 3)",
+          "url": "https://www.aehnetwork.org/textbook/production-systems-in-pre-colonial-africa/",
+          "provider": "African Economic History Network",
+          "access": "free open textbook chapter",
+          "rationale": "Chapter 3 discusses pre-colonial African production systems and economic development; use it as a selected historical example.",
+          "theme_keys": [
+            "african_societies"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        },
+        {
+          "source_id": "african_demographics_aehn_chapter_8",
+          "title": "African Demographics (AEHN, Chapter 8)",
+          "url": "https://www.aehnetwork.org/textbook/how-many-people-are-too-many-people/",
+          "provider": "African Economic History Network",
+          "access": "free open textbook chapter",
+          "rationale": "Chapter 8 discusses African population size, growth and social/political change; it is not a source for current Nigerian demographic estimates.",
+          "theme_keys": [
+            "african_societies"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        },
+        {
+          "source_id": "growing_cities_urbanization_in_africa_aehn_chapter_14",
+          "title": "Growing Cities: Urbanization in Africa (AEHN, Chapter 14)",
+          "url": "https://www.aehnetwork.org/textbook/growing-cities-urbanization-in-africa/",
+          "provider": "African Economic History Network",
+          "access": "free open textbook chapter",
+          "rationale": "Chapter 14 explains African urban growth in historical and global perspective; use it as a selected regional account, not a complete contemporary survey.",
+          "theme_keys": [
+            "african_societies"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        }
+      ],
+      "student_resource_count": 0,
+      "duplicate_resource_urls": [],
+      "prepared_candidate_resource_count": 5,
+      "resource_metadata_gaps": [
+        "current_external_verification",
+        "resource_level_and_sequence",
+        "first_click_locator"
+      ],
+      "external_review_status": "pending_current_external_verification_and_theme_fit_review",
+      "terminal_disposition": null,
+      "curriculum_boundary": "Theme is the resource-enrichment target; its already-classified courses/outcomes remain supporting anchors, not separate resource rows."
+    },
+    {
+      "item_id": "Sociology:theme:applied_practice",
+      "item_key": "applied_practice",
+      "item_name": "Social work and practical change",
+      "item_type": "curriculum_theme_grouping",
+      "context_level": "programme",
+      "context_key": "Sociology",
+      "guidance_owner": "programme",
+      "theme_summary": "These courses connect social-science knowledge with social work, community services, innovation and practical responses to social needs.",
+      "course_codes": [
+        "SOC 205",
+        "SSC 301"
+      ],
+      "course_anchors": [
+        {
+          "courseCode": "SOC 205",
+          "courseTitle": "Elements of Social Work",
+          "courseSummary": "The study of social causes and effects of such problems as poverty, delinquency, crime, relevant to social work practices. Topics include Contemporary Nigerian Social work. Organisation, function and practice in public and private agencies, including social security systems. ---",
+          "sourceLocator": "Original CCMAS source: Sociology; SOC 205; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed pp. 330-331",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        },
+        {
+          "courseCode": "SSC 301",
+          "courseTitle": "Innovation in the Social Sciences",
+          "courseSummary": "Identifying Innovative ideas in dealing with Societal Problems and Environmental Issues. Establishing and mobilising resources for establishing enterprises through which social science knowledge can be applied to social research for public and private sectors; social and human welfare services such as care for children and the elderly, training consulting services; Proposal writing techniques for grants, Managing grants. Models for establishing Family Social Health Centres, Community Gender Balancing Units, and Community Development Management Units. Social Sciences and innovation in technology and Patenting new ideas.",
+          "sourceLocator": "Original CCMAS source: Sociology; SSC 301; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed pp. 333-334",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        }
+      ],
+      "resources": [
+        {
+          "source_id": "an_introduction_to_social_work_openlearn",
+          "title": "An introduction to social work (OpenLearn)",
+          "url": "https://www.open.edu/openlearn/health-sports-psychology/social-care-social-work/an-introduction-social-work/content-section-0?active-tab=content-tab",
+          "provider": "The Open University",
+          "access": "free open course; UK practice context",
+          "rationale": "An optional introductory resource for the applied social-work part of the theme. Its professional examples are UK-scoped and do not define Nigerian qualification or licensing requirements.",
+          "theme_keys": [
+            "applied_practice"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        }
+      ],
+      "student_resource_count": 0,
+      "duplicate_resource_urls": [],
+      "prepared_candidate_resource_count": 1,
+      "resource_metadata_gaps": [
+        "current_external_verification",
+        "resource_level_and_sequence",
+        "first_click_locator"
+      ],
+      "external_review_status": "pending_current_external_verification_and_theme_fit_review",
+      "terminal_disposition": null,
+      "curriculum_boundary": "Theme is the resource-enrichment target; its already-classified courses/outcomes remain supporting anchors, not separate resource rows."
+    },
+    {
+      "item_id": "Sociology:theme:governance",
+      "item_key": "governance",
+      "item_name": "Politics and organisations",
+      "item_type": "curriculum_theme_grouping",
+      "context_level": "programme",
+      "context_key": "Sociology",
+      "guidance_owner": "programme",
+      "theme_summary": "These courses examine political life, collective action, formal organisations and how institutions work with society.",
+      "course_codes": [
+        "SOC 305",
+        "SOC 306"
+      ],
+      "course_anchors": [
+        {
+          "courseCode": "SOC 305",
+          "courseTitle": "Political Sociology",
+          "courseSummary": "The techniques for applying the Sociological mode of enquiry to the study of politics. Sociological theories and Politics. The social and cultural contexts of political activity and behaviour. Political organizations — political parties and ideology. Prevalence of electoral crimes. Mass movements and political change. Political participation and dividends. ---",
+          "sourceLocator": "Original CCMAS source: Sociology; SOC 305; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed p. 336",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        },
+        {
+          "courseCode": "SOC 306",
+          "courseTitle": "Formal Organisations",
+          "courseSummary": "Structural properties of organizations and their consequences. Bureaucracies and complex organizations in the community. Major theoretical and methodological problems in studying complex organizations. Problems of formal organizations in the new states. ---",
+          "sourceLocator": "Original CCMAS source: Sociology; SOC 306; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed pp. 336-337",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        }
+      ],
+      "resources": [
+        {
+          "source_id": "sociology_themes_and_perspectives_8th_edition",
+          "title": "Sociology: Themes and Perspectives (8th edition)",
+          "url": "https://collins.co.uk/products/9780007498826",
+          "provider": "Collins",
+          "access": "publisher reference; paid or library access",
+          "rationale": "A recognised Sociology reference text by Michael Haralambos and Martin Holborn. The catalogue does not claim it is a universal required text; use a legal library or publisher copy.",
+          "theme_keys": [
+            "people",
+            "ideas",
+            "research",
+            "social_issues",
+            "governance"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        },
+        {
+          "source_id": "introduction_to_sociology_3e",
+          "title": "Introduction to Sociology 3e",
+          "url": "https://openstax.org/books/introduction-sociology-3e/pages/1-introduction",
+          "provider": "OpenStax",
+          "access": "free open textbook",
+          "rationale": "A legal, openly licensed free textbook for introductory concepts, theories, culture, institutions, research methods and social change.",
+          "theme_keys": [
+            "core",
+            "people",
+            "ideas",
+            "research",
+            "social_change",
+            "social_issues",
+            "governance"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        }
+      ],
+      "student_resource_count": 0,
+      "duplicate_resource_urls": [],
+      "prepared_candidate_resource_count": 2,
+      "resource_metadata_gaps": [
+        "current_external_verification",
+        "resource_level_and_sequence",
+        "first_click_locator"
+      ],
+      "external_review_status": "pending_current_external_verification_and_theme_fit_review",
+      "terminal_disposition": null,
+      "curriculum_boundary": "Theme is the resource-enrichment target; its already-classified courses/outcomes remain supporting anchors, not separate resource rows."
+    },
+    {
+      "item_id": "Sociology:theme:ideas",
+      "item_key": "ideas",
+      "item_name": "Ideas and foundations",
+      "item_type": "curriculum_theme_grouping",
+      "context_level": "programme",
+      "context_key": "Sociology",
+      "guidance_owner": "programme",
+      "theme_summary": "Courses in this part introduce the concepts, history and theories used to make sense of the programme’s subject area.",
+      "course_codes": [
+        "SOC 101",
+        "SOC 105",
+        "SOC 106",
+        "SOC 201",
+        "SOC 401"
+      ],
+      "course_anchors": [
+        {
+          "courseCode": "SOC 101",
+          "courseTitle": "Introduction to Sociology I",
+          "courseSummary": "Analysis of the connection between the Industrial and Political revolutions which occurred in the 18th century, the attempts by the founding fathers of Sociology to produce a science of society and emergence of Sociology. The difference between sociology and other social science subjects; Introduction to basic concepts of Sociological analysis such as roles, status, society, culture, culture conta",
+          "sourceLocator": "Original CCMAS source: Sociology; SOC 101; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed pp. 323-324",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        },
+        {
+          "courseCode": "SOC 105",
+          "courseTitle": "Elements of Scientific Thought",
+          "courseSummary": "Analysis of the connection between the Industrial and Political revolutions which occurred in the 18th century, the attempts by the founding fathers of Sociology to produce a science of society and emergence of Sociology. The difference between sociology and other social science subjects; Introduction to basic concepts of Sociological analysis such as roles, status, society, culture, culture conta",
+          "sourceLocator": "Original CCMAS source: Sociology; SOC 105; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed p. 326",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        },
+        {
+          "courseCode": "SOC 106",
+          "courseTitle": "Introduction to Sociology II",
+          "courseSummary": "The understanding and application of the classical theories of Sociology (Functionalism, Marxism, and Symbolic Interactionism): Types and functions of social institutions especially the family, marriage, education, religion, politics and many others.: Analysis of social control in groups, social change, social inequalities, types of societies and social problems. Methods and techniques of social investigation.",
+          "sourceLocator": "Original CCMAS source: Sociology; SOC 106; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed pp. 326-327",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        },
+        {
+          "courseCode": "SOC 201",
+          "courseTitle": "History of Social Thought",
+          "courseSummary": "The origin of Social Thought from the Greek City States: the events that heralded its emergence: the works of Plato, Aristotle, Hobbes and many others. The works of Philosophers during the Middle age, Montesquieu, Political Philosophy of Machiavelli: the investiture contest, the rise of emperors and philosophers: the era of enlightenment and the emergence of the call for personal rights, freedom and the waning of the powers of the Pope and Emperors: understanding the law of human progress by the 18th -Century Philosophers, and a survey of the founding fathers of Sociology. A historical overview of the political ideas of early philosophers/writers on society such as, great Greek thinkers, Plato, Aristotle and others like Machiavelli and many others. foreruners to Comte and Herbert Spencer on development of the new world order (societies). The influence of theory of evolution on social thinking, as well as the emergence/influence of Karl Marx, Max Weber, Talcott Parsons and social change in society.",
+          "sourceLocator": "Original CCMAS source: Sociology; SOC 201; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed pp. 328-329",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        },
+        {
+          "courseCode": "SOC 401",
+          "courseTitle": "Classical and Contemporary Sociological Theories",
+          "courseSummary": "Major theories and schools of thought in the 20th and 21st centuries. Contemporary developments of classical sociological theories, the major orientations in contemporary sociological theory. Functionalism, symbolic interactionism, conflict theory, ethno - methodology, exchange theory and other perspectives and application of these theories to contemporary problems. Major orientation in contemporary sociological theories, functionalism, symbolic interaction, structuralism, conflict theory, ethnomethodology, exchange theory and other perspectives. Application of these theories to contemporary problems. Definition of theory and scientific theory. Writings of early phiolosophers influenced the evolution of sociological theories. Classical (old), grand sociological and postmodernist theories propunded by Comte, Spencer, Durkehim, Weber, Parsons as examples. Theories evolved out of debates/ideas on how societies can be organised to enjoy social order. Theory as scientific means of having a good understandin of social order and social events in society.",
+          "sourceLocator": "Original CCMAS source: Sociology; SOC 401; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed pp. 337-338",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        }
+      ],
+      "resources": [
+        {
+          "source_id": "sociology_themes_and_perspectives_8th_edition",
+          "title": "Sociology: Themes and Perspectives (8th edition)",
+          "url": "https://collins.co.uk/products/9780007498826",
+          "provider": "Collins",
+          "access": "publisher reference; paid or library access",
+          "rationale": "A recognised Sociology reference text by Michael Haralambos and Martin Holborn. The catalogue does not claim it is a universal required text; use a legal library or publisher copy.",
+          "theme_keys": [
+            "people",
+            "ideas",
+            "research",
+            "social_issues",
+            "governance"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        },
+        {
+          "source_id": "sociology",
+          "title": "Sociology",
+          "url": "https://www.wiley-vch.de/en/areas-interest/humanities-social-sciences/sociology-12so/general-sociology-12so0/sociology-978-1-5095-3922-2",
+          "provider": "Wiley",
+          "access": "publisher reference; paid or library access",
+          "rationale": "Anthony Giddens Sociology reference text. Use it as a supporting theory and contemporary-society reference, not as a universal admission or course requirement.",
+          "theme_keys": [
+            "ideas"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        },
+        {
+          "source_id": "introduction_to_sociology_3e",
+          "title": "Introduction to Sociology 3e",
+          "url": "https://openstax.org/books/introduction-sociology-3e/pages/1-introduction",
+          "provider": "OpenStax",
+          "access": "free open textbook",
+          "rationale": "A legal, openly licensed free textbook for introductory concepts, theories, culture, institutions, research methods and social change.",
+          "theme_keys": [
+            "core",
+            "people",
+            "ideas",
+            "research",
+            "social_change",
+            "social_issues",
+            "governance"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        },
+        {
+          "source_id": "introduction_to_sociology_noun_courseware",
+          "title": "Introduction to Sociology (NOUN courseware)",
+          "url": "https://nou.edu.ng/coursewarecontent/CSS111%20INTRODUCTION%20%20TO%20SOCIOLOGY.pdf",
+          "provider": "National Open University of Nigeria",
+          "access": "NOUN courseware; educational-use terms apply",
+          "rationale": "NOUN courseware (published 2008; first printed 2004) covering foundational Sociology topics. Use it as an optional institution-specific reference, not a current national prescription; follow NOUN's stated use terms.",
+          "theme_keys": [
+            "people",
+            "ideas",
+            "social_change"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        }
+      ],
+      "student_resource_count": 0,
+      "duplicate_resource_urls": [],
+      "prepared_candidate_resource_count": 4,
+      "resource_metadata_gaps": [
+        "current_external_verification",
+        "resource_level_and_sequence",
+        "first_click_locator"
+      ],
+      "external_review_status": "pending_current_external_verification_and_theme_fit_review",
+      "terminal_disposition": null,
+      "curriculum_boundary": "Theme is the resource-enrichment target; its already-classified courses/outcomes remain supporting anchors, not separate resource rows."
+    },
+    {
+      "item_id": "Sociology:theme:people",
+      "item_key": "people",
+      "item_name": "People, groups and society",
+      "item_type": "curriculum_theme_grouping",
+      "context_level": "programme",
+      "context_key": "Sociology",
+      "guidance_owner": "programme",
+      "theme_summary": "Courses in this part help you examine the people, groups, institutions, cultures or systems named in the programme record.",
+      "course_codes": [
+        "SOC 102",
+        "SOC 104",
+        "SOC 203",
+        "SOC 209",
+        "PSY 204"
+      ],
+      "course_anchors": [
+        {
+          "courseCode": "SOC 102",
+          "courseTitle": "Introduction to Anthropology",
+          "courseSummary": "The concepts, themes, perspectives and methods of anthropological enquiries. The relationship between Anthropology and other social science disciplines. Survey of human origins and cultural achievements to reflect main variations in social and political systems and the relevance of Anthropology in contemporary societies. Other areas include the evolution of humanity, human biological ecological va",
+          "sourceLocator": "Original CCMAS source: Sociology; SOC 102; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed p. 324",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        },
+        {
+          "courseCode": "SOC 104",
+          "courseTitle": "Introduction to Psychology",
+          "courseSummary": "Introduction to the biological foundations of human behaviour: the process by which knowledge, attitude, personality and experience shape human behaviour: the functioning of the social system and the formation of different attitudes by individuals. Psychology from cognate ones like sociology, social anthropology, psychiatry, social psychology and many others. Idea about various specialities in psychology (such as general psychology vis -à-vis clinical psychology and in what context any expert in the discipline can operate) and many others. The history of psychology, focus of psychology, unit of study in psychology and key concepts. Methods used in psycholgical studies and many others. Overview of psyhological theories of human behaviour/personaly development, such as theories of Freud, Jung, Piaget and many others. History of psychology in Nigeria today.",
+          "sourceLocator": "Original CCMAS source: Sociology; SOC 104; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed pp. 325-326",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        },
+        {
+          "courseCode": "SOC 203",
+          "courseTitle": "Sociology of the Family",
+          "courseSummary": "Universal definitions of the family and analyses: the principles of kinship, classification. Types and functions of social groups formed on these principles: theoretical perspectives on the family, Functionalism, Marxism, and Symbolic interactionism: the family and education, religion and politics: marriage, forms, functions and future prospects: marital instability, conflicts and intervention strategies in families and marriages and many others. An understanding of the role/ functions of family in tradtional and modern societies. An understanding of how the functions of the family unit have changed/evolved over the years in tradtional socities and key factors responsible. Normal, disturbed, and/or problem family units and factors accounting for them. A grounding of the critical role of family in society, and the future of the family.",
+          "sourceLocator": "Original CCMAS source: Sociology; SOC 203; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed pp. 329-330",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        },
+        {
+          "courseCode": "SOC 209",
+          "courseTitle": "Language in Society and Culture",
+          "courseSummary": "An examination of the social and cultural functions of language with particular reference to Nigeria and other West African societies. Language and social development. Language problems of new states. Language policy. Definition of language and the role of language in communication, strengths and weaknesses of diversity in languages and cultures. ---",
+          "sourceLocator": "Original CCMAS source: Sociology; SOC 209; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed pp. 331-332",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        },
+        {
+          "courseCode": "PSY 204",
+          "courseTitle": "Introduction to Social Psychology",
+          "courseSummary": "Definition and history of social psychology. Research methods: experimental, observation, quasi-experimental. Relationship between social psychology and other social sciences. Attitude: definition, development, functions, attitude change, theories of attitude change. Social perception. Attribution and impression formation. Introduction to group dynamics. Social psychologists and the 21 st century challenges. Anthropological psychology. Prosocial behaviour: Altruism -Reciprocity. Meaning, types, and theories of prosocial behaviour – Altruism, Warm-glow, social exchange and social leaning. Basic motives underlying prosocial behaviour. Why do people help more than others? Individual, gender, cultural, religious and mood differences. Determinants of prosocial behaviour: when will people help? – Environment, Residential mobility, number of bystanders. Ways of increasing helping behaviour.",
+          "sourceLocator": "Original CCMAS source: Sociology; PSY 204; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed p. 330",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        }
+      ],
+      "resources": [
+        {
+          "source_id": "sociology_themes_and_perspectives_8th_edition",
+          "title": "Sociology: Themes and Perspectives (8th edition)",
+          "url": "https://collins.co.uk/products/9780007498826",
+          "provider": "Collins",
+          "access": "publisher reference; paid or library access",
+          "rationale": "A recognised Sociology reference text by Michael Haralambos and Martin Holborn. The catalogue does not claim it is a universal required text; use a legal library or publisher copy.",
+          "theme_keys": [
+            "people",
+            "ideas",
+            "research",
+            "social_issues",
+            "governance"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        },
+        {
+          "source_id": "introduction_to_sociology_3e",
+          "title": "Introduction to Sociology 3e",
+          "url": "https://openstax.org/books/introduction-sociology-3e/pages/1-introduction",
+          "provider": "OpenStax",
+          "access": "free open textbook",
+          "rationale": "A legal, openly licensed free textbook for introductory concepts, theories, culture, institutions, research methods and social change.",
+          "theme_keys": [
+            "core",
+            "people",
+            "ideas",
+            "research",
+            "social_change",
+            "social_issues",
+            "governance"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        },
+        {
+          "source_id": "introduction_to_sociology_noun_courseware",
+          "title": "Introduction to Sociology (NOUN courseware)",
+          "url": "https://nou.edu.ng/coursewarecontent/CSS111%20INTRODUCTION%20%20TO%20SOCIOLOGY.pdf",
+          "provider": "National Open University of Nigeria",
+          "access": "NOUN courseware; educational-use terms apply",
+          "rationale": "NOUN courseware (published 2008; first printed 2004) covering foundational Sociology topics. Use it as an optional institution-specific reference, not a current national prescription; follow NOUN's stated use terms.",
+          "theme_keys": [
+            "people",
+            "ideas",
+            "social_change"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        }
+      ],
+      "student_resource_count": 0,
+      "duplicate_resource_urls": [],
+      "prepared_candidate_resource_count": 3,
+      "resource_metadata_gaps": [
+        "current_external_verification",
+        "resource_level_and_sequence",
+        "first_click_locator"
+      ],
+      "external_review_status": "pending_current_external_verification_and_theme_fit_review",
+      "terminal_disposition": null,
+      "curriculum_boundary": "Theme is the resource-enrichment target; its already-classified courses/outcomes remain supporting anchors, not separate resource rows."
+    },
+    {
+      "item_id": "Sociology:theme:research",
+      "item_key": "research",
+      "item_name": "Research and evidence",
+      "item_type": "curriculum_theme_grouping",
+      "context_level": "programme",
+      "context_key": "Sociology",
+      "guidance_owner": "programme",
+      "theme_summary": "Courses in this part show how the programme asks questions, gathers information, examines evidence and communicates findings.",
+      "course_codes": [
+        "SOC 301",
+        "SOC 406",
+        "SOC 408",
+        "SSC 302",
+        "SSC 401"
+      ],
+      "course_anchors": [
+        {
+          "courseCode": "SOC 301",
+          "courseTitle": "Methods of Social Research and Statistics",
+          "courseSummary": "Different forms of research design: Descriptive studies, Experimental studies and Cross - sectional design and the survey method. Historical research: the strengths and weaknesses of each design, and how to select a design based on the research problem. Strategies of descriptive and non- descriptive and historical research. Various types of research methods. Their advantages and disadvantages. Overview of the study of human beings in societies in diverse contexts. Idea of the different methods of social research targeted at human beings. Quantitative and qualitative research methods (such as survey, comparative study, quasi - experiment, types of study and contexts for use of such methods and those for gathering soft data under qualitiative methods like focus group discussion, indepth interview, ethnorgaphic, case study and many others. Strengths /weakneses in the use of all the methods. Justification for use of one or some or all the methods in social research in human societies. Essence of integrity in data collection, adherence to ethics in social research, objectivity in all aspects of researching (such as design of study, collection of data, data processing, interpretation and conlusion otherwise outcomes would not be deemed credible or scientific).",
+          "sourceLocator": "Original CCMAS source: Sociology; SOC 301; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed pp. 334-335",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        },
+        {
+          "courseCode": "SOC 406",
+          "courseTitle": "Models in Sociological Analysis",
+          "courseSummary": "Types of explanations used in sociology. Types of data used in constructing explanations in sociology. Classical theories and the emergence of models in sociology. Evolutionism and Postmodernism and sociological interpretations. Appropriate data for constructing explanations. Applicability of each model given the nature of the social problems. ---",
+          "sourceLocator": "Original CCMAS source: Sociology; SOC 406; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed pp. 338-339",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        },
+        {
+          "courseCode": "SOC 408",
+          "courseTitle": "Research Project",
+          "courseSummary": "Data collection and coding procedures, analysis of data and relate these to the research objectives. Writing and discussing the research report. Understanding various research methods most commonly used in Sociology and use such as practical guides in writing their projects. Conceptualise projects. Feasible projects that can be researched. Project research proposal, its feasibility and implementat",
+          "sourceLocator": "Original CCMAS source: Sociology; SOC 408; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed p. 338",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        },
+        {
+          "courseCode": "SSC 302",
+          "courseTitle": "Research Method I",
+          "courseSummary": "Introduction to Social Science research protocol with particular emphasis on proposal development; literature review (conceptual, empirical and theoretical framework), ethnography of the study area, statement of the research problem, sampling procedures and methods of data collection and instruments. ---",
+          "sourceLocator": "Original CCMAS source: Sociology; SSC 302; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed p. 334",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        },
+        {
+          "courseCode": "SSC 401",
+          "courseTitle": "Research Method II",
+          "courseSummary": "Data collection and coding procedures. Analysis of data and relate these to the research objectives. Writing and discussing the research report. --- ══════════════════════════════════════════ Analysis of the connection between the Industrial and Political revolutions which occurred in the 18th century, the attempts by the founding fathers of Sociology to produce a science of society and emergence ",
+          "sourceLocator": "Original CCMAS source: Sociology; SSC 401; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed p. 337",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        }
+      ],
+      "resources": [
+        {
+          "source_id": "sociology_themes_and_perspectives_8th_edition",
+          "title": "Sociology: Themes and Perspectives (8th edition)",
+          "url": "https://collins.co.uk/products/9780007498826",
+          "provider": "Collins",
+          "access": "publisher reference; paid or library access",
+          "rationale": "A recognised Sociology reference text by Michael Haralambos and Martin Holborn. The catalogue does not claim it is a universal required text; use a legal library or publisher copy.",
+          "theme_keys": [
+            "people",
+            "ideas",
+            "research",
+            "social_issues",
+            "governance"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        },
+        {
+          "source_id": "introduction_to_sociology_3e",
+          "title": "Introduction to Sociology 3e",
+          "url": "https://openstax.org/books/introduction-sociology-3e/pages/1-introduction",
+          "provider": "OpenStax",
+          "access": "free open textbook",
+          "rationale": "A legal, openly licensed free textbook for introductory concepts, theories, culture, institutions, research methods and social change.",
+          "theme_keys": [
+            "core",
+            "people",
+            "ideas",
+            "research",
+            "social_change",
+            "social_issues",
+            "governance"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        },
+        {
+          "source_id": "research_methodology_noun_development_studies_courseware",
+          "title": "Research Methodology (NOUN Development Studies courseware)",
+          "url": "https://www.nou.edu.ng/coursewarecontent/DES%20311.pdf",
+          "provider": "National Open University of Nigeria",
+          "access": "NOUN courseware; educational-use terms apply",
+          "rationale": "The 2024 NOUN Development Studies courseware covers research design, quantitative and qualitative methods, data collection, analysis, ethics and reports. Optional cross-programme methods support, not a Sociology curriculum requirement.",
+          "theme_keys": [
+            "research"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        },
+        {
+          "source_id": "social_science_statistics_noun_courseware",
+          "title": "Social Science Statistics (NOUN courseware)",
+          "url": "https://nou.edu.ng/coursewarecontent/FSS%20211%20SOCIAL%20SCIENCE%20STATISTICS.pdf",
+          "provider": "National Open University of Nigeria",
+          "access": "NOUN courseware; educational-use terms apply",
+          "rationale": "The 2022 NOUN courseware teaches social-science statistics, including data presentation, sampling, hypothesis testing, correlation and regression. Optional statistics practice, not a Sociology programme requirement.",
+          "theme_keys": [
+            "research"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        }
+      ],
+      "student_resource_count": 0,
+      "duplicate_resource_urls": [],
+      "prepared_candidate_resource_count": 4,
+      "resource_metadata_gaps": [
+        "current_external_verification",
+        "resource_level_and_sequence",
+        "first_click_locator"
+      ],
+      "external_review_status": "pending_current_external_verification_and_theme_fit_review",
+      "terminal_disposition": null,
+      "curriculum_boundary": "Theme is the resource-enrichment target; its already-classified courses/outcomes remain supporting anchors, not separate resource rows."
+    },
+    {
+      "item_id": "Sociology:theme:shared_communication",
+      "item_key": "shared_communication",
+      "item_name": "Communication and academic writing",
+      "item_type": "curriculum_theme_grouping",
+      "context_level": "programme",
+      "context_key": "Sociology",
+      "guidance_owner": "programme",
+      "theme_summary": "Shared university learning in clear English, reading, writing, reasoning and presenting ideas.",
+      "course_codes": [
+        "GST 111"
+      ],
+      "course_anchors": [
+        {
+          "courseCode": "GST 111",
+          "courseTitle": "Communication Skills in English",
+          "courseSummary": "Sound patterns in English Language (vowels and consonants, phonetics and phonology). English word classes (lexical and grammatical words, definitions, forms, functions, usages, collocations). Sentence in English (types: structural and functional, simple and complex). Grammar and Usage (tense, mood, modality and concord, aspects of language use in everyday life). Logical and Critical Thinking and R",
+          "sourceLocator": "Original CCMAS source: Sociology; GST 111; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed p. 322",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        }
+      ],
+      "resources": [
+        {
+          "source_id": "essay_and_report_writing_skills_reports_openlearn",
+          "title": "Essay and report writing skills: reports (OpenLearn)",
+          "url": "https://www.open.edu/openlearn/mod/oucontent/view.php?id=4398&section=4.2",
+          "provider": "The Open University",
+          "access": "free open learning section",
+          "rationale": "Section 4.2 explains what reports are for and how clear report structure helps a reader. It supports the report-writing portion of GST 111 only; it does not cover all communication outcomes.",
+          "theme_keys": [
+            "shared_communication"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        }
+      ],
+      "student_resource_count": 0,
+      "duplicate_resource_urls": [],
+      "prepared_candidate_resource_count": 1,
+      "resource_metadata_gaps": [
+        "current_external_verification",
+        "resource_level_and_sequence",
+        "first_click_locator"
+      ],
+      "external_review_status": "pending_current_external_verification_and_theme_fit_review",
+      "terminal_disposition": null,
+      "curriculum_boundary": "Theme is the resource-enrichment target; its already-classified courses/outcomes remain supporting anchors, not separate resource rows."
+    },
+    {
+      "item_id": "Sociology:theme:shared_enterprise",
+      "item_key": "shared_enterprise",
+      "item_name": "Entrepreneurship and venture creation",
+      "item_type": "curriculum_theme_grouping",
+      "context_level": "programme",
+      "context_key": "Sociology",
+      "guidance_owner": "programme",
+      "theme_summary": "Shared courses on identifying opportunities, developing ideas and understanding how ventures are planned.",
+      "course_codes": [
+        "ENT 211",
+        "ENT 312"
+      ],
+      "course_anchors": [
+        {
+          "courseCode": "ENT 211",
+          "courseTitle": "Entrepreneurship and Innovation",
+          "courseSummary": "Concept of Entrepreneurship (Entrepreneurship, Intrapreneurship/Corporate Entrepreneurship,). Theories, Rationale and relevance of Entrepreneurship (Schumpeterian and other perspectives, Risk-Taking, Necessity and opportunity-based entrepreneurship and Creative destruction). Characteristics of Entrepreneurs (Opportunity seeker, Risk taker, Natural and Nurtured, Problem solver and change agent, Innovator and creative thinker). Entrepreneurial thinking (Critical thinking, Reflective thinking, and Creative thinking). Innovation (Concept of innovation, Dimensions of innovation, Change and innovation, Knowledge and innovation). Enterprise formation, partnership and networking (Basics of Business Plan, Forms of business ownership, Business registration and Forming alliances and joint ventures). Contemporary Entrepreneurship Issues (Knowledge, Skills and Technology, Intellectual property, Virtual office, Networking). Entrepreneurship in Nigeria (Biography of inspirational Entrepreneurs, Youth and women entrepreneurship, Entrepreneurship support institutions, Youth enterprise networks and Environmental and cultural barriers to entrepreneurship). Basic principles of e-commerce.",
+          "sourceLocator": "Original CCMAS source: Sociology; ENT 211; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed pp. 327-328",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        },
+        {
+          "courseCode": "ENT 312",
+          "courseTitle": "Venture Creation",
+          "courseSummary": "Opportunity Identification (Sources of business opportunities in Nigeria, Environmental scanning, Demand and supply gap/unmet needs/market gaps/Market Research, Unutilised resources, Social and climate conditions and Technology adoption gap). New business development (business planning, market research). Entrepreneurial Finance (Venture capital, Equity finance, Micro finance, Personal savings, Small business investment organizations and Business plan competition). Entrepreneurial marketing and e -commerce (Principles of marketing, Customer Acquisition & Retention, B2B, C2C and B2C models of e -commerce, First Mover Advantage, E -commerce business models and Successful E -Commerce Companies,). Small Business Management/Family Business: Leadership & Management, Basic book keeping, Nature of family business and Family Business Growth Model. Negotiation and Business communication (Strategy and tactics of negotiation/bargaining, Traditional and modern business communication methods). Opportunity Discovery Demonstrations (Business idea generation presentations, Business idea Contest, Brainstorming sessions, Idea pitching). Technological Solutions (The Concept of Market/Customer Solution, Customer Solution and Emerging Technologies, Business Applications of New Technologies - Artificial Intelligence (AI), Virtual/Mixed Reality (VR), Internet of Things (IoTs), Blockchain, Cloud Computing, Renewable Energy and many others. Digital Business and E-Commerce Strategies).",
+          "sourceLocator": "Original CCMAS source: Sociology; ENT 312; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed p. 333",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        }
+      ],
+      "resources": [
+        {
+          "source_id": "entrepreneurship_from_ideas_to_reality_openlearn",
+          "title": "Entrepreneurship – from ideas to reality (OpenLearn)",
+          "url": "https://www.open.edu/openlearn/money-business/entrepreneurship-ideas-reality?active-tab=content-tab",
+          "provider": "The Open University",
+          "access": "free open course",
+          "rationale": "A 24-hour optional course with sessions on idea generation, opportunity testing, business models and venture planning. It is supplementary to the shared entrepreneurship courses.",
+          "theme_keys": [
+            "shared_enterprise"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        }
+      ],
+      "student_resource_count": 0,
+      "duplicate_resource_urls": [],
+      "prepared_candidate_resource_count": 1,
+      "resource_metadata_gaps": [
+        "current_external_verification",
+        "resource_level_and_sequence",
+        "first_click_locator"
+      ],
+      "external_review_status": "pending_current_external_verification_and_theme_fit_review",
+      "terminal_disposition": null,
+      "curriculum_boundary": "Theme is the resource-enrichment target; its already-classified courses/outcomes remain supporting anchors, not separate resource rows."
+    },
+    {
+      "item_id": "Sociology:theme:shared_nigerian_culture",
+      "item_key": "shared_nigerian_culture",
+      "item_name": "Nigerian peoples and culture",
+      "item_type": "curriculum_theme_grouping",
+      "context_level": "programme",
+      "context_key": "Sociology",
+      "guidance_owner": "programme",
+      "theme_summary": "A shared course on Nigerian peoples, history, culture and social life.",
+      "course_codes": [
+        "GST 112"
+      ],
+      "course_anchors": [
+        {
+          "courseCode": "GST 112",
+          "courseTitle": "Nigerian Peoples and Culture",
+          "courseSummary": "Nigerian history, culture and art up to 1800 (Yoruba, Hausa and Igbo peoples and culture. Peoples and culture of the ethnic minority groups). Nigeria under colonial rule (advent of colonial rule in Nigeria. Colonial administration of Nigeria). Evolution of Nigeria as a political unit (amalgamation of Nigeria in 1914. Formation of political parties in Nigeria. Nationalist movement and struggle for independence). Nigeria and challenges of nation building (military intervention in Nigerian politics. Nigerian Civil War). Concept of trade and economics of self-reliance (indigenous trade and market system. indigenous apprenticeship system among Nigeria people. Trade, skill acquisition and self -reliance). Social justices and national development (law definition and classification. Judiciary and fundamental rights. Individual, norms and values (basic Nigeria norms and values, patterns of citizenship acquisition. Citizenship and civic responsibilities. Indigenous languages, usage and development. Negative attitudes and conducts. Cultism, kidnapping and other related social vices). Re-orientation, moral and national values (The 3R’s – Reconstruction, Rehabilitation and Re -orientation; Re -orientation Strategies: Operation Feed the Nation (OFN), Green Revolution, Austerity Measures, War Against Indiscipline (WAI), War Against Indiscipline and Corruption(WAIC), Mass Mobilization for Self-Reliance, Social Justice and Economic Recovery (MAMSER), National Orientation Agency (NOA). Current socio -political and cultural developments in Nigeria.",
+          "sourceLocator": "Original CCMAS source: Sociology; GST 112; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed pp. 322-323",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        }
+      ],
+      "resources": [
+        {
+          "source_id": "nigerian_peoples_and_culture_noun_courseware",
+          "title": "Nigerian Peoples and Culture (NOUN courseware)",
+          "url": "https://nou.edu.ng/coursewarecontent/GST%20201%20%20NIGERIAN%20PEOPLES%20AND%20CULTURE.pdf",
+          "provider": "National Open University of Nigeria",
+          "access": "NOUN courseware; educational-use terms apply",
+          "rationale": "NOUN course guide pp. iv–vi and study units introduce Nigerian peoples, culture areas and national development. A Nigeria-specific optional reference, not a universal Nigerian university requirement or a survey of all African societies.",
+          "theme_keys": [
+            "shared_nigerian_culture",
+            "african_societies"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        }
+      ],
+      "student_resource_count": 0,
+      "duplicate_resource_urls": [],
+      "prepared_candidate_resource_count": 1,
+      "resource_metadata_gaps": [
+        "current_external_verification",
+        "resource_level_and_sequence",
+        "first_click_locator"
+      ],
+      "external_review_status": "pending_current_external_verification_and_theme_fit_review",
+      "terminal_disposition": null,
+      "curriculum_boundary": "Theme is the resource-enrichment target; its already-classified courses/outcomes remain supporting anchors, not separate resource rows."
+    },
+    {
+      "item_id": "Sociology:theme:shared_peace_conflict",
+      "item_key": "shared_peace_conflict",
+      "item_name": "Peace, conflict and security",
+      "item_type": "curriculum_theme_grouping",
+      "context_level": "programme",
+      "context_key": "Sociology",
+      "guidance_owner": "programme",
+      "theme_summary": "A shared course introducing peace, conflict, security and ways people respond to conflict.",
+      "course_codes": [
+        "GST 312"
+      ],
+      "course_anchors": [
+        {
+          "courseCode": "GST 312",
+          "courseTitle": "Peace and Conflict Resolution",
+          "courseSummary": "Concepts of Peace, Conflict and Security in a multi -ethnic nation. Types and Theories of Conflicts: Ethnic, Religious, Economic, Geo -political Conflicts. Structural Conflict Theory, Realist Theory of Conflict, Frustration -Aggression Conflict Theory. Root causes of Conflict and Violence in Africa: Indigene and settlers Phenomenon; Boundaries/boarder disputes. Political disputes. Ethnic disputes and rivalries; Economic Inequalities. Social disputes. Nationalist Movements and Agitations. Selected Conflict Case Studies – Tiv-Jukun; Zangon Kataf, Chieftaincy and Land disputes and many others. Peace Building, Management of Conflicts and Security: Peace & Human Development. Approaches to Peace & Conflict Management --- (Religious, Government, Community Leaders and many others). Elements of Peace Studies and Conflict Resolution: Conflict dynamics assessment Scales: Constructive Destructive. Justice and Legal framework: Concepts of Social Justice. The Nigerian Legal System. Insurgency and Terrorism. Peace Mediation and Peace Keeping. Peace & Security Council (International, National and Local levels) Agents of Conflict resolution – Conventions, Treaties Community Policing: Evolution and Imperatives. Alternative Dispute Resolution, ADR: a.) Dialogue b.) Arbitration, c.) Negotiation d.) Collaboration and many others. Roles of International Organizations in Conflict Resolution: a.) The United Nations, UN, and its Conflict Resolution Organs, b.) The African Union & Peace Security Council c.) ECOWAS in Peace Keeping. Media and Traditional Institutions in Peace Building. Managing Post -Conflict Situations/Crisis: Refugees. Internally Displaced Persons, IDPs. The role of NGOs in Post - Conflict Situations/Crisis.",
+          "sourceLocator": "Original CCMAS source: Sociology; GST 312; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed pp. 332-333",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        }
+      ],
+      "resources": [
+        {
+          "source_id": "principles_and_practices_of_peace_education_openlearn",
+          "title": "Principles and practices of peace education (OpenLearn)",
+          "url": "https://www.open.edu/openlearn/education-development/principles-and-practices-peace-education",
+          "provider": "The Open University",
+          "access": "free introductory course; educational/community peace context",
+          "rationale": "A free introductory course on peace education, relationships and constructive approaches to conflict in educational/community settings. It is not a full peace-and-conflict-studies course or Nigeria-specific conflict analysis.",
+          "theme_keys": [
+            "shared_peace_conflict"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        },
+        {
+          "source_id": "history_of_conflicts_in_nigeria_noun_courseware",
+          "title": "History of Conflicts in Nigeria (NOUN courseware)",
+          "url": "https://nou.edu.ng/coursewarecontent/PCR331%20HISTORY%20OF%20CONFLICTS%20IN%20NIGERIA.pdf",
+          "provider": "National Open University of Nigeria",
+          "access": "NOUN courseware; educational-use terms apply",
+          "rationale": "Modules 1 and 4 cover conflict concepts, peace, and historical Nigerian examples (printed pp. 1–20 and 60–83). Optional Nigeria-specific courseware, not a current conflict assessment or a universal requirement.",
+          "theme_keys": [
+            "shared_peace_conflict"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        }
+      ],
+      "student_resource_count": 0,
+      "duplicate_resource_urls": [],
+      "prepared_candidate_resource_count": 2,
+      "resource_metadata_gaps": [
+        "current_external_verification",
+        "resource_level_and_sequence",
+        "first_click_locator"
+      ],
+      "external_review_status": "pending_current_external_verification_and_theme_fit_review",
+      "terminal_disposition": null,
+      "curriculum_boundary": "Theme is the resource-enrichment target; its already-classified courses/outcomes remain supporting anchors, not separate resource rows."
+    },
+    {
+      "item_id": "Sociology:theme:shared_philosophy",
+      "item_key": "shared_philosophy",
+      "item_name": "Philosophy and reasoning",
+      "item_type": "curriculum_theme_grouping",
+      "context_level": "programme",
+      "context_key": "Sociology",
+      "guidance_owner": "programme",
+      "theme_summary": "A shared course on philosophical questions, logic and clear reasoning.",
+      "course_codes": [
+        "GST 212"
+      ],
+      "course_anchors": [
+        {
+          "courseCode": "GST 212",
+          "courseTitle": "Philosophy, Logic and Human Existence",
+          "courseSummary": "Scope of philosophy; notions, meanings, branches and problems of philosophy. Logic as an indispensable tool of philosophy. Elements of syllogism, symbolic logic — the first nine rules of inference. Informal fallacies, laws of thought, nature of arguments. Valid and invalid arguments, logic of form and logic of content — deduction, induction and inferences. Creative and critical thinking. Impact of philosophy on human existence. Philosophy and politics, philosophy and human conduct, philosophy and religion, philosophy and human values, philosophy and character moulding and many others.",
+          "sourceLocator": "Original CCMAS source: Sociology; GST 212; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed p. 327",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        }
+      ],
+      "resources": [
+        {
+          "source_id": "analysis_argument_and_critical_thinking_openlearn",
+          "title": "Analysis, argument and critical thinking (OpenLearn)",
+          "url": "https://www.open.edu/openlearn/education-development/extending-and-developing-your-thinking-skills/content-section-8",
+          "provider": "The Open University",
+          "access": "free open learning section",
+          "rationale": "Section 8 introduces analysis, arguments, reasons and evidence through an everyday example. It supports reasoning practice, not the full philosophy curriculum.",
+          "theme_keys": [
+            "shared_philosophy"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        }
+      ],
+      "student_resource_count": 0,
+      "duplicate_resource_urls": [],
+      "prepared_candidate_resource_count": 1,
+      "resource_metadata_gaps": [
+        "current_external_verification",
+        "resource_level_and_sequence",
+        "first_click_locator"
+      ],
+      "external_review_status": "pending_current_external_verification_and_theme_fit_review",
+      "terminal_disposition": null,
+      "curriculum_boundary": "Theme is the resource-enrichment target; its already-classified courses/outcomes remain supporting anchors, not separate resource rows."
+    },
+    {
+      "item_id": "Sociology:theme:social_change",
+      "item_key": "social_change",
+      "item_name": "Social change and development",
+      "item_type": "curriculum_theme_grouping",
+      "context_level": "programme",
+      "context_key": "Sociology",
+      "guidance_owner": "programme",
+      "theme_summary": "These courses explore how societies change, what shapes development and how those changes affect people and institutions.",
+      "course_codes": [
+        "SOC 202",
+        "SOC 407"
+      ],
+      "course_anchors": [
+        {
+          "courseCode": "SOC 202",
+          "courseTitle": "Social Change and Social Problems",
+          "courseSummary": "Meaning and nature of social change: theoretical perspectives on social change: adapting the institutional method in studying social change: the concepts of Industrialisation, Modernisation, Civilisation and development particularly in Africa: social problems resulting from economic, political and religious change: change in the family and legal system: problems associated with rapid social change",
+          "sourceLocator": "Original CCMAS source: Sociology; SOC 202; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed p. 329",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        },
+        {
+          "courseCode": "SOC 407",
+          "courseTitle": "Sociology of Development",
+          "courseSummary": "Theories of development. Socio-economic analysis of the concept of development, and of its relation to growth. Sociological implications of development. Its effect on society and family structure. The impact of colonial policies, and post -independence international conditions. differentiate the concept and theories of development - Modernization, Dependency Mode of Production and many others Socio -economic analysis of development and its relation to growth. Difference between factors in focus in the study of economic development as opposed to sociology of development. The contribtuion of Max Weber to the rise of sociology of development. Non -economic factors like value -system, norms profit, or other cultural imperatives are key determitants of economic development. Role of non -economic factors in socio-economic in the rapid developemnt of Nigeria develpoment. Minimum Academic Standards Equipment S/N Equipment Quantity 1 Computers (Desktop/Laptop) for the departmental office 4 2 Computers (Desktop/Laptop)for teaching students in a 10 computer room with Internet 3 Computers (Desktop/Laptop)for academic staff 1 each staff 4 Good internet facility 5 Overhead and multimedia projectors 1 6 Audio-tape recorders 4 7 Video recorder 1 8 Disc player 1 9 Television 1 10 Over-head Power-point 1 11 Vehicle for field trip 1 Social Sciences 339 New",
+          "sourceLocator": "Original CCMAS source: Sociology; SOC 407; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed p. 339",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        }
+      ],
+      "resources": [
+        {
+          "source_id": "introduction_to_sociology_3e",
+          "title": "Introduction to Sociology 3e",
+          "url": "https://openstax.org/books/introduction-sociology-3e/pages/1-introduction",
+          "provider": "OpenStax",
+          "access": "free open textbook",
+          "rationale": "A legal, openly licensed free textbook for introductory concepts, theories, culture, institutions, research methods and social change.",
+          "theme_keys": [
+            "core",
+            "people",
+            "ideas",
+            "research",
+            "social_change",
+            "social_issues",
+            "governance"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        },
+        {
+          "source_id": "introduction_to_sociology_noun_courseware",
+          "title": "Introduction to Sociology (NOUN courseware)",
+          "url": "https://nou.edu.ng/coursewarecontent/CSS111%20INTRODUCTION%20%20TO%20SOCIOLOGY.pdf",
+          "provider": "National Open University of Nigeria",
+          "access": "NOUN courseware; educational-use terms apply",
+          "rationale": "NOUN courseware (published 2008; first printed 2004) covering foundational Sociology topics. Use it as an optional institution-specific reference, not a current national prescription; follow NOUN's stated use terms.",
+          "theme_keys": [
+            "people",
+            "ideas",
+            "social_change"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        }
+      ],
+      "student_resource_count": 0,
+      "duplicate_resource_urls": [],
+      "prepared_candidate_resource_count": 2,
+      "resource_metadata_gaps": [
+        "current_external_verification",
+        "resource_level_and_sequence",
+        "first_click_locator"
+      ],
+      "external_review_status": "pending_current_external_verification_and_theme_fit_review",
+      "terminal_disposition": null,
+      "curriculum_boundary": "Theme is the resource-enrichment target; its already-classified courses/outcomes remain supporting anchors, not separate resource rows."
+    },
+    {
+      "item_id": "Sociology:theme:social_issues",
+      "item_key": "social_issues",
+      "item_name": "Inequality, gender and social problems",
+      "item_type": "curriculum_theme_grouping",
+      "context_level": "programme",
+      "context_key": "Sociology",
+      "guidance_owner": "programme",
+      "theme_summary": "These courses examine inequality, gender relations, crime and other social problems, including their causes and effects.",
+      "course_codes": [
+        "SOC 210",
+        "SOC 302",
+        "SOC 303"
+      ],
+      "course_anchors": [
+        {
+          "courseCode": "SOC 210",
+          "courseTitle": "Gender and Society",
+          "courseSummary": "The social definition of gender: theories of gender — Biological theories (Murdock P., Alex Thio, Parker and Parker and many others), Marxist theory — (the origin of the family and gender inequality), Feminism (from conservative to radical feminism) and Socialisation theory. Cultural practices and gender inequality — Early marriage, female genital mutilation, widowhood practices: gender inequality",
+          "sourceLocator": "Original CCMAS source: Sociology; SOC 210; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed p. 332",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        },
+        {
+          "courseCode": "SOC 302",
+          "courseTitle": "Social Inequality",
+          "courseSummary": "The nature, origin and forms of social inequality: the sociological perspective and consequences of social inequality. Types of social mobility: generational, intragenerational and intergenerational. Social inequality and social stability. Social inequality and democracy. Social inequality and social probability in Nigeria; the meaning of social inequality and its dimensions; related concepts like",
+          "sourceLocator": "Original CCMAS source: Sociology; SOC 302; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed p. 335",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        },
+        {
+          "courseCode": "SOC 303",
+          "courseTitle": "Sociology of Crime and Delinquency",
+          "courseSummary": "Nature and Definition of Crime. Theories of crime. Social inequality and crime. Traditional control of crime and delinquency. Relevance of traditional crime control in modern societies. The Criminal Justice System in Nigeria. Crime and gender. Cultural conditions and crime. Between crime and delinquency. Analyse how society responds to crime and delinquency. ---",
+          "sourceLocator": "Original CCMAS source: Sociology; SOC 303; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed pp. 335-336",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        }
+      ],
+      "resources": [
+        {
+          "source_id": "sociology_themes_and_perspectives_8th_edition",
+          "title": "Sociology: Themes and Perspectives (8th edition)",
+          "url": "https://collins.co.uk/products/9780007498826",
+          "provider": "Collins",
+          "access": "publisher reference; paid or library access",
+          "rationale": "A recognised Sociology reference text by Michael Haralambos and Martin Holborn. The catalogue does not claim it is a universal required text; use a legal library or publisher copy.",
+          "theme_keys": [
+            "people",
+            "ideas",
+            "research",
+            "social_issues",
+            "governance"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        },
+        {
+          "source_id": "introduction_to_sociology_3e",
+          "title": "Introduction to Sociology 3e",
+          "url": "https://openstax.org/books/introduction-sociology-3e/pages/1-introduction",
+          "provider": "OpenStax",
+          "access": "free open textbook",
+          "rationale": "A legal, openly licensed free textbook for introductory concepts, theories, culture, institutions, research methods and social change.",
+          "theme_keys": [
+            "core",
+            "people",
+            "ideas",
+            "research",
+            "social_change",
+            "social_issues",
+            "governance"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        }
+      ],
+      "student_resource_count": 0,
+      "duplicate_resource_urls": [],
+      "prepared_candidate_resource_count": 2,
+      "resource_metadata_gaps": [
+        "current_external_verification",
+        "resource_level_and_sequence",
+        "first_click_locator"
+      ],
+      "external_review_status": "pending_current_external_verification_and_theme_fit_review",
+      "terminal_disposition": null,
+      "curriculum_boundary": "Theme is the resource-enrichment target; its already-classified courses/outcomes remain supporting anchors, not separate resource rows."
+    },
+    {
+      "item_id": "Sociology:theme:technology",
+      "item_key": "technology",
+      "item_name": "Technology and information",
+      "item_type": "curriculum_theme_grouping",
+      "context_level": "programme",
+      "context_key": "Sociology",
+      "guidance_owner": "programme",
+      "theme_summary": "Courses in this part cover the digital applications and information practices recorded for the programme.",
+      "course_codes": [
+        "SSC 202"
+      ],
+      "course_anchors": [
+        {
+          "courseCode": "SSC 202",
+          "courseTitle": "Introduction to Computer and its Application",
+          "courseSummary": "Historical perspectives of computing sciences that gave birth to the different programs. Characteristics of each program in computing sciences. Hardware, Software; and human resources; Integration and application in business and other segments of society. Information processing and its roles in society. laboratory assignments using the PC’s operating system, and several commonly used application software, such as word processors, spreadsheets, presentations, graphics and other applications. Internet and on - line resources, browsers, and search engines.",
+          "sourceLocator": "Original CCMAS source: Sociology; SSC 202; Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed p. 328",
+          "sourceUrl": "https://www.nuc.edu.ng/wp-content/uploads/2026/03/Social-Sciences-CCMAS-FINAL-2023-A.pdf"
+        }
+      ],
+      "resources": [
+        {
+          "source_id": "introducing_computing_and_it_openlearn",
+          "title": "Introducing computing and IT (OpenLearn)",
+          "url": "https://www.open.edu/openlearn/digital-computing/introducing-computing-and-it/content-section-1.3",
+          "provider": "The Open University",
+          "access": "free open course",
+          "rationale": "An introductory course on digital life, information society, online safety and computing concepts. It provides context, not training in a particular office-software brand.",
+          "theme_keys": [
+            "technology"
+          ],
+          "source_artifact": "backend/migration_sociology_theme_resource_repair_2026-10-23.sql",
+          "database_status": "prepared_local_migration_not_live",
+          "external_review_status": "pending_current_link_and_item_fit_verification"
+        }
+      ],
+      "student_resource_count": 0,
+      "duplicate_resource_urls": [],
+      "prepared_candidate_resource_count": 1,
+      "resource_metadata_gaps": [
+        "current_external_verification",
+        "resource_level_and_sequence",
+        "first_click_locator"
+      ],
+      "external_review_status": "pending_current_external_verification_and_theme_fit_review",
+      "terminal_disposition": null,
+      "curriculum_boundary": "Theme is the resource-enrichment target; its already-classified courses/outcomes remain supporting anchors, not separate resource rows."
     },
     {
       "item_id": "D078|anthropologist:knowledge:ESCO-SKILL-09529105-30ab-4b92-b394-18a8607a57c8",

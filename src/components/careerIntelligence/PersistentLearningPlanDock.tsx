@@ -41,7 +41,7 @@ export function PersistentLearningPlanDockProvider({ children }: { children: Rea
   const dock = visible && renderer ? <View pointerEvents="box-none" style={[
         styles.dockLayer,
         Platform.OS === "web" ? styles.dockLayerWeb : styles.dockLayerNative,
-        Platform.OS !== "web" && { bottom: width < 768 ? 82 : 16 },
+        { bottom: width < 768 ? 82 : 16 },
       ]}>{renderer()}</View> : null;
   return <PersistentLearningPlanDockContext.Provider value={value}>
     <PersistentLearningPlanDockPortal dock={dock}>{children}</PersistentLearningPlanDockPortal>

@@ -111,7 +111,7 @@ export function WebSectionLabel({ label, action, onAction }: {
     <View style={styles.sectionLabelRow}>
       <Text style={[styles.sectionLabel, { color: colors.textMuted }]}>{label.toUpperCase()}</Text>
       {action && (
-        <TouchableOpacity onPress={onAction} activeOpacity={0.7}>
+        <TouchableOpacity onPress={onAction} activeOpacity={0.7} accessibilityRole="button">
           <Text style={[styles.sectionAction, { color: colors.accent }]}>{action}</Text>
         </TouchableOpacity>
       )}
@@ -297,6 +297,7 @@ export function WebListRow({
       style={[styles.listRow, { borderBottomColor: colors.border }]}
       onPress={onPress}
       activeOpacity={0.75}
+      accessibilityRole={onPress ? 'button' : undefined}
     >
       <Text style={styles.listRowIcon}>{icon}</Text>
       <View style={{ flex: 1 }}>
@@ -343,13 +344,13 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   pageTitle: {
-    fontSize: 17,
+    fontSize: FontSize.xxxl,
     fontWeight: '800',
     letterSpacing: -0.4,
     marginBottom: 2,
   },
   pageSubtitle: {
-    fontSize: FontSize.xs,
+    fontSize: FontSize.md,
     fontWeight: FontWeight.medium,
   },
   pageHeaderRight: {
@@ -383,7 +384,7 @@ const styles = StyleSheet.create({
     marginBottom: GRID_GAP_SM,
   },
   sectionLabel: {
-    fontSize: 10,
+    fontSize: FontSize.sm,
     fontWeight: FontWeight.black,
     letterSpacing: 1,
   },
@@ -418,7 +419,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   cardTitle: {
-    fontSize: FontSize.xs,
+    fontSize: FontSize.md,
     fontWeight: FontWeight.bold,
   },
 
@@ -433,8 +434,8 @@ const styles = StyleSheet.create({
   },
   statTileEmoji:  { fontSize: 18 },
   statTileValue:  { fontSize: FontSize.lg, fontWeight: FontWeight.black, lineHeight: 20 },
-  statTileLabel:  { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
-  statTileSub:    { fontSize: 10, marginTop: 1 },
+  statTileLabel:  { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
+  statTileSub:    { fontSize: FontSize.sm, marginTop: 1 },
 
   divider: {
     height: 1,
@@ -447,7 +448,7 @@ const styles = StyleSheet.create({
     marginVertical: GRID_GAP_SM,
   },
   dividerLine: { flex: 1, height: 1 },
-  dividerLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, letterSpacing: 0.5 },
+  dividerLabel: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, letterSpacing: 0.5 },
 
   listRow: {
     flexDirection: 'row',
@@ -458,9 +459,9 @@ const styles = StyleSheet.create({
   },
   listRowIcon:      { fontSize: 16 },
   listRowTitle:     { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
-  listRowSub:       { fontSize: FontSize.xs, marginTop: 2 },
+  listRowSub:       { fontSize: FontSize.sm, marginTop: 2 },
   listRowBadge:     { minWidth: 18, height: 18, borderRadius: 9, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 5 },
-  listRowBadgeText: { fontSize: 10, fontWeight: FontWeight.black, color: '#fff' },
+  listRowBadgeText: { fontSize: FontSize.sm, fontWeight: FontWeight.black, color: '#fff' },
   listRowRight:     { marginLeft: Spacing.sm, alignItems: 'center', justifyContent: 'center' },
   listRowRightText: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
 

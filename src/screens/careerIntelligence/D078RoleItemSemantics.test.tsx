@@ -1,6 +1,10 @@
 jest.mock("@/theme/motion", () => ({ useReducedMotion: () => true }));
 jest.mock("@/hooks/useAuth", () => ({ useAuth: () => ({ user: { id: "student-1" } }) }));
 
+jest.mock("react-native-safe-area-context", () => ({
+  ...jest.requireActual("react-native-safe-area-context"),
+  useSafeAreaInsets: () => ({ top: 0, right: 0, bottom: 0, left: 0 }),
+}));
 import React from "react";
 import { render, screen } from "@testing-library/react-native";
 import { ThemeProvider } from "@/theme";
