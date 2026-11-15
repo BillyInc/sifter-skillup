@@ -513,8 +513,9 @@ describe("D078 method-aware route projection", () => {
         ]);
         const aggregateOnlyIds = (route.domain_downstream_item_ids ?? [])
           .filter((itemId) => !explicitlyRoutedDomainIds.has(itemId));
-        expect(projection.domainItemIdsByArea[route.area_id] ?? [])
-          .not.toEqual(expect.arrayContaining(aggregateOnlyIds));
+        for (const itemId of aggregateOnlyIds) {
+          expect(projection.domainItemIdsByArea[route.area_id] ?? []).not.toContain(itemId);
+        }
       }
     }
   });

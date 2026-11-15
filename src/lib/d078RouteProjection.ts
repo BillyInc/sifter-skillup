@@ -777,7 +777,15 @@ export function projectD078Route(selection: D078Selection): D078Projection {
         support.routes.add(`${combinationId}:${areaId}`);
         for (const contribution of route.method_contributions ?? []) {
           support.methodContributions.set(contribution.method_id, contribution);
-          for (const id of availableIds(contribution.task_family_ids)) taskFamilies.get(areaId)!.add(id);
+          const contributionFamilyIds = availableIds(contribution.task_family_ids);
+          for (const id of contributionFamilyIds) taskFamilies.get(areaId)!.add(id);
+          // Fixed named-design routes use method contributions as the exact
+          // area/task bridge. Materialize their reviewed family→area-item
+          // edges just as the single-method and component-variant paths do;
+          // otherwise area-owned cards disappear on fixed combined designs.
+          for (const edge of areaItemEdgesForTaskFamilies(new Set(contributionFamilyIds), areaId)) {
+            if (isNodeAvailable(edge.targetId)) areaItems.get(areaId)!.add(edge.targetId);
+          }
           for (const id of availableIds(contribution.area_item_ids)) areaItems.get(areaId)!.add(id);
         for (const id of availableIds(contribution.task_linked_domain_item_ids)) {
             if (isToolId(id)) {
