@@ -1392,3 +1392,29 @@ git show main:.github/workflows/semgrep.yml | head -1
 Add a line here whenever a fix is landed that a future bulk merge could
 plausibly discard. This list is the cheapest available defence, and it only
 works if it is kept current.
+
+## `main` was rewritten on 16 November 2026 — reset your local copy
+
+To remove `Co-authored-by: Claude` trailers from two squash-merge commits
+(#253 and #254), `main` was force-pushed from `e0f35bd` to `de7632a`. File
+contents are identical (same tree). Seven commits changed hash, including the
+#256 `json-seed` merge. Older commits and the `json-seed` commits themselves
+kept their hashes.
+
+If you have a local `main` or a branch based on the old `main`, do not merge or
+push it as is: the old commits would reappear next to the rewritten ones.
+
+```bash
+git fetch origin
+git checkout main
+git reset --hard origin/main
+```
+
+Then rebase any branch that was based on the old `main`
+(for `json-seed`, the old merge commit was `88b99a3`, now `612ff39`):
+
+```bash
+git rebase --onto origin/main <old-base-commit> <your-branch>
+```
+
+Delete this section once everyone has reset.
