@@ -230,7 +230,7 @@ function defaultIcon(type: SearchResultType): string {
     case "skill": return "check-circle";
     case "tool": return "tool";
     case "certification": return "award";
-    case "university": return "building";
+    case "university": return "home";
     case "scholarship": return "award";
     case "opportunity": return "star";
     case "admin": return "shield";

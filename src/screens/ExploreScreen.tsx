@@ -993,7 +993,7 @@ function buildExtendedSearchGroups(
         href: undergraduate
           ? `${basePath}/admission?mode=school&school_id=${encodeURIComponent(item.id)}&user_type=student&journey=undergraduate_programmes`
           : `${basePath}/admission?mode=school&school_id=${encodeURIComponent(item.id)}`,
-        icon: "building",
+        icon: "home",
       })),
     },
     {
