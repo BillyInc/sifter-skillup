@@ -302,11 +302,11 @@ This is a single-method route. The method remains usable on its own; a combined 
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Find and assess existing social data â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Find and assess existing social data — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Find and assess existing social data is linked to Quantitative methods (working with numbers).
 - **Route context:** Turning ideas into observable measures is linked to Quantitative methods (working with numbers).
 - **Route context:** Finding and organising research sources is linked to Quantitative methods (working with numbers).
@@ -315,10 +315,10 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Plan research responsibly when people or sensitive data are involved â€” useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
-- Organise and protect research information when a project uses data â€” use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Plan research responsibly when people or sensitive data are involved — useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
+- Organise and protect research information when a project uses data — use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Quantitative methods (working with numbers).
 - **Route context:** Organise and protect research information when a project uses data is linked to Quantitative methods (working with numbers).
 - **Route context:** Plan research responsibly when people or sensitive data are involved is linked to Quantitative methods (working with numbers).
@@ -326,41 +326,41 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Quantitative methods (working with numbers):**
 _Useful and optional:_
-- Sensitivity and robustness analysis for quantitative findings â€” useful edge; condition: Use sensitivity or robustness checks when a quantitative result depends on uncertain inputs, modelling choices or assumptions that could materially change the conclusion.
-- Longitudinal, panel and multilevel data â€” useful and optional
-- Use AI cautiously to assist cross-source social-data harmonisation â€” optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
-- Use AI to draft or improve research-data metadata, then curate and verify it â€” optional; condition: Optional experimental support for drafting or reviewing metadata. A human curator checks every field against the source and repository schema.
-- Validate and document AI use in a research workflow â€” use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
-- ANOVA: group, factorial and repeated-measures comparisons â€” useful and optional
-- Barnard's unconditional exact test for 2×2 tables â€” useful and optional
-- Boschloo's unconditional exact test for 2×2 tables â€” useful and optional
-- Chi-square tests for categorical counts and association â€” useful and optional
-- Confirmatory factor analysis (CFA) â€” useful and optional
-- Count regression: Poisson and negative binomial models â€” useful and optional
-- Exploratory factor analysis (EFA) â€” useful and optional
-- Exponential-family random graph models (ERGMs) â€” useful and optional
-- Fisher's exact test for categorical counts â€” useful and optional
-- Friedman rank test for matched or blocked groups â€” useful and optional
-- Item response theory (IRT) and differential item functioning â€” useful and optional
-- Kendall rank correlation â€” useful and optional
-- Kruskal–Wallis rank test for independent groups â€” useful and optional
-- Simple and multiple linear regression (ordinary least squares) â€” useful and optional
-- Logistic regression for binary outcomes â€” useful and optional
-- Machine learning for survey nonresponse adjustment â€” useful and optional
-- Multinomial logistic regression for unordered categorical outcomes â€” useful and optional
-- Ordinal regression for ordered categorical outcomes â€” useful and optional
-- Pearson product-moment correlation â€” useful and optional
-- Probit regression for binary outcomes â€” useful and optional
-- Regularized linear regression: ridge, LASSO and elastic net â€” useful and optional
-- Scale reliability estimation: alpha, omega and alternatives â€” useful and optional
-- Spatial autocorrelation: Moran's I and local indicators (LISA) â€” useful and optional
-- Spatial regression: spatial lag and spatial error models â€” useful and optional
-- Spearman rank correlation â€” useful and optional
-- Supervised machine learning for social-research prediction and classification â€” useful and optional
-- One-sample, independent-samples and paired t-tests â€” useful and optional
-- Tree-ensemble machine learning for prediction and classification â€” useful and optional
-- Wilcoxon rank-sum and signed-rank tests â€” useful and optional
-- Quantitative methods (working with numbers) â€” use only when its stated condition applies; condition: Choose this approach when a question needs numerical measurement, counting, comparison or a statistical summary; it is an option, not a requirement for every route.
+- Sensitivity and robustness analysis for quantitative findings — useful edge; condition: Use sensitivity or robustness checks when a quantitative result depends on uncertain inputs, modelling choices or assumptions that could materially change the conclusion.
+- Longitudinal, panel and multilevel data — useful and optional
+- Use AI cautiously to assist cross-source social-data harmonisation — optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
+- Use AI to draft or improve research-data metadata, then curate and verify it — optional; condition: Optional experimental support for drafting or reviewing metadata. A human curator checks every field against the source and repository schema.
+- Validate and document AI use in a research workflow — use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
+- ANOVA: group, factorial and repeated-measures comparisons — useful and optional
+- Barnard's unconditional exact test for 2×2 tables — useful and optional
+- Boschloo's unconditional exact test for 2×2 tables — useful and optional
+- Chi-square tests for categorical counts and association — useful and optional
+- Confirmatory factor analysis (CFA) — useful and optional
+- Count regression: Poisson and negative binomial models — useful and optional
+- Exploratory factor analysis (EFA) — useful and optional
+- Exponential-family random graph models (ERGMs) — useful and optional
+- Fisher's exact test for categorical counts — useful and optional
+- Friedman rank test for matched or blocked groups — useful and optional
+- Item response theory (IRT) and differential item functioning — useful and optional
+- Kendall rank correlation — useful and optional
+- Kruskal–Wallis rank test for independent groups — useful and optional
+- Simple and multiple linear regression (ordinary least squares) — useful and optional
+- Logistic regression for binary outcomes — useful and optional
+- Machine learning for survey nonresponse adjustment — useful and optional
+- Multinomial logistic regression for unordered categorical outcomes — useful and optional
+- Ordinal regression for ordered categorical outcomes — useful and optional
+- Pearson product-moment correlation — useful and optional
+- Probit regression for binary outcomes — useful and optional
+- Regularized linear regression: ridge, LASSO and elastic net — useful and optional
+- Scale reliability estimation: alpha, omega and alternatives — useful and optional
+- Spatial autocorrelation: Moran's I and local indicators (LISA) — useful and optional
+- Spatial regression: spatial lag and spatial error models — useful and optional
+- Spearman rank correlation — useful and optional
+- Supervised machine learning for social-research prediction and classification — useful and optional
+- One-sample, independent-samples and paired t-tests — useful and optional
+- Tree-ensemble machine learning for prediction and classification — useful and optional
+- Wilcoxon rank-sum and signed-rank tests — useful and optional
+- Quantitative methods (working with numbers) — use only when its stated condition applies; condition: Choose this approach when a question needs numerical measurement, counting, comparison or a statistical summary; it is an option, not a requirement for every route.
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Power BI for social-research reporting and interactive dashboards
 - Tableau for social-research visualisation and dashboards
@@ -435,8 +435,8 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Economist** — Research economic issues, analyse economic/statistical data or models and explain economic patterns, forecasts or policy implications.
 **Exact area-stage menu for selected focus: Build and analyze economic evidence**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Applied econometric analysis with assumptions and diagnostics â€” use only when its stated condition applies; condition: Optional applied-economics method for estimating and checking economic relationships with observed data. Introduce only for a relevant economic question; regression alone does not establish causality. The linked CORE Econ material is a worked-data learning route, not a complete econometrics qualification.
-- Reproducible research workflow and data documentation â€” useful and optional
+- Applied econometric analysis with assumptions and diagnostics — use only when its stated condition applies; condition: Optional applied-economics method for estimating and checking economic relationships with observed data. Introduce only for a relevant economic question; regression alone does not establish causality. The linked CORE Econ material is a worked-data learning route, not a complete econometrics qualification.
+- Reproducible research workflow and data documentation — useful and optional
 Tools in this selected focus group, with their item relationship shown above:
 - Reproducible economic data analysis (R or Python; select a workflow)
 **Pack 1 action — Build and analyze economic evidence:**
@@ -553,11 +553,11 @@ This is a single-method route. The method remains usable on its own; a combined 
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Find and assess existing social data â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Find and assess existing social data — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Find and assess existing social data is linked to Interviews.
 - **Route context:** Turning ideas into observable measures is linked to Interviews.
 - **Route context:** Finding and organising research sources is linked to Interviews.
@@ -566,10 +566,10 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Plan research responsibly when people or sensitive data are involved â€” useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
-- Organise and protect research information when a project uses data â€” use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Plan research responsibly when people or sensitive data are involved — useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
+- Organise and protect research information when a project uses data — use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Interviews.
 - **Route context:** Organise and protect research information when a project uses data is linked to Interviews.
 - **Route context:** Plan research responsibly when people or sensitive data are involved is linked to Interviews.
@@ -577,20 +577,20 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Interviews:**
 _Useful and optional:_
-- Archival and historical research â€” use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
-- Case-study and comparative-case design â€” use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
-- Discourse and conversation analysis â€” useful and optional
-- Experiments, quasi-experiments and causal inference â€” useful and optional
-- Focus groups and workshops â€” use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
-- Longitudinal, panel and multilevel data â€” useful and optional
-- Participatory and action research â€” use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
-- Piloting questions before fieldwork â€” use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
-- Programme evaluation and theory of change â€” use only when its stated condition applies; condition: Assess what changed, for whom, why, under what conditions and at what cost.
-- Psychometrics and scale construction â€” useful and optional
-- Evidence synthesis: systematic reviews and scoping reviews â€” use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
-- AI-assisted annotation of social-research text, with human validation â€” optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
-- Conversation analysis (CA) of talk-in-interaction â€” useful and optional
-- Interpretative phenomenological analysis (IPA) â€” useful and optional
+- Archival and historical research — use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
+- Case-study and comparative-case design — use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
+- Discourse and conversation analysis — useful and optional
+- Experiments, quasi-experiments and causal inference — useful and optional
+- Focus groups and workshops — use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
+- Longitudinal, panel and multilevel data — useful and optional
+- Participatory and action research — use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
+- Piloting questions before fieldwork — use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
+- Programme evaluation and theory of change — use only when its stated condition applies; condition: Assess what changed, for whom, why, under what conditions and at what cost.
+- Psychometrics and scale construction — useful and optional
+- Evidence synthesis: systematic reviews and scoping reviews — use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
+- AI-assisted annotation of social-research text, with human validation — optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
+- Conversation analysis (CA) of talk-in-interaction — useful and optional
+- Interpretative phenomenological analysis (IPA) — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - ATLAS.ti for qualitative data coding and retrieval
 - Dedoose for collaborative qualitative and mixed-methods analysis
@@ -674,10 +674,10 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Statistician** — Plan or apply statistical methods to collect, organise, analyse and interpret numerical data, then explain what estimates and uncertainty support.
 **Exact area-stage menu for selected focus: Translate a social question into a feasible study design by defining purpose, population, evidence, sampling, method, ethics and the limits of the planned inference.**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Choose between surveys, interviews, focus groups and document methods â€” choose one alternative; condition: Choose among surveys, interviews, focus groups or documents according to the question; these are alternatives, not a cumulative checklist.
-- Protect participants and handle research data responsibly â€” use only when its stated condition applies; condition: Apply safeguards when a project involves people or sensitive/identifiable data; follow Nigerian law and institutional review where applicable.
-- Turn a social question into a feasible study design â€” useful and optional
-- Sampling, measurement and representativeness â€” use only when its stated condition applies; condition: Use when selecting people/cases or measuring a concept; state who or what the evidence can represent.
+- Choose between surveys, interviews, focus groups and document methods — choose one alternative; condition: Choose among surveys, interviews, focus groups or documents according to the question; these are alternatives, not a cumulative checklist.
+- Protect participants and handle research data responsibly — use only when its stated condition applies; condition: Apply safeguards when a project involves people or sensitive/identifiable data; follow Nigerian law and institutional review where applicable.
+- Turn a social question into a feasible study design — useful and optional
+- Sampling, measurement and representativeness — use only when its stated condition applies; condition: Use when selecting people/cases or measuring a concept; state who or what the evidence can represent.
 Tools in this selected focus group, with their item relationship shown above:
 - KoboToolbox for electronic form collection
 - NVivo or Taguette for documented qualitative coding
@@ -771,11 +771,11 @@ This is a single-method route. The method remains usable on its own; a combined 
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Find and assess existing social data â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Find and assess existing social data — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Find and assess existing social data is linked to Surveys and questionnaire design.
 - **Route context:** Turning ideas into observable measures is linked to Surveys and questionnaire design.
 - **Route context:** Finding and organising research sources is linked to Surveys and questionnaire design.
@@ -784,10 +784,10 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Plan research responsibly when people or sensitive data are involved â€” useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
-- Organise and protect research information when a project uses data â€” use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Plan research responsibly when people or sensitive data are involved — useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
+- Organise and protect research information when a project uses data — use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Surveys and questionnaire design.
 - **Route context:** Organise and protect research information when a project uses data is linked to Surveys and questionnaire design.
 - **Route context:** Plan research responsibly when people or sensitive data are involved is linked to Surveys and questionnaire design.
@@ -795,34 +795,34 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Surveys and questionnaire design:**
 _Useful and optional:_
-- Archival and historical research â€” use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
-- Case-study and comparative-case design â€” use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
-- Longitudinal, panel and multilevel data â€” useful and optional
-- Evidence synthesis: systematic reviews and scoping reviews â€” use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
-- Use AI cautiously to assist cross-source social-data harmonisation â€” optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
-- Use AI to draft or improve research-data metadata, then curate and verify it â€” optional; condition: Optional experimental support for drafting or reviewing metadata. A human curator checks every field against the source and repository schema.
-- AI-assisted annotation of social-research text, with human validation â€” optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
-- Validate and document AI use in a research workflow â€” use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
-- Barnard's unconditional exact test for 2×2 tables â€” useful and optional
-- Boschloo's unconditional exact test for 2×2 tables â€” useful and optional
-- Chi-square tests for categorical counts and association â€” useful and optional
-- Confirmatory factor analysis (CFA) â€” useful and optional
-- Count regression: Poisson and negative binomial models â€” useful and optional
-- Exploratory factor analysis (EFA) â€” useful and optional
-- Fisher's exact test for categorical counts â€” useful and optional
-- Item response theory (IRT) and differential item functioning â€” useful and optional
-- Kendall rank correlation â€” useful and optional
-- Kruskal–Wallis rank test for independent groups â€” useful and optional
-- Simple and multiple linear regression (ordinary least squares) â€” useful and optional
-- Machine learning for survey nonresponse adjustment â€” useful and optional
-- Multinomial logistic regression for unordered categorical outcomes â€” useful and optional
-- Ordinal regression for ordered categorical outcomes â€” useful and optional
-- Pearson product-moment correlation â€” useful and optional
-- Probit regression for binary outcomes â€” useful and optional
-- Scale reliability estimation: alpha, omega and alternatives â€” useful and optional
-- Spearman rank correlation â€” useful and optional
-- One-sample, independent-samples and paired t-tests â€” useful and optional
-- Wilcoxon rank-sum and signed-rank tests â€” useful and optional
+- Archival and historical research — use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
+- Case-study and comparative-case design — use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
+- Longitudinal, panel and multilevel data — useful and optional
+- Evidence synthesis: systematic reviews and scoping reviews — use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
+- Use AI cautiously to assist cross-source social-data harmonisation — optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
+- Use AI to draft or improve research-data metadata, then curate and verify it — optional; condition: Optional experimental support for drafting or reviewing metadata. A human curator checks every field against the source and repository schema.
+- AI-assisted annotation of social-research text, with human validation — optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
+- Validate and document AI use in a research workflow — use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
+- Barnard's unconditional exact test for 2×2 tables — useful and optional
+- Boschloo's unconditional exact test for 2×2 tables — useful and optional
+- Chi-square tests for categorical counts and association — useful and optional
+- Confirmatory factor analysis (CFA) — useful and optional
+- Count regression: Poisson and negative binomial models — useful and optional
+- Exploratory factor analysis (EFA) — useful and optional
+- Fisher's exact test for categorical counts — useful and optional
+- Item response theory (IRT) and differential item functioning — useful and optional
+- Kendall rank correlation — useful and optional
+- Kruskal–Wallis rank test for independent groups — useful and optional
+- Simple and multiple linear regression (ordinary least squares) — useful and optional
+- Machine learning for survey nonresponse adjustment — useful and optional
+- Multinomial logistic regression for unordered categorical outcomes — useful and optional
+- Ordinal regression for ordered categorical outcomes — useful and optional
+- Pearson product-moment correlation — useful and optional
+- Probit regression for binary outcomes — useful and optional
+- Scale reliability estimation: alpha, omega and alternatives — useful and optional
+- Spearman rank correlation — useful and optional
+- One-sample, independent-samples and paired t-tests — useful and optional
+- Wilcoxon rank-sum and signed-rank tests — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Power BI for social-research reporting and interactive dashboards
 - Tableau for social-research visualisation and dashboards
@@ -902,10 +902,10 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Demographer** — Describe and analyse population size, composition and change using births, deaths, migration and related data; explain assumptions in estimates or projections.
 **Exact area-stage menu for selected focus: Measure and explain population change using fertility, mortality and migration concepts, checking source coverage and assumptions before comparing estimates or projections.**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Appraise census, survey and administrative population data â€” useful and optional
-- Population estimation and projection with uncertainty â€” useful and optional
-- Population measures and demographic change â€” use only when its stated condition applies; condition: Use when the question needs population counts, rates or change measures; define denominator and reference period.
-- Interpret migration and urbanisation patterns â€” use only when its stated condition applies; condition: Use when migration or settlement change is relevant; describe the population, period and source limits.
+- Appraise census, survey and administrative population data — useful and optional
+- Population estimation and projection with uncertainty — useful and optional
+- Population measures and demographic change — use only when its stated condition applies; condition: Use when the question needs population counts, rates or change measures; define denominator and reference period.
+- Interpret migration and urbanisation patterns — use only when its stated condition applies; condition: Use when migration or settlement change is relevant; describe the population, period and source limits.
 **Pack 3 action — Measure and explain population change using fertility, mortality and migration concepts, checking source coverage and assumptions before comparing estimates or projections.:**
 Select this pack's exact choice(s): **Appraise census, survey and administrative population data**, **Population measures and demographic change**, **Interpret migration and urbanisation patterns**.
 Follow this exact graph-reviewed order: **Appraise census, survey and administrative population data** → **Population measures and demographic change** → **Interpret migration and urbanisation patterns**.
@@ -1008,11 +1008,11 @@ This is a single-method route. The method remains usable on its own; a combined 
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Find and assess existing social data â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Find and assess existing social data — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Find and assess existing social data is linked to Qualitative methods (working with words, observations and meaning).
 - **Route context:** Turning ideas into observable measures is linked to Qualitative methods (working with words, observations and meaning).
 - **Route context:** Finding and organising research sources is linked to Qualitative methods (working with words, observations and meaning).
@@ -1021,10 +1021,10 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Plan research responsibly when people or sensitive data are involved â€” useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
-- Organise and protect research information when a project uses data â€” use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Plan research responsibly when people or sensitive data are involved — useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
+- Organise and protect research information when a project uses data — use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Qualitative methods (working with words, observations and meaning).
 - **Route context:** Organise and protect research information when a project uses data is linked to Qualitative methods (working with words, observations and meaning).
 - **Route context:** Plan research responsibly when people or sensitive data are involved is linked to Qualitative methods (working with words, observations and meaning).
@@ -1032,15 +1032,15 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Qualitative methods (working with words, observations and meaning):**
 _Useful and optional:_
-- Discourse and conversation analysis â€” useful and optional
-- Focus groups and workshops â€” use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
-- Participatory and action research â€” use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
-- AI-assisted annotation of social-research text, with human validation â€” optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
-- Conversation analysis (CA) of talk-in-interaction â€” useful and optional
-- Critical discourse analysis (CDA) â€” useful and optional
-- Interpretative phenomenological analysis (IPA) â€” useful and optional
-- LLM-assisted measurement of constructs in social text â€” useful and optional
-- Natural language processing and computational text mining â€” useful and optional
+- Discourse and conversation analysis — useful and optional
+- Focus groups and workshops — use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
+- Participatory and action research — use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
+- AI-assisted annotation of social-research text, with human validation — optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
+- Conversation analysis (CA) of talk-in-interaction — useful and optional
+- Critical discourse analysis (CDA) — useful and optional
+- Interpretative phenomenological analysis (IPA) — useful and optional
+- LLM-assisted measurement of constructs in social text — useful and optional
+- Natural language processing and computational text mining — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - ATLAS.ti for qualitative data coding and retrieval
 - Dedoose for collaborative qualitative and mixed-methods analysis
@@ -1097,7 +1097,7 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Thanatology researcher** — Investigate social, cultural or psychological aspects of death, dying, bereavement or related practices using a defined disciplinary question and evidence.
 **Exact area-stage menu for selected focus: Use interviews, observation or documents to understand interaction**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Qualitative interview, observation and document inquiry â€” use only when its stated condition applies; condition: Plan and conduct ethical interviews/observation/document analysis, preserve context, code material and report evidence-backed themes and counterexamples.
+- Qualitative interview, observation and document inquiry — use only when its stated condition applies; condition: Plan and conduct ethical interviews/observation/document analysis, preserve context, code material and report evidence-backed themes and counterexamples.
 Tools in this selected focus group, with their item relationship shown above:
 - NVivo or Taguette for qualitative coding
 **Pack 4 action — Use interviews, observation or documents to understand interaction:**
@@ -1195,10 +1195,10 @@ After those components are selected, choose **Measure a pattern, then explain it
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Turning ideas into observable measures is linked to Surveys and questionnaire design, Interviews.
 - **Route context:** Finding and organising research sources is linked to Surveys and questionnaire design, Interviews.
 - **Route context:** Checking reliability, validity and uncertainty is linked to Surveys and questionnaire design, Interviews.
@@ -1206,20 +1206,20 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Surveys and questionnaire design, Interviews.
 - **Route context:** Keeping a clear, repeatable research record is linked to Surveys and questionnaire design, Interviews.
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Interviews:**
 _Useful and optional:_
-- Archival and historical research â€” use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
-- Discourse and conversation analysis â€” useful and optional
-- Experiments, quasi-experiments and causal inference â€” useful and optional
-- Longitudinal, panel and multilevel data â€” useful and optional
-- Evidence synthesis: systematic reviews and scoping reviews â€” use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
-- Conversation analysis (CA) of talk-in-interaction â€” useful and optional
-- Interpretative phenomenological analysis (IPA) â€” useful and optional
+- Archival and historical research — use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
+- Discourse and conversation analysis — useful and optional
+- Experiments, quasi-experiments and causal inference — useful and optional
+- Longitudinal, panel and multilevel data — useful and optional
+- Evidence synthesis: systematic reviews and scoping reviews — use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
+- Conversation analysis (CA) of talk-in-interaction — useful and optional
+- Interpretative phenomenological analysis (IPA) — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - ATLAS.ti for qualitative data coding and retrieval
 - Dedoose for collaborative qualitative and mixed-methods analysis
@@ -1231,37 +1231,37 @@ _Tools attached to this method contribution; compare and select only what you pl
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Interviews, Surveys and questionnaire design:**
 _Useful and optional:_
-- AI-assisted annotation of social-research text, with human validation â€” optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
+- AI-assisted annotation of social-research text, with human validation — optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Statsmodels
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Surveys and questionnaire design:**
 _Useful and optional:_
-- Piloting questions before fieldwork â€” use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
-- Psychometrics and scale construction â€” useful and optional
-- Use AI cautiously to assist cross-source social-data harmonisation â€” optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
-- Use AI to draft or improve research-data metadata, then curate and verify it â€” optional; condition: Optional experimental support for drafting or reviewing metadata. A human curator checks every field against the source and repository schema.
-- Validate and document AI use in a research workflow â€” use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
-- Barnard's unconditional exact test for 2×2 tables â€” useful and optional
-- Boschloo's unconditional exact test for 2×2 tables â€” useful and optional
-- Chi-square tests for categorical counts and association â€” useful and optional
-- Confirmatory factor analysis (CFA) â€” useful and optional
-- Count regression: Poisson and negative binomial models â€” useful and optional
-- Exploratory factor analysis (EFA) â€” useful and optional
-- Fisher's exact test for categorical counts â€” useful and optional
-- Item response theory (IRT) and differential item functioning â€” useful and optional
-- Kendall rank correlation â€” useful and optional
-- Kruskal–Wallis rank test for independent groups â€” useful and optional
-- Simple and multiple linear regression (ordinary least squares) â€” useful and optional
-- Machine learning for survey nonresponse adjustment â€” useful and optional
-- Multinomial logistic regression for unordered categorical outcomes â€” useful and optional
-- Ordinal regression for ordered categorical outcomes â€” useful and optional
-- Pearson product-moment correlation â€” useful and optional
-- Probit regression for binary outcomes â€” useful and optional
-- Scale reliability estimation: alpha, omega and alternatives â€” useful and optional
-- Spearman rank correlation â€” useful and optional
-- One-sample, independent-samples and paired t-tests â€” useful and optional
-- Wilcoxon rank-sum and signed-rank tests â€” useful and optional
+- Piloting questions before fieldwork — use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
+- Psychometrics and scale construction — useful and optional
+- Use AI cautiously to assist cross-source social-data harmonisation — optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
+- Use AI to draft or improve research-data metadata, then curate and verify it — optional; condition: Optional experimental support for drafting or reviewing metadata. A human curator checks every field against the source and repository schema.
+- Validate and document AI use in a research workflow — use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
+- Barnard's unconditional exact test for 2×2 tables — useful and optional
+- Boschloo's unconditional exact test for 2×2 tables — useful and optional
+- Chi-square tests for categorical counts and association — useful and optional
+- Confirmatory factor analysis (CFA) — useful and optional
+- Count regression: Poisson and negative binomial models — useful and optional
+- Exploratory factor analysis (EFA) — useful and optional
+- Fisher's exact test for categorical counts — useful and optional
+- Item response theory (IRT) and differential item functioning — useful and optional
+- Kendall rank correlation — useful and optional
+- Kruskal–Wallis rank test for independent groups — useful and optional
+- Simple and multiple linear regression (ordinary least squares) — useful and optional
+- Machine learning for survey nonresponse adjustment — useful and optional
+- Multinomial logistic regression for unordered categorical outcomes — useful and optional
+- Ordinal regression for ordered categorical outcomes — useful and optional
+- Pearson product-moment correlation — useful and optional
+- Probit regression for binary outcomes — useful and optional
+- Scale reliability estimation: alpha, omega and alternatives — useful and optional
+- Spearman rank correlation — useful and optional
+- One-sample, independent-samples and paired t-tests — useful and optional
+- Wilcoxon rank-sum and signed-rank tests — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Power BI for social-research reporting and interactive dashboards
 - Tableau for social-research visualisation and dashboards
@@ -1340,8 +1340,8 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Tax policy analyst** — Analyse tax rules, fiscal data or policy proposals and estimate or explain possible revenue, distributional and administrative implications.
 **Exact area-stage menu for selected focus: Turn a governance or public-policy question into a bounded evidence review: identify institutions and affected groups, compare evidence and options, then state a reasoned finding with uncertainty and trade-offs.**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Policy evidence review and options appraisal â€” use only when its stated condition applies; condition: Summarize what is known, assess source quality and applicability, identify evidence gaps, and compare feasible options without presenting the review as a complete systematic review unless its protocol warrants that label.
-- Policy brief and evidence communication â€” use only when its stated condition applies; condition: Turn an evidence review into a short brief with issue, evidence, options, trade-offs, recommendation conditions and references.
+- Policy evidence review and options appraisal — use only when its stated condition applies; condition: Summarize what is known, assess source quality and applicability, identify evidence gaps, and compare feasible options without presenting the review as a complete systematic review unless its protocol warrants that label.
+- Policy brief and evidence communication — use only when its stated condition applies; condition: Turn an evidence review into a short brief with issue, evidence, options, trade-offs, recommendation conditions and references.
 **Pack 5 action — Turn a governance or public-policy question into a bounded evidence review: identify institutions and affected groups, compare evidence and options, then state a reasoned finding with uncertainty and trade-offs.:**
 Select this pack's exact choice(s): **Policy evidence review and options appraisal**.
 Leave this exact visible choice unchecked for the skip test: **Policy brief and evidence communication**. Other unselected choices stay unchecked.
@@ -1463,10 +1463,10 @@ After those components are selected, choose **Compare survey and interview evide
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Turning ideas into observable measures is linked to Surveys and questionnaire design, Interviews.
 - **Route context:** Finding and organising research sources is linked to Surveys and questionnaire design, Interviews.
 - **Route context:** Checking reliability, validity and uncertainty is linked to Surveys and questionnaire design, Interviews.
@@ -1474,18 +1474,18 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Surveys and questionnaire design, Interviews.
 - **Route context:** Keeping a clear, repeatable research record is linked to Surveys and questionnaire design, Interviews.
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Interviews:**
 _Useful and optional:_
-- Discourse and conversation analysis â€” useful and optional
-- Focus groups and workshops â€” use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
-- Participatory and action research â€” use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
-- Conversation analysis (CA) of talk-in-interaction â€” useful and optional
-- Interpretative phenomenological analysis (IPA) â€” useful and optional
+- Discourse and conversation analysis — useful and optional
+- Focus groups and workshops — use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
+- Participatory and action research — use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
+- Conversation analysis (CA) of talk-in-interaction — useful and optional
+- Interpretative phenomenological analysis (IPA) — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - ATLAS.ti for qualitative data coding and retrieval
 - Dedoose for collaborative qualitative and mixed-methods analysis
@@ -1496,38 +1496,38 @@ _Tools attached to this method contribution; compare and select only what you pl
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Interviews, Surveys and questionnaire design:**
 _Useful and optional:_
-- AI-assisted annotation of social-research text, with human validation â€” optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
+- AI-assisted annotation of social-research text, with human validation — optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Surveys and questionnaire design:**
 _Useful and optional:_
-- Experiments, quasi-experiments and causal inference â€” useful and optional
-- Longitudinal, panel and multilevel data â€” useful and optional
-- Piloting questions before fieldwork â€” use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
-- Psychometrics and scale construction â€” useful and optional
-- Evidence synthesis: systematic reviews and scoping reviews â€” use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
-- Use AI cautiously to assist cross-source social-data harmonisation â€” optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
-- Use AI to draft or improve research-data metadata, then curate and verify it â€” optional; condition: Optional experimental support for drafting or reviewing metadata. A human curator checks every field against the source and repository schema.
-- Validate and document AI use in a research workflow â€” use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
-- Barnard's unconditional exact test for 2×2 tables â€” useful and optional
-- Boschloo's unconditional exact test for 2×2 tables â€” useful and optional
-- Chi-square tests for categorical counts and association â€” useful and optional
-- Confirmatory factor analysis (CFA) â€” useful and optional
-- Count regression: Poisson and negative binomial models â€” useful and optional
-- Exploratory factor analysis (EFA) â€” useful and optional
-- Fisher's exact test for categorical counts â€” useful and optional
-- Item response theory (IRT) and differential item functioning â€” useful and optional
-- Kendall rank correlation â€” useful and optional
-- Kruskal–Wallis rank test for independent groups â€” useful and optional
-- Simple and multiple linear regression (ordinary least squares) â€” useful and optional
-- Machine learning for survey nonresponse adjustment â€” useful and optional
-- Multinomial logistic regression for unordered categorical outcomes â€” useful and optional
-- Ordinal regression for ordered categorical outcomes â€” useful and optional
-- Pearson product-moment correlation â€” useful and optional
-- Probit regression for binary outcomes â€” useful and optional
-- Scale reliability estimation: alpha, omega and alternatives â€” useful and optional
-- Spearman rank correlation â€” useful and optional
-- One-sample, independent-samples and paired t-tests â€” useful and optional
-- Wilcoxon rank-sum and signed-rank tests â€” useful and optional
+- Experiments, quasi-experiments and causal inference — useful and optional
+- Longitudinal, panel and multilevel data — useful and optional
+- Piloting questions before fieldwork — use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
+- Psychometrics and scale construction — useful and optional
+- Evidence synthesis: systematic reviews and scoping reviews — use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
+- Use AI cautiously to assist cross-source social-data harmonisation — optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
+- Use AI to draft or improve research-data metadata, then curate and verify it — optional; condition: Optional experimental support for drafting or reviewing metadata. A human curator checks every field against the source and repository schema.
+- Validate and document AI use in a research workflow — use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
+- Barnard's unconditional exact test for 2×2 tables — useful and optional
+- Boschloo's unconditional exact test for 2×2 tables — useful and optional
+- Chi-square tests for categorical counts and association — useful and optional
+- Confirmatory factor analysis (CFA) — useful and optional
+- Count regression: Poisson and negative binomial models — useful and optional
+- Exploratory factor analysis (EFA) — useful and optional
+- Fisher's exact test for categorical counts — useful and optional
+- Item response theory (IRT) and differential item functioning — useful and optional
+- Kendall rank correlation — useful and optional
+- Kruskal–Wallis rank test for independent groups — useful and optional
+- Simple and multiple linear regression (ordinary least squares) — useful and optional
+- Machine learning for survey nonresponse adjustment — useful and optional
+- Multinomial logistic regression for unordered categorical outcomes — useful and optional
+- Ordinal regression for ordered categorical outcomes — useful and optional
+- Pearson product-moment correlation — useful and optional
+- Probit regression for binary outcomes — useful and optional
+- Scale reliability estimation: alpha, omega and alternatives — useful and optional
+- Spearman rank correlation — useful and optional
+- One-sample, independent-samples and paired t-tests — useful and optional
+- Wilcoxon rank-sum and signed-rank tests — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Power BI for social-research reporting and interactive dashboards
 - Tableau for social-research visualisation and dashboards
@@ -1625,8 +1625,8 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Thanatology researcher** — Investigate social, cultural or psychological aspects of death, dying, bereavement or related practices using a defined disciplinary question and evidence.
 **Exact area-stage menu for selected focus: Study a defined behaviour or social-psychological process by selecting suitable measures and an observational, survey, interview or experimental design; evaluate reliability, validity and ethical limits.**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Ethical, cultural and reflexive judgement â€” use only when its stated condition applies; condition: Identify power, cultural assumptions, potential harm, consent/privacy needs and how researcher position may affect questions and interpretation.
-- Behavioural research design and measurement â€” use only when its stated condition applies; condition: Specify question, population, constructs, design, measures, analysis, ethics and what conclusions the design permits.
+- Ethical, cultural and reflexive judgement — use only when its stated condition applies; condition: Identify power, cultural assumptions, potential harm, consent/privacy needs and how researcher position may affect questions and interpretation.
+- Behavioural research design and measurement — use only when its stated condition applies; condition: Specify question, population, constructs, design, measures, analysis, ethics and what conclusions the design permits.
 **Pack 6 action — Study a defined behaviour or social-psychological process by selecting suitable measures and an observational, survey, interview or experimental design; evaluate reliability, validity and ethical limits.:**
 Select this pack's exact choice(s): **Ethical, cultural and reflexive judgement**.
 Leave this exact visible choice unchecked for the skip test: **Behavioural research design and measurement**. Other unselected choices stay unchecked.
@@ -1634,7 +1634,7 @@ After each tap, only the selected card is checked and only its row is added to t
 Toggle one selected optional card off and confirm its tray row disappears; toggle it back on before continuing so the pack's final selected set is restored.
 **Exact area-stage menu for selected focus: Use interviews, observation or documents to understand interaction**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Qualitative interview, observation and document inquiry â€” use only when its stated condition applies; condition: Plan and conduct ethical interviews/observation/document analysis, preserve context, code material and report evidence-backed themes and counterexamples.
+- Qualitative interview, observation and document inquiry — use only when its stated condition applies; condition: Plan and conduct ethical interviews/observation/document analysis, preserve context, code material and report evidence-backed themes and counterexamples.
 Tools in this selected focus group, with their item relationship shown above:
 - NVivo or Taguette for qualitative coding
 **Pack 6 action — Use interviews, observation or documents to understand interaction:**
@@ -1786,10 +1786,10 @@ After those components are selected, choose **Compare what people say with situa
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Turning ideas into observable measures is linked to Interviews, Observation and ethnographic approaches.
 - **Route context:** Finding and organising research sources is linked to Interviews, Observation and ethnographic approaches.
 - **Route context:** Checking reliability, validity and uncertainty is linked to Interviews, Observation and ethnographic approaches.
@@ -1797,17 +1797,17 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Interviews, Observation and ethnographic approaches.
 - **Route context:** Keeping a clear, repeatable research record is linked to Interviews, Observation and ethnographic approaches.
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Interviews:**
 _Useful and optional:_
-- Programme evaluation and theory of change â€” use only when its stated condition applies; condition: Assess what changed, for whom, why, under what conditions and at what cost.
-- Evidence synthesis: systematic reviews and scoping reviews â€” use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
-- AI-assisted annotation of social-research text, with human validation â€” optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
-- Interpretative phenomenological analysis (IPA) â€” useful and optional
+- Programme evaluation and theory of change — use only when its stated condition applies; condition: Assess what changed, for whom, why, under what conditions and at what cost.
+- Evidence synthesis: systematic reviews and scoping reviews — use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
+- AI-assisted annotation of social-research text, with human validation — optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
+- Interpretative phenomenological analysis (IPA) — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Dedoose for collaborative qualitative and mixed-methods analysis
 - Jamovi for introductory quantitative social-science analysis
@@ -1815,16 +1815,16 @@ _Tools attached to this method contribution; compare and select only what you pl
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Interviews, Observation and ethnographic approaches:**
 _Useful and optional:_
-- Archival and historical research â€” use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
-- Case-study and comparative-case design â€” use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
-- Discourse and conversation analysis â€” useful and optional
-- Experiments, quasi-experiments and causal inference â€” useful and optional
-- Focus groups and workshops â€” use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
-- Longitudinal, panel and multilevel data â€” useful and optional
-- Participatory and action research â€” use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
-- Piloting questions before fieldwork â€” use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
-- Psychometrics and scale construction â€” useful and optional
-- Conversation analysis (CA) of talk-in-interaction â€” useful and optional
+- Archival and historical research — use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
+- Case-study and comparative-case design — use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
+- Discourse and conversation analysis — useful and optional
+- Experiments, quasi-experiments and causal inference — useful and optional
+- Focus groups and workshops — use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
+- Longitudinal, panel and multilevel data — useful and optional
+- Participatory and action research — use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
+- Piloting questions before fieldwork — use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
+- Psychometrics and scale construction — useful and optional
+- Conversation analysis (CA) of talk-in-interaction — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - ATLAS.ti for qualitative data coding and retrieval
 - Jupyter
@@ -1909,10 +1909,10 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Statistician** — Plan or apply statistical methods to collect, organise, analyse and interpret numerical data, then explain what estimates and uncertainty support.
 **Exact area-stage menu for selected focus: Translate a social question into a feasible study design by defining purpose, population, evidence, sampling, method, ethics and the limits of the planned inference.**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Choose between surveys, interviews, focus groups and document methods â€” choose one alternative; condition: Choose among surveys, interviews, focus groups or documents according to the question; these are alternatives, not a cumulative checklist.
-- Protect participants and handle research data responsibly â€” use only when its stated condition applies; condition: Apply safeguards when a project involves people or sensitive/identifiable data; follow Nigerian law and institutional review where applicable.
-- Turn a social question into a feasible study design â€” useful and optional
-- Sampling, measurement and representativeness â€” use only when its stated condition applies; condition: Use when selecting people/cases or measuring a concept; state who or what the evidence can represent.
+- Choose between surveys, interviews, focus groups and document methods — choose one alternative; condition: Choose among surveys, interviews, focus groups or documents according to the question; these are alternatives, not a cumulative checklist.
+- Protect participants and handle research data responsibly — use only when its stated condition applies; condition: Apply safeguards when a project involves people or sensitive/identifiable data; follow Nigerian law and institutional review where applicable.
+- Turn a social question into a feasible study design — useful and optional
+- Sampling, measurement and representativeness — use only when its stated condition applies; condition: Use when selecting people/cases or measuring a concept; state who or what the evidence can represent.
 Tools in this selected focus group, with their item relationship shown above:
 - KoboToolbox for electronic form collection
 - NVivo or Taguette for documented qualitative coding
@@ -2016,10 +2016,10 @@ After those components are selected, choose **Choose evidence methods with parti
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Turning ideas into observable measures is linked to Participatory and action research, Interviews.
 - **Route context:** Finding and organising research sources is linked to Participatory and action research, Interviews.
 - **Route context:** Checking reliability, validity and uncertainty is linked to Participatory and action research, Interviews.
@@ -2027,16 +2027,16 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Participatory and action research, Interviews.
 - **Route context:** Keeping a clear, repeatable research record is linked to Participatory and action research, Interviews.
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Interviews:**
 _Useful and optional:_
-- Piloting questions before fieldwork â€” use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
-- AI-assisted annotation of social-research text, with human validation â€” optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
-- Interpretative phenomenological analysis (IPA) â€” useful and optional
+- Piloting questions before fieldwork — use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
+- AI-assisted annotation of social-research text, with human validation — optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
+- Interpretative phenomenological analysis (IPA) — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - ATLAS.ti for qualitative data coding and retrieval
 - Dedoose for collaborative qualitative and mixed-methods analysis
@@ -2045,16 +2045,16 @@ _Tools attached to this method contribution; compare and select only what you pl
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Interviews, Participatory and action research:**
 _Useful and optional:_
-- Focus groups and workshops â€” use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
-- Participatory and action research â€” use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
-- Conversation analysis (CA) of talk-in-interaction â€” useful and optional
+- Focus groups and workshops — use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
+- Participatory and action research — use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
+- Conversation analysis (CA) of talk-in-interaction — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Taguette for highlighting and coding documents
 - NVivo for organizing and coding substantial qualitative material
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Participatory and action research:**
 _Useful and optional:_
-- Investigate how AI systems affect people, groups and institutions â€” use only when its stated condition applies; condition: Optional when the research question concerns an AI system's effects on people, groups, or institutions; scope the assessment and involve affected stakeholders where appropriate.
+- Investigate how AI systems affect people, groups and institutions — use only when its stated condition applies; condition: Optional when the research question concerns an AI system's effects on people, groups, or institutions; scope the assessment and involve affected stakeholders where appropriate.
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - NetworkX for analysing relationship data as a graph
 - ODK for offline-capable field data collection
@@ -2114,8 +2114,8 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Anthropologist** — Study human life, culture, language, social organisation or change using contextual evidence, comparative interpretation and appropriate field or documentary methods.
 **Exact area-stage menu for selected focus: Gather situated evidence through fieldwork**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Ethnographic fieldwork and participant observation â€” useful and optional
-- Qualitative interviewing and focus-group facilitation â€” useful and optional
+- Ethnographic fieldwork and participant observation — useful and optional
+- Qualitative interviewing and focus-group facilitation — useful and optional
 Tools in this selected focus group, with their item relationship shown above:
 - Digital field-survey collection (KoboToolbox / KoboCollect or alternatives)
 **Pack 8 action — Gather situated evidence through fieldwork:**
@@ -2211,11 +2211,11 @@ This is a single-method route. The method remains usable on its own; a combined 
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Find and assess existing social data â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Find and assess existing social data — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Find and assess existing social data is linked to Agent-based modelling of social processes.
 - **Route context:** Turning ideas into observable measures is linked to Agent-based modelling of social processes.
 - **Route context:** Finding and organising research sources is linked to Agent-based modelling of social processes.
@@ -2224,10 +2224,10 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Plan research responsibly when people or sensitive data are involved â€” useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
-- Organise and protect research information when a project uses data â€” use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Plan research responsibly when people or sensitive data are involved — useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
+- Organise and protect research information when a project uses data — use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Agent-based modelling of social processes.
 - **Route context:** Organise and protect research information when a project uses data is linked to Agent-based modelling of social processes.
 - **Route context:** Plan research responsibly when people or sensitive data are involved is linked to Agent-based modelling of social processes.
@@ -2235,11 +2235,11 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Agent-based modelling of social processes:**
 _Useful and optional:_
-- Agent-based modelling of social processes â€” use only when its stated condition applies; condition: Use agent-based modelling when a stated theory or mechanism can be represented as interacting agents and a simulation can help explore possible patterns; simulation output is not evidence that real people will behave that way.
-- Experiments, quasi-experiments and causal inference â€” useful and optional
-- Validate and document AI use in a research workflow â€” use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
-- Critically test AI-generated social responses or agents in exploratory simulations â€” optional; condition: Experimental simulation option for an explicit agent-based modelling question. Synthetic outputs are not human participants, representative survey responses, or evidence of actual population behaviour.
-- ODD protocol for documenting agent-based models â€” useful and optional
+- Agent-based modelling of social processes — use only when its stated condition applies; condition: Use agent-based modelling when a stated theory or mechanism can be represented as interacting agents and a simulation can help explore possible patterns; simulation output is not evidence that real people will behave that way.
+- Experiments, quasi-experiments and causal inference — useful and optional
+- Validate and document AI use in a research workflow — use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
+- Critically test AI-generated social responses or agents in exploratory simulations — optional; condition: Experimental simulation option for an explicit agent-based modelling question. Synthetic outputs are not human participants, representative survey responses, or evidence of actual population behaviour.
+- ODD protocol for documenting agent-based models — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Power BI for social-research reporting and interactive dashboards
 - Tableau for social-research visualisation and dashboards
@@ -2276,7 +2276,7 @@ Select only the task-family focus or focuses named for this pack; every other fo
 No task-family focus is selected in this pack. The general route for the area remains available; this is a valid path and must not block progression.
 **No-focus route: general area learning and tools shown when no task-family card is selected:**
 **Useful and conditional route choices (skippable unless the card's stated need applies):**
-- Agent-based economic modelling (Python/Mesa or another justified platform) â€” use only when its stated condition applies; condition: Optional specialist method for studying how stated economic actors, rules and interactions may generate broader patterns. A simulation is a model under assumptions, not an empirical forecast or proof about real people.
+- Agent-based economic modelling (Python/Mesa or another justified platform) — use only when its stated condition applies; condition: Optional specialist method for studying how stated economic actors, rules and interactions may generate broader patterns. A simulation is a model under assumptions, not an empirical forecast or proof about real people.
 **Pack 9 action — general_area_route_without_task_family_focus:**
 Select this pack's exact choice(s): **Agent-based economic modelling (Python/Mesa or another justified platform)**.
 After each tap, only the selected card is checked and only its row is added to the tray; this choice alone does not change the downstream route.
@@ -2329,11 +2329,11 @@ This is a single-method route. The method remains usable on its own; a combined 
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Find and assess existing social data â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Find and assess existing social data — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Find and assess existing social data is linked to Social network analysis.
 - **Route context:** Turning ideas into observable measures is linked to Social network analysis.
 - **Route context:** Finding and organising research sources is linked to Social network analysis.
@@ -2342,10 +2342,10 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Plan research responsibly when people or sensitive data are involved â€” useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
-- Organise and protect research information when a project uses data â€” use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Plan research responsibly when people or sensitive data are involved — useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
+- Organise and protect research information when a project uses data — use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Social network analysis.
 - **Route context:** Organise and protect research information when a project uses data is linked to Social network analysis.
 - **Route context:** Plan research responsibly when people or sensitive data are involved is linked to Social network analysis.
@@ -2353,11 +2353,11 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Social network analysis:**
 _Useful and optional:_
-- Network analysis â€” useful edge; condition: Choose Network Analysis when the research question concerns the structure of connections among defined people, organisations or other entities.
-- Agent-based modelling of social processes â€” use only when its stated condition applies; condition: Use agent-based modelling when a stated theory or mechanism can be represented as interacting agents and a simulation can help explore possible patterns; simulation output is not evidence that real people will behave that way.
-- Participatory and action research â€” use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
-- Validate and document AI use in a research workflow â€” use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
-- Exponential-family random graph models (ERGMs) â€” useful and optional
+- Network analysis — useful edge; condition: Choose Network Analysis when the research question concerns the structure of connections among defined people, organisations or other entities.
+- Agent-based modelling of social processes — use only when its stated condition applies; condition: Use agent-based modelling when a stated theory or mechanism can be represented as interacting agents and a simulation can help explore possible patterns; simulation output is not evidence that real people will behave that way.
+- Participatory and action research — use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
+- Validate and document AI use in a research workflow — use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
+- Exponential-family random graph models (ERGMs) — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Power BI for social-research reporting and interactive dashboards
 - Tableau for social-research visualisation and dashboards
@@ -2398,7 +2398,7 @@ Select only the task-family focus or focuses named for this pack; every other fo
 No task-family focus is selected in this pack. The general route for the area remains available; this is a valid path and must not block progression.
 **No-focus route: general area learning and tools shown when no task-family card is selected:**
 **Useful and conditional route choices (skippable unless the card's stated need applies):**
-- Agent-based economic modelling (Python/Mesa or another justified platform) â€” use only when its stated condition applies; condition: Optional specialist method for studying how stated economic actors, rules and interactions may generate broader patterns. A simulation is a model under assumptions, not an empirical forecast or proof about real people.
+- Agent-based economic modelling (Python/Mesa or another justified platform) — use only when its stated condition applies; condition: Optional specialist method for studying how stated economic actors, rules and interactions may generate broader patterns. A simulation is a model under assumptions, not an empirical forecast or proof about real people.
 **Pack 10 action — general_area_route_without_task_family_focus:**
 Select this pack's exact choice(s): **Agent-based economic modelling (Python/Mesa or another justified platform)**.
 After each tap, only the selected card is checked and only its row is added to the tray; this choice alone does not change the downstream route.
@@ -2456,11 +2456,11 @@ This is a single-method route. The method remains usable on its own; a combined 
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Find and assess existing social data â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Find and assess existing social data — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Find and assess existing social data is linked to Spatial analysis and mapping with suitable social data.
 - **Route context:** Turning ideas into observable measures is linked to Spatial analysis and mapping with suitable social data.
 - **Route context:** Finding and organising research sources is linked to Spatial analysis and mapping with suitable social data.
@@ -2469,10 +2469,10 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Plan research responsibly when people or sensitive data are involved â€” useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
-- Organise and protect research information when a project uses data â€” use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Plan research responsibly when people or sensitive data are involved — useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
+- Organise and protect research information when a project uses data — use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Spatial analysis and mapping with suitable social data.
 - **Route context:** Organise and protect research information when a project uses data is linked to Spatial analysis and mapping with suitable social data.
 - **Route context:** Plan research responsibly when people or sensitive data are involved is linked to Spatial analysis and mapping with suitable social data.
@@ -2480,14 +2480,14 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Spatial analysis and mapping with suitable social data:**
 _Useful and optional:_
-- Archival and historical research â€” use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
-- Case-study and comparative-case design â€” use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
-- Longitudinal, panel and multilevel data â€” useful and optional
-- Evidence synthesis: systematic reviews and scoping reviews â€” use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
-- Use AI cautiously to assist cross-source social-data harmonisation â€” optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
-- Use AI to draft or improve research-data metadata, then curate and verify it â€” optional; condition: Optional experimental support for drafting or reviewing metadata. A human curator checks every field against the source and repository schema.
-- Spatial autocorrelation: Moran's I and local indicators (LISA) â€” useful and optional
-- Spatial regression: spatial lag and spatial error models â€” useful and optional
+- Archival and historical research — use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
+- Case-study and comparative-case design — use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
+- Longitudinal, panel and multilevel data — useful and optional
+- Evidence synthesis: systematic reviews and scoping reviews — use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
+- Use AI cautiously to assist cross-source social-data harmonisation — optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
+- Use AI to draft or improve research-data metadata, then curate and verify it — optional; condition: Optional experimental support for drafting or reviewing metadata. A human curator checks every field against the source and repository schema.
+- Spatial autocorrelation: Moran's I and local indicators (LISA) — useful and optional
+- Spatial regression: spatial lag and spatial error models — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Power BI for social-research reporting and interactive dashboards
 - Tableau for social-research visualisation and dashboards
@@ -2555,10 +2555,10 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Demographer** — Describe and analyse population size, composition and change using births, deaths, migration and related data; explain assumptions in estimates or projections.
 **Exact area-stage menu for selected focus: Describe how people, services or social conditions vary across places and scales by checking spatial data provenance, geographic units and map choices before interpreting a pattern.**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Spatial data provenance, geographic units and scale â€” use only when its stated condition applies; condition: Use when geographic units, coverage, reference period or map scale affect interpretation; inspect data access and anonymisation.
-- Spatial analysis and map-based comparison â€” use only when its stated condition applies; condition: Optional method for questions where spatial pattern or distance is relevant; maps do not establish causation.
-- Explain spatial patterns without overclaiming â€” use only when its stated condition applies; condition: Use when explaining a mapped pattern; state data, scale and uncertainty limits and avoid causal overclaiming.
-- Geographical random forest for spatially varying prediction â€” useful and optional
+- Spatial data provenance, geographic units and scale — use only when its stated condition applies; condition: Use when geographic units, coverage, reference period or map scale affect interpretation; inspect data access and anonymisation.
+- Spatial analysis and map-based comparison — use only when its stated condition applies; condition: Optional method for questions where spatial pattern or distance is relevant; maps do not establish causation.
+- Explain spatial patterns without overclaiming — use only when its stated condition applies; condition: Use when explaining a mapped pattern; state data, scale and uncertainty limits and avoid causal overclaiming.
+- Geographical random forest for spatially varying prediction — useful and optional
 Tools in this selected focus group, with their item relationship shown above:
 - QGIS for a human-geography spatial workflow
 **Pack 11 action — Describe how people, services or social conditions vary across places and scales by checking spatial data provenance, geographic units and map choices before interpreting a pattern.:**
@@ -2663,11 +2663,11 @@ This is a single-method route. The method remains usable on its own; a combined 
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Find and assess existing social data â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Find and assess existing social data — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Find and assess existing social data is linked to Experiments, quasi-experiments and causal inference.
 - **Route context:** Turning ideas into observable measures is linked to Experiments, quasi-experiments and causal inference.
 - **Route context:** Finding and organising research sources is linked to Experiments, quasi-experiments and causal inference.
@@ -2676,10 +2676,10 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Plan research responsibly when people or sensitive data are involved â€” useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
-- Organise and protect research information when a project uses data â€” use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Plan research responsibly when people or sensitive data are involved — useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
+- Organise and protect research information when a project uses data — use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Experiments, quasi-experiments and causal inference.
 - **Route context:** Organise and protect research information when a project uses data is linked to Experiments, quasi-experiments and causal inference.
 - **Route context:** Plan research responsibly when people or sensitive data are involved is linked to Experiments, quasi-experiments and causal inference.
@@ -2687,32 +2687,32 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Experiments, quasi-experiments and causal inference:**
 _Useful and optional:_
-- Sensitivity and robustness analysis for quantitative findings â€” useful edge; condition: Use sensitivity or robustness checks when a quantitative result depends on uncertain inputs, modelling choices or assumptions that could materially change the conclusion.
-- Archival and historical research â€” use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
-- Case-study and comparative-case design â€” use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
-- Discourse and conversation analysis â€” useful and optional
-- Experiments, quasi-experiments and causal inference â€” useful and optional
-- Focus groups and workshops â€” use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
-- Longitudinal, panel and multilevel data â€” useful and optional
-- Participatory and action research â€” use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
-- Piloting questions before fieldwork â€” use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
-- Programme evaluation and theory of change â€” use only when its stated condition applies; condition: Assess what changed, for whom, why, under what conditions and at what cost.
-- Psychometrics and scale construction â€” useful and optional
-- Evidence synthesis: systematic reviews and scoping reviews â€” use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
-- ANOVA: group, factorial and repeated-measures comparisons â€” useful and optional
-- Count regression: Poisson and negative binomial models â€” useful and optional
-- Friedman rank test for matched or blocked groups â€” useful and optional
-- Kruskal–Wallis rank test for independent groups â€” useful and optional
-- Simple and multiple linear regression (ordinary least squares) â€” useful and optional
-- Logistic regression for binary outcomes â€” useful and optional
-- Multinomial logistic regression for unordered categorical outcomes â€” useful and optional
-- Probit regression for binary outcomes â€” useful and optional
-- Process tracing for within-case causal mechanisms â€” useful and optional
-- Regularized linear regression: ridge, LASSO and elastic net â€” useful and optional
-- Spatial regression: spatial lag and spatial error models â€” useful and optional
-- Supervised machine learning for social-research prediction and classification â€” useful and optional
-- One-sample, independent-samples and paired t-tests â€” useful and optional
-- Wilcoxon rank-sum and signed-rank tests â€” useful and optional
+- Sensitivity and robustness analysis for quantitative findings — useful edge; condition: Use sensitivity or robustness checks when a quantitative result depends on uncertain inputs, modelling choices or assumptions that could materially change the conclusion.
+- Archival and historical research — use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
+- Case-study and comparative-case design — use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
+- Discourse and conversation analysis — useful and optional
+- Experiments, quasi-experiments and causal inference — useful and optional
+- Focus groups and workshops — use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
+- Longitudinal, panel and multilevel data — useful and optional
+- Participatory and action research — use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
+- Piloting questions before fieldwork — use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
+- Programme evaluation and theory of change — use only when its stated condition applies; condition: Assess what changed, for whom, why, under what conditions and at what cost.
+- Psychometrics and scale construction — useful and optional
+- Evidence synthesis: systematic reviews and scoping reviews — use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
+- ANOVA: group, factorial and repeated-measures comparisons — useful and optional
+- Count regression: Poisson and negative binomial models — useful and optional
+- Friedman rank test for matched or blocked groups — useful and optional
+- Kruskal–Wallis rank test for independent groups — useful and optional
+- Simple and multiple linear regression (ordinary least squares) — useful and optional
+- Logistic regression for binary outcomes — useful and optional
+- Multinomial logistic regression for unordered categorical outcomes — useful and optional
+- Probit regression for binary outcomes — useful and optional
+- Process tracing for within-case causal mechanisms — useful and optional
+- Regularized linear regression: ridge, LASSO and elastic net — useful and optional
+- Spatial regression: spatial lag and spatial error models — useful and optional
+- Supervised machine learning for social-research prediction and classification — useful and optional
+- One-sample, independent-samples and paired t-tests — useful and optional
+- Wilcoxon rank-sum and signed-rank tests — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - EViews for econometric time-series analysis
 - Jamovi for introductory quantitative social-science analysis
@@ -2797,10 +2797,10 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Statistician** — Plan or apply statistical methods to collect, organise, analyse and interpret numerical data, then explain what estimates and uncertainty support.
 **Exact area-stage menu for selected focus: Translate a social question into a feasible study design by defining purpose, population, evidence, sampling, method, ethics and the limits of the planned inference.**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Choose between surveys, interviews, focus groups and document methods â€” choose one alternative; condition: Choose among surveys, interviews, focus groups or documents according to the question; these are alternatives, not a cumulative checklist.
-- Protect participants and handle research data responsibly â€” use only when its stated condition applies; condition: Apply safeguards when a project involves people or sensitive/identifiable data; follow Nigerian law and institutional review where applicable.
-- Turn a social question into a feasible study design â€” useful and optional
-- Sampling, measurement and representativeness â€” use only when its stated condition applies; condition: Use when selecting people/cases or measuring a concept; state who or what the evidence can represent.
+- Choose between surveys, interviews, focus groups and document methods — choose one alternative; condition: Choose among surveys, interviews, focus groups or documents according to the question; these are alternatives, not a cumulative checklist.
+- Protect participants and handle research data responsibly — use only when its stated condition applies; condition: Apply safeguards when a project involves people or sensitive/identifiable data; follow Nigerian law and institutional review where applicable.
+- Turn a social question into a feasible study design — useful and optional
+- Sampling, measurement and representativeness — use only when its stated condition applies; condition: Use when selecting people/cases or measuring a concept; state who or what the evidence can represent.
 Tools in this selected focus group, with their item relationship shown above:
 - KoboToolbox for electronic form collection
 - NVivo or Taguette for documented qualitative coding
@@ -2901,11 +2901,11 @@ This is a single-method route. The method remains usable on its own; a combined 
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Find and assess existing social data â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Find and assess existing social data — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Find and assess existing social data is linked to Focus groups and workshops.
 - **Route context:** Turning ideas into observable measures is linked to Focus groups and workshops.
 - **Route context:** Finding and organising research sources is linked to Focus groups and workshops.
@@ -2914,10 +2914,10 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Plan research responsibly when people or sensitive data are involved â€” useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
-- Organise and protect research information when a project uses data â€” use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Plan research responsibly when people or sensitive data are involved — useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
+- Organise and protect research information when a project uses data — use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Focus groups and workshops.
 - **Route context:** Organise and protect research information when a project uses data is linked to Focus groups and workshops.
 - **Route context:** Plan research responsibly when people or sensitive data are involved is linked to Focus groups and workshops.
@@ -2925,14 +2925,14 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Focus groups and workshops:**
 _Useful and optional:_
-- Case-study and comparative-case design â€” use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
-- Discourse and conversation analysis â€” useful and optional
-- Focus groups and workshops â€” use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
-- Longitudinal, panel and multilevel data â€” useful and optional
-- Participatory and action research â€” use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
-- AI-assisted annotation of social-research text, with human validation â€” optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
-- Conversation analysis (CA) of talk-in-interaction â€” useful and optional
-- Interpretative phenomenological analysis (IPA) â€” useful and optional
+- Case-study and comparative-case design — use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
+- Discourse and conversation analysis — useful and optional
+- Focus groups and workshops — use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
+- Longitudinal, panel and multilevel data — useful and optional
+- Participatory and action research — use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
+- AI-assisted annotation of social-research text, with human validation — optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
+- Conversation analysis (CA) of talk-in-interaction — useful and optional
+- Interpretative phenomenological analysis (IPA) — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - ATLAS.ti for qualitative data coding and retrieval
 - Dedoose for collaborative qualitative and mixed-methods analysis
@@ -2991,7 +2991,7 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Thanatology researcher** — Investigate social, cultural or psychological aspects of death, dying, bereavement or related practices using a defined disciplinary question and evidence.
 **Exact area-stage menu for selected focus: Use interviews, observation or documents to understand interaction**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Qualitative interview, observation and document inquiry â€” use only when its stated condition applies; condition: Plan and conduct ethical interviews/observation/document analysis, preserve context, code material and report evidence-backed themes and counterexamples.
+- Qualitative interview, observation and document inquiry — use only when its stated condition applies; condition: Plan and conduct ethical interviews/observation/document analysis, preserve context, code material and report evidence-backed themes and counterexamples.
 Tools in this selected focus group, with their item relationship shown above:
 - NVivo or Taguette for qualitative coding
 **Pack 13 action — Use interviews, observation or documents to understand interaction:**
@@ -3090,11 +3090,11 @@ This is a single-method route. The method remains usable on its own; a combined 
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Find and assess existing social data â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Find and assess existing social data — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Find and assess existing social data is linked to Observation and ethnographic approaches.
 - **Route context:** Turning ideas into observable measures is linked to Observation and ethnographic approaches.
 - **Route context:** Finding and organising research sources is linked to Observation and ethnographic approaches.
@@ -3103,10 +3103,10 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Plan research responsibly when people or sensitive data are involved â€” useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
-- Organise and protect research information when a project uses data â€” use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Plan research responsibly when people or sensitive data are involved — useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
+- Organise and protect research information when a project uses data — use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Observation and ethnographic approaches.
 - **Route context:** Organise and protect research information when a project uses data is linked to Observation and ethnographic approaches.
 - **Route context:** Plan research responsibly when people or sensitive data are involved is linked to Observation and ethnographic approaches.
@@ -3114,10 +3114,10 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Observation and ethnographic approaches:**
 _Useful and optional:_
-- Focus groups and workshops â€” use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
-- Participatory and action research â€” use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
-- Piloting questions before fieldwork â€” use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
-- Conversation analysis (CA) of talk-in-interaction â€” useful and optional
+- Focus groups and workshops — use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
+- Participatory and action research — use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
+- Piloting questions before fieldwork — use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
+- Conversation analysis (CA) of talk-in-interaction — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - ATLAS.ti for qualitative data coding and retrieval
 - QualCoder for open-source qualitative analysis
@@ -3212,11 +3212,11 @@ This is a single-method route. The method remains usable on its own; a combined 
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Find and assess existing social data â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Find and assess existing social data — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Find and assess existing social data is linked to Document and content analysis.
 - **Route context:** Turning ideas into observable measures is linked to Document and content analysis.
 - **Route context:** Finding and organising research sources is linked to Document and content analysis.
@@ -3225,10 +3225,10 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Plan research responsibly when people or sensitive data are involved â€” useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
-- Organise and protect research information when a project uses data â€” use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Plan research responsibly when people or sensitive data are involved — useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
+- Organise and protect research information when a project uses data — use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Document and content analysis.
 - **Route context:** Organise and protect research information when a project uses data is linked to Document and content analysis.
 - **Route context:** Plan research responsibly when people or sensitive data are involved is linked to Document and content analysis.
@@ -3236,24 +3236,24 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Document and content analysis:**
 _Useful and optional:_
-- Archival and historical research â€” use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
-- Case-study and comparative-case design â€” use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
-- Discourse and conversation analysis â€” useful and optional
-- Experiments, quasi-experiments and causal inference â€” useful and optional
-- Focus groups and workshops â€” use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
-- Longitudinal, panel and multilevel data â€” useful and optional
-- Participatory and action research â€” use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
-- Piloting questions before fieldwork â€” use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
-- Psychometrics and scale construction â€” useful and optional
-- Use AI cautiously to assist cross-source social-data harmonisation â€” optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
-- AI-assisted annotation of social-research text, with human validation â€” optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
-- Investigate how AI systems affect people, groups and institutions â€” use only when its stated condition applies; condition: Optional when the research question concerns an AI system's effects on people, groups, or institutions; scope the assessment and involve affected stakeholders where appropriate.
-- Validate and document AI use in a research workflow â€” use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
-- Critical discourse analysis (CDA) â€” useful and optional
-- LLM-assisted measurement of constructs in social text â€” useful and optional
-- Natural language processing and computational text mining â€” useful and optional
-- Supervised machine learning for social-research prediction and classification â€” useful and optional
-- Tree-ensemble machine learning for prediction and classification â€” useful and optional
+- Archival and historical research — use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
+- Case-study and comparative-case design — use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
+- Discourse and conversation analysis — useful and optional
+- Experiments, quasi-experiments and causal inference — useful and optional
+- Focus groups and workshops — use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
+- Longitudinal, panel and multilevel data — useful and optional
+- Participatory and action research — use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
+- Piloting questions before fieldwork — use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
+- Psychometrics and scale construction — useful and optional
+- Use AI cautiously to assist cross-source social-data harmonisation — optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
+- AI-assisted annotation of social-research text, with human validation — optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
+- Investigate how AI systems affect people, groups and institutions — use only when its stated condition applies; condition: Optional when the research question concerns an AI system's effects on people, groups, or institutions; scope the assessment and involve affected stakeholders where appropriate.
+- Validate and document AI use in a research workflow — use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
+- Critical discourse analysis (CDA) — useful and optional
+- LLM-assisted measurement of constructs in social text — useful and optional
+- Natural language processing and computational text mining — useful and optional
+- Supervised machine learning for social-research prediction and classification — useful and optional
+- Tree-ensemble machine learning for prediction and classification — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - ATLAS.ti for qualitative data coding and retrieval
 - Hugging Face Transformers for pretrained NLP models
@@ -3339,10 +3339,10 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Statistician** — Plan or apply statistical methods to collect, organise, analyse and interpret numerical data, then explain what estimates and uncertainty support.
 **Exact area-stage menu for selected focus: Translate a social question into a feasible study design by defining purpose, population, evidence, sampling, method, ethics and the limits of the planned inference.**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Choose between surveys, interviews, focus groups and document methods â€” choose one alternative; condition: Choose among surveys, interviews, focus groups or documents according to the question; these are alternatives, not a cumulative checklist.
-- Protect participants and handle research data responsibly â€” use only when its stated condition applies; condition: Apply safeguards when a project involves people or sensitive/identifiable data; follow Nigerian law and institutional review where applicable.
-- Turn a social question into a feasible study design â€” useful and optional
-- Sampling, measurement and representativeness â€” use only when its stated condition applies; condition: Use when selecting people/cases or measuring a concept; state who or what the evidence can represent.
+- Choose between surveys, interviews, focus groups and document methods — choose one alternative; condition: Choose among surveys, interviews, focus groups or documents according to the question; these are alternatives, not a cumulative checklist.
+- Protect participants and handle research data responsibly — use only when its stated condition applies; condition: Apply safeguards when a project involves people or sensitive/identifiable data; follow Nigerian law and institutional review where applicable.
+- Turn a social question into a feasible study design — useful and optional
+- Sampling, measurement and representativeness — use only when its stated condition applies; condition: Use when selecting people/cases or measuring a concept; state who or what the evidence can represent.
 Tools in this selected focus group, with their item relationship shown above:
 - KoboToolbox for electronic form collection
 - NVivo or Taguette for documented qualitative coding
@@ -3437,11 +3437,11 @@ This is a single-method route. The method remains usable on its own; a combined 
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Find and assess existing social data â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Find and assess existing social data — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Find and assess existing social data is linked to Discourse and conversation analysis.
 - **Route context:** Turning ideas into observable measures is linked to Discourse and conversation analysis.
 - **Route context:** Finding and organising research sources is linked to Discourse and conversation analysis.
@@ -3450,10 +3450,10 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Plan research responsibly when people or sensitive data are involved â€” useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
-- Organise and protect research information when a project uses data â€” use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Plan research responsibly when people or sensitive data are involved — useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
+- Organise and protect research information when a project uses data — use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Discourse and conversation analysis.
 - **Route context:** Organise and protect research information when a project uses data is linked to Discourse and conversation analysis.
 - **Route context:** Plan research responsibly when people or sensitive data are involved is linked to Discourse and conversation analysis.
@@ -3461,16 +3461,16 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Discourse and conversation analysis:**
 _Useful and optional:_
-- Archival and historical research â€” use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
-- Discourse and conversation analysis â€” useful and optional
-- Experiments, quasi-experiments and causal inference â€” useful and optional
-- Longitudinal, panel and multilevel data â€” useful and optional
-- Evidence synthesis: systematic reviews and scoping reviews â€” use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
-- AI-assisted annotation of social-research text, with human validation â€” optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
-- Conversation analysis (CA) of talk-in-interaction â€” useful and optional
-- Critical discourse analysis (CDA) â€” useful and optional
-- LLM-assisted measurement of constructs in social text â€” useful and optional
-- Natural language processing and computational text mining â€” useful and optional
+- Archival and historical research — use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
+- Discourse and conversation analysis — useful and optional
+- Experiments, quasi-experiments and causal inference — useful and optional
+- Longitudinal, panel and multilevel data — useful and optional
+- Evidence synthesis: systematic reviews and scoping reviews — use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
+- AI-assisted annotation of social-research text, with human validation — optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
+- Conversation analysis (CA) of talk-in-interaction — useful and optional
+- Critical discourse analysis (CDA) — useful and optional
+- LLM-assisted measurement of constructs in social text — useful and optional
+- Natural language processing and computational text mining — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - ATLAS.ti for qualitative data coding and retrieval
 - Hugging Face Transformers for pretrained NLP models
@@ -3541,8 +3541,8 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Tax policy analyst** — Analyse tax rules, fiscal data or policy proposals and estimate or explain possible revenue, distributional and administrative implications.
 **Exact area-stage menu for selected focus: Turn a governance or public-policy question into a bounded evidence review: identify institutions and affected groups, compare evidence and options, then state a reasoned finding with uncertainty and trade-offs.**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Policy evidence review and options appraisal â€” use only when its stated condition applies; condition: Summarize what is known, assess source quality and applicability, identify evidence gaps, and compare feasible options without presenting the review as a complete systematic review unless its protocol warrants that label.
-- Policy brief and evidence communication â€” use only when its stated condition applies; condition: Turn an evidence review into a short brief with issue, evidence, options, trade-offs, recommendation conditions and references.
+- Policy evidence review and options appraisal — use only when its stated condition applies; condition: Summarize what is known, assess source quality and applicability, identify evidence gaps, and compare feasible options without presenting the review as a complete systematic review unless its protocol warrants that label.
+- Policy brief and evidence communication — use only when its stated condition applies; condition: Turn an evidence review into a short brief with issue, evidence, options, trade-offs, recommendation conditions and references.
 **Pack 16 action — Turn a governance or public-policy question into a bounded evidence review: identify institutions and affected groups, compare evidence and options, then state a reasoned finding with uncertainty and trade-offs.:**
 Select this pack's exact choice(s): **Policy evidence review and options appraisal**.
 Leave this exact visible choice unchecked for the skip test: **Policy brief and evidence communication**. Other unselected choices stay unchecked.
@@ -3630,11 +3630,11 @@ This is a single-method route. The method remains usable on its own; a combined 
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Find and assess existing social data â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Find and assess existing social data — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Find and assess existing social data is linked to Case-study and comparative-case design.
 - **Route context:** Turning ideas into observable measures is linked to Case-study and comparative-case design.
 - **Route context:** Finding and organising research sources is linked to Case-study and comparative-case design.
@@ -3643,10 +3643,10 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Plan research responsibly when people or sensitive data are involved â€” useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
-- Organise and protect research information when a project uses data â€” use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Plan research responsibly when people or sensitive data are involved — useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
+- Organise and protect research information when a project uses data — use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Case-study and comparative-case design.
 - **Route context:** Organise and protect research information when a project uses data is linked to Case-study and comparative-case design.
 - **Route context:** Plan research responsibly when people or sensitive data are involved is linked to Case-study and comparative-case design.
@@ -3654,13 +3654,13 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Case-study and comparative-case design:**
 _Useful and optional:_
-- Archival and historical research â€” use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
-- Case-study and comparative-case design â€” use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
-- Discourse and conversation analysis â€” useful and optional
-- Longitudinal, panel and multilevel data â€” useful and optional
-- Evidence synthesis: systematic reviews and scoping reviews â€” use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
-- Investigate how AI systems affect people, groups and institutions â€” use only when its stated condition applies; condition: Optional when the research question concerns an AI system's effects on people, groups, or institutions; scope the assessment and involve affected stakeholders where appropriate.
-- Process tracing for within-case causal mechanisms â€” useful and optional
+- Archival and historical research — use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
+- Case-study and comparative-case design — use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
+- Discourse and conversation analysis — useful and optional
+- Longitudinal, panel and multilevel data — useful and optional
+- Evidence synthesis: systematic reviews and scoping reviews — use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
+- Investigate how AI systems affect people, groups and institutions — use only when its stated condition applies; condition: Optional when the research question concerns an AI system's effects on people, groups, or institutions; scope the assessment and involve affected stakeholders where appropriate.
+- Process tracing for within-case causal mechanisms — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Python
 - Scikit-learn
@@ -3718,8 +3718,8 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Anthropologist** — Study human life, culture, language, social organisation or change using contextual evidence, comparative interpretation and appropriate field or documentary methods.
 **Exact area-stage menu for selected focus: Analyze existing qualitative, documentary, and archival evidence**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Secondary qualitative-data analysis and provenance assessment â€” useful and optional
-- Systematic document and media analysis â€” useful and optional
+- Secondary qualitative-data analysis and provenance assessment — useful and optional
+- Systematic document and media analysis — useful and optional
 **Pack 17 action — Analyze existing qualitative, documentary, and archival evidence:**
 Select this pack's exact choice(s): **Secondary qualitative-data analysis and provenance assessment**.
 Leave this exact visible choice unchecked for the skip test: **Systematic document and media analysis**. Other unselected choices stay unchecked.
@@ -3810,11 +3810,11 @@ This is a single-method route. The method remains usable on its own; a combined 
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Find and assess existing social data â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Find and assess existing social data — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Find and assess existing social data is linked to Archival and historical research.
 - **Route context:** Turning ideas into observable measures is linked to Archival and historical research.
 - **Route context:** Finding and organising research sources is linked to Archival and historical research.
@@ -3823,10 +3823,10 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Plan research responsibly when people or sensitive data are involved â€” useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
-- Organise and protect research information when a project uses data â€” use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Plan research responsibly when people or sensitive data are involved — useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
+- Organise and protect research information when a project uses data — use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Archival and historical research.
 - **Route context:** Organise and protect research information when a project uses data is linked to Archival and historical research.
 - **Route context:** Plan research responsibly when people or sensitive data are involved is linked to Archival and historical research.
@@ -3834,14 +3834,14 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Archival and historical research:**
 _Useful and optional:_
-- Archival and historical research â€” use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
-- Case-study and comparative-case design â€” use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
-- Discourse and conversation analysis â€” useful and optional
-- Longitudinal, panel and multilevel data â€” useful and optional
-- Evidence synthesis: systematic reviews and scoping reviews â€” use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
-- Use AI cautiously to assist cross-source social-data harmonisation â€” optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
-- Use AI to draft or improve research-data metadata, then curate and verify it â€” optional; condition: Optional experimental support for drafting or reviewing metadata. A human curator checks every field against the source and repository schema.
-- Process tracing for within-case causal mechanisms â€” useful and optional
+- Archival and historical research — use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
+- Case-study and comparative-case design — use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
+- Discourse and conversation analysis — useful and optional
+- Longitudinal, panel and multilevel data — useful and optional
+- Evidence synthesis: systematic reviews and scoping reviews — use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
+- Use AI cautiously to assist cross-source social-data harmonisation — optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
+- Use AI to draft or improve research-data metadata, then curate and verify it — optional; condition: Optional experimental support for drafting or reviewing metadata. A human curator checks every field against the source and repository schema.
+- Process tracing for within-case causal mechanisms — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Python
 - Scikit-learn
@@ -3898,8 +3898,8 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Anthropologist** — Study human life, culture, language, social organisation or change using contextual evidence, comparative interpretation and appropriate field or documentary methods.
 **Exact area-stage menu for selected focus: Analyze existing qualitative, documentary, and archival evidence**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Secondary qualitative-data analysis and provenance assessment â€” useful and optional
-- Systematic document and media analysis â€” useful and optional
+- Secondary qualitative-data analysis and provenance assessment — useful and optional
+- Systematic document and media analysis — useful and optional
 **Pack 18 action — Analyze existing qualitative, documentary, and archival evidence:**
 Select this pack's exact choice(s): **Secondary qualitative-data analysis and provenance assessment**.
 Leave this exact visible choice unchecked for the skip test: **Systematic document and media analysis**. Other unselected choices stay unchecked.
@@ -4000,11 +4000,11 @@ This is a single-method route. The method remains usable on its own; a combined 
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Find and assess existing social data â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Find and assess existing social data — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Find and assess existing social data is linked to Mixed methods (combining numerical and qualitative evidence when justified).
 - **Route context:** Turning ideas into observable measures is linked to Mixed methods (combining numerical and qualitative evidence when justified).
 - **Route context:** Finding and organising research sources is linked to Mixed methods (combining numerical and qualitative evidence when justified).
@@ -4013,10 +4013,10 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Plan research responsibly when people or sensitive data are involved â€” useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
-- Organise and protect research information when a project uses data â€” use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Plan research responsibly when people or sensitive data are involved — useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
+- Organise and protect research information when a project uses data — use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Mixed methods (combining numerical and qualitative evidence when justified).
 - **Route context:** Organise and protect research information when a project uses data is linked to Mixed methods (combining numerical and qualitative evidence when justified).
 - **Route context:** Plan research responsibly when people or sensitive data are involved is linked to Mixed methods (combining numerical and qualitative evidence when justified).
@@ -4024,13 +4024,13 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Mixed methods (combining numerical and qualitative evidence when justified):**
 _Useful and optional:_
-- Case-study and comparative-case design â€” use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
-- Experiments, quasi-experiments and causal inference â€” useful and optional
-- Programme evaluation and theory of change â€” use only when its stated condition applies; condition: Assess what changed, for whom, why, under what conditions and at what cost.
-- Evidence synthesis: systematic reviews and scoping reviews â€” use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
-- AI-assisted annotation of social-research text, with human validation â€” optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
-- Validate and document AI use in a research workflow â€” use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
-- Quantitative methods (working with numbers) â€” use only when its stated condition applies; condition: Choose this approach when a question needs numerical measurement, counting, comparison or a statistical summary; it is an option, not a requirement for every route.
+- Case-study and comparative-case design — use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
+- Experiments, quasi-experiments and causal inference — useful and optional
+- Programme evaluation and theory of change — use only when its stated condition applies; condition: Assess what changed, for whom, why, under what conditions and at what cost.
+- Evidence synthesis: systematic reviews and scoping reviews — use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
+- AI-assisted annotation of social-research text, with human validation — optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
+- Validate and document AI use in a research workflow — use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
+- Quantitative methods (working with numbers) — use only when its stated condition applies; condition: Choose this approach when a question needs numerical measurement, counting, comparison or a statistical summary; it is an option, not a requirement for every route.
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Dedoose for collaborative qualitative and mixed-methods analysis
 - MAXQDA for qualitative and mixed-methods analysis
@@ -4074,7 +4074,7 @@ Select only the task-family focus or focuses named for this pack; every other fo
 No task-family focus is selected in this pack. The general route for the area remains available; this is a valid path and must not block progression.
 **No-focus route: general area learning and tools shown when no task-family card is selected:**
 **Useful and conditional route choices (skippable unless the card's stated need applies):**
-- Applied econometric analysis with assumptions and diagnostics â€” use only when its stated condition applies; condition: Optional applied-economics method for estimating and checking economic relationships with observed data. Introduce only for a relevant economic question; regression alone does not establish causality. The linked CORE Econ material is a worked-data learning route, not a complete econometrics qualification.
+- Applied econometric analysis with assumptions and diagnostics — use only when its stated condition applies; condition: Optional applied-economics method for estimating and checking economic relationships with observed data. Introduce only for a relevant economic question; regression alone does not establish causality. The linked CORE Econ material is a worked-data learning route, not a complete econometrics qualification.
 **Pack 19 action — general_area_route_without_task_family_focus:**
 Select this pack's exact choice(s): **Applied econometric analysis with assumptions and diagnostics**.
 After each tap, only the selected card is checked and only its row is added to the tray; this choice alone does not change the downstream route.
@@ -4137,11 +4137,11 @@ This is a single-method route. The method remains usable on its own; a combined 
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Find and assess existing social data â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Find and assess existing social data — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Find and assess existing social data is linked to Evidence synthesis: systematic reviews and scoping reviews.
 - **Route context:** Turning ideas into observable measures is linked to Evidence synthesis: systematic reviews and scoping reviews.
 - **Route context:** Finding and organising research sources is linked to Evidence synthesis: systematic reviews and scoping reviews.
@@ -4150,10 +4150,10 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Plan research responsibly when people or sensitive data are involved â€” useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
-- Organise and protect research information when a project uses data â€” use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Plan research responsibly when people or sensitive data are involved — useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
+- Organise and protect research information when a project uses data — use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Evidence synthesis: systematic reviews and scoping reviews.
 - **Route context:** Organise and protect research information when a project uses data is linked to Evidence synthesis: systematic reviews and scoping reviews.
 - **Route context:** Plan research responsibly when people or sensitive data are involved is linked to Evidence synthesis: systematic reviews and scoping reviews.
@@ -4161,15 +4161,15 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Evidence synthesis: systematic reviews and scoping reviews:**
 _Useful and optional:_
-- Case-study and comparative-case design â€” use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
-- Discourse and conversation analysis â€” useful and optional
-- Experiments, quasi-experiments and causal inference â€” useful and optional
-- Focus groups and workshops â€” use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
-- Longitudinal, panel and multilevel data â€” useful and optional
-- Participatory and action research â€” use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
-- Programme evaluation and theory of change â€” use only when its stated condition applies; condition: Assess what changed, for whom, why, under what conditions and at what cost.
-- Evidence synthesis: systematic reviews and scoping reviews â€” use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
-- AI-assisted annotation of social-research text, with human validation â€” optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
+- Case-study and comparative-case design — use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
+- Discourse and conversation analysis — useful and optional
+- Experiments, quasi-experiments and causal inference — useful and optional
+- Focus groups and workshops — use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
+- Longitudinal, panel and multilevel data — useful and optional
+- Participatory and action research — use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
+- Programme evaluation and theory of change — use only when its stated condition applies; condition: Assess what changed, for whom, why, under what conditions and at what cost.
+- Evidence synthesis: systematic reviews and scoping reviews — use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
+- AI-assisted annotation of social-research text, with human validation — optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Jamovi for introductory quantitative social-science analysis
 - Jupyter
@@ -4243,10 +4243,10 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Social work researcher** — Design or manage research on social issues or social-service practice, gather and analyse evidence and report findings for service or policy learning.
 **Exact area-stage menu for selected focus: Evaluate a programme by clarifying intended use and stakeholders, describing context and implementation, selecting credible evidence and methods, and reporting justified conclusions and limitations.**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Describe how a programme is expected to produce change â€” useful and optional
-- Select evaluation questions, design and credible evidence â€” useful and optional
-- Use a quantitative analysis workflow only when the design supports it â€” use only when its stated condition applies; condition: Optional analysis path only when measurement, sample and design support quantitative analysis; qualitative or descriptive alternatives may fit better.
-- Turn findings into usable, transparent recommendations â€” useful and optional
+- Describe how a programme is expected to produce change — useful and optional
+- Select evaluation questions, design and credible evidence — useful and optional
+- Use a quantitative analysis workflow only when the design supports it — use only when its stated condition applies; condition: Optional analysis path only when measurement, sample and design support quantitative analysis; qualitative or descriptive alternatives may fit better.
+- Turn findings into usable, transparent recommendations — useful and optional
 Tools in this selected focus group, with their item relationship shown above:
 - IBM SPSS for a justified social-data analysis
 **Pack 20 action — Evaluate a programme by clarifying intended use and stakeholders, describing context and implementation, selecting credible evidence and methods, and reporting justified conclusions and limitations.:**
@@ -4334,11 +4334,11 @@ This is a single-method route. The method remains usable on its own; a combined 
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Find and assess existing social data â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Find and assess existing social data — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Find and assess existing social data is linked to Programme evaluation and theory of change.
 - **Route context:** Turning ideas into observable measures is linked to Programme evaluation and theory of change.
 - **Route context:** Finding and organising research sources is linked to Programme evaluation and theory of change.
@@ -4347,10 +4347,10 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Plan research responsibly when people or sensitive data are involved â€” useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
-- Organise and protect research information when a project uses data â€” use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Plan research responsibly when people or sensitive data are involved — useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
+- Organise and protect research information when a project uses data — use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Programme evaluation and theory of change.
 - **Route context:** Organise and protect research information when a project uses data is linked to Programme evaluation and theory of change.
 - **Route context:** Plan research responsibly when people or sensitive data are involved is linked to Programme evaluation and theory of change.
@@ -4358,24 +4358,24 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Programme evaluation and theory of change:**
 _Useful and optional:_
-- Sensitivity and robustness analysis for quantitative findings â€” useful edge; condition: Use sensitivity or robustness checks when a quantitative result depends on uncertain inputs, modelling choices or assumptions that could materially change the conclusion.
-- Scenario analysis across plausible futures â€” useful edge; condition: Use scenario analysis when the question is about how a policy, programme or social system could respond to several plausible future conditions, rather than predicting one certain future.
-- Case-study and comparative-case design â€” use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
-- Experiments, quasi-experiments and causal inference â€” useful and optional
-- Focus groups and workshops â€” use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
-- Longitudinal, panel and multilevel data â€” useful and optional
-- Participatory and action research â€” use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
-- Programme evaluation and theory of change â€” use only when its stated condition applies; condition: Assess what changed, for whom, why, under what conditions and at what cost.
-- Evidence synthesis: systematic reviews and scoping reviews â€” use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
-- Investigate how AI systems affect people, groups and institutions â€” use only when its stated condition applies; condition: Optional when the research question concerns an AI system's effects on people, groups, or institutions; scope the assessment and involve affected stakeholders where appropriate.
-- Count regression: Poisson and negative binomial models â€” useful and optional
-- Simple and multiple linear regression (ordinary least squares) â€” useful and optional
-- Logistic regression for binary outcomes â€” useful and optional
-- Multinomial logistic regression for unordered categorical outcomes â€” useful and optional
-- Ordinal regression for ordered categorical outcomes â€” useful and optional
-- Probit regression for binary outcomes â€” useful and optional
-- Process tracing for within-case causal mechanisms â€” useful and optional
-- One-sample, independent-samples and paired t-tests â€” useful and optional
+- Sensitivity and robustness analysis for quantitative findings — useful edge; condition: Use sensitivity or robustness checks when a quantitative result depends on uncertain inputs, modelling choices or assumptions that could materially change the conclusion.
+- Scenario analysis across plausible futures — useful edge; condition: Use scenario analysis when the question is about how a policy, programme or social system could respond to several plausible future conditions, rather than predicting one certain future.
+- Case-study and comparative-case design — use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
+- Experiments, quasi-experiments and causal inference — useful and optional
+- Focus groups and workshops — use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
+- Longitudinal, panel and multilevel data — useful and optional
+- Participatory and action research — use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
+- Programme evaluation and theory of change — use only when its stated condition applies; condition: Assess what changed, for whom, why, under what conditions and at what cost.
+- Evidence synthesis: systematic reviews and scoping reviews — use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
+- Investigate how AI systems affect people, groups and institutions — use only when its stated condition applies; condition: Optional when the research question concerns an AI system's effects on people, groups, or institutions; scope the assessment and involve affected stakeholders where appropriate.
+- Count regression: Poisson and negative binomial models — useful and optional
+- Simple and multiple linear regression (ordinary least squares) — useful and optional
+- Logistic regression for binary outcomes — useful and optional
+- Multinomial logistic regression for unordered categorical outcomes — useful and optional
+- Ordinal regression for ordered categorical outcomes — useful and optional
+- Probit regression for binary outcomes — useful and optional
+- Process tracing for within-case causal mechanisms — useful and optional
+- One-sample, independent-samples and paired t-tests — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Power BI for social-research reporting and interactive dashboards
 - Tableau for social-research visualisation and dashboards
@@ -4455,10 +4455,10 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Social work researcher** — Design or manage research on social issues or social-service practice, gather and analyse evidence and report findings for service or policy learning.
 **Exact area-stage menu for selected focus: Evaluate a programme by clarifying intended use and stakeholders, describing context and implementation, selecting credible evidence and methods, and reporting justified conclusions and limitations.**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Describe how a programme is expected to produce change â€” useful and optional
-- Select evaluation questions, design and credible evidence â€” useful and optional
-- Use a quantitative analysis workflow only when the design supports it â€” use only when its stated condition applies; condition: Optional analysis path only when measurement, sample and design support quantitative analysis; qualitative or descriptive alternatives may fit better.
-- Turn findings into usable, transparent recommendations â€” useful and optional
+- Describe how a programme is expected to produce change — useful and optional
+- Select evaluation questions, design and credible evidence — useful and optional
+- Use a quantitative analysis workflow only when the design supports it — use only when its stated condition applies; condition: Optional analysis path only when measurement, sample and design support quantitative analysis; qualitative or descriptive alternatives may fit better.
+- Turn findings into usable, transparent recommendations — useful and optional
 Tools in this selected focus group, with their item relationship shown above:
 - IBM SPSS for a justified social-data analysis
 **Pack 21 action — Evaluate a programme by clarifying intended use and stakeholders, describing context and implementation, selecting credible evidence and methods, and reporting justified conclusions and limitations.:**
@@ -4553,11 +4553,11 @@ This is a single-method route. The method remains usable on its own; a combined 
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Find and assess existing social data â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Find and assess existing social data — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Find and assess existing social data is linked to Psychometrics and scale construction.
 - **Route context:** Turning ideas into observable measures is linked to Psychometrics and scale construction.
 - **Route context:** Finding and organising research sources is linked to Psychometrics and scale construction.
@@ -4566,10 +4566,10 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Plan research responsibly when people or sensitive data are involved â€” useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
-- Organise and protect research information when a project uses data â€” use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Plan research responsibly when people or sensitive data are involved — useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
+- Organise and protect research information when a project uses data — use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Psychometrics and scale construction.
 - **Route context:** Organise and protect research information when a project uses data is linked to Psychometrics and scale construction.
 - **Route context:** Plan research responsibly when people or sensitive data are involved is linked to Psychometrics and scale construction.
@@ -4577,20 +4577,20 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Psychometrics and scale construction:**
 _Useful and optional:_
-- Longitudinal, panel and multilevel data â€” useful and optional
-- Piloting questions before fieldwork â€” use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
-- Psychometrics and scale construction â€” useful and optional
-- ANOVA: group, factorial and repeated-measures comparisons â€” useful and optional
-- Chi-square tests for categorical counts and association â€” useful and optional
-- Confirmatory factor analysis (CFA) â€” useful and optional
-- Exploratory factor analysis (EFA) â€” useful and optional
-- Item response theory (IRT) and differential item functioning â€” useful and optional
-- Kendall rank correlation â€” useful and optional
-- Logistic regression for binary outcomes â€” useful and optional
-- Ordinal regression for ordered categorical outcomes â€” useful and optional
-- Pearson product-moment correlation â€” useful and optional
-- Scale reliability estimation: alpha, omega and alternatives â€” useful and optional
-- Spearman rank correlation â€” useful and optional
+- Longitudinal, panel and multilevel data — useful and optional
+- Piloting questions before fieldwork — use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
+- Psychometrics and scale construction — useful and optional
+- ANOVA: group, factorial and repeated-measures comparisons — useful and optional
+- Chi-square tests for categorical counts and association — useful and optional
+- Confirmatory factor analysis (CFA) — useful and optional
+- Exploratory factor analysis (EFA) — useful and optional
+- Item response theory (IRT) and differential item functioning — useful and optional
+- Kendall rank correlation — useful and optional
+- Logistic regression for binary outcomes — useful and optional
+- Ordinal regression for ordered categorical outcomes — useful and optional
+- Pearson product-moment correlation — useful and optional
+- Scale reliability estimation: alpha, omega and alternatives — useful and optional
+- Spearman rank correlation — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Power BI for social-research reporting and interactive dashboards
 - Tableau for social-research visualisation and dashboards
@@ -4663,8 +4663,8 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Behavioural scientist** — Formulate evidence-based questions about behaviour in social settings, select suitable observation or measurement methods and interpret behaviour within its context.
 **Exact area-stage menu for selected focus: Analyse behavioural data when the question requires measurement**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Operationalise, analyse and communicate behavioural measures â€” use only when its stated condition applies; condition: Operationalise a construct, check measure quality, analyse data using an appropriate method and explain results and limitations.
-- R, Python, SPSS or Stata as analysis alternatives â€” use only when its stated condition applies; condition: Import a permitted dataset, clean/code variables, produce descriptive or inferential analysis and document reproducible steps in a selected tool.
+- Operationalise, analyse and communicate behavioural measures — use only when its stated condition applies; condition: Operationalise a construct, check measure quality, analyse data using an appropriate method and explain results and limitations.
+- R, Python, SPSS or Stata as analysis alternatives — use only when its stated condition applies; condition: Import a permitted dataset, clean/code variables, produce descriptive or inferential analysis and document reproducible steps in a selected tool.
 **Pack 22 action — Analyse behavioural data when the question requires measurement:**
 Select this pack's exact choice(s): **Operationalise, analyse and communicate behavioural measures**.
 Leave this exact visible choice unchecked for the skip test: **R, Python, SPSS or Stata as analysis alternatives**. Other unselected choices stay unchecked.
@@ -4763,11 +4763,11 @@ This is a single-method route. The method remains usable on its own; a combined 
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Find and assess existing social data â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Find and assess existing social data — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Find and assess existing social data is linked to Longitudinal, panel and multilevel data.
 - **Route context:** Turning ideas into observable measures is linked to Longitudinal, panel and multilevel data.
 - **Route context:** Finding and organising research sources is linked to Longitudinal, panel and multilevel data.
@@ -4776,10 +4776,10 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Plan research responsibly when people or sensitive data are involved â€” useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
-- Organise and protect research information when a project uses data â€” use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Plan research responsibly when people or sensitive data are involved — useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
+- Organise and protect research information when a project uses data — use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Longitudinal, panel and multilevel data.
 - **Route context:** Organise and protect research information when a project uses data is linked to Longitudinal, panel and multilevel data.
 - **Route context:** Plan research responsibly when people or sensitive data are involved is linked to Longitudinal, panel and multilevel data.
@@ -4787,18 +4787,18 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Longitudinal, panel and multilevel data:**
 _Useful and optional:_
-- Sensitivity and robustness analysis for quantitative findings â€” useful edge; condition: Use sensitivity or robustness checks when a quantitative result depends on uncertain inputs, modelling choices or assumptions that could materially change the conclusion.
-- Longitudinal, panel and multilevel data â€” useful and optional
-- Use AI cautiously to assist cross-source social-data harmonisation â€” optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
-- Use AI to draft or improve research-data metadata, then curate and verify it â€” optional; condition: Optional experimental support for drafting or reviewing metadata. A human curator checks every field against the source and repository schema.
-- ANOVA: group, factorial and repeated-measures comparisons â€” useful and optional
-- Count regression: Poisson and negative binomial models â€” useful and optional
-- Friedman rank test for matched or blocked groups â€” useful and optional
-- Simple and multiple linear regression (ordinary least squares) â€” useful and optional
-- Spatial autocorrelation: Moran's I and local indicators (LISA) â€” useful and optional
-- Spatial regression: spatial lag and spatial error models â€” useful and optional
-- Wilcoxon rank-sum and signed-rank tests â€” useful and optional
-- Quantitative methods (working with numbers) â€” use only when its stated condition applies; condition: Choose this approach when a question needs numerical measurement, counting, comparison or a statistical summary; it is an option, not a requirement for every route.
+- Sensitivity and robustness analysis for quantitative findings — useful edge; condition: Use sensitivity or robustness checks when a quantitative result depends on uncertain inputs, modelling choices or assumptions that could materially change the conclusion.
+- Longitudinal, panel and multilevel data — useful and optional
+- Use AI cautiously to assist cross-source social-data harmonisation — optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
+- Use AI to draft or improve research-data metadata, then curate and verify it — optional; condition: Optional experimental support for drafting or reviewing metadata. A human curator checks every field against the source and repository schema.
+- ANOVA: group, factorial and repeated-measures comparisons — useful and optional
+- Count regression: Poisson and negative binomial models — useful and optional
+- Friedman rank test for matched or blocked groups — useful and optional
+- Simple and multiple linear regression (ordinary least squares) — useful and optional
+- Spatial autocorrelation: Moran's I and local indicators (LISA) — useful and optional
+- Spatial regression: spatial lag and spatial error models — useful and optional
+- Wilcoxon rank-sum and signed-rank tests — useful and optional
+- Quantitative methods (working with numbers) — use only when its stated condition applies; condition: Choose this approach when a question needs numerical measurement, counting, comparison or a statistical summary; it is an option, not a requirement for every route.
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Power BI for social-research reporting and interactive dashboards
 - Tableau for social-research visualisation and dashboards
@@ -4866,8 +4866,8 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Economist** — Research economic issues, analyse economic/statistical data or models and explain economic patterns, forecasts or policy implications.
 **Exact area-stage menu for selected focus: Build and analyze economic evidence**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Applied econometric analysis with assumptions and diagnostics â€” use only when its stated condition applies; condition: Optional applied-economics method for estimating and checking economic relationships with observed data. Introduce only for a relevant economic question; regression alone does not establish causality. The linked CORE Econ material is a worked-data learning route, not a complete econometrics qualification.
-- Reproducible research workflow and data documentation â€” useful and optional
+- Applied econometric analysis with assumptions and diagnostics — use only when its stated condition applies; condition: Optional applied-economics method for estimating and checking economic relationships with observed data. Introduce only for a relevant economic question; regression alone does not establish causality. The linked CORE Econ material is a worked-data learning route, not a complete econometrics qualification.
+- Reproducible research workflow and data documentation — useful and optional
 Tools in this selected focus group, with their item relationship shown above:
 - Reproducible economic data analysis (R or Python; select a workflow)
 **Pack 23 action — Build and analyze economic evidence:**
@@ -4975,11 +4975,11 @@ This is a single-method route. The method remains usable on its own; a combined 
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Find and assess existing social data â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Find and assess existing social data — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Find and assess existing social data is linked to Network analysis.
 - **Route context:** Turning ideas into observable measures is linked to Network analysis.
 - **Route context:** Finding and organising research sources is linked to Network analysis.
@@ -4988,10 +4988,10 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Plan research responsibly when people or sensitive data are involved â€” useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
-- Organise and protect research information when a project uses data â€” use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Plan research responsibly when people or sensitive data are involved — useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
+- Organise and protect research information when a project uses data — use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Network analysis.
 - **Route context:** Organise and protect research information when a project uses data is linked to Network analysis.
 - **Route context:** Plan research responsibly when people or sensitive data are involved is linked to Network analysis.
@@ -4999,10 +4999,10 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Network analysis:**
 _Useful and optional:_
-- Archival and historical research â€” use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
-- Case-study and comparative-case design â€” use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
-- Validate and document AI use in a research workflow â€” use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
-- Exponential-family random graph models (ERGMs) â€” useful and optional
+- Archival and historical research — use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
+- Case-study and comparative-case design — use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
+- Validate and document AI use in a research workflow — use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
+- Exponential-family random graph models (ERGMs) — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Power BI for social-research reporting and interactive dashboards
 - Tableau for social-research visualisation and dashboards
@@ -5051,7 +5051,7 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Political scientist** — Study political systems, institutions, public opinion or political behaviour; analyse documents, events or data and communicate findings about political processes.
 **Exact area-stage menu for selected focus: Understand institutions, authority and policy processes**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Stakeholder and affected-group mapping â€” use only when its stated condition applies; condition: Prepare an actor map naming interests, influence, likely effects, missing voices and engagement routes for a bounded policy question.
+- Stakeholder and affected-group mapping — use only when its stated condition applies; condition: Prepare an actor map naming interests, influence, likely effects, missing voices and engagement routes for a bounded policy question.
 **Pack 24 action — Understand institutions, authority and policy processes:**
 Select this pack's exact choice(s): **Stakeholder and affected-group mapping**.
 After each tap, only the selected card is checked and only its row is added to the tray; this choice alone does not change the downstream route.
@@ -5134,11 +5134,11 @@ This is a single-method route. The method remains usable on its own; a combined 
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Find and assess existing social data â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Find and assess existing social data — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Find and assess existing social data is linked to Computational and digital social-research methods.
 - **Route context:** Turning ideas into observable measures is linked to Computational and digital social-research methods.
 - **Route context:** Finding and organising research sources is linked to Computational and digital social-research methods.
@@ -5147,10 +5147,10 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Plan research responsibly when people or sensitive data are involved â€” useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
-- Organise and protect research information when a project uses data â€” use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Plan research responsibly when people or sensitive data are involved — useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
+- Organise and protect research information when a project uses data — use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Computational and digital social-research methods.
 - **Route context:** Organise and protect research information when a project uses data is linked to Computational and digital social-research methods.
 - **Route context:** Plan research responsibly when people or sensitive data are involved is linked to Computational and digital social-research methods.
@@ -5158,29 +5158,29 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Computational and digital social-research methods:**
 _Useful and optional:_
-- Archival and historical research â€” use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
-- Case-study and comparative-case design â€” use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
-- Agent-based modelling of social processes â€” use only when its stated condition applies; condition: Use agent-based modelling when a stated theory or mechanism can be represented as interacting agents and a simulation can help explore possible patterns; simulation output is not evidence that real people will behave that way.
-- Discourse and conversation analysis â€” useful and optional
-- Experiments, quasi-experiments and causal inference â€” useful and optional
-- Longitudinal, panel and multilevel data â€” useful and optional
-- Piloting questions before fieldwork â€” use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
-- Programme evaluation and theory of change â€” use only when its stated condition applies; condition: Assess what changed, for whom, why, under what conditions and at what cost.
-- Psychometrics and scale construction â€” useful and optional
-- Evidence synthesis: systematic reviews and scoping reviews â€” use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
-- Use AI cautiously to assist cross-source social-data harmonisation â€” optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
-- Use AI to draft or improve research-data metadata, then curate and verify it â€” optional; condition: Optional experimental support for drafting or reviewing metadata. A human curator checks every field against the source and repository schema.
-- AI-assisted annotation of social-research text, with human validation â€” optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
-- Validate and document AI use in a research workflow â€” use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
-- Critical discourse analysis (CDA) â€” useful and optional
-- Exponential-family random graph models (ERGMs) â€” useful and optional
-- LLM-assisted measurement of constructs in social text â€” useful and optional
-- Machine learning for survey nonresponse adjustment â€” useful and optional
-- Natural language processing and computational text mining â€” useful and optional
-- ODD protocol for documenting agent-based models â€” useful and optional
-- Regularized linear regression: ridge, LASSO and elastic net â€” useful and optional
-- Supervised machine learning for social-research prediction and classification â€” useful and optional
-- Tree-ensemble machine learning for prediction and classification â€” useful and optional
+- Archival and historical research — use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
+- Case-study and comparative-case design — use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
+- Agent-based modelling of social processes — use only when its stated condition applies; condition: Use agent-based modelling when a stated theory or mechanism can be represented as interacting agents and a simulation can help explore possible patterns; simulation output is not evidence that real people will behave that way.
+- Discourse and conversation analysis — useful and optional
+- Experiments, quasi-experiments and causal inference — useful and optional
+- Longitudinal, panel and multilevel data — useful and optional
+- Piloting questions before fieldwork — use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
+- Programme evaluation and theory of change — use only when its stated condition applies; condition: Assess what changed, for whom, why, under what conditions and at what cost.
+- Psychometrics and scale construction — useful and optional
+- Evidence synthesis: systematic reviews and scoping reviews — use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
+- Use AI cautiously to assist cross-source social-data harmonisation — optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
+- Use AI to draft or improve research-data metadata, then curate and verify it — optional; condition: Optional experimental support for drafting or reviewing metadata. A human curator checks every field against the source and repository schema.
+- AI-assisted annotation of social-research text, with human validation — optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
+- Validate and document AI use in a research workflow — use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
+- Critical discourse analysis (CDA) — useful and optional
+- Exponential-family random graph models (ERGMs) — useful and optional
+- LLM-assisted measurement of constructs in social text — useful and optional
+- Machine learning for survey nonresponse adjustment — useful and optional
+- Natural language processing and computational text mining — useful and optional
+- ODD protocol for documenting agent-based models — useful and optional
+- Regularized linear regression: ridge, LASSO and elastic net — useful and optional
+- Supervised machine learning for social-research prediction and classification — useful and optional
+- Tree-ensemble machine learning for prediction and classification — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Power BI for social-research reporting and interactive dashboards
 - Tableau for social-research visualisation and dashboards
@@ -5264,11 +5264,11 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Statistician** — Plan or apply statistical methods to collect, organise, analyse and interpret numerical data, then explain what estimates and uncertainty support.
 **Exact area-stage menu for selected focus: Build a reproducible workflow for a bounded social-science dataset: preserve provenance, clean and document variables, analyse a stated question, visualise results and report limits.**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Agent-based modelling for a stated social mechanism â€” useful and optional
-- Translate a social question into a computational task â€” useful and optional; condition: Useful as an area starting point; review it or skip it according to prior knowledge and the work you select.
-- Track data provenance, permissions and digital-research risk â€” useful and optional
-- Clean and document a social-science dataset reproducibly â€” useful and optional
-- Interpretable statistical modelling when the question and design justify it â€” use only when its stated condition applies; condition: Optional quantitative route; requires suitable design, assumptions, diagnostics and interpretation, not code alone.
+- Agent-based modelling for a stated social mechanism — useful and optional
+- Translate a social question into a computational task — useful and optional; condition: Useful as an area starting point; review it or skip it according to prior knowledge and the work you select.
+- Track data provenance, permissions and digital-research risk — useful and optional
+- Clean and document a social-science dataset reproducibly — useful and optional
+- Interpretable statistical modelling when the question and design justify it — use only when its stated condition applies; condition: Optional quantitative route; requires suitable design, assumptions, diagnostics and interpretation, not code alone.
 Tools in this selected focus group, with their item relationship shown above:
 - Jupyter for an explained, repeatable workflow
 - Pandas for cleaning and combining tabular research data
@@ -5369,10 +5369,10 @@ After those components are selected, choose **Choose evidence methods with parti
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Turning ideas into observable measures is linked to Participatory and action research, Observation and ethnographic approaches.
 - **Route context:** Finding and organising research sources is linked to Participatory and action research, Observation and ethnographic approaches.
 - **Route context:** Checking reliability, validity and uncertainty is linked to Participatory and action research, Observation and ethnographic approaches.
@@ -5380,8 +5380,8 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Participatory and action research, Observation and ethnographic approaches.
 - **Route context:** Keeping a clear, repeatable research record is linked to Participatory and action research, Observation and ethnographic approaches.
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
@@ -5392,9 +5392,9 @@ _Tools attached to this method contribution; compare and select only what you pl
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Observation and ethnographic approaches, Participatory and action research:**
 _Useful and optional:_
-- Focus groups and workshops â€” use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
-- Participatory and action research â€” use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
-- Conversation analysis (CA) of talk-in-interaction â€” useful and optional
+- Focus groups and workshops — use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
+- Participatory and action research — use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
+- Conversation analysis (CA) of talk-in-interaction — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Taguette for highlighting and coding documents
 - NVivo for organizing and coding substantial qualitative material
@@ -5472,10 +5472,10 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Demographer** — Describe and analyse population size, composition and change using births, deaths, migration and related data; explain assumptions in estimates or projections.
 **Exact area-stage menu for selected focus: Describe how people, services or social conditions vary across places and scales by checking spatial data provenance, geographic units and map choices before interpreting a pattern.**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Geographical random forest for spatially varying prediction â€” useful and optional
-- Spatial data provenance, geographic units and scale â€” use only when its stated condition applies; condition: Use when geographic units, coverage, reference period or map scale affect interpretation; inspect data access and anonymisation.
-- Spatial analysis and map-based comparison â€” use only when its stated condition applies; condition: Optional method for questions where spatial pattern or distance is relevant; maps do not establish causation.
-- Explain spatial patterns without overclaiming â€” use only when its stated condition applies; condition: Use when explaining a mapped pattern; state data, scale and uncertainty limits and avoid causal overclaiming.
+- Geographical random forest for spatially varying prediction — useful and optional
+- Spatial data provenance, geographic units and scale — use only when its stated condition applies; condition: Use when geographic units, coverage, reference period or map scale affect interpretation; inspect data access and anonymisation.
+- Spatial analysis and map-based comparison — use only when its stated condition applies; condition: Optional method for questions where spatial pattern or distance is relevant; maps do not establish causation.
+- Explain spatial patterns without overclaiming — use only when its stated condition applies; condition: Use when explaining a mapped pattern; state data, scale and uncertainty limits and avoid causal overclaiming.
 Tools in this selected focus group, with their item relationship shown above:
 - QGIS for a human-geography spatial workflow
 **Pack 26 action — Describe how people, services or social conditions vary across places and scales by checking spatial data provenance, geographic units and map choices before interpreting a pattern.:**
@@ -5583,10 +5583,10 @@ After those components are selected, choose **Explore first, measure next** (`co
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Turning ideas into observable measures is linked to Qualitative methods (working with words, observations and meaning), Surveys and questionnaire design.
 - **Route context:** Finding and organising research sources is linked to Qualitative methods (working with words, observations and meaning), Surveys and questionnaire design.
 - **Route context:** Checking reliability, validity and uncertainty is linked to Qualitative methods (working with words, observations and meaning), Surveys and questionnaire design.
@@ -5594,23 +5594,23 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Qualitative methods (working with words, observations and meaning), Surveys and questionnaire design.
 - **Route context:** Keeping a clear, repeatable research record is linked to Qualitative methods (working with words, observations and meaning), Surveys and questionnaire design.
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Qualitative methods (working with words, observations and meaning):**
 _Useful and optional:_
-- Archival and historical research â€” use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
-- Discourse and conversation analysis â€” useful and optional
-- Experiments, quasi-experiments and causal inference â€” useful and optional
-- Longitudinal, panel and multilevel data â€” useful and optional
-- Evidence synthesis: systematic reviews and scoping reviews â€” use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
-- Conversation analysis (CA) of talk-in-interaction â€” useful and optional
-- Critical discourse analysis (CDA) â€” useful and optional
-- Interpretative phenomenological analysis (IPA) â€” useful and optional
-- LLM-assisted measurement of constructs in social text â€” useful and optional
-- Natural language processing and computational text mining â€” useful and optional
+- Archival and historical research — use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
+- Discourse and conversation analysis — useful and optional
+- Experiments, quasi-experiments and causal inference — useful and optional
+- Longitudinal, panel and multilevel data — useful and optional
+- Evidence synthesis: systematic reviews and scoping reviews — use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
+- Conversation analysis (CA) of talk-in-interaction — useful and optional
+- Critical discourse analysis (CDA) — useful and optional
+- Interpretative phenomenological analysis (IPA) — useful and optional
+- LLM-assisted measurement of constructs in social text — useful and optional
+- Natural language processing and computational text mining — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - ATLAS.ti for qualitative data coding and retrieval
 - Dedoose for collaborative qualitative and mixed-methods analysis
@@ -5622,37 +5622,37 @@ _Tools attached to this method contribution; compare and select only what you pl
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Qualitative methods (working with words, observations and meaning), Surveys and questionnaire design:**
 _Useful and optional:_
-- AI-assisted annotation of social-research text, with human validation â€” optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
+- AI-assisted annotation of social-research text, with human validation — optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Statsmodels
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Surveys and questionnaire design:**
 _Useful and optional:_
-- Piloting questions before fieldwork â€” use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
-- Psychometrics and scale construction â€” useful and optional
-- Use AI cautiously to assist cross-source social-data harmonisation â€” optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
-- Use AI to draft or improve research-data metadata, then curate and verify it â€” optional; condition: Optional experimental support for drafting or reviewing metadata. A human curator checks every field against the source and repository schema.
-- Validate and document AI use in a research workflow â€” use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
-- Barnard's unconditional exact test for 2×2 tables â€” useful and optional
-- Boschloo's unconditional exact test for 2×2 tables â€” useful and optional
-- Chi-square tests for categorical counts and association â€” useful and optional
-- Confirmatory factor analysis (CFA) â€” useful and optional
-- Count regression: Poisson and negative binomial models â€” useful and optional
-- Exploratory factor analysis (EFA) â€” useful and optional
-- Fisher's exact test for categorical counts â€” useful and optional
-- Item response theory (IRT) and differential item functioning â€” useful and optional
-- Kendall rank correlation â€” useful and optional
-- Kruskal–Wallis rank test for independent groups â€” useful and optional
-- Simple and multiple linear regression (ordinary least squares) â€” useful and optional
-- Machine learning for survey nonresponse adjustment â€” useful and optional
-- Multinomial logistic regression for unordered categorical outcomes â€” useful and optional
-- Ordinal regression for ordered categorical outcomes â€” useful and optional
-- Pearson product-moment correlation â€” useful and optional
-- Probit regression for binary outcomes â€” useful and optional
-- Scale reliability estimation: alpha, omega and alternatives â€” useful and optional
-- Spearman rank correlation â€” useful and optional
-- One-sample, independent-samples and paired t-tests â€” useful and optional
-- Wilcoxon rank-sum and signed-rank tests â€” useful and optional
+- Piloting questions before fieldwork — use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
+- Psychometrics and scale construction — useful and optional
+- Use AI cautiously to assist cross-source social-data harmonisation — optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
+- Use AI to draft or improve research-data metadata, then curate and verify it — optional; condition: Optional experimental support for drafting or reviewing metadata. A human curator checks every field against the source and repository schema.
+- Validate and document AI use in a research workflow — use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
+- Barnard's unconditional exact test for 2×2 tables — useful and optional
+- Boschloo's unconditional exact test for 2×2 tables — useful and optional
+- Chi-square tests for categorical counts and association — useful and optional
+- Confirmatory factor analysis (CFA) — useful and optional
+- Count regression: Poisson and negative binomial models — useful and optional
+- Exploratory factor analysis (EFA) — useful and optional
+- Fisher's exact test for categorical counts — useful and optional
+- Item response theory (IRT) and differential item functioning — useful and optional
+- Kendall rank correlation — useful and optional
+- Kruskal–Wallis rank test for independent groups — useful and optional
+- Simple and multiple linear regression (ordinary least squares) — useful and optional
+- Machine learning for survey nonresponse adjustment — useful and optional
+- Multinomial logistic regression for unordered categorical outcomes — useful and optional
+- Ordinal regression for ordered categorical outcomes — useful and optional
+- Pearson product-moment correlation — useful and optional
+- Probit regression for binary outcomes — useful and optional
+- Scale reliability estimation: alpha, omega and alternatives — useful and optional
+- Spearman rank correlation — useful and optional
+- One-sample, independent-samples and paired t-tests — useful and optional
+- Wilcoxon rank-sum and signed-rank tests — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Power BI for social-research reporting and interactive dashboards
 - Tableau for social-research visualisation and dashboards
@@ -5732,8 +5732,8 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Tax policy analyst** — Analyse tax rules, fiscal data or policy proposals and estimate or explain possible revenue, distributional and administrative implications.
 **Exact area-stage menu for selected focus: Turn a governance or public-policy question into a bounded evidence review: identify institutions and affected groups, compare evidence and options, then state a reasoned finding with uncertainty and trade-offs.**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Policy evidence review and options appraisal â€” use only when its stated condition applies; condition: Summarize what is known, assess source quality and applicability, identify evidence gaps, and compare feasible options without presenting the review as a complete systematic review unless its protocol warrants that label.
-- Policy brief and evidence communication â€” use only when its stated condition applies; condition: Turn an evidence review into a short brief with issue, evidence, options, trade-offs, recommendation conditions and references.
+- Policy evidence review and options appraisal — use only when its stated condition applies; condition: Summarize what is known, assess source quality and applicability, identify evidence gaps, and compare feasible options without presenting the review as a complete systematic review unless its protocol warrants that label.
+- Policy brief and evidence communication — use only when its stated condition applies; condition: Turn an evidence review into a short brief with issue, evidence, options, trade-offs, recommendation conditions and references.
 **Pack 27 action — Turn a governance or public-policy question into a bounded evidence review: identify institutions and affected groups, compare evidence and options, then state a reasoned finding with uncertainty and trade-offs.:**
 Select this pack's exact choice(s): **Policy evidence review and options appraisal**.
 Leave this exact visible choice unchecked for the skip test: **Policy brief and evidence communication**. Other unselected choices stay unchecked.
@@ -5857,10 +5857,10 @@ After those components are selected, choose **Use group discussion to shape a su
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Turning ideas into observable measures is linked to Focus groups and workshops, Surveys and questionnaire design.
 - **Route context:** Finding and organising research sources is linked to Focus groups and workshops, Surveys and questionnaire design.
 - **Route context:** Checking reliability, validity and uncertainty is linked to Focus groups and workshops, Surveys and questionnaire design.
@@ -5868,40 +5868,40 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Focus groups and workshops, Surveys and questionnaire design.
 - **Route context:** Keeping a clear, repeatable research record is linked to Focus groups and workshops, Surveys and questionnaire design.
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Surveys and questionnaire design:**
 _Useful and optional:_
-- Archival and historical research â€” use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
-- Case-study and comparative-case design â€” use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
-- Longitudinal, panel and multilevel data â€” useful and optional
-- Evidence synthesis: systematic reviews and scoping reviews â€” use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
-- Use AI cautiously to assist cross-source social-data harmonisation â€” optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
-- Use AI to draft or improve research-data metadata, then curate and verify it â€” optional; condition: Optional experimental support for drafting or reviewing metadata. A human curator checks every field against the source and repository schema.
-- Validate and document AI use in a research workflow â€” use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
-- Barnard's unconditional exact test for 2×2 tables â€” useful and optional
-- Boschloo's unconditional exact test for 2×2 tables â€” useful and optional
-- Chi-square tests for categorical counts and association â€” useful and optional
-- Confirmatory factor analysis (CFA) â€” useful and optional
-- Count regression: Poisson and negative binomial models â€” useful and optional
-- Exploratory factor analysis (EFA) â€” useful and optional
-- Fisher's exact test for categorical counts â€” useful and optional
-- Item response theory (IRT) and differential item functioning â€” useful and optional
-- Kendall rank correlation â€” useful and optional
-- Kruskal–Wallis rank test for independent groups â€” useful and optional
-- Simple and multiple linear regression (ordinary least squares) â€” useful and optional
-- Machine learning for survey nonresponse adjustment â€” useful and optional
-- Multinomial logistic regression for unordered categorical outcomes â€” useful and optional
-- Ordinal regression for ordered categorical outcomes â€” useful and optional
-- Pearson product-moment correlation â€” useful and optional
-- Probit regression for binary outcomes â€” useful and optional
-- Scale reliability estimation: alpha, omega and alternatives â€” useful and optional
-- Spearman rank correlation â€” useful and optional
-- One-sample, independent-samples and paired t-tests â€” useful and optional
-- Wilcoxon rank-sum and signed-rank tests â€” useful and optional
+- Archival and historical research — use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
+- Case-study and comparative-case design — use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
+- Longitudinal, panel and multilevel data — useful and optional
+- Evidence synthesis: systematic reviews and scoping reviews — use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
+- Use AI cautiously to assist cross-source social-data harmonisation — optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
+- Use AI to draft or improve research-data metadata, then curate and verify it — optional; condition: Optional experimental support for drafting or reviewing metadata. A human curator checks every field against the source and repository schema.
+- Validate and document AI use in a research workflow — use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
+- Barnard's unconditional exact test for 2×2 tables — useful and optional
+- Boschloo's unconditional exact test for 2×2 tables — useful and optional
+- Chi-square tests for categorical counts and association — useful and optional
+- Confirmatory factor analysis (CFA) — useful and optional
+- Count regression: Poisson and negative binomial models — useful and optional
+- Exploratory factor analysis (EFA) — useful and optional
+- Fisher's exact test for categorical counts — useful and optional
+- Item response theory (IRT) and differential item functioning — useful and optional
+- Kendall rank correlation — useful and optional
+- Kruskal–Wallis rank test for independent groups — useful and optional
+- Simple and multiple linear regression (ordinary least squares) — useful and optional
+- Machine learning for survey nonresponse adjustment — useful and optional
+- Multinomial logistic regression for unordered categorical outcomes — useful and optional
+- Ordinal regression for ordered categorical outcomes — useful and optional
+- Pearson product-moment correlation — useful and optional
+- Probit regression for binary outcomes — useful and optional
+- Scale reliability estimation: alpha, omega and alternatives — useful and optional
+- Spearman rank correlation — useful and optional
+- One-sample, independent-samples and paired t-tests — useful and optional
+- Wilcoxon rank-sum and signed-rank tests — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Power BI for social-research reporting and interactive dashboards
 - Tableau for social-research visualisation and dashboards
@@ -5922,14 +5922,14 @@ _Tools attached to this method contribution; compare and select only what you pl
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Surveys and questionnaire design, Focus groups and workshops:**
 _Useful and optional:_
-- AI-assisted annotation of social-research text, with human validation â€” optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
+- AI-assisted annotation of social-research text, with human validation — optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Focus groups and workshops:**
 _Useful and optional:_
-- Focus groups and workshops â€” use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
-- Participatory and action research â€” use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
-- Conversation analysis (CA) of talk-in-interaction â€” useful and optional
-- Interpretative phenomenological analysis (IPA) â€” useful and optional
+- Focus groups and workshops — use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
+- Participatory and action research — use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
+- Conversation analysis (CA) of talk-in-interaction — useful and optional
+- Interpretative phenomenological analysis (IPA) — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - ATLAS.ti for qualitative data coding and retrieval
 - Dedoose for collaborative qualitative and mixed-methods analysis
@@ -6010,10 +6010,10 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Demographer** — Describe and analyse population size, composition and change using births, deaths, migration and related data; explain assumptions in estimates or projections.
 **Exact area-stage menu for selected focus: Describe how people, services or social conditions vary across places and scales by checking spatial data provenance, geographic units and map choices before interpreting a pattern.**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Spatial data provenance, geographic units and scale â€” use only when its stated condition applies; condition: Use when geographic units, coverage, reference period or map scale affect interpretation; inspect data access and anonymisation.
-- Spatial analysis and map-based comparison â€” use only when its stated condition applies; condition: Optional method for questions where spatial pattern or distance is relevant; maps do not establish causation.
-- Explain spatial patterns without overclaiming â€” use only when its stated condition applies; condition: Use when explaining a mapped pattern; state data, scale and uncertainty limits and avoid causal overclaiming.
-- Geographical random forest for spatially varying prediction â€” useful and optional
+- Spatial data provenance, geographic units and scale — use only when its stated condition applies; condition: Use when geographic units, coverage, reference period or map scale affect interpretation; inspect data access and anonymisation.
+- Spatial analysis and map-based comparison — use only when its stated condition applies; condition: Optional method for questions where spatial pattern or distance is relevant; maps do not establish causation.
+- Explain spatial patterns without overclaiming — use only when its stated condition applies; condition: Use when explaining a mapped pattern; state data, scale and uncertainty limits and avoid causal overclaiming.
+- Geographical random forest for spatially varying prediction — useful and optional
 Tools in this selected focus group, with their item relationship shown above:
 - QGIS for a human-geography spatial workflow
 **Pack 28 action — Describe how people, services or social conditions vary across places and scales by checking spatial data provenance, geographic units and map choices before interpreting a pattern.:**
@@ -6141,10 +6141,10 @@ After those components are selected, choose **Use group discussion to interpret 
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Turning ideas into observable measures is linked to Surveys and questionnaire design, Focus groups and workshops.
 - **Route context:** Finding and organising research sources is linked to Surveys and questionnaire design, Focus groups and workshops.
 - **Route context:** Checking reliability, validity and uncertainty is linked to Surveys and questionnaire design, Focus groups and workshops.
@@ -6152,40 +6152,40 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Surveys and questionnaire design, Focus groups and workshops.
 - **Route context:** Keeping a clear, repeatable research record is linked to Surveys and questionnaire design, Focus groups and workshops.
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Surveys and questionnaire design:**
 _Useful and optional:_
-- Experiments, quasi-experiments and causal inference â€” useful and optional
-- Piloting questions before fieldwork â€” use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
-- Psychometrics and scale construction â€” useful and optional
-- Evidence synthesis: systematic reviews and scoping reviews â€” use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
-- Use AI cautiously to assist cross-source social-data harmonisation â€” optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
-- Use AI to draft or improve research-data metadata, then curate and verify it â€” optional; condition: Optional experimental support for drafting or reviewing metadata. A human curator checks every field against the source and repository schema.
-- Validate and document AI use in a research workflow â€” use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
-- Barnard's unconditional exact test for 2×2 tables â€” useful and optional
-- Boschloo's unconditional exact test for 2×2 tables â€” useful and optional
-- Chi-square tests for categorical counts and association â€” useful and optional
-- Confirmatory factor analysis (CFA) â€” useful and optional
-- Count regression: Poisson and negative binomial models â€” useful and optional
-- Exploratory factor analysis (EFA) â€” useful and optional
-- Fisher's exact test for categorical counts â€” useful and optional
-- Item response theory (IRT) and differential item functioning â€” useful and optional
-- Kendall rank correlation â€” useful and optional
-- Kruskal–Wallis rank test for independent groups â€” useful and optional
-- Simple and multiple linear regression (ordinary least squares) â€” useful and optional
-- Machine learning for survey nonresponse adjustment â€” useful and optional
-- Multinomial logistic regression for unordered categorical outcomes â€” useful and optional
-- Ordinal regression for ordered categorical outcomes â€” useful and optional
-- Pearson product-moment correlation â€” useful and optional
-- Probit regression for binary outcomes â€” useful and optional
-- Scale reliability estimation: alpha, omega and alternatives â€” useful and optional
-- Spearman rank correlation â€” useful and optional
-- One-sample, independent-samples and paired t-tests â€” useful and optional
-- Wilcoxon rank-sum and signed-rank tests â€” useful and optional
+- Experiments, quasi-experiments and causal inference — useful and optional
+- Piloting questions before fieldwork — use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
+- Psychometrics and scale construction — useful and optional
+- Evidence synthesis: systematic reviews and scoping reviews — use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
+- Use AI cautiously to assist cross-source social-data harmonisation — optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
+- Use AI to draft or improve research-data metadata, then curate and verify it — optional; condition: Optional experimental support for drafting or reviewing metadata. A human curator checks every field against the source and repository schema.
+- Validate and document AI use in a research workflow — use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
+- Barnard's unconditional exact test for 2×2 tables — useful and optional
+- Boschloo's unconditional exact test for 2×2 tables — useful and optional
+- Chi-square tests for categorical counts and association — useful and optional
+- Confirmatory factor analysis (CFA) — useful and optional
+- Count regression: Poisson and negative binomial models — useful and optional
+- Exploratory factor analysis (EFA) — useful and optional
+- Fisher's exact test for categorical counts — useful and optional
+- Item response theory (IRT) and differential item functioning — useful and optional
+- Kendall rank correlation — useful and optional
+- Kruskal–Wallis rank test for independent groups — useful and optional
+- Simple and multiple linear regression (ordinary least squares) — useful and optional
+- Machine learning for survey nonresponse adjustment — useful and optional
+- Multinomial logistic regression for unordered categorical outcomes — useful and optional
+- Ordinal regression for ordered categorical outcomes — useful and optional
+- Pearson product-moment correlation — useful and optional
+- Probit regression for binary outcomes — useful and optional
+- Scale reliability estimation: alpha, omega and alternatives — useful and optional
+- Spearman rank correlation — useful and optional
+- One-sample, independent-samples and paired t-tests — useful and optional
+- Wilcoxon rank-sum and signed-rank tests — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Power BI for social-research reporting and interactive dashboards
 - Tableau for social-research visualisation and dashboards
@@ -6206,17 +6206,17 @@ _Tools attached to this method contribution; compare and select only what you pl
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Surveys and questionnaire design, Focus groups and workshops:**
 _Useful and optional:_
-- Longitudinal, panel and multilevel data â€” useful and optional
-- AI-assisted annotation of social-research text, with human validation â€” optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
+- Longitudinal, panel and multilevel data — useful and optional
+- AI-assisted annotation of social-research text, with human validation — optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Focus groups and workshops:**
 _Useful and optional:_
-- Case-study and comparative-case design â€” use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
-- Discourse and conversation analysis â€” useful and optional
-- Focus groups and workshops â€” use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
-- Participatory and action research â€” use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
-- Conversation analysis (CA) of talk-in-interaction â€” useful and optional
-- Interpretative phenomenological analysis (IPA) â€” useful and optional
+- Case-study and comparative-case design — use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
+- Discourse and conversation analysis — useful and optional
+- Focus groups and workshops — use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
+- Participatory and action research — use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
+- Conversation analysis (CA) of talk-in-interaction — useful and optional
+- Interpretative phenomenological analysis (IPA) — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - ATLAS.ti for qualitative data coding and retrieval
 - Dedoose for collaborative qualitative and mixed-methods analysis
@@ -6293,8 +6293,8 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Behavioural scientist** — Formulate evidence-based questions about behaviour in social settings, select suitable observation or measurement methods and interpret behaviour within its context.
 **Exact area-stage menu for selected focus: Study a defined behaviour or social-psychological process by selecting suitable measures and an observational, survey, interview or experimental design; evaluate reliability, validity and ethical limits.**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Ethical, cultural and reflexive judgement â€” use only when its stated condition applies; condition: Identify power, cultural assumptions, potential harm, consent/privacy needs and how researcher position may affect questions and interpretation.
-- Behavioural research design and measurement â€” use only when its stated condition applies; condition: Specify question, population, constructs, design, measures, analysis, ethics and what conclusions the design permits.
+- Ethical, cultural and reflexive judgement — use only when its stated condition applies; condition: Identify power, cultural assumptions, potential harm, consent/privacy needs and how researcher position may affect questions and interpretation.
+- Behavioural research design and measurement — use only when its stated condition applies; condition: Specify question, population, constructs, design, measures, analysis, ethics and what conclusions the design permits.
 **Pack 29 action — Study a defined behaviour or social-psychological process by selecting suitable measures and an observational, survey, interview or experimental design; evaluate reliability, validity and ethical limits.:**
 Select this pack's exact choice(s): **Ethical, cultural and reflexive judgement**.
 Leave this exact visible choice unchecked for the skip test: **Behavioural research design and measurement**. Other unselected choices stay unchecked.
@@ -6414,10 +6414,10 @@ After those components are selected, choose **Build a case study from complement
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Turning ideas into observable measures is linked to Case-study and comparative-case design, Interviews, Document and content analysis, Observation and ethnographic approaches.
 - **Route context:** Finding and organising research sources is linked to Case-study and comparative-case design, Interviews, Document and content analysis, Observation and ethnographic approaches.
 - **Route context:** Checking reliability, validity and uncertainty is linked to Case-study and comparative-case design, Interviews, Document and content analysis, Observation and ethnographic approaches.
@@ -6425,30 +6425,30 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Case-study and comparative-case design, Interviews, Document and content analysis, Observation and ethnographic approaches.
 - **Route context:** Keeping a clear, repeatable research record is linked to Case-study and comparative-case design, Interviews, Document and content analysis, Observation and ethnographic approaches.
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Case-study and comparative-case design:**
 _Useful and optional:_
-- Process tracing for within-case causal mechanisms â€” useful and optional
+- Process tracing for within-case causal mechanisms — useful and optional
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Case-study and comparative-case design, Document and content analysis:**
 _Useful and optional:_
-- Investigate how AI systems affect people, groups and institutions â€” use only when its stated condition applies; condition: Optional when the research question concerns an AI system's effects on people, groups, or institutions; scope the assessment and involve affected stakeholders where appropriate.
+- Investigate how AI systems affect people, groups and institutions — use only when its stated condition applies; condition: Optional when the research question concerns an AI system's effects on people, groups, or institutions; scope the assessment and involve affected stakeholders where appropriate.
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Case-study and comparative-case design, Document and content analysis, Interviews, Observation and ethnographic approaches:**
 _Useful and optional:_
-- Archival and historical research â€” use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
-- Case-study and comparative-case design â€” use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
-- Discourse and conversation analysis â€” useful and optional
-- Experiments, quasi-experiments and causal inference â€” useful and optional
-- Focus groups and workshops â€” use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
-- Longitudinal, panel and multilevel data â€” useful and optional
-- Participatory and action research â€” use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
-- Piloting questions before fieldwork â€” use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
-- Psychometrics and scale construction â€” useful and optional
+- Archival and historical research — use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
+- Case-study and comparative-case design — use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
+- Discourse and conversation analysis — useful and optional
+- Experiments, quasi-experiments and causal inference — useful and optional
+- Focus groups and workshops — use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
+- Longitudinal, panel and multilevel data — useful and optional
+- Participatory and action research — use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
+- Piloting questions before fieldwork — use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
+- Psychometrics and scale construction — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Jupyter
 - NetworkX for analysing relationship data as a graph
@@ -6460,20 +6460,20 @@ _Tools attached to this method contribution; compare and select only what you pl
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Case-study and comparative-case design, Interviews:**
 _Useful and optional:_
-- Programme evaluation and theory of change â€” use only when its stated condition applies; condition: Assess what changed, for whom, why, under what conditions and at what cost.
-- Evidence synthesis: systematic reviews and scoping reviews â€” use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
+- Programme evaluation and theory of change — use only when its stated condition applies; condition: Assess what changed, for whom, why, under what conditions and at what cost.
+- Evidence synthesis: systematic reviews and scoping reviews — use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Jamovi for introductory quantitative social-science analysis
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Document and content analysis:**
 _Useful and optional:_
-- Use AI cautiously to assist cross-source social-data harmonisation â€” optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
-- Validate and document AI use in a research workflow â€” use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
-- Critical discourse analysis (CDA) â€” useful and optional
-- LLM-assisted measurement of constructs in social text â€” useful and optional
-- Natural language processing and computational text mining â€” useful and optional
-- Supervised machine learning for social-research prediction and classification â€” useful and optional
-- Tree-ensemble machine learning for prediction and classification â€” useful and optional
+- Use AI cautiously to assist cross-source social-data harmonisation — optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
+- Validate and document AI use in a research workflow — use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
+- Critical discourse analysis (CDA) — useful and optional
+- LLM-assisted measurement of constructs in social text — useful and optional
+- Natural language processing and computational text mining — useful and optional
+- Supervised machine learning for social-research prediction and classification — useful and optional
+- Tree-ensemble machine learning for prediction and classification — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Hugging Face Transformers for pretrained NLP models
 - NLTK for teaching and prototyping language-data analysis
@@ -6482,7 +6482,7 @@ _Tools attached to this method contribution; compare and select only what you pl
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Document and content analysis, Interviews:**
 _Useful and optional:_
-- AI-assisted annotation of social-research text, with human validation â€” optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
+- AI-assisted annotation of social-research text, with human validation — optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - MAXQDA for qualitative and mixed-methods analysis
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
@@ -6493,13 +6493,13 @@ _Tools attached to this method contribution; compare and select only what you pl
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Interviews:**
 _Useful and optional:_
-- Interpretative phenomenological analysis (IPA) â€” useful and optional
+- Interpretative phenomenological analysis (IPA) — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Dedoose for collaborative qualitative and mixed-methods analysis
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Interviews, Observation and ethnographic approaches:**
 _Useful and optional:_
-- Conversation analysis (CA) of talk-in-interaction â€” useful and optional
+- Conversation analysis (CA) of talk-in-interaction — useful and optional
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Pack 30 action — Field-wide knowledge and useful learning:**
 Select this pack's exact choice(s): **Finding and organising research sources**.
@@ -6597,10 +6597,10 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Social work researcher** — Design or manage research on social issues or social-service practice, gather and analyse evidence and report findings for service or policy learning.
 **Exact area-stage menu for selected focus: Evaluate a programme by clarifying intended use and stakeholders, describing context and implementation, selecting credible evidence and methods, and reporting justified conclusions and limitations.**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Describe how a programme is expected to produce change â€” useful and optional
-- Select evaluation questions, design and credible evidence â€” useful and optional
-- Use a quantitative analysis workflow only when the design supports it â€” use only when its stated condition applies; condition: Optional analysis path only when measurement, sample and design support quantitative analysis; qualitative or descriptive alternatives may fit better.
-- Turn findings into usable, transparent recommendations â€” useful and optional
+- Describe how a programme is expected to produce change — useful and optional
+- Select evaluation questions, design and credible evidence — useful and optional
+- Use a quantitative analysis workflow only when the design supports it — use only when its stated condition applies; condition: Optional analysis path only when measurement, sample and design support quantitative analysis; qualitative or descriptive alternatives may fit better.
+- Turn findings into usable, transparent recommendations — useful and optional
 Tools in this selected focus group, with their item relationship shown above:
 - IBM SPSS for a justified social-data analysis
 **Pack 30 action — Evaluate a programme by clarifying intended use and stakeholders, describing context and implementation, selecting credible evidence and methods, and reporting justified conclusions and limitations.:**
@@ -6714,10 +6714,10 @@ After those components are selected, choose **Use documents to support an interv
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Turning ideas into observable measures is linked to Document and content analysis, Interviews.
 - **Route context:** Finding and organising research sources is linked to Document and content analysis, Interviews.
 - **Route context:** Checking reliability, validity and uncertainty is linked to Document and content analysis, Interviews.
@@ -6725,26 +6725,26 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Document and content analysis, Interviews.
 - **Route context:** Keeping a clear, repeatable research record is linked to Document and content analysis, Interviews.
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Document and content analysis:**
 _Useful and optional:_
-- Archival and historical research â€” use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
-- Case-study and comparative-case design â€” use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
-- Discourse and conversation analysis â€” useful and optional
-- Longitudinal, panel and multilevel data â€” useful and optional
-- Evidence synthesis: systematic reviews and scoping reviews â€” use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
-- Use AI cautiously to assist cross-source social-data harmonisation â€” optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
-- Investigate how AI systems affect people, groups and institutions â€” use only when its stated condition applies; condition: Optional when the research question concerns an AI system's effects on people, groups, or institutions; scope the assessment and involve affected stakeholders where appropriate.
-- Validate and document AI use in a research workflow â€” use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
-- Critical discourse analysis (CDA) â€” useful and optional
-- LLM-assisted measurement of constructs in social text â€” useful and optional
-- Natural language processing and computational text mining â€” useful and optional
-- Supervised machine learning for social-research prediction and classification â€” useful and optional
-- Tree-ensemble machine learning for prediction and classification â€” useful and optional
+- Archival and historical research — use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
+- Case-study and comparative-case design — use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
+- Discourse and conversation analysis — useful and optional
+- Longitudinal, panel and multilevel data — useful and optional
+- Evidence synthesis: systematic reviews and scoping reviews — use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
+- Use AI cautiously to assist cross-source social-data harmonisation — optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
+- Investigate how AI systems affect people, groups and institutions — use only when its stated condition applies; condition: Optional when the research question concerns an AI system's effects on people, groups, or institutions; scope the assessment and involve affected stakeholders where appropriate.
+- Validate and document AI use in a research workflow — use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
+- Critical discourse analysis (CDA) — useful and optional
+- LLM-assisted measurement of constructs in social text — useful and optional
+- Natural language processing and computational text mining — useful and optional
+- Supervised machine learning for social-research prediction and classification — useful and optional
+- Tree-ensemble machine learning for prediction and classification — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Hugging Face Transformers for pretrained NLP models
 - NLTK for teaching and prototyping language-data analysis
@@ -6755,7 +6755,7 @@ _Tools attached to this method contribution; compare and select only what you pl
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Document and content analysis, Interviews:**
 _Useful and optional:_
-- AI-assisted annotation of social-research text, with human validation â€” optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
+- AI-assisted annotation of social-research text, with human validation — optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - ATLAS.ti for qualitative data coding and retrieval
 - MAXQDA for qualitative and mixed-methods analysis
@@ -6765,11 +6765,11 @@ _Tools attached to this method contribution; compare and select only what you pl
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Interviews:**
 _Useful and optional:_
-- Focus groups and workshops â€” use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
-- Participatory and action research â€” use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
-- Piloting questions before fieldwork â€” use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
-- Conversation analysis (CA) of talk-in-interaction â€” useful and optional
-- Interpretative phenomenological analysis (IPA) â€” useful and optional
+- Focus groups and workshops — use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
+- Participatory and action research — use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
+- Piloting questions before fieldwork — use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
+- Conversation analysis (CA) of talk-in-interaction — useful and optional
+- Interpretative phenomenological analysis (IPA) — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Dedoose for collaborative qualitative and mixed-methods analysis
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
@@ -6837,8 +6837,8 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Thanatology researcher** — Investigate social, cultural or psychological aspects of death, dying, bereavement or related practices using a defined disciplinary question and evidence.
 **Exact area-stage menu for selected focus: Compare interview, observation or documentary accounts to describe a social pattern, explain how context shapes it and report differences or evidence that challenges the interpretation.**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Thematic/framework analysis with an auditable codebook â€” useful and optional
-- Reflexive, auditable interpretation â€” useful and optional
+- Thematic/framework analysis with an auditable codebook — useful and optional
+- Reflexive, auditable interpretation — useful and optional
 **Pack 31 action — Compare interview, observation or documentary accounts to describe a social pattern, explain how context shapes it and report differences or evidence that challenges the interpretation.:**
 Select this pack's exact choice(s): **Thematic/framework analysis with an auditable codebook**.
 Leave this exact visible choice unchecked for the skip test: **Reflexive, auditable interpretation**. Other unselected choices stay unchecked.
@@ -6937,10 +6937,10 @@ After those components are selected, choose **Choose evidence methods with parti
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Turning ideas into observable measures is linked to Participatory and action research, Focus groups and workshops.
 - **Route context:** Finding and organising research sources is linked to Participatory and action research, Focus groups and workshops.
 - **Route context:** Checking reliability, validity and uncertainty is linked to Participatory and action research, Focus groups and workshops.
@@ -6948,15 +6948,15 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Participatory and action research, Focus groups and workshops.
 - **Route context:** Keeping a clear, repeatable research record is linked to Participatory and action research, Focus groups and workshops.
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Focus groups and workshops:**
 _Useful and optional:_
-- AI-assisted annotation of social-research text, with human validation â€” optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
-- Interpretative phenomenological analysis (IPA) â€” useful and optional
+- AI-assisted annotation of social-research text, with human validation — optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
+- Interpretative phenomenological analysis (IPA) — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - ATLAS.ti for qualitative data coding and retrieval
 - Dedoose for collaborative qualitative and mixed-methods analysis
@@ -6965,12 +6965,12 @@ _Tools attached to this method contribution; compare and select only what you pl
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Focus groups and workshops, Participatory and action research:**
 _Useful and optional:_
-- Case-study and comparative-case design â€” use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
-- Discourse and conversation analysis â€” useful and optional
-- Focus groups and workshops â€” use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
-- Longitudinal, panel and multilevel data â€” useful and optional
-- Participatory and action research â€” use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
-- Conversation analysis (CA) of talk-in-interaction â€” useful and optional
+- Case-study and comparative-case design — use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
+- Discourse and conversation analysis — useful and optional
+- Focus groups and workshops — use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
+- Longitudinal, panel and multilevel data — useful and optional
+- Participatory and action research — use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
+- Conversation analysis (CA) of talk-in-interaction — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - NetworkX for analysing relationship data as a graph
 - Taguette for highlighting and coding documents
@@ -6978,9 +6978,9 @@ _Tools attached to this method contribution; compare and select only what you pl
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Participatory and action research:**
 _Useful and optional:_
-- Experiments, quasi-experiments and causal inference â€” useful and optional
-- Programme evaluation and theory of change â€” use only when its stated condition applies; condition: Assess what changed, for whom, why, under what conditions and at what cost.
-- Investigate how AI systems affect people, groups and institutions â€” use only when its stated condition applies; condition: Optional when the research question concerns an AI system's effects on people, groups, or institutions; scope the assessment and involve affected stakeholders where appropriate.
+- Experiments, quasi-experiments and causal inference — useful and optional
+- Programme evaluation and theory of change — use only when its stated condition applies; condition: Assess what changed, for whom, why, under what conditions and at what cost.
+- Investigate how AI systems affect people, groups and institutions — use only when its stated condition applies; condition: Optional when the research question concerns an AI system's effects on people, groups, or institutions; scope the assessment and involve affected stakeholders where appropriate.
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - ODK for offline-capable field data collection
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
@@ -7045,7 +7045,7 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Thanatology researcher** — Investigate social, cultural or psychological aspects of death, dying, bereavement or related practices using a defined disciplinary question and evidence.
 **Exact area-stage menu for selected focus: Use interviews, observation or documents to understand interaction**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Qualitative interview, observation and document inquiry â€” use only when its stated condition applies; condition: Plan and conduct ethical interviews/observation/document analysis, preserve context, code material and report evidence-backed themes and counterexamples.
+- Qualitative interview, observation and document inquiry — use only when its stated condition applies; condition: Plan and conduct ethical interviews/observation/document analysis, preserve context, code material and report evidence-backed themes and counterexamples.
 Tools in this selected focus group, with their item relationship shown above:
 - NVivo or Taguette for qualitative coding
 **Pack 32 action — Use interviews, observation or documents to understand interaction:**
@@ -7149,10 +7149,10 @@ After those components are selected, choose **Choose evidence methods with parti
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Turning ideas into observable measures is linked to Participatory and action research, Surveys and questionnaire design.
 - **Route context:** Finding and organising research sources is linked to Participatory and action research, Surveys and questionnaire design.
 - **Route context:** Checking reliability, validity and uncertainty is linked to Participatory and action research, Surveys and questionnaire design.
@@ -7160,39 +7160,39 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Participatory and action research, Surveys and questionnaire design.
 - **Route context:** Keeping a clear, repeatable research record is linked to Participatory and action research, Surveys and questionnaire design.
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Surveys and questionnaire design:**
 _Useful and optional:_
-- Piloting questions before fieldwork â€” use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
-- Psychometrics and scale construction â€” useful and optional
-- Use AI cautiously to assist cross-source social-data harmonisation â€” optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
-- Use AI to draft or improve research-data metadata, then curate and verify it â€” optional; condition: Optional experimental support for drafting or reviewing metadata. A human curator checks every field against the source and repository schema.
-- AI-assisted annotation of social-research text, with human validation â€” optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
-- Validate and document AI use in a research workflow â€” use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
-- Barnard's unconditional exact test for 2×2 tables â€” useful and optional
-- Boschloo's unconditional exact test for 2×2 tables â€” useful and optional
-- Chi-square tests for categorical counts and association â€” useful and optional
-- Confirmatory factor analysis (CFA) â€” useful and optional
-- Count regression: Poisson and negative binomial models â€” useful and optional
-- Exploratory factor analysis (EFA) â€” useful and optional
-- Fisher's exact test for categorical counts â€” useful and optional
-- Item response theory (IRT) and differential item functioning â€” useful and optional
-- Kendall rank correlation â€” useful and optional
-- Kruskal–Wallis rank test for independent groups â€” useful and optional
-- Simple and multiple linear regression (ordinary least squares) â€” useful and optional
-- Machine learning for survey nonresponse adjustment â€” useful and optional
-- Multinomial logistic regression for unordered categorical outcomes â€” useful and optional
-- Ordinal regression for ordered categorical outcomes â€” useful and optional
-- Pearson product-moment correlation â€” useful and optional
-- Probit regression for binary outcomes â€” useful and optional
-- Scale reliability estimation: alpha, omega and alternatives â€” useful and optional
-- Spearman rank correlation â€” useful and optional
-- One-sample, independent-samples and paired t-tests â€” useful and optional
-- Wilcoxon rank-sum and signed-rank tests â€” useful and optional
+- Piloting questions before fieldwork — use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
+- Psychometrics and scale construction — useful and optional
+- Use AI cautiously to assist cross-source social-data harmonisation — optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
+- Use AI to draft or improve research-data metadata, then curate and verify it — optional; condition: Optional experimental support for drafting or reviewing metadata. A human curator checks every field against the source and repository schema.
+- AI-assisted annotation of social-research text, with human validation — optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
+- Validate and document AI use in a research workflow — use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
+- Barnard's unconditional exact test for 2×2 tables — useful and optional
+- Boschloo's unconditional exact test for 2×2 tables — useful and optional
+- Chi-square tests for categorical counts and association — useful and optional
+- Confirmatory factor analysis (CFA) — useful and optional
+- Count regression: Poisson and negative binomial models — useful and optional
+- Exploratory factor analysis (EFA) — useful and optional
+- Fisher's exact test for categorical counts — useful and optional
+- Item response theory (IRT) and differential item functioning — useful and optional
+- Kendall rank correlation — useful and optional
+- Kruskal–Wallis rank test for independent groups — useful and optional
+- Simple and multiple linear regression (ordinary least squares) — useful and optional
+- Machine learning for survey nonresponse adjustment — useful and optional
+- Multinomial logistic regression for unordered categorical outcomes — useful and optional
+- Ordinal regression for ordered categorical outcomes — useful and optional
+- Pearson product-moment correlation — useful and optional
+- Probit regression for binary outcomes — useful and optional
+- Scale reliability estimation: alpha, omega and alternatives — useful and optional
+- Spearman rank correlation — useful and optional
+- One-sample, independent-samples and paired t-tests — useful and optional
+- Wilcoxon rank-sum and signed-rank tests — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Power BI for social-research reporting and interactive dashboards
 - Tableau for social-research visualisation and dashboards
@@ -7214,10 +7214,10 @@ _Tools attached to this method contribution; compare and select only what you pl
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Participatory and action research:**
 _Useful and optional:_
-- Focus groups and workshops â€” use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
-- Participatory and action research â€” use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
-- Investigate how AI systems affect people, groups and institutions â€” use only when its stated condition applies; condition: Optional when the research question concerns an AI system's effects on people, groups, or institutions; scope the assessment and involve affected stakeholders where appropriate.
-- Conversation analysis (CA) of talk-in-interaction â€” useful and optional
+- Focus groups and workshops — use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
+- Participatory and action research — use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
+- Investigate how AI systems affect people, groups and institutions — use only when its stated condition applies; condition: Optional when the research question concerns an AI system's effects on people, groups, or institutions; scope the assessment and involve affected stakeholders where appropriate.
+- Conversation analysis (CA) of talk-in-interaction — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Taguette for highlighting and coding documents
 - NVivo for organizing and coding substantial qualitative material
@@ -7276,8 +7276,8 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Economic development coordinator** — Coordinate evidence-informed economic-development initiatives by analysing local conditions, convening partners and tracking implementation or outcomes.
 **Exact area-stage menu for selected focus: Design a decision-linked citizen participation process**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Plan inclusive participation and close the feedback loop â€” use only when its stated condition applies; condition: Maintain an inclusion-and-response log connecting groups, access supports, input themes, official responses and follow-up actions.
-- Design, deliver and review a citizen participation process â€” use only when its stated condition applies; condition: Create a participation plan with decision scope, participants, accessible information, method, facilitation, analysis, response and follow-up.
+- Plan inclusive participation and close the feedback loop — use only when its stated condition applies; condition: Maintain an inclusion-and-response log connecting groups, access supports, input themes, official responses and follow-up actions.
+- Design, deliver and review a citizen participation process — use only when its stated condition applies; condition: Create a participation plan with decision scope, participants, accessible information, method, facilitation, analysis, response and follow-up.
 **Pack 33 action — Design a decision-linked citizen participation process:**
 Select this pack's exact choice(s): **Plan inclusive participation and close the feedback loop**.
 Leave this exact visible choice unchecked for the skip test: **Design, deliver and review a citizen participation process**. Other unselected choices stay unchecked.
@@ -7392,10 +7392,10 @@ After those components are selected, choose **Choose evidence methods with parti
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Turning ideas into observable measures is linked to Participatory and action research, Observation and ethnographic approaches.
 - **Route context:** Finding and organising research sources is linked to Participatory and action research, Observation and ethnographic approaches.
 - **Route context:** Checking reliability, validity and uncertainty is linked to Participatory and action research, Observation and ethnographic approaches.
@@ -7403,8 +7403,8 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Participatory and action research, Observation and ethnographic approaches.
 - **Route context:** Keeping a clear, repeatable research record is linked to Participatory and action research, Observation and ethnographic approaches.
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
@@ -7415,9 +7415,9 @@ _Tools attached to this method contribution; compare and select only what you pl
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Observation and ethnographic approaches, Participatory and action research:**
 _Useful and optional:_
-- Focus groups and workshops â€” use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
-- Participatory and action research â€” use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
-- Conversation analysis (CA) of talk-in-interaction â€” useful and optional
+- Focus groups and workshops — use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
+- Participatory and action research — use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
+- Conversation analysis (CA) of talk-in-interaction — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Taguette for highlighting and coding documents
 - NVivo for organizing and coding substantial qualitative material
@@ -7495,10 +7495,10 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Demographer** — Describe and analyse population size, composition and change using births, deaths, migration and related data; explain assumptions in estimates or projections.
 **Exact area-stage menu for selected focus: Describe how people, services or social conditions vary across places and scales by checking spatial data provenance, geographic units and map choices before interpreting a pattern.**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Geographical random forest for spatially varying prediction â€” useful and optional
-- Spatial data provenance, geographic units and scale â€” use only when its stated condition applies; condition: Use when geographic units, coverage, reference period or map scale affect interpretation; inspect data access and anonymisation.
-- Spatial analysis and map-based comparison â€” use only when its stated condition applies; condition: Optional method for questions where spatial pattern or distance is relevant; maps do not establish causation.
-- Explain spatial patterns without overclaiming â€” use only when its stated condition applies; condition: Use when explaining a mapped pattern; state data, scale and uncertainty limits and avoid causal overclaiming.
+- Geographical random forest for spatially varying prediction — useful and optional
+- Spatial data provenance, geographic units and scale — use only when its stated condition applies; condition: Use when geographic units, coverage, reference period or map scale affect interpretation; inspect data access and anonymisation.
+- Spatial analysis and map-based comparison — use only when its stated condition applies; condition: Optional method for questions where spatial pattern or distance is relevant; maps do not establish causation.
+- Explain spatial patterns without overclaiming — use only when its stated condition applies; condition: Use when explaining a mapped pattern; state data, scale and uncertainty limits and avoid causal overclaiming.
 Tools in this selected focus group, with their item relationship shown above:
 - QGIS for a human-geography spatial workflow
 **Pack 34 action — Describe how people, services or social conditions vary across places and scales by checking spatial data provenance, geographic units and map choices before interpreting a pattern.:**
@@ -7607,11 +7607,11 @@ This is a single-method route. The method remains usable on its own; a combined 
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Find and assess existing social data â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Find and assess existing social data — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Find and assess existing social data is linked to Scenario analysis across plausible futures.
 - **Route context:** Turning ideas into observable measures is linked to Scenario analysis across plausible futures.
 - **Route context:** Finding and organising research sources is linked to Scenario analysis across plausible futures.
@@ -7620,10 +7620,10 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Plan research responsibly when people or sensitive data are involved â€” useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
-- Organise and protect research information when a project uses data â€” use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Plan research responsibly when people or sensitive data are involved — useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
+- Organise and protect research information when a project uses data — use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Scenario analysis across plausible futures.
 - **Route context:** Organise and protect research information when a project uses data is linked to Scenario analysis across plausible futures.
 - **Route context:** Plan research responsibly when people or sensitive data are involved is linked to Scenario analysis across plausible futures.
@@ -7631,7 +7631,7 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Scenario analysis across plausible futures:**
 _Useful and optional:_
-- Scenario analysis across plausible futures â€” useful edge; condition: Use scenario analysis when the question is about how a policy, programme or social system could respond to several plausible future conditions, rather than predicting one certain future.
+- Scenario analysis across plausible futures — useful edge; condition: Use scenario analysis when the question is about how a policy, programme or social system could respond to several plausible future conditions, rather than predicting one certain future.
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Pack 35 action — Field-wide knowledge and useful learning:**
 Select this pack's exact choice(s): **Finding and organising research sources**.
@@ -7667,7 +7667,7 @@ No separate selected-domain-item support edge is recorded for this focus.
 - **Political scientist** — Study political systems, institutions, public opinion or political behaviour; analyse documents, events or data and communicate findings about political processes.
 **Exact area-stage menu for selected focus: Explore plausible futures and stress-test policy choices**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Build policy scenarios and test a strategy against them â€” useful and optional; condition: Only when the selected policy question concerns plausible future conditions or strategy resilience.
+- Build policy scenarios and test a strategy against them — useful and optional; condition: Only when the selected policy question concerns plausible future conditions or strategy resilience.
 **Pack 35 action — Explore plausible futures and stress-test policy choices:**
 Select this pack's exact choice(s): **Build policy scenarios and test a strategy against them**.
 After each tap, only the selected card is checked and only its row is added to the tray; this choice alone does not change the downstream route.
@@ -7748,11 +7748,11 @@ This is a single-method route. The method remains usable on its own; a combined 
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Find and assess existing social data â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Find and assess existing social data — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Find and assess existing social data is linked to Case-study and comparative-case design.
 - **Route context:** Turning ideas into observable measures is linked to Case-study and comparative-case design.
 - **Route context:** Finding and organising research sources is linked to Case-study and comparative-case design.
@@ -7761,10 +7761,10 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Plan research responsibly when people or sensitive data are involved â€” useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
-- Organise and protect research information when a project uses data â€” use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Plan research responsibly when people or sensitive data are involved — useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
+- Organise and protect research information when a project uses data — use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Case-study and comparative-case design.
 - **Route context:** Organise and protect research information when a project uses data is linked to Case-study and comparative-case design.
 - **Route context:** Plan research responsibly when people or sensitive data are involved is linked to Case-study and comparative-case design.
@@ -7772,13 +7772,13 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Case-study and comparative-case design:**
 _Useful and optional:_
-- Archival and historical research â€” use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
-- Case-study and comparative-case design â€” use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
-- Discourse and conversation analysis â€” useful and optional
-- Longitudinal, panel and multilevel data â€” useful and optional
-- Evidence synthesis: systematic reviews and scoping reviews â€” use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
-- Investigate how AI systems affect people, groups and institutions â€” use only when its stated condition applies; condition: Optional when the research question concerns an AI system's effects on people, groups, or institutions; scope the assessment and involve affected stakeholders where appropriate.
-- Process tracing for within-case causal mechanisms â€” useful and optional
+- Archival and historical research — use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
+- Case-study and comparative-case design — use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
+- Discourse and conversation analysis — useful and optional
+- Longitudinal, panel and multilevel data — useful and optional
+- Evidence synthesis: systematic reviews and scoping reviews — use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
+- Investigate how AI systems affect people, groups and institutions — use only when its stated condition applies; condition: Optional when the research question concerns an AI system's effects on people, groups, or institutions; scope the assessment and involve affected stakeholders where appropriate.
+- Process tracing for within-case causal mechanisms — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Python
 - Scikit-learn
@@ -7842,8 +7842,8 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Thanatology researcher** — Investigate social, cultural or psychological aspects of death, dying, bereavement or related practices using a defined disciplinary question and evidence.
 **Exact area-stage menu for selected focus: Compare interview, observation or documentary accounts to describe a social pattern, explain how context shapes it and report differences or evidence that challenges the interpretation.**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Thematic/framework analysis with an auditable codebook â€” useful and optional
-- Reflexive, auditable interpretation â€” useful and optional
+- Thematic/framework analysis with an auditable codebook — useful and optional
+- Reflexive, auditable interpretation — useful and optional
 **Pack 36 action — Compare interview, observation or documentary accounts to describe a social pattern, explain how context shapes it and report differences or evidence that challenges the interpretation.:**
 Select this pack's exact choice(s): **Thematic/framework analysis with an auditable codebook**.
 Leave this exact visible choice unchecked for the skip test: **Reflexive, auditable interpretation**. Other unselected choices stay unchecked.
@@ -7924,11 +7924,11 @@ This is a single-method route. The method remains usable on its own; a combined 
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Find and assess existing social data â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Find and assess existing social data — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Find and assess existing social data is linked to Qualitative methods (working with words, observations and meaning).
 - **Route context:** Turning ideas into observable measures is linked to Qualitative methods (working with words, observations and meaning).
 - **Route context:** Finding and organising research sources is linked to Qualitative methods (working with words, observations and meaning).
@@ -7937,10 +7937,10 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Plan research responsibly when people or sensitive data are involved â€” useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
-- Organise and protect research information when a project uses data â€” use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Plan research responsibly when people or sensitive data are involved — useful edge; condition: Choose this preparation when the selected research task will involve people or identifiable/sensitive information. Use it before collecting or using that information to identify consent, privacy, possible harm and the permissions or review that apply.
+- Organise and protect research information when a project uses data — use only when its stated condition applies; condition: Use this when a project creates, receives, stores or shares research information and needs to document what it contains, protect it and control access.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Qualitative methods (working with words, observations and meaning).
 - **Route context:** Organise and protect research information when a project uses data is linked to Qualitative methods (working with words, observations and meaning).
 - **Route context:** Plan research responsibly when people or sensitive data are involved is linked to Qualitative methods (working with words, observations and meaning).
@@ -7948,15 +7948,15 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Qualitative methods (working with words, observations and meaning):**
 _Useful and optional:_
-- Discourse and conversation analysis â€” useful and optional
-- Focus groups and workshops â€” use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
-- Participatory and action research â€” use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
-- AI-assisted annotation of social-research text, with human validation â€” optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
-- Conversation analysis (CA) of talk-in-interaction â€” useful and optional
-- Critical discourse analysis (CDA) â€” useful and optional
-- Interpretative phenomenological analysis (IPA) â€” useful and optional
-- LLM-assisted measurement of constructs in social text â€” useful and optional
-- Natural language processing and computational text mining â€” useful and optional
+- Discourse and conversation analysis — useful and optional
+- Focus groups and workshops — use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
+- Participatory and action research — use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
+- AI-assisted annotation of social-research text, with human validation — optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
+- Conversation analysis (CA) of talk-in-interaction — useful and optional
+- Critical discourse analysis (CDA) — useful and optional
+- Interpretative phenomenological analysis (IPA) — useful and optional
+- LLM-assisted measurement of constructs in social text — useful and optional
+- Natural language processing and computational text mining — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - ATLAS.ti for qualitative data coding and retrieval
 - Dedoose for collaborative qualitative and mixed-methods analysis
@@ -8013,7 +8013,7 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Thanatology researcher** — Investigate social, cultural or psychological aspects of death, dying, bereavement or related practices using a defined disciplinary question and evidence.
 **Exact area-stage menu for selected focus: Use interviews, observation or documents to understand interaction**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Qualitative interview, observation and document inquiry â€” use only when its stated condition applies; condition: Plan and conduct ethical interviews/observation/document analysis, preserve context, code material and report evidence-backed themes and counterexamples.
+- Qualitative interview, observation and document inquiry — use only when its stated condition applies; condition: Plan and conduct ethical interviews/observation/document analysis, preserve context, code material and report evidence-backed themes and counterexamples.
 Tools in this selected focus group, with their item relationship shown above:
 - NVivo or Taguette for qualitative coding
 **Pack 37 action — Use interviews, observation or documents to understand interaction:**
@@ -8112,10 +8112,10 @@ After those components are selected, choose **Build a case study from complement
 4. **After method/design selection and before opening an area: domain learning and tools.** Only the groups and cards in this exact route menu should appear. For every group, perform the generated select/skip/compare actions immediately below its menu; no area is opened until this stage is checked.
 **Field-wide knowledge and useful learning (Layer 2; optional, route-linked choices):**
 _Useful and optional:_
-- Finding and organising research sources â€” useful and optional
-- Sampling and knowing what evidence represents â€” useful and optional
-- Turning ideas into observable measures â€” useful and optional
-- Checking reliability, validity and uncertainty â€” useful and optional
+- Finding and organising research sources — useful and optional
+- Sampling and knowing what evidence represents — useful and optional
+- Turning ideas into observable measures — useful and optional
+- Checking reliability, validity and uncertainty — useful and optional
 - **Route context:** Turning ideas into observable measures is linked to Case-study and comparative-case design, Interviews, Document and content analysis, Observation and ethnographic approaches.
 - **Route context:** Finding and organising research sources is linked to Case-study and comparative-case design, Interviews, Document and content analysis, Observation and ethnographic approaches.
 - **Route context:** Checking reliability, validity and uncertainty is linked to Case-study and comparative-case design, Interviews, Document and content analysis, Observation and ethnographic approaches.
@@ -8123,30 +8123,30 @@ _Useful and optional:_
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Research practices and conditional preparation (Layer 3; optional, route-linked choices):**
 _Useful and optional:_
-- Keeping a clear, repeatable research record â€” useful and optional
-- Ethics for AI-assisted and digital-trace research â€” use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
+- Keeping a clear, repeatable research record — useful and optional
+- Ethics for AI-assisted and digital-trace research — use only when its stated condition applies; condition: Assess human oversight, data quality, provenance, consent, privacy, bias and disclosure when AI or online traces are used.
 - **Route context:** Ethics for AI-assisted and digital-trace research is linked to Case-study and comparative-case design, Interviews, Document and content analysis, Observation and ethnographic approaches.
 - **Route context:** Keeping a clear, repeatable research record is linked to Case-study and comparative-case design, Interviews, Document and content analysis, Observation and ethnographic approaches.
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Case-study and comparative-case design:**
 _Useful and optional:_
-- Process tracing for within-case causal mechanisms â€” useful and optional
+- Process tracing for within-case causal mechanisms — useful and optional
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Case-study and comparative-case design, Document and content analysis:**
 _Useful and optional:_
-- Investigate how AI systems affect people, groups and institutions â€” use only when its stated condition applies; condition: Optional when the research question concerns an AI system's effects on people, groups, or institutions; scope the assessment and involve affected stakeholders where appropriate.
+- Investigate how AI systems affect people, groups and institutions — use only when its stated condition applies; condition: Optional when the research question concerns an AI system's effects on people, groups, or institutions; scope the assessment and involve affected stakeholders where appropriate.
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Case-study and comparative-case design, Document and content analysis, Interviews, Observation and ethnographic approaches:**
 _Useful and optional:_
-- Archival and historical research â€” use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
-- Case-study and comparative-case design â€” use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
-- Discourse and conversation analysis â€” useful and optional
-- Experiments, quasi-experiments and causal inference â€” useful and optional
-- Focus groups and workshops â€” use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
-- Longitudinal, panel and multilevel data â€” useful and optional
-- Participatory and action research â€” use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
-- Piloting questions before fieldwork â€” use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
-- Psychometrics and scale construction â€” useful and optional
+- Archival and historical research — use only when its stated condition applies; condition: Use records and archives as evidence while checking provenance, context and gaps.
+- Case-study and comparative-case design — use only when its stated condition applies; condition: Set defensible boundaries around a case and compare cases without treating one example as universal.
+- Discourse and conversation analysis — useful and optional
+- Experiments, quasi-experiments and causal inference — useful and optional
+- Focus groups and workshops — use only when its stated condition applies; condition: Study how people discuss a topic together and how group interaction shapes evidence.
+- Longitudinal, panel and multilevel data — useful and optional
+- Participatory and action research — use only when its stated condition applies; condition: Involve affected communities in framing questions, design, interpretation or action.
+- Piloting questions before fieldwork — use only when its stated condition applies; condition: Test whether research questions are understood as intended before fieldwork.
+- Psychometrics and scale construction — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Jupyter
 - NetworkX for analysing relationship data as a graph
@@ -8158,20 +8158,20 @@ _Tools attached to this method contribution; compare and select only what you pl
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Case-study and comparative-case design, Interviews:**
 _Useful and optional:_
-- Programme evaluation and theory of change â€” use only when its stated condition applies; condition: Assess what changed, for whom, why, under what conditions and at what cost.
-- Evidence synthesis: systematic reviews and scoping reviews â€” use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
+- Programme evaluation and theory of change — use only when its stated condition applies; condition: Assess what changed, for whom, why, under what conditions and at what cost.
+- Evidence synthesis: systematic reviews and scoping reviews — use only when its stated condition applies; condition: Find, screen, assess and combine existing studies rather than collecting new data by default.
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Jamovi for introductory quantitative social-science analysis
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Document and content analysis:**
 _Useful and optional:_
-- Use AI cautiously to assist cross-source social-data harmonisation â€” optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
-- Validate and document AI use in a research workflow â€” use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
-- Critical discourse analysis (CDA) â€” useful and optional
-- LLM-assisted measurement of constructs in social text â€” useful and optional
-- Natural language processing and computational text mining â€” useful and optional
-- Supervised machine learning for social-research prediction and classification â€” useful and optional
-- Tree-ensemble machine learning for prediction and classification â€” useful and optional
+- Use AI cautiously to assist cross-source social-data harmonisation — optional; condition: Experimental optional support for comparing existing datasets. Verify every proposed mapping against source codebooks, populations, measures, periods, and transformation rules.
+- Validate and document AI use in a research workflow — use only when its stated condition applies; condition: Use only when AI is used in the selected workflow; record the system, version, task, data context, checks, and required disclosure.
+- Critical discourse analysis (CDA) — useful and optional
+- LLM-assisted measurement of constructs in social text — useful and optional
+- Natural language processing and computational text mining — useful and optional
+- Supervised machine learning for social-research prediction and classification — useful and optional
+- Tree-ensemble machine learning for prediction and classification — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Hugging Face Transformers for pretrained NLP models
 - NLTK for teaching and prototyping language-data analysis
@@ -8180,7 +8180,7 @@ _Tools attached to this method contribution; compare and select only what you pl
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Document and content analysis, Interviews:**
 _Useful and optional:_
-- AI-assisted annotation of social-research text, with human validation â€” optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
+- AI-assisted annotation of social-research text, with human validation — optional; condition: Optional experimental support on a justified text-analysis task. Compare model annotations with human-coded examples and retain human interpretive responsibility.
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - MAXQDA for qualitative and mixed-methods analysis
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
@@ -8191,13 +8191,13 @@ _Tools attached to this method contribution; compare and select only what you pl
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Interviews:**
 _Useful and optional:_
-- Interpretative phenomenological analysis (IPA) â€” useful and optional
+- Interpretative phenomenological analysis (IPA) — useful and optional
 _Tools attached to this method contribution; compare and select only what you plan to use:_
 - Dedoose for collaborative qualitative and mixed-methods analysis
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Method-linked choices: Interviews, Observation and ethnographic approaches:**
 _Useful and optional:_
-- Conversation analysis (CA) of talk-in-interaction â€” useful and optional
+- Conversation analysis (CA) of talk-in-interaction — useful and optional
 - This group is skippable; its placement organizes the route and does not make it a prerequisite.
 **Pack 38 action — Field-wide knowledge and useful learning:**
 Select this pack's exact choice(s): **Finding and organising research sources**.
@@ -8295,10 +8295,10 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Social work researcher** — Design or manage research on social issues or social-service practice, gather and analyse evidence and report findings for service or policy learning.
 **Exact area-stage menu for selected focus: Evaluate a programme by clarifying intended use and stakeholders, describing context and implementation, selecting credible evidence and methods, and reporting justified conclusions and limitations.**
 Requirement lane `useful_optional` — these are the area items for this focus:
-- Describe how a programme is expected to produce change â€” useful and optional
-- Select evaluation questions, design and credible evidence â€” useful and optional
-- Use a quantitative analysis workflow only when the design supports it â€” use only when its stated condition applies; condition: Optional analysis path only when measurement, sample and design support quantitative analysis; qualitative or descriptive alternatives may fit better.
-- Turn findings into usable, transparent recommendations â€” useful and optional
+- Describe how a programme is expected to produce change — useful and optional
+- Select evaluation questions, design and credible evidence — useful and optional
+- Use a quantitative analysis workflow only when the design supports it — use only when its stated condition applies; condition: Optional analysis path only when measurement, sample and design support quantitative analysis; qualitative or descriptive alternatives may fit better.
+- Turn findings into usable, transparent recommendations — useful and optional
 Tools in this selected focus group, with their item relationship shown above:
 - IBM SPSS for a justified social-data analysis
 **Pack 38 action — Evaluate a programme by clarifying intended use and stakeholders, describing context and implementation, selecting credible evidence and methods, and reporting justified conclusions and limitations.:**
@@ -8371,8 +8371,8 @@ The task-family focus is selected only after the method/design and area. Select 
 - **Thanatology researcher** — Investigate social, cultural or psychological aspects of death, dying, bereavement or related practices using a defined disciplinary question and evidence.
 Exact additional-area menu for **Compare interview, observation or documentary accounts to describe a social pattern, explain how context shapes it and report differences or evidence that challenges the interpretation.**:
 Requirement lane `useful_optional`:
-- Thematic/framework analysis with an auditable codebook â€” useful and optional
-- Reflexive, auditable interpretation â€” useful and optional
+- Thematic/framework analysis with an auditable codebook — useful and optional
+- Reflexive, auditable interpretation — useful and optional
 **Pack 38 action — Compare interview, observation or documentary accounts to describe a social pattern, explain how context shapes it and report differences or evidence that challenges the interpretation.:**
 Select this pack's exact choice(s): **Thematic/framework analysis with an auditable codebook**.
 Leave this exact visible choice unchecked for the skip test: **Reflexive, auditable interpretation**. Other unselected choices stay unchecked.
