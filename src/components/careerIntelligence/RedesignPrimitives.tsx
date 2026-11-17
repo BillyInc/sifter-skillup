@@ -418,13 +418,13 @@ const styles = StyleSheet.create({
     gap: Spacing.md,
   },
   sectionLabel: {
-    fontSize: 10,
+    fontSize: FontSize.sm,
     fontWeight: FontWeight.semibold,
     letterSpacing: 0.9,
     textTransform: "uppercase",
   },
   sectionAction: { minHeight: 28, justifyContent: "center" },
-  sectionActionText: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
+  sectionActionText: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
   tabs: {
     minHeight: 38,
     flexDirection: "row",
@@ -448,7 +448,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  filterChipText: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
+  filterChipText: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
   searchBar: {
     minHeight: 44,
     borderRadius: Radius.md,
