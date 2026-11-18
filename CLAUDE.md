@@ -6,6 +6,33 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Sifter LevelUp is a Duolingo-style learning app for crypto literacy and quant finance. It has two main parts: a React Native/Expo mobile frontend and a FastAPI Python backend, backed by Supabase (Postgres) with Celery/Redis for background jobs.
 
+## Product redesign and feedback implementation brief
+
+When implementing the student or career-intelligence admin experience, first
+read all three source documents in
+`docs/design-feedback/2026-11-18/`:
+
+- `platform_redesign_feedback_verbatim.pdf` contains the explicit review
+  corrections and decisions. Treat these as requirements, including removing
+  unsupported or template-only UI, honoring the existing product decisions,
+  and adapting the redesign to the current application.
+- `student_experience_ux_ui_blueprint.pdf` is the student UX/UI blueprint and
+  structural wireframe reference.
+- `career_intelligence_admin_ux_detailed.pdf` is the detailed institutional
+  admin UX/UI blueprint and wireframe reference.
+
+Implement the applicable design and feedback in the product; do not stop at
+summarizing or archiving the documents. Preserve the existing underlying data:
+do not edit or regenerate canonical datasets, seed content, database records,
+or Supabase state for this redesign. Keep existing database schemas, API/data
+contracts, and matching/scoring business rules intact. Build the experience
+from the data and capabilities already present, and do not invent metrics,
+roles, institution facts, or profile values to make a mockup appear complete.
+For a requested behavior that the current data model or API cannot support
+(including score-based admission outcomes), do not fabricate values or silently
+change the model; identify the gap and report the smallest required data or
+contract change for separate approval. Do not apply migrations or seed files
+as part of this redesign unless the user separately requests it.
 ## Windows local command runner contract
 
 - The current operator workflow is the IDE and its integrated terminal, not the
