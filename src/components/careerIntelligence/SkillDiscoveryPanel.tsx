@@ -14,7 +14,7 @@ import { useTheme, CompassFonts, FontSize, Radius, Spacing } from "@/theme";
 import { careerData } from "@/lib/careerData";
 import { getStartingPoint } from "@/lib/startingPoint";
 import { useAuth } from "@/hooks/useAuth";
-import { adminLearnerAudienceForOrg } from "@/lib/adminLearnerAudience";
+import { adminLearnerAudienceForOrg, learnerStageLabel } from "@/lib/adminLearnerAudience";
 import { useExploreNav } from "@/lib/exploreNav";
 import { useResponsive } from "@/hooks/useResponsive";
 import { pending, type DataState, type SkillDiscoveryResult } from "@/types/career";
@@ -261,7 +261,7 @@ export function SkillDiscoveryPanel({ adminType }: SkillDiscoveryPanelProps) {
               <View style={styles.optionRow}>
                 {(adminAudience?.learnerTypes ?? []).map((item) => (
                   <TouchableOpacity key={item} onPress={() => setAdminLearnerTypes((current) => current.includes(item) ? (current.length > 1 ? current.filter((value) => value !== item) : current) : [...current, item])} accessibilityRole={adminType === "secondary_school" ? "checkbox" : "radio"} accessibilityState={adminType === "secondary_school" ? { checked: adminLearnerTypes.includes(item) } : { selected: adminLearnerTypes.includes(item) }} style={[styles.option, { borderColor: adminLearnerTypes.includes(item) ? colors.accentRole.action : colors.borderRole.subtle, backgroundColor: adminLearnerTypes.includes(item) ? colors.accentRole.action : colors.surface.raised }]}>
-                    <Text style={{ color: adminLearnerTypes.includes(item) ? colors.textRole.inverse : colors.textRole.primary, fontSize: FontSize.sm, fontWeight: "700" }}>{item === "undergraduate" ? "Undergraduate" : item.toUpperCase()}</Text>
+                    <Text style={{ color: adminLearnerTypes.includes(item) ? colors.textRole.inverse : colors.textRole.primary, fontSize: FontSize.sm, fontWeight: "700" }}>{learnerStageLabel(item, adminType)}</Text>
                   </TouchableOpacity>
                 ))}
               </View>

@@ -11,7 +11,7 @@ import { useRouter } from "expo-router";
 
 import { SifterButton } from "@/components/ui";
 import { useAuth } from "@/hooks/useAuth";
-import { adminLearnerAudienceForOrg, type AdminLearnerAudience } from "@/lib/adminLearnerAudience";
+import { adminLearnerAudienceForOrg, learnerStageLabel, type AdminLearnerAudience } from "@/lib/adminLearnerAudience";
 import { getEducatorProfile } from "@/lib/educatorProfile";
 import { provisioningData } from "@/lib/provisioningData";
 import { guidanceContextQuery } from "@/lib/guidanceRouteContext";
@@ -218,7 +218,7 @@ export function GuidanceStartScreen() {
         {target === "anonymous" ? <View style={styles.section}>
           <Text style={[styles.sectionTitle, CompassFonts.bodySemibold, { color: colors.text }]}>Student context</Text>
           <Text style={[styles.body, { color: colors.textMuted }]}>{audience.description} This context controls which admission questions and stream filters appear.</Text>
-          <View style={styles.optionRow}>{audience.learnerTypes.map((value) => <Choice key={value} title={value === "undergraduate" ? "Undergraduate" : value.toUpperCase()} body="Use this student context for the guidance check." active={learnerType === value} onPress={() => setLearnerType(value)} colors={colors} />)}</View>
+          <View style={styles.optionRow}>{audience.learnerTypes.map((value) => <Choice key={value} title={learnerStageLabel(value, organizationType)} body="Use this student context for the guidance check." active={learnerType === value} onPress={() => setLearnerType(value)} colors={colors} />)}</View>
           {needsStream ? <><Text style={[styles.label, { color: colors.textMuted }]}>Stream</Text><View style={styles.optionRow}>{audience.streams.map((value) => <Choice key={value} title={value[0].toUpperCase() + value.slice(1)} body="A guidance filter, not a permanent eligibility judgement." active={stream === value} onPress={() => setStream(value)} colors={colors} />)}</View></> : null}
         </View> : null}
 

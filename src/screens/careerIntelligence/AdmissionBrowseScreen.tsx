@@ -28,7 +28,7 @@ import { invalidateGuidancePathCache } from "@/components/careerIntelligence";
 import { LiveSubjectMultiSelect, MAX_OLEVEL_SUBJECTS } from "@/components/onboarding/LiveSubjectMultiSelect";
 import { useExploreNav } from "@/lib/exploreNav";
 import { isGuidanceContextCompatible } from "@/lib/guidanceRouteContext";
-import { adminLearnerAudienceForOrg, type AdminLearnerAudience } from "@/lib/adminLearnerAudience";
+import { adminLearnerAudienceForOrg, learnerStageLabel, type AdminLearnerAudience } from "@/lib/adminLearnerAudience";
 import { CareerDisclaimer } from "@/components/careerIntelligence/CareerDisclaimer";
 import { provisioningData } from "@/lib/provisioningData";
 import type {
@@ -734,7 +734,7 @@ export default function AdmissionBrowseScreen() {
               onPress={() => setContextClass(value)}
               style={[styles.modeBtn, { backgroundColor: normalizedContextClass === value ? Brand.primary : colors.card, borderColor: colors.border }]}
             >
-              <Text style={{ color: normalizedContextClass === value ? colors.textInverse : colors.text }}>{value === "undergraduate" ? "Undergraduate" : value.toUpperCase()}</Text>
+              <Text style={{ color: normalizedContextClass === value ? colors.textInverse : colors.text }}>{learnerStageLabel(value, adminType)}</Text>
             </TouchableOpacity>
           ))}
         </View>

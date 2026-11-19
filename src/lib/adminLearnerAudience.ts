@@ -20,11 +20,13 @@ const SECONDARY: AdminLearnerAudience = {
 };
 
 const PROVIDER: AdminLearnerAudience = {
-  learnerTypes: ["jamb"],
+  // Tutorial centres prepare learners for both O-level and UTME, so both
+  // starting points are offered. "ss3" is the existing O-level starting point.
+  learnerTypes: ["ss3", "jamb"],
   streams: [],
   streamRequired: true,
-  label: "JAMB students",
-  description: "JAMB guidance does not use a secondary-school stream.",
+  label: "O-level and UTME students",
+  description: "Choose O-level or UTME. Tutorial-centre guidance does not use a secondary-school stream.",
 };
 
 const UNIVERSITY: AdminLearnerAudience = {
@@ -64,3 +66,21 @@ export function isAdminLearnerTypeAllowed(
   );
 }
 
+
+/**
+ * Display label for a learner stage in an organisation's own vocabulary.
+ * Tutorial centres and JAMB cafes call the existing "ss3" starting point
+ * "O-level" and the "jamb" starting point "UTME"; the stored values do not
+ * change.
+ */
+export function learnerStageLabel(
+  value: string,
+  organizationType?: OrganizationType | string | null,
+): string {
+  if (value === "undergraduate") return "Undergraduate";
+  if (organizationType === "tutorial_centre" || organizationType === "jamb_cafe") {
+    if (value === "ss3") return "O-level";
+    if (value === "jamb") return "UTME (JAMB)";
+  }
+  return value.toUpperCase();
+}
