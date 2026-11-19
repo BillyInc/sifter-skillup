@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
     gap: Spacing.md,
   },
   eyebrow: {
-    fontSize: FontSize.xs,
+    fontSize: FontSize.sm,
     fontWeight: '600',
     letterSpacing: 0.9,
     marginTop: Spacing.sm,
@@ -343,7 +343,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
   legendLabel: {
-    fontSize: 9,
+    fontSize: FontSize.sm,
     marginRight: 4,
   },
   heatmapGrid: {
@@ -357,7 +357,7 @@ const styles = StyleSheet.create({
   dayLabel: {
     width: 14,
     height: 14,
-    fontSize: 9,
+    fontSize: FontSize.sm,
     fontWeight: '600',
     textAlign: 'center',
     lineHeight: 14,
@@ -406,11 +406,11 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   rewardSub: {
-    fontSize: 10,
+    fontSize: FontSize.sm,
     marginTop: 2,
   },
   rewardStatus: {
-    fontSize: FontSize.xs,
+    fontSize: FontSize.sm,
     fontWeight: '600',
   },
 
@@ -420,7 +420,7 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
   },
   panelEyebrow: {
-    fontSize: FontSize.xs,
+    fontSize: FontSize.sm,
     fontWeight: '700',
     letterSpacing: 0.8,
     textTransform: 'uppercase',

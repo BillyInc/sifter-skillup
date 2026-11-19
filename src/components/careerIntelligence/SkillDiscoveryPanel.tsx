@@ -48,7 +48,7 @@ function labelForIntent(intent: Intent) {
   return intent === "learned" ? "I already know" : "I want to build";
 }
 
-function EvidenceChips({ values, color, limit }: { values: string[]; color: string; limit?: number }) {
+function MatchedSkillChips({ values, color, limit }: { values: string[]; color: string; limit?: number }) {
   if (!values.length) return null;
   const visible = limit ? values.slice(0, limit) : values;
   return (
@@ -65,11 +65,11 @@ function EvidenceChips({ values, color, limit }: { values: string[]; color: stri
   );
 }
 
-function MatchMeta({ score, label, explanation, color }: { score: number; label: string; explanation?: string; color: string }) {
+function MatchMeta({ label, explanation, color }: { label: string; explanation?: string; color: string }) {
   return (
     <View style={styles.matchMeta}>
       <Text style={[CompassFonts.data, { color, fontSize: FontSize.xs, fontWeight: "800" }]}>
-        {score > 0 ? `${Math.round(score * 100)}% · ` : ""}{label}
+        {label}
       </Text>
       {explanation ? <Text style={{ color, fontSize: FontSize.xs, textAlign: "right", maxWidth: 190 }}>{explanation}</Text> : null}
     </View>
@@ -404,9 +404,9 @@ function SkillResults({
             {visiblePaths.map((path, index) => (
               <TouchableOpacity key={`${path.domainId}-${path.roleKey ?? path.subgroupId ?? index}`} onPress={() => onOpenPath(path)} accessibilityRole="button" style={[styles.pathCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
                 <View style={styles.pathTop}><View style={[styles.pathIndex, { backgroundColor: colors.surface.subtle }]}><Text style={{ color: colors.accentRole.action, fontSize: FontSize.xs, fontWeight: "900" }}>{index + 1}</Text></View><View style={{ flex: 1, gap: 2 }}><Text style={{ color: colors.textRole.muted, fontSize: FontSize.xs, fontWeight: "700" }}>{path.domainName}</Text><Text style={{ color: colors.textRole.primary, fontSize: FontSize.md, fontWeight: "800" }}>{path.subgroupName ? `${path.subgroupName} → ` : ""}{path.roleName ?? "Explore this domain"}</Text></View><Feather name="arrow-up-right" size={17} color={colors.accentRole.action} /></View>
-                <View style={styles.routeMeta}><Text style={{ color: colors.textRole.muted, fontSize: FontSize.xs }}>{path.tier ? `${path.tier} route` : "Domain route"}</Text><MatchMeta score={path.matchScore} label={path.matchLabel} color={colors.accentRole.action} /></View>
+                <View style={styles.routeMeta}><Text style={{ color: colors.textRole.muted, fontSize: FontSize.xs }}>{path.tier ? `${path.tier} route` : "Domain route"}</Text><MatchMeta label={path.matchLabel} color={colors.accentRole.action} /></View>
                 <Text style={[styles.help, { color: colors.textRole.secondary }]}>{path.explanation}</Text>
-                {path.matchedSkills.length ? <EvidenceChips values={path.matchedSkills} color={colors.accentRole.success} limit={3} /> : null}
+                {path.matchedSkills.length ? <MatchedSkillChips values={path.matchedSkills} color={colors.accentRole.success} limit={3} /> : null}
                 {path.gaps.length ? <Text style={[styles.help, { color: colors.textRole.muted }]}>Preparation still needed: {path.gaps.slice(0, 3).join(", ")}{path.gaps.length > 3 ? ` +${path.gaps.length - 3} more` : ""}</Text> : null}
               </TouchableOpacity>
             ))}
@@ -438,7 +438,7 @@ function SkillResults({
                         .map((source) => ({ ...source, studentUrl: studentSafeUrl(source.url) }))
                         .filter((source) => adminMode ? Boolean(source.url) : Boolean(source.studentUrl))
                         .slice(0, 3);
-                      return sources.length ? <View style={{ gap: 3 }}><Text style={[styles.help, { color: colors.textRole.muted, fontWeight: "800" }]}>Evidence</Text>{sources.map((source) => <ExternalLinkGuard key={source.url} audience={adminMode ? "admin" : "student"} url={adminMode ? source.url : source.studentUrl} label={source.title ?? "Open evidence source"} description={`This opens the evidence source recorded for ${item.name}.`} textStyle={[styles.help, { color: colors.accentRole.action }]} />)}</View> : <Text style={[styles.help, { color: colors.textRole.muted }]}>No verified evidence link is available for this match yet.</Text>;
+                      return sources.length && adminMode ? <View style={{ gap: 3 }}><Text style={[styles.help, { color: colors.textRole.muted, fontWeight: "800" }]}>Evidence</Text>{sources.map((source) => <ExternalLinkGuard key={source.url} audience={adminMode ? "admin" : "student"} url={adminMode ? source.url : source.studentUrl} label={source.title ?? "Open evidence source"} description={`This opens the evidence source recorded for ${item.name}.`} textStyle={[styles.help, { color: colors.accentRole.action }]} />)}</View> : null;
                     })()}
                   </View> : null}
                 </TouchableOpacity>
@@ -453,23 +453,23 @@ function SkillResults({
       {data.domains.length ? (
         <View style={styles.resultSection}>
           <SectionLabel>DOMAINS</SectionLabel>
-          {visibleDomains.map((item) => <TouchableOpacity key={item.id} onPress={() => onOpenDomain(item.id)} accessibilityRole="button" style={[styles.entityCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}><View style={styles.entityTop}><View style={{ flex: 1, gap: 3 }}><Text style={{ color: colors.textRole.primary, fontSize: FontSize.md, fontWeight: "800" }}>{item.name}</Text>{item.cluster ? <Text style={[styles.help, { color: colors.textRole.muted }]}>{item.cluster}</Text> : null}</View><MatchMeta score={item.matchScore} label={item.matchLabel} explanation={item.matchExplanation} color={colors.accentRole.action} /></View>{item.description ? <Text style={[styles.help, { color: colors.textRole.secondary }]}>{item.description}</Text> : null}{item.matchedSkills.length ? <EvidenceChips values={item.matchedSkills} color={colors.accentRole.success} limit={4} /> : null}{item.gaps.length ? <Text style={[styles.help, { color: colors.textRole.muted }]}>Foundation gaps: {item.gaps.slice(0, 3).join(", ")}{item.gaps.length > 3 ? ` +${item.gaps.length - 3} more` : ""}</Text> : null}<Text style={[styles.link, { color: colors.accentRole.action }]}>Open domain explanation →</Text></TouchableOpacity>)}
+          {visibleDomains.map((item) => <TouchableOpacity key={item.id} onPress={() => onOpenDomain(item.id)} accessibilityRole="button" style={[styles.entityCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}><View style={styles.entityTop}><View style={{ flex: 1, gap: 3 }}><Text style={{ color: colors.textRole.primary, fontSize: FontSize.md, fontWeight: "800" }}>{item.name}</Text>{item.cluster ? <Text style={[styles.help, { color: colors.textRole.muted }]}>{item.cluster}</Text> : null}</View><MatchMeta label={item.matchLabel} explanation={item.matchExplanation} color={colors.accentRole.action} /></View>{item.description ? <Text style={[styles.help, { color: colors.textRole.secondary }]}>{item.description}</Text> : null}{item.matchedSkills.length ? <MatchedSkillChips values={item.matchedSkills} color={colors.accentRole.success} limit={4} /> : null}{item.gaps.length ? <Text style={[styles.help, { color: colors.textRole.muted }]}>Foundation gaps: {item.gaps.slice(0, 3).join(", ")}{item.gaps.length > 3 ? ` +${item.gaps.length - 3} more` : ""}</Text> : null}<Text style={[styles.link, { color: colors.accentRole.action }]}>Open domain explanation →</Text></TouchableOpacity>)}
         </View>
       ) : null}
 
       {data.subgroups.length ? (
-         <View style={styles.resultSection}><SectionLabel>SUBGROUPS</SectionLabel>{visibleSubgroups.map((item) => <TouchableOpacity key={item.id} onPress={() => item.domainId && onOpenSubgroup(item.domainId, item.id)} accessibilityRole="button" style={[styles.entityRow, { borderBottomColor: colors.borderRole.subtle }]}><View style={{ flex: 1, gap: 2 }}><Text style={{ color: colors.textRole.primary, fontWeight: "800" }}>{item.name ?? "Unnamed subgroup"}</Text><Text style={[styles.help, { color: colors.textRole.muted }]}>{item.domainName ?? "Domain route"}</Text>{item.gaps.length ? <Text style={[styles.help, { color: colors.textRole.muted }]}>Next gaps: {item.gaps.slice(0, 2).join(", ")}</Text> : null}</View><MatchMeta score={item.matchScore} label={item.matchLabel} color={colors.accentRole.action} /></TouchableOpacity>)}</View>
+         <View style={styles.resultSection}><SectionLabel>SUBGROUPS</SectionLabel>{visibleSubgroups.map((item) => <TouchableOpacity key={item.id} onPress={() => item.domainId && onOpenSubgroup(item.domainId, item.id)} accessibilityRole="button" style={[styles.entityRow, { borderBottomColor: colors.borderRole.subtle }]}><View style={{ flex: 1, gap: 2 }}><Text style={{ color: colors.textRole.primary, fontWeight: "800" }}>{item.name ?? "Unnamed subgroup"}</Text><Text style={[styles.help, { color: colors.textRole.muted }]}>{item.domainName ?? "Domain route"}</Text>{item.gaps.length ? <Text style={[styles.help, { color: colors.textRole.muted }]}>Next gaps: {item.gaps.slice(0, 2).join(", ")}</Text> : null}</View><MatchMeta label={item.matchLabel} color={colors.accentRole.action} /></TouchableOpacity>)}</View>
       ) : null}
 
       {data.roles.length ? (
-        <View style={styles.resultSection}><SectionLabel>ROLES</SectionLabel><Text style={[styles.help, { color: colors.textRole.muted }]}>Roles are shown after the domain route. Entry-level roles are prioritized so the next step remains realistic.</Text>{visibleRoles.map((item) => <TouchableOpacity key={item.key ?? item.name} onPress={() => item.key && onOpenRole(item.key)} accessibilityRole="button" style={[styles.entityRow, { borderBottomColor: colors.borderRole.subtle }]}><View style={{ flex: 1, gap: 2 }}><Text style={{ color: colors.textRole.primary, fontWeight: "800" }}>{item.name ?? "Unnamed role"}</Text><Text style={[styles.help, { color: colors.textRole.muted }]}>{item.domainName ?? "Domain route"}{item.tier ? ` · ${item.tier}` : ""}</Text>{item.gaps.length ? <Text style={[styles.help, { color: colors.textRole.muted }]}>Essential gaps: {item.gaps.slice(0, 2).join(", ")}</Text> : null}</View><MatchMeta score={item.matchScore} label={item.matchLabel} color={colors.accentRole.action} /></TouchableOpacity>)}</View>
+        <View style={styles.resultSection}><SectionLabel>ROLES</SectionLabel><Text style={[styles.help, { color: colors.textRole.muted }]}>Roles are shown after the domain route. Entry-level roles are prioritized so the next step remains realistic.</Text>{visibleRoles.map((item) => <TouchableOpacity key={item.key ?? item.name} onPress={() => item.key && onOpenRole(item.key)} accessibilityRole="button" style={[styles.entityRow, { borderBottomColor: colors.borderRole.subtle }]}><View style={{ flex: 1, gap: 2 }}><Text style={{ color: colors.textRole.primary, fontWeight: "800" }}>{item.name ?? "Unnamed role"}</Text><Text style={[styles.help, { color: colors.textRole.muted }]}>{item.domainName ?? "Domain route"}{item.tier ? ` · ${item.tier}` : ""}</Text>{item.gaps.length ? <Text style={[styles.help, { color: colors.textRole.muted }]}>Essential gaps: {item.gaps.slice(0, 2).join(", ")}</Text> : null}</View><MatchMeta label={item.matchLabel} color={colors.accentRole.action} /></TouchableOpacity>)}</View>
       ) : null}
 
       {competencies.length ? (
         <View style={styles.resultSection}>
           <SectionLabel>COMPETENCIES</SectionLabel>
           <Text style={[styles.help, { color: colors.textRole.muted }]}>Competencies are the demonstrated combinations of knowledge and ability that help you use a skill in a real setting.</Text>
-          {visibleCompetencies.map((item) => <View key={`${item.domainId}-${item.name}`} style={[styles.entityRow, { borderBottomColor: colors.borderRole.subtle }]}><View style={{ flex: 1, gap: 4 }}><ItemTypeBadge type="competency" colors={colors} /><Text style={{ color: colors.textRole.primary, fontWeight: "700" }}>{item.name ?? "Unnamed competency"}</Text><Text style={[styles.help, { color: colors.textRole.muted }]}>{item.domainName ?? "Domain route"}</Text></View><MatchMeta score={item.matchScore} label={item.matchLabel} color={colors.accentRole.action} /></View>)}
+          {visibleCompetencies.map((item) => <View key={`${item.domainId}-${item.name}`} style={[styles.entityRow, { borderBottomColor: colors.borderRole.subtle }]}><View style={{ flex: 1, gap: 4 }}><ItemTypeBadge type="competency" colors={colors} /><Text style={{ color: colors.textRole.primary, fontWeight: "700" }}>{item.name ?? "Unnamed competency"}</Text><Text style={[styles.help, { color: colors.textRole.muted }]}>{item.domainName ?? "Domain route"}</Text></View><MatchMeta label={item.matchLabel} color={colors.accentRole.action} /></View>)}
         </View>
       ) : null}
 
@@ -477,7 +477,7 @@ function SkillResults({
         <View style={styles.resultSection}>
           <SectionLabel>TOOLS</SectionLabel>
           <Text style={[styles.help, { color: colors.textRole.muted }]}>Tools are instruments you may use to practise or deliver work in this route.</Text>
-          {visibleTools.map((item) => <View key={`${item.domainId}-${item.name}`} style={[styles.entityRow, { borderBottomColor: colors.borderRole.subtle }]}><View style={{ flex: 1, gap: 4 }}><ItemTypeBadge type="tool" colors={colors} /><Text style={{ color: colors.textRole.primary, fontWeight: "700" }}>{item.name ?? "Unnamed tool"}</Text><Text style={[styles.help, { color: colors.textRole.muted }]}>{item.group ?? "Tool"} · {item.domainName ?? "Domain"}</Text></View><MatchMeta score={item.matchScore} label={item.matchLabel} color={colors.accentRole.action} /></View>)}
+          {visibleTools.map((item) => <View key={`${item.domainId}-${item.name}`} style={[styles.entityRow, { borderBottomColor: colors.borderRole.subtle }]}><View style={{ flex: 1, gap: 4 }}><ItemTypeBadge type="tool" colors={colors} /><Text style={{ color: colors.textRole.primary, fontWeight: "700" }}>{item.name ?? "Unnamed tool"}</Text><Text style={[styles.help, { color: colors.textRole.muted }]}>{item.group ?? "Tool"} · {item.domainName ?? "Domain"}</Text></View><MatchMeta label={item.matchLabel} color={colors.accentRole.action} /></View>)}
         </View>
       ) : null}
 
@@ -485,7 +485,7 @@ function SkillResults({
         <View style={styles.resultSection}>
           <SectionLabel>CERTIFICATIONS</SectionLabel>
           <Text style={[styles.help, { color: colors.textRole.muted }]}>Certifications are formal credentials; they are separate from the skills and competencies to build.</Text>
-          {visibleCertifications.map((item) => <View key={`${item.domainId}-${item.name}`} style={[styles.entityRow, { borderBottomColor: colors.borderRole.subtle }]}><View style={{ flex: 1, gap: 4 }}><ItemTypeBadge type="certification" colors={colors} /><Text style={{ color: colors.textRole.primary, fontWeight: "700" }}>{item.name ?? "Unnamed certification"}</Text><Text style={[styles.help, { color: colors.textRole.muted }]}>{item.body ?? "Certification"}{item.level ? ` · ${item.level}` : ""} · {item.domainName ?? "Domain"}</Text></View><MatchMeta score={item.matchScore} label={item.matchLabel} color={colors.accentRole.action} /></View>)}
+          {visibleCertifications.map((item) => <View key={`${item.domainId}-${item.name}`} style={[styles.entityRow, { borderBottomColor: colors.borderRole.subtle }]}><View style={{ flex: 1, gap: 4 }}><ItemTypeBadge type="certification" colors={colors} /><Text style={{ color: colors.textRole.primary, fontWeight: "700" }}>{item.name ?? "Unnamed certification"}</Text><Text style={[styles.help, { color: colors.textRole.muted }]}>{item.body ?? "Certification"}{item.level ? ` · ${item.level}` : ""} · {item.domainName ?? "Domain"}</Text></View><MatchMeta label={item.matchLabel} color={colors.accentRole.action} /></View>)}
         </View>
       ) : null}
 

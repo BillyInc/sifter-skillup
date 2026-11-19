@@ -3,33 +3,19 @@ import { View, Text, StyleSheet } from "react-native";
 import { useTheme, Spacing, FontSize, Brand } from "../../theme";
 import { SifterButton } from "../ui";
 import { LiveAdmissionSearchField } from "./LiveAdmissionSearchField";
-import { SelectField } from "./primitives";
-import { careerData } from "../../lib/careerData";
 import type { SetupFormProps } from "../../types/onboarding";
 import LocalLegalNotice from "../LocalLegalNotice";
 
 /** University-only setup for the current undergraduate user type. */
 export function CurrentStudentSetupForm({ value, onChange, onContinue }: SetupFormProps) {
   const { colors } = useTheme();
-  const [faculties, setFaculties] = React.useState<{ label: string; value: string }[]>([]);
   const schoolId = value.preferredSchoolId;
-
-  React.useEffect(() => {
-    let active = true;
-    setFaculties([]);
-    if (!schoolId) return () => { active = false; };
-    careerData.getSchoolFaculties(schoolId).then((state) => {
-      if (!active || state.status !== "real") return;
-      setFaculties((state.data ?? []).map((item) => ({ label: item.name, value: item.value })));
-    });
-    return () => { active = false; };
-  }, [schoolId]);
 
   return (
     <View style={styles.form}>
       <View style={styles.heading}>
         <Text style={[styles.title, { color: colors.text }]}>Tell us what you study</Text>
-        <Text style={[styles.sub, { color: colors.textSoft }]}>Choose your university first. Then we will show only the faculties and programme names recorded for that university.</Text>
+        <Text style={[styles.sub, { color: colors.textSoft }]}>Choose your university first. Then we will show only the programme names recorded for that university.</Text>
       </View>
       <LocalLegalNotice audience="student" />
 
@@ -54,16 +40,6 @@ export function CurrentStudentSetupForm({ value, onChange, onContinue }: SetupFo
         helperText="Choose your university from the list. You cannot add a new university from this step yet."
       />
 
-      {schoolId && faculties.length ? (
-        <SelectField
-          label="Faculty (if listed)"
-          value={value.discipline}
-          placeholder="Select your faculty"
-          options={faculties}
-          onSelect={(v) => onChange({ discipline: v, programmeName: undefined, intendedProgramme: undefined, intendedJambProgrammeId: undefined })}
-        />
-      ) : null}
-
       {schoolId ? (
         <LiveAdmissionSearchField
           label="Your programme"
@@ -77,12 +53,9 @@ export function CurrentStudentSetupForm({ value, onChange, onContinue }: SetupFo
           placeholder="Search this university's programmes"
           kind="programme"
           schoolId={schoolId}
-          faculty={value.discipline}
           helperText="Choose the programme name your university uses. This keeps your university and programme details connected."
         />
       ) : null}
-
-      <Text style={[styles.note, { color: colors.textMuted }]}>If faculty information is available for your university, you can use it to narrow the programme list. Your final choice remains tied to that university.</Text>
 
       <SifterButton
         label="Continue"
