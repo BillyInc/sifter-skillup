@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
   },
   hero: { gap: 4, marginBottom: Spacing.xs },
   eyebrow: {
-    fontSize: FontSize.xs,
+    fontSize: FontSize.sm,
     letterSpacing: 0.9,
     textTransform: "uppercase",
   },
@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
     gap: Spacing.xs,
   },
   filterLabel: {
-    fontSize: FontSize.xs,
+    fontSize: FontSize.sm,
     letterSpacing: 0.7,
     textTransform: "uppercase",
   },
