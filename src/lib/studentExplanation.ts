@@ -535,7 +535,8 @@ export function studentResourceRationale(
   if (cleanReason && cleanReason.split(/\s+/).length >= 18) return cleanReason;
 
   const use = studentFacingCopy(studentContextSections(contextualUse).meaning);
-  const cleanLocator = studentFacingCopy(locator);
+  // A locator is an exact citation (title, section, page): never insert glossary definitions into it.
+  const cleanLocator = (locator ?? "").replace(/\s+/g, " ").trim();
   const attachedFor = cleanReason
     ? `This resource is attached to help you learn or review ${cleanReason.replace(/[.!?]+$/, "")}.`
     : `This resource is attached as a place to learn or read more about ${itemName}.`;

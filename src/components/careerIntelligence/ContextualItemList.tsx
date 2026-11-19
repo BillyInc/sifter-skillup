@@ -64,6 +64,13 @@ function itemResources(resources: CareerLearningResource[] | undefined, item: Ca
   });
 }
 
+/** A related resource is usually named after the item itself, which would give every link the same
+ * accessible name ("Open NVivo"). Name it by its provider instead so each destination is distinguishable. */
+function relatedResourceTitle(resource: Pick<CareerLearningResource, "targetName" | "provider">, itemName: string): string {
+  const target = resource.targetName?.trim() ?? "";
+  return !target || target.toLowerCase() === itemName.trim().toLowerCase() ? resource.provider || target : target;
+}
+
 function resourceButtonLabel(resource: { mediaType?: string | null; delivery?: string | null; title?: string | null; kind?: string | null; resourceType?: string | null }, itemName: string): string {
   const format = `${resource.mediaType ?? ""} ${resource.delivery ?? ""} ${resource.kind ?? ""} ${resource.resourceType ?? ""} ${resource.title ?? ""}`.toLowerCase();
   if (/video|youtube|watch/.test(format)) return `Watch ${resource.title || `a video about ${itemName}`}`;
@@ -147,7 +154,8 @@ export function explainResourceRationale(
 
   const use = studentSections(item.contextualUse).meaning || studentCopy(item.contextualUse);
   const locatorValue = item.linkSourceReference?.locator;
-  const locator = typeof locatorValue === "string" ? studentCopy(locatorValue) : "";
+  // The locator is an exact citation: keep it verbatim so glossary definitions are never inserted into it.
+  const locator = typeof locatorValue === "string" ? locatorValue.replace(/\s+/g, " ").trim() : "";
   const rationale = `This resource is included to help you learn or review ${cleanReason.replace(/[.!?]+$/, "")}.`;
   const routeContext = use
     ? "It supports the work explained above, but may cover only part of that work."
@@ -292,7 +300,7 @@ export function ContextualItemList({ items, itemTypes, title = "Your preparation
        const hasDistinctRoleContext = Boolean(learningRoute?.roleId && roleName && roleContext && roleContext.toLocaleLowerCase() !== contextualUse.toLocaleLowerCase());
        const resourceCandidates = [
          ...(url ? [{ key: `primary:${url}`, url, label: resourceButtonLabel({ mediaType: item.linkMediaType, title: item.linkTitle, kind: item.linkKind }, item.name), title: item.linkTitle || `Learning resource for ${item.name}`, mediaType: item.linkMediaType, learningLevel: item.linkLearningLevel, sequenceOrder: item.linkSequenceOrder, access: item.linkAccess, kind: item.linkKind, locator: typeof item.linkEvidence?.locator === "string" ? item.linkEvidence.locator : undefined }] : []),
-         ...relatedResources.map((candidate) => ({ key: candidate.id, url: candidate.url, label: resourceButtonLabel({ mediaType: candidate.mediaType, delivery: candidate.delivery, title: candidate.targetName, resourceType: candidate.resourceType }, item.name), title: candidate.provider, mediaType: candidate.mediaType, learningLevel: candidate.learningLevel, sequenceOrder: candidate.sequenceOrder, access: candidate.accessType === "free" ? "Free to access" : candidate.accessType === "mixed" ? "Free and paid options" : candidate.accessType === "paid" ? "Paid; check provider" : "Check current access", delivery: candidate.delivery, resourceType: candidate.resourceType, locator: candidate.description })),
+         ...relatedResources.map((candidate) => ({ key: candidate.id, url: candidate.url, label: resourceButtonLabel({ mediaType: candidate.mediaType, delivery: candidate.delivery, title: relatedResourceTitle(candidate, item.name), resourceType: candidate.resourceType }, item.name), title: candidate.provider, mediaType: candidate.mediaType, learningLevel: candidate.learningLevel, sequenceOrder: candidate.sequenceOrder, access: candidate.accessType === "free" ? "Free to access" : candidate.accessType === "mixed" ? "Free and paid options" : candidate.accessType === "paid" ? "Paid; check provider" : "Check current access", delivery: candidate.delivery, resourceType: candidate.resourceType, rationale: candidate.description })),
          ...(item.additionalLearningLinks ?? []).map((candidate) => ({ key: `additional:${candidate.url}`, url: candidate.url, label: resourceButtonLabel({ mediaType: candidate.mediaType, title: candidate.title, kind: candidate.kind }, item.name), title: candidate.title, mediaType: candidate.mediaType, learningLevel: candidate.learningLevel, sequenceOrder: candidate.sequenceOrder, access: candidate.access, kind: candidate.kind, locator: candidate.locator, rationale: candidate.rationale })),
        ].filter((link) => /^https:\/\//i.test(link.url));
        const resourceButtons = sortLearningResources(resourceCandidates.filter((link, index, all) => all.findIndex((candidate) => candidate.url === link.url) === index));
@@ -381,6 +389,21 @@ export function ContextualItemList({ items, itemTypes, title = "Your preparation
                 const target = ordered.find((candidate) => candidate.itemKey === relationship.targetItemKey);
                 if (target) { setRelationshipReturn({ key, name: item.name }); setExpanded(true); setOpenKey(`${target.contextKey}:${target.itemType}:${target.itemKey}`); }
               }}><Text style={[styles.more, { color: colors.accentRole.action }]}>See {relationship.target}</Text></TouchableOpacity> : null}
+              {!relationship.targetItemKey && relationship.targetRouteKey && relationship.targetRouteLevel && learningRoute?.domainId ? <TouchableOpacity accessibilityRole="button" accessibilityLabel={`Open ${relationship.targetRouteLevel === "subgroup" ? "area" : "role"}: ${relationship.target}`} onPress={() => {
+                // Area and role targets leave this list for their own route page. Keep the
+                // current route as history so the learner can come back to this item.
+                const routeContext = {
+                  programmeId: learningRoute.programmeId,
+                  domainId: learningRoute.domainId,
+                  ...(relationship.targetRouteLevel === "subgroup"
+                    ? { areaId: relationship.targetRouteKey }
+                    : { areaId: learningRoute.areaId, roleId: relationship.targetRouteKey }),
+                  focused: true,
+                  preserveHistory: true,
+                };
+                if (relationship.targetRouteLevel === "subgroup") exploreNav.subgroup(router, learningRoute.domainId!, relationship.targetRouteKey!, routeContext);
+                else exploreNav.role(router, relationship.targetRouteKey!, routeContext);
+              }}><Text style={[styles.more, { color: colors.accentRole.action }]}>Open {relationship.targetRouteLevel === "subgroup" ? "area" : "role"}: {relationship.target}</Text></TouchableOpacity> : null}
             </View>)}
           </View> : null}
           {learningFocus && relationshipRecords(item, learningRoute).some((relationship) => relationship.label === "Choose one") ? <TouchableOpacity accessibilityRole="button" accessibilityLabel={`Compare alternatives for ${item.name}`} onPress={() => exploreNav.guided(router, { programmeId: learningRoute?.programmeId, domainId: learningRoute?.domainId, areaId: learningRoute?.areaId, roleId: learningRoute?.roleId, focused: true, openTray: true })} style={styles.actionButton}>
