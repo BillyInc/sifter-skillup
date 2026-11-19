@@ -129,6 +129,6 @@ const styles = StyleSheet.create({
   },
   value: { fontSize: FontSize.xxxl, letterSpacing: 0 },
   label: { fontSize: FontSize.sm, fontWeight: '600', marginTop: 2 },
-  delta: { fontSize: FontSize.xs, fontWeight: '700', marginTop: 2 },
-  stamp: { fontSize: FontSize.xs, marginTop: 2, letterSpacing: 0 },
+  delta: { fontSize: FontSize.sm, fontWeight: '700', marginTop: 2 },
+  stamp: { fontSize: FontSize.sm, marginTop: 2, letterSpacing: 0 },
 });
