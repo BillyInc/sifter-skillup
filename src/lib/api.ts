@@ -218,6 +218,7 @@ export const API = {
     first_name?: string;
     middle_name?: string;
     last_name?: string;
+    display_name?: string;
     date_of_birth?: string;
     email_code?: string;
     terms_version?: string;

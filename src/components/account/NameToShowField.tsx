@@ -1,13 +1,13 @@
 /**
  * Optional "Name to show" control for Settings. It writes through the existing
- * `PUT /api/users/me` { username } contract and then refreshes the session
+ * `PUT /api/users/me` ({ display_name } when the API returns that field, else legacy { username }) and then refreshes the session
  * user, so every surface that reads `getDisplayName` updates together.
  */
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { CompassFonts, FontSize, Radius, Spacing, useTheme } from '@/theme';
 import { API } from '@/lib/api';
-import { getDisplayName, NAME_TO_SHOW_MAX, sanitizeNameToShow, type NameSource } from '@/lib/displayName';
+import { DISPLAY_NAME_MAX, getDisplayName, NAME_TO_SHOW_MAX, sanitizeNameToShow, supportsDisplayName, type NameSource } from '@/lib/displayName';
 
 export default function NameToShowField({
   user,
@@ -18,6 +18,8 @@ export default function NameToShowField({
 }) {
   const { colors } = useTheme();
   const current = getDisplayName(user);
+  const useDisplayName = supportsDisplayName(user);
+  const max = useDisplayName ? DISPLAY_NAME_MAX : NAME_TO_SHOW_MAX;
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState('');
   const [busy, setBusy] = useState(false);
@@ -31,7 +33,7 @@ export default function NameToShowField({
 
   const save = async () => {
     if (busy) return;
-    const result = sanitizeNameToShow(draft);
+    const result = sanitizeNameToShow(draft, max);
     if (!result.ok) {
       setError(result.error);
       return;
@@ -43,11 +45,12 @@ export default function NameToShowField({
     setBusy(true);
     setError(null);
     try {
-      await API.updateMe({ username: result.value });
+      await API.updateMe(useDisplayName ? { display_name: result.value } : { username: result.value });
       await onSaved();
       setEditing(false);
-    } catch {
-      setError('Could not save your name. Check your connection and try again.');
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : '';
+      setError(useDisplayName && msg && !/network|fetch|timeout|failed to/i.test(msg) ? msg : 'Could not save your name. Check your connection and try again.');
     } finally {
       setBusy(false);
     }
@@ -63,7 +66,7 @@ export default function NameToShowField({
             onChangeText={(value) => { setDraft(value); if (error) setError(null); }}
             placeholder="The name you want to see"
             placeholderTextColor={colors.textRole.placeholder}
-            maxLength={NAME_TO_SHOW_MAX}
+            maxLength={max}
             autoCapitalize="words"
             autoComplete="name"
             autoFocus

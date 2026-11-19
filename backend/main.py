@@ -21,6 +21,7 @@ from models import *
 from auth import Auth
 from logger import log
 from middleware.session_middleware import DeviceSessionMiddleware
+from profile_validation import DisplayNameError, validate_display_name
 from legal_versions import CURRENT_PRIVACY_VERSION, CURRENT_TERMS_VERSION
 
 # App setup
@@ -568,6 +569,11 @@ async def auth_signup(body: dict, request: Request):
     last_name = (body.get("last_name") or "").strip()
     date_of_birth = (body.get("date_of_birth") or "").strip() or None
     username = " ".join(part for part in (first_name, middle_name, last_name) if part) or email.split("@")[0]
+    # Optional, additive: old clients omit it and behave exactly as before.
+    try:
+        display_name = validate_display_name(body.get("display_name"))
+    except DisplayNameError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
     if not email or "@" not in email:
         raise HTTPException(status_code=400, detail="Valid email is required")
     if len(password) < 6:
@@ -634,6 +640,7 @@ async def auth_signup(body: dict, request: Request):
                     "middle_name": middle_name or None,
                     "last_name": last_name or None,
                     "date_of_birth": date_of_birth,
+                    **({"display_name": display_name} if display_name else {}),
                     "password_hash": password_hash,
                     "auth_provider": "email",
                     "onboarding_completed": False,
@@ -649,7 +656,7 @@ async def auth_signup(body: dict, request: Request):
         password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
         user = _create_user(username=username, auth_provider="email", email=email, password_hash=password_hash,
                             first_name=first_name, middle_name=middle_name, last_name=last_name,
-                            date_of_birth=date_of_birth)
+                            date_of_birth=date_of_birth, display_name=display_name)
         user = _attach_legal_acceptance(db.get_service_client(), user, legal_acceptance)
         user["onboarding_completed"] = False
         token = Auth.create_jwt(user["id"])
@@ -753,7 +760,8 @@ async def _post_auth_device_register(user_id: str, body: dict, request: Request)
 
 def _create_user(telegram_id=None, wallet_address=None, username="Student",
                  avatar_url=None, auth_provider="guest", email=None, password_hash=None,
-                 first_name=None, middle_name=None, last_name=None, date_of_birth=None) -> dict:
+                 first_name=None, middle_name=None, last_name=None, date_of_birth=None,
+                 display_name=None) -> dict:
     onboarding_completed = auth_provider == "guest"
     account_type = "student" if auth_provider == "guest" else "pending"
     payload = {
@@ -772,6 +780,10 @@ def _create_user(telegram_id=None, wallet_address=None, username="Student",
         "achievements": [], "settings": {"notifications": True, "sound": True, "haptics": True},
         "created_at": datetime.now().isoformat(), "last_login": datetime.now().isoformat(),
     }
+    if display_name:
+        # Only written when provided. A pre-migration schema drops it via the
+        # missing-column retry below.
+        payload["display_name"] = display_name
     # Keep signup usable against older local schemas while migrations are
     # being applied. PostgREST names the missing column in PGRST204 errors;
     # remove only that optional field and retry. Required auth fields still
@@ -859,7 +871,20 @@ async def update_me(updates: UserUpdate, current_user: dict = Depends(Auth.get_c
     if not payload:
         current_user.pop("password_hash", None)
         return ResponseModel(data=current_user)
-    user = _update_user_returning(db.get_client(), current_user["id"], payload)
+    if "display_name" in payload:
+        try:
+            payload["display_name"] = validate_display_name(payload["display_name"])
+        except DisplayNameError as exc:
+            raise HTTPException(status_code=400, detail=str(exc))
+    try:
+        user = _update_user_returning(db.get_client(), current_user["id"], payload)
+    except HTTPException:
+        raise
+    except Exception as exc:
+        if "display_name" in payload and "display_name" in str(exc):
+            # Column not migrated yet: do not crash; tell the client it is unavailable.
+            raise HTTPException(status_code=409, detail="Name to show is not available yet.")
+        raise
     user.update(payload)
     user.pop("password_hash", None)
     return ResponseModel(data=user)
