@@ -14,6 +14,7 @@ import { AdminShell } from "../../src/screens/admin/AdminShell";
 import { LevelUpWebWordmark } from "../../src/components/brand/LevelUpWebWordmark";
 import { PersistentLearningPlanDockProvider } from "../../src/components/careerIntelligence/PersistentLearningPlanDock";
 import { Search } from "lucide-react";
+import { getDisplayName } from "../../src/lib/displayName";
 import "./styles.css";
 
 const TOKEN_KEY = "sifter_auth_token_v2";
@@ -696,7 +697,7 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
         <a href="/myworld" onClick={(e) => { e.preventDefault(); go("/myworld"); }}>My World</a>
         <a href="/profile" onClick={(e) => { e.preventDefault(); go("/profile"); }}>Profile</a>
       </nav>
-      <div className="platform-sidebar-account"><span>{user.username || user.email || "Account"}</span><button className="text-button" onClick={() => { void signOut().then(() => go("/", true)); }}>Sign out</button></div>
+      <div className="platform-sidebar-account"><span>{getDisplayName(user) || user.email || "Account"}</span><button className="text-button" onClick={() => { void signOut().then(() => go("/", true)); }}>Sign out</button></div>
     </aside> : null}
     <section className="platform-main">
       <header className="platform-toolbar">

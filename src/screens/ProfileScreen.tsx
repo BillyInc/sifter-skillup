@@ -9,6 +9,7 @@ import { Modal, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, Vi
 import { useRouter } from "expo-router";
 import { useTheme, CompassFonts, FontSize, Radius, Spacing, webContainer } from "@/theme";
 import { useAuth } from "@/hooks/useAuth";
+import { getDisplayName } from "@/lib/displayName";
 import { getStartingPoint } from "@/lib/startingPoint";
 import type { StartingPointProfile, UserType } from "@/types/onboarding";
 import { isAdminAccount } from "@/lib/accountType";
@@ -59,6 +60,7 @@ export default function ProfileScreen() {
   const isWide = useIsWebWide();
   const isAdmin = isAdminAccount(user?.account_type);
   const isGuest = user?.auth_provider === "guest";
+  const displayName = isGuest ? null : getDisplayName(user);
 
   useEffect(() => {
     let active = true;
@@ -105,6 +107,7 @@ export default function ProfileScreen() {
   const account = (
     <View style={[styles.context, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
       <Text style={[styles.contextLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>ACCOUNT</Text>
+      {displayName ? <Text style={[styles.contextTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{displayName}</Text> : null}
       <Text style={[styles.body, { color: colors.textRole.primary }]}>{user?.email || "Guest session"}</Text>
       {isGuest ? <>
         <Text style={[styles.meta, { color: colors.textRole.muted }]}>Guest browsing does not save guidance until you create an account.</Text>

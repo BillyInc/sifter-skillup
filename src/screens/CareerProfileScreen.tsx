@@ -46,6 +46,7 @@ import type {
   UserType,
 } from "../types/onboarding";
 import { useAuth } from "@/hooks/useAuth";
+import { getDisplayName } from "@/lib/displayName";
 
 const USER_TYPE_LABEL: Record<UserType, string> = {
   senior_secondary: "Senior secondary (SS1/SS2)",
@@ -113,8 +114,7 @@ export default function CareerProfileScreen() {
     }, [loadProfileData]),
   );
 
-  const displayName =
-    user?.username && user.username !== "Student" ? user.username : null;
+  const displayName = getDisplayName(user);
 
   const runAccountAction = useCallback(async () => {
     if (!accountAction || actionBusy) return;

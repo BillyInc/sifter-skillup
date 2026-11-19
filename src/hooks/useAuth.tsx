@@ -30,6 +30,8 @@ import { getLegalAcceptance, LEGAL_ACCEPTANCE_KEY } from '../lib/legal';
 export interface UserProfile {
   id: string;
   username: string;
+  /** Given name captured at sign-up; used only as a display-name fallback. */
+  first_name?: string | null;
   avatar_url: string | null;
   auth_provider: string;
   /** Discriminates the student app from the institutional/admin side. Legacy
@@ -592,6 +594,7 @@ function _normalise(raw: any): UserProfile {
   return {
     id: raw.id ?? '',
     username: raw.username ?? 'Student',
+    first_name: raw.first_name ?? null,
     avatar_url: raw.avatar_url ?? null,
     auth_provider: raw.auth_provider ?? 'guest',
     account_type: raw.account_type,
