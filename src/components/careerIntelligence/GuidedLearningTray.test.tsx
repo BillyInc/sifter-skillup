@@ -75,6 +75,24 @@ function stackSet() {
   });
 }
 
+// The tray adds plain-language glosses inline, e.g. "survey (a planned way ...)".
+// Strip those parenthetical definitions (innermost first) to assert the
+// reviewed wording around them.
+function textOf(node: { props: { children?: unknown } }): string {
+  const parts = ([] as unknown[]).concat(node.props.children ?? []);
+  return parts.map((part) => (typeof part === "string" || typeof part === "number" ? String(part) : "")).join("");
+}
+
+function withoutGlosses(text: string): string {
+  let previous: string;
+  let current = text;
+  do {
+    previous = current;
+    current = current.replace(/\s\([^()]*\)/g, "");
+  } while (current !== previous);
+  return current;
+}
+
 describe("GuidedLearningTray", () => {
   it("gives Full a viewport-filling scroll area while Mid remains bounded", () => {
     const d078Route = {
@@ -176,7 +194,7 @@ describe("GuidedLearningTray", () => {
 
     expect(screen.getByText("Sociology · Social Sciences")).toBeTruthy();
     expect(screen.getByText("2 selected method/designs · 2 added items")).toBeTruthy();
-    expect(screen.getByText("Your selected approaches")).toBeTruthy();
+    expect(screen.getByText("Your selected approaches and work focuses")).toBeTruthy();
     expect(screen.getByText("Interviews")).toBeTruthy();
     expect(screen.getByText("Interviews + observation")).toBeTruthy();
     expect(screen.getByText("Foundations carried on this route")).toBeTruthy();
@@ -440,7 +458,9 @@ describe("GuidedLearningTray", () => {
     fireEvent.press(screen.getByRole("button", { name: "Show explanation for Evidence review" }));
 
     expect(screen.getByText(/This item is part of the recommended learning for the selected route/)).toBeTruthy();
-    expect(screen.getByText("Evidence review is a way to check a claim.")).toBeTruthy();
+    // Plain-language glosses are added inline for technical words ("Evidence (...) review").
+    expect(screen.getByText(/^Evidence \([^)]+\) review is a way to check a claim\.$/)).toBeTruthy();
+    expect(screen.queryByText(/staff display instruction/)).toBeNull();
     expect(screen.getByText("Example task")).toBeTruthy();
     expect(screen.getByText("Compare the claim with its source.")).toBeTruthy();
     expect(screen.queryByText(/candidate|Route note:/i)).toBeNull();
@@ -465,7 +485,7 @@ describe("GuidedLearningTray", () => {
     expect(StyleSheet.flatten(screen.getByText("What it is").props.style).fontSize).toBeGreaterThanOrEqual(18);
     expect(StyleSheet.flatten(screen.getByText(/A survey is a planned way to collect information/).props.style).fontSize).toBeGreaterThanOrEqual(16);
     expect(screen.getByText("How it connects to your programme")).toBeTruthy();
-    expect(screen.getByText(/The Sociology programme introduces questions about social life and research evidence/)).toBeTruthy();
+    expect(screen.getByText(/^The Sociology programme introduces questions about social life and research(?: \([^)]+\))? evidence/)).toBeTruthy();
     expect(screen.getByText("What it means in this domain")).toBeTruthy();
     expect(screen.getByText("What it adds in this area")).toBeTruthy();
     expect(screen.getByText("How it applies to this role")).toBeTruthy();
@@ -475,7 +495,8 @@ describe("GuidedLearningTray", () => {
     expect(screen.queryByText("Evidence context")).toBeNull();
     expect(screen.getByText("Learning resources")).toBeTruthy();
     expect(screen.getByText("A little more context")).toBeTruthy();
-    expect(screen.getAllByText(available.explanation!).length).toBe(1);
+    expect(screen.getAllByText(/is useful when a study needs answers from many people/)
+      .filter((node) => withoutGlosses(textOf(node)) === available.explanation!).length).toBe(1);
     expect(screen.getByRole("link", { name: "Open guide: Survey design: official learning guide for Survey design" })).toBeTruthy();
     expect(screen.queryByText("Why this resource is attached")).toBeNull();
     expect(screen.getByRole("link", { name: "Open evidence source Survey design guide" })).toBeTruthy();
@@ -687,9 +708,11 @@ describe("GuidedLearningTray", () => {
     fireEvent.press(compareButton);
     expect(screen.getAllByText(/Alternative choice/).length).toBeGreaterThanOrEqual(2);
     expect(screen.getByText(/Python is a programming language: a way to write instructions that tell a computer how to work with information and repeat steps consistently\./)).toBeTruthy();
-    expect(screen.getAllByText(/In Sociology, a learner might use Python to organise survey responses, check for missing values, and summarise patterns across a dataset\./).length).toBeGreaterThan(0);
-    expect(screen.getByText(/Research methods: understand how a question, evidence and study design fit together before choosing computational.*steps\./)).toBeTruthy();
-    expect(screen.getByText(/Python can carry out instructions consistently, but it cannot choose a suitable study design or repair biased or incomplete data on its own\./)).toBeTruthy();
+    expect(screen.getAllByText(/In Sociology, a learner might use Python to organise survey(?: \([^)]+\))? responses, check for missing values, and summarise patterns across a dataset\./).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/^Research \(.*methods/)
+      .some((node) => /^Research methods: understand how a question, evidence and study design fit together before choosing computational.*steps\./.test(withoutGlosses(textOf(node))))).toBe(true);
+    expect(screen.getAllByText(/Python can carry out instructions consistently/)
+      .some((node) => /Python can carry out instructions consistently, but it cannot choose a suitable study design or repair biased or incomplete data on its own\./.test(withoutGlosses(textOf(node))))).toBe(true);
     expect(screen.getByRole("link", { name: "Open learning destination for Python" })).toBeTruthy();
     fireEvent.press(screen.getByRole("button", { name: "Choose Python" }));
     expect(onSelectAlternative).toHaveBeenCalledWith(routeKey, "analysis-tool", python);

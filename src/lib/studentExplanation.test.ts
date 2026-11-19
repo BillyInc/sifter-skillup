@@ -102,3 +102,16 @@ test("shows an honest non-mastery limit when no item-specific limitation is reco
   expect(studentItemLimitations(["This method cannot establish that one factor caused another."]))
     .toEqual([expect.stringMatching(/^This method \(.+\) cannot establish that one factor caused another\.$/)]);
 });
+
+describe("technical glosses are idempotent", () => {
+  it("does not nest a definition inside an existing definition when applied twice", () => {
+    const text = "Python cannot repair biased or incomplete data on its own.";
+    const once = studentFacingCopy(text);
+    expect(once).toContain("data (");
+    expect(studentFacingCopy(once)).toBe(once);
+  });
+
+  it("does not insert a definition inside a hyphenated compound", () => {
+    expect(studentFacingCopy("Only for causal-estimation work.")).toBe("Only for causal-estimation work.");
+  });
+});

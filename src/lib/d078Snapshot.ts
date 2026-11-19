@@ -61,8 +61,14 @@ export function supportedD078Selection(value: unknown): D078Selection {
     d078ApplicableLayerItems(2, base).forEach((id) => supportedItems.add(id));
     d078ApplicableLayerItems(3, base).forEach((id) => supportedItems.add(id));
   }
+  const taskFamilyIdsByArea = Object.fromEntries(Object.entries(base.taskFamilyIdsByArea ?? {}).flatMap(([familyAreaId, familyIds]) => {
+    const eligible = new Set(projection.taskFamilyIdsByArea[familyAreaId] ?? []);
+    const selected = familyIds.filter((id) => eligible.has(id));
+    return selected.length ? [[familyAreaId, selected]] : [];
+  }));
+  const { taskFamilyIdsByArea: _unsanitizedFamilies, ...baseWithoutFamilies } = base;
   return {
-    ...base,
+    ...baseWithoutFamilies,
     methodIds: projection.methods.filter((method) => method.selected).map((method) => method.id),
     combinationIds: projection.combinations.filter((combination) => combination.selected).map((combination) => combination.id),
     componentMethodIds: Object.fromEntries(projection.combinations
@@ -74,11 +80,10 @@ export function supportedD078Selection(value: unknown): D078Selection {
     ...(raw.domainInPlan === true ? { domainInPlan: true } : {}),
     ...(planAreaId ? { planAreaId } : {}),
     ...(planRoleId ? { planRoleId } : {}),
-    taskFamilyIdsByArea: Object.fromEntries(Object.entries(base.taskFamilyIdsByArea ?? {}).flatMap(([familyAreaId, familyIds]) => {
-      const eligible = new Set(projection.taskFamilyIdsByArea[familyAreaId] ?? []);
-      const selected = familyIds.filter((id) => eligible.has(id));
-      return selected.length ? [[familyAreaId, selected]] : [];
-    })),
+    // Emit the key only when a family is actually selected, so selections and
+    // saved snapshots that never used task families stay byte-identical across
+    // a save/reopen round trip (no spurious "changed" detection).
+    ...(Object.keys(taskFamilyIdsByArea).length ? { taskFamilyIdsByArea } : {}),
   };
 }
 

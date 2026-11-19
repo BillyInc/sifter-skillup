@@ -1,4 +1,5 @@
 import {
+  supportedD078Selection,
   d078ProgrammeIdFromSnapshot,
   d078RouteStacksFromSnapshot,
   d078SavedRouteHref,
@@ -284,4 +285,18 @@ test("share summary preserves each saved D078 route as a separate branch", () =>
   expect(share?.routeDetails.join(" ")).not.toContain("Route 1: Area:");
   expect(share?.routeDetails.join(" ")).toContain("Sociology and Social Anthropology");
   expect(share?.routeDetails.join(" ")).toContain("Computational and Digital Social Science");
+});
+
+test("keeps task families only when a supported one is selected, so round trips stay stable", () => {
+  const plain = validFullSelection();
+  expect("taskFamilyIdsByArea" in supportedD078Selection(plain)).toBe(false);
+  expect("taskFamilyIdsByArea" in supportedD078Selection({ ...plain, taskFamilyIdsByArea: { "unknown-area": ["nope"] } })).toBe(false);
+
+  const projection = projectD078Route(plain);
+  const [areaId, families] = Object.entries(projection.taskFamilyIdsByArea).find(([, ids]) => ids.length > 0) ?? [];
+  expect(areaId && families).toBeTruthy();
+  if (!areaId || !families) return;
+  const withFamily = supportedD078Selection({ ...plain, taskFamilyIdsByArea: { [areaId]: [families[0], "removed:family"] } });
+  expect(withFamily.taskFamilyIdsByArea).toEqual({ [areaId]: [families[0]] });
+  expect(supportedD078Selection(withFamily)).toEqual(withFamily);
 });
