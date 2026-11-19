@@ -123,7 +123,9 @@ export interface RoomMessage {
   id:                    string;
   room_id:               string;
   author_id:             string;
+  /** Legacy display field; for other authors prefer `author_public_name`. */
   author_username:       string;
+  author_public_name?:   string;
   author_stage:          number;
   message_type:          MessageType;
   content:               string;
@@ -156,7 +158,10 @@ export interface Guild {
 export interface LeaderboardEntry {
   rank:         number;
   user_id:      string;
+  /** Legacy display field; the server now fills it with the public name. */
   username:     string;
+  /** Name safe to show to other users (display name, else first name). */
+  public_name?: string;
   avatar_emoji: string;
   xp_stage:     number;
   weekly_xp:    number;

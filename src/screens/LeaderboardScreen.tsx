@@ -18,6 +18,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme, Spacing, Radius, FontSize, FontWeight, webContainer } from '@/theme';
 import { CompassFonts } from '@/theme';
 import { useAuth } from '@/hooks/useAuth';
+import { getDisplayName } from '@/lib/displayName';
+import { getPublicName } from '@/lib/publicName';
 import { leaderboardEngine, type LeaderboardScope } from '@/lib/leaderboardEngine';
 import type { Leaderboard, LeaderboardEntry } from '../types/social';
 import { resolveTrackContext } from '@/lib/trackContext';
@@ -87,7 +89,7 @@ export default function LeaderboardScreen({ navigation: _navigation }: any) {
         </View>
         <View style={{ flex: 1 }}>
           <Text style={[styles.username, { color: isUser ? colors.accentRole.action : colors.textRole.primary, fontWeight: isUser ? '900' : '600' }]}>
-            {entry.username}{isUser ? ' (You)' : ''}
+            {isUser ? (getDisplayName(user) ?? getPublicName(entry)) : getPublicName(entry)}{isUser ? ' (You)' : ''}
           </Text>
           <Text style={[styles.stageName, { color: stageColor }]}>Stage {entry.xp_stage}</Text>
         </View>

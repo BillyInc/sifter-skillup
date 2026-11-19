@@ -8,6 +8,7 @@ import { useTheme, Spacing, Radius, FontSize, FontWeight } from '@/theme';
 import { useAuth } from '@/hooks/useAuth';
 import RoomMessage from '@/components/RoomMessage';
 import { API } from '@/lib/api';
+import { getOwnPublicName } from '@/lib/publicName';
 import type { RoomMessage as Msg } from '../types/social';
 
 const POLL_MS = 10000;
@@ -70,7 +71,8 @@ export default function TrackRoomScreen({ route, navigation }: TrackRoomScreenPr
         content: text,
         message_type: 'text',
         author_id: user?.id ?? 'anon',
-        author_username: user?.username ?? 'You',
+        // Shown to other members: never the legal-name `username`.
+        author_username: getOwnPublicName(user),
         author_stage: user?.xp_stage ?? 1,
       });
       await fetchMessages();

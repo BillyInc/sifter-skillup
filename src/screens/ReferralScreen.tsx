@@ -20,6 +20,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme, Spacing, Radius, FontSize, FontWeight, webContainer } from '@/theme';
 import { CompassFonts } from '@/theme';
 import { API } from '@/lib/api';
+import { getPublicName } from '@/lib/publicName';
 import { offlineRead } from '@/lib/offlineQueue';
 
 interface ReferralStats {
@@ -31,6 +32,7 @@ interface ReferralStats {
   pendingPoints: number;
   recentReferrals: Array<{
     username: string;
+    public_name?: string;
     type: 'direct' | 'indirect';
     pointsEarned: number;
     joinedAt: string;
@@ -175,7 +177,7 @@ export default function ReferralScreen() {
             {stats!.recentReferrals.map((r, i) => (
               <View key={i} style={[styles.referralRow, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
                 <View style={{ flex: 1 }}>
-                  <Text style={[styles.referralName, { color: colors.textRole.primary }]}>{r.username}</Text>
+                  <Text style={[styles.referralName, { color: colors.textRole.primary }]}>{getPublicName(r)}</Text>
                   <Text style={[styles.referralType, { color: colors.textRole.secondary }]}>{r.type === 'direct' ? 'Direct referral' : 'Indirect referral'}</Text>
                 </View>
                 <Text style={[styles.referralPoints, { color: colors.accentRole.success }]}>+{r.pointsEarned} pts</Text>
