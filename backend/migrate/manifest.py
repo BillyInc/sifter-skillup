@@ -16,7 +16,14 @@ from typing import Any
 
 from . import sqlio
 
-KINDS = ("schema", "seed", "destructive")
+# schema/seed run automatically. The other three need a human:
+#   destructive       drops structure or replaces a table's contents
+#   data_destructive  deletes/truncates rows without dropping and recreating the table
+#   rebuild           drops and recreates the taxonomy; never applied without an explicit
+#                     flag AND an approval, and by default shown as "refused"
+KINDS = ("schema", "seed", "destructive", "data_destructive", "rebuild")
+GUARDED_KINDS = ("destructive", "data_destructive", "rebuild")
+SOURCES = ("sql", "gz")
 DEFAULT_MANIFEST = Path(__file__).with_name("manifest.toml")
 
 # Top-level names in backend/ that must be registered (entry or unordered).
@@ -42,6 +49,14 @@ class ExternalRequire:
 
 
 @dataclass(frozen=True)
+class LintWaiver:
+    """A reviewed, visible acknowledgement of one lint finding code for one entry."""
+
+    code: str
+    reason: str
+
+
+@dataclass(frozen=True)
 class Entry:
     id: str
     kind: str
@@ -51,6 +66,9 @@ class Entry:
     requires: tuple[str, ...] = ()
     external_requires: tuple[ExternalRequire, ...] = ()
     allow_destructive_reason: str | None = None
+    authoritative: str | None = None  # "sql" | "gz": which copy wins when both exist
+    authoritative_reason: str | None = None
+    lint_waivers: tuple[LintWaiver, ...] = ()
     verify: tuple[str, ...] = ()
     down: str | None = None
     manual_only: bool = False
@@ -162,6 +180,29 @@ def parse_manifest(data: dict[str, Any]) -> Manifest:
             raise ManifestError(
                 f"{where}: 'allow_destructive_reason' must be a non-empty string"
             )
+        authoritative = raw.get("authoritative")
+        if authoritative is not None and authoritative not in SOURCES:
+            raise ManifestError(f"{where}: 'authoritative' must be one of {SOURCES}")
+        auth_reason = raw.get("authoritative_reason")
+        if authoritative is not None and (
+            not isinstance(auth_reason, str) or not auth_reason.strip()
+        ):
+            raise ManifestError(
+                f"{where}: 'authoritative' needs a non-empty 'authoritative_reason' (the evidence)"
+            )
+        waivers: list[LintWaiver] = []
+        for waiver in raw.get("lint_waivers") or []:
+            if (
+                not isinstance(waiver, dict)
+                or not isinstance(waiver.get("code"), str)
+                or not waiver["code"]
+                or not isinstance(waiver.get("reason"), str)
+                or not waiver["reason"].strip()
+            ):
+                raise ManifestError(
+                    f"{where}: each lint_waivers item needs a 'code' and a non-empty 'reason'"
+                )
+            waivers.append(LintWaiver(waiver["code"], waiver["reason"]))
         entries.append(
             Entry(
                 id=entry_id,
@@ -174,6 +215,9 @@ def parse_manifest(data: dict[str, Any]) -> Manifest:
                     raw.get("external_requires"), where
                 ),
                 allow_destructive_reason=allow_reason,
+                authoritative=authoritative,
+                authoritative_reason=auth_reason if authoritative else None,
+                lint_waivers=tuple(waivers),
                 verify=_str_list(raw.get("verify"), "verify", where),
                 down=down,
                 manual_only=manual_only,
@@ -229,6 +273,54 @@ def is_contained(root: Path, rel: str) -> bool:
     return (root / rel).resolve().is_relative_to(root.resolve())
 
 
+@dataclass(frozen=True)
+class Source:
+    """Which on-disk copy of a single-file entry is authoritative.
+
+    ``candidates`` are the existing ``X.sql`` / ``X.sql.gz`` copies. ``path`` is the
+    chosen one, or ``None`` when two copies differ (after BOM/CRLF normalisation) and
+    the manifest has not pinned one with ``authoritative``. ``differing`` is true
+    whenever the two copies differ in content, pinned or not.
+    """
+
+    path: Path | None
+    candidates: tuple[Path, ...]
+    differing: bool = False
+    rule: str = ""
+
+
+def resolve_source(entry: Entry, root: Path) -> Source:
+    if entry.path is None or not is_contained(root, entry.path):
+        return Source(None, ())
+    declared = root / entry.path
+    base = sqlio.stem(declared.name)
+    found = tuple(
+        p
+        for p in (
+            declared.with_name(base + ".sql"),
+            declared.with_name(base + ".sql.gz"),
+        )
+        if p.is_file()
+    )
+    if len(found) <= 1:
+        chosen = found[0] if found else None
+        return Source(chosen, found, rule="only copy" if chosen else "")
+    if sqlio.sha256_file(found[0]) == sqlio.sha256_file(found[1]):
+        # Same content (modulo BOM/CRLF): the copy the manifest names wins.
+        chosen = declared if declared in found else found[0]
+        return Source(chosen, found, rule="identical copies; manifest path")
+    if entry.authoritative is not None:
+        suffix = ".sql" if entry.authoritative == "sql" else ".sql.gz"
+        pinned = declared.with_name(base + suffix)
+        if pinned in found:
+            return Source(pinned, found, True, f"pinned authoritative={entry.authoritative}")
+    return Source(None, found, True, "copies differ and none is pinned")
+
+
+class AmbiguousSourceError(FileNotFoundError):
+    """Two differing copies exist and the manifest does not say which one is real."""
+
+
 def entry_files(entry: Entry, root: Path) -> list[Path]:
     """Existing files for an entry (a single file, or the numeric-ordered parts).
 
@@ -239,7 +331,10 @@ def entry_files(entry: Entry, root: Path) -> list[Path]:
     if not is_contained(root, target):
         return []
     if entry.path is not None:
-        candidate = root / entry.path
+        source = resolve_source(entry, root)
+        if source.path is not None:
+            return [source.path]
+        candidate = root / entry.path  # ambiguous: validate() reports it
         return [candidate] if candidate.is_file() else []
     assert entry.parts_glob is not None
     root_resolved = root.resolve()
@@ -256,7 +351,7 @@ def entry_files(entry: Entry, root: Path) -> list[Path]:
 def entry_checksum(entry: Entry, root: Path) -> str:
     """Checksum recorded in the ledger for an entry.
 
-    Single file: SHA-256 of the decompressed bytes. Group: SHA-256 of
+    Single file: SHA-256 of the decompressed bytes with BOM stripped and CRLF -> LF. Group: SHA-256 of
     ``"<part name> <part sha256>\\n"`` lines in numeric part order, so editing,
     adding, removing or reordering any part changes the group checksum.
     """
@@ -264,6 +359,10 @@ def entry_checksum(entry: Entry, root: Path) -> str:
     if not files:
         raise FileNotFoundError(f"{entry.id}: no files found")
     if not entry.is_group:
+        if resolve_source(entry, root).path is None and entry.path is not None:
+            raise AmbiguousSourceError(
+                f"{entry.id}: .sql and .sql.gz differ and the manifest does not pin 'authoritative'"
+            )
         return sqlio.sha256_file(files[0])
     digest = hashlib.sha256()
     for part in files:
@@ -407,11 +506,39 @@ def validate(manifest: Manifest, root: Path) -> list[Issue]:
                 and not (root / check).is_file()
             ):
                 err("MISSING_PATH", f"{entry.id}: verify file '{check}' does not exist")
-        if entry.kind == "destructive" and not (entry.manual_only or entry.approval):
+        if entry.kind in GUARDED_KINDS and not (entry.manual_only or entry.approval):
             err(
                 "DESTRUCTIVE_UNGUARDED",
-                f"{entry.id}: destructive entries need manual_only = true or a non-empty 'approval' marker",
+                f"{entry.id}: {entry.kind} entries need manual_only = true or a non-empty 'approval' marker",
             )
+        if entry.kind == "rebuild" and not (entry.manual_only and entry.approval):
+            err(
+                "REBUILD_UNGUARDED",
+                f"{entry.id}: rebuild entries need manual_only = true AND an 'approval' marker",
+            )
+        if entry.path is not None:
+            source = resolve_source(entry, root)
+            if source.differing and source.path is None:
+                err(
+                    "DUPLICATE_SOURCE_DIFFERS",
+                    f"{entry.id}: {', '.join(p.name for p in source.candidates)} differ in content; "
+                    "pin one with authoritative = \"sql\"|\"gz\" plus authoritative_reason",
+                )
+            elif source.differing:
+                stale = [p.name for p in source.candidates if p != source.path]
+                issues.append(
+                    Issue(
+                        "STALE_DUPLICATE",
+                        f"{entry.id}: using {source.path.name} ({entry.authoritative_reason}); "
+                        f"differing copy {', '.join(stale)} is ignored",
+                        severity="warning",
+                    )
+                )
+            elif entry.authoritative is not None and len(source.candidates) == 1:
+                err(
+                    "AUTHORITATIVE_UNNEEDED",
+                    f"{entry.id}: 'authoritative' is set but only one copy exists",
+                )
 
     # Requires: unknown ids, self reference, forward references, cycles.
     positions = {entry.id: index for index, entry in enumerate(manifest.entries)}

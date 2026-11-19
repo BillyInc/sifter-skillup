@@ -1,7 +1,8 @@
 """File access helpers: transparent ``.gz`` handling and checksums.
 
-Checksums are always computed over the *decompressed* bytes so a ``.sql`` file
-and its ``.sql.gz`` transport hash identically.
+Checksums are always computed over the *decompressed* bytes, with a UTF-8 BOM
+stripped and CRLF normalised to LF, so a ``.sql`` file, its ``.sql.gz`` transport
+and a Windows checkout (autocrlf) of either hash identically.
 """
 
 from __future__ import annotations
@@ -31,8 +32,48 @@ def iter_chunks(path: Path) -> Iterator[bytes]:
             yield chunk
 
 
+_BOM = b"\xef\xbb\xbf"
+
+
+def normalise_bytes(raw: bytes) -> bytes:
+    """Strip a leading UTF-8 BOM and turn CRLF into LF (a lone CR is kept)."""
+    if raw.startswith(_BOM):
+        raw = raw[len(_BOM) :]
+    return raw.replace(b"\r\n", b"\n")
+
+
+def iter_normalised_chunks(path: Path) -> Iterator[bytes]:
+    """Streaming ``normalise_bytes``; a CR at a chunk end waits for the next chunk."""
+    first = True
+    carry = b""
+    for chunk in iter_chunks(path):
+        data = carry + chunk
+        if first:
+            if len(data) < len(_BOM) and _BOM.startswith(data):
+                carry = data  # not enough bytes yet to decide about the BOM
+                continue
+            if data.startswith(_BOM):
+                data = data[len(_BOM) :]
+            first = False
+        carry = b""
+        if data.endswith(b"\r"):
+            carry, data = b"\r", data[:-1]
+        if data:
+            yield data.replace(b"\r\n", b"\n")
+    if carry:
+        yield carry  # a trailing lone CR, or a short file
+
+
 def sha256_file(path: Path) -> str:
-    """SHA-256 of the decompressed content of ``path``."""
+    """SHA-256 of the normalised, decompressed content of ``path``."""
+    digest = hashlib.sha256()
+    for chunk in iter_normalised_chunks(path):
+        digest.update(chunk)
+    return digest.hexdigest()
+
+
+def sha256_raw(path: Path) -> str:
+    """SHA-256 of the decompressed bytes exactly as stored (no normalisation)."""
     digest = hashlib.sha256()
     for chunk in iter_chunks(path):
         digest.update(chunk)

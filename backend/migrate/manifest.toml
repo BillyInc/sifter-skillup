@@ -6,7 +6,7 @@
 # career-guidance list). Anything whose order the docs do not state unambiguously is in
 # [[unordered]] at the bottom, with the reason. Do not guess an order: ask the owner.
 #
-# Fields: id, kind (schema|seed|destructive), path | parts_glob (+expected_parts),
+# Fields: id, kind (schema|seed|destructive|data_destructive|rebuild), path | parts_glob (+expected_parts),
 #         requires, verify (phase 2: check queries; empty for now), down (undo script, optional),
 #         manual_only (never automatic), approval (required marker for destructive entries),
 #         external_requires (dependencies that cannot be an ordered `requires` edge: array of
@@ -14,6 +14,15 @@
 #         unresolved by verify-manifest and plan, never reorders anything),
 #         allow_destructive_reason (a schema/seed entry whose SQL the linter flags as destructive,
 #         e.g. DROP CONSTRAINT/POLICY IF EXISTS before re-creating it; must say why it is safe),
+#         authoritative ("sql"|"gz") + authoritative_reason (required with it): which copy wins when
+#         X.sql and X.sql.gz both exist and DIFFER in content; unpinned differing copies are an
+#         error (DUPLICATE_SOURCE_DIFFERS). Copies that differ only by BOM/CRLF are the same file.
+#         lint_waivers (array of { code, reason }): acknowledges one lint finding code for this entry;
+#         still printed as WAIVED. Never use it to hide a finding without a written reason.
+#         kind data_destructive: deletes/truncates rows (not a drop/recreate of the same table);
+#         same approval gate as destructive. kind rebuild: drops and recreates the taxonomy;
+#         needs manual_only AND approval and is shown as 'refused' unless the operator passes
+#         --allow-rebuild with an approval reference; never automatic.
 #         note, source.
 # `requires` edges added by the hardening pass each cite the SQL line that proves them
 # (an ALTER/INSERT/REFERENCES on a table another ordered entry creates).
@@ -47,6 +56,9 @@ id = "migration_career_pilot"
 kind = "schema"
 allow_destructive_reason = "ALTER TABLE ... DROP CONSTRAINT IF EXISTS school_programme_subject_options_exception_id_key (migration_career_pilot.sql:112) is replaced by the composite unique index uq_school_programme_subject_options_exception_exam, as the in-file comment at lines 109-111 states; no table or row data is removed"
 path = "migration_career_pilot.sql"
+lint_waivers = [
+  { code = "DROP_CONSTRAINT_NOT_READDED", reason = "school_programme_subject_options_exception_id_key (migration_career_pilot.sql:112) is replaced by the composite unique index uq_school_programme_subject_options_exception_exam, as the in-file comment at lines 109-111 states" },
+]
 requires = [
   "migration_career_base_registry",
   "migration_subject_catalog",
@@ -117,7 +129,7 @@ source = "CLAUDE.md 'Canonical 2026-09-11 order'"
 
 [[entry]]
 id = "migration_career_v2"
-kind = "destructive"
+kind = "rebuild"
 path = "migration_career_v2.sql"
 requires = [
   "migration_career_pilot",
@@ -142,6 +154,8 @@ requires = [
   "migration_subject_catalog",
 ]
 verify = []
+authoritative = "sql"
+authoritative_reason = "the .sql is the later generation (last commit 2026-10-22, f01424d, 'AGR/AGRIC split and 36 dropped catalog rows') and is the file the local audits read (_audit_subject_option_seed.py:30, _audit_subject_match_exhaustive.py:42); the .sql.gz was last committed 2026-10-17 and differs in alias lists, the HSC/CSC/STORE/HEC/TD/AUTO/CAT aliases and a stale header comment"
 source = "CLAUDE.md 'Canonical 2026-09-11 order'"
 
 [[entry]]
@@ -179,6 +193,8 @@ requires = [
 verify = []
 approval = "replacement seed: snapshot programme_subject_rule_records into _bak first, deploy together with seed_subject_options, explicit approval"
 note = "Replacement seed (DELETE FROM programme_subject_rule_records); CLAUDE.md: both replacement subject seeds must be deployed together."
+authoritative = "sql"
+authoritative_reason = "the .sql is the later generation (last commit 2026-10-24 vs 2026-10-17 for the .sql.gz); the committed Sociology matcher audit of 2026-10-24 is generated against it; the two copies differ in row content with the same 1260 INSERTs"
 source = "CLAUDE.md 'Canonical 2026-09-11 order'"
 
 [[entry]]
@@ -195,6 +211,8 @@ requires = [
 verify = []
 approval = "replacement seed: snapshot the two matcher tables into _bak first, then explicit approval"
 note = "Documented replacement seed: DELETEs and rebuilds programme_subject_options and programme_subject_option_items."
+authoritative = "sql"
+authoritative_reason = "the .sql is the later generation (last commit 2026-10-24 vs 2026-10-22 for the .sql.gz): parsed_at stamps 2026-10-24T12:20:17Z against 2026-10-22T17:10:18Z, 9378 vs 8781 INSERT statements, and it is paired with the 2026-10-24 rule-record seed that must deploy with it"
 source = "CLAUDE.md 'Canonical 2026-09-11 order'"
 
 
@@ -254,13 +272,14 @@ source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 Oct
 
 [[entry]]
 id = "migration_programme_domain_review_corrections_2026-09-18"
-kind = "schema"
+kind = "data_destructive"
 path = "migration_programme_domain_review_corrections_2026-09-18.sql"
 requires = [
   "migration_programme_domain_evidence_2026-09-17",
 ]
 verify = []
-note = "Removes 715 programme-domain edges (data deletion); not marked destructive by the docs - OWNER CHECK."
+note = "Removes 715 programme-domain edges (DELETE FROM programme_domain_evidence line 728 and programme_domain line 1453); classified data_destructive by owner default."
+approval = "deletes 715 reviewed programme-domain edges and their evidence rows; approve after a _bak snapshot of programme_domain and programme_domain_evidence"
 source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 1 #2"
 
 [[entry]]
@@ -290,6 +309,10 @@ source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 Oct
 id = "migration_programme_curriculum_contract_general_2026-09-18"
 kind = "schema"
 path = "migration_programme_curriculum_contract_general_2026-09-18.sql"
+lint_waivers = [
+  { code = "DROP_CONSTRAINT_NOT_READDED", reason = "OWNER TRIAGE PENDING: line 14 drops programme_curriculum_outcomes_display_group_check and the file never re-adds it, so the CHECK is relaxed; waived only so CI can run, not judged safe. Needs a decision: re-add it in a new migration, or document that dropping it is intended." },
+  { code = "KIND_CONFLICT", reason = "OWNER TRIAGE PENDING: same DROP CONSTRAINT as above (tracked in tests/test_migrate_repo_manifest.py NEEDS_HUMAN_TRIAGE)." },
+]
 requires = [
   "migration_sociology_curriculum_contract_2026-09-17",
 ]
@@ -394,7 +417,7 @@ source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 Oct
 
 [[entry]]
 id = "migration_guidance_ownership_and_sociology_resources_2026-09-11"
-kind = "schema"
+kind = "data_destructive"
 path = "migration_guidance_ownership_and_sociology_resources_2026-09-11.sql"
 requires = [
   "migration_guidance_programme_reading_and_market_scope_2026-09-12",
@@ -402,6 +425,9 @@ requires = [
   "migration_contextual_career_items",
 ]
 verify = []
+authoritative = "sql"
+authoritative_reason = "the .sql is later (last commit 2026-10-23 vs 2026-10-22) and is the only copy that parses under standard_conforming_strings=on: line 630 doubles the apostrophe in the .sql but uses backslash-apostrophe in the .sql.gz (a backslash-quote that ends the string literal early and is a syntax error on Supabase); otherwise the copies differ only by CRLF"
+approval = "scoped delete-then-reinsert: DELETE FROM career_guidance_foundations for D078 (line 106) and DELETE FROM career_learning_resources for the listed guidance layers (line 162); approve after a _bak snapshot of both tables"
 source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 1 #15"
 
 [[entry]]
@@ -427,7 +453,7 @@ source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 Oct
 
 [[entry]]
 id = "migration_sociology_domain_tool_path_2026-09-18"
-kind = "schema"
+kind = "data_destructive"
 path = "migration_sociology_domain_tool_path_2026-09-18.sql"
 requires = [
   # proven by SQL: migration_sociology_domain_tool_path_2026-09-18.sql:102 INSERT INTO skillup_dev.career_item_relationships; table created by migration_career_item_relationships_2026-09-17.sql:5
@@ -436,6 +462,9 @@ requires = [
   "migration_career_resources_v1",
 ]
 verify = []
+authoritative = "sql"
+authoritative_reason = "the .sql is later (last commit 2026-10-22 vs 2026-10-18); the .sql.gz resource VALUES rows (10 rows, lines 163-172) use a shortened third column and append 'Access: ...' to the description; the .sql keeps the full access text in that column; no other difference"
+approval = "scoped delete-then-reinsert: DELETE FROM career_learning_resources for the social_sciences_domain_tool_path_v1 layer (line 134); approve after a _bak snapshot"
 source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 1 #18"
 
 [[entry]]
@@ -491,13 +520,14 @@ source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 Oct
 
 [[entry]]
 id = "seed_sociology_curriculum_contract_2026-09-17"
-kind = "seed"
+kind = "data_destructive"
 path = "seed_sociology_curriculum_contract_2026-09-17.sql.gz"
 requires = [
   "migration_sociology_curriculum_contract_2026-09-17",
   "migration_programme_curriculum_contract_general_2026-09-18",
 ]
 verify = []
+approval = "scoped delete-then-reinsert: DELETE FROM programme_curriculum_outcomes and programme_abilities for the Sociology programme, then re-insert in the same file; approve after a _bak snapshot"
 source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 2 #2"
 
 [[entry]]
@@ -568,13 +598,14 @@ source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 Oct
 
 [[entry]]
 id = "migration_guidance_global_2026-09-11"
-kind = "seed"
+kind = "data_destructive"
 path = "migration_guidance_global_2026-09-11.sql"
 requires = [
   "migration_guidance_all_programmes_2026-09-12",
 ]
 verify = []
-note = "Data-loading migration_ file; replaces role-derived domain foundations - OWNER CHECK whether it deserves 'destructive'."
+note = "Data-loading migration_ file; replaces the generated global domain-foundation layer (DELETE FROM career_guidance_foundations line 70); classified data_destructive by owner default."
+approval = "deletes the generated global_domain_foundation_v1 rows then reloads them; approve after a _bak snapshot of career_guidance_foundations"
 source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 2 #8"
 
 [[entry]]

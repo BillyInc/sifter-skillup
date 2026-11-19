@@ -142,15 +142,15 @@ def test_new_detections_ignore_comments_and_strings():
     assert not lint.analyse_sql(sql).destructive
 
 
-def test_counterpart_comparison_is_memory_capped(tmp_path):
+def test_counterpart_comparison_streams_and_is_not_limited_by_the_analysis_cap(
+    tmp_path,
+):
     (tmp_path / "migration_a.sql").write_bytes(b"SELECT 1;\n" * 50)
     with gzip.open(tmp_path / "migration_a.sql.gz", "wb") as handle:
         handle.write(b"SELECT 2;\n" * 50)
     capped = lint.lint_file(tmp_path / "migration_a.sql", tmp_path, max_bytes=100)
-    assert capped.counterpart == "unverified"
-    assert (
-        lint.lint_file(tmp_path / "migration_a.sql", tmp_path).counterpart == "MISMATCH"
-    )
+    # content analysis is skipped over the cap, but the pair is still compared (streamed)
+    assert capped.counterpart == "MISMATCH" and not capped.analysed
     assert lint.summarise([capped])["migration"]["gz_counterpart_differs"] == 1
 
 

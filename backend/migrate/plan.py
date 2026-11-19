@@ -18,6 +18,7 @@ APPROVAL = (
 )
 MANUAL = "manual"  # manual_only: never automatic
 BLOCKED = "blocked"  # a required entry is neither applied nor going to run
+REFUSED = "refused"  # rebuild entry: never runs without an explicit flag plus approval
 
 
 @dataclass
@@ -73,6 +74,8 @@ def build_plan(
     checksum_of: Checksummer,
     *,
     checksum_pending: bool = False,
+    allow_rebuild: bool = False,
+    rebuild_approval: str | None = None,
 ) -> Plan:
     """Walk the manifest in order and classify every entry.
 
@@ -84,6 +87,7 @@ def build_plan(
     ledger knows (to detect drift), or for every entry with ``checksum_pending``.
     """
     applied = dict(ledger.applied())
+    baselines = dict(ledger.baselines())
     plan = Plan()
     ids = {entry.id for entry in manifest.entries}
     for unknown in sorted(set(applied) - ids):
@@ -106,6 +110,10 @@ def build_plan(
                 plan.warnings.append(
                     f"{entry.id} is recorded as applied but requires unapplied {missing}"
                 )
+            if entry.id in baselines:
+                row.detail = f"baseline recorded by {baselines[entry.id].get('operator', '?')} (not run by the runner)"
+                if entry.kind == "rebuild":
+                    plan.warnings.append(f"{entry.id} is a rebuild entry recorded as baseline")
             if row.checksum == row.applied_checksum:
                 row.status = APPLIED
             else:
@@ -118,6 +126,20 @@ def build_plan(
 
         if checksum_pending:
             row.checksum = checksum_of(entry)
+        if entry.kind == "rebuild":
+            if allow_rebuild and rebuild_approval and rebuild_approval.strip():
+                row.status = MANUAL
+                row.detail = (
+                    f"rebuild authorised ({rebuild_approval.strip()}); still never "
+                    "automatic: staging or an empty database, by hand, after a backup"
+                )
+            else:
+                row.status = REFUSED
+                row.detail = (
+                    "refused: rebuild drops and recreates the taxonomy; needs "
+                    "--allow-rebuild plus --rebuild-approval and a backup"
+                )
+            continue
         if entry.manual_only:
             row.status = MANUAL
             row.detail = "manual_only: never run automatically"
@@ -134,9 +156,9 @@ def build_plan(
             row.status = BLOCKED
             row.detail = f"halted: earlier entry {halted_by} is blocked and apply order is strict"
             continue
-        if entry.kind == "destructive":
+        if entry.kind in mf.GUARDED_KINDS:
             row.status = APPROVAL
-            row.detail = f"destructive: {entry.approval}"
+            row.detail = f"{entry.kind}: {entry.approval}"
             awaiting_approval.append(entry.id)
         elif awaiting_approval:
             row.detail = "only after approval of " + ", ".join(awaiting_approval)
@@ -179,15 +201,16 @@ def format_plan(plan: Plan) -> str:
             APPROVAL: "APPROVAL",
             MANUAL: "MANUAL  ",
             BLOCKED: "blocked ",
+            REFUSED: "REFUSED ",
         }[row.status]
         suffix = f"  - {row.detail}" if row.detail else ""
         if row.unresolved:
             suffix += "  [unresolved dependency: " + ", ".join(row.unresolved) + "]"
-        lines.append(f"{row.position:>3}  {flag:<9}  [{row.kind:<11}] {row.id}{suffix}")
+        lines.append(f"{row.position:>3}  {flag:<9}  [{row.kind:<16}] {row.id}{suffix}")
     lines.append("")
     counts = {
         status: len(plan.with_status(status))
-        for status in (APPLIED, PENDING, APPROVAL, MANUAL, BLOCKED, DRIFT)
+        for status in (APPLIED, PENDING, APPROVAL, MANUAL, REFUSED, BLOCKED, DRIFT)
     }
     lines.append(
         "summary: "
@@ -210,6 +233,7 @@ def plan_to_dict(plan: Plan) -> dict:
         "rows": [row.__dict__ for row in plan.rows],
         "would_run": [row.id for row in plan.would_run],
         "needs_approval": [row.id for row in plan.needs_approval],
+        "refused": [row.id for row in plan.with_status(REFUSED)],
         "unresolved_dependencies": {
             row.id: row.unresolved for row in plan.unresolved_dependencies
         },

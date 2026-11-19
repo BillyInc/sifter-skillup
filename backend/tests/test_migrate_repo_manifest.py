@@ -49,7 +49,7 @@ def test_every_migration_is_registered():
 def test_career_v2_is_never_automatic_and_replacement_seeds_are_destructive():
     by_id = {entry.id: entry for entry in mf.load_manifest(MANIFEST).entries}
     career_v2 = by_id["migration_career_v2"]
-    assert career_v2.kind == "destructive" and career_v2.manual_only
+    assert career_v2.kind == "rebuild" and career_v2.manual_only and career_v2.approval
     assert by_id["seed_subject_options"].kind == "destructive"
 
 

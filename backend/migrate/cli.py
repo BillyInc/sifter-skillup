@@ -15,7 +15,7 @@ from typing import Sequence
 from . import lint as lint_mod
 from . import manifest as mf
 from . import plan as plan_mod
-from .ledger import InMemoryLedger, load_applied_json
+from .ledger import BaselineError, InMemoryLedger, build_baseline, load_applied_json
 
 
 def _load(args: argparse.Namespace) -> tuple[mf.Manifest, Path]:
@@ -41,12 +41,25 @@ def cmd_verify_manifest(args: argparse.Namespace) -> int:
 def cmd_lint(args: argparse.Namespace) -> int:
     manifest, root = _load(args)
     files = lint_mod.discover(root, manifest)
-    report = lint_mod.build_report(files, root, max_bytes=args.max_mib * 1024 * 1024)
+    cache: lint_mod.ReportCache = {}
+    limit = args.max_mib * 1024 * 1024
+    report = lint_mod.build_report(files, root, max_bytes=limit, cache=cache)
+    print(lint_mod.format_table(report))
+    findings = lint_mod.collect_findings(manifest, root, max_bytes=limit, cache=cache)
     if args.json:
+        report["findings"] = [f.__dict__ | {"failing": f.failing} for f in findings]
         Path(args.json).write_text(lint_mod.to_json(report), encoding="utf-8")
         print(f"wrote {args.json}", file=sys.stderr)
-    print(lint_mod.format_table(report))
-    return 0
+    failing = [f for f in findings if f.failing]
+    print()
+    for finding in findings:
+        print(finding)
+    print(
+        f"lint: {len(failing)} error(s), "
+        f"{sum(1 for f in findings if f.waived_reason)} waived, "
+        f"{sum(1 for f in findings if f.severity == 'warning')} warning(s)"
+    )
+    return 1 if failing else 0
 
 
 def cmd_plan(args: argparse.Namespace) -> int:
@@ -74,6 +87,8 @@ def cmd_plan(args: argparse.Namespace) -> int:
             ledger,
             plan_mod.default_checksummer(root),
             checksum_pending=args.checksums,
+            allow_rebuild=args.allow_rebuild,
+            rebuild_approval=args.rebuild_approval,
         )
     except FileNotFoundError as exc:
         print(f"plan failed: {exc}", file=sys.stderr)
@@ -83,6 +98,24 @@ def cmd_plan(args: argparse.Namespace) -> int:
     else:
         print(plan_mod.format_plan(plan))
     return 2 if plan.has_drift else 0
+
+
+def cmd_baseline(args: argparse.Namespace) -> int:
+    manifest, root = _load(args)
+    out = Path(args.out)
+    if out.exists():
+        print(f"refusing to overwrite {out}", file=sys.stderr)
+        return 1
+    try:
+        rows = build_baseline(
+            manifest, root, args.entries, Path(args.preflight), args.operator
+        )
+    except BaselineError as exc:
+        print(f"baseline refused: {exc}", file=sys.stderr)
+        return 1
+    out.write_text(json.dumps({"applied": rows}, indent=2), encoding="utf-8")
+    print(f"wrote {len(rows)} baseline row(s) to {out}")
+    return 0
 
 
 def cmd_checksums(args: argparse.Namespace) -> int:
@@ -138,7 +171,34 @@ def build_parser() -> argparse.ArgumentParser:
         help="also hash entries that are not applied yet",
     )
     plan.add_argument("--json", action="store_true", help="machine-readable output")
+    plan.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="accepted for CI clarity: plan never connects to a database or runs SQL",
+    )
+    plan.add_argument(
+        "--allow-rebuild",
+        action="store_true",
+        help="show rebuild entries as authorised (needs --rebuild-approval; still never automatic)",
+    )
+    plan.add_argument(
+        "--rebuild-approval",
+        metavar="REF",
+        help="who/what approved the rebuild (recorded, not verified)",
+    )
     plan.set_defaults(func=cmd_plan)
+
+    baseline = sub.add_parser(
+        "baseline",
+        help="write ledger baseline rows for entries the operator names (never inferred)",
+    )
+    baseline.add_argument(
+        "--preflight", required=True, metavar="FILE", help="saved read-only preflight JSON"
+    )
+    baseline.add_argument("--entries", nargs="+", required=True, metavar="ID")
+    baseline.add_argument("--operator", required=True)
+    baseline.add_argument("--out", required=True, metavar="FILE", help="applied.json to write")
+    baseline.set_defaults(func=cmd_baseline)
 
     checksums = sub.add_parser(
         "checksums", help="print the checksum of every manifest entry"

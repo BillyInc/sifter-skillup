@@ -57,7 +57,9 @@ def test_delete_with_where_is_not_flagged():
     result = lint.analyse_sql(
         "DELETE FROM x WHERE id = 1;\nDELETE FROM y\n USING z WHERE y.id = z.id;\n"
     )
-    assert result.delete_without_where == 0 and not result.destructive
+    # no unconditional delete, but any row deletion is data_destructive (gated by kind)
+    assert result.delete_without_where == 0
+    assert result.data_destructive == 2 and result.destructive
 
 
 def test_destructive_words_in_comments_and_strings_are_ignored():

@@ -89,6 +89,7 @@ DESTRUCTIVE_FIELDS = (
     "update_without_where",
     "cascade",
     "dynamic_destructive",
+    "data_destructive",
 )
 _LEGEND = {
     "drop_table": "DT",
@@ -108,8 +109,25 @@ _LEGEND = {
     "update_without_where": "UPD",
     "cascade": "CAS",
     "dynamic_destructive": "DYN",
+    "data_destructive": "DD",
 }
 _TRUNCATE = re.compile(r"\bTRUNCATE\b", re.I)
+_DELETE_TARGET = re.compile(r"\bDELETE\s+FROM\s+(?:ONLY\s+)?([\w.\"]+)", re.I)
+_TRUNCATE_TARGET = re.compile(
+    r"\bTRUNCATE\s+(?:TABLE\s+)?(?:ONLY\s+)?([\w.\"]+(?:\s*,\s*[\w.\"]+)*)", re.I
+)
+_DROP_TABLE_TARGET = re.compile(r"\bDROP\s+TABLE\s+(?:IF\s+EXISTS\s+)?([\w.\"]+)", re.I)
+_CREATE_TABLE_TARGET = re.compile(
+    r"\bCREATE\s+(?:UNLOGGED\s+)?TABLE\s+(?:IF\s+NOT\s+EXISTS\s+)?([\w.\"]+)", re.I
+)
+_CREATE_TEMP_TARGET = re.compile(
+    r"\bCREATE\s+(?:GLOBAL\s+|LOCAL\s+)?(?:TEMP|TEMPORARY)\s+TABLE\s+(?:IF\s+NOT\s+EXISTS\s+)?([\w.\"]+)",
+    re.I,
+)
+_DROP_CONSTRAINT_NAME = re.compile(
+    r"\bDROP\s+CONSTRAINT\s+(?:IF\s+EXISTS\s+)?([\w\"]+)", re.I
+)
+_ADD_CONSTRAINT_NAME = re.compile(r"\bADD\s+CONSTRAINT\s+([\w\"]+)", re.I)
 _DELETE_FROM = re.compile(r"\bDELETE\s+FROM\b", re.I)
 _WHERE = re.compile(r"\bWHERE\b", re.I)
 _IF_NOT_EXISTS = re.compile(r"\bIF\s+NOT\s+EXISTS\b", re.I)
@@ -181,6 +199,62 @@ def _alter_drop_column(flat: str) -> int:
         statement = flat[match.end() : end if end != -1 else len(flat)]
         count += len(_ALTER_DROP_COLUMN.findall(statement))
     return count
+
+
+def _table_key(name: str) -> str:
+    return name.replace('"', "").lower().split(".")[-1]
+
+
+def _row_deleted_tables(flat: str) -> list[str]:
+    """Tables that lose rows (``DELETE FROM``/``TRUNCATE``) and are neither dropped
+    *and* recreated in the same file (a rebuild, counted as structural) nor temporary.
+    One list item per statement."""
+    dropped = {_table_key(m.group(1)) for m in _DROP_TABLE_TARGET.finditer(flat)}
+    recreated = {_table_key(m.group(1)) for m in _CREATE_TABLE_TARGET.finditer(flat)}
+    temporary = {_table_key(m.group(1)) for m in _CREATE_TEMP_TARGET.finditer(flat)}
+    skip = (dropped & recreated) | temporary
+    targets = [_table_key(m.group(1)) for m in _DELETE_TARGET.finditer(flat)]
+    for match in _TRUNCATE_TARGET.finditer(flat):
+        targets.extend(_table_key(t.strip()) for t in match.group(1).split(","))
+    return [t for t in targets if t not in skip]
+
+
+def _unreadded_constraints(flat: str, with_strings: str) -> list[str]:
+    """Names in ``DROP CONSTRAINT [IF EXISTS] x`` with no ``ADD CONSTRAINT x`` anywhere
+    in the same file (``with_strings`` keeps literals so dynamic ``EXECUTE '... ADD
+    CONSTRAINT x ...'`` counts as re-adding)."""
+    added = {
+        m.group(1).replace('"', "").lower()
+        for m in _ADD_CONSTRAINT_NAME.finditer(with_strings)
+    }
+    missing: list[str] = []
+    for match in _DROP_CONSTRAINT_NAME.finditer(flat):
+        name = match.group(1).replace('"', "").lower()
+        if name not in added and name not in missing:
+            missing.append(name)
+    return missing
+
+
+def _backslash_quote_lines(text: str) -> list[int]:
+    """Lines where ``\\'`` sits inside an ordinary string literal.
+
+    With Postgres ``standard_conforming_strings = on`` (the Supabase default) a
+    backslash is not an escape character, so ``'institution\\'s'`` ends the literal
+    at ``\\'`` and the following ``s`` is a syntax error. ``E'...'`` strings are exempt.
+    Flagged only when the literal ends in a backslash and is glued to a following word
+    character, which is never valid SQL.
+    """
+    lines: list[int] = []
+    for match in _TOKEN.finditer(text):
+        token = match.group(0)
+        if not token.startswith("'") or len(token) < 2 or token[-2] != "\\":
+            continue
+        before = text[match.start() - 1] if match.start() else ""
+        after = text[match.end()] if match.end() < len(text) else ""
+        if before in ("E", "e") or not (after.isalnum() or after == "_"):
+            continue
+        lines.append(text.count("\n", 0, match.start()) + 1)
+    return lines
 
 
 def _strip_comments_only(text: str) -> str:
@@ -272,6 +346,10 @@ class Analysis:
     update_without_where: int = 0
     cascade: int = 0
     dynamic_destructive: int = 0
+    data_destructive: int = 0
+    data_destructive_tables: list[str] = field(default_factory=list)
+    unreadded_constraints: list[str] = field(default_factory=list)
+    backslash_quote_lines: list[int] = field(default_factory=list)
     destructive: bool = False
     if_not_exists: int = 0
     if_exists: int = 0
@@ -295,6 +373,13 @@ def analyse_sql(text: str) -> Analysis:
     for name, value in _destructive_counts(flat).items():
         setattr(result, name, value)
     result.dynamic_destructive = _dynamic_destructive(text)
+    deleted = _row_deleted_tables(flat)
+    result.data_destructive = len(deleted)
+    result.data_destructive_tables = sorted(set(deleted))
+    result.unreadded_constraints = _unreadded_constraints(
+        flat, _strip_comments_only(text)
+    )
+    result.backslash_quote_lines = _backslash_quote_lines(text)
     result.destructive = any(getattr(result, name) for name in DESTRUCTIVE_FIELDS)
     result.if_not_exists = len(_IF_NOT_EXISTS.findall(flat))
     result.if_exists = len(_IF_EXISTS.findall(flat))
@@ -337,19 +422,12 @@ def _role(name: str) -> str:
     return "other"
 
 
-def _compare_counterpart(
-    plain: Path, gz: Path, plain_sha: str, max_bytes: int = MAX_ANALYSE_BYTES
-) -> str:
-    """``match``, ``crlf-only`` (same text, different line endings), ``MISMATCH`` or
-    ``unverified`` (differs by hash and is too large to compare in memory)."""
-    if sqlio.sha256_file(gz) == plain_sha:
+def _compare_counterpart(plain: Path, gz: Path) -> str:
+    """``match`` (identical bytes), ``crlf-only`` (identical after BOM/CRLF
+    normalisation) or ``MISMATCH`` (the content really differs). Streams both files."""
+    if sqlio.sha256_raw(plain) == sqlio.sha256_raw(gz):
         return "match"
-    plain_bytes = sqlio.read_capped(plain, max_bytes)
-    gz_bytes = sqlio.read_capped(gz, max_bytes)
-    if plain_bytes is None or gz_bytes is None:
-        return "unverified"
-    normalise = lambda raw: raw.replace(b"\r\n", b"\n")  # noqa: E731
-    if normalise(plain_bytes) == normalise(gz_bytes):
+    if sqlio.sha256_file(plain) == sqlio.sha256_file(gz):
         return "crlf-only"
     return "MISMATCH"
 
@@ -361,6 +439,8 @@ def lint_file(path: Path, root: Path, max_bytes: int = MAX_ANALYSE_BYTES) -> Fil
         else path.as_posix()
     )
     data = sqlio.read_capped(path, max_bytes)
+    if data is not None:
+        data = sqlio.normalise_bytes(data)
     report = FileReport(
         path=rel,
         role=_role(path.name),
@@ -373,9 +453,7 @@ def lint_file(path: Path, root: Path, max_bytes: int = MAX_ANALYSE_BYTES) -> Fil
     if path.suffix != ".gz":
         gz = path.with_name(path.name + ".gz")
         if gz.is_file():
-            report.counterpart = _compare_counterpart(
-                path, gz, report.sha256, max_bytes
-            )
+            report.counterpart = _compare_counterpart(path, gz)
     if data is None:
         report.analysed = False
         report.notes.append(
@@ -411,10 +489,27 @@ def discover(root: Path, manifest: mf.Manifest | None = None) -> list[Path]:
     return sorted(files, key=lambda p: p.relative_to(root).as_posix())
 
 
+ReportCache = dict[Path, FileReport]
+
+
+def cached_lint_file(
+    path: Path, root: Path, max_bytes: int, cache: ReportCache | None
+) -> FileReport:
+    """``lint_file`` memoised per path (analysing the 30 MB seeds is slow)."""
+    if cache is None:
+        return lint_file(path, root, max_bytes)
+    if path not in cache:
+        cache[path] = lint_file(path, root, max_bytes)
+    return cache[path]
+
+
 def build_report(
-    files: Iterable[Path], root: Path, max_bytes: int = MAX_ANALYSE_BYTES
+    files: Iterable[Path],
+    root: Path,
+    max_bytes: int = MAX_ANALYSE_BYTES,
+    cache: ReportCache | None = None,
 ) -> dict[str, Any]:
-    reports = [lint_file(path, root, max_bytes) for path in files]
+    reports = [cached_lint_file(path, root, max_bytes, cache) for path in files]
     return {"files": [_as_dict(r) for r in reports], "summary": summarise(reports)}
 
 
@@ -522,7 +617,10 @@ class KindConflict:
 
 
 def kind_conflicts(
-    manifest: mf.Manifest, root: Path, max_bytes: int = MAX_ANALYSE_BYTES
+    manifest: mf.Manifest,
+    root: Path,
+    max_bytes: int = MAX_ANALYSE_BYTES,
+    cache: ReportCache | None = None,
 ) -> list[KindConflict]:
     """Entries whose SQL looks destructive but are not ``kind = "destructive"``.
 
@@ -532,11 +630,11 @@ def kind_conflicts(
     """
     conflicts: list[KindConflict] = []
     for entry in manifest.entries:
-        if entry.kind == "destructive" or entry.allow_destructive_reason:
+        if entry.kind in mf.GUARDED_KINDS or entry.allow_destructive_reason:
             continue
         found: dict[str, int] = {}
         for path in mf.entry_files(entry, root):
-            analysis = lint_file(path, root, max_bytes).analysis
+            analysis = cached_lint_file(path, root, max_bytes, cache).analysis
             if analysis is None:
                 continue
             for name in DESTRUCTIVE_FIELDS:
@@ -546,3 +644,127 @@ def kind_conflicts(
         if found:
             conflicts.append(KindConflict(entry.id, entry.kind, found))
     return conflicts
+
+
+# ---------------------------------------------------------------------------
+# Findings (what `lint` fails on)
+# ---------------------------------------------------------------------------
+
+
+@dataclass
+class Finding:
+    code: str
+    path: str
+    message: str
+    severity: str = "error"  # "error" | "warning"
+    waived_reason: str | None = None  # set when a manifest lint_waivers entry covers it
+
+    @property
+    def failing(self) -> bool:
+        return self.severity == "error" and self.waived_reason is None
+
+    def __str__(self) -> str:
+        tag = "WAIVED" if self.waived_reason else self.severity.upper()
+        text = f"{tag} {self.code}: {self.path}: {self.message}"
+        if self.waived_reason:
+            text += f" [waiver: {self.waived_reason}]"
+        return text
+
+
+def _file_findings(
+    path: Path, root: Path, max_bytes: int, cache: ReportCache | None
+) -> list[Finding]:
+    report = cached_lint_file(path, root, max_bytes, cache)
+    found: list[Finding] = []
+    analysis = report.analysis
+    if analysis is None:
+        return found
+    if analysis.backslash_quote_lines:
+        found.append(
+            Finding(
+                "BACKSLASH_QUOTE",
+                report.path,
+                "backslash-quote inside a normal string literal at line(s) "
+                f"{analysis.backslash_quote_lines[:5]}: with standard_conforming_strings=on "
+                "(Supabase default) the literal ends at the backslash-quote and the SQL fails to parse",
+            )
+        )
+    if analysis.unreadded_constraints:
+        found.append(
+            Finding(
+                "DROP_CONSTRAINT_NOT_READDED",
+                report.path,
+                "DROP CONSTRAINT without ADD CONSTRAINT of the same name in this file: "
+                + ", ".join(analysis.unreadded_constraints)
+                + " (the constraint is gone afterwards)",
+            )
+        )
+    return found
+
+
+def collect_findings(
+    manifest: mf.Manifest,
+    root: Path,
+    max_bytes: int = MAX_ANALYSE_BYTES,
+    cache: ReportCache | None = None,
+) -> list[Finding]:
+    """Everything ``lint`` reports as an error or warning, with manifest waivers applied.
+
+    Pure read-only analysis. A waiver (``lint_waivers`` on an entry) downgrades a
+    finding from failing to "waived" but it is still printed and kept in the JSON.
+    """
+    findings: list[Finding] = []
+    for issue in mf.validate(manifest, root):
+        if issue.code in ("DUPLICATE_SOURCE_DIFFERS", "STALE_DUPLICATE"):
+            findings.append(Finding(issue.code, "manifest", issue.message, issue.severity))
+    covered: set[Path] = set()
+    for entry in manifest.entries:
+        waivers = {w.code: w.reason for w in entry.lint_waivers}
+        entry_found: list[Finding] = []
+        for path in mf.entry_files(entry, root):
+            covered.add(path)
+            entry_found.extend(_file_findings(path, root, max_bytes, cache))
+        for conflict in kind_conflicts(
+            mf.Manifest(entries=(entry,)), root, max_bytes, cache
+        ):
+            entry_found.append(
+                Finding(
+                    "KIND_CONFLICT",
+                    entry.id,
+                    f"kind={entry.kind} but the SQL is destructive: {conflict}",
+                )
+            )
+        source = mf.resolve_source(entry, root)
+        if source.differing and source.path is not None:
+            # Evidence for the pinned choice: does the ignored copy even parse?
+            for other in source.candidates:
+                if other != source.path:
+                    for finding in _file_findings(other, root, max_bytes, cache):
+                        if finding.code == "BACKSLASH_QUOTE":
+                            findings.append(
+                                Finding(
+                                    "STALE_COPY_BACKSLASH_QUOTE",
+                                    finding.path,
+                                    "ignored (non-authoritative) copy: " + finding.message,
+                                    severity="warning",
+                                )
+                            )
+        for finding in entry_found:
+            finding.waived_reason = waivers.get(finding.code)
+            findings.append(finding)
+    # Registered-but-unordered files (and plain/gz pairs outside the manifest).
+    for path in discover(root, manifest):
+        if path in covered:
+            continue
+        rel = path.relative_to(root).as_posix()
+        if path.suffix == ".sql" and path.with_name(path.name + ".gz").is_file():
+            if _compare_counterpart(path, path.with_name(path.name + ".gz")) == "MISMATCH":
+                findings.append(
+                    Finding(
+                        "DUPLICATE_SOURCE_DIFFERS",
+                        rel,
+                        "unordered file has a .sql and a .sql.gz that differ in content",
+                    )
+                )
+        findings.extend(_file_findings(path, root, max_bytes, cache))
+    return findings
