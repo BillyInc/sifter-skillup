@@ -819,7 +819,7 @@ describe("DegreeSkills programme preview", () => {
     expect(screen.queryByText("Giddens and Sutton Sociology volume")).toBeNull();
 
     fireEvent.press(screen.getAllByRole("button", { name: "Why included?" })[0]);
-    expect(screen.getByText("The stored rationale connects this section to research methods.")).toBeTruthy();
+    expect(screen.getByText(plainText("The stored rationale connects this section to research methods."))).toBeTruthy();
     fireEvent.press(screen.getAllByRole("link", { name: "Open" })[0]);
     expect(screen.getByText("openstax.org")).toBeTruthy();
   });
