@@ -9,6 +9,7 @@ import { Modal, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, Vi
 import { useRouter } from "expo-router";
 import { useTheme, CompassFonts, FontSize, Radius, Spacing, webContainer } from "@/theme";
 import { useAuth } from "@/hooks/useAuth";
+import Avatar from "@/components/account/Avatar";
 import { getDisplayName } from "@/lib/displayName";
 import { getStartingPoint } from "@/lib/startingPoint";
 import type { StartingPointProfile, UserType } from "@/types/onboarding";
@@ -107,7 +108,10 @@ export default function ProfileScreen() {
   const account = (
     <View style={[styles.context, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
       <Text style={[styles.contextLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>ACCOUNT</Text>
-      {displayName ? <Text style={[styles.contextTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{displayName}</Text> : null}
+      {!isGuest ? <View style={styles.identity}>
+        <Avatar user={user} size={48} />
+        {displayName ? <Text style={[styles.contextTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{displayName}</Text> : null}
+      </View> : null}
       <Text style={[styles.body, { color: colors.textRole.primary }]}>{user?.email || "Guest session"}</Text>
       {isGuest ? <>
         <Text style={[styles.meta, { color: colors.textRole.muted }]}>Guest browsing does not save guidance until you create an account.</Text>
@@ -158,6 +162,7 @@ const styles = StyleSheet.create({
   title: { fontSize: FontSize.xxl, marginBottom: Spacing.sm },
   context: { borderWidth: 1, borderRadius: Radius.xl, padding: Spacing.lg, gap: Spacing.sm },
   contextLabel: { fontSize: FontSize.xs, letterSpacing: 0.8 },
+  identity: { flexDirection: "row", alignItems: "center", gap: Spacing.sm },
   contextTitle: { fontSize: FontSize.lg },
   body: { fontSize: FontSize.sm, lineHeight: 21 },
   meta: { fontSize: FontSize.xs, lineHeight: 18 },

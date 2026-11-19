@@ -16,6 +16,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
 import { FontSize, CompassFonts, Radius, Spacing, useTheme } from '@/theme';
 import { useAuth } from '@/hooks/useAuth';
+import Avatar from '@/components/account/Avatar';
 import { resolveTrackContext, type TrackContext } from '@/lib/trackContext';
 import { SearchOverlay, SearchBar } from '@/components/careerIntelligence';
 import { TOUCH_TARGET_MIN } from '@/components/ui';
@@ -438,6 +439,17 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
             >
               <Feather name={isDark ? 'sun' : 'moon'} size={16} color={colors.textRole.primary} />
             </TouchableOpacity>
+
+            {!isGuest ? (
+              <TouchableOpacity
+                activeOpacity={0.85}
+                onPress={() => router.push('/(tabs)/profile' as any)}
+                accessibilityRole="button"
+                accessibilityLabel="Open your profile"
+              >
+                <Avatar user={user} size={34} />
+              </TouchableOpacity>
+            ) : null}
 
             </> : null}
           </View>

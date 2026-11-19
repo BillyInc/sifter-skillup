@@ -26,7 +26,6 @@ import { recordLearningInterest } from "@/lib/learningInterest";
 import { ADMIN_EXPLORE_BASE, useExploreNav } from "@/lib/exploreNav";
 import { filterUniversityOfferingsBySubjectMatch, type GuidanceRouteContext } from "@/lib/guidanceRouteContext";
 import { provisioningData } from "@/lib/provisioningData";
-import { getStartingPoint } from "@/lib/startingPoint";
 import { useAuth } from "@/hooks/useAuth";
 import { awardLine } from "@/lib/programmeAward";
 import { hasStudentDisplayableProgrammeLearning, programmePreviewExplanation, programmePreviewSections, programmePreviewUnavailableMessage } from "@/lib/programmePreview";
@@ -53,7 +52,6 @@ export interface ProgrammeDetailRefinedScreenProps {
   guidanceEntry?: string;
   viewOnly?: boolean;
   journeyMode?: string;
-  yearOfStudy?: string;
 }
 
 type ProgrammeTab = "overview" | "requirements" | "schools";
@@ -234,10 +232,10 @@ function appendProgrammeChoice(
   };
 }
 
-export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgrammeId, initialSchoolId, userType, guidanceStudentId, guidanceTarget, guidanceEntry, viewOnly, journeyMode, yearOfStudy }: ProgrammeDetailRefinedScreenProps) {
+export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgrammeId, initialSchoolId, userType, guidanceStudentId, guidanceTarget, guidanceEntry, viewOnly, journeyMode }: ProgrammeDetailRefinedScreenProps) {
   const router = useRouter();
   const persistentDock = usePersistentLearningPlanDock();
-  const routeParams = useLocalSearchParams<{ focus?: string | string[]; guidance_target?: string | string[]; guidance_entry?: string | string[]; view_only?: string | string[]; journey_mode?: string | string[]; resume?: string | string[]; user_type?: string | string[]; class_name?: string | string[]; stream?: string | string[]; year_of_study?: string | string[]; olevel_subjects?: string | string[]; subjects?: string | string[]; university_match_ids?: string | string[]; university_match_filter?: string | string[]; subject_match_basis?: string | string[] }>();
+  const routeParams = useLocalSearchParams<{ focus?: string | string[]; guidance_target?: string | string[]; guidance_entry?: string | string[]; view_only?: string | string[]; journey_mode?: string | string[]; resume?: string | string[]; user_type?: string | string[]; class_name?: string | string[]; stream?: string | string[]; olevel_subjects?: string | string[]; subjects?: string | string[]; university_match_ids?: string | string[]; university_match_filter?: string | string[]; subject_match_basis?: string | string[] }>();
   const routeUserType = Array.isArray(routeParams.user_type) ? routeParams.user_type[0] : routeParams.user_type;
   const activeUserType = userType || routeUserType;
   const routeClassName = Array.isArray(routeParams.class_name) ? routeParams.class_name[0] : routeParams.class_name;
@@ -277,8 +275,6 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
   const exploreNav = useExploreNav();
   const { colors } = useTheme();
   const { user } = useAuth();
-  const routeYearOfStudy = yearOfStudy || (Array.isArray(routeParams.year_of_study) ? routeParams.year_of_study[0] : routeParams.year_of_study);
-  const [studentYearOfStudy, setStudentYearOfStudy] = useState<string | null>(routeYearOfStudy?.trim() || null);
   const universitySelectionRoute = universitySelectionAllowed && activeResumeStage === "university_offerings";
   const [tab, setTab] = useState<ProgrammeTab>(universitySelectionRoute ? "schools" : "overview");
   const [state, setState] = useState<DataState<Programme>>(() => pending("Loading programme details..."));
@@ -381,19 +377,6 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
   useEffect(() => loadProgramme(), [loadProgramme]);
 
   const programme = state.data;
-  useEffect(() => {
-    if (!undergraduateContext || guidanceStudentId || routeYearOfStudy?.trim()) return;
-    let active = true;
-    void getStartingPoint(user?.id).then((profile) => {
-      if (!active) return;
-      const profileProgramme = profile?.programmeName?.trim().toLocaleLowerCase();
-      const activeProgramme = programme?.name?.trim().toLocaleLowerCase();
-      setStudentYearOfStudy(profile?.yearOfStudy?.trim() && profileProgramme && activeProgramme && profileProgramme === activeProgramme
-        ? profile.yearOfStudy.trim()
-        : null);
-    });
-    return () => { active = false; };
-  }, [guidanceStudentId, undergraduateContext, programme?.name, routeYearOfStudy, user?.id]);
   const activeProgrammeId = jambProgrammeId || programmeId;
   const programmeName = programme?.studentName
     ?? programme?.studentNames?.[0]
@@ -729,7 +712,6 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
            secondaryUniversityFlow={secondaryUniversityFlow}
            undergraduateContext={undergraduateContext}
            subjectMatchScopeApplied={subjectMatchScopeApplied}
-          studentYearOfStudy={studentYearOfStudy}
            universitySelectionAllowed={universitySelectionAllowed}
           notice={notice}
           savingSchool={savingSchool}
@@ -867,7 +849,6 @@ export function ProgrammeDetailBody({
   secondaryUniversityFlow,
   undergraduateContext,
   subjectMatchScopeApplied,
-  studentYearOfStudy,
   universitySelectionAllowed,
   notice,
   savingSchool,
@@ -908,7 +889,6 @@ export function ProgrammeDetailBody({
   secondaryUniversityFlow: boolean;
   undergraduateContext: boolean;
   subjectMatchScopeApplied: boolean;
-  studentYearOfStudy: string | null;
   universitySelectionAllowed: boolean;
   notice: string | null;
   savingSchool: string | null;
@@ -989,7 +969,6 @@ export function ProgrammeDetailBody({
                 : earlySecondary
                   ? <Text style={[styles.body, { color: colors.textRole.secondary }]}>Start by understanding what this programme covers. When you are ready, choose a university to see its requirements.</Text>
                   : <Text style={[styles.body, { color: colors.textRole.secondary }]}>This is the programme identity. Choose a university to see this programme at that university, what you will study, and its requirements.</Text>}
-              {undergraduateContext && studentYearOfStudy ? <Text style={[styles.meta, { color: colors.textRole.muted }]}>Year of study: {studentYearOfStudy}</Text> : null}
             </View>
           ) : null}
           {selectedSchool ? (

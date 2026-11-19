@@ -1072,7 +1072,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   eyebrow: {
-    fontSize: FontSize.xs,
+    fontSize: FontSize.sm,
     ...CompassFonts.bodySemibold,
     letterSpacing: 0.9,
     marginTop: Spacing.sm,
@@ -1099,7 +1099,7 @@ const styles = StyleSheet.create({
     lineHeight: FontSize.sm * 1.4,
   },
   stateLine: {
-    fontSize: FontSize.xs,
+    fontSize: FontSize.md,
     ...CompassFonts.bodySemibold,
     marginTop: -Spacing.xs,
   },
@@ -1119,8 +1119,8 @@ const styles = StyleSheet.create({
     ...CompassFonts.bodySemibold,
   },
   schoolMatcherBody: {
-    fontSize: FontSize.xs,
-    lineHeight: FontSize.xs * 1.5,
+    fontSize: FontSize.md,
+    lineHeight: FontSize.md * 1.5,
   },
 
   // ── Idle ─────────────────────────────────────────────────────
@@ -1149,8 +1149,8 @@ const styles = StyleSheet.create({
     ...CompassFonts.bodySemibold,
   },
   adminActionBody: {
-    fontSize: FontSize.xs,
-    lineHeight: FontSize.xs * 1.5,
+    fontSize: FontSize.md,
+    lineHeight: FontSize.md * 1.5,
   },
 
   // Cluster carousel
@@ -1222,8 +1222,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   clusterCardDescription: {
-    fontSize: FontSize.xs,
-    lineHeight: FontSize.xs * 1.45,
+    fontSize: FontSize.md,
+    lineHeight: FontSize.md * 1.45,
     textAlign: "center",
   },
   seeAllLink: {
@@ -1263,8 +1263,8 @@ const styles = StyleSheet.create({
     gap: 3,
   },
   unifiedPathwayBody: {
-    fontSize: FontSize.xs,
-    lineHeight: FontSize.xs * 1.45,
+    fontSize: FontSize.md,
+    lineHeight: FontSize.md * 1.45,
   },
 
   // Admission card
@@ -1289,7 +1289,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   admissionEyebrow: {
-    fontSize: FontSize.xs,
+    fontSize: FontSize.sm,
     ...CompassFonts.bodySemibold,
     letterSpacing: 0.8,
   },
@@ -1320,7 +1320,7 @@ const styles = StyleSheet.create({
     lineHeight: 30,
   },
   admissionNumeralUnit: {
-    fontSize: 9,
+    fontSize: FontSize.sm,
     ...CompassFonts.bodySemibold,
     letterSpacing: 0.5,
     marginTop: 1,
@@ -1358,12 +1358,12 @@ const styles = StyleSheet.create({
     lineHeight: FontSize.sm * 1.3,
   },
   guestActionBody: {
-    fontSize: FontSize.xs,
-    lineHeight: FontSize.xs * 1.45,
+    fontSize: FontSize.md,
+    lineHeight: FontSize.md * 1.45,
     flex: 1,
   },
   guestActionLink: {
-    fontSize: FontSize.xs,
+    fontSize: FontSize.sm,
     ...CompassFonts.bodySemibold,
   },
 
@@ -1381,7 +1381,7 @@ const styles = StyleSheet.create({
     ...CompassFonts.bodySemibold,
   },
   eliteSub: {
-    fontSize: FontSize.xs,
+    fontSize: FontSize.md,
     marginTop: 2,
   },
 
@@ -1415,8 +1415,8 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   note: {
-    fontSize: FontSize.xs,
-    lineHeight: FontSize.xs * 1.6,
+    fontSize: FontSize.md,
+    lineHeight: FontSize.md * 1.6,
     marginTop: Spacing.md,
   },
 
@@ -1437,7 +1437,7 @@ const styles = StyleSheet.create({
   },
   compareText: { fontSize: FontSize.sm, ...CompassFonts.bodySemibold },
   rowTitle: { fontSize: FontSize.md, ...CompassFonts.bodySemibold },
-  rowMeta: { fontSize: FontSize.xs, marginTop: 2 },
+  rowMeta: { fontSize: FontSize.sm, marginTop: 2 },
   roleHead: {
     flexDirection: "row",
     alignItems: "center",
@@ -1463,7 +1463,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     maxWidth: "100%",
   },
-  chipText: { fontSize: FontSize.xs, ...CompassFonts.bodySemibold },
+  chipText: { fontSize: FontSize.sm, ...CompassFonts.bodySemibold },
 
   // Guest / data-limited
   guestPanel: {
@@ -1488,8 +1488,8 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
   },
   dataNoticeText: {
-    fontSize: FontSize.xs,
+    fontSize: FontSize.md,
     ...CompassFonts.bodySemibold,
-    lineHeight: FontSize.xs * 1.5,
+    lineHeight: FontSize.md * 1.5,
   },
 });
