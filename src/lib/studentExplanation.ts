@@ -445,6 +445,15 @@ export function explainTechnicalTerms(value: string, previouslyExplained?: Set<s
     if (!match || match.index === undefined) return [];
     const termKey = pattern.source.toLocaleLowerCase();
     const after = value.slice(match.index + match[0].length);
+    // Never gloss inside text that is already a parenthetical definition:
+    // running this twice over the same copy would otherwise nest a definition
+    // inside a definition.
+    const openBefore = (value.slice(0, match.index).match(/\(/g) ?? []).length;
+    const closedBefore = (value.slice(0, match.index).match(/\)/g) ?? []).length;
+    if (openBefore > closedBefore) return [];
+    // A term inside a hyphenated compound ("causal-estimation") is one word for
+    // the reader: inserting a definition would split it mid-word.
+    if (/^-\p{L}/u.test(after)) return [];
     if (/^\s*\(/.test(after)
       || /^\s+\S+\s*,\s*which\b/i.test(after)
       || /^\s+(?:is|are|means|refers to)\s+(?:a|an|the)?\s*(?:record|set|collection|field|process|planned way|measure|form|system|software|information|range|method|study|computer-run|defined steps)\b/i.test(after)) {

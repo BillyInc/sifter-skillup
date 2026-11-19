@@ -101,6 +101,14 @@ function renderBody(props: any) {
   return render(<ThemeProvider><ProgrammeDetailBody {...props} /></ThemeProvider>);
 }
 
+// The programme tray starts collapsed to its icon dock (programmeTrayMode
+// "icon"); a learner opens it by pressing the dock, as these tests do.
+function openLearningPlanTray() {
+  expect(screen.queryByTestId("guided-learning-tray")).toBeNull();
+  fireEvent.press(screen.getByRole("button", { name: /^Open learning plan tray/ }));
+  expect(screen.getByTestId("guided-learning-tray")).toBeTruthy();
+}
+
 describe("programme preview and university downstream", () => {
   beforeEach(() => mockExploreNav.domain.mockReset());
 
@@ -133,7 +141,7 @@ describe("programme preview and university downstream", () => {
       selectedSchool: null,
     });
 
-    expect(screen.getByTestId("guided-learning-tray")).toBeTruthy();
+    openLearningPlanTray();
     expect(screen.getByText(/Programme: Sociology/)).toBeTruthy();
     expect(screen.queryByText(/Institution:/)).toBeNull();
   });
@@ -156,7 +164,7 @@ describe("programme preview and university downstream", () => {
       trayInstitution: selectedSchool,
     });
 
-    expect(screen.getByTestId("guided-learning-tray")).toBeTruthy();
+    openLearningPlanTray();
     expect(screen.getByText(/Programme: Sociology/)).toBeTruthy();
     expect(screen.getByText(/Institution: University of Lagos/)).toBeTruthy();
   });
@@ -172,7 +180,7 @@ describe("programme preview and university downstream", () => {
     };
     renderBody({ ...baseProps, selectedSchool, selectedSchoolId: "unilag" });
 
-    expect(screen.getByTestId("guided-learning-tray")).toBeTruthy();
+    openLearningPlanTray();
     expect(screen.getByText(/Programme: Sociology/)).toBeTruthy();
     expect(screen.getByText(/Institution: University of Lagos/)).toBeTruthy();
   });
