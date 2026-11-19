@@ -511,7 +511,7 @@ describe("D078 method-aware route projection", () => {
               && Boolean(String(reference.url ?? "").trim() || String(reference.locator ?? "").trim()));
         })) {
           const target = graph.nodes_by_id[edge.targetId];
-          const required = target.required_selected_domain_item_ids ?? [];
+          const required = (target.required_selected_domain_item_ids ?? []) as string[];
           if (required.every((id: string) => selection.addedItemIds.includes(id))) {
             expect(projection.areaItemIdsByArea[route.area_id] ?? []).toContain(edge.targetId);
           }
@@ -573,7 +573,7 @@ describe("D078 method-aware route projection", () => {
           graph.nodes_by_id[id]?.student_visible === true
           && graph.nodes_by_id[id]?.student_selectable !== false
           && graph.nodes_by_id[id]?.approval !== "unapproved"
-          && (graph.nodes_by_id[id]?.required_selected_domain_item_ids ?? [])
+          && ((graph.nodes_by_id[id]?.required_selected_domain_item_ids ?? []) as string[])
             .every((requiredId: string) => methodSelection.addedItemIds.includes(requiredId));
         const expectedTaskFamilies = (route.task_family_ids ?? []).filter((familyId) =>
           isAvailableForSelection(familyId),
@@ -1019,7 +1019,7 @@ describe("D078 method-aware route projection", () => {
     const verifyRouteContext = (selection: typeof INITIAL_D078_SELECTION, areaId: string, familyIds: string[], roleIds: string[]) => {
       const projection = projectD078Route(selectD078Area(selection, areaId));
       const eligibleFamilyIds = familyIds.filter((familyId) =>
-        (graph.nodes_by_id[familyId]?.required_selected_domain_item_ids ?? [])
+        ((graph.nodes_by_id[familyId]?.required_selected_domain_item_ids ?? []) as string[])
           .every((requiredId: string) => selection.addedItemIds.includes(requiredId)),
       );
       for (const familyId of eligibleFamilyIds) {

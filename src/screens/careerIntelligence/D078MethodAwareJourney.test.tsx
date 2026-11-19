@@ -650,7 +650,7 @@ describe("D078 method-aware journey UI acceptance", () => {
     const scenarioMethodId = "domain-item:d078-scenario-analysis";
     const selectedLayerItems = graph.domain_learning_layers
       .filter((layer) => layer.layer === 2 || layer.layer === 3)
-      .flatMap((layer) => layer.item_ids.filter((id) => layer.route_applicability_by_item?.[id]?.includes(scenarioMethodId)));
+      .flatMap((layer) => (layer.item_ids ?? []).filter((id) => layer.route_applicability_by_item?.[id]?.includes(scenarioMethodId)));
 
     expect(selectedLayerItems).toHaveLength(9);
     expect(new Set(selectedLayerItems).size).toBe(9);
@@ -1224,7 +1224,7 @@ describe("D078 method-aware journey UI acceptance", () => {
     const roleTaskIds = new Set(projectD078Route(selection).visibleRoles
       .find((entry) => entry.roleId === role!.roleId && entry.areaId === role!.areaId)?.taskContexts.map((context) => context.taskId) ?? []);
     const roleTools = d078GraphDataForTests().role_tool_routes.filter((route) =>
-      route.role_id === role!.roleId && route.area_ids.includes(role!.areaId) && roleTaskIds.has(route.task_node_id),
+      route.role_id === role!.roleId && route.area_ids.includes(role!.areaId as string) && roleTaskIds.has(route.task_node_id as string),
     );
     expect(roleTools.length).toBeGreaterThan(0);
     expect(screen.getAllByText(/Optional tools for this task/).length).toBeGreaterThan(0);
@@ -1246,7 +1246,7 @@ describe("D078 method-aware journey UI acceptance", () => {
       const label = d078Node(route.tool_node_id)?.label;
       if (label) expect(screen.getByRole("button", { name: `Add ${label} to your learning` })).toBeTruthy();
     });
-    const roleTaskLabel = d078Node(visibleRoleTool.task_node_id)?.label;
+    const roleTaskLabel = d078Node(visibleRoleTool.task_node_id as string)?.label;
     if (roleTaskLabel) expect(screen.getAllByText(roleTaskLabel).length).toBeGreaterThan(0);
     expect(screen.queryByText("This role is not in your selected route")).toBeNull();
     unmount();
