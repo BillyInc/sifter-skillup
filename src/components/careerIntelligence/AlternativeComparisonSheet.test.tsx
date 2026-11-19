@@ -90,8 +90,9 @@ describe("AlternativeComparisonSheet", () => {
 
     expect(screen.getByText(/How it is used: Use it when a question needs comparable answers/)).toBeTruthy();
     expect(screen.getByText(/Example of the work: Draft and test a short questionnaire/)).toBeTruthy();
-    expect(screen.getByText(/A tested questionnaire and a note on who its answers represent/)).toBeTruthy();
-    expect(screen.getByText(/What to keep in mind: A survey does not explain causes by itself/)).toBeTruthy();
+    // Body copy carries first-use glossary definitions in parentheses after technical terms.
+    expect(screen.getByText(/^A tested questionnaire \(.*\) and a note on who its answers represent\./)).toBeTruthy();
+    expect(screen.getByText(/What to keep in mind: A survey \(.*\) does not explain causes by itself/)).toBeTruthy();
     expect(screen.queryByText(/Task:|Output:|Guardrail:/)).toBeNull();
   });
 
@@ -114,15 +115,15 @@ describe("AlternativeComparisonSheet", () => {
     expect(screen.getByText("Limits")).toBeTruthy();
     expect(screen.getByText("Evidence context")).toBeTruthy();
     expect(screen.getByText("Source coverage")).toBeTruthy();
-    expect(screen.getByText(/The evidence is international/)).toBeTruthy();
-    expect(screen.getByText(/The evidence includes a Nigerian connection/)).toBeTruthy();
+    expect(screen.getByText(/^The evidence \(.*\) is international\. Apply it in Nigeria/)).toBeTruthy();
+    expect(screen.getByText(/^The evidence \(.*\) includes a Nigerian connection/)).toBeTruthy();
     expect(screen.getByText("Learning destination")).toBeTruthy();
     expect(screen.getByText("Why it fits this route")).toBeTruthy();
     expect(screen.getAllByText(/suits this selected analysis route/)).toHaveLength(2);
     expect(screen.getByText(/This guide teaches the Python workflow described for this route/)).toBeTruthy();
-    expect(screen.getByText(/The research design identifies what the analysis should answer/)).toBeTruthy();
+    expect(screen.getByText(/The research design \(.*\) identifies what the analysis should answer/)).toBeTruthy();
     expect(screen.getByText(/Visual summaries can help communicate the patterns found/)).toBeTruthy();
-    expect(screen.getByText("How it is used: Analyse and document social research data in a reproducible workflow.")).toBeTruthy();
+    expect(screen.getByText(/^How it is used: Analyse and document social research \(.*\) data \(.*\) in a reproducible workflow\./)).toBeTruthy();
     expect(screen.getByText("R produces a reproducible analysis summary.")).toBeTruthy();
     expect(screen.getByText("Currently selected")).toBeTruthy();
     expect(onSelect).not.toHaveBeenCalled();
