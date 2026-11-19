@@ -12,6 +12,7 @@ import { Radius, Shadow, Spacing, FontSize, FontWeight, useTheme, CompassFonts, 
 import { requestPushPermission, scheduleDailyReminder } from '@/lib/notificationEngine';
 import { enqueueWrite } from '@/lib/offlineStorage';
 import { useAuth } from '@/hooks/useAuth';
+import { getGreetingName } from '@/lib/displayName';
 import DisclaimerFooter from '@/components/DisclaimerFooter';
 import { resolveTrackContext } from '@/lib/trackContext';
 
@@ -62,7 +63,7 @@ export default function NotificationSettingsScreen() {
         await scheduleDailyReminder({
           userId: user.id,
           trackId: user.current_track_id ?? 'default',
-          userName: user.username ?? 'there',
+          userName: getGreetingName(user) ?? 'there',
           progress: 0,
           streak: user.streak ?? 0,
           hourLocal,

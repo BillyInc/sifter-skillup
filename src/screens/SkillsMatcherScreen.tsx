@@ -3,9 +3,10 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { SkillDiscoveryPanel } from "@/components/careerIntelligence/SkillDiscoveryPanel";
 import { useTheme, CompassFonts, FontSize, Spacing } from "@/theme";
 
@@ -39,10 +40,11 @@ function resolveMatcherAdminType(value: string | null): SkillsMatcherAdminType {
   }
 }
 
-export default function SkillsMatcherScreen() {
+export default function SkillsMatcherScreen({ studentView = false }: { studentView?: boolean } = {}) {
   const { colors } = useTheme();
+  const router = useRouter();
   const params = useLocalSearchParams<{ admin_type?: string | string[] }>();
-  const requestedAdminType = readParam(params.admin_type);
+  const requestedAdminType = studentView ? null : readParam(params.admin_type);
   const adminType = resolveMatcherAdminType(requestedAdminType);
   const universityAdminView = requestedAdminType === "university";
 
@@ -54,9 +56,19 @@ export default function SkillsMatcherScreen() {
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.intro}>
+        {studentView ? (
+          <TouchableOpacity
+            accessibilityRole="button"
+            accessibilityLabel="Back to Explore"
+            onPress={() => (router.canGoBack() ? router.back() : router.replace("/(tabs)/explore" as never))}
+            style={styles.back}
+          >
+            <Text style={[styles.backText, { color: colors.accentRole.action }]}>← Back to Explore</Text>
+          </TouchableOpacity>
+        ) : null}
         <Text style={[styles.eyebrow, { color: colors.accentRole.action }]}>SKILLS EXPLORER</Text>
         <Text style={[CompassFonts.displaySemi, styles.title, { color: colors.textRole.primary }]}>Skills Matcher</Text>
-        <Text style={[styles.description, { color: colors.textRole.secondary }]}>Search a skill you have or want to learn, then follow the possible domains, subgroups and roles alongside what you would need to build next.</Text>
+        <Text style={[styles.description, { color: colors.textRole.secondary }]}>Add skills you have, or switch to skills you want to learn, to see domains, subgroups and roles they could connect to and what may be useful to build next. These are guidance connections, not a promise of a job or income.</Text>
         {universityAdminView ? (
           <View style={[styles.scopeNote, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
             <Text style={[styles.scopeTitle, { color: colors.textRole.primary }]}>University admin view</Text>
@@ -85,6 +97,15 @@ const styles = StyleSheet.create({
   },
   intro: {
     gap: Spacing.sm,
+  },
+  back: {
+    alignSelf: "flex-start",
+    minHeight: 44,
+    justifyContent: "center",
+  },
+  backText: {
+    fontSize: FontSize.sm,
+    fontWeight: "800",
   },
   eyebrow: {
     fontSize: FontSize.xs,

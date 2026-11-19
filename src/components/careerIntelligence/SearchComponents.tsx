@@ -25,6 +25,8 @@ import {
   hScroll,
 } from "../../theme";
 import { SearchBar } from "./RedesignPrimitives";
+import { SaveButton } from "./SaveButton";
+import { savedEntityTypeForResult } from "../../lib/searchResultSave";
 import type { SearchIntent, SearchResult, SearchResultType, SearchScope } from "../../types/career";
 
 // ── ScopeChip ─────────────────────────────────────────────────
@@ -125,13 +127,17 @@ export function SearchResultRow({
   query,
   onPress,
   style,
+  showSave = false,
 }: {
   result: SearchResult;
   query?: string;
   onPress?: (result: SearchResult) => void;
   style?: StyleProp<ViewStyle>;
+  /** Quick-save from the row, for result types the saved_items API supports. */
+  showSave?: boolean;
 }) {
   const { colors } = useTheme();
+  const saveType = showSave && !result.locked && !result.disabled ? savedEntityTypeForResult(result.type) : null;
   const disabled = result.disabled || result.locked || !onPress;
   const iconName = (result.icon ?? defaultIcon(result.type)) as keyof typeof Feather.glyphMap;
 
@@ -212,6 +218,9 @@ export function SearchResultRow({
           ) : null}
         </View>
       </View>
+      {saveType ? (
+        <SaveButton entityType={saveType} entityId={result.id} label={result.title} compact />
+      ) : null}
       {result.locked ? (
         <Feather name="lock" size={14} color={colors.state.locked} />
       ) : onPress ? (
@@ -248,9 +257,11 @@ export function SearchResultsGroup({
   onMorePress,
   maxRows,
   style,
+  showSave,
 }: {
   label: string;
   results: SearchResult[];
+  showSave?: boolean;
   query?: string;
   onResultPress?: (result: SearchResult) => void;
   onOpenExplore?: (query: string, scope: SearchScope) => void;
@@ -280,6 +291,7 @@ export function SearchResultsGroup({
           result={result}
           query={query}
           onPress={onResultPress}
+          showSave={showSave}
         />
       ))}
       {remaining > 0 ? (

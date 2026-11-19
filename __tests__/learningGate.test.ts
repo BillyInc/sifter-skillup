@@ -12,6 +12,12 @@ describe("learning route gate", () => {
     expect(isLegacyLearningPath("/myworld")).toBe(false);
   });
 
+  it("keeps the student Skills Matcher route outside the gated legacy prefixes", () => {
+    expect(isLegacyLearningPath("/(tabs)/skills")).toBe(true);
+    expect(isLegacyLearningPath("/(tabs)/explore/skills-matcher")).toBe(false);
+    expect(isLegacyLearningPath("/explore/skills-matcher")).toBe(false);
+  });
+
   it("marks learning links opened from My World", () => {
     expect(withMyWorldLearningGate("/(tabs)/map")).toBe("/(tabs)/map?from=myworld");
     expect(withMyWorldLearningGate("/skills/quant-map?trackId=quant")).toBe(

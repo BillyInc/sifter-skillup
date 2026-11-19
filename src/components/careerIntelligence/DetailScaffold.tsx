@@ -16,7 +16,8 @@ import {
   type NativeScrollEvent,
   useWindowDimensions,
 } from "react-native";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, usePathname, useRouter } from "expo-router";
+import { parentRouteFor } from "../../lib/backFallback";
 import { Feather } from "@expo/vector-icons";
 import {
   useTheme,
@@ -171,6 +172,8 @@ export function DetailScaffold<T>({
     scrollOffsetRef.current = event.nativeEvent.contentOffset.y;
     onScroll?.(event);
   };
+  const pathname = usePathname();
+  const routeParams = useLocalSearchParams<{ domain_id?: string | string[] }>();
   const goBack = () => {
     if (onBack) {
       onBack();
@@ -181,7 +184,12 @@ export function DetailScaffold<T>({
     if (canGoBack) {
       router.back();
     } else {
-      router.replace("/(tabs)/explore" as never);
+      // No history (deep link / refreshed tab): go to this route's parent, not
+      // always the Explore root.
+      const domainParam = routeParams?.domain_id;
+      router.replace(parentRouteFor(pathname ?? "", {
+        domainId: Array.isArray(domainParam) ? domainParam[0] : domainParam,
+      }) as never);
     }
   };
 

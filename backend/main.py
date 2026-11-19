@@ -1063,6 +1063,9 @@ async def delete_me(
         }).eq("user_id", current_user["id"]).execute()
     except Exception as exc:
         log.warning("Active session revocation skipped during deletion", error=str(exc))
+    # My World collections are purged immediately (best effort, never fails deletion).
+    from routes.collections_routes import purge_user_collections
+    purge_user_collections(current_user["id"])
     return ResponseModel(data={"deleted": True, "available_at": available_at})
 
 
@@ -1242,6 +1245,9 @@ app.include_router(users_extra_router)
 from routes.career_routes import router as career_router
 app.include_router(career_router)
 
+from routes.collections_routes import router as collections_router
+app.include_router(collections_router)
+
 from routes.institutions_routes import router as institutions_router
 app.include_router(institutions_router)
 
@@ -1253,6 +1259,9 @@ app.include_router(admission_router)
 
 from routes.student_pipeline_routes import router as student_pipeline_router
 app.include_router(student_pipeline_router)
+
+from routes.student_subject_grades_routes import router as student_subject_grades_router
+app.include_router(student_subject_grades_router)
 
 from routes.entrepreneurship_routes import router as entrepreneurship_router
 app.include_router(entrepreneurship_router)

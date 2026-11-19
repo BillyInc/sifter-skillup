@@ -33,6 +33,13 @@ export interface MappingFeedbackButtonProps {
   /** Optional compact variant for inline use. */
   compact?: boolean;
   onSubmitted?: () => void;
+  /** Student-facing wording. Defaults keep the original expert labels. */
+  label?: string;
+  title?: string;
+  /** Restrict the offered feedback types (e.g. students only flag or suggest). */
+  allowedTypes?: FeedbackType[];
+  optionLabels?: Partial<Record<FeedbackType, string>>;
+  placeholder?: string;
 }
 
 const FEEDBACK_OPTIONS: { value: FeedbackType; label: string; icon: string }[] = [
@@ -49,7 +56,15 @@ export function MappingFeedbackButton({
   targetLabel,
   compact,
   onSubmitted,
+  label,
+  title,
+  allowedTypes,
+  optionLabels,
+  placeholder,
 }: MappingFeedbackButtonProps) {
+  const options = FEEDBACK_OPTIONS
+    .filter((opt) => !allowedTypes || allowedTypes.includes(opt.value))
+    .map((opt) => ({ ...opt, label: optionLabels?.[opt.value] ?? opt.label }));
   const { colors } = useTheme();
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedType, setSelectedType] = useState<FeedbackType | null>(null);
@@ -89,6 +104,8 @@ export function MappingFeedbackButton({
     <>
       <TouchableOpacity
         onPress={() => setModalVisible(true)}
+        accessibilityRole="button"
+        accessibilityLabel={label ?? "Submit mapping feedback"}
         activeOpacity={0.8}
         style={[
           compact ? styles.compactBtn : styles.btn,
@@ -104,7 +121,7 @@ export function MappingFeedbackButton({
             { color: "#fff" },
           ]}
         >
-          {compact ? "Feedback" : "Submit mapping feedback"}
+          {label ?? (compact ? "Feedback" : "Submit mapping feedback")}
         </Text>
       </TouchableOpacity>
 
@@ -125,7 +142,7 @@ export function MappingFeedbackButton({
             ]}
           >
             <Text style={[styles.modalTitle, { color: colors.text }]}>
-              Mapping feedback
+              {title ?? "Mapping feedback"}
             </Text>
             <Text style={[styles.modalSubtitle, { color: colors.textSoft }]}>
               {sourceLabel} → {targetLabel}
@@ -135,7 +152,7 @@ export function MappingFeedbackButton({
               What kind of feedback is this?
             </Text>
             <View style={styles.options}>
-              {FEEDBACK_OPTIONS.map((opt) => (
+              {options.map((opt) => (
                 <TouchableOpacity
                   key={opt.value}
                   onPress={() => setSelectedType(opt.value)}
@@ -172,7 +189,7 @@ export function MappingFeedbackButton({
             <TextInput
               value={notes}
               onChangeText={setNotes}
-              placeholder="Add any notes about this mapping…"
+              placeholder={placeholder ?? "Add any notes about this mapping…"}
               placeholderTextColor={colors.textMuted}
               multiline
               style={[

@@ -7,6 +7,8 @@ import { useResponsive } from "@/hooks/useResponsive";
 import { useAuth } from "@/hooks/useAuth";
 import { API } from "@/lib/api";
 import { saveStartingPoint } from "@/lib/startingPoint";
+import { careerData } from "@/lib/careerData";
+import { pruneGrades } from "@/lib/olevelGrades";
 import {
   clearOnboardingDraft,
   getOnboardingDraft,
@@ -261,6 +263,16 @@ export default function OnboardingFlow({
     };
     try {
       await saveStartingPoint(full, user?.id);
+      // Optional self-reported O-level grades go to the versioned grade store
+      // (a new version; earlier versions are kept). Best effort: never blocks.
+      const gradeSubjects = full.olevelSubjects ?? [];
+      const grades = pruneGrades(full.olevelGrades, gradeSubjects);
+      if (
+        (full.userType === "jamb" || full.userType === "ss3_secondary") &&
+        Object.keys(grades).length
+      ) {
+        careerData.saveSubjectGrades(full.olevelExamBody ?? "waec", grades).catch(() => {});
+      }
       // Initial guidance setup is complete once this form is saved. The
       // programme/university decision may continue in Discovery and must not
       // keep the account trapped behind the onboarding guard.

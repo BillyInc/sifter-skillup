@@ -47,6 +47,7 @@ import {
   saveAdminTask,
 } from "@/lib/adminResume";
 import { useAuth } from "@/hooks/useAuth";
+import { learnerStageLabel } from "@/lib/adminLearnerAudience";
 import { provisioningDraftsNeedTicks, provisioningModeFor, selectedProvisioningDraftIds } from "@/lib/provisioningFlow";
 import {
   provisioningData,
@@ -77,8 +78,11 @@ const SECONDARY_STAGES: { value: ProvisioningStudentType; label: string }[] = [
   { value: "ss3", label: "SS3" },
 ];
 
+// Tutorial centres and JAMB cafes start learners at O-level or UTME. O-level
+// uses the existing "ss3" starting point; UTME is the existing "jamb" one.
 const JAMB_STAGES: { value: ProvisioningStudentType; label: string }[] = [
-  { value: "jamb", label: "JAMB" },
+  { value: "ss3", label: "O-level" },
+  { value: "jamb", label: "UTME (JAMB)" },
 ];
 
 function streamLabel(stream?: ProvisioningStream | null) {
@@ -204,7 +208,7 @@ export function StudentProvisioningScreen({
             </TouchableOpacity>
           ))}
         </View>
-        {tab === "roster" ? <RosterTab /> : <AddStudentsTab initialMode={effectiveMode} organizationId={organizationId} organizationContextReady={organizationContextReady} />}
+        {tab === "roster" ? <RosterTab organizationType={organizationType} /> : <AddStudentsTab initialMode={effectiveMode} organizationId={organizationId} organizationContextReady={organizationContextReady} />}
         </> : null}
       </View>
     </AdminShell>
@@ -217,9 +221,13 @@ export default StudentProvisioningScreen;
 // Roster tab
 // ─────────────────────────────────────────────────────────────
 
-function RosterTab() {
+function RosterTab({ organizationType }: { organizationType?: string | null }) {
   const { colors } = useTheme();
   const router = useRouter();
+  const providerOrg = organizationType === "tutorial_centre" || organizationType === "jamb_cafe";
+  // Tutorial centres have no class: show their O-level / UTME starting point.
+  const stageText = (s: { studentClass?: string | null; studentType?: string | null }) =>
+    s.studentClass || (providerOrg && s.studentType ? learnerStageLabel(s.studentType, organizationType) : null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<RosterSummary | null>(null);
@@ -445,9 +453,9 @@ function RosterTab() {
                 <Text style={[styles.rosterName, CompassFonts.bodyBold, { color: colors.text }]}>
                   {s.fullName || "Unnamed student"}
                 </Text>
-                {!![s.studentClass, s.stream ? `${streamLabel(s.stream)} stream` : null].filter(Boolean).length && (
+                {!![stageText(s), s.stream ? `${streamLabel(s.stream)} stream` : null].filter(Boolean).length && (
                   <Text style={[styles.rosterMeta, { color: colors.textMuted }]}>
-                    {[s.studentClass, s.stream ? `${streamLabel(s.stream)} stream` : null].filter(Boolean).join(" · ")}
+                    {[stageText(s), s.stream ? `${streamLabel(s.stream)} stream` : null].filter(Boolean).join(" · ")}
                   </Text>
                 )}
               </View>
@@ -1051,7 +1059,7 @@ function AddStudentsTab({ initialMode = "school", organizationId, organizationCo
             Correct any unclear names, tick the students you want to create
             accounts for, then create. Ticked rows with a name become accounts.
           </Text>
-           <Text style={[styles.cardHint, { color: colors.textMuted }]}>{showStream ? "Choose the class and stream separately for each student below." : "JAMB accounts use the JAMB student type and do not have a secondary-school stream."}</Text>
+           <Text style={[styles.cardHint, { color: colors.textMuted }]}>{showStream ? "Choose the class and stream separately for each student below." : "Choose O-level or UTME separately for each student. These accounts do not have a secondary-school stream."}</Text>
 
           {drafts.map((d) => (
             <View
@@ -1088,17 +1096,17 @@ function AddStudentsTab({ initialMode = "school", organizationId, organizationCo
                   />
                   {d.fullName ? <TouchableOpacity onPress={() => { patchDraft(d.id, { fullName: "" }); void commitDraft({ ...d, fullName: "" }); }} style={styles.clearButton}><Text style={[styles.clearButtonText, { color: colors.textMuted }]}>Clear</Text></TouchableOpacity> : null}
                 </View>
-                {showStream ? <StagePicker
-                  label="Class"
+                <StagePicker
+                  label={showStream ? "Class" : "Starting point"}
                   value={d.studentType ?? defaultStudentType}
                   options={stageOptions}
                   onChange={(studentType) => {
-                    const studentClass = studentType.toUpperCase();
+                    const studentClass = showStream ? studentType.toUpperCase() : undefined;
                     const updated = { ...d, studentType, studentClass };
                     patchDraft(d.id, { studentType, studentClass });
                     commitDraft(updated);
                   }}
-                /> : null}
+                />
                 {showStream ? <StreamPicker
                   label="Stream"
                   compact
@@ -1400,7 +1408,7 @@ function StagePicker({
           {label}
         </Text>
       ) : null}
-      {!value ? <Text style={[styles.cardHint, { color: colors.textMuted }]}>Choose a class</Text> : null}
+      {!value ? <Text style={[styles.cardHint, { color: colors.textMuted }]}>Choose a starting point</Text> : null}
       <View style={styles.streamPills}>
         {options.map((option) => {
           const active = option.value === value;

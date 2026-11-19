@@ -20,6 +20,7 @@ import {
   TextTabs,
   invalidateGuidancePathCache,
   ExternalLinkGuard,
+  ProgrammeTrustPanel,
 } from "@/components/careerIntelligence";
 import { careerData, type GuidanceReportPath, type JambProgrammeRequirements, type JambProgrammeSchool } from "@/lib/careerData";
 import { recordLearningInterest } from "@/lib/learningInterest";
@@ -27,6 +28,7 @@ import { ADMIN_EXPLORE_BASE, useExploreNav } from "@/lib/exploreNav";
 import { filterUniversityOfferingsBySubjectMatch, type GuidanceRouteContext } from "@/lib/guidanceRouteContext";
 import { provisioningData } from "@/lib/provisioningData";
 import { useAuth } from "@/hooks/useAuth";
+import { programmeTrust } from "@/lib/programmeTrust";
 import { awardLine } from "@/lib/programmeAward";
 import { hasStudentDisplayableProgrammeLearning, programmePreviewExplanation, programmePreviewSections, programmePreviewUnavailableMessage } from "@/lib/programmePreview";
 import { programmeCurriculumForDisplay, programmeDomainsForDisplay } from "@/lib/sociologyCurriculumPreview";
@@ -1134,7 +1136,13 @@ export function ProgrammeDetailBody({
                   <Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayRequirement(card.field, card.value)}</Text>
                 </View>
               ))}
-              <DataSourceBadge verification="inferred" source="JAMB brochure" style={{ alignSelf: "flex-start" }} />
+              <ProgrammeTrustPanel
+                trust={programmeTrust(requirements, selectedSchool)}
+                programmeId={String(selectedSchool.jambProgrammeId ?? data.id)}
+                programmeLabel={data.name}
+                schoolId={selectedSchool.schoolId}
+                schoolLabel={institutionLabel(selectedSchool)}
+              />
               {selectedSchool.universityStructuredSubjectRules?.length ? (
                 <View style={[styles.requirement, { borderColor: colors.borderRole.subtle }]}>
                   <Text style={[styles.label, { color: colors.textRole.primary }]}>Structured university subject rules</Text>

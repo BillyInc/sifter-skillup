@@ -58,8 +58,8 @@ DELETE FROM skillup_dev.learning_interest_active_selections a
 WHERE NOT EXISTS (
     SELECT 1 FROM skillup_dev.users u
     WHERE u.id = a.user_id
-      AND u.settings #>> '{legalAcceptance,termsVersion}' = '2026-10-28.1'
-      AND u.settings #>> '{legalAcceptance,privacyVersion}' = '2026-10-28.1'
+      AND u.settings #>> '{legalAcceptance,termsVersion}' = '2026-10-29.1'
+      AND u.settings #>> '{legalAcceptance,privacyVersion}' = '2026-10-29.1'
       AND u.settings #>> '{legalAcceptance,analyticsConsent}' = 'true'
       AND COALESCE(u.is_deleted, FALSE) = FALSE
 );
@@ -158,13 +158,13 @@ DECLARE
     new_current_consent BOOLEAN;
 BEGIN
     old_current_consent := COALESCE((
-        OLD.settings #>> '{legalAcceptance,termsVersion}' = '2026-10-28.1'
-        AND OLD.settings #>> '{legalAcceptance,privacyVersion}' = '2026-10-28.1'
+        OLD.settings #>> '{legalAcceptance,termsVersion}' = '2026-10-29.1'
+        AND OLD.settings #>> '{legalAcceptance,privacyVersion}' = '2026-10-29.1'
         AND OLD.settings #>> '{legalAcceptance,analyticsConsent}' = 'true'
     ), FALSE);
     new_current_consent := COALESCE((
-        NEW.settings #>> '{legalAcceptance,termsVersion}' = '2026-10-28.1'
-        AND NEW.settings #>> '{legalAcceptance,privacyVersion}' = '2026-10-28.1'
+        NEW.settings #>> '{legalAcceptance,termsVersion}' = '2026-10-29.1'
+        AND NEW.settings #>> '{legalAcceptance,privacyVersion}' = '2026-10-29.1'
         AND NEW.settings #>> '{legalAcceptance,analyticsConsent}' = 'true'
     ), FALSE);
 
@@ -203,8 +203,8 @@ BEGIN
     WHERE NOT EXISTS (
         SELECT 1 FROM skillup_dev.users u
         WHERE u.id = a.user_id
-          AND u.settings #>> '{legalAcceptance,termsVersion}' = '2026-10-28.1'
-          AND u.settings #>> '{legalAcceptance,privacyVersion}' = '2026-10-28.1'
+          AND u.settings #>> '{legalAcceptance,termsVersion}' = '2026-10-29.1'
+          AND u.settings #>> '{legalAcceptance,privacyVersion}' = '2026-10-29.1'
           AND u.settings #>> '{legalAcceptance,analyticsConsent}' = 'true'
           AND COALESCE(u.is_deleted, FALSE) = FALSE
     );
@@ -279,8 +279,8 @@ WITH event_cohort AS (
 ), current_cohort AS (
     SELECT a.* FROM skillup_dev.learning_interest_active_selections a
     JOIN skillup_dev.users u ON u.id = a.user_id
-    WHERE u.settings #>> '{legalAcceptance,termsVersion}' = '2026-10-28.1'
-      AND u.settings #>> '{legalAcceptance,privacyVersion}' = '2026-10-28.1'
+    WHERE u.settings #>> '{legalAcceptance,termsVersion}' = '2026-10-29.1'
+      AND u.settings #>> '{legalAcceptance,privacyVersion}' = '2026-10-29.1'
       AND u.settings #>> '{legalAcceptance,analyticsConsent}' = 'true'
       AND COALESCE(u.is_deleted, FALSE) = FALSE
       AND (p_school_id IS NULL OR a.affiliation_school_ids @> ARRAY[p_school_id])
@@ -435,8 +435,8 @@ WITH scoped_events AS (
 ), scoped_current AS (
     SELECT a.* FROM skillup_dev.learning_interest_active_selections a
     JOIN skillup_dev.users u ON u.id = a.user_id
-    WHERE u.settings #>> '{legalAcceptance,termsVersion}' = '2026-10-28.1'
-      AND u.settings #>> '{legalAcceptance,privacyVersion}' = '2026-10-28.1'
+    WHERE u.settings #>> '{legalAcceptance,termsVersion}' = '2026-10-29.1'
+      AND u.settings #>> '{legalAcceptance,privacyVersion}' = '2026-10-29.1'
       AND u.settings #>> '{legalAcceptance,analyticsConsent}' = 'true'
       AND COALESCE(u.is_deleted, FALSE) = FALSE
       AND (p_school_id IS NULL OR a.affiliation_school_ids @> ARRAY[p_school_id])

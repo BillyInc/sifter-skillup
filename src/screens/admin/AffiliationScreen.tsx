@@ -98,7 +98,7 @@ export function AffiliationScreen() {
   };
 
   return (
-    <AdminShell title="Affiliation" eyebrow="School code">
+    <AdminShell title="Referrals" eyebrow="School code and referrals">
       <ScrollView
         style={{ flex: 1, backgroundColor: colors.bg }}
         contentContainerStyle={[styles.scroll, webContainer as object]}
@@ -178,6 +178,17 @@ export function AffiliationScreen() {
                 ? "The count is hidden until at least five affiliations are recorded, to protect student privacy."
                 : `${count ?? 0} students have affiliated with this school.`
               : stats.meta?.notice ?? "Affiliation data is unavailable right now."}
+          </Text>
+        </View>
+
+        {/* No earnings contract exists yet (see report): honest empty state only. */}
+        <View style={styles.section} accessibilityRole="summary">
+          <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>
+            Money earned from referrals
+          </Text>
+          <Text style={[styles.lede, { color: colors.textMuted }]}>
+            Earnings are not available yet. Referral earnings are not recorded
+            for institutions today, so no amount is shown rather than an estimate.
           </Text>
         </View>
 

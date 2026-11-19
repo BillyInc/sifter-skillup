@@ -8,6 +8,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useTheme, Spacing, Radius, FontSize, FontWeight } from '../theme';
 import type { RoomMessage as RoomMessageType } from '../types/social';
+import { getPublicName } from '@/lib/publicName';
 
 interface RoomMessageProps {
   message:    RoomMessageType;
@@ -65,7 +66,7 @@ export default function RoomMessage({ message, isOwn, onReact, onLessonTap }: Ro
         {/* Author name */}
         {!isOwn && (
           <Text style={[styles.authorName, { color: stageColor }]}>
-            {message.author_username}
+            {getPublicName({ public_name: message.author_public_name, author_username: message.author_username })}
           </Text>
         )}
 

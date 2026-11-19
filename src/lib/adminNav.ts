@@ -190,9 +190,13 @@ const PROFILE_ITEM: AdminNavItem = {
   go: (n) => adminNav.profile(n),
 };
 
+// The school-code / referral surface. Every admin type sees it (university,
+// secondary school, tutorial centre, JAMB cafe) and every role within the
+// organisation: the endpoint behind it is aggregate-only and scoped
+// server-side to the caller's own institution.
 const AFFILIATION_ITEM: AdminNavItem = {
   key: "affiliation",
-  label: "Affiliation",
+  label: "Referrals",
   icon: "🔗",
   match: "affiliation",
   go: (n) => adminNav.affiliation(n),
@@ -345,9 +349,7 @@ export function getAdminNavGroups(
     : intelligenceItems.filter((item) => ["dashboard", "market-intelligence", "domain-reach", "skills-gap", "explore", "peers"].includes(item.key));
   const setupItems = managementRole
     ? [PROFILE_ITEM, AFFILIATION_ITEM, VERIFICATION_ITEM]
-    : role === "data_viewer"
-      ? [PROFILE_ITEM]
-      : [PROFILE_ITEM];
+    : [PROFILE_ITEM, AFFILIATION_ITEM];
 
   return [
     {

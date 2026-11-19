@@ -17,6 +17,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Spacing, Radius, FontSize, FontWeight, Shadow, webContainer, useTheme, type ColorPalette } from '@/theme';
 import { API } from '@/lib/api';
 import { useAuth } from '@/hooks/useAuth';
+import { getOwnPublicName } from '@/lib/publicName';
 import DisclaimerFooter from '@/components/DisclaimerFooter';
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -615,7 +616,8 @@ function ConnectedView({
 // Portfolio file builder — generates real Python files from user's progress
 // ─────────────────────────────────────────────────────────────────────────────
 function buildPortfolioFiles(user: any): Array<{ path: string; content: string }> {
-  const name = user?.username ?? 'Sifter Student';
+  // Written into files pushed to a (possibly public) repo: never the legal-name `username`.
+  const name = getOwnPublicName(user);
   const date = new Date().toISOString().split('T')[0];
 
   const readme = `# Quant Finance Portfolio — ${name}

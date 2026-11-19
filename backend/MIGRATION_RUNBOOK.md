@@ -360,7 +360,7 @@ analytics consent is true. It does not read saved paths as an analytics source.
 Analytics capture also requires acceptance of the current server-owned Terms and
 Privacy versions. The dashboard scope disclosure was expanded to distinguish
 an explored institution from an affiliated school, so the application versions
-Terms and Privacy are now `2026-10-28.1` because the analytics disclosures
+Terms and Privacy are now `2026-10-29.1` because the analytics disclosures
 and consent-bound current-selection snapshot changed. Stale
 consent does not authorize new events until the user reviews the updated policy
 and makes a fresh analytics choice. When a learner creates a separate D078
