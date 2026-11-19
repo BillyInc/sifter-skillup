@@ -227,7 +227,7 @@ the 2026-10-26 analytics migration. It captures new explicit additions/removals
 into a route-scoped active snapshot; it does not backfill from old events or
 saved paths. Current snapshot counts are unwindowed; activity counts remain
 date-windowed. The current snapshot is cleared when analytics consent is
-withdrawn or must be renewed. Terms and Privacy versions are `2026-10-28.1`,
+withdrawn or must be renewed. Terms and Privacy versions are `2026-10-29.1`,
 so users must make a fresh analytics choice before new events/snapshots are captured.
 When the learner explicitly creates a separate D078 route by copying the active
 route, record its copied items as `selection_copied`: include them in the new
