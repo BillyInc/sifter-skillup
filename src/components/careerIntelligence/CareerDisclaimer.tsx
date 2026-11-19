@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
   },
   footerText: {
-    fontSize: FontSize.xs,
-    lineHeight: FontSize.xs * 1.6,
+    fontSize: FontSize.sm,
+    lineHeight: FontSize.sm * 1.6,
     textAlign: "center",
   },
   inline: {
@@ -64,8 +64,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.md,
   },
   inlineText: {
-    fontSize: FontSize.xs,
-    lineHeight: FontSize.xs * 1.55,
+    fontSize: FontSize.sm,
+    lineHeight: FontSize.sm * 1.55,
     fontWeight: "600",
   },
 });
