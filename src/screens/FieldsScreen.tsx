@@ -489,7 +489,7 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   eyebrow: {
-    fontSize: FontSize.xs,
+    fontSize: FontSize.sm,
     fontWeight: '900',
     letterSpacing: 1.2,
   },
@@ -643,7 +643,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   islandNumber: {
-    fontSize: FontSize.xs,
+    fontSize: FontSize.sm,
     fontWeight: '700',
   },
   islandName: {
@@ -670,7 +670,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   trackIconText: {
-    fontSize: FontSize.xs,
+    fontSize: FontSize.sm,
     fontWeight: '900',
   },
   trackCopy: {
@@ -698,7 +698,7 @@ const styles = StyleSheet.create({
     borderRadius: Radius.full,
   },
   pillText: {
-    fontSize: 10,
+    fontSize: FontSize.sm,
     fontWeight: '700',
   },
 });
