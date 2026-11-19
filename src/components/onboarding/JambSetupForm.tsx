@@ -26,6 +26,8 @@ import type {
   SetupFormProps,
   SsDoor,
 } from "../../types/onboarding";
+import { OlevelGradePicker } from "./OlevelGradePicker";
+import { UTME_SCORE_COPY, pruneGrades } from "../../lib/olevelGrades";
 import LocalLegalNotice from "../LocalLegalNotice";
 
 const DOORS: {
@@ -221,13 +223,28 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
           stream={value.stream}
           examType="olevel"
           value={value.olevelSubjects}
-          onChange={(v) => onChange({ olevelSubjects: v as string[] })}
+          onChange={(v) =>
+            onChange({
+              olevelSubjects: v as string[],
+              // Removing a subject removes its grade.
+              olevelGrades: pruneGrades(value.olevelGrades, v as string[]),
+            })
+          }
           minSelected={5}
           maxSelected={MAX_OLEVEL_SUBJECTS}
           fixedSubjects={["English Language", "Mathematics"]}
           showSearch
           streamScoped
           helperText="Your stream shows the subjects usually taken on that path. A programme can still ask for a subject that is not in this list. We will show that when you open the programme."
+        />
+      ) : null}
+
+      {value.stream && door && (door === "unsure" || showSubjectCheck) && selectedOlevelSubjects.length ? (
+        <OlevelGradePicker
+          subjects={selectedOlevelSubjects}
+          grades={value.olevelGrades}
+          examBody={value.olevelExamBody}
+          onChange={({ grades, examBody }) => onChange({ olevelGrades: grades, olevelExamBody: examBody })}
         />
       ) : null}
 
@@ -245,6 +262,9 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
           fixedSubjects={["English Language"]}
           helperText="Use of English is fixed. Choose 3 other UTME subjects from your selected stream. Cross-listed subjects appear in every applicable stream. Exact programme and institution combinations are checked separately and take priority."
         />
+      ) : null}
+      {value.stream && door && (door === "unsure" || showSubjectCheck) ? (
+        <Text style={[styles.caption, { color: colors.textMuted }]}>{UTME_SCORE_COPY}</Text>
       ) : null}
 
       {door === "know_where" ? (

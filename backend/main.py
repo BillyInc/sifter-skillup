@@ -1164,6 +1164,9 @@ app.include_router(admission_router)
 from routes.student_pipeline_routes import router as student_pipeline_router
 app.include_router(student_pipeline_router)
 
+from routes.student_subject_grades_routes import router as student_subject_grades_router
+app.include_router(student_subject_grades_router)
+
 from routes.entrepreneurship_routes import router as entrepreneurship_router
 app.include_router(entrepreneurship_router)
 
