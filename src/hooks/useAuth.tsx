@@ -32,6 +32,8 @@ export interface UserProfile {
   username: string;
   /** Given name captured at sign-up; used only as a display-name fallback. */
   first_name?: string | null;
+  /** Optional name the user chose to be shown; absent when the backend predates it. */
+  display_name?: string | null;
   avatar_url: string | null;
   auth_provider: string;
   /** Discriminates the student app from the institutional/admin side. Legacy
@@ -97,6 +99,7 @@ interface AuthContextType {
     first_name?: string;
     middle_name?: string;
     last_name?: string;
+    display_name?: string;
     date_of_birth?: string;
     email_code?: string;
   }) => Promise<void>;
@@ -365,6 +368,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     first_name?: string;
     middle_name?: string;
     last_name?: string;
+    display_name?: string;
     date_of_birth?: string;
     email_code?: string;
     terms_version?: string;
@@ -595,6 +599,8 @@ function _normalise(raw: any): UserProfile {
     id: raw.id ?? '',
     username: raw.username ?? 'Student',
     first_name: raw.first_name ?? null,
+    // Keep `undefined` when the API omits it so the UI can feature-detect support.
+    ...(raw.display_name !== undefined ? { display_name: raw.display_name ?? null } : {}),
     avatar_url: raw.avatar_url ?? null,
     auth_provider: raw.auth_provider ?? 'guest',
     account_type: raw.account_type,

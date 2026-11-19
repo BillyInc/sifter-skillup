@@ -40,6 +40,7 @@ class SyncStatus(str, Enum):
 
 class UserUpdate(BaseModel):
     username:           Optional[str]            = None
+    display_name:       Optional[str]            = None
     avatar_url:         Optional[str]            = None
     settings:           Optional[Dict[str, Any]] = None
     active_track:       Optional[str]            = None
