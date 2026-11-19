@@ -47,6 +47,7 @@ import type {
 } from "../types/onboarding";
 import { useAuth } from "@/hooks/useAuth";
 import { getDisplayName } from "@/lib/displayName";
+import Avatar from "@/components/account/Avatar";
 
 const USER_TYPE_LABEL: Record<UserType, string> = {
   senior_secondary: "Senior secondary (SS1/SS2)",
@@ -140,9 +141,12 @@ export default function CareerProfileScreen() {
         <Text style={[styles.eyebrow, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
           PROFILE
         </Text>
-        <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
-          {displayName ?? "Your profile"}
-        </Text>
+        <View style={styles.identity}>
+          <Avatar user={user} size={56} />
+          <Text style={[styles.title, styles.identityName, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
+            {displayName ?? "Your profile"}
+          </Text>
+        </View>
         {user?.email ? (
           <Text style={[styles.subtle, { color: colors.textRole.muted }]}>
             {user.email}
@@ -560,6 +564,8 @@ const styles = StyleSheet.create({
     letterSpacing: 1.5,
     marginTop: Spacing.sm,
   },
+  identity: { flexDirection: "row", alignItems: "center", gap: Spacing.md },
+  identityName: { flexShrink: 1 },
   title: {
     fontSize: FontSize.display,
     lineHeight: FontSize.display * 1.15,
