@@ -30,7 +30,7 @@ describe("D078 method and combination picker", () => {
       onClear={() => undefined}
     /></ThemeProvider>);
 
-    expect(graph.method_node_ids).toHaveLength(22);
+    expect(graph.method_node_ids).toHaveLength(23);
     expect(graph.combination_designs).toHaveLength(9);
     const methodButtons = screen.getAllByRole("button").filter((button) => String(button.props.accessibilityLabel ?? "").startsWith("Select "));
     expect(methodButtons[0].props.accessibilityLabel).toContain("Quantitative methods");
@@ -47,10 +47,10 @@ describe("D078 method and combination picker", () => {
     }
     expect(screen.queryByLabelText("Search methods and combined designs")).toBeNull();
     expect(screen.queryByText("How this fits your programme")).toBeNull();
-    expect(screen.queryByText(/introduces quantitative \(working with numbers and counts\) research and expects you to apply appropriate statistics/i)).toBeNull();
+    expect(screen.queryByText(/introduces quantitative \(using numbers such as counts, measurements or scores[^)]*\) research \([^)]*\) and expects you to apply appropriate statistics/i)).toBeNull();
     fireEvent.press(screen.getByRole("button", { name: "See more about Quantitative methods (working with numbers)" }));
     expect(screen.getByText("How this fits your programme")).toBeTruthy();
-    expect(screen.getByText(/introduces quantitative \(working with numbers and counts\) research and expects you to apply appropriate statistics/i)).toBeTruthy();
+    expect(screen.getByText(/introduces quantitative \(using numbers such as counts, measurements or scores[^)]*\) research \([^)]*\) and expects you to apply appropriate statistics/i)).toBeTruthy();
     expect(screen.queryByText(/Curriculum evidence/)).toBeNull();
     expect(screen.queryByText("SOC 301")).toBeNull();
     expect(screen.getByText("Methods of research")).toBeTruthy();

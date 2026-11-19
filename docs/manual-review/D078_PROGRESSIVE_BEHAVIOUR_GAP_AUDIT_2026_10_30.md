@@ -78,7 +78,7 @@ An alphabetical list does not corrupt the content or create a false prerequisite
 - Current graph counts: 14 Sociology themes, 236 outcomes, 7 canonical areas, 19 roles, 112 approved domain items, 119 selectable area items, 50 approved task families, 161 student-visible role items (12 explicitly excluded), 95 role-tool routes, and 8 area sequence edges. The 161 role items remain unordered and skippable; no role-item prerequisite is inferred.
 - Focused route-projection regressions pass for task-family filtering and the Geographical Random Forest edge. The browser host is still unavailable, so this remains local code/data verification, not authenticated rendered acceptance.
 
-## Reconciliation against regenerated graph â€” 2026-11-03
+## Reconciliation against regenerated graph — 2026-11-03
 
 - The 2026-11-02 v10 graph and compact UI projection were regenerated after separating Mesa and Casevo from the domain-wide tool choice lane. Both retain distinct canonical identities and are now `display_stage: area`; neither appears in `domain_tool_ids`, `domain_downstream_item_ids`, or a domain learning layer. They are independently selectable only in graph-supported area/method/task contexts. The retired combined/legacy area aliases remain hidden and non-selectable.
 - Mesa and Casevo are not alternatives to each other. The source-backed graph relation is `specialist_extension_of`: Casevo is a specialist cognitive-agent/social-simulation workflow built on the broader Mesa framework. This relation is explanatory and non-blocking; selecting Casevo does not silently select Mesa or make Mesa a prerequisite. Casevo retains its separate reviewed alternative to NetLogo where the graph presents that comparison.

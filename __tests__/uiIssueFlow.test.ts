@@ -29,9 +29,9 @@ describe("reported admin and programme navigation flows", () => {
     expect(programmePreviewExplanation(programme)).not.toContain("Held course");
   });
 
-  it("explains a missing programme contract as unavailable seed data, not learner failure", () => {
-    expect(programmePreviewUnavailableMessage("not_seeded")).toContain("not been loaded");
-    expect(programmePreviewUnavailableMessage("not_seeded")).toContain("will not substitute");
+  it("explains a missing programme contract as unavailable, without blaming the learner", () => {
+    expect(programmePreviewUnavailableMessage("not_seeded")).toContain("not available here yet");
+    expect(programmePreviewUnavailableMessage("not_seeded")).toContain("choose a university");
   });
 
   it("exports only reports actually returned by the programme-intelligence API", () => {
