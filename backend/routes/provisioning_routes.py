@@ -72,9 +72,21 @@ _CONSENT_SCOPES = {"progress", "contact", "full"}
 _GUIDANCE_STREAMS = {"science", "commercial", "art", "technical"}
 _GUIDANCE_LEARNER_TYPES = {
     "secondary_school": {"ss1", "ss2", "ss3"},
-    "tutorial_centre": {"jamb"},
-    "jamb_cafe": {"jamb"},
+    # Tutorial centres and JAMB cafes prepare learners for both O-level and
+    # UTME. "ss3" is the existing O-level starting point (final-year
+    # secondary / O-level sitting); "jamb" is the UTME starting point.
+    "tutorial_centre": {"ss3", "jamb"},
+    "jamb_cafe": {"ss3", "jamb"},
     "university": {"undergraduate"},
+}
+
+# Starting points each organisation type may create. Secondary schools own the
+# three secondary classes (bulk or single); tutorial centres and JAMB cafes own
+# the O-level and UTME starting points. Universities create no accounts.
+_PROVISIONING_STAGES_BY_ORG = {
+    "secondary_school": {"ss1", "ss2", "ss3"},
+    "tutorial_centre": {"ss3", "jamb"},
+    "jamb_cafe": {"ss3", "jamb"},
 }
 
 
@@ -339,10 +351,11 @@ def _validate_provisioning_type(value: Optional[str], org_type: str) -> str:
     student_type = _clean_student_type(value)
     if not student_type:
         raise HTTPException(status_code=400, detail="Choose the Student stage before creating an account.")
-    if org_type in {"tutorial_centre", "jamb_cafe"} and student_type != "jamb":
-        raise HTTPException(status_code=403, detail="This organisation can create JAMB Student accounts only.")
-    if org_type == "secondary_school" and student_type == "jamb":
-        raise HTTPException(status_code=403, detail="A secondary school can create SS1, SS2 or SS3 Student accounts only.")
+    allowed = _PROVISIONING_STAGES_BY_ORG.get(org_type)
+    if allowed is not None and student_type not in allowed:
+        if org_type == "secondary_school":
+            raise HTTPException(status_code=403, detail="A secondary school can create SS1, SS2 or SS3 Student accounts only.")
+        raise HTTPException(status_code=403, detail="This organisation can create O-level and UTME (JAMB) Student accounts only.")
     return student_type
 
 
