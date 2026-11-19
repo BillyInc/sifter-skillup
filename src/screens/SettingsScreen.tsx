@@ -6,6 +6,7 @@ import { CompassFonts, FontSize, Radius, Shadow, Spacing, useTheme, webContainer
 import { useAuth } from '@/hooks/useAuth';
 import { API } from '@/lib/api';
 import { isAdminAccount } from '@/lib/accountType';
+import AvatarPicker from '@/components/account/AvatarPicker';
 import NameToShowField from '@/components/account/NameToShowField';
 import TermsScreen from '@/screens/TermsScreen';
 import PrivacyScreen from '@/screens/PrivacyScreen';
@@ -174,6 +175,7 @@ export default function SettingsScreen() {
         </SettingsCard>
 
         {!isGuest ? <SettingsCard title="ACCOUNT">
+          <AvatarPicker user={user} onSaved={refreshUser} />
           <NameToShowField user={user} onSaved={refreshUser} />
           <Row label="Email" value={user?.email || 'Not set'} />
         </SettingsCard> : null}

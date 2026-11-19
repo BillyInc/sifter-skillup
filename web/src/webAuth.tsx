@@ -5,6 +5,7 @@ export type WebUser = {
   id: string;
   username?: string;
   first_name?: string | null;
+  avatar_url?: string | null;
   email?: string;
   auth_provider?: string;
   account_type?: string;
