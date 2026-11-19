@@ -1397,6 +1397,16 @@ class StudentIntelligenceDomain(_InstitutionBase):
     pct: float
 
 
+class StudentIntelligenceStage(_InstitutionBase):
+    """Counts only: affiliated students by the stage they recorded in their own
+    starting point, split by how they joined. No per-student field."""
+
+    stage: str
+    total: int = 0
+    self_signed_up: int = 0
+    provisioned_by_you: int = 0
+
+
 class StudentIntelligence(_InstitutionBase):
     """AGGREGATE rollup only — §5.5. Never carries a student id, name, class,
     claim code or any other per-row field."""
@@ -1406,6 +1416,9 @@ class StudentIntelligence(_InstitutionBase):
     self_signed_up: int = 0
     provisioned_by_you: int = 0
     unclaimed_codes: int = 0
+    # Additive: affiliated students by recorded stage (counts only). Students
+    # who have not saved a starting point are counted under "not_recorded".
+    stage_counts: List[StudentIntelligenceStage] = Field(default_factory=list)
     top_domains: List[StudentIntelligenceDomain] = Field(default_factory=list)
     # True when the cohort is under the k-anonymity threshold; the mix is
     # suppressed rather than published.
@@ -3339,6 +3352,7 @@ async def get_student_intelligence(
         provisioned_count = 0
         domain_counts: dict = {}
         directions_seen = 0
+        joined_by: dict = {}
         for i in range(0, len(student_ids), 500):
             chunk = student_ids[i:i + 500]
             rows = (
@@ -3351,13 +3365,53 @@ async def get_student_intelligence(
             for u in rows:
                 if (u.get("provenance") or "self") == "provisioned":
                     provisioned_count += 1
+                    joined_by[u.get("id")] = "provisioned"
                 else:
                     self_count += 1
+                    joined_by[u.get("id")] = "self"
                 direction = u.get("chosen_direction") or {}
                 key = direction.get("domain_key") if isinstance(direction, dict) else None
                 if key:
                     directions_seen += 1
                     domain_counts[key] = domain_counts.get(key, 0) + 1
+
+        # Stage rollup: the stage each affiliated student recorded themselves
+        # (student_starting_points.user_type). Aggregated here; ids never leave.
+        stage_buckets: dict = {}
+        stage_of: dict = {}
+        try:
+            for i in range(0, len(student_ids), 500):
+                chunk = student_ids[i:i + 500]
+                sp_rows = (
+                    svc.table("student_starting_points")
+                    .select("user_id, user_type")
+                    .in_("user_id", chunk)
+                    .execute()
+                    .data
+                ) or []
+                for sp in sp_rows:
+                    if sp.get("user_id") and sp.get("user_type"):
+                        stage_of[sp["user_id"]] = str(sp["user_type"])
+        except Exception as exc:  # noqa: BLE001
+            log.warning("institutions: stage read skipped", error=str(exc))
+            stage_of = {}
+        if stage_of:
+            for sid, how in joined_by.items():
+                bucket = stage_buckets.setdefault(
+                    stage_of.get(sid) or "not_recorded",
+                    {"total": 0, "self": 0, "provisioned": 0},
+                )
+                bucket["total"] += 1
+                bucket["self" if how == "self" else "provisioned"] += 1
+        stage_counts = [
+            StudentIntelligenceStage(
+                stage=name,
+                total=b["total"],
+                self_signed_up=b["self"],
+                provisioned_by_you=b["provisioned"],
+            )
+            for name, b in sorted(stage_buckets.items(), key=lambda kv: (-kv[1]["total"], kv[0]))
+        ]
 
         unclaimed_codes = 0
         try:
@@ -3406,6 +3460,7 @@ async def get_student_intelligence(
             self_signed_up=self_count,
             provisioned_by_you=provisioned_count,
             unclaimed_codes=unclaimed_codes,
+            stage_counts=stage_counts,
             top_domains=top_domains,
             below_threshold=below_threshold,
         )

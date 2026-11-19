@@ -465,6 +465,69 @@ class TestStudentIntelligenceIsAggregateOnly:
         assert data["topDomains"] == []
         assert "suppressed" in r.json()["message"]
 
+    def test_stage_counts_are_counts_only_and_split_by_signup_route(
+        self, client, auth_header, inst_db, monkeypatch
+    ):
+        """Students who signed up under the school code themselves (provenance
+        self) are counted next to the ones the admin provisioned, grouped by
+        the stage they recorded. Counts only: no ids in the body."""
+        import routes.institutions_routes as ir
+
+        students = [
+            {"id": f"stu-{i}", "provenance": "self" if i < 4 else "provisioned",
+             "chosen_direction": {}}
+            for i in range(6)
+        ]
+        stages = {"stu-0": "ss3_secondary", "stu-1": "ss3_secondary",
+                  "stu-2": "jamb", "stu-4": "ss3_secondary"}
+
+        class _Q:
+            def __init__(self, table):
+                self.table_name = table
+
+            def select(self, *_a, **_k):
+                return self
+
+            def eq(self, *_a, **_k):
+                return self
+
+            def is_(self, *_a, **_k):
+                return self
+
+            def in_(self, *_a, **_k):
+                return self
+
+            def limit(self, *_a, **_k):
+                return self
+
+            def execute(self):
+                if self.table_name == "student_affiliations":
+                    return MagicMock(data=[{"student_id": s["id"]} for s in students])
+                if self.table_name == "users":
+                    return MagicMock(data=students)
+                if self.table_name == "student_starting_points":
+                    return MagicMock(
+                        data=[{"user_id": k, "user_type": v} for k, v in stages.items()]
+                    )
+                return MagicMock(data=[])
+
+        class _Svc:
+            def table(self, name):
+                return _Q(name)
+
+        monkeypatch.setattr(ir, "_svc", lambda: _Svc(), raising=False)
+        _as_admin(inst_db, monkeypatch, org_id="school-1")
+        r = client.get("/api/institutions/me/student-intelligence", headers=auth_header)
+        assert r.status_code == 200, r.text
+        by_stage = {x["stage"]: x for x in r.json()["data"]["stageCounts"]}
+        assert by_stage["ss3_secondary"] == {
+            "stage": "ss3_secondary", "total": 3, "selfSignedUp": 2, "provisionedByYou": 1}
+        assert by_stage["jamb"]["total"] == 1
+        assert by_stage["not_recorded"]["total"] == 2
+        assert sum(x["total"] for x in by_stage.values()) == 6
+        for leak in ("stu-0", "stu-5", "userId"):
+            assert leak not in r.text
+
     def test_empty_cohort_is_zeroed_with_a_message(
         self, client, auth_header, inst_db, monkeypatch
     ):

@@ -57,6 +57,7 @@ import type {
 } from "../../types/institution";
 import { AdminShell } from "./AdminShell";
 import { StatCard } from "./StatCard";
+import { StudentStageTable } from "@/components/admin/StudentStageTable";
 import { ComingSoonPanel } from "./ComingSoonPanel";
 import { IntelligenceAlerts } from "./IntelligenceAlerts";
 
@@ -413,6 +414,7 @@ export function GeneralDashboardScreen() {
                       />
                     ) : null}
                   </View>
+                  <StudentStageTable rows={s.stageCounts ?? []} />
                   {top.length ? (
                     <Text
                       style={[styles.panelNote, { color: colors.textSoft }]}
