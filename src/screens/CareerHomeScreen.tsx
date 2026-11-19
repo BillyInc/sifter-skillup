@@ -46,6 +46,7 @@ import {
   type SavedItem,
 } from "../types/career";
 import type { StartingPointProfile, UserType } from "../types/onboarding";
+import { getGreetingName } from "../lib/displayName";
 
 const QUICK = [
   {
@@ -274,10 +275,7 @@ export default function CareerHomeScreen() {
   const { user } = useAuth();
   const { isMobile } = useResponsive();
   const isGuest = user?.auth_provider === "guest";
-  const name =
-    user?.username && user.username !== "Student"
-      ? user.username.split(" ")[0]
-      : null;
+  const name = getGreetingName(user);
 
   const [starting, setStarting] = useState<StartingPointProfile | null>(null);
   const [startingLoaded, setStartingLoaded] = useState(false);
