@@ -46,6 +46,7 @@ from pydantic import BaseModel
 from auth import Auth
 from database import db
 from models import ResponseModel
+from public_name import public_name, publicize_user_row, run_with_public_name_columns
 
 # ─────────────────────────────────────────────────────────────
 # Pydantic models
@@ -129,38 +130,42 @@ async def get_feed(
         [r["target_id"] for r in (muted.data or [])]
     )
 
-    # Build query
-    q = (
-        db.get_service_client()
-        .table("posts")
-        .select(
-            "*, "
-            "users!user_id(id, username, avatar_url, active_track, is_private), "
-            "post_reactions(reaction_type, count), "
-            "post_polls(id, question, options, total_votes, ends_at)"
+    # Build query. The author's public-name columns are spliced in (and retried
+    # without display_name if that column is not migrated yet).
+    def _build_feed_query(name_cols: str):
+        q = (
+            db.get_service_client()
+            .table("posts")
+            .select(
+                "*, "
+                f"users!user_id(id, {name_cols}, avatar_url, active_track, is_private), "
+                "post_reactions(reaction_type, count), "
+                "post_polls(id, question, options, total_votes, ends_at)"
+            )
+            .eq("is_deleted", False)
+            .order("created_at", desc=True)
+            .limit(limit + 1)  # fetch one extra to determine has_more
         )
-        .eq("is_deleted", False)
-        .order("created_at", desc=True)
-        .limit(limit + 1)  # fetch one extra to determine has_more
-    )
 
-    if cursor:
-        q = q.lt("created_at", cursor)
+        if cursor:
+            q = q.lt("created_at", cursor)
 
-    if mode == "following":
-        # Get who current user follows
-        follows_res = db.get_service_client().table("follows").select("following_id").eq("follower_id", user_id).execute()
-        following_ids = [r["following_id"] for r in (follows_res.data or [])]
-        following_ids.append(user_id)  # include own posts
-        q = q.in_("user_id", following_ids)
-    elif mode == "discover":
-        # Trending posts: last 48h, sorted by engagement
-        cutoff = (datetime.now(timezone.utc) - timedelta(hours=48)).isoformat()
-        q = q.gte("created_at", cutoff)
-        if track:
-            q = q.eq("track_context", track)
+        if mode == "following":
+            # Get who current user follows
+            follows_res = db.get_service_client().table("follows").select("following_id").eq("follower_id", user_id).execute()
+            following_ids = [r["following_id"] for r in (follows_res.data or [])]
+            following_ids.append(user_id)  # include own posts
+            q = q.in_("user_id", following_ids)
+        elif mode == "discover":
+            # Trending posts: last 48h, sorted by engagement
+            cutoff = (datetime.now(timezone.utc) - timedelta(hours=48)).isoformat()
+            q = q.gte("created_at", cutoff)
+            if track:
+                q = q.eq("track_context", track)
 
-    result = q.execute()
+        return q
+
+    result = run_with_public_name_columns(lambda c: _build_feed_query(c).execute())
     raw_posts = result.data or []
 
     # Filter excluded users
@@ -233,7 +238,7 @@ def _shape_post(raw: dict, viewer_id: str) -> dict:
         "id": raw["id"],
         "author": {
             "id": author_row.get("id", raw.get("user_id", "")),
-            "name": author_row.get("username", "User"),
+            "name": public_name(author_row),
             "avatar": author_row.get("avatar_url") or "⚡",
             "track": author_row.get("active_track"),
             "isPrivate": author_row.get("is_private", False),
@@ -297,16 +302,16 @@ async def search_community(
     blocked = db.get_service_client().table("user_blocks").select("target_id").eq("user_id", user_id).execute()
     excluded = {r["target_id"] for r in (blocked.data or [])}
 
-    result = (
+    result = run_with_public_name_columns(lambda c: (
         db.get_service_client()
         .table("posts")
-        .select("*, users!user_id(id, username, avatar_url, active_track, is_private)")
+        .select(f"*, users!user_id(id, {c}, avatar_url, active_track, is_private)")
         .ilike("content", f"%{safe_q}%")
         .eq("is_deleted", False)
         .order("created_at", desc=True)
         .limit(30)
         .execute()
-    )
+    ))
 
     # Also search by hashtag
     hashtag_q = safe_q.lstrip("#").lower()
@@ -324,14 +329,14 @@ async def search_community(
     # Add hashtag-matched posts not already in results
     existing_ids = {p["id"] for p in all_posts}
     if hashtag_post_ids - existing_ids:
-        extra = (
+        extra = run_with_public_name_columns(lambda c: (
             db.get_service_client()
             .table("posts")
-            .select("*, users!user_id(id, username, avatar_url, active_track, is_private)")
+            .select(f"*, users!user_id(id, {c}, avatar_url, active_track, is_private)")
             .in_("id", list(hashtag_post_ids - existing_ids))
             .eq("is_deleted", False)
             .execute()
-        )
+        ))
         all_posts.extend(extra.data or [])
 
     filtered = [p for p in all_posts if p.get("user_id") not in excluded]
@@ -558,16 +563,22 @@ async def request_follow(body: FollowAction, current_user: dict = Depends(Auth.g
 
 @community_v2_router.get("/api/users/follow-requests", response_model=ResponseModel)
 async def get_follow_requests(current_user: dict = Depends(Auth.get_current_user)):
-    result = (
+    result = run_with_public_name_columns(lambda c: (
         db.get_service_client()
         .table("follow_requests")
-        .select("*, users!requester_id(id, username, avatar_url, active_track)")
+        .select(f"*, users!requester_id(id, {c}, avatar_url, active_track)")
         .eq("target_id", current_user["id"])
         .eq("status", "pending")
         .order("created_at", desc=True)
         .execute()
-    )
-    return ResponseModel(data=result.data or [])
+    ))
+    rows = []
+    for r in (result.data or []):
+        r = dict(r)
+        if isinstance(r.get("users"), dict):
+            r["users"] = publicize_user_row(r["users"])
+        rows.append(r)
+    return ResponseModel(data=rows)
 
 
 @community_v2_router.post("/api/users/follow-request/respond", response_model=ResponseModel)
@@ -644,18 +655,18 @@ async def unmute_user(body: BlockAction, current_user: dict = Depends(Auth.get_c
 async def get_dm_threads(current_user: dict = Depends(Auth.get_current_user)):
     """Return DM threads where current user is a participant."""
     user_id = current_user["id"]
-    result = (
+    result = run_with_public_name_columns(lambda c: (
         db.get_service_client()
         .table("dm_threads")
         .select(
             "id, created_at, updated_at, "
             "dm_messages(content, created_at, sender_id, is_read, id),"
-            "thread_participants!inner(user_id, users!user_id(id, username, avatar_url))"
+            f"thread_participants!inner(user_id, users!user_id(id, {c}, avatar_url))"
         )
         .eq("thread_participants.user_id", user_id)
         .order("updated_at", desc=True)
         .execute()
-    )
+    ))
 
     threads = []
     for t in (result.data or []):
@@ -670,7 +681,7 @@ async def get_dm_threads(current_user: dict = Depends(Auth.get_current_user)):
             "id": t["id"],
             "participant": {
                 "id": other.get("id", "") if other else "",
-                "name": other.get("username", "User") if other else "User",
+                "name": public_name(other),
                 "avatar": other.get("avatar_url") or "⚡" if other else "⚡",
             },
             "lastMessage": last_msg["content"][:80] if last_msg else "",
@@ -690,20 +701,26 @@ async def get_dm_messages(thread_id: str, current_user: dict = Depends(Auth.get_
     if not check.data:
         raise HTTPException(403, "Not a participant in this thread")
 
-    messages = (
+    messages = run_with_public_name_columns(lambda c: (
         db.get_service_client()
         .table("dm_messages")
-        .select("*, users!sender_id(id, username, avatar_url)")
+        .select(f"*, users!sender_id(id, {c}, avatar_url)")
         .eq("thread_id", thread_id)
         .order("created_at", desc=True)
         .limit(50)
         .execute()
-    )
+    ))
+    shaped_messages = []
+    for m in (messages.data or []):
+        m = dict(m)
+        if isinstance(m.get("users"), dict):
+            m["users"] = publicize_user_row(m["users"])
+        shaped_messages.append(m)
 
     # Mark as read
     db.get_service_client().table("dm_messages").update({"is_read": True}).eq("thread_id", thread_id).neq("sender_id", user_id).execute()
 
-    return ResponseModel(data={"messages": messages.data or []})
+    return ResponseModel(data={"messages": shaped_messages})
 
 
 @community_v2_router.post("/api/dms/send", response_model=ResponseModel)
@@ -776,15 +793,15 @@ async def get_notifications(
     limit: int = Query(50, le=100),
     current_user: dict = Depends(Auth.get_current_user),
 ):
-    result = (
+    result = run_with_public_name_columns(lambda c: (
         db.get_service_client()
         .table("notifications")
-        .select("*, users!actor_id(id, username, avatar_url)")
+        .select(f"*, users!actor_id(id, {c}, avatar_url)")
         .eq("recipient_id", current_user["id"])
         .order("created_at", desc=True)
         .limit(limit)
         .execute()
-    )
+    ))
     notifications = []
     for n in (result.data or []):
         actor = n.get("users") or {}
@@ -792,7 +809,7 @@ async def get_notifications(
         notifications.append({
             "id": n["id"],
             "type": n["type"],
-            "actor": {"id": actor.get("id", ""), "name": actor.get("username", ""), "avatar": actor.get("avatar_url") or "⚡"},
+            "actor": {"id": actor.get("id", ""), "name": public_name(actor) if actor else "", "avatar": actor.get("avatar_url") or "⚡"},
             "postId": n.get("post_id"),
             "postSnippet": n.get("post_snippet"),
             "reaction": extra.get("reaction"),

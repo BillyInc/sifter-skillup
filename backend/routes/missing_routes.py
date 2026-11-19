@@ -31,6 +31,7 @@ from auth import Auth
 from database import db
 from models import ResponseModel
 from legal_versions import analytics_consent_is_current
+from public_name import public_name, publicize_user_row, run_with_public_name_columns
 
 
 def _analytics_consented(user: dict) -> bool:
@@ -659,19 +660,21 @@ async def get_posts(
     """
     user_guild_id = guild_id or current_user.get("guild_id")
 
-    q = (
-        db.get_client()
-        .table("posts")
-        .select("*, users(username, avatar_url), post_likes(user_id)")
-        .order("created_at", desc=True)
-        .range(offset, offset + limit - 1)
-    )
-    if user_guild_id:
-        q = q.eq("guild_id", user_guild_id)
-    if field:
-        q = q.eq("field", field)
+    def _build(name_cols: str):
+        q = (
+            db.get_client()
+            .table("posts")
+            .select(f"*, users({name_cols}, avatar_url), post_likes(user_id)")
+            .order("created_at", desc=True)
+            .range(offset, offset + limit - 1)
+        )
+        if user_guild_id:
+            q = q.eq("guild_id", user_guild_id)
+        if field:
+            q = q.eq("field", field)
+        return q
 
-    result = q.execute()
+    result = run_with_public_name_columns(lambda c: _build(c).execute())
 
     # Shape the response — attach isLiked per current user
     shaped = []
@@ -679,7 +682,8 @@ async def get_posts(
     for post in (result.data or []):
         likes_list = post.pop("post_likes", []) or []
         author_data = post.pop("users", {}) or {}
-        post["author"] = author_data.get("username", "Unknown")
+        post["author"] = public_name(author_data)
+        post["author_public_name"] = post["author"]
         post["avatarUrl"] = author_data.get("avatar_url")
         post["isLiked"] = any(lk["user_id"] == user_id for lk in likes_list)
         post["likes"] = len(likes_list)
@@ -710,7 +714,8 @@ async def create_post(
 
     # Attach author info for immediate display
     post_out = result.data[0] if result.data else post
-    post_out["author"] = current_user.get("username", "You")
+    post_out["author"] = public_name(current_user)
+    post_out["author_public_name"] = post_out["author"]
     post_out["avatarUrl"] = current_user.get("avatar_url")
     post_out["isLiked"] = False
     post_out["likes"] = 0
@@ -954,12 +959,18 @@ async def friend_suggestions(current_user: dict = Depends(Auth.get_current_user)
     user_track = current_user.get("active_track", "")
     suggestions = []
     if user_track:
-        result = db.get_service_client().table("users").select("id, username, avatar_url, active_track").eq("active_track", user_track).neq("id", current_user["id"]).limit(10).execute()
-        suggestions = result.data or []
+        result = run_with_public_name_columns(lambda c: db.get_service_client().table("users").select(f"id, {c}, avatar_url, active_track").eq("active_track", user_track).neq("id", current_user["id"]).limit(10).execute())
+        suggestions = [publicize_user_row(u) for u in (result.data or [])]
     return ResponseModel(data=suggestions)
 
 
 @social_router.get("/friends", response_model=ResponseModel)
 async def get_friends(current_user: dict = Depends(Auth.get_current_user)):
-    result = db.get_service_client().table("friends").select("*, users!friend_id(id, username, avatar_url, active_track)").eq("user_id", current_user["id"]).execute()
-    return ResponseModel(data=result.data or [])
+    result = run_with_public_name_columns(lambda c: db.get_service_client().table("friends").select(f"*, users!friend_id(id, {c}, avatar_url, active_track)").eq("user_id", current_user["id"]).execute())
+    rows = []
+    for r in (result.data or []):
+        r = dict(r)
+        if isinstance(r.get("users"), dict):
+            r["users"] = publicize_user_row(r["users"])
+        rows.append(r)
+    return ResponseModel(data=rows)
