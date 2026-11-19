@@ -12,6 +12,7 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useRouter, useLocalSearchParams } from "expo-router";
+import { domainIdFromRoleKey } from "@/lib/backFallback";
 import {
   DetailScaffold,
   NotesWidget,
@@ -136,14 +137,16 @@ const guidanceContext: GuidanceRouteContext = {
       router.back();
       return;
     }
-    const parentDomain = state.data?.appearsIn?.[0]?.domainId;
+    const parentDomain = state.data?.appearsIn?.[0]?.domainId ?? domainIdFromRoleKey(roleKey);
     const parentSubgroup = guidanceContext.areaId ?? (state.data?.appearsIn?.[0]?.domainId === "D078" ? undefined : state.data?.subgroupId);
     if (parentDomain && parentSubgroup) {
       router.replace(`${exploreNav.base}/domain/${encodeURIComponent(parentDomain)}/subgroup/${encodeURIComponent(parentSubgroup)}` as never);
+    } else if (parentDomain) {
+      router.replace(`${exploreNav.base}/domain/${encodeURIComponent(parentDomain)}` as never);
     } else {
       router.replace(`${exploreNav.base}/domains` as never);
     }
-  }, [exploreNav.base, guidanceContext.areaId, router, state.data]);
+  }, [exploreNav.base, guidanceContext.areaId, roleKey, router, state.data]);
 
   if (isD078RoleKey && !guidanceContext.areaId) {
     return <D078RoleRoute

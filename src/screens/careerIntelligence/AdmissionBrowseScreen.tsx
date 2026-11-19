@@ -8,6 +8,8 @@
  * wrapper over a screen in src/screens.
  */
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { browseStateKey, readBrowseState, writeBrowseState } from "@/lib/browseSessionState";
+import { useBrowseScroll } from "@/hooks/useBrowseScroll";
 import {
   ActivityIndicator,
   ScrollView,
@@ -219,17 +221,45 @@ export default function AdmissionBrowseScreen() {
   const showSchoolMode = !effectiveUserType || effectiveUserType === "student";
   const initialMode: Mode =
     rawMode === "subjects" ? "subjects" : rawMode === "school" && showSchoolMode ? "school" : "programme";
-  const [mode, setMode] = useState<Mode>(initialMode);
-  const [query, setQuery] = useState(readParam(params.q));
+  // Returning from an opened programme or university restores the student's
+  // own inputs. A link that carries explicit inputs, or any guidance
+  // checkpoint (which has its own account-scoped resume), always wins.
+  const browseKey = browseStateKey(
+    "admission",
+    user?.id,
+    [rawMode, discoveryEntry, userType, readParam(params.admin), readParam(params.admin_type), readParam(params.journey_mode) || readParam(params.journey)].join(":"),
+  );
+  const draftRef = useRef<Record<string, unknown> | null | undefined>(undefined);
+  if (draftRef.current === undefined) {
+    const explicitInputs = [
+      params.q, params.subjects, params.olevel_subjects, params.programme, params.school_id,
+      params.guidance_student_id, params.resume, params.class_name, params.stream,
+    ].some((value) => readParam(value)) || readParam(params.focus) === "guidance";
+    draftRef.current = explicitInputs ? null : readBrowseState(browseKey)?.fields ?? null;
+  }
+  const draft = draftRef.current;
+  const draftText = (name: string) => (typeof draft?.[name] === "string" ? draft[name] as string : undefined);
+  const draftMode = draftText("mode");
+  const [mode, setMode] = useState<Mode>(
+    draftMode === "subjects" || draftMode === "programme" || (draftMode === "school" && showSchoolMode)
+      ? draftMode as Mode
+      : initialMode,
+  );
+  const [query, setQuery] = useState(draftText("query") ?? readParam(params.q));
   const [subjectText, setSubjectText] = useState(
-    decodeURIComponent(readParam(params.subjects)).replace(/,/g, ", "),
+    draftText("subjectText") ?? decodeURIComponent(readParam(params.subjects)).replace(/,/g, ", "),
   );
   const [olevelSubjectText, setOlevelSubjectText] = useState(
-    decodeURIComponent(readParam(params.olevel_subjects)).replace(/,/g, ", "),
+    draftText("olevelSubjectText") ?? decodeURIComponent(readParam(params.olevel_subjects)).replace(/,/g, ", "),
   );
   const rawExamType = readParam(params.exam_type);
+  const draftExamType = draftText("subjectExamType");
   const [subjectExamType, setSubjectExamType] = useState<"utme" | "olevel" | "combined">(
-    earlySecondary ? "olevel" : rawExamType === "olevel" ? "olevel" : rawExamType === "utme" ? "utme" : "combined",
+    earlySecondary
+      ? "olevel"
+      : draftExamType === "olevel" || draftExamType === "utme" || draftExamType === "combined"
+        ? draftExamType
+        : rawExamType === "olevel" ? "olevel" : rawExamType === "utme" ? "utme" : "combined",
   );
   const isAdminExplore = readParam(params.admin) === "1";
   const adminType = readParam(params.admin_type);
@@ -267,16 +297,25 @@ export default function AdmissionBrowseScreen() {
   const selectedSubjectDetails: SubjectProgrammeMatch | null = selected && "matchedSubjectCount" in selected ? selected : null;
 
   // School-first (enrolled) state.
-  const [schoolQuery, setSchoolQuery] = useState("");
-  const [universityQuery, setUniversityQuery] = useState("");
+  const [schoolQuery, setSchoolQuery] = useState(draftText("schoolQuery") ?? "");
+  const [universityQuery, setUniversityQuery] = useState(draftText("universityQuery") ?? "");
   const [schoolMatches, setSchoolMatches] = useState<AdmissionSchool[]>([]);
+  const draftSchool = draft?.chosenSchool as AdmissionSchool | undefined;
   const [chosenSchool, setChosenSchool] = useState<AdmissionSchool | null>(null);
   const initialSchoolId = readParam(params.school_id);
   const initialSchoolName = readParam(params.school_name);
   const [offerings, setOfferings] = useState<SchoolProgrammeOffering[]>([]);
-  const [courseFilter, setCourseFilter] = useState(readParam(params.programme));
+  const [courseFilter, setCourseFilter] = useState(draftText("courseFilter") ?? readParam(params.programme));
   const [resumeHydrated, setResumeHydrated] = useState(!guidanceStudentId);
   const [guidanceComplete, setGuidanceComplete] = useState(false);
+  const persistDraft = !guidanceStudentId && !isFocusedGuidance;
+  useEffect(() => {
+    if (!persistDraft) return;
+    writeBrowseState(browseKey, {
+      fields: { mode, query, subjectText, olevelSubjectText, subjectExamType, schoolQuery, universityQuery, courseFilter, chosenSchool },
+    });
+  }, [browseKey, chosenSchool, courseFilter, mode, olevelSubjectText, persistDraft, query, schoolQuery, subjectExamType, subjectText, universityQuery]);
+  const browseScroll = useBrowseScroll(persistDraft ? browseKey : `${browseKey}|guided`);
   const guidanceCompleteRef = useRef(false);
   const finalizingGuidanceRef = useRef(false);
 
@@ -609,7 +648,12 @@ export default function AdmissionBrowseScreen() {
   // context directly instead of sending the student back to a generic Home or
   // requiring the university search a second time.
   useEffect(() => {
-    if (initialMode !== "school" || !initialSchoolId || chosenSchool) return;
+    if (chosenSchool) return;
+    if (!initialSchoolId && draftSchool?.id && typeof draftSchool.name === "string") {
+      void chooseSchool(draftSchool);
+      return;
+    }
+    if (initialMode !== "school" || !initialSchoolId) return;
     void chooseSchool({
       id: initialSchoolId,
       name: initialSchoolName || "Selected university",
@@ -1091,6 +1135,11 @@ export default function AdmissionBrowseScreen() {
 
   return (
     <ScrollView
+      ref={browseScroll.ref}
+      onScroll={browseScroll.onScroll}
+      onLayout={browseScroll.onLayout}
+      onContentSizeChange={browseScroll.onContentSizeChange}
+      scrollEventThrottle={browseScroll.scrollEventThrottle}
       style={{ flex: 1, backgroundColor: colors.bg }}
       contentContainerStyle={[styles.scroll, webContainer as object]}
       keyboardShouldPersistTaps="handled"
