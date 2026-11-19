@@ -662,6 +662,14 @@ export interface StudentIntelligenceDomain {
   pct: number;
 }
 
+/** Counts of affiliated students at one recorded stage, by signup route. */
+export interface StudentIntelligenceStage {
+  stage: string;
+  total: number;
+  selfSignedUp: number;
+  provisionedByYou: number;
+}
+
 /** Aggregate, k-anonymised roster rollup. Carries no per-student field. */
 export interface StudentIntelligenceSummary {
   organizationId: string;
@@ -669,6 +677,8 @@ export interface StudentIntelligenceSummary {
   selfSignedUp: number;
   provisionedByYou: number;
   unclaimedCodes: number;
+  /** Additive: absent from older servers. */
+  stageCounts?: StudentIntelligenceStage[];
   topDomains: StudentIntelligenceDomain[];
   /** True when the cohort is under the k-anonymity threshold (mix suppressed). */
   belowThreshold?: boolean;

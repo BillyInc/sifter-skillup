@@ -141,7 +141,7 @@ function marketLabel(row: RoleDemandRow): string {
 
 /**
  * The role row columns. Every column that used to be its own screen lives
- * here: NG postings + Global (role demand), Remote % (remote), Salary
+ * here: Local postings + Global (role demand), Remote % (remote), Salary
  * (salary), Trend (trends), Market signal.
  */
 const ROLE_COLUMNS: ColumnDef[] = [
@@ -149,7 +149,7 @@ const ROLE_COLUMNS: ColumnDef[] = [
   { key: "domainName", label: "Domain", width: 120 },
   {
     key: "ngPostings",
-    label: "NG postings",
+    label: "Local postings",
     width: 90,
     render: (val: number) => (val != null ? val.toLocaleString() : "—"),
   },
