@@ -38,3 +38,10 @@ export function getAvatarPreset(avatarUrl: string | null | undefined): AvatarPre
   const id = avatarUrl.slice(AVATAR_PRESET_PREFIX.length);
   return AVATAR_PRESETS.find((preset) => preset.id === id) ?? null;
 }
+
+export const AVATAR_UPLOAD_PREFIX = 'upload:';
+
+/** True when the stored value refers to an uploaded photo (resolved to a signed URL by the API). */
+export function isUploadedAvatar(avatarUrl: string | null | undefined): boolean {
+  return typeof avatarUrl === 'string' && avatarUrl.startsWith(AVATAR_UPLOAD_PREFIX);
+}

@@ -317,6 +317,14 @@ export const API = {
   getMe: (): Promise<CompatAny> => request<UserProfile>('/api/users/me'),
   updateMe: (updates: Partial<UserProfile> | Record<string, unknown>): Promise<CompatAny> =>
     request<UserProfile>('/api/users/me', { method: 'PUT', body: JSON.stringify(updates) }),
+  /** Upload a profile photo (multipart). The server validates, re-encodes and stores it privately. */
+  uploadAvatar: (file: Blob, filename: string): Promise<{ avatar_url: string; avatar_display_url: string | null }> => {
+    const body = new FormData();
+    body.append('file', file, filename);
+    return request('/api/users/me/avatar', { method: 'POST', body, timeoutMs: 60_000 });
+  },
+  removeAvatar: (): Promise<{ avatar_url: null; avatar_display_url: null }> =>
+    request('/api/users/me/avatar', { method: 'DELETE' }),
   recordLegalAcceptance: (acceptance: {
     termsVersion: string;
     privacyVersion: string;

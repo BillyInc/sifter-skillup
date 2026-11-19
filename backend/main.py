@@ -8,7 +8,7 @@ from contextlib import asynccontextmanager
 from datetime import datetime, date, timedelta
 from typing import Optional
 
-from fastapi import FastAPI, Depends, HTTPException, BackgroundTasks, Request, Header
+from fastapi import FastAPI, Depends, HTTPException, BackgroundTasks, Request, Header, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
@@ -21,6 +21,7 @@ from models import *
 from auth import Auth
 from logger import log
 from middleware.session_middleware import DeviceSessionMiddleware
+import avatar_storage
 from profile_validation import DisplayNameError, validate_display_name
 from legal_versions import CURRENT_PRIVACY_VERSION, CURRENT_TERMS_VERSION
 
@@ -851,6 +852,8 @@ async def get_me(current_user: dict = Depends(Auth.get_current_user)):
     # Keep them pending so the client routes them to user-type selection.
     current_user.setdefault("account_type", "pending")
     _hydrate_account_type_selection(current_user)
+    current_user["avatar_display_url"] = avatar_storage.avatar_display_url(
+        current_user.get("avatar_url"), current_user["id"])
     return ResponseModel(data=current_user)
 
 
@@ -871,6 +874,12 @@ async def update_me(updates: UserUpdate, current_user: dict = Depends(Auth.get_c
     if not payload:
         current_user.pop("password_hash", None)
         return ResponseModel(data=current_user)
+    if "avatar_url" in payload:
+        try:
+            payload["avatar_url"] = avatar_storage.validate_avatar_url(
+                payload["avatar_url"], current_user["id"])
+        except avatar_storage.AvatarError as exc:
+            raise HTTPException(status_code=400, detail=str(exc))
     if "display_name" in payload:
         try:
             payload["display_name"] = validate_display_name(payload["display_name"])
@@ -887,7 +896,81 @@ async def update_me(updates: UserUpdate, current_user: dict = Depends(Auth.get_c
         raise
     user.update(payload)
     user.pop("password_hash", None)
+    if "avatar_url" in payload:
+        old_key = avatar_storage.uploaded_key(current_user.get("avatar_url"))
+        if old_key and old_key != avatar_storage.uploaded_key(payload["avatar_url"]):
+            _purge_avatar_objects([old_key])
+        user["avatar_display_url"] = avatar_storage.avatar_display_url(
+            user.get("avatar_url"), current_user["id"])
     return ResponseModel(data=user)
+
+
+def _purge_avatar_objects(keys: list) -> None:
+    """Best-effort removal; a storage outage never fails the request."""
+    try:
+        avatar_storage.get_storage().delete(list(keys))
+    except Exception as exc:
+        log.warning("Avatar object removal failed", error=str(exc))
+
+
+@app.post("/api/users/me/avatar", response_model=ResponseModel)
+async def upload_avatar(
+    request: Request,
+    file: UploadFile = File(...),
+    current_user: dict = Depends(Auth.get_current_user),
+):
+    """Replace the profile photo. Only the owner can ever see it."""
+    declared = request.headers.get("content-length")
+    if declared and declared.isdigit() and int(declared) > avatar_storage.MAX_UPLOAD_BYTES + 64 * 1024:
+        raise HTTPException(status_code=413, detail="That photo is larger than 2 MB. Choose a smaller one.")
+    raw = await file.read(avatar_storage.MAX_UPLOAD_BYTES + 1)
+    try:
+        webp = avatar_storage.process_avatar_image(raw)
+    except avatar_storage.AvatarError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    user_id = current_user["id"]
+    key = avatar_storage.new_object_key(user_id)
+    storage = avatar_storage.get_storage()
+    try:
+        storage.upload(key, webp, "image/webp")
+    except Exception as exc:
+        log.error("Avatar upload to storage failed", error=str(exc))
+        raise HTTPException(status_code=503, detail="Photo upload is temporarily unavailable. Try again later.")
+    value = f"{avatar_storage.UPLOAD_PREFIX}{key}"
+    try:
+        db.get_service_client().table("users").update({"avatar_url": value}).eq("id", user_id).execute()
+    except Exception as exc:
+        log.error("Avatar reference save failed", error=str(exc))
+        _purge_avatar_objects([key])
+        raise HTTPException(status_code=500, detail="Could not save your photo. Try again.")
+    old_key = avatar_storage.uploaded_key(current_user.get("avatar_url"))
+    if old_key and old_key != key:
+        _purge_avatar_objects([old_key])
+    return ResponseModel(data={
+        "avatar_url": value,
+        "avatar_display_url": avatar_storage.avatar_display_url(value, user_id),
+    })
+
+
+@app.delete("/api/users/me/avatar", response_model=ResponseModel)
+async def remove_avatar(current_user: dict = Depends(Auth.get_current_user)):
+    """Remove the uploaded photo and fall back to the initial."""
+    user_id = current_user["id"]
+    try:
+        keys = avatar_storage.get_storage().list_keys(user_id)
+    except Exception:
+        keys = []
+    current_key = avatar_storage.uploaded_key(current_user.get("avatar_url"))
+    if current_key and current_key not in keys:
+        keys.append(current_key)
+    if avatar_storage.is_uploaded(current_user.get("avatar_url")):
+        try:
+            db.get_service_client().table("users").update({"avatar_url": None}).eq("id", user_id).execute()
+        except Exception as exc:
+            log.error("Avatar reference clear failed", error=str(exc))
+            raise HTTPException(status_code=500, detail="Could not remove your photo. Try again.")
+    _purge_avatar_objects(keys)
+    return ResponseModel(data={"avatar_url": None, "avatar_display_url": None})
 
 
 @app.post("/api/users/legal-acceptance", response_model=ResponseModel)
@@ -956,7 +1039,14 @@ async def delete_me(
         "email": f"deleted-{current_user['id']}@deleted.invalid",
         "password_hash": None,
         "onboarding_completed": False,
+        "avatar_url": None,
     }
+    # Purge the stored photo immediately (it is personal data); best effort so
+    # a storage outage never leaves the account active.
+    try:
+        _purge_avatar_objects(avatar_storage.get_storage().list_keys(current_user["id"]))
+    except Exception as exc:
+        log.warning("Avatar purge skipped during deletion", error=str(exc))
     try:
         _soft_delete_user_compat(service, current_user["id"], deletion_updates)
     except Exception as exc:

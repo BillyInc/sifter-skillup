@@ -28,6 +28,7 @@ from pydantic import BaseModel
 
 from auth import Auth
 from database import db
+from avatar_storage import public_avatar_url
 from models import ResponseModel
 from logger import log
 from public_name import (
@@ -176,7 +177,7 @@ async def my_guild(current_user: dict = Depends(Auth.get_current_user)):
 
     # Get member count
     try:
-        members = _guild_members(guild_id, "id, points, streak, starknet_address", 10)
+        members = [{**m, "avatar_url": public_avatar_url(m.get("avatar_url"))} for m in _guild_members(guild_id, "id, points, streak, starknet_address", 10)]
     except Exception:
         members = []
 
@@ -231,7 +232,7 @@ async def guild_detail(
         raise HTTPException(404, "Guild not found")
 
     try:
-        members = _guild_members(guild_id, "id, points, streak, avatar_url, starknet_address", 50)
+        members = [{**m, "avatar_url": public_avatar_url(m.get("avatar_url"))} for m in _guild_members(guild_id, "id, points, streak, avatar_url, starknet_address", 50)]
     except Exception:
         members = []
 

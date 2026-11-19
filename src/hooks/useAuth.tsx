@@ -35,6 +35,8 @@ export interface UserProfile {
   /** Optional name the user chose to be shown; absent when the backend predates it. */
   display_name?: string | null;
   avatar_url: string | null;
+  /** Short-lived signed URL for the owner's uploaded photo; absent for presets/none. */
+  avatar_display_url?: string | null;
   auth_provider: string;
   /** Discriminates the student app from the institutional/admin side. Legacy
    *  completed accounts may omit it until they choose a persona. */
@@ -602,6 +604,7 @@ function _normalise(raw: any): UserProfile {
     // Keep `undefined` when the API omits it so the UI can feature-detect support.
     ...(raw.display_name !== undefined ? { display_name: raw.display_name ?? null } : {}),
     avatar_url: raw.avatar_url ?? null,
+    ...(raw.avatar_display_url ? { avatar_display_url: String(raw.avatar_display_url) } : {}),
     auth_provider: raw.auth_provider ?? 'guest',
     account_type: raw.account_type,
     account_type_selected_at: raw.account_type_selected_at ?? null,
