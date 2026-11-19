@@ -47,4 +47,9 @@ CREATE INDEX IF NOT EXISTS idx_student_subject_grade_sets_user_current
 -- direct client access is ever wanted.
 ALTER TABLE skillup_dev.student_subject_grade_sets ENABLE ROW LEVEL SECURITY;
 
+-- Same privilege posture as student_subject_choices (migration_student_pipeline_live.sql):
+-- with no policies RLS already denies reads/writes, but TRUNCATE is not covered by
+-- RLS, so client roles must not hold any table privilege on the grade history.
+REVOKE ALL ON TABLE skillup_dev.student_subject_grade_sets FROM anon, authenticated;
+
 COMMIT;
