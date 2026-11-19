@@ -99,7 +99,7 @@ function universityRows(result: CareerSearchResult): SearchResult[] {
     href: result.userType === "student"
       ? `/(tabs)/explore/admission?mode=school&school_id=${encodeURIComponent(item.id)}&user_type=student&journey=undergraduate_programmes`
       : `/(tabs)/explore/admission?mode=school&school_id=${encodeURIComponent(item.id)}`,
-    icon: "building",
+    icon: "home",
   }));
 }
 
