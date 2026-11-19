@@ -16,6 +16,9 @@ import { learningPlanRouteKey, type LearningPlanRoute } from "@/lib/guidedLearni
 import { studentContextSections, studentFacingCopy, studentOutputCopy, studentResourceRationale } from "@/lib/studentExplanation";
 import { useExploreNav } from "@/lib/exploreNav";
 
+/** Optional fields some resource candidates carry; the union of candidate literals does not always declare them. */
+type ResourceExtras = { locator?: string | null; rationale?: string | null };
+
 const ITEM_TYPE_LABEL: Record<CareerContextItem["itemType"], string> = {
   skill: "Skill", tool: "Tool", competency: "Competency", certification: "Certification or qualification",
   method: "Method", knowledge: "Knowledge", resource: "Learning resource",
@@ -428,13 +431,13 @@ export function ContextualItemList({ items, itemTypes, title = "Your preparation
             <Text style={[styles.detailLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Learn more about {item.name}</Text>
             {resourceButtons.map((link) => <View key={link.key} style={[styles.resourceEntry, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
               <View style={styles.resourceEntryMeta}><LearningResourceBadge resource={link} /><Text style={[styles.resourceAccess, { color: colors.textRole.muted }]}>{link.access || "Check the provider's current access terms."}</Text></View>
-              {link.locator ? <Text style={[styles.resourceLocator, { color: colors.textRole.secondary }]}>Where to start: {link.locator}</Text> : null}
-              {link.rationale ? <Text style={[styles.resourceLocator, { color: colors.textRole.secondary }]}>{link.rationale}</Text> : null}
+              {(link as ResourceExtras).locator ? <Text style={[styles.resourceLocator, { color: colors.textRole.secondary }]}>Where to start: {(link as ResourceExtras).locator}</Text> : null}
+              {(link as ResourceExtras).rationale ? <Text style={[styles.resourceLocator, { color: colors.textRole.secondary }]}>{(link as ResourceExtras).rationale}</Text> : null}
               <View style={styles.resourceEntryActions}>
                 <ExternalLinkGuard
                   url={link.url}
                   label={link.label}
-                  description={link.rationale || `Open this ${link.mediaType || "learning"} resource for ${item.name}.`}
+                  description={(link as ResourceExtras).rationale || `Open this ${link.mediaType || "learning"} resource for ${item.name}.`}
                   style={styles.resourceButton}
                   textStyle={[styles.resourceLinkText, { color: colors.accentRole.action }]}
                 />

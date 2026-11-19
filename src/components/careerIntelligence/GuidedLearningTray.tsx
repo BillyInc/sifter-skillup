@@ -789,7 +789,7 @@ export function GuidedLearningTray({
           </View>;
         })}
       </ScrollView> : null}
-      {displayMode !== "icon" ? <View style={styles.actionRow}>
+      {(displayMode as string) !== "icon" ? <View style={styles.actionRow}>
         {actionNotice || statusMessage ? <Text accessibilityLiveRegion="polite" style={[styles.actionStatus, { color: colors.textRole.secondary }]}>{actionNotice ?? statusMessage}</Text> : null}
         {onCreateD078Route ? <RouteButton label="Build a separate route" onPress={onCreateD078Route} variant="secondary" style={styles.actionButton} /> : null}
         {onSave ? <RouteButton label="Save" onPress={() => { setActionNotice(null); onSave(); }} variant="quiet" style={styles.actionButton} /> : null}

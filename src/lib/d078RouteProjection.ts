@@ -1026,7 +1026,7 @@ export function projectD078Route(selection: D078Selection): D078Projection {
         familyLabel: family?.label ?? familyEdge.sourceId,
         taskId: task.id,
         taskLabel: task.label,
-        explanation: familyEdge.explanation,
+        explanation: familyEdge.explanation ?? "",
         ...(typeof task.learner_output === "string" || Array.isArray(task.learner_output) ? { learnerOutput: task.learner_output as string | string[] } : {}),
         ...(Array.isArray(task.limitations) ? { limitations: task.limitations as string[] } : {}),
         ...(Array.isArray(task.task_conditions) ? {
