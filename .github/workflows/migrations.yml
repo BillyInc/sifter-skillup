@@ -1,0 +1,88 @@
+# Migration runner checks (phase 1: static, read-only).
+#
+# NO DATABASE, NO SECRETS. This workflow never connects to Postgres/Supabase and
+# never executes SQL: it lints the SQL text, validates the manifest, prints the
+# plan (what would run, in order) and runs the migrate unit tests, which use only
+# synthetic files in temp directories. Do not add DATABASE_URL or any secret
+# here; the throwaway-Postgres, staging and approval-gated production jobs are a
+# later phase (see backend/migrate/README.md "Next phase").
+name: Migrations
+
+on:
+  pull_request:
+    paths:
+      - 'backend/migrate/**'
+      - 'backend/migration_*.sql'
+      - 'backend/migration_*.sql.gz'
+      - 'backend/seed_*.sql'
+      - 'backend/seed_*.sql.gz'
+      - 'backend/seed_*_parts*/**'
+      - 'backend/patch_*.sql'
+      - 'backend/tests/test_migrate_*.py'
+      - '.github/workflows/migrations.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'backend/migrate/**'
+      - 'backend/migration_*.sql'
+      - 'backend/migration_*.sql.gz'
+      - 'backend/seed_*.sql'
+      - 'backend/seed_*.sql.gz'
+      - 'backend/seed_*_parts*/**'
+      - 'backend/patch_*.sql'
+      - 'backend/tests/test_migrate_*.py'
+      - '.github/workflows/migrations.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: migrations-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  migrations:
+    name: Migration lint, plan and tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      # Stdlib only; run from the repository root, exactly as documented.
+      - name: Verify manifest
+        run: python -m backend.migrate verify-manifest
+
+      # Exits 1 on any un-waived lint error (differing .sql/.sql.gz copies, a
+      # backslash-quote in a normal string, DROP CONSTRAINT without re-add, SQL
+      # whose kind understates what it destroys). Waived findings are still printed.
+      - name: Lint migrations
+        run: python -m backend.migrate lint --json migrate-lint.json
+
+      - name: Plan (dry run, empty ledger)
+        if: always()
+        run: |
+          python -m backend.migrate plan --dry-run > migrate-plan.txt
+          python -m backend.migrate plan --dry-run --json > migrate-plan.json
+          cat migrate-plan.txt
+
+      - name: Upload plan
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: migration-plan
+          path: |
+            migrate-plan.txt
+            migrate-plan.json
+            migrate-lint.json
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Migrate unit tests
+        working-directory: backend
+        run: |
+          uv sync --extra test
+          uv run pytest tests/test_migrate_*.py -q
