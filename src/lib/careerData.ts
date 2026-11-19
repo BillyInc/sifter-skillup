@@ -347,7 +347,48 @@ export interface JambProgrammeDetail extends JambProgrammeSuggestion {
   requirements?: JambProgrammeRequirements;
 }
 
+export type GradeCheckStatus = "met" | "not_met" | "unknown";
+
+export interface GradeCheckCondition {
+  kind: string;
+  status: GradeCheckStatus;
+  required: string;
+  note: string;
+  subject?: string;
+  entered?: string | number;
+}
+
+/** Self-reported O-level grade check returned by the matcher when grades are sent. */
+export interface GradeCheck {
+  status: GradeCheckStatus;
+  conditions: GradeCheckCondition[];
+  basis?: "self_reported" | string;
+  bandsNote?: string;
+  utmeScoreNote?: string;
+}
+
+/** One saved (versioned) O-level grade set. `grades` is keyed by subject code. */
+export interface SubjectGradeSet {
+  id?: string | null;
+  version: number;
+  examBody: "waec" | "neco" | "other";
+  grades: Record<string, string>;
+  selfReported?: boolean;
+  createdAt?: string | null;
+  supersededAt?: string | null;
+}
+
+export interface SubjectGradesView {
+  supported: boolean;
+  current: SubjectGradeSet | null;
+  versions: SubjectGradeSet[];
+  /** subject code -> display name */
+  subjectNames?: Record<string, string>;
+  created?: boolean;
+}
+
 export interface SubjectProgrammeMatch extends JambProgrammeSuggestion {
+  gradeCheck?: GradeCheck;
   matchedSubjectCount: number;
   matchedSubjects: string[];
   missingSubjects?: string[];
@@ -361,6 +402,7 @@ export interface SubjectProgrammeMatch extends JambProgrammeSuggestion {
     | "eligible"
     | "utme_match_olevel_gap"
     | "utme_match_olevel_unparsed"
+    | "olevel_grade_not_met"
     | string;
   requirementText?: string | null;
   matchBasis:
@@ -379,6 +421,7 @@ export interface SubjectProgrammeMatch extends JambProgrammeSuggestion {
     examType: "utme" | "olevel" | string;
     matchedSubjects: string[];
     requirementText?: string | null;
+    gradeCheck?: GradeCheck;
   }>;
 }
 
@@ -500,14 +543,40 @@ export const careerData = {
     profile: StartingPointProfile,
   ): Promise<DataState<StartingPointProfile>> {
     try {
+      // Grades live only in the versioned grade-set store, never in the
+      // unversioned starting-point copy.
+      const { olevelGrades: _grades, olevelExamBody: _body, ...rest } = profile;
       return await request<DataState<StartingPointProfile>>(
         `/api/student/starting-point`,
-        { method: "POST", body: JSON.stringify(profile) },
+        { method: "POST", body: JSON.stringify(rest) },
       );
     } catch {
       return comingSoon<StartingPointProfile>(
         "Could not save starting point to the server.",
       );
+    }
+  },
+
+  async getSubjectGrades(): Promise<DataState<SubjectGradesView>> {
+    try {
+      return await request<DataState<SubjectGradesView>>(`/api/student/subject-grades`);
+    } catch {
+      return comingSoon<SubjectGradesView>("Saved grades are temporarily unavailable.");
+    }
+  },
+
+  /** Saves a NEW version of the grade set (older versions are kept). */
+  async saveSubjectGrades(
+    examBody: "waec" | "neco" | "other",
+    grades: Record<string, string>,
+  ): Promise<DataState<SubjectGradesView>> {
+    try {
+      return await request<DataState<SubjectGradesView>>(`/api/student/subject-grades`, {
+        method: "POST",
+        body: JSON.stringify({ exam_body: examBody, grades }),
+      });
+    } catch {
+      return comingSoon<SubjectGradesView>("Could not save your grades. Please try again.");
     }
   },
 
@@ -555,8 +624,13 @@ export const careerData = {
       examType?: "utme" | "olevel" | "combined";
       olevelSubjects?: string[];
       schoolId?: string;
+      /** Self-reported O-level grades keyed by subject name. Sent via POST only when non-empty. */
+      olevelGrades?: Record<string, string>;
     },
   ): Promise<DataState<SubjectProgrammeMatch[]>> {
+    const gradeEntries = Object.entries(options?.olevelGrades ?? {})
+      .filter(([, grade]) => Boolean(grade))
+      .sort(([a], [b]) => a.localeCompare(b));
     const key = [
       "programme-matches",
       [...subjects].sort().join(",").toLowerCase(),
@@ -564,10 +638,28 @@ export const careerData = {
       options?.examType ?? "",
       [...(options?.olevelSubjects ?? [])].sort().join(",").toLowerCase(),
       options?.schoolId ?? "",
+      // Graded and ungraded results must never share a cache entry.
+      gradeEntries.length ? `grades=${gradeEntries.map(([k, v]) => `${k.toLowerCase()}:${v}`).join("|")}` : "",
     ].join(":");
     return readThrough(
       key,
       async () => {
+        if (gradeEntries.length) {
+          return request<DataState<SubjectProgrammeMatch[]>>(
+            `/api/student/programmes/by-subjects`,
+            {
+              method: "POST",
+              body: JSON.stringify({
+                subjects: subjects.join(","),
+                olevel_subjects: (options?.olevelSubjects ?? []).join(","),
+                exam_type: options?.examType ?? "combined",
+                stream: stream || undefined,
+                school_id: options?.schoolId || undefined,
+                olevel_grades: Object.fromEntries(gradeEntries),
+              }),
+            },
+          );
+        }
         const qs = new URLSearchParams();
         qs.set("subjects", subjects.join(","));
         if (stream) qs.set("stream", stream);

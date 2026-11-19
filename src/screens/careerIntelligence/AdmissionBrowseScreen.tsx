@@ -26,6 +26,9 @@ import { clearOnboardingDraft } from "@/lib/onboardingDraft";
 import { useAuth } from "@/hooks/useAuth";
 import { invalidateGuidancePathCache } from "@/components/careerIntelligence";
 import { LiveSubjectMultiSelect, MAX_OLEVEL_SUBJECTS } from "@/components/onboarding/LiveSubjectMultiSelect";
+import { OlevelGradePicker } from "@/components/onboarding/OlevelGradePicker";
+import { GradeCheckNote } from "@/components/careerIntelligence/GradeCheckNote";
+import { UTME_SCORE_COPY, pruneGrades, sameGrades, type OlevelExamBody } from "@/lib/olevelGrades";
 import { useExploreNav } from "@/lib/exploreNav";
 import { isGuidanceContextCompatible } from "@/lib/guidanceRouteContext";
 import { adminLearnerAudienceForOrg, type AdminLearnerAudience } from "@/lib/adminLearnerAudience";
@@ -123,6 +126,9 @@ function normalizeGuidanceStage(stage: GuidanceResumeSnapshot["stage"]): Guidanc
 }
 
 function matchSummary(item: SubjectProgrammeMatch): string {
+  if (item.eligibilityStatus === "olevel_grade_not_met") {
+    return "Your subjects match, but a grade you entered may not meet this requirement. Confirm with JAMB or the institution.";
+  }
   if (item.matchBasis === "combined") {
     if (item.eligibilityStatus === "eligible") {
       return "UTME gate matches and O-level requirement is satisfied.";
@@ -263,6 +269,11 @@ export default function AdmissionBrowseScreen() {
   const [selectedSubjectMatch, setSelectedSubjectMatch] = useState<SubjectProgrammeMatch | null>(null);
   const [subjectMatchStatus, setSubjectMatchStatus] = useState<SubjectMatchStatus>("idle");
   const [subjectMatchAttempted, setSubjectMatchAttempted] = useState(false);
+  // Optional self-reported O-level grades keyed by subject name. `savedGradesRef`
+  // is the last set known to be stored, so a changed set is saved as a NEW version.
+  const [olevelGrades, setOlevelGrades] = useState<Record<string, string>>({});
+  const [olevelExamBody, setOlevelExamBody] = useState<OlevelExamBody>("waec");
+  const savedGradesRef = useRef<{ grades: Record<string, string>; body: OlevelExamBody }>({ grades: {}, body: "waec" });
   const [programmeDetail, setProgrammeDetail] = useState<JambProgrammeDetail | null>(null);
   const selectedSubjectDetails: SubjectProgrammeMatch | null = selected && "matchedSubjectCount" in selected ? selected : null;
 
@@ -365,7 +376,11 @@ export default function AdmissionBrowseScreen() {
       setGuidanceComplete(false);
     }
     if (kind === "utme") setSubjectText(next.join(", "));
-    else setOlevelSubjectText(next.join(", "));
+    else {
+      setOlevelSubjectText(next.join(", "));
+      // Removing a subject removes its grade.
+      setOlevelGrades((prev) => pruneGrades(prev, next));
+    }
     // A previous match is no longer valid after the subject set changes.
     // Requiring a fresh click also prevents stale results from appearing while
     // the selection is below the minimum gate.
@@ -374,6 +389,53 @@ export default function AdmissionBrowseScreen() {
     setSubjectMatchAttempted(false);
     setNotice(null);
   };
+
+  const updateGrades = (next: { grades: Record<string, string>; examBody: OlevelExamBody }) => {
+    setOlevelGrades(next.grades);
+    setOlevelExamBody(next.examBody);
+    // Earlier results were computed from the previous grades; never show them
+    // as if they reflect the new ones. A fresh match is required.
+    setCandidates([]);
+    setSelected(null);
+    setSubjectMatchAttempted(false);
+    setNotice(null);
+  };
+
+  // Load the student's current saved grades (grades are optional; skip silently
+  // when the store is unavailable or empty). Falls back to the on-device copy.
+  useEffect(() => {
+    if (earlySecondary) return;
+    let alive = true;
+    (async () => {
+      let grades: Record<string, string> = {};
+      let body: OlevelExamBody = "waec";
+      try {
+        const state = await careerData.getSubjectGrades();
+        const current = state.status === "real" ? state.data?.current : null;
+        if (current) {
+          const names = state.data?.subjectNames ?? {};
+          grades = Object.fromEntries(
+            Object.entries(current.grades).map(([code, grade]) => [names[code] ?? code, grade]),
+          );
+          body = current.examBody;
+        }
+      } catch { /* optional */ }
+      if (!Object.keys(grades).length) {
+        try {
+          const local = await getStartingPoint(user?.id);
+          if (local?.olevelGrades) {
+            grades = local.olevelGrades;
+            body = local.olevelExamBody ?? "waec";
+          }
+        } catch { /* optional */ }
+      }
+      if (!alive || !Object.keys(grades).length) return;
+      savedGradesRef.current = { grades, body };
+      setOlevelGrades((prev) => (Object.keys(prev).length ? prev : grades));
+      setOlevelExamBody(body);
+    })();
+    return () => { alive = false; };
+  }, [earlySecondary, user?.id]);
 
   useEffect(() => {
     if (!subjectLimitExceeded) return;
@@ -518,6 +580,15 @@ export default function AdmissionBrowseScreen() {
     setSubjectMatchAttempted(true);
     setNotice(null);
     setSelected(null);
+    const gradesForMatch = earlySecondary || subjectExamType === "utme" ? {} : pruneGrades(olevelGrades, olevelSubjects);
+    if (
+      Object.keys(gradesForMatch).length &&
+      (!sameGrades(gradesForMatch, savedGradesRef.current.grades) || olevelExamBody !== savedGradesRef.current.body)
+    ) {
+      // Changed grades become a NEW saved version (older versions are kept).
+      savedGradesRef.current = { grades: gradesForMatch, body: olevelExamBody };
+      careerData.saveSubjectGrades(olevelExamBody, gradesForMatch).catch(() => {});
+    }
     try {
       const state = await careerData.getProgrammesBySubjects(
         subjectExamType === "olevel" ? olevelSubjects : subjects,
@@ -526,6 +597,7 @@ export default function AdmissionBrowseScreen() {
             examType: subjectExamType,
           olevelSubjects,
           schoolId: (selectedAdmissionSchool?.schoolId ?? chosenSchool?.id ?? initialSchoolId) || undefined,
+          ...(Object.keys(gradesForMatch).length ? { olevelGrades: gradesForMatch } : {}),
         },
       );
       const nextCandidates = (state.status === "real" || state.status === "fallback") && state.data ? state.data : [];
@@ -1414,6 +1486,17 @@ export default function AdmissionBrowseScreen() {
               }
             />
           ) : null}
+          {subjectExamType !== "utme" && !earlySecondary && olevelSubjects.length ? (
+            <OlevelGradePicker
+              subjects={olevelSubjects}
+              grades={olevelGrades}
+              examBody={olevelExamBody}
+              onChange={updateGrades}
+            />
+          ) : null}
+          {subjectExamType !== "olevel" ? (
+            <Text style={[styles.hint, { color: colors.textMuted }]}>{UTME_SCORE_COPY}</Text>
+          ) : null}
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={runSubjectMatch}
@@ -1498,6 +1581,7 @@ export default function AdmissionBrowseScreen() {
                   <Text style={[styles.cardMeta, { color: active ? colors.textInverse : colors.textMuted }]}>
                     {matchSummary(item)}
                   </Text>
+                  <GradeCheckNote item={item} />
                   {item.olevelMissingSubjects?.length ? (
                     <Text style={[styles.cardMeta, { color: active ? colors.textInverse : colors.textMuted }]}>
                       O-level gaps: {item.olevelMissingSubjects.slice(0, 2).join("; ")}
