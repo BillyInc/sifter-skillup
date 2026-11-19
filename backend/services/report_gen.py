@@ -434,6 +434,44 @@ def _d078_nodes() -> dict:
         return {}
 
 
+_AREA_TASK_ITEM_EVIDENCE = {
+    "reviewed_area_task_item_synthesis": {"area_task_evidence", "area_item_evidence"},
+    "official_casevo_project_and_paper_plus_existing_abm_area_route": {"tool_capability_evidence", "area_task_route_context"},
+    "reviewed_peer_method_paper_and_project_learning_material": {"area_item_evidence", "task_specific_learning_resource"},
+    "reviewed_canonical_domain_tool_area_context": {"domain_item_evidence", "area_task_evidence"},
+}
+
+
+def _d078_task_linked_area_items(data: dict, nodes: dict, area_id: str, family_ids: set[str]) -> set[str]:
+    """Area items reached from a route's task families by a reviewed edge.
+
+    Mirrors areaItemEdgesForTaskFamilies in src/lib/d078RouteProjection.ts: the
+    route contract no longer lists these items in `area_item_ids`, so the report
+    must follow the same reviewed task_has_area_learning_item edges as the UI.
+    """
+    if not family_ids:
+        return set()
+    found: set[str] = set()
+    for edge in data.get("typed_relationship_edges", []):
+        if (not isinstance(edge, dict) or edge.get("relationship") != "task_has_area_learning_item"
+                or edge.get("status") != "resolved_ready_for_use" or edge.get("sourceId") not in family_ids):
+            continue
+        roles = _AREA_TASK_ITEM_EVIDENCE.get(str(edge.get("evidenceBasis") or ""))
+        references = edge.get("sourceReferences") or []
+        if not roles or not any(
+            isinstance(ref, dict) and str(ref.get("source_role") or "") in roles
+            and (str(ref.get("url") or "").strip() or str(ref.get("locator") or "").strip())
+            for ref in references
+        ):
+            continue
+        item = nodes.get(edge.get("targetId"))
+        if (isinstance(item, dict) and (item.get("area_id") == area_id or edge.get("areaId") == area_id)
+                and item.get("student_visible") is True and item.get("student_selectable") is not False
+                and item.get("approval") != "unapproved"):
+            found.add(str(edge["targetId"]))
+    return found
+
+
 def _d078_saved_route(path: dict, selection: Optional[dict] = None) -> Optional[dict]:
     snapshot = path.get("learningPlanSnapshot") if isinstance(path.get("learningPlanSnapshot"), dict) else {}
     if snapshot.get("dataVersion") != "guided-experience-d078-v1":
@@ -495,6 +533,8 @@ def _d078_saved_route(path: dict, selection: Optional[dict] = None) -> Optional[
         area_domain_items = allowed_domain_items_by_area.setdefault(area_id, set())
         area_tools = allowed_tools_by_area.setdefault(area_id, set())
         allowed_area_items.setdefault(area_id, set()).update(strings(route.get("area_item_ids")))
+        allowed_area_items[area_id].update(
+            _d078_task_linked_area_items(data, nodes, area_id, set(strings(route.get("task_family_ids")))))
         route_domain_items = strings(route.get("task_linked_domain_item_ids")) + strings(route.get("domain_downstream_item_ids")) + strings(route.get("available_item_ids"))
         route_tools = strings(route.get("tool_ids")) + strings(route.get("domain_tool_ids"))
         allowed_domain_items.update(route_domain_items)
