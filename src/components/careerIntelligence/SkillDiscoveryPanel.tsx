@@ -20,6 +20,7 @@ import { useResponsive } from "@/hooks/useResponsive";
 import { pending, type DataState, type SkillDiscoveryResult } from "@/types/career";
 import { SectionLabel } from "./index";
 import { ExternalLinkGuard } from "./ExternalLinkGuard";
+import { MappingFeedbackButton } from "./MappingFeedbackButton";
 import { isStudentLearningResource, studentSafeUrl } from "@/lib/studentCareerBoundary";
 
 type Intent = "learned" | "intended";
@@ -392,23 +393,40 @@ function SkillResults({
         <View style={styles.resultIntroIcon}><Feather name="map" size={18} color={colors.accentRole.action} /></View>
         <View style={{ flex: 1, gap: 3 }}>
           <Text style={[CompassFonts.bodyBold, { color: colors.textRole.primary, fontSize: FontSize.md }]}>{hasTerms ? "Your skills, translated into routes" : "Explore the skill map"}</Text>
-          <Text style={[styles.help, { color: colors.textRole.secondary }]}>{hasTerms ? intent === "learned" ? "These are not promises of employment. They are source-backed connections in the career catalogue, with the preparation still needed shown underneath." : "These routes show where the skill is used. Use the suggested additions to build a more complete foundation." : "Choose a cluster or add a skill to see the connected career graph."}</Text>
+          <Text style={[styles.help, { color: colors.textRole.secondary }]}>{hasTerms ? intent === "learned" ? "These are not promises of employment. They are source-backed connections in the career catalogue, with the preparation still needed shown underneath." : "These routes show where the skill may be useful. Use the suggested additions to build a more complete foundation." : "Choose a cluster or add a skill to see the connected career graph."}</Text>
         </View>
       </View>
 
       {hasTerms && paths.length ? (
         <View style={styles.resultSection}>
-          <SectionLabel>POSSIBLE ROUTES FROM YOUR SKILLS</SectionLabel>
-           <Text style={[styles.help, { color: colors.textRole.muted }]}>A route shows how your selected skills connect to a domain, then to a subgroup and role. Entry-level routes are placed first.</Text>
+          <SectionLabel>ROUTES THESE SKILLS COULD CONNECT TO</SectionLabel>
+           <Text style={[styles.help, { color: colors.textRole.muted }]}>A route shows how your selected skills could connect to a domain, then to a subgroup and role. Entry-level routes are placed first.</Text>
           <View style={styles.pathList}>
             {visiblePaths.map((path, index) => (
-              <TouchableOpacity key={`${path.domainId}-${path.roleKey ?? path.subgroupId ?? index}`} onPress={() => onOpenPath(path)} accessibilityRole="button" style={[styles.pathCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
+              <View key={`${path.domainId}-${path.roleKey ?? path.subgroupId ?? index}`} style={{ gap: Spacing.xs }}>
+              <TouchableOpacity onPress={() => onOpenPath(path)} accessibilityRole="button" style={[styles.pathCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
                 <View style={styles.pathTop}><View style={[styles.pathIndex, { backgroundColor: colors.surface.subtle }]}><Text style={{ color: colors.accentRole.action, fontSize: FontSize.xs, fontWeight: "900" }}>{index + 1}</Text></View><View style={{ flex: 1, gap: 2 }}><Text style={{ color: colors.textRole.muted, fontSize: FontSize.xs, fontWeight: "700" }}>{path.domainName}</Text><Text style={{ color: colors.textRole.primary, fontSize: FontSize.md, fontWeight: "800" }}>{path.subgroupName ? `${path.subgroupName} → ` : ""}{path.roleName ?? "Explore this domain"}</Text></View><Feather name="arrow-up-right" size={17} color={colors.accentRole.action} /></View>
                 <View style={styles.routeMeta}><Text style={{ color: colors.textRole.muted, fontSize: FontSize.xs }}>{path.tier ? `${path.tier} route` : "Domain route"}</Text><MatchMeta label={path.matchLabel} color={colors.accentRole.action} /></View>
                 <Text style={[styles.help, { color: colors.textRole.secondary }]}>{path.explanation}</Text>
                 {path.matchedSkills.length ? <MatchedSkillChips values={path.matchedSkills} color={colors.accentRole.success} limit={3} /> : null}
                 {path.gaps.length ? <Text style={[styles.help, { color: colors.textRole.muted }]}>Preparation still needed: {path.gaps.slice(0, 3).join(", ")}{path.gaps.length > 3 ? ` +${path.gaps.length - 3} more` : ""}</Text> : null}
               </TouchableOpacity>
+              {!adminMode ? (
+                <MappingFeedbackButton
+                  compact
+                  edgeType="skill_match"
+                  sourceId={data.terms.join(" | ") || path.domainId}
+                  sourceLabel={data.terms.join(", ") || "Your skills"}
+                  targetId={path.roleKey ?? path.subgroupId ?? path.domainId}
+                  targetLabel={path.domainName}
+                  label="Flag a weak match"
+                  title="Flag a weak match"
+                  allowedTypes={["flag", "suggest"]}
+                  optionLabels={{ flag: "This does not fit my skills", suggest: "Suggest a better match" }}
+                  placeholder="Tell us why this looks like a weak match…"
+                />
+              ) : null}
+              </View>
             ))}
           </View>
           {paths.length > 4 ? <TouchableOpacity onPress={() => setShowAllPaths((current) => !current)} accessibilityRole="button"><Text style={[styles.link, { color: colors.accentRole.action }]}>{showAllPaths ? "Show fewer routes" : `See all ${paths.length} routes`}</Text></TouchableOpacity> : null}

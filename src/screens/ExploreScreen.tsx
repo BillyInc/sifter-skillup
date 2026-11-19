@@ -355,6 +355,29 @@ export default function ExploreScreen({
         />
       ) : null}
 
+      {/* Blueprint section 8: Skills Matcher follows the main search and
+          starting points and precedes the broader catalogue categories. */}
+      {!adminAudience ? (
+        <TouchableOpacity
+          activeOpacity={0.88}
+          accessibilityRole="button"
+          accessibilityLabel="Skills Matcher. See where your skills could connect to domains and roles."
+          onPress={() => exploreNav.skillsMatcher(router)}
+          style={[styles.admissionCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}
+        >
+          <View style={[styles.admissionIcon, { backgroundColor: colors.accentRole.action + "14" }]}>
+            <Feather name="compass" size={22} color={colors.accentRole.action} />
+          </View>
+          <View style={styles.admissionLeft}>
+            <Text style={[styles.admissionEyebrow, { color: colors.accentRole.action }]}>SKILLS MATCHER</Text>
+            <Text style={[styles.admissionTitle, { color: colors.textRole.primary }]}>Start from what you can do</Text>
+            <Text style={[styles.admissionBody, { color: colors.textRole.secondary }]}>Add skills you have or want to learn and see the domains and roles they could connect to.</Text>
+            <Text style={[styles.admissionAction, { color: colors.accentRole.action }]}>Open Skills Matcher <Text style={{ fontSize: 16 }}>→</Text></Text>
+          </View>
+          <Feather name="arrow-up-right" size={20} color={colors.textRole.muted} />
+        </TouchableOpacity>
+      ) : null}
+
       {!adminAudience ? (
         <View style={styles.section}>
           <SectionLabel>Browse by type</SectionLabel>

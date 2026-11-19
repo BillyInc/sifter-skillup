@@ -38,6 +38,7 @@ const DomainExplorerScreen = lazy(() => import("../../src/screens/careerIntellig
 const DomainDetailScreen = lazy(() => import("../../src/screens/careerIntelligence/DomainDetailScreen"));
 const SubgroupDetailScreen = lazy(() => import("../../src/screens/careerIntelligence/SubgroupDetailScreen"));
 const RoleDetailScreen = lazy(() => import("../../src/screens/careerIntelligence/RoleDetailScreen"));
+const SkillsMatcherScreen = lazy(() => import("../../src/screens/SkillsMatcherScreen"));
 const ProgrammeCompareScreen = lazy(() => import("../../src/screens/careerIntelligence/ProgrammeCompareScreen"));
 const CareerHomeScreen = lazy(() => import("../../src/screens/CareerHomeScreen"));
 const MyWorldScreen = lazy(() => import("../../src/screens/MyWorldScreen"));
@@ -501,7 +502,8 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
   // "Back to programme", "Back to student guidance", ...), so the shell's generic
   // Back would show a second one. Focused guidance keeps the shell's "Exit guidance".
   const routeHasOwnBack = !focusedGuidance && (
-    /^\/explore\/(programme|role)\/[^/]+/.test(route)
+    route === "/explore/skills-matcher"
+    || /^\/explore\/(programme|role)\/[^/]+/.test(route)
     || /^\/explore\/domain\/[^/]+(\/subgroup\/[^/]+)?$/.test(route)
     || /^\/opportunities\/(opportunity|organisation)\//.test(path)
     || path === "/opportunities/scholarships"
@@ -518,6 +520,7 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
     if (legacyAdmission) return <LegacyAdmissionRedirect jambName={decodeURIComponent(legacyAdmission)} admin={path.startsWith("/admin/")} />;
     if (route === "/explore/domains") return <DomainExplorerScreen />;
     if (route === "/explore/compare") return <ProgrammeCompareScreen />;
+    if (route === "/explore/skills-matcher" && !isAdminRoute) return <SkillsMatcherScreen studentView />;
     if (route === "/explore/pathways") return <PathwaysHubScreen />;
     if (route === "/explore/pathways/entrepreneurship") return <EntrepreneurshipPathwayScreen />;
     if (route === "/explore/pathways/career-change") return <CareerChangerScreen />;

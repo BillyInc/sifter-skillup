@@ -65,6 +65,11 @@ export function makeExploreNav(base: string) {
       logGuidanceRoute(`${base}/domain-guidance`, context, "domains");
       router.push(`${base}/domain-guidance${query ? `?${query}` : ""}` as never);
     },
+    /** Student Skills Matcher. Lives under Explore, outside the gated legacy
+     * `/skills` learning prefix, so it stays reachable for students. */
+    skillsMatcher(router: Nav) {
+      router.push(`${base}/skills-matcher` as never);
+    },
     compare(router: Nav, programmeIds: string[] = []) {
       const ids = programmeIds.slice(0, 4).map(encodeURIComponent).join(",");
       router.push(`${base}/compare${ids ? `?ids=${ids}` : ""}` as never);
