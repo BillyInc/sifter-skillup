@@ -66,21 +66,9 @@ import { xpEngine, type XPSnapshot } from "@/lib/XPEngine";
 import { streakEngine, type StreakStatus } from "@/lib/StreakEngine";
 import { PdfExportButton } from "@/components/careerIntelligence";
 import { d078AreaLabel as getD078AreaLabel, d078CombinationLabel, d078Node } from "@/lib/d078RouteProjection";
+import { ENTITY_META } from "@/screens/myworld/entityMeta";
+import { CollectionsSection } from "@/screens/myworld/CollectionsSection";
 import { d078ProgrammeIdFromSnapshot, d078RouteStacksFromSnapshot, d078SavedRouteHref, d078SelectionFromSnapshot, d078ShareInputForAllRoutesFromSnapshot, isD078Snapshot, selectSavedSnapshot } from "@/lib/d078Snapshot";
-
-/** Human-friendly glyphs / labels per saved entity type. */
-const ENTITY_META: Record<SavedEntityType, { icon: string; label: string }> = {
-  resource: { icon: "🔗", label: "Resource" },
-  programme: { icon: "🎓", label: "Programme" },
-  school: { icon: "🏫", label: "School" },
-  domain: { icon: "🧭", label: "Domain" },
-  subgroup: { icon: "🧱", label: "Subgroup" },
-  role: { icon: "💼", label: "Role" },
-  comparison: { icon: "⚖️", label: "Comparison" },
-  opportunity: { icon: "📌", label: "Opportunity" },
-  organisation: { icon: "🏢", label: "Employer" },
-  elite_pathway: { icon: "⭐", label: "Pathway" },
-};
 
 /** Plural section titles for the saved-items groups (order = display order). */
 const SAVED_GROUP_ORDER: { type: SavedEntityType; title: string }[] = [
@@ -161,6 +149,9 @@ function PersonalCareerBlocks({ saved, notes, refresh }: PersonalData) {
 
   return (
     <>
+      {/* ── Collections: named groups of saved items ──────────────── */}
+      <CollectionsSection saved={saved} />
+
       {/* ── Saved domains & roles (grouped by entity type) ────────── */}
       <Text style={[styles.section, CompassFonts.bodyBold, { color: colors.textRole.secondary }]}>
         Saved domains & roles

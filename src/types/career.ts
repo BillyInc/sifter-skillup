@@ -508,6 +508,38 @@ export interface SavedItem {
   createdAt: string;
 }
 
+/** A named collection of the student's saved items (My World). Items are
+ *  references to `SavedItem` rows; a collection never owns canonical data. */
+export interface Collection {
+  id: string;
+  name: string;
+  kind: "custom" | "starter" | "pathway";
+  starterKey?: string | null;
+  itemCount: number;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+/** A suggested collection name. Offered to the student, never auto-created. */
+export interface CollectionStarter {
+  starterKey: string;
+  name: string;
+  description: string;
+  /** True once the student has already created this starter. */
+  created: boolean;
+}
+
+/** A saved item as a member of a collection, with the saved object resolved. */
+export interface CollectionItem {
+  savedItemId: string;
+  entityType: SavedEntityType;
+  entityId: string;
+  label?: string | null;
+  savedAt?: string;
+  position: number;
+  addedAt?: string;
+}
+
 export interface Note {
   id: string;
   entityType: SavedEntityType;
