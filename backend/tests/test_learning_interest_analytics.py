@@ -196,7 +196,7 @@ def test_programmes_domains_and_institutions_are_first_class_selection_events(mo
     service.schema.return_value = service
     service.table.return_value.upsert.return_value.execute.return_value.data = []
     monkeypatch.setattr(analytics.db, "get_service_client", lambda: service)
-    user = {"id": "student-2", "settings": {"legalAcceptance": {"termsVersion": "2026-10-28.1", "privacyVersion": "2026-10-28.1", "analyticsConsent": True}}}
+    user = {"id": "student-2", "settings": {"legalAcceptance": {"termsVersion": "2026-10-29.1", "privacyVersion": "2026-10-29.1", "analyticsConsent": True}}}
 
     for entity_type, entity_id, label in (
         ("programme", "sociology", "Sociology"),
