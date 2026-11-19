@@ -29,6 +29,7 @@ from pydantic import BaseModel
 
 from auth import Auth
 from database import db
+from avatar_storage import public_avatar_url, scrub_embedded_avatars
 from models import ResponseModel
 from legal_versions import analytics_consent_is_current
 
@@ -680,7 +681,7 @@ async def get_posts(
         likes_list = post.pop("post_likes", []) or []
         author_data = post.pop("users", {}) or {}
         post["author"] = author_data.get("username", "Unknown")
-        post["avatarUrl"] = author_data.get("avatar_url")
+        post["avatarUrl"] = public_avatar_url(author_data.get("avatar_url"))
         post["isLiked"] = any(lk["user_id"] == user_id for lk in likes_list)
         post["likes"] = len(likes_list)
         shaped.append(post)
@@ -955,11 +956,11 @@ async def friend_suggestions(current_user: dict = Depends(Auth.get_current_user)
     suggestions = []
     if user_track:
         result = db.get_service_client().table("users").select("id, username, avatar_url, active_track").eq("active_track", user_track).neq("id", current_user["id"]).limit(10).execute()
-        suggestions = result.data or []
+        suggestions = [{**u, "avatar_url": public_avatar_url(u.get("avatar_url"))} for u in (result.data or [])]
     return ResponseModel(data=suggestions)
 
 
 @social_router.get("/friends", response_model=ResponseModel)
 async def get_friends(current_user: dict = Depends(Auth.get_current_user)):
     result = db.get_service_client().table("friends").select("*, users!friend_id(id, username, avatar_url, active_track)").eq("user_id", current_user["id"]).execute()
-    return ResponseModel(data=result.data or [])
+    return ResponseModel(data=scrub_embedded_avatars(result.data))

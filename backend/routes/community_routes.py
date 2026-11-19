@@ -45,6 +45,7 @@ from pydantic import BaseModel
 
 from auth import Auth
 from database import db
+from avatar_storage import public_avatar_url, scrub_embedded_avatars
 from models import ResponseModel
 
 # ─────────────────────────────────────────────────────────────
@@ -234,7 +235,7 @@ def _shape_post(raw: dict, viewer_id: str) -> dict:
         "author": {
             "id": author_row.get("id", raw.get("user_id", "")),
             "name": author_row.get("username", "User"),
-            "avatar": author_row.get("avatar_url") or "⚡",
+            "avatar": public_avatar_url(author_row.get("avatar_url")) or "⚡",
             "track": author_row.get("active_track"),
             "isPrivate": author_row.get("is_private", False),
         },
@@ -567,7 +568,7 @@ async def get_follow_requests(current_user: dict = Depends(Auth.get_current_user
         .order("created_at", desc=True)
         .execute()
     )
-    return ResponseModel(data=result.data or [])
+    return ResponseModel(data=scrub_embedded_avatars(result.data))
 
 
 @community_v2_router.post("/api/users/follow-request/respond", response_model=ResponseModel)
@@ -671,7 +672,7 @@ async def get_dm_threads(current_user: dict = Depends(Auth.get_current_user)):
             "participant": {
                 "id": other.get("id", "") if other else "",
                 "name": other.get("username", "User") if other else "User",
-                "avatar": other.get("avatar_url") or "⚡" if other else "⚡",
+                "avatar": public_avatar_url(other.get("avatar_url")) or "⚡" if other else "⚡",
             },
             "lastMessage": last_msg["content"][:80] if last_msg else "",
             "lastAt": last_msg["created_at"] if last_msg else t["created_at"],
@@ -703,7 +704,7 @@ async def get_dm_messages(thread_id: str, current_user: dict = Depends(Auth.get_
     # Mark as read
     db.get_service_client().table("dm_messages").update({"is_read": True}).eq("thread_id", thread_id).neq("sender_id", user_id).execute()
 
-    return ResponseModel(data={"messages": messages.data or []})
+    return ResponseModel(data={"messages": scrub_embedded_avatars(messages.data)})
 
 
 @community_v2_router.post("/api/dms/send", response_model=ResponseModel)
@@ -792,7 +793,7 @@ async def get_notifications(
         notifications.append({
             "id": n["id"],
             "type": n["type"],
-            "actor": {"id": actor.get("id", ""), "name": actor.get("username", ""), "avatar": actor.get("avatar_url") or "⚡"},
+            "actor": {"id": actor.get("id", ""), "name": actor.get("username", ""), "avatar": public_avatar_url(actor.get("avatar_url")) or "⚡"},
             "postId": n.get("post_id"),
             "postSnippet": n.get("post_snippet"),
             "reaction": extra.get("reaction"),

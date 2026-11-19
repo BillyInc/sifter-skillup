@@ -28,6 +28,7 @@ from pydantic import BaseModel
 
 from auth import Auth
 from database import db
+from avatar_storage import public_avatar_url
 from models import ResponseModel
 from logger import log
 
@@ -162,7 +163,7 @@ async def my_guild(current_user: dict = Depends(Auth.get_current_user)):
             .limit(10)
             .execute()
         )
-        members = members_res.data or []
+        members = [{**m, "avatar_url": public_avatar_url(m.get("avatar_url"))} for m in (members_res.data or [])]
     except Exception:
         members = []
 
@@ -226,7 +227,7 @@ async def guild_detail(
             .limit(50)
             .execute()
         )
-        members = members_res.data or []
+        members = [{**m, "avatar_url": public_avatar_url(m.get("avatar_url"))} for m in (members_res.data or [])]
     except Exception:
         members = []
 
