@@ -76,7 +76,12 @@ describe("University Explore", () => {
     await waitFor(() => expect(screen.getByText("Your JAMB programme offerings")).toBeTruthy());
     expect(screen.getByText("Example University view: institution-scoped offerings, curriculum coverage and aggregate peer context. This workspace is for university planning, not student guidance.")).toBeTruthy();
     expect(screen.getByText("Accounting and Finance")).toBeTruthy();
-    expect(screen.getByText(/Social Sciences/)).toBeTruthy();
+    // The API still returns jambFaculty, but the owner removed faculty from the UI.
+    expect(screen.queryByText(/Social Sciences/)).toBeNull();
+    expect(screen.queryByText(/Administration/)).toBeNull();
+    expect(screen.queryByText(/JAMB faculty/i)).toBeNull();
+    expect(screen.queryByText(/Faculties recorded/i)).toBeNull();
+    expect(screen.getByPlaceholderText("Search your programme offerings")).toBeTruthy();
     expect(screen.getByText("Compare programme portfolios")).toBeTruthy();
     expect(screen.getAllByText("Example Peer University").length).toBeGreaterThan(1);
     await waitFor(() => expect(screen.getByText(/1 programme is listed/)).toBeTruthy());
