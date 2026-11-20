@@ -37,7 +37,6 @@ export function LiveAdmissionSearchField({
   institutionType,
   helperText,
   schoolId,
-  faculty,
   selectedId,
   allowRegister = false,
   registerAddress,
@@ -51,7 +50,6 @@ export function LiveAdmissionSearchField({
   institutionType?: string;
   helperText?: string;
   schoolId?: string;
-  faculty?: string;
   selectedId?: string;
   allowRegister?: boolean;
   registerAddress?: string;
@@ -102,7 +100,7 @@ export function LiveAdmissionSearchField({
       const state =
         kind === "programme"
             ? schoolId
-            ? await careerData.getSchoolProgrammes(schoolId, q, faculty)
+            ? await careerData.getSchoolProgrammes(schoolId, q)
             : await careerData.searchJambProgrammes(q)
           : await careerData.searchAdmissionSchools(q, institutionType);
       if (!active) return;
@@ -142,7 +140,7 @@ export function LiveAdmissionSearchField({
       active = false;
       clearTimeout(t);
     };
-  }, [query, kind, institutionType, schoolId, faculty, selected]);
+  }, [query, kind, institutionType, schoolId, selected]);
 
   const registerTypedInstitution = async () => {
     const name = query.trim();
