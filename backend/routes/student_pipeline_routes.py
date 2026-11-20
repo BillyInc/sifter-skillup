@@ -24,6 +24,7 @@ from logger import log
 from models import ResponseModel
 from reference_cache import REFERENCE_TTL_SECONDS, SEARCH_TTL_SECONDS, clear_prefix, get_json, set_json
 from services.guidance_report import resolve_guidance_report_context
+from services.olevel_grades import MAX_GRADE_ENTRIES, grade_check as _olevel_grade_check, normalize_grade
 from services.report_gen import ReportContext, _d078_saved_route, build_report_docx, build_report_html
 
 router = APIRouter(prefix="/api/student", tags=["student-pipeline"])
@@ -68,6 +69,21 @@ def _real(data: Any, notice: Optional[str] = None) -> dict:
         "data": data,
         "meta": ({"notice": notice} if notice else None),
     }
+
+
+def _apply_grade_status(fields: dict) -> dict:
+    """Return grade annotation fields, labelling (never hiding) a grade failure."""
+    check = fields.get("gradeCheck")
+    if check and check.get("status") == "not_met":
+        return {**fields, "eligibilityStatus": "olevel_grade_not_met"}
+    return fields
+
+
+def _grade_adjusted_status(status: str, check: dict | None) -> str:
+    """Only a grade that is NOT MET downgrades; unknown/met never upgrades."""
+    if check and check.get("status") == "not_met" and status in {"eligible", "olevel_grade_check_required"}:
+        return "olevel_grade_not_met"
+    return status
 
 
 def _fallback(data: Any, notice: str) -> dict:
@@ -2127,7 +2143,12 @@ def get_jamb_programme_schools(jamb_programme_id: str, year: Optional[int] = Que
         return ResponseModel(data=_coming_soon("The university list for this programme is temporarily unavailable."))
 
 
-def _evaluate_school_subject_option(option: dict, item_rows: list[dict], selected_norm: set[str]) -> dict:
+def _evaluate_school_subject_option(
+    option: dict,
+    item_rows: list[dict],
+    selected_norm: set[str],
+    grades_by_norm: dict[str, str] | None = None,
+) -> dict:
     """Evaluate one parsed university-scoped rule without changing national matching."""
     if not item_rows and option.get("condition_text"):
         # A condition-only local note (for example a waiver, exclusion, grade
@@ -2202,7 +2223,7 @@ def _evaluate_school_subject_option(option: dict, item_rows: list[dict], selecte
     minimum_gap = max(0, minimum_required - credit_subject_count) if exam_type == "olevel" else 0
     if minimum_gap:
         missing.append(f"{minimum_gap} more O-level subject(s)")
-    return {
+    result = {
         "passes": not missing,
         "matchedSubjects": list(dict.fromkeys(
             [row["name"] for row in required if row["norm"] in selected_norm]
@@ -2216,6 +2237,22 @@ def _evaluate_school_subject_option(option: dict, item_rows: list[dict], selecte
             else []
         ),
     }
+    # Grades only ANNOTATE an already-evaluated rule; they never change
+    # ``passes`` and so never change the candidate set.
+    if grades_by_norm and exam_type == "olevel":
+        result["gradeCheck"] = _olevel_grade_check(
+            required=required,
+            pass_required=pass_required,
+            groups=[
+                {"names": names, "minimum": group_min.get(key, 1), "distinct": group_distinct.get(key)}
+                for key, names in grouped.items()
+            ],
+            credit_minimum=minimum_required,
+            selected_norm=selected_norm,
+            grades_by_norm=grades_by_norm,
+            has_source_condition=bool(option.get("condition_text")),
+        )
+    return result
 
 
 def _match_verified_school_subject_options(
@@ -2223,6 +2260,7 @@ def _match_verified_school_subject_options(
     exam_type: str,
     school_id: str | None = None,
     limit: int = 2000,
+    grades_by_norm: dict[str, str] | None = None,
 ) -> list[dict]:
     """Match only parsed, full university-scoped rules.
 
@@ -2299,6 +2337,7 @@ def _match_verified_school_subject_options(
                 option,
                 items_by_option.get(str(option.get("id")), []),
                 selected_norm,
+                *([grades_by_norm] if grades_by_norm else []),
             )
             if not result.get("passes"):
                 continue
@@ -2320,6 +2359,7 @@ def _match_verified_school_subject_options(
                 "universityRequirementOptionId": option.get("id"),
                 "gradeVerificationRequired": result.get("gradeVerificationRequired", False),
                 "verificationNotes": result.get("verificationNotes", []),
+                **({"gradeCheck": result["gradeCheck"]} if result.get("gradeCheck") else {}),
             }
             key = (school_key, programme_key)
             existing = best_by_pair.get(key)
@@ -2633,6 +2673,93 @@ async def programmes_by_subjects(
     # valid matches behind the old 40/80-item cap.
     limit: int = Query(2000),
 ):
+    # GET never carries grades (they must not appear in URLs or access logs).
+    return await _programmes_by_subjects_core(
+        subjects, olevel_subjects, exam_type, stream, school_id, limit, None
+    )
+
+
+class SubjectMatchIn(BaseModel):
+    """POST body for the subject matcher. Same fields as the GET query plus
+    optional self-reported O-level grades (never sent in a URL)."""
+
+    subjects: list[str] | str = ""
+    olevel_subjects: list[str] | str = ""
+    exam_type: str = "combined"
+    stream: Optional[str] = None
+    school_id: Optional[str] = None
+    limit: int = Field(2000, ge=1, le=2000)
+    # { "<subject code or name>": "A1".."F9" }; invalid entries are ignored and
+    # reported in meta.gradeInput.ignored, never raised.
+    olevel_grades: Optional[dict[str, Any]] = None
+
+
+def _csv(value: list[str] | str) -> str:
+    if isinstance(value, str):
+        return value
+    return ",".join(str(item) for item in value if str(item).strip())
+
+
+def _resolve_grades(raw: dict[str, Any]) -> tuple[dict[str, str], list[str]]:
+    """Map {subject code|name: grade} to ({normalised name: grade}, ignored keys)."""
+    names_by_code: dict[str, str] = {}
+    try:
+        rows = (
+            _svc().table("subject_catalog").select("name, code")
+            .limit(MAX_SUBJECT_MATCH_CATALOG_ROWS).execute()
+        ).data or []
+        names_by_code = {
+            str(row.get("code") or "").upper(): _normalise_subject(row.get("name") or "")
+            for row in rows if row.get("code") and row.get("name")
+        }
+    except Exception as exc:  # noqa: BLE001
+        log.debug("grade subject catalogue unavailable", error=str(exc))
+    resolved: dict[str, str] = {}
+    ignored: list[str] = []
+    for index, (key, value) in enumerate(raw.items()):
+        grade = normalize_grade(value)
+        key_text = str(key).strip()
+        norm = names_by_code.get(key_text.upper()) or _normalise_subject(_canonical_subject_name(key_text))
+        if index >= MAX_GRADE_ENTRIES or grade is None or not norm:
+            ignored.append(key_text[:40])
+            continue
+        resolved[norm] = grade
+    return resolved, ignored
+
+
+@router.post("/programmes/by-subjects", response_model=ResponseModel)
+async def programmes_by_subjects_with_grades(body: SubjectMatchIn):
+    """POST variant: identical selection matching, plus optional ``gradeCheck``.
+
+    Grades only annotate the rows the selection logic already returned; the set
+    of matched programmes is identical with and without ``olevel_grades``.
+    """
+    grades_by_norm: dict[str, str] | None = None
+    ignored: list[str] = []
+    if body.olevel_grades:
+        grades_by_norm, ignored = _resolve_grades(body.olevel_grades)
+    response = await _programmes_by_subjects_core(
+        _csv(body.subjects), _csv(body.olevel_subjects), body.exam_type,
+        body.stream, body.school_id, body.limit, grades_by_norm or None,
+    )
+    if body.olevel_grades:
+        payload = response.data
+        if isinstance(payload, dict):
+            meta = dict(payload.get("meta") or {})
+            meta["gradeInput"] = {"applied": len(grades_by_norm or {}), "ignored": ignored}
+            payload["meta"] = meta
+    return response
+
+
+async def _programmes_by_subjects_core(
+    subjects: str,
+    olevel_subjects: str,
+    exam_type: str,
+    stream: Optional[str],
+    school_id: Optional[str],
+    limit: int,
+    grades_by_norm: dict[str, str] | None,
+):
     global _SUBJECT_MATCH_AUTHORITY_STATE
     _SUBJECT_MATCH_AUTHORITY_STATE = "unknown"
     # FastAPI supplies a plain int during request handling, while direct
@@ -2711,6 +2838,9 @@ async def programmes_by_subjects(
             )
         )
 
+    # Only forwarded when grades were sent, so the no-grade call path (and any
+    # caller/test double with the old signature) is exactly the pre-grades one.
+    grade_kwargs = {"grades_by_norm": grades_by_norm} if grades_by_norm else {}
     try:
         selected_school_id = (school_id.strip() if isinstance(school_id, str) else "") or None
         offered_programme_ids = _school_offered_programme_ids(selected_school_id)
@@ -2744,6 +2874,7 @@ async def programmes_by_subjects(
                 limit=min(match_limit, 2000),
                 exam_type="olevel",
                 require_full=True,
+                **grade_kwargs,
             )
             structured = restrict_to_verified_school_rules(
                 restrict_to_selected_school(national_olevel_matches), "olevel"
@@ -2760,6 +2891,7 @@ async def programmes_by_subjects(
                 limit=min(match_limit, 400),
                 exam_type="olevel",
                 require_full=False,
+                **grade_kwargs,
             )
             national_utme_matches = restrict_to_selected_school(national_utme_matches)
             national_olevel_matches = restrict_to_selected_school(national_olevel_matches)
@@ -2774,6 +2906,7 @@ async def programmes_by_subjects(
                     status = "eligible" if not olevel.get("missingSubjects") else "utme_match_olevel_gap"
                     if status == "eligible" and olevel.get("gradeVerificationRequired"):
                         status = "olevel_grade_check_required"
+                    status = _grade_adjusted_status(status, olevel.get("gradeCheck"))
                     structured.append({
                         **match,
                         "olevelMatchedSubjectCount": olevel.get("matchedSubjectCount", 0),
@@ -2784,6 +2917,7 @@ async def programmes_by_subjects(
                         "verificationNotes": olevel.get("verificationNotes", []),
                         "eligibilityStatus": status,
                         "matchBasis": "combined",
+                        **({"gradeCheck": olevel["gradeCheck"]} if olevel.get("gradeCheck") else {}),
                     })
                 else:
                     structured.append({
@@ -2812,7 +2946,9 @@ async def programmes_by_subjects(
             else []
         )
         local_olevel_matches = (
-            _match_verified_school_subject_options(olevel_norm, "olevel", selected_school_id, match_limit)
+            _match_verified_school_subject_options(
+                olevel_norm, "olevel", selected_school_id, match_limit, **grade_kwargs
+            )
             if exam in {"olevel", "combined"} and olevel_norm
             else []
         )
@@ -2845,6 +2981,7 @@ async def programmes_by_subjects(
                     ),
                     "matchedSubjects": local.get("matchedSubjects", []),
                     "requirementText": local.get("requirementText"),
+                    **({"gradeCheck": local["gradeCheck"]} if local.get("gradeCheck") else {}),
                 }
                 for local in local_rows
             ]
@@ -2891,6 +3028,11 @@ async def programmes_by_subjects(
                 if olevel_source:
                     combined_row["gradeVerificationRequired"] = olevel_source.get("gradeVerificationRequired", False)
                     combined_row["verificationNotes"] = olevel_source.get("verificationNotes", [])
+                    if olevel_source.get("gradeCheck"):
+                        combined_row["gradeCheck"] = olevel_source["gradeCheck"]
+                        combined_row["eligibilityStatus"] = _grade_adjusted_status(
+                            combined_row["eligibilityStatus"], olevel_source["gradeCheck"]
+                        )
                 combined_row["olevelMissingSubjects"] = []
                 combined_by_id[programme_key] = combined_row
             structured = list(combined_by_id.values())[: min(match_limit, 2000)]
@@ -2943,6 +3085,7 @@ def _match_structured_subject_options(
     limit: int,
     exam_type: str = "utme",
     require_full: bool = True,
+    grades_by_norm: dict[str, str] | None = None,
 ) -> list[dict]:
     global _SUBJECT_MATCH_AUTHORITY_STATE
     svc = _svc()
@@ -3308,6 +3451,23 @@ def _match_structured_subject_options(
         )
         entry = scored.get(opt["jamb_programme_id"])
         if not entry or matched_count > entry["matchedSubjectCount"]:
+            grade_fields: dict[str, Any] = {}
+            if grades_by_norm and exam_type == "olevel":
+                # Annotation only: runs after this option has already been
+                # accepted by the selection logic above.
+                pass_norms = {row["norm"] for row in pass_required}
+                grade_fields["gradeCheck"] = _olevel_grade_check(
+                    required=[row for row in required if row["norm"] not in pass_norms],
+                    pass_required=pass_required,
+                    groups=[
+                        {"names": names, "minimum": group_min.get(key, 1), "distinct": group_distinct.get(key)}
+                        for key, names in grouped.items()
+                    ],
+                    credit_minimum=min_required,
+                    selected_norm=selected_norm,
+                    grades_by_norm=grades_by_norm,
+                    has_source_condition=bool(typed_json.get("hasCondition")),
+                )
             scored[opt["jamb_programme_id"]] = {
                 "jambProgrammeId": opt["jamb_programme_id"],
                 "matchedSubjectCount": matched_count,
@@ -3321,6 +3481,7 @@ def _match_structured_subject_options(
                 "verificationNotes": verification_notes,
                 **({"eligibilityStatus": "olevel_grade_check_required"}
                    if exam_type == "olevel" and verification_notes else {}),
+                **_apply_grade_status(grade_fields),
             }
 
     if not scored:

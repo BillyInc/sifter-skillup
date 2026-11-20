@@ -3,7 +3,10 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { fireEvent, render, screen } from "@testing-library/react-native";
 import { ThemeProvider } from "@/theme";
 import type { CareerContextItem } from "@/types/career";
+import { plainText } from "./testGloss";
 import { ContextualItemList, explainResourceRationale, matchesItemScope } from "./ContextualItemList";
+
+jest.mock("@/hooks/useAuth", () => ({ useAuth: () => ({ user: null }) }));
 
 const mockGuided = jest.fn();
 const mockSubgroup = jest.fn();
@@ -113,8 +116,9 @@ describe("ContextualItemList", () => {
   it("describes the domain compulsory branch by requirement, not as a generic shared-foundation list", () => {
     render(<ThemeProvider><ContextualItemList items={[{ ...item, requirementLevel: "needed" }]} contextLevel="domain" itemScope="shared-foundation" title="Compulsory domain foundations" /></ThemeProvider>);
 
-    expect(screen.getByText("These items are needed for this field route. Follow the displayed order before continuing. The useful edges section contains optional choices that support particular routes and can be skipped.")).toBeTruthy();
+    expect(screen.getByText("These foundations give you a common base for exploring different areas of the field.")).toBeTruthy();
     expect(screen.queryByText(/shared starting points/)).toBeNull();
+    expect(screen.queryByText(/Choose from these additional options/)).toBeNull();
   });
 
   it("does not turn missing role-owned records into a claim that the role has no learning needs", () => {
@@ -129,26 +133,25 @@ describe("ContextualItemList", () => {
 
     expect(screen.getByText("Skill")).toBeTruthy();
     expect(screen.getByText("Optional learning focus")).toBeTruthy();
-    expect(screen.queryByText("Why it is included")).toBeNull();
-    expect(screen.queryByText("How it is used in this field")).toBeNull();
+    expect(screen.queryByText("How you might use it")).toBeNull();
     fireEvent.press(screen.getByRole("button", { name: "Open details for Research design" }));
-    expect(screen.getByText("Why it is included")).toBeTruthy();
-    expect(screen.getByText("How it is used in this field")).toBeTruthy();
-    expect(screen.getByLabelText("Supports area: Computational and Digital Social Science")).toBeTruthy();
+    expect(screen.getByText("How you might use it")).toBeTruthy();
     expect(screen.getByText("Why it may help on this direction")).toBeTruthy();
-    expect(screen.getByText("A planned design helps match a social question to suitable methods.")).toBeTruthy();
-    expect(screen.getByText("Example of the work")).toBeTruthy();
-    expect(screen.getByText("Compare a question with the information needed to answer it.")).toBeTruthy();
+    expect(screen.getByText(/Computational and Digital Social Science · Useful for this route/)).toBeTruthy();
+    expect(screen.getByText(plainText("A planned design helps match a social question to suitable methods."))).toBeTruthy();
+    // Task and output now read as sentences inside the single "How you might use it" section.
+    expect(screen.getByText(/For example, Compare a question with the information needed to answer it\./)).toBeTruthy();
+    expect(screen.getByText(/This work may result in: For a sample/)).toBeTruthy();
     expect(screen.getByText("What to keep in mind")).toBeTruthy();
-    expect(screen.getByText("A design cannot correct weak or biased evidence.")).toBeTruthy();
+    expect(screen.getByText(plainText("A design cannot correct weak or biased evidence."))).toBeTruthy();
     expect(screen.queryByText(/Route note|Task:|Guardrail:|Show only within/)).toBeNull();
-    expect(screen.getByRole("link", { name: "Read the OpenLearn guide to research methodology" })).toBeTruthy();
+    expect(screen.getByRole("link", { name: /OpenLearn guide to research methodology/ })).toBeTruthy();
   });
 
   it("shows an explanatory item summary before expansion, then replaces it with separately labelled details", () => {
     render(<ThemeProvider><ContextualItemList items={[item]} contextLevel="domain" itemScope="learning-options" /></ThemeProvider>);
 
-    const summary = screen.getByText(item.plainMeaning);
+    const summary = screen.getByText(plainText(item.plainMeaning));
     expect(summary).toBeTruthy();
     expect(StyleSheet.flatten(summary.props.style).fontSize).toBeGreaterThanOrEqual(16);
     expect(StyleSheet.flatten(summary.props.style).lineHeight).toBeGreaterThanOrEqual(24);
@@ -156,8 +159,8 @@ describe("ContextualItemList", () => {
 
     fireEvent.press(screen.getByRole("button", { name: "Open details for Research design" }));
     expect(screen.getByText("What it is")).toBeTruthy();
-    expect(screen.getAllByText(item.plainMeaning)).toHaveLength(1);
-    expect(screen.getByText("How it is used in this field")).toBeTruthy();
+    expect(screen.getAllByText(plainText(item.plainMeaning))).toHaveLength(1);
+    expect(screen.getByText("How you might use it")).toBeTruthy();
   });
 
   it("never renders empty definition or route-use sections when an approved payload is incomplete", () => {
@@ -167,13 +170,13 @@ describe("ContextualItemList", () => {
     expect(screen.getByText("A plain-language explanation has not been provided for this item yet.")).toBeTruthy();
     fireEvent.press(screen.getByRole("button", { name: "Open details for Research design" }));
     expect(screen.getByText("What it is")).toBeTruthy();
-    expect(screen.getByText("How it is used in this field")).toBeTruthy();
-    expect(screen.getByText("A description of how this item is used at this level has not been provided yet.")).toBeTruthy();
-    expect(screen.getByText("What it cannot prove or replace")).toBeTruthy();
-    expect(screen.getByText(/No item-specific limitation is recorded.*does not show that you have mastered it/)).toBeTruthy();
+    expect(screen.getByText("How you might use it")).toBeTruthy();
+    // The fallback sentence shares the "How you might use it" section with any recorded task and output.
+    expect(screen.getByText(/^A description of how this item is used at this level has not been provided yet\./)).toBeTruthy();
+    expect(screen.queryByText(/undefined|null/)).toBeNull();
   });
 
-  it("explains item evidence context separately from its task and programme connection", () => {
+  it("shows the programme connection as its own labelled section, separate from the item's use", () => {
     const locallyAnchored = {
       ...item,
       geographicScope: "nigeria_to_global" as const,
@@ -182,9 +185,9 @@ describe("ContextualItemList", () => {
     render(<ThemeProvider><ContextualItemList items={[locallyAnchored]} contextLevel="domain" itemScope="learning-options" /></ThemeProvider>);
     fireEvent.press(screen.getByRole("button", { name: "Open details for Research design" }));
 
-    expect(screen.getByText("Evidence context")).toBeTruthy();
-    expect(screen.getByText(/The evidence includes a Nigerian connection and places it in a wider field context/)).toBeTruthy();
-    expect(screen.getByText("How it relates to your programme")).toBeTruthy();
+    expect(screen.getByText("How this builds on your programme")).toBeTruthy();
+    expect(screen.getByText(/The programme gives a starting point/)).toBeTruthy();
+    expect(screen.getByText("How you might use it")).toBeTruthy();
   });
 
   it("separates an embedded output from task narration instead of displaying a jumbled label", () => {
@@ -194,9 +197,9 @@ describe("ContextualItemList", () => {
     };
     render(<ThemeProvider><ContextualItemList items={[itemWithOutput]} contextLevel="domain" itemScope="learning-options" /></ThemeProvider>);
     fireEvent.press(screen.getByRole("button", { name: "Open details for Research design" }));
-    expect(screen.getByText("What you may produce")).toBeTruthy();
-    expect(screen.getByText("A short evidence plan naming the source, method and one limitation.")).toBeTruthy();
+    expect(screen.getByText(/This work may result in: A short evidence/)).toBeTruthy();
     expect(screen.queryByText(/Task: Compare a question/)).toBeNull();
+    expect(screen.queryByText(/Output:/)).toBeNull();
   });
 
   it("uses the same embedded output and guardrail sections as the learning tray", () => {
@@ -207,12 +210,9 @@ describe("ContextualItemList", () => {
     };
     render(<ThemeProvider><ContextualItemList items={[itemWithEmbeddedOutput]} contextLevel="domain" itemScope="learning-options" /></ThemeProvider>);
     fireEvent.press(screen.getByRole("button", { name: "Open details for Research design" }));
-    expect(screen.getByText("How it is used in this field")).toBeTruthy();
-    expect(screen.getByText("Use this method for the selected question.")).toBeTruthy();
-    expect(screen.getByText("Example of the work")).toBeTruthy();
-    expect(screen.getByText("Compare two sources.")).toBeTruthy();
-    expect(screen.getByText("What you may produce")).toBeTruthy();
-    expect(screen.getByText("A cited comparison that states one limitation.")).toBeTruthy();
+    expect(screen.getByText("How you might use it")).toBeTruthy();
+    // Meaning, task and output are separated by the shared parser and read as sentences in one section.
+    expect(screen.getByText(/^Use this method \(.*\) for the selected question\.\s+For example, Compare two sources\.\s+This work may result in: A cited comparison that states one limitation\.$/s)).toBeTruthy();
     expect(screen.getByText("What to keep in mind")).toBeTruthy();
     expect(screen.getByText("Do not infer causes from a single association.")).toBeTruthy();
     expect(screen.queryByText(/Output:|Task:|Guardrail:/)).toBeNull();
@@ -244,8 +244,8 @@ describe("ContextualItemList", () => {
 
     fireEvent.press(screen.getByRole("button", { name: "Open details for Research design" }));
     expect(screen.getByText("How it connects to this role")).toBeTruthy();
-    expect(screen.getByText(routeItem.roleContext!)).toBeTruthy();
-    expect(screen.getByText("How it is used in this field")).toBeTruthy();
+    expect(screen.getByText(plainText(routeItem.roleContext!))).toBeTruthy();
+    expect(screen.getByText("How you might use it")).toBeTruthy();
 
     rerender(<ThemeProvider><ContextualItemList
       items={[routeItem]}
@@ -316,9 +316,9 @@ describe("ContextualItemList", () => {
       fireEvent.press(screen.getByRole("button", { name: `Open details for Reviewed ${itemType}` }));
 
       expect(screen.getByText("What it is")).toBeTruthy();
-      expect(screen.getByText(typedItem.plainMeaning)).toBeTruthy();
-      expect(screen.getByText("How it is used in this field")).toBeTruthy();
-      expect(screen.getByText(/In Social Sciences, a learner can use this/)).toBeTruthy();
+      expect(screen.getByText(plainText(typedItem.plainMeaning))).toBeTruthy();
+      expect(screen.getByText("How you might use it")).toBeTruthy();
+      expect(screen.getByText(plainText(typedItem.contextualUse, { exact: false }))).toBeTruthy();
     },
   );
 
@@ -363,7 +363,6 @@ describe("ContextualItemList", () => {
       complements: ["A codebook that explains how the themes were applied"],
       validAlternatives: ["Manual coding may fit a small set of documents."],
       requirementLevel: "useful",
-      requirementReason: "Useful when this role is analysing qualitative interview material; it is not needed for every sociological task.",
       linkEvidence: { why_this_resource: "This guide teaches the software's qualitative coding workflow used in the example above." },
       additionalLearningLinks: [{
         title: "NVivo practice walkthrough",
@@ -405,29 +404,33 @@ describe("ContextualItemList", () => {
     expect(screen.getByText("Tool")).toBeTruthy();
     expect(screen.getByText("Useful option for this work")).toBeTruthy();
     fireEvent.press(screen.getByRole("button", { name: "Open details for NVivo" }));
-    const labels = ["What it is", "How it is used in this role", "Why it is included", "Example of the work", "What to keep in mind", "What may help you prepare", "What can work alongside it", "Other approaches to consider", "What you may produce", "Why this resource is here", "What it cannot prove or replace"];
-    const rendered = screen.UNSAFE_getAllByType(Text).map((node) => String(node.props.children ?? ""));
+    const labels = ["What it is", "How you might use it", "Why it may help on this direction", "What to keep in mind", "What may help you prepare", "What can work alongside it", "Other approaches to consider", "How it connects to other learning", "Learn more about NVivo"];
+    // Headings whose children are split (e.g. "Learn more about " + name) are compared as one string.
+    const rendered = screen.UNSAFE_getAllByType(Text).map((node) => [node.props.children].flat().join(""));
     const positions = labels.map((label) => rendered.findIndex((value) => value === label));
     expect(positions.map((position, index) => position < 0 ? labels[index] : null).filter(Boolean)).toEqual([]);
     expect(positions).toEqual([...positions].sort((a, b) => a - b));
-    expect(StyleSheet.flatten(screen.getByText("What it is").props.style).fontSize).toBeGreaterThanOrEqual(18);
-    expect(StyleSheet.flatten(screen.getByText(tool.plainMeaning).props.style).fontSize).toBeGreaterThanOrEqual(16);
-    expect(StyleSheet.flatten(screen.getByText("What it is").props.style).fontSize).toBeGreaterThan(StyleSheet.flatten(screen.getByText(tool.plainMeaning).props.style).fontSize);
-    expect(screen.getByText(/Useful when this role is analysing qualitative interview material/)).toBeTruthy();
-    expect(screen.getByText("A clear research question and a documented coding plan")).toBeTruthy();
-    expect(screen.getByText("A codebook that explains how the themes were applied")).toBeTruthy();
-    expect(screen.getByText("Manual coding may fit a small set of documents.")).toBeTruthy();
-    expect(screen.getByText(/A coded set of extracts/)).toBeTruthy();
-    expect(screen.getByText(/This guide teaches the software's qualitative coding workflow/)).toBeTruthy();
-    expect(screen.getAllByText("Why this link may help")).toHaveLength(5);
-    expect(screen.getAllByText(/This resource is attached as a place to learn or read more about NVivo/).length).toBeGreaterThanOrEqual(2);
-    expect(screen.getByText("Start at: Coding interview transcripts")).toBeTruthy();
-    expect(screen.getByRole("button", { name: "Builds on: Qualitative analysis" })).toBeTruthy();
-    expect(screen.getByText("Product documentation/reference")).toBeTruthy();
-    expect(screen.getByText("Video learning")).toBeTruthy();
-    expect(screen.getByText("Paid learning alternative")).toBeTruthy();
-    expect(screen.getByRole("link", { name: "Open Research Skills Video for NVivo" })).toBeTruthy();
-    expect(screen.getByRole("link", { name: "Open NVivo Training for NVivo" })).toBeTruthy();
+    // Section headings are 15px semibold (reduced from 18px in d7dda1f); body copy stays at 16px or more.
+    expect(StyleSheet.flatten(screen.getByText("What it is").props.style).fontSize).toBeGreaterThanOrEqual(15);
+    expect(StyleSheet.flatten(screen.getByText(plainText(tool.plainMeaning)).props.style).fontSize).toBeGreaterThanOrEqual(16);
+    expect(screen.getByText(/^A clear research question \(.*\) and a documented coding/)).toBeTruthy();
+    expect(screen.getByText(/^A codebook \(.*\) that explains how the themes were applied/)).toBeTruthy();
+    expect(screen.getByText(/^Manual coding \(.*\) may fit a small set of documents\./)).toBeTruthy();
+    expect(screen.getByText(/This work may result in: A coded set of extracts/)).toBeTruthy();
+    // Each resource keeps its own description (as plain text, not as a "where to start" locator) and an exact locator where one exists.
+    expect(screen.getByText("Official product documentation for the coding workflow.")).toBeTruthy();
+    expect(screen.getByText("A video lesson that demonstrates coding interview material.")).toBeTruthy();
+    expect(screen.getByText("Where to start: Coding interview transcripts")).toBeTruthy();
+    expect(screen.queryByText(/Where to start: (Official|A video|A paid)/)).toBeNull();
+    expect(screen.getByRole("button", { name: "See related learning: Qualitative analysis" })).toBeTruthy();
+    expect(screen.getAllByText("Free to access").length).toBeGreaterThanOrEqual(2);
+    expect(screen.getByText("Paid; check provider")).toBeTruthy();
+    // Resources named after the item itself are told apart by provider, so link names are distinct.
+    expect(screen.getByRole("link", { name: "Open NVivo official documentation" })).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Watch Research Skills Video" })).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Open NVivo Training" })).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Open NVivo learning page" })).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Watch NVivo practice walkthrough" })).toBeTruthy();
     fireEvent.press(screen.getByRole("button", { name: "Open learning tray after saving" }));
     expect(mockGuided).toHaveBeenCalledWith(expect.any(Object), expect.objectContaining({
       programmeId: "sociology",
@@ -457,8 +460,9 @@ describe("ContextualItemList", () => {
     };
     render(<ThemeProvider><ContextualItemList items={[sourceTool, targetTool]} contextLevel="role" itemScope="learning-options" /></ThemeProvider>);
     fireEvent.press(screen.getByRole("button", { name: "Open details for Tool A" }));
-    fireEvent.press(screen.getByRole("button", { name: "Choose one: Tool B" }));
-    fireEvent.press(screen.getByRole("button", { name: "Open target Tool B" }));
+    // The relationship is explained inline; its target opens with one press.
+    expect(screen.getByText(/Tool B is another approach to consider\./)).toBeTruthy();
+    fireEvent.press(screen.getByRole("button", { name: "See related learning: Tool B" }));
     expect(screen.getByRole("button", { name: "Hide details for Tool B" })).toBeTruthy();
     fireEvent.press(screen.getByRole("button", { name: "Return to Tool A" }));
     expect(screen.getByRole("button", { name: "Hide details for Tool A" })).toBeTruthy();
@@ -491,8 +495,7 @@ describe("ContextualItemList", () => {
     /></ThemeProvider>);
 
     fireEvent.press(screen.getByRole("button", { name: "Open details for Research design" }));
-    fireEvent.press(screen.getByRole("button", { name: "Supports role: Sociologist" }));
-    fireEvent.press(screen.getByRole("button", { name: "Open target Sociologist" }));
+    fireEvent.press(screen.getByRole("button", { name: "Open role: Sociologist" }));
 
     expect(mockRole).toHaveBeenCalledWith(expect.any(Object), "D078|sociologist", expect.objectContaining({
       programmeId: "sociology",
@@ -502,5 +505,33 @@ describe("ContextualItemList", () => {
       focused: true,
       preserveHistory: true,
     }));
+  });
+
+  it("opens an approved related area route with its context and preserves history", () => {
+    const areaTarget: CareerContextItem = { ...item, relationships: [] };
+    render(<ThemeProvider><ContextualItemList
+      items={[areaTarget]}
+      contextLevel="domain"
+      itemScope="learning-options"
+      learningRoute={{ programmeId: "sociology", domainId: "D078" }}
+      learningFocus
+    /></ThemeProvider>);
+
+    fireEvent.press(screen.getByRole("button", { name: "Open details for Research design" }));
+    fireEvent.press(screen.getByRole("button", { name: "Open area: Computational and Digital Social Science" }));
+
+    expect(mockSubgroup).toHaveBeenCalledWith(expect.any(Object), "D078", "D078|sg:21", expect.objectContaining({
+      programmeId: "sociology",
+      domainId: "D078",
+      areaId: "D078|sg:21",
+      focused: true,
+      preserveHistory: true,
+    }));
+  });
+
+  it("offers no route navigation when there is no selected domain route to carry", () => {
+    render(<ThemeProvider><ContextualItemList items={[item]} contextLevel="domain" itemScope="learning-options" /></ThemeProvider>);
+    fireEvent.press(screen.getByRole("button", { name: "Open details for Research design" }));
+    expect(screen.queryByRole("button", { name: /^Open (area|role):/ })).toBeNull();
   });
 });

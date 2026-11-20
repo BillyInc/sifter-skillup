@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-28",
+  "candidate_ids": [
+    "domain-emerging:d078-emerging-ai-assisted-cross-source-data-harmonisation",
+    "domain-emerging:d078-emerging-ai-assisted-research-data-metadata-curation",
+    "domain-emerging:d078-emerging-ai-assisted-social-text-annotation",
+    "domain-emerging:d078-emerging-ai-social-impact-assessment",
+    "domain-emerging:d078-emerging-ai-use-validation-and-provenance",
+    "domain-emerging:d078-experimental-synthetic-respondent-and-llm-agent-testing",
+    "domain-emerging:d078-power-bi-research-reporting-tool",
+    "domain-emerging:d078-tableau-research-visualisation-tool"
+  ],
+  "candidate_count": 8,
+  "single_method_area_route_count": 290,
+  "combination_method_contribution_count": 495,
+  "requirement_policy": "candidate-specific optional/conditional; skippable; never blocks method or area progression",
+  "combination_policy": "attach only to the exact method contribution that supports the item; do not union unrelated method paths",
+  "graph_global_student_visible_unchanged": true,
+  "sql_changed": false
+}

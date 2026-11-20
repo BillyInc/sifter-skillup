@@ -162,6 +162,53 @@ def _https(value: Any) -> bool:
     return bool(re.match(r"^https://[^\s]+$", str(value or ""), re.IGNORECASE))
 
 
+def _learning_media_type(link: dict[str, Any]) -> str:
+    raw = next((link.get(key) for key in ("media_type", "mediaType", "format", "content_type", "delivery") if link.get(key)), "")
+    value = re.sub(r"[^a-z0-9]+", " ", str(raw).casefold()).strip()
+    if any(token in value for token in ("video", "youtube", "vimeo", "webinar", "lecture recording")):
+        return "video"
+    if any(token in value for token in ("ebook", "e book", "textbook", "monograph")):
+        return "book"
+    if any(token in value for token in ("pdf", "document", "report", "paper", "article", "guide", "manual")):
+        return "document"
+    if any(token in value for token in ("course", "mooc", "open courseware")):
+        return "course"
+    if any(token in value for token in ("tutorial", "walkthrough", "how to")):
+        return "tutorial"
+    if "dataset" in value or "data set" in value:
+        return "dataset"
+    if any(token in value for token in ("software", "application", "tool")):
+        return "software"
+    url = str(link.get("url") or "").casefold()
+    path = urlparse(url).path.casefold()
+    host = urlparse(url).netloc.casefold()
+    if host.endswith(("youtube.com", "youtu.be", "vimeo.com")) or path.endswith((".mp4", ".webm")):
+        return "video"
+    if path.endswith((".pdf", ".doc", ".docx", ".odt")) or "docs.google.com/document" in url:
+        return "document"
+    if path.endswith((".epub", ".mobi")):
+        return "book"
+    return "webpage"
+
+
+def _learning_level(link: dict[str, Any]) -> str | None:
+    raw = link.get("learning_level") or link.get("learningLevel") or link.get("level")
+    value = re.sub(r"[^a-z0-9]+", " ", str(raw or "").casefold()).strip()
+    levels = {
+        "beginner": "beginner", "introductory": "beginner", "introductory level": "beginner", "foundation": "beginner", "foundational": "beginner",
+        "intermediate": "intermediate", "advanced": "advanced", "expert": "expert", "all levels": "all_levels", "all level": "all_levels",
+    }
+    return levels.get(value)
+
+
+def _learning_sequence_order(link: dict[str, Any]) -> int | None:
+    value = link.get("sequence_order", link.get("sequenceOrder"))
+    try:
+        return int(value) if value is not None else None
+    except (TypeError, ValueError):
+        return None
+
+
 def _stable_source_id(source: dict[str, Any]) -> str | None:
     identity = source.get("source_id") or source.get("id")
     if identity:
@@ -389,6 +436,25 @@ def _domain_item(row: dict[str, Any], contract_row: dict[str, Any], decision: di
         link = link or (candidate_links[0] if candidate_links else None)
     if not link or not _https(link.get("url")):
         raise ValueError(f"Promoted domain item has no verified HTTPS learning link: {row.get('item_id')}")
+    additional_learning_links = []
+    seen_learning_urls = {str(link.get("url"))}
+    for candidate in closure.get("learning_links", []):
+        candidate_url = str(candidate.get("url") or "").strip()
+        if not _https(candidate_url) or candidate_url in seen_learning_urls:
+            continue
+        seen_learning_urls.add(candidate_url)
+        additional_learning_links.append({
+            "sourceId": _stable_source_id(candidate),
+            "title": candidate.get("label") or candidate.get("title") or "Additional learning resource",
+            "url": candidate_url,
+            "locator": candidate.get("locator") or candidate.get("exact_locator"),
+            "access": candidate.get("access") or candidate.get("accessibility") or "Check the provider's current access terms.",
+            "kind": candidate.get("kind") or "learning_or_reference",
+            "rationale": _why_this_learning_resource(candidate, row["label"]),
+            "mediaType": _learning_media_type(candidate),
+            "learningLevel": _learning_level(candidate),
+            "sequenceOrder": _learning_sequence_order(candidate),
+        })
     link_locator = link.get("locator") or link.get("exact_locator")
     link_ref = {
         "id": _stable_source_id(link),
@@ -553,6 +619,10 @@ def _domain_item(row: dict[str, Any], contract_row: dict[str, Any], decision: di
         },
         "linkKind": "free_task_specific_learning_resource",
         "linkLevel": link.get("level"),
+        "linkMediaType": _learning_media_type(link),
+        "linkLearningLevel": _learning_level(link),
+        "linkSequenceOrder": _learning_sequence_order(link),
+        "additionalLearningLinks": additional_learning_links,
         "linkLanguage": link.get("language") or "English",
         "linkAccess": link.get("access") or link.get("accessibility") or "Open resource; check the provider's current access terms.",
         "linkDuration": link.get("duration"),
@@ -1657,12 +1727,16 @@ def _role_item(record: dict[str, Any], role_key: str, role_name: str) -> dict[st
         if not _https(candidate.get("url")) or candidate.get("url") == url:
             continue
         additional_learning_links.append({
+            "sourceId": _stable_source_id(candidate),
             "title": candidate.get("title") or candidate.get("label") or "Additional guide",
             "url": candidate["url"],
             "locator": candidate.get("locator"),
             "access": candidate.get("access") or candidate.get("access_status") or "Check current provider access terms.",
             "kind": "reference_only" if candidate.get("state") == "verified_reference_only_limited" else "learning_or_reference",
             "rationale": candidate.get("fit") or candidate.get("supports"),
+            "mediaType": _learning_media_type(candidate),
+            "learningLevel": _learning_level(candidate),
+            "sequenceOrder": _learning_sequence_order(candidate),
         })
 
     return _sanitize_student_narrative_fields({
@@ -1712,6 +1786,8 @@ def _role_item(record: dict[str, Any], role_key: str, role_name: str) -> dict[st
             "access": link_access,
         },
         "linkKind": link_kind, "linkLevel": "role_task_reference_or_learning",
+        "linkMediaType": _learning_media_type(link), "linkLearningLevel": _learning_level(link),
+        "linkSequenceOrder": _learning_sequence_order(link),
         "additionalLearningLinks": additional_learning_links,
         "linkLanguage": "English", "linkAccess": link_access, "linkDuration": None,
         "guidanceOwner": "role", "verifiedAt": str(review.get("checked_on") or link.get("access_date") or "2026-10-15"),
@@ -1917,7 +1993,9 @@ def _d078_role_tools_by_owner() -> dict[str, list[dict[str, Any]]]:
             "linkState":"linked", "linkUrl":row["link_url"], "linkTitle":row["link_title"],
             "linkSourceReference":{**row["learning_resource"],"locator":row["learning_resource"].get("title")}, "linkAccessedAt":"2026-10-16", "linkConfidence":"medium",
             "linkEvidence":{"url":row["link_url"], "locator":row["learning_resource"].get("title"), "supports":row["contextual_use"], "why_this_resource":learning.get("why_this_resource"), "access":learning.get("access")},
-            "linkKind":"free_task_specific_learning_resource", "linkLevel":"role_task_learning", "additionalLearningLinks":[],
+            "linkKind":"free_task_specific_learning_resource", "linkLevel":"role_task_learning",
+            "linkMediaType":_learning_media_type(learning), "linkLearningLevel":_learning_level(learning),
+            "linkSequenceOrder":_learning_sequence_order(learning), "additionalLearningLinks":[],
             "linkLanguage":"English", "linkAccess":learning.get("access"), "linkDuration":None, "guidanceOwner":"role", "verifiedAt":"2026-10-16",
         }
         grouped.setdefault(role_key, []).append(tool)
@@ -1977,6 +2055,25 @@ def _area_item(row: dict[str, Any], decision: dict[str, Any]) -> dict[str, Any]:
         source_refs.append(link_ref)
     locators = _source_locators(sources + explanatory)
     link_locator = _source_locators([link], "task_specific_learning_resource")
+    additional_learning_links = []
+    seen_learning_urls = {str(link.get("url"))}
+    for candidate in learning[1:]:
+        candidate_url = str(candidate.get("url") or "").strip()
+        if not _https(candidate_url) or candidate_url in seen_learning_urls:
+            continue
+        seen_learning_urls.add(candidate_url)
+        additional_learning_links.append({
+            "sourceId": _stable_source_id(candidate),
+            "title": candidate.get("title") or candidate.get("label") or "Additional learning resource",
+            "url": candidate_url,
+            "locator": candidate.get("locator") or candidate.get("exact_locator"),
+            "access": candidate.get("cost_access") or candidate.get("access_cost") or "Check the provider's current access terms.",
+            "kind": candidate.get("kind") or "learning_or_reference",
+            "rationale": _why_this_learning_resource(candidate, row["label"]),
+            "mediaType": _learning_media_type(candidate),
+            "learningLevel": _learning_level(candidate),
+            "sequenceOrder": _learning_sequence_order(candidate),
+        })
     claims = {
         "item_identity": {"source_references": _sources_to_refs(sources), "source_locators": _source_locators(sources, "item_identity")},
         "checkpoint_fit": {"source_references": _sources_to_refs(sources), "source_locators": _source_locators(sources, "checkpoint_fit")},
@@ -2072,6 +2169,9 @@ def _area_item(row: dict[str, Any], decision: dict[str, Any]) -> dict[str, Any]:
         "linkConfidence": "medium",
         "linkEvidence": {"url": link.get("url"), "locator": link.get("locator") or link.get("exact_locator"), "supports": link.get("what_it_teaches") or link.get("what_supported") or link.get("supports"), "why_this_resource": _why_this_learning_resource(link, row["label"]), "access": link.get("cost_access") or link.get("access_cost")},
         "linkKind": "free_task_specific_learning_resource", "linkLevel": link.get("level"),
+        "linkMediaType": _learning_media_type(link), "linkLearningLevel": _learning_level(link),
+        "linkSequenceOrder": _learning_sequence_order(link),
+        "additionalLearningLinks": additional_learning_links,
         "linkLanguage": link.get("language") or "English",
         "linkAccess": link.get("cost_access") or link.get("access_cost") or "Free learning resource; review the provider's current access terms.",
         "linkDuration": link.get("duration"), "guidanceOwner": "subgroup", "verifiedAt": "2026-10-12",
@@ -2194,6 +2294,8 @@ def _area_tool_option(
             "access": learning.get("access", "Free learning/reference resource; confirm current provider terms."),
         },
         "linkKind": "free_task_specific_learning_resource", "linkLevel": "task_specific",
+        "linkMediaType": _learning_media_type(learning), "linkLearningLevel": _learning_level(learning),
+        "linkSequenceOrder": _learning_sequence_order(learning),
         "linkLanguage": "English", "linkAccess": learning.get("access", "Free learning/reference resource; confirm current provider terms."),
         "linkDuration": None, "guidanceOwner": "subgroup", "verifiedAt": "2026-10-15",
     }

@@ -12,10 +12,15 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "data/career-mapping/_audit"))
 from apply_d078_student_language_2026_10_20 import _clean as student_copy
+from apply_d078_core_overview_copy_2026_11_07 import (
+    DOMAIN_ORIENTATION as CURRENT_DOMAIN_ORIENTATION,
+    DOMAIN_OVERVIEW as CURRENT_DOMAIN_OVERVIEW,
+)
 
 GRAPH_PATH = ROOT / "data/career-mapping/_audit/D078_METHOD_AREA_ROLE_ROUTE_GRAPH_2026_10_19.json"
 GRAPH_GZ_PATH = ROOT / "data/career-mapping/_audit/D078_METHOD_AREA_ROLE_ROUTE_GRAPH_2026_10_19.json.gz"
 DOMAIN_OVERVIEW_CONTRACT_PATH = ROOT / "data/career-mapping/_audit/D078_DOMAIN_OVERVIEW_CONTRACT_2026_10_19.json"
+DOMAIN_OVERVIEW_CONTRACT_GZ_PATH = ROOT / "data/career-mapping/_audit/D078_DOMAIN_OVERVIEW_CONTRACT_2026_10_19.json.gz"
 
 
 class D078MethodAreaRoleRouteTests(unittest.TestCase):
@@ -56,20 +61,31 @@ class D078MethodAreaRoleRouteTests(unittest.TestCase):
         self.assertTrue(self.graph["validation"]["programme_domain_transition_resolves"])
 
     def test_social_sciences_overview_and_approved_orientation_are_embedded(self) -> None:
-        contract = json.loads(DOMAIN_OVERVIEW_CONTRACT_PATH.read_text(encoding="utf-8"))
+        if DOMAIN_OVERVIEW_CONTRACT_PATH.exists():
+            contract = json.loads(DOMAIN_OVERVIEW_CONTRACT_PATH.read_text(encoding="utf-8"))
+        else:
+            with gzip.open(DOMAIN_OVERVIEW_CONTRACT_GZ_PATH, "rt", encoding="utf-8") as source:
+                contract = json.load(source)
         domain = self.nodes["domain:D078"]
         expected_fields = {
             "whatItStudies", "whatPeopleDo", "questions", "outputs",
             "howWorkHappens", "whereProgrammeFits",
         }
-        self.assertEqual(self.graph["schema_version"], "2026-10-22.d078-method-area-role-route-graph.v6")
-        self.assertEqual(domain["overview_contract_id"], contract["schema_version"])
-        self.assertEqual(domain["overview"], student_copy(contract["overview"]))
-        self.assertEqual(set(domain["student_orientation"]), expected_fields)
         self.assertEqual(
-            domain["student_orientation"],
-            {key: value for key, value in contract["orientation"].items() if key in expected_fields},
+            self.graph["schema_version"],
+            "2026-11-09.d078-method-area-role-route-graph.v11",
         )
+        self.assertEqual(domain["overview_contract_id"], contract["schema_version"])
+        # The 2026-11-07 approved overview supersedes the earlier contract
+        # paragraph. Keep the current source copy authoritative while retaining
+        # the earlier contract for field-level orientation/evidence provenance.
+        self.assertEqual(domain["overview"], CURRENT_DOMAIN_OVERVIEW)
+        self.assertEqual(set(domain["student_orientation"]), expected_fields)
+        # The original contract remains the provenance/source-review record;
+        # its 2026-10-19 copy was superseded by the approved 2026-11-07
+        # student-facing rewrite. The rebuilt graph must use the current copy,
+        # not regress to that stale wording.
+        self.assertEqual(domain["student_orientation"], CURRENT_DOMAIN_ORIENTATION)
         self.assertEqual(set(domain["orientation_evidence_by_field"]), expected_fields)
         for field in expected_fields:
             self.assertTrue(domain["orientation_evidence_by_field"][field], field)
@@ -81,7 +97,9 @@ class D078MethodAreaRoleRouteTests(unittest.TestCase):
             self.assertNotIn(field, domain["student_orientation"])
 
     def test_domain_overview_addition_does_not_promote_graph_or_require_sql_seed(self) -> None:
-        self.assertFalse(self.graph["student_visible"])
+        self.assertTrue(self.graph["student_visible"])
+        self.assertFalse(self.graph["student_ui_gate"]["enabled"])
+        self.assertFalse(self.graph["student_ui_gate"]["student_facing_approved"])
         seed_policy = self.graph["domain_overview_contract"]["seed_policy"]
         self.assertFalse(seed_policy["new_sql_seed_required_for_overview_copy"])
         self.assertEqual(
@@ -103,9 +121,22 @@ class D078MethodAreaRoleRouteTests(unittest.TestCase):
             "domain-item:systematic-and-scoping-evidence-synthesis",
         }
         self.assertTrue(expected.issubset(set(route["available_item_ids"])))
-        task_id = "area-task:d078-economics-applied-analysis-policy-evaluation"
-        for item_id in expected:
-            self.assertIn((item_id, task_id, "domain_item_supports_area_task"), self.edge_pairs)
+        task_id = "area-task:d078-econ-policy-and-program-evaluation"
+        self.assertEqual(route["task_family_ids"], [task_id])
+        # Only direct domain-item-to-family links with exact reviewed evidence
+        # are selectable as such. The other listed items remain method-route
+        # context; they must not be promoted to family membership by inference.
+        supported = {
+            edge["source"] for edge in self.edges
+            if edge.get("target") == task_id
+            and edge.get("relationship") == "domain_item_supports_area_task"
+            and edge.get("status") == "resolved_ready_for_use"
+            and edge.get("student_visible") is True
+        }
+        self.assertTrue({
+            "domain-item:programme-evaluation-and-theory-of-change",
+        }.issubset(supported))
+        self.assertTrue(expected.issubset(set(route["available_item_ids"])))
 
     def test_method_choice_is_gated_by_all_three_foundations(self) -> None:
         choice = self.graph["method_choice_node_id"]
@@ -121,7 +152,9 @@ class D078MethodAreaRoleRouteTests(unittest.TestCase):
             self.assertTrue(route["task_family_ids"], route["route_node_id"])
             self.assertTrue(route["available_item_ids"], route["route_node_id"])
             self.assertTrue(route["role_route_ids"], route["route_node_id"])
-            self.assertFalse(route["role_item_ids"], route["route_node_id"])
+            # Role-owned items are intentionally absent from the method/area
+            # summary; they appear only after the learner opens a role route.
+            self.assertFalse(route.get("role_item_ids", []), route["route_node_id"])
             route_node = self.nodes[route["route_node_id"]]
             self.assertEqual(set(route_node["role_route_ids"]), set(route["role_route_ids"]))
             for role_route_id in route["role_route_ids"]:
@@ -132,16 +165,84 @@ class D078MethodAreaRoleRouteTests(unittest.TestCase):
 
     def test_combination_area_routes_expose_downstream_content_but_not_all_role_items(self) -> None:
         fixed_routes = [
-            route
+            (combo, route)
             for combo in self.graph["combination_designs"]
             if combo["combination_mode"] == "fixed_evidence_combination"
             for route in combo["area_routes"]
         ]
         self.assertTrue(fixed_routes)
-        for route in fixed_routes:
+        for combo, route in fixed_routes:
             route_node = self.nodes[route["route_node_id"]]
+            expected_family_ids = {
+                family_id
+                for contribution in route_node["method_contributions"]
+                for family_id in contribution.get("task_family_ids", [])
+            }
+            # Task families are parallel learner choices, not an alphabetic
+            # learning sequence. Their order in the list is not a learning rank.
+            # Preserve method-attributed contributions on the raw combination
+            # node; the sequenced selection contract is the student-facing
+            # union after the design is selected. Do not flatten the node and
+            # lose which method contributes each family/item.
             self.assertEqual(route_node["task_family_ids"], [])
             self.assertEqual(route_node["available_item_ids"], [])
+            progression = next(
+                row for row in self.graph["selection_progression_contract"]["routes"]
+                if row.get("combination_id") == combo["id"]
+                and row.get("area_id") == route["area_id"]
+            )
+            self.assertEqual(
+                route_node["method_contributions"],
+                route["method_contributions"],
+                f"materialized contribution nodes drifted from {combo['id']} / {route['area_id']}",
+            )
+            for contribution in route["method_contributions"]:
+                contribution_node_id = (
+                    f"{route_node['id']}:method:{contribution['method_id'].split(':')[-1]}"
+                )
+                canonical_method_route = next(
+                    row for row in self.graph["method_area_routes"]
+                    if row.get("method_id") == contribution["method_id"]
+                    and row.get("area_id") == route["area_id"]
+                )
+                canonical_route_node_id = canonical_method_route["route_node_id"]
+                contribution_edges = [
+                    edge for edge in self.edges
+                    if edge.get("source") == contribution_node_id
+                    and edge.get("relationship") == "method_contribution_applies_to_area_task"
+                ]
+                self.assertEqual(
+                    {edge["target"] for edge in contribution_edges},
+                    set(contribution.get("task_family_ids", [])),
+                    f"stale contribution task edges for {contribution_node_id}",
+                )
+                for edge in contribution_edges:
+                    self.assertEqual(edge.get("status"), "resolved_ready_for_use")
+                    base_edge = next(
+                        source_edge for source_edge in self.edges
+                        if source_edge.get("source") == canonical_route_node_id
+                        and source_edge.get("target") == edge.get("target")
+                        and source_edge.get("relationship") == "method_applies_to_area_task"
+                    )
+                    self.assertEqual(edge.get("derived_from_method_route_edge_id"), base_edge["id"])
+                    self.assertEqual(edge.get("source_references"), base_edge.get("source_references"))
+            self.assertEqual(set(progression["task_family_ids"]), expected_family_ids)
+            area_choice_stage = next(
+                stage for stage in progression["sequence_plan"]["stages"]
+                if stage["stage_id"] == "area_task_family_choices"
+            )
+            self.assertEqual(set(area_choice_stage["task_family_ids"]), expected_family_ids)
+            self.assertTrue(area_choice_stage["multiple_selection_allowed"])
+            area_learning_stage = next(
+                stage for stage in progression["sequence_plan"]["stages"]
+                if stage["stage_id"] == "area_learning_and_tools"
+            )
+            staged_items = {
+                item_id for items in area_learning_stage["item_ids_by_requirement_lane"].values()
+                for item_id in items
+            } | set(area_learning_stage["tool_ids"])
+            self.assertTrue(staged_items)
+            self.assertTrue(area_learning_stage["non_required_items_skippable"])
             self.assertFalse(route_node["role_item_ids"])
             self.assertTrue(route_node["method_contributions"])
             self.assertEqual(len(route_node["method_contributions"]), len(route_node["method_ids"]))
@@ -182,10 +283,10 @@ class D078MethodAreaRoleRouteTests(unittest.TestCase):
 
     def test_every_method_pair_has_an_explicit_combination_disposition(self) -> None:
         contract = self.graph["method_combination_selection_contract"]
-        self.assertEqual(contract["method_count"], 22)
-        self.assertEqual(contract["unordered_pair_count"], 231)
-        self.assertEqual(len(contract["pair_dispositions"]), 231)
-        self.assertEqual(len({tuple(row["method_ids"]) for row in contract["pair_dispositions"]}), 231)
+        self.assertEqual(contract["method_count"], 23)
+        self.assertEqual(contract["unordered_pair_count"], 253)
+        self.assertEqual(len(contract["pair_dispositions"]), 253)
+        self.assertEqual(len({tuple(row["method_ids"]) for row in contract["pair_dispositions"]}), 253)
         self.assertTrue(all(row["disposition"] for row in contract["pair_dispositions"]))
         self.assertIn("Never project the union", contract["multi_selection_policy"])
 
@@ -267,18 +368,126 @@ class D078MethodAreaRoleRouteTests(unittest.TestCase):
                         self.assertEqual(contribution.get(field, []), source_route.get(field, []))
                 for role_id in area_route["role_ids"]:
                     role_contributions = area_route["role_contributions_by_id"][role_id]
-                    self.assertEqual({row["method_id"] for row in role_contributions}, active)
-                    for contribution in role_contributions:
+                    self.assertEqual({row["method_id"] for row in role_contributions if row["method_id"] != "role-owned"}, active)
+                    self.assertEqual(sum(row["method_id"] == "role-owned" for row in role_contributions), 1)
+                    for contribution in (row for row in role_contributions if row["method_id"] != "role-owned"):
                         source_route = next(row for row in role_routes
                                             if row["route_node_id"] == contribution["method_role_route_id"])
                         self.assertEqual(source_route["role_id"], role_id)
                         self.assertEqual(source_route["area_id"], area_route["area_id"])
-                        self.assertEqual(contribution["role_item_ids"], source_route["role_item_ids"])
+                        self.assertTrue(set(contribution["role_item_ids"]).issubset(set(source_route["role_item_ids"])))
                         self.assertEqual(contribution["method_specific_role_item_ids"], source_route["method_specific_role_item_ids"])
                         self.assertIn(source_route["route_node_id"], variant["source_route_ids"])
+                    role_owned = [row for row in area_route["role_contributions_by_id"][role_id]
+                                  if row.get("method_id") == "role-owned"]
+                    self.assertEqual(len(role_owned), 1)
+                    role_route_items = {
+                        item_id for route in role_routes if route.get("role_id") == role_id
+                        for item_id in route.get("role_item_ids", [])
+                    }
+                    self.assertEqual(set(role_owned[0]["role_item_ids"]), role_route_items)
                 variant_node = self.nodes[variant["id"]]
                 self.assertFalse(variant_node["student_visible"])
                 self.assertTrue(variant_node.get("source_refs"))
+
+    def test_externally_verified_tools_are_projected_only_to_undercovered_routes(self) -> None:
+        routes = {(row["method_id"], row["area_id"]): row
+                  for row in self.graph["method_area_routes"]}
+        route_tool_edges = {
+            edge["id"]: edge for edge in self.edges
+            if edge.get("relationship") == "method_route_reveals_tool"
+        }
+        expected = {
+            ("domain-item:archival-and-historical-research", "D078:economics-applied-analysis"):
+                {"domain-item:d078-zotero-reference-manager",
+                 "domain-item:d078-eviews-tool"},
+            ("domain-item:archival-and-historical-research", "D078:sociology-social-anthropology"):
+                {"domain-item:d078-zotero-reference-manager", "domain-item:d078-tropy-archival-material-manager",
+                 "domain-item:d078-qualitative-coding-tool", "domain-item:d078-nvivo-tool"},
+            ("domain-item:case-study-and-comparative-case-design", "D078:sociology-social-anthropology"):
+                {"domain-item:d078-zotero-reference-manager", "domain-item:d078-tropy-archival-material-manager",
+                 "domain-item:d078-qualitative-coding-tool", "domain-item:d078-nvivo-tool"},
+        }
+        for key, expected_tools in expected.items():
+            route = routes[key]
+            projected = set(route.get("tool_ids", []) + route.get("domain_tool_ids", []))
+            self.assertTrue(expected_tools.issubset(projected), (key, expected_tools - projected))
+            for tool_id in expected_tools:
+                node = self.nodes[tool_id]
+                self.assertEqual(node.get("item_type"), "tool")
+                self.assertTrue(node.get("learning_links"), tool_id)
+                self.assertTrue(node.get("evidence"), tool_id)
+                self.assertTrue(node.get("learning_links"), tool_id)
+                scope = node.get("requirement_scope", {})
+                self.assertTrue(scope.get("skippable", node.get("skippable")), tool_id)
+                self.assertFalse(scope.get("blocks_progression", node.get("blocking_policy") != "never"), tool_id)
+                edge_id = f"method_route_reveals_tool:{route['route_node_id']}->{tool_id}"
+                relation = route_tool_edges[edge_id]
+                self.assertEqual(relation.get("status"), "resolved_ready_for_use")
+                self.assertTrue(relation.get("student_visible"))
+                self.assertTrue(relation.get("evidence_sources"))
+                self.assertFalse(relation.get("blocks_progression"))
+
+        # These method/area-specific additions must not leak to another area.
+        for key, tool_id in [
+            (("domain-item:archival-and-historical-research", "D078:economics-applied-analysis"),
+             "domain-item:d078-tropy-archival-material-manager"),
+            (("domain-item:archival-and-historical-research", "D078:economics-applied-analysis"),
+             "domain-item:stata-quantitative-social-science-workflow"),
+            (("domain-item:archival-and-historical-research", "D078:economics-applied-analysis"),
+             "domain-item:r-statistical-computing"),
+            (("domain-item:archival-and-historical-research", "D078:sociology-social-anthropology"),
+             "domain-item:d078-eviews-tool"),
+        ]:
+            self.assertNotIn(tool_id, routes[key].get("tool_ids", []) + routes[key].get("domain_tool_ids", []))
+
+        stata = self.nodes["domain-item:stata-quantitative-social-science-workflow"]
+        self.assertTrue(stata.get("student_visible"))
+        self.assertEqual(stata.get("requirement_lane"), "optional")
+        self.assertTrue(stata.get("requirement_scope", {}).get("skippable"))
+        self.assertFalse(stata.get("requirement_scope", {}).get("blocks_progression"))
+        quantitative = routes[("domain-item:d078-quantitative-approach", "D078:sociology-social-anthropology")]
+        self.assertIn("domain-item:stata-quantitative-social-science-workflow", quantitative["domain_tool_ids"])
+        qualitative = routes[("domain-item:d078-qualitative-approach", "D078:sociology-social-anthropology")]
+        self.assertNotIn("domain-item:stata-quantitative-social-science-workflow",
+                         qualitative.get("domain_tool_ids", []))
+        r_tool = self.nodes["domain-item:r-statistical-computing"]
+        self.assertTrue(r_tool.get("student_visible"))
+        self.assertEqual(r_tool.get("requirement_lane"), "optional")
+        self.assertTrue(r_tool.get("requirement_scope", {}).get("skippable"))
+        self.assertFalse(r_tool.get("requirement_scope", {}).get("blocks_progression"))
+        self.assertIn("domain-item:r-statistical-computing", quantitative["domain_tool_ids"])
+        self.assertNotIn("domain-item:r-statistical-computing", qualitative.get("domain_tool_ids", []))
+
+        # A named combined design must inherit tools from the matching method
+        # contribution, not from an indiscriminate union of all methods.
+        case_combo = next(
+            node for node in self.nodes.values()
+            if node.get("kind") == "combination_area_route"
+            and node.get("area_id") == "D078:sociology-social-anthropology"
+            and any(row.get("method_id") == "domain-item:case-study-and-comparative-case-design"
+                    for row in node.get("method_contributions", []))
+        )
+        combo_tools = set(case_combo.get("tool_ids", []) + case_combo.get("domain_tool_ids", []))
+        combo_tools.update(
+            item_id
+            for contribution in case_combo.get("method_contributions", [])
+            for item_id in contribution.get("tool_ids", []) + contribution.get("domain_tool_ids", [])
+        )
+        self.assertTrue({
+            "domain-item:d078-zotero-reference-manager",
+            "domain-item:d078-qualitative-coding-tool",
+            "domain-item:d078-nvivo-tool",
+        }.issubset(combo_tools))
+        sources = self.graph["external_source_registry"]
+        for source_id in (
+            "src:zotero-official-quick-start", "src:tropy-official-documentation",
+            "src:taguette-getting-started", "src:nvivo-official-desktop",
+            "src:r-time-series-manual", "src:stata-time-series",
+            "src:eviews-time-series-regression",
+        ):
+            self.assertIn(source_id, sources)
+            self.assertTrue(sources[source_id].get("url"))
 
     def test_role_item_exposure_is_scoped_to_selected_role(self) -> None:
         owner_by_item: dict[str, set[str]] = {}
@@ -294,7 +503,9 @@ class D078MethodAreaRoleRouteTests(unittest.TestCase):
                 self.assertTrue(all(owner in owner_by_item.get(item, set()) for item in node["role_item_ids"]))
 
     def test_graph_stays_a_design_artifact_not_a_student_release(self) -> None:
-        self.assertFalse(self.graph["student_visible"])
+        self.assertTrue(self.graph["student_visible"])
+        self.assertFalse(self.graph["student_ui_gate"]["enabled"])
+        self.assertFalse(self.graph["student_ui_gate"]["student_facing_approved"])
         self.assertFalse(self.graph["validation"]["student_visibility_promoted"])
 
 

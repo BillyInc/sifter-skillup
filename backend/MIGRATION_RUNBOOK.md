@@ -331,6 +331,159 @@ substitute for production deployment verification.
 | 17 | `backend/migration_school_identity.sql` | Adds address fields, source-backed official/short institution-name fields, and unique readable school affiliation codes for same-name disambiguation. Full names and abbreviations must be populated from an authoritative institution source; application code must not infer them from acronyms. | #13 |
 | 18 | `backend/migration_goal_apply_now.sql` | Consolidated additive patch for auth compatibility, legacy account routing support, school identity, affiliation, provisioning, claim codes and account deletion. | base `users` + `schools` tables |
 | 19 | `backend/migration_institution_verification_proof.sql` | Adds institution proof-submission metadata and the private verification-proofs storage bucket. | #18 + Supabase Storage |
+| 20 | `backend/migration_learning_interest_analytics_2026-10-26.sql` | Opt-in event history for programme, institution, domain, area, role, method/design and learning-item choices. Returns activity counts, route contexts and zero-filled UTC daily activity; affiliated school/state are snapshotted at event time; Cron deletes events after 395 days. | Supabase Cron (`pg_cron`) enabled; `users`, `student_affiliations`, `schools.state`, `schools.official_name`, and verified `institution_members` schema from #13, #15, #17, #18 |
+| 21 | `backend/migration_learning_interest_current_selections_2026-10-28.sql` | Additive current-selection snapshot and aggregate fields, separate from dated activity. Captures explicit post-migration changes and copied D078 route contexts (`selection_copied` affects current snapshot only, not add-action metrics); supports multiple routes per learner/item; refreshes route metadata without rewriting each choice's event-time learner stage/school attribution; clears snapshots on consent withdrawal/staleness or account soft deletion; updates searchable options. No seed or historical backfill. | #20 applied; `users.settings` and `users.is_deleted` are present; backend/frontend with Terms and Privacy `2026-10-28.1` deployed together |
+
+### Learning-interest analytics deployment note
+
+These additive migrations are required before `/analytics` can return persisted
+activity and current-selection aggregates. Before applying #20, enable Supabase Cron (`pg_cron`) for
+the project in the Supabase Dashboard. The migration intentionally fails if
+the `cron` schema is absent, so analytics events cannot be deployed without
+their automatic retention job. Apply it after the user, affiliation,
+institution membership, and `schools.state` schemas exist (steps #13, #15, #17
+and #18); no analytics seed is needed. A trigger snapshots the learner's
+affiliated school IDs and states at selection time; school-scoped counts use
+that event-time cohort, not the learner's current affiliation and never the
+university context being explored.
+
+Read-only live REST preflight on 2026-10-28 confirmed the existing `schools`
+table is reachable (872 rows), while both
+`learning_interest_events` and `learning_interest_active_selections` returned
+HTTP 404 in `skillup_dev`. Treat migrations #20 and #21 as unapplied until the
+post-apply table, function, trigger, and Cron checks below pass. No SQL writes
+were performed during that preflight.
+
+The application records only explicit programme/institution/domain/area/role,
+method/design and learning-item additions/removals from users whose saved
+analytics consent is true. It does not read saved paths as an analytics source.
+Analytics capture also requires acceptance of the current server-owned Terms and
+Privacy versions. The dashboard scope disclosure was expanded to distinguish
+an explored institution from an affiliated school, so the application versions
+Terms and Privacy are now `2026-10-29.1` because the analytics disclosures
+and consent-bound current-selection snapshot changed. Stale
+consent does not authorize new events until the user reviews the updated policy
+and makes a fresh analytics choice. When a learner creates a separate D078
+route by copying the active route, #21 records its selections as
+`selection_copied`; the new scope appears in current-selection aggregates but
+does not inflate recent add-action counts. Apply #21 after #20 and before enabling the
+updated dashboard. This migration does not backfill current choices from event
+history or saved plans: current counts begin only when explicit selections are
+tracked under the new contract.
+`institution_id` means the university or centre explored by the learner;
+`affiliation_school_id` filters against the learner's affiliated school IDs
+snapshotted on the event. Platform staff can segment by an affiliated school.
+School admins with multiple verified institution memberships choose one from
+the dashboard's institution-scope selector; the API validates the requested
+school against the caller's verified memberships, so a client-supplied ID
+cannot widen access. The searchable filter-options endpoint uses the same
+selected-school authorization scope.
+The aggregate response reports distinct learners who added and distinct
+learners who removed a choice, separately from the corresponding action totals,
+and reports learners whose active selections are currently present. Current
+selection counts are independent of the chosen activity date window; activity
+comparisons remain limited to the chosen interval and its immediately preceding
+equal-duration interval. The current snapshot is not course completion, an
+opt-in participation rate, or a copy of the learner's entire saved path.
+Selection snapshots are keyed by a server-hashed stable route scope plus item
+identity, so removing an item in one route does not erase the same item still
+selected in another route. Withdrawal or stale-version consent clears current
+snapshots; event history remains access-restricted until its 395-day retention
+deadline or account deletion.
+`route_combinations_total` counts all distinct selected route-context hashes
+matching the active filters; it is not the number of rows returned by the
+top-route preview. The dashboard lists at most 50 highest-ranked routes and
+100 highest-ranked choices; searchable item and named route-pattern filters can
+isolate low-frequency choices and route patterns beyond the unfiltered previews.
+These caps are display limits,
+not small-cell suppression, and the exact aggregate totals remain visible.
+It also creates an aggregate-only searchable filter-options RPC: the frontend
+searches human-readable labels (programme/domain/item names, stage, affiliated
+school and state),
+while the backend enforces platform-staff or verified-school scope before the
+RPC is called. The migration grants table access only to `service_role`; dashboard reads go through the
+aggregate RPCs. Exact small-cohort counts are returned only to the authorised
+dashboard audience; the dashboard never returns names, emails, or individual
+routes. The scheduled job deletes raw event rows
+older than 395 days; account deletion also cascades to linked events and active
+selection snapshots. Apply #20, verify its table/RPC/retention job, then apply
+#21 in a separate transaction through the Supabase SQL Editor or verified
+`psql`; verify the active-selection table, triggers and updated RPCs before
+enabling dashboard access. Do not treat a local
+test or generated migration as proof it is live.
+
+Post-apply verification (read-only):
+
+```sql
+SELECT c.relname, c.relrowsecurity AS rls_enabled
+FROM pg_class c
+JOIN pg_namespace n ON n.oid = c.relnamespace
+WHERE n.nspname = 'skillup_dev'
+  AND c.relname IN ('learning_interest_events', 'learning_interest_active_selections');
+
+SELECT t.tgname
+FROM pg_trigger t
+JOIN pg_class c ON c.oid = t.tgrelid
+JOIN pg_namespace n ON n.oid = c.relnamespace
+WHERE n.nspname = 'skillup_dev'
+  AND c.relname = 'learning_interest_events'
+  AND t.tgname IN ('trg_learning_interest_affiliation_state_snapshot', 'trg_learning_interest_active_selection')
+  AND NOT t.tgisinternal;
+
+SELECT t.tgname
+FROM pg_trigger t
+JOIN pg_class c ON c.oid = t.tgrelid
+JOIN pg_namespace n ON n.oid = c.relnamespace
+WHERE n.nspname = 'skillup_dev'
+  AND c.relname = 'users'
+  AND t.tgname = 'trg_clear_learning_interest_snapshot_on_consent_change'
+  AND NOT t.tgisinternal;
+
+SELECT column_name, data_type, udt_name
+FROM information_schema.columns
+WHERE table_schema = 'skillup_dev'
+  AND ((table_name = 'learning_interest_events' AND column_name IN ('affiliation_school_ids', 'affiliation_states', 'selection_scope_key'))
+    OR (table_name = 'learning_interest_active_selections' AND column_name IN ('selection_scope_key', 'selected_at')));
+
+SELECT p.proname, p.prosecdef AS security_definer,
+       has_function_privilege('anon', p.oid, 'EXECUTE') AS anon_can_execute,
+       has_function_privilege('authenticated', p.oid, 'EXECUTE') AS authenticated_can_execute,
+       has_function_privilege('service_role', p.oid, 'EXECUTE') AS service_role_can_execute
+FROM pg_proc p
+JOIN pg_namespace n ON n.oid = p.pronamespace
+WHERE n.nspname = 'skillup_dev'
+  AND p.proname IN ('get_learning_interest_analytics', 'get_learning_interest_filter_options', 'sync_learning_interest_active_selection', 'clear_learning_interest_snapshot_on_consent_change');
+
+SELECT has_table_privilege('anon', 'skillup_dev.learning_interest_events', 'SELECT') AS anon_can_read_events,
+       has_table_privilege('authenticated', 'skillup_dev.learning_interest_events', 'SELECT') AS authenticated_can_read_events,
+       has_table_privilege('anon', 'skillup_dev.learning_interest_active_selections', 'SELECT') AS anon_can_read_active,
+       has_table_privilege('authenticated', 'skillup_dev.learning_interest_active_selections', 'SELECT') AS authenticated_can_read_active,
+       has_table_privilege('service_role', 'skillup_dev.learning_interest_events', 'INSERT') AS service_role_can_insert,
+       has_table_privilege('service_role', 'skillup_dev.learning_interest_events', 'SELECT') AS service_role_can_read;
+```
+
+Expected: RLS is enabled on both tables; event scope and active-selection
+columns exist; both tracking triggers are present; `anon` and `authenticated`
+cannot execute either aggregate function or read either table. `service_role`
+can execute both aggregate functions and read/insert events. Both aggregate functions
+must be security definer. Confirm the daily retention job is present and scheduled, and inspect
+its run history in Supabase Cron before exposing `/analytics`:
+
+```sql
+SELECT jobname, schedule, command, active
+FROM cron.job
+WHERE jobname = 'levelup-learning-interest-retention';
+```
+
+Expected: one active daily job at `15 3 * * *` calling
+`skillup_dev.purge_expired_learning_interest_events()`. The function must
+delete event rows older than 395 days and active-selection snapshots whose
+owners no longer have current affirmative analytics consent or whose accounts
+are soft-deleted. It must not delete a current-consent active choice merely
+because its selection predates the activity window. Stop and investigate any mismatch
+before exposing `/analytics`. Do
+not run a row-level event query as a dashboard smoke test; use the API's
+aggregate response and a consented test account instead.
 
 The consolidated patch adds `users.account_type_selected_at`. This is required
 to distinguish an old completed account that inherited the historical `student`

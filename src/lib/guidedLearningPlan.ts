@@ -70,12 +70,16 @@ export interface LearningPlanSourceReference {
 }
 
 export interface LearningPlanResourceLink {
+  sourceId?: string | null;
   title: string;
   url: string;
   locator?: string | null;
   access?: string | null;
   kind?: string | null;
   rationale?: string | null;
+  mediaType?: "book" | "document" | "video" | "course" | "tutorial" | "dataset" | "software" | "webpage" | null;
+  learningLevel?: "beginner" | "intermediate" | "advanced" | "expert" | "all_levels" | null;
+  sequenceOrder?: number | null;
 }
 
 export interface LearningPlanCandidate {
@@ -122,6 +126,9 @@ export interface LearningPlanCandidate {
   linkTitle?: string;
   linkRationale?: string;
   learningLinks?: LearningPlanResourceLink[];
+  linkMediaType?: LearningPlanResourceLink["mediaType"];
+  linkLearningLevel?: LearningPlanResourceLink["learningLevel"];
+  linkSequenceOrder?: number | null;
   linkAccess?: string;
   linkKind?: string;
   sourceLocators?: Array<Record<string, unknown>>;
@@ -187,6 +194,9 @@ export interface LearningPlanSnapshotItem {
   linkTitle?: string;
   linkRationale?: string;
   learningLinks?: LearningPlanResourceLink[];
+  linkMediaType?: LearningPlanResourceLink["mediaType"];
+  linkLearningLevel?: LearningPlanResourceLink["learningLevel"];
+  linkSequenceOrder?: number | null;
   linkAccess?: string;
   linkKind?: string;
   sourceLocators?: Array<Record<string, unknown>>;
@@ -875,6 +885,9 @@ export function createLearningPlanSnapshot(input: {
         ...(item.linkTitle ? { linkTitle: item.linkTitle } : {}),
         ...(item.linkRationale ? { linkRationale: item.linkRationale } : {}),
         ...(item.learningLinks?.length ? { learningLinks: item.learningLinks.map((link) => ({ ...link })) } : {}),
+        ...(item.linkMediaType ? { linkMediaType: item.linkMediaType } : {}),
+        ...(item.linkLearningLevel ? { linkLearningLevel: item.linkLearningLevel } : {}),
+        ...(item.linkSequenceOrder != null ? { linkSequenceOrder: item.linkSequenceOrder } : {}),
         ...(item.linkAccess ? { linkAccess: item.linkAccess } : {}),
         ...(item.linkKind ? { linkKind: item.linkKind } : {}),
         ...(item.sourceLocators?.length ? { sourceLocators: item.sourceLocators.map((locator) => ({ ...locator })) } : {}),

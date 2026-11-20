@@ -369,19 +369,19 @@ const styles = StyleSheet.create({
   timeText:        { fontSize: 11 },
 
   cardTitle:       { fontSize: FontSize.sm, fontWeight: FontWeight.black, lineHeight: 19 },
-  cardContent:     { fontSize: FontSize.xs, lineHeight: 18 },
+  cardContent:     { fontSize: FontSize.md, lineHeight: 18 },
 
   // Widgets
   widget:          { borderRadius: Radius.lg, padding: Spacing.md, borderWidth: 1, gap: Spacing.xs },
   widgetValue:     { fontSize: FontSize.xl, fontWeight: FontWeight.black },
-  widgetLabel:     { fontSize: FontSize.xs, fontWeight: FontWeight.semibold, textTransform: 'uppercase' as any },
+  widgetLabel:     { fontSize: FontSize.sm, fontWeight: FontWeight.semibold, textTransform: 'uppercase' as any },
   changeRow:       { flexDirection: 'row', gap: Spacing.md },
-  changeText:      { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
+  changeText:      { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
   protocolRow:     { flexDirection: 'row', gap: Spacing.sm, flexWrap: 'wrap', marginTop: Spacing.xs },
   protocolChip:    { alignItems: 'center' },
-  protocolName:    { fontSize: 10, fontWeight: FontWeight.semibold },
+  protocolName:    { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
   protocolValue:   { fontSize: FontSize.sm, fontWeight: FontWeight.black },
-  linkText:        { fontSize: FontSize.xs, fontWeight: FontWeight.bold, marginTop: Spacing.xs },
+  linkText:        { fontSize: FontSize.sm, fontWeight: FontWeight.bold, marginTop: Spacing.xs },
 
   voteBar:         { flexDirection: 'row', height: 8, borderRadius: Radius.full, overflow: 'hidden' },
   voteFill:        { height: '100%' },
@@ -392,7 +392,7 @@ const styles = StyleSheet.create({
   campaignTask:    { fontSize: FontSize.sm, lineHeight: 18 },
   campaignReward:  { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
   campaignFooter:  { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: Spacing.xs },
-  campaignMeta:    { fontSize: 10, flex: 1 },
+  campaignMeta:    { fontSize: FontSize.sm, flex: 1 },
 
   projectRow:      { flexDirection: 'row', gap: Spacing.xs, flexWrap: 'wrap' },
   projectBadge:    { paddingHorizontal: 8, paddingVertical: 3, borderRadius: Radius.full },
@@ -402,18 +402,18 @@ const styles = StyleSheet.create({
   sentimentHeader: { flexDirection: 'row', alignItems: 'baseline', gap: Spacing.sm },
   sentimentIndex:  { fontSize: FontSize.xxl, fontWeight: FontWeight.black },
   sentimentLabel:  { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
-  sentimentChange: { fontSize: FontSize.xs, marginLeft: 'auto' as any },
+  sentimentChange: { fontSize: FontSize.sm, marginLeft: 'auto' as any },
   sentimentBar:    { height: 8, borderRadius: Radius.full, overflow: 'hidden' },
   sentimentFill:   { height: '100%', borderRadius: Radius.full },
   sentimentScale:  { flexDirection: 'row', justifyContent: 'space-between' },
-  sentimentScaleText:{ fontSize: 10 },
+  sentimentScaleText:{ fontSize: FontSize.sm },
 
   jobRow:          { flexDirection: 'row', gap: Spacing.xs, flexWrap: 'wrap' },
   jobFooter:       { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: Spacing.xs },
   applyBy:         { fontSize: 11 },
 
   skillRow:        { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  skillMeta:       { fontSize: FontSize.xs, fontWeight: FontWeight.semibold, flex: 1 },
+  skillMeta:       { fontSize: FontSize.sm, fontWeight: FontWeight.semibold, flex: 1 },
 
   guildMeta:       { gap: 2 },
   guildHandle:     { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
@@ -422,7 +422,7 @@ const styles = StyleSheet.create({
   newsImage:       { width: '100%', height: 148, borderRadius: Radius.lg },
 
   actionChip:      { paddingHorizontal: Spacing.md, paddingVertical: 5, borderRadius: Radius.full },
-  actionChipText:  { fontSize: FontSize.xs, fontWeight: FontWeight.black, color: '#fff' },
+  actionChipText:  { fontSize: FontSize.sm, fontWeight: FontWeight.black, color: '#fff' },
 
   reactionRow:     { flexDirection: 'row', gap: Spacing.xs, flexWrap: 'wrap' },
   reactionPill:    { flexDirection: 'row', alignItems: 'center', gap: 3, paddingHorizontal: 8, paddingVertical: 4, borderRadius: Radius.full, borderWidth: 1 },
@@ -432,5 +432,5 @@ const styles = StyleSheet.create({
   engagement:      { borderTopWidth: 1, paddingTop: Spacing.sm, gap: Spacing.xs },
   engagementActions:{ flexDirection: 'row', gap: Spacing.md },
   engagementBtn:   { padding: 4 },
-  engagementBtnText:{ fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
+  engagementBtnText:{ fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
 });

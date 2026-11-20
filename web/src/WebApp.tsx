@@ -12,7 +12,12 @@ import { adminAudienceForProfile } from "../../src/lib/adminAudience";
 import type { EducatorProfile } from "../../src/types/institution";
 import { AdminShell } from "../../src/screens/admin/AdminShell";
 import { LevelUpWebWordmark } from "../../src/components/brand/LevelUpWebWordmark";
+import { PersistentLearningPlanDockProvider } from "../../src/components/careerIntelligence/PersistentLearningPlanDock";
 import { Search } from "lucide-react";
+import { getDisplayName } from "../../src/lib/displayName";
+import Avatar from "../../src/components/account/Avatar";
+import { parentRouteFor } from "../../src/lib/backFallback";
+import { canGoBackInApp, pushWithDepth, replaceKeepingDepth } from "./historyIndex";
 import "./styles.css";
 
 const TOKEN_KEY = "sifter_auth_token_v2";
@@ -33,6 +38,7 @@ const DomainExplorerScreen = lazy(() => import("../../src/screens/careerIntellig
 const DomainDetailScreen = lazy(() => import("../../src/screens/careerIntelligence/DomainDetailScreen"));
 const SubgroupDetailScreen = lazy(() => import("../../src/screens/careerIntelligence/SubgroupDetailScreen"));
 const RoleDetailScreen = lazy(() => import("../../src/screens/careerIntelligence/RoleDetailScreen"));
+const SkillsMatcherScreen = lazy(() => import("../../src/screens/SkillsMatcherScreen"));
 const ProgrammeCompareScreen = lazy(() => import("../../src/screens/careerIntelligence/ProgrammeCompareScreen"));
 const CareerHomeScreen = lazy(() => import("../../src/screens/CareerHomeScreen"));
 const MyWorldScreen = lazy(() => import("../../src/screens/MyWorldScreen"));
@@ -63,7 +69,6 @@ const EcosystemTrackScreen = lazy(() => import("../../src/screens/EcosystemTrack
 const StarknetTrackScreen = lazy(() => import("../../src/screens/StarknetTrackScreen"));
 const CairoBuilderTrackScreen = lazy(() => import("../../src/screens/CairoBuilderTrackScreen"));
 const LeaderboardScreen = lazy(() => import("../../src/screens/LeaderboardScreen"));
-const InterviewModeScreen = lazy(() => import("../../src/screens/InterviewModeScreen"));
 const PathwaysHubScreen = lazy(() => import("../../src/screens/careerIntelligence/PathwaysHubScreen"));
 const EntrepreneurshipPathwayScreen = lazy(() => import("../../src/screens/careerIntelligence/EntrepreneurshipPathwayScreen"));
 const CareerChangerScreen = lazy(() => import("../../src/screens/careerIntelligence/CareerChangerScreen"));
@@ -123,27 +128,24 @@ function normalizeWebPath(rawPath: string): string {
 }
 
 function go(path: string, replace = false) {
-  if (replace) window.history.replaceState({}, "", path);
-  else window.history.pushState({}, "", path);
+  if (replace) replaceKeepingDepth(path);
+  else pushWithDepth(path);
   window.dispatchEvent(new PopStateEvent("popstate"));
 }
 
 function platformBackFallback(path: string): string {
   if (path === "/onboarding") return "/home";
-  if (path.startsWith("/explore/")) return "/explore";
-  if (path.startsWith("/opportunities/")) return "/opportunities";
-  if (path.startsWith("/profile/")) return "/profile";
-  if (path.startsWith("/myworld/") || path.startsWith("/portfolio")) return "/myworld";
-  if (path.startsWith("/skills") || path === "/streaks" || path === "/world" || path === "/map" || path.startsWith("/map/")) return "/home";
-  return "/home";
+  return parentRouteFor(path, { domainId: new URLSearchParams(window.location.search).get("domain_id") });
 }
 
 function platformBack(path: string) {
-  if (window.history.length > 1 && document.referrer.startsWith(window.location.origin)) {
+  // A real in-app step goes back through history; a cold entry (deep link,
+  // new tab) goes to the parent of the current route instead.
+  if (canGoBackInApp()) {
     window.history.back();
     return;
   }
-  go(platformBackFallback(path));
+  go(platformBackFallback(path), true);
 }
 
 function useLocation() {
@@ -186,7 +188,7 @@ function WebRouterApp() {
     if (rawPath === path) return;
     const query = window.location.search;
     const hash = window.location.hash;
-    window.history.replaceState({}, "", `${path}${query}${hash}`);
+    replaceKeepingDepth(`${path}${query}${hash}`);
     window.dispatchEvent(new PopStateEvent("popstate"));
   }, [path, rawPath]);
 
@@ -495,12 +497,13 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
       : path;
   const isAdminExplore = path.startsWith("/admin/explore") || path.startsWith("/admin/workspace-explore");
   const isAdminRoute = path.startsWith("/admin");
-  const isRootPlatformRoute = path === "/" || path === "/home" || path === "/explore" || path === "/opportunities" || path === "/myworld" || path === "/profile";
+  const isRootPlatformRoute = path === "/" || path === "/home" || path === "/explore" || path === "/build" || path === "/explore/pathways/entrepreneurship" || path === "/opportunities" || path === "/myworld" || path === "/profile";
   // These detail screens render their own contextual back link (DetailScaffold:
   // "Back to programme", "Back to student guidance", ...), so the shell's generic
   // Back would show a second one. Focused guidance keeps the shell's "Exit guidance".
   const routeHasOwnBack = !focusedGuidance && (
-    /^\/explore\/(programme|role)\/[^/]+/.test(route)
+    route === "/explore/skills-matcher"
+    || /^\/explore\/(programme|role)\/[^/]+/.test(route)
     || /^\/explore\/domain\/[^/]+(\/subgroup\/[^/]+)?$/.test(route)
     || /^\/opportunities\/(opportunity|organisation)\//.test(path)
     || path === "/opportunities/scholarships"
@@ -511,11 +514,13 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
     if (route === "/" || route === "/home") return <CareerHomeScreen />;
     if (route === "/onboarding") return <Suspense fallback={<RouteLoading />}><AccountTypeGate /></Suspense>;
     if (route === "/explore") return <ExploreScreen initialQuery={query.get("q") ?? ""} adminAudience={path.startsWith("/admin") ? adminAudienceForProfile(adminProfile) : undefined} adminType={path.startsWith("/admin") ? adminProfile?.organizationType : undefined} />;
+    if (route === "/build") return <DomainExplorerScreen intent="build" />;
     if (route === "/explore/admission") return <AdmissionBrowseScreen />;
     const legacyAdmission = route.match(/^\/explore\/admission\/([^/]+)$/)?.[1];
     if (legacyAdmission) return <LegacyAdmissionRedirect jambName={decodeURIComponent(legacyAdmission)} admin={path.startsWith("/admin/")} />;
     if (route === "/explore/domains") return <DomainExplorerScreen />;
     if (route === "/explore/compare") return <ProgrammeCompareScreen />;
+    if (route === "/explore/skills-matcher" && !isAdminRoute) return <SkillsMatcherScreen studentView />;
     if (route === "/explore/pathways") return <PathwaysHubScreen />;
     if (route === "/explore/pathways/entrepreneurship") return <EntrepreneurshipPathwayScreen />;
     if (route === "/explore/pathways/career-change") return <CareerChangerScreen />;
@@ -546,7 +551,7 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
     if (path === "/leaderboard") return <LeaderboardScreen />;
     if (path === "/fields") return <FieldsScreen />;
     if (path === "/skills/quant-map") return <QuantMapScreen />;
-    if (path === "/skills/interview") return <InterviewModeScreen />;
+    if (path === "/skills/interview") return <DisabledLearningScreen area="Interview mode" />;
     if (path === "/skills/lesson") return <DisabledLearningScreen area="Lessons" />;
     if (path === "/skills") return <SkillsScreen />;
     if (path === "/streaks") return <StreaksScreen />;
@@ -666,8 +671,10 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
     }
   };
 
-  if (isAdminExplore) {
-    return (
+  // The learning-plan tray is a viewport dock, portaled to document.body.
+  // It has to sit outside this page shell. The Vite page scrolls the window,
+  // so a tray left inside the route content stays at the bottom of the page.
+  const shell = isAdminExplore ? (
       <AdminShell title="Explore programmes and domains">
         <ExploreBaseProvider base={ADMIN_EXPLORE_BASE}>
           <div className="admin-web-content">
@@ -675,17 +682,12 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
           </div>
         </ExploreBaseProvider>
       </AdminShell>
-    );
-  }
-
-  // Every native admin screen owns an AdminShell. Do not wrap it in the
-  // student platform shell on Vite: that produced two competing navigation
-  // systems and made browser admin pages look like student pages.
-  if (isAdminRoute) {
-    return <Suspense fallback={<RouteLoading />}>{content()}</Suspense>;
-  }
-
-  return <main className={`platform-shell${focusedGuidance ? " is-guidance-workspace" : ""}`}>
+    ) : isAdminRoute ? (
+    // Every native admin screen owns an AdminShell. Do not wrap it in the
+    // student platform shell on Vite: that produced two competing navigation
+    // systems and made browser admin pages look like student pages.
+    <Suspense fallback={<RouteLoading />}>{content()}</Suspense>
+  ) : <main className={`platform-shell${focusedGuidance ? " is-guidance-workspace" : ""}`}>
     {!focusedGuidance ? <aside className="platform-sidebar">
       <a className="brand" href="/home" onClick={(event) => { event.preventDefault(); go("/home"); }} aria-label="LevelUp home">
         <LevelUpWebWordmark variant="light" width={188} height={50} />
@@ -693,11 +695,12 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
       <nav className="platform-nav" aria-label="Main navigation">
         <a href="/home" onClick={(e) => { e.preventDefault(); go("/home"); }}>Home</a>
         <a href="/explore" onClick={(e) => { e.preventDefault(); go("/explore"); }}>Explore</a>
+        <a href="/build" onClick={(e) => { e.preventDefault(); go("/build"); }}>Build</a>
         <a href="/opportunities" onClick={(e) => { e.preventDefault(); go("/opportunities"); }}>Opportunities</a>
         <a href="/myworld" onClick={(e) => { e.preventDefault(); go("/myworld"); }}>My World</a>
         <a href="/profile" onClick={(e) => { e.preventDefault(); go("/profile"); }}>Profile</a>
       </nav>
-      <div className="platform-sidebar-account"><span>{user.username || user.email || "Account"}</span><button className="text-button" onClick={() => { void signOut().then(() => go("/", true)); }}>Sign out</button></div>
+      <div className="platform-sidebar-account"><div className="platform-sidebar-identity"><Avatar user={user} size={28} /><span>{getDisplayName(user) || user.email || "Account"}</span></div><button className="text-button" onClick={() => { void signOut().then(() => go("/", true)); }}>Sign out</button></div>
     </aside> : null}
     <section className="platform-main">
       <header className="platform-toolbar">
@@ -720,6 +723,7 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
       <div className="platform-content"><Suspense fallback={<RouteLoading />}>{content()}</Suspense></div>
     </section>
   </main>;
+  return <PersistentLearningPlanDockProvider>{shell}</PersistentLearningPlanDockProvider>;
 }
 
 function PersonaChooser({ onChoose }: { onChoose: (value: string) => void }) {

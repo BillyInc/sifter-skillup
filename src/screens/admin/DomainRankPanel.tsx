@@ -23,9 +23,9 @@ import type { DomainRankItem, RankScope } from "../../types/institution";
 import { StaggerReveal } from "@/components/animations/StaggerReveal";
 
 const SCOPES: { value: RankScope; label: string }[] = [
-  { value: "nigerian", label: "NG local" },
+  { value: "nigerian", label: "Local" },
+  { value: "remote", label: "Remote" },
   { value: "global", label: "Global" },
-  { value: "remote", label: "NG remote" },
 ];
 
 export interface DomainRankPanelProps {

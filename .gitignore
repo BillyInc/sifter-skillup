@@ -94,6 +94,10 @@ data/career-mapping/role_tools_malformed_2026-08-26.json
 # never commit the plain reconstructions.
 data/career-mapping/domain_specialization_catalog.json
 data/career-mapping/_audit/D078_PROGRAMME_TO_ROLE_LEARNING_PATH_GRAPH_2026_10_15.json
+data/career-mapping/_audit/D078_METHOD_AREA_ROLE_ROUTE_GRAPH_2026_10_19.json
+data/career-mapping/_audit/D078_RELATIONSHIP_RESOLUTION_2026_10_20.json
+data/career-mapping/_audit/D078_REQUIREMENT_LANE_DISPOSITION_2026_10_20.json
+data/career-mapping/_audit/D078_REQUIREMENT_LANE_REPAIR_SUMMARY_2026_10_20.json
 data/career-mapping/_audit/D078_PROGRAMME_TO_ROLE_LEARNING_PATH_GRAPH_2026_10_15.rebuilt.json
 data/career-mapping/_audit/D078_MASTER_GUIDED_EXPERIENCE_RECONCILIATION_2026_10_12.json
 data/career-mapping/_audit/D078_STUDENT_PROMOTION_GATE_2026_10_10.json
@@ -127,3 +131,8 @@ nul
 # characters of raw backend error bodies, and land in whatever directory the
 # script was run from.
 e2e*.json
+
+# Raw copies of generated JSON that the app imports. They are committed only as
+# .json.gz; CI and the deploy workflows gunzip them before building.
+data/career-mapping/_audit/sociology_theme_student_abilities_2026_10_22.json
+data/career-mapping/_audit/sociology_curriculum_contract_2026-09-17.json

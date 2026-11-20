@@ -28,8 +28,15 @@ from pydantic import BaseModel
 
 from auth import Auth
 from database import db
+from avatar_storage import public_avatar_url
 from models import ResponseModel
 from logger import log
+from public_name import (
+    public_name,
+    public_names_for_ids,
+    publicize_user_row,
+    run_with_public_name_columns,
+)
 
 guild_router = APIRouter(prefix="/api/guilds", tags=["guilds"])
 
@@ -108,6 +115,23 @@ def _ensure_guild_tables():
     pass
 
 
+def _guild_members(guild_id: str, columns: str, limit: int) -> list:
+    """Top guild members by points, shaped for OTHER users: `username` carries
+    the public name (never the legal name) and `public_name` is added."""
+    res = run_with_public_name_columns(
+        lambda name_cols: (
+            db.get_service_client()
+            .table("users")
+            .select(f"{columns}, {name_cols}")
+            .eq("guild_id", guild_id)
+            .order("points", desc=True)
+            .limit(limit)
+            .execute()
+        )
+    )
+    return [publicize_user_row(m) for m in (res.data or [])]
+
+
 # ── Routes ──────────────────────────────────────────────────────────────────────
 
 @guild_router.get("", response_model=ResponseModel)
@@ -153,16 +177,7 @@ async def my_guild(current_user: dict = Depends(Auth.get_current_user)):
 
     # Get member count
     try:
-        members_res = (
-            db.get_service_client()
-            .table("users")
-            .select("id, username, points, streak, starknet_address")
-            .eq("guild_id", guild_id)
-            .order("points", desc=True)
-            .limit(10)
-            .execute()
-        )
-        members = members_res.data or []
+        members = [{**m, "avatar_url": public_avatar_url(m.get("avatar_url"))} for m in _guild_members(guild_id, "id, points, streak, starknet_address", 10)]
     except Exception:
         members = []
 
@@ -217,16 +232,7 @@ async def guild_detail(
         raise HTTPException(404, "Guild not found")
 
     try:
-        members_res = (
-            db.get_service_client()
-            .table("users")
-            .select("id, username, points, streak, avatar_url, starknet_address")
-            .eq("guild_id", guild_id)
-            .order("points", desc=True)
-            .limit(50)
-            .execute()
-        )
-        members = members_res.data or []
+        members = [{**m, "avatar_url": public_avatar_url(m.get("avatar_url"))} for m in _guild_members(guild_id, "id, points, streak, avatar_url, starknet_address", 50)]
     except Exception:
         members = []
 
@@ -248,16 +254,7 @@ async def guild_leaderboard(
     current_user: dict = Depends(Auth.get_current_user),
 ):
     try:
-        res = (
-            db.get_service_client()
-            .table("users")
-            .select("id, username, points, streak, starknet_address, completed_levels")
-            .eq("guild_id", guild_id)
-            .order("points", desc=True)
-            .limit(50)
-            .execute()
-        )
-        members = res.data or []
+        members = _guild_members(guild_id, "id, points, streak, starknet_address, completed_levels", 50)
     except Exception:
         members = []
 
@@ -335,7 +332,7 @@ async def guild_chat(
         res = (
             db.get_service_client()
             .table("guild_messages")
-            .select("id, content, created_at, user_id, username")
+            .select("id, content, created_at, user_id")
             .eq("guild_id", guild_id)
             .order("created_at", desc=True)
             .limit(limit)
@@ -344,6 +341,15 @@ async def guild_chat(
         messages = list(reversed(res.data or []))
     except Exception:
         messages = []
+
+    # guild_messages.username is a snapshot taken when the message was written
+    # and may hold a legal name. Never return it: resolve the CURRENT public
+    # name per author instead (neutral fallback if the lookup fails).
+    names = public_names_for_ids(db.get_service_client(), (m.get("user_id") for m in messages))
+    for m in messages:
+        name = names.get(m.get("user_id"), public_name(None))
+        m["username"] = name
+        m["public_name"] = name
 
     return ResponseModel(data=messages)
 
@@ -368,7 +374,7 @@ async def send_guild_message(
             "id": msg_id,
             "guild_id": guild_id,
             "user_id": current_user["id"],
-            "username": current_user.get("username", "Student"),
+            "username": public_name(current_user),  # stored snapshot must not be the legal name
             "content": content,
             "created_at": datetime.now(timezone.utc).isoformat(),
         }).execute()

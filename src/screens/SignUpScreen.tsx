@@ -147,6 +147,7 @@ export default function SignUpScreen() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [middleName, setMiddleName] = useState("");
+  const [displayName, setDisplayName] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [datePickerOpen, setDatePickerOpen] = useState(false);
   const [email, setEmail] = useState("");
@@ -180,6 +181,7 @@ export default function SignUpScreen() {
         setFirstName("");
         setLastName("");
         setMiddleName("");
+        setDisplayName("");
         setDateOfBirth("");
         setEmail("");
         setPassword("");
@@ -226,6 +228,7 @@ export default function SignUpScreen() {
   const applyDevPreset = (preset: (typeof DEV_SIGNUP_PRESETS)[number]) => {
     setFirstName(preset.firstName);
     setMiddleName("");
+    setDisplayName("");
     setLastName(preset.lastName);
     setDateOfBirth("01/01/2000");
     setEmail(preset.email);
@@ -271,6 +274,7 @@ export default function SignUpScreen() {
           first_name: firstName,
           middle_name: middleName || undefined,
           last_name: lastName,
+          display_name: displayName.trim() || undefined,
           date_of_birth: isoDob,
           email_code: emailCode.trim(),
       };
@@ -375,6 +379,15 @@ export default function SignUpScreen() {
         value={middleName}
         onChangeText={setMiddleName}
       />
+
+      <AuthField
+        label="Name to show (optional)"
+        value={displayName}
+        onChangeText={setDisplayName}
+      />
+      <Text style={{ color: colors.textRole.muted, fontSize: FontSize.xs, lineHeight: 17 }}>
+        This is the name you will see in the app. It is not your legal name, so you can use a nickname or just your first name. Do not use an email address or phone number. You can skip this and change it later in Settings.
+      </Text>
 
       <View style={styles.fieldGroup}>
         <Text style={[styles.label, { color: colors.textRole.secondary }, CompassFonts.bodyBold]}>Date of birth</Text>

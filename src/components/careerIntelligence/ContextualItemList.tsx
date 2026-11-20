@@ -7,11 +7,17 @@ import type { CareerContextItem, CareerLearningResource, ComputationalMethodEvid
 import { SectionLabel } from "./RedesignPrimitives";
 import { isStudentResource, resourceForItem, studentItemLinkUrl } from "./resourceLinks";
 import { ExternalLinkGuard } from "./ExternalLinkGuard";
+import { SaveButton } from "./SaveButton";
+import { LearningResourceBadge } from "./LearningResourceBadge";
+import { sortLearningResources } from "./learningResourcePresentation";
 import { GuidanceReportButton } from "./GuidanceReportButton";
 import { relationshipRecords, sequenceGuidanceText } from "./ContextRelationshipSheet";
 import { learningPlanRouteKey, type LearningPlanRoute } from "@/lib/guidedLearningPlan";
 import { studentContextSections, studentFacingCopy, studentOutputCopy, studentResourceRationale } from "@/lib/studentExplanation";
 import { useExploreNav } from "@/lib/exploreNav";
+
+/** Optional fields some resource candidates carry; the union of candidate literals does not always declare them. */
+type ResourceExtras = { locator?: string | null; rationale?: string | null };
 
 const ITEM_TYPE_LABEL: Record<CareerContextItem["itemType"], string> = {
   skill: "Skill", tool: "Tool", competency: "Competency", certification: "Certification or qualification",
@@ -61,11 +67,19 @@ function itemResources(resources: CareerLearningResource[] | undefined, item: Ca
   });
 }
 
-function resourceButtonLabel(resource: { delivery?: string | null; title?: string | null; kind?: string | null; resourceType?: string | null }, itemName: string): string {
-  const format = `${resource.delivery ?? ""} ${resource.kind ?? ""} ${resource.resourceType ?? ""} ${resource.title ?? ""}`.toLowerCase();
-  if (/video|youtube|watch/.test(format)) return `Watch a video about ${itemName}`;
-  if (/pdf|download/.test(format)) return `Download a guide to ${itemName}`;
-  return `Learn more about ${itemName}`;
+/** A related resource is usually named after the item itself, which would give every link the same
+ * accessible name ("Open NVivo"). Name it by its provider instead so each destination is distinguishable. */
+function relatedResourceTitle(resource: Pick<CareerLearningResource, "targetName" | "provider">, itemName: string): string {
+  const target = resource.targetName?.trim() ?? "";
+  return !target || target.toLowerCase() === itemName.trim().toLowerCase() ? resource.provider || target : target;
+}
+
+function resourceButtonLabel(resource: { mediaType?: string | null; delivery?: string | null; title?: string | null; kind?: string | null; resourceType?: string | null }, itemName: string): string {
+  const format = `${resource.mediaType ?? ""} ${resource.delivery ?? ""} ${resource.kind ?? ""} ${resource.resourceType ?? ""} ${resource.title ?? ""}`.toLowerCase();
+  if (/video|youtube|watch/.test(format)) return `Watch ${resource.title || `a video about ${itemName}`}`;
+  if (/book|ebook|textbook/.test(format)) return `Open ${resource.title || `a book about ${itemName}`}`;
+  if (/pdf|document|download|guide|manual/.test(format)) return `Open ${resource.title || `a guide to ${itemName}`}`;
+  return `Open ${resource.title || `a learning resource for ${itemName}`}`;
 }
 
 /** Apply only sequence edges explicitly approved as hard prerequisites. Ordinary
@@ -143,7 +157,8 @@ export function explainResourceRationale(
 
   const use = studentSections(item.contextualUse).meaning || studentCopy(item.contextualUse);
   const locatorValue = item.linkSourceReference?.locator;
-  const locator = typeof locatorValue === "string" ? studentCopy(locatorValue) : "";
+  // The locator is an exact citation: keep it verbatim so glossary definitions are never inserted into it.
+  const locator = typeof locatorValue === "string" ? locatorValue.replace(/\s+/g, " ").trim() : "";
   const rationale = `This resource is included to help you learn or review ${cleanReason.replace(/[.!?]+$/, "")}.`;
   const routeContext = use
     ? "It supports the work explained above, but may cover only part of that work."
@@ -286,12 +301,12 @@ export function ContextualItemList({ items, itemTypes, title = "Your preparation
        const roleContext = studentCopy(item.roleContext);
        const contextualUse = studentSections(item.contextualUse).meaning;
        const hasDistinctRoleContext = Boolean(learningRoute?.roleId && roleName && roleContext && roleContext.toLocaleLowerCase() !== contextualUse.toLocaleLowerCase());
-       const label = resource ? resourceButtonLabel(resource, item.name) : `Learn more about ${item.name}`;
-       const resourceButtons = [
-         ...(url ? [{ key: `primary:${url}`, url, label }] : []),
-         ...relatedResources.map((candidate) => ({ key: candidate.id, url: candidate.url, label: resourceButtonLabel(candidate, item.name) })),
-         ...(item.additionalLearningLinks ?? []).map((candidate) => ({ key: `additional:${candidate.url}`, url: candidate.url, label: resourceButtonLabel(candidate, item.name) })),
-       ];
+       const resourceCandidates = [
+         ...(url ? [{ key: `primary:${url}`, url, label: resourceButtonLabel({ mediaType: item.linkMediaType, title: item.linkTitle, kind: item.linkKind }, item.name), title: item.linkTitle || `Learning resource for ${item.name}`, mediaType: item.linkMediaType, learningLevel: item.linkLearningLevel, sequenceOrder: item.linkSequenceOrder, access: item.linkAccess, kind: item.linkKind, locator: typeof item.linkEvidence?.locator === "string" ? item.linkEvidence.locator : undefined }] : []),
+         ...relatedResources.map((candidate) => ({ key: candidate.id, url: candidate.url, label: resourceButtonLabel({ mediaType: candidate.mediaType, delivery: candidate.delivery, title: relatedResourceTitle(candidate, item.name), resourceType: candidate.resourceType }, item.name), title: candidate.provider, mediaType: candidate.mediaType, learningLevel: candidate.learningLevel, sequenceOrder: candidate.sequenceOrder, access: candidate.accessType === "free" ? "Free to access" : candidate.accessType === "mixed" ? "Free and paid options" : candidate.accessType === "paid" ? "Paid; check provider" : "Check current access", delivery: candidate.delivery, resourceType: candidate.resourceType, rationale: candidate.description })),
+         ...(item.additionalLearningLinks ?? []).map((candidate) => ({ key: `additional:${candidate.url}`, url: candidate.url, label: resourceButtonLabel({ mediaType: candidate.mediaType, title: candidate.title, kind: candidate.kind }, item.name), title: candidate.title, mediaType: candidate.mediaType, learningLevel: candidate.learningLevel, sequenceOrder: candidate.sequenceOrder, access: candidate.access, kind: candidate.kind, locator: candidate.locator, rationale: candidate.rationale })),
+       ].filter((link) => /^https:\/\//i.test(link.url));
+       const resourceButtons = sortLearningResources(resourceCandidates.filter((link, index, all) => all.findIndex((candidate) => candidate.url === link.url) === index));
       const visibleRelationships = relationshipRecords(item, learningRoute).filter((relationship) => relationship.type !== "works_with" || item.contextLevel === "domain");
       return <View key={key} style={[styles.card, styles.gridCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
         {relationshipReturn && isOpen ? <TouchableOpacity accessibilityRole="button" accessibilityLabel={`Return to ${relationshipReturn.name}`} onPress={() => { setOpenKey(relationshipReturn.key); setRelationshipReturn(null); }} style={[styles.returnToRelationship, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
@@ -377,6 +392,21 @@ export function ContextualItemList({ items, itemTypes, title = "Your preparation
                 const target = ordered.find((candidate) => candidate.itemKey === relationship.targetItemKey);
                 if (target) { setRelationshipReturn({ key, name: item.name }); setExpanded(true); setOpenKey(`${target.contextKey}:${target.itemType}:${target.itemKey}`); }
               }}><Text style={[styles.more, { color: colors.accentRole.action }]}>See {relationship.target}</Text></TouchableOpacity> : null}
+              {!relationship.targetItemKey && relationship.targetRouteKey && relationship.targetRouteLevel && learningRoute?.domainId ? <TouchableOpacity accessibilityRole="button" accessibilityLabel={`Open ${relationship.targetRouteLevel === "subgroup" ? "area" : "role"}: ${relationship.target}`} onPress={() => {
+                // Area and role targets leave this list for their own route page. Keep the
+                // current route as history so the learner can come back to this item.
+                const routeContext = {
+                  programmeId: learningRoute.programmeId,
+                  domainId: learningRoute.domainId,
+                  ...(relationship.targetRouteLevel === "subgroup"
+                    ? { areaId: relationship.targetRouteKey }
+                    : { areaId: learningRoute.areaId, roleId: relationship.targetRouteKey }),
+                  focused: true,
+                  preserveHistory: true,
+                };
+                if (relationship.targetRouteLevel === "subgroup") exploreNav.subgroup(router, learningRoute.domainId!, relationship.targetRouteKey!, routeContext);
+                else exploreNav.role(router, relationship.targetRouteKey!, routeContext);
+              }}><Text style={[styles.more, { color: colors.accentRole.action }]}>Open {relationship.targetRouteLevel === "subgroup" ? "area" : "role"}: {relationship.target}</Text></TouchableOpacity> : null}
             </View>)}
           </View> : null}
           {learningFocus && relationshipRecords(item, learningRoute).some((relationship) => relationship.label === "Choose one") ? <TouchableOpacity accessibilityRole="button" accessibilityLabel={`Compare alternatives for ${item.name}`} onPress={() => exploreNav.guided(router, { programmeId: learningRoute?.programmeId, domainId: learningRoute?.domainId, areaId: learningRoute?.areaId, roleId: learningRoute?.roleId, focused: true, openTray: true })} style={styles.actionButton}>
@@ -399,14 +429,21 @@ export function ContextualItemList({ items, itemTypes, title = "Your preparation
           </View> : null}
           {resourceButtons.length ? <View style={[styles.resource, { borderTopColor: colors.borderRole.subtle }]}>
             <Text style={[styles.detailLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Learn more about {item.name}</Text>
-            <View style={styles.resourceButtons}>{resourceButtons.map((link) => <ExternalLinkGuard
-              key={link.key}
-              url={link.url}
-              label={link.label}
-              description={`Open a learning resource for ${item.name}.`}
-              style={styles.resourceButton}
-              textStyle={[styles.resourceLinkText, { color: colors.accentRole.action }]}
-            />)}</View>
+            {resourceButtons.map((link) => <View key={link.key} style={[styles.resourceEntry, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+              <View style={styles.resourceEntryMeta}><LearningResourceBadge resource={link} /><Text style={[styles.resourceAccess, { color: colors.textRole.muted }]}>{link.access || "Check the provider's current access terms."}</Text></View>
+              {(link as ResourceExtras).locator ? <Text style={[styles.resourceLocator, { color: colors.textRole.secondary }]}>Where to start: {(link as ResourceExtras).locator}</Text> : null}
+              {(link as ResourceExtras).rationale ? <Text style={[styles.resourceLocator, { color: colors.textRole.secondary }]}>{(link as ResourceExtras).rationale}</Text> : null}
+              <View style={styles.resourceEntryActions}>
+                <ExternalLinkGuard
+                  url={link.url}
+                  label={link.label}
+                  description={(link as ResourceExtras).rationale || `Open this ${link.mediaType || "learning"} resource for ${item.name}.`}
+                  style={styles.resourceButton}
+                  textStyle={[styles.resourceLinkText, { color: colors.accentRole.action }]}
+                />
+                <SaveButton entityType="resource" entityId={link.url} label={link.title} compact />
+              </View>
+            </View>)}
           </View> : null}
         </View> : null}
       </View>;
@@ -447,7 +484,7 @@ function methodsForItem(
 const styles = StyleSheet.create({
   container: { gap: Spacing.md }, itemsGrid: { flexDirection: "row", flexWrap: "wrap", alignItems: "flex-start", gap: Spacing.md }, gridCard: { flexGrow: 1, flexBasis: "47%", minWidth: 290, maxWidth: "100%" }, caption: { fontSize: 16, lineHeight: 24 }, itemSection: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm }, expandedContent: { gap: Spacing.md }, routeReason: { gap: Spacing.xs }, routeLabel: { fontSize: 16, lineHeight: 23, fontWeight: "700" },
   emptyCard: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.xs },
-  card: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.md }, cardSummary: { borderLeftWidth: 3, paddingLeft: Spacing.md, paddingVertical: Spacing.xs }, returnToRelationship: { minHeight: 44, flexDirection: "row", alignItems: "center", gap: Spacing.xs, borderBottomWidth: 1, paddingHorizontal: Spacing.md, marginHorizontal: -Spacing.md, marginTop: -Spacing.md, marginBottom: Spacing.xs }, returnToRelationshipText: { fontSize: 16, lineHeight: 23, fontWeight: "700" }, header: { flexDirection: "row", alignItems: "flex-start", gap: Spacing.sm }, cardHeading: { flex: 1, gap: Spacing.sm }, badges: { flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: Spacing.xs }, typeBadge: { flexDirection: "row", alignItems: "center", gap: Spacing.xs }, levelBadge: { borderWidth: 1, borderRadius: Radius.full, paddingHorizontal: Spacing.sm, paddingVertical: 3 }, levelText: { fontSize: FontSize.sm, fontWeight: "700" }, actions: { flexDirection: "row", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: Spacing.sm }, actionButton: { minHeight: 44, justifyContent: "center", paddingVertical: Spacing.xs }, name: { fontSize: FontSize.xl, lineHeight: FontSize.xl * 1.25 }, type: { fontSize: FontSize.sm, fontWeight: "700" }, copy: { fontSize: 16, lineHeight: 25 }, more: { fontSize: 16, lineHeight: 23, fontWeight: "800" }, detail: { borderTopWidth: 1, paddingTop: Spacing.md, gap: Spacing.md }, detailLabel: { fontSize: 15, lineHeight: 22 }, resource: { borderTopWidth: 1, paddingTop: Spacing.xs, gap: Spacing.xs }, resourceButtons: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.xs }, resourceButton: { minHeight: 44, justifyContent: "center", paddingHorizontal: Spacing.xs }, resourceLinkText: { fontSize: 15, lineHeight: 22, fontWeight: "600" }, limit: { fontSize: 16, lineHeight: 24 }, methodsInline: { gap: Spacing.sm, paddingTop: Spacing.sm }, methodName: { fontSize: 16, lineHeight: 23 }, methodCard: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm },
+  card: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.md }, cardSummary: { borderLeftWidth: 3, paddingLeft: Spacing.md, paddingVertical: Spacing.xs }, returnToRelationship: { minHeight: 44, flexDirection: "row", alignItems: "center", gap: Spacing.xs, borderBottomWidth: 1, paddingHorizontal: Spacing.md, marginHorizontal: -Spacing.md, marginTop: -Spacing.md, marginBottom: Spacing.xs }, returnToRelationshipText: { fontSize: 16, lineHeight: 23, fontWeight: "700" }, header: { flexDirection: "row", alignItems: "flex-start", gap: Spacing.sm }, cardHeading: { flex: 1, gap: Spacing.sm }, badges: { flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: Spacing.xs }, typeBadge: { flexDirection: "row", alignItems: "center", gap: Spacing.xs }, levelBadge: { borderWidth: 1, borderRadius: Radius.full, paddingHorizontal: Spacing.sm, paddingVertical: 3 }, levelText: { fontSize: FontSize.sm, fontWeight: "700" }, actions: { flexDirection: "row", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: Spacing.sm }, actionButton: { minHeight: 44, justifyContent: "center", paddingVertical: Spacing.xs }, name: { fontSize: FontSize.xl, lineHeight: FontSize.xl * 1.25 }, type: { fontSize: FontSize.sm, fontWeight: "700" }, copy: { fontSize: 16, lineHeight: 25 }, more: { fontSize: 16, lineHeight: 23, fontWeight: "800" }, detail: { borderTopWidth: 1, paddingTop: Spacing.md, gap: Spacing.md }, detailLabel: { fontSize: 15, lineHeight: 22 }, resource: { borderTopWidth: 1, paddingTop: Spacing.xs, gap: Spacing.sm }, resourceEntry: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.sm, gap: Spacing.xs }, resourceEntryMeta: { flexDirection: "row", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: Spacing.xs }, resourceAccess: { fontSize: FontSize.xs, lineHeight: 18 }, resourceLocator: { fontSize: 14, lineHeight: 21 }, resourceEntryActions: { flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: Spacing.sm }, resourceButton: { minHeight: 44, justifyContent: "center", paddingHorizontal: Spacing.xs }, resourceLinkText: { fontSize: 15, lineHeight: 22, fontWeight: "600" }, limit: { fontSize: 16, lineHeight: 24 }, methodsInline: { gap: Spacing.sm, paddingTop: Spacing.sm }, methodName: { fontSize: 16, lineHeight: 23 }, methodCard: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm },
 });
 
 export default ContextualItemList;

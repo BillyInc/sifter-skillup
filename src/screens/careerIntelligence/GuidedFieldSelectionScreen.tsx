@@ -6,6 +6,7 @@ import { Feather } from "@expo/vector-icons";
 import { DetailScaffold, RouteLine } from "@/components/careerIntelligence";
 import { hasGuidanceReportContextForRoute, isGuidanceReportReadyForRoute } from "@/components/careerIntelligence/GuidanceReportButton";
 import { careerData, type GuidanceDomainSelection, type GuidanceReportPath } from "@/lib/careerData";
+import { learningInterestTypeForItem, recordLearningInterest, routeItemRemovalEvents } from "@/lib/learningInterest";
 import { openStudentDocument, provisioningData, shareTextSummary } from "@/lib/provisioningData";
 import { useExploreNav } from "@/lib/exploreNav";
 import { guidanceContextQuery, type GuidanceRouteContext } from "@/lib/guidanceRouteContext";
@@ -374,9 +375,50 @@ export default function GuidedFieldSelectionScreen() {
     };
   }, [path.learningFocus, path.learningPlanOrderByRoute, path.learningPlanRemovedIdsByRoute, path.programme, path.roles, programmeId, roleDetails, selectedDomains, selectedRoleSelections, selectedSubgroups]);
 
+  const analyticsRouteLabel = (routeKey: string) => {
+    const route = guidedPlan.routeLabels[routeKey];
+    return [
+      String((pathRef.current.programme as Snapshot | undefined)?.name ?? ""),
+      route?.domain,
+      route?.area,
+      route?.role,
+    ].filter(Boolean).join(" → ").slice(0, 420);
+  };
+
+  const recordFocusRemovalsForRoutes = (currentPath: GuidanceReportPath["path"], routeKeys: string[]) => {
+    const events = routeItemRemovalEvents(currentPath.learningFocus ?? [], routeKeys, (routeKey) => {
+      const route = guidedPlan.stackSet.stacks.find((stack) => learningPlanRouteKey(stack.route) === routeKey)?.route;
+      return {
+        learner_stage: guidanceContext.className || guidanceContext.userType,
+        programme_id: String(route?.programmeId ?? (currentPath.programme as Snapshot | undefined)?.id ?? programmeId ?? ""),
+        institution_id: String((currentPath.university as Snapshot | undefined)?.id ?? guidanceContext.schoolId ?? ""),
+        domain_id: route?.domainId,
+        area_id: route?.areaId,
+        role_id: route?.roleId,
+        route_label: analyticsRouteLabel(routeKey),
+      };
+    });
+    for (const event of events) {
+      recordLearningInterest(event.action, event.entity_type, event.entity_id, event.entity_label, event.context);
+    }
+  };
+
   const removeLearningFocus = (routeKey: string, itemId: string) => {
     const currentPath = pathRef.current;
     const allRouteKeys = guidedPlan.stackSet.stacks.map((stack) => learningPlanRouteKey(stack.route));
+    const removedEntry = (currentPath.learningFocus ?? []).find((entry) => learningFocusId(entry) === itemId);
+    if (removedEntry) {
+      recordLearningInterest("selection_removed", learningInterestTypeForItem(removedEntry.itemType), removedEntry.itemKey, removedEntry.name, {
+        learner_stage: guidanceContext.className || guidanceContext.userType,
+        programme_id: String((currentPath.programme as Snapshot | undefined)?.id ?? programmeId ?? ""),
+        institution_id: String((currentPath.university as Snapshot | undefined)?.id ?? guidanceContext.schoolId ?? ""),
+        domain_id: removedEntry.domainId || guidedPlan.stackSet.stacks.find((entry) => learningPlanRouteKey(entry.route) === routeKey)?.route.domainId,
+        route_label: analyticsRouteLabel(routeKey),
+        selection_scope_id: routeKey,
+        area_id: removedEntry.contextLevel === "subgroup" ? removedEntry.contextKey : undefined,
+        role_id: removedEntry.contextLevel === "role" ? removedEntry.contextKey : undefined,
+      });
+    }
     const nextFocus = (currentPath.learningFocus ?? []).flatMap((entry) => {
       if (learningFocusId(entry) !== itemId) return [entry];
       const remaining = removeEntryFromRoute(entry, routeKey, allRouteKeys);
@@ -426,6 +468,18 @@ export default function GuidedFieldSelectionScreen() {
     const nextFocus = existing
       ? currentFocus.map((entry) => learningFocusId(entry) === candidate.id ? addEntryToRoute(entry, routeKey) : entry)
       : [...currentFocus, nextEntry];
+    if (!existing || !entryRouteKeys(existing).includes(routeKey)) {
+      recordLearningInterest("selection_added", learningInterestTypeForItem(source.itemType), source.itemKey, source.name, {
+        learner_stage: guidanceContext.className || guidanceContext.userType,
+        programme_id: String(stack.route.programmeId ?? programmeId ?? ""),
+        institution_id: String((currentPath.university as Snapshot | undefined)?.id ?? guidanceContext.schoolId ?? ""),
+        domain_id: source.domainId || stack.route.domainId,
+        area_id: source.contextLevel === "subgroup" ? source.contextKey : stack.route.areaId,
+        role_id: source.contextLevel === "role" ? source.contextKey : stack.route.roleId,
+        route_label: analyticsRouteLabel(routeKey),
+        selection_scope_id: routeKey,
+      });
+    }
     const removedByRoute = { ...(currentPath.learningPlanRemovedIdsByRoute ?? {}) };
     removedByRoute[routeKey] = (removedByRoute[routeKey] ?? []).filter((id) => id !== candidate.id);
     updateDraft({
@@ -485,6 +539,31 @@ export default function GuidedFieldSelectionScreen() {
     const nextFocus = existing
       ? nextFocusWithoutCompeting.map((entry) => learningFocusId(entry) === candidate.id ? addEntryToRoute(entry, routeKey) : entry)
       : [...nextFocusWithoutCompeting, nextEntry];
+    for (const entry of currentFocus.filter((choice) => competingIds.has(learningFocusId(choice))
+      && entryRouteKeys(choice).includes(routeKey))) {
+      recordLearningInterest("selection_removed", learningInterestTypeForItem(entry.itemType), entry.itemKey, entry.name, {
+        learner_stage: guidanceContext.className || guidanceContext.userType,
+        programme_id: String(stack.route.programmeId ?? programmeId ?? ""),
+        institution_id: String((currentPath.university as Snapshot | undefined)?.id ?? guidanceContext.schoolId ?? ""),
+        domain_id: entry.domainId || stack.route.domainId,
+        area_id: entry.contextLevel === "subgroup" ? entry.contextKey : stack.route.areaId,
+        role_id: entry.contextLevel === "role" ? entry.contextKey : stack.route.roleId,
+        route_label: analyticsRouteLabel(routeKey),
+        selection_scope_id: routeKey,
+      });
+    }
+    if (!existing || !entryRouteKeys(existing).includes(routeKey)) {
+      recordLearningInterest("selection_added", learningInterestTypeForItem(source.itemType), source.itemKey, source.name, {
+        learner_stage: guidanceContext.className || guidanceContext.userType,
+        programme_id: String(stack.route.programmeId ?? programmeId ?? ""),
+        institution_id: String((currentPath.university as Snapshot | undefined)?.id ?? guidanceContext.schoolId ?? ""),
+        domain_id: source.domainId || stack.route.domainId,
+        area_id: source.contextLevel === "subgroup" ? source.contextKey : stack.route.areaId,
+        role_id: source.contextLevel === "role" ? source.contextKey : stack.route.roleId,
+        route_label: analyticsRouteLabel(routeKey),
+        selection_scope_id: routeKey,
+      });
+    }
     const removedByRoute = { ...(currentPath.learningPlanRemovedIdsByRoute ?? {}) };
     removedByRoute[routeKey] = (removedByRoute[routeKey] ?? []).filter((id) => id !== candidate.id && !competingIds.has(id));
     updateDraft({
@@ -529,7 +608,7 @@ export default function GuidedFieldSelectionScreen() {
   const persist = async (nextPath: GuidanceReportPath["path"], options: { completeSnapshot?: boolean } = {}) => {
     const sequence = ++saveSequence.current;
     setSaving(true);
-    setNotice(null);
+    setNotice(options.completeSnapshot ? "Saving your guidance route to My World…" : null);
     const stackByRoute = new Map(
       guidedPlan.stackSet.stacks.map((stack) => [learningPlanRouteKey(stack.route), stack]),
     );
@@ -654,6 +733,47 @@ export default function GuidedFieldSelectionScreen() {
   const toggleDomain = (domain: DomainV2) => {
     const currentPath = pathRef.current;
     const selected = (currentPath.domains ?? []).some((entry) => String(entry.id ?? "") === domain.id);
+    recordLearningInterest(selected ? "selection_removed" : "selection_added", "domain", domain.id, domain.name, {
+      learner_stage: guidanceContext.className || guidanceContext.userType,
+      programme_id: String((currentPath.programme as Snapshot | undefined)?.id ?? programmeId ?? ""),
+      institution_id: String((currentPath.university as Snapshot | undefined)?.id ?? guidanceContext.schoolId ?? ""),
+      domain_id: domain.id,
+      route_label: `${domain.name}`,
+        selection_scope_id: `guided:${String((currentPath.programme as Snapshot | undefined)?.id ?? programmeId ?? "")}:domain:${domain.id}`,
+    });
+    if (selected) {
+      recordFocusRemovalsForRoutes(
+        currentPath,
+        guidedPlan.stackSet.stacks
+          .filter((stack) => stack.route.domainId === domain.id)
+          .map((stack) => learningPlanRouteKey(stack.route)),
+      );
+      for (const area of currentPath.subgroups ?? []) {
+        if (String(area.domainId ?? "") !== domain.id) continue;
+        recordLearningInterest("selection_removed", "area", String(area.id ?? ""), String(area.name ?? "Area"), {
+          learner_stage: guidanceContext.className || guidanceContext.userType,
+          programme_id: String((currentPath.programme as Snapshot | undefined)?.id ?? programmeId ?? ""),
+          institution_id: String((currentPath.university as Snapshot | undefined)?.id ?? guidanceContext.schoolId ?? ""),
+          domain_id: domain.id,
+          area_id: String(area.id ?? ""),
+          route_label: `${domain.name} → ${String(area.name ?? "Area")}`,
+          selection_scope_id: `guided:${String((currentPath.programme as Snapshot | undefined)?.id ?? programmeId ?? "")}:area:${domain.id}:${String(area.id ?? "")}`,
+        });
+      }
+      for (const role of currentPath.roles ?? []) {
+        if (String(role.domainId ?? "") !== domain.id) continue;
+        recordLearningInterest("selection_removed", "role", String(role.id ?? ""), String(role.name ?? "Role"), {
+          learner_stage: guidanceContext.className || guidanceContext.userType,
+          programme_id: String((currentPath.programme as Snapshot | undefined)?.id ?? programmeId ?? ""),
+          institution_id: String((currentPath.university as Snapshot | undefined)?.id ?? guidanceContext.schoolId ?? ""),
+          domain_id: domain.id,
+          area_id: role.subgroupId ? String(role.subgroupId) : undefined,
+          role_id: String(role.id ?? ""),
+          route_label: `${domain.name}${role.subgroupName ? ` → ${role.subgroupName}` : ""} → ${String(role.name ?? "Role")}`,
+          selection_scope_id: `guided:${String((currentPath.programme as Snapshot | undefined)?.id ?? programmeId ?? "")}:role:${domain.id}:${String(role.subgroupId ?? "")}:${String(role.id ?? "")}`,
+        });
+      }
+    }
     const nextDomains = selected
       ? (currentPath.domains ?? []).filter((entry) => String(entry.id ?? "") !== domain.id)
       : [...(currentPath.domains ?? []), domainItem(domain.id, domain.name, {
@@ -691,6 +811,47 @@ export default function GuidedFieldSelectionScreen() {
   const toggleSubgroup = (domain: DomainV2, subgroup: DomainV2["subgroups"][number]) => {
     const currentPath = pathRef.current;
     const selected = (currentPath.subgroups ?? []).some((entry) => String(entry.id ?? "") === subgroup.id);
+    const domainSelected = (currentPath.domains ?? []).some((entry) => String(entry.id ?? "") === domain.id);
+    if (!selected && !domainSelected) {
+      recordLearningInterest("selection_added", "domain", domain.id, domain.name, {
+        learner_stage: guidanceContext.className || guidanceContext.userType,
+        programme_id: String((currentPath.programme as Snapshot | undefined)?.id ?? programmeId ?? ""),
+        institution_id: String((currentPath.university as Snapshot | undefined)?.id ?? guidanceContext.schoolId ?? ""),
+        domain_id: domain.id,
+        route_label: `${String((currentPath.programme as Snapshot | undefined)?.name ?? "Programme")} → ${domain.name}`,
+        selection_scope_id: `guided:${String((currentPath.programme as Snapshot | undefined)?.id ?? programmeId ?? "")}:domain:${domain.id}`,
+      });
+    }
+    recordLearningInterest(selected ? "selection_removed" : "selection_added", "area", subgroup.id, subgroup.name, {
+      learner_stage: guidanceContext.className || guidanceContext.userType,
+      programme_id: String((currentPath.programme as Snapshot | undefined)?.id ?? programmeId ?? ""),
+      institution_id: String((currentPath.university as Snapshot | undefined)?.id ?? guidanceContext.schoolId ?? ""),
+      domain_id: domain.id,
+      area_id: subgroup.id,
+      route_label: `${domain.name} → ${subgroup.name}`,
+      selection_scope_id: `guided:${String((currentPath.programme as Snapshot | undefined)?.id ?? programmeId ?? "")}:area:${domain.id}:${subgroup.id}`,
+    });
+    if (selected) {
+      recordFocusRemovalsForRoutes(
+        currentPath,
+        guidedPlan.stackSet.stacks
+          .filter((stack) => stack.route.domainId === domain.id && stack.route.areaId === subgroup.id)
+          .map((stack) => learningPlanRouteKey(stack.route)),
+      );
+      for (const role of currentPath.roles ?? []) {
+        if (String(role.subgroupId ?? "") !== subgroup.id) continue;
+        recordLearningInterest("selection_removed", "role", String(role.id ?? ""), String(role.name ?? "Role"), {
+          learner_stage: guidanceContext.className || guidanceContext.userType,
+          programme_id: String((currentPath.programme as Snapshot | undefined)?.id ?? programmeId ?? ""),
+          institution_id: String((currentPath.university as Snapshot | undefined)?.id ?? guidanceContext.schoolId ?? ""),
+          domain_id: domain.id,
+          area_id: subgroup.id,
+          role_id: String(role.id ?? ""),
+          route_label: `${domain.name} → ${subgroup.name} → ${String(role.name ?? "Role")}`,
+          selection_scope_id: `guided:${String((currentPath.programme as Snapshot | undefined)?.id ?? programmeId ?? "")}:role:${domain.id}:${subgroup.id}:${String(role.id ?? "")}`,
+        });
+      }
+    }
     const nextSubgroups = selected
       ? (currentPath.subgroups ?? []).filter((entry) => String(entry.id ?? "") !== subgroup.id)
       : [...(currentPath.subgroups ?? []), item(subgroup.id, subgroup.name, { domainId: domain.id, domainName: domain.name })];
@@ -702,6 +863,35 @@ export default function GuidedFieldSelectionScreen() {
   const toggleRole = (domain: DomainV2, subgroup: DomainV2["subgroups"][number] | undefined, role: DomainRoleSummary) => {
     const currentPath = pathRef.current;
     const selected = (currentPath.roles ?? []).some((entry) => String(entry.id ?? "") === role.key);
+    const domainSelected = (currentPath.domains ?? []).some((entry) => String(entry.id ?? "") === domain.id);
+    if (!selected && !domainSelected) {
+      recordLearningInterest("selection_added", "domain", domain.id, domain.name, {
+        learner_stage: guidanceContext.className || guidanceContext.userType,
+        programme_id: String((currentPath.programme as Snapshot | undefined)?.id ?? programmeId ?? ""),
+        institution_id: String((currentPath.university as Snapshot | undefined)?.id ?? guidanceContext.schoolId ?? ""),
+        domain_id: domain.id,
+        route_label: `${String((currentPath.programme as Snapshot | undefined)?.name ?? "Programme")} → ${domain.name}`,
+        selection_scope_id: `guided:${String((currentPath.programme as Snapshot | undefined)?.id ?? programmeId ?? "")}:domain:${domain.id}`,
+      });
+    }
+    if (selected) {
+      recordFocusRemovalsForRoutes(
+        currentPath,
+        guidedPlan.stackSet.stacks
+          .filter((stack) => stack.route.domainId === domain.id && stack.route.roleId === role.key)
+          .map((stack) => learningPlanRouteKey(stack.route)),
+      );
+    }
+    recordLearningInterest(selected ? "selection_removed" : "selection_added", "role", role.key, role.name, {
+      learner_stage: guidanceContext.className || guidanceContext.userType,
+      programme_id: String((currentPath.programme as Snapshot | undefined)?.id ?? programmeId ?? ""),
+      institution_id: String((currentPath.university as Snapshot | undefined)?.id ?? guidanceContext.schoolId ?? ""),
+      domain_id: domain.id,
+      area_id: subgroup?.id,
+      role_id: role.key,
+      route_label: `${domain.name}${subgroup ? ` → ${subgroup.name}` : ""} → ${role.name}`,
+      selection_scope_id: `guided:${String((currentPath.programme as Snapshot | undefined)?.id ?? programmeId ?? "")}:role:${domain.id}:${String(subgroup?.id ?? "")}:${role.key}`,
+    });
     const nextRoles = selected
       ? (currentPath.roles ?? []).filter((entry) => String(entry.id ?? "") !== role.key)
       : [...(currentPath.roles ?? []), item(role.key, role.name, {
@@ -731,7 +921,9 @@ export default function GuidedFieldSelectionScreen() {
       return;
     }
     void openStudentDocument(reportDocumentPath).then((opened) => {
-      if (!opened) setNotice("The report could not be opened. Check your connection and sign-in, then try again.");
+      setNotice(opened
+        ? "Your learning plan report is ready to print or download."
+        : "The report could not be opened. Check your connection and sign-in, then try again.");
     });
   };
 

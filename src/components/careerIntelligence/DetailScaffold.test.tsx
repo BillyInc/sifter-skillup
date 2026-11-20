@@ -5,7 +5,7 @@ import { DetailScaffold, d078ContentGutter } from "./DetailScaffold";
 import { ThemeProvider } from "@/theme";
 import { real } from "@/types/career";
 
-jest.mock("expo-router", () => ({ useRouter: () => ({ back: jest.fn(), replace: jest.fn(), canGoBack: () => false }) }));
+jest.mock("expo-router", () => ({ useRouter: () => ({ back: jest.fn(), replace: jest.fn(), canGoBack: () => false }), usePathname: () => "/explore/programme/1", useLocalSearchParams: () => ({}) }));
 jest.mock("@/hooks/useAuth", () => ({ useAuth: () => ({ user: { id: "student-1" } }) }));
 
 describe("DetailScaffold D078 heading options", () => {

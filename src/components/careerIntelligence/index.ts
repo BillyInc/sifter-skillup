@@ -122,6 +122,7 @@ export { ShareExportButton } from "./ShareExportButton";
 export { GuidanceReportButton, invalidateGuidancePathCache } from "./GuidanceReportButton";
 export { MappingFeedbackButton } from "./MappingFeedbackButton";
 export type { MappingFeedbackButtonProps } from "./MappingFeedbackButton";
+export { ProgrammeTrustPanel } from "./ProgrammeTrustPanel";
 
 // ── Toast system ───────────────────────────────────────────────
 export { Toast, ToastProvider, showToast } from "./Toast";

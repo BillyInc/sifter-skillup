@@ -163,8 +163,8 @@
       "role_domain_lane_review_sources": [
         "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D139_role_domain_fit_review_2026_10_05.json"
       ],
-      "specialization_fit_review_status": "review_required",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_review_status": "supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07 remains review-required: A lexical winner is not a fit decision; this exact role key has no manually confirmed task-to-area disposition in this batch review. Task-triangulation reconciliation 2026-10-07: the role description/skills and source work-profile activities match the canonical area boundary using label hits delivery, game and boundary/task hits coordination, delivery, game, management, planning; parent-domain fit is supported.",
       "specialization_fit_review_source_refs": [
         "https://www.tesda.gov.ph/Uploads/File/Philippine%20Skills%20Framework/PSF%20-%20Game%20Development.pdf"
@@ -190,13 +190,38 @@
         }
       ],
       "role_domain_routes_updated": "2026-10-07",
-      "specialization_fit_status": null,
-      "specialization_fit_area_key": null,
-      "student_path_status": "excluded",
-      "student_path_exclusion_reason": "Exact role-to-area-of-specialization evidence is review_required; this role-domain row is hidden from student paths until an area route is source-backed. Parent-domain fit remains supported. The row and its evidence remain available to administrators for later reconciliation.",
+      "specialization_fit_status": "supported",
+      "specialization_fit_area_key": "D139:game-production-and-team-delivery",
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null,
       "student_path_exclusion_date": "2026-10-07",
       "specialization_fit_student_visibility": "hidden_review_required",
-      "specialization_fit_student_visibility_date": "2026-10-07"
+      "specialization_fit_student_visibility_date": "2026-10-07",
+      "role_area_routes": [
+        {
+          "area_id": "D139:game-production-and-team-delivery",
+          "status": "supported",
+          "route_type": "primary",
+          "evidence": {
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Game Production and Team Delivery. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
+            "source_refs": [
+              "https://esco.ec.europa.eu/en/classification/occupation-main",
+              "https://igda.org/resourcelibrary/game-industry-standards/",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.onetonline.org/help/onet/",
+              "https://www.tesda.gov.ph/Uploads/File/Philippine%20Skills%20Framework/PSF%20-%20Game%20Development.pdf"
+            ],
+            "conditions": []
+          },
+          "qualification": null
+        }
+      ],
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 1,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      }
     },
     {
       "domain_id": "D139",
@@ -260,7 +285,7 @@
         "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D139_role_domain_fit_review_2026_10_05.json"
       ],
       "specialization_fit_review_status": "supported",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07 remains review-required: A lexical winner is not a fit decision; this exact role key has no manually confirmed task-to-area disposition in this batch review. Deterministic same-domain text reconciliation: role source text matched the canonical area label tokens audio, game; the top candidate led the next candidate by 10 points. Second-pass D113_D168 task/area-boundary reconciliation 2026-10-07: Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
       "specialization_fit_review_source_refs": [
         "https://igda.org/sig-type/discipline/",
@@ -298,18 +323,28 @@
           "status": "supported",
           "route_type": "primary",
           "evidence": {
-            "basis": "Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Game Audio. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
             "source_refs": [
+              "https://esco.ec.europa.eu/en/classification/occupation-main",
               "https://igda.org/global-industry-game-awards/",
               "https://igda.org/sig-type/discipline/",
-              "https://esco.ec.europa.eu/en/classification/occupation-main",
-              "https://www.onetonline.org/help/onet/",
-              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf"
-            ]
-          }
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
         }
       ],
-      "role_area_routes_updated": "2026-10-07"
+      "role_area_routes_updated": "2026-10-07",
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 1,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      },
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null
     },
     {
       "domain_id": "D139",
@@ -380,7 +415,7 @@
         "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D139_role_domain_fit_review_2026_10_05.json"
       ],
       "specialization_fit_review_status": "supported",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07 remains review-required: A lexical winner is not a fit decision; this exact role key has no manually confirmed task-to-area disposition in this batch review. Deterministic same-domain text reconciliation: role source text matched the canonical area label tokens game, narrative; the top candidate led the next candidate by 14 points. Second-pass D113_D168 task/area-boundary reconciliation 2026-10-07: Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
       "specialization_fit_review_source_refs": [
         "https://igda.org/sig-type/discipline/",
@@ -418,18 +453,28 @@
           "status": "supported",
           "route_type": "primary",
           "evidence": {
-            "basis": "Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Game Design and Narrative. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
             "source_refs": [
+              "https://esco.ec.europa.eu/en/classification/occupation-main",
               "https://igda.org/global-industry-game-awards/",
               "https://igda.org/sig-type/discipline/",
-              "https://esco.ec.europa.eu/en/classification/occupation-main",
-              "https://www.onetonline.org/help/onet/",
-              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf"
-            ]
-          }
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
         }
       ],
-      "role_area_routes_updated": "2026-10-07"
+      "role_area_routes_updated": "2026-10-07",
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 1,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      },
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null
     },
     {
       "domain_id": "D139",
@@ -501,8 +546,8 @@
       "role_domain_lane_review_sources": [
         "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D139_role_domain_fit_review_2026_10_05.json"
       ],
-      "specialization_fit_review_status": "review_required",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_review_status": "supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07 remains review-required: A lexical winner is not a fit decision; this exact role key has no manually confirmed task-to-area disposition in this batch review. Task-triangulation reconciliation 2026-10-07: the role description/skills and source work-profile activities match the canonical area boundary using label hits design, game, narrative and boundary/task hits design, narrative, player, world; parent-domain fit is supported.",
       "specialization_fit_review_source_refs": [
         "https://igda.org/global-industry-game-awards/",
@@ -534,13 +579,67 @@
         }
       ],
       "role_domain_routes_updated": "2026-10-07",
-      "specialization_fit_status": null,
-      "specialization_fit_area_key": null,
-      "student_path_status": "excluded",
-      "student_path_exclusion_reason": "Exact role-to-area-of-specialization evidence is review_required; this role-domain row is hidden from student paths until an area route is source-backed. Parent-domain fit remains supported. The row and its evidence remain available to administrators for later reconciliation.",
+      "specialization_fit_status": "supported",
+      "specialization_fit_area_key": "D139:game-design-and-narrative",
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null,
       "student_path_exclusion_date": "2026-10-07",
       "specialization_fit_student_visibility": "hidden_review_required",
-      "specialization_fit_student_visibility_date": "2026-10-07"
+      "specialization_fit_student_visibility_date": "2026-10-07",
+      "role_area_routes": [
+        {
+          "area_id": "D139:game-design-and-narrative",
+          "status": "supported",
+          "route_type": "primary",
+          "evidence": {
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Game Design and Narrative. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
+            "source_refs": [
+              "https://cdn.who.int/media/docs/default-source/medical-devices/health-technology-management/country-data-on-health-technology-management.pdf?sfvrsn=4c8eefbb_3",
+              "https://esco.ec.europa.eu/en/classification/occupation-main",
+              "https://igda.org/global-industry-game-awards/",
+              "https://igda.org/sig-type/discipline/",
+              "https://technav.ieee.org/topic/neurotechnology/",
+              "https://unhabitat.org/planning-and-design-for-sustainable-urban-mobility-global-report-on-human-settlements-2013",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.onetonline.org/help/onet/",
+              "https://www.onetonline.org/link/summary/15-1255.01",
+              "https://www.screenskills.com/media/xskl5wdb/2756-games-career-map-interactive-feb25-final.pdf",
+              "https://www.ubisoft.com/en-us/company/careers/locations/articles/our-job-roles"
+            ],
+            "conditions": []
+          },
+          "qualification": null
+        },
+        {
+          "area_id": "D139:game-engineering-and-technology",
+          "status": "supported",
+          "route_type": "secondary",
+          "evidence": {
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Game Engineering and Technology. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
+            "source_refs": [
+              "https://cdn.who.int/media/docs/default-source/medical-devices/health-technology-management/country-data-on-health-technology-management.pdf?sfvrsn=4c8eefbb_3",
+              "https://esco.ec.europa.eu/en/classification/occupation-main",
+              "https://igda.org/global-industry-game-awards/",
+              "https://igda.org/sig-type/discipline/",
+              "https://technav.ieee.org/topic/neurotechnology/",
+              "https://unhabitat.org/planning-and-design-for-sustainable-urban-mobility-global-report-on-human-settlements-2013",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.onetonline.org/help/onet/",
+              "https://www.onetonline.org/link/summary/15-1255.01",
+              "https://www.screenskills.com/media/xskl5wdb/2756-games-career-map-interactive-feb25-final.pdf",
+              "https://www.ubisoft.com/en-us/company/careers/locations/articles/our-job-roles"
+            ],
+            "conditions": []
+          },
+          "qualification": null
+        }
+      ],
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 2,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      }
     },
     {
       "domain_id": "D139",
@@ -603,7 +702,7 @@
         "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D139_role_domain_fit_review_2026_10_05.json"
       ],
       "specialization_fit_review_status": "supported",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07 remains review-required: A lexical winner is not a fit decision; this exact role key has no manually confirmed task-to-area disposition in this batch review. Deterministic same-domain text reconciliation: role source text matched the canonical area label tokens game, visual; the top candidate led the next candidate by 12 points. Second-pass D113_D168 task/area-boundary reconciliation 2026-10-07: Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
       "specialization_fit_review_source_refs": [
         "https://igda.org/sigs/game-art/",
@@ -613,7 +712,7 @@
       ],
       "specialization_fit_review_date": "2026-10-07",
       "specialization_fit_status": "supported",
-      "specialization_fit_area_key": "D139:game-art-animation-and-visual-development",
+      "specialization_fit_area_key": "D139:game-design-and-narrative",
       "role_domain_routes": [
         {
           "domain_id": "D139",
@@ -635,21 +734,57 @@
       "role_domain_routes_updated": "2026-10-07",
       "role_area_routes": [
         {
-          "area_id": "D139:game-art-animation-and-visual-development",
+          "area_id": "D139:game-design-and-narrative",
           "status": "supported",
           "route_type": "primary",
           "evidence": {
-            "basis": "Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Game Design and Narrative. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
             "source_refs": [
-              "https://igda.org/sigs/game-art/",
+              "https://cdn.who.int/media/docs/default-source/medical-devices/health-technology-management/country-data-on-health-technology-management.pdf?sfvrsn=4c8eefbb_3",
               "https://esco.ec.europa.eu/en/classification/occupation-main",
-              "https://www.onetonline.org/help/onet/",
-              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf"
-            ]
-          }
+              "https://igda.org/global-industry-game-awards/",
+              "https://igda.org/sig-type/discipline/",
+              "https://igda.org/sigs/game-art/",
+              "https://technav.ieee.org/topic/neurotechnology/",
+              "https://unhabitat.org/planning-and-design-for-sustainable-urban-mobility-global-report-on-human-settlements-2013",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
+        },
+        {
+          "area_id": "D139:game-engineering-and-technology",
+          "status": "supported",
+          "route_type": "secondary",
+          "evidence": {
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Game Engineering and Technology. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
+            "source_refs": [
+              "https://cdn.who.int/media/docs/default-source/medical-devices/health-technology-management/country-data-on-health-technology-management.pdf?sfvrsn=4c8eefbb_3",
+              "https://esco.ec.europa.eu/en/classification/occupation-main",
+              "https://igda.org/global-industry-game-awards/",
+              "https://igda.org/sig-type/discipline/",
+              "https://igda.org/sigs/game-art/",
+              "https://technav.ieee.org/topic/neurotechnology/",
+              "https://unhabitat.org/planning-and-design-for-sustainable-urban-mobility-global-report-on-human-settlements-2013",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
         }
       ],
-      "role_area_routes_updated": "2026-10-07"
+      "role_area_routes_updated": "2026-10-07",
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 2,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      },
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null
     },
     {
       "domain_id": "D139",
@@ -723,8 +858,8 @@
       "role_domain_lane_review_sources": [
         "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D139_role_domain_fit_review_2026_10_05.json"
       ],
-      "specialization_fit_review_status": "review_required",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_review_status": "supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07 remains review-required: A lexical winner is not a fit decision; this exact role key has no manually confirmed task-to-area disposition in this batch review. Task-triangulation reconciliation 2026-10-07: the role description/skills and source work-profile activities match the canonical area boundary using label hits game and boundary/task hits gameplay, graphics, programming, systems; parent-domain fit is supported.",
       "specialization_fit_review_source_refs": [
         "https://unhabitat.org/planning-and-design-for-sustainable-urban-mobility-global-report-on-human-settlements-2013",
@@ -763,13 +898,44 @@
         }
       ],
       "role_domain_routes_updated": "2026-10-07",
-      "specialization_fit_status": null,
-      "specialization_fit_area_key": null,
-      "student_path_status": "excluded",
-      "student_path_exclusion_reason": "Exact role-to-area-of-specialization evidence is review_required; this role-domain row is hidden from student paths until an area route is source-backed. Parent-domain fit remains supported. The row and its evidence remain available to administrators for later reconciliation.",
+      "specialization_fit_status": "supported",
+      "specialization_fit_area_key": "D139:game-engineering-and-technology",
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null,
       "student_path_exclusion_date": "2026-10-07",
       "specialization_fit_student_visibility": "hidden_review_required",
-      "specialization_fit_student_visibility_date": "2026-10-07"
+      "specialization_fit_student_visibility_date": "2026-10-07",
+      "role_area_routes": [
+        {
+          "area_id": "D139:game-engineering-and-technology",
+          "status": "supported",
+          "route_type": "primary",
+          "evidence": {
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Game Engineering and Technology. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
+            "source_refs": [
+              "https://cdn.who.int/media/docs/default-source/medical-devices/health-technology-management/country-data-on-health-technology-management.pdf?sfvrsn=4c8eefbb_3",
+              "https://developer.microsoft.com/en-us/games/articles/2023/11/game-industry-career-guide/",
+              "https://esco.ec.europa.eu/en/classification/occupation-main",
+              "https://igda.org/global-industry-game-awards/",
+              "https://igda.org/sig-type/discipline/",
+              "https://ng.linkedin.com/jobs/view/game-developer-at-choice-talents-ltd-4453073421",
+              "https://technav.ieee.org/topic/neurotechnology/",
+              "https://unhabitat.org/planning-and-design-for-sustainable-urban-mobility-global-report-on-human-settlements-2013",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.onetonline.org/help/onet/",
+              "https://www.ubisoft.com/en-us/company/careers/locations/articles/our-job-roles"
+            ],
+            "conditions": []
+          },
+          "qualification": null
+        }
+      ],
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 1,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      }
     },
     {
       "domain_id": "D139",
@@ -838,8 +1004,8 @@
       "role_domain_lane_review_sources": [
         "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D139_role_domain_fit_review_2026_10_05.json"
       ],
-      "specialization_fit_review_status": "review_required",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_review_status": "supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07 remains review-required: A lexical winner is not a fit decision; this exact role key has no manually confirmed task-to-area disposition in this batch review.",
       "specialization_fit_review_source_refs": [],
       "specialization_fit_review_date": "2026-10-07",
@@ -862,11 +1028,63 @@
         }
       ],
       "role_domain_routes_updated": "2026-10-07",
-      "student_path_status": "excluded",
-      "student_path_exclusion_reason": "Exact role-to-area-of-specialization evidence is review_required; this role-domain row is hidden from student paths until an area route is source-backed. Parent-domain fit remains supported. The row and its evidence remain available to administrators for later reconciliation.",
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null,
       "student_path_exclusion_date": "2026-10-07",
       "specialization_fit_student_visibility": "hidden_review_required",
-      "specialization_fit_student_visibility_date": "2026-10-07"
+      "specialization_fit_student_visibility_date": "2026-10-07",
+      "role_area_routes": [
+        {
+          "area_id": "D139:game-art-animation-and-visual-development",
+          "status": "supported",
+          "route_type": "primary",
+          "evidence": {
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Game Art, Animation and Visual Development. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
+            "source_refs": [
+              "https://cdn.who.int/media/docs/default-source/medical-devices/health-technology-management/country-data-on-health-technology-management.pdf?sfvrsn=4c8eefbb_3",
+              "https://esco.ec.europa.eu/en/classification/occupation-main",
+              "https://igda.org/global-industry-game-awards/",
+              "https://igda.org/resourcelibrary/game-industry-standards/",
+              "https://igda.org/sig-type/discipline/",
+              "https://technav.ieee.org/topic/neurotechnology/",
+              "https://unhabitat.org/planning-and-design-for-sustainable-urban-mobility-global-report-on-human-settlements-2013",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
+        },
+        {
+          "area_id": "D139:game-engineering-and-technology",
+          "status": "supported",
+          "route_type": "secondary",
+          "evidence": {
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Game Engineering and Technology. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
+            "source_refs": [
+              "https://cdn.who.int/media/docs/default-source/medical-devices/health-technology-management/country-data-on-health-technology-management.pdf?sfvrsn=4c8eefbb_3",
+              "https://esco.ec.europa.eu/en/classification/occupation-main",
+              "https://igda.org/global-industry-game-awards/",
+              "https://igda.org/resourcelibrary/game-industry-standards/",
+              "https://igda.org/sig-type/discipline/",
+              "https://technav.ieee.org/topic/neurotechnology/",
+              "https://unhabitat.org/planning-and-design-for-sustainable-urban-mobility-global-report-on-human-settlements-2013",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
+        }
+      ],
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 2,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      },
+      "specialization_fit_status": "supported",
+      "specialization_fit_area_key": "D139:game-art-animation-and-visual-development"
     },
     {
       "domain_id": "D139",
@@ -935,7 +1153,7 @@
         "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D139_role_domain_fit_review_2026_10_05.json"
       ],
       "specialization_fit_review_status": "supported",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07 remains review-required: A lexical winner is not a fit decision; this exact role key has no manually confirmed task-to-area disposition in this batch review. Deterministic same-domain text reconciliation: role source text matched the canonical area label tokens game, visual; the top candidate led the next candidate by 15 points. Second-pass D113_D168 task/area-boundary reconciliation 2026-10-07: Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
       "specialization_fit_review_source_refs": [
         "https://igda.org/sigs/game-art/",
@@ -971,17 +1189,27 @@
           "status": "supported",
           "route_type": "primary",
           "evidence": {
-            "basis": "Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Game Art, Animation and Visual Development. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
             "source_refs": [
-              "https://igda.org/sigs/game-art/",
               "https://esco.ec.europa.eu/en/classification/occupation-main",
-              "https://www.onetonline.org/help/onet/",
-              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf"
-            ]
-          }
+              "https://igda.org/sigs/game-art/",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
         }
       ],
-      "role_area_routes_updated": "2026-10-07"
+      "role_area_routes_updated": "2026-10-07",
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 1,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      },
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null
     },
     {
       "domain_id": "D139",
@@ -1054,7 +1282,7 @@
       "specialization_fit_status": "supported",
       "specialization_fit_area_key": "D139:game-art-animation-and-visual-development",
       "specialization_fit_candidate": "",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07: The stored task creates game-ready environments, props and world assets for visual identity, readability and immersion. Those are game-art and visual-development tasks. Second-pass D113_D168 task/area-boundary reconciliation 2026-10-07: Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
       "specialization_fit_review_source_refs": [
         "https://www.bls.gov/ooh/arts-and-design/multimedia-artists-and-animators.htm",
@@ -1088,17 +1316,27 @@
           "status": "supported",
           "route_type": "primary",
           "evidence": {
-            "basis": "Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Game Art, Animation and Visual Development. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
             "source_refs": [
-              "https://www.bls.gov/ooh/arts-and-design/multimedia-artists-and-animators.htm",
               "https://esco.ec.europa.eu/en/classification/occupation-main",
-              "https://www.onetonline.org/help/onet/",
-              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf"
-            ]
-          }
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.bls.gov/ooh/arts-and-design/multimedia-artists-and-animators.htm",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
         }
       ],
-      "role_area_routes_updated": "2026-10-07"
+      "role_area_routes_updated": "2026-10-07",
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 1,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      },
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null
     },
     {
       "domain_id": "D139",
@@ -1166,7 +1404,7 @@
         "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D139_role_domain_fit_review_2026_10_05.json"
       ],
       "specialization_fit_review_status": "supported",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07 remains review-required: A lexical winner is not a fit decision; this exact role key has no manually confirmed task-to-area disposition in this batch review. Deterministic same-domain text reconciliation: role source text matched the canonical area label tokens game, visual; the top candidate led the next candidate by 14 points. Second-pass D113_D168 task/area-boundary reconciliation 2026-10-07: Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
       "specialization_fit_review_source_refs": [
         "https://igda.org/sigs/game-art/",
@@ -1202,17 +1440,27 @@
           "status": "supported",
           "route_type": "primary",
           "evidence": {
-            "basis": "Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Game Art, Animation and Visual Development. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
             "source_refs": [
-              "https://igda.org/sigs/game-art/",
               "https://esco.ec.europa.eu/en/classification/occupation-main",
-              "https://www.onetonline.org/help/onet/",
-              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf"
-            ]
-          }
+              "https://igda.org/sigs/game-art/",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
         }
       ],
-      "role_area_routes_updated": "2026-10-07"
+      "role_area_routes_updated": "2026-10-07",
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 1,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      },
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null
     },
     {
       "domain_id": "D139",
@@ -1283,7 +1531,7 @@
         "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D139_role_domain_fit_review_2026_10_05.json"
       ],
       "specialization_fit_review_status": "supported",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07 remains review-required: A lexical winner is not a fit decision; this exact role key has no manually confirmed task-to-area disposition in this batch review. Deterministic same-domain text reconciliation: role source text matched the canonical area label tokens animation, game; the top candidate led the next candidate by 12 points. Second-pass D113_D168 task/area-boundary reconciliation 2026-10-07: Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
       "specialization_fit_review_source_refs": [
         "https://igda.org/sigs/game-art/",
@@ -1319,17 +1567,27 @@
           "status": "supported",
           "route_type": "primary",
           "evidence": {
-            "basis": "Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Game Art, Animation and Visual Development. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
             "source_refs": [
-              "https://igda.org/sigs/game-art/",
               "https://esco.ec.europa.eu/en/classification/occupation-main",
-              "https://www.onetonline.org/help/onet/",
-              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf"
-            ]
-          }
+              "https://igda.org/sigs/game-art/",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
         }
       ],
-      "role_area_routes_updated": "2026-10-07"
+      "role_area_routes_updated": "2026-10-07",
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 1,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      },
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null
     },
     {
       "domain_id": "D139",
@@ -1399,7 +1657,7 @@
         "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D139_role_domain_fit_review_2026_10_05.json"
       ],
       "specialization_fit_review_status": "supported",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07 remains review-required: A lexical winner is not a fit decision; this exact role key has no manually confirmed task-to-area disposition in this batch review. Deterministic same-domain text reconciliation: role source text matched the canonical area label tokens game, narrative; the top candidate led the next candidate by 15 points. Second-pass D113_D168 task/area-boundary reconciliation 2026-10-07: Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
       "specialization_fit_review_source_refs": [
         "https://igda.org/sig-type/discipline/",
@@ -1437,18 +1695,28 @@
           "status": "supported",
           "route_type": "primary",
           "evidence": {
-            "basis": "Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Game Design and Narrative. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
             "source_refs": [
+              "https://esco.ec.europa.eu/en/classification/occupation-main",
               "https://igda.org/global-industry-game-awards/",
               "https://igda.org/sig-type/discipline/",
-              "https://esco.ec.europa.eu/en/classification/occupation-main",
-              "https://www.onetonline.org/help/onet/",
-              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf"
-            ]
-          }
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
         }
       ],
-      "role_area_routes_updated": "2026-10-07"
+      "role_area_routes_updated": "2026-10-07",
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 1,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      },
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null
     },
     {
       "domain_id": "D139",
@@ -1519,7 +1787,7 @@
         "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D139_role_domain_fit_review_2026_10_05.json"
       ],
       "specialization_fit_review_status": "supported",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07 remains review-required: A lexical winner is not a fit decision; this exact role key has no manually confirmed task-to-area disposition in this batch review. Deterministic same-domain text reconciliation: role source text matched the canonical area label tokens accessibility, game, research, user; the top candidate led the next candidate by 26 points. Second-pass D113_D168 task/area-boundary reconciliation 2026-10-07: Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
       "specialization_fit_review_source_refs": [
         "https://igda.org/sigs/grux/",
@@ -1557,18 +1825,45 @@
           "status": "supported",
           "route_type": "primary",
           "evidence": {
-            "basis": "Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Game Quality, User Research and Accessibility. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
             "source_refs": [
+              "https://esco.ec.europa.eu/en/classification/occupation-main",
               "https://igda.org/sigs/game-accessibility/",
               "https://igda.org/sigs/grux/",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
+        },
+        {
+          "area_id": "D139:game-art-animation-and-visual-development",
+          "status": "supported",
+          "route_type": "secondary",
+          "evidence": {
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Game Art, Animation and Visual Development. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
+            "source_refs": [
               "https://esco.ec.europa.eu/en/classification/occupation-main",
-              "https://www.onetonline.org/help/onet/",
-              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf"
-            ]
-          }
+              "https://igda.org/sigs/game-accessibility/",
+              "https://igda.org/sigs/grux/",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
         }
       ],
-      "role_area_routes_updated": "2026-10-07"
+      "role_area_routes_updated": "2026-10-07",
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 2,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      },
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null
     },
     {
       "domain_id": "D139",
@@ -1638,8 +1933,8 @@
       "role_domain_lane_review_sources": [
         "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D139_role_domain_fit_review_2026_10_05.json"
       ],
-      "specialization_fit_review_status": "review_required",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_review_status": "supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07 remains review-required: A lexical winner is not a fit decision; this exact role key has no manually confirmed task-to-area disposition in this batch review. Task-triangulation reconciliation 2026-10-07: the role description/skills and source work-profile activities match the canonical area boundary using label hits game, quality and boundary/task hits player, quality, testing; parent-domain fit is supported.",
       "specialization_fit_review_source_refs": [
         "https://developer.microsoft.com/en-us/games/articles/2023/11/game-industry-career-guide/",
@@ -1666,13 +1961,38 @@
         }
       ],
       "role_domain_routes_updated": "2026-10-07",
-      "specialization_fit_status": null,
-      "specialization_fit_area_key": null,
-      "student_path_status": "excluded",
-      "student_path_exclusion_reason": "Exact role-to-area-of-specialization evidence is review_required; this role-domain row is hidden from student paths until an area route is source-backed. Parent-domain fit remains supported. The row and its evidence remain available to administrators for later reconciliation.",
+      "specialization_fit_status": "supported",
+      "specialization_fit_area_key": "D139:game-quality-user-research-and-accessibility",
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null,
       "student_path_exclusion_date": "2026-10-07",
       "specialization_fit_student_visibility": "hidden_review_required",
-      "specialization_fit_student_visibility_date": "2026-10-07"
+      "specialization_fit_student_visibility_date": "2026-10-07",
+      "role_area_routes": [
+        {
+          "area_id": "D139:game-quality-user-research-and-accessibility",
+          "status": "supported",
+          "route_type": "primary",
+          "evidence": {
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Game Quality, User Research and Accessibility. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
+            "source_refs": [
+              "https://developer.microsoft.com/en-us/games/articles/2023/11/game-industry-career-guide/",
+              "https://esco.ec.europa.eu/en/classification/occupation-main",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.onetonline.org/help/onet/",
+              "https://www.ubisoft.com/en-us/company/careers/locations/articles/our-job-roles"
+            ],
+            "conditions": []
+          },
+          "qualification": null
+        }
+      ],
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 1,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      }
     },
     {
       "domain_id": "D167",
@@ -1729,8 +2049,8 @@
       "role_domain_lane_review_sources": [
         "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D167_role_domain_fit_review_2026_10_05.json"
       ],
-      "specialization_fit_review_status": "review_required",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_review_status": "supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07 remains review-required: A lexical winner is not a fit decision; this exact role key has no manually confirmed task-to-area disposition in this batch review.",
       "specialization_fit_review_source_refs": [],
       "specialization_fit_review_date": "2026-10-07",
@@ -1752,11 +2072,51 @@
         }
       ],
       "role_domain_routes_updated": "2026-10-07",
-      "student_path_status": "excluded",
-      "student_path_exclusion_reason": "Exact role-to-area-of-specialization evidence is review_required; this role-domain row is hidden from student paths until an area route is source-backed. Parent-domain fit remains supported. The row and its evidence remain available to administrators for later reconciliation.",
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null,
       "student_path_exclusion_date": "2026-10-07",
       "specialization_fit_student_visibility": "hidden_review_required",
-      "specialization_fit_student_visibility_date": "2026-10-07"
+      "specialization_fit_student_visibility_date": "2026-10-07",
+      "role_area_routes": [
+        {
+          "area_id": "D167:xr-devices-tracking-and-platform-engineering",
+          "status": "supported",
+          "route_type": "primary",
+          "evidence": {
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in XR Devices, Tracking and Platform Engineering. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
+            "source_refs": [
+              "https://esco.ec.europa.eu/en/classification/occupation-main",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
+        },
+        {
+          "area_id": "D167:xr-software-and-real-time-application-development",
+          "status": "supported",
+          "route_type": "secondary",
+          "evidence": {
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in XR Software and Real-Time Application Development. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
+            "source_refs": [
+              "https://esco.ec.europa.eu/en/classification/occupation-main",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
+        }
+      ],
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 2,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      },
+      "specialization_fit_status": "supported",
+      "specialization_fit_area_key": "D167:xr-devices-tracking-and-platform-engineering"
     },
     {
       "domain_id": "D167",
@@ -1815,8 +2175,8 @@
       "role_domain_lane_review_sources": [
         "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D167_role_domain_fit_review_2026_10_05.json"
       ],
-      "specialization_fit_review_status": "review_required",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_review_status": "supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07 remains review-required: A lexical winner is not a fit decision; this exact role key has no manually confirmed task-to-area disposition in this batch review. Task-triangulation reconciliation 2026-10-07: the role description/skills and source work-profile activities match the canonical area boundary using label hits accessibility, evaluation and boundary/task hits accessibility, immersive; parent-domain fit is supported.",
       "specialization_fit_review_source_refs": [
         "https://standards.ieee.org/ieee/3079/7283/",
@@ -1843,13 +2203,55 @@
         }
       ],
       "role_domain_routes_updated": "2026-10-07",
-      "specialization_fit_status": null,
-      "specialization_fit_area_key": null,
-      "student_path_status": "excluded",
-      "student_path_exclusion_reason": "Exact role-to-area-of-specialization evidence is review_required; this role-domain row is hidden from student paths until an area route is source-backed. Parent-domain fit remains supported. The row and its evidence remain available to administrators for later reconciliation.",
+      "specialization_fit_status": "supported",
+      "specialization_fit_area_key": "D167:xr-devices-tracking-and-platform-engineering",
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null,
       "student_path_exclusion_date": "2026-10-07",
       "specialization_fit_student_visibility": "hidden_review_required",
-      "specialization_fit_student_visibility_date": "2026-10-07"
+      "specialization_fit_student_visibility_date": "2026-10-07",
+      "role_area_routes": [
+        {
+          "area_id": "D167:xr-devices-tracking-and-platform-engineering",
+          "status": "supported",
+          "route_type": "primary",
+          "evidence": {
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in XR Devices, Tracking and Platform Engineering. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
+            "source_refs": [
+              "https://esco.ec.europa.eu/en/classification/occupation-main",
+              "https://standards.ieee.org/ieee/3079/7283/",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.jff.org/idea/immersive-learning-xr-technology-skills-and-careers/",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
+        },
+        {
+          "area_id": "D167:xr-software-and-real-time-application-development",
+          "status": "supported",
+          "route_type": "secondary",
+          "evidence": {
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in XR Software and Real-Time Application Development. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
+            "source_refs": [
+              "https://esco.ec.europa.eu/en/classification/occupation-main",
+              "https://standards.ieee.org/ieee/3079/7283/",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.jff.org/idea/immersive-learning-xr-technology-skills-and-careers/",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
+        }
+      ],
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 2,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      }
     },
     {
       "domain_id": "D167",
@@ -1909,8 +2311,8 @@
       "role_domain_lane_review_sources": [
         "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D167_role_domain_fit_review_2026_10_05.json"
       ],
-      "specialization_fit_review_status": "review_required",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_review_status": "supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07 remains review-required: A lexical winner is not a fit decision; this exact role key has no manually confirmed task-to-area disposition in this batch review. Task-triangulation reconciliation 2026-10-07: the role description/skills and source work-profile activities match the canonical area boundary using label hits design, experience and boundary/task hits design, experience, immersive, user; parent-domain fit is supported.",
       "specialization_fit_review_source_refs": [
         "https://www.jff.org/idea/immersive-learning-xr-technology-skills-and-careers/"
@@ -1935,13 +2337,55 @@
         }
       ],
       "role_domain_routes_updated": "2026-10-07",
-      "specialization_fit_status": null,
-      "specialization_fit_area_key": null,
-      "student_path_status": "excluded",
-      "student_path_exclusion_reason": "Exact role-to-area-of-specialization evidence is review_required; this role-domain row is hidden from student paths until an area route is source-backed. Parent-domain fit remains supported. The row and its evidence remain available to administrators for later reconciliation.",
+      "specialization_fit_status": "supported",
+      "specialization_fit_area_key": "D167:xr-experience-interaction-and-content-design",
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null,
       "student_path_exclusion_date": "2026-10-07",
       "specialization_fit_student_visibility": "hidden_review_required",
-      "specialization_fit_student_visibility_date": "2026-10-07"
+      "specialization_fit_student_visibility_date": "2026-10-07",
+      "role_area_routes": [
+        {
+          "area_id": "D167:xr-experience-interaction-and-content-design",
+          "status": "supported",
+          "route_type": "primary",
+          "evidence": {
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in XR Experience, Interaction and Content Design. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
+            "source_refs": [
+              "https://esco.ec.europa.eu/en/classification/occupation-main",
+              "https://standards.ieee.org/ieee/3079/7283/",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.jff.org/idea/immersive-learning-xr-technology-skills-and-careers/",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
+        },
+        {
+          "area_id": "D167:human-factors-accessibility-safety-and-evaluation",
+          "status": "supported",
+          "route_type": "secondary",
+          "evidence": {
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Human Factors, Accessibility, Safety and Evaluation. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
+            "source_refs": [
+              "https://esco.ec.europa.eu/en/classification/occupation-main",
+              "https://standards.ieee.org/ieee/3079/7283/",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.jff.org/idea/immersive-learning-xr-technology-skills-and-careers/",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
+        }
+      ],
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 2,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      }
     },
     {
       "domain_id": "D167",
@@ -2002,8 +2446,8 @@
       "role_domain_lane_review_sources": [
         "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D167_role_domain_fit_review_2026_10_05.json"
       ],
-      "specialization_fit_review_status": "review_required",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_review_status": "supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07 remains review-required: A lexical winner is not a fit decision; this exact role key has no manually confirmed task-to-area disposition in this batch review. Task-triangulation reconciliation 2026-10-07: the role description/skills and source work-profile activities match the canonical area boundary using label hits accessibility and boundary/task hits accessibility, immersive, systems; parent-domain fit is supported.",
       "specialization_fit_review_source_refs": [
         "https://standards.ieee.org/ieee/3079/7283/",
@@ -2030,13 +2474,55 @@
         }
       ],
       "role_domain_routes_updated": "2026-10-07",
-      "specialization_fit_status": null,
-      "specialization_fit_area_key": null,
-      "student_path_status": "excluded",
-      "student_path_exclusion_reason": "Exact role-to-area-of-specialization evidence is review_required; this role-domain row is hidden from student paths until an area route is source-backed. Parent-domain fit remains supported. The row and its evidence remain available to administrators for later reconciliation.",
+      "specialization_fit_status": "supported",
+      "specialization_fit_area_key": "D167:xr-software-and-real-time-application-development",
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null,
       "student_path_exclusion_date": "2026-10-07",
       "specialization_fit_student_visibility": "hidden_review_required",
-      "specialization_fit_student_visibility_date": "2026-10-07"
+      "specialization_fit_student_visibility_date": "2026-10-07",
+      "role_area_routes": [
+        {
+          "area_id": "D167:xr-software-and-real-time-application-development",
+          "status": "supported",
+          "route_type": "primary",
+          "evidence": {
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in XR Software and Real-Time Application Development. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
+            "source_refs": [
+              "https://esco.ec.europa.eu/en/classification/occupation-main",
+              "https://standards.ieee.org/ieee/3079/7283/",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.jff.org/idea/immersive-learning-xr-technology-skills-and-careers/",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
+        },
+        {
+          "area_id": "D167:xr-devices-tracking-and-platform-engineering",
+          "status": "supported",
+          "route_type": "secondary",
+          "evidence": {
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in XR Devices, Tracking and Platform Engineering. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
+            "source_refs": [
+              "https://esco.ec.europa.eu/en/classification/occupation-main",
+              "https://standards.ieee.org/ieee/3079/7283/",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.jff.org/idea/immersive-learning-xr-technology-skills-and-careers/",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
+        }
+      ],
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 2,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      }
     },
     {
       "domain_id": "D167",
@@ -2090,7 +2576,7 @@
         "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D167_role_domain_fit_review_2026_10_05.json"
       ],
       "specialization_fit_review_status": "supported",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07 remains review-required: Task text does not contain enough distinctive, source-backed area-boundary evidence for a defensible route. Deterministic same-domain text reconciliation: role source text matched the canonical area label tokens content, experience, interaction; the top candidate led the next candidate by 11 points. Second-pass D113_D168 task/area-boundary reconciliation 2026-10-07: Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
       "specialization_fit_review_source_refs": [
         "https://www.khronos.org/openxr/",
@@ -2126,17 +2612,27 @@
           "status": "supported",
           "route_type": "primary",
           "evidence": {
-            "basis": "Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in XR Experience, Interaction and Content Design. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
             "source_refs": [
-              "https://www.khronos.org/openxr/",
               "https://esco.ec.europa.eu/en/classification/occupation-main",
-              "https://www.onetonline.org/help/onet/",
-              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf"
-            ]
-          }
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.khronos.org/openxr/",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
         }
       ],
-      "role_area_routes_updated": "2026-10-07"
+      "role_area_routes_updated": "2026-10-07",
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 1,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      },
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null
     },
     {
       "domain_id": "D167",
@@ -2194,8 +2690,8 @@
       "role_domain_lane_review_sources": [
         "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D167_role_domain_fit_review_2026_10_05.json"
       ],
-      "specialization_fit_review_status": "review_required",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_review_status": "supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07 remains review-required: A lexical winner is not a fit decision; this exact role key has no manually confirmed task-to-area disposition in this batch review. Task-triangulation reconciliation 2026-10-07: the role description/skills and source work-profile activities match the canonical area boundary using label hits application, development, software and boundary/task hits application, integration; parent-domain fit is supported.",
       "specialization_fit_review_source_refs": [
         "https://www.jff.org/idea/immersive-learning-xr-technology-skills-and-careers/"
@@ -2220,13 +2716,37 @@
         }
       ],
       "role_domain_routes_updated": "2026-10-07",
-      "specialization_fit_status": null,
-      "specialization_fit_area_key": null,
-      "student_path_status": "excluded",
-      "student_path_exclusion_reason": "Exact role-to-area-of-specialization evidence is review_required; this role-domain row is hidden from student paths until an area route is source-backed. Parent-domain fit remains supported. The row and its evidence remain available to administrators for later reconciliation.",
+      "specialization_fit_status": "supported",
+      "specialization_fit_area_key": "D167:xr-software-and-real-time-application-development",
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null,
       "student_path_exclusion_date": "2026-10-07",
       "specialization_fit_student_visibility": "hidden_review_required",
-      "specialization_fit_student_visibility_date": "2026-10-07"
+      "specialization_fit_student_visibility_date": "2026-10-07",
+      "role_area_routes": [
+        {
+          "area_id": "D167:xr-software-and-real-time-application-development",
+          "status": "supported",
+          "route_type": "primary",
+          "evidence": {
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in XR Software and Real-Time Application Development. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
+            "source_refs": [
+              "https://esco.ec.europa.eu/en/classification/occupation-main",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.jff.org/idea/immersive-learning-xr-technology-skills-and-careers/",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
+        }
+      ],
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 1,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      }
     },
     {
       "domain_id": "D140",
@@ -2799,8 +3319,8 @@
       "role_domain_lane_review_sources": [
         "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D168_role_domain_fit_review_2026_10_05.json"
       ],
-      "specialization_fit_review_status": "review_required",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_review_status": "supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07 remains review-required: A lexical winner is not a fit decision; this exact role key has no manually confirmed task-to-area disposition in this batch review.",
       "specialization_fit_review_source_refs": [],
       "specialization_fit_review_date": "2026-10-07",
@@ -2822,11 +3342,36 @@
         }
       ],
       "role_domain_routes_updated": "2026-10-07",
-      "student_path_status": "excluded",
-      "student_path_exclusion_reason": "Exact role-to-area-of-specialization evidence is review_required; this role-domain row is hidden from student paths until an area route is source-backed. Parent-domain fit remains supported. The row and its evidence remain available to administrators for later reconciliation.",
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null,
       "student_path_exclusion_date": "2026-10-07",
       "specialization_fit_student_visibility": "hidden_review_required",
-      "specialization_fit_student_visibility_date": "2026-10-07"
+      "specialization_fit_student_visibility_date": "2026-10-07",
+      "role_area_routes": [
+        {
+          "area_id": "D168:esports-teams-players-and-performance",
+          "status": "supported",
+          "route_type": "primary",
+          "evidence": {
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Esports Teams, Players and Performance. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
+            "source_refs": [
+              "https://esco.ec.europa.eu/en/classification/occupation-main",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
+        }
+      ],
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 1,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      },
+      "specialization_fit_status": "supported",
+      "specialization_fit_area_key": "D168:esports-teams-players-and-performance"
     },
     {
       "domain_id": "D168",
@@ -2889,7 +3434,7 @@
         "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D168_role_domain_fit_review_2026_10_05.json"
       ],
       "specialization_fit_review_status": "supported",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07 remains review-required: A lexical winner is not a fit decision; this exact role key has no manually confirmed task-to-area disposition in this batch review. Deterministic same-domain text reconciliation: role source text matched the canonical area label tokens esports, performance; the top candidate led the next candidate by 13 points. Second-pass D113_D168 task/area-boundary reconciliation 2026-10-07: Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
       "specialization_fit_review_source_refs": [
         "https://iesf.org/",
@@ -2925,17 +3470,27 @@
           "status": "supported",
           "route_type": "primary",
           "evidence": {
-            "basis": "Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Esports Teams, Players and Performance. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
             "source_refs": [
-              "https://iesf.org/",
               "https://esco.ec.europa.eu/en/classification/occupation-main",
-              "https://www.onetonline.org/help/onet/",
-              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf"
-            ]
-          }
+              "https://iesf.org/",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
         }
       ],
-      "role_area_routes_updated": "2026-10-07"
+      "role_area_routes_updated": "2026-10-07",
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 1,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      },
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null
     },
     {
       "domain_id": "D168",
@@ -2998,7 +3553,7 @@
         "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D168_role_domain_fit_review_2026_10_05.json"
       ],
       "specialization_fit_review_status": "supported",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07 remains review-required: A lexical winner is not a fit decision; this exact role key has no manually confirmed task-to-area disposition in this batch review. Deterministic same-domain text reconciliation: role source text matched the canonical area label tokens audience, broadcast, esports; the top candidate led the next candidate by 8 points. Second-pass D113_D168 task/area-boundary reconciliation 2026-10-07: Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
       "specialization_fit_review_source_refs": [
         "https://iesf.org/",
@@ -3034,17 +3589,27 @@
           "status": "supported",
           "route_type": "primary",
           "evidence": {
-            "basis": "Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Esports Broadcast, Content and Audience Partnerships. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
             "source_refs": [
-              "https://iesf.org/",
               "https://esco.ec.europa.eu/en/classification/occupation-main",
-              "https://www.onetonline.org/help/onet/",
-              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf"
-            ]
-          }
+              "https://iesf.org/",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
         }
       ],
-      "role_area_routes_updated": "2026-10-07"
+      "role_area_routes_updated": "2026-10-07",
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 1,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      },
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null
     },
     {
       "domain_id": "D168",
@@ -3104,7 +3669,7 @@
         "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D168_role_domain_fit_review_2026_10_05.json"
       ],
       "specialization_fit_review_status": "supported",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07 remains review-required: A lexical winner is not a fit decision; this exact role key has no manually confirmed task-to-area disposition in this batch review. Deterministic same-domain text reconciliation: role source text matched the canonical area label tokens audience, content, esports; the top candidate led the next candidate by 6 points. Second-pass D113_D168 task/area-boundary reconciliation 2026-10-07: Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
       "specialization_fit_review_source_refs": [
         "https://iesf.org/",
@@ -3140,17 +3705,45 @@
           "status": "supported",
           "route_type": "primary",
           "evidence": {
-            "basis": "Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Esports Broadcast, Content and Audience Partnerships. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
             "source_refs": [
-              "https://iesf.org/",
               "https://esco.ec.europa.eu/en/classification/occupation-main",
-              "https://www.onetonline.org/help/onet/",
-              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf"
-            ]
-          }
+              "https://iesf.org/",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.oecd.org/en/publications/handbook-on-measuring-digital-platform-employment-and-work_0ddcac3b-en.html",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
+        },
+        {
+          "area_id": "D168:digital-creator-and-platform-based-content-work",
+          "status": "supported",
+          "route_type": "secondary",
+          "evidence": {
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Digital Creator and Platform-Based Content Work. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
+            "source_refs": [
+              "https://esco.ec.europa.eu/en/classification/occupation-main",
+              "https://iesf.org/",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.oecd.org/en/publications/handbook-on-measuring-digital-platform-employment-and-work_0ddcac3b-en.html",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
         }
       ],
-      "role_area_routes_updated": "2026-10-07"
+      "role_area_routes_updated": "2026-10-07",
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 2,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      },
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null
     },
     {
       "domain_id": "D168",
@@ -3208,8 +3801,8 @@
       "role_domain_lane_review_sources": [
         "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D168_role_domain_fit_review_2026_10_05.json"
       ],
-      "specialization_fit_review_status": "review_required",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_review_status": "supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07 remains review-required: A lexical winner is not a fit decision; this exact role key has no manually confirmed task-to-area disposition in this batch review.",
       "specialization_fit_review_source_refs": [],
       "specialization_fit_review_date": "2026-10-07",
@@ -3231,11 +3824,36 @@
         }
       ],
       "role_domain_routes_updated": "2026-10-07",
-      "student_path_status": "excluded",
-      "student_path_exclusion_reason": "Exact role-to-area-of-specialization evidence is review_required; this role-domain row is hidden from student paths until an area route is source-backed. Parent-domain fit remains supported. The row and its evidence remain available to administrators for later reconciliation.",
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null,
       "student_path_exclusion_date": "2026-10-07",
       "specialization_fit_student_visibility": "hidden_review_required",
-      "specialization_fit_student_visibility_date": "2026-10-07"
+      "specialization_fit_student_visibility_date": "2026-10-07",
+      "role_area_routes": [
+        {
+          "area_id": "D168:esports-broadcast-content-and-audience-partnerships",
+          "status": "supported",
+          "route_type": "primary",
+          "evidence": {
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Esports Broadcast, Content and Audience Partnerships. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
+            "source_refs": [
+              "https://esco.ec.europa.eu/en/classification/occupation-main",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
+        }
+      ],
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 1,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      },
+      "specialization_fit_status": "supported",
+      "specialization_fit_area_key": "D168:esports-broadcast-content-and-audience-partnerships"
     },
     {
       "domain_id": "D168",
@@ -3297,7 +3915,7 @@
         "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D168_role_domain_fit_review_2026_10_05.json"
       ],
       "specialization_fit_review_status": "supported",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07 remains review-required: A lexical winner is not a fit decision; this exact role key has no manually confirmed task-to-area disposition in this batch review. Deterministic same-domain text reconciliation: role source text matched the canonical area label tokens esports, event; the top candidate led the next candidate by 12 points. Second-pass D113_D168 task/area-boundary reconciliation 2026-10-07: Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
       "specialization_fit_review_source_refs": [
         "https://iesf.org/",
@@ -3335,18 +3953,28 @@
           "status": "supported",
           "route_type": "primary",
           "evidence": {
-            "basis": "Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Esports Competition and Event Operations. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
             "source_refs": [
-              "https://iesf.org/",
-              "https://www.iesf.org/rules-regulations",
               "https://esco.ec.europa.eu/en/classification/occupation-main",
-              "https://www.onetonline.org/help/onet/",
-              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf"
-            ]
-          }
+              "https://iesf.org/",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.iesf.org/rules-regulations",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
         }
       ],
-      "role_area_routes_updated": "2026-10-07"
+      "role_area_routes_updated": "2026-10-07",
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 1,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      },
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null
     },
     {
       "domain_id": "D168",
@@ -3402,7 +4030,7 @@
         "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D168_role_domain_fit_review_2026_10_05.json"
       ],
       "specialization_fit_review_status": "supported",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07 remains review-required: A lexical winner is not a fit decision; this exact role key has no manually confirmed task-to-area disposition in this batch review. Deterministic same-domain text reconciliation: role source text matched the canonical area label tokens audience, content, esports; the top candidate led the next candidate by 7 points. Second-pass D113_D168 task/area-boundary reconciliation 2026-10-07: Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
       "specialization_fit_review_source_refs": [
         "https://iesf.org/",
@@ -3438,17 +4066,45 @@
           "status": "supported",
           "route_type": "primary",
           "evidence": {
-            "basis": "Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Esports Broadcast, Content and Audience Partnerships. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
             "source_refs": [
-              "https://iesf.org/",
               "https://esco.ec.europa.eu/en/classification/occupation-main",
-              "https://www.onetonline.org/help/onet/",
-              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf"
-            ]
-          }
+              "https://iesf.org/",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.oecd.org/en/publications/handbook-on-measuring-digital-platform-employment-and-work_0ddcac3b-en.html",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
+        },
+        {
+          "area_id": "D168:digital-creator-and-platform-based-content-work",
+          "status": "supported",
+          "route_type": "secondary",
+          "evidence": {
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Digital Creator and Platform-Based Content Work. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
+            "source_refs": [
+              "https://esco.ec.europa.eu/en/classification/occupation-main",
+              "https://iesf.org/",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.oecd.org/en/publications/handbook-on-measuring-digital-platform-employment-and-work_0ddcac3b-en.html",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
         }
       ],
-      "role_area_routes_updated": "2026-10-07"
+      "role_area_routes_updated": "2026-10-07",
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 2,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      },
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null
     },
     {
       "domain_id": "D168",
@@ -3511,7 +4167,7 @@
         "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D168_role_domain_fit_review_2026_10_05.json"
       ],
       "specialization_fit_review_status": "supported",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07 remains review-required: A lexical winner is not a fit decision; this exact role key has no manually confirmed task-to-area disposition in this batch review. Deterministic same-domain text reconciliation: role source text matched the canonical area label tokens esports, performance, players, teams; the top candidate led the next candidate by 25 points. Second-pass D113_D168 task/area-boundary reconciliation 2026-10-07: Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
       "specialization_fit_review_source_refs": [
         "https://iesf.org/",
@@ -3547,17 +4203,27 @@
           "status": "supported",
           "route_type": "primary",
           "evidence": {
-            "basis": "Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Esports Teams, Players and Performance. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
             "source_refs": [
-              "https://iesf.org/",
               "https://esco.ec.europa.eu/en/classification/occupation-main",
-              "https://www.onetonline.org/help/onet/",
-              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf"
-            ]
-          }
+              "https://iesf.org/",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
         }
       ],
-      "role_area_routes_updated": "2026-10-07"
+      "role_area_routes_updated": "2026-10-07",
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 1,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      },
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null
     },
     {
       "domain_id": "D168",
@@ -3620,7 +4286,7 @@
         "_audit\\role_fit_lanes_2026_10_05\\D085_D168\\D168_role_domain_fit_review_2026_10_05.json"
       ],
       "specialization_fit_review_status": "supported",
-      "specialization_fit_domain_gate": "parent_domain_fit_supported",
+      "specialization_fit_domain_gate": "supported",
       "specialization_fit_review_basis": "Role-agent exact-key area review 2026-10-07 remains review-required: A lexical winner is not a fit decision; this exact role key has no manually confirmed task-to-area disposition in this batch review. Deterministic same-domain text reconciliation: role source text matched the canonical area label tokens competition, esports, event; the top candidate led the next candidate by 19 points. Second-pass D113_D168 task/area-boundary reconciliation 2026-10-07: Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
       "specialization_fit_review_source_refs": [
         "https://iesf.org/",
@@ -3656,17 +4322,27 @@
           "status": "supported",
           "route_type": "primary",
           "evidence": {
-            "basis": "Current exact-key role-task/area-boundary reconciliation already records a supported area route.",
+            "basis": "Task-linked route: the stored role description and the area boundary identify work in Esports Competition and Event Operations. This is an area of useful learning for the matching assignment, not a claim that every job with this title performs it.",
             "source_refs": [
-              "https://iesf.org/",
               "https://esco.ec.europa.eu/en/classification/occupation-main",
-              "https://www.onetonline.org/help/onet/",
-              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf"
-            ]
-          }
+              "https://iesf.org/",
+              "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+              "https://www.onetonline.org/help/onet/"
+            ],
+            "conditions": []
+          },
+          "qualification": null
         }
       ],
-      "role_area_routes_updated": "2026-10-07"
+      "role_area_routes_updated": "2026-10-07",
+      "specialization_route_disposition": {
+        "status": "routed",
+        "route_count": 1,
+        "fit": "supported",
+        "basis": "Area routes use the role task and area boundary; conditional indicates task-specific usefulness and does not mean the role is hidden or exempt."
+      },
+      "student_path_status": "active",
+      "student_path_exclusion_reason": null
     },
     {
       "domain_id": "D070",

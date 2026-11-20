@@ -68,12 +68,14 @@ describe("AdmissionBrowseScreen subject-match programme rows", () => {
     });
   });
 
-  it("shows a programme action and carries the matching national/local university set into the preview", async () => {
+  it("shows programme results before university names and carries matching university scope to the programme preview", async () => {
     const ui = render(<AdmissionBrowseScreen />);
 
     await waitFor(() => expect(ui.getByText("Sociology")).toBeTruthy());
     expect(ui.getByRole("button", { name: "See this programme Sociology" })).toBeTruthy();
     expect(ui.queryByText("National University")).toBeNull();
+    expect(ui.queryByText("Local University")).toBeNull();
+    expect(ui.queryByText("Gap University")).toBeNull();
 
     fireEvent.press(ui.getByRole("button", { name: "See this programme Sociology" }));
 
@@ -91,7 +93,7 @@ describe("AdmissionBrowseScreen subject-match programme rows", () => {
     }));
   });
 
-  it("uses the exact offered programme name for a university-only match row", async () => {
+  it("uses the exact offered programme name without exposing its university before programme selection", async () => {
     mockGetProgrammesBySubjects.mockResolvedValueOnce({
       status: "real",
       data: [{
@@ -118,6 +120,7 @@ describe("AdmissionBrowseScreen subject-match programme rows", () => {
     await waitFor(() => expect(ui.getByText("Sociology")).toBeTruthy());
     expect(ui.getByRole("button", { name: "See this programme Sociology" })).toBeTruthy();
     expect(ui.queryByText("Programme")).toBeNull();
+    expect(ui.queryByText("ILORIN")).toBeNull();
 
     fireEvent.press(ui.getByRole("button", { name: "See this programme Sociology" }));
     await waitFor(() => expect(mockExploreNav.programme).toHaveBeenCalled());
@@ -126,5 +129,26 @@ describe("AdmissionBrowseScreen subject-match programme rows", () => {
       subjectMatchScopeApplied: true,
       subjectMatchSchoolIds: ["uni-ilorin"],
     }));
+  });
+
+  it("labels each row with its grade check and never hides a row", async () => {
+    mockGetProgrammesBySubjects.mockResolvedValueOnce({
+      status: "real",
+      data: ["met", "not_met", "unknown"].map((status, n) => ({
+        id: `p${n}`, jambProgrammeId: `p${n}`, jambName: `Programme ${n}`,
+        matchedSubjectCount: 5, matchedSubjects: [], matchBasis: "olevel",
+        eligibilityStatus: status === "not_met" ? "olevel_grade_not_met" : undefined,
+        gradeCheck: { status, conditions: [{ kind: "credit_subject", status, required: "r", note: `Reason ${status}.` }] },
+      })),
+      meta: {},
+    });
+    const ui = render(<AdmissionBrowseScreen />);
+    await waitFor(() => expect(ui.getByText("Programme 2")).toBeTruthy());
+    expect(ui.getByText("Programme 0")).toBeTruthy();
+    expect(ui.getByText("Programme 1")).toBeTruthy();
+    expect(ui.getByText("Grades meet this requirement")).toBeTruthy();
+    expect(ui.getAllByText("Grades may not meet this requirement").length).toBeGreaterThan(0);
+    expect(ui.getByText("Add your grade to check")).toBeTruthy();
+    expect(ui.getByText(/a grade you entered may not meet this requirement/)).toBeTruthy();
   });
 });

@@ -29,6 +29,7 @@ export interface AdminNavContext {
   organizationType?: OrganizationType;
   providerSessionOnly?: boolean;
   role?: OrgRole;
+  isInternalStaff?: boolean;
 }
 
 type AdminAudience = "university" | "school" | "provider";
@@ -71,6 +72,9 @@ export const adminNav = {
    */
   marketIntelligence(router: Nav) {
     router.push("/(admin)/market-intelligence" as never);
+  },
+  learningInterest(router: Nav) {
+    router.push("/(admin)/analytics" as never);
   },
   /** §5.1 View A — curriculum portfolio reach. Structural, NOT market data. */
   domainReach(router: Nav) {
@@ -186,9 +190,13 @@ const PROFILE_ITEM: AdminNavItem = {
   go: (n) => adminNav.profile(n),
 };
 
+// The school-code / referral surface. Every admin type sees it (university,
+// secondary school, tutorial centre, JAMB cafe) and every role within the
+// organisation: the endpoint behind it is aggregate-only and scoped
+// server-side to the caller's own institution.
 const AFFILIATION_ITEM: AdminNavItem = {
   key: "affiliation",
-  label: "Affiliation",
+  label: "Referrals",
   icon: "🔗",
   match: "affiliation",
   go: (n) => adminNav.affiliation(n),
@@ -277,6 +285,15 @@ export function getAdminNavGroups(
   }
 
   intelligenceItems.push(
+    ...(ctx?.isInternalStaff || (ctx?.role && ["owner", "admin", "institution_admin", "dean", "hod", "counsellor"].includes(ctx.role))
+      ? [{
+          key: "learning-interest",
+          label: "Learner interest",
+          icon: "◉",
+          match: "analytics",
+          go: (n: Nav) => adminNav.learningInterest(n),
+        }]
+      : []),
     {
       key: "market-intelligence",
       label:
@@ -332,9 +349,7 @@ export function getAdminNavGroups(
     : intelligenceItems.filter((item) => ["dashboard", "market-intelligence", "domain-reach", "skills-gap", "explore", "peers"].includes(item.key));
   const setupItems = managementRole
     ? [PROFILE_ITEM, AFFILIATION_ITEM, VERIFICATION_ITEM]
-    : role === "data_viewer"
-      ? [PROFILE_ITEM]
-      : [PROFILE_ITEM];
+    : [PROFILE_ITEM, AFFILIATION_ITEM];
 
   return [
     {

@@ -65,6 +65,17 @@ test("shows a typed relationship only when its item-specific explanation exists"
   })]);
 });
 
+test("does not split a hyphenated compound with an inline definition", () => {
+  const [relationship] = relationshipRecords({
+    ...item,
+    relationships: [{
+      ...item.relationships![0],
+      learnerExplanation: "Both tools support causal-estimation work.",
+    }],
+  });
+  expect(relationship.explanation).toBe("Both tools support causal-estimation work.");
+});
+
 test("removes staff placement notes from relationship explanations without hiding the supported connection", () => {
   const [relationship] = relationshipRecords({
     ...item,
@@ -168,8 +179,10 @@ test("opens the tapped relationship target and returns to the same connection/so
   expect(screen.getByText("Research question design")).toBeTruthy();
   expect(screen.getByText("Why it connects")).toBeTruthy();
   expect(StyleSheet.flatten(screen.getByText("Why it connects").props.style).fontSize).toBeGreaterThanOrEqual(18);
-  expect(StyleSheet.flatten(screen.getByText("A clear question helps you choose a method that can answer it.").props.style).fontSize).toBeGreaterThanOrEqual(16);
-  expect(screen.getByText("A clear question helps you choose a method that can answer it.")).toBeTruthy();
+  // The sheet is the learner-facing layer: it adds a plain-language gloss for
+  // the technical word "method" inline, so match the explanation around it.
+  const explanation = screen.getByText(/^A clear question helps you choose a method \(.+\) that can answer it\.$/);
+  expect(StyleSheet.flatten(explanation.props.style).fontSize).toBeGreaterThanOrEqual(16);
   expect(screen.getByRole("link", { name: "Open relationship evidence: Methods guide" })).toBeTruthy();
 
   fireEvent.press(screen.getByRole("button", { name: "Back to connection" }));
@@ -201,6 +214,14 @@ test("uses the supplied open-target action when the route host can navigate to t
     }),
   ));
   fireEvent.press(screen.getByRole("button", { name: "Open target R" }));
-  expect(onOpenTarget).toHaveBeenCalledWith(relationship);
+  // The host receives the relationship as shown to the learner (technical
+  // terms glossed), so assert the target identity and the unchanged wording.
+  expect(onOpenTarget).toHaveBeenCalledWith(expect.objectContaining({
+    type: "alternative",
+    target: "R",
+    targetItemKey: "r",
+    targetItemType: "tool",
+    explanation: expect.stringMatching(/^Both support statistical \(.+\) analysis through different workflows\.$/),
+  }));
   expect(onClose).toHaveBeenCalledTimes(1);
 });

@@ -22,7 +22,7 @@ export default function AdminStack() {
         ? "/(auth)/onboarding?restart=1"
       : user.auth_provider !== "guest" && (!user.onboarding_completed || accountType === "pending")
         ? "/(auth)/onboarding"
-        : !isAdminAccount(accountType)
+        : !isAdminAccount(accountType) && user?.is_internal_staff !== true
           ? "/(tabs)/home"
           : null;
 

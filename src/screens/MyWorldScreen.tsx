@@ -31,7 +31,6 @@ import {
   TextInput,
   Pressable,
   Linking,
-  Alert,
 } from "react-native";
 import * as Clipboard from "expo-clipboard";
 import { useFocusEffect, useRouter, type Href } from "expo-router";
@@ -67,21 +66,9 @@ import { xpEngine, type XPSnapshot } from "@/lib/XPEngine";
 import { streakEngine, type StreakStatus } from "@/lib/StreakEngine";
 import { PdfExportButton } from "@/components/careerIntelligence";
 import { d078AreaLabel as getD078AreaLabel, d078CombinationLabel, d078Node } from "@/lib/d078RouteProjection";
+import { ENTITY_META } from "@/screens/myworld/entityMeta";
+import { CollectionsSection } from "@/screens/myworld/CollectionsSection";
 import { d078ProgrammeIdFromSnapshot, d078RouteStacksFromSnapshot, d078SavedRouteHref, d078SelectionFromSnapshot, d078ShareInputForAllRoutesFromSnapshot, isD078Snapshot, selectSavedSnapshot } from "@/lib/d078Snapshot";
-
-/** Human-friendly glyphs / labels per saved entity type. */
-const ENTITY_META: Record<SavedEntityType, { icon: string; label: string }> = {
-  resource: { icon: "🔗", label: "Resource" },
-  programme: { icon: "🎓", label: "Programme" },
-  school: { icon: "🏫", label: "School" },
-  domain: { icon: "🧭", label: "Domain" },
-  subgroup: { icon: "🧱", label: "Subgroup" },
-  role: { icon: "💼", label: "Role" },
-  comparison: { icon: "⚖️", label: "Comparison" },
-  opportunity: { icon: "📌", label: "Opportunity" },
-  organisation: { icon: "🏢", label: "Employer" },
-  elite_pathway: { icon: "⭐", label: "Pathway" },
-};
 
 /** Plural section titles for the saved-items groups (order = display order). */
 const SAVED_GROUP_ORDER: { type: SavedEntityType; title: string }[] = [
@@ -158,13 +145,18 @@ function usePersonalData(enabled = true): PersonalData {
 function PersonalCareerBlocks({ saved, notes, refresh }: PersonalData) {
   const { colors } = useTheme();
   const [editing, setEditing] = useState<Note | null>(null);
+  const [actionNotice, setActionNotice] = useState<string | null>(null);
 
   return (
     <>
+      {/* ── Collections: named groups of saved items ──────────────── */}
+      <CollectionsSection saved={saved} />
+
       {/* ── Saved domains & roles (grouped by entity type) ────────── */}
       <Text style={[styles.section, CompassFonts.bodyBold, { color: colors.textRole.secondary }]}>
         Saved domains & roles
       </Text>
+      {actionNotice ? <Text accessibilityLiveRegion="polite" style={[styles.reportNotice, CompassFonts.body, { color: colors.textRole.secondary }]}>{actionNotice}</Text> : null}
       {saved ? (
         <DataStateView
           state={saved}
@@ -186,7 +178,7 @@ function PersonalCareerBlocks({ saved, notes, refresh }: PersonalData) {
                       <SavedItemRow
                         key={item.id}
                         item={item}
-                        onRemoved={refresh}
+                        onRemoved={(label) => { refresh(); setActionNotice(`${label} removed from My World.`); }}
                       />
                     ))}
                   </View>
@@ -225,9 +217,10 @@ function PersonalCareerBlocks({ saved, notes, refresh }: PersonalData) {
       <NoteEditorSheet
         note={editing}
         onClose={() => setEditing(null)}
-        onSaved={() => {
+        onSaved={(message) => {
           setEditing(null);
           refresh();
+          setActionNotice(message);
         }}
       />
     </>
@@ -571,6 +564,7 @@ function GuidanceReportCard() {
   const router = useRouter();
   const [state, setState] = useState<DataState<GuidanceReportPath | null> | null>(null);
   const [selectedSnapshotId, setSelectedSnapshotId] = useState<string | null>(null);
+  const [pendingDeleteSnapshotId, setPendingDeleteSnapshotId] = useState<string | null>(null);
   const [downloadNotice, setDownloadNotice] = useState<string | null>(null);
   const [shareNotice, setShareNotice] = useState<string | null>(null);
   const [shareSheetVisible, setShareSheetVisible] = useState(false);
@@ -800,20 +794,25 @@ function GuidanceReportCard() {
   };
 
   const confirmDeleteSnapshot = (snapshotId: string) => {
-    Alert.alert("Delete saved version?", "This removes this version from your My World archive. It will not change your other saved versions.", [
-      { text: "Cancel", style: "cancel" },
-      { text: "Delete version", style: "destructive", onPress: () => {
-        void careerData.deleteGuidanceSnapshot(snapshotId).then((result) => {
-          if (result.status === "real") {
-            setState(result);
-            if (selectedSnapshotId === snapshotId) setSelectedSnapshotId(null);
-            setShareNotice("Saved version deleted.");
-          } else {
-            setDownloadNotice("This saved version could not be deleted. Try again when you are online.");
-          }
-        });
-      } },
-    ]);
+    setPendingDeleteSnapshotId(snapshotId);
+  };
+
+  const deleteSavedSnapshot = async () => {
+    const snapshotId = pendingDeleteSnapshotId;
+    if (!snapshotId) return;
+    setPendingDeleteSnapshotId(null);
+    try {
+      const result = await careerData.deleteGuidanceSnapshot(snapshotId);
+      if (result.status === "real") {
+        setState(result);
+        if (selectedSnapshotId === snapshotId) setSelectedSnapshotId(null);
+        setShareNotice("Saved version deleted from My World.");
+      } else {
+        setDownloadNotice("This saved version could not be deleted. Try again when you are online.");
+      }
+    } catch {
+      setDownloadNotice("This saved version could not be deleted. Try again when you are online.");
+    }
   };
 
   const downloadEditableCopy = async () => {
@@ -823,7 +822,9 @@ function GuidanceReportCard() {
     const opened = await openStudentDocument(reportPath, {
       download: "sifter-guidance-report.docx",
     });
-    if (!opened) setDownloadNotice("The editable copy is unavailable right now. Try again when you are online.");
+    setDownloadNotice(opened
+      ? "Editable copy downloaded."
+      : "The editable copy is unavailable right now. Try again when you are online.");
   };
 
   return (
@@ -900,8 +901,8 @@ function GuidanceReportCard() {
       )}
       {!ready && !selectedSnapshotUnavailable ? <Text accessibilityRole="alert" style={[styles.reportNotice, CompassFonts.body, { color: colors.textRole.muted }]}>Printing is unavailable until a named university, secondary school, or tutorial centre is attached.</Text> : null}
       {selectedSnapshotUnavailable ? <Text accessibilityRole="alert" style={[styles.reportNotice, CompassFonts.body, { color: colors.textRole.muted }]}>That saved version is no longer available. Select another saved version to continue.</Text> : null}
-      {downloadNotice ? <Text style={[styles.reportNotice, CompassFonts.body, { color: colors.textRole.muted }]}>{downloadNotice}</Text> : null}
-      {shareNotice ? <Text style={[styles.reportNotice, CompassFonts.body, { color: colors.textRole.muted }]}>{shareNotice}</Text> : null}
+      {downloadNotice ? <Text accessibilityLiveRegion="polite" style={[styles.reportNotice, CompassFonts.body, { color: colors.textRole.muted }]}>{downloadNotice}</Text> : null}
+      {shareNotice ? <Text accessibilityLiveRegion="polite" style={[styles.reportNotice, CompassFonts.body, { color: colors.textRole.muted }]}>{shareNotice}</Text> : null}
       <LearningPlanShareSheet
         visible={shareSheetVisible}
         input={shareInput}
@@ -909,6 +910,22 @@ function GuidanceReportCard() {
         onShare={shareSelectedCopy}
         onCopy={copySelectedShareCopy}
       />
+      <Modal transparent visible={Boolean(pendingDeleteSnapshotId)} animationType="fade" onRequestClose={() => setPendingDeleteSnapshotId(null)}>
+        <Pressable style={[styles.deleteSnapshotBackdrop, { backgroundColor: colors.overlay }]} onPress={() => setPendingDeleteSnapshotId(null)}>
+          <Pressable style={[styles.deleteSnapshotCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.strong }]} onPress={() => {}}>
+            <Text style={[styles.sheetTitle, CompassFonts.displaySemi, { color: colors.textRole.primary }]}>Delete saved version?</Text>
+            <Text style={[styles.reportBody, CompassFonts.body, { color: colors.textRole.secondary }]}>This removes this version from your My World archive. It will not change your other saved versions.</Text>
+            <View style={styles.sheetActions}>
+              <TouchableOpacity onPress={() => setPendingDeleteSnapshotId(null)} style={[styles.sheetDeleteBtn, { borderColor: colors.borderRole.subtle }]} accessibilityRole="button">
+                <Text style={[styles.reportLinkText, CompassFonts.bodyBold, { color: colors.textRole.secondary }]}>Keep version</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => { void deleteSavedSnapshot(); }} style={[styles.sheetDeleteBtn, { borderColor: colors.accentRole.danger }]} accessibilityRole="button">
+                <Text style={[styles.reportLinkText, CompassFonts.bodyBold, { color: colors.accentRole.danger }]}>Delete version</Text>
+              </TouchableOpacity>
+            </View>
+          </Pressable>
+        </Pressable>
+      </Modal>
     </View>
   );
 }
@@ -1036,7 +1053,7 @@ function SavedItemRow({
   onRemoved,
 }: {
   item: SavedItem;
-  onRemoved: () => void;
+  onRemoved: (label: string) => void;
 }) {
   const { colors } = useTheme();
   const router = useRouter();
@@ -1066,7 +1083,7 @@ function SavedItemRow({
     setRemoveNotice(null);
     try {
       const result = await careerData.removeSavedItem(item.id);
-      if (result.status === "real") onRemoved();
+      if (result.status === "real") onRemoved(item.label ?? meta.label);
       else setRemoveNotice(result.meta?.notice ?? "This item could not be removed yet.");
     } catch {
       setRemoveNotice("This item could not be removed yet. Try again.");
@@ -1207,7 +1224,7 @@ function NoteEditorSheet({
 }: {
   note: Note | null;
   onClose: () => void;
-  onSaved: () => void;
+  onSaved: (message: string) => void;
 }) {
   const { colors } = useTheme();
   const [body, setBody] = useState("");
@@ -1240,7 +1257,7 @@ function NoteEditorSheet({
         category.trim() || undefined,
       );
       if (result.status === "real") {
-        onSaved();
+        onSaved("Note saved to My World.");
       } else {
         setNotice(result.meta?.notice ?? "Couldn't save right now — try again.");
       }
@@ -1257,10 +1274,8 @@ function NoteEditorSheet({
     setNotice(null);
     try {
       const result = await careerData.deleteNote(note.id);
-      if (result.status === "real" || result.status === "coming_soon") {
-        // A successful delete returns `real`; a failed request degrades to
-        // coming_soon. Either way we refetch so the list reflects the truth.
-        onSaved();
+      if (result.status === "real") {
+        onSaved("Note deleted from My World.");
       } else {
         setNotice(result.meta?.notice ?? "Couldn't delete right now — try again.");
       }
@@ -1612,6 +1627,20 @@ const styles = StyleSheet.create({
   sheetBackdrop: {
     flex: 1,
     justifyContent: "flex-end",
+  },
+  deleteSnapshotBackdrop: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: Spacing.lg,
+  },
+  deleteSnapshotCard: {
+    width: "100%" as any,
+    maxWidth: 440,
+    borderWidth: 1,
+    borderRadius: Radius.xl,
+    padding: Spacing.lg,
+    gap: Spacing.sm,
   },
   sheet: {
     borderTopLeftRadius: Radius.xxl,

@@ -43,6 +43,20 @@ interface ConnectedAccount {
   tokenExpiry?: string;
 }
 
+// The backend returns snake_case rows ({ platform_id, profile_url, connected_at,
+// token_expiry }) and the request layer does no case conversion, so map them to
+// the camelCase shape this screen reads (platformId, ...).
+function toConnectedAccount(row: any): ConnectedAccount {
+  return {
+    platformId: row?.platformId ?? row?.platform_id ?? '',
+    username: row?.username ?? '',
+    profileUrl: row?.profileUrl ?? row?.profile_url ?? '',
+    connectedAt: row?.connectedAt ?? row?.connected_at ?? '',
+    accessToken: row?.accessToken,
+    tokenExpiry: row?.tokenExpiry ?? row?.token_expiry ?? undefined,
+  };
+}
+
 interface PortfolioItem {
   id: string;
   title: string;
@@ -672,7 +686,7 @@ export default function PortfolioScreen() {
         xpEngine.snapshot().catch(() => null),
         streakEngine.status().catch(() => null),
       ]);
-      setConnected(Array.isArray(accs) ? accs : (accs?.accounts ?? []));
+      setConnected((Array.isArray(accs) ? accs : (accs?.accounts ?? [])).map(toConnectedAccount));
       setItems(Array.isArray(items) ? items : (items?.items ?? []));
       setXp(xpSnap);
       setStreak(streakSnap);

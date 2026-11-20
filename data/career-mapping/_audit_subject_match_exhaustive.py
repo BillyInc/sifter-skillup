@@ -442,6 +442,140 @@ def _codes_to_names(codes: set[str], catalog: dict[str, dict[str, str]]) -> set[
     return {_norm(catalog[code]["name"]) for code in codes}
 
 
+# ---------------------------------------------------------------------------
+# Grade-invariance pass (added with the optional O-level grades feature).
+# Independent oracle: it never calls ``grade_check``. Semantics: an ungraded
+# selected subject is "unknown"; evaluate the rule in a best world (ungraded =
+# A1) and a worst world (ungraded = F9). Not met if even the best world fails;
+# met only if the worst world passes; otherwise unknown. A published free-text
+# condition (hasCondition) can only turn "met" into "unknown".
+# ---------------------------------------------------------------------------
+_CREDIT = {"A1", "B2", "B3", "C4", "C5", "C6"}
+_PASS = _CREDIT | {"D7", "E8"}
+
+
+def _rule_satisfied_with_grades(option, items_by_opt, typed_rule, selected_codes, effective):
+    credit = {c for c in selected_codes if effective[c] in _CREDIT}
+    passed = {c for c in selected_codes if effective[c] in _PASS}
+    items = items_by_opt[option["id"]]
+    pass_required = set((typed_rule or {}).get("rule_json", {}).get("passRequiredCodes") or [])
+    required = {i["code"] for i in items if i["requirement_role"] == "required"} - pass_required
+    if not required <= credit or not pass_required <= passed:
+        return False
+    groups: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for item in items:
+        if item["requirement_role"] == "one_of" and item["group_key"]:
+            groups[item["group_key"]].append(item)
+    related: dict[str, list[tuple[str, set[str], int]]] = defaultdict(list)
+    for key, group_items in groups.items():
+        minimum = int(group_items[0].get("min_from_group") or 1)
+        members = {i["code"] for i in group_items}
+        scope = group_items[0].get("distinct_group_key")
+        if scope:
+            related[scope].append((key, members, minimum))
+        elif len(members & credit) < minimum:
+            return False
+    if not all(_distinct_groups_satisfied(g, credit) for g in related.values()):
+        return False
+    return len(credit) >= int(option["min_required"] or 0)
+
+
+def _expected_grade_status(option, items_by_opt, typed_rule, selected_codes, grades):
+    best = {c: grades.get(c, "A1") for c in selected_codes}
+    worst = {c: grades.get(c, "F9") for c in selected_codes}
+    if not _rule_satisfied_with_grades(option, items_by_opt, typed_rule, selected_codes, best):
+        return "not_met"
+    has_condition = bool((typed_rule or {}).get("rule_json", {}).get("hasCondition"))
+    if has_condition or not _rule_satisfied_with_grades(option, items_by_opt, typed_rule, selected_codes, worst):
+        return "unknown"
+    return "met"
+
+
+def _grade_invariance_pass(spr, catalog, active_options, items_by_opt, cases):
+    """Second pass: grades must not change the candidate set; statuses must match the oracle."""
+    runs = mismatches = 0
+    failures: list[dict[str, Any]] = []
+    status_counts: Counter = Counter()
+
+    def check(label, exam_type, selected_codes, grades):
+        nonlocal runs, mismatches
+        names = _codes_to_names(set(selected_codes), catalog)
+        by_norm = {_norm(catalog[c]["name"]): g for c, g in grades.items()}
+        plain = spr._match_structured_subject_options(names, limit=2000, exam_type=exam_type, require_full=True)
+        graded = spr._match_structured_subject_options(
+            names, limit=2000, exam_type=exam_type, require_full=True, grades_by_norm=by_norm or None
+        )
+        runs += 1
+        plain_ids = {r["jambProgrammeId"] for r in plain}
+        graded_ids = {r["jambProgrammeId"] for r in graded}
+        if plain_ids != graded_ids:
+            failures.append({"label": label, "kind": "candidate_set_changed",
+                             "plain": sorted(plain_ids), "graded": sorted(graded_ids)})
+            mismatches += 1
+            return
+        plain_by_id = {r["jambProgrammeId"]: r for r in plain}
+        for row in graded:
+            base = plain_by_id[row["jambProgrammeId"]]
+            extra = set(row) - set(base)
+            changed = {k for k in base if k != "eligibilityStatus" and base[k] != row.get(k)}
+            if changed or (extra - {"gradeCheck", "eligibilityStatus"}):
+                failures.append({"label": label, "kind": "fields_changed", "id": row["jambProgrammeId"],
+                                 "changed": sorted(changed), "extra": sorted(extra)})
+                mismatches += 1
+                continue
+            if exam_type != "olevel" or not by_norm:
+                if "gradeCheck" in row:
+                    failures.append({"label": label, "kind": "unexpected_gradeCheck", "id": row["jambProgrammeId"]})
+                    mismatches += 1
+                continue
+            expected = {
+                _expected_grade_status(option, items_by_opt, rule, set(selected_codes), grades)
+                for option, rule in active_options
+                if option["exam_type"] == "olevel"
+                and option["jamb_programme_id"] == row["jambProgrammeId"]
+                and _option_expected(option, items_by_opt, set(selected_codes), typed_rule=rule)
+            }
+            actual = (row.get("gradeCheck") or {}).get("status")
+            status_counts[actual] += 1
+            if actual not in expected:
+                failures.append({"label": label, "kind": "status", "id": row["jambProgrammeId"],
+                                 "actual": actual, "expected": sorted(expected)})
+                mismatches += 1
+            # Missing grade must never read as a failure on its own.
+            if actual == "not_met" and "not_met" not in expected:
+                mismatches += 1
+
+    for (exam_type, selected_codes), label in cases.items():
+        if not label.startswith("valid:"):
+            continue
+        option_id = label.split(":", 1)[1]
+        option, rule = next((o, r) for o, r in active_options if o["id"] == option_id)
+        selected = set(selected_codes)
+        # UTME cases must be unaffected and never carry gradeCheck.
+        if exam_type != "olevel":
+            check(label + ":utme-with-grades", exam_type, selected, {c: "C6" for c in selected})
+            continue
+        all_c6 = {c: "C6" for c in selected}
+        check(label + ":all-C6", exam_type, selected, all_c6)
+        named = [i["code"] for i in items_by_opt[option_id] if i["code"] in selected]
+        pass_codes = [c for c in (rule.get("rule_json", {}).get("passRequiredCodes") or []) if c in selected]
+        required = [i["code"] for i in items_by_opt[option_id]
+                    if i["requirement_role"] == "required" and i["code"] in selected and i["code"] not in pass_codes]
+        for code in pass_codes[:1]:
+            check(label + f":{code}=F9", exam_type, selected, {**all_c6, code: "F9"})
+            check(label + f":{code}=E8", exam_type, selected, {**all_c6, code: "E8"})
+        for code in required[:1]:
+            check(label + f":{code}=D7", exam_type, selected, {**all_c6, code: "D7"})
+            omitted = {c: g for c, g in all_c6.items() if c != code}
+            check(label + f":{code}=omitted", exam_type, selected, omitted)
+        for code in named[:1]:
+            check(label + f":{code}=F9-any", exam_type, selected, {**all_c6, code: "F9"})
+    if failures:
+        raise AssertionError(f"{len(failures)} grade-invariance mismatches; first={failures[:3]}")
+    return {"gradeInvarianceRuns": runs, "gradeInvarianceMismatches": mismatches,
+            "gradeStatusCounts": dict(status_counts)}
+
+
 def main() -> int:
     catalog = _load_catalog()
     options = _load_options()
@@ -541,7 +675,10 @@ def main() -> int:
         if failures:
             raise AssertionError(f"{len(failures)} matcher oracle mismatches; first={failures[:3]}")
 
+        grade_summary = _grade_invariance_pass(spr, catalog, active_options, items_by_opt, cases)
+
         print(json.dumps({
+            **grade_summary,
             "status": "passed",
             "catalogSubjects": len(catalog),
             "options": len(options),

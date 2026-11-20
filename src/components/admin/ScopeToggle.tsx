@@ -1,6 +1,6 @@
 /**
  * ScopeToggle — a segmented control for selecting a demand-ranking scope
- * (NG local / Global / NG remote). Mirrors the style of DomainRankPanel's toggle
+ * (Local / Remote / Global). Mirrors the style of DomainRankPanel's toggle
  * but extracted as a reusable component so other screens (Trends, Salary) can
  * use it without re-declaring scope labels and active styling.
  */
@@ -16,9 +16,9 @@ export interface ScopeToggleProps {
 }
 
 const SCOPES: { value: ScopeOption; label: string }[] = [
-  { value: "nigerian", label: "NG local" },
+  { value: "nigerian", label: "Local" },
+  { value: "remote", label: "Remote" },
   { value: "global", label: "Global" },
-  { value: "remote", label: "NG remote" },
 ];
 
 export function ScopeToggle({ value, onChange }: ScopeToggleProps) {

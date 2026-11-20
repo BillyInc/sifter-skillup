@@ -30,12 +30,20 @@ import { getLegalAcceptance, LEGAL_ACCEPTANCE_KEY } from '../lib/legal';
 export interface UserProfile {
   id: string;
   username: string;
+  /** Given name captured at sign-up; used only as a display-name fallback. */
+  first_name?: string | null;
+  /** Optional name the user chose to be shown; absent when the backend predates it. */
+  display_name?: string | null;
   avatar_url: string | null;
+  /** Short-lived signed URL for the owner's uploaded photo; absent for presets/none. */
+  avatar_display_url?: string | null;
   auth_provider: string;
   /** Discriminates the student app from the institutional/admin side. Legacy
    *  completed accounts may omit it until they choose a persona. */
   account_type?: 'pending' | 'student' | 'educator' | 'institution_admin';
   account_type_selected_at?: string | null;
+  /** Read-only server-provided flag; the API remains the authorization authority. */
+  is_internal_staff?: boolean;
   email: string;
   points: number;
   streak: number;
@@ -93,6 +101,7 @@ interface AuthContextType {
     first_name?: string;
     middle_name?: string;
     last_name?: string;
+    display_name?: string;
     date_of_birth?: string;
     email_code?: string;
   }) => Promise<void>;
@@ -361,6 +370,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     first_name?: string;
     middle_name?: string;
     last_name?: string;
+    display_name?: string;
     date_of_birth?: string;
     email_code?: string;
     terms_version?: string;
@@ -590,10 +600,15 @@ function _normalise(raw: any): UserProfile {
   return {
     id: raw.id ?? '',
     username: raw.username ?? 'Student',
+    first_name: raw.first_name ?? null,
+    // Keep `undefined` when the API omits it so the UI can feature-detect support.
+    ...(raw.display_name !== undefined ? { display_name: raw.display_name ?? null } : {}),
     avatar_url: raw.avatar_url ?? null,
+    ...(raw.avatar_display_url ? { avatar_display_url: String(raw.avatar_display_url) } : {}),
     auth_provider: raw.auth_provider ?? 'guest',
     account_type: raw.account_type,
     account_type_selected_at: raw.account_type_selected_at ?? null,
+    is_internal_staff: raw.is_internal_staff === true,
     email: raw.email ?? '',
     points: raw.points ?? 0,
     streak: raw.streak ?? 0,

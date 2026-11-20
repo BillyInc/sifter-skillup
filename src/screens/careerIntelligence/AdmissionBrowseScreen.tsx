@@ -8,6 +8,8 @@
  * wrapper over a screen in src/screens.
  */
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { browseStateKey, readBrowseState, writeBrowseState } from "@/lib/browseSessionState";
+import { useBrowseScroll } from "@/hooks/useBrowseScroll";
 import {
   ActivityIndicator,
   ScrollView,
@@ -26,9 +28,12 @@ import { clearOnboardingDraft } from "@/lib/onboardingDraft";
 import { useAuth } from "@/hooks/useAuth";
 import { invalidateGuidancePathCache } from "@/components/careerIntelligence";
 import { LiveSubjectMultiSelect, MAX_OLEVEL_SUBJECTS } from "@/components/onboarding/LiveSubjectMultiSelect";
+import { OlevelGradePicker } from "@/components/onboarding/OlevelGradePicker";
+import { GradeCheckNote } from "@/components/careerIntelligence/GradeCheckNote";
+import { UTME_SCORE_COPY, pruneGrades, sameGrades, type OlevelExamBody } from "@/lib/olevelGrades";
 import { useExploreNav } from "@/lib/exploreNav";
 import { isGuidanceContextCompatible } from "@/lib/guidanceRouteContext";
-import { adminLearnerAudienceForOrg, type AdminLearnerAudience } from "@/lib/adminLearnerAudience";
+import { adminLearnerAudienceForOrg, learnerStageLabel, type AdminLearnerAudience } from "@/lib/adminLearnerAudience";
 import { CareerDisclaimer } from "@/components/careerIntelligence/CareerDisclaimer";
 import { provisioningData } from "@/lib/provisioningData";
 import type {
@@ -123,6 +128,9 @@ function normalizeGuidanceStage(stage: GuidanceResumeSnapshot["stage"]): Guidanc
 }
 
 function matchSummary(item: SubjectProgrammeMatch): string {
+  if (item.eligibilityStatus === "olevel_grade_not_met") {
+    return "Your subjects match, but a grade you entered may not meet this requirement. Confirm with JAMB or the institution.";
+  }
   if (item.matchBasis === "combined") {
     if (item.eligibilityStatus === "eligible") {
       return "UTME gate matches and O-level requirement is satisfied.";
@@ -219,17 +227,45 @@ export default function AdmissionBrowseScreen() {
   const showSchoolMode = !effectiveUserType || effectiveUserType === "student";
   const initialMode: Mode =
     rawMode === "subjects" ? "subjects" : rawMode === "school" && showSchoolMode ? "school" : "programme";
-  const [mode, setMode] = useState<Mode>(initialMode);
-  const [query, setQuery] = useState(readParam(params.q));
+  // Returning from an opened programme or university restores the student's
+  // own inputs. A link that carries explicit inputs, or any guidance
+  // checkpoint (which has its own account-scoped resume), always wins.
+  const browseKey = browseStateKey(
+    "admission",
+    user?.id,
+    [rawMode, discoveryEntry, userType, readParam(params.admin), readParam(params.admin_type), readParam(params.journey_mode) || readParam(params.journey)].join(":"),
+  );
+  const draftRef = useRef<Record<string, unknown> | null | undefined>(undefined);
+  if (draftRef.current === undefined) {
+    const explicitInputs = [
+      params.q, params.subjects, params.olevel_subjects, params.programme, params.school_id,
+      params.guidance_student_id, params.resume, params.class_name, params.stream,
+    ].some((value) => readParam(value)) || readParam(params.focus) === "guidance";
+    draftRef.current = explicitInputs ? null : readBrowseState(browseKey)?.fields ?? null;
+  }
+  const draft = draftRef.current;
+  const draftText = (name: string) => (typeof draft?.[name] === "string" ? draft[name] as string : undefined);
+  const draftMode = draftText("mode");
+  const [mode, setMode] = useState<Mode>(
+    draftMode === "subjects" || draftMode === "programme" || (draftMode === "school" && showSchoolMode)
+      ? draftMode as Mode
+      : initialMode,
+  );
+  const [query, setQuery] = useState(draftText("query") ?? readParam(params.q));
   const [subjectText, setSubjectText] = useState(
-    decodeURIComponent(readParam(params.subjects)).replace(/,/g, ", "),
+    draftText("subjectText") ?? decodeURIComponent(readParam(params.subjects)).replace(/,/g, ", "),
   );
   const [olevelSubjectText, setOlevelSubjectText] = useState(
-    decodeURIComponent(readParam(params.olevel_subjects)).replace(/,/g, ", "),
+    draftText("olevelSubjectText") ?? decodeURIComponent(readParam(params.olevel_subjects)).replace(/,/g, ", "),
   );
   const rawExamType = readParam(params.exam_type);
+  const draftExamType = draftText("subjectExamType");
   const [subjectExamType, setSubjectExamType] = useState<"utme" | "olevel" | "combined">(
-    earlySecondary ? "olevel" : rawExamType === "olevel" ? "olevel" : rawExamType === "utme" ? "utme" : "combined",
+    earlySecondary
+      ? "olevel"
+      : draftExamType === "olevel" || draftExamType === "utme" || draftExamType === "combined"
+        ? draftExamType
+        : rawExamType === "olevel" ? "olevel" : rawExamType === "utme" ? "utme" : "combined",
   );
   const isAdminExplore = readParam(params.admin) === "1";
   const adminType = readParam(params.admin_type);
@@ -263,20 +299,34 @@ export default function AdmissionBrowseScreen() {
   const [selectedSubjectMatch, setSelectedSubjectMatch] = useState<SubjectProgrammeMatch | null>(null);
   const [subjectMatchStatus, setSubjectMatchStatus] = useState<SubjectMatchStatus>("idle");
   const [subjectMatchAttempted, setSubjectMatchAttempted] = useState(false);
+  // Optional self-reported O-level grades keyed by subject name. `savedGradesRef`
+  // is the last set known to be stored, so a changed set is saved as a NEW version.
+  const [olevelGrades, setOlevelGrades] = useState<Record<string, string>>({});
+  const [olevelExamBody, setOlevelExamBody] = useState<OlevelExamBody>("waec");
+  const savedGradesRef = useRef<{ grades: Record<string, string>; body: OlevelExamBody }>({ grades: {}, body: "waec" });
   const [programmeDetail, setProgrammeDetail] = useState<JambProgrammeDetail | null>(null);
   const selectedSubjectDetails: SubjectProgrammeMatch | null = selected && "matchedSubjectCount" in selected ? selected : null;
 
   // School-first (enrolled) state.
-  const [schoolQuery, setSchoolQuery] = useState("");
-  const [universityQuery, setUniversityQuery] = useState("");
+  const [schoolQuery, setSchoolQuery] = useState(draftText("schoolQuery") ?? "");
+  const [universityQuery, setUniversityQuery] = useState(draftText("universityQuery") ?? "");
   const [schoolMatches, setSchoolMatches] = useState<AdmissionSchool[]>([]);
+  const draftSchool = draft?.chosenSchool as AdmissionSchool | undefined;
   const [chosenSchool, setChosenSchool] = useState<AdmissionSchool | null>(null);
   const initialSchoolId = readParam(params.school_id);
   const initialSchoolName = readParam(params.school_name);
   const [offerings, setOfferings] = useState<SchoolProgrammeOffering[]>([]);
-  const [courseFilter, setCourseFilter] = useState(readParam(params.programme));
+  const [courseFilter, setCourseFilter] = useState(draftText("courseFilter") ?? readParam(params.programme));
   const [resumeHydrated, setResumeHydrated] = useState(!guidanceStudentId);
   const [guidanceComplete, setGuidanceComplete] = useState(false);
+  const persistDraft = !guidanceStudentId && !isFocusedGuidance;
+  useEffect(() => {
+    if (!persistDraft) return;
+    writeBrowseState(browseKey, {
+      fields: { mode, query, subjectText, olevelSubjectText, subjectExamType, schoolQuery, universityQuery, courseFilter, chosenSchool },
+    });
+  }, [browseKey, chosenSchool, courseFilter, mode, olevelSubjectText, persistDraft, query, schoolQuery, subjectExamType, subjectText, universityQuery]);
+  const browseScroll = useBrowseScroll(persistDraft ? browseKey : `${browseKey}|guided`);
   const guidanceCompleteRef = useRef(false);
   const finalizingGuidanceRef = useRef(false);
 
@@ -365,7 +415,11 @@ export default function AdmissionBrowseScreen() {
       setGuidanceComplete(false);
     }
     if (kind === "utme") setSubjectText(next.join(", "));
-    else setOlevelSubjectText(next.join(", "));
+    else {
+      setOlevelSubjectText(next.join(", "));
+      // Removing a subject removes its grade.
+      setOlevelGrades((prev) => pruneGrades(prev, next));
+    }
     // A previous match is no longer valid after the subject set changes.
     // Requiring a fresh click also prevents stale results from appearing while
     // the selection is below the minimum gate.
@@ -374,6 +428,53 @@ export default function AdmissionBrowseScreen() {
     setSubjectMatchAttempted(false);
     setNotice(null);
   };
+
+  const updateGrades = (next: { grades: Record<string, string>; examBody: OlevelExamBody }) => {
+    setOlevelGrades(next.grades);
+    setOlevelExamBody(next.examBody);
+    // Earlier results were computed from the previous grades; never show them
+    // as if they reflect the new ones. A fresh match is required.
+    setCandidates([]);
+    setSelected(null);
+    setSubjectMatchAttempted(false);
+    setNotice(null);
+  };
+
+  // Load the student's current saved grades (grades are optional; skip silently
+  // when the store is unavailable or empty). Falls back to the on-device copy.
+  useEffect(() => {
+    if (earlySecondary) return;
+    let alive = true;
+    (async () => {
+      let grades: Record<string, string> = {};
+      let body: OlevelExamBody = "waec";
+      try {
+        const state = await careerData.getSubjectGrades();
+        const current = state.status === "real" ? state.data?.current : null;
+        if (current) {
+          const names = state.data?.subjectNames ?? {};
+          grades = Object.fromEntries(
+            Object.entries(current.grades).map(([code, grade]) => [names[code] ?? code, grade]),
+          );
+          body = current.examBody;
+        }
+      } catch { /* optional */ }
+      if (!Object.keys(grades).length) {
+        try {
+          const local = await getStartingPoint(user?.id);
+          if (local?.olevelGrades) {
+            grades = local.olevelGrades;
+            body = local.olevelExamBody ?? "waec";
+          }
+        } catch { /* optional */ }
+      }
+      if (!alive || !Object.keys(grades).length) return;
+      savedGradesRef.current = { grades, body };
+      setOlevelGrades((prev) => (Object.keys(prev).length ? prev : grades));
+      setOlevelExamBody(body);
+    })();
+    return () => { alive = false; };
+  }, [earlySecondary, user?.id]);
 
   useEffect(() => {
     if (!subjectLimitExceeded) return;
@@ -518,6 +619,15 @@ export default function AdmissionBrowseScreen() {
     setSubjectMatchAttempted(true);
     setNotice(null);
     setSelected(null);
+    const gradesForMatch = earlySecondary || subjectExamType === "utme" ? {} : pruneGrades(olevelGrades, olevelSubjects);
+    if (
+      Object.keys(gradesForMatch).length &&
+      (!sameGrades(gradesForMatch, savedGradesRef.current.grades) || olevelExamBody !== savedGradesRef.current.body)
+    ) {
+      // Changed grades become a NEW saved version (older versions are kept).
+      savedGradesRef.current = { grades: gradesForMatch, body: olevelExamBody };
+      careerData.saveSubjectGrades(olevelExamBody, gradesForMatch).catch(() => {});
+    }
     try {
       const state = await careerData.getProgrammesBySubjects(
         subjectExamType === "olevel" ? olevelSubjects : subjects,
@@ -526,6 +636,7 @@ export default function AdmissionBrowseScreen() {
             examType: subjectExamType,
           olevelSubjects,
           schoolId: (selectedAdmissionSchool?.schoolId ?? chosenSchool?.id ?? initialSchoolId) || undefined,
+          ...(Object.keys(gradesForMatch).length ? { olevelGrades: gradesForMatch } : {}),
         },
       );
       const nextCandidates = (state.status === "real" || state.status === "fallback") && state.data ? state.data : [];
@@ -609,7 +720,12 @@ export default function AdmissionBrowseScreen() {
   // context directly instead of sending the student back to a generic Home or
   // requiring the university search a second time.
   useEffect(() => {
-    if (initialMode !== "school" || !initialSchoolId || chosenSchool) return;
+    if (chosenSchool) return;
+    if (!initialSchoolId && draftSchool?.id && typeof draftSchool.name === "string") {
+      void chooseSchool(draftSchool);
+      return;
+    }
+    if (initialMode !== "school" || !initialSchoolId) return;
     void chooseSchool({
       id: initialSchoolId,
       name: initialSchoolName || "Selected university",
@@ -734,7 +850,7 @@ export default function AdmissionBrowseScreen() {
               onPress={() => setContextClass(value)}
               style={[styles.modeBtn, { backgroundColor: normalizedContextClass === value ? Brand.primary : colors.card, borderColor: colors.border }]}
             >
-              <Text style={{ color: normalizedContextClass === value ? colors.textInverse : colors.text }}>{value === "undergraduate" ? "Undergraduate" : value.toUpperCase()}</Text>
+              <Text style={{ color: normalizedContextClass === value ? colors.textInverse : colors.text }}>{learnerStageLabel(value, adminType)}</Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -1091,6 +1207,11 @@ export default function AdmissionBrowseScreen() {
 
   return (
     <ScrollView
+      ref={browseScroll.ref}
+      onScroll={browseScroll.onScroll}
+      onLayout={browseScroll.onLayout}
+      onContentSizeChange={browseScroll.onContentSizeChange}
+      scrollEventThrottle={browseScroll.scrollEventThrottle}
       style={{ flex: 1, backgroundColor: colors.bg }}
       contentContainerStyle={[styles.scroll, webContainer as object]}
       keyboardShouldPersistTaps="handled"
@@ -1414,6 +1535,17 @@ export default function AdmissionBrowseScreen() {
               }
             />
           ) : null}
+          {subjectExamType !== "utme" && !earlySecondary && olevelSubjects.length ? (
+            <OlevelGradePicker
+              subjects={olevelSubjects}
+              grades={olevelGrades}
+              examBody={olevelExamBody}
+              onChange={updateGrades}
+            />
+          ) : null}
+          {subjectExamType !== "olevel" ? (
+            <Text style={[styles.hint, { color: colors.textMuted }]}>{UTME_SCORE_COPY}</Text>
+          ) : null}
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={runSubjectMatch}
@@ -1498,14 +1630,10 @@ export default function AdmissionBrowseScreen() {
                   <Text style={[styles.cardMeta, { color: active ? colors.textInverse : colors.textMuted }]}>
                     {matchSummary(item)}
                   </Text>
+                  <GradeCheckNote item={item} />
                   {item.olevelMissingSubjects?.length ? (
                     <Text style={[styles.cardMeta, { color: active ? colors.textInverse : colors.textMuted }]}>
                       O-level gaps: {item.olevelMissingSubjects.slice(0, 2).join("; ")}
-                    </Text>
-                  ) : null}
-                  {item.universitySpecificMatchSchoolIds?.length ? (
-                    <Text style={[styles.cardMeta, { color: active ? colors.textInverse : colors.textMuted }]}>
-                      University-specific matches: {item.schoolOfferings?.filter((school) => item.universitySpecificMatchSchoolIds?.includes(String(school.schoolId ?? ""))).map((school) => school.officialName || school.schoolName).join(", ") || item.universitySpecificMatchSchoolIds.length + " university offerings"}
                     </Text>
                   ) : null}
                 </View>

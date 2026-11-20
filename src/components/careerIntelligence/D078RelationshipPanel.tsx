@@ -14,7 +14,7 @@ import {
 } from "react-native";
 import { CompassFonts, FontSize, Radius, Spacing, useTheme } from "@/theme";
 import { useReducedMotion } from "@/theme/motion";
-import type { D078TypedRelationshipEdge } from "@/lib/d078RouteProjection";
+import { isD078SelectableAlternativeEdge, type D078TypedRelationshipEdge } from "@/lib/d078RouteProjection";
 import { RouteButton } from "./RouteButton";
 
 export type { D078TypedRelationshipEdge } from "@/lib/d078RouteProjection";
@@ -44,7 +44,33 @@ function edgeKey(edge: D078TypedRelationshipEdge, index: number): string {
   return edge.id ?? `${edge.relationship}:${edge.sourceId}:${edge.targetId}:${index}`;
 }
 
-function relationshipMeaning(type: string, currentIsSource: boolean, blockingPolicy?: string): RelationshipMeaning | null {
+function relationshipMeaning(
+  type: string,
+  currentIsSource: boolean,
+  blockingPolicy?: string,
+  sequencePolicy?: string,
+  sequenceApproved?: boolean,
+  condition?: string,
+  otherLabel?: string,
+): RelationshipMeaning | null {
+  if (sequenceApproved && sequencePolicy === "conditional_prerequisite") {
+    const when = condition?.trim() || "when this route condition applies";
+    return {
+      label: currentIsSource ? "Review before the connected step when it applies" : "Check this earlier learning when it applies",
+      explanation: currentIsSource
+        ? `${when} Review this before ${otherLabel ?? "the connected learning"} if you have not already learned it. You can continue if you already know it; this is not a blocker.`
+        : `${when} Review ${otherLabel ?? "the connected learning"} first if you have not already learned it. You can continue if you already know it; this is not a blocker.`,
+    };
+  }
+  if (sequenceApproved && sequencePolicy === "workflow") {
+    const when = condition?.trim() || "For this route";
+    return {
+      label: currentIsSource ? "Recommended next in this route" : "Recommended earlier in this route",
+      explanation: currentIsSource
+        ? `${when} start with this learning, then continue to ${otherLabel ?? "the connected step"}. The two can be learned together when that suits the work.`
+        : `${when} review ${otherLabel ?? "the connected step"} before this one. The two can be learned together when that suits the work.`,
+    };
+  }
   switch (type) {
     case "prerequisite_for":
       return blockingPolicy === "blocks"
@@ -89,6 +115,7 @@ function relationshipMeaning(type: string, currentIsSource: boolean, blockingPol
       return { label: "Specialist extension", explanation: "This is a narrower extension of the connected learning; it is optional unless a route explicitly says otherwise." };
     case "alternative_to":
     case "alternative_tool_option":
+    case "tool_alternative_for_role_task":
       return { label: "Another way", explanation: "These are alternative options. Choose the one that fits your question; they are not steps you need to learn together.", comparison: true };
     default:
       return null;
@@ -117,6 +144,9 @@ export function D078RelationshipPanel({
   onUseTarget,
   onOpenTarget,
   routeContextLabel,
+  activeRoleId,
+  activeRoleTaskId,
+  activeAreaId,
   focusElement,
   style,
 }: {
@@ -127,6 +157,10 @@ export function D078RelationshipPanel({
   onOpenTarget: (target: D078RelationshipItem, edge: D078TypedRelationshipEdge) => void;
   /** The learner's current D078 domain/area/role stop, when one is selected. */
   routeContextLabel?: string;
+  /** Role/task ownership keeps role-tool alternatives off unrelated routes. */
+  activeRoleId?: string;
+  activeRoleTaskId?: string;
+  activeAreaId?: string;
   /** Optional platform focus adapter; defaults to native/web focus handling. */
   focusElement?: (element: unknown) => void;
   style?: ViewStyle;
@@ -145,11 +179,20 @@ export function D078RelationshipPanel({
 
   const visible = useMemo(() => {
     const rows: Array<{ edge: D078TypedRelationshipEdge; target: D078RelationshipItem; meaning: RelationshipMeaning; key: string }> = [];
+    const seenRelationships = new Set<string>();
     let hasHiddenResolvedTarget = false;
     for (const [index, edge] of typedEdges.entries()) {
       if (edge.sourceId === edge.targetId) continue;
       const status = edge.status?.toLowerCase();
       if (!status || !READY_EDGE_STATUSES.has(status)) continue;
+      // An area-owned comparison is available only while the learner is on
+      // that area route. Do not leak it onto the domain page or another area.
+      if (edge.areaId && edge.areaId !== activeAreaId) continue;
+      if (edge.relationship === "tool_alternative_for_role_task") {
+        if (!activeRoleId || edge.roleId !== activeRoleId) continue;
+        if (activeRoleTaskId && edge.roleTaskId !== activeRoleTaskId) continue;
+        if (activeAreaId && !edge.roleAreaIds?.includes(activeAreaId)) continue;
+      }
       if (edge.targetResolved !== true || edge.sourceResolved !== true) continue;
       const source = projectedById.get(edge.sourceId);
       const target = projectedById.get(edge.targetId);
@@ -160,16 +203,34 @@ export function D078RelationshipPanel({
         if (currentIsSource || currentIsTarget) hasHiddenResolvedTarget = true;
         continue;
       }
+      if (["alternative_to", "alternative_tool_option", "tool_alternative_for_role_task"].includes(edge.relationship)
+        && !isD078SelectableAlternativeEdge(edge)) continue;
       if (!source || !target) {
         if (currentIsSource || currentIsTarget) hasHiddenResolvedTarget = true;
         continue;
       }
       const other = currentIsSource ? target : source;
-      const meaning = relationshipMeaning(edge.relationship, currentIsSource, edge.blockingPolicy);
-      if (meaning) rows.push({ edge, target: other, meaning, key: edgeKey(edge, index) });
+      const meaning = relationshipMeaning(
+        edge.relationship,
+        currentIsSource,
+        edge.blockingPolicy,
+        edge.sequencePolicy,
+        edge.sequenceApproved,
+        edge.condition,
+        currentIsSource ? target.label : source.label,
+      );
+      const pairKey = [edge.sourceId, edge.targetId].sort().join("::");
+      const contextKey = edge.relationship === "tool_alternative_for_role_task"
+        ? `${edge.roleId ?? ""}:${edge.roleTaskId ?? ""}:${(edge.roleAreaIds ?? []).join(",")}`
+        : `${edge.areaId ?? ""}`;
+      const dedupeKey = `${edge.relationship}:${pairKey}:${contextKey}`;
+      if (meaning && !seenRelationships.has(dedupeKey)) {
+        seenRelationships.add(dedupeKey);
+        rows.push({ edge, target: other, meaning, key: edgeKey(edge, index) });
+      }
     }
     return { rows, hasHiddenResolvedTarget };
-  }, [currentItem.id, projectedById, typedEdges]);
+  }, [activeAreaId, activeRoleId, activeRoleTaskId, currentItem.id, projectedById, typedEdges]);
 
   useEffect(() => {
     if (active) {
@@ -294,7 +355,15 @@ export function D078RelationshipPanel({
 }
 
 function meaningFor(edge: D078TypedRelationshipEdge): RelationshipMeaning {
-  return relationshipMeaning(edge.relationship, true, edge.blockingPolicy) ?? { label: "Related learning", explanation: "This is a connected learning option." };
+  return relationshipMeaning(
+    edge.relationship,
+    true,
+    edge.blockingPolicy,
+    edge.sequencePolicy,
+    edge.sequenceApproved,
+    edge.condition,
+    edge.targetId,
+  ) ?? { label: "Related learning", explanation: "This is a connected learning option." };
 }
 
 const styles = StyleSheet.create({

@@ -6,6 +6,33 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Sifter LevelUp is a Duolingo-style learning app for crypto literacy and quant finance. It has two main parts: a React Native/Expo mobile frontend and a FastAPI Python backend, backed by Supabase (Postgres) with Celery/Redis for background jobs.
 
+## Product redesign and feedback implementation brief
+
+When implementing the student or career-intelligence admin experience, first
+read all three source documents in
+`docs/design-feedback/2026-11-18/`:
+
+- `platform_redesign_feedback_verbatim.pdf` contains the explicit review
+  corrections and decisions. Treat these as requirements, including removing
+  unsupported or template-only UI, honoring the existing product decisions,
+  and adapting the redesign to the current application.
+- `student_experience_ux_ui_blueprint.pdf` is the student UX/UI blueprint and
+  structural wireframe reference.
+- `career_intelligence_admin_ux_detailed.pdf` is the detailed institutional
+  admin UX/UI blueprint and wireframe reference.
+
+Implement the applicable design and feedback in the product; do not stop at
+summarizing or archiving the documents. Preserve the existing underlying data:
+do not edit or regenerate canonical datasets, seed content, database records,
+or Supabase state for this redesign. Keep existing database schemas, API/data
+contracts, and matching/scoring business rules intact. Build the experience
+from the data and capabilities already present, and do not invent metrics,
+roles, institution facts, or profile values to make a mockup appear complete.
+For a requested behavior that the current data model or API cannot support
+(including score-based admission outcomes), do not fabricate values or silently
+change the model; identify the gap and report the smallest required data or
+contract change for separate approval. Do not apply migrations or seed files
+as part of this redesign unless the user separately requests it.
 ## Windows local command runner contract
 
 - The current operator workflow is the IDE and its integrated terminal, not the
@@ -164,6 +191,55 @@ D078/Sociology migration and seed order, prerequisites, transport format,
 preflight and postflight checks. Do not maintain or invent a second ordered
 list here; if this summary conflicts with the runbook, stop and correct the
 summary/runbook before preparing a deployment.
+
+The opt-in learner-interest dashboard has its own additive schema migration,
+`backend/migration_learning_interest_analytics_2026-10-26.sql`. Apply it only
+after enabling Supabase Cron (`pg_cron`) and after the user/affiliation and
+institution-membership schema prerequisites in the runbook. It needs no seed.
+The migration fails closed if Cron is unavailable and schedules daily deletion
+of raw event rows older than 395 days. Do not expose raw event rows or use saved-route
+records as analytics; use the consent-gated capture endpoint and aggregate RPC.
+The dashboard's route filters must use the migration's aggregate-only searchable
+filter-options RPC so staff select programme/domain/item labels rather than
+typing record IDs. It must also make named route patterns searchable so a
+learner route beyond the 50-pattern preview can be inspected by its own label;
+selecting a route-pattern filter shows all matching items in that route. The
+backend must enforce scope before returning options.
+School admins with multiple verified institution memberships must explicitly
+choose the institution in the analytics UI. The schools-options endpoint may
+list only verified memberships, and each aggregate/options request must send
+the selected school ID for server-side membership validation; never infer or
+trust a client-supplied school scope without that check.
+The product owner explicitly requires exact small-cohort aggregates, so do not
+add minimum-cell suppression; keep individual identifiers and learner histories
+out of dashboard responses. The runbook remains the source
+of truth for application and verification steps. Its state filter uses the
+affiliated-school state snapshotted at selection time, not the university the
+learner is exploring.
+The aggregate measures include distinct people who added and removed choices,
+separately from action counts. They compare the selected window with the
+immediately preceding interval of equal duration using the same filters.
+Describe this only as recorded-activity change, never as current saved intent
+or learner growth.
+Current selection is a separate measure from that activity history. Apply
+`backend/migration_learning_interest_current_selections_2026-10-28.sql` after
+the 2026-10-26 analytics migration. It captures new explicit additions/removals
+into a route-scoped active snapshot; it does not backfill from old events or
+saved paths. Current snapshot counts are unwindowed; activity counts remain
+date-windowed. The current snapshot is cleared when analytics consent is
+withdrawn or must be renewed. Terms and Privacy versions are `2026-10-29.1`,
+so users must make a fresh analytics choice before new events/snapshots are captured.
+When the learner explicitly creates a separate D078 route by copying the active
+route, record its copied items as `selection_copied`: include them in the new
+current-selection scope but exclude them from add-action counts. A named
+combined design must also retain its required component methods in method-level
+analytics, even though the UI presents the named design as the selected route.
+The dashboard also returns current route-context patterns separately from
+recent event contexts; neither is proof of a completed/saved route. Route
+metadata refreshes after a choice changes, but each item's learner-stage and
+affiliated-school attribution remains from when that item was selected. Keep
+current intent, route contexts, and dated activity distinct in UI, CSV, metric
+text and staff interpretation.
 
 Package gate: every required addition listed in the runbook must travel with it:
 migration_career_item_relationship_target_context_2026-10-17.sql,
@@ -1343,3 +1419,78 @@ git show main:.github/workflows/semgrep.yml | head -1
 Add a line here whenever a fix is landed that a future bulk merge could
 plausibly discard. This list is the cheapest available defence, and it only
 works if it is kept current.
+
+## `main` was rewritten on 16 November 2026 — reset your local copy
+
+To remove `Co-authored-by: Claude` trailers from two squash-merge commits
+(#253 and #254), `main` was force-pushed from `e0f35bd` to `de7632a`. File
+contents are identical (same tree). Seven commits changed hash, including the
+#256 `json-seed` merge. Older commits and the `json-seed` commits themselves
+kept their hashes.
+
+If you have a local `main` or a branch based on the old `main`, do not merge or
+push it as is: the old commits would reappear next to the rewritten ones.
+
+```bash
+git fetch origin
+git checkout main
+git reset --hard origin/main
+```
+
+Then rebase any branch that was based on the old `main`
+(for `json-seed`, the old merge commit was `88b99a3`, now `612ff39`):
+
+```bash
+git rebase --onto origin/main <old-base-commit> <your-branch>
+```
+
+Delete this section once everyone has reset.
+
+## Open items for Samuel (added 20 November 2026)
+
+These need an owner or data decision. None can be settled by a code-only change,
+and none should be worked around by editing canonical data or skipping tests.
+
+### 1. Two failing backend tests: relationship explanations
+
+`backend/tests/test_d078_relationship_explanation_contract.py` fails on `main`
+(these are the only two backend failures; 765 pass), and they block Backend
+Checks and the pytest step of Deploy Backend.
+
+- `test_recorded_relationship_notes_replace_only_the_matching_generic_edges`
+  expects `d078-resolved-relation:<ledger id>:*` edges in
+  `data/career-mapping/_audit/D078_METHOD_AREA_ROLE_ROUTE_GRAPH_2026_10_19.json`
+  (33 eligible ledger records). The committed graph has none: its edges use the
+  `d078-method-resolution:*` scheme, so the test finds 0 matching edges and 33
+  `no_matching_canonical_edge` conflicts.
+- `test_every_student_relationship_gets_item_context_without_inventing_route_requirements`
+  expects 566 student-visible, `resolved_ready_for_use` edges; the graph has 7,779.
+- Decide which is right: regenerate and recommit the graph that contains the
+  resolved-relation edges, or re-baseline both tests to the current edge scheme
+  and counts. Re-run `finalize_d078_relationship_route_contract_2026_10_20.py`
+  and `export_d078_method_aware_ui_data_2026_10_19.py` if the graph changes.
+  Do not skip or delete the tests to get green.
+
+### 2. Subject-grade bands need confirmation
+
+The O-level `grade_check` treats a **credit** as A1 to C6 and a **pass** as
+A1 to E8, and treats a missing grade as unknown. These bands are an assumption
+from the common WAEC/NECO scale, not a confirmed rule from the JAMB brochure or
+each university. Confirm the bands (and whether any university uses a different
+one), and whether a per-university `gradeCheck` is wanted. Until confirmed, the
+result must stay labelled as an indication, never as an admission outcome.
+
+### 3. Referral earnings have no data source
+
+The admin referrals view can show counts it can read, but there is no table or
+API that records earnings, payouts or commission rates, so no earnings figure is
+shown. Do not invent one. Smallest change needed: a table recording earning
+events (referrer, referred user, amount, currency, status, created_at) plus the
+commission rule, approved separately, with a migration prepared and not applied.
+
+### 4. Endpoints outside this repo must use the public name
+
+`/api/leaderboard/*`, `/api/rooms/*` and `/api/referrals/stats` are not served
+by this repository. Whatever serves them must return the learner's `public_name`
+(display name, else first name, else "Learner"), never `username`, full name,
+email or a raw avatar path, and must use `public_avatar_url` for avatars.

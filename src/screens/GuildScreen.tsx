@@ -13,6 +13,8 @@ import { StaggerReveal } from '@/components/animations/StaggerReveal';
 import { useTheme, CompassFonts, FontWeight, Spacing, Radius, FontSize, Shadow } from '@/theme';
 import { useAuth } from '@/hooks/useAuth';
 import { API, API_BASE } from '@/lib/api';
+import { getDisplayName } from '@/lib/displayName';
+import { getPublicName } from '@/lib/publicName';
 import { streakEngine, type StreakStatus } from '@/lib/StreakEngine';
 import { resolveTrackContext } from '@/lib/trackContext';
 import {
@@ -25,11 +27,11 @@ interface GuildDef {
   track_focus?: string;
 }
 interface GuildMember {
-  id: string; username: string; points: number; streak: number;
+  id: string; username: string; public_name?: string; points: number; streak: number;
   starknet_address?: string; rank?: number; is_current_user?: boolean;
 }
 interface ChatMsg {
-  id: string; content: string; username: string; created_at: string; user_id: string;
+  id: string; content: string; username: string; public_name?: string; created_at: string; user_id: string;
 }
 
 async function apiGet(path: string) {
@@ -303,7 +305,7 @@ export default function GuildScreen() {
                         >
                           <Text style={[s.rank, { color: i < 3 ? myGuild.accent : colors.textRole.muted }]}>#{i + 1}</Text>
                           <View style={{ flex: 1 }}>
-                            <Text style={[s.memberName, { color: colors.textRole.primary }]}>{m.username}{m.id === user?.id ? ' (You)' : ''}</Text>
+                            <Text style={[s.memberName, { color: colors.textRole.primary }]}>{m.id === user?.id ? (getDisplayName(user) ?? getPublicName(m)) : getPublicName(m)}{m.id === user?.id ? ' (You)' : ''}</Text>
                             <Text style={{ color: colors.textRole.muted, fontSize: 11 }}>Streak {m.streak}d</Text>
                           </View>
                           <Text style={[s.pts, { color: colors.textRole.secondary }]}>{m.points?.toLocaleString()} XP</Text>
@@ -371,7 +373,7 @@ export default function GuildScreen() {
                               alignSelf: msg.user_id === user?.id ? 'flex-end' : 'flex-start',
                               borderColor: msg.user_id === user?.id ? `${colors.accentRole.action}40` : colors.borderRole.subtle,
                             }]}>
-                              <Text style={{ color: colors.accentRole.action, fontSize: 10, fontWeight: '800', marginBottom: 2 }}>{msg.username}</Text>
+                              <Text style={{ color: colors.accentRole.action, fontSize: 10, fontWeight: '800', marginBottom: 2 }}>{msg.user_id === user?.id ? (getDisplayName(user) ?? getPublicName(msg)) : getPublicName(msg)}</Text>
                               <Text style={{ color: colors.textRole.primary, fontSize: FontSize.sm, lineHeight: 18 }}>{msg.content}</Text>
                             </View>
                           ))
@@ -408,13 +410,13 @@ export default function GuildScreen() {
             <WebCol weight={1}>
               <WebCard title="Leaderboard" accentBar accentColor={colors.accentRole.action} style={{ marginBottom: 20 }}>
                 {sideLeaders.map((m: GuildMember, i: number) => (
-                  <View key={m.id ?? `${m.username}-${i}`} style={[s.webLeaderboardRow, { borderBottomColor: colors.borderRole.subtle }]}>
+                  <View key={m.id ?? `${getPublicName(m)}-${i}`} style={[s.webLeaderboardRow, { borderBottomColor: colors.borderRole.subtle }]}>
                     <View style={[s.webRankDot, { backgroundColor: i < 3 ? ['#FFD700', '#C0C0C0', '#CD7F32'][i] : colors.surface.subtle }]}>
                       <Text style={{ color: i < 3 ? colors.surface.inverse : colors.textRole.muted, fontSize: 10, fontWeight: '800' }}>{m.rank ?? i + 1}</Text>
                     </View>
                     <View style={{ flex: 1 }}>
                       <Text style={{ color: m.is_current_user ? colors.accentRole.action : colors.textRole.primary, fontSize: 12, fontWeight: m.is_current_user ? '800' : '700' }}>
-                        {m.username}{m.is_current_user ? ' (You)' : ''}
+                        {m.is_current_user ? (getDisplayName(user) ?? getPublicName(m)) : getPublicName(m)}{m.is_current_user ? ' (You)' : ''}
                       </Text>
                       <Text style={{ color: colors.textRole.muted, fontSize: 10 }}>{m.points?.toLocaleString()} XP · Streak {m.streak}d</Text>
                     </View>
@@ -502,7 +504,7 @@ export default function GuildScreen() {
                     <Text style={[s.rank, { color: i < 3 ? myGuild.accent : colors.textRole.muted }]}>#{i + 1}</Text>
                     <View style={{ flex: 1 }}>
                       <Text style={[s.memberName, { color: colors.textRole.primary }]}>
-                        {m.username}{m.id === user?.id ? ' (You)' : ''}
+                        {m.id === user?.id ? (getDisplayName(user) ?? getPublicName(m)) : getPublicName(m)}{m.id === user?.id ? ' (You)' : ''}
                       </Text>
                       {m.starknet_address && (
                         <Text style={{ color: colors.textRole.muted, fontSize: 10, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace' }}>
@@ -561,7 +563,7 @@ export default function GuildScreen() {
                       <Text style={[s.lbRank, { color: m.rank && m.rank <= 3 ? '#FFD700' : colors.textRole.muted }]}>#{m.rank}</Text>
                       <View style={{ flex: 1 }}>
                         <Text style={[s.lbName, { color: m.is_current_user ? colors.accentRole.action : colors.textRole.primary }]}>
-                          {m.username}{m.is_current_user ? ' ← You' : ''}
+                          {m.is_current_user ? (getDisplayName(user) ?? getPublicName(m)) : getPublicName(m)}{m.is_current_user ? ' ← You' : ''}
                         </Text>
                         <Text style={{ color: colors.textRole.muted, fontSize: 11 }}>
                           🔥 {m.streak} day streak · {(m as any).levels_completed ?? 0} levels
@@ -591,7 +593,7 @@ export default function GuildScreen() {
                         alignSelf: msg.user_id === user?.id ? 'flex-end' : 'flex-start',
                         borderColor: msg.user_id === user?.id ? `${colors.accentRole.action}40` : colors.borderRole.subtle,
                       }]}>
-                        <Text style={{ color: colors.accentRole.action, fontSize: 10, fontWeight: '800', marginBottom: 2 }}>{msg.username}</Text>
+                        <Text style={{ color: colors.accentRole.action, fontSize: 10, fontWeight: '800', marginBottom: 2 }}>{msg.user_id === user?.id ? (getDisplayName(user) ?? getPublicName(msg)) : getPublicName(msg)}</Text>
                         <Text style={{ color: colors.textRole.primary, fontSize: FontSize.sm, lineHeight: 18 }}>{msg.content}</Text>
                       </View>
                     ))

@@ -46,6 +46,16 @@ import {
   type SavedItem,
 } from "../types/career";
 import type { StartingPointProfile, UserType } from "../types/onboarding";
+import { getGreetingName } from "../lib/displayName";
+import { exploreNav } from "../lib/exploreNav";
+import {
+  resolveHomeStage,
+  homeRoutesFor,
+  subjectReason,
+  undergraduateProgramme,
+  type HomeRoute,
+} from "../lib/homeStage";
+import { StageHome } from "../components/home/StageHome";
 
 const QUICK = [
   {
@@ -274,10 +284,7 @@ export default function CareerHomeScreen() {
   const { user } = useAuth();
   const { isMobile } = useResponsive();
   const isGuest = user?.auth_provider === "guest";
-  const name =
-    user?.username && user.username !== "Student"
-      ? user.username.split(" ")[0]
-      : null;
+  const name = getGreetingName(user);
 
   const [starting, setStarting] = useState<StartingPointProfile | null>(null);
   const [startingLoaded, setStartingLoaded] = useState(false);
@@ -389,9 +396,75 @@ export default function CareerHomeScreen() {
     ...(realGuidance?.path.subjects?.olevel ?? []),
     ...(realGuidance?.path.subjects?.utme ?? []),
   ];
+  // Stage-aware Home: only for a signed-in student with a recognised stage.
+  // Guests and profiles without a stage keep the original starting-point card.
+  const stage = !isGuest && startingLoaded ? resolveHomeStage(starting) : null;
+  const stageProgrammeHref =
+    stage?.key === "undergraduate" &&
+    nextAction?.href.startsWith("/(tabs)/explore/programme/")
+      ? nextAction.href
+      : null;
+  const openStageRoute = (route: HomeRoute) =>
+    exploreNav.admissionHub(router, route.mode, null, route.options);
   const homeQuickActions = earlySecondary
     ? QUICK.filter((item) => item.title !== "Entrepreneurship" && item.title !== "Opportunities")
     : QUICK;
+
+  const contextCardEl = (
+      realGuidance && (
+        activeProgrammeNames.length || activeUniversityName || activeDomainNames.length ||
+        activeSubgroupNames.length || activeRoleNames.length || activeSubjects.length ||
+        realGuidance.path.resume?.status === "in_progress"
+      ) ? (
+        <View style={[styles.contextCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+          <Text style={[styles.contextTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
+            {stage
+              ? "Continue where you left off"
+              : realGuidance.path.resume?.status === "in_progress" ? "Guidance in progress" : "Your saved guidance"}
+          </Text>
+          {activeProgrammeNames.length ? (
+            <Text style={[styles.contextMeta, { color: colors.textRole.secondary }, CompassFonts.body]}>
+              Programme{activeProgrammeNames.length > 1 ? "s" : ""}: {activeProgrammeNames.join(", ")}
+            </Text>
+          ) : null}
+          {activeUniversityName ? (
+            <Text style={[styles.contextMeta, { color: colors.textRole.secondary }, CompassFonts.body]}>
+              University: {activeUniversityName}{activeUniversityAddress ? ` · ${activeUniversityAddress}` : ""}
+            </Text>
+          ) : null}
+          {activeSubjects.length ? (
+            <Text style={[styles.contextMeta, { color: colors.textRole.secondary }, CompassFonts.body]}>
+              Subjects: {activeSubjects.join(", ")}
+            </Text>
+          ) : null}
+          {activeDomainNames.length ? (
+            <Text style={[styles.contextMeta, { color: colors.textRole.secondary }, CompassFonts.body]}>
+              Domains: {activeDomainNames.join(", ")}
+            </Text>
+          ) : null}
+          {activeSubgroupNames.length ? (
+            <Text style={[styles.contextMeta, { color: colors.textRole.secondary }, CompassFonts.body]}>
+              Subgroups: {activeSubgroupNames.join(", ")}
+            </Text>
+          ) : null}
+          {activeRoleNames.length ? (
+            <Text style={[styles.contextMeta, { color: colors.textRole.secondary }, CompassFonts.body]}>
+              Roles: {activeRoleNames.join(", ")}
+            </Text>
+          ) : null}
+          {realGuidance.path.resume?.status === "in_progress" ? (
+            <Text style={[styles.contextMeta, { color: colors.textRole.muted }, CompassFonts.body]}>
+              Your unfinished choices are saved. Continue from the last completed step.
+            </Text>
+          ) : null}
+          <TouchableOpacity activeOpacity={0.7} onPress={() => nextAction && router.push(nextAction.href as any)}>
+            <Text style={[styles.cardLinkText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
+              {earlySecondary ? "Continue" : "Open saved guidance"}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      ) : null
+  );
 
   return (
     <ScrollView
@@ -442,57 +515,23 @@ export default function CareerHomeScreen() {
         </View>
       ) : null}
 
-      {realGuidance && (
-        activeProgrammeNames.length || activeUniversityName || activeDomainNames.length ||
-        activeSubgroupNames.length || activeRoleNames.length || activeSubjects.length ||
-        realGuidance.path.resume?.status === "in_progress"
-      ) ? (
-        <View style={[styles.contextCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-          <Text style={[styles.contextTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
-            {realGuidance.path.resume?.status === "in_progress" ? "Guidance in progress" : "Your saved guidance"}
-          </Text>
-          {activeProgrammeNames.length ? (
-            <Text style={[styles.contextMeta, { color: colors.textRole.secondary }, CompassFonts.body]}>
-              Programme{activeProgrammeNames.length > 1 ? "s" : ""}: {activeProgrammeNames.join(", ")}
-            </Text>
-          ) : null}
-          {activeUniversityName ? (
-            <Text style={[styles.contextMeta, { color: colors.textRole.secondary }, CompassFonts.body]}>
-              University: {activeUniversityName}{activeUniversityAddress ? ` · ${activeUniversityAddress}` : ""}
-            </Text>
-          ) : null}
-          {activeSubjects.length ? (
-            <Text style={[styles.contextMeta, { color: colors.textRole.secondary }, CompassFonts.body]}>
-              Subjects: {activeSubjects.join(", ")}
-            </Text>
-          ) : null}
-          {activeDomainNames.length ? (
-            <Text style={[styles.contextMeta, { color: colors.textRole.secondary }, CompassFonts.body]}>
-              Domains: {activeDomainNames.join(", ")}
-            </Text>
-          ) : null}
-          {activeSubgroupNames.length ? (
-            <Text style={[styles.contextMeta, { color: colors.textRole.secondary }, CompassFonts.body]}>
-              Subgroups: {activeSubgroupNames.join(", ")}
-            </Text>
-          ) : null}
-          {activeRoleNames.length ? (
-            <Text style={[styles.contextMeta, { color: colors.textRole.secondary }, CompassFonts.body]}>
-              Roles: {activeRoleNames.join(", ")}
-            </Text>
-          ) : null}
-          {realGuidance.path.resume?.status === "in_progress" ? (
-            <Text style={[styles.contextMeta, { color: colors.textRole.muted }, CompassFonts.body]}>
-              Your unfinished choices are saved. Continue from the last completed step.
-            </Text>
-          ) : null}
-          <TouchableOpacity activeOpacity={0.7} onPress={() => nextAction && router.push(nextAction.href as any)}>
-            <Text style={[styles.cardLinkText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
-              {earlySecondary ? "Continue" : "Open saved guidance"}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      ) : null}
+      {stage && starting ? (
+        <>
+          <StageHome
+            stage={stage}
+            routes={homeRoutesFor(stage.key, starting)}
+            subjectReason={subjectReason(starting)}
+            programme={stage.key === "undergraduate" ? undergraduateProgramme(starting) : undefined}
+            programmeHref={stageProgrammeHref}
+            onOpenRoute={openStageRoute}
+            onOpenProgramme={() => stageProgrammeHref && router.push(stageProgrammeHref as never)}
+            onEditStage={() => router.push("/(auth)/onboarding?restart=1")}
+          />
+          {contextCardEl}
+        </>
+      ) : (
+        <>
+      {contextCardEl}
 
       {/* Your starting point */}
       <Text style={[styles.section, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>
@@ -578,10 +617,12 @@ export default function CareerHomeScreen() {
           </Text>
         </TouchableOpacity>
       )}
+        </>
+      )}
 
       {/* Quick actions stay available while saved guidance hydrates. */}
       <Text style={[styles.section, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>
-        Quick actions
+        {stage ? "Explore next" : "Quick actions"}
       </Text>
       <View style={[styles.grid, isMobile ? styles.gridMobile : styles.gridWide]}>
         {homeQuickActions.map((q, i) => (

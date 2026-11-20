@@ -29,6 +29,13 @@ const IS_WEB = Platform.OS === "web";
 let activeUserId: string | null = null;
 let activeDeviceId: string | null = null;
 let encryptionKeyPromise: Promise<AESEncryptionKey | null> | null = null;
+let queueMutationTail: Promise<void> = Promise.resolve();
+
+function withQueueMutationLock<T>(operation: () => Promise<T>): Promise<T> {
+  const result = queueMutationTail.then(operation, operation);
+  queueMutationTail = result.then(() => undefined, () => undefined);
+  return result;
+}
 
 interface CacheEntry<T> {
   value: T;
@@ -226,38 +233,42 @@ async function saveQueue(queue: WriteOp[]): Promise<boolean> {
 
 /** Enqueue an authenticated-account write to replay later. */
 export async function queueWrite(op: QueuableOp): Promise<WriteOp> {
-  if (!activeNamespace()) throw new Error("CAREER_CACHE_IDENTITY_REQUIRED");
-  const entry: WriteOp = {
-    ...op,
-    id: `w_${Date.now()}_${Math.random().toString(36).slice(2)}`,
-    createdAt: Date.now(),
-  };
-  const queue = await loadQueue();
-  queue.push(entry);
-  const trimmed = queue.length > MAX_QUEUE_SIZE ? queue.slice(-MAX_QUEUE_SIZE) : queue;
-  if (!(await saveQueue(trimmed))) throw new Error("CAREER_QUEUE_STORAGE_UNAVAILABLE");
-  return entry;
+  return withQueueMutationLock(async () => {
+    if (!activeNamespace()) throw new Error("CAREER_CACHE_IDENTITY_REQUIRED");
+    const entry: WriteOp = {
+      ...op,
+      id: `w_${Date.now()}_${Math.random().toString(36).slice(2)}`,
+      createdAt: Date.now(),
+    };
+    const queue = await loadQueue();
+    queue.push(entry);
+    const trimmed = queue.length > MAX_QUEUE_SIZE ? queue.slice(-MAX_QUEUE_SIZE) : queue;
+    if (!(await saveQueue(trimmed))) throw new Error("CAREER_QUEUE_STORAGE_UNAVAILABLE");
+    return entry;
+  });
 }
 
 /** Cancel an optimistic save before it has reached the server. */
 export async function cancelQueuedSave(entityType: string, entityId: string): Promise<void> {
-  const queue = await loadQueue();
-  const remaining = queue.filter((op) => {
-    if (op.endpoint !== "/api/career/saved" || op.method !== "POST") return true;
-    const body = op.body as { entityType?: string; entityId?: string } | undefined;
-    return body?.entityType !== entityType || body?.entityId !== entityId;
+  await withQueueMutationLock(async () => {
+    const queue = await loadQueue();
+    const remaining = queue.filter((op) => {
+      if (op.endpoint !== "/api/career/saved" || op.method !== "POST") return true;
+      const body = op.body as { entityType?: string; entityId?: string } | undefined;
+      return body?.entityType !== entityType || body?.entityId !== entityId;
+    });
+    if (remaining.length !== queue.length) await saveQueue(remaining);
   });
-  if (remaining.length !== queue.length) await saveQueue(remaining);
 }
 
 export async function pendingWrites(): Promise<number> {
-  return (await loadQueue()).length;
+  return withQueueMutationLock(async () => (await loadQueue()).length);
 }
 
 /** Replay account-scoped writes when online; preserve auth failures for re-login. */
 export async function flushQueue(): Promise<number> {
   if (!activeNamespace() || !activeDeviceId) return 0;
-  const queue = await loadQueue();
+  const queue = await withQueueMutationLock(loadQueue);
   if (!queue.length) return 0;
 
   const token = await API.getToken().catch(() => null);
@@ -267,7 +278,7 @@ export async function flushQueue(): Promise<number> {
     Authorization: `Bearer ${token}`,
     "X-Device-Id": activeDeviceId,
   };
-  const remaining: WriteOp[] = [];
+  const consumedIds = new Set<string>();
   let flushed = 0;
 
   for (let index = 0; index < queue.length; index += 1) {
@@ -280,24 +291,33 @@ export async function flushQueue(): Promise<number> {
       });
       if (res.ok || res.status === 409 || (res.status >= 400 && res.status < 500 && res.status !== 401 && res.status !== 403)) {
         flushed += 1;
+        consumedIds.add(op.id);
       } else if (res.status === 401 || res.status === 403) {
-        remaining.push(...queue.slice(index));
         break;
       } else {
-        remaining.push(...queue.slice(index));
         break;
       }
     } catch {
-      remaining.push(...queue.slice(index));
       break;
     }
   }
-  await saveQueue(remaining);
+  if (consumedIds.size) {
+    // Queue writes may arrive while HTTP replay is in flight. Remove only the
+    // operations this pass actually consumed; never overwrite newly queued
+    // work with the stale snapshot loaded before the requests.
+    await withQueueMutationLock(async () => {
+      const current = await loadQueue();
+      const remaining = current.filter((op) => !consumedIds.has(op.id));
+      if (remaining.length !== current.length) await saveQueue(remaining);
+    });
+  }
   return flushed;
 }
 
 export async function clearQueue(): Promise<void> {
-  const storageKey = queueStorageKey();
-  if (!storageKey) return;
-  try { await AsyncStorage.removeItem(storageKey); } catch {}
+  await withQueueMutationLock(async () => {
+    const storageKey = queueStorageKey();
+    if (!storageKey) return;
+    try { await AsyncStorage.removeItem(storageKey); } catch {}
+  });
 }

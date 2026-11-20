@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   sheet: { width: "100%", maxWidth: 640, maxHeight: "88%", borderWidth: 1, borderRadius: Radius.xl, overflow: "hidden" },
   header: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", padding: Spacing.lg, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: "rgba(128,128,128,0.22)" },
   headerCopy: { gap: Spacing.xs },
-  eyebrow: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold, letterSpacing: 1 },
+  eyebrow: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold, letterSpacing: 1 },
   title: { fontSize: FontSize.xl, ...CompassFonts.displayBold },
   close: { width: 42, height: 42, borderRadius: Radius.full, alignItems: "center", justifyContent: "center" },
   content: { padding: Spacing.lg, gap: Spacing.lg },

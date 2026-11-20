@@ -26,11 +26,24 @@ export function supportedD078Selection(value: unknown): D078Selection {
     areaId: typeof raw.areaId === "string" ? raw.areaId : undefined,
     roleId: typeof raw.roleId === "string" ? raw.roleId : undefined,
     addedItemIds: Array.isArray(raw.addedItemIds) ? raw.addedItemIds.filter((id): id is string => typeof id === "string") : [],
+    taskFamilyIdsByArea: raw.taskFamilyIdsByArea && typeof raw.taskFamilyIdsByArea === "object"
+      ? Object.fromEntries(Object.entries(raw.taskFamilyIdsByArea).flatMap(([areaId, ids]) => [
+        [areaId, Array.isArray(ids) ? ids.filter((id): id is string => typeof id === "string") : []],
+      ]))
+      : {},
   };
   const projection = projectD078Route(base);
   const areaId = projection.visibleAreas.some((area) => area.areaId === base.areaId) ? base.areaId : undefined;
   const roleId = areaId && projection.visibleRoles.some((role) => role.roleId === base.roleId && role.areaId === areaId)
     ? base.roleId
+    : undefined;
+  const requestedPlanArea = typeof raw.planAreaId === "string" ? raw.planAreaId : undefined;
+  const planAreaId = requestedPlanArea && projection.visibleAreas.some((area) => area.areaId === requestedPlanArea)
+    ? requestedPlanArea
+    : undefined;
+  const requestedPlanRole = typeof raw.planRoleId === "string" ? raw.planRoleId : undefined;
+  const planRoleId = planAreaId && requestedPlanRole && projection.visibleRoles.some((role) => role.roleId === requestedPlanRole && role.areaId === planAreaId)
+    ? requestedPlanRole
     : undefined;
   const supportedItems = new Set<string>();
   (areaId ? projection.domainItemIdsByArea[areaId] ?? [] : projection.domainItemIds).forEach((id) => supportedItems.add(id));
@@ -48,8 +61,14 @@ export function supportedD078Selection(value: unknown): D078Selection {
     d078ApplicableLayerItems(2, base).forEach((id) => supportedItems.add(id));
     d078ApplicableLayerItems(3, base).forEach((id) => supportedItems.add(id));
   }
+  const taskFamilyIdsByArea = Object.fromEntries(Object.entries(base.taskFamilyIdsByArea ?? {}).flatMap(([familyAreaId, familyIds]) => {
+    const eligible = new Set(projection.taskFamilyIdsByArea[familyAreaId] ?? []);
+    const selected = familyIds.filter((id) => eligible.has(id));
+    return selected.length ? [[familyAreaId, selected]] : [];
+  }));
+  const { taskFamilyIdsByArea: _unsanitizedFamilies, ...baseWithoutFamilies } = base;
   return {
-    ...base,
+    ...baseWithoutFamilies,
     methodIds: projection.methods.filter((method) => method.selected).map((method) => method.id),
     combinationIds: projection.combinations.filter((combination) => combination.selected).map((combination) => combination.id),
     componentMethodIds: Object.fromEntries(projection.combinations
@@ -58,6 +77,13 @@ export function supportedD078Selection(value: unknown): D078Selection {
     areaId,
     roleId,
     addedItemIds: [...new Set(base.addedItemIds)].filter((id) => supportedItems.has(id)),
+    ...(raw.domainInPlan === true ? { domainInPlan: true } : {}),
+    ...(planAreaId ? { planAreaId } : {}),
+    ...(planRoleId ? { planRoleId } : {}),
+    // Emit the key only when a family is actually selected, so selections and
+    // saved snapshots that never used task families stay byte-identical across
+    // a save/reopen round trip (no spurious "changed" detection).
+    ...(Object.keys(taskFamilyIdsByArea).length ? { taskFamilyIdsByArea } : {}),
   };
 }
 

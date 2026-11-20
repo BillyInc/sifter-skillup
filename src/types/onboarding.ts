@@ -53,6 +53,10 @@ export interface StartingPointProfile {
   jambSubjects?: string[];
   /** O-level/WAEC/NECO subjects used for programme eligibility checks. */
   olevelSubjects?: string[];
+  /** Optional self-reported O-level grades keyed by subject name (A1-F9). */
+  olevelGrades?: Record<string, string>;
+  /** Exam body for olevelGrades. */
+  olevelExamBody?: "waec" | "neco" | "other";
   preferredInstitutionType?: InstitutionType;
   preferredSchoolId?: string;
   preferredSchool?: string;

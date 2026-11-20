@@ -1,4 +1,5 @@
 import {
+  supportedD078Selection,
   d078ProgrammeIdFromSnapshot,
   d078RouteStacksFromSnapshot,
   d078SavedRouteHref,
@@ -76,6 +77,22 @@ test("round-trips a valid full saved D078 selection through archive reopen", () 
   expect(d078SelectionFromSnapshot(reopened, PROGRAMME_ID)).toEqual({ ...selection, roleId: undefined });
   expect(d078SelectionFromSnapshot(selectSavedSnapshot(path, "d078-latest"), PROGRAMME_ID)).toEqual(selection);
   expect(selection.addedItemIds).not.toEqual(expect.arrayContaining(d078GraphDataForTests().foundation_item_ids));
+});
+
+test("retains both endpoints of a graph-marked alternative pair in saved route state", () => {
+  const base: D078Selection = { methodIds: [INTERVIEWS], combinationIds: [], componentMethodIds: {}, addedItemIds: [] };
+  const projection = projectD078Route(base);
+  const routeItems = new Set([...projection.domainItemIds, ...projection.toolIds]);
+  const pair = d078GraphDataForTests().typed_relationship_edges.find((edge) =>
+    ["alternative_to", "alternative_tool_option"].includes(edge.relationship)
+    && edge.status === "resolved_ready_for_use"
+    && routeItems.has(edge.sourceId)
+    && routeItems.has(edge.targetId),
+  );
+  expect(pair).toBeTruthy();
+  const selection = { ...base, addedItemIds: [pair!.sourceId, pair!.targetId] };
+  const reopened = d078SelectionFromSnapshot(saved("d078-alternative-pair", selection), PROGRAMME_ID);
+  expect(reopened?.addedItemIds).toEqual(expect.arrayContaining([pair!.sourceId, pair!.targetId]));
 });
 
 test("builds a D078 My World resume URL at the saved domain, area, or role stop point", () => {
@@ -268,4 +285,18 @@ test("share summary preserves each saved D078 route as a separate branch", () =>
   expect(share?.routeDetails.join(" ")).not.toContain("Route 1: Area:");
   expect(share?.routeDetails.join(" ")).toContain("Sociology and Social Anthropology");
   expect(share?.routeDetails.join(" ")).toContain("Computational and Digital Social Science");
+});
+
+test("keeps task families only when a supported one is selected, so round trips stay stable", () => {
+  const plain = validFullSelection();
+  expect("taskFamilyIdsByArea" in supportedD078Selection(plain)).toBe(false);
+  expect("taskFamilyIdsByArea" in supportedD078Selection({ ...plain, taskFamilyIdsByArea: { "unknown-area": ["nope"] } })).toBe(false);
+
+  const projection = projectD078Route(plain);
+  const [areaId, families] = Object.entries(projection.taskFamilyIdsByArea).find(([, ids]) => ids.length > 0) ?? [];
+  expect(areaId && families).toBeTruthy();
+  if (!areaId || !families) return;
+  const withFamily = supportedD078Selection({ ...plain, taskFamilyIdsByArea: { [areaId]: [families[0], "removed:family"] } });
+  expect(withFamily.taskFamilyIdsByArea).toEqual({ [areaId]: [families[0]] });
+  expect(supportedD078Selection(withFamily)).toEqual(withFamily);
 });

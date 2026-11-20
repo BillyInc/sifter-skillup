@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   Animated,
+  Modal,
   ScrollView,
   StyleSheet,
   Text,
@@ -34,6 +35,9 @@ import { AlternativeComparisonSheet } from "./AlternativeComparisonSheet";
 import { sequenceGuidanceText, type StudentRelationship } from "./ContextRelationshipSheet";
 import { RouteButton } from "./RouteButton";
 import { ExternalLinkGuard } from "./ExternalLinkGuard";
+import { SaveButton } from "./SaveButton";
+import { LearningResourceBadge } from "./LearningResourceBadge";
+import { sortLearningResources } from "./learningResourcePresentation";
 
 export type GuidedLearningTrayMode = "icon" | "compact" | "mid" | "full";
 
@@ -47,8 +51,9 @@ export interface GuidedLearningTrayRouteLabels {
 export interface D078TrayChoice {
   id: string;
   label: string;
-  kind: "method" | "combination" | "component_method";
+  kind: "method" | "combination" | "component_method" | "task_family";
   combinationId?: string;
+  areaId?: string;
 }
 
 export interface D078TrayItem {
@@ -79,6 +84,7 @@ export interface D078TrayContext {
   roleId?: string;
   onRemoveChoice: (choice: D078TrayChoice) => void;
   onRemoveItem: (itemId: string) => void;
+  onRemoveProgramme?: () => void;
   onActivate?: () => void;
   onRemoveStack?: () => void;
 }
@@ -109,13 +115,6 @@ export interface GuidedLearningTrayProps {
   statusMessage?: string | null;
   style?: StyleProp<ViewStyle>;
 }
-
-const MODE_LABELS: Record<GuidedLearningTrayMode, string> = {
-  icon: "Icon",
-  compact: "Small",
-  mid: "Mid",
-  full: "Full",
-};
 
 const LAYER_LABELS: Record<LearningPlanLayer, string> = {
   programme: "Programme",
@@ -241,14 +240,14 @@ function LearningItemDetails({ item, route }: { item: LearningPlanCandidate; rou
   const candidateResourceLinks = item.learningLinks?.length
     ? item.learningLinks
     : item.linkUrl ? [{ title: item.linkTitle || `Learning resource for ${item.name}`, url: item.linkUrl, rationale: item.linkRationale, access: item.linkAccess, kind: item.linkKind }] : [];
-  const resourceLinks = candidateResourceLinks.filter((link) => studentSafeUrl(link.url));
+  const resourceLinks = sortLearningResources(candidateResourceLinks.filter((link) => studentSafeUrl(link.url)));
   const evidenceReferences = item.sourceReferences?.filter((reference) => studentSafeUrl(reference.url)) ?? [];
   const useMeaning = studentFacingCopy(useSections.meaning);
   const exampleTask = studentFacingCopy(useSections.task);
   const possibleOutput = studentOutputCopy(item.expectedOutput, item.contextualUse);
   const keepInMind = [
     studentFacingCopy(useSections.guardrail),
-    ...studentItemLimitations(item.limitations).map(studentFacingCopy),
+    ...studentItemLimitations(item.limitations).map((value) => studentFacingCopy(value)),
   ].filter(Boolean).join("\n\n");
   const section = (title: string, body?: string | null) => {
     const learnerCopy = studentFacingCopy(body);
@@ -296,12 +295,21 @@ function LearningItemDetails({ item, route }: { item: LearningPlanCandidate; rou
     {resourceLinks.length ? <View style={styles.resourceEvidence}>
       <Text accessibilityRole="header" style={[styles.resourceSectionHeading, { color: colors.textRole.primary }]}>Learning resources</Text>
       {resourceLinks.map((link, index) => {
-        const media = `${link.kind ?? ""} ${link.title}`.toLowerCase();
+        const media = `${link.mediaType ?? ""} ${link.kind ?? ""} ${link.title}`.toLowerCase();
         const isVideo = /video|youtube|watch/.test(media);
-        const isDownload = /pdf|download|guide/.test(media);
-        const action = isVideo ? "Watch" : isDownload ? "Open guide" : "Open";
+        const isGuide = /pdf|download|guide|manual|document/.test(media);
+        const action = isVideo ? "Watch" : isGuide ? "Open guide" : "Open";
         const label = `${action}: ${link.title} for ${item.name}`;
-        return <ExternalLinkGuard key={`${link.url}:${index}`} url={link.url} label={label} accessibilityLabel={label} description={link.rationale || `This resource helps you learn ${item.name} in the context of the selected route.`} hideUnavailable icon={<Feather name={isVideo ? "play-circle" : isDownload ? "download" : "external-link"} size={14} color={colors.accentRole.action} />} style={[styles.resourceLink, styles.resourceButton]} textStyle={[styles.resourceLinkText, { color: colors.accentRole.action }]} />;
+        return <View key={`${link.url}:${index}`} style={[styles.resourceEntry, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
+          <LearningResourceBadge resource={link} />
+          {link.access ? <Text style={[styles.resourceAccess, { color: colors.textRole.muted }]}>{link.access}</Text> : null}
+          {link.locator ? <Text style={[styles.resourceLocator, { color: colors.textRole.secondary }]}>Where to start: {link.locator}</Text> : null}
+          {link.rationale ? <Text style={[styles.resourceLocator, { color: colors.textRole.secondary }]}>{link.rationale}</Text> : null}
+          <View style={styles.resourceActions}>
+            <ExternalLinkGuard url={link.url} label={label} accessibilityLabel={label} description={link.rationale || `This resource helps you learn ${item.name} in the context of the selected route.`} hideUnavailable icon={<Feather name={isVideo ? "play-circle" : isGuide ? "download" : "external-link"} size={14} color={colors.accentRole.action} />} style={[styles.resourceLink, styles.resourceButton]} textStyle={[styles.resourceLinkText, { color: colors.accentRole.action }]} />
+            <SaveButton entityType="resource" entityId={link.url} label={link.title} compact />
+          </View>
+        </View>;
       })}
     </View> : null}
     {studentRelationships(item, route).length ? <View style={styles.resourceEvidence}>
@@ -532,7 +540,11 @@ export function GuidedLearningTray({
   const { width: viewportWidth } = useWindowDimensions();
   const reducedMotion = useReducedMotion();
   const [mode, setMode] = useState<GuidedLearningTrayMode>(initialMode);
+  const [programmeRemovalRoute, setProgrammeRemovalRoute] = useState<D078TrayContext | null>(null);
+  const [pendingRemoval, setPendingRemoval] = useState<{ label: string; remove: () => void } | null>(null);
+  const [actionNotice, setActionNotice] = useState<string | null>(null);
   const previousInitialMode = useRef(initialMode);
+  const previousStatusMessage = useRef(statusMessage);
   const initialModeChanged = previousInitialMode.current !== initialMode;
   // A selection can arrive while this dock is already mounted. Derive its
   // newly requested compact state during render so the checked row is visible
@@ -541,7 +553,13 @@ export function GuidedLearningTray({
   const previousDropKey = useRef(dropKey);
   const dropProgress = useRef(new Animated.Value(1)).current;
   const dropOpacity = useRef(new Animated.Value(0)).current;
-  const d078RouteList = d078Routes?.length ? d078Routes : d078Route ? [d078Route] : [];
+  const allD078Routes = d078Routes?.length ? d078Routes : d078Route ? [d078Route] : [];
+  const hasSelectedRouteContent = (route: D078TrayContext) => Boolean(
+    (route.programmeSelected ?? Boolean(route.programmeLabel))
+    || route.institutionContextLabel || route.domainLabel || route.areaLabel || route.roleLabel
+    || route.choices.length || route.foundations.length || route.selectedItems.length,
+  );
+  const d078RouteList = allD078Routes.filter(hasSelectedRouteContent);
   const totalSelected = useMemo(() => stackSet.stacks.reduce((sum, stack) => sum + stack.selectedIds.length
     + Number(Boolean(stack.route.programmeId)) + Number(Boolean(stack.route.domainId))
     + Number(Boolean(stack.route.areaId)) + Number(Boolean(stack.route.roleId)), 0)
@@ -549,6 +567,7 @@ export function GuidedLearningTray({
       + Number(route.programmeSelected ?? Boolean(route.programmeLabel)) + Number(Boolean(route.institutionContextLabel))
       + Number(Boolean(route.domainLabel)) + Number(Boolean(route.areaLabel)) + Number(Boolean(route.roleLabel)), 0), [d078RouteList, stackSet.stacks]);
   const routeCount = stackSet.stacks.length + d078RouteList.length;
+  const previousTotalSelected = useRef(totalSelected);
 
   // `initialMode` is also an open command from item cards. The guided route
   // can remain mounted while navigation updates its query, so applying it
@@ -562,8 +581,21 @@ export function GuidedLearningTray({
   }, [initialMode]);
 
   useEffect(() => {
+    if (previousStatusMessage.current === statusMessage) return;
+    previousStatusMessage.current = statusMessage;
+    if (statusMessage) setActionNotice(null);
+  }, [statusMessage]);
+
+  useEffect(() => {
     if (dropKey === undefined || dropKey === previousDropKey.current) return;
     previousDropKey.current = dropKey;
+    if (totalSelected > previousTotalSelected.current) {
+      const label = pendingDropLabel?.trim();
+      setActionNotice(label ? `${label.replace(/[.!?]+$/, "")}.` : "Added to your learning plan.");
+    } else if (totalSelected < previousTotalSelected.current) {
+      setActionNotice("Removed from your learning plan.");
+    }
+    previousTotalSelected.current = totalSelected;
     dropProgress.setValue(0);
     dropOpacity.setValue(1);
     const drop = reducedMotion
@@ -573,7 +605,7 @@ export function GuidedLearningTray({
       drop,
       Animated.timing(dropOpacity, { toValue: 0, duration: reducedMotion ? 120 : 240, useNativeDriver: true }),
     ]).start();
-  }, [dropKey, dropOpacity, dropProgress, reducedMotion]);
+  }, [dropKey, dropOpacity, dropProgress, pendingDropLabel, reducedMotion, totalSelected]);
 
   const changeMode = (next: GuidedLearningTrayMode) => {
     if (!forceIcon) setMode(next);
@@ -582,15 +614,20 @@ export function GuidedLearningTray({
 
   if (!routeCount && displayMode !== "icon") {
     return (
-      <RouteButton
-        accessibilityLabel="Open learning plan tray"
-        onPress={() => changeMode("compact")}
-        variant="quiet"
-        icon={<Feather name="folder" size={18} color={colors.accentRole.action} />}
-        style={[styles.emptyTray, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }, style]}
-      >
-        <Text style={[styles.emptyTrayText, { color: colors.textRole.primary }]}>Your learning plan is empty</Text>
-      </RouteButton>
+      <View style={[styles.emptyTrayWrap, style]}>
+        <View style={[styles.emptyTrayShell, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.strong }]}>
+          <RouteButton
+            accessibilityLabel="Open learning plan tray"
+            onPress={() => changeMode("mid")}
+            variant="quiet"
+            icon={<Feather name="folder" size={18} color={colors.accentRole.action} />}
+            style={styles.emptyTray}
+          >
+            <Text style={[styles.emptyTrayText, { color: colors.textRole.primary }]}>Your learning plan is empty</Text>
+          </RouteButton>
+          {onDismiss ? <RouteButton accessibilityLabel="Close learning plan tray" onPress={onDismiss} variant="quiet" icon={<Feather name="x" size={17} color={colors.textRole.muted} />} style={styles.headerIconButton} /> : null}
+        </View>
+      </View>
     );
   }
 
@@ -610,23 +647,19 @@ export function GuidedLearningTray({
   if (displayMode === "icon") {
     return (
       <View style={[styles.iconWrap, style]}>
-        <RouteButton
-          accessibilityLabel={`Open learning plan tray for ${dockLabel}${totalSelected > 0 ? `, with ${totalSelected} selected route detail${totalSelected === 1 ? "" : "s"} or learning choice${totalSelected === 1 ? "" : "s"}` : ""}`}
-          onPress={() => changeMode("compact")}
-          variant="quiet"
-          style={[styles.iconTray, { width: Math.max(120, Math.min(252, viewportWidth * 0.48)), backgroundColor: colors.surface.raised, borderColor: colors.borderRole.strong }]}
-        >
-          <Feather name="folder" size={21} color={colors.accentRole.action} />
-          <Text style={[styles.iconTrayLabel, { color: colors.textRole.primary }]} numberOfLines={1}>Learning plan</Text>
-          {totalSelected > 0 ? <View style={[styles.countBadge, { backgroundColor: colors.accentRole.fill }]}><Text style={[styles.countBadgeText, { color: colors.accentRole.onFill }]}>{totalSelected}</Text></View> : null}
-        </RouteButton>
-        {onDismiss ? <RouteButton
-          accessibilityLabel="Dismiss learning plan tray"
-          onPress={onDismiss}
-          variant="quiet"
-          icon={<Feather name="x" size={18} color={colors.textRole.muted} />}
-          style={styles.headerIconButton}
-        /> : null}
+        <View style={[styles.iconTray, { width: Math.max(160, Math.min(292, viewportWidth * 0.58)), backgroundColor: colors.surface.raised, borderColor: colors.borderRole.strong }]}>
+          <RouteButton
+            accessibilityLabel={`Open learning plan tray for ${dockLabel}${totalSelected > 0 ? `, with ${totalSelected} selected route detail${totalSelected === 1 ? "" : "s"} or learning choice${totalSelected === 1 ? "" : "s"}` : ""}`}
+            onPress={() => changeMode("mid")}
+            variant="quiet"
+            style={styles.iconTrayOpenButton}
+          >
+            <Feather name="folder" size={21} color={colors.accentRole.action} />
+            <Text style={[styles.iconTrayLabel, { color: colors.textRole.primary }]} numberOfLines={1}>Learning plan</Text>
+            {totalSelected > 0 ? <View style={[styles.countBadge, { backgroundColor: colors.accentRole.fill }]}><Text style={[styles.countBadgeText, { color: colors.accentRole.onFill }]}>{totalSelected}</Text></View> : null}
+          </RouteButton>
+          {onDismiss ? <RouteButton accessibilityLabel="Close learning plan tray" onPress={onDismiss} variant="quiet" icon={<Feather name="x" size={17} color={colors.textRole.muted} />} style={styles.headerIconButton} /> : null}
+        </View>
         <Animated.View pointerEvents="none" style={[styles.dropPill, { opacity: dropOpacity, transform: [{ translateY: dropProgress.interpolate({ inputRange: [0, 1], outputRange: [-22, 0] }) }, { scale: dropProgress.interpolate({ inputRange: [0, 1], outputRange: [0.72, 1] }) }], backgroundColor: colors.accentRole.fill }]}>
           <Text style={[styles.dropPillText, { color: colors.accentRole.onFill }]}>{pendingDropLabel || "Added"}</Text>
         </Animated.View>
@@ -637,7 +670,7 @@ export function GuidedLearningTray({
   const compact = displayMode === "compact";
   const mid = displayMode === "mid";
   return (
-    <View testID="guided-learning-tray" style={[styles.tray, displayMode === "full" && styles.trayFull, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.strong }, style]}>
+    <View testID="guided-learning-tray" style={[styles.tray, styles.trayOpen, displayMode === "full" && styles.trayFull, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.strong }, style]}>
       <Animated.View pointerEvents="none" style={[styles.dropPill, { opacity: dropOpacity, transform: [{ translateY: dropProgress.interpolate({ inputRange: [0, 1], outputRange: [-18, 0] }) }, { scale: dropProgress.interpolate({ inputRange: [0, 1], outputRange: [0.72, 1] }) }], backgroundColor: colors.accentRole.fill }]}>
         <Text style={[styles.dropPillText, { color: colors.accentRole.onFill }]}>{pendingDropLabel || "Added to your plan"}</Text>
       </Animated.View>
@@ -648,8 +681,9 @@ export function GuidedLearningTray({
           <Text style={[styles.trayMeta, { color: colors.textRole.secondary }]}>{totalSelected} selected route detail{totalSelected === 1 ? "" : "s"} or learning choice{totalSelected === 1 ? "" : "s"} · {routeCount} route{routeCount === 1 ? "" : "s"}</Text>
         </View>
         <View style={styles.headerActions}>
-          <RouteButton accessibilityLabel="Collapse learning plan tray to icon" onPress={() => changeMode("icon")} variant="quiet" icon={<Feather name="minimize-2" size={18} color={colors.textRole.muted} />} style={styles.headerIconButton} />
-          {onDismiss ? <RouteButton accessibilityLabel="Dismiss learning plan tray" onPress={onDismiss} variant="quiet" icon={<Feather name="x" size={18} color={colors.textRole.muted} />} style={styles.headerIconButton} /> : null}
+          <RouteButton accessibilityLabel="Minimize learning plan tray" onPress={() => changeMode("icon")} variant="quiet" icon={<Feather name="minus" size={19} color={colors.textRole.muted} />} style={styles.headerIconButton} />
+          <RouteButton accessibilityLabel={displayMode === "full" ? "Restore learning plan tray" : "Expand learning plan tray"} onPress={() => changeMode(displayMode === "full" ? "mid" : "full")} variant="quiet" icon={<Feather name={displayMode === "full" ? "minimize-2" : "maximize-2"} size={17} color={colors.textRole.muted} />} style={styles.headerIconButton} />
+          {onDismiss ? <RouteButton accessibilityLabel="Close learning plan tray" onPress={onDismiss} variant="quiet" icon={<Feather name="x" size={18} color={colors.textRole.muted} />} style={styles.headerIconButton} /> : null}
         </View>
       </View>
       {stackSet.warnings.length || d078RouteList.length > 1 ? <View style={[styles.warningBox, { backgroundColor: colors.warningSoft, borderColor: colors.accentRole.warning }]}>
@@ -665,18 +699,19 @@ export function GuidedLearningTray({
           ))}
         </View>
       </View> : null}
-      {compact ? d078RouteList.map((route, routeIndex) => <View key={`compact-d078-${route.stackId ?? routeIndex}`} style={styles.compactD078Summary}>
-        <View style={styles.d078Row}>
-          <Feather name={(route.programmeSelected ?? Boolean(route.programmeLabel)) ? "check-square" : "square"} size={20} color={(route.programmeSelected ?? Boolean(route.programmeLabel)) ? colors.accentRole.action : colors.textRole.muted} />
+      {compact ? <ScrollView style={styles.routeScrollCompact} contentContainerStyle={styles.routeScrollContent} nestedScrollEnabled>{d078RouteList.map((route, routeIndex) => <View key={`compact-d078-${route.stackId ?? routeIndex}`} style={styles.compactD078Summary}>
+        {(route.programmeSelected ?? Boolean(route.programmeLabel)) ? <View style={styles.d078Row}>
+          <Feather name="check" size={20} color={colors.accentRole.action} />
           <Feather name="book-open" size={18} color={colors.accentRole.action} />
-          <Text style={[styles.d078Copy, { color: colors.textRole.primary }]}>Programme: {route.programmeLabel || "Choose a programme on the page"}</Text>
-        </View>
+          <Text style={[styles.d078Copy, styles.d078ProgrammeCopy, { color: colors.textRole.primary }]}>Programme: {route.programmeLabel}</Text>
+          {route.active !== false && route.onRemoveProgramme ? <RouteButton accessibilityLabel={`Remove ${route.programmeLabel} from your learning plan`} onPress={() => setProgrammeRemovalRoute(route)} variant="quiet" icon={<Feather name="trash-2" size={17} color={colors.textRole.muted} />} style={styles.d078Remove} /> : null}
+        </View> : null}
         {route.institutionContextLabel ? <View key={route.institutionId ?? route.institutionContextLabel} style={styles.d078Row}><Feather name="check-square" size={18} color={colors.accentRole.action} /><Text style={[styles.d078Copy, { color: colors.textRole.secondary }]}>{route.institutionContextLabel}</Text></View> : null}
         {route.domainLabel ? <View key={route.domainId ?? route.domainLabel} style={styles.d078Row}><Feather name="check-square" size={18} color={colors.accentRole.action} /><Text style={[styles.d078Copy, { color: colors.textRole.secondary }]}>Field: {route.domainLabel}</Text></View> : null}
         {route.areaLabel ? <View key={route.areaId ?? route.areaLabel} style={styles.d078Row}><Feather name="check-square" size={18} color={colors.accentRole.action} /><Text style={[styles.d078Copy, { color: colors.textRole.secondary }]}>Area: {route.areaLabel}</Text></View> : null}
         {route.roleLabel ? <View key={route.roleId ?? route.roleLabel} style={styles.d078Row}><Feather name="check-square" size={18} color={colors.accentRole.action} /><Text style={[styles.d078Copy, { color: colors.textRole.secondary }]}>Role: {route.roleLabel}</Text></View> : null}
         {route.choices.length ? <View style={styles.d078Section}>
-          <Text style={[styles.d078Heading, { color: colors.textRole.primary }]}>Your selected approaches</Text>
+          <Text style={[styles.d078Heading, { color: colors.textRole.primary }]}>Your selected approaches and work focuses</Text>
           {route.choices.map((choice) => <View key={`${choice.kind}:${choice.id}`} style={styles.d078Row}><Feather name="check-square" size={18} color={colors.accentRole.action} /><Text style={[styles.d078Copy, { color: colors.textRole.secondary }]}>{choice.label}</Text></View>)}
         </View> : null}
         {(["domain", "area", "role"] as const).map((level) => {
@@ -689,8 +724,7 @@ export function GuidedLearningTray({
           </View>;
         })}
         <Text style={[styles.d078Meta, { color: colors.textRole.muted }]}>{route.choices.length} selected method/design{route.choices.length === 1 ? "" : "s"} · {route.selectedItems.length} added item{route.selectedItems.length === 1 ? "" : "s"}</Text>
-      </View>) : null}
-      {statusMessage ? <Text accessibilityLiveRegion="polite" style={[styles.d078Meta, { color: colors.textRole.muted }]}>{statusMessage}</Text> : null}
+      </View>)}</ScrollView> : null}
       {!compact ? <ScrollView style={[styles.routeScroll, displayMode === "full" && styles.routeScrollFull]} contentContainerStyle={styles.routeScrollContent} nestedScrollEnabled>
         {d078RouteList.map((route, routeIndex) => {
           // A legacy/single-route caller has no active flag. Keep its route
@@ -710,23 +744,24 @@ export function GuidedLearningTray({
               <Text style={[styles.d078Meta, { color: colors.textRole.secondary }]}>{route.choices.length} selected method/design{route.choices.length === 1 ? "" : "s"} {"\u00b7"} {route.selectedItems.length} added item{route.selectedItems.length === 1 ? "" : "s"}</Text>
             </View>
             {route.onActivate && !routeIsActive ? <RouteButton label="Use this route" onPress={route.onActivate} variant="secondary" style={styles.d078RouteButton} /> : null}
-            {route.onRemoveStack ? <RouteButton accessibilityLabel={`Remove route ${routeIndex + 1}`} onPress={route.onRemoveStack} variant="quiet" icon={<Feather name="x" size={16} color={colors.textRole.muted} />} style={styles.d078RouteButton} /> : null}
+            {route.onRemoveStack ? <RouteButton accessibilityLabel={`Delete route ${routeIndex + 1}`} onPress={() => setPendingRemoval({ label: `Route ${routeIndex + 1}`, remove: route.onRemoveStack! })} variant="quiet" icon={<Feather name="trash-2" size={16} color={colors.textRole.muted} />} style={styles.d078RouteButton} /> : null}
           </View>
-          <View style={styles.d078Row}>
-            <Feather name={(route.programmeSelected ?? Boolean(route.programmeLabel)) ? "check-square" : "square"} size={20} color={(route.programmeSelected ?? Boolean(route.programmeLabel)) ? colors.accentRole.action : colors.textRole.muted} />
+          {(route.programmeSelected ?? Boolean(route.programmeLabel)) ? <View style={styles.d078Row}>
+            <Feather name="check" size={20} color={colors.accentRole.action} />
             <Feather name="book-open" size={18} color={colors.accentRole.action} />
-            <Text style={[styles.d078Copy, { color: colors.textRole.primary }]}>Programme: {route.programmeLabel || "Choose a programme on the page"}</Text>
-          </View>
+            <Text style={[styles.d078Copy, styles.d078ProgrammeCopy, { color: colors.textRole.primary }]}>Programme: {route.programmeLabel}</Text>
+            {routeIsActive && route.onRemoveProgramme ? <RouteButton accessibilityLabel={`Remove ${route.programmeLabel} from your learning plan`} onPress={() => setProgrammeRemovalRoute(route)} variant="quiet" icon={<Feather name="trash-2" size={17} color={colors.textRole.muted} />} style={styles.d078Remove} /> : null}
+          </View> : null}
           {route.institutionContextLabel ? <View style={styles.d078Row}><Feather name="check-square" size={18} color={colors.accentRole.action} /><Text style={[styles.d078Copy, { color: colors.textRole.secondary }]}>{route.institutionContextLabel}</Text></View> : null}
           {route.domainLabel ? <View style={styles.d078Row}><Feather name="check-square" size={18} color={colors.accentRole.action} /><Text style={[styles.d078Copy, { color: colors.textRole.secondary }]}>Field: {route.domainLabel}</Text></View> : null}
           {route.areaLabel ? <View style={styles.d078Row}><Feather name="check-square" size={18} color={colors.accentRole.action} /><Text style={[styles.d078Copy, { color: colors.textRole.secondary }]}>Area: {route.areaLabel}</Text></View> : null}
           {route.roleLabel ? <View style={styles.d078Row}><Feather name="check-square" size={18} color={colors.accentRole.action} /><Text style={[styles.d078Copy, { color: colors.textRole.secondary }]}>Role: {route.roleLabel}</Text></View> : null}
           {route.choices.length ? <View style={styles.d078Section}>
-            <Text style={[styles.d078Heading, { color: colors.textRole.primary }]}>Your selected approaches</Text>
+            <Text style={[styles.d078Heading, { color: colors.textRole.primary }]}>Your selected approaches and work focuses</Text>
             {route.choices.map((choice) => <View key={`${choice.kind}:${choice.id}`} style={styles.d078Row}>
               <Feather name="check-square" size={18} color={colors.accentRole.action} />
               <Text style={[styles.d078Copy, { color: colors.textRole.secondary }]}>{choice.label}</Text>
-              {routeIsActive ? <RouteButton accessibilityLabel={`Remove ${choice.label} from your selected approaches`} onPress={() => route.onRemoveChoice(choice)} variant="quiet" icon={<Feather name="x" size={16} color={colors.textRole.muted} />} style={styles.d078Remove} /> : null}
+              {routeIsActive ? <RouteButton accessibilityLabel={`Delete ${choice.label} from your selected approaches`} onPress={() => setPendingRemoval({ label: choice.label, remove: () => route.onRemoveChoice(choice) })} variant="quiet" icon={<Feather name="trash-2" size={16} color={colors.textRole.muted} />} style={styles.d078Remove} /> : null}
             </View>)}
           </View> : null}
           {route.foundations.length ? <View style={styles.d078Section}>
@@ -740,7 +775,7 @@ export function GuidedLearningTray({
               {group.items.map((item) => <View key={item.id} style={styles.d078Row}>
                 <Feather name="check-square" size={18} color={colors.accentRole.action} />
                 <View style={styles.d078ItemCopy}><Text style={[styles.d078Copy, { color: colors.textRole.primary }]}>{item.label}</Text><Text style={[styles.d078Meta, { color: colors.textRole.muted }]}>{item.lane}</Text></View>
-                {routeIsActive ? <RouteButton accessibilityLabel={`Remove ${item.label} from your learning`} onPress={() => route.onRemoveItem(item.id)} variant="quiet" icon={<Feather name="x" size={16} color={colors.textRole.muted} />} style={styles.d078Remove} /> : null}
+                {routeIsActive ? <RouteButton accessibilityLabel={`Delete ${item.label} from your learning`} onPress={() => setPendingRemoval({ label: item.label, remove: () => route.onRemoveItem(item.id) })} variant="quiet" icon={<Feather name="trash-2" size={16} color={colors.textRole.muted} />} style={styles.d078Remove} /> : null}
               </View>)}
             </View>) : <Text style={[styles.d078Meta, { color: colors.textRole.muted }]}>No additional items selected. The foundations and selected methods remain part of this route.</Text>}
           </View>
@@ -750,33 +785,55 @@ export function GuidedLearningTray({
           const key = learningPlanRouteKey(stack.route);
           return <View key={key} style={[styles.routeCard, { borderColor: colors.borderRole.subtle }]}>
             <Text style={[styles.routeTitle, { color: colors.textRole.primary }]}>{routeLabel(stack.route, routeLabels?.[key])}</Text>
-            <RouteLayers stack={stack} routeKey={key} onRemove={onRemove} onReorder={onReorder} onSelectCandidate={onSelectCandidate} onSelectAlternative={onSelectAlternative} advisoryAreaLabels={advisoryAreaLabels?.[key]} />
+            <RouteLayers stack={stack} routeKey={key} onRemove={onRemove ? (routeKey, itemId) => { const label = stackItems(stack).find((item) => item.id === itemId)?.name ?? "item"; onRemove(routeKey, itemId); setActionNotice(`Removed ${label} from your learning plan.`); } : undefined} onReorder={onReorder} onSelectCandidate={onSelectCandidate} onSelectAlternative={onSelectAlternative} advisoryAreaLabels={advisoryAreaLabels?.[key]} />
           </View>;
         })}
       </ScrollView> : null}
-      <View style={styles.modeRow}>
-        {(["compact", "mid", "full"] as GuidedLearningTrayMode[]).map((value) => (
-          <RouteButton key={value} label={MODE_LABELS[value]} accessibilityLabel={`Show learning plan ${MODE_LABELS[value].toLowerCase()} size`} selected={displayMode === value} variant={displayMode === value ? "selected" : "quiet"} onPress={() => changeMode(value)} style={styles.modeButton} />
-        ))}
-      </View>
-      {mid || displayMode === "full" ? <View style={styles.actionRow}>
+      {(displayMode as string) !== "icon" ? <View style={styles.actionRow}>
+        {actionNotice || statusMessage ? <Text accessibilityLiveRegion="polite" style={[styles.actionStatus, { color: colors.textRole.secondary }]}>{actionNotice ?? statusMessage}</Text> : null}
         {onCreateD078Route ? <RouteButton label="Build a separate route" onPress={onCreateD078Route} variant="secondary" style={styles.actionButton} /> : null}
-        {onSave ? <RouteButton label="Save" onPress={onSave} variant="quiet" style={styles.actionButton} /> : null}
-        {onPrint ? <RouteButton label="Print / download" onPress={onPrint} variant="quiet" style={styles.actionButton} /> : null}
-        {onShare ? <RouteButton label="Share summary" onPress={onShare} variant="quiet" style={styles.actionButton} /> : null}
+        {onSave ? <RouteButton label="Save" onPress={() => { setActionNotice(null); onSave(); }} variant="quiet" style={styles.actionButton} /> : null}
+        {onPrint ? <RouteButton label="Print / download" onPress={() => { setActionNotice(null); onPrint(); }} variant="quiet" style={styles.actionButton} /> : null}
+        {onShare ? <RouteButton label="Share summary" onPress={() => { setActionNotice(null); onShare(); }} variant="quiet" style={styles.actionButton} /> : null}
       </View> : null}
+      <Modal transparent visible={Boolean(programmeRemovalRoute)} animationType="fade" onRequestClose={() => setProgrammeRemovalRoute(null)}>
+        <View style={styles.confirmationBackdrop}>
+          <View accessibilityRole="alert" style={[styles.confirmationCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.strong }]}>
+            <Text accessibilityRole="header" style={[styles.confirmationTitle, { color: colors.textRole.primary }]}>Remove programme?</Text>
+            <Text style={[styles.detailText, { color: colors.textRole.secondary }]}>Remove {programmeRemovalRoute?.programmeLabel} from your learning plan? Its programme selection will be cleared.</Text>
+            <View style={styles.confirmationActions}>
+              <RouteButton label="Keep programme" onPress={() => setProgrammeRemovalRoute(null)} variant="secondary" />
+              <RouteButton label="Remove programme" onPress={() => { const label = programmeRemovalRoute?.programmeLabel ?? "Programme"; programmeRemovalRoute?.onRemoveProgramme?.(); setActionNotice(`Removed ${label} from your learning plan.`); setProgrammeRemovalRoute(null); }} variant="quiet" />
+            </View>
+          </View>
+        </View>
+      </Modal>
+      <Modal transparent visible={Boolean(pendingRemoval)} animationType="fade" onRequestClose={() => setPendingRemoval(null)}>
+        <View style={styles.confirmationBackdrop}>
+          <View accessibilityRole="alert" style={[styles.confirmationCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.strong }]}>
+            <Text accessibilityRole="header" style={[styles.confirmationTitle, { color: colors.textRole.primary }]}>Delete this selection?</Text>
+            <Text style={[styles.detailText, { color: colors.textRole.secondary }]}>Do you want to delete {pendingRemoval?.label} from this learning route? This does not delete your account or other routes.</Text>
+            <View style={styles.confirmationActions}>
+              <RouteButton label="Keep it" onPress={() => setPendingRemoval(null)} variant="secondary" />
+              <RouteButton label="Delete selection" onPress={() => { const label = pendingRemoval?.label ?? "Selection"; pendingRemoval?.remove(); setActionNotice(`Removed ${label} from your learning plan.`); setPendingRemoval(null); }} variant="quiet" />
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   iconWrap: { flexDirection: "row", alignItems: "center", justifyContent: "flex-end", minHeight: 56, gap: Spacing.xs },
-  iconTray: { height: 54, borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, flexDirection: "row", alignItems: "center", justifyContent: "flex-start", gap: Spacing.sm, ...Shadow.md },
+  iconTray: { height: 56, borderWidth: 1, borderRadius: Radius.md, paddingLeft: Spacing.md, paddingRight: 4, flexDirection: "row", alignItems: "center", gap: Spacing.xs, ...Shadow.md },
+  iconTrayOpenButton: { flex: 1, height: 52, minHeight: 52, paddingHorizontal: 0, borderWidth: 0, flexDirection: "row", alignItems: "center", justifyContent: "flex-start", gap: Spacing.sm },
   iconTrayLabel: { fontSize: 15, lineHeight: 20, fontWeight: FontWeight.semibold, flex: 1 },
   countBadge: { position: "absolute", right: -3, top: -3, minWidth: 20, height: 20, paddingHorizontal: 4, borderRadius: Radius.full, alignItems: "center", justifyContent: "center" },
   countBadgeText: { fontSize: FontSize.md, lineHeight: 16, fontWeight: FontWeight.heavy },
   tray: { borderWidth: 1, borderRadius: Radius.xl, padding: Spacing.lg, ...Shadow.md, overflow: "visible" },
-  trayFull: { flex: 1, height: "100%" as any, minHeight: 0 },
+  trayOpen: { flexDirection: "column", overflow: "hidden", maxHeight: "70vh" as any },
+  trayFull: { alignSelf: "flex-end", width: "100%" as any, maxWidth: 560, height: "78vh" as any, maxHeight: "78vh" as any, minHeight: 320, flexGrow: 0 },
   trayHeader: { flexDirection: "row", alignItems: "flex-start", gap: Spacing.md },
   headerActions: { flexDirection: "row", alignItems: "center", gap: 2 },
   trayTitleBlock: { flex: 1 },
@@ -787,7 +844,8 @@ const styles = StyleSheet.create({
   warningBox: { flexDirection: "row", gap: Spacing.sm, borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, marginTop: Spacing.md },
   warningCopy: { flex: 1, gap: Spacing.xs },
   warningText: { flex: 1, fontSize: 14, lineHeight: 20 },
-  routeScroll: { maxHeight: 360, marginTop: Spacing.md },
+  routeScroll: { maxHeight: 360, marginTop: Spacing.md, flexShrink: 1, minHeight: 0 },
+  routeScrollCompact: { maxHeight: 220, marginTop: Spacing.sm, flexShrink: 1, minHeight: 0 },
   routeScrollFull: { flex: 1, minHeight: 0, maxHeight: undefined as any },
   routeScrollContent: { gap: Spacing.md, paddingBottom: Spacing.xs },
   d078Section: { gap: Spacing.xs, marginTop: Spacing.md },
@@ -833,6 +891,10 @@ const styles = StyleSheet.create({
   detailText: { fontSize: 16, lineHeight: 25 },
   detailMeta: { fontSize: 16, lineHeight: 24 },
   detailLabel: { fontWeight: FontWeight.bold },
+  resourceEntry: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.sm, gap: Spacing.xs },
+  resourceAccess: { fontSize: FontSize.xs, lineHeight: 18 },
+  resourceLocator: { fontSize: 14, lineHeight: 21 },
+  resourceActions: { flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: Spacing.sm },
   resourceLink: { minHeight: 44, alignSelf: "flex-start", flexDirection: "row", alignItems: "center", gap: Spacing.xs, paddingVertical: Spacing.xs },
   resourceButton: { minHeight: 44, borderWidth: 0, borderRadius: 0, paddingHorizontal: 2, paddingVertical: 0, alignSelf: "flex-start" },
   resourceLinkText: { fontSize: 15, lineHeight: 22, fontWeight: FontWeight.semibold },
@@ -844,12 +906,18 @@ const styles = StyleSheet.create({
   compareLink: { alignSelf: "flex-start", minHeight: 44, justifyContent: "center", marginTop: Spacing.xs },
   advisoryBox: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, marginTop: Spacing.xs },
   emptyText: { fontSize: 16, lineHeight: 24, paddingVertical: Spacing.md },
-  modeRow: { flexDirection: "row", gap: Spacing.xs, marginTop: Spacing.md },
-  modeButton: { minHeight: 44, minWidth: 56, paddingHorizontal: Spacing.md, borderRadius: Radius.full, justifyContent: "center" },
-  actionRow: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm, marginTop: Spacing.md },
+  d078ProgrammeCopy: { flex: 1 },
+  confirmationBackdrop: { flex: 1, backgroundColor: "rgba(0,0,0,0.48)", alignItems: "center", justifyContent: "center", padding: Spacing.lg },
+  confirmationCard: { width: "100%", maxWidth: 440, borderWidth: 1, borderRadius: Radius.lg, padding: Spacing.lg, gap: Spacing.md },
+  confirmationTitle: { fontSize: 20, lineHeight: 28, fontWeight: FontWeight.bold },
+  confirmationActions: { flexDirection: "row", justifyContent: "flex-end", flexWrap: "wrap", gap: Spacing.sm },
+  actionRow: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm, marginTop: Spacing.md, flexShrink: 0 },
+  actionStatus: { width: "100%", fontSize: 14, lineHeight: 20 },
   actionButton: { minHeight: 44, borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, flexDirection: "row", alignItems: "center", gap: Spacing.xs },
   dropPill: { position: "absolute", right: Spacing.lg, top: -18, zIndex: 5, borderRadius: Radius.full, paddingHorizontal: Spacing.md, paddingVertical: Spacing.xs, ...Shadow.sm },
   dropPillText: { fontSize: 14, lineHeight: 20, fontWeight: FontWeight.bold },
   emptyTray: { minHeight: 56, borderWidth: 1, borderRadius: Radius.xl, paddingHorizontal: Spacing.lg, flexDirection: "row", alignItems: "center", gap: Spacing.sm, ...Shadow.sm },
+  emptyTrayShell: { minHeight: 56, flexDirection: "row", alignItems: "center", borderWidth: 1, borderRadius: Radius.md, paddingLeft: Spacing.md, paddingRight: 4, ...Shadow.md },
+  emptyTrayWrap: { flexDirection: "row", alignItems: "center", justifyContent: "flex-end", gap: Spacing.xs },
   emptyTrayText: { fontSize: 16, lineHeight: 24, fontWeight: FontWeight.semibold },
 });

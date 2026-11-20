@@ -1,0 +1,167 @@
+{
+  "domain_id": "D166",
+  "recorded_on": "2026-10-29",
+  "disposition": "four_broad_proposals_superseded_by_eight_detailed_source_reconciled_areas",
+  "records": [
+    {
+      "area_id": "D166:perception-sensing-and-scene-understanding",
+      "label": "Perception, Sensing and Scene Understanding",
+      "description": "Build and validate sensing systems and algorithms that detect, classify and track road users, objects and driving conditions.",
+      "boundary": "Build and validate sensing systems and algorithms that detect, classify and track road users, objects and driving conditions.",
+      "source_ids": [
+        "NHTSA_AUTOMATED_VEHICLE_SAFETY_SCOPE"
+      ],
+      "source_references": [
+        {
+          "source_id": "NHTSA_AUTOMATED_VEHICLE_SAFETY_SCOPE",
+          "publisher": "National Highway Traffic Safety Administration",
+          "title": "Automated Vehicles Safety",
+          "url": "https://www.nhtsa.gov/vehicle-safety/automated-vehicles-safety",
+          "locator": "NHTSA automated-vehicle safety overview: automated-driving systems, sensing, performance and safety evaluation context.",
+          "supports": "Perception, sensing and scene understanding are established automated-driving engineering practice areas.",
+          "claim_limit": "U.S. public-safety policy scope; does not establish the exact catalogue boundary, role route or Nigerian vehicle approval.",
+          "geographic_scope": "United States public-sector guidance; practice evidence only"
+        }
+      ],
+      "uncorroborated_source_urls": [],
+      "recommendation_status": "recommendation_needs_role_and_context_integration",
+      "area_status": "review_required_pending_role_route_and_evidence_gate",
+      "student_visible": false,
+      "nigerian_context": null,
+      "source_evidence_status": "source_linked",
+      "unresolved_source_ids": [],
+      "area_evidence_link_check": {
+        "checked_against_catalog_and_captured_review_sources": true,
+        "resolution_methods": [],
+        "unresolved_catalog_source_ids": []
+      },
+      "disposition": "superseded_by_eight_detailed_source_reconciled_areas",
+      "replaced_by_area_ids": [
+        "D166:vehicle-sensing-and-sensor-calibration",
+        "D166:perception-and-scene-understanding"
+      ],
+      "student_destination": false,
+      "note": "Historical broad area proposal retained for audit only; not an active area or ISCO subgroup."
+    },
+    {
+      "area_id": "D166:localization-mapping-and-vehicle-state-estimation",
+      "label": "Localization, Mapping and Vehicle State Estimation",
+      "description": "Estimate vehicle position and motion and maintain/use maps and localization systems for automated driving.",
+      "boundary": "Estimate vehicle position and motion and maintain/use maps and localization systems for automated driving.",
+      "source_ids": [
+        "NHTSA_AUTOMATED_VEHICLE_SAFETY_SCOPE"
+      ],
+      "source_references": [
+        {
+          "source_id": "NHTSA_AUTOMATED_VEHICLE_SAFETY_SCOPE",
+          "publisher": "National Highway Traffic Safety Administration",
+          "title": "Automated Vehicles Safety",
+          "url": "https://www.nhtsa.gov/vehicle-safety/automated-vehicles-safety",
+          "locator": "NHTSA automated-vehicle safety context: automated-driving systems require defined system performance and safety evaluation.",
+          "supports": "Localization, mapping and vehicle-state estimation are established automated-driving engineering practice areas.",
+          "claim_limit": "U.S. public-safety policy scope; does not establish the exact catalogue boundary, role route or Nigerian vehicle approval.",
+          "geographic_scope": "United States public-sector guidance; practice evidence only"
+        }
+      ],
+      "uncorroborated_source_urls": [],
+      "recommendation_status": "recommendation_needs_role_and_context_integration",
+      "area_status": "review_required_pending_role_route_and_evidence_gate",
+      "student_visible": false,
+      "nigerian_context": null,
+      "source_evidence_status": "source_linked",
+      "unresolved_source_ids": [],
+      "area_evidence_link_check": {
+        "checked_against_catalog_and_captured_review_sources": true,
+        "resolution_methods": [],
+        "unresolved_catalog_source_ids": []
+      },
+      "disposition": "superseded_by_eight_detailed_source_reconciled_areas",
+      "replaced_by_area_ids": [
+        "D166:high-definition-mapping",
+        "D166:localization-and-vehicle-state-estimation"
+      ],
+      "student_destination": false,
+      "note": "Historical broad area proposal retained for audit only; not an active area or ISCO subgroup."
+    },
+    {
+      "area_id": "D166:planning-control-and-automated-driving-software",
+      "label": "Planning, Control and Automated Driving Software",
+      "description": "Plan safe paths and control vehicle motion within system constraints and the operational design domain.",
+      "boundary": "Plan safe paths and control vehicle motion within system constraints and the operational design domain.",
+      "source_ids": [
+        "SAE_J3016_AUTOMATED_DRIVING_TAXONOMY"
+      ],
+      "source_references": [
+        {
+          "source_id": "SAE_J3016_AUTOMATED_DRIVING_TAXONOMY",
+          "publisher": "SAE International",
+          "title": "Taxonomy and Definitions for Terms Related to Driving Automation Systems",
+          "url": "https://saemobilus.sae.org/standards/j3016_202104-taxonomy-definitions-terms-related-driving-automation-systems-road-motor-vehicles?tabType=viewannotation",
+          "locator": "SAE J3016 scope: standardized levels and terminology for driving-automation systems and their operating roles.",
+          "supports": "Planning, control and automated-driving software are established autonomous-vehicle engineering practice areas.",
+          "claim_limit": "SAE terminology standard; supports scope, not the exact catalogue boundary, role route or vehicle-approval requirements.",
+          "geographic_scope": "international engineering standard"
+        }
+      ],
+      "uncorroborated_source_urls": [],
+      "recommendation_status": "recommendation_needs_role_and_context_integration",
+      "area_status": "review_required_pending_role_route_and_evidence_gate",
+      "student_visible": false,
+      "nigerian_context": null,
+      "source_evidence_status": "source_linked",
+      "unresolved_source_ids": [],
+      "area_evidence_link_check": {
+        "checked_against_catalog_and_captured_review_sources": true,
+        "resolution_methods": [],
+        "unresolved_catalog_source_ids": []
+      },
+      "disposition": "superseded_by_eight_detailed_source_reconciled_areas",
+      "replaced_by_area_ids": [
+        "D166:automated-driving-planning",
+        "D166:vehicle-control-and-dynamics"
+      ],
+      "student_destination": false,
+      "note": "Historical broad area proposal retained for audit only; not an active area or ISCO subgroup."
+    },
+    {
+      "area_id": "D166:vehicle-integration-safety-and-verification",
+      "label": "Vehicle Integration, Safety and Verification",
+      "description": "Integrate automated-driving components with the vehicle and verify system performance, safety and operational constraints.",
+      "boundary": "Integrate automated-driving components with the vehicle and verify system performance, safety and operational constraints.",
+      "source_ids": [
+        "SAE_J3016_AUTOMATED_DRIVING_TAXONOMY"
+      ],
+      "source_references": [
+        {
+          "source_id": "SAE_J3016_AUTOMATED_DRIVING_TAXONOMY",
+          "publisher": "SAE International",
+          "title": "Taxonomy and Definitions for Terms Related to Driving Automation Systems",
+          "url": "https://saemobilus.sae.org/standards/j3016_202104-taxonomy-definitions-terms-related-driving-automation-systems-road-motor-vehicles?tabType=viewannotation",
+          "locator": "SAE J3016 scope: taxonomy and definitions for driving-automation systems, their operating levels and actors, providing coherent terminology for design, safety and verification discussions.",
+          "supports": "Automated-vehicle integration, safety and verification are established engineering practice concerns.",
+          "claim_limit": "SAE terminology standard; supports scope, not the exact catalogue boundary, role route or vehicle-approval requirements in Nigeria.",
+          "geographic_scope": "international engineering standard"
+        }
+      ],
+      "uncorroborated_source_urls": [],
+      "recommendation_status": "recommendation_needs_role_and_context_integration",
+      "area_status": "review_required_pending_role_route_and_evidence_gate",
+      "student_visible": false,
+      "nigerian_context": null,
+      "source_evidence_status": "source_linked",
+      "unresolved_source_ids": [],
+      "area_evidence_link_check": {
+        "checked_against_catalog_and_captured_review_sources": true,
+        "resolution_methods": [],
+        "unresolved_catalog_source_ids": []
+      },
+      "disposition": "superseded_by_eight_detailed_source_reconciled_areas",
+      "replaced_by_area_ids": [
+        "D166:vehicle-interface-and-system-integration",
+        "D166:ads-safety-verification-and-validation"
+      ],
+      "student_destination": false,
+      "note": "Historical broad area proposal retained for audit only; not an active area or ISCO subgroup."
+    }
+  ]
+}

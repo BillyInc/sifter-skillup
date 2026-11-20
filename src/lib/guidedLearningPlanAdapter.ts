@@ -5,6 +5,7 @@
  */
 
 import type { CareerContextItem, CareerContextItemRelationship } from "@/types/career";
+import { sortLearningResources } from "@/components/careerIntelligence/learningResourcePresentation";
 import type {
   LearningPlanCandidate,
   LearningPlanCategory,
@@ -216,16 +217,20 @@ export function contextItemToLearningCandidate(
   const prerequisites = reviewedPrerequisites(item, index);
   const linkEvidence = item.linkEvidence ?? {};
   const linkSource = item.linkSourceReference ?? {};
-  const learningLinks = [
+  const learningLinks = sortLearningResources([
     ...(item.linkUrl && item.linkTitle ? [{
+      sourceId: typeof linkSource.id === "string" ? linkSource.id : typeof linkSource.source_id === "string" ? linkSource.source_id : undefined,
       title: item.linkTitle,
       url: item.linkUrl,
       access: item.linkAccess,
       kind: item.linkKind,
+      mediaType: item.linkMediaType,
+      learningLevel: item.linkLearningLevel,
+      sequenceOrder: item.linkSequenceOrder,
       rationale: firstText(linkEvidence.why_this_resource, linkEvidence.evidence_use, linkEvidence.evidenceUse, linkEvidence.supports),
     }] : []),
     ...(item.additionalLearningLinks ?? []).map((link) => ({ ...link })),
-  ].filter((link) => /^https:\/\//i.test(link.url));
+  ].filter((link) => /^https:\/\//i.test(link.url)));
   return {
     id: stableId(item),
     name: item.name,
@@ -265,6 +270,9 @@ export function contextItemToLearningCandidate(
     linkRationale: firstText(linkEvidence.why_this_resource, linkEvidence.evidence_use, linkEvidence.evidenceUse, linkEvidence.supports,
       linkSource.evidence_use, linkSource.evidenceUse, linkSource.supports),
     learningLinks: learningLinks.length ? learningLinks : undefined,
+    linkMediaType: item.linkMediaType ?? undefined,
+    linkLearningLevel: item.linkLearningLevel ?? undefined,
+    linkSequenceOrder: item.linkSequenceOrder ?? undefined,
     linkAccess: item.linkAccess ?? undefined,
     linkKind: item.linkKind ?? undefined,
     sourceLocators: item.sourceLocators?.map((locator) => ({ ...locator })),

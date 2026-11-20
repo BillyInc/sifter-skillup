@@ -167,7 +167,7 @@ export function PathwaysHubScreen({
 
   const selectedDomain = domainState.data;
   const selectedSubgroup = selectedDomain?.subgroups.find((item) => item.id === selectedSubgroupId);
-  const availableRoles = rolesForPathwaySelection(selectedDomain, selectedSubgroupId);
+  const availableRoles = rolesForPathwaySelection(selectedDomain ?? undefined, selectedSubgroupId);
   const selectedRole = availableRoles.find((item) => item.key === selectedRoleKey);
 
   const chooseSubgroup = (subgroupId: string) => {
@@ -345,9 +345,9 @@ function TargetPathSection({ colors, focus, onFocus, domainClusters, selectedDom
         {domain?.subgroups?.length ? <View style={styles.chips}>{domain.subgroups.map((item) => <TouchableOpacity key={item.id} onPress={() => onSubgroup(item.id)} style={[styles.chip, { borderColor: item.id === selectedSubgroupId ? colors.accentRole.action : colors.borderRole.subtle, backgroundColor: item.id === selectedSubgroupId ? colors.surface.subtle : colors.surface.raised }]}><Text style={[styles.chipText, { color: item.id === selectedSubgroupId ? colors.accentRole.action : colors.textRole.secondary }, CompassFonts.bodySemibold]}>{item.name}</Text></TouchableOpacity>)}</View> : <StateNote colors={colors} state={domainState} />}
         <Text style={[styles.subsectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>3. Choose a role</Text>
         {domain?.id === "D078" && !selectedSubgroupId ? (
-          <Text style={[styles.copy, { color: colors.textRole.secondary }, CompassFonts.body]}>Choose an area above to see only the roles connected to it.</Text>
+          <Text style={[styles.sectionBody, { color: colors.textRole.secondary }, CompassFonts.body]}>Choose an area above to see only the roles connected to it.</Text>
         ) : availableRoles.length ? <View style={styles.cards}>{availableRoles.map((item) => <TouchableOpacity key={item.key} onPress={() => onRole(item.key)} style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: item.key === selectedRoleKey ? colors.accentRole.action : colors.borderRole.subtle }]}><View style={styles.cardText}><Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{item.name}</Text><Text style={[styles.cardBody, { color: colors.textRole.muted }, CompassFonts.body]}>{item.tier ?? "Role"}{item.eliteStatus ? ` · ${item.eliteStatus}` : ""}</Text></View><Feather name="chevron-right" size={18} color={colors.textRole.muted} /></TouchableOpacity>)}</View> : domain?.id === "D078" ? (
-          <Text style={[styles.copy, { color: colors.textRole.muted }, CompassFonts.body]}>No role is currently connected to this area.</Text>
+          <Text style={[styles.sectionBody, { color: colors.textRole.muted }, CompassFonts.body]}>No role is currently connected to this area.</Text>
         ) : <StateNote colors={colors} state={domainState} />}
       </> : null}
 

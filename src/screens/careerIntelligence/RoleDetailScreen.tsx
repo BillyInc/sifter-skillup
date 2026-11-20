@@ -12,6 +12,7 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useRouter, useLocalSearchParams } from "expo-router";
+import { domainIdFromRoleKey } from "@/lib/backFallback";
 import {
   DetailScaffold,
   NotesWidget,
@@ -70,7 +71,7 @@ export interface RoleDetailScreenProps {
 }
 
 export function RoleDetailScreen(props: RoleDetailScreenProps) {
-const params = useLocalSearchParams<{ id: string; area_id?: string | string[]; domain_id?: string | string[]; d078_selection?: string | string[]; d078_route_stacks?: string | string[]; d078_role_id?: string | string[]; d078_from_area?: string | string[]; programme_id?: string | string[]; jamb_programme_id?: string | string[]; school_id?: string | string[]; user_type?: string | string[]; journey_mode?: string | string[]; guidance_student_id?: string | string[]; guidance_target?: string | string[]; guidance_entry?: string | string[]; focus?: string | string[] }>();
+const params = useLocalSearchParams<{ id: string; area_id?: string | string[]; domain_id?: string | string[]; d078_selection?: string | string[]; d078_route_stacks?: string | string[]; d078_role_id?: string | string[]; d078_from_area?: string | string[]; d078_domain_overview_seen?: string | string[]; programme_id?: string | string[]; jamb_programme_id?: string | string[]; school_id?: string | string[]; user_type?: string | string[]; journey_mode?: string | string[]; guidance_student_id?: string | string[]; guidance_target?: string | string[]; guidance_entry?: string | string[]; focus?: string | string[] }>();
   const router = useRouter();
   const outerScrollRef = useRef<ScrollView>(null);
   const roleKey = props.roleId ?? String(params.id ?? "");
@@ -136,14 +137,16 @@ const guidanceContext: GuidanceRouteContext = {
       router.back();
       return;
     }
-    const parentDomain = state.data?.appearsIn?.[0]?.domainId;
+    const parentDomain = state.data?.appearsIn?.[0]?.domainId ?? domainIdFromRoleKey(roleKey);
     const parentSubgroup = guidanceContext.areaId ?? (state.data?.appearsIn?.[0]?.domainId === "D078" ? undefined : state.data?.subgroupId);
     if (parentDomain && parentSubgroup) {
       router.replace(`${exploreNav.base}/domain/${encodeURIComponent(parentDomain)}/subgroup/${encodeURIComponent(parentSubgroup)}` as never);
+    } else if (parentDomain) {
+      router.replace(`${exploreNav.base}/domain/${encodeURIComponent(parentDomain)}` as never);
     } else {
       router.replace(`${exploreNav.base}/domains` as never);
     }
-  }, [exploreNav.base, guidanceContext.areaId, router, state.data]);
+  }, [exploreNav.base, guidanceContext.areaId, roleKey, router, state.data]);
 
   if (isD078RoleKey && !guidanceContext.areaId) {
     return <D078RoleRoute
@@ -152,6 +155,7 @@ const guidanceContext: GuidanceRouteContext = {
       roleKey={roleKey}
       initialSelection={parseD078Selection(params.d078_selection)}
       initialRouteStacks={parseD078RouteStacks(params.d078_route_stacks, parseD078Selection(params.d078_selection))}
+      domainOverviewAlreadyPresented={false}
       roles={[]}
       guidanceContext={guidanceContext}
     />;
@@ -164,13 +168,13 @@ const guidanceContext: GuidanceRouteContext = {
       backLabel={targetStudentId ? "Back to student guidance" : "Back to subgroup"}
       onBack={onBack}
       save={focusedGuidance ? undefined : { entityType: "role", entityId: roleKey }}
-      reportSelection={{
+      reportSelection={isD078RoleKey || state.data?.appearsIn.some((entry) => entry.domainId === "D078") ? undefined : {
         kind: "roles",
         id: roleKey,
         name: formatCareerLabel(state.data?.name ?? "Role"),
         domainId: state.data?.appearsIn?.[0]?.domainId,
         domainName: state.data?.appearsIn?.[0]?.domainName,
-        subgroupId: guidanceContext.areaId ?? (state.data?.appearsIn?.[0]?.domainId === "D078" ? undefined : state.data?.subgroupId ?? undefined),
+        subgroupId: guidanceContext.areaId ?? state.data?.subgroupId ?? undefined,
       }}
       targetStudentId={targetStudentId}
       state={state}
@@ -190,6 +194,7 @@ const guidanceContext: GuidanceRouteContext = {
         initialSelection={parseD078Selection(params.d078_selection)}
         initialRouteStacks={parseD078RouteStacks(params.d078_route_stacks, parseD078Selection(params.d078_selection))}
         returnToAreaOnBack={(Array.isArray(params.d078_from_area) ? params.d078_from_area[0] : params.d078_from_area) === "1"}
+        domainOverviewAlreadyPresented={(Array.isArray(params.d078_domain_overview_seen) ? params.d078_domain_overview_seen[0] : params.d078_domain_overview_seen) === "1"}
         roles={[]}
         guidanceContext={guidanceContext}
         roleResources={role.resources}
@@ -1047,7 +1052,7 @@ function formatCurrencySource(
   source: NonNullable<DomainRoleV2Enriched["currencySource"]>,
 ): string {
   const map: Record<typeof source, string> = {
-    wef_foj_2025: "WEF Future of Jobs 2025",
+    wef_foj_2025: "World Economic Forum Future of Jobs 2025",
     onet_emerging: "O*NET Emerging",
     lightcast: "Lightcast",
     curated: "curated review",

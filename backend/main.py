@@ -8,7 +8,7 @@ from contextlib import asynccontextmanager
 from datetime import datetime, date, timedelta
 from typing import Optional
 
-from fastapi import FastAPI, Depends, HTTPException, BackgroundTasks, Request, Header
+from fastapi import FastAPI, Depends, HTTPException, BackgroundTasks, Request, Header, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
@@ -21,6 +21,9 @@ from models import *
 from auth import Auth
 from logger import log
 from middleware.session_middleware import DeviceSessionMiddleware
+import avatar_storage
+from profile_validation import DisplayNameError, validate_display_name
+from legal_versions import CURRENT_PRIVACY_VERSION, CURRENT_TERMS_VERSION
 
 # App setup
 @asynccontextmanager
@@ -91,10 +94,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.add_middleware(DeviceSessionMiddleware)
-
-# Server-owned document versions. Clients must accept these exact versions.
-CURRENT_TERMS_VERSION = "2026-10-10"
-CURRENT_PRIVACY_VERSION = "2026-10-10"
 
 @app.middleware("http")
 async def logging_middleware(request: Request, call_next):
@@ -571,6 +570,11 @@ async def auth_signup(body: dict, request: Request):
     last_name = (body.get("last_name") or "").strip()
     date_of_birth = (body.get("date_of_birth") or "").strip() or None
     username = " ".join(part for part in (first_name, middle_name, last_name) if part) or email.split("@")[0]
+    # Optional, additive: old clients omit it and behave exactly as before.
+    try:
+        display_name = validate_display_name(body.get("display_name"))
+    except DisplayNameError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
     if not email or "@" not in email:
         raise HTTPException(status_code=400, detail="Valid email is required")
     if len(password) < 6:
@@ -637,6 +641,7 @@ async def auth_signup(body: dict, request: Request):
                     "middle_name": middle_name or None,
                     "last_name": last_name or None,
                     "date_of_birth": date_of_birth,
+                    **({"display_name": display_name} if display_name else {}),
                     "password_hash": password_hash,
                     "auth_provider": "email",
                     "onboarding_completed": False,
@@ -652,7 +657,7 @@ async def auth_signup(body: dict, request: Request):
         password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
         user = _create_user(username=username, auth_provider="email", email=email, password_hash=password_hash,
                             first_name=first_name, middle_name=middle_name, last_name=last_name,
-                            date_of_birth=date_of_birth)
+                            date_of_birth=date_of_birth, display_name=display_name)
         user = _attach_legal_acceptance(db.get_service_client(), user, legal_acceptance)
         user["onboarding_completed"] = False
         token = Auth.create_jwt(user["id"])
@@ -756,7 +761,8 @@ async def _post_auth_device_register(user_id: str, body: dict, request: Request)
 
 def _create_user(telegram_id=None, wallet_address=None, username="Student",
                  avatar_url=None, auth_provider="guest", email=None, password_hash=None,
-                 first_name=None, middle_name=None, last_name=None, date_of_birth=None) -> dict:
+                 first_name=None, middle_name=None, last_name=None, date_of_birth=None,
+                 display_name=None) -> dict:
     onboarding_completed = auth_provider == "guest"
     account_type = "student" if auth_provider == "guest" else "pending"
     payload = {
@@ -775,6 +781,10 @@ def _create_user(telegram_id=None, wallet_address=None, username="Student",
         "achievements": [], "settings": {"notifications": True, "sound": True, "haptics": True},
         "created_at": datetime.now().isoformat(), "last_login": datetime.now().isoformat(),
     }
+    if display_name:
+        # Only written when provided. A pre-migration schema drops it via the
+        # missing-column retry below.
+        payload["display_name"] = display_name
     # Keep signup usable against older local schemas while migrations are
     # being applied. PostgREST names the missing column in PGRST204 errors;
     # remove only that optional field and retry. Required auth fields still
@@ -842,6 +852,8 @@ async def get_me(current_user: dict = Depends(Auth.get_current_user)):
     # Keep them pending so the client routes them to user-type selection.
     current_user.setdefault("account_type", "pending")
     _hydrate_account_type_selection(current_user)
+    current_user["avatar_display_url"] = avatar_storage.avatar_display_url(
+        current_user.get("avatar_url"), current_user["id"])
     return ResponseModel(data=current_user)
 
 
@@ -862,10 +874,111 @@ async def update_me(updates: UserUpdate, current_user: dict = Depends(Auth.get_c
     if not payload:
         current_user.pop("password_hash", None)
         return ResponseModel(data=current_user)
-    user = _update_user_returning(db.get_client(), current_user["id"], payload)
+    if "avatar_url" in payload:
+        try:
+            payload["avatar_url"] = avatar_storage.validate_avatar_url(
+                payload["avatar_url"], current_user["id"])
+        except avatar_storage.AvatarError as exc:
+            raise HTTPException(status_code=400, detail=str(exc))
+    if "display_name" in payload:
+        try:
+            payload["display_name"] = validate_display_name(payload["display_name"])
+        except DisplayNameError as exc:
+            raise HTTPException(status_code=400, detail=str(exc))
+    try:
+        user = _update_user_returning(db.get_client(), current_user["id"], payload)
+    except HTTPException:
+        raise
+    except Exception as exc:
+        if "display_name" in payload and "display_name" in str(exc):
+            # Column not migrated yet: do not crash; tell the client it is unavailable.
+            raise HTTPException(status_code=409, detail="Name to show is not available yet.")
+        raise
     user.update(payload)
     user.pop("password_hash", None)
+    if "avatar_url" in payload:
+        old_key = avatar_storage.uploaded_key(current_user.get("avatar_url"))
+        if old_key and old_key != avatar_storage.uploaded_key(payload["avatar_url"]):
+            _purge_avatar_objects([old_key])
+        user["avatar_display_url"] = avatar_storage.avatar_display_url(
+            user.get("avatar_url"), current_user["id"])
     return ResponseModel(data=user)
+
+
+def _purge_avatar_objects(keys: list) -> None:
+    """Best-effort removal; a storage outage never fails the request."""
+    try:
+        avatar_storage.get_storage().delete(list(keys))
+    except Exception as exc:
+        log.warning("Avatar object removal failed", error=str(exc))
+
+
+@app.post("/api/users/me/avatar", response_model=ResponseModel)
+async def upload_avatar(
+    request: Request,
+    file: UploadFile = File(...),
+    current_user: dict = Depends(Auth.get_current_user),
+):
+    """Replace the profile photo. Only the owner can ever see it."""
+    user_id = current_user["id"]
+    wait = avatar_storage.upload_limiter.check(user_id)
+    if wait:
+        raise HTTPException(
+            status_code=429,
+            detail="You have changed your photo too many times. Try again later.",
+            headers={"Retry-After": str(wait)},
+        )
+    declared = request.headers.get("content-length")
+    if declared and declared.isdigit() and int(declared) > avatar_storage.MAX_UPLOAD_BYTES + 64 * 1024:
+        raise HTTPException(status_code=413, detail="That photo is larger than 2 MB. Choose a smaller one.")
+    raw = await file.read(avatar_storage.MAX_UPLOAD_BYTES + 1)
+    try:
+        webp = avatar_storage.process_avatar_image(raw)
+    except avatar_storage.AvatarError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    key = avatar_storage.new_object_key(user_id)
+    storage = avatar_storage.get_storage()
+    try:
+        storage.upload(key, webp, "image/webp")
+    except Exception as exc:
+        log.error("Avatar upload to storage failed", error=str(exc))
+        raise HTTPException(status_code=503, detail="Photo upload is temporarily unavailable. Try again later.")
+    value = f"{avatar_storage.UPLOAD_PREFIX}{key}"
+    try:
+        db.get_service_client().table("users").update({"avatar_url": value}).eq("id", user_id).execute()
+    except Exception as exc:
+        log.error("Avatar reference save failed", error=str(exc))
+        _purge_avatar_objects([key])
+        raise HTTPException(status_code=500, detail="Could not save your photo. Try again.")
+    avatar_storage.upload_limiter.record(user_id)
+    old_key = avatar_storage.uploaded_key(current_user.get("avatar_url"))
+    if old_key and old_key != key:
+        _purge_avatar_objects([old_key])
+    return ResponseModel(data={
+        "avatar_url": value,
+        "avatar_display_url": avatar_storage.avatar_display_url(value, user_id),
+    })
+
+
+@app.delete("/api/users/me/avatar", response_model=ResponseModel)
+async def remove_avatar(current_user: dict = Depends(Auth.get_current_user)):
+    """Remove the uploaded photo and fall back to the initial."""
+    user_id = current_user["id"]
+    try:
+        keys = avatar_storage.get_storage().list_keys(user_id)
+    except Exception:
+        keys = []
+    current_key = avatar_storage.uploaded_key(current_user.get("avatar_url"))
+    if current_key and current_key not in keys:
+        keys.append(current_key)
+    if avatar_storage.is_uploaded(current_user.get("avatar_url")):
+        try:
+            db.get_service_client().table("users").update({"avatar_url": None}).eq("id", user_id).execute()
+        except Exception as exc:
+            log.error("Avatar reference clear failed", error=str(exc))
+            raise HTTPException(status_code=500, detail="Could not remove your photo. Try again.")
+    _purge_avatar_objects(keys)
+    return ResponseModel(data={"avatar_url": None, "avatar_display_url": None})
 
 
 @app.post("/api/users/legal-acceptance", response_model=ResponseModel)
@@ -934,7 +1047,14 @@ async def delete_me(
         "email": f"deleted-{current_user['id']}@deleted.invalid",
         "password_hash": None,
         "onboarding_completed": False,
+        "avatar_url": None,
     }
+    # Purge the stored photo immediately (it is personal data); best effort so
+    # a storage outage never leaves the account active.
+    try:
+        _purge_avatar_objects(avatar_storage.get_storage().list_keys(current_user["id"]))
+    except Exception as exc:
+        log.warning("Avatar purge skipped during deletion", error=str(exc))
     try:
         _soft_delete_user_compat(service, current_user["id"], deletion_updates)
     except Exception as exc:
@@ -951,6 +1071,9 @@ async def delete_me(
         }).eq("user_id", current_user["id"]).execute()
     except Exception as exc:
         log.warning("Active session revocation skipped during deletion", error=str(exc))
+    # My World collections are purged immediately (best effort, never fails deletion).
+    from routes.collections_routes import purge_user_collections
+    purge_user_collections(current_user["id"])
     return ResponseModel(data={"deleted": True, "available_at": available_at})
 
 
@@ -1130,6 +1253,9 @@ app.include_router(users_extra_router)
 from routes.career_routes import router as career_router
 app.include_router(career_router)
 
+from routes.collections_routes import router as collections_router
+app.include_router(collections_router)
+
 from routes.institutions_routes import router as institutions_router
 app.include_router(institutions_router)
 
@@ -1142,11 +1268,17 @@ app.include_router(admission_router)
 from routes.student_pipeline_routes import router as student_pipeline_router
 app.include_router(student_pipeline_router)
 
+from routes.student_subject_grades_routes import router as student_subject_grades_router
+app.include_router(student_subject_grades_router)
+
 from routes.entrepreneurship_routes import router as entrepreneurship_router
 app.include_router(entrepreneurship_router)
 
 from routes.feedback_routes import router as feedback_router
 app.include_router(feedback_router)
+
+from routes.learning_analytics_routes import router as learning_analytics_router
+app.include_router(learning_analytics_router)
 
 if __name__ == "__main__":
     import uvicorn

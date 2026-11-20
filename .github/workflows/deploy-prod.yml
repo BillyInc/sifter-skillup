@@ -251,6 +251,13 @@ jobs:
           node-version: '20'
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile
+      - name: Decompress generated data the app imports
+        # The repo stores these generated JSON files only as .json.gz, but the
+        # app (DegreeSkills) imports the raw .json, so type-check, tests and the
+        # web build fail without them. Never commit the raw files.
+        run: |
+          gunzip -kf data/career-mapping/_audit/sociology_theme_student_abilities_2026_10_22.json.gz
+          gunzip -kf data/career-mapping/_audit/sociology_curriculum_contract_2026-09-17.json.gz
       - name: Export web bundle (prod)
         run: npx expo export --platform web
         env:

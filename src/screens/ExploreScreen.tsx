@@ -7,7 +7,7 @@
  *  3. Browse clusters / pathways / admission intelligence / elite pathways
  *  4. Typed search results grouped by domain → role → programme
  */
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -43,11 +43,14 @@ import { locked, type DataState, type CareerSearchResult, type SearchResult } fr
 import { useAuth } from "@/hooks/useAuth";
 import { useResponsive } from "@/hooks/useResponsive";
 import { StaggerReveal } from "@/components/animations/StaggerReveal";
+import { SaveButton } from "@/components/careerIntelligence/SaveButton";
 import { SkillDiscoveryPanel } from "@/components/careerIntelligence/SkillDiscoveryPanel";
 import { CareerDisclaimer } from "@/components/careerIntelligence/CareerDisclaimer";
 import { getStartingPoint } from "@/lib/startingPoint";
 import { useSearchLauncher } from "@/components/shell/searchLauncher";
 import { parseExploreQuery, searchScopeForExplore } from "@/lib/exploreQuery";
+import { browseStateKey, readBrowseState, writeBrowseState } from "@/lib/browseSessionState";
+import { useBrowseScroll } from "@/hooks/useBrowseScroll";
 import type { StartingPointProfile } from "@/types/onboarding";
 
 // ─── Cluster hero data ───────────────────────────────────────────
@@ -75,6 +78,7 @@ const CLUSTER_HEROES: {
 const MIN_QUERY = 2;
 const TIERS: readonly TierType[] = ["entry", "mid", "senior"];
 type ResultFilter = "all" | "programmes" | "universities" | "domains" | "subgroups" | "roles" | "skills" | "tools" | "certifications" | "opportunities";
+const EXPLORE_FILTER_VALUES: readonly ResultFilter[] = ["all", "programmes", "universities", "domains", "subgroups", "roles", "skills", "tools", "certifications", "opportunities"];
 const asTier = (t?: string): TierType | undefined =>
   t && (TIERS as readonly string[]).includes(t) ? (t as TierType) : undefined;
 
@@ -136,8 +140,34 @@ export default function ExploreScreen({
   const [startingPointResolved, setStartingPointResolved] = useState(false);
   const [schoolMatcherOpen, setSchoolMatcherOpen] = useState(false);
 
-  const [query, setQuery] = useState(initialQuery);
-  const [filter, setFilter] = useState<ResultFilter>("all");
+  // Returning from a result restores the student's own search and filter. An
+  // explicit hand-off (?q= / ?scope= or initialQuery) always wins over it.
+  const browseKey = browseStateKey("explore", user?.id, exploreNav.base);
+  const restored = useRef<{ query: string; filter: ResultFilter } | null | undefined>(undefined);
+  if (restored.current === undefined) {
+    const saved = readBrowseState(browseKey);
+    const explicitText = initialQuery || routeQuery.text;
+    const savedQuery = typeof saved?.fields.query === "string" ? saved.fields.query : "";
+    const savedFilter = saved?.fields.filter;
+    // The URL's own ?q= wins, but the same search keeps its chosen filter.
+    const sameSearch = !explicitText || explicitText === savedQuery;
+    // A different search starts from the top, not at the old scroll offset.
+    if (saved && !sameSearch) writeBrowseState(browseKey, { scrollY: 0 });
+    restored.current = saved && sameSearch && routeQuery.scope === "all"
+      ? {
+          query: savedQuery,
+          filter: typeof savedFilter === "string" && EXPLORE_FILTER_VALUES.includes(savedFilter as ResultFilter)
+            ? savedFilter as ResultFilter
+            : "all",
+        }
+      : null;
+  }
+  const [query, setQuery] = useState(initialQuery || restored.current?.query || "");
+  const [filter, setFilter] = useState<ResultFilter>(restored.current?.filter ?? "all");
+  useEffect(() => {
+    writeBrowseState(browseKey, { fields: { query, filter } });
+  }, [browseKey, filter, query]);
+  const browseScroll = useBrowseScroll(browseKey);
   const [loading, setLoading] = useState(false);
   // Starts EMPTY. This was seeded with ["Medicine", "Data analyst", "Law"] and
   // labelled "Recent" — three searches the user had never run, presented as
@@ -149,8 +179,14 @@ export default function ExploreScreen({
     null,
   );
 
+  // A restored filter must survive the URL sync while the URL itself carries
+  // no scope; any real scope change in the URL still drives the filter.
+  const lastScope = useRef(routeQuery.scope);
   useEffect(() => {
     if (routeQuery.text) setQuery(routeQuery.text);
+    const scopeUnchangedAll = routeQuery.scope === "all" && lastScope.current === "all";
+    lastScope.current = routeQuery.scope;
+    if (restored.current && scopeUnchangedAll) return;
     if (routeQuery.scope) setFilter(searchScopeForExplore(routeQuery.scope) as ResultFilter);
   }, [routeQuery.scope, routeQuery.text]);
 
@@ -238,6 +274,11 @@ export default function ExploreScreen({
 
   return (
     <ScrollView
+      ref={browseScroll.ref}
+      onScroll={browseScroll.onScroll}
+      onLayout={browseScroll.onLayout}
+      onContentSizeChange={browseScroll.onContentSizeChange}
+      scrollEventThrottle={browseScroll.scrollEventThrottle}
       style={{ flex: 1, backgroundColor: colors.surface.base }}
       contentContainerStyle={[
         styles.scroll,
@@ -314,6 +355,29 @@ export default function ExploreScreen({
         />
       ) : null}
 
+      {/* Blueprint section 8: Skills Matcher follows the main search and
+          starting points and precedes the broader catalogue categories. */}
+      {!adminAudience ? (
+        <TouchableOpacity
+          activeOpacity={0.88}
+          accessibilityRole="button"
+          accessibilityLabel="Skills Matcher. See where your skills could connect to domains and roles."
+          onPress={() => exploreNav.skillsMatcher(router)}
+          style={[styles.admissionCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}
+        >
+          <View style={[styles.admissionIcon, { backgroundColor: colors.accentRole.action + "14" }]}>
+            <Feather name="compass" size={22} color={colors.accentRole.action} />
+          </View>
+          <View style={styles.admissionLeft}>
+            <Text style={[styles.admissionEyebrow, { color: colors.accentRole.action }]}>SKILLS MATCHER</Text>
+            <Text style={[styles.admissionTitle, { color: colors.textRole.primary }]}>Start from what you can do</Text>
+            <Text style={[styles.admissionBody, { color: colors.textRole.secondary }]}>Add skills you have or want to learn and see the domains and roles they could connect to.</Text>
+            <Text style={[styles.admissionAction, { color: colors.accentRole.action }]}>Open Skills Matcher <Text style={{ fontSize: 16 }}>→</Text></Text>
+          </View>
+          <Feather name="arrow-up-right" size={20} color={colors.textRole.muted} />
+        </TouchableOpacity>
+      ) : null}
+
       {!adminAudience ? (
         <View style={styles.section}>
           <SectionLabel>Browse by type</SectionLabel>
@@ -385,6 +449,7 @@ export default function ExploreScreen({
                         title={d.name}
                         subtitle={d.cluster}
                         meta="Domain route"
+                        right={!isGuest ? <RowSave entityType="domain" entityId={d.id} label={d.name} /> : undefined}
                       />
                     </StaggerReveal>
                   ))}
@@ -406,6 +471,7 @@ export default function ExploreScreen({
                             {r.name}
                           </Text>
                           <TierBadgeView tier={asTier(r.tier)} />
+                          {single && !isGuest ? <SaveButton entityType="role" entityId={single.roleKey} label={r.name} compact /> : null}
                         </View>
                         {single ? (
                           <Text
@@ -492,6 +558,7 @@ export default function ExploreScreen({
                           title={p.name}
                           subtitle={meta}
                           meta={p.institutionType ?? "Programme"}
+                          right={!isGuest ? <RowSave entityType="programme" entityId={p.id} label={p.name} /> : undefined}
                         />
                       </StaggerReveal>
                     );
@@ -517,6 +584,7 @@ export default function ExploreScreen({
                     }}
                     onMorePress={isGuest ? () => router.push("/(auth)/sign-in" as any) : undefined}
                     maxRows={isGuest ? 2 : undefined}
+                    showSave={!isGuest}
                   />
                 ))}
             </View>
@@ -970,6 +1038,17 @@ function DataLimitedState() {
 
 // ─── Styles ──────────────────────────────────────────────────────
 
+/** Quick-save beside the row's chevron, so the row still reads as navigable. */
+function RowSave({ entityType, entityId, label }: { entityType: "domain" | "programme"; entityId: string; label: string }) {
+  const { colors } = useTheme();
+  return (
+    <View style={{ flexDirection: "row", alignItems: "center", gap: Spacing.xs }}>
+      <SaveButton entityType={entityType} entityId={entityId} label={label} compact />
+      <Feather name="chevron-right" size={17} color={colors.textRole.muted} />
+    </View>
+  );
+}
+
 function buildExtendedSearchGroups(
   data: CareerSearchResult,
   base: string,
@@ -993,7 +1072,7 @@ function buildExtendedSearchGroups(
         href: undergraduate
           ? `${basePath}/admission?mode=school&school_id=${encodeURIComponent(item.id)}&user_type=student&journey=undergraduate_programmes`
           : `${basePath}/admission?mode=school&school_id=${encodeURIComponent(item.id)}`,
-        icon: "building",
+        icon: "home",
       })),
     },
     {
@@ -1072,7 +1151,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   eyebrow: {
-    fontSize: FontSize.xs,
+    fontSize: FontSize.sm,
     ...CompassFonts.bodySemibold,
     letterSpacing: 0.9,
     marginTop: Spacing.sm,
@@ -1099,7 +1178,7 @@ const styles = StyleSheet.create({
     lineHeight: FontSize.sm * 1.4,
   },
   stateLine: {
-    fontSize: FontSize.xs,
+    fontSize: FontSize.md,
     ...CompassFonts.bodySemibold,
     marginTop: -Spacing.xs,
   },
@@ -1119,8 +1198,8 @@ const styles = StyleSheet.create({
     ...CompassFonts.bodySemibold,
   },
   schoolMatcherBody: {
-    fontSize: FontSize.xs,
-    lineHeight: FontSize.xs * 1.5,
+    fontSize: FontSize.md,
+    lineHeight: FontSize.md * 1.5,
   },
 
   // ── Idle ─────────────────────────────────────────────────────
@@ -1149,8 +1228,8 @@ const styles = StyleSheet.create({
     ...CompassFonts.bodySemibold,
   },
   adminActionBody: {
-    fontSize: FontSize.xs,
-    lineHeight: FontSize.xs * 1.5,
+    fontSize: FontSize.md,
+    lineHeight: FontSize.md * 1.5,
   },
 
   // Cluster carousel
@@ -1222,8 +1301,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   clusterCardDescription: {
-    fontSize: FontSize.xs,
-    lineHeight: FontSize.xs * 1.45,
+    fontSize: FontSize.md,
+    lineHeight: FontSize.md * 1.45,
     textAlign: "center",
   },
   seeAllLink: {
@@ -1263,8 +1342,8 @@ const styles = StyleSheet.create({
     gap: 3,
   },
   unifiedPathwayBody: {
-    fontSize: FontSize.xs,
-    lineHeight: FontSize.xs * 1.45,
+    fontSize: FontSize.md,
+    lineHeight: FontSize.md * 1.45,
   },
 
   // Admission card
@@ -1289,7 +1368,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   admissionEyebrow: {
-    fontSize: FontSize.xs,
+    fontSize: FontSize.sm,
     ...CompassFonts.bodySemibold,
     letterSpacing: 0.8,
   },
@@ -1320,7 +1399,7 @@ const styles = StyleSheet.create({
     lineHeight: 30,
   },
   admissionNumeralUnit: {
-    fontSize: 9,
+    fontSize: FontSize.sm,
     ...CompassFonts.bodySemibold,
     letterSpacing: 0.5,
     marginTop: 1,
@@ -1358,12 +1437,12 @@ const styles = StyleSheet.create({
     lineHeight: FontSize.sm * 1.3,
   },
   guestActionBody: {
-    fontSize: FontSize.xs,
-    lineHeight: FontSize.xs * 1.45,
+    fontSize: FontSize.md,
+    lineHeight: FontSize.md * 1.45,
     flex: 1,
   },
   guestActionLink: {
-    fontSize: FontSize.xs,
+    fontSize: FontSize.sm,
     ...CompassFonts.bodySemibold,
   },
 
@@ -1381,7 +1460,7 @@ const styles = StyleSheet.create({
     ...CompassFonts.bodySemibold,
   },
   eliteSub: {
-    fontSize: FontSize.xs,
+    fontSize: FontSize.md,
     marginTop: 2,
   },
 
@@ -1415,8 +1494,8 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   note: {
-    fontSize: FontSize.xs,
-    lineHeight: FontSize.xs * 1.6,
+    fontSize: FontSize.md,
+    lineHeight: FontSize.md * 1.6,
     marginTop: Spacing.md,
   },
 
@@ -1437,7 +1516,7 @@ const styles = StyleSheet.create({
   },
   compareText: { fontSize: FontSize.sm, ...CompassFonts.bodySemibold },
   rowTitle: { fontSize: FontSize.md, ...CompassFonts.bodySemibold },
-  rowMeta: { fontSize: FontSize.xs, marginTop: 2 },
+  rowMeta: { fontSize: FontSize.sm, marginTop: 2 },
   roleHead: {
     flexDirection: "row",
     alignItems: "center",
@@ -1463,7 +1542,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     maxWidth: "100%",
   },
-  chipText: { fontSize: FontSize.xs, ...CompassFonts.bodySemibold },
+  chipText: { fontSize: FontSize.sm, ...CompassFonts.bodySemibold },
 
   // Guest / data-limited
   guestPanel: {
@@ -1488,8 +1567,8 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
   },
   dataNoticeText: {
-    fontSize: FontSize.xs,
+    fontSize: FontSize.md,
     ...CompassFonts.bodySemibold,
-    lineHeight: FontSize.xs * 1.5,
+    lineHeight: FontSize.md * 1.5,
   },
 });

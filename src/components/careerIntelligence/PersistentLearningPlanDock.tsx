@@ -54,6 +54,9 @@ export function usePersistentLearningPlanDock(): PersistentLearningPlanDockValue
 
 const styles = StyleSheet.create({
   dockLayer: { zIndex: 1000, alignItems: "flex-end", justifyContent: "flex-end" },
-  dockLayerWeb: { position: "fixed" as any, right: 16 },
-  dockLayerNative: { position: "absolute", right: 16 },
+  // The web portal owns viewport anchoring in a raw DOM wrapper. Keeping this
+  // RN view unpositioned prevents route-shell/layout styles from competing
+  // with the fixed anchor and lets the tray size itself naturally.
+  dockLayerWeb: { maxWidth: "100%" as any },
+  dockLayerNative: { position: "absolute", left: 16, right: 16, bottom: 0 },
 });

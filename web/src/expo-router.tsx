@@ -1,3 +1,4 @@
+import { canGoBackInApp, pushWithDepth, replaceKeepingDepth } from "./historyIndex";
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 
 export type Href = string | { pathname: string; params?: Record<string, string | number | undefined> };
@@ -29,8 +30,8 @@ function browserPath(href: Href): string {
 }
 
 function announce(path: string, replace = false) {
-  if (replace) window.history.replaceState({}, "", path);
-  else window.history.pushState({}, "", path);
+  if (replace) replaceKeepingDepth(path);
+  else pushWithDepth(path);
   window.dispatchEvent(new PopStateEvent("popstate"));
 }
 
@@ -39,7 +40,7 @@ export function useRouter(): Router {
     push: (href) => announce(browserPath(href)),
     replace: (href) => announce(browserPath(href), true),
     back: () => window.history.back(),
-    canGoBack: () => window.history.length > 1,
+    canGoBack: () => canGoBackInApp(),
     dismissTo: (href) => announce(browserPath(href), true),
   }), []);
 }

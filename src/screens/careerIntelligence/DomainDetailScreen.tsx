@@ -114,7 +114,7 @@ export function DomainDetailScreen(props: DomainDetailScreenProps) {
       backLabel={targetStudentId ? "Back to student guidance" : "Back to programme"}
       onBack={onBack}
       save={focusedGuidance ? undefined : { entityType: "domain", entityId: domainKey }}
-      reportSelection={{ kind: "domains", id: domainKey, name: state.data?.name ?? "Domain" }}
+      reportSelection={domainKey === "D078" ? undefined : { kind: "domains", id: domainKey, name: state.data?.name ?? "Domain" }}
       targetStudentId={targetStudentId}
       state={state}
       onRetry={loadDomain}
@@ -553,7 +553,7 @@ function DomainBody({
 
       <View style={refinedStyles.sectionHeading}>
         <View style={refinedStyles.cardHeading}><Feather name="layers" size={17} color={colors.accentRole.action} /><Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Your shared starting point</Text></View>
-        <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>Your Sociology studies are the starting point. These field-wide foundations add ways to investigate social questions and assess evidence, and carry forward as you explore areas and roles.</Text>
+        <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>Your Sociology studies are the starting point. These shared foundations add ways to ask social questions, gather information and judge what the evidence can support. They carry forward as you explore areas and roles.</Text>
       </View>
         <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
         <ContextualItemList items={domainItems} itemTypes={["skill", "competency", "method", "knowledge", "tool", "certification"]} resources={domainResources} contextLevel="domain" itemScope="shared-foundation" title="Foundations for this field" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} domainName={domain.name} learningFocus targetStudentId={targetStudentId} showCaption={false} />
@@ -578,7 +578,7 @@ function DomainBody({
       </View>
       <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
         <ContextualItemList items={domainItems} itemTypes={["method"]} resources={domainResources} contextLevel="domain" itemScope="learning-options" sequenceBand="advanced_extensions" title="Advanced and specialist approaches" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} domainName={domain.name} learningFocus targetStudentId={targetStudentId} showCaption={false} />
-        <ContextualItemList items={domainItems} itemTypes={["method"]} resources={domainResources} contextLevel="domain" itemScope="learning-options" sequenceBand="specialist_extensions" title="Computational, spatial and simulation approaches" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} domainName={domain.name} learningFocus targetStudentId={targetStudentId} showCaption={false} />
+        <ContextualItemList items={domainItems} itemTypes={["method"]} resources={domainResources} contextLevel="domain" itemScope="learning-options" sequenceBand="specialist_extensions" title="Computer-based analysis, geographic mapping and simulations (computer-run scenarios built from stated rules)" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} domainName={domain.name} learningFocus targetStudentId={targetStudentId} showCaption={false} />
       </View>
       <View style={[refinedStyles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
         <ContextualItemList items={domainItems} itemTypes={["tool"]} resources={domainResources} contextLevel="domain" itemScope="learning-options" sequenceBand="tool_support" title="Tools for the chosen approach" learningRoute={{ programmeId: guidanceContext.programmeId, domainId: domain.id }} domainName={domain.name} learningFocus targetStudentId={targetStudentId} showCaption={false} />

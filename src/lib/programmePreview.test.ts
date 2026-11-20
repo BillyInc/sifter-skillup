@@ -56,6 +56,6 @@ describe("programmePreviewExplanation", () => {
       abilities: [],
     };
 
-    expect(programmePreviewExplanation(programme, reviewedPreview)).toContain("Sociology studies how people live together");
+    expect(programmePreviewExplanation(programme, reviewedPreview)).toContain("It examines how people live together");
   });
 });
