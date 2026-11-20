@@ -222,7 +222,9 @@ def _resolve_school_id(current_user: dict, requested_school_id: Optional[str] = 
                 .data
                 or []
             )
-            if membership and membership[0].get("seat_status") != "revoked":
+            # Only an ACTIVE seat carries scope: pending claims, suspended and
+            # revoked seats do not (a column-less schema reads as active).
+            if membership and membership[0].get("seat_status") in (None, "active"):
                 return requested_school_id
             return None
         except Exception as exc:  # noqa: BLE001
@@ -257,16 +259,24 @@ def _resolve_school_id(current_user: dict, requested_school_id: Optional[str] = 
             .table("institution_members")
             .select("school_id")
             .eq("user_id", current_user["id"])
-            .neq("seat_status", "revoked")
+            .eq("seat_status", "active")
             .order("verified", desc=True)
             .order("created_at", desc=True)
             .limit(1)
             .execute()
         )
-        if res.data:
-            return res.data[0]["school_id"]
+        # An empty result means "no active seat": never retry without the seat
+        # filter, which is how a revoked admin used to resolve to the school.
+        return res.data[0]["school_id"] if res.data else None
     except Exception as exc:  # noqa: BLE001
-        log.warning("provisioning: active school lookup skipped", error=str(exc))
+        error_text = str(exc).lower()
+        if "seat_status" not in error_text or not any(
+            marker in error_text
+            for marker in ("column", "schema cache", "does not exist", "not found")
+        ):
+            log.warning("provisioning: active school lookup failed", error=str(exc))
+            return None
+        log.warning("provisioning: seat_status column missing, using the older lookup", error=str(exc))
     try:
         res = (
             _svc()

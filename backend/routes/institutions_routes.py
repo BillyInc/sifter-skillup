@@ -37,6 +37,7 @@
 #   GET  /{institution_id}/domain-reach/leaderboard?filter=all|federal|state|private
 #   GET  /{institution_id}/student-intelligence — StudentIntelligence rollup (§5.5)
 # ============================================================
+from contextvars import ContextVar
 from datetime import datetime, timedelta, timezone
 import hmac
 import re
@@ -92,28 +93,56 @@ def _resolve_org(current_user: dict) -> Optional[str]:
     return (member or {}).get("school_id")
 
 
-def _membership_for_user(current_user: dict) -> Optional[dict]:
-    """Best institution_members row for the current user, or None.
+def _is_missing_column_error(exc: Exception, column: str = "seat_status") -> bool:
+    """True only when the database says the column itself does not exist.
 
-    Prefer live, verified, newest memberships. Fall back for older schemas that
-    may not yet have seat_status or verified columns.
+    The "older schema" fallbacks below may relax a seat_status filter ONLY for
+    this error. An empty result, a timeout or any other failure must never widen
+    access (a revoked member used to be found again by the unfiltered retry).
     """
+    text = str(exc).lower()
+    return column in text and any(
+        marker in text for marker in ("column", "schema cache", "does not exist", "not found")
+    )
+
+
+_ACTIVE_SEAT = "active"
+# A pending claim on a school nobody administers yet. It carries no admin scope.
+_PENDING_SEAT = "invited"
+
+
+def _seat_is_active(row: Optional[dict]) -> bool:
+    """Active seat; rows from a schema without seat_status count as active."""
+    return bool(row) and (row.get("seat_status") in (None, _ACTIVE_SEAT))
+
+
+def _membership_for_user(current_user: dict, *, include_pending: bool = False) -> Optional[dict]:
+    """The user's institution_members row, or None.
+
+    Only an ACTIVE seat carries admin scope. ``include_pending=True`` also returns
+    a pending claim (seat_status 'invited'), which exists only so the claimant can
+    submit verification proof for review. Revoked and suspended seats never
+    resolve. The unfiltered retry runs only for a schema without seat_status.
+    """
+    seats = [_ACTIVE_SEAT, _PENDING_SEAT] if include_pending else [_ACTIVE_SEAT]
     try:
         res = (
             _svc()
             .table("institution_members")
             .select("*")
             .eq("user_id", current_user["id"])
-            .neq("seat_status", "revoked")
+            .in_("seat_status", seats)
             .order("verified", desc=True)
             .order("created_at", desc=True)
             .limit(1)
             .execute()
         )
-        if res.data:
-            return res.data[0]
+        return (res.data or [None])[0]
     except Exception as exc:
-        log.warning("institutions: active membership lookup skipped", error=str(exc))
+        if not _is_missing_column_error(exc):
+            log.warning("institutions: membership lookup failed", error=str(exc))
+            return None
+        log.warning("institutions: seat_status column missing, using the older lookup", error=str(exc))
     try:
         res = (
             _svc()
@@ -132,6 +161,8 @@ def _membership_for_user(current_user: dict) -> Optional[dict]:
 
 
 def _can_invite_members(member: Optional[dict], current_user: dict) -> bool:
+    if member and not _seat_is_active(member):
+        return False  # a pending, suspended or revoked seat can invite nobody
     role = (member or {}).get("role") or current_user.get("account_type")
     return role in {"owner", "institution_admin", "admin"}
 
@@ -250,20 +281,32 @@ def _refuse_join(detail: str, status_code: int = 409) -> None:
     raise HTTPException(status_code=status_code, detail=detail)
 
 
+def _like_escape(value: str) -> str:
+    """Escape ILIKE wildcards so an address is matched literally."""
+    return value.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
+
+
 def _pending_invite(svc, school_id: str, email: str) -> Optional[dict]:
+    """The caller's pending, unexpired invitation, looked up by address.
+
+    Looked up by the (escaped) address rather than by scanning the school's first
+    200 pending rows, so a school with many invitations cannot hide one. The match
+    is re-checked exactly after lower-casing.
+    """
+    wanted = (email or "").strip().lower()
+    if not wanted:
+        return None
     rows = (
         svc.table("institution_member_invites")
         .select("*")
         .eq("school_id", school_id)
         .eq("status", "pending")
-        .limit(200)
+        .ilike("invited_email", _like_escape(wanted))
+        .limit(50)
         .execute()
         .data
         or []
     )
-    wanted = (email or "").strip().lower()
-    if not wanted:
-        return None
     for row in rows:
         if (row.get("invited_email") or "").strip().lower() == wanted and _is_unexpired(
             row.get("expires_at")
@@ -293,7 +336,9 @@ def _authorize_join(current_user: dict, school_id: str) -> Optional[dict]:
     except Exception as exc:  # noqa: BLE001
         log.error("institutions: join check could not read members", error=str(exc))
         _refuse_join("Could not check this organisation right now. Please try again.", 503)
-    active = [m for m in members if m.get("seat_status") != "revoked"]
+    # Only an ACTIVE seat is an administrator. Pending claims (seat 'invited'),
+    # suspended and revoked seats do not block or open a school.
+    active = [m for m in members if _seat_is_active(m)]
     if not active or any(m.get("user_id") == current_user.get("id") for m in active):
         return None
     try:
@@ -323,20 +368,103 @@ def _invite_for_user(current_user: dict, school_id: str) -> Optional[dict]:
         return None
 
 
-def _close_invite(current_user: dict, invite: Optional[dict]) -> None:
-    """Mark an invitation accepted once the member row exists."""
-    if not invite:
-        return
+def _consume_invite(current_user: dict, invite: dict) -> None:
+    """Take a pending invitation, once, or fail the join.
+
+    The update is conditional on status 'pending' and must return the row. Two
+    requests racing for the same invitation cannot both win, and a database
+    failure fails the join instead of leaving a reusable invitation behind.
+    """
+    try:
+        taken = (
+            _svc()
+            .table("institution_member_invites")
+            .update(
+                {
+                    "status": "accepted",
+                    "accepted_by": current_user["id"],
+                    "accepted_at": datetime.now(timezone.utc).isoformat(),
+                }
+            )
+            .eq("id", invite["id"])
+            .eq("status", "pending")
+            .execute()
+            .data
+            or []
+        )
+    except Exception as exc:  # noqa: BLE001
+        log.error("institutions: invitation could not be consumed", error=str(exc))
+        raise HTTPException(
+            status_code=503, detail="Could not accept the invitation right now. Please try again."
+        ) from exc
+    if not taken:
+        raise HTTPException(
+            status_code=409,
+            detail="This invitation has already been used or is no longer valid. Ask for a new one.",
+        )
+
+
+def _restore_invite(current_user: dict, invite: dict) -> None:
+    """Put a consumed invitation back to pending when the member row failed."""
     try:
         _svc().table("institution_member_invites").update(
-            {
-                "status": "accepted",
-                "accepted_by": current_user["id"],
-                "accepted_at": datetime.now(timezone.utc).isoformat(),
-            }
-        ).eq("id", invite["id"]).execute()
+            {"status": "pending", "accepted_by": None, "accepted_at": None}
+        ).eq("id", invite["id"]).eq("accepted_by", current_user["id"]).execute()
     except Exception as exc:  # noqa: BLE001
-        log.warning("institutions: invitation close skipped", error=str(exc))
+        log.error("institutions: invitation could not be restored", error=str(exc))
+
+
+def _inviter_is_authorised(school_id: str, invited_by: Optional[str]) -> bool:
+    """True when the inviter still holds an active admin-level seat in the school."""
+    if not invited_by:
+        return False
+    try:
+        rows = (
+            _svc()
+            .table("institution_members")
+            .select("*")
+            .eq("user_id", invited_by)
+            .eq("school_id", school_id)
+            .limit(1)
+            .execute()
+            .data
+            or []
+        )
+    except Exception as exc:  # noqa: BLE001
+        log.warning("institutions: inviter lookup failed", error=str(exc))
+        return False
+    return bool(rows) and _seat_is_active(rows[0]) and rows[0].get("role") in {
+        "owner",
+        "institution_admin",
+        "admin",
+    }
+
+
+def _existing_member_row(user_id: str, school_id: str) -> Optional[dict]:
+    """The user's row in this school whatever its seat status, or None."""
+    rows = (
+        _svc()
+        .table("institution_members")
+        .select("*")
+        .eq("user_id", user_id)
+        .eq("school_id", school_id)
+        .limit(1)
+        .execute()
+        .data
+        or []
+    )
+    return rows[0] if rows else None
+
+
+# Schools created by THIS request. The creator of a brand-new organisation is
+# its first administrator; the claimant of a pre-existing row (seeded registry,
+# or a school whose administrators were all removed) is not.
+_created_schools: ContextVar[frozenset] = ContextVar("institution_created_schools", default=frozenset())
+
+
+def _note_created_school(school_id: Optional[str]) -> None:
+    if school_id:
+        _created_schools.set(_created_schools.get() | {school_id})
 
 
 def _find_or_create_school(
@@ -438,7 +566,9 @@ def _find_or_create_school(
     existing_address = (row.get("address") or "").strip() if row else ""
     if row is not None and current_user is not None:
         _authorize_join(current_user, row.get("id"))
+    created_here = False
     if not row:
+        created_here = True
         row = (
             svc.table("schools")
             .insert(
@@ -470,6 +600,8 @@ def _find_or_create_school(
     if not row:
         return None
     school_id = row.get("id")
+    if created_here:
+        _note_created_school(school_id)
     if not row.get("school_code"):
         try:
             code = _school_affiliation_code(svc, row.get("name") or name, row.get("address") or address, school_id)
@@ -493,11 +625,23 @@ def _attach_member(
     school_id: str,
     account_type: str,
     role: Optional[str],
-) -> None:
+    *,
+    seat_status: str = _ACTIVE_SEAT,
+    verified: bool = False,
+    update_existing: bool = False,
+    invited_by: Optional[str] = None,
+) -> Optional[dict]:
+    """Create the caller's seat, or (only for a consumed invitation) update it.
+
+    An EXISTING seat is never changed from a request body: role, seat status and
+    verified stay as stored unless ``update_existing`` is set, which the caller
+    does only after consuming an invitation. ``verified`` is only ever raised
+    here, never lowered, so re-submitting does not demote a verified member.
+    """
     svc = _svc()
     existing = (
         svc.table("institution_members")
-        .select("id")
+        .select("*")
         .eq("user_id", current_user["id"])
         .eq("school_id", school_id)
         .limit(1)
@@ -507,37 +651,55 @@ def _attach_member(
     )
     member_role = role or account_type
     if existing:
+        if not update_existing:
+            return existing[0]
+        update = {"role": member_role, "seat_status": seat_status}
+        if verified:
+            update["verified"] = True
+        if invited_by:
+            update["invited_by"] = invited_by
         try:
-            svc.table("institution_members").update(
-                {"role": member_role, "verified": False, "seat_status": "active"}
-            ).eq("id", existing[0]["id"]).execute()
-            return
+            svc.table("institution_members").update(update).eq("id", existing[0]["id"]).execute()
         except Exception as exc:  # noqa: BLE001
-            log.warning("institutions: member update with seat_status skipped", error=str(exc))
-            svc.table("institution_members").update(
-                {"role": account_type, "verified": False}
-            ).eq("id", existing[0]["id"]).execute()
-            return
+            if not _is_missing_column_error(exc):
+                raise
+            log.warning("institutions: member update without seat_status", error=str(exc))
+            fallback = {"role": account_type}
+            if verified:
+                fallback["verified"] = True
+            svc.table("institution_members").update(fallback).eq("id", existing[0]["id"]).execute()
+        return {**existing[0], **update}
+    row = {
+        "user_id": current_user["id"],
+        "school_id": school_id,
+        "role": member_role,
+        "verified": bool(verified),
+        "seat_status": seat_status,
+    }
+    if invited_by:
+        row["invited_by"] = invited_by
     try:
-        svc.table("institution_members").insert(
-            {
-                "user_id": current_user["id"],
-                "school_id": school_id,
-                "role": member_role,
-                "verified": False,
-                "seat_status": "active",
-            }
-        ).execute()
+        svc.table("institution_members").insert(row).execute()
     except Exception as exc:  # noqa: BLE001
-        log.warning("institutions: member insert with full role skipped", error=str(exc))
+        if not _is_missing_column_error(exc) and not _is_missing_column_error(exc, "invited_by"):
+            raise
+        if seat_status != _ACTIVE_SEAT:
+            # A schema without seat_status cannot represent a pending claim.
+            # Never turn it into an active seat: fail closed.
+            raise HTTPException(
+                status_code=503,
+                detail="Organisation claims are not available yet. Please try again later.",
+            ) from exc
+        log.warning("institutions: member insert without optional columns", error=str(exc))
         svc.table("institution_members").insert(
             {
                 "user_id": current_user["id"],
                 "school_id": school_id,
                 "role": account_type,
-                "verified": False,
+                "verified": bool(verified),
             }
         ).execute()
+    return row
 
 
 def _institution_programme_ids(school_id: Optional[str]) -> Optional[list]:
@@ -1894,6 +2056,8 @@ async def submit_verification(
     # only that endpoint is allowed to move the school to pending review.
     status = "claimed"
     account_type = _normal_account_type(claim.account_type, claim.role)
+    pending_claim = False
+    _created_schools.set(frozenset())
     try:
         org = _find_or_create_school(claim, current_user)
         if not org:
@@ -1901,14 +2065,51 @@ async def submit_verification(
                 data=None,
                 message="Organisation name is required to create the admin workspace.",
             )
-        # Joining a school that already has administrators goes through its
-        # invitation: the invited role wins over whatever the request body says.
+        # What the caller may become is decided HERE, from stored state, never
+        # from the request body:
+        #   * an invitation: its role and its inviter decide the seat
+        #   * an existing seat: it is left exactly as stored
+        #   * a school created by this request: its creator is the first admin
+        #   * any other school with no active administrator (seeded registry row,
+        #     all administrators removed): a PENDING claim with no admin scope
+        #     until a reviewer activates it
         invite = _invite_for_user(current_user, org.id)
-        invited_role = (invite or {}).get("role")
-        if invited_role:
-            account_type = _normal_account_type(None, invited_role)
-        _attach_member(current_user, org.id, account_type, invited_role or claim.role)
-        _close_invite(current_user, invite)
+        existing_member = _existing_member_row(current_user["id"], org.id)
+        if invite:
+            invited_role = invite.get("role")
+            if invited_role:
+                account_type = _normal_account_type(None, invited_role)
+            _consume_invite(current_user, invite)
+            try:
+                _attach_member(
+                    current_user,
+                    org.id,
+                    account_type,
+                    invited_role or claim.role,
+                    seat_status=_ACTIVE_SEAT,
+                    verified=_inviter_is_authorised(org.id, invite.get("invited_by")),
+                    update_existing=True,
+                    invited_by=invite.get("invited_by"),
+                )
+            except Exception:
+                _restore_invite(current_user, invite)
+                raise
+        elif existing_member:
+            seat = existing_member.get("seat_status") or _ACTIVE_SEAT
+            if seat in {"revoked", "suspended"}:
+                raise HTTPException(
+                    status_code=403,
+                    detail="Your access to this organisation was removed. Ask an owner to invite you again.",
+                )
+            pending_claim = seat == _PENDING_SEAT
+            account_type = _normal_account_type(None, existing_member.get("role"))
+        elif org.id in _created_schools.get():
+            _attach_member(current_user, org.id, account_type, claim.role)
+        else:
+            _attach_member(
+                current_user, org.id, account_type, claim.role, seat_status=_PENDING_SEAT
+            )
+            pending_claim = True
         try:
             _svc().table("users").update(
                 {
@@ -1931,7 +2132,12 @@ async def submit_verification(
         )
         return ResponseModel(
             data=org.model_dump(by_alias=True),
-            message="Admin workspace linked. Submit verification proof to request review.",
+            message=(
+                "Claim received. Submit verification proof; access to this "
+                "organisation's workspace starts after it is reviewed."
+                if pending_claim
+                else "Admin workspace linked. Submit verification proof to request review."
+            ),
         )
     except HTTPException:
         # Authorisation refusals (e.g. an organisation that already has
@@ -1947,8 +2153,11 @@ async def submit_verification(
 
 
 def _proof_org_for_user(current_user: dict) -> tuple[dict, Optional[dict]]:
-    """Resolve the caller's own school before accepting a proof file."""
-    member = _membership_for_user(current_user)
+    """Resolve the caller's own school before accepting a proof file.
+
+    A pending claim counts here: submitting proof is how it gets reviewed.
+    """
+    member = _membership_for_user(current_user, include_pending=True)
     school_id = (member or {}).get("school_id")
     if not school_id:
         raise HTTPException(status_code=409, detail="Link your organisation before submitting verification proof.")
