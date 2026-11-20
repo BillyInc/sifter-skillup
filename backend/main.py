@@ -31,7 +31,13 @@ from auth import Auth
 from logger import log
 from middleware.session_middleware import DeviceSessionMiddleware
 import avatar_storage
-from privacy import cooldown_row, deletion_user_fields, device_cooldown_active
+from privacy import (
+    cooldown_row,
+    deletion_user_fields,
+    device_cooldown_active,
+    normalize_device_id,
+    scrub_deleted_sessions,
+)
 from profile_validation import DisplayNameError, validate_display_name
 from legal_versions import CURRENT_PRIVACY_VERSION, CURRENT_TERMS_VERSION
 
@@ -1007,16 +1013,14 @@ async def delete_me(
     x_device_id: Optional[str] = Header(None, alias="X-Device-Id"),
 ):
     """Soft-delete the account, revoke its sessions and start the device cooldown."""
-    device_id = (x_device_id or "").strip()
+    device_id = normalize_device_id(x_device_id)
     deleted_at = datetime.now().isoformat()
     available_at = (datetime.now() + timedelta(hours=24)).isoformat()
     service = db.get_service_client()
     try:
-        # Hashes only: the raw email and device id are not kept after deletion.
+        # Only a hashed device id is kept (and no email, in any form) after deletion.
         service.table("account_deletion_cooldowns").insert(
-            cooldown_row(
-                current_user["id"], device_id, current_user.get("email"), deleted_at, available_at
-            )
+            cooldown_row(current_user["id"], device_id, deleted_at, available_at)
         ).execute()
     except Exception as exc:
         # Lifecycle migrations are additive. Account deletion must still work
@@ -1046,6 +1050,8 @@ async def delete_me(
         }).eq("user_id", current_user["id"]).execute()
     except Exception as exc:
         log.warning("Active session revocation skipped during deletion", error=str(exc))
+    # Scrub device names/ids and push tokens, and drop the push token row.
+    scrub_deleted_sessions(service, current_user["id"])
     # My World collections are purged immediately (best effort, never fails deletion).
     from routes.collections_routes import purge_user_collections
     purge_user_collections(current_user["id"])

@@ -128,7 +128,7 @@ def test_soft_delete_stores_only_hashes_in_the_cooldown_row(monkeypatch):
     svc, out = _run_delete_me(monkeypatch)
     assert out.data["deleted"] is True
     cooldown = [w for w in svc.writes if w[0] == "account_deletion_cooldowns" and w[1] == "insert"][0][2]
-    assert cooldown["email"].startswith("h1:") and cooldown["device_id"].startswith("h1:")
+    assert cooldown["email"] is None and cooldown["device_id"].startswith("h1:")  # no email, in any form
     blob = repr(cooldown).lower()
     assert "example.com" not in blob and "device-abc" not in blob
 

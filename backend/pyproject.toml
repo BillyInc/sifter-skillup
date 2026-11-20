@@ -25,6 +25,7 @@ dependencies = [
     "firebase-admin>=7.4.0",
     "tweepy>=4.16.0",
     "pillow>=10.0.0",
+    "segno>=1.6.6",
 ]
 
 [project.optional-dependencies]
