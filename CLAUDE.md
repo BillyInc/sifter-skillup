@@ -1445,3 +1445,52 @@ git rebase --onto origin/main <old-base-commit> <your-branch>
 ```
 
 Delete this section once everyone has reset.
+
+## Open items for Samuel (added 20 November 2026)
+
+These need an owner or data decision. None can be settled by a code-only change,
+and none should be worked around by editing canonical data or skipping tests.
+
+### 1. Two failing backend tests: relationship explanations
+
+`backend/tests/test_d078_relationship_explanation_contract.py` fails on `main`
+(these are the only two backend failures; 765 pass), and they block Backend
+Checks and the pytest step of Deploy Backend.
+
+- `test_recorded_relationship_notes_replace_only_the_matching_generic_edges`
+  expects `d078-resolved-relation:<ledger id>:*` edges in
+  `data/career-mapping/_audit/D078_METHOD_AREA_ROLE_ROUTE_GRAPH_2026_10_19.json`
+  (33 eligible ledger records). The committed graph has none: its edges use the
+  `d078-method-resolution:*` scheme, so the test finds 0 matching edges and 33
+  `no_matching_canonical_edge` conflicts.
+- `test_every_student_relationship_gets_item_context_without_inventing_route_requirements`
+  expects 566 student-visible, `resolved_ready_for_use` edges; the graph has 7,779.
+- Decide which is right: regenerate and recommit the graph that contains the
+  resolved-relation edges, or re-baseline both tests to the current edge scheme
+  and counts. Re-run `finalize_d078_relationship_route_contract_2026_10_20.py`
+  and `export_d078_method_aware_ui_data_2026_10_19.py` if the graph changes.
+  Do not skip or delete the tests to get green.
+
+### 2. Subject-grade bands need confirmation
+
+The O-level `grade_check` treats a **credit** as A1 to C6 and a **pass** as
+A1 to E8, and treats a missing grade as unknown. These bands are an assumption
+from the common WAEC/NECO scale, not a confirmed rule from the JAMB brochure or
+each university. Confirm the bands (and whether any university uses a different
+one), and whether a per-university `gradeCheck` is wanted. Until confirmed, the
+result must stay labelled as an indication, never as an admission outcome.
+
+### 3. Referral earnings have no data source
+
+The admin referrals view can show counts it can read, but there is no table or
+API that records earnings, payouts or commission rates, so no earnings figure is
+shown. Do not invent one. Smallest change needed: a table recording earning
+events (referrer, referred user, amount, currency, status, created_at) plus the
+commission rule, approved separately, with a migration prepared and not applied.
+
+### 4. Endpoints outside this repo must use the public name
+
+`/api/leaderboard/*`, `/api/rooms/*` and `/api/referrals/stats` are not served
+by this repository. Whatever serves them must return the learner's `public_name`
+(display name, else first name, else "Learner"), never `username`, full name,
+email or a raw avatar path, and must use `public_avatar_url` for avatars.

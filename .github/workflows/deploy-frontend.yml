@@ -1,21 +1,12 @@
 name: Deploy Frontend (dev)
 
 on:
-  push:
-    branches: [main]
-    paths:
-      # 'app/**' is the expo-router route tree and is NOT covered by 'app.json'
-      # — a different path entirely. Without it, a change that only adds or
-      # edits routes (a whole new screen stack, say) never triggers a deploy,
-      # and the site silently keeps serving the previous build.
-      - 'app/**'
-      - 'src/**'
-      - 'assets/**'
-      - 'app.json'
-      - 'package.json'
-      - 'pnpm-lock.yaml'
-      - 'metro.config.js'
-      - '.github/workflows/deploy-frontend.yml'
+  # PAUSED 2026-11-20: the dev server is not reachable ("Setup SSH key" fails at
+  # ssh-keyscan on every push), so push-triggered runs only add red noise to main.
+  # Re-enable by restoring the `push:` block (branches: [main], paths: app/**,
+  # src/**, assets/**, app.json, package.json, pnpm-lock.yaml, metro.config.js,
+  # this file) once the SERVER and SSH_KEY secrets point at a live host.
+  # Manual runs still work.
   workflow_dispatch:
 
 # Same fixed group as deploy-backend.yml — a push touching both backend/ and src/
