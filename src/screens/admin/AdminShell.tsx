@@ -293,7 +293,6 @@ export function AdminShell({
         title={title}
         eyebrow={eyebrow}
         actions={actions}
-        children={children}
         audience={audience}
         profile={profile}
         groups={navGroups}
@@ -315,7 +314,9 @@ export function AdminShell({
         adminSearch={adminSearch}
         onAdminSearchChange={setAdminSearch}
         onAdminSearchSubmit={submitAdminSearch}
-      />
+      >
+        {children}
+      </WebAdminShell>
     );
   }
 

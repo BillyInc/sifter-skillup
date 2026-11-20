@@ -40,7 +40,7 @@ export function SeniorSecondaryExploreSetupForm({
         </Text>
         <Text style={[styles.sub, { color: colors.textSoft }]}>
             Choose subjects you take or are considering, and optionally choose a
-            programme. We will show the programme's general requirements before
+            programme. We will show the programme&apos;s general requirements before
             you compare universities.
         </Text>
       </View>

@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/rules-of-hooks — platform-conditional hooks: isWeb is a static
+/* eslint-disable react-hooks/rules-of-hooks -- platform-conditional hooks: isWeb is a static
    Platform.OS check; hooks are always called, just from different packages. */
 import React from 'react';
 import { Platform } from 'react-native';

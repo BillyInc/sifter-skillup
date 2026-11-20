@@ -455,7 +455,7 @@ export function SkillsGapScreen() {
           <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>{copy.title}</Text>
           <Text style={[styles.lede, { color: colors.textMuted }]}>{copy.body}</Text>
           {audience === "university" ? <View style={styles.programmeChooser}>
-            <Text style={[styles.meta, { color: colors.textMuted }]}>Showing this university's own programme teaching records by default.</Text>
+            <Text style={[styles.meta, { color: colors.textMuted }]}>Showing this university&apos;s own programme teaching records by default.</Text>
             <TouchableOpacity accessibilityRole="button" onPress={() => {
               const next = !universityJambChooserOpen;
               setUniversityJambChooserOpen(next);
@@ -498,7 +498,7 @@ export function SkillsGapScreen() {
           </View> : null}
           <View style={[styles.marketNotice, { backgroundColor: colors.surface.subtle, borderColor: colors.border }]}>
             <Text style={[styles.marketNoticeTitle, CompassFonts.bodyBold, { color: colors.text }]}>How to read this view</Text>
-            <Text style={[styles.meta, { color: colors.textMuted }]}>The institution's recorded programme teaching is the baseline. Sourced domain, subgroup and role records are the downstream comparison layer. A candidate gap means the downstream layer contains an item that the teaching record does not currently evidence; it is not an accreditation requirement, an employment-demand signal or a recommendation.</Text>
+            <Text style={[styles.meta, { color: colors.textMuted }]}>The institution&apos;s recorded programme teaching is the baseline. Sourced domain, subgroup and role records are the downstream comparison layer. A candidate gap means the downstream layer contains an item that the teaching record does not currently evidence; it is not an accreditation requirement, an employment-demand signal or a recommendation.</Text>
           </View>
           {Platform.OS === "web" && reports.length ? <View style={styles.exportActions}>
             <TouchableOpacity accessibilityRole="button" onPress={() => window.print()} style={[styles.exportButton, { borderColor: colors.border }]}><Text style={[styles.meta, { color: colors.text }]}>Print current report</Text></TouchableOpacity>

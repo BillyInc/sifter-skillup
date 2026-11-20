@@ -545,7 +545,7 @@ export function ZkSnarksVsStarksSim({ onComplete, onSkip }: SimProps) {
           })}
         </View>
         {checked && <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft, marginTop: Spacing.sm, lineHeight: 16 }}>
-          💡 Starknet uses STARKs (Scalable Transparent Arguments of Knowledge) — transparent (no trusted setup) and quantum-resistant. This is Cairo's native proof system.
+          💡 Starknet uses STARKs (Scalable Transparent Arguments of Knowledge) — transparent (no trusted setup) and quantum-resistant. This is Cairo&apos;s native proof system.
         </Text>}
       </Card>
 
@@ -603,7 +603,7 @@ export function RwaEvaluatorSim({ onComplete, onSkip }: SimProps) {
   return (
     <SimShell icon="🏛️" title="RWA Protocol Evaluator" subtitle="Real-world assets on-chain — evaluate what's actually trustless vs marketing speak.">
       <Card>
-        <Text style={s.h2}>RWA key questions: Is there a legal entity? Who holds the physical asset? What's the redemption path? Is the yield sustainable?</Text>
+        <Text style={s.h2}>RWA key questions: Is there a legal entity? Who holds the physical asset? What&apos;s the redemption path? Is the yield sustainable?</Text>
       </Card>
       {products.map(p => (
         <Card key={p.name} style={{ borderColor: checked ? riskColor(ratings[p.name]) : Colors.border }}>
@@ -685,8 +685,8 @@ export function WalletDrainerDrillSim({ onComplete, onSkip }: SimProps) {
         <Card>
           <Text style={s.fl}>HOW DRAINERS WORK</Text>
           <Text style={s.blt}>• Drainer = contract that calls transferFrom() on all approved tokens at once</Text>
-          <Text style={s.blt}>• One "setApprovalForAll" gives unlimited access to all NFTs in collection</Text>
-          <Text style={s.blt}>• "Permit" signatures move ERC-20 tokens without a transaction</Text>
+          <Text style={s.blt}>• One &quot;setApprovalForAll&quot; gives unlimited access to all NFTs in collection</Text>
+          <Text style={s.blt}>• &quot;Permit&quot; signatures move ERC-20 tokens without a transaction</Text>
           <Text style={s.blt}>• Recovery: impossible. Transactions are irreversible.</Text>
         </Card>
         <TouchableOpacity onPress={() => { setStep(1); setDrained(false); setChoice1(null); setChoice2(null); setApprovalChecked(false); }}
@@ -711,9 +711,9 @@ export function WalletDrainerDrillSim({ onComplete, onSkip }: SimProps) {
           <Card style={{ borderColor: Colors.red }}>
             <Text style={[s.fl, { color: Colors.red }]}>SCENARIO 1 — NFT MINT APPROVAL</Text>
             <Text style={{ fontWeight: '700', color: Colors.text, lineHeight: 20, marginBottom: Spacing.md }}>
-              You're minting an NFT. MetaMask pops up asking you to sign:{'\n\n'}
+              You&apos;re minting an NFT. MetaMask pops up asking you to sign:{'\n\n'}
               <Text style={{ fontFamily: 'monospace', color: Colors.red }}>setApprovalForAll(0xUnknown...drain, true)</Text>{'\n\n'}
-              The site says "this is required to verify your wallet for the mint."
+              The site says &quot;this is required to verify your wallet for the mint.&quot;
             </Text>
             <View style={{ padding: Spacing.md, backgroundColor: '#fef3c7', borderRadius: Radius.md }}>
               <Text style={{ fontWeight: '700', color: '#92400e' }}>⚠️ setApprovalForAll = grants unlimited access to ALL your NFTs in this collection to that address</Text>
@@ -722,7 +722,7 @@ export function WalletDrainerDrillSim({ onComplete, onSkip }: SimProps) {
           <View style={{ gap: Spacing.sm }}>
             <TouchableOpacity onPress={() => handleChoice1('approve')}
               style={{ padding: Spacing.md, borderRadius: Radius.md, borderWidth: 2, borderColor: Colors.red, backgroundColor: '#fff0f0', alignItems: 'center' }}>
-              <Text style={{ fontWeight: '800', color: Colors.red }}>Approve — the site says it's required</Text>
+              <Text style={{ fontWeight: '800', color: Colors.red }}>Approve — the site says it&apos;s required</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => handleChoice1('reject')}
               style={{ padding: Spacing.md, borderRadius: Radius.md, borderWidth: 2, borderColor: Colors.green, backgroundColor: '#f0fdf4', alignItems: 'center' }}>
@@ -742,7 +742,7 @@ export function WalletDrainerDrillSim({ onComplete, onSkip }: SimProps) {
               <Text style={{ fontFamily: 'monospace', fontSize: FontSize.xs, color: Colors.text }}>
                 Permit{'\n'}owner: 0xYourAddress{'\n'}spender: 0xDrainer{'\n'}value: 999999999{'\n'}deadline: 9999999999
               </Text>{'\n\n'}
-              The site says "verify ownership to claim your 500 USDC airdrop."
+              The site says &quot;verify ownership to claim your 500 USDC airdrop.&quot;
             </Text>
             <View style={{ padding: Spacing.md, backgroundColor: '#fef3c7', borderRadius: Radius.md }}>
               <Text style={{ fontWeight: '700', color: '#92400e' }}>⚠️ A Permit signature = off-chain permission for the spender to take unlimited USDC from your wallet. No transaction needed.</Text>
@@ -755,7 +755,7 @@ export function WalletDrainerDrillSim({ onComplete, onSkip }: SimProps) {
             </TouchableOpacity>
             <TouchableOpacity onPress={() => handleChoice2('reject')}
               style={{ padding: Spacing.md, borderRadius: Radius.md, borderWidth: 2, borderColor: Colors.green, backgroundColor: '#f0fdf4', alignItems: 'center' }}>
-              <Text style={{ fontWeight: '800', color: Colors.green }}>Reject — Permit + "spender: unknown address" is a drainer</Text>
+              <Text style={{ fontWeight: '800', color: Colors.green }}>Reject — Permit + &quot;spender: unknown address&quot; is a drainer</Text>
             </TouchableOpacity>
           </View>
         </>
@@ -813,7 +813,7 @@ export function FlashbotsProtectSim({ onComplete, onSkip }: SimProps) {
     <SimShell icon="🤖" title="Flashbots Protect — Block MEV Bots" subtitle="Route your transaction through a private mempool. MEV bots can't see it, so they can't sandwich it.">
       <Card>
         <Text style={s.fl}>THE SCENARIO</Text>
-        <Text style={s.h2}>You're swapping ${swapAmount} USDC → ETH on Uniswap. Without protection, this tx sits in the public mempool for ~12 seconds where MEV bots can see and sandwich it.</Text>
+        <Text style={s.h2}>You&apos;re swapping ${swapAmount} USDC → ETH on Uniswap. Without protection, this tx sits in the public mempool for ~12 seconds where MEV bots can see and sandwich it.</Text>
         <TextInput style={[s.inp, { marginTop: Spacing.md }]} value={swapAmount} onChangeText={setSwapAmount}
           keyboardType="decimal-pad" placeholder="Swap amount ($)" placeholderTextColor={Colors.textMuted} editable={!done} />
       </Card>
@@ -830,7 +830,7 @@ export function FlashbotsProtectSim({ onComplete, onSkip }: SimProps) {
             <Text style={[s.fl, { color: Colors.green }]}>OPTION B — FLASHBOTS PROTECT</Text>
             <View style={s.row}><Text style={s.rk}>MEV loss</Text><Text style={[s.rv, { color: Colors.green, fontWeight: '800' }]}>$0.00</Text></View>
             <View style={s.row}><Text style={s.rk}>RPC endpoint</Text><Text style={{ fontSize: 10, fontFamily: 'monospace', color: Colors.accent }}>rpc.flashbots.net</Text></View>
-            <View style={s.row}><Text style={s.rk}>Bot visibility</Text><Text style={[s.rv, { color: Colors.green }]}>Private — bots can't see it</Text></View>
+            <View style={s.row}><Text style={s.rk}>Bot visibility</Text><Text style={[s.rv, { color: Colors.green }]}>Private — bots can&apos;t see it</Text></View>
           </Card>
           <View style={{ flexDirection: 'row', gap: Spacing.sm }}>
             <TouchableOpacity onPress={() => { setUseProtection(false); setDone(true); }}
