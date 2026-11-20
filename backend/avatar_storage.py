@@ -10,7 +10,10 @@ from __future__ import annotations
 
 import io
 import re
+import threading
+import time
 import uuid
+from collections import defaultdict, deque
 from typing import Optional, Protocol
 
 from PIL import Image, ImageOps, UnidentifiedImageError
@@ -213,3 +216,43 @@ def process_avatar_image(data: bytes) -> bytes:
 
 def new_object_key(user_id: str) -> str:
     return f"{user_id}/{uuid.uuid4()}.webp"
+
+
+# --- Upload rate limit -------------------------------------------------------
+# Per-user sliding windows over successful uploads only. In-memory, so each
+# worker process keeps its own counts (the effective ceiling is per worker).
+UPLOAD_LIMITS = ((3600, 5, "hour"), (86400, 20, "day"))
+
+
+class UploadRateLimiter:
+    def __init__(self, limits=UPLOAD_LIMITS, clock=time.time) -> None:
+        self._limits = limits
+        self._clock = clock
+        self._events = defaultdict(deque)
+        self._lock = threading.Lock()
+
+    def check(self, user_id: str) -> Optional[int]:
+        """Seconds until the user may upload again, or None if allowed now."""
+        now = self._clock()
+        with self._lock:
+            events = self._events[user_id]
+            horizon = max(w for w, _, _ in self._limits)
+            while events and events[0] <= now - horizon:
+                events.popleft()
+            wait = 0
+            for window, maximum, _ in self._limits:
+                recent = [t for t in events if t > now - window]
+                if len(recent) >= maximum:
+                    wait = max(wait, int(recent[len(recent) - maximum] + window - now) + 1)
+            return wait or None
+
+    def record(self, user_id: str) -> None:
+        with self._lock:
+            self._events[user_id].append(self._clock())
+
+    def reset(self) -> None:
+        with self._lock:
+            self._events.clear()
+
+
+upload_limiter = UploadRateLimiter()
