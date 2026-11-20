@@ -1083,6 +1083,12 @@ async def delete_me(
     # My World collections are purged immediately (best effort, never fails deletion).
     from routes.collections_routes import purge_user_collections
     purge_user_collections(current_user["id"])
+    # A deleted sole admin must not keep an active institution seat.
+    try:
+        from routes.institutions_routes import revoke_user_seats
+        revoke_user_seats(current_user["id"])
+    except Exception as exc:  # noqa: BLE001
+        log.warning("Institution seat revocation skipped during deletion", error=type(exc).__name__)
     return ResponseModel(data={"deleted": True, "available_at": available_at})
 
 
