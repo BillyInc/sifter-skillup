@@ -1,11 +1,17 @@
-# Migration runner checks (phase 1: static, read-only).
+# Migration runner checks and gated database jobs.
 #
-# NO DATABASE, NO SECRETS. This workflow never connects to Postgres/Supabase and
-# never executes SQL: it lints the SQL text, validates the manifest, prints the
-# plan (what would run, in order) and runs the migrate unit tests, which use only
-# synthetic files in temp directories. Do not add DATABASE_URL or any secret
-# here; the throwaway-Postgres, staging and approval-gated production jobs are a
-# later phase (see backend/migrate/README.md "Next phase").
+# The `migrations` job (every PR and push to main) is static: it never connects to
+# Postgres/Supabase and never reads a secret. It lints the SQL text, validates the
+# manifest, prints the plan and runs the migrate unit tests (synthetic files only).
+#
+# The `db-status` and `db-apply` jobs touch the real database. They run ONLY from a
+# manual workflow_dispatch on main, and only inside the `production` GitHub Environment,
+# which must be configured with required reviewers (Settings > Environments > production)
+# so every run waits for a human to approve it. The connection string is the environment
+# secret `DATABASE_URL` (Supabase Session pooler string; GitHub runners are IPv4-only),
+# exposed to the runner as MIGRATE_DATABASE_URL and never printed. `db-apply` is a dry run
+# unless the `confirm_apply` input is ticked. Destructive entries run only if named in
+# `approve_ids` together with `approval_ref`; rebuild and manual_only entries never run.
 name: Migrations
 
 on:
@@ -20,6 +26,29 @@ on:
       - 'backend/patch_*.sql'
       - 'backend/tests/test_migrate_*.py'
       - '.github/workflows/migrations.yml'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'status = read-only ledger + plan; apply = run pending entries'
+        type: choice
+        options: [status, apply]
+        default: status
+      confirm_apply:
+        description: 'apply mode only: tick to execute (unticked = dry run)'
+        type: boolean
+        default: false
+      approve_ids:
+        description: 'space-separated destructive entry ids approved for this run (optional)'
+        type: string
+        default: ''
+      approval_ref:
+        description: 'who approved the destructive entries, and where (required with approve_ids)'
+        type: string
+        default: ''
+      empty_database:
+        description: 'tick ONLY if the database is known to be empty (allows an empty ledger)'
+        type: boolean
+        default: false
   push:
     branches: [main]
     paths:
@@ -86,3 +115,62 @@ jobs:
         run: |
           uv sync --extra test
           uv run pytest tests/test_migrate_*.py -q
+
+  # ---------------------------------------------------------------------------
+  # Database jobs: manual, main only, behind the `production` environment approval.
+  # ---------------------------------------------------------------------------
+  db-status:
+    name: Ledger status (read-only, needs approval)
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.mode == 'status'
+    needs: migrations
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: production
+    concurrency:
+      group: migrations-db
+      cancel-in-progress: false
+    env:
+      MIGRATE_DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install database driver (this job only)
+        run: pip install 'psycopg[binary]'
+      - name: Status
+        run: python -m backend.migrate status
+
+  db-apply:
+    name: Apply pending migrations (needs approval)
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.mode == 'apply'
+    needs: migrations
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    environment: production
+    concurrency:
+      group: migrations-db
+      cancel-in-progress: false
+    env:
+      MIGRATE_DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      APPROVE_IDS: ${{ inputs.approve_ids }}
+      APPROVAL_REF: ${{ inputs.approval_ref }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install database driver (this job only)
+        run: pip install 'psycopg[binary]'
+      # .sql.gz transports are decompressed in memory by the runner (checksums are over the
+      # decompressed, BOM/CRLF-normalised text); nothing is written to disk or uploaded.
+      - name: Apply (dry run unless confirm_apply is ticked)
+        run: |
+          args=()
+          if [ "${{ inputs.confirm_apply }}" = "true" ]; then args+=(--apply); fi
+          if [ "${{ inputs.empty_database }}" = "true" ]; then args+=(--empty-database); fi
+          if [ -n "$APPROVE_IDS" ]; then
+            # word-splitting of the ids is intended; the runner rejects unknown ids
+            args+=(--approve $APPROVE_IDS --approval-ref "$APPROVAL_REF")
+          fi
+          python -m backend.migrate apply "${args[@]}"

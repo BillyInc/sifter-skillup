@@ -1,7 +1,8 @@
-"""``python -m migrate plan|lint|verify-manifest|checksums`` (run from ``backend/``).
+"""``python -m migrate plan|lint|verify-manifest|checksums|baseline`` never touch a database.
 
-Every command is read-only with respect to databases: there is no connection
-code in this package.
+``status``, ``apply`` and ``import-baseline`` do, through ``executor.connect_from_env``
+(URL only from the environment). ``apply`` and ``import-baseline`` are dry runs unless
+``--apply`` is passed.
 """
 
 from __future__ import annotations
@@ -10,8 +11,10 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from typing import Sequence
+from typing import Callable, Sequence
 
+from . import apply as apply_mod
+from . import executor as ex_mod
 from . import lint as lint_mod
 from . import manifest as mf
 from . import plan as plan_mod
@@ -118,6 +121,135 @@ def cmd_baseline(args: argparse.Namespace) -> int:
     return 0
 
 
+Connect = Callable[[], ex_mod.Executor]
+
+
+def _print_outcomes(result: apply_mod.ApplyResult) -> None:
+    for outcome in result.outcomes:
+        extra = f"  - {outcome.detail}" if outcome.detail else ""
+        print(f"{outcome.status:<14} {outcome.id}{extra}")
+    for message in result.messages:
+        print(message, file=sys.stderr)
+
+
+def cmd_status(args: argparse.Namespace, connect: Connect) -> int:
+    manifest, root = _load(args)
+    try:
+        executor = connect()
+    except ex_mod.ExecutorError as exc:
+        print(f"cannot connect: {exc}", file=sys.stderr)
+        return 1
+    try:
+        plan, info = apply_mod.run_status(manifest, root, executor, args.schema)
+    except ex_mod.ExecutorError as exc:
+        print(f"status failed: {exc}", file=sys.stderr)
+        return 1
+    finally:
+        executor.close()
+    print(
+        f"ledger: {'present' if info['ledger_exists'] else 'MISSING'}, "
+        f"{info['ledger_rows']} row(s)"
+    )
+    print(plan_mod.format_plan(plan))
+    return 2 if plan.has_drift else 0
+
+
+def cmd_apply(args: argparse.Namespace, connect: Connect) -> int:
+    manifest, root = _load(args)
+    try:
+        executor = connect()
+    except ex_mod.ExecutorError as exc:
+        print(f"cannot connect: {exc}", file=sys.stderr)
+        return 1
+    try:
+        result = apply_mod.run_apply(
+            manifest,
+            root,
+            executor,
+            apply=args.apply,
+            approve=args.approve or (),
+            approval_ref=args.approval_ref,
+            empty_database=args.empty_database,
+            schema=args.schema,
+        )
+    except (ex_mod.ExecutorError, apply_mod.RefusedError) as exc:
+        print(f"apply failed: {exc}", file=sys.stderr)
+        return 1
+    finally:
+        executor.close()
+    mode = "APPLY" if args.apply else "DRY RUN (nothing executed; pass --apply to run)"
+    print(f"mode: {mode}")
+    _print_outcomes(result)
+    applied = sum(1 for o in result.outcomes if o.status == "applied")
+    print(
+        f"summary: {applied} applied, {len(result.outcomes)} considered, exit {result.exit_code}"
+    )
+    return result.exit_code
+
+
+def cmd_import_baseline(args: argparse.Namespace, connect: Connect) -> int:
+    manifest, root = _load(args)
+    try:
+        ledger_file = load_applied_json(Path(args.file))
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        print(f"cannot read {args.file}: {exc}", file=sys.stderr)
+        return 1
+    rows = ledger_file.baselines()
+    if not rows:
+        print("no baseline rows in file", file=sys.stderr)
+        return 1
+    ids = {entry.id for entry in manifest.entries}
+    unknown = sorted(set(rows) - ids)
+    if unknown:
+        print(
+            f"unknown entries in baseline file: {', '.join(unknown)}", file=sys.stderr
+        )
+        return 1
+    if not args.apply:
+        print(f"DRY RUN: would record {len(rows)} baseline row(s): {', '.join(rows)}")
+        return 0
+    from .sqlledger import SqlLedger
+
+    try:
+        executor = connect()
+    except ex_mod.ExecutorError as exc:
+        print(f"cannot connect: {exc}", file=sys.stderr)
+        return 1
+    try:
+        if not executor.try_advisory_lock(ex_mod.ADVISORY_LOCK_KEY):
+            print("another migration run holds the advisory lock", file=sys.stderr)
+            return 1
+        ledger = SqlLedger(executor, args.schema)
+        if not ledger.exists():
+            apply_mod.bootstrap_ledger(executor, args.schema)
+        existing = ledger.applied()
+        applied_by = ledger_file.applied()
+        executor.begin()
+        try:
+            for entry_id, meta in rows.items():
+                if entry_id in existing:
+                    raise ValueError(f"{entry_id} is already in the ledger")
+                ledger.record_baseline(
+                    entry_id,
+                    applied_by[entry_id],
+                    operator=meta.get("operator", ""),
+                    preflight_sha256=meta.get("preflight_sha256", ""),
+                )
+            executor.commit()
+        except Exception as exc:  # noqa: BLE001
+            executor.rollback()
+            print(f"baseline import rolled back: {exc}", file=sys.stderr)
+            return 1
+        executor.advisory_unlock(ex_mod.ADVISORY_LOCK_KEY)
+    except ex_mod.ExecutorError as exc:
+        print(f"baseline import failed: {exc}", file=sys.stderr)
+        return 1
+    finally:
+        executor.close()
+    print(f"recorded {len(rows)} baseline row(s)")
+    return 0
+
+
 def cmd_checksums(args: argparse.Namespace) -> int:
     manifest, root = _load(args)
     result = {entry.id: mf.entry_checksum(entry, root) for entry in manifest.entries}
@@ -193,12 +325,55 @@ def build_parser() -> argparse.ArgumentParser:
         help="write ledger baseline rows for entries the operator names (never inferred)",
     )
     baseline.add_argument(
-        "--preflight", required=True, metavar="FILE", help="saved read-only preflight JSON"
+        "--preflight",
+        required=True,
+        metavar="FILE",
+        help="saved read-only preflight JSON",
     )
     baseline.add_argument("--entries", nargs="+", required=True, metavar="ID")
     baseline.add_argument("--operator", required=True)
-    baseline.add_argument("--out", required=True, metavar="FILE", help="applied.json to write")
+    baseline.add_argument(
+        "--out", required=True, metavar="FILE", help="applied.json to write"
+    )
     baseline.set_defaults(func=cmd_baseline)
+
+    db_note = (
+        f"reads the database URL from ${ex_mod.URL_ENV} only (never a CLI argument)"
+    )
+    status = sub.add_parser("status", help=f"read-only ledger + plan; {db_note}")
+    status.add_argument("--schema", default="skillup_dev")
+    status.set_defaults(func=cmd_status, db=True)
+
+    apply = sub.add_parser(
+        "apply", help=f"run pending entries; dry run unless --apply; {db_note}"
+    )
+    apply.add_argument(
+        "--apply", action="store_true", help="actually execute (default: dry run)"
+    )
+    apply.add_argument(
+        "--approve", nargs="+", metavar="ID", help="approve these destructive entries"
+    )
+    apply.add_argument(
+        "--approval-ref",
+        metavar="REF",
+        help="who approved, and where (required with --approve)",
+    )
+    apply.add_argument(
+        "--empty-database",
+        action="store_true",
+        help="the database is known to be empty: allow an empty ledger to start from zero",
+    )
+    apply.add_argument("--schema", default="skillup_dev")
+    apply.set_defaults(func=cmd_apply, db=True)
+
+    imp = sub.add_parser(
+        "import-baseline",
+        help="record baseline rows from a 'baseline' command file into the ledger (--apply to write)",
+    )
+    imp.add_argument("file", metavar="FILE")
+    imp.add_argument("--apply", action="store_true")
+    imp.add_argument("--schema", default="skillup_dev")
+    imp.set_defaults(func=cmd_import_baseline, db=True)
 
     checksums = sub.add_parser(
         "checksums", help="print the checksum of every manifest entry"
@@ -210,9 +385,11 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+def main(argv: Sequence[str] | None = None, connect: Connect | None = None) -> int:
     args = build_parser().parse_args(argv)
     try:
+        if getattr(args, "db", False):
+            return args.func(args, connect or ex_mod.connect_from_env)
         return args.func(args)
     except mf.ManifestError as exc:
         print(f"manifest error: {exc}", file=sys.stderr)

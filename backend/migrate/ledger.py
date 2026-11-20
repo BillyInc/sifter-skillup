@@ -32,8 +32,15 @@ class Ledger(Protocol):
         """Return ``{entry_id: metadata}`` for rows recorded as ``baseline``."""
         ...
 
-    def record_applied(self, entry_id: str, checksum: str) -> None:
-        """Record a successful apply (the phase 2 runner calls this in-transaction)."""
+    def record_applied(
+        self,
+        entry_id: str,
+        checksum: str,
+        *,
+        approval_ref: str | None = None,
+        duration_ms: int | None = None,
+    ) -> None:
+        """Record a successful apply (the runner calls this inside the entry's transaction)."""
         ...
 
     def record_baseline(
@@ -54,7 +61,14 @@ class InMemoryLedger:
     def baselines(self) -> Mapping[str, Mapping[str, str]]:
         return {key: dict(value) for key, value in self._baselines.items()}
 
-    def record_applied(self, entry_id: str, checksum: str) -> None:
+    def record_applied(
+        self,
+        entry_id: str,
+        checksum: str,
+        *,
+        approval_ref: str | None = None,
+        duration_ms: int | None = None,
+    ) -> None:
         if entry_id in self._applied:
             raise ValueError(f"{entry_id} is already recorded")
         self._applied[entry_id] = checksum

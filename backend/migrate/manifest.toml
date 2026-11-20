@@ -921,3 +921,27 @@ reason = "Optional all-programme curriculum refresh; the runbook says the D078-o
 [[unordered]]
 path = "seed_programme_curriculum_contract_2026-10-02_parts_gz"
 reason = "Optional all-programme curriculum refresh; the runbook says the D078-only path does not need it."
+
+[[unordered]]
+path = "migration_avatars_bucket_2026-11-19.sql"
+reason = "Prepared 2026-11-19 (PROPOSED, NOT APPLIED); added after the manifest was written. Its place in the apply order has not been decided by the owner."
+
+[[unordered]]
+path = "migration_display_name_2026-11-19.sql"
+reason = "Prepared 2026-11-19 (PROPOSED, NOT APPLIED); added after the manifest was written. Its place in the apply order has not been decided by the owner."
+
+[[unordered]]
+path = "migration_my_world_collections_2026-11-19.sql"
+reason = "Prepared 2026-11-19 (PROPOSED, NOT APPLIED); added after the manifest was written. Its header names its own prerequisites but the owner has not placed it in the ordered chain."
+
+[[unordered]]
+path = "migration_student_subject_grade_sets_2026-11-19.sql"
+reason = "Prepared 2026-11-19 (PROPOSED, NOT APPLIED); header says it runs after migration_student_pipeline_live. The owner has not placed it in the ordered chain."
+
+[[unordered]]
+path = "migration_learning_interest_analytics_2026-10-26.sql"
+reason = "CLAUDE.md says it needs Supabase Cron (pg_cron) and the user/affiliation and institution-membership prerequisites, which the runbook lists without a position in the ordered chain. Needs pg_cron enabled first; ordering is the owner's decision."
+
+[[unordered]]
+path = "migration_learning_interest_current_selections_2026-10-28.sql"
+reason = "CLAUDE.md says apply it after migration_learning_interest_analytics_2026-10-26; that file is itself unordered, so this one cannot be ordered yet."

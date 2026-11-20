@@ -119,8 +119,8 @@ so a later edit shows as drift. `plan --applied` shows baseline rows as `applied
 
 ## What is and is not automatic
 
-- Entries in `[[entry]]` have a defined order, but in phase 1 nothing runs.
-  Later phases run only `schema` and `seed` entries, never `manual_only`.
+- Entries in `[[entry]]` have a defined order. `plan` and `lint` never run anything; `apply --apply`
+  (phase 2) runs only `schema` and `seed` entries, plus approved destructive ones, never `manual_only`.
 - `destructive` / `data_destructive` entries with `approval` need a human, plus a `_bak`
   snapshot (phase 3). `migration_career_v2.sql` is kind `rebuild` and `manual_only`
   forever: it drops the taxonomy tables.
@@ -149,6 +149,58 @@ so a later edit shows as drift. `plan --applied` shows baseline rows as `applied
   direct `db.<ref>.supabase.co` host.
 - Do not upload database dumps or snapshots as GitHub artifacts: this repository
   is public. Snapshots stay inside the database (`_bak` schema).
+
+## Phase 2: the runner (status, apply, import-baseline)
+
+These commands connect to a database. The URL is read **only** from the environment
+variable `MIGRATE_DATABASE_URL` (never a CLI argument, so it cannot reach logs or shell
+history); the driver (`psycopg`) is imported lazily and is installed only in the
+workflow's database jobs. Nothing in the test suite touches a real database: tests use a
+sqlite-backed fake behind the `Executor` seam (`executor.py`).
+
+| command | what it does |
+|---|---|
+| `status` | read-only (`BEGIN READ ONLY`): is the ledger there, how many rows, and the plan against it |
+| `apply` | dry run by default (reads the ledger read-only, prints what would run). `--apply` executes |
+| `import-baseline FILE` | dry run by default; `--apply` records the `baseline` rows from a `baseline` command file into the ledger |
+
+`apply --apply` rules (each has a test in `tests/test_migrate_apply.py`):
+
+- one runner at a time (`pg_try_advisory_lock`), released at the end;
+- refuses on **checksum drift** (an applied entry's file changed), exit 2;
+- refuses when the ledger is missing or empty unless `--empty-database` is passed, so a
+  populated database with no ledger can never be "migrated from zero": record a baseline first;
+- only `schema` and `seed` entries run by themselves. `destructive` / `data_destructive`
+  entries run only if named with `--approve ID ...` **and** `--approval-ref REF`; until then the
+  run stops there (strict order), exit 0, and later entries wait. `rebuild` and `manual_only`
+  entries never run and cannot be approved;
+- one transaction per entry (all parts of a group together) that also inserts the ledger row, so
+  an entry is applied-and-recorded or neither; the first failure rolls back, stops the run and
+  reports `ExceptionType: first line` (never the SQL);
+- the file text is prepared first: the file's own `BEGIN;`/`COMMIT;` pairs are removed (the runner
+  owns the transaction; several pairs in one file run inside the single runner transaction),
+  session-level `SET x` lines outside the pair become `SET LOCAL`, and `RESET ALL` runs after each
+  entry. `ROLLBACK`, `SAVEPOINT`, unbalanced pairs, statements outside a pair other than `SET`, and
+  a backslash-apostrophe in a plain string are **refused** (nothing runs). All 51 ordered entries
+  prepare cleanly today (checked locally, no database);
+- `.sql.gz` is decompressed in memory; nothing is written to disk or uploaded.
+
+The ledger table is `skillup_dev.schema_migrations`; its DDL is `backend/migrate/ledger.sql`
+(marked **PROPOSED, NOT APPLIED**, RLS on, `REVOKE ALL ... FROM anon, authenticated`). The runner
+creates it itself the first time `apply --apply --empty-database` (or `import-baseline --apply`)
+runs against a database without one.
+
+Group entries (the 35 contextual seed parts) run as one transaction. If that proves too large for
+the database, the group needs an owner decision (see the runbook).
+
+### Onboarding an existing database (production)
+
+1. `status` (needs `MIGRATE_DATABASE_URL`): ledger will show MISSING.
+2. Run the read-only preflight, save its JSON, then
+   `python -m backend.migrate baseline --preflight FILE --entries ID ... --operator NAME --out baseline.json`
+   naming only entries the preflight proves are applied.
+3. `import-baseline baseline.json` (dry run), then `--apply`.
+4. `status` again: applied entries show as baseline; pending ones would run.
 
 ## CI (this change) and what the next phase needs
 

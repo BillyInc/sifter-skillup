@@ -1429,3 +1429,35 @@ the manifest and compressed parts are the transport artifact. The original
 CCMAS review manifest records the three rows that remain review-only and the
 source reconciliation decisions for the remaining flagged rows. Those review
 rows are retained for staff audit but are filtered from student responses.
+
+## Automated runner (`backend/migrate`)
+
+Migrations can be applied by the runner instead of by hand. It does not change which files exist or
+their order (the manifest records the order stated in this runbook and CLAUDE.md); it applies the
+missing ones, one transaction each, and records them in `skillup_dev.schema_migrations`.
+Full behaviour and safety rules: `backend/migrate/README.md`.
+
+One-time owner setup:
+
+1. GitHub: Settings > Environments > New environment `production`; add **required reviewers**
+   (every database job waits for approval) and restrict deployment to the `main` branch.
+2. In that environment add the secret **`DATABASE_URL`**: the Supabase **Session pooler**
+   connection string (GitHub runners are IPv4-only; do not use the direct `db.<ref>.supabase.co`
+   host). It is exposed to the job as `MIGRATE_DATABASE_URL` and never printed.
+3. Record a baseline of what production already has (README, "Onboarding an existing database").
+   Until then `apply` refuses because the ledger is missing/empty.
+
+Running it: Actions > Migrations > Run workflow (on `main`).
+
+- `mode = status`: read-only ledger and plan.
+- `mode = apply`, `confirm_apply` unticked: dry run, prints what would run.
+- `mode = apply`, `confirm_apply` ticked: runs the pending `schema`/`seed` entries in order and stops
+  at the first error. A `destructive`/`data_destructive` entry runs only if its id is listed in
+  `approve_ids` with an `approval_ref`; `rebuild` (`migration_career_v2`) and `manual_only` entries
+  never run: apply those by hand as before.
+
+Pull requests only run the static job (lint, manifest, plan, unit tests); they never reach the
+database. The six migrations prepared on 2026-11-19 and 2026-10-26/28 (display name, avatars bucket,
+My World collections, grade sets, learning-interest analytics and current selections) are in the
+manifest's `[[unordered]]` list: the runner will not apply them until the owner places them in the
+ordered chain.
