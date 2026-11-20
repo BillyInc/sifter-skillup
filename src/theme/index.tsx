@@ -103,8 +103,15 @@ export interface ColorPalette {
     inverse: string;
   };
   borderRole: {
+    /** Decorative card edges and dividers only (about 1.3:1; not a control boundary). */
     subtle: string;
+    /** Boundary of an interactive control (checkbox, selected card). Same value as `control`. */
     strong: string;
+    /**
+     * Boundary of an input, checkbox or outlined control. Meets WCAG 1.4.11
+     * (3:1) on the raised, base and subtle surfaces in both themes.
+     */
+    control: string;
     focus: string;
   };
   accentRole: {
@@ -159,9 +166,9 @@ export const LightColors: ColorPalette = {
   card: '#FFFFFF', cardElevated: '#FFFFFF', navy: '#111214',
   accent: '#C2410C', accentSoft: '#FBEDE6', accentDim: '#96522F', accentDeep: '#9A3412',
   green: '#0F7A4E', greenSoft: '#EAF7F0',
-  red: '#D92D20', redSoft: '#FDECEC',
-  gold: '#B8860B', goldSoft: '#FBF3DD',
-  orange: '#B45309', orangeSoft: '#FBF0E2',
+  red: '#C42B1F', redSoft: '#FDECEC',
+  gold: '#80600A', goldSoft: '#FBF3DD',
+  orange: '#A04A08', orangeSoft: '#FBF0E2',
   text: '#111214', textSoft: '#4B5563', textMuted: '#606875', textInverse: '#FFFFFF',
   border: '#E3E5E8', borderDark: '#C9CDD3', borderFocus: '#C2410C',
   beginner: '#10B981', intermediate: '#F59E0B', pro: '#F59E0B',
@@ -169,7 +176,7 @@ export const LightColors: ColorPalette = {
   bridge: '#06B6D4', meme: '#EF4444', base: '#0052FF', ton: '#0088CC',
   bnb: '#F0B90B', solana: '#9945FF', starknet: '#F59E0B',
   tabBar: '#FFFFFF', tabBarBorder: '#E3E5E8', tabBarActive: '#111214',
-  inputBg: '#FFFFFF', inputBorder: '#D9DDE3',
+  inputBg: '#FFFFFF', inputBorder: '#7F8791',
   overlay: 'rgba(17,18,20,0.46)', shimmer: '#EEEFF1', shimmerHighlight: '#F8F8F9',
   stitch: '#111214', stitchSoft: '#F1F2F4',
   levelBadge: '#F6F7F8', levelBadgeText: '#4B5563',
@@ -190,7 +197,8 @@ export const LightColors: ColorPalette = {
   },
   borderRole: {
     subtle: '#E3E5E8',
-    strong: '#C9CDD3',
+    strong: '#7F8791',
+    control: '#7F8791',
     focus: '#C2410C',
   },
   accentRole: {
@@ -198,14 +206,14 @@ export const LightColors: ColorPalette = {
     fill: '#FF8A00',
     onFill: '#0F172A',
     status: '#2563EB',
-    warning: '#A16207',
-    danger: '#D92D20',
+    warning: '#9A5906',
+    danger: '#C42B1F',
     success: '#0F7A4E',
   },
   state: {
-    locked: '#6B7280',
+    locked: '#5F6672',
     lockedSoft: '#F1F2F4',
-    pending: '#B45309',
+    pending: '#A04A08',
     pendingSoft: '#FBF0E2',
     verified: '#0F7A4E',
     verifiedSoft: '#EAF7F0',
@@ -214,14 +222,14 @@ export const LightColors: ColorPalette = {
   },
   // ── Legacy aliases ──
   cobalt: '#1F5EFF', cobaltDeep: '#123AAE', cobaltWash: '#EEF4FF',
-  apricot: '#B45309', apricotWash: '#FBF0E2',
+  apricot: '#A04A08', apricotWash: '#FBF0E2',
   bgSunken: '#ECEEF1',
   success: '#0F7A4E', successSoft: '#EAF7F0',
-  warning: '#B45309', warningSoft: '#FBF0E2',
-  danger: '#D92D20', dangerSoft: '#FDECEC',
+  warning: '#A04A08', warningSoft: '#FBF0E2',
+  danger: '#C42B1F', dangerSoft: '#FDECEC',
   info: '#2563EB', infoSoft: '#EEF4FF',
-  demand: '#0D9488', demandSoft: '#E2F5F2',
-  elite: '#B8860B', eliteSoft: '#FBF3DD',
+  demand: '#0F766E', demandSoft: '#E2F5F2',
+  elite: '#80600A', eliteSoft: '#FBF3DD',
   routeLine: '#C9D6F2', routeNode: '#1F5EFF', routeNodeMuted: '#C4C8D4',
 };
 
@@ -242,7 +250,7 @@ export const DarkColors: ColorPalette = {
   bridge: '#22D3EE', meme: '#F87171', base: '#3B82F6', ton: '#38BDF8',
   bnb: '#FBB024', solana: '#B57AFF', starknet: '#F4B74A',
   tabBar: '#1B1D20', tabBarBorder: '#30343A', tabBarActive: '#F4F5F6',
-  inputBg: '#1B1D20', inputBorder: '#383D45',
+  inputBg: '#1B1D20', inputBorder: '#757C86',
   overlay: 'rgba(8,9,10,0.76)', shimmer: '#24272B', shimmerHighlight: '#30343A',
   stitch: '#F4F5F6', stitchSoft: '#24272B',
   levelBadge: '#342815', levelBadgeText: '#F4B74A',
@@ -263,7 +271,8 @@ export const DarkColors: ColorPalette = {
   },
   borderRole: {
     subtle: '#30343A',
-    strong: '#444A53',
+    strong: '#757C86',
+    control: '#757C86',
     focus: '#FF8A4C',
   },
   accentRole: {
