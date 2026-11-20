@@ -51,9 +51,18 @@ _UNLINKED_ON_DELETE_TABLES = (
 _GUARDED = ("guilds", "institution_verification_submissions")
 
 
-def _is_missing_table(exc: Exception) -> bool:
+def _is_missing_table(exc: Exception, table: str) -> bool:
+    """True only when the error says THIS table is absent.
+
+    PGRST204 (a missing column) and "does not exist" are ambiguous on their
+    own, so they count only when the message names the table being purged;
+    anything else is a real error and keeps the user row.
+    """
     text = f"{type(exc).__name__} {exc} {getattr(exc, 'code', '')}".lower()
-    return any(m in text for m in ("pgrst205", "pgrst204", "42p01", "does not exist", "could not find the table"))
+    names_table = table.lower() in text
+    if "pgrst205" in text or "could not find the table" in text:
+        return names_table
+    return names_table and any(m in text for m in ("pgrst204", "42p01", "does not exist"))
 
 
 def _purge_owned_guilds(svc, user_id: str) -> str:
@@ -90,7 +99,7 @@ def hard_delete_learner_content(user_id: str) -> dict:
     try:
         svc = db.get_service_client().schema(_SCHEMA)
     except Exception as exc:  # noqa: BLE001
-        log.warning("Learner content purge skipped", error=str(exc))
+        log.warning("Learner content purge skipped", error=type(exc).__name__)
         return {t: "skipped" for t in _LEARNER_CONTENT_TABLES + _UNLINKED_ON_DELETE_TABLES + _GUARDED}
     for table in _LEARNER_CONTENT_TABLES + _UNLINKED_ON_DELETE_TABLES:
         try:
@@ -102,18 +111,18 @@ def hard_delete_learner_content(user_id: str) -> dict:
             svc.table(table).delete().eq("user_id", user_id).execute()
             outcome[table] = "deleted"
         except Exception as exc:  # noqa: BLE001
-            if _is_missing_table(exc):
+            if _is_missing_table(exc, table):
                 outcome[table] = "missing_table"
             else:
                 outcome[table] = "error"
-                log.warning("Learner content purge failed", table=table, error=str(exc))
+                log.warning("Learner content purge failed", table=table, error=type(exc).__name__)
     for table, check in (("guilds", _purge_owned_guilds), ("institution_verification_submissions", _verification_submissions)):
         try:
             outcome[table] = check(svc, user_id)
         except Exception as exc:  # noqa: BLE001
-            if _is_missing_table(exc):
+            if _is_missing_table(exc, table):
                 outcome[table] = "missing_table"
             else:
                 outcome[table] = "error"
-                log.warning("Learner content purge check failed", table=table, error=str(exc))
+                log.warning("Learner content purge check failed", table=table, error=type(exc).__name__)
     return outcome

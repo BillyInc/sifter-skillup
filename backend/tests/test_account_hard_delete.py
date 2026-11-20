@@ -82,7 +82,7 @@ def test_only_accounts_past_retention_are_removed(monkeypatch):
         {"id": "active", "is_deleted": False, "deletion_cooldown_until": None},
     ])
     out = ahd.hard_delete_expired_accounts(NOW)
-    assert out == {"dry_run": False, "eligible": 1, "deleted": 1, "failed": 0}
+    assert out == {"dry_run": False, "eligible": 1, "deleted": 1, "failed": 0, "blocked": {}, "abandoned": 0}
     assert purged == ["old"]
     assert sorted(r["id"] for r in f.tables["users"]) == ["active", "recent"]
 

@@ -1017,16 +1017,8 @@ async def delete_me(
     deleted_at = datetime.now().isoformat()
     available_at = (datetime.now() + timedelta(hours=24)).isoformat()
     service = db.get_service_client()
-    try:
-        # Only a hashed device id is kept (and no email, in any form) after deletion.
-        service.table("account_deletion_cooldowns").insert(
-            cooldown_row(current_user["id"], device_id, deleted_at, available_at)
-        ).execute()
-    except Exception as exc:
-        # Lifecycle migrations are additive. Account deletion must still work
-        # against an older local schema; the cooldown is an extra safeguard,
-        # not a reason to leave the account active.
-        log.warning("Account deletion cooldown table unavailable", error=str(exc))
+    # Resetting settings and setting is_deleted withdraws analytics consent; the users-row trigger
+    # trg_clear_learning_interest_snapshot_on_consent_change then clears the learner's snapshot.
     deletion_updates = deletion_user_fields(current_user["id"], device_id, deleted_at, available_at)
     # Purge the stored photo immediately (it is personal data); best effort so
     # a storage outage never leaves the account active.
@@ -1043,6 +1035,22 @@ async def delete_me(
         raise HTTPException(
             status_code=500, detail="Account deletion is temporarily unavailable."
         ) from exc
+    # The cooldown row is written only after the account is really soft-deleted, so a failed
+    # deletion (500) leaves no cooldown behind, and a retry does not add a second row.
+    try:
+        existing = (
+            service.table("account_deletion_cooldowns").select("user_id")
+            .eq("user_id", current_user["id"]).limit(1).execute().data
+        )
+        if not existing:
+            # Only a hashed device id is kept (and no email, in any form) after deletion.
+            service.table("account_deletion_cooldowns").insert(
+                cooldown_row(current_user["id"], device_id, deleted_at, available_at)
+            ).execute()
+    except Exception as exc:
+        # Lifecycle migrations are additive. Account deletion must still work
+        # against an older local schema; the cooldown is an extra safeguard.
+        log.warning("Account deletion cooldown table unavailable", error=type(exc).__name__)
     try:
         service.table("active_sessions").update({
             "is_active": False,

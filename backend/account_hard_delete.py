@@ -122,7 +122,7 @@ def hard_delete_expired_accounts(now: datetime | None = None) -> dict:
     svc = db.get_service_client().schema(_SCHEMA)
 
     batch, backoff = _eligible_batch(svc, cutoff, batch_size, now.toordinal())
-    result = {"dry_run": not enabled, "eligible": len(batch), "deleted": 0, "failed": 0}
+    result = {"dry_run": not enabled, "eligible": len(batch), "deleted": 0, "failed": 0, "blocked": {}, "abandoned": 0}
     if not enabled:
         log.info("Account hard delete dry run", **result)
         return result
@@ -136,6 +136,9 @@ def hard_delete_expired_accounts(now: datetime | None = None) -> dict:
                 # failed step did not remove, or the delete would be refused.
                 incomplete += 1
                 result["failed"] += 1
+                for table, state in outcome.items():
+                    if state == "blocked":
+                        result["blocked"][table] = result["blocked"].get(table, 0) + 1
                 _record_failure(svc, row, now.isoformat())
                 continue
             svc.table("users").delete().eq("id", row["id"]).eq("is_deleted", True).execute()
@@ -147,6 +150,7 @@ def hard_delete_expired_accounts(now: datetime | None = None) -> dict:
     cooldowns_purged = purge_expired_cooldowns(svc, now.isoformat())
     if backoff:
         abandoned = _abandoned_count(svc)
+        result["abandoned"] = abandoned
         if abandoned:
             log.warning("Account hard delete has accounts that exhausted their attempts", count=abandoned)
     log.info("Account hard delete run", purge_incomplete=incomplete, cooldowns_purged=cooldowns_purged, **result)
