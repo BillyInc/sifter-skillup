@@ -18,10 +18,11 @@
  *   - Tableau / Medium / Upwork: generates package for manual upload
  */
 
+import { openExternalUrl } from "@/lib/safeUrl";
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  StatusBar, Linking, ActivityIndicator, Alert,
+  StatusBar, ActivityIndicator, Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Spacing, Radius, FontSize, Shadow, useTheme, webContainer, FontWeight, ColorPalette } from '@/theme';
@@ -812,7 +813,7 @@ export default function PortfolioHubScreen() {
   const handleConnect = useCallback(async (platformId: string) => {
     try {
       const { url } = await API.getPlatformAuthUrl(platformId);
-      await Linking.openURL(url);
+      if (!(await openExternalUrl(url))) throw new Error("This link could not be opened.");
     } catch {
       Alert.alert('Error', `Could not open ${platformId} auth. Please try again.`);
     }

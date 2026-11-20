@@ -13,7 +13,7 @@ import re
 import threading
 import time
 import uuid
-from collections import defaultdict, deque
+from collections import deque
 from typing import Optional, Protocol
 
 from PIL import Image, ImageOps, UnidentifiedImageError
@@ -225,20 +225,34 @@ UPLOAD_LIMITS = ((3600, 5, "hour"), (86400, 20, "day"))
 
 
 class UploadRateLimiter:
-    def __init__(self, limits=UPLOAD_LIMITS, clock=time.time) -> None:
+    """Sliding-window limiter, per key, in memory (per worker process).
+
+    Keys are created only when an event is RECORDED, deleted as soon as their
+    window empties, and capped at ``max_keys`` (oldest-first eviction), so a
+    flood of distinct callers cannot grow memory without bound. Merely checking
+    a key never creates it.
+    """
+
+    def __init__(self, limits=UPLOAD_LIMITS, clock=time.time, max_keys: int = 50_000) -> None:
         self._limits = limits
         self._clock = clock
-        self._events = defaultdict(deque)
+        self._max_keys = max_keys
+        self._events: dict = {}
         self._lock = threading.Lock()
 
     def check(self, user_id: str) -> Optional[int]:
         """Seconds until the user may upload again, or None if allowed now."""
         now = self._clock()
         with self._lock:
-            events = self._events[user_id]
+            events = self._events.get(user_id)
+            if not events:
+                return None
             horizon = max(w for w, _, _ in self._limits)
             while events and events[0] <= now - horizon:
                 events.popleft()
+            if not events:
+                del self._events[user_id]
+                return None
             wait = 0
             for window, maximum, _ in self._limits:
                 recent = [t for t in events if t > now - window]
@@ -247,8 +261,18 @@ class UploadRateLimiter:
             return wait or None
 
     def record(self, user_id: str) -> None:
+        now = self._clock()
         with self._lock:
-            self._events[user_id].append(self._clock())
+            if user_id not in self._events and len(self._events) >= self._max_keys:
+                self._evict(now)
+            self._events.setdefault(user_id, deque()).append(now)
+
+    def _evict(self, now: float) -> None:
+        horizon = max(w for w, _, _ in self._limits)
+        for key in [k for k, ev in self._events.items() if not ev or ev[-1] <= now - horizon]:
+            del self._events[key]
+        while len(self._events) >= self._max_keys:
+            del self._events[next(iter(self._events))]
 
     def reset(self) -> None:
         with self._lock:

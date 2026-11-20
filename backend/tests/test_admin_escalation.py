@@ -69,7 +69,7 @@ class TestVerifyRequiresOwnerCode:
         promoted = []
         monkeypatch.setattr(
             ir, "_find_or_create_school",
-            lambda claim: (_ for _ in ()).throw(
+            lambda claim, current_user=None: (_ for _ in ()).throw(
                 AssertionError("reached org creation despite no owner-code grant")
             ),
         )
@@ -119,7 +119,7 @@ class TestVerifyRequiresOwnerCode:
 
         monkeypatch.setattr(
             ir, "_find_or_create_school",
-            lambda claim: Organization(
+            lambda claim, current_user=None: Organization(
                 id="school-1", type="university", name="Real University",
                 verification_status="unverified",
             ),

@@ -222,7 +222,9 @@ def _resolve_school_id(current_user: dict, requested_school_id: Optional[str] = 
                 .data
                 or []
             )
-            if membership and membership[0].get("seat_status") != "revoked":
+            # Only an ACTIVE seat carries scope: pending claims, suspended and
+            # revoked seats do not (a column-less schema reads as active).
+            if membership and membership[0].get("seat_status") in (None, "active"):
                 return requested_school_id
             return None
         except Exception as exc:  # noqa: BLE001
@@ -257,16 +259,24 @@ def _resolve_school_id(current_user: dict, requested_school_id: Optional[str] = 
             .table("institution_members")
             .select("school_id")
             .eq("user_id", current_user["id"])
-            .neq("seat_status", "revoked")
+            .eq("seat_status", "active")
             .order("verified", desc=True)
             .order("created_at", desc=True)
             .limit(1)
             .execute()
         )
-        if res.data:
-            return res.data[0]["school_id"]
+        # An empty result means "no active seat": never retry without the seat
+        # filter, which is how a revoked admin used to resolve to the school.
+        return res.data[0]["school_id"] if res.data else None
     except Exception as exc:  # noqa: BLE001
-        log.warning("provisioning: active school lookup skipped", error=str(exc))
+        error_text = str(exc).lower()
+        if "seat_status" not in error_text or not any(
+            marker in error_text
+            for marker in ("column", "schema cache", "does not exist", "not found")
+        ):
+            log.warning("provisioning: active school lookup failed", error=str(exc))
+            return None
+        log.warning("provisioning: seat_status column missing, using the older lookup", error=str(exc))
     try:
         res = (
             _svc()
@@ -292,6 +302,58 @@ def _require_school(current_user: dict) -> str:
             status_code=409,
             detail="Your account is not linked to a school yet. Complete institution verification first.",
         )
+    return school_id
+
+
+# Roles that may create, change or delete provisioned students, regenerate or
+# print claim codes, and confirm merges. A read-only or advisory seat (data_viewer,
+# counsellor, course_advisor, admissions_officer, hod, dean) may read the roster
+# and guidance but never mints, prints or deletes student access.
+PROVISIONING_WRITE_ROLES = frozenset(
+    {"owner", "institution_admin", "admin", "educator", "provisioning_manager"}
+)
+# Guidance edits are also open to the advisory roles whose job is guidance.
+GUIDANCE_WRITE_ROLES = PROVISIONING_WRITE_ROLES | frozenset(
+    {"counsellor", "course_advisor", "hod", "dean"}
+)
+
+
+def _member_role(current_user: dict, school_id: str) -> Optional[str]:
+    """The caller's role in this school (active seats only), or None."""
+    try:
+        rows = (
+            _svc()
+            .table("institution_members")
+            .select("*")
+            .eq("user_id", current_user["id"])
+            .eq("school_id", school_id)
+            .limit(1)
+            .execute()
+            .data
+            or []
+        )
+    except Exception as exc:  # noqa: BLE001
+        log.warning("provisioning: member role lookup failed", error=str(exc))
+        return None
+    if not rows or rows[0].get("seat_status") not in (None, "active"):
+        return None
+    return rows[0].get("role") or current_user.get("account_type")
+
+
+def _check_role(current_user: dict, school_id: str, allowed: frozenset) -> None:
+    role = _member_role(current_user, school_id)
+    if role not in allowed:
+        log.warning("provisioning: role not allowed for this action", school_id=school_id, role=role)
+        raise HTTPException(
+            status_code=403,
+            detail="Your role in this organisation cannot do this. Ask an owner or administrator.",
+        )
+
+
+def _require_school_role(current_user: dict, allowed: frozenset) -> str:
+    """The caller's school, provided their ACTIVE seat holds one of ``allowed`` roles."""
+    school_id = _require_school(current_user)
+    _check_role(current_user, school_id, allowed)
     return school_id
 
 
@@ -334,12 +396,18 @@ def _stream_for_org(value: Optional[str], org_type: str) -> Optional[str]:
     return _clean_stream(value) if org_type == "secondary_school" else None
 
 
-def _provisioning_context(current_user: dict, requested_school_id: Optional[str] = None) -> tuple[str, str]:
+def _provisioning_context(
+    current_user: dict,
+    requested_school_id: Optional[str] = None,
+    allowed_roles: Optional[frozenset] = None,
+) -> tuple[str, str]:
     school_id = _resolve_school_id(current_user, requested_school_id)
     if not school_id:
         if requested_school_id:
             raise HTTPException(status_code=403, detail="You do not have an active membership in the selected organisation.")
         raise HTTPException(status_code=409, detail="Your account is not linked to an organisation yet.")
+    if allowed_roles is not None:
+        _check_role(current_user, school_id, allowed_roles)
     row = (_svc().table("schools").select("institution_type").eq("id", school_id).limit(1).execute().data or [None])[0]
     org_type = (row or {}).get("institution_type") or "secondary_school"
     if org_type == "university":
@@ -534,7 +602,7 @@ async def create_drafts(
     """Stage draft rows for the review grid. Vision pre-fill from uploaded pages
     (transient — images discarded here) plus any manual rows. Nothing is minted;
     the educator corrects and confirms before /generate."""
-    school_id, org_type = _provisioning_context(current_user, payload.organization_id)
+    school_id, org_type = _provisioning_context(current_user, payload.organization_id, PROVISIONING_WRITE_ROLES)
 
     rows: List[dict] = []
     batch_stream = _stream_for_org(payload.stream, org_type)
@@ -626,7 +694,7 @@ async def update_draft(
     current_user: dict = Depends(Auth.require_admin),
 ):
     """Correct/confirm a draft in the review grid (the assisted-correction step)."""
-    school_id, org_type = _provisioning_context(current_user, payload.organization_id)
+    school_id, org_type = _provisioning_context(current_user, payload.organization_id, PROVISIONING_WRITE_ROLES)
     _validate_provisioning_type(payload.student_type, org_type)
     updates = {
         "full_name": payload.full_name,
@@ -668,7 +736,7 @@ async def generate_accounts(
     'provisioned', claim_state 'unclaimed'. Subjects arriving in the payload seed
     the chosen direction inline and are then discarded — never written.
     """
-    school_id, org_type = _provisioning_context(current_user, payload.organization_id)
+    school_id, org_type = _provisioning_context(current_user, payload.organization_id, PROVISIONING_WRITE_ROLES)
     school_row = (_svc().table("schools").select("name").eq("id", school_id).limit(1).execute().data or [None])[0]
     school_name = (school_row or {}).get("name")
     if not payload.items:
@@ -809,7 +877,7 @@ async def regenerate_code(
 ):
     """Invalidate the current claim code and issue a new one (lost-card path).
     Allowed only while the account is still unclaimed."""
-    school_id = _require_school(current_user)
+    school_id = _require_school_role(current_user, PROVISIONING_WRITE_ROLES)
     try:
         ures = _users().select("id, claim_state, provisioning_school_id, student_class, settings").eq(
             "id", user_id
@@ -882,7 +950,7 @@ async def delete_student_account(
 ):
     """Delete one wrong/unclaimed Student shell created by this school."""
 
-    school_id = _require_school(current_user)
+    school_id = _require_school_role(current_user, PROVISIONING_WRITE_ROLES)
     try:
         row = (
             _users()
@@ -914,7 +982,7 @@ async def delete_student_accounts(
     been claimed or guided, nothing in the batch is deleted.
     """
 
-    school_id = _require_school(current_user)
+    school_id = _require_school_role(current_user, PROVISIONING_WRITE_ROLES)
     ids = list(dict.fromkeys(i.strip() for i in payload.student_ids if i and i.strip()))
     if not ids:
         raise HTTPException(status_code=400, detail="Select at least one Student account to delete.")
@@ -945,7 +1013,7 @@ async def clear_drafts(
 ):
     """Clear explicitly selected review rows before accounts are generated."""
 
-    school_id, _org_type = _provisioning_context(current_user, payload.organization_id)
+    school_id, _org_type = _provisioning_context(current_user, payload.organization_id, PROVISIONING_WRITE_ROLES)
     ids = list(dict.fromkeys(i.strip() for i in payload.draft_ids if i and i.strip()))
     if not ids:
         raise HTTPException(status_code=400, detail="Select at least one draft row to clear.")
@@ -1094,7 +1162,7 @@ async def confirm_merge_candidate(
     current_user: dict = Depends(Auth.require_admin),
 ):
     """Confirm a pending candidate and merge the provisioned shell into the real account."""
-    school_id = _require_school(current_user)
+    school_id = _require_school_role(current_user, PROVISIONING_WRITE_ROLES)
     try:
         res = _svc().table("student_merge_candidates").select("*").eq(
             "id", candidate_id
@@ -1135,7 +1203,7 @@ async def dismiss_merge_candidate(
     current_user: dict = Depends(Auth.require_admin),
 ):
     """Dismiss a pending candidate so deterministic sweeps do not recreate it."""
-    school_id = _require_school(current_user)
+    school_id = _require_school_role(current_user, PROVISIONING_WRITE_ROLES)
     try:
         res = _svc().table("student_merge_candidates").update({
             "status": "dismissed",
@@ -1405,7 +1473,7 @@ async def request_student_consent(
     student app. This keeps a claimed account retained and anonymised at the
     admin read boundary rather than deleting it.
     """
-    school_id = _require_school(current_user)
+    school_id = _require_school_role(current_user, PROVISIONING_WRITE_ROLES)
     scope = _validate_consent_scope(payload.scope)
     message = (payload.message or "").strip() or None
     try:
@@ -1795,7 +1863,7 @@ async def save_student_guidance(
     the account. Only the direction is persisted; subjects and grades remain
     transient inputs and are never copied into the account.
     """
-    school_id = _require_school(current_user)
+    school_id = _require_school_role(current_user, GUIDANCE_WRITE_ROLES)
     direction = payload.chosen_direction.model_dump(exclude_none=True)
     if not direction:
         raise HTTPException(status_code=400, detail="Choose a programme or career direction first.")
@@ -1831,7 +1899,7 @@ async def save_student_guidance_path(
     current_user: dict = Depends(Auth.require_admin),
 ):
     """Save a selected path or an unfinished resume checkpoint for one Student."""
-    school_id = _require_school(current_user)
+    school_id = _require_school_role(current_user, GUIDANCE_WRITE_ROLES)
     _load_school_student(user_id, school_id)  # 404s unless the student belongs to this school
     raw_path = payload.get("path") if isinstance(payload.get("path"), dict) else {}
     path = _guidance_path_snapshot(raw_path)
@@ -1919,7 +1987,7 @@ async def get_login_card(
     current_user: dict = Depends(Auth.require_admin),
 ):
     """The detachable login card carrying the live claim code (unclaimed only)."""
-    school_id = _require_school(current_user)
+    school_id = _require_school_role(current_user, PROVISIONING_WRITE_ROLES)
     u = _load_school_student(user_id, school_id)
     cres = _svc().table("claim_codes").select("code").eq(
         "student_id", user_id

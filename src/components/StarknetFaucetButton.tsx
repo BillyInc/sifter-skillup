@@ -9,10 +9,11 @@
  * Shows claim status, handles cooldown, links to Voyager on success.
  */
 
+import { openExternalUrl } from "@/lib/safeUrl";
 import React, { useState, useEffect } from 'react';
 import {
   View, Text, TouchableOpacity, StyleSheet,
-  ActivityIndicator, Linking,
+  ActivityIndicator,
 } from 'react-native';
 import { Colors, Spacing, Radius, FontSize } from '../theme';
 import {
@@ -50,7 +51,7 @@ export default function StarknetFaucetButton({ walletAddress, compact, onSuccess
         setHoursLeft(24);
         onSuccess?.(r);
       } else if (r.fallbackUrl) {
-        Linking.openURL(r.fallbackUrl).catch(() => {});
+        void openExternalUrl(r.fallbackUrl);
       }
     } finally {
       setLoading(false);
@@ -68,7 +69,7 @@ export default function StarknetFaucetButton({ walletAddress, compact, onSuccess
         </View>
         {result.txHash && (
           <TouchableOpacity
-            onPress={() => Linking.openURL(voyagerTxUrl(result.txHash!))}
+            onPress={() => void openExternalUrl(voyagerTxUrl(result.txHash!))}
             style={s.voyagerBtn}
           >
             <Text style={s.voyagerText}>View →</Text>
@@ -83,7 +84,7 @@ export default function StarknetFaucetButton({ walletAddress, compact, onSuccess
     <View style={[s.wrap, s.errorWrap, compact && s.compact]}>
       <Text style={s.errorText}>⚠️ {result.error}</Text>
       {result.fallbackUrl && (
-        <TouchableOpacity onPress={() => Linking.openURL(result.fallbackUrl!)}>
+        <TouchableOpacity onPress={() => void openExternalUrl(result.fallbackUrl)}>
           <Text style={s.linkText}>Open faucet.starknet.io →</Text>
         </TouchableOpacity>
       )}

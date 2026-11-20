@@ -1777,6 +1777,11 @@ const styles = StyleSheet.create({
     borderRadius: Radius.sm,
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.sm,
+    // 44px touch target (Find, Search, Continue, See this programme): the text
+    // alone made these about 27px tall.
+    minHeight: 44,
+    justifyContent: "center",
+    alignItems: "center",
   },
   actionText: { color: "#FFFFFF", fontSize: FontSize.sm, fontWeight: FontWeight.black },
   hint: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },

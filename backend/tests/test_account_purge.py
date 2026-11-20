@@ -17,7 +17,11 @@ def _db(monkeypatch, tables=("collections", "collection_items", "saved_items", "
 def test_hard_delete_removes_only_that_users_content(monkeypatch):
     f = _db(monkeypatch)
     out = ap.hard_delete_learner_content(ME)
-    assert out == {"collections": "deleted", "saved_items": "deleted", "user_notes": "deleted"}
+    assert {k: out[k] for k in ("collections", "saved_items", "user_notes")} == {
+        "collections": "deleted", "saved_items": "deleted", "user_notes": "deleted"}
+    # tables this fake schema does not have are reported, never an error
+    assert out["user_feedback"] == "missing_table" and out["guilds"] == "missing_table"
+    assert "error" not in out.values() and "blocked" not in out.values()
     assert [r["user_id"] for r in f.tables["saved_items"]] == [OTHER]
     assert [r["user_id"] for r in f.tables["user_notes"]] == [OTHER]
     assert [r["user_id"] for r in f.tables["collections"]] == [OTHER]

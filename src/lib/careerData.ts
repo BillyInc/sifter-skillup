@@ -54,11 +54,13 @@ import {
   type AdmissionSnapshotVersion,
   comingSoon,
   error,
+  locked,
   pending,
   type MappingFeedback,
   type FeedbackType,
 } from "../types/career";
 import { API_READ_TIMEOUT_MS, request } from "./api";
+import { ApiError } from "./errors";
 import { getCached, getCachedStale, setCached, queueWrite, cancelQueuedSave, flushQueue } from "./careerCache";
 import type { StartingPointProfile } from "../types/onboarding";
 import {
@@ -78,6 +80,20 @@ const DETAIL_TTL_MS = REFERENCE_TTL_MS;
 // timeout even though the route eventually returns a complete response.
 // Keep the longer budget scoped to these reference-detail reads only.
 const CAREER_DETAIL_TIMEOUT_MS = API_READ_TIMEOUT_MS;
+
+/**
+ * A write that the SERVER answered (HTTP 4xx/5xx) was rejected, not lost. Only
+ * a transport failure (no response at all) may be queued as "saved on this
+ * device"; queueing a rejected write would show a false "saved" and replay a
+ * request that will keep failing.
+ */
+function rejectedWrite<T>(cause: unknown, failure: string): DataState<T> | null {
+  if (!(cause instanceof ApiError)) return null;
+  if (cause.status === 401 || cause.status === 403) {
+    return locked<T>("Sign in again to save this.");
+  }
+  return error<T>(failure);
+}
 
 const inFlight = new Map<string, Promise<DataState<unknown>>>();
 
@@ -880,7 +896,9 @@ export const careerData = {
       );
       if (result.status === "real") await setCached("guidance_path", result, DETAIL_TTL_MS);
       return result;
-    } catch {
+    } catch (cause) {
+      const rejected = rejectedWrite<GuidanceReportPath>(cause, "Could not save this guidance path. Try again.");
+      if (rejected) return rejected;
       try {
         const optimistic: GuidanceReportPath = {
           source: input.source,
@@ -1147,7 +1165,9 @@ export const careerData = {
         ]);
       }
       return result;
-    } catch {
+    } catch (cause) {
+      const rejected = rejectedWrite<SavedItem>(cause, "Couldn't save that. Try again.");
+      if (rejected) return rejected;
       try {
         const cached = await getCachedStale<DataState<SavedItem[]>>("saved_items");
         const previous = cached?.data ?? [];
@@ -1196,7 +1216,17 @@ export const careerData = {
         }
       }
       return result;
-    } catch {
+    } catch (cause) {
+      // 404: the item is already gone on the server, so the removal succeeded.
+      if (cause instanceof ApiError && cause.status === 404) {
+        const cached = await getCachedStale<DataState<SavedItem[]>>("saved_items");
+        if (cached?.data) {
+          await updateSavedItemsCache(cached.data.filter((item) => item.id !== savedItemId));
+        }
+        return { status: "real", data: null };
+      }
+      const rejected = rejectedWrite<null>(cause, "Couldn't remove that. Try again.");
+      if (rejected) return rejected;
       try {
         const cached = await getCachedStale<DataState<SavedItem[]>>("saved_items");
         if (cached?.data) {
@@ -1428,7 +1458,9 @@ export const careerData = {
         method: "POST",
         body: JSON.stringify(payload),
       });
-    } catch {
+    } catch (cause) {
+      const rejected = rejectedWrite<Note>(cause, "Couldn't save that note. Try again.");
+      if (rejected) return rejected;
       try {
         await queueWrite({
           endpoint: "/api/career/notes",

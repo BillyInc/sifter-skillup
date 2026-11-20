@@ -255,6 +255,9 @@ class Settings:
     ]
     AIRTABLE_SYNC_INTERVAL_MINUTES: int = int(os.getenv("AIRTABLE_SYNC_INTERVAL_MINUTES", "30"))
     # Scheduled hard delete of self-deleted accounts. Dry run unless explicitly enabled.
+    # Keyed-hash secret for account-deletion cooldown rows (email and device id are
+    # stored only as HMAC hashes). Set it in production; it falls back to JWT_SECRET.
+    ACCOUNT_DELETION_HASH_SECRET: str = os.getenv("ACCOUNT_DELETION_HASH_SECRET", "")
     ACCOUNT_HARD_DELETE_ENABLED: bool = os.getenv("ACCOUNT_HARD_DELETE_ENABLED", "false").strip().lower() in ("1", "true", "yes")
     ACCOUNT_HARD_DELETE_RETENTION_DAYS: int = int(os.getenv("ACCOUNT_HARD_DELETE_RETENTION_DAYS", "30"))
     ACCOUNT_HARD_DELETE_BATCH_SIZE: int = int(os.getenv("ACCOUNT_HARD_DELETE_BATCH_SIZE", "100"))
@@ -298,12 +301,14 @@ class Settings:
     # Comma-separated owner-issued codes that allow educators, tutorial centres,
     # and institutions to enter admin mode before the full verification pipeline.
     WEB_DASHBOARD_URL: str = os.getenv("WEB_DASHBOARD_URL", "http://localhost:3000")
-    # The development deployment is intentionally testable with the built-in
-    # developer code. Production has a different hostname and remains closed
-    # unless an explicit owner-issued code is configured.
-    DEVELOPER_ACCESS_ENABLED: bool = DEBUG or WEB_DASHBOARD_URL.lower().startswith(
-        "https://dev."
-    )
+    # The built-in developer code is enabled ONLY by DEBUG or by the explicit
+    # DEVELOPER_ACCESS_ENABLED flag. It used to be inferred from a hostname
+    # prefix (https://dev.), which meant any publicly reachable dev deployment
+    # accepted a well-known code that grants admin-mode entry. A dev server that
+    # still needs it must now say so: DEVELOPER_ACCESS_ENABLED=true.
+    DEVELOPER_ACCESS_ENABLED: bool = DEBUG or os.getenv(
+        "DEVELOPER_ACCESS_ENABLED", ""
+    ).strip().lower() in {"1", "true", "yes"}
     _ENV_EDUCATOR_ACCESS_CODES = [
         code.strip().upper()
         for code in os.getenv("EDUCATOR_ACCESS_CODES", "").split(",")

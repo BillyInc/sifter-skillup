@@ -854,6 +854,18 @@ note = "Its :57 DELETE hard-codes Terms and Privacy version 2026-10-29.1 as the 
 source = "MIGRATION_RUNBOOK.md table A #21; CLAUDE.md 'Current selection is a separate measure'"
 
 
+[[entry]]
+id = "migration_hard_delete_backoff_2026-11-21"
+kind = "schema"
+path = "migration_hard_delete_backoff_2026-11-21.sql"
+requires = []
+external_requires = [
+  { ref = "migration_account_lifecycle_patch.sql", evidence = "migration_hard_delete_backoff_2026-11-21.sql index predicate WHERE is_deleted and its column deletion_cooldown_until: users.is_deleted and users.deletion_cooldown_until are added by migration_account_lifecycle_patch.sql:6 (also migration_goal_apply_now.sql:36)" },
+]
+verify = []
+note = "Additive: users.purge_attempts (NOT NULL DEFAULT 0), users.last_purge_attempt_at and a partial index for the scheduled hard delete's queue. The job works without it (rotating fallback), so apply any time. Baseline migration_account_lifecycle_patch.sql first if production already has it."
+source = "Header of migration_hard_delete_backoff_2026-11-21.sql (PROPOSED, NOT APPLIED); added with the learner-privacy review fixes"
+
 # ======================================================================
 # UNORDERED: order not stated unambiguously in the docs. Never applied automatically.
 # ======================================================================

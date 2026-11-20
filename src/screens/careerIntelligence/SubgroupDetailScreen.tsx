@@ -1,5 +1,6 @@
+import { openExternalUrl } from "@/lib/safeUrl";
 import React, { useCallback, useEffect, useState } from "react";
-import { Linking, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import {
@@ -226,7 +227,7 @@ function SubgroupBody({ subgroup, domain, roles, programmeConnection, guidanceCo
         />
         {subgroup.isCurrentAreaOfSpecialization && subgroup.areaSources?.length ? <View style={[styles.detail, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
           <SectionLabel>Sources for this area description</SectionLabel>
-          {subgroup.areaSources.map((source, index) => <TouchableOpacity key={`${source.id ?? source.url}-${index}`} accessibilityRole="link" onPress={() => { void Linking.openURL(source.url).catch(() => undefined); }}>
+          {subgroup.areaSources.map((source, index) => <TouchableOpacity key={`${source.id ?? source.url}-${index}`} accessibilityRole="link" onPress={() => { void openExternalUrl(source.url); }}>
             <Text style={[styles.moreText, { color: colors.accentRole.action }]}>{source.title ?? "Open source"} ↗</Text>
           </TouchableOpacity>)}
         </View> : null}

@@ -27,6 +27,7 @@ import type {
 } from '../types/api';
 import type { LearningInterestAnalytics, LearningInterestFilterOption, LearningInterestSchoolOption } from '../types/learningAnalytics';
 import { resolveRequestTimeout } from './requestTimeout';
+import { ApiError } from './errors';
 
 // Re-export types for call sites that import { UserProfile, Badge, FeedItem } from './api'
 export type { UserProfile, Badge, FeedItem } from '../types/api';
@@ -157,9 +158,13 @@ export async function request<T>(path: string, options: RequestOptions = {}): Pr
       const detailMessage = typeof json?.detail?.message === "string" ? json.detail.message : undefined;
       const error = typeof json?.error === "string" ? json.error : undefined;
       const message = typeof json?.message === "string" ? json.message : undefined;
-      throw new Error(
+      // ApiError is an Error subclass carrying the HTTP status, so callers can
+      // tell a server RESPONSE (4xx/5xx: not an offline condition) from a
+      // transport failure (fetch rejects with no response).
+      throw new ApiError(
         error ?? detail ?? detailMessage ?? message ??
         (responseText.trim() ? responseText.trim().slice(0, 240) : `Request failed (${res.status})`),
+        res.status,
       );
     }
 
