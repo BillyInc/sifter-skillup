@@ -62,6 +62,22 @@ export const collectionsData = {
   removeItem: (id: string, savedItemId: string) =>
     call<null>(`${BASE}/${enc(id)}/items/${enc(savedItemId)}`, { method: "DELETE" }, "Could not remove that item."),
 
+  /** Saves the full order: every current member's id, once each. */
+  reorder: (id: string, savedItemIds: string[]) =>
+    call<{ count: number }>(
+      `${BASE}/${enc(id)}/order`,
+      { method: "PATCH", ...json({ savedItemIds }) },
+      "Could not save the new order.",
+    ),
+
+  /** Sets a private note; blank or null clears it. */
+  setNote: (id: string, savedItemId: string, note: string | null) =>
+    call<{ savedItemId: string; note: string | null }>(
+      `${BASE}/${enc(id)}/items/${enc(savedItemId)}`,
+      { method: "PATCH", ...json({ note }) },
+      "Could not save the note.",
+    ),
+
   moveItem: (id: string, savedItemId: string, toCollectionId: string) =>
     call<{ moved: boolean }>(
       `${BASE}/${enc(id)}/items/${enc(savedItemId)}/move`,

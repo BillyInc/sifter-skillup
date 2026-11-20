@@ -537,6 +537,8 @@ export interface CollectionItem {
   label?: string | null;
   savedAt?: string;
   position: number;
+  /** Private note; only ever returned to the owner. */
+  note?: string | null;
   addedAt?: string;
 }
 

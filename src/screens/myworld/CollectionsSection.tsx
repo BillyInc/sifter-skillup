@@ -7,8 +7,10 @@
  * any canonical programme, role or task item.
  *
  * In scope: list, create (starter names are suggestions only), open, rename,
- * delete, add saved items, remove from collection with explicit confirmation.
- * Not in this slice: ordering UI, export, sharing.
+ * delete, add saved items, remove from collection with explicit confirmation,
+ * order items (move up / move down, no drag needed), private per-item notes,
+ * and a print / share export of the collection.
+ * Not in this slice: sharing with other people.
  */
 import React, { useCallback, useEffect, useState } from "react";
 import {
@@ -21,11 +23,14 @@ import {
   Pressable,
   ActivityIndicator,
   ScrollView,
+  Platform,
+  Share,
   useWindowDimensions,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useTheme, Spacing, Radius, FontSize, CompassFonts } from "@/theme";
 import { collectionsData } from "@/lib/collectionsData";
+import { collectionToPrintHtml, collectionToText, type ExportItem } from "@/lib/collectionExport";
 import {
   type Collection,
   type CollectionItem,
@@ -37,10 +42,11 @@ import { ENTITY_META } from "./entityMeta";
 import { GlyphIcon } from "../../components/icons/GlyphIcon";
 
 export const REMOVE_FROM_COLLECTION_COPY =
-  "This removes it from this collection. It does not delete the original programme, role or task item.";
+  "This removes it from this collection. It does not delete the item you saved.";
 export const DELETE_COLLECTION_COPY =
-  "Your saved items stay in My World. This does not delete any original programme, role or task item.";
+  "Your saved items stay in My World. This does not delete any item you saved.";
 const NAME_MAX = 60;
+export const NOTE_MAX = 500;
 const WIDE_BREAKPOINT = 720;
 
 type Sheet =
@@ -286,6 +292,9 @@ function CollectionDetail({
 }) {
   const { colors } = useTheme();
   const [items, setItems] = useState<DataState<CollectionItem[]> | null>(null);
+  const [noteItem, setNoteItem] = useState<CollectionItem | null>(null);
+  const [ordering, setOrdering] = useState(false);
+  const [orderProblem, setOrderProblem] = useState<string | null>(null);
 
   const loadItems = useCallback(async () => {
     setItems(await collectionsData.items(collection.id));
@@ -308,6 +317,55 @@ function CollectionDetail({
   const memberIds = new Set(members.map((m) => m.savedItemId));
   const addable = savedItems.filter((s) => !memberIds.has(s.id));
 
+  const exportItems = (): ExportItem[] =>
+    members.map((m) => ({
+      name: m.label ?? m.entityId,
+      typeLabel: (ENTITY_META[m.entityType] ?? { label: "Item" }).label,
+      note: m.note ?? null,
+    }));
+
+  const exportCollection = async () => {
+    const list = exportItems();
+    if (Platform.OS === "web" && typeof window !== "undefined" && typeof window.open === "function") {
+      const view = window.open("", "_blank");
+      if (view) {
+        view.document.open();
+        view.document.write(collectionToPrintHtml(collection.name, list));
+        view.document.close();
+        view.focus();
+        view.print();
+        return;
+      }
+      onChanged("Your browser blocked the print window. Allow pop-ups for this site and try again.");
+      return;
+    }
+    try {
+      await Share.share({ title: collection.name, message: collectionToText(collection.name, list) });
+    } catch {
+      onChanged("Could not open sharing. Try again.");
+    }
+  };
+
+  // Move one item up or down. The new order is shown at once and saved as a
+  // whole; if saving fails the previous order comes back with a message.
+  const moveItem = async (index: number, delta: -1 | 1) => {
+    const target = index + delta;
+    if (ordering || target < 0 || target >= members.length) return;
+    const previous = items;
+    const next = [...members];
+    [next[index], next[target]] = [next[target], next[index]];
+    setItems({ status: "real", data: next.map((m, i) => ({ ...m, position: i })) });
+    setOrdering(true);
+    setOrderProblem(null);
+    const result = await collectionsData.reorder(collection.id, next.map((m) => m.savedItemId));
+    setOrdering(false);
+    if (result.status !== "real") {
+      setItems(previous);
+      setOrderProblem(result.meta?.notice ?? "Could not save the new order. Try again.");
+      void loadItems();
+    }
+  };
+
   return (
     <View style={styles.listWrap}>
       <TouchableOpacity accessibilityRole="button" accessibilityLabel="Back to all collections" onPress={onBack} style={styles.backBtn}>
@@ -323,6 +381,14 @@ function CollectionDetail({
       <View style={styles.actionRow}>
         <OutlineBtn label="Add saved items" icon="plus" onPress={onAdd} colors={colors} />
         <OutlineBtn label="Rename" icon="edit" onPress={onRename} colors={colors} />
+        {members.length > 0 ? (
+          <OutlineBtn
+            label={Platform.OS === "web" ? "Print or save as PDF" : "Share this list"}
+            icon={Platform.OS === "web" ? "printer" : "share"}
+            onPress={() => void exportCollection()}
+            colors={colors}
+          />
+        ) : null}
         <OutlineBtn label="Delete collection" icon="trash-2" onPress={onDelete} colors={colors} danger />
       </View>
 
@@ -348,35 +414,93 @@ function CollectionDetail({
         />
       ) : (
         <View style={styles.list}>
-          {members.map((item) => {
+          {orderProblem ? (
+            <Text accessibilityLiveRegion="polite" accessibilityRole="alert" style={[styles.muted, CompassFonts.body, { color: colors.accentRole.danger }]}>
+              {orderProblem}
+            </Text>
+          ) : null}
+          {members.map((item, index) => {
             const meta = ENTITY_META[item.entityType] ?? { icon: "•", label: "Item" };
             const name = item.label ?? item.entityId;
             return (
               <View
                 key={item.savedItemId}
-                style={[styles.row, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}
+                style={[styles.rowStack, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}
               >
-                <GlyphIcon glyph={meta.icon} size={20} color={colors.textRole.secondary} fallbackStyle={styles.rowIcon} />
-                <View style={styles.cardText}>
-                  <Text numberOfLines={2} style={[styles.cardTitle, CompassFonts.bodySemibold, { color: colors.textRole.primary }]}>{name}</Text>
-                  <View style={[styles.typeChip, { backgroundColor: colors.surface.subtle }]}>
-                    <Text style={[styles.typeChipText, { color: colors.textRole.muted }]}>{meta.label}</Text>
+                <View style={styles.rowTop}>
+                  <GlyphIcon glyph={meta.icon} size={20} color={colors.textRole.secondary} fallbackStyle={styles.rowIcon} />
+                  <View style={styles.cardText}>
+                    <Text numberOfLines={2} style={[styles.cardTitle, CompassFonts.bodySemibold, { color: colors.textRole.primary }]}>{name}</Text>
+                    <View style={[styles.typeChip, { backgroundColor: colors.surface.subtle }]}>
+                      <Text style={[styles.typeChipText, { color: colors.textRole.muted }]}>{meta.label}</Text>
+                    </View>
                   </View>
                 </View>
-                <TouchableOpacity
-                  accessibilityRole="button"
-                  accessibilityLabel={`Remove ${name} from this collection`}
-                  onPress={() => onRemoveItem(item)}
-                  style={styles.iconBtn}
-                >
-                  <Feather name="x" size={16} color={colors.textRole.muted} />
-                </TouchableOpacity>
+                {item.note ? (
+                  <Text accessibilityLabel={`Your note on ${name}: ${item.note}`} style={[styles.noteText, CompassFonts.body, { color: colors.textRole.secondary }]}>
+                    {item.note}
+                  </Text>
+                ) : null}
+                <View style={styles.rowActions}>
+                  <TouchableOpacity
+                    accessibilityRole="button"
+                    accessibilityLabel={`Move ${name} up`}
+                    accessibilityState={{ disabled: index === 0 || ordering }}
+                    disabled={index === 0 || ordering}
+                    onPress={() => void moveItem(index, -1)}
+                    style={[styles.iconBtn, (index === 0 || ordering) && styles.dimmed]}
+                  >
+                    <Feather name="arrow-up" size={16} color={colors.textRole.secondary} />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    accessibilityRole="button"
+                    accessibilityLabel={`Move ${name} down`}
+                    accessibilityState={{ disabled: index === members.length - 1 || ordering }}
+                    disabled={index === members.length - 1 || ordering}
+                    onPress={() => void moveItem(index, 1)}
+                    style={[styles.iconBtn, (index === members.length - 1 || ordering) && styles.dimmed]}
+                  >
+                    <Feather name="arrow-down" size={16} color={colors.textRole.secondary} />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    accessibilityRole="button"
+                    accessibilityLabel={`${item.note ? "Edit note on" : "Add note to"} ${name}`}
+                    onPress={() => setNoteItem(item)}
+                    style={styles.noteBtn}
+                  >
+                    <Feather name="edit-3" size={14} color={colors.accentRole.action} />
+                    <Text style={[styles.linkText, CompassFonts.bodySemibold, { color: colors.accentRole.action }]}>{item.note ? "Edit note" : "Add note"}</Text>
+                  </TouchableOpacity>
+                  <View style={styles.spacer} />
+                  <TouchableOpacity
+                    accessibilityRole="button"
+                    accessibilityLabel={`Remove ${name} from this collection`}
+                    onPress={() => onRemoveItem(item)}
+                    style={styles.iconBtn}
+                  >
+                    <Feather name="x" size={16} color={colors.textRole.muted} />
+                  </TouchableOpacity>
+                </View>
               </View>
             );
           })}
         </View>
       )}
 
+      <NoteSheet
+        item={noteItem}
+        collectionId={collection.id}
+        onClose={() => setNoteItem(null)}
+        onSaved={(savedItemId, note) => {
+          setNoteItem(null);
+          setItems((current) =>
+            current?.status === "real" && current.data
+              ? { ...current, data: current.data.map((m) => (m.savedItemId === savedItemId ? { ...m, note } : m)) }
+              : current,
+          );
+          onChanged(note ? "Note saved." : "Note removed.");
+        }}
+      />
       <NameSheet
         visible={sheet?.kind === "rename"}
         mode="rename"
@@ -612,6 +736,79 @@ function NameSheet({
   );
 }
 
+function NoteSheet({
+  item,
+  collectionId,
+  onClose,
+  onSaved,
+}: {
+  item: CollectionItem | null;
+  collectionId: string;
+  onClose: () => void;
+  onSaved: (savedItemId: string, note: string | null) => void;
+}) {
+  const { colors } = useTheme();
+  const [text, setText] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [problem, setProblem] = useState<string | null>(null);
+  const visible = item !== null;
+  const itemId = item?.savedItemId;
+
+  useEffect(() => {
+    if (item) {
+      setText(item.note ?? "");
+      setProblem(null);
+      setBusy(false);
+    }
+    // Reset only when a different item is opened, not when its note changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [itemId]);
+
+  const save = async () => {
+    if (!item || busy) return;
+    setBusy(true);
+    setProblem(null);
+    const trimmed = text.trim();
+    const result = await collectionsData.setNote(collectionId, item.savedItemId, trimmed ? trimmed : null);
+    setBusy(false);
+    // On failure the text stays as typed so Save can simply be pressed again.
+    if (result.status === "real" && result.data) onSaved(result.data.savedItemId, result.data.note ?? null);
+    else setProblem(result.meta?.notice ?? "Could not save the note. Try again.");
+  };
+
+  return (
+    <SheetShell visible={visible} title={item?.note ? "Edit note" : "Add note"} onClose={onClose}>
+      <Text style={[styles.muted, CompassFonts.body, { color: colors.textRole.secondary }]}>
+        Only you can see this note. It is not shared with anyone.
+      </Text>
+      <View style={[styles.inputWrap, { borderColor: problem ? colors.accentRole.danger : colors.borderRole.control, backgroundColor: colors.surface.base }]}>
+        <TextInput
+          value={text}
+          onChangeText={(v) => {
+            setText(v);
+            setProblem(null);
+          }}
+          maxLength={NOTE_MAX}
+          multiline
+          autoFocus
+          numberOfLines={4}
+          placeholder="For example, ask about fees"
+          placeholderTextColor={colors.textRole.muted}
+          accessibilityLabel="Note"
+          style={[styles.input, styles.noteInput, CompassFonts.body, { color: colors.textRole.primary }]}
+        />
+      </View>
+      <Text style={[styles.muted, { color: colors.textRole.muted }]}>{text.length}/{NOTE_MAX}</Text>
+      {problem ? (
+        <Text accessibilityLiveRegion="polite" accessibilityRole="alert" style={[styles.muted, CompassFonts.body, { color: colors.accentRole.danger }]}>
+          {problem}
+        </Text>
+      ) : null}
+      <SheetActions busy={busy} confirmLabel={problem ? "Try again" : "Save note"} onClose={onClose} onConfirm={() => void save()} />
+    </SheetShell>
+  );
+}
+
 function AddItemsSheet({
   visible,
   collection,
@@ -815,6 +1012,14 @@ const styles = StyleSheet.create({
   typeChip: { alignSelf: "flex-start", borderRadius: Radius.full, paddingHorizontal: Spacing.sm, paddingVertical: 1, marginTop: 2 },
   typeChipText: { fontSize: FontSize.sm, letterSpacing: 0.3 },
   iconBtn: { width: 44, height: 44, alignItems: "center", justifyContent: "center" },
+  dimmed: { opacity: 0.35 },
+  rowStack: { padding: Spacing.md, borderWidth: 1, borderRadius: Radius.lg, gap: Spacing.xs },
+  rowTop: { flexDirection: "row", alignItems: "center", gap: Spacing.md },
+  rowActions: { flexDirection: "row", alignItems: "center", flexWrap: "wrap" },
+  noteBtn: { flexDirection: "row", alignItems: "center", gap: Spacing.xs, minHeight: 44, paddingHorizontal: Spacing.sm },
+  noteText: { fontSize: FontSize.md, lineHeight: FontSize.md * 1.5 },
+  noteInput: { minHeight: 96, textAlignVertical: "top" },
+  spacer: { flex: 1 },
   primaryBtn: { flexDirection: "row", alignItems: "center", justifyContent: "center", gap: Spacing.xs, minHeight: 44, paddingHorizontal: Spacing.lg, borderRadius: Radius.md },
   primaryBtnText: { fontSize: FontSize.md },
   outlineBtn: { flexDirection: "row", alignItems: "center", justifyContent: "center", gap: Spacing.xs, minHeight: 44, paddingHorizontal: Spacing.md, borderRadius: Radius.md, borderWidth: 1 },

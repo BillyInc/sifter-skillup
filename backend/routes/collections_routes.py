@@ -11,6 +11,8 @@
 #   GET    /api/career/collections/{id}/items         members, saved object resolved
 #   POST   /api/career/collections/{id}/items         add {savedItemIds: [...]}
 #   DELETE /api/career/collections/{id}/items/{sid}   remove from this collection
+#   PATCH  /api/career/collections/{id}/items/{sid}   set or clear a private note {note}
+#   PATCH  /api/career/collections/{id}/order         reorder {savedItemIds: [...all members]}
 #   POST   /api/career/collections/{id}/items/{sid}/move  {toCollectionId}
 #
 # Invariants
@@ -22,7 +24,11 @@
 #   * Tables are created by backend/migration_my_world_collections_2026-11-19.sql
 #     (PROPOSED, NOT APPLIED). Until it is applied every endpoint returns a
 #     `coming_soon` DataState instead of a 500.
-# Not in this slice: ordering UI/reorder, notes, export, sharing.
+#   * Notes are private to the owner. Every endpoint is owner-only and there is
+#     no sharing endpoint; if sharing is ever added it must not return `note`.
+#   * Ordering and notes use the `position` / `note` columns that the same
+#     migration creates, so no further schema change is needed.
+# Not in this slice: sharing.
 # ============================================================
 import re
 import unicodedata
@@ -42,6 +48,7 @@ MAX_NAME_LEN = 60
 MAX_COLLECTIONS_PER_USER = 50
 MAX_ITEMS_PER_COLLECTION = 200
 MAX_IDS_PER_REQUEST = 50
+MAX_NOTE_LEN = 500
 
 # Suggestions only. Nothing is created until the student picks one (blueprint
 # p.9: "suggested starter collections").
@@ -120,6 +127,26 @@ def clean_name(raw: Any) -> str:
     return name
 
 
+def clean_note(raw: Any) -> Optional[str]:
+    """Normalise a private note. None or blank clears it; raises HTTP 400 if invalid."""
+    if raw is None:
+        return None
+    if not isinstance(raw, str):
+        raise HTTPException(status_code=400, detail="A note must be text.")
+    text = unicodedata.normalize("NFKC", raw).replace("\r\n", "\n").replace("\r", "\n")
+    text = "\n".join(line.rstrip() for line in text.split("\n")).strip()
+    if not text:
+        return None
+    if len(text) > MAX_NOTE_LEN:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Notes can be up to {MAX_NOTE_LEN} characters.",
+        )
+    if any(unicodedata.category(ch).startswith("C") and ch != "\n" for ch in text):
+        raise HTTPException(status_code=400, detail="That note has characters we cannot use.")
+    return text
+
+
 def _collection_out(row: dict, item_count: int = 0) -> dict:
     return {
         "id": row["id"],
@@ -141,6 +168,7 @@ def _saved_out(row: dict, link: dict) -> dict:
         "savedAt": row.get("created_at"),
         "sourceContext": row.get("source_context"),
         "position": link.get("position", 0),
+        "note": link.get("note"),
         "addedAt": link.get("added_at"),
     }
 
@@ -411,6 +439,71 @@ async def remove_collection_item(
         return _real(None)
 
     return _run("remove_item", work)
+
+
+@router.patch("/{collection_id}/items/{saved_item_id}", response_model=ResponseModel)
+async def set_item_note(
+    collection_id: str,
+    saved_item_id: str,
+    body: dict = Body(default_factory=dict),
+    current_user: dict = Depends(Auth.get_current_user),
+):
+    """Set or clear the private note on one item {note}. Blank or null clears it."""
+    if "note" not in body:
+        raise HTTPException(status_code=400, detail="Send a note, or null to clear it.")
+    note = clean_note(body.get("note"))
+
+    def work():
+        svc = _svc()
+        uid = current_user["id"]
+        _owned_collection(svc, uid, collection_id)
+        if not any(link["saved_item_id"] == saved_item_id for link in _links(svc, collection_id)):
+            raise HTTPException(status_code=404, detail="That item is not in this collection.")
+        if not _owned_saved_items(svc, uid, [saved_item_id]):
+            raise HTTPException(status_code=404, detail="Saved item not found.")
+        (
+            svc.table("collection_items")
+            .update({"note": note})
+            .eq("collection_id", collection_id)
+            .eq("saved_item_id", saved_item_id)
+            .execute()
+        )
+        return _real({"savedItemId": saved_item_id, "note": note})
+
+    return _run("set_note", work)
+
+
+@router.patch("/{collection_id}/order", response_model=ResponseModel)
+async def reorder_collection_items(
+    collection_id: str,
+    body: dict = Body(default_factory=dict),
+    current_user: dict = Depends(Auth.get_current_user),
+):
+    """Reorder {savedItemIds: [...]}. Must list every current member exactly once."""
+    ids = _id_list(body, "savedItemIds")
+
+    def work():
+        svc = _svc()
+        uid = current_user["id"]
+        _owned_collection(svc, uid, collection_id)
+        links = _links(svc, collection_id)
+        members = {link["saved_item_id"] for link in links}
+        if set(ids) != members or len(ids) != len(members):
+            raise HTTPException(
+                status_code=409,
+                detail="This collection changed. Reload it and try again.",
+            )
+        for index, saved_id in enumerate(ids):
+            (
+                svc.table("collection_items")
+                .update({"position": index})
+                .eq("collection_id", collection_id)
+                .eq("saved_item_id", saved_id)
+                .execute()
+            )
+        return _real({"count": len(ids)})
+
+    return _run("reorder", work)
 
 
 @router.post("/{collection_id}/items/{saved_item_id}/move", response_model=ResponseModel)
