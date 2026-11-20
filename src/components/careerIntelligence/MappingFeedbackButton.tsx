@@ -20,6 +20,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
+import { Feather } from "@expo/vector-icons";
 import { useTheme, Spacing, Radius, FontSize, Brand, FontWeight } from "../../theme";
 import { careerData } from "../../lib/careerData";
 import type { FeedbackType } from "../../types/career";
@@ -40,6 +41,10 @@ export interface MappingFeedbackButtonProps {
   allowedTypes?: FeedbackType[];
   optionLabels?: Partial<Record<FeedbackType, string>>;
   placeholder?: string;
+  /** "outline" is a quiet secondary button (44px target); the default keeps the filled pill. */
+  variant?: "filled" | "outline";
+  /** Feather icon name shown instead of the emoji. */
+  icon?: React.ComponentProps<typeof Feather>["name"];
 }
 
 const FEEDBACK_OPTIONS: { value: FeedbackType; label: string; icon: string }[] = [
@@ -61,6 +66,8 @@ export function MappingFeedbackButton({
   allowedTypes,
   optionLabels,
   placeholder,
+  variant = "filled",
+  icon,
 }: MappingFeedbackButtonProps) {
   const options = FEEDBACK_OPTIONS
     .filter((opt) => !allowedTypes || allowedTypes.includes(opt.value))
@@ -109,16 +116,23 @@ export function MappingFeedbackButton({
         activeOpacity={0.8}
         style={[
           compact ? styles.compactBtn : styles.btn,
-          { backgroundColor: Brand.primary, borderColor: Brand.primary },
+          variant === "outline"
+            ? [styles.outlineBtn, { backgroundColor: "transparent", borderColor: Brand.primary }]
+            : { backgroundColor: Brand.primary, borderColor: Brand.primary },
         ]}
       >
-        <Text style={[styles.btnIcon, compact ? { fontSize: 12 } : undefined]}>
-          {compact ? "✏️" : "📝"}
-        </Text>
+        {icon ? (
+          <Feather name={icon} size={14} color={variant === "outline" ? Brand.primary : "#fff"} />
+        ) : (
+          <Text style={[styles.btnIcon, compact ? { fontSize: 12 } : undefined]}>
+            {compact ? "✏️" : "📝"}
+          </Text>
+        )}
         <Text
           style={[
             compact ? styles.compactBtnLabel : styles.btnLabel,
-            { color: "#fff" },
+            { color: variant === "outline" ? Brand.primary : "#fff" },
+            variant === "outline" ? styles.outlineLabel : null,
           ]}
         >
           {label ?? (compact ? "Feedback" : "Submit mapping feedback")}
@@ -263,6 +277,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.sm,
   },
   compactBtnLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
+  outlineBtn: { minHeight: 44, justifyContent: "center", paddingVertical: Spacing.xs, paddingHorizontal: Spacing.md },
+  outlineLabel: { fontSize: FontSize.sm },
   modalOverlay: {
     flex: 1,
     justifyContent: "center",

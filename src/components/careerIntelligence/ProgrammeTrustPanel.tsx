@@ -48,6 +48,8 @@ export function ProgrammeTrustPanel({ trust, programmeId, programmeLabel, school
         ) : null}
         <MappingFeedbackButton
           compact
+          variant="outline"
+          icon="flag"
           edgeType="programme_requirement"
           sourceId={programmeId}
           sourceLabel={programmeLabel}
