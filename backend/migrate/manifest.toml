@@ -154,6 +154,11 @@ requires = [
   "migration_subject_catalog",
 ]
 verify = []
+# Derived from seed_subject_catalog.sql: one multi-row INSERT with 82 distinct `code` values (ON CONFLICT (code)), and no DELETE.
+# Note: CLAUDE.md quotes 46 catalog subjects, the file inserts 82; the file is authoritative, the doc figure looks stale.
+verify_rows = [
+  { table = "subject_catalog", min_rows = 82 },
+]
 authoritative = "sql"
 authoritative_reason = "the .sql is the later generation (last commit 2026-10-22, f01424d, 'AGR/AGRIC split and 36 dropped catalog rows') and is the file the local audits read (_audit_subject_option_seed.py:30, _audit_subject_match_exhaustive.py:42); the .sql.gz was last committed 2026-10-17 and differs in alias lists, the HSC/CSC/STORE/HEC/TD/AUTO/CAT aliases and a stale header comment"
 source = "CLAUDE.md 'Canonical 2026-09-11 order'"
@@ -168,6 +173,23 @@ requires = [
   "seed_subject_catalog",
 ]
 verify = []
+# Derived from seed_career_pilot.sql VALUES rows with distinct ids (ON CONFLICT (id), no DELETE/UPDATE in the file):
+# programmes 244, schools 690, jamb_programmes 420, programme_mapping 420, programme_subject_requirements 420,
+# jamb_programme_requirement_sources 2715, school_programmes 8116, school_programme_requirement_exceptions 4007,
+# school_programme_subject_options 1911. 420 JAMB identities matches CLAUDE.md; the other CLAUDE.md figures (243 programmes,
+# 861 institutions, 9,130 offerings, 2,706 sources, 3,884 exceptions, 1,998 options) differ from the file and are not used.
+# school_programme_subject_option_items (22,179 conditional INSERT..SELECT statements) is deliberately not checked.
+verify_rows = [
+  { table = "programmes", min_rows = 244 },
+  { table = "schools", min_rows = 690 },
+  { table = "jamb_programmes", min_rows = 420 },
+  { table = "programme_mapping", min_rows = 420 },
+  { table = "programme_subject_requirements", min_rows = 420 },
+  { table = "jamb_programme_requirement_sources", min_rows = 2715 },
+  { table = "school_programmes", min_rows = 8116 },
+  { table = "school_programme_requirement_exceptions", min_rows = 4007 },
+  { table = "school_programme_subject_options", min_rows = 1911 },
+]
 source = "CLAUDE.md 'Canonical 2026-09-11 order'"
 
 [[entry]]
@@ -179,6 +201,10 @@ requires = [
   "seed_career_pilot",
 ]
 verify = []
+# Derived from the decompressed seed: one multi-row INSERT with 1,273 distinct ids (ON CONFLICT (id)).
+verify_rows = [
+  { table = "jamb_programme_learning_resources", min_rows = 1273 },
+]
 note = "Review-only data until the separate approval gate passes."
 source = "CLAUDE.md 'Canonical 2026-09-11 order'"
 
@@ -191,6 +217,12 @@ requires = [
   "seed_career_pilot",
 ]
 verify = []
+# Derived from seed_subject_rule_records.sql: 1,260 INSERT statements with 1,260 distinct ids and 1,260 distinct
+# (jamb_programme_id, exam_type) pairs (420 each of utme, olevel, direct_entry); matches CLAUDE.md's 1,260 typed records.
+# Each statement is guarded by WHERE EXISTS on jamb_programmes, so the count assumes seed_career_pilot is applied (it is required).
+verify_rows = [
+  { table = "programme_subject_rule_records", min_rows = 1260 },
+]
 approval = "replacement seed: back up programme_subject_rule_records yourself first (the runner takes no backup); must be applied in the same run as seed_subject_options; explicit approval"
 must_apply_with = ["seed_subject_options"]
 note = "Replacement seed (DELETE FROM programme_subject_rule_records); CLAUDE.md: both replacement subject seeds must be deployed together."
@@ -210,6 +242,13 @@ requires = [
   "migration_student_pipeline_live",
 ]
 verify = []
+# Derived from seed_subject_options.sql: 578 programme_subject_options statements with 578 distinct ids (each guarded by
+# WHERE EXISTS on jamb_programmes, satisfied by the required seed_career_pilot). CLAUDE.md quotes 604, the file has 578.
+# programme_subject_option_items (8,800 statements) is NOT checked: its UNIQUE(option_id, subject_id, requirement_role,
+# group_key) plus ON CONFLICT DO NOTHING can legitimately collapse rows, so no safe floor can be derived.
+verify_rows = [
+  { table = "programme_subject_options", min_rows = 578 },
+]
 approval = "replacement seed: back up the two matcher tables yourself first (the runner takes no backup); must be applied in the same run as seed_subject_rule_records; explicit approval"
 must_apply_with = ["seed_subject_rule_records"]
 note = "Documented replacement seed: DELETEs and rebuilds programme_subject_options and programme_subject_option_items."
@@ -518,6 +557,10 @@ requires = [
   "migration_programme_domain_review_corrections_2026-09-18",
 ]
 verify = []
+# Derived from the decompressed seed: 14 INSERTs with 1,344 distinct (programme_id, domain_id) pairs (ON CONFLICT on that pair).
+verify_rows = [
+  { table = "programme_domain_evidence", min_rows = 1344 },
+]
 source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 2 #1"
 
 [[entry]]
@@ -529,6 +572,13 @@ requires = [
   "migration_programme_curriculum_contract_general_2026-09-18",
 ]
 verify = []
+# Derived from the decompressed seed: 236 distinct outcome_id values and 7 distinct ability titles (DELETE then re-INSERT
+# for the Sociology programme). Not scoped to the programme (it is chosen by a subselect), so the outcome count is table-wide;
+# the 7 ability titles are matched by name.
+verify_rows = [
+  { table = "programme_curriculum_outcomes", min_rows = 236 },
+  { table = "programme_abilities", min_rows = 7, where = [{ column = "display_title", op = "in", values = ["Build your Sociology foundation", "Apply what you learn", "Investigate new problems"] }] },
+]
 approval = "scoped delete-then-reinsert: DELETE FROM programme_curriculum_outcomes and programme_abilities for the Sociology programme, then re-insert in the same file; approve after you have taken a _bak snapshot yourself (the runner takes none)"
 source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 2 #2"
 
@@ -540,6 +590,12 @@ requires = [
   "migration_programme_theme_guidance_2026-10-08",
 ]
 verify = []
+# Derived from the decompressed seed: 3 theme items and 1 relationship, all theme_key 'research', inserted for each matching
+# programme row (so at least that many when the Sociology programme exists).
+verify_rows = [
+  { table = "programme_theme_guidance", min_rows = 3, where = [{ column = "theme_key", op = "=", value = "research" }, { column = "item_key", op = "in", values = ["social_research_evidence_types", "social_research_method_selection", "ethical_social_research"] }] },
+  { table = "programme_theme_relationships", min_rows = 1, where = [{ column = "theme_key", op = "=", value = "research" }, { column = "relationship_key", op = "=", value = "research_question_guides_method_choice" }] },
+]
 source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 2 #3"
 
 [[entry]]
@@ -572,7 +628,13 @@ requires = [
   "seed_sociology_curriculum_contract_2026-09-17",
 ]
 verify = []
-note = "Parts 001-035 in numeric order; each part is its own transaction."
+# Derived from the 35 decompressed parts: 121,377 distinct (context_level, context_key, item_type, item_key) rows in
+# career_context_items (ON CONFLICT on that key, parts total about 664 MiB). career_item_relationships (408,163 rows) is not
+# checked: its ON CONFLICT has no target, so duplicates cannot be counted with confidence.
+verify_rows = [
+  { table = "career_context_items", min_rows = 121377 },
+]
+note = "Parts 001-035 in numeric order; the runner applies all 35 in ONE transaction with one ledger row (see README, 'Large group entries')."
 source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 2 #5"
 
 [[entry]]
@@ -583,6 +645,11 @@ requires = [
   "seed_career_context_items_v1_parts",
 ]
 verify = []
+# Derived from the decompressed seed: 2 career_item_path_targets rows from domain item research-design to two D078 areas
+# (ON CONFLICT on the target key). Its other work is one UPDATE of an existing row, which has no row count.
+verify_rows = [
+  { table = "career_item_path_targets", min_rows = 2, where = [{ column = "context_level", op = "=", value = "domain" }, { column = "context_key", op = "=", value = "D078" }, { column = "from_item_key", op = "=", value = "research-design" }, { column = "target_key", op = "in", values = ["D078:computational-digital-social-science", "D078:social-research-evaluation"] }] },
+]
 note = "Must run AFTER the 35 contextual parts: it UPDATEs a row part-002 creates."
 source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 2 #6"
 
@@ -618,6 +685,12 @@ requires = [
   "migration_d078_specialization_taxonomy_2026-10-12",
 ]
 verify = []
+# Derived from the decompressed seed and its own header: exactly seven Areas of Specialization and 26 area-to-role routes
+# (distinct area_key; distinct (role_id, area_key)). Matches CLAUDE.md's seven canonical areas.
+verify_rows = [
+  { table = "career_areas_of_specialization", min_rows = 7, where = [{ column = "domain_key", op = "=", value = "D078" }] },
+  { table = "career_role_area_routes", min_rows = 26, where = [{ column = "area_key", op = "like", value = "D078:%" }] },
+]
 source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 2 #9"
 
 [[entry]]
@@ -650,6 +723,12 @@ requires = [
   "migration_career_context_claim_validation",
 ]
 verify = []
+# Derived from the decompressed seed and its header ('52 domain items + 150 area items = 202 rows', 202 distinct
+# (context_level, context_key, item_type, item_key)) and its 3 route-scoped conditional relationships (3 distinct from_item_key).
+verify_rows = [
+  { table = "career_context_items", min_rows = 202, where = [{ column = "context_level", op = "in", values = ["domain", "subgroup"] }, { column = "context_key", op = "like", value = "D078%" }] },
+  { table = "career_item_relationships", min_rows = 3, where = [{ column = "context_key", op = "=", value = "D078:economics-applied-analysis" }, { column = "from_item_key", op = "in", values = ["D078-ECON-APPLIED-ECONOMETRICS", "D078-ECON-CAUSAL-ML", "D078-ECON-CASEVO-LLM-SIM"] }] },
+]
 note = "First of three separate final D078 transactions; keep them separate."
 source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 2 #11"
 
@@ -663,6 +742,12 @@ requires = [
   "seed_d078_guided_content_2026-10-12",
 ]
 verify = []
+# Derived from the decompressed seed: 173 d078_role_item_contracts rows (173 distinct queue_position; matches CLAUDE.md's
+# 173-row ledger) and 202 role cards (202 distinct context keys, all context_level 'role', matches CLAUDE.md's 202 cards).
+verify_rows = [
+  { table = "d078_role_item_contracts", min_rows = 173 },
+  { table = "career_context_items", min_rows = 202, where = [{ column = "context_level", op = "=", value = "role" }, { column = "context_key", op = "like", value = "D078|%" }] },
+]
 source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 2 #12"
 
 [[entry]]
@@ -673,6 +758,11 @@ requires = [
   "seed_d078_role_item_contracts_2026-10-15",
 ]
 verify = []
+# Derived from the decompressed seed: 95 distinct role-scoped tool cards across 19 roles (matches CLAUDE.md). The 202 role
+# cards of the previous seed are skills and knowledge, so the tool scope is exactly this seed's rows.
+verify_rows = [
+  { table = "career_context_items", min_rows = 95, where = [{ column = "context_level", op = "=", value = "role" }, { column = "context_key", op = "like", value = "D078|%" }, { column = "item_type", op = "=", value = "tool" }] },
+]
 source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 2 #13"
 
 

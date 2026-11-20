@@ -27,10 +27,28 @@ def run_row_checks(
     for check in entry.verify_rows:
         if not _IDENT.match(check.table):
             raise RowCheckError(f"unsafe table name in verify_rows: {check.table!r}")
-        rows = executor.query(f"SELECT count(*) FROM {schema}.{check.table}")
+        sql = f"SELECT count(*) FROM {schema}.{check.table}"
+        params: list[str] = []
+        clauses: list[str] = []
+        for column, op, values in check.where:
+            if not _IDENT.match(column) or op not in ("=", "like", "in"):
+                raise RowCheckError(
+                    f"unsafe where term in verify_rows: {column!r} {op!r}"
+                )
+            if op == "in":
+                clauses.append(f"{column} IN ({', '.join(['%s'] * len(values))})")
+            elif op == "like":
+                clauses.append(f"{column} LIKE %s")
+            else:
+                clauses.append(f"{column} = %s")
+            params.extend(values)
+        if clauses:
+            sql += " WHERE " + " AND ".join(clauses)
+        rows = executor.query(sql, params)
         found = int(rows[0][0])
         if found < check.min_rows:
+            scope = " matching the declared scope" if check.where else ""
             raise RowCheckError(
-                f"{entry.id}: {schema}.{check.table} has {found} row(s) after the "
+                f"{entry.id}: {schema}.{check.table} has {found} row(s){scope} after the "
                 f"entry ran; expected at least {check.min_rows}"
             )

@@ -63,6 +63,9 @@ class RowCheck:
 
     table: str
     min_rows: int
+    # Optional scope: (column, op, values) terms ANDed together; op is "=", "like" or "in".
+    # Without it the whole table is counted, which only proves the table is not empty.
+    where: tuple[tuple[str, str, tuple[str, ...]], ...] = ()
 
 
 @dataclass(frozen=True)
@@ -173,8 +176,57 @@ def _row_checks(value: Any, where: str) -> tuple[RowCheck, ...]:
                 f"{where}: each verify_rows item needs a lowercase 'table' name "
                 "(no schema prefix) and an integer 'min_rows' >= 1"
             )
-        checks.append(RowCheck(table=table, min_rows=minimum))
+        checks.append(
+            RowCheck(table=table, min_rows=minimum, where=_row_check_where(item, where))
+        )
     return tuple(checks)
+
+
+_WHERE_OPS = ("=", "like", "in")
+
+
+def _row_check_where(
+    item: dict[str, Any], where: str
+) -> tuple[tuple[str, str, tuple[str, ...]], ...]:
+    raw = item.get("where")
+    if raw is None:
+        return ()
+    if not isinstance(raw, list) or not raw:
+        raise ManifestError(f"{where}: verify_rows 'where' must be a non-empty array")
+    terms: list[tuple[str, str, tuple[str, ...]]] = []
+    for term in raw:
+        column = term.get("column") if isinstance(term, dict) else None
+        op = term.get("op") if isinstance(term, dict) else None
+        if (
+            not isinstance(column, str)
+            or not _IDENT.match(column)
+            or op not in _WHERE_OPS
+        ):
+            raise ManifestError(
+                f"{where}: each verify_rows 'where' term needs a lowercase 'column' and "
+                f"an 'op' of {', '.join(_WHERE_OPS)}"
+            )
+        if op == "in":
+            values = term.get("values")
+            ok = (
+                isinstance(values, list)
+                and bool(values)
+                and all(isinstance(v, str) and v and "\x00" not in v for v in values)
+            )
+            if not ok:
+                raise ManifestError(
+                    f"{where}: a 'where' term with op 'in' needs a non-empty 'values' "
+                    "array of non-empty strings"
+                )
+            terms.append((column, op, tuple(values)))
+        else:
+            value = term.get("value")
+            if not isinstance(value, str) or not value or "\x00" in value:
+                raise ManifestError(
+                    f"{where}: a 'where' term with op '{op}' needs a non-empty string 'value'"
+                )
+            terms.append((column, op, (value,)))
+    return tuple(terms)
 
 
 def parse_manifest(data: dict[str, Any]) -> Manifest:
@@ -360,7 +412,9 @@ def resolve_source(entry: Entry, root: Path) -> Source:
         suffix = ".sql" if entry.authoritative == "sql" else ".sql.gz"
         pinned = declared.with_name(base + suffix)
         if pinned in found:
-            return Source(pinned, found, True, f"pinned authoritative={entry.authoritative}")
+            return Source(
+                pinned, found, True, f"pinned authoritative={entry.authoritative}"
+            )
     return Source(None, found, True, "copies differ and none is pinned")
 
 
@@ -569,7 +623,7 @@ def validate(manifest: Manifest, root: Path) -> list[Issue]:
                 err(
                     "DUPLICATE_SOURCE_DIFFERS",
                     f"{entry.id}: {', '.join(p.name for p in source.candidates)} differ in content; "
-                    "pin one with authoritative = \"sql\"|\"gz\" plus authoritative_reason",
+                    'pin one with authoritative = "sql"|"gz" plus authoritative_reason',
                 )
             elif source.differing:
                 stale = [p.name for p in source.candidates if p != source.path]
