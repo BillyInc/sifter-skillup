@@ -5,11 +5,12 @@
 // Connection modal  — Create new account OR Connect existing
 // Attribution       — every push tags "Sifter LevelUp" as source
 
+import { openExternalUrl } from "@/lib/safeUrl";
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
   SafeAreaView, Modal, TextInput, ActivityIndicator,
-  Alert, Linking, RefreshControl, KeyboardAvoidingView,
+  Alert, RefreshControl, KeyboardAvoidingView,
   Platform,
 } from 'react-native';
 import { useAuth } from '@/hooks/useAuth';
@@ -341,7 +342,7 @@ function PlatformConnectModal({
                   <Text style={mStyle.chevron}>›</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={mStyle.modeCard} onPress={() => Linking.openURL(platform.signupUrl)} activeOpacity={0.85}>
+                <TouchableOpacity style={mStyle.modeCard} onPress={() => openExternalUrl(platform.signupUrl)} activeOpacity={0.85}>
                   <Text style={{ fontSize: 18 }}>🌐</Text>
                   <View style={{ flex: 1 }}>
                     <Text style={mStyle.modeTitle}>Open {platform.name}</Text>
@@ -441,7 +442,7 @@ function PlatformConnectModal({
                 />
 
                 {existing && (
-                  <TouchableOpacity onPress={() => Linking.openURL(existing.profileUrl)} style={mStyle.openProfile}>
+                  <TouchableOpacity onPress={() => openExternalUrl(existing.profileUrl)} style={mStyle.openProfile}>
                     <Text style={mStyle.openProfileText}>Open profile ↗</Text>
                   </TouchableOpacity>
                 )}
@@ -593,7 +594,7 @@ function PushItemModal({
                       style={pushSt.platformRow}
                       onPress={async () => {
                         const pkg = await API.portfolioGeneratePackage({ itemId: item.id, platformId: acc.platformId });
-                        if (pkg?.downloadUrl) Linking.openURL(pkg.downloadUrl);
+                        if (pkg?.downloadUrl) void openExternalUrl(pkg.downloadUrl);
                       }}>
                       <Text style={{ fontSize: 18 }}>{pl.icon}</Text>
                       <View style={{ flex: 1 }}>

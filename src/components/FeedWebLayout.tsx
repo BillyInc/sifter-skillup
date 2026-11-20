@@ -17,10 +17,11 @@
  * Right column panels pull directly from feedItems already loaded.
  */
 
+import { openExternalUrl } from "@/lib/safeUrl";
 import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  Linking, Platform,
+  Platform,
 } from 'react-native';
 import {
   useTheme, Spacing, Radius, FontSize, FontWeight,
@@ -160,7 +161,7 @@ function DataPanel({
       {meta?.externalUrl && (
         <TouchableOpacity
           style={[styles.extLink, { borderColor: accentColor + '40' }]}
-          onPress={() => Platform.OS === 'web' && Linking.openURL(meta.externalUrl)}
+          onPress={() => Platform.OS === 'web' && void openExternalUrl(meta.externalUrl)}
         >
           <Text style={[styles.extLinkText, { color: accentColor }]}>
             {isEco ? 'View on DeFiLlama →' : 'View on Bloomberg →'}
@@ -264,7 +265,7 @@ function CampaignsPanel({
               </Text>
               <TouchableOpacity
                 style={[styles.joinBtn, { backgroundColor: accentColor }]}
-                onPress={() => meta?.joinUrl && Linking.openURL(meta.joinUrl)}
+                onPress={() => meta?.joinUrl && void openExternalUrl(meta.joinUrl)}
               >
                 <Text style={styles.joinBtnText}>Join</Text>
               </TouchableOpacity>
@@ -344,7 +345,7 @@ function JobsPanel({
           <TouchableOpacity
             key={item.id}
             style={[styles.jobItem, { borderBottomColor: colors.border }]}
-            onPress={() => meta?.applyUrl && Linking.openURL(meta.applyUrl)}
+            onPress={() => meta?.applyUrl && void openExternalUrl(meta.applyUrl)}
             activeOpacity={0.75}
           >
             <Text style={[styles.jobTitle, { color: colors.text }]} numberOfLines={2}>

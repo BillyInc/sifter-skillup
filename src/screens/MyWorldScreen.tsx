@@ -20,6 +20,7 @@
  * DataStateView, so empty / coming-soon / locked states are graceful and honest
  * — never mock rows. Data refreshes on focus and after every mutation.
  */
+import { openExternalUrl } from "@/lib/safeUrl";
 import React, { useCallback, useEffect, useState } from "react";
 import {
   View,
@@ -30,8 +31,7 @@ import {
   Modal,
   TextInput,
   Pressable,
-  Linking,
-} from "react-native";
+  } from "react-native";
 import * as Clipboard from "expo-clipboard";
 import { useFocusEffect, useRouter, type Href } from "expo-router";
 import {
@@ -1075,7 +1075,7 @@ function SavedItemRow({
     else if (item.entityType === "subgroup")
       exploreNav.subgroupDirect(router, item.entityId);
     else if (item.entityType === "resource")
-      void Linking.openURL(item.entityId).catch(() => {});
+      void openExternalUrl(item.entityId);
     // comparison / opportunity / organisation have no live detail route yet.
   };
 

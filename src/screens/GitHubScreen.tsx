@@ -7,6 +7,7 @@
  *   3. LEARN MODULE   → Step-by-step Git concepts (what is a repo, commit, push, README)
  */
 
+import { openExternalUrl } from "@/lib/safeUrl";
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
@@ -588,7 +589,7 @@ function ConnectedView({
           <TouchableOpacity
             key={repo.name}
             style={styles.repoRow}
-            onPress={() => Linking.openURL(repo.url)}
+            onPress={() => { void openExternalUrl(repo.url); }}
             activeOpacity={0.7}
           >
             <View style={{ flex: 1 }}>
@@ -1041,7 +1042,7 @@ export default function GitHubScreen() {
     setConnectLoading(true);
     try {
       const { url } = await API.githubAuthUrl();
-      await Linking.openURL(url);
+      if (!(await openExternalUrl(url))) throw new Error("This link could not be opened.");
       // Poll for connection after returning from browser
       setTimeout(loadStatus, 3000);
       setTimeout(loadStatus, 8000);

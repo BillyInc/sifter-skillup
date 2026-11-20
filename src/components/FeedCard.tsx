@@ -4,10 +4,10 @@
  * v3 theme throughout. Based on your template scaffold.
  */
 
+import { openExternalUrl } from "@/lib/safeUrl";
 import React from 'react';
 import {
-  View, Text, StyleSheet, TouchableOpacity, Image, Linking,
-} from 'react-native';
+  View, Text, StyleSheet, TouchableOpacity, Image, } from 'react-native';
 import {
   useTheme, Spacing, Radius, FontSize, FontWeight, Shadow,
 } from '../theme';
@@ -61,7 +61,7 @@ function EcosystemDataWidget({ metadata, accent }: { metadata: any; accent: stri
         </View>
       )}
       {metadata.externalUrl && (
-        <TouchableOpacity onPress={() => Linking.openURL(metadata.externalUrl)}>
+        <TouchableOpacity onPress={() => void openExternalUrl(metadata.externalUrl)}>
           <Text style={[styles.linkText, { color: accent }]}>🔗 View on DeFiLlama →</Text>
         </TouchableOpacity>
       )}
@@ -87,7 +87,7 @@ function GovernanceWidget({ metadata, accent }: { metadata: any; accent: string 
       {metadata.canVote && (
         <TouchableOpacity
           style={[styles.actionChip, { backgroundColor: accent }]}
-          onPress={() => metadata.voteUrl && Linking.openURL(metadata.voteUrl)}
+          onPress={() => metadata.voteUrl && void openExternalUrl(metadata.voteUrl)}
         >
           <Text style={styles.actionChipText}>Vote →</Text>
         </TouchableOpacity>
@@ -108,7 +108,7 @@ function CampaignWidget({ metadata, accent }: { metadata: any; accent: string })
         </Text>
         <TouchableOpacity
           style={[styles.actionChip, { backgroundColor: metadata.isJoined ? colors.green : accent }]}
-          onPress={() => metadata.joinUrl && Linking.openURL(metadata.joinUrl)}
+          onPress={() => metadata.joinUrl && void openExternalUrl(metadata.joinUrl)}
         >
           <Text style={styles.actionChipText}>{metadata.isJoined ? 'Joined ✓' : 'Join'}</Text>
         </TouchableOpacity>
@@ -143,7 +143,7 @@ function NewProjectWidget({ metadata, accent }: { metadata: any; accent: string 
         <Text style={[styles.projectTvl, { color: colors.textSoft }]}>TVL: <Text style={{ color: accent, fontWeight: FontWeight.bold }}>{metadata.tvl}</Text></Text>
       )}
       {metadata.websiteUrl && (
-        <TouchableOpacity onPress={() => Linking.openURL(metadata.websiteUrl!)}>
+        <TouchableOpacity onPress={() => void openExternalUrl(metadata.websiteUrl)}>
           <Text style={[styles.linkText, { color: accent }]}>Visit site →</Text>
         </TouchableOpacity>
       )}
@@ -204,7 +204,7 @@ function JobWidget({ metadata, accent }: { metadata: any; accent: string }) {
         {metadata.applyUrl && (
           <TouchableOpacity
             style={[styles.actionChip, { backgroundColor: accent }]}
-            onPress={() => Linking.openURL(metadata.applyUrl!)}
+            onPress={() => void openExternalUrl(metadata.applyUrl)}
           >
             <Text style={styles.actionChipText}>Apply →</Text>
           </TouchableOpacity>
