@@ -123,7 +123,7 @@ function PortfolioComparison({ state }: { state: DataState<PeerProgrammeComparis
     <Text style={[styles.meta, { color: colors.textMuted }]}>{data.peer.institutionName}: {data.peer.programmesAccessible} programmes · {data.peer.domainsAccessible} domains · {data.peer.specializationsAccessible} specializations · {data.peer.rolesAccessible} roles</Text>
     {data.programmesPeerTeachesNotCurrent.map((row) => <View key={row.offeringId ?? row.jambProgrammeId} style={[styles.difference, { borderTopColor: colors.border }]}>
       <Text style={[styles.optionText, { color: colors.text }]}>{row.programmeName}</Text>
-      <Text style={[styles.meta, { color: colors.textMuted }]}>{row.jambFaculty ? `JAMB faculty: ${row.jambFaculty} · ` : ""}{row.domainsAccessible} domains · {row.specializationsAccessible} specializations · {row.rolesAccessible} roles{row.curriculumAnchor === "unmapped" ? " · No CCMAS anchor" : ""}</Text>
+      <Text style={[styles.meta, { color: colors.textMuted }]}>{row.domainsAccessible} domains · {row.specializationsAccessible} specializations · {row.rolesAccessible} roles{row.curriculumAnchor === "unmapped" ? " · No CCMAS anchor" : ""}</Text>
     </View>)}
     <Text style={[styles.resultTitle, { color: colors.text }]}>Market demand: Coming soon</Text>
     <Text style={[styles.meta, { color: colors.textMuted }]}>{data.demandNote} Reach counts do not indicate demand.</Text>

@@ -45,6 +45,8 @@ describe("university Programme Intelligence reports", () => {
     fireEvent.press(screen.getByText("Accounting and Finance"));
     await waitFor(() => expect(screen.getByText(/Back to offering reports/)).toBeTruthy());
     expect(screen.getByText("Mapped CCMAS curriculum baseline")).toBeTruthy();
+    // jambFaculty is still returned by the API but is no longer shown (owner decision).
+    expect(screen.queryByText(/Social Sciences/)).toBeNull();
     expect(screen.getByText(/not verified teaching delivery at this specific university/)).toBeTruthy();
     expect(screen.getByText(/separate external-curriculum comparison is not supplied/)).toBeTruthy();
     expect(screen.getByText("FIN101 · Foundations")).toBeTruthy();

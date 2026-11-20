@@ -347,7 +347,7 @@ function ProgrammeCoverageCard({ report }: { report: ProgrammeSkillCoverage }) {
       <View style={styles.programmeHeader}>
         <View style={styles.baselineCopy}>
           <Text style={[styles.programmeTitle, CompassFonts.bodyBold, { color: colors.text }]}>{report.programmeName}</Text>
-          <Text style={[styles.meta, { color: colors.textMuted }]}>{report.jambProgrammeName ? `JAMB offering${report.jambFaculty ? ` · ${report.jambFaculty}` : ""}${report.offeringId ? ` · Offering ${report.offeringId}` : ""}` : report.comparisonScope === "jamb_ccmas_baseline" ? "JAMB programme with shared CCMAS curriculum evidence (not university-specific teaching)" : "This institution's programme teaching versus sourced downstream evidence"}</Text>
+          <Text style={[styles.meta, { color: colors.textMuted }]}>{report.jambProgrammeName ? `JAMB offering${report.offeringId ? ` · Offering ${report.offeringId}` : ""}` : report.comparisonScope === "jamb_ccmas_baseline" ? "JAMB programme with shared CCMAS curriculum evidence (not university-specific teaching)" : "This institution's programme teaching versus sourced downstream evidence"}</Text>
         </View>
       </View>
       {report.jambAnchorState === "unmapped" ? <Text style={[styles.meta, { color: colors.textMuted }]}>This JAMB programme has no CCMAS anchor. It remains selectable, but a CCMAS curriculum comparison cannot be calculated from the current mapping.</Text> : null}
@@ -397,7 +397,7 @@ export function SkillsGapScreen() {
   const selectedReport = reports.find((report) => reportKey(report) === selectedReportKey) ?? null;
   const advisoryAudience = audience === "tutorial_centre" || audience === "secondary_school";
   const filteredJambOptions = (jambOptions.status === "real" ? jambOptions.data ?? [] : [])
-    .filter((option) => `${option.name} ${option.faculty ?? ""}`.toLocaleLowerCase().includes(jambQuery.trim().toLocaleLowerCase()))
+    .filter((option) => option.name.toLocaleLowerCase().includes(jambQuery.trim().toLocaleLowerCase()))
     .slice(0, 10);
 
   const downloadReport = () => {
@@ -492,7 +492,7 @@ export function SkillsGapScreen() {
               style={[styles.programmeOption, { borderColor: colors.border }]}
             >
               <Text style={[styles.meta, CompassFonts.bodyBold, { color: colors.text }]}>{option.name}</Text>
-              <Text style={[styles.meta, { color: colors.textMuted }]}>{option.faculty ? `${option.faculty} · ` : ""}{option.hasCcmasAnchor ? "CCMAS anchor recorded" : "No CCMAS anchor; still selectable"}</Text>
+              <Text style={[styles.meta, { color: colors.textMuted }]}>{option.hasCcmasAnchor ? "CCMAS anchor recorded" : "No CCMAS anchor; still selectable"}</Text>
             </TouchableOpacity>)}
             {jambOptions.status === "real" && jambQuery.trim().length >= 2 && !filteredJambOptions.length ? <Text style={[styles.meta, { color: colors.textMuted }]}>No JAMB programme matches that search.</Text> : null}
           </View> : null}
@@ -517,7 +517,7 @@ export function SkillsGapScreen() {
                 {rows.map((report) => <TouchableOpacity key={reportKey(report)} accessibilityRole="button" onPress={() => setSelectedReportKey(reportKey(report))} style={[styles.indexRow, { borderColor: colors.border, backgroundColor: colors.surface.raised }]}>
                   <View style={styles.baselineCopy}>
                     <Text style={[styles.programmeTitle, CompassFonts.bodyBold, { color: colors.text }]}>{report.jambProgrammeName ?? report.programmeName}</Text>
-                    <Text style={[styles.meta, { color: colors.textMuted }]}>{[report.jambFaculty, report.offeringId ? `Offering ${report.offeringId}` : null, report.jambAnchorState === "unmapped" ? "No CCMAS anchor" : "CCMAS curriculum baseline"].filter(Boolean).join(" · ")}</Text>
+                    <Text style={[styles.meta, { color: colors.textMuted }]}>{[report.offeringId ? `Offering ${report.offeringId}` : null, report.jambAnchorState === "unmapped" ? "No CCMAS anchor" : "CCMAS curriculum baseline"].filter(Boolean).join(" · ")}</Text>
                     <Text style={[styles.meta, { color: colors.textSoft }]}>{report.domains.length} connected domains · {report.curriculumEvidence?.filter((row) => row.studentDisplay && row.dataState === "source_backed").length ?? 0} source-backed outcomes</Text>
                   </View>
                   <Text style={[styles.openLink, { color: colors.accent }]}>Open report →</Text>

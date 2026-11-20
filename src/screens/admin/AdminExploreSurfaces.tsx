@@ -133,7 +133,7 @@ export function UniversityExploreSurface({ profile, initialQuery = "" }: { profi
 
   const offeringRows = offerings.status === "real" ? offerings.data ?? [] : [];
   const filteredOfferings = offeringRows.filter((row) =>
-    `${row.jambProgrammeName ?? row.programmeName} ${row.jambFaculty ?? ""}`.toLowerCase().includes(query.toLowerCase()),
+    `${row.jambProgrammeName ?? row.programmeName}`.toLowerCase().includes(query.toLowerCase()),
   );
   const stats = summary.status === "real" ? summary.data : null;
   const peerRows = peers.status === "real" ? peers.data ?? [] : [];
@@ -154,17 +154,16 @@ export function UniversityExploreSurface({ profile, initialQuery = "" }: { profi
         {stats ? <View style={styles.capabilityRow}>
           <Capability title="Programmes recorded" value={stats.activeProgrammes.toLocaleString()} />
           <Capability title="Domains connected" value={stats.domainsAccessible.toLocaleString()} />
-          {stats.facultyCount != null ? <Capability title="Faculties recorded" value={stats.facultyCount.toLocaleString()} /> : null}
         </View> : <Notice>{stateNotice(summary, "Loading your institution summary…", "Institution summary is not available yet.")}</Notice>}
       </AdminExploreCard>
 
-      <AdminExploreCard title="Your JAMB programme offerings" body="Each row keeps this university's offering attached to its JAMB identity and faculty context. Shared CCMAS curriculum is supporting evidence, not a claim that every university teaches an identical curriculum.">
-        <TextInputLike value={query} onChange={setQuery} placeholder="Search your programme offerings or faculty" />
+      <AdminExploreCard title="Your JAMB programme offerings" body="Each row keeps this university's offering attached to its JAMB identity. Shared CCMAS curriculum is supporting evidence, not a claim that every university teaches an identical curriculum.">
+        <TextInputLike value={query} onChange={setQuery} placeholder="Search your programme offerings" />
         {offerings.status !== "real" ? <Notice>{stateNotice(offerings, "Loading your programme offerings…", "Your programme offering reports are not available yet.")}</Notice> : filteredOfferings.length ? filteredOfferings.map((row) => (
           <TouchableOpacity key={row.offeringId ?? `${row.jambProgrammeId}-${row.programmeId}`} accessibilityRole="button" onPress={() => router.push(`/(admin)/skills-gap?jamb_programme_id=${encodeURIComponent(row.jambProgrammeId ?? "")}` as never)} style={[styles.offeringRow, { borderColor: colors.borderRole.subtle }]}>
             <View style={{ flex: 1, gap: 3 }}>
               <Text style={[styles.cardTitle, { color: colors.textRole.primary }]}>{row.jambProgrammeName ?? row.programmeName}</Text>
-              <Text style={[styles.notice, { color: colors.textRole.muted }]}>{[row.jambFaculty, row.curriculumContractState === "available" ? "CCMAS curriculum available" : "Curriculum evidence unavailable", row.jambAnchorState === "unmapped" ? "No CCMAS anchor; external evidence needed" : null].filter(Boolean).join(" · ")}</Text>
+              <Text style={[styles.notice, { color: colors.textRole.muted }]}>{[row.curriculumContractState === "available" ? "CCMAS curriculum available" : "Curriculum evidence unavailable", row.jambAnchorState === "unmapped" ? "No CCMAS anchor; external evidence needed" : null].filter(Boolean).join(" · ")}</Text>
               {row.domains.length ? <Text style={[styles.notice, { color: colors.textRole.secondary }]}>{row.domains.map((domain) => `${domain.matchType}: ${domain.domainName}`).join(" · ")}</Text> : null}
             </View>
             <Text style={[styles.link, { color: colors.accentRole.action }]}>Open report →</Text>
@@ -229,7 +228,7 @@ function PeerPortfolioComparison({ state }: { state: DataState<PeerProgrammeComp
       {missing.map((row) => <View key={`${row.offeringId ?? row.jambProgrammeId}-${row.jambProgrammeId}`} style={[styles.differenceRow, { borderColor: colors.borderRole.subtle }]}>
         <View style={{ flex: 1, gap: 2 }}>
           <Text style={[styles.body, CompassFonts.bodySemibold, { color: colors.textRole.primary }]}>{row.programmeName}</Text>
-          <Text style={[styles.notice, { color: colors.textRole.muted }]}>{[row.jambFaculty ? `JAMB faculty: ${row.jambFaculty}` : null, row.curriculumAnchor === "mapped" ? "CCMAS anchor mapped" : "No CCMAS anchor"].filter(Boolean).join(" · ")}</Text>
+          <Text style={[styles.notice, { color: colors.textRole.muted }]}>{[row.curriculumAnchor === "mapped" ? "CCMAS anchor mapped" : "No CCMAS anchor"].filter(Boolean).join(" · ")}</Text>
         </View>
         <Text style={[styles.peerStat, { color: colors.textRole.secondary }]}>{row.domainsAccessible} domains · {row.specializationsAccessible} specializations · {row.rolesAccessible} roles</Text>
       </View>)}
