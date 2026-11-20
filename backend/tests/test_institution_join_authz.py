@@ -350,36 +350,44 @@ class TestAccessCodeRateLimit:
         ir.access_code_limiter.reset()
 
 
+def _load_private_config():
+    """Evaluate config.py as a throw-away module.
+
+    Reloading the real ``config`` would replace the shared ``settings`` object
+    that every other module and test already holds, and break unrelated tests
+    that run later. A private copy under another name leaves it untouched.
+    """
+    import importlib.util
+    import pathlib
+
+    path = pathlib.Path(__file__).resolve().parents[1] / "config.py"
+    spec = importlib.util.spec_from_file_location("config_under_test", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
 class TestDeveloperCodeIsAnExplicitFlag:
     def test_dev_host_prefix_alone_does_not_enable_the_developer_code(self, monkeypatch):
-        import importlib
-
-        import config as config_module
-
         monkeypatch.delenv("DEVELOPER_ACCESS_ENABLED", raising=False)
         monkeypatch.delenv("EDUCATOR_ACCESS_CODES", raising=False)
         monkeypatch.setenv("DEBUG", "false")
         monkeypatch.setenv("WEB_DASHBOARD_URL", "https://dev.example.com")
-        reloaded = importlib.reload(config_module)
-        try:
-            assert reloaded.settings.DEVELOPER_ACCESS_ENABLED is False
-            assert "LEVELUP-EDU-DEV" not in reloaded.settings.EDUCATOR_ACCESS_CODES
-        finally:
-            monkeypatch.undo()
-            importlib.reload(config_module)
+        cfg = _load_private_config()
+        assert cfg.settings.DEVELOPER_ACCESS_ENABLED is False
+        assert "LEVELUP-EDU-DEV" not in cfg.settings.EDUCATOR_ACCESS_CODES
 
     def test_explicit_flag_enables_it(self, monkeypatch):
-        import importlib
-
-        import config as config_module
-
         monkeypatch.setenv("DEBUG", "false")
         monkeypatch.setenv("DEVELOPER_ACCESS_ENABLED", "true")
         monkeypatch.delenv("EDUCATOR_ACCESS_CODES", raising=False)
-        reloaded = importlib.reload(config_module)
-        try:
-            assert reloaded.settings.DEVELOPER_ACCESS_ENABLED is True
-            assert "LEVELUP-EDU-DEV" in reloaded.settings.EDUCATOR_ACCESS_CODES
-        finally:
-            monkeypatch.undo()
-            importlib.reload(config_module)
+        cfg = _load_private_config()
+        assert cfg.settings.DEVELOPER_ACCESS_ENABLED is True
+        assert "LEVELUP-EDU-DEV" in cfg.settings.EDUCATOR_ACCESS_CODES
+
+    def test_configured_owner_codes_are_unaffected_by_the_flag(self, monkeypatch):
+        monkeypatch.setenv("DEBUG", "false")
+        monkeypatch.delenv("DEVELOPER_ACCESS_ENABLED", raising=False)
+        monkeypatch.setenv("EDUCATOR_ACCESS_CODES", "owner-one, owner-two")
+        cfg = _load_private_config()
+        assert cfg.settings.EDUCATOR_ACCESS_CODES == ["OWNER-ONE", "OWNER-TWO"]
