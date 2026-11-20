@@ -48,6 +48,16 @@ import {
 } from "@/lib/adminResume";
 import { useAuth } from "@/hooks/useAuth";
 import { learnerStageLabel } from "@/lib/adminLearnerAudience";
+import { RosterFilterBar } from "@/components/admin/RosterFilters";
+import {
+  EMPTY_ROSTER_FILTERS,
+  applyRosterFilters,
+  buildRosterFilterGroups,
+  getRememberedRosterFilters,
+  rememberRosterFilters,
+  sanitizeRosterFilters,
+  type RosterFilters,
+} from "@/lib/rosterFilters";
 import { provisioningDraftsNeedTicks, provisioningModeFor, selectedProvisioningDraftIds } from "@/lib/provisioningFlow";
 import {
   provisioningData,
@@ -238,6 +248,9 @@ function RosterTab({ organizationType }: { organizationType?: string | null }) {
   const [deleteBusy, setDeleteBusy] = useState(false);
   const [consentRequestBusy, setConsentRequestBusy] = useState(false);
   const [consentRequestMessage, setConsentRequestMessage] = useState<string | null>(null);
+  // Filter choice is remembered for the session so opening a student and coming
+  // back does not lose it.
+  const [rosterFilters, setRosterFilters] = useState<RosterFilters>(() => getRememberedRosterFilters());
 
   const load = useCallback(() => {
     setLoading(true);
@@ -343,6 +356,17 @@ function RosterTab({ organizationType }: { organizationType?: string | null }) {
     sharedWithYou: 0,
   };
 
+  // Filters only narrow the rows already loaded; a choice that no longer exists
+  // (e.g. after a delete) falls back to "All" without touching stored state.
+  const filterGroups = buildRosterFilterGroups(summary.students, rosterFilters, stageText);
+  const activeFilters = sanitizeRosterFilters(rosterFilters, filterGroups);
+  const shownStudents = applyRosterFilters(summary.students, activeFilters, stageText);
+  const changeFilters = (next: RosterFilters) => {
+    setRosterFilters(next);
+    rememberRosterFilters(next);
+  };
+  const resetFilters = () => changeFilters({ ...EMPTY_ROSTER_FILTERS });
+
   return (
     <ScrollView
       contentContainerStyle={[styles.scroll, webContainer as object]}
@@ -431,7 +455,35 @@ function RosterTab({ organizationType }: { organizationType?: string | null }) {
         </View>
       ) : (
         <View style={{ gap: Spacing.sm }}>
-          {summary.students.map((s) => (
+          <RosterFilterBar
+            groups={buildRosterFilterGroups(summary.students, activeFilters, stageText)}
+            filters={activeFilters}
+            total={summary.students.length}
+            shown={shownStudents.length}
+            onChange={changeFilters}
+            onReset={resetFilters}
+          />
+          {shownStudents.length === 0 ? (
+            <View
+              style={[styles.emptyCard, { backgroundColor: colors.card, borderColor: colors.border }]}
+              accessibilityRole="alert"
+            >
+              <Text style={[styles.emptyTitle, CompassFonts.displayBold, { color: colors.text }]}>
+                No students match these filters
+              </Text>
+              <Text style={[styles.emptyBody, { color: colors.textMuted }]}>
+                Try a different combination, or reset the filters to see everyone you can view.
+              </Text>
+              <TouchableOpacity
+                accessibilityRole="button"
+                onPress={resetFilters}
+                style={[styles.miniBtn, { borderColor: colors.border, minHeight: 44, justifyContent: "center" }]}
+              >
+                <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Reset filters</Text>
+              </TouchableOpacity>
+            </View>
+          ) : null}
+          {shownStudents.map((s) => (
             <View
               key={s.userId}
               style={[
