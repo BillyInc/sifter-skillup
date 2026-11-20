@@ -311,9 +311,9 @@ source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 Oct
 id = "migration_programme_curriculum_contract_general_2026-09-18"
 kind = "schema"
 path = "migration_programme_curriculum_contract_general_2026-09-18.sql"
+allow_destructive_reason = "DROP CONSTRAINT IF EXISTS programme_curriculum_outcomes_display_group_check (migration_programme_curriculum_contract_general_2026-09-18.sql:14) removes only a CHECK; no table or row data is removed. Dropping it is intended (decided 2026-11-20): see the DROP_CONSTRAINT_NOT_READDED waiver"
 lint_waivers = [
-  { code = "DROP_CONSTRAINT_NOT_READDED", reason = "OWNER TRIAGE PENDING: line 14 drops programme_curriculum_outcomes_display_group_check and the file never re-adds it, so the CHECK is relaxed; waived only so CI can run, not judged safe. Needs a decision: re-add it in a new migration, or document that dropping it is intended." },
-  { code = "KIND_CONFLICT", reason = "OWNER TRIAGE PENDING: same DROP CONSTRAINT as above (tracked in tests/test_migrate_repo_manifest.py NEEDS_HUMAN_TRIAGE)." },
+  { code = "DROP_CONSTRAINT_NOT_READDED", reason = "DECIDED 2026-11-20: the drop is intentional and the constraint must NOT be re-added. The constraint (added by migration_sociology_curriculum_contract_2026-09-17.sql:38) only allows display_group IN ('sociology_programme','supporting_social_sciences','shared_university'). This file's header and line 17 make programme_core the generic default, career_routes.py and student_pipeline_routes.py fall back to 'programme_core', and seed_programme_curriculum_contract_2026-10-02.sql.gz writes 61,196 programme_core rows; the old CHECK would reject all of them. The Sociology labels stay valid because no CHECK remains." },
 ]
 requires = [
   "migration_sociology_curriculum_contract_2026-09-17",
@@ -676,6 +676,85 @@ verify = []
 source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 2 #13"
 
 
+# ----------------------------------------------------------------------
+# D. Student features and learning-interest analytics (prepared 2026-10/11)
+#    Dependencies below are the tables/columns each file's SQL actually uses.
+# ----------------------------------------------------------------------
+
+[[entry]]
+id = "migration_display_name_2026-11-19"
+kind = "schema"
+path = "migration_display_name_2026-11-19.sql"
+requires = []
+verify = []
+note = "Adds users.display_name. Needs skillup_dev.users, created by supabase-schema.sql (not a migration_ file), so there is no ordered edge."
+source = "Header of migration_display_name_2026-11-19.sql (additive, idempotent); placed by the 2026-11-20 ordering review"
+
+[[entry]]
+id = "migration_avatars_bucket_2026-11-19"
+kind = "schema"
+path = "migration_avatars_bucket_2026-11-19.sql"
+requires = [
+  "migration_display_name_2026-11-19",
+]
+verify = []
+note = "Needs Supabase Storage (storage.buckets) to exist; it inserts the private avatars bucket, no policies. Ordered after display_name only so the two profile features land together; no SQL dependency between them."
+source = "Header of migration_avatars_bucket_2026-11-19.sql; placed by the 2026-11-20 ordering review"
+
+[[entry]]
+id = "migration_my_world_collections_2026-11-19"
+kind = "schema"
+path = "migration_my_world_collections_2026-11-19.sql"
+requires = [
+  # proven by SQL: migration_my_world_collections_2026-11-19.sql:56 REFERENCES skillup_dev.saved_items(id) and :70 ALTER TABLE skillup_dev.saved_items; saved_items is created only by migration_career_v2.sql (rebuild; baseline it with a reason)
+  "migration_career_v2",
+]
+verify = []
+note = "Collections plus saved_items.source_context. Also references skillup_dev.users (base schema)."
+source = "Header of migration_my_world_collections_2026-11-19.sql; placed by the 2026-11-20 ordering review"
+
+[[entry]]
+id = "migration_student_subject_grade_sets_2026-11-19"
+kind = "schema"
+path = "migration_student_subject_grade_sets_2026-11-19.sql"
+requires = [
+  # proven by SQL: migration_student_subject_grade_sets_2026-11-19.sql:29 REFERENCES skillup_dev.student_starting_points(id); header says 'Run AFTER migration_student_pipeline_live.sql'
+  "migration_student_pipeline_live",
+]
+verify = []
+note = "Append-only self-reported O-level grade sets. Also references skillup_dev.users (base schema)."
+source = "Header of migration_student_subject_grade_sets_2026-11-19.sql; placed by the 2026-11-20 ordering review"
+
+[[entry]]
+id = "migration_learning_interest_analytics_2026-10-26"
+kind = "schema"
+allow_destructive_reason = "DROP FUNCTION IF EXISTS get_learning_interest_analytics(...) x5 (migration_learning_interest_analytics_2026-10-26.sql:81-95) removes superseded overload signatures and is immediately followed by CREATE OR REPLACE of the current one (:97); DROP TRIGGER IF EXISTS trg_learning_interest_affiliation_state_snapshot (:68) is followed by CREATE TRIGGER of the same name (:70); the DELETE at :317 is inside the purge function body (a definition, executed only by the daily Cron job, which deletes events older than 395 days by design). The migration creates its own table, so no existing rows are removed when it runs"
+path = "migration_learning_interest_analytics_2026-10-26.sql"
+requires = []
+external_requires = [
+  { ref = "migration_provisioning.sql", evidence = "migration_learning_interest_analytics_2026-10-26.sql:54 FROM skillup_dev.student_affiliations; table created by migration_provisioning.sql:105 (also migration_goal_apply_now.sql:123); runbook table A #13" },
+  { ref = "migration_school_identity.sql", evidence = "migration_learning_interest_analytics_2026-10-26.sql:57 s.state and :275 s.official_name; columns added by migration_school_identity.sql:7 and :14; runbook table A #17" },
+]
+verify = []
+note = "REQUIRES SUPABASE CRON FIRST: the file RAISEs EXCEPTION at its end unless pg_cron is enabled (Dashboard, Database, Extensions, pg_cron), then schedules daily deletion of raw events older than 395 days. The runbook also lists a verified institution_members schema (#15) as a prerequisite; the SQL does not reference that table, so it is not an edge. Baseline the two unordered prerequisite files if production already has them."
+source = "MIGRATION_RUNBOOK.md table A #20; CLAUDE.md 'opt-in learner-interest dashboard'"
+
+[[entry]]
+id = "migration_learning_interest_current_selections_2026-10-28"
+kind = "schema"
+allow_destructive_reason = "DROP CONSTRAINT IF EXISTS learning_interest_events_event_type_check (migration_learning_interest_current_selections_2026-10-28.sql:13) is re-added at :14 with selection_copied allowed; DROP TRIGGER IF EXISTS trg_learning_interest_active_selection (:142) and trg_clear_learning_interest_snapshot_on_consent_change (:179) are each followed by CREATE TRIGGER of the same name; the DELETE at :57 runs against learning_interest_active_selections, a table this same file creates (empty on first apply) and removes only snapshot rows whose user no longer has current affirmative consent or is deleted, which is the privacy rule the file enforces; the DELETE statements at :113, :172 and :198-:202 are inside function bodies. No event history (learning_interest_events) rows are deleted"
+path = "migration_learning_interest_current_selections_2026-10-28.sql"
+requires = [
+  "migration_learning_interest_analytics_2026-10-26",
+]
+external_requires = [
+  { ref = "migration_account_lifecycle_patch.sql", evidence = "migration_learning_interest_current_selections_2026-10-28.sql:64 COALESCE(u.is_deleted, FALSE) and :181 AFTER UPDATE OF settings, is_deleted ON skillup_dev.users; users.is_deleted is added by migration_account_lifecycle_patch.sql:6 (also migration_goal_apply_now.sql:36); runbook table A #21 'users.settings and users.is_deleted are present'" },
+]
+verify = []
+note = "Its :57 DELETE hard-codes Terms and Privacy version 2026-10-29.1 as the current consent version. Deploy the backend/frontend with that version together with it."
+source = "MIGRATION_RUNBOOK.md table A #21; CLAUDE.md 'Current selection is a separate measure'"
+
+
 # ======================================================================
 # UNORDERED: order not stated unambiguously in the docs. Never applied automatically.
 # ======================================================================
@@ -924,26 +1003,3 @@ reason = "Optional all-programme curriculum refresh; the runbook says the D078-o
 path = "seed_programme_curriculum_contract_2026-10-02_parts_gz"
 reason = "Optional all-programme curriculum refresh; the runbook says the D078-only path does not need it."
 
-[[unordered]]
-path = "migration_avatars_bucket_2026-11-19.sql"
-reason = "Prepared 2026-11-19 (PROPOSED, NOT APPLIED); added after the manifest was written. Its place in the apply order has not been decided by the owner."
-
-[[unordered]]
-path = "migration_display_name_2026-11-19.sql"
-reason = "Prepared 2026-11-19 (PROPOSED, NOT APPLIED); added after the manifest was written. Its place in the apply order has not been decided by the owner."
-
-[[unordered]]
-path = "migration_my_world_collections_2026-11-19.sql"
-reason = "Prepared 2026-11-19 (PROPOSED, NOT APPLIED); added after the manifest was written. Its header names its own prerequisites but the owner has not placed it in the ordered chain."
-
-[[unordered]]
-path = "migration_student_subject_grade_sets_2026-11-19.sql"
-reason = "Prepared 2026-11-19 (PROPOSED, NOT APPLIED); header says it runs after migration_student_pipeline_live. The owner has not placed it in the ordered chain."
-
-[[unordered]]
-path = "migration_learning_interest_analytics_2026-10-26.sql"
-reason = "CLAUDE.md says it needs Supabase Cron (pg_cron) and the user/affiliation and institution-membership prerequisites, which the runbook lists without a position in the ordered chain. Needs pg_cron enabled first; ordering is the owner's decision."
-
-[[unordered]]
-path = "migration_learning_interest_current_selections_2026-10-28.sql"
-reason = "CLAUDE.md says apply it after migration_learning_interest_analytics_2026-10-26; that file is itself unordered, so this one cannot be ordered yet."
