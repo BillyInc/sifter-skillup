@@ -920,6 +920,14 @@ async def upload_avatar(
     current_user: dict = Depends(Auth.get_current_user),
 ):
     """Replace the profile photo. Only the owner can ever see it."""
+    user_id = current_user["id"]
+    wait = avatar_storage.upload_limiter.check(user_id)
+    if wait:
+        raise HTTPException(
+            status_code=429,
+            detail="You have changed your photo too many times. Try again later.",
+            headers={"Retry-After": str(wait)},
+        )
     declared = request.headers.get("content-length")
     if declared and declared.isdigit() and int(declared) > avatar_storage.MAX_UPLOAD_BYTES + 64 * 1024:
         raise HTTPException(status_code=413, detail="That photo is larger than 2 MB. Choose a smaller one.")
@@ -928,7 +936,6 @@ async def upload_avatar(
         webp = avatar_storage.process_avatar_image(raw)
     except avatar_storage.AvatarError as exc:
         raise HTTPException(status_code=400, detail=str(exc))
-    user_id = current_user["id"]
     key = avatar_storage.new_object_key(user_id)
     storage = avatar_storage.get_storage()
     try:
@@ -943,6 +950,7 @@ async def upload_avatar(
         log.error("Avatar reference save failed", error=str(exc))
         _purge_avatar_objects([key])
         raise HTTPException(status_code=500, detail="Could not save your photo. Try again.")
+    avatar_storage.upload_limiter.record(user_id)
     old_key = avatar_storage.uploaded_key(current_user.get("avatar_url"))
     if old_key and old_key != key:
         _purge_avatar_objects([old_key])

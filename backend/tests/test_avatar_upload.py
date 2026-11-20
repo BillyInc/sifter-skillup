@@ -287,3 +287,52 @@ class TestAccountDeletionPurge:
         _login_as(mock_db)
         storage.list_keys = MagicMock(side_effect=RuntimeError("down"))
         assert client.delete("/api/users/me", headers=auth_header).status_code == 200
+
+
+class TestUploadRateLimit:
+    @pytest.fixture(autouse=True)
+    def _reset(self):
+        avatar_storage.upload_limiter.reset()
+        yield
+        avatar_storage.upload_limiter.reset()
+
+    def test_limiter_blocks_after_hourly_cap_and_resets(self):
+        t = [1000.0]
+        lim = avatar_storage.UploadRateLimiter(clock=lambda: t[0])
+        for _ in range(5):
+            assert lim.check("u") is None
+            lim.record("u")
+        wait = lim.check("u")
+        assert wait and 0 < wait <= 3601
+        t[0] += 3601
+        assert lim.check("u") is None
+
+    def test_limiter_daily_cap(self):
+        t = [0.0]
+        lim = avatar_storage.UploadRateLimiter(clock=lambda: t[0])
+        for _ in range(20):
+            t[0] += 1000  # keeps each hour under 5 uploads
+            assert lim.check("u") is None
+            lim.record("u")
+        assert lim.check("u") is not None
+
+    def test_limiter_is_per_user(self):
+        lim = avatar_storage.UploadRateLimiter()
+        for _ in range(5):
+            lim.record("a")
+        assert lim.check("a") is not None
+        assert lim.check("b") is None
+
+    def test_endpoint_returns_429_with_retry_after(self, client, auth_header, mock_db, storage):
+        _login_as(mock_db)
+        for _ in range(5):
+            assert _post(client, auth_header, _img()).status_code == 200
+        r = _post(client, auth_header, _img())
+        assert r.status_code == 429
+        assert int(r.headers["Retry-After"]) > 0
+
+    def test_rejected_files_do_not_count(self, client, auth_header, mock_db, storage):
+        _login_as(mock_db)
+        for _ in range(8):
+            assert _post(client, auth_header, b"not an image").status_code == 400
+        assert _post(client, auth_header, _img()).status_code == 200
