@@ -218,51 +218,75 @@ jobs:
           SSH="ssh -i $HOME/.ssh/deploy_key -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts"
           $SSH "$SERVER_USER@$SERVER_HOST" bash -s <<'EOSSH'
           set -euo pipefail
-          # Primary rate limit for /api/auth/*: per client address, at the edge,
-          # shared by every worker. The in-process limiter is only a backstop.
-          # Idempotent; rolls back if nginx rejects the config (nginx is shared
-          # with KYS on this box).
+          # PRIMARY rate limit for /api/auth/*: per client address, at the edge,
+          # shared by every worker. The in-process limiter is only a best-effort
+          # per-worker backstop. 10 r/s with burst=100 nodelay lets a classroom on
+          # one school network log in or sign up together, while a sustained flood
+          # from one address is throttled (429). Convergent: re-running with the
+          # same or changed values leaves exactly one zone and one location block
+          # (matched on the zone name "levelup_auth", not on exact text). Rolls
+          # back if nginx rejects the config (nginx is shared with KYS on this box).
           exec 9>/tmp/levelup-nginx-deploy.lock
           flock 9
           SITE=/etc/nginx/sites-available/levelup-api-prod
           ZONE=/etc/nginx/conf.d/levelup-auth-limits.conf
           [ -f "$SITE" ] || { echo "site $SITE not found; skipping edge limits." >&2; exit 0; }
-          if grep -q 'location /api/auth/' "$SITE" && [ -f "$ZONE" ]; then
-            echo "edge auth limits already present."
-            exit 0
+          WANT_ZONE='limit_req_zone $binary_remote_addr zone=levelup_auth:10m rate=10r/s;'
+          WANT_LIMIT='limit_req zone=levelup_auth burst=100 nodelay;'
+          SITE_BAK="$SITE.bak-auth-limits"
+          ZONE_BAK="$ZONE.bak-auth-limits"
+          CHANGED=0
+          ZONE_EXISTED=0
+          if [ -f "$ZONE" ]; then ZONE_EXISTED=1; fi
+          if [ "$ZONE_EXISTED" = 0 ] || [ "$(cat "$ZONE")" != "$WANT_ZONE" ]; then
+            [ "$ZONE_EXISTED" = 1 ] && sudo cp -p "$ZONE" "$ZONE_BAK"
+            printf '%s\n' "$WANT_ZONE" | sudo tee "$ZONE" >/dev/null
+            CHANGED=1
           fi
-          ZONE_CREATED=0
-          if [ ! -f "$ZONE" ]; then
-            sudo tee "$ZONE" >/dev/null <<'ZONECONF'
-          limit_req_zone $binary_remote_addr zone=levelup_auth:10m rate=30r/m;
-          ZONECONF
-            ZONE_CREATED=1
-          fi
-          if ! grep -q 'location /api/auth/' "$SITE"; then
-            sudo cp -p "$SITE" "$SITE.bak-auth-limits"
+          if grep -q 'location /api/auth/' "$SITE"; then
+            if grep -qF "$WANT_LIMIT" "$SITE" && grep -q 'limit_req_status 429;' "$SITE"; then
+              :
+            elif grep -qE '^[[:space:]]*limit_req zone=levelup_auth ' "$SITE"; then
+              sudo cp -p "$SITE" "$SITE_BAK"
+              sudo sed -i -E "s|^([[:space:]]*)limit_req zone=levelup_auth .*;|\1$WANT_LIMIT|" "$SITE"
+              CHANGED=1
+            else
+              echo "location /api/auth/ exists without the levelup_auth limit; leaving it untouched." >&2
+            fi
+          else
+            sudo cp -p "$SITE" "$SITE_BAK"
             LOC=$(mktemp)
-            cat >"$LOC" <<'LOCATION'
+            cat >"$LOC" <<LOCATION
               location /api/auth/ {
-                  limit_req zone=levelup_auth burst=30 nodelay;
+                  $WANT_LIMIT
                   limit_req_status 429;
-                  proxy_pass http://127.0.0.1:8001;
-                  proxy_set_header Host $host;
-                  proxy_set_header X-Real-IP $remote_addr;
-                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                  proxy_set_header X-Forwarded-Proto $scheme;
+                  proxy_pass http://127.0.0.1:8000;
+                  proxy_set_header Host \$host;
+                  proxy_set_header X-Real-IP \$remote_addr;
+                  proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+                  proxy_set_header X-Forwarded-Proto \$scheme;
               }
           LOCATION
-            awk -v block="$LOC" '/^[[:space:]]*location \/ \{/ { while ((getline l < block) > 0) print l; close(block) } { print }' "$SITE.bak-auth-limits" | sudo tee "$SITE" >/dev/null
+            awk -v block="$LOC" '/^[[:space:]]*location \/ \{/ { while ((getline l < block) > 0) print l; close(block) } { print }' "$SITE_BAK" | sudo tee "$SITE" >/dev/null
             rm -f "$LOC"
+            CHANGED=1
+          fi
+          if [ "$CHANGED" = 0 ]; then
+            echo "edge auth limits already in place."
+            exit 0
           fi
           if ! sudo nginx -t; then
-            [ -f "$SITE.bak-auth-limits" ] && sudo mv -f "$SITE.bak-auth-limits" "$SITE"
-            [ "$ZONE_CREATED" = 1 ] && sudo rm -f "$ZONE"
+            [ -f "$SITE_BAK" ] && sudo mv -f "$SITE_BAK" "$SITE"
+            if [ "$ZONE_EXISTED" = 1 ]; then
+              [ -f "$ZONE_BAK" ] && sudo mv -f "$ZONE_BAK" "$ZONE"
+            else
+              sudo rm -f "$ZONE"
+            fi
             echo "nginx config invalid; rolled back edge auth limits." >&2
             exit 1
           fi
           sudo systemctl reload nginx
-          sudo rm -f "$SITE.bak-auth-limits"
+          sudo rm -f "$SITE_BAK" "$ZONE_BAK"
           EOSSH
 
       - name: Health check (prod API)
