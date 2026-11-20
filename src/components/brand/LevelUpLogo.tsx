@@ -30,7 +30,7 @@ const BARS = [
 
 export function LevelUpLogo({
   size = 96,
-  color = Brand.primary,
+  color = Brand.mark,
   animated = false,
   style,
 }: LevelUpLogoProps) {
