@@ -225,6 +225,32 @@ the database, the group needs an owner decision (see the runbook).
 3. `import-baseline baseline.json` (dry run), then `--apply`.
 4. `status` again: applied entries show as baseline; pending ones would run.
 
+## Student features and analytics (section D of the manifest)
+
+The six migrations prepared in October and November 2026 are ordered at the end of the manifest.
+Each edge below is proven by the SQL (file:line evidence is in `manifest.toml`):
+
+1. `migration_display_name_2026-11-19`: needs `users` (base `supabase-schema.sql`, not a migration).
+2. `migration_avatars_bucket_2026-11-19`: needs Supabase Storage (`storage.buckets`); it inserts the
+   private bucket and creates no policies.
+3. `migration_my_world_collections_2026-11-19`: requires `migration_career_v2` (`saved_items` is created
+   only there; baseline it with a reason).
+4. `migration_student_subject_grade_sets_2026-11-19`: requires `migration_student_pipeline_live`.
+5. `migration_learning_interest_analytics_2026-10-26`: needs the unordered files
+   `migration_provisioning.sql` (`student_affiliations`) and `migration_school_identity.sql`
+   (`schools.state`, `schools.official_name`); baseline them if production already has them.
+   **Enable Supabase Cron (`pg_cron`) first** (Dashboard, Database, Extensions): the file raises an
+   exception at its end otherwise.
+6. `migration_learning_interest_current_selections_2026-10-28`: requires #5 and the unordered
+   `migration_account_lifecycle_patch.sql` (`users.is_deleted`); ship Terms and Privacy `2026-10-29.1`
+   with it.
+
+Decision recorded 2026-11-20: `migration_programme_curriculum_contract_general_2026-09-18` drops
+`programme_curriculum_outcomes_display_group_check` on purpose and it is **not** re-added. The
+Sociology migration's CHECK only allowed three Sociology labels, while the generic default is
+`programme_core` (the generic curriculum seed writes 61,196 such rows, which that CHECK would reject).
+The manifest entry carries the reason as a lint waiver.
+
 ## Reviewing a run (plan-sha)
 
 `plan` and a dry-run `apply` print `plan-sha: <64 hex>`: a hash of the ordered list of pending and

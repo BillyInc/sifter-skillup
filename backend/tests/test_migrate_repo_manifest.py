@@ -90,11 +90,9 @@ def test_documented_orderings_hold():
 # Entries the linter calls destructive that a human still has to classify. Do NOT add
 # to this set to silence a new finding: give the entry `kind = "destructive"` (with
 # approval/manual_only) or an `allow_destructive_reason` in the manifest. Entries here
-# must be resolved by a human and then removed.
-#   migration_programme_curriculum_contract_general_2026-09-18: DROP CONSTRAINT IF
-#   EXISTS programme_curriculum_outcomes_display_group_check (line 14) is NOT followed
-#   by re-adding it; it relaxes a CHECK. Whether that deserves a reason is a human call.
-NEEDS_HUMAN_TRIAGE = {"migration_programme_curriculum_contract_general_2026-09-18"}
+# must be resolved by a human and then removed. Empty since 2026-11-20: the curriculum
+# contract's DROP CONSTRAINT was decided as intentional (see its manifest entry).
+NEEDS_HUMAN_TRIAGE: set[str] = set()
 
 
 def test_lint_destructive_entries_are_classified_or_justified():
@@ -195,8 +193,52 @@ def test_student_pipeline_live_reports_its_unordered_and_later_dependencies():
         i.message
         for i in mf.validate(manifest, BACKEND)
         if i.code == "UNRESOLVED_DEPENDENCY"
+        and i.message.startswith("migration_student_pipeline_live ")
     ]
     assert len(messages) == 2
+
+
+NEW_2026_11_ORDER = [
+    "migration_display_name_2026-11-19",
+    "migration_avatars_bucket_2026-11-19",
+    "migration_my_world_collections_2026-11-19",
+    "migration_student_subject_grade_sets_2026-11-19",
+    "migration_learning_interest_analytics_2026-10-26",
+    "migration_learning_interest_current_selections_2026-10-28",
+]
+
+
+def test_the_six_newer_migrations_are_ordered_with_their_proven_dependencies():
+    manifest = mf.load_manifest(MANIFEST)
+    ids = [e.id for e in manifest.entries]
+    by_id = {e.id: e for e in manifest.entries}
+    positions = [ids.index(i) for i in NEW_2026_11_ORDER]
+    assert positions == sorted(positions)
+    unordered = {u.path for u in manifest.unordered}
+    for entry_id in NEW_2026_11_ORDER:
+        assert by_id[entry_id].path not in unordered
+        assert by_id[entry_id].kind == "schema"
+    assert "migration_career_v2" in by_id[NEW_2026_11_ORDER[2]].requires
+    assert "migration_student_pipeline_live" in by_id[NEW_2026_11_ORDER[3]].requires
+    assert NEW_2026_11_ORDER[4] in by_id[NEW_2026_11_ORDER[5]].requires
+    analytics_refs = {x.ref for x in by_id[NEW_2026_11_ORDER[4]].external_requires}
+    assert analytics_refs == {"migration_provisioning.sql", "migration_school_identity.sql"}
+    selections_refs = {x.ref for x in by_id[NEW_2026_11_ORDER[5]].external_requires}
+    assert selections_refs == {"migration_account_lifecycle_patch.sql"}
+    assert "pg_cron" in by_id[NEW_2026_11_ORDER[4]].note
+
+
+def test_the_curriculum_contract_constraint_drop_is_recorded_as_a_decision():
+    entry = next(
+        e
+        for e in mf.load_manifest(MANIFEST).entries
+        if e.id == "migration_programme_curriculum_contract_general_2026-09-18"
+    )
+    assert entry.allow_destructive_reason
+    waivers = {w.code: w.reason for w in entry.lint_waivers}
+    assert set(waivers) == {"DROP_CONSTRAINT_NOT_READDED"}
+    assert "must NOT be re-added" in waivers["DROP_CONSTRAINT_NOT_READDED"]
+    assert "OWNER TRIAGE PENDING" not in waivers["DROP_CONSTRAINT_NOT_READDED"]
 
 
 def test_proven_requires_edges_from_the_review_are_present():
