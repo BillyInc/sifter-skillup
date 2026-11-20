@@ -67,6 +67,7 @@ import { streakEngine, type StreakStatus } from "@/lib/StreakEngine";
 import { PdfExportButton } from "@/components/careerIntelligence";
 import { d078AreaLabel as getD078AreaLabel, d078CombinationLabel, d078Node } from "@/lib/d078RouteProjection";
 import { ENTITY_META } from "@/screens/myworld/entityMeta";
+import { GlyphIcon } from "@/components/icons/GlyphIcon";
 import { CollectionsSection } from "@/screens/myworld/CollectionsSection";
 import { d078ProgrammeIdFromSnapshot, d078RouteStacksFromSnapshot, d078SavedRouteHref, d078SelectionFromSnapshot, d078ShareInputForAllRoutesFromSnapshot, isD078Snapshot, selectSavedSnapshot } from "@/lib/d078Snapshot";
 
@@ -309,7 +310,7 @@ function LockedTracksCard({ router }: { router: ReturnType<typeof useRouter> }) 
       ]}
     >
       <View style={styles.lockedHead}>
-        <Text style={styles.lockedIcon}>🧭</Text>
+        <GlyphIcon glyph="🧭" size={28} color={colors.textRole.primary} />
         <View style={{ flex: 1 }}>
           <View style={styles.lockedHeadRow}>
             <Text style={[styles.lockedTitle, CompassFonts.bodyBold, { color: colors.textRole.primary }]}>
@@ -329,7 +330,7 @@ function LockedTracksCard({ router }: { router: ReturnType<typeof useRouter> }) 
       <View style={styles.lockedBullets}>
         {LOCKED_BULLETS.map((b) => (
           <View key={b.title} style={styles.lockedBullet}>
-            <Text style={styles.lockedBulletIcon}>{b.icon}</Text>
+            <GlyphIcon glyph={b.icon} size={16} color={colors.textRole.secondary} fallbackStyle={styles.lockedBulletIcon} />
             <Text style={[styles.lockedBulletText, { color: colors.textRole.secondary }]}>
               <Text style={[CompassFonts.bodyBold, { color: colors.textRole.primary }]}>
                 {b.title}.{" "}
@@ -488,7 +489,7 @@ function LiveWorldHub() {
         ]}
       >
         <View style={styles.snapshotAvatar}>
-          <Text style={styles.snapshotEmoji}>🧑‍💻</Text>
+          <GlyphIcon glyph="🧑‍💻" size={28} color={colors.textRole.primary} />
         </View>
         <View style={{ flex: 1 }}>
           <Text style={[styles.snapshotStage, CompassFonts.bodyBold, { color: colors.textRole.primary }]}>
@@ -502,8 +503,9 @@ function LiveWorldHub() {
               ·
             </Text>
             <Text style={[styles.snapshotStat, CompassFonts.bodyBold, { color: colors.accentRole.warning }]}>
-              {streak?.streak ?? 0}🔥
+              {streak?.streak ?? 0}
             </Text>
+            <GlyphIcon glyph="🔥" size={14} color={colors.accentRole.warning} accessibilityLabel="day streak" />
             <Text style={[styles.snapshotDot, { color: colors.textRole.muted }]}>
               ·
             </Text>
@@ -537,7 +539,7 @@ function LiveWorldHub() {
               { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
             ]}
           >
-            <Text style={styles.moreIcon}>{m.icon}</Text>
+            <GlyphIcon glyph={m.icon} size={22} color={colors.textRole.primary} fallbackStyle={styles.moreIcon} />
             <Text
               style={[styles.moreLabel, { color: colors.textRole.primary }]}
               numberOfLines={2}
@@ -1108,7 +1110,7 @@ function SavedItemRow({
         accessibilityRole="button"
         accessibilityLabel={`Open ${item.label ?? meta.label}`}
       >
-        <Text style={styles.rowIcon}>{meta.icon}</Text>
+        <GlyphIcon glyph={meta.icon} size={20} color={colors.textRole.secondary} fallbackStyle={styles.rowIcon} />
         <View style={{ flex: 1 }}>
           <Text
             style={[styles.rowTitle, { color: colors.textRole.primary }]}
@@ -1136,7 +1138,7 @@ function SavedItemRow({
         accessibilityRole="button"
         accessibilityLabel={`Remove ${item.label ?? meta.label}`}
       >
-        <Text style={[styles.removeIcon, { color: colors.textRole.muted }]}>✕</Text>
+        <GlyphIcon glyph="✕" size={16} color={colors.textRole.muted} />
       </TouchableOpacity>
     </View>
   );
@@ -1166,7 +1168,7 @@ function NoteFolder({
         <Text style={[styles.folderChevron, { color: colors.textRole.muted }]}>
           {open ? "▾" : "▸"}
         </Text>
-        <Text style={styles.folderIcon}>{open ? "📂" : "📁"}</Text>
+        <GlyphIcon glyph={open ? "📂" : "📁"} size={16} color={colors.textRole.secondary} />
         <Text style={[styles.folderName, { color: colors.textRole.primary }]} numberOfLines={1}>
           {category}
         </Text>
@@ -1201,9 +1203,12 @@ function NoteCard({ note, onPress }: { note: Note; onPress: () => void }) {
       accessibilityLabel={`Edit note on ${label}`}
     >
       <View style={styles.noteHead}>
-        <Text style={[styles.noteEntity, { color: colors.textRole.muted }]} numberOfLines={1}>
-          {ENTITY_META[note.entityType].icon} {label}
-        </Text>
+        <View style={styles.noteEntityRow}>
+          <GlyphIcon glyph={ENTITY_META[note.entityType].icon} size={12} color={colors.textRole.muted} />
+          <Text style={[styles.noteEntity, { color: colors.textRole.muted }]} numberOfLines={1}>
+            {label}
+          </Text>
+        </View>
         <Text style={[styles.noteTime, { color: colors.textRole.muted }]}>
           {formatWhen(note.updatedAt)}
         </Text>
@@ -1312,9 +1317,10 @@ function NoteEditorSheet({
 
           <Text style={[styles.sheetTitle, { color: colors.textRole.primary }]}>Edit note</Text>
           {label ? (
-            <Text style={[styles.sheetSubtitle, { color: colors.textRole.muted }]}>
-              {note ? ENTITY_META[note.entityType].icon : ""} {label}
-            </Text>
+            <View style={styles.noteEntityRow}>
+              {note ? <GlyphIcon glyph={ENTITY_META[note.entityType].icon} size={13} color={colors.textRole.muted} /> : null}
+              <Text style={[styles.sheetSubtitle, { color: colors.textRole.muted }]}>{label}</Text>
+            </View>
           ) : null}
 
           <Text style={[styles.fieldLabel, { color: colors.textRole.secondary }]}>Note</Text>
@@ -1558,6 +1564,7 @@ const styles = StyleSheet.create({
     minHeight: 44,
   },
   rowIcon: { fontSize: 22 },
+  noteEntityRow: { flexDirection: "row", alignItems: "center", gap: 4, flexShrink: 1 },
   rowTitle: { fontSize: FontSize.md },
   typeChip: {
     alignSelf: "flex-start",

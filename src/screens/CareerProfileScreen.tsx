@@ -13,6 +13,7 @@
  * DataStateView, so they degrade gracefully - never mock rows.
  */
 import React, { useCallback, useState } from "react";
+import { GlyphIcon } from "@/components/icons/GlyphIcon";
 import {
   View,
   Text,
@@ -477,7 +478,7 @@ function SavedRow({ item }: { item: SavedItem }) {
         { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
       ]}
     >
-      <Text style={styles.rowIcon}>{meta.icon}</Text>
+      <GlyphIcon glyph={meta.icon} size={20} color={colors.textRole.secondary} fallbackStyle={styles.rowIcon} accessibilityLabel={meta.label} />
       <View style={{ flex: 1 }}>
         <Text style={[styles.rowTitle, CompassFonts.bodyBold, { color: colors.textRole.primary }]} numberOfLines={1}>
           {item.label ?? meta.label}
@@ -529,7 +530,7 @@ function AccountRow({
       onPress={onPress}
       style={styles.accountRow}
     >
-      <Text style={styles.accountIcon}>{icon}</Text>
+      <GlyphIcon glyph={icon} size={18} color={danger ? colors.accentRole.danger : colors.textRole.secondary} fallbackStyle={styles.accountIcon} />
       <View style={{ flex: 1 }}>
         <Text
             style={[
@@ -546,7 +547,7 @@ function AccountRow({
           </Text>
         ) : null}
       </View>
-      <Text style={[styles.accountArrow, { color: colors.textRole.muted }]}>{">"}</Text>
+      <GlyphIcon glyph="chevron-right" size={16} color={colors.textRole.muted} />
     </TouchableOpacity>
   );
 }

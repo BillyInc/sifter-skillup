@@ -34,6 +34,7 @@ import {
   type SavedItem,
 } from "@/types/career";
 import { ENTITY_META } from "./entityMeta";
+import { GlyphIcon } from "../../components/icons/GlyphIcon";
 
 export const REMOVE_FROM_COLLECTION_COPY =
   "This removes it from this collection. It does not delete the original programme, role or task item.";
@@ -355,7 +356,7 @@ function CollectionDetail({
                 key={item.savedItemId}
                 style={[styles.row, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}
               >
-                <Text style={styles.rowIcon}>{meta.icon}</Text>
+                <GlyphIcon glyph={meta.icon} size={20} color={colors.textRole.secondary} fallbackStyle={styles.rowIcon} />
                 <View style={styles.cardText}>
                   <Text numberOfLines={2} style={[styles.cardTitle, CompassFonts.bodySemibold, { color: colors.textRole.primary }]}>{name}</Text>
                   <View style={[styles.typeChip, { backgroundColor: colors.surface.subtle }]}>
