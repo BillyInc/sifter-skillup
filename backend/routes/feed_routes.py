@@ -5,11 +5,10 @@
 # relevant to the track the user is on.
 # ============================================
 import uuid
-from datetime import datetime, timedelta
+from datetime import datetime
 from typing import Optional
 
-import httpx
-from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 
 from auth import Auth
 from database import db

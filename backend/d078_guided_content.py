@@ -544,7 +544,6 @@ def _domain_item(row: dict[str, Any], contract_row: dict[str, Any], decision: di
         domain_context = "This is a useful additional capability at domain level. It can strengthen relevant area or role routes, but it is not required on every Social Sciences path."
     else:
         domain_context = "This is a focused or optional Social Sciences learning option. Choose it only when its specific task fits the area or role you are exploring."
-    linksources = sources_by_role.get("learning_link", [])
     geographic_scope = "nigeria_to_global" if any(str(source.get("publisher") or "").casefold().find("nigeria") >= 0 or source.get("source_id") == "nuc_ccmas" for source in refs) else "global"
     return {
         "contextLevel": "domain",
@@ -2238,7 +2237,7 @@ def _area_tool_option(
         "source_references": [official_ref],
         "source_locators": [{"sourceId": official["source_id"], "url": official["url"], "locator": official["locator"]}],
     }
-    resource_claim = {
+    _resource_claim = {
         "source_references": [learning_ref],
         "source_locators": [{"sourceId": learning["source_id"], "url": learning["url"], "locator": learning["locator"]}],
     }

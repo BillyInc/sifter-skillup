@@ -210,7 +210,7 @@ def test_remove_and_delete_never_delete_saved_items(fake, as_user):
     as_user.post(f"/api/career/collections/{a['id']}/items", json={"savedItemIds": ["s1", "s2"]})
     as_user.delete(f"/api/career/collections/{a['id']}/items/s1")
     assert {r["id"] for r in fake.tables["saved_items"]} == {"s1", "s2"}
-    assert [l["saved_item_id"] for l in fake.tables["collection_items"]] == ["s2"]
+    assert [link["saved_item_id"] for link in fake.tables["collection_items"]] == ["s2"]
     as_user.delete(f"/api/career/collections/{a['id']}")
     assert {r["id"] for r in fake.tables["saved_items"]} == {"s1", "s2"}
     assert fake.tables["collection_items"] == [] and fake.tables["collections"] == []
@@ -251,7 +251,7 @@ class TestCrossUserAccessDenied:
         assert [c["name"] for c in listed] == ["Theirs"]
         # My data is untouched.
         assert any(c["name"] == "Mine" for c in fake.tables["collections"])
-        assert any(l["saved_item_id"] == "mine" for l in fake.tables["collection_items"])
+        assert any(link["saved_item_id"] == "mine" for link in fake.tables["collection_items"])
 
     def test_cannot_add_someone_elses_saved_item_to_my_collection(self, fake, as_user):
         self._setup(fake, as_user)
@@ -259,14 +259,14 @@ class TestCrossUserAccessDenied:
         col = fake.tables["collections"][0]
         r = as_user.post(f"/api/career/collections/{col['id']}/items", json={"savedItemIds": ["mine", "theirs"]})
         assert r.status_code == 404
-        assert [l["saved_item_id"] for l in fake.tables["collection_items"] if l["collection_id"] == col["id"]] == ["mine"]
+        assert [link["saved_item_id"] for link in fake.tables["collection_items"] if link["collection_id"] == col["id"]] == ["mine"]
 
     def test_cannot_move_into_someone_elses_collection(self, fake, as_user):
         col, theirs = self._setup(fake, as_user)
         as_user.switch(ME)
         r = as_user.post(f"/api/career/collections/{col['id']}/items/mine/move", json={"toCollectionId": theirs["id"]})
         assert r.status_code == 404
-        assert any(l["saved_item_id"] == "mine" and l["collection_id"] == col["id"] for l in fake.tables["collection_items"])
+        assert any(link["saved_item_id"] == "mine" and link["collection_id"] == col["id"] for link in fake.tables["collection_items"])
 
 
 def test_limits(fake, as_user, monkeypatch):
@@ -311,7 +311,7 @@ def test_purge_user_collections_only_touches_that_user(fake, as_user):
     as_user.post(f"/api/career/collections/{theirs['id']}/items", json={"savedItemIds": ["s2"]})
     cr.purge_user_collections(ME)
     assert [c["name"] for c in fake.tables["collections"]] == ["Theirs"]
-    assert [l["saved_item_id"] for l in fake.tables["collection_items"]] == ["s2"]
+    assert [link["saved_item_id"] for link in fake.tables["collection_items"]] == ["s2"]
     assert len(fake.tables["saved_items"]) == 2
 
 

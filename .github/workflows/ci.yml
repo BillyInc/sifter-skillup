@@ -79,13 +79,11 @@ jobs:
         with:
           python-version: '3.13'
       - run: uv sync --extra test
-      # Advisory only: reports the ruff backlog so it stays visible without
-      # gating (it is large today). Make it blocking once the count is cleared.
-      - name: Ruff (advisory, not gating)
-        run: |
-          COUNT=$(uv run ruff check . --output-format concise 2>/dev/null | grep -c '^[^ ]*:[0-9]' || true)
-          echo "ruff findings: $COUNT (not gating)"
-          echo "ruff findings: $COUNT (not gating)" >> "$GITHUB_STEP_SUMMARY"
+      # Blocking: the backend is at zero findings for the configured rules
+      # (see [tool.ruff.lint.per-file-ignores] in backend/pyproject.toml for the
+      # three documented exceptions). A new finding fails the build.
+      - name: Ruff
+        run: uv run ruff check .
       # The whole suite, not a hand-maintained list of five files.
       #
       # This step named its test files explicitly, so every file added since

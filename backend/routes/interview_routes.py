@@ -16,13 +16,12 @@
 import re
 import uuid
 from datetime import datetime
-from typing import Optional, List, Dict, Any
+from typing import Optional, Dict, Any
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
 from auth import Auth
-from config import settings
 from database import db
 from logger import log
 from models import ResponseModel
@@ -59,9 +58,12 @@ def extract_numbers(text: str) -> list:
         try:
             val = float(m.group(1).replace(',', ''))
             suffix = m.group(2) or ''
-            if suffix == 'M': val *= 1_000_000
-            elif suffix == 'K': val *= 1_000
-            elif suffix == 'B': val *= 1_000_000_000
+            if suffix == 'M':
+                val *= 1_000_000
+            elif suffix == 'K':
+                val *= 1_000
+            elif suffix == 'B':
+                val *= 1_000_000_000
             if suffix == '%':
                 results.append(val)
                 results.append(val / 100)

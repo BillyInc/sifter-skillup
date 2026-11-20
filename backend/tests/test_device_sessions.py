@@ -3,7 +3,7 @@ Tests for middleware/device_sessions.py and middleware/session_middleware.py
 (the modules main.py actually serves).
 """
 import asyncio
-from unittest.mock import AsyncMock, MagicMock
+from unittest.mock import MagicMock
 
 import pytest
 from fastapi.testclient import TestClient

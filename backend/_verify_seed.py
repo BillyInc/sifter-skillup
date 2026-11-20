@@ -39,11 +39,11 @@ pdf = json.load(open(os.path.join(CM, "programme_domain_final.json"), encoding="
 jdm = json.load(open(os.path.join(CM, "jamb_domain_map.json"), encoding="utf-8"))
 reach = set()
 for v in pdf.values():
-    for l in (v["links"] if isinstance(v, dict) and "links" in v else v):
-        reach.add(l["domain_id"])
+    for link in (v["links"] if isinstance(v, dict) and "links" in v else v):
+        reach.add(link["domain_id"])
 for e in jdm.values():
-    for l in e.get("links", []):
-        reach.add(l["domain_id"])
+    for link in e.get("links", []):
+        reach.add(link["domain_id"])
 HIDDEN = {d for d in meta if meta[d].get("excluded") or d not in reach}
 N_DOMAINS = len(meta) - len(HIDDEN)
 roles = json.load(open(os.path.join(CM, "role_library_v3.json"), encoding="utf-8"))

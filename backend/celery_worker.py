@@ -8,13 +8,13 @@ from celery import Celery
 from celery.schedules import crontab
 from config import settings
 from database import db
+from datetime import datetime, date, timedelta, timezone
+from logger import log
 
 # Demand tables currently contain taxonomy-derived baselines, not a verified
 # labour-market feed. Keep scheduled jobs from turning those rows into new
 # derived signals until source-backed ingestion is wired and reviewed.
 _DEMAND_INGESTION_READY = False
-from datetime import datetime, date, timedelta, timezone
-from logger import log
 
 celery = Celery(
     "sifter_skillup",
@@ -490,7 +490,7 @@ def check_enrichment_freshness():
       - roles_currency: 180 days (WEF/O*NET/Lightcast cycles)
       - admission: 365 days (annual cycle)
     """
-    from datetime import datetime, timedelta, timezone
+    from datetime import datetime, timezone
     SLA_DAYS = {
         "tools": 30,
         "certs": 90,

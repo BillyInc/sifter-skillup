@@ -9,12 +9,10 @@
 # 2. Download full track blob if update needed
 # ============================================================
 from datetime import datetime
-from typing import Optional
 
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, Depends, HTTPException
 
 from auth import Auth
-from config import settings
 from database import db
 from logger import log
 from models import ResponseModel

@@ -5,13 +5,10 @@
 # ============================================
 import uuid
 from datetime import datetime
-from typing import Optional
 
-import httpx
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 
 from auth import Auth
-from config import settings
 from database import db
 from logger import log
 from models import ResponseModel, SocialShare
@@ -186,7 +183,6 @@ async def social_blast(
     The client handles the actual OAuth posting; this records it server-side.
     """
     platforms  = body.get("platforms", [])
-    content    = body.get("content", "")
     content_id = body.get("content_id", "")
     content_type = body.get("content_type", "achievement")
 
