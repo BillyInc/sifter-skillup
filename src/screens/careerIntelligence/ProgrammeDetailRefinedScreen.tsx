@@ -1278,7 +1278,7 @@ export function ProgrammeDetailBody({
               </View>
             ))}
           </View>
-          {!universitySearchResults.length && subjectMatchScopeApplied && !universityQuery.trim() ? <Text style={[styles.body, { color: colors.textRole.muted }]}>No recorded university offering matched the subjects you entered. You can review the programme's general and university-specific requirements to see what may need to change.</Text> : null}
+          {!universitySearchResults.length && subjectMatchScopeApplied && !universityQuery.trim() ? <Text style={[styles.body, { color: colors.textRole.muted }]}>No recorded university offering matched the subjects you entered. You can review the programme&apos;s general and university-specific requirements to see what may need to change.</Text> : null}
           {!universitySearchResults.length && (!subjectMatchScopeApplied || universityQuery.trim()) && schools.length ? <Text style={[styles.body, { color: colors.textRole.muted }]}>No recorded university matches that search. Try the full name, abbreviation or location.</Text> : null}
           {comparisonSchoolIds.length > 1 ? (
             <TouchableOpacity

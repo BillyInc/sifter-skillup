@@ -224,7 +224,7 @@ export function BridgeLockMintSim({ onComplete, onSkip }: SimProps) {
             <Card style={{ borderColor: Colors.red }}>
               <Text style={[s.fieldLabel, { color: Colors.red }]}>⚠️ HACK SIMULATION</Text>
               <Text style={s.hint2}>
-                The bridge contract now holds {amtF} ETH (plus everyone else's). If an attacker finds a vulnerability in the bridge contract, they can drain ALL locked funds. Your wETH becomes worthless.
+                The bridge contract now holds {amtF} ETH (plus everyone else&apos;s). If an attacker finds a vulnerability in the bridge contract, they can drain ALL locked funds. Your wETH becomes worthless.
               </Text>
               <TouchableOpacity onPress={doHack} style={{ marginTop: Spacing.md, padding: Spacing.md, backgroundColor: Colors.red, borderRadius: Radius.md, alignItems: 'center' }}>
                 <Text style={{ color: '#fff', fontWeight: '800' }}>💥 Simulate Bridge Hack</Text>
@@ -453,7 +453,7 @@ export function OptimisticRollupSim({ onComplete, onSkip }: SimProps) {
       {step === 2 && (
         <Card>
           <Text style={s.fieldLabel}>STEP 3 — BATCH POSTED TO ETHEREUM</Text>
-          <Text style={s.hint2}>The batch is submitted to Ethereum. The sequencer also posts a "state root" — a cryptographic summary of the new Arbitrum state after all transactions.</Text>
+          <Text style={s.hint2}>The batch is submitted to Ethereum. The sequencer also posts a &quot;state root&quot; — a cryptographic summary of the new Arbitrum state after all transactions.</Text>
           <View style={{ marginTop: Spacing.md, gap: 4 }}>
             <View style={s.row}><Text style={s.rowKey}>Batch size</Text><Text style={s.rowVal}>5,000 transactions</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Method</Text><Text style={s.rowVal}>EIP-4844 blob (cheap)</Text></View>
@@ -461,7 +461,7 @@ export function OptimisticRollupSim({ onComplete, onSkip }: SimProps) {
             <View style={s.row}><Text style={s.rowKey}>Challenge window starts</Text><Text style={[s.rowVal, { color: '#f59e0b' }]}>⏳ 7 days</Text></View>
           </View>
           <Text style={[s.hint2, { marginTop: Spacing.sm }]}>
-            The batch is "optimistically" assumed valid. Anyone can watch and challenge if it's wrong.
+            The batch is &quot;optimistically&quot; assumed valid. Anyone can watch and challenge if it&apos;s wrong.
           </Text>
         </Card>
       )}
@@ -498,7 +498,7 @@ export function OptimisticRollupSim({ onComplete, onSkip }: SimProps) {
             <Text style={{ fontSize: 18, textAlign: 'center' }}>✅</Text>
             <Text style={{ fontWeight: '800', textAlign: 'center', color: Colors.text, marginTop: Spacing.sm }}>7 days passed. No fraud proof submitted.</Text>
             <Text style={[s.hint2, { textAlign: 'center', marginTop: 4 }]}>
-              Your withdrawal is now final on Ethereum mainnet. The sequencer's state root is permanently accepted.
+              Your withdrawal is now final on Ethereum mainnet. The sequencer&apos;s state root is permanently accepted.
             </Text>
           </Card>
           <Card>
@@ -952,7 +952,7 @@ export function BridgeEvalSim({ onComplete, onSkip }: SimProps) {
           <Card>
             <Text style={s.fieldLabel}>THE LESSON FROM MULTICHAIN</Text>
             <Text style={s.bullet}>• Smart contract audits cannot catch organisational key custody</Text>
-            <Text style={s.bullet}>• Always ask: "Is any single person critical to security?"</Text>
+            <Text style={s.bullet}>• Always ask: &quot;Is any single person critical to security?&quot;</Text>
             <Text style={s.bullet}>• 6/7 perfect factors ≠ safe if the 7th is a single point of failure</Text>
             <Text style={s.bullet}>• Geographic + legal concentration of keys multiplies risk</Text>
           </Card>
@@ -1272,7 +1272,7 @@ export function SafeBridgingDrillSim({ onComplete, onSkip }: SimProps) {
         <>
           <Card>
             <Text style={s.fieldLabel}>STEP 1 — VERIFY THE BRIDGE URL</Text>
-            <Text style={s.hint2}>You Googled "Arbitrum bridge." Two results appeared. Which do you click?</Text>
+            <Text style={s.hint2}>You Googled &quot;Arbitrum bridge.&quot; Two results appeared. Which do you click?</Text>
           </Card>
           {[
             { url: FAKE_URL,  label: '⚡ Arbitrum Bridge — Fast & Free!', isReal: false, badge: 'Ad' },
@@ -1530,7 +1530,7 @@ export function BridgeAggregatorSim({ onComplete, onSkip }: SimProps) {
                 <Card>
                   <Text style={s.fieldLabel}>AGGREGATOR RULE #1</Text>
                   <Text style={s.bullet}>• Aggregators optimise for cost/speed — not security</Text>
-                  <Text style={s.bullet}>• Always click "Details" before selecting any route</Text>
+                  <Text style={s.bullet}>• Always click &quot;Details&quot; before selecting any route</Text>
                   <Text style={s.bullet}>• Cheapest route = often least secure bridge</Text>
                   <Text style={s.bullet}>• The extra $1–3 for a reputable bridge is worth it</Text>
                 </Card>
@@ -1579,8 +1579,8 @@ export function ZkProofDemoSim({ onComplete, onSkip }: SimProps) {
       {mode === 'analogy' && (
         <>
           <Card>
-            <Text style={s.fieldLabel}>THE WHERE'S WALDO PROOF</Text>
-            <Text style={s.hint2}>You found Waldo. Your friend doesn't believe you. You need to prove it WITHOUT revealing where he is. How?</Text>
+            <Text style={s.fieldLabel}>THE WHERE&apos;S WALDO PROOF</Text>
+            <Text style={s.hint2}>You found Waldo. Your friend doesn&apos;t believe you. You need to prove it WITHOUT revealing where he is. How?</Text>
           </Card>
           <Card>
             <View style={{ alignItems: 'center', padding: Spacing.lg }}>
@@ -1605,10 +1605,10 @@ export function ZkProofDemoSim({ onComplete, onSkip }: SimProps) {
             <>
               <Card style={{ borderColor: Colors.accent }}>
                 <Text style={s.fieldLabel}>THIS IS A ZK PROOF</Text>
-                <Text style={s.bullet}>• Prover (you): knows Waldo's location (private input)</Text>
-                <Text style={s.bullet}>• Verifier (friend): sees only "Waldo is here" (public output)</Text>
+                <Text style={s.bullet}>• Prover (you): knows Waldo&apos;s location (private input)</Text>
+                <Text style={s.bullet}>• Verifier (friend): sees only &quot;Waldo is here&quot; (public output)</Text>
                 <Text style={s.bullet}>• Zero knowledge: location revealed = zero</Text>
-                <Text style={s.bullet}>• On Starknet: prover knows 10,000 valid txs. Ethereum sees only "all valid" = zero individual tx knowledge needed</Text>
+                <Text style={s.bullet}>• On Starknet: prover knows 10,000 valid txs. Ethereum sees only &quot;all valid&quot; = zero individual tx knowledge needed</Text>
               </Card>
               <PrimaryBtn label="See Batch Proofs →" onPress={() => setMode('batch')} />
             </>
@@ -1919,7 +1919,7 @@ export function IntentBridgeSim({ onComplete, onSkip }: SimProps) {
         <>
           <Card>
             <Text style={s.fieldLabel}>STEP 1 — DECLARE YOUR INTENT</Text>
-            <Text style={s.hint2}>You don't specify HOW to bridge. You declare WHAT you want. Solvers compete to fill it.</Text>
+            <Text style={s.hint2}>You don&apos;t specify HOW to bridge. You declare WHAT you want. Solvers compete to fill it.</Text>
             <View style={{ gap: Spacing.sm, marginTop: Spacing.md }}>
               <View>
                 <Text style={s.fieldLabel}>I HAVE (on Ethereum)</Text>

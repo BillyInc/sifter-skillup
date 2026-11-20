@@ -366,7 +366,7 @@ export function MemeExitStrategySim({ onComplete, onSkip }: SimProps) {
           <Card>
             <Text style={s.fl}>PROFESSIONAL RULES</Text>
             <Text style={s.blt}>• Decide your exit before you enter — never in the moment</Text>
-            <Text style={s.blt}>• Selling half at 2× = free position (you can't lose)</Text>
+            <Text style={s.blt}>• Selling half at 2× = free position (you can&apos;t lose)</Text>
             <Text style={s.blt}>• Moonbags are small — never more than 20% of position</Text>
             <Text style={s.blt}>• Volume collapse = exit signal regardless of price</Text>
           </Card>
@@ -807,7 +807,7 @@ export function AirdropScamDrillSim({ onComplete, onSkip }: SimProps) {
         return (
           <Card key={sc.id} style={{ borderColor: checked ? (isCorrect ? Colors.green : Colors.red) : Colors.border }}>
             {sc.url && <Text style={{ fontFamily: 'monospace', fontSize: FontSize.sm, fontWeight: '800', color: Colors.text, marginBottom: Spacing.md }}>{sc.url}</Text>}
-            {sc.message && <Text style={{ fontSize: FontSize.sm, color: Colors.text, fontStyle: 'italic', marginBottom: Spacing.md, lineHeight: 20 }}>"{sc.message}"</Text>}
+            {sc.message && <Text style={{ fontSize: FontSize.sm, color: Colors.text, fontStyle: 'italic', marginBottom: Spacing.md, lineHeight: 20 }}>&quot;{sc.message}&quot;</Text>}
             <View style={{ flexDirection: 'row', gap: Spacing.sm }}>
               {[{ v: true, l: '⚠️ SCAM' }, { v: false, l: '✅ LEGIT' }].map(({ v, l }) => {
                 const isCh = chosen === v;

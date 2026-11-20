@@ -84,7 +84,7 @@ export function HierarchyOrientationCard({
       {cleanActivities.length ? <Subsection title="Work activities recorded for this role" colors={colors}>{cleanActivities.map((activity) => <View key={activity} style={styles.row}><Feather name="check" size={14} color={colors.accentRole.action} /><Text style={[styles.copy, { color: colors.textRole.secondary }]}>{activity}</Text></View>)}</Subsection> : null}
       {orientation?.whereProgrammeFits ? <View style={styles.highlight}><Text style={[styles.subheading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>How it connects to your programme</Text><Text style={[styles.copy, { color: colors.textRole.secondary }]}>{orientation.whereProgrammeFits}</Text></View> : null}
       {orientation?.decisionGuide ? <Subsection title="Could this path suit you?" colors={colors}><Text style={[styles.copy, { color: colors.textRole.secondary }]}>{orientation.decisionGuide}</Text></Subsection> : null}
-      {!hasDetails && !orientation?.whatItStudies && !orientation?.whatPeopleDo && level === "role" ? <Text style={[styles.note, { color: colors.textRole.muted }]}>The role's attached work evidence will appear below when it is available.</Text> : null}
+      {!hasDetails && !orientation?.whatItStudies && !orientation?.whatPeopleDo && level === "role" ? <Text style={[styles.note, { color: colors.textRole.muted }]}>The role&apos;s attached work evidence will appear below when it is available.</Text> : null}
       {orientation?.sourceNote ? <Text style={[styles.note, { color: colors.textRole.muted }]}>Reference basis: {orientation.sourceNote}</Text> : null}
     </View>
   );

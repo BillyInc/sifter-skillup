@@ -52,6 +52,19 @@ jobs:
             exit 1
           fi
 
+      - name: ESLint
+        # Errors gate the build; warnings are counted in the job summary and do
+        # not fail it. Files the compiler already excludes (tsconfig exclude,
+        # src/data/) are ignored in eslint.config.js.
+        run: |
+          STATUS=0
+          npx eslint src app --format json --output-file eslint-report.json || STATUS=$?
+          node -e "const r=require('./eslint-report.json');let e=0,w=0;for(const f of r){e+=f.errorCount;w+=f.warningCount}const l='eslint: '+e+' errors, '+w+' warnings (errors gate)';console.log(l);require('fs').appendFileSync(process.env.GITHUB_STEP_SUMMARY||'/dev/null',l+'\n')" || true
+          if [ "$STATUS" -ne 0 ]; then
+            npx eslint src app --quiet || true
+            exit 1
+          fi
+
       - name: Web Build
         run: npx expo export --platform web
 
