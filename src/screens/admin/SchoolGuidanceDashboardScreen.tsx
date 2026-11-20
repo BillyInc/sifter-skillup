@@ -49,37 +49,26 @@ import type {
   EducatorProfile,
   InstitutionSummary,
   IntelligenceAlert,
+  StudentIntelligenceSummary,
 } from "../../types/institution";
 import { AdminShell } from "./AdminShell";
 import { StatCard } from "./StatCard";
 import { ComingSoonPanel } from "./ComingSoonPanel";
+import { AdminWorkbench } from "@/components/admin/AdminWorkbench";
 import { IntelligenceAlerts } from "./IntelligenceAlerts";
 
 /**
- * Field-level view of the `getStudentIntelligenceSummary()` payload. Its
- * canonical type (`StudentIntelligenceSummary`) is referenced by adminData.ts
- * but does not yet exist in src/types/institution.ts, which this screen does
- * not own. Every field is optional and read defensively, so nothing renders
- * unless the payload carries it.
- *
- * TODO(types): import the canonical `StudentIntelligenceSummary` once it lands
- * in src/types/institution.ts and delete this local shape.
+ * The payload is the canonical `StudentIntelligenceSummary`. This screen used
+ * to read a hand-written shape through an unchecked cast, and four field names
+ * did not match what the API sends (provisioned / unclaimedProvisioned /
+ * domainName / domainId vs provisionedByYou / unclaimedCodes / label /
+ * domainKey), so those figures rendered blank. `domainsRepresented` is not in
+ * the payload at all; it stays optional and the card shows "—" until the API
+ * supplies it, rather than a number derived from something else.
  */
-interface LearnerDomainShareView {
-  domainId?: string;
-  domainName?: string;
-  pct?: number;
-  /** Points above/below the national student mix, when computed (§6.0). */
-}
-
-interface LearnerIntelligenceView {
-  totalAffiliated?: number;
-  selfSignedUp?: number;
-  provisioned?: number;
-  unclaimedProvisioned?: number;
+type LearnerIntelligenceView = Partial<StudentIntelligenceSummary> & {
   domainsRepresented?: number;
-  topDomains?: LearnerDomainShareView[];
-}
+};
 
 function loadingState<T>(): DataState<T> {
   return { status: "pending", data: null };
@@ -104,7 +93,8 @@ export function SchoolGuidanceDashboardScreen() {
     useState<DataState<InstitutionSummary>>(loadingState);
   const [alerts, setAlerts] =
     useState<DataState<IntelligenceAlert[]>>(loadingState);
-  const [students, setLearners] = useState<DataState<unknown>>(loadingState);
+  const [students, setLearners] =
+    useState<DataState<StudentIntelligenceSummary>>(loadingState);
 
   useEffect(() => {
     let active = true;
@@ -128,7 +118,7 @@ export function SchoolGuidanceDashboardScreen() {
       if (!active) return;
       setSummary(s);
       setAlerts(a);
-      setLearners(li as DataState<unknown>);
+      setLearners(li);
     })();
     return () => {
       active = false;
@@ -147,7 +137,7 @@ export function SchoolGuidanceDashboardScreen() {
     profile?.organizationName ||
     "Your organisation";
 
-  const learnerState: DataState<unknown> = students;
+  const learnerState: DataState<StudentIntelligenceSummary> = students;
 
   return (
     <AdminShell title={title} eyebrow={orgName}>
@@ -230,8 +220,8 @@ export function SchoolGuidanceDashboardScreen() {
             select={(d) => fmtInt(view<LearnerIntelligenceView>(d).totalAffiliated)}
             selectDelta={(d) => {
               const v = view<LearnerIntelligenceView>(d);
-              return v.selfSignedUp != null || v.provisioned != null
-                ? `${fmtInt(v.selfSignedUp)} self · ${fmtInt(v.provisioned)} you added`
+              return v.selfSignedUp != null || v.provisionedByYou != null
+                ? `${fmtInt(v.selfSignedUp)} self · ${fmtInt(v.provisionedByYou)} you added`
                 : undefined;
             }}
             deltaPositive={() => true}
@@ -241,7 +231,7 @@ export function SchoolGuidanceDashboardScreen() {
             label="Unclaimed codes"
             state={learnerState}
             select={(d) =>
-              fmtInt(view<LearnerIntelligenceView>(d).unclaimedProvisioned)
+              fmtInt(view<LearnerIntelligenceView>(d).unclaimedCodes)
             }
           />
           <StatCard
@@ -253,6 +243,9 @@ export function SchoolGuidanceDashboardScreen() {
             }
           />
         </View>
+
+        {/* ── Workbench: what needs attention, and where to pick up ── */}
+        <AdminWorkbench students={students} providerOnly={providerOnly} wide={wide} />
 
         {/* ── Alerts ── */}
         <View style={styles.section}>
@@ -321,7 +314,7 @@ export function SchoolGuidanceDashboardScreen() {
           >
             {(data) => {
               const v = view<LearnerIntelligenceView>(data);
-              const top = (v.topDomains ?? []).filter((d) => d.domainName);
+              const top = (v.topDomains ?? []).filter((d) => d.label);
               if (!top.length) {
                 return (
                   <Text style={[styles.panelNote, { color: colors.textMuted }]}>
@@ -333,7 +326,7 @@ export function SchoolGuidanceDashboardScreen() {
                 <View style={styles.list}>
                   {top.slice(0, 5).map((d, i) => (
                     <View
-                      key={d.domainId ?? `${d.domainName}-${i}`}
+                      key={d.domainKey ?? `${d.label}-${i}`}
                       style={[
                         styles.interestRow,
                         { borderTopColor: colors.border },
@@ -347,7 +340,7 @@ export function SchoolGuidanceDashboardScreen() {
                         ]}
                         numberOfLines={1}
                       >
-                        {d.domainName}
+                        {d.label}
                       </Text>
                       <Text
                         style={[

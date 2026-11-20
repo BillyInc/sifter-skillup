@@ -15,3 +15,5 @@ export { NationalBenchmarkPanel } from "./NationalBenchmarkPanel";
 export type { NationalBenchmarkPanelProps } from "./NationalBenchmarkPanel";
 export { AdminGuidanceEvidencePanel } from "./AdminGuidanceEvidencePanel";
 export type { AdminGuidanceEvidencePanelProps } from "./AdminGuidanceEvidencePanel";
+export { AdminWorkbench, AttentionNeededPanel, ResumePanel } from "./AdminWorkbench";
+export type { AdminWorkbenchProps } from "./AdminWorkbench";
