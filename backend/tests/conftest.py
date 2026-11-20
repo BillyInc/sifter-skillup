@@ -128,6 +128,19 @@ def mock_db(patch_all_db_modules):
 
 
 @pytest.fixture
+def login_as(mock_db):
+    """Make Auth.get_current_user resolve tokens to ``user``.
+
+    The dependency loads the user row and checks the token against it (subject,
+    deletion, revocation counter), so a test that wants to act as a user must
+    supply a real row, not an unconfigured MagicMock.
+    """
+    def _login(user: dict) -> None:
+        mock_db.get_service_client().table().select().eq().single().execute.return_value = MagicMock(data=user)
+    return _login
+
+
+@pytest.fixture
 def mock_redis():
     mock = MagicMock()
     mock.get.return_value = None

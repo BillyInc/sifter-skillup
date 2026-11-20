@@ -177,7 +177,7 @@ class TestLoginIsRateLimited:
         _install(mock_db, {"users": [_admin(email="a@b.test")]})
         codes = [
             client.post("/api/auth/login", json={"email": "a@b.test", "password": "nope"}).status_code
-            for _ in range(12)
+            for _ in range(35)   # unknown client address: the account ceiling is 30 failures
         ]
         assert codes[0] == 401
         assert 429 in codes, codes
@@ -222,7 +222,7 @@ class TestEmailCodeRequests:
         with patch("main._issue_email_code", new=AsyncMock(return_value="123456")):
             codes = [
                 client.post("/api/auth/email-code/request", json={"email": "v@x.test"}).status_code
-                for _ in range(8)
+                for _ in range(14)   # per-email ceiling is 10 an hour
             ]
         assert codes[0] == 200
         assert 429 in codes, codes
@@ -232,7 +232,7 @@ class TestEmailCodeRequests:
         with patch("main._issue_email_code", new=AsyncMock(return_value="123456")):
             codes = [
                 client.post("/api/auth/password-reset/request", json={"email": "v@x.test"}).status_code
-                for _ in range(8)
+                for _ in range(14)   # per-email ceiling is 10 an hour
             ]
         assert 429 in codes, codes
 

@@ -3,6 +3,7 @@
 # Extended: device sessions, Starknet, Airtable,
 #           offline sync, feed, social rewards
 # ============================================
+import logging
 import os
 from dotenv import load_dotenv
 
@@ -20,15 +21,26 @@ _DEFAULT_JWT_SECRET = "change-me-in-production"
 
 
 def check_jwt_secret(secret: str, debug: bool) -> None:
-    """Refuse to run a production process that signs tokens with a guessable key."""
+    """Refuse to run a production process that signs tokens with a guessable key.
+
+    This runs when ``config`` is imported, so it applies to EVERY process that
+    imports it: the API (main), the Celery worker and beat (celery_worker.py and
+    workers/celery_worker.py), the database/auth helpers, scheduled jobs and
+    scripts. Each of them needs the same JWT_SECRET (32+ random characters) in
+    its environment when DEBUG is off, or it exits at startup.
+    """
     if debug:
         return
     if not secret or secret == _DEFAULT_JWT_SECRET or len(secret) < MIN_JWT_SECRET_LENGTH:
-        raise RuntimeError(
+        message = (
             "JWT_SECRET must be set to a random value of at least "
-            f"{MIN_JWT_SECRET_LENGTH} characters when DEBUG is false. "
-            "Refusing to start with a default or short signing secret."
+            f"{MIN_JWT_SECRET_LENGTH} characters when DEBUG is false, in every process "
+            "that imports config (the API, the Celery worker and beat, scheduled jobs "
+            "and scripts). Refusing to start with a default, missing or short signing secret."
         )
+        # Loud, and visible even if the process manager hides the traceback.
+        logging.getLogger("config").critical(message)
+        raise RuntimeError(message)
 
 
 class Settings:
@@ -85,6 +97,10 @@ class Settings:
     # that "address" would let one abuser lock everybody out. Set this to true
     # only when the proxy overwrites X-Forwarded-For.
     TRUST_PROXY_HEADERS: bool = os.getenv("TRUST_PROXY_HEADERS", "false").lower() == "true"
+    # How many reverse proxies you run in front of the API. The client address is
+    # taken that many places from the RIGHT of X-Forwarded-For (each proxy appends
+    # the address it saw); entries further left are client-supplied and ignored.
+    TRUSTED_PROXY_HOPS: int = max(1, int(os.getenv("TRUSTED_PROXY_HOPS", "1")))
 
     # ── Privy (Starknet embedded wallet auth) ────────────────
     PRIVY_APP_ID: str = os.getenv("PRIVY_APP_ID", "")

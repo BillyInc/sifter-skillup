@@ -191,7 +191,10 @@ async def _optional_current_user(
             .single()
             .execute()
         )
-        return result.data or None
+        user = result.data or None
+        # Same rule as Auth.get_current_user: a token issued before a password
+        # reset (or for a deleted account) must not resolve to the user here.
+        return user if Auth.token_matches_user(payload, user) else None
     except Exception:
         return None
 
@@ -254,7 +257,8 @@ def _get_user_from_sifter_token(sifter_token: Optional[str]) -> Optional[dict]:
             .single()
             .execute()
         )
-        return result.data or None
+        user = result.data or None
+        return user if Auth.token_matches_user(payload, user) else None
     except Exception:
         return None
 

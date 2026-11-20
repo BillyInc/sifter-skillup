@@ -10,7 +10,8 @@ class TestHealthCheck:
 
 
 class TestGameState:
-    def test_get_game_state_empty(self, client, mock_db, sample_user, auth_header):
+    def test_get_game_state_empty(self, client, mock_db, login_as, sample_user, auth_header):
+        login_as(sample_user)
         mock_result = MagicMock()
         mock_result.data = []
         mock_db.get_client().table().select().eq().execute.return_value = mock_result
@@ -18,7 +19,8 @@ class TestGameState:
             response = client.get("/api/game/state", headers=auth_header)
             assert response.status_code == 200
 
-    def test_get_quant_gate_locked(self, client, sample_user, auth_header):
+    def test_get_quant_gate_locked(self, client, login_as, sample_user, auth_header):
+        login_as(sample_user)
         with patch("auth.Auth.get_current_user", return_value=sample_user):
             response = client.get("/api/game/quant-gate", headers=auth_header)
             assert response.status_code == 200

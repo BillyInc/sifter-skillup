@@ -184,3 +184,32 @@ async def _send(email: str, code: str, *, subject: str, html: str, text: str) ->
         }
     )
     log.info("Transactional email sent", email=email, subject=subject)
+
+
+def _exists_html() -> str:
+    return (
+        "<p>Someone asked to create a LevelUp account with this email address, "
+        "but an account already exists.</p>"
+        "<p>If it was you, sign in, or use <b>Forgot password</b> to reset it. "
+        "If it was not you, you can ignore this email: nothing has changed.</p>"
+    )
+
+
+def _exists_text() -> str:
+    return (
+        "Someone asked to create a LevelUp account with this email address, but "
+        "an account already exists.\n\nIf it was you, sign in, or use Forgot "
+        "password to reset it. If it was not you, ignore this email -- nothing "
+        "has changed.\n"
+    )
+
+
+async def send_account_exists_notice(email: str) -> None:
+    """Tell a registered address that a signup was attempted. Carries no code."""
+    await _send(
+        email,
+        "",
+        subject="You already have a LevelUp account",
+        html=_exists_html(),
+        text=_exists_text(),
+    )

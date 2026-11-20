@@ -2,7 +2,8 @@ from unittest.mock import patch, MagicMock
 
 
 class TestPortfolioAccounts:
-    def test_get_accounts_empty(self, client, mock_db, sample_user, auth_header):
+    def test_get_accounts_empty(self, client, mock_db, login_as, sample_user, auth_header):
+        login_as(sample_user)
         mock_result = MagicMock()
         mock_result.data = []
         mock_db.get_service_client().table().select().eq().execute.return_value = mock_result

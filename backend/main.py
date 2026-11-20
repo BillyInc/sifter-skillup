@@ -10,7 +10,7 @@ from contextlib import asynccontextmanager
 from datetime import datetime, date, timedelta
 from typing import Optional
 
-from fastapi import FastAPI, Depends, HTTPException, BackgroundTasks, Request, Header, UploadFile, File
+from fastapi import FastAPI, Depends, HTTPException, BackgroundTasks, Body, Request, Header, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
@@ -267,31 +267,66 @@ async def _require_valid_email_code(email: str, code: str):
     raise HTTPException(status_code=400, detail=_CODE_FAILURE_DETAIL[outcome])
 
 
+async def _issue_signup_code_quietly(email: str) -> None:
+    """Send the signup code after the response has gone out.
+
+    Done in a background task for registered and unknown addresses alike, so
+    neither the latency nor a delivery failure (502) tells a caller which
+    addresses have accounts.
+    """
+    try:
+        await _issue_email_code(email, email_codes.PURPOSE_SIGNUP)
+    except Exception as exc:  # noqa: BLE001 - never surfaces to the requester
+        log.warning("Signup code delivery failed", error=type(exc).__name__)
+
+
+async def _send_account_exists_notice(email: str) -> None:
+    """Tell a registered address that someone asked to sign up with it.
+
+    No code is sent. The owner is pointed at sign-in and password reset.
+    """
+    await email_delivery.send_account_exists_notice(email)
+
+
+async def _send_account_exists_notice_quietly(email: str) -> None:
+    try:
+        await _send_account_exists_notice(email)
+    except Exception as exc:  # noqa: BLE001 - never surfaces to the requester
+        log.warning("Account-exists notice failed", error=type(exc).__name__)
+
+
 @app.post("/api/auth/email-code/request", response_model=ResponseModel)
-async def request_email_code(body: dict, request: Request):
+async def request_email_code(body: dict, request: Request, background_tasks: BackgroundTasks):
     email = _normalise_email(body.get("email", ""))
     if not email or "@" not in email:
         raise HTTPException(status_code=400, detail="Valid email is required")
 
-    # Limit before doing any work, per address and (when known) per client.
+    # Limit before doing any work (and before any lookup), per email and, when
+    # the real client address is known, per (email, address) and per address.
     ip = auth_rate_limit.client_ip(request)
-    auth_rate_limit.enforce("email_code_email", email)
-    auth_rate_limit.enforce("email_code_ip", ip or "")
-    auth_rate_limit.record("email_code_email", email)
-    auth_rate_limit.record("email_code_ip", ip or "")
+    buckets = auth_rate_limit.request_buckets("email_code", email, ip)
+    auth_rate_limit.enforce_all(buckets)
+    auth_rate_limit.record_all(buckets)
 
     data = {"sent": True, "expiresInMinutes": settings.EMAIL_CODE_TTL_MINUTES}
     existing = db.get_service_client().table("users").select("id,password_hash").eq("email", email).execute()
-    if existing.data and existing.data[0].get("password_hash"):
-        # Same answer as for an unknown address (no 409): the response must not
-        # reveal which emails have accounts, and a registered address is not
-        # mailed a signup code. Signup itself still refuses a duplicate, but
-        # only after a valid code, which an outsider cannot obtain.
+    registered = bool(existing.data and existing.data[0].get("password_hash"))
+
+    if settings.EMAIL_VERIFICATION_DEV_CODES and not registered:
+        # Development only: the code is returned in the response, so it must be
+        # issued before answering. Production never takes this branch.
+        code = await _issue_email_code(email, email_codes.PURPOSE_SIGNUP)
+        data["devCode"] = code
         return ResponseModel(data=data)
 
-    code = await _issue_email_code(email, email_codes.PURPOSE_SIGNUP)
-    if settings.EMAIL_VERIFICATION_DEV_CODES:
-        data["devCode"] = code
+    # Same answer, same work shape for both cases: a background task and a
+    # uniform response. A registered address gets a notice with no code; signup
+    # itself still refuses a duplicate, but only after a valid code, which an
+    # outsider cannot obtain.
+    if registered:
+        background_tasks.add_task(_send_account_exists_notice_quietly, email)
+    else:
+        background_tasks.add_task(_issue_signup_code_quietly, email)
     return ResponseModel(data=data)
 
 
@@ -302,10 +337,9 @@ async def request_password_reset_code(body: dict, request: Request):
     if not email or "@" not in email:
         raise HTTPException(status_code=400, detail="Valid email is required")
     ip = auth_rate_limit.client_ip(request)
-    auth_rate_limit.enforce("reset_request_email", email)
-    auth_rate_limit.enforce("reset_request_ip", ip or "")
-    auth_rate_limit.record("reset_request_email", email)
-    auth_rate_limit.record("reset_request_ip", ip or "")
+    buckets = auth_rate_limit.request_buckets("reset_request", email, ip)
+    auth_rate_limit.enforce_all(buckets)
+    auth_rate_limit.record_all(buckets)
 
     code = await _issue_email_code(email, email_codes.PURPOSE_PASSWORD_RESET)
     data = {"sent": True, "expiresInMinutes": settings.EMAIL_CODE_TTL_MINUTES}
@@ -326,7 +360,7 @@ async def confirm_password_reset(body: dict, request: Request):
 
     ip = auth_rate_limit.client_ip(request)
     auth_rate_limit.enforce("reset_confirm_fail_email", email)
-    auth_rate_limit.enforce("reset_confirm_fail_ip", ip or "")
+    auth_rate_limit.enforce("reset_confirm_fail_ip", ip or "")  # skipped when the address is unknown
 
     if not (settings.EMAIL_VERIFICATION_DEV_CODES and code == "000000"):
         outcome = await email_codes.verify_code(
@@ -387,13 +421,21 @@ async def get_admin_mfa(current_user: dict = Depends(Auth.get_current_user)):
 
 
 def _admin_mfa_status(user_id: str) -> Optional[str]:
-    """The stored MFA status, or None when there is no row or no table yet."""
+    """The stored MFA status; None only when there is genuinely no row.
+
+    A failed lookup must NOT read as "not enabled": the callers use this to
+    decide whether a session may change MFA, so an outage would turn into a
+    downgrade. A lookup error is a 503 instead.
+    """
     try:
         rows = db.get_service_client().table("user_mfa_settings").select(
             "status"
         ).eq("user_id", user_id).limit(1).execute().data or []
-    except Exception:
-        return None
+    except Exception as exc:
+        log.warning("Admin MFA status lookup failed", error=type(exc).__name__)
+        raise HTTPException(
+            status_code=503, detail="Admin security status is unavailable. Try again shortly."
+        ) from exc
     return rows[0].get("status") if rows else None
 
 
@@ -430,6 +472,7 @@ async def verify_admin_mfa(body: dict, current_user: dict = Depends(Auth.get_cur
     code = str(body.get("code") or "").strip()
     if not code:
         raise HTTPException(status_code=400, detail="Admin MFA code is required.")
+    auth_rate_limit.enforce("mfa_verify_fail_user", current_user["id"])
     if settings.EMAIL_VERIFICATION_DEV_CODES and code == "000000":
         outcome = email_codes.OK
     elif settings.EMAIL_CODE_STORAGE == "database":
@@ -443,7 +486,9 @@ async def verify_admin_mfa(body: dict, current_user: dict = Depends(Auth.get_cur
             purpose=email_codes.PURPOSE_ADMIN_MFA,
         )
     if outcome != email_codes.OK:
+        auth_rate_limit.record("mfa_verify_fail_user", current_user["id"])
         raise HTTPException(status_code=400, detail="Invalid or expired admin MFA code.")
+    auth_rate_limit.clear("mfa_verify_fail_user", current_user["id"])
     try:
         db.get_service_client().table("user_mfa_settings").upsert({
             "user_id": current_user["id"], "status": "enabled", "method": "email_otp",
@@ -457,7 +502,7 @@ async def verify_admin_mfa(body: dict, current_user: dict = Depends(Auth.get_cur
 
 
 @app.post("/api/auth/mfa/defer", response_model=ResponseModel)
-async def defer_admin_mfa(body: dict, current_user: dict = Depends(Auth.get_current_user)):
+async def defer_admin_mfa(body: Optional[dict] = Body(default=None), current_user: dict = Depends(Auth.get_current_user)):
     _admin_user(current_user)
     # A session that has not proved MFA must not be able to switch MFA off.
     if _admin_mfa_status(current_user["id"]) == "enabled" and not current_user.get("_mfa_verified"):
@@ -776,16 +821,15 @@ async def auth_login(body: dict, request: Request):
     # Online guessing: count FAILURES per account and, when the real client
     # address is known, per address. A correct password is never counted.
     ip = auth_rate_limit.client_ip(request)
-    auth_rate_limit.enforce("login_fail_email", email)
-    auth_rate_limit.enforce("login_fail_ip", ip or "")
+    login_buckets = auth_rate_limit.login_buckets(email, ip)
+    auth_rate_limit.enforce_all(login_buckets)
     result = db.get_service_client().table("users").select("*").eq("email", email).execute()
     result.data = [row for row in (result.data or []) if row.get("is_deleted") is not True]
     user = result.data[0] if result.data else None
     if not user or not user.get("password_hash") or not bcrypt.checkpw(password.encode(), user["password_hash"].encode()):
-        auth_rate_limit.record("login_fail_email", email)
-        auth_rate_limit.record("login_fail_ip", ip or "")
+        auth_rate_limit.record_all(login_buckets)
         raise HTTPException(status_code=401, detail="Invalid email or password")
-    auth_rate_limit.clear("login_fail_email", email)
+    auth_rate_limit.clear_login(email, ip)
     db.get_service_client().table("users").update({"last_login": datetime.now().isoformat()}).eq("id", user["id"]).execute()
     token = Auth.create_jwt(user["id"], token_version=Auth.token_version_of(user))
     _hydrate_account_type_selection(user)

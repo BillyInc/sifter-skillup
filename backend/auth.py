@@ -102,6 +102,28 @@ class Auth:
         return value
 
     @staticmethod
+    def token_matches_user(payload: dict | None, user: dict | None) -> bool:
+        """True only if a decoded token still belongs to this user's live session.
+
+        The one rule every code path that turns a JWT into a user must apply:
+        the subject is the user, the account is not deleted, and the ``tv``
+        claim equals the user's current revocation counter (a password reset
+        bumps it). A row without the counter column reads as 0, so tokens
+        issued before the migration keep working until the first reset.
+        """
+        if not isinstance(payload, dict) or not isinstance(user, dict):
+            return False
+        if not payload.get("sub") or str(payload.get("sub")) != str(user.get("id")):
+            return False
+        if user.get("is_deleted") is True:
+            return False
+        try:
+            token_tv = int(payload.get("tv") or 0)
+        except (TypeError, ValueError):
+            return False
+        return token_tv == Auth.token_version_of(user)
+
+    @staticmethod
     def decode_jwt(token: str) -> dict:
         return jwt.decode(
             token,
@@ -136,11 +158,7 @@ class Auth:
             user.setdefault("account_type", "pending")
             # A password reset bumps users.token_version; older tokens stop
             # working. Without the column both sides read as 0 (unchanged).
-            try:
-                token_tv = int(payload.get("tv") or 0)
-            except (TypeError, ValueError):
-                token_tv = -1
-            if token_tv != Auth.token_version_of(user):
+            if not Auth.token_matches_user(payload, user):
                 raise HTTPException(status_code=401, detail="Session expired. Please sign in again.")
             user["_mfa_verified"] = bool(payload.get("mfa_verified"))
             return user

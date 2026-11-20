@@ -1356,6 +1356,22 @@ GITHUB / LINKEDIN / TWITTER / INSTAGRAM / FACEBOOK / MEDIUM /
 REDDIT / BEHANCE / DRIBBBLE / GOOGLE / VIMEO — _CLIENT_ID + _SECRET
 ```
 
+#### Required in production (the process refuses to start without it)
+
+With `DEBUG=false`, `config.py` raises at import unless `JWT_SECRET` is set to a
+random value of at least 32 characters (not the placeholder default). `config` is
+imported by the API, the Celery worker and beat (`celery_worker.py`,
+`workers/celery_worker.py`), the database and auth helpers, scheduled jobs and
+scripts, so every one of those processes needs the same secret. Check the
+production value before deploying a build that includes this guard.
+
+Also relevant to authentication: `TRUST_PROXY_HEADERS` and `TRUSTED_PROXY_HOPS`
+(client address behind a reverse proxy), `AUTH_RATE_LIMIT_ENABLED`,
+and `ALLOW_INSECURE_DEV_CODES` (never on a reachable server). A password reset revokes older tokens through
+`users.token_version` (`backend/migration_token_version_2026-11-21.sql`, apply it
+manually; the code works without it but revocation only takes effect once it is
+applied).
+
 ### Frontend (Expo, build-time)
 
 ```
