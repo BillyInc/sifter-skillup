@@ -16,8 +16,11 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
-  frontend:
-    name: Frontend Checks
+  # Frontend is split so the type check + web build run in parallel with the jest
+  # shards instead of after them. `frontend` (below) is the single aggregate that
+  # keeps the "Frontend Checks" check name stable for CI gate and branch rules.
+  frontend-static:
+    name: Frontend static (types and web build)
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -49,9 +52,6 @@ jobs:
             exit 1
           fi
 
-      - name: Tests
-        run: npx jest --ci --coverage --passWithNoTests
-
       - name: Web Build
         run: npx expo export --platform web
 
@@ -61,6 +61,99 @@ jobs:
           name: web-build
           path: dist/
           retention-days: 7
+
+  # The jest suite, split with jest's own --shard. Every shard records how many
+  # test files exist in total, how many it was assigned and how many it ran, so
+  # the aggregate can prove the shards together covered the whole suite.
+  frontend-tests:
+    name: Frontend tests (shard ${{ matrix.shard }}/4)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - name: Decompress generated data the app imports
+        run: |
+          gunzip -kf data/career-mapping/_audit/sociology_theme_student_abilities_2026_10_22.json.gz
+          gunzip -kf data/career-mapping/_audit/sociology_curriculum_contract_2026-09-17.json.gz
+
+      - name: Tests (shard ${{ matrix.shard }}/4)
+        env:
+          SHARD: ${{ matrix.shard }}
+        run: |
+          set -euo pipefail
+          TOTAL=$(npx jest --ci --listTests | grep -c . || true)
+          LISTED=$(npx jest --ci --shard="${SHARD}/4" --listTests | grep -c . || true)
+          echo "suite has $TOTAL test files; shard $SHARD/4 is assigned $LISTED"
+          set +e
+          npx jest --ci --shard="${SHARD}/4" --json --outputFile=jest-result.json
+          STATUS=$?
+          set -e
+          RAN=$(jq '.numTotalTestSuites' jest-result.json)
+          FAILED=$(jq '.numFailedTestSuites + .numRuntimeErrorTestSuites' jest-result.json)
+          echo "shard $SHARD/4 ran $RAN test files ($FAILED failed suites), jest exit $STATUS"
+          mkdir -p shard-report
+          printf '{"shard":%s,"total":%s,"listed":%s,"ran":%s}\n' "$SHARD" "$TOTAL" "$LISTED" "$RAN" > "shard-report/shard-${SHARD}.json"
+          exit "$STATUS"
+
+      - name: Upload shard report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jest-shard-${{ matrix.shard }}
+          path: shard-report/
+          retention-days: 3
+
+  # The one stable "Frontend Checks" check. Fails if the static job or any shard
+  # failed, was cancelled or was skipped, and fails if the shards did not run
+  # exactly the test files an unsharded run would list (nothing silently dropped).
+  frontend:
+    name: Frontend Checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: [frontend-static, frontend-tests]
+    if: always()
+    steps:
+      - name: Require the static job and every shard to have succeeded
+        run: |
+          echo "static: ${{ needs.frontend-static.result }}"
+          echo "tests:  ${{ needs.frontend-tests.result }}"
+          if [ "${{ needs.frontend-static.result }}" != "success" ] || [ "${{ needs.frontend-tests.result }}" != "success" ]; then
+            exit 1
+          fi
+      - name: Download shard reports
+        uses: actions/download-artifact@v4
+        with:
+          pattern: jest-shard-*
+          path: reports
+          merge-multiple: true
+      - name: Check the shards covered the whole suite
+        run: |
+          set -euo pipefail
+          COUNT=$(ls reports/shard-*.json | wc -l)
+          TOTAL=$(jq -s 'map(.total) | unique | if length == 1 then .[0] else error("shards disagree on the suite size") end' reports/shard-*.json)
+          LISTED=$(jq -s 'map(.listed) | add' reports/shard-*.json)
+          RAN=$(jq -s 'map(.ran) | add' reports/shard-*.json)
+          {
+            echo "### Frontend test coverage across shards"
+            echo "- shards reporting: $COUNT of 4"
+            echo "- test files in the suite (unsharded list): $TOTAL"
+            echo "- assigned across shards: $LISTED"
+            echo "- actually run: $RAN"
+          } | tee -a "$GITHUB_STEP_SUMMARY"
+          if [ "$COUNT" != "4" ] || [ "$LISTED" != "$TOTAL" ] || [ "$RAN" != "$TOTAL" ]; then
+            echo "Shards did not cover the whole suite" >&2
+            exit 1
+          fi
 
   backend:
     name: Backend Checks
@@ -106,7 +199,8 @@ jobs:
           REDIS_URL: redis://localhost:6379/0
           SINGLE_DEVICE_ENFORCEMENT: 'false'
 
-  # One stable check name for branch protection. It fails if either job failed,
+  # One stable check name for branch protection. It fails if either job (the
+  # `frontend` job is itself the aggregate of the static job and the jest shards) failed,
   # was cancelled, or was skipped, so a skipped job can never read as a pass.
   ci-gate:
     name: CI gate
