@@ -158,18 +158,33 @@ sqlite-backed fake behind the `Executor` seam (`executor.py`).
 |---|---|
 | `status` | read-only (`BEGIN READ ONLY`): is the ledger there, how many rows, and the plan against it |
 | `apply` | dry run by default (reads the ledger read-only, prints what would run). `--apply` executes |
-| `import-baseline FILE` | dry run by default; `--apply` records the `baseline` rows from a `baseline` command file into the ledger |
+| `import-baseline FILE` | dry run by default; `--apply` records the `baseline` rows from a `baseline` command file into the ledger. The file is hand-editable, so every row is re-checked against the manifest first: checksum must equal the files now, `rebuild` entries are refused, an operator and a 64-hex `preflight_sha256` are required |
 
 `apply --apply` rules (each has a test in `tests/test_migrate_apply.py`):
 
 - one runner at a time (`pg_try_advisory_lock`), released at the end;
 - refuses on **checksum drift** (an applied entry's file changed), exit 2;
 - refuses when the ledger is missing or empty unless `--empty-database` is passed, so a
-  populated database with no ledger can never be "migrated from zero": record a baseline first;
+  populated database with no ledger can never be "migrated from zero": record a baseline first.
+  `--empty-database` is **verified, not trusted**: it is refused if the schema already holds any
+  table, view or materialised view other than the ledger;
+- refuses when the ledger holds ids the manifest does not know (a renamed entry would look pending
+  and run a second time), unless `--allow-unknown-ledger-ids` is passed;
+- the ledger is looked up with `to_regclass()` (not the information schema, which hides tables the
+  role cannot read); after bootstrapping it must be visible and empty, or the run stops;
+- the connection must stay the same backend (`pg_backend_pid()` is checked when the lock is
+  taken, at the start of each entry and just before `COMMIT`); a change rolls the entry back;
+- each entry runs with `SET LOCAL lock_timeout` (default 30 s) and `statement_timeout` (default
+  15 min); change with `--lock-timeout-ms` / `--statement-timeout-ms`, `0` = none;
 - only `schema` and `seed` entries run by themselves. `destructive` / `data_destructive`
   entries run only if named with `--approve ID ...` **and** `--approval-ref REF`; until then the
-  run stops there (strict order), exit 0, and later entries wait. `rebuild` and `manual_only`
-  entries never run and cannot be approved;
+  run stops there (strict order) and later entries wait. A `schema`/`seed` entry whose SQL the
+  linter flags as destructive (DROP, TRUNCATE, unqualified DELETE ...) is gated the same way and
+  can be approved the same way. An `apply --apply` that stops for approval exits 0; a **dry run**
+  that stops there exits **3**, so CI cannot read it as clean. `rebuild` and `manual_only`
+  entries never run and cannot be approved. Entries that depend on a skipped (refused, manual,
+  blocked) entry, or whose `external_requires` names a later ordered entry that is not applied,
+  are skipped with the reason; independent entries still run;
 - a `plan-sha` from a dry run must be presented with `--plan-sha` (the CLI refuses `--apply`
   without it, and the run refuses if the plan changed since: see "Reviewing a run");
 - an entry with `must_apply_with` (the two replacement subject seeds) is only run when its partner
@@ -179,12 +194,18 @@ sqlite-backed fake behind the `Executor` seam (`executor.py`).
 - one transaction per entry (all parts of a group together) that also inserts the ledger row, so
   an entry is applied-and-recorded or neither; the first failure rolls back, stops the run and
   reports `ExceptionType: first line` (never the SQL);
-- the file text is prepared first: the file's own `BEGIN;`/`COMMIT;` pairs are removed (the runner
-  owns the transaction; several pairs in one file run inside the single runner transaction),
+- the file text is prepared first with one tokenizer shared with `lint` (`sqltx.py`): transaction
+  control is recognised only as the first keyword of a top-level statement, so comments, strings and
+  `$$` bodies are never touched and `COMMIT; -- done` is found. The file's own plain `BEGIN;` /
+  `BEGIN WORK;` / `START TRANSACTION;` ... `COMMIT;` / `COMMIT WORK;` / `END;` pairs are removed (the
+  runner owns the transaction; several pairs run inside the single runner transaction),
   session-level `SET x` lines outside the pair become `SET LOCAL`, and `RESET ALL` runs after each
-  entry. `ROLLBACK`, `SAVEPOINT`, unbalanced pairs, statements outside a pair other than `SET`, and
-  a backslash-apostrophe in a plain string are **refused** (nothing runs). All 51 ordered entries
-  prepare cleanly today (checked locally, no database);
+  entry. Every other transaction-control statement (`ROLLBACK`, `ABORT`, `SAVEPOINT`, `RELEASE`,
+  `COMMIT AND CHAIN`, `BEGIN ISOLATION LEVEL ...`, a close without an open, ...), statements outside a
+  pair other than `SET`, and a backslash-apostrophe in a plain string are **refused** (nothing runs).
+  A `BEGIN ATOMIC ... END;` function body has top-level semicolons and is refused too (use a `$$`
+  body). If a commit acknowledgement is lost the message says the entry may have **committed**
+  and to run `status`, never "rolled back";
 - `.sql.gz` is decompressed in memory; nothing is written to disk or uploaded.
 
 The ledger table is `skillup_dev.schema_migrations`; its DDL is `backend/migrate/ledger.sql`

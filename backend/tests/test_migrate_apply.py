@@ -12,6 +12,20 @@ from migrate import executor as ex_mod
 from migrate import manifest as mf
 from migrate.sqlledger import SqlLedger
 
+
+@pytest.fixture(autouse=True)
+def _seeded_ledger_row_is_deliberate(monkeypatch):
+    """``seeded()`` puts a baseline row 'old' (not a manifest id) in the ledger; most tests
+    mean it as ordinary history. Tests of the refusal pass the flag explicitly."""
+    original = ap.run_apply
+
+    def run_apply(*args, **kwargs):
+        kwargs.setdefault("allow_unknown_ledger_ids", True)
+        return original(*args, **kwargs)
+
+    monkeypatch.setattr(ap, "run_apply", run_apply)
+
+
 LEDGER_TABLE = (
     "CREATE TABLE skillup_dev.schema_migrations (id TEXT PRIMARY KEY, checksum TEXT NOT NULL, "
     "kind TEXT NOT NULL DEFAULT 'applied', applied_at TEXT DEFAULT CURRENT_TIMESTAMP, "
@@ -36,6 +50,9 @@ class FakeExecutor:
         self.executed: list[str] = []
         self.script_calls = 0
         self.fail_on: str | None = None
+        self.pid_calls = 0
+        self.pid_change_after: int | None = None
+        self.timeouts: list[tuple[int, int]] = []
 
     def begin(self, *, read_only: bool = False) -> None:
         assert not self.in_tx, "nested transaction"
@@ -78,6 +95,22 @@ class FakeExecutor:
             (name,),
         ).fetchone()
         return row is not None
+
+    def list_tables(self, schema):
+        rows = self.db.execute(
+            f"SELECT name FROM {schema}.sqlite_master WHERE type IN ('table','view') "
+            "AND name NOT LIKE 'sqlite_%' ORDER BY name"
+        ).fetchall()
+        return [r[0] for r in rows]
+
+    def backend_pid(self):
+        self.pid_calls += 1
+        if self.pid_change_after is not None and self.pid_calls > self.pid_change_after:
+            return 2
+        return 1
+
+    def set_timeouts(self, lock_timeout_ms, statement_timeout_ms):
+        self.timeouts.append((lock_timeout_ms, statement_timeout_ms))
 
     def reset_session(self) -> None:
         self.resets += 1
@@ -542,17 +575,19 @@ def run_cli(argv, ex, tmp_path):
 def test_cli_apply_defaults_to_dry_run_and_apply_flag_executes(tmp_path, capsys):
     basic(tmp_path)
     ex = seeded(FakeExecutor())
-    assert run_cli(["apply"], ex, tmp_path) == 0
+    flag = "--allow-unknown-ledger-ids"  # seeded() records a baseline row 'old'
+    assert run_cli(["apply", flag], ex, tmp_path) == 0
     assert "DRY RUN" in capsys.readouterr().out and not ex.has_table("a")
-    assert run_cli(["apply", "--apply"], seeded(FakeExecutor()), tmp_path) == 1  # needs --plan-sha
+    flag_run = run_cli(["apply", "--apply", flag], seeded(FakeExecutor()), tmp_path)
+    assert flag_run == 1  # needs --plan-sha
     capsys.readouterr()
-    run_cli(["apply"], seeded(FakeExecutor()), tmp_path)
+    run_cli(["apply", flag], seeded(FakeExecutor()), tmp_path)
     sha = [
         line.split(": ", 1)[1]
         for line in capsys.readouterr().out.splitlines()
         if line.startswith("plan-sha: ")
     ][0]
-    argv = ["apply", "--apply", "--plan-sha", sha]
+    argv = ["apply", "--apply", flag, "--plan-sha", sha]
     assert run_cli(argv, seeded(ex2 := FakeExecutor()), tmp_path) == 0
     assert ex2.has_table("a") and ex2.has_table("b") and ex2.closed
 
@@ -589,7 +624,7 @@ def test_import_baseline_dry_run_then_apply(tmp_path, capsys):
                 "checksum": mf.entry_checksum(manifest.entries[0], root),
                 "kind": "baseline",
                 "operator": "sam",
-                "preflight_sha256": "ab",
+                "preflight_sha256": "ab" * 32,
             }
         ]
     }

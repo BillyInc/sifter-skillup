@@ -160,13 +160,13 @@ def build_plan(
         if row.unresolved:
             # A dependency the manifest cannot order is only satisfied once the ledger
             # records it (applied, or baselined with the operator's evidence). Without
-            # that, running this entry would fail on a fresh database.
+            # that, running this entry would fail on a fresh database. Only this entry
+            # (and whatever requires it) waits: independent entries are not held back.
             row.status = BLOCKED
             row.detail = (
-                "needs " + ", ".join(row.unresolved) + " recorded in the ledger first "
-                "(apply it by hand, then record a baseline)"
+                "depends on " + ", ".join(row.unresolved) + ", which is not recorded in "
+                "the ledger (apply it by hand, then record a baseline)"
             )
-            halted_by = halted_by or entry.id
             continue
         if halted_by is not None:
             row.status = BLOCKED

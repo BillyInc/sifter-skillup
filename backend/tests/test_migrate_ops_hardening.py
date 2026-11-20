@@ -22,6 +22,12 @@ from tests.test_migrate_apply import (
     seeded,
 )
 
+def run_apply(*args, **kwargs):
+    """seeded() puts a placeholder id in the ledger; it is not a manifest entry."""
+    kwargs.setdefault("allow_unknown_ledger_ids", True)
+    return ap.run_apply(*args, **kwargs)
+
+
 WORKFLOW = (
     Path(__file__).resolve().parents[2] / ".github" / "workflows" / "migrations.yml"
 )
@@ -85,21 +91,21 @@ def test_apply_refuses_a_stale_or_wrong_plan_sha_and_accepts_the_right_one(tmp_p
     )
     manifest = manifest_of(entry("migration_a"))
     ex = seeded(FakeExecutor())
-    dry = ap.run_apply(manifest, root, ex)
+    dry = run_apply(manifest, root, ex)
     sha = pl.plan_sha(dry.plan)
-    bad = ap.run_apply(
+    bad = run_apply(
         manifest, root, seeded(FakeExecutor()), apply=True, expected_plan_sha="0" * 64
     )
     assert bad.exit_code == 1 and "plan-sha mismatch" in bad.messages[0]
     ex2 = seeded(FakeExecutor())
-    ok = ap.run_apply(manifest, root, ex2, apply=True, expected_plan_sha=sha)
+    ok = run_apply(manifest, root, ex2, apply=True, expected_plan_sha=sha)
     assert ok.exit_code == 0 and ex2.has_table("a")
     # an edit after review changes the sha and refuses
     ex3 = seeded(FakeExecutor())
     (tmp_path / "migration_a.sql").write_text(
         "CREATE TABLE skillup_dev.a (y INTEGER);\n"
     )
-    stale = ap.run_apply(manifest, root, ex3, apply=True, expected_plan_sha=sha)
+    stale = run_apply(manifest, root, ex3, apply=True, expected_plan_sha=sha)
     assert stale.exit_code == 1 and not ex3.has_table("a")
 
 
@@ -116,7 +122,7 @@ def test_cli_apply_refuses_without_plan_sha(tmp_path, capsys):
 
 def test_replacement_seeds_must_be_approved_together(tmp_path):
     root, manifest = two(tmp_path)
-    alone = ap.run_apply(
+    alone = run_apply(
         manifest,
         root,
         seeded(FakeExecutor()),
@@ -126,7 +132,7 @@ def test_replacement_seeds_must_be_approved_together(tmp_path):
     )
     assert alone.exit_code == 1 and "seed_two" in alone.messages[0]
     ex = seeded(FakeExecutor())
-    both = ap.run_apply(
+    both = run_apply(
         manifest,
         root,
         ex,
@@ -203,7 +209,7 @@ def test_short_row_count_rolls_the_entry_back_and_records_nothing(tmp_path):
         entry("seed_empty", verify_rows=[{"table": "t", "min_rows": 1}])
     )
     ex = seeded(FakeExecutor())
-    result = ap.run_apply(manifest, root, ex, apply=True)
+    result = run_apply(manifest, root, ex, apply=True)
     assert result.exit_code == 1 and "expected at least 1" in result.messages[0]
     assert not ex.has_table("t")  # rolled back with the entry
     assert (
@@ -225,7 +231,7 @@ def test_enough_rows_commits(tmp_path):
         entry("seed_ok", verify_rows=[{"table": "t", "min_rows": 1}])
     )
     ex = seeded(FakeExecutor())
-    assert ap.run_apply(manifest, root, ex, apply=True).exit_code == 0
+    assert run_apply(manifest, root, ex, apply=True).exit_code == 0
 
 
 def test_row_check_rejects_unsafe_names():
