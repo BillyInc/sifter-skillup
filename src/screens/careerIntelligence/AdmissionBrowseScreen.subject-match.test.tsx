@@ -93,6 +93,16 @@ describe("AdmissionBrowseScreen subject-match programme rows", () => {
     }));
   });
 
+  it("the shared actionBtn style (Find, Search, Continue, See this programme) is a 44px target", () => {
+    // The Continue button needs the full subject-selection flow to render, so the
+    // shared style that carries the rule is checked directly.
+    const source = require("fs").readFileSync(require("path").join(__dirname, "AdmissionBrowseScreen.tsx"), "utf8") as string;
+    const block = /actionBtn: \{([\s\S]*?)\n  \},/.exec(source)?.[1] ?? "";
+    expect(block).toMatch(/minHeight: 44/);
+    // and the Continue button really uses that style
+    expect(source).toMatch(/accessibilityLabel="Continue"[\s\S]{0,400}styles\.actionBtn/);
+  });
+
   it("uses the exact offered programme name without exposing its university before programme selection", async () => {
     mockGetProgrammesBySubjects.mockResolvedValueOnce({
       status: "real",

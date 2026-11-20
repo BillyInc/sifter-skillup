@@ -10,6 +10,7 @@
 // For demo day, GitHub is the only live-OAuth target. Other `oauth`-integration
 // platforms fall through to the manual-link flow in PortfolioScreen.
 
+import { openExternalUrl, safeExternalUrl } from './safeUrl';
 import { Platform, Linking } from 'react-native';
 import * as ExpoLinking from 'expo-linking';
 import { API } from './api';
@@ -79,7 +80,7 @@ export async function startPortfolioOAuth({
 
   // Native: open the auth URL; backend will redirect to sifter:// which the app
   // handles via existing deep-link wiring.
-  await Linking.openURL(authUrl);
+  if (!(await openExternalUrl(authUrl))) throw new Error('The sign-in link was not safe to open.');
   return () => {};
 }
 
@@ -113,7 +114,9 @@ function startWebOAuth({
   };
 
   // Open the popup synchronously so browsers don't block it.
-  popup = window.open(authUrl, 'sifter-portfolio-oauth', 'width=600,height=720');
+  const safeAuthUrl = safeExternalUrl(authUrl);
+  if (!safeAuthUrl) throw new Error('The sign-in link was not safe to open.');
+  popup = window.open(safeAuthUrl, 'sifter-portfolio-oauth', 'width=600,height=720');
   if (!popup) {
     throw new Error('Popup blocked — allow popups for this site and retry.');
   }

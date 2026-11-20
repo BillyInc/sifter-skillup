@@ -1,7 +1,7 @@
+import { openExternalUrl } from "@/lib/safeUrl";
 import React, { useMemo, useState } from 'react';
 import {
-  View, Modal, Text, StyleSheet, ScrollView, TouchableOpacity, Linking,
-} from 'react-native';
+  View, Modal, Text, StyleSheet, ScrollView, TouchableOpacity, } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme, Spacing, Radius, FontSize, Shadow, webContainer } from "@/theme";
 import { useResponsive } from "@/hooks/useResponsive";
@@ -24,7 +24,7 @@ function ResourceCard({ resource }: { resource: ExternalResource }) {
   return (
     <TouchableOpacity
       style={[styles.resourceCard, Shadow.sm, { backgroundColor: colors.card, borderColor: colors.border }]}
-      onPress={() => Linking.openURL(resource.url).catch(() => {})}
+      onPress={() => openExternalUrl(resource.url)}
       activeOpacity={0.8}
     >
       <View style={styles.resourceHeader}>

@@ -130,6 +130,10 @@ export function SaveButton({
         if (result.status === "pending") {
           showHint(result.meta?.notice ?? "Saved on this device; it will sync when you reconnect.");
         } else showHint(next ? "Saved to My World." : "Removed from My World.");
+      } else if (result.status === "error") {
+        // The server rejected the write (not offline): roll back, say so, and
+        // leave the button usable as the retry.
+        rollback(result.meta?.notice ?? "Couldn't save just now. Try again.", "error");
       } else {
         rollback(result.meta?.notice ?? "Saving comes online soon", "warning");
       }
@@ -222,9 +226,11 @@ const styles = StyleSheet.create({
   label: { fontSize: FontSize.sm, fontWeight: "600" },
   hint: { fontSize: FontSize.sm, fontWeight: "600", maxWidth: 220 },
   hintCompact: {
+    // Hangs UNDER the 44px button, right-aligned with it. It used to sit to the
+    // button's left (right: 48), which covered the row's own action text.
     position: "absolute",
-    right: 48,
-    top: 8,
+    right: 0,
+    top: 48,
     zIndex: 2,
     paddingHorizontal: Spacing.sm,
     paddingVertical: Spacing.xs,

@@ -1,5 +1,6 @@
+import { openExternalUrl } from "@/lib/safeUrl";
 import React from "react";
-import { Linking, Modal, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from "react-native";
+import { Modal, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { CompassFonts, Radius, Spacing, useTheme } from "@/theme";
 import type { LearningPlanCandidate } from "@/lib/guidedLearningPlan";
@@ -110,12 +111,12 @@ function ComparisonCell({ option, row, selected }: {
       {option.themeLabel ? <Text style={[styles.optionMeta, { color: colors.textRole.muted }]}>{option.themeLabel}</Text> : null}
       <Text style={[styles.cellText, { color: colors.textRole.secondary }]}>{currentValue}</Text>
       {row.label === "Learning destination" && option.linkUrl && /^https:\/\//i.test(option.linkUrl) ? (
-        <TouchableOpacity accessibilityRole="link" accessibilityLabel={`Open learning destination for ${option.name}`} onPress={() => { void Linking.openURL(option.linkUrl!); }} style={styles.linkAction}>
+        <TouchableOpacity accessibilityRole="link" accessibilityLabel={`Open learning destination for ${option.name}`} onPress={() => { void openExternalUrl(option.linkUrl); }} style={styles.linkAction}>
           <Text style={[styles.linkText, { color: colors.accentRole.action }]}>{option.linkTitle || option.learningLinks?.[0]?.title || "Open learning destination"}</Text>
         </TouchableOpacity>
       ) : null}
       {row.label === "Source coverage" ? option.sourceReferences?.filter((reference) => /^https:\/\//i.test(reference.url)).map((reference) => (
-        <TouchableOpacity key={`${option.id}:${reference.url}`} accessibilityRole="link" accessibilityLabel={`Open reference for ${option.name}: ${reference.title || reference.url}`} onPress={() => { void Linking.openURL(reference.url); }} style={styles.linkAction}>
+        <TouchableOpacity key={`${option.id}:${reference.url}`} accessibilityRole="link" accessibilityLabel={`Open reference for ${option.name}: ${reference.title || reference.url}`} onPress={() => { void openExternalUrl(reference.url); }} style={styles.linkAction}>
           <Text style={[styles.linkText, { color: colors.accentRole.action }]}>{reference.title || "Open reference"}</Text>
         </TouchableOpacity>
       )) : null}

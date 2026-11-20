@@ -1,5 +1,6 @@
+import { openExternalUrl } from "@/lib/safeUrl";
 import React from "react";
-import { Linking, Modal, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Modal, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { CompassFonts, FontSize, Radius, Spacing, useTheme } from "@/theme";
 import type { CareerContextItemRelationship, CareerContextItemPathTarget } from "@/types/career";
@@ -264,7 +265,7 @@ export function ContextRelationshipSheet({
               {activeRelationship.targetItemType ? <Text style={[styles.relationshipMeta, { color: colors.textRole.muted }]}>{activeRelationship.targetItemType[0].toUpperCase() + activeRelationship.targetItemType.slice(1)} · related learning item</Text> : null}
               {activeRelationship.targetRouteLevel ? <Text style={[styles.relationshipMeta, { color: colors.textRole.muted }]}>{routeContributionText(activeRelationship.requirementLevel) ?? "A supported route option"}</Text> : null}
               {activeRelationship.sourceReferences?.filter((reference) => /^https:\/\//i.test(reference.url)).map((reference, sourceIndex) => (
-                <TouchableOpacity key={`${reference.url}:${sourceIndex}`} accessibilityRole="link" accessibilityLabel={`Open relationship evidence: ${reference.title || reference.url}`} onPress={() => { void Linking.openURL(reference.url); }}>
+                <TouchableOpacity key={`${reference.url}:${sourceIndex}`} accessibilityRole="link" accessibilityLabel={`Open relationship evidence: ${reference.title || reference.url}`} onPress={() => { void openExternalUrl(reference.url); }}>
                   <Text style={[styles.relationshipSource, { color: colors.accentRole.action }]}>Open evidence: {reference.title || "Source"}</Text>
                 </TouchableOpacity>
               ))}
@@ -289,7 +290,7 @@ export function ContextRelationshipSheet({
                     <Text style={[styles.relationshipMeta, { color: colors.textRole.secondary }]}>{sequenceGuidanceText(itemName, relationship)}</Text>
                     {routeContributionText(relationship.requirementLevel) ? <Text style={[styles.relationshipMeta, { color: colors.textRole.muted }]}>{routeContributionText(relationship.requirementLevel)}</Text> : null}
                     {relationship.sourceReferences?.filter((reference) => /^https:\/\//i.test(reference.url)).map((reference, sourceIndex) => (
-                      <TouchableOpacity key={`${reference.url}:${sourceIndex}`} accessibilityRole="link" accessibilityLabel={`Open relationship evidence: ${reference.title || reference.url}`} onPress={() => { void Linking.openURL(reference.url); }}>
+                      <TouchableOpacity key={`${reference.url}:${sourceIndex}`} accessibilityRole="link" accessibilityLabel={`Open relationship evidence: ${reference.title || reference.url}`} onPress={() => { void openExternalUrl(reference.url); }}>
                         <Text style={[styles.relationshipSource, { color: colors.accentRole.action }]}>Open evidence: {reference.title || "Source"}</Text>
                       </TouchableOpacity>
                     ))}

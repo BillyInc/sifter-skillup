@@ -42,6 +42,52 @@ beforeEach(() => {
   mockGetSavedItems.mockResolvedValue({ status: "real", data: [] });
 });
 
+describe("SaveButton: the confirmation message does not cover the row", () => {
+  it("hangs under the button (not over the row text to its left)", async () => {
+    mockSaveItem.mockResolvedValue({ status: "real", data: { id: "s1" } });
+    setup();
+    const button = await screen.findByRole("button", { name: "Sociology, save" });
+    await act(async () => { fireEvent.press(button); });
+    const message = await screen.findByText("Saved to My World.");
+    const flat = Object.assign({}, ...message.props.style.flat(3).filter(Boolean));
+    expect(flat.position).toBe("absolute");
+    expect(flat.top).toBeGreaterThanOrEqual(44);
+    expect(flat.right).toBeLessThanOrEqual(0);
+  });
+});
+
+describe("SaveButton: a server rejection is not shown as saved", () => {
+  it("rolls back and shows the failure when the server rejects the save", async () => {
+    mockSaveItem.mockResolvedValue({ status: "error", data: null, meta: { notice: "Couldn't save that. Try again." } });
+    setup();
+    const button = await screen.findByRole("button", { name: "Sociology, save" });
+    await act(async () => { fireEvent.press(button); });
+    await waitFor(() => expect(showToast).toHaveBeenCalledWith("Couldn't save that. Try again.", "error"));
+    const after = await screen.findByRole("button", { name: "Sociology, save" });
+    expect(after.props.accessibilityState.selected).toBe(false);
+    expect(screen.queryByText(/saved on this device/i)).toBeNull();
+  });
+
+  it("rolls back with a sign-in message on a locked (401) result", async () => {
+    mockSaveItem.mockResolvedValue({ status: "locked", data: null, meta: { notice: "Sign in again to save this." } });
+    setup();
+    const button = await screen.findByRole("button", { name: "Sociology, save" });
+    await act(async () => { fireEvent.press(button); });
+    await waitFor(() => expect(showToast).toHaveBeenCalledWith("Sign in again to save this.", "warning"));
+    const after = await screen.findByRole("button", { name: "Sociology, save" });
+    expect(after.props.accessibilityState.selected).toBe(false);
+  });
+
+  it("keeps the saved state and says so when it is queued on this device (offline)", async () => {
+    mockSaveItem.mockResolvedValue({ status: "pending", data: null, meta: { notice: "Saved on this device — it will sync when you reconnect." } });
+    setup();
+    const button = await screen.findByRole("button", { name: "Sociology, save" });
+    await act(async () => { fireEvent.press(button); });
+    await waitFor(() => expect(screen.getByText(/saved on this device/i)).toBeTruthy());
+    expect((await screen.findByRole("button", { name: "Sociology, saved" })).props.accessibilityState.selected).toBe(true);
+  });
+});
+
 describe("SaveButton quick-save", () => {
   it("is a named, pressable toggle with a 44px target", async () => {
     setup();
