@@ -396,6 +396,16 @@ export default function AdmissionBrowseScreen() {
         ? olevelSubjects.length >= 5 && olevelSubjects.length <= MAX_OLEVEL_SUBJECTS
         : subjects.length === 4 && olevelSubjects.length >= 5 && olevelSubjects.length <= MAX_OLEVEL_SUBJECTS;
   const canMatchSubjects = hasSubjectContext && !subjectLimitExceeded;
+  // Why Continue is unavailable, from the same counts that gate it.
+  const continueBlockedReason: string | null = canMatchSubjects
+    ? null
+    : subjectLimitExceeded
+      ? "Too many subjects chosen. Remove some to continue."
+      : subjectExamType === "utme"
+        ? "Choose 4 UTME subjects to continue."
+        : subjectExamType === "olevel"
+          ? `Choose 5 to ${MAX_OLEVEL_SUBJECTS} O-level subjects to continue.`
+          : `Choose 4 UTME subjects and 5 to ${MAX_OLEVEL_SUBJECTS} O-level subjects to continue.`;
   const guidedSubjectDiscovery =
     journeyMode === "guided_subject_discovery" &&
     initialMode === "subjects" &&
@@ -1550,17 +1560,23 @@ export default function AdmissionBrowseScreen() {
             activeOpacity={0.8}
             onPress={runSubjectMatch}
             disabled={!canMatchSubjects || loading}
+            accessibilityRole="button"
+            accessibilityLabel="Continue"
+            accessibilityHint={continueBlockedReason ?? undefined}
             accessibilityState={{ disabled: !canMatchSubjects || loading }}
             style={[
               styles.actionBtn,
-              {
-                backgroundColor: canMatchSubjects ? Brand.primary : colors.border,
-                alignSelf: "flex-start",
-              },
+              canMatchSubjects
+                ? { backgroundColor: Brand.primary }
+                : { backgroundColor: colors.surface.subtle, borderWidth: 1, borderColor: colors.borderRole.subtle },
+              { alignSelf: "flex-start" },
             ]}
           >
-            <Text style={styles.actionText}>Continue</Text>
+            <Text style={[styles.actionText, !canMatchSubjects && { color: colors.textMuted }]}>Continue</Text>
           </TouchableOpacity>
+          {continueBlockedReason ? (
+            <Text style={[styles.hint, { color: colors.textMuted }]}>{continueBlockedReason}</Text>
+          ) : null}
           {stream ? (
             <Text style={[styles.hint, { color: colors.textMuted }]}>
               Stream: {stream}. Stream sorts suggestions; subjects decide eligibility.
@@ -1701,12 +1717,12 @@ function ModeButton({
       style={[
         styles.modeBtn,
         {
-          backgroundColor: active ? colors.text : colors.card,
-          borderColor: active ? colors.text : colors.border,
+          backgroundColor: active ? colors.accentRole.action : colors.card,
+          borderColor: active ? colors.accentRole.action : colors.border,
         },
       ]}
     >
-      <Text style={[styles.modeText, { color: active ? colors.textInverse : colors.text }]}>
+      <Text style={[styles.modeText, { color: active ? colors.textRole.inverse : colors.text }]}>
         {label}
       </Text>
     </TouchableOpacity>

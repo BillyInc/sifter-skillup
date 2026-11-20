@@ -183,7 +183,7 @@ export function IntroCarousel({ onDone }: { onDone: () => void }) {
               key={i}
               style={[
                 styles.dot,
-                { width: w, opacity: o, backgroundColor: Brand.primary },
+                { width: w, opacity: o, backgroundColor: Brand.mark },
               ]}
             />
           );
@@ -196,7 +196,7 @@ export function IntroCarousel({ onDone }: { onDone: () => void }) {
           label={isLast ? "Get Started" : "Next"}
           onPress={goNext}
           variant="track"
-          color={Brand.primary}
+          color={Brand.mark}
           size="lg"
           fullWidth
         />

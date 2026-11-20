@@ -18,6 +18,7 @@ describe("StudentStageTable", () => {
     expect(screen.getByText("Senior secondary (SS3)")).toBeTruthy();
     expect(screen.getByText("Stage not recorded yet")).toBeTruthy();
     expect(screen.getByText("Self-signed-up")).toBeTruthy();
+    expect(screen.getByText("Added by you")).toBeTruthy();
   });
 
   it("renders nothing when there are no rows and falls back for unknown stages", () => {

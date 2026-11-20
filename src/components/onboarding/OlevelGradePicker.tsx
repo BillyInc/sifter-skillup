@@ -67,6 +67,7 @@ export function OlevelGradePicker({ subjects, grades, examBody, onChange }: Olev
           label={subject}
           options={GRADE_OPTIONS}
           value={current[subject] ?? UNKNOWN}
+          neutralValue={UNKNOWN}
           onChange={(v) => setGrade(subject, v as string)}
         />
       ))}

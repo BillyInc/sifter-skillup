@@ -162,6 +162,7 @@ export function ChoiceChips({
   multi,
   label,
   maxSelected,
+  neutralValue,
 }: {
   options: ChoiceOption[];
   value: string | string[] | undefined;
@@ -169,6 +170,12 @@ export function ChoiceChips({
   multi?: boolean;
   label?: string;
   maxSelected?: number;
+  /**
+   * An option that is the resting/default answer (e.g. "I don't know yet").
+   * It still reports selected to assistive tech, but is drawn with a quiet
+   * outline instead of the solid action fill, so it does not read as a choice.
+   */
+  neutralValue?: string;
 }) {
   const { colors } = useTheme();
   const selectedSet = new Set(
@@ -206,18 +213,25 @@ export function ChoiceChips({
       <View style={styles.chipWrap}>
         {options.map((o) => {
           const on = selectedSet.has(o.value);
+          const quiet = on && neutralValue !== undefined && o.value === neutralValue;
+          const solid = on && !quiet;
           return (
             <TouchableOpacity
               key={o.value}
               activeOpacity={0.85}
               onPress={() => toggle(o.value)}
+              accessibilityRole="button"
+              accessibilityLabel={label ? `${label}: ${o.label}` : o.label}
+              accessibilityState={{ selected: on }}
               style={[
                 styles.chip,
                 {
-                  backgroundColor: on
+                  backgroundColor: solid
                     ? colors.accentRole.action
-                    : colors.surface.raised,
-                  borderColor: on
+                    : quiet
+                      ? colors.surface.subtle
+                      : colors.surface.raised,
+                  borderColor: solid
                     ? colors.accentRole.action
                     : colors.borderRole.subtle,
                 },
@@ -227,7 +241,7 @@ export function ChoiceChips({
                 style={[
                   styles.chipText,
                   {
-                    color: on
+                    color: solid
                       ? colors.textRole.inverse
                       : colors.textRole.primary,
                   },
@@ -584,7 +598,7 @@ const styles = StyleSheet.create({
     borderRadius: Radius.full,
     paddingHorizontal: Spacing.md,
     paddingVertical: 9,
-    minHeight: 40,
+    minHeight: 44,
     justifyContent: "center",
   },
   chipText: { fontSize: FontSize.sm },

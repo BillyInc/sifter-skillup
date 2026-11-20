@@ -125,8 +125,8 @@ export function FilterChip({
       style={[
         styles.filterChip,
         {
-          backgroundColor: active ? colors.surface.inverse : colors.surface.raised,
-          borderColor: active ? colors.surface.inverse : colors.borderRole.subtle,
+          backgroundColor: active ? colors.accentRole.action : colors.surface.raised,
+          borderColor: active ? colors.accentRole.action : colors.borderRole.subtle,
           opacity: locked ? 0.62 : 1,
         },
       ]}
