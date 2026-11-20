@@ -134,7 +134,7 @@ async def register_push_token(
     }).execute()
 
     # Also update device session push_token if exists
-    from device_sessions import _get_existing_session
+    from middleware.device_sessions import _get_existing_session
     session = _get_existing_session(current_user["id"])
     if session:
         db.get_service_client().table("active_sessions").update({

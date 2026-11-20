@@ -19,7 +19,7 @@ from starlette.middleware.base import BaseHTTPMiddleware
 
 from auth import Auth
 from config import settings
-from device_sessions import validate_device_header
+from middleware.device_sessions import validate_device_header
 from logger import log
 
 # Routes that bypass device validation entirely.

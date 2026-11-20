@@ -7,7 +7,7 @@ from unittest.mock import AsyncMock, MagicMock
 import pytest
 from fastapi.testclient import TestClient
 
-import device_sessions
+import middleware.device_sessions as device_sessions
 import session_middleware
 from auth import Auth
 from main import app

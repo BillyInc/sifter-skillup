@@ -460,10 +460,10 @@ older ones still at `backend/<name>_routes.py` — both are wired in
 | `middleware/session_middleware.py` | Validates `X-Device-Id` on every authenticated request |
 | `middleware/device_sessions.py` | Device session model + helpers |
 | `email_delivery.py`, `email_codes.py`, `db_email_codes.py` | Email code generation, Resend delivery, DB persistence |
-| `fcm_service.py` | FCM push send |
+| `services/fcm_service.py` | FCM push send |
 | `crypto_utils.py` | EIP-191 / HMAC helpers |
 | `celery_worker.py` | Celery app, task registry, beat schedule |
-| `airtable_sync.py` | Airtable → Postgres content sync |
+| `services/airtable_sync.py` | Airtable → Postgres content sync |
 
 ### Router groupings today (see §17 for target classification)
 
@@ -686,8 +686,8 @@ constant fetching burns API quota and adds noise.
 | Supabase | `database.py` | 5xx; offline surfaces still render | **Core** |
 | Redis | `celery_worker.py` | Beat stalls; jobs queue after restart | **Core** |
 | Resend | `email_delivery.py` | Signup 502 | **Core** (primary auth channel) |
-| Airtable | `airtable_sync.py` | Sync stops; last-synced content stays live | **Supporting** |
-| FCM | `fcm_service.py` | No pushes; in-app feed still delivered | **Supporting** |
+| Airtable | `services/airtable_sync.py` | Sync stops; last-synced content stays live | **Supporting** |
+| FCM | `services/fcm_service.py` | No pushes; in-app feed still delivered | **Supporting** |
 | Labour-market data sources | `fetch_labour_market_demand` | Metrics go stale (monthly refresh) | **Core** |
 | Google OAuth | (planned) | Auth degrades to email + password | **Future** |
 | Privy | `@privy-io/expo` | Wallet auth blocked | **Future** (opt-in wallet only) |
@@ -1384,9 +1384,8 @@ sifter-skillup/
 ├── backend/
 │   ├── main.py  auth.py  config.py  database.py  models.py  logger.py
 │   ├── crypto_utils.py  email_delivery.py  email_codes.py  db_email_codes.py
-│   ├── fcm_service.py  device_sessions.py
 │   ├── middleware/               # session_middleware, device_sessions, require_admin/staff/institution_member
-│   ├── celery_worker.py  airtable_sync.py
+│   ├── celery_worker.py
 │   ├── routes/                   # newer routers (target home)
 │   ├── <name>_routes.py          # older routers (migrating)
 │   ├── migration_*.sql           # ~40 flat migrations
