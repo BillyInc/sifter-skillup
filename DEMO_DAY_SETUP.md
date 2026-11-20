@@ -52,7 +52,9 @@ PRIVY_APP_ID=your_privy_app_id
 PRIVY_APP_SECRET=your_privy_app_secret
 
 # Legacy auth (still used for guest flow + backend-issued session JWTs)
-JWT_SECRET=min_32_char_secret
+# Required: 32+ random characters (not a placeholder), or the backend refuses to start.
+# generate with: python -c "import secrets;print(secrets.token_urlsafe(48))"
+JWT_SECRET=<paste the generated value>
 
 # Starknet RPCs (round-robin pool)
 STARKNET_SEPOLIA_RPCS=["https://starknet-sepolia.public.blastapi.io/rpc/v0_7","https://free-rpc.nethermind.io/sepolia-juno/rpc/v0_7"]

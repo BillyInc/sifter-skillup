@@ -16,8 +16,21 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
 from config import settings
 from database import db
+from logger import log
 
 security = HTTPBearer(auto_error=False)
+
+
+_MISSING_TABLE_MARKERS = (
+    "pgrst205", "pgrst204", "42p01", "does not exist", "could not find the table",
+)
+
+
+def _is_missing_table(exc: Exception) -> bool:
+    """True when the error means the table itself is absent (pre-migration)."""
+    text = f"{type(exc).__name__} {exc} {getattr(exc, 'code', '')}".lower()
+    return any(marker in text for marker in _MISSING_TABLE_MARKERS)
+
 
 class Auth:
 
@@ -166,6 +179,29 @@ class Auth:
             raise HTTPException(status_code=401, detail="Invalid token")
 
     @staticmethod
+    def admin_mfa_status(user_id: str) -> Optional[str]:
+        """The stored admin MFA status; None when there is no row or no table yet.
+
+        ONE lookup for every caller. A table that does not exist yet (the
+        security migration has not been applied) reads as "not configured",
+        exactly as before. Any other error must NOT read as "not enabled": the
+        callers use this to decide whether a session may act as an admin or
+        change MFA, so an outage would turn into a downgrade. It is a 503.
+        """
+        try:
+            rows = db.get_service_client().table("user_mfa_settings").select(
+                "status"
+            ).eq("user_id", user_id).limit(1).execute().data or []
+        except Exception as exc:  # noqa: BLE001
+            if _is_missing_table(exc):
+                return None
+            log.warning("Admin MFA status lookup failed", error=type(exc).__name__)
+            raise HTTPException(
+                status_code=503, detail="Admin security status is unavailable. Try again shortly."
+            ) from exc
+        return rows[0].get("status") if rows else None
+
+    @staticmethod
     async def require_admin(
         # .__func__: unwrap the staticmethod so FastAPI sees the async function,
         # not the descriptor — otherwise the dependency injects an un-awaited
@@ -181,15 +217,7 @@ class Auth:
         """
         if current_user.get("account_type") not in ("institution_admin", "educator"):
             raise HTTPException(status_code=403, detail="Admin access required")
-        try:
-            mfa = db.get_service_client().table("user_mfa_settings").select(
-                "status"
-            ).eq("user_id", current_user["id"]).limit(1).execute().data or []
-        except Exception:
-            # Older installations can continue using admin access until the
-            # security migration has been applied.
-            mfa = []
-        if mfa and mfa[0].get("status") == "enabled" and not current_user.get("_mfa_verified"):
+        if Auth.admin_mfa_status(current_user["id"]) == "enabled" and not current_user.get("_mfa_verified"):
             raise HTTPException(status_code=428, detail="Admin MFA verification required.")
         return current_user
 

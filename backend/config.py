@@ -17,7 +17,31 @@ def dev_codes_enabled(debug: bool, allow_insecure: bool, flag: bool) -> bool:
 
 
 MIN_JWT_SECRET_LENGTH = 32
+MIN_JWT_SECRET_DISTINCT_CHARS = 10
 _DEFAULT_JWT_SECRET = "change-me-in-production"
+# Values that ship in the repo, its docs or its public CI files. A secret that
+# contains any of them is public knowledge however long it is.
+_PLACEHOLDER_MARKERS = (
+    "generate-a-strong", "change-me", "changeme", "ci-test-secret", "secret-must-be",
+    "min_32", "min-32", "your-", "your_", "example", "placeholder",
+)
+
+
+def _weak_jwt_secret_reason(secret: str) -> str | None:
+    """Why ``secret`` cannot sign production tokens, or None when it can."""
+    if not secret:
+        return "it is missing"
+    if secret == _DEFAULT_JWT_SECRET:
+        return "it is the default value"
+    if len(secret) < MIN_JWT_SECRET_LENGTH:
+        return f"it is shorter than {MIN_JWT_SECRET_LENGTH} characters"
+    lowered = secret.lower()
+    for marker in _PLACEHOLDER_MARKERS:
+        if marker in lowered:
+            return "it looks like a placeholder or a value published in the repository"
+    if len(set(secret)) < MIN_JWT_SECRET_DISTINCT_CHARS:
+        return f"it has fewer than {MIN_JWT_SECRET_DISTINCT_CHARS} distinct characters"
+    return None
 
 
 def check_jwt_secret(secret: str, debug: bool) -> None:
@@ -26,17 +50,20 @@ def check_jwt_secret(secret: str, debug: bool) -> None:
     This runs when ``config`` is imported, so it applies to EVERY process that
     imports it: the API (main), the Celery worker and beat (celery_worker.py and
     workers/celery_worker.py), the database/auth helpers, scheduled jobs and
-    scripts. Each of them needs the same JWT_SECRET (32+ random characters) in
-    its environment when DEBUG is off, or it exits at startup.
+    scripts. Each of them needs the same JWT_SECRET (32+ random characters, not
+    a placeholder) in its environment when DEBUG is off, or it exits at startup.
+    Generate one with: python -c "import secrets;print(secrets.token_urlsafe(48))"
     """
     if debug:
         return
-    if not secret or secret == _DEFAULT_JWT_SECRET or len(secret) < MIN_JWT_SECRET_LENGTH:
+    reason = _weak_jwt_secret_reason(secret)
+    if reason:
         message = (
-            "JWT_SECRET must be set to a random value of at least "
-            f"{MIN_JWT_SECRET_LENGTH} characters when DEBUG is false, in every process "
-            "that imports config (the API, the Celery worker and beat, scheduled jobs "
-            "and scripts). Refusing to start with a default, missing or short signing secret."
+            f"JWT_SECRET is not acceptable: {reason}. It must be a random value of at least "
+            f"{MIN_JWT_SECRET_LENGTH} characters when DEBUG is false, set in every process "
+            "that imports config (the API, the Celery worker and beat, scheduled jobs and "
+            "scripts). Generate one with: python -c \"import secrets;print(secrets.token_urlsafe(48))\". "
+            "Refusing to start."
         )
         # Loud, and visible even if the process manager hides the traceback.
         logging.getLogger("config").critical(message)

@@ -24,10 +24,20 @@ Design, and the trade-offs it makes on purpose
   it never blocks sign-in.
 - Every check answers identically for registered and unknown accounts; limits
   are applied before any database lookup.
-- Memory is bounded: checks never create state, empty windows are dropped,
-  keys are length-capped, and the table is capped at MAX_KEYS with
-  least-recently-active eviction (a key that is currently locked out is
-  evicted last).
+- Memory is bounded WITHOUT ever evicting a live counter. Checks never create
+  state, empty windows are dropped, keys are length-capped, and each bucket
+  holds at most MAX_KEYS keys. Evicting an entry would reset it: an attacker who
+  floods junk keys could wipe a victim's failure count and win a fresh guess
+  budget. So when a bucket is full of live entries it FAILS CLOSED for NEW keys
+  (429) and keeps every existing counter. A key whose window has passed frees
+  its slot. The price is that a very large flood can briefly refuse new keys in
+  that one bucket; it cannot touch other buckets or existing counters.
+- When the real address is unknown, mail-sending steps also share one coarse
+  global bucket per endpoint, so unlimited distinct emails cannot be used to
+  create unlimited keys or unlimited mail.
+- Address ceilings are sized for schools (many students behind one address):
+  generous, with a short back-off cap. The per-account (email, address) and
+  per-email limits stay tight.
 - Per-address limits are applied only when the real client address is known
   (see client_ip). Behind a proxy that does not forward it, every request
   would share one "address" and one abuser would lock everybody out.
@@ -50,30 +60,42 @@ from config import settings
 LIMITS: dict[str, tuple[int, int]] = {
     # sign-in guessing (failures only)
     "login_fail_pair": (15 * 60, 8),            # (email, address)
-    "login_fail_ip": (15 * 60, 40),             # address, across accounts
+    "login_fail_ip": (15 * 60, 200),            # address, across accounts (schools share one)
     "login_fail_email_noip": (15 * 60, 30),     # email, when the address is unknown
     "login_fail_email_global": (60 * 60, 400),  # email, last resort against a botnet
     # mail-sending steps (requests)
     "email_code_pair": (60 * 60, 3),
     "email_code_email": (60 * 60, 10),
-    "email_code_ip": (60 * 60, 15),
+    "email_code_ip": (60 * 60, 60),
+    "email_code_global_noip": (60 * 60, 600),   # all requests, when the address is unknown
     "reset_request_pair": (60 * 60, 3),
     "reset_request_email": (60 * 60, 10),
-    "reset_request_ip": (60 * 60, 15),
+    "reset_request_ip": (60 * 60, 60),
+    "reset_request_global_noip": (60 * 60, 600),
+    # "you already have an account" notices: one per address per day
+    "account_exists_notice_email": (24 * 60 * 60, 1),
     # code guessing: the code space is small, so this stays tight per email
     "reset_confirm_fail_email": (15 * 60, 5),
-    "reset_confirm_fail_ip": (15 * 60, 30),
+    "reset_confirm_fail_ip": (15 * 60, 100),
     # admin MFA
     "mfa_request_user": (60 * 60, 6),
     "mfa_verify_fail_user": (15 * 60, 8),
     "mfa_defer_fail_user": (15 * 60, 5),
 }
 
-MAX_KEYS = 50_000
+MAX_KEYS = 50_000                # per bucket
 MAX_KEY_LENGTH = 128
 MAX_BACKOFF_SECONDS = 4 * 60 * 60
+# Address buckets are shared by everyone behind one address (a school), so a
+# lockout there must clear quickly.
+BACKOFF_CAPS: dict[str, int] = {
+    "login_fail_ip": 15 * 60,
+    "email_code_ip": 15 * 60,
+    "reset_request_ip": 15 * 60,
+    "reset_confirm_fail_ip": 15 * 60,
+}
 STRIKE_DECAY_SECONDS = 24 * 60 * 60
-_SWEEP_PER_RECORD = 5
+CAPACITY_RETRY_SECONDS = 60      # answer for a NEW key when its bucket is full
 
 
 class _Entry:
@@ -87,18 +109,28 @@ class _Entry:
 
 
 class SlidingWindowLimiter:
+    """Sliding windows with back-off, one ordered table per bucket.
+
+    Each table is ordered by last activity, so expired entries sit at the front
+    and are dropped in O(1). Live entries are never evicted (see module doc).
+    """
+
     def __init__(self, limits: dict[str, tuple[int, int]] = LIMITS,
                  clock: Callable[[], float] = time.time, max_keys: int = MAX_KEYS) -> None:
         self._limits = limits
         self._clock = clock
         self._max_keys = max_keys
-        self._state: "OrderedDict[tuple[str, str], _Entry]" = OrderedDict()
+        self._tables: dict[str, "OrderedDict[str, _Entry]"] = {}
         self._lock = threading.Lock()
 
     # -- introspection -----------------------------------------------------
     def key_count(self) -> int:
         with self._lock:
-            return len(self._state)
+            return sum(len(t) for t in self._tables.values())
+
+    def bucket_key_count(self, bucket: str) -> int:
+        with self._lock:
+            return len(self._tables.get(bucket, ()))
 
     # -- internals (lock held) ---------------------------------------------
     def _prune(self, entry: _Entry, now: float, window: int) -> None:
@@ -112,45 +144,37 @@ class SlidingWindowLimiter:
             return False
         return entry.strikes == 0 or now - entry.last_strike > STRIKE_DECAY_SECONDS
 
-    def _window_of(self, bucket: str) -> int:
-        return self._limits[bucket][0]
-
-    def _sweep_front(self, now: float) -> None:
-        for _ in range(_SWEEP_PER_RECORD):
-            if not self._state:
-                return
-            k = next(iter(self._state))
-            if self._expired(self._state[k], now, self._window_of(k[0])):
-                del self._state[k]
+    def _sweep_front(self, table: "OrderedDict[str, _Entry]", now: float, window: int) -> None:
+        """Drop expired entries from the front (least recently active)."""
+        while table:
+            key = next(iter(table))
+            if self._expired(table[key], now, window):
+                del table[key]
             else:
                 return
 
-    def _evict_over_cap(self, now: float) -> None:
-        while len(self._state) > self._max_keys:
-            victim = None
-            for k, entry in self._state.items():  # least recently active first
-                if entry.blocked_until <= now:
-                    victim = k
-                    break
-            if victim is None:
-                victim = next(iter(self._state))
-            del self._state[victim]
+    def _full(self, table: "OrderedDict[str, _Entry]", now: float, window: int) -> bool:
+        self._sweep_front(table, now, window)
+        return len(table) >= self._max_keys
 
     # -- public --------------------------------------------------------------
     def retry_after(self, bucket: str, key: str) -> Optional[int]:
         """Seconds until the next event is allowed, or None if allowed now.
 
-        Never creates state for a key that has not recorded an event.
+        Never creates state. A NEW key in a bucket that is full of live entries
+        is refused (fail closed) instead of evicting somebody's counter.
         """
         window, maximum = self._limits[bucket]
         now = self._clock()
-        k = (bucket, key)
         with self._lock:
-            entry = self._state.get(k)
+            table = self._tables.get(bucket)
+            entry = table.get(key) if table is not None else None
             if entry is None:
+                if table is not None and self._full(table, now, window):
+                    return CAPACITY_RETRY_SECONDS
                 return None
             if self._expired(entry, now, window):
-                del self._state[k]
+                del table[key]
                 return None
             if entry.blocked_until > now:
                 return max(1, int(math.ceil(entry.blocked_until - now)))
@@ -160,32 +184,37 @@ class SlidingWindowLimiter:
                 entry.strikes += 1
                 entry.last_strike = now
                 sliding = max(1.0, entry.events[len(entry.events) - maximum] + window - now)
-                wait = min(sliding * (2 ** (entry.strikes - 1)), float(MAX_BACKOFF_SECONDS))
+                cap = float(BACKOFF_CAPS.get(bucket, MAX_BACKOFF_SECONDS))
+                wait = min(sliding * (2 ** (entry.strikes - 1)), cap)
                 entry.blocked_until = now + wait
                 return max(1, int(math.ceil(wait)))
         return None
 
     def record(self, bucket: str, key: str) -> None:
+        window = self._limits[bucket][0]
         now = self._clock()
-        k = (bucket, key)
         with self._lock:
-            entry = self._state.get(k)
+            table = self._tables.setdefault(bucket, OrderedDict())
+            entry = table.get(key)
             if entry is None:
+                if self._full(table, now, window):
+                    return  # fail closed: never evict a live counter to make room
                 entry = _Entry()
-                self._state[k] = entry
+                table[key] = entry
             else:
-                self._state.move_to_end(k)
+                table.move_to_end(key)
             entry.events.append(now)
-            self._sweep_front(now)
-            self._evict_over_cap(now)
+            self._sweep_front(table, now, window)
 
     def clear(self, bucket: str, key: str) -> None:
         with self._lock:
-            self._state.pop((bucket, key), None)
+            table = self._tables.get(bucket)
+            if table is not None:
+                table.pop(key, None)
 
     def reset(self) -> None:
         with self._lock:
-            self._state.clear()
+            self._tables.clear()
 
 
 limiter = SlidingWindowLimiter()
@@ -264,6 +293,21 @@ def clear(bucket: str, key: str) -> None:
         limiter.clear(bucket, _key(key))
 
 
+def allow_once(bucket: str, key: str) -> bool:
+    """True and counts the event if ``key`` still has allowance; never raises.
+
+    For best-effort actions (a courtesy email) that should simply be skipped, not
+    answered with a 429, when the allowance is used up.
+    """
+    if not settings.AUTH_RATE_LIMIT_ENABLED or not key:
+        return True
+    k = _key(key)
+    if limiter.retry_after(bucket, k) is not None:
+        return False
+    limiter.record(bucket, k)
+    return True
+
+
 # -- bucket sets ---------------------------------------------------------------
 def login_buckets(email: str, ip: Optional[str]) -> list[tuple[str, str]]:
     email = _key(email)
@@ -277,7 +321,9 @@ def request_buckets(prefix: str, email: str, ip: Optional[str]) -> list[tuple[st
     email = _key(email)
     if ip:
         return [(f"{prefix}_pair", f"{email}|{ip}"), (f"{prefix}_email", email), (f"{prefix}_ip", ip)]
-    return [(f"{prefix}_email", email)]
+    # Address unknown: per email, plus one coarse bucket for the whole endpoint so
+    # distinct emails cannot be used to mail or to create keys without limit.
+    return [(f"{prefix}_email", email), (f"{prefix}_global_noip", "global")]
 
 
 def enforce_all(buckets: list[tuple[str, str]]) -> None:

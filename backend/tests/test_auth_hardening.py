@@ -284,7 +284,8 @@ class TestJwtSecretGuard:
 
     def test_a_strong_secret_is_accepted(self):
         import config
-        config.check_jwt_secret("x" * 40, debug=False)
+        import secrets
+        config.check_jwt_secret(secrets.token_urlsafe(48), debug=False)
 
     def test_debug_may_keep_a_weak_secret(self):
         import config

@@ -1359,7 +1359,11 @@ REDDIT / BEHANCE / DRIBBBLE / GOOGLE / VIMEO — _CLIENT_ID + _SECRET
 #### Required in production (the process refuses to start without it)
 
 With `DEBUG=false`, `config.py` raises at import unless `JWT_SECRET` is set to a
-random value of at least 32 characters (not the placeholder default). `config` is
+random value of at least 32 characters with at least 10 distinct characters. The
+default, and anything containing a placeholder marker (`generate-a-strong`,
+`change-me`, `ci-test-secret`, `min_32`, `your-`, `example`, `placeholder`, ...),
+is refused even when long enough; generate one with
+`python -c "import secrets;print(secrets.token_urlsafe(48))"`. `config` is
 imported by the API, the Celery worker and beat (`celery_worker.py`,
 `workers/celery_worker.py`), the database and auth helpers, scheduled jobs and
 scripts, so every one of those processes needs the same secret. Check the

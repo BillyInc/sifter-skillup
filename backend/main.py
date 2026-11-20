@@ -324,7 +324,11 @@ async def request_email_code(body: dict, request: Request, background_tasks: Bac
     # itself still refuses a duplicate, but only after a valid code, which an
     # outsider cannot obtain.
     if registered:
-        background_tasks.add_task(_send_account_exists_notice_quietly, email)
+        # At most one notice per address per day, so the notice cannot be used to
+        # flood a registered owner. The response is the same either way; the limit
+        # is per worker process (see auth_rate_limit).
+        if auth_rate_limit.allow_once("account_exists_notice_email", email):
+            background_tasks.add_task(_send_account_exists_notice_quietly, email)
     else:
         background_tasks.add_task(_issue_signup_code_quietly, email)
     return ResponseModel(data=data)
@@ -421,22 +425,12 @@ async def get_admin_mfa(current_user: dict = Depends(Auth.get_current_user)):
 
 
 def _admin_mfa_status(user_id: str) -> Optional[str]:
-    """The stored MFA status; None only when there is genuinely no row.
+    """The stored MFA status; one shared lookup (see Auth.admin_mfa_status).
 
-    A failed lookup must NOT read as "not enabled": the callers use this to
-    decide whether a session may change MFA, so an outage would turn into a
-    downgrade. A lookup error is a 503 instead.
+    None only when there is genuinely no row, or the security migration has not
+    created the table yet. A failed lookup is a 503, never "not enabled".
     """
-    try:
-        rows = db.get_service_client().table("user_mfa_settings").select(
-            "status"
-        ).eq("user_id", user_id).limit(1).execute().data or []
-    except Exception as exc:
-        log.warning("Admin MFA status lookup failed", error=type(exc).__name__)
-        raise HTTPException(
-            status_code=503, detail="Admin security status is unavailable. Try again shortly."
-        ) from exc
-    return rows[0].get("status") if rows else None
+    return Auth.admin_mfa_status(user_id)
 
 
 @app.post("/api/auth/mfa/request", response_model=ResponseModel)
@@ -812,6 +806,11 @@ async def auth_signup(body: dict, request: Request):
         )
 
 
+# bcrypt hash of a random throwaway string. Never matches a real password; it
+# exists so a login for an unknown address costs the same as a real check.
+_DUMMY_PASSWORD_HASH = bcrypt.hashpw(secrets.token_bytes(24), bcrypt.gensalt()).decode()
+
+
 @app.post("/api/auth/login", response_model=ResponseModel)
 async def auth_login(body: dict, request: Request):
     email = (body.get("email") or "").strip().lower()
@@ -826,7 +825,12 @@ async def auth_login(body: dict, request: Request):
     result = db.get_service_client().table("users").select("*").eq("email", email).execute()
     result.data = [row for row in (result.data or []) if row.get("is_deleted") is not True]
     user = result.data[0] if result.data else None
-    if not user or not user.get("password_hash") or not bcrypt.checkpw(password.encode(), user["password_hash"].encode()):
+    # Always run exactly one bcrypt comparison, against a fixed dummy hash when
+    # there is no usable account, so unknown and known addresses take the same
+    # time and the response cannot be used to find registered emails.
+    stored_hash = (user or {}).get("password_hash") or _DUMMY_PASSWORD_HASH
+    password_ok = bcrypt.checkpw(password.encode(), stored_hash.encode())
+    if not user or not user.get("password_hash") or not password_ok:
         auth_rate_limit.record_all(login_buckets)
         raise HTTPException(status_code=401, detail="Invalid email or password")
     auth_rate_limit.clear_login(email, ip)

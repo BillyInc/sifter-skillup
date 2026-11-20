@@ -218,7 +218,9 @@ class TestLimiterMemoryIsBounded:
         assert lim.retry_after("login_fail_pair", "victim") is not None  # now locked out
         for i in range(500):
             lim.record("login_fail_email_noip", f"noise{i}")
-        assert lim.key_count() <= 50
+        # The cap is per bucket now: the noise bucket is bounded, and the
+        # victim's counters in another bucket are untouched.
+        assert lim.bucket_key_count("login_fail_email_noip") <= 50
         assert lim.retry_after("login_fail_pair", "victim") is not None, \
             "flooding distinct keys must not evict an active lockout"
 

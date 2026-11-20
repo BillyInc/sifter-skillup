@@ -54,7 +54,7 @@ jobs:
         run: uv run pytest --tb=short -q
         env:
           DEBUG: 'true'
-          JWT_SECRET: ci-test-secret-must-be-at-least-32-characters-long
+          JWT_SECRET: 58tdjjpRND_pueUvjawwv5zBaiT5oz6FBOMM-vXUodWpUSexzeSReWpcHBK95pfV
           SUPABASE_URL: https://placeholder.supabase.co
           SUPABASE_ANON_KEY: placeholder
           SUPABASE_SERVICE_KEY: placeholder
