@@ -43,10 +43,11 @@ import re
 from uuid import uuid4
 from typing import Any, List, Literal, Optional
 
-from fastapi import APIRouter, Body, Depends, File, Form, HTTPException, Query, UploadFile
+from fastapi import APIRouter, Body, Depends, File, Form, HTTPException, Query, Request, UploadFile
 from pydantic import BaseModel, ConfigDict, Field
 
 from auth import Auth
+from avatar_storage import UploadRateLimiter
 from config import settings
 from database import db
 from logger import log
@@ -219,7 +220,128 @@ def _require_school_identity_schema(svc) -> None:
         ) from exc
 
 
-def _find_or_create_school(claim: "VerificationClaim") -> Optional["Organization"]:
+# ─────────────────────────────────────────────────────────────
+# Joining an existing school
+# ─────────────────────────────────────────────────────────────
+#
+# The owner access code is shared, so holding it proves nothing about WHICH
+# school a caller administers. Without the check below, POST /verify with
+# another school's name and address (or organization_id) linked the caller to
+# that school, and the admin and provisioning routes only check that a
+# membership row exists: roster, login cards with live claim codes and student
+# deletion were then reachable. A school that already has an active member can
+# only be joined through a pending, unexpired invitation to the caller's email
+# (institution_member_invites, created by an owner or admin).
+
+def _is_unexpired(value: Any) -> bool:
+    if not value:
+        return True
+    try:
+        text = str(value).replace("Z", "+00:00")
+        expires = datetime.fromisoformat(text)
+        if expires.tzinfo is None:
+            expires = expires.replace(tzinfo=timezone.utc)
+        return expires > datetime.now(timezone.utc)
+    except (TypeError, ValueError):
+        return False
+
+
+def _refuse_join(detail: str, status_code: int = 409) -> None:
+    raise HTTPException(status_code=status_code, detail=detail)
+
+
+def _pending_invite(svc, school_id: str, email: str) -> Optional[dict]:
+    rows = (
+        svc.table("institution_member_invites")
+        .select("*")
+        .eq("school_id", school_id)
+        .eq("status", "pending")
+        .limit(200)
+        .execute()
+        .data
+        or []
+    )
+    wanted = (email or "").strip().lower()
+    if not wanted:
+        return None
+    for row in rows:
+        if (row.get("invited_email") or "").strip().lower() == wanted and _is_unexpired(
+            row.get("expires_at")
+        ):
+            return row
+    return None
+
+
+def _authorize_join(current_user: dict, school_id: str) -> Optional[dict]:
+    """Allow a caller to be linked to ``school_id`` or raise.
+
+    Returns the pending invitation being used (so the caller can close it), or
+    None when no invitation is needed: the school has no active member yet, or
+    the caller is already a member. Fails closed on any lookup error.
+    """
+    try:
+        svc = _svc()
+        members = (
+            svc.table("institution_members")
+            .select("user_id, seat_status")
+            .eq("school_id", school_id)
+            .limit(500)
+            .execute()
+            .data
+            or []
+        )
+    except Exception as exc:  # noqa: BLE001
+        log.error("institutions: join check could not read members", error=str(exc))
+        _refuse_join("Could not check this organisation right now. Please try again.", 503)
+    active = [m for m in members if m.get("seat_status") != "revoked"]
+    if not active or any(m.get("user_id") == current_user.get("id") for m in active):
+        return None
+    try:
+        invite = _pending_invite(svc, school_id, current_user.get("email") or "")
+    except Exception as exc:  # noqa: BLE001
+        log.error("institutions: join check could not read invitations", error=str(exc))
+        invite = None
+    if invite:
+        return invite
+    log.warning(
+        "institutions: join refused, organisation already has members and no invitation",
+        user_id=current_user.get("id"),
+        school_id=school_id,
+    )
+    _refuse_join(
+        "This organisation already has administrators. Ask an owner or admin "
+        "to invite you from their team page."
+    )
+
+
+def _invite_for_user(current_user: dict, school_id: str) -> Optional[dict]:
+    """The caller's pending, unexpired invitation for ``school_id`` (read only)."""
+    try:
+        return _pending_invite(_svc(), school_id, current_user.get("email") or "")
+    except Exception as exc:  # noqa: BLE001
+        log.warning("institutions: invitation lookup skipped", error=str(exc))
+        return None
+
+
+def _close_invite(current_user: dict, invite: Optional[dict]) -> None:
+    """Mark an invitation accepted once the member row exists."""
+    if not invite:
+        return
+    try:
+        _svc().table("institution_member_invites").update(
+            {
+                "status": "accepted",
+                "accepted_by": current_user["id"],
+                "accepted_at": datetime.now(timezone.utc).isoformat(),
+            }
+        ).eq("id", invite["id"]).execute()
+    except Exception as exc:  # noqa: BLE001
+        log.warning("institutions: invitation close skipped", error=str(exc))
+
+
+def _find_or_create_school(
+    claim: "VerificationClaim", current_user: Optional[dict] = None
+) -> Optional["Organization"]:
     name = (claim.organization_name or "").strip()
     if not name:
         return None
@@ -257,6 +379,8 @@ def _find_or_create_school(claim: "VerificationClaim") -> Optional["Organization
         )
         if selected:
             selected_row = selected[0]
+            if current_user is not None:
+                _authorize_join(current_user, selected_row.get("id"))
             existing_address = (selected_row.get("address") or "").strip()
             effective_address = address or existing_address
             # Selecting an existing school creates no row, but an admin grant
@@ -312,6 +436,8 @@ def _find_or_create_school(claim: "VerificationClaim") -> Optional["Organization
         None,
     )
     existing_address = (row.get("address") or "").strip() if row else ""
+    if row is not None and current_user is not None:
+        _authorize_join(current_user, row.get("id"))
     if not row:
         row = (
             svc.table("schools")
@@ -1581,9 +1707,29 @@ async def invite_team_member(
         )
 
 
+# Failed access-code attempts per caller. Only failures are recorded, so a
+# legitimate code holder is never locked out by their own successes; the limit
+# stops guessing of the shared owner code by user and by source address.
+ACCESS_CODE_FAILURES_PER_WINDOW = 10
+access_code_limiter = UploadRateLimiter(
+    limits=((900, ACCESS_CODE_FAILURES_PER_WINDOW, "15 minutes"),
+            (86400, ACCESS_CODE_FAILURES_PER_WINDOW * 5, "day")),
+)
+
+
+def _access_code_keys(request: Optional[Request], current_user: dict) -> list:
+    keys = [f"user:{current_user.get('id')}"]
+    client = getattr(request, "client", None)
+    host = getattr(client, "host", None)
+    if host:
+        keys.append(f"ip:{host}")
+    return keys
+
+
 @router.post("/access-code/validate", response_model=ResponseModel)
 async def validate_admin_access_code(
     payload: AdminAccessCodeRequest = Body(...),
+    request: Request = None,
     current_user: dict = Depends(Auth.get_current_user),
 ):
     """Validate an owner-issued admin access code.
@@ -1592,12 +1738,22 @@ async def validate_admin_access_code(
     centres while proof review remains manual. It does not verify ownership,
     create an institution membership, or replace school/student claim codes.
     """
+    keys = _access_code_keys(request, current_user)
+    waits = [w for w in (access_code_limiter.check(k) for k in keys) if w]
+    if waits:
+        raise HTTPException(
+            status_code=429,
+            detail="Too many incorrect access codes. Try again later.",
+            headers={"Retry-After": str(max(waits))},
+        )
     submitted = (payload.code or "").strip().upper()
     ok = bool(submitted) and any(
         hmac.compare_digest(submitted, configured)
         for configured in settings.EDUCATOR_ACCESS_CODES
     )
     if not ok:
+        for key in keys:
+            access_code_limiter.record(key)
         log.info(
             "Institution access code rejected",
             user_id=current_user["id"],
@@ -1727,13 +1883,20 @@ async def submit_verification(
     status = "claimed"
     account_type = _normal_account_type(claim.account_type, claim.role)
     try:
-        org = _find_or_create_school(claim)
+        org = _find_or_create_school(claim, current_user)
         if not org:
             return ResponseModel(
                 data=None,
                 message="Organisation name is required to create the admin workspace.",
             )
-        _attach_member(current_user, org.id, account_type, claim.role)
+        # Joining a school that already has administrators goes through its
+        # invitation: the invited role wins over whatever the request body says.
+        invite = _invite_for_user(current_user, org.id)
+        invited_role = (invite or {}).get("role")
+        if invited_role:
+            account_type = _normal_account_type(None, invited_role)
+        _attach_member(current_user, org.id, account_type, invited_role or claim.role)
+        _close_invite(current_user, invite)
         try:
             _svc().table("users").update(
                 {
@@ -1758,6 +1921,10 @@ async def submit_verification(
             data=org.model_dump(by_alias=True),
             message="Admin workspace linked. Submit verification proof to request review.",
         )
+    except HTTPException:
+        # Authorisation refusals (e.g. an organisation that already has
+        # administrators) must reach the client, not become a generic failure.
+        raise
     except Exception as exc:  # noqa: BLE001
         log.error("Institution verify claim failed", user_id=current_user["id"], error=str(exc))
         return ResponseModel(
