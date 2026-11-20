@@ -194,12 +194,21 @@ def test_baseline_rows_come_only_from_named_entries_and_a_preflight_file(tmp_pat
         build_baseline(_manifest(), root, ["migration_a"], root / "bad.json", "a")
 
 
-def test_a_rebuild_entry_can_never_be_baselined(tmp_path):
+def test_a_rebuild_entry_can_never_be_run_and_is_baselined_only_with_a_reason(tmp_path):
     root = _root(tmp_path)
     with pytest.raises(BaselineError, match="rebuild"):
         build_baseline(
             _manifest(), root, ["migration_v2"], root / "preflight.json", "alice"
         )
+    rows = build_baseline(
+        _manifest(),
+        root,
+        ["migration_v2"],
+        root / "preflight.json",
+        "alice",
+        reason="taxonomy already seeded",
+    )
+    assert "rebuild baseline reason: taxonomy already seeded" in rows[0]["operator"]
 
 
 def test_baseline_roundtrip_shows_as_applied_and_detects_drift(tmp_path):

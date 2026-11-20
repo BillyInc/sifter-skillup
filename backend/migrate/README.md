@@ -158,7 +158,7 @@ sqlite-backed fake behind the `Executor` seam (`executor.py`).
 |---|---|
 | `status` | read-only (`BEGIN READ ONLY`): is the ledger there, how many rows, and the plan against it |
 | `apply` | dry run by default (reads the ledger read-only, prints what would run). `--apply` executes |
-| `import-baseline FILE` | dry run by default; `--apply` records the `baseline` rows from a `baseline` command file into the ledger. The file is hand-editable, so every row is re-checked against the manifest first: checksum must equal the files now, `rebuild` entries are refused, an operator and a 64-hex `preflight_sha256` are required |
+| `import-baseline FILE` | dry run by default; `--apply` records the `baseline` rows from a `baseline` command file into the ledger. The file is hand-editable, so every row is re-checked against the manifest first: checksum must equal the files now, a `rebuild` entry is accepted **only** if its `operator` text carries the `(rebuild baseline reason: <reason>)` marker that `baseline --reason` writes (it is still never run), an operator and a 64-hex `preflight_sha256` are required |
 
 `apply --apply` rules (each has a test in `tests/test_migrate_apply.py`):
 
@@ -244,12 +244,26 @@ be approved blind or after a later PR added an entry. The workflow does the same
 
 ## Fresh database or rebuilt taxonomy
 
-`migration_career_v2` (rebuild) is never run by the runner, but several entries depend on it. The
-sequence is: apply the earlier entries with the runner, apply `migration_career_v2` (and any
-`[[unordered]]` prerequisite such as `migration_admission_intelligence`) by hand per the runbook,
-record them with `baseline --reason` / `--entries <path>` and `import-baseline`, then continue with
-`apply`. Until then `plan` shows the dependants as `blocked`, by design. A baselined rebuild is not
-reported as "applied out of order".
+`migration_career_v2` (rebuild) is never run by the runner, but several entries depend on it, and
+`migration_student_pipeline_live` also waits on the `[[unordered]]` file
+`migration_admission_intelligence.sql`. Onboarding an existing production database, in this order
+(all `python -m migrate ...` commands run from `backend/`, e.g. `uv run python -m migrate ...`):
+
+1. Take your own backup and save a read-only preflight result as `PREFLIGHT.json`.
+2. Record everything the database already has. Name each entry (no wildcard):
+   `baseline --preflight PREFLIGHT.json --entries <id> ... --operator NAME --out baseline.json`.
+   Include `migration_career_v2` **with** `--reason "<why the database already has it>"`, and
+   `--entries migration_admission_intelligence.sql` (an unordered file is named by its path).
+   `plan` prints the exact `baseline` command for each unmet dependency.
+3. `import-baseline baseline.json` (dry run), then again with `--apply`. A rebuild row is accepted
+   only if it came from `baseline --reason` (the marker in its `operator` text); a hand-edited row
+   without the marker is refused. The rebuild is recorded as present and never runs.
+4. `db-status` (read-only), then a `db-apply` dry run: read its `plan-sha:` line.
+5. A confirmed `db-apply` with that `plan_sha` (and `approve_ids` / `approval_ref` only for the
+   entries a human has reviewed). The run refuses if the plan changed since the dry run.
+
+Until the baselines are recorded `plan` shows the dependants as `blocked`, by design. A baselined
+rebuild is not reported as "applied out of order".
 
 ## When something goes wrong
 

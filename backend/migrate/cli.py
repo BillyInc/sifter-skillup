@@ -206,6 +206,10 @@ def cmd_apply(args: argparse.Namespace, connect: Connect) -> int:
     return result.exit_code
 
 
+# Written by `baseline --reason` (ledger.build_baseline): "<operator> (rebuild baseline reason: <text>)".
+REBUILD_REASON_RE = re.compile(r"^\S.* \(rebuild baseline reason: \S[^()]*\)$")
+
+
 def cmd_import_baseline(args: argparse.Namespace, connect: Connect) -> int:
     manifest, root = _load(args)
     try:
@@ -228,13 +232,21 @@ def cmd_import_baseline(args: argparse.Namespace, connect: Connect) -> int:
         return 1
     # The file is hand-editable: re-verify every row against the manifest as it is now.
     by_id = {entry.id: entry for entry in manifest.entries}
+    for item in manifest.unordered:
+        by_id.setdefault(
+            item.path, mf.Entry(id=item.path, kind="schema", path=item.path)
+        )
     applied_by = ledger_file.applied()
     for entry_id, meta in rows.items():
         entry = by_id[entry_id]
-        if entry.kind == "rebuild":
+        if entry.kind == "rebuild" and not re.search(
+            REBUILD_REASON_RE, str(meta.get("operator", ""))
+        ):
             print(
-                f"baseline import refused: '{entry_id}' is a rebuild entry and can "
-                "never be baselined",
+                f"baseline import refused: '{entry_id}' is a rebuild entry; it can be "
+                "recorded as already present only from a `baseline --reason` row "
+                "(operator text must carry 'rebuild baseline reason: <reason>'). "
+                "It is never run by the runner.",
                 file=sys.stderr,
             )
             return 1

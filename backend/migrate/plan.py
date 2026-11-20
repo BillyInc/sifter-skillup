@@ -118,7 +118,9 @@ def build_plan(
             if entry.id in baselines:
                 row.detail = f"baseline recorded by {baselines[entry.id].get('operator', '?')} (not run by the runner)"
                 if entry.kind == "rebuild":
-                    plan.warnings.append(f"{entry.id} is a rebuild entry recorded as baseline")
+                    plan.warnings.append(
+                        f"{entry.id} is a rebuild entry recorded as baseline"
+                    )
             if row.checksum == row.applied_checksum:
                 row.status = APPLIED
             else:
@@ -164,8 +166,11 @@ def build_plan(
             # (and whatever requires it) waits: independent entries are not held back.
             row.status = BLOCKED
             row.detail = (
-                "depends on " + ", ".join(row.unresolved) + ", which is not recorded in "
-                "the ledger (apply it by hand, then record a baseline)"
+                "depends on "
+                + ", ".join(row.unresolved)
+                + ", which is not recorded in "
+                "the ledger (apply it by hand, then record a baseline). To record it: "
+                + "; ".join(_baseline_hint(ref, manifest) for ref in row.unresolved)
             )
             continue
         if halted_by is not None:
@@ -211,6 +216,18 @@ def build_plan(
     return plan
 
 
+def _baseline_hint(ref: str, manifest: mf.Manifest) -> str:
+    """The exact command that records ``ref`` as already present (never runs it)."""
+    kind = next((e.kind for e in manifest.entries if e.id == ref), None)
+    reason = (
+        ' --reason "<why the database already has it>"' if kind == "rebuild" else ""
+    )
+    return (
+        f"python -m migrate baseline --preflight PREFLIGHT.json --entries {ref} "
+        f"--operator NAME{reason}"
+    )
+
+
 def plan_sha(plan: Plan) -> str:
     """Stable fingerprint of what a run would execute (pending and approval rows, in order).
 
@@ -228,9 +245,7 @@ def plan_sha(plan: Plan) -> str:
 
 def _sha_is_reliable(plan: Plan) -> bool:
     """The sha needs every pending/approval row's checksum (``checksum_pending=True``)."""
-    return all(
-        row.checksum for row in plan.rows if row.status in (PENDING, APPROVAL)
-    )
+    return all(row.checksum for row in plan.rows if row.status in (PENDING, APPROVAL))
 
 
 def group_violations(
