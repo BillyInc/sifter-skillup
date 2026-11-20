@@ -209,6 +209,62 @@ jobs:
           fi
           EOSSH
 
+      - name: Edge rate limit on prod auth routes
+        env:
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+        run: |
+          set -euo pipefail
+          SSH="ssh -i $HOME/.ssh/deploy_key -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts"
+          $SSH "$SERVER_USER@$SERVER_HOST" bash -s <<'EOSSH'
+          set -euo pipefail
+          # Primary rate limit for /api/auth/*: per client address, at the edge,
+          # shared by every worker. The in-process limiter is only a backstop.
+          # Idempotent; rolls back if nginx rejects the config (nginx is shared
+          # with KYS on this box).
+          exec 9>/tmp/levelup-nginx-deploy.lock
+          flock 9
+          SITE=/etc/nginx/sites-available/levelup-api-prod
+          ZONE=/etc/nginx/conf.d/levelup-auth-limits.conf
+          [ -f "$SITE" ] || { echo "site $SITE not found; skipping edge limits." >&2; exit 0; }
+          if grep -q 'location /api/auth/' "$SITE" && [ -f "$ZONE" ]; then
+            echo "edge auth limits already present."
+            exit 0
+          fi
+          ZONE_CREATED=0
+          if [ ! -f "$ZONE" ]; then
+            sudo tee "$ZONE" >/dev/null <<'ZONECONF'
+          limit_req_zone $binary_remote_addr zone=levelup_auth:10m rate=30r/m;
+          ZONECONF
+            ZONE_CREATED=1
+          fi
+          if ! grep -q 'location /api/auth/' "$SITE"; then
+            sudo cp -p "$SITE" "$SITE.bak-auth-limits"
+            LOC=$(mktemp)
+            cat >"$LOC" <<'LOCATION'
+              location /api/auth/ {
+                  limit_req zone=levelup_auth burst=30 nodelay;
+                  limit_req_status 429;
+                  proxy_pass http://127.0.0.1:8001;
+                  proxy_set_header Host $host;
+                  proxy_set_header X-Real-IP $remote_addr;
+                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                  proxy_set_header X-Forwarded-Proto $scheme;
+              }
+          LOCATION
+            awk -v block="$LOC" '/^[[:space:]]*location \/ \{/ { while ((getline l < block) > 0) print l; close(block) } { print }' "$SITE.bak-auth-limits" | sudo tee "$SITE" >/dev/null
+            rm -f "$LOC"
+          fi
+          if ! sudo nginx -t; then
+            [ -f "$SITE.bak-auth-limits" ] && sudo mv -f "$SITE.bak-auth-limits" "$SITE"
+            [ "$ZONE_CREATED" = 1 ] && sudo rm -f "$ZONE"
+            echo "nginx config invalid; rolled back edge auth limits." >&2
+            exit 1
+          fi
+          sudo systemctl reload nginx
+          sudo rm -f "$SITE.bak-auth-limits"
+          EOSSH
+
       - name: Health check (prod API)
         env:
           SERVER_USER: ${{ secrets.SERVER_USER }}

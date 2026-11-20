@@ -110,15 +110,13 @@ class TestLockoutCannotBeUsedAgainstAVictim:
             assert self._login(client, VICTIM_IP, "typo").status_code == 401
         assert self._login(client, VICTIM_IP, "correct horse").status_code == 200
 
-    def test_without_a_known_address_the_account_threshold_is_higher(self, client, mock_db):
+    def test_without_a_known_address_an_account_is_never_locked_out(self, client, mock_db):
         # TestClient peers are not public addresses, so the real client is unknown.
+        # A hard lockout here would let anyone lock the owner out (see third review).
         _install(mock_db, {"users": [_admin(email="victim@x.test")]})
         codes = [client.post("/api/auth/login", json={"email": "victim@x.test", "password": "x"}).status_code
-                 for _ in range(15)]
-        assert 429 not in codes, "a handful of typos must not lock an account when the client is unknown"
-        many = [client.post("/api/auth/login", json={"email": "victim@x.test", "password": "x"}).status_code
-                for _ in range(40)]
-        assert 429 in many, "unknown-address guessing still needs a ceiling"
+                 for _ in range(60)]
+        assert 429 not in codes
 
     def test_a_failed_attempt_never_reveals_whether_the_email_exists(self, client, mock_db):
         _install(mock_db, {"users": []})
@@ -191,21 +189,21 @@ class TestLimiterMemoryIsBounded:
     def test_checking_unknown_keys_creates_nothing(self):
         lim = auth_rate_limit.SlidingWindowLimiter()
         for i in range(100_000):
-            assert lim.retry_after("login_fail_email_noip", f"user{i}@x.test") is None
+            assert lim.retry_after("login_fail_pair", f"user{i}@x.test") is None
         assert lim.key_count() == 0
 
     def test_recording_many_distinct_keys_is_capped(self):
         lim = auth_rate_limit.SlidingWindowLimiter(max_keys=1000)
         for i in range(100_000):
-            lim.record("login_fail_email_noip", f"user{i}@x.test")
+            lim.record("login_fail_pair", f"user{i}@x.test")
         assert lim.key_count() <= 1000
 
     def test_empty_windows_are_dropped(self):
         now = [0.0]
         lim = auth_rate_limit.SlidingWindowLimiter(clock=lambda: now[0])
-        lim.record("login_fail_email_noip", "a@x.test")
+        lim.record("login_fail_pair", "a@x.test")
         now[0] += 10 * 60 * 60
-        lim.retry_after("login_fail_email_noip", "a@x.test")
+        lim.retry_after("login_fail_pair", "a@x.test")
         assert lim.key_count() == 0
 
     def test_very_long_keys_are_bounded(self):
@@ -217,10 +215,10 @@ class TestLimiterMemoryIsBounded:
             lim.record("login_fail_pair", "victim")
         assert lim.retry_after("login_fail_pair", "victim") is not None  # now locked out
         for i in range(500):
-            lim.record("login_fail_email_noip", f"noise{i}")
+            lim.record("login_fail_pair", f"noise{i}")
         # The cap is per bucket now: the noise bucket is bounded, and the
         # victim's counters in another bucket are untouched.
-        assert lim.bucket_key_count("login_fail_email_noip") <= 50
+        assert lim.bucket_key_count("login_fail_pair") <= 50
         assert lim.retry_after("login_fail_pair", "victim") is not None, \
             "flooding distinct keys must not evict an active lockout"
 

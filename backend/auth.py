@@ -9,9 +9,11 @@ import urllib.parse
 from datetime import datetime, timedelta, timezone
 from typing import Optional
 
+import bcrypt
 import jwt
 from jwt import PyJWTError
 from fastapi import Depends, HTTPException
+from fastapi.concurrency import run_in_threadpool
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
 from config import settings
@@ -21,18 +23,45 @@ from logger import log
 security = HTTPBearer(auto_error=False)
 
 
-_MISSING_TABLE_MARKERS = (
-    "pgrst205", "pgrst204", "42p01", "does not exist", "could not find the table",
-)
+_MISSING_TABLE_CODES = {"PGRST205", "42P01"}
+
+
+def _error_code(exc: Exception) -> str:
+    """The structured Postgres/PostgREST code, or "" when the error has none."""
+    code = getattr(exc, "code", None)
+    if not code and exc.args and isinstance(exc.args[0], dict):
+        code = exc.args[0].get("code")
+    return str(code or "").upper()
 
 
 def _is_missing_table(exc: Exception) -> bool:
-    """True when the error means the table itself is absent (pre-migration)."""
-    text = f"{type(exc).__name__} {exc} {getattr(exc, 'code', '')}".lower()
-    return any(marker in text for marker in _MISSING_TABLE_MARKERS)
+    """True only for a structured "table absent" code (pre-migration).
+
+    Message text is never matched: a missing COLUMN (42703/PGRST204) or a dropped
+    connection must not read as "MFA not configured", which would skip the check.
+    """
+    return _error_code(exc) in _MISSING_TABLE_CODES
 
 
 class Auth:
+
+    # ── Passwords (bcrypt runs in a worker thread, never on the event loop) ──
+    @staticmethod
+    async def hash_password(password: str) -> str:
+        raw = password.encode("utf-8")
+        if len(raw) > 72:
+            raise HTTPException(status_code=400, detail="Password must be at most 72 bytes.")
+        return (await run_in_threadpool(bcrypt.hashpw, raw, bcrypt.gensalt())).decode("utf-8")
+
+    @staticmethod
+    async def verify_password(password: str, hashed: str) -> bool:
+        raw = password.encode("utf-8")
+        if len(raw) > 72:
+            # bcrypt cannot hash this, so it cannot be the stored password; burn the
+            # same time as a normal check and answer False (a counted failure).
+            await run_in_threadpool(bcrypt.checkpw, b"x", hashed.encode("utf-8"))
+            return False
+        return bool(await run_in_threadpool(bcrypt.checkpw, raw, hashed.encode("utf-8")))
 
     # ── Telegram ────────────────────────────────────────────────
     @staticmethod

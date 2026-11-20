@@ -173,15 +173,19 @@ class TestMfaCannotBeDowngradedByTheSessionItProtects:
 # 2. Brute force
 # --------------------------------------------------------------------------
 class TestLoginIsRateLimited:
-    def test_repeated_failures_lock_the_account_out_temporarily(self, client, mock_db):
+    def test_repeated_failures_from_one_address_are_blocked_temporarily(self, client, mock_db, monkeypatch):
+        from config import settings
+        monkeypatch.setattr(settings, "TRUST_PROXY_HEADERS", True, raising=False)
+        monkeypatch.setattr(settings, "TRUSTED_PROXY_HOPS", 1, raising=False)
         _install(mock_db, {"users": [_admin(email="a@b.test")]})
+        h = {"X-Forwarded-For": "6.6.6.6"}
         codes = [
-            client.post("/api/auth/login", json={"email": "a@b.test", "password": "nope"}).status_code
-            for _ in range(35)   # unknown client address: the account ceiling is 30 failures
+            client.post("/api/auth/login", headers=h, json={"email": "a@b.test", "password": "nope"}).status_code
+            for _ in range(12)
         ]
         assert codes[0] == 401
         assert 429 in codes, codes
-        locked = client.post("/api/auth/login", json={"email": "a@b.test", "password": "correct horse"})
+        locked = client.post("/api/auth/login", headers=h, json={"email": "a@b.test", "password": "correct horse"})
         assert locked.status_code == 429
         assert int(locked.headers["Retry-After"]) > 0
 

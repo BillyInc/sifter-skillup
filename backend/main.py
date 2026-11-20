@@ -27,7 +27,7 @@ from models import (
     TrackType,
     UserUpdate,
 )
-from auth import Auth
+from auth import Auth, _is_missing_table
 from logger import log
 from middleware.session_middleware import DeviceSessionMiddleware
 import auth_rate_limit
@@ -361,6 +361,8 @@ async def confirm_password_reset(body: dict, request: Request):
         raise HTTPException(status_code=400, detail="Email and reset code are required")
     if len(password) < 6:
         raise HTTPException(status_code=400, detail="Password must be at least 6 characters")
+    if len(password.encode("utf-8")) > 72:
+        raise HTTPException(status_code=400, detail="Password must be at most 72 bytes.")
 
     ip = auth_rate_limit.client_ip(request)
     auth_rate_limit.enforce("reset_confirm_fail_email", email)
@@ -380,7 +382,7 @@ async def confirm_password_reset(body: dict, request: Request):
     existing = service.table("users").select("*").eq("email", email).limit(1).execute()
     if existing.data:
         user = existing.data[0]
-        password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+        password_hash = await Auth.hash_password(password)
         update = {"password_hash": password_hash}
         # Revoke every session issued before the reset. The counter column is
         # added by migration_token_version_2026-11-21.sql; until it exists the
@@ -416,8 +418,11 @@ async def get_admin_mfa(current_user: dict = Depends(Auth.get_current_user)):
         rows = db.get_service_client().table("user_mfa_settings").select(
             "status,method,last_verified_at,deferred_until"
         ).eq("user_id", current_user["id"]).limit(1).execute().data or []
-    except Exception:
-        rows = []
+    except Exception as exc:
+        if not _is_missing_table(exc):
+            log.error("MFA status lookup failed: %s", exc)
+            raise HTTPException(status_code=503, detail="Could not check admin security right now.")
+        rows = []  # table not created yet (pre-migration)
     return ResponseModel(data=rows[0] if rows else {
         "status": "recommended", "method": "email_otp",
         "last_verified_at": None, "deferred_until": None,
@@ -507,7 +512,7 @@ async def defer_admin_mfa(body: Optional[dict] = Body(default=None), current_use
     if stored_hash:
         auth_rate_limit.enforce("mfa_defer_fail_user", current_user["id"])
         password = str((body or {}).get("password") or "")
-        if not password or not bcrypt.checkpw(password.encode(), stored_hash.encode()):
+        if not password or not await Auth.verify_password(password, stored_hash):
             auth_rate_limit.record("mfa_defer_fail_user", current_user["id"])
             raise HTTPException(status_code=403, detail="Enter your password to defer admin security.")
         auth_rate_limit.clear("mfa_defer_fail_user", current_user["id"])
@@ -745,7 +750,7 @@ async def auth_signup(body: dict, request: Request):
             # their known dev password so repeated preset clicks can sign in;
             # never apply this behavior to real accounts or production.
             if _is_dev_account_email(email) and existing_user.get("password_hash"):
-                password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+                password_hash = await Auth.hash_password(password)
                 user = _update_user_returning(db.get_service_client(), existing_user["id"], {
                     "password_hash": password_hash,
                     "last_login": datetime.now().isoformat(),
@@ -758,7 +763,7 @@ async def auth_signup(body: dict, request: Request):
             # A failed post-signup step can leave the user row without credentials.
             # Complete that partial row instead of making the user retry into a 409.
             if not existing_user.get("password_hash"):
-                password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+                password_hash = await Auth.hash_password(password)
                 user = _update_user_returning(db.get_service_client(), existing_user["id"], {
                     "username": username,
                     "first_name": first_name or None,
@@ -778,7 +783,7 @@ async def auth_signup(body: dict, request: Request):
                 await _post_auth_device_register(user["id"], body, request)
                 return ResponseModel(data={"token": token, "user": sanitize_user_row(user)})
             raise HTTPException(status_code=409, detail="Email already registered. Try Log in instead.")
-        password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+        password_hash = await Auth.hash_password(password)
         user = _create_user(username=username, auth_provider="email", email=email, password_hash=password_hash,
                             first_name=first_name, middle_name=middle_name, last_name=last_name,
                             date_of_birth=date_of_birth, display_name=display_name)
@@ -829,7 +834,7 @@ async def auth_login(body: dict, request: Request):
     # there is no usable account, so unknown and known addresses take the same
     # time and the response cannot be used to find registered emails.
     stored_hash = (user or {}).get("password_hash") or _DUMMY_PASSWORD_HASH
-    password_ok = bcrypt.checkpw(password.encode(), stored_hash.encode())
+    password_ok = await Auth.verify_password(password, stored_hash)
     if not user or not user.get("password_hash") or not password_ok:
         auth_rate_limit.record_all(login_buckets)
         raise HTTPException(status_code=401, detail="Invalid email or password")
