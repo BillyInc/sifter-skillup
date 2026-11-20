@@ -1494,3 +1494,31 @@ commission rule, approved separately, with a migration prepared and not applied.
 by this repository. Whatever serves them must return the learner's `public_name`
 (display name, else first name, else "Learner"), never `username`, full name,
 email or a raw avatar path, and must use `public_avatar_url` for avatars.
+
+### 5. Seed counts in this file disagree with the seed files
+
+While deriving the migration runner's row-count checks (`verify_rows` in
+`backend/migrate/manifest.toml`), the counts below were measured from the
+generated seed SQL and do not match the figures quoted earlier in this file.
+The runner uses the seed files. Decide which side is stale: if the doc is
+out of date, update the figures here; if a seed is out of date, regenerate it
+with the documented generators and audits (never hand-edit generated SQL).
+
+| Item | This file says | Seed file has |
+| --- | --- | --- |
+| Catalog subjects (`seed_subject_catalog.sql`) | 46 | 82 |
+| National matcher options (`seed_subject_options.sql`) | 604 | 578 |
+| Programme rows (`seed_career_pilot.sql`) | 243 | 244 |
+| Institutions | 861 | 690 |
+| University offerings | 9,130 | 8,116 |
+| Requirement-source rows | 2,706 | 2,715 |
+| University exception rows | 3,884 | 4,007 |
+| Structured university options | 1,998 | 1,911 |
+
+Figures that matched: 420 JAMB identities, 1,260 typed rule records, 173
+role-item contracts, 202 role cards, 95 role tools, 7 canonical areas.
+
+The row-count floors are in the manifest next to each seed with the
+derivation. A floor is a minimum, so a refreshed seed with more rows still
+passes; a seed that shrinks below its floor makes the apply fail before
+COMMIT, which is intended.
