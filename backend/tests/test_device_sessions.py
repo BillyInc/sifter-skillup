@@ -1,5 +1,6 @@
 """
-Tests for device_sessions.py and session_middleware.py.
+Tests for middleware/device_sessions.py and middleware/session_middleware.py
+(the modules main.py actually serves).
 """
 import asyncio
 from unittest.mock import AsyncMock, MagicMock
@@ -8,7 +9,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 import middleware.device_sessions as device_sessions
-import session_middleware
+import middleware.session_middleware as session_middleware
 from auth import Auth
 from main import app
 
@@ -146,10 +147,123 @@ class TestSessionMiddleware:
             assert r2.status_code == 200
 
     def test_middleware_drain_no_longer_skipped(self):
-        # /api/sync/drain must NOT be in the middleware skip list
+        # /api/sync/drain must NOT be in the SERVED middleware's skip list
+        assert session_middleware.__name__ == "middleware.session_middleware"
+        assert not session_middleware._should_skip("/api/sync/drain")
         for prefix in session_middleware._SKIP_PREFIXES:
             assert not "/api/sync/drain".startswith(prefix), \
                 f"/api/sync/drain unexpectedly skipped by prefix {prefix!r}"
+
+    def test_drain_without_device_id_is_rejected(self, mock_db, monkeypatch):
+        monkeypatch.setattr(session_middleware.settings, "SINGLE_DEVICE_ENFORCEMENT", True, raising=False)
+        token = Auth.create_jwt("user-dev-1")
+        with TestClient(app) as c:
+            r = c.post("/api/sync/drain", json={}, headers={"Authorization": f"Bearer {token}"})
+        assert r.status_code == 401
+        assert r.json().get("error") == "device_required"
+
+    def test_drain_with_unregistered_device_is_rejected(self, mock_db, monkeypatch):
+        monkeypatch.setattr(session_middleware.settings, "SINGLE_DEVICE_ENFORCEMENT", True, raising=False)
+        monkeypatch.setattr(session_middleware, "validate_device_header", lambda user_id, device_id: False)
+        token = Auth.create_jwt("user-dev-1")
+        with TestClient(app) as c:
+            r = c.post(
+                "/api/sync/drain",
+                json={},
+                headers={"Authorization": f"Bearer {token}", "X-Device-Id": "not-registered"},
+            )
+        assert r.status_code == 401
+        body = r.json()
+        assert body.get("error") == "device_mismatch"
+        # No internal detail (user id, device id, stack) in the response.
+        assert "user-dev-1" not in r.text and "not-registered" not in r.text
+
+    def test_drain_with_registered_device_reaches_the_route(self, mock_db, monkeypatch):
+        monkeypatch.setattr(session_middleware.settings, "SINGLE_DEVICE_ENFORCEMENT", True, raising=False)
+        monkeypatch.setattr(session_middleware, "validate_device_header", lambda user_id, device_id: True)
+        token = Auth.create_jwt("user-dev-1")
+        with TestClient(app) as c:
+            r = c.post(
+                "/api/sync/drain",
+                json={},
+                headers={"Authorization": f"Bearer {token}", "X-Device-Id": "devA"},
+            )
+        # Whatever the route answers, it was not stopped by the device check.
+        assert r.json().get("error") not in ("device_required", "device_mismatch")
+
+    def test_middleware_caches_user_and_device_on_request_state(self, monkeypatch):
+        from fastapi import Request
+        from fastapi.responses import JSONResponse
+
+        monkeypatch.setattr(session_middleware.settings, "SINGLE_DEVICE_ENFORCEMENT", True, raising=False)
+        monkeypatch.setattr(session_middleware, "validate_device_header", lambda user_id, device_id: True)
+        token = Auth.create_jwt("user-dev-1")
+        scope = {
+            "type": "http",
+            "method": "POST",
+            "path": "/api/sync/drain",
+            "query_string": b"",
+            "headers": [
+                (b"authorization", f"Bearer {token}".encode()),
+                (b"x-device-id", b"devA"),
+            ],
+        }
+        seen = {}
+
+        async def call_next(req):
+            seen["user_id"] = req.state.user_id
+            seen["device_id"] = req.state.device_id
+            return JSONResponse({"ok": True})
+
+        mw = session_middleware.DeviceSessionMiddleware(app=None)
+        resp = asyncio.run(mw.dispatch(Request(scope), call_next))
+        assert resp.status_code == 200
+        assert seen == {"user_id": "user-dev-1", "device_id": "devA"}
+
+    def test_user_id_extraction_uses_auth_decode_jwt_and_requires_exp_and_sub(self):
+        import time
+
+        import jwt as pyjwt
+        from fastapi import Request
+
+        def req_with(token):
+            return Request({
+                "type": "http", "method": "GET", "path": "/x", "query_string": b"",
+                "headers": [(b"authorization", f"Bearer {token}".encode())],
+            })
+
+        settings = session_middleware.settings
+        good = Auth.create_jwt("user-dev-1")
+        assert session_middleware._extract_user_id_from_bearer(req_with(good)) == "user-dev-1"
+
+        no_exp = pyjwt.encode({"sub": "user-dev-1"}, settings.JWT_SECRET, algorithm=settings.JWT_ALGORITHM)
+        assert session_middleware._extract_user_id_from_bearer(req_with(no_exp)) is None
+
+        no_sub = pyjwt.encode(
+            {"exp": int(time.time()) + 600}, settings.JWT_SECRET, algorithm=settings.JWT_ALGORITHM
+        )
+        assert session_middleware._extract_user_id_from_bearer(req_with(no_sub)) is None
+
+        expired = pyjwt.encode(
+            {"sub": "user-dev-1", "exp": int(time.time()) - 60},
+            settings.JWT_SECRET,
+            algorithm=settings.JWT_ALGORITHM,
+        )
+        assert session_middleware._extract_user_id_from_bearer(req_with(expired)) is None
+        assert session_middleware._extract_user_id_from_bearer(req_with("garbage")) is None
+
+    def test_user_id_extraction_never_raises_on_unexpected_errors(self, monkeypatch):
+        from fastapi import Request
+
+        def boom(token):
+            raise RuntimeError("secret internals")
+
+        monkeypatch.setattr(session_middleware.Auth, "decode_jwt", staticmethod(boom))
+        req = Request({
+            "type": "http", "method": "GET", "path": "/x", "query_string": b"",
+            "headers": [(b"authorization", b"Bearer abc")],
+        })
+        assert session_middleware._extract_user_id_from_bearer(req) is None
 
 
 # ─────────────────────────────────────────────────────────────

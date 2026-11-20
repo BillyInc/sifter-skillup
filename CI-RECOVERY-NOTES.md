@@ -120,6 +120,7 @@ Netlify access — not a code change.
   `validate_device_header` returns `True` on no-session so registration still works) —
   but the rollout needs all clients updated first. **Decide: require the header (tighten
   `middleware/session_middleware.py`), or update the test to the current lenient contract.**
+  *(Update: the served middleware was hardened to match the root copy, `/api/sync/drain` is no longer exempt, and the root `session_middleware.py` was deleted.)*
 
 ### Cleanup worth doing
 Delete the stale root duplicates (`offline_sync.py`, `device_sessions.py`,

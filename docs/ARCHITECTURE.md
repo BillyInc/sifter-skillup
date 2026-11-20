@@ -457,7 +457,7 @@ older ones still at `backend/<name>_routes.py` — both are wired in
 | `config.py` | pydantic-settings; loads `.env`; single source of URLs, keys, flags |
 | `database.py` | Supabase client factory; enforces `skillup_dev` schema |
 | `auth.py` | JWT issue/verify; channel-specific verifiers |
-| `middleware/session_middleware.py` | Validates `X-Device-Id` on every authenticated request |
+| `middleware/session_middleware.py` | Validates `X-Device-Id` on every authenticated request, including `/api/sync/drain` (only `/health`, docs, `/api/auth/*` and the GitHub callback are exempt); caches `request.state.user_id` and `device_id` |
 | `middleware/device_sessions.py` | Device session model + helpers |
 | `email_delivery.py`, `email_codes.py`, `db_email_codes.py` | Email code generation, Resend delivery, DB persistence |
 | `services/fcm_service.py` | FCM push send |
