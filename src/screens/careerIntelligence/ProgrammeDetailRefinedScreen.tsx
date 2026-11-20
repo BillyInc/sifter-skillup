@@ -329,7 +329,9 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
           studentName: variant.studentName || variant.jambName,
           studentNames: [variant.studentName || variant.jambName].filter(Boolean) as string[],
           institutionType: "university",
-          discipline: variant.jambFaculty || "",
+          // Faculty is not shown to students: the product has no faculty
+          // information to stand behind yet (owner feedback, 2026-11-18).
+          discipline: "",
           qualification: variant.qualification || variant.degreeType || undefined,
           durationYears: variant.durationYears ?? undefined,
           // A JAMB variant must use its own source-backed skills profile. Do

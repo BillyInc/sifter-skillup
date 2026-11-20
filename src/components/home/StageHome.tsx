@@ -6,7 +6,11 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useTheme, Spacing, Radius, FontSize, CompassFonts } from "../../theme";
-import type { HomeStageInfo, HomeRoute } from "../../lib/homeStage";
+import type {
+  HomeStageInfo,
+  HomeRoute,
+  HomeConnectionGroup,
+} from "../../lib/homeStage";
 
 export interface StageHomeProps {
   stage: HomeStageInfo;
@@ -19,6 +23,11 @@ export interface StageHomeProps {
   onOpenRoute: (route: HomeRoute) => void;
   onOpenProgramme: () => void;
   onEditStage: () => void;
+  /** Undergraduate only: the programme's existing domain links, by relationship. */
+  connections?: HomeConnectionGroup[];
+  onOpenDomain?: (domainId: string, matchType: string) => void;
+  /** Opens the existing student Skills Matcher. */
+  onOpenSkillsMatcher?: () => void;
 }
 
 const HEADINGS: Record<HomeStageInfo["key"], { title: string; body: string }> =
@@ -191,7 +200,169 @@ export function StageHome(props: StageHomeProps) {
           </View>
         )}
       </View>
+
+      {stage.key === "undergraduate" && props.connections?.length ? (
+        <ProgrammeConnections
+          groups={props.connections}
+          onOpenDomain={props.onOpenDomain}
+        />
+      ) : null}
+
+      {props.onOpenSkillsMatcher ? (
+        <SkillsMatcherCard onOpen={props.onOpenSkillsMatcher} />
+      ) : null}
     </View>
+  );
+}
+
+function ProgrammeConnections({
+  groups,
+  onOpenDomain,
+}: {
+  groups: HomeConnectionGroup[];
+  onOpenDomain?: (domainId: string, matchType: string) => void;
+}) {
+  const { colors } = useTheme();
+  return (
+    <View
+      style={[
+        styles.primary,
+        {
+          backgroundColor: colors.surface.raised,
+          borderColor: colors.borderRole.subtle,
+        },
+      ]}
+      testID="home-connections"
+    >
+      <Text
+        accessibilityRole="header"
+        style={[
+          styles.title,
+          { color: colors.textRole.primary },
+          CompassFonts.displayBold,
+        ]}
+      >
+        Where your programme can take you
+      </Text>
+      <Text
+        style={[
+          styles.body,
+          { color: colors.textRole.secondary },
+          CompassFonts.body,
+        ]}
+      >
+        The domains linked to your programme, grouped by how closely they
+        connect. Choose one to see its roles.
+      </Text>
+      {groups.map((group) => (
+        <View
+          key={group.key}
+          style={styles.tier}
+          testID={`home-connections-${group.key}`}
+        >
+          <Text
+            style={[
+              styles.routeTitle,
+              { color: colors.textRole.primary },
+              CompassFonts.bodyBold,
+            ]}
+          >
+            {group.title} · {group.domains.length}
+          </Text>
+          <Text
+            style={[
+              styles.body,
+              { color: colors.textRole.muted },
+              CompassFonts.body,
+            ]}
+          >
+            {group.hint}
+          </Text>
+          <View style={styles.chips}>
+            {group.domains.map((d) => (
+              <TouchableOpacity
+                key={d.domainId}
+                accessibilityRole="button"
+                accessibilityLabel={`${d.domainName}, ${group.title} link`}
+                activeOpacity={0.85}
+                onPress={() => onOpenDomain?.(d.domainId, group.key)}
+                style={[
+                  styles.chip,
+                  {
+                    borderColor: colors.borderRole.control,
+                    backgroundColor: colors.surface.base,
+                  },
+                ]}
+                testID={`home-domain-${d.domainId}`}
+              >
+                <Text
+                  style={[
+                    styles.chipText,
+                    { color: colors.textRole.primary },
+                    CompassFonts.bodyMedium,
+                  ]}
+                >
+                  {d.domainName}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+      ))}
+    </View>
+  );
+}
+
+function SkillsMatcherCard({ onOpen }: { onOpen: () => void }) {
+  const { colors } = useTheme();
+  return (
+    <TouchableOpacity
+      accessibilityRole="button"
+      accessibilityLabel="Skills Matcher. See where your skills could connect to domains and roles."
+      activeOpacity={0.88}
+      onPress={onOpen}
+      style={[
+        styles.route,
+        {
+          backgroundColor: colors.surface.raised,
+          borderColor: colors.borderRole.subtle,
+        },
+      ]}
+      testID="home-skills-matcher"
+    >
+      <Feather name="compass" size={22} color={colors.accentRole.action} />
+      <View style={{ flex: 1, gap: 2 }}>
+        <Text
+          style={[
+            styles.eyebrow,
+            { color: colors.accentRole.action },
+            CompassFonts.bodyBold,
+          ]}
+        >
+          Skills Matcher
+        </Text>
+        <Text
+          style={[
+            styles.routeTitle,
+            { color: colors.textRole.primary },
+            CompassFonts.bodyBold,
+          ]}
+        >
+          Start from what you can do
+        </Text>
+        <Text
+          style={[
+            styles.body,
+            { color: colors.textRole.muted },
+            CompassFonts.body,
+          ]}
+        >
+          Add skills you have or want to learn and see the domains and roles
+          they could connect to.
+        </Text>
+      </View>
+      <Feather name="arrow-right" size={18} color={colors.textRole.muted} />
+    </TouchableOpacity>
   );
 }
 
@@ -327,4 +498,14 @@ const styles = StyleSheet.create({
   },
   ctaText: { color: "#fff", fontSize: FontSize.sm },
   cardLink: { minHeight: 44, justifyContent: "center" },
+  tier: { gap: 4, marginTop: Spacing.xs },
+  chips: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.xs },
+  chip: {
+    minHeight: 44,
+    justifyContent: "center",
+    borderWidth: 1,
+    borderRadius: Radius.md,
+    paddingHorizontal: Spacing.md,
+  },
+  chipText: { fontSize: FontSize.sm },
 });
