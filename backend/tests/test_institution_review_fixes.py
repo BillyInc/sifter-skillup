@@ -348,6 +348,7 @@ class TestInviteVerifiedFlag:
 
     def test_invited_by_an_authorised_admin_is_verified(self, svc):
         _school(svc)
+        svc.store["schools"][0]["verification_status"] = "verified"  # third review round, F1
         _member(svc, "owner", role="owner", verified=True)
         self._invite(svc, "owner")
         _verify(_claim(), _user("guest", "guest@example.com"))

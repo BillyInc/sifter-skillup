@@ -82,6 +82,7 @@ class TestInviterMustStillBeAuthorised:
 
     def test_invite_from_an_active_admin_still_works(self, svc):
         _school(svc)
+        svc.store["schools"][0]["verification_status"] = "verified"  # third review round, F1
         _member(svc, "owner")
         _member(svc, "adm", role="admin")
         _invite(svc, invited_by="adm")

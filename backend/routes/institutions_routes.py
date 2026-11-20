@@ -106,9 +106,22 @@ def _is_missing_column_error(exc: Exception, column: str = "seat_status") -> boo
     )
 
 
+def _is_missing_table_error(exc: Exception) -> bool:
+    """True only when the database says the TABLE itself is absent (schema not applied)."""
+    text = f"{type(exc).__name__} {exc} {getattr(exc, 'code', '')}".lower()
+    return any(m in text for m in ("pgrst205", "42p01", "could not find the table"))
+
+
+def _is_check_violation(exc: Exception) -> bool:
+    """True for a CHECK/constraint violation (a bad value, not a missing schema)."""
+    text = f"{type(exc).__name__} {exc} {getattr(exc, 'code', '')}".lower()
+    return "23514" in text or "violates check constraint" in text
+
+
 _ACTIVE_SEAT = "active"
 # A pending claim on a school nobody administers yet. It carries no admin scope.
 _PENDING_SEAT = "invited"
+_REVOKED_SEAT = "revoked"
 
 
 def _seat_is_active(row: Optional[dict]) -> bool:
@@ -481,6 +494,19 @@ def _invite_is_honourable(school_id: str, invite: dict, invitee_id: str) -> bool
     return True
 
 
+def _invitee_is_verified(school_id: str, invite: dict, school_status: Optional[str]) -> bool:
+    """Whether an invited seat counts as verified.
+
+    The inviter's own seat must be verified AND the school itself must have been
+    verified by a reviewer. An unverified school creator therefore cannot mint verified
+    (analytics-capable) access for an alternate account just by inviting it.
+    """
+    inviter = _inviter_row(school_id, invite.get("invited_by"))
+    if not inviter or not inviter.get("verified", True):
+        return False
+    return (school_status or "") == "verified"
+
+
 def _void_invite(invite: dict) -> None:
     """Mark an invitation that can no longer be honoured as revoked (best effort)."""
     try:
@@ -489,6 +515,22 @@ def _void_invite(invite: dict) -> None:
         ).eq("status", "pending").execute()
     except Exception as exc:  # noqa: BLE001
         log.warning("institutions: could not void a dead invitation", error=str(exc))
+
+
+def revoke_user_seats(user_id: str) -> None:
+    """Revoke every institution seat the user holds (called when the account is deleted).
+
+    Best effort and never raises: account deletion must not fail because of this. A schema
+    without ``seat_status`` cannot represent a revoked seat, so nothing is changed there.
+    """
+    try:
+        # No `neq` filter: SQL `NULL <> 'revoked'` is NULL, which would skip older rows
+        # whose seat_status was never set.
+        _svc().table("institution_members").update({"seat_status": _REVOKED_SEAT}).eq(
+            "user_id", user_id
+        ).execute()
+    except Exception as exc:  # noqa: BLE001
+        log.warning("institutions: seat revocation on deletion skipped", error=type(exc).__name__)
 
 
 def _may_submit_proof(member: Optional[dict]) -> bool:
@@ -1906,6 +1948,18 @@ async def invite_team_member(
     if not invited_email:
         return ResponseModel(data=None, message="Invitation email is required.")
 
+    # The role is validated HERE, not only when the invitation is accepted: it must be one
+    # the database allows (the same list as the table's CHECK constraint) and may never rank
+    # above the inviter's own seat.
+    if payload.role not in _ROLE_RANK:
+        raise HTTPException(status_code=422, detail="That role is not available for invitations.")
+    inviter_role = (member or {}).get("role") or current_user.get("account_type")
+    if _role_rank(payload.role) > _role_rank(inviter_role):
+        raise HTTPException(
+            status_code=403,
+            detail="You cannot invite someone to a role above your own.",
+        )
+
     expires = datetime.now(timezone.utc) + timedelta(days=14)
     row = {
         "school_id": school_id,
@@ -1929,11 +1983,21 @@ async def invite_team_member(
         )
         return ResponseModel(data=invite.model_dump(by_alias=True))
     except Exception as exc:
-        log.warning("institutions: team invite create skipped", error=str(exc))
-        return ResponseModel(
-            data=None,
-            message="Team invitations are not active until the institution team schema is applied.",
-        )
+        if _is_missing_table_error(exc):
+            log.warning("institutions: team invite table missing", error=type(exc).__name__)
+            return ResponseModel(
+                data=None,
+                message="Team invitations are not active until the institution team schema is applied.",
+            )
+        if _is_check_violation(exc):
+            log.warning("institutions: team invite rejected by a constraint", error=type(exc).__name__)
+            raise HTTPException(
+                status_code=422, detail="That role is not available for invitations."
+            ) from exc
+        log.error("institutions: team invite create failed", error=type(exc).__name__)
+        raise HTTPException(
+            status_code=503, detail="Could not create the invitation right now. Try again."
+        ) from exc
 
 
 # Failed access-code attempts. Only failures are recorded, so a legitimate code
@@ -2161,6 +2225,7 @@ async def submit_verification(
                 invited_role = keep_role
             if invited_role:
                 account_type = _normal_account_type(None, invited_role)
+            invite_verified = _invitee_is_verified(org.id, invite, org.verification_status)
             _consume_invite(current_user, invite)
             try:
                 _attach_member(
@@ -2169,7 +2234,7 @@ async def submit_verification(
                     account_type,
                     invited_role or claim.role,
                     seat_status=_ACTIVE_SEAT,
-                    verified=True,
+                    verified=invite_verified,
                     update_existing=True,
                     invited_by=invite.get("invited_by"),
                 )

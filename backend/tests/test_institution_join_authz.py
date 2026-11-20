@@ -281,6 +281,9 @@ class TestVerifyRoute:
 
     def test_accepting_an_invite_links_the_invited_role_and_closes_the_invite(self, svc, monkeypatch):
         _school_with_owner(svc)
+        # The invited seat is only "verified" when the school itself was verified by a
+        # reviewer (third review round, F1); see test_institution_review_round3.
+        svc.store["schools"][0]["verification_status"] = "verified"
         monkeypatch.setattr(ir, "_require_school_identity_schema", lambda _svc: None)
         svc.store["institution_member_invites"] = [
             {"id": "i1", "school_id": "school-b", "invited_email": "attacker@example.com",
@@ -296,7 +299,7 @@ class TestVerifyRoute:
         mine = [m for m in svc.store["institution_members"] if m["user_id"] == "attacker"]
         assert len(mine) == 1
         assert mine[0]["role"] == "counsellor", "an invite must not be upgradable by the claim body"
-        # The inviter is an active owner who still holds their seat, so the invited
+        # The inviter is an active, verified owner of a verified school, so the invited
         # member is vouched for. (An invite whose inviter is gone is refused: see
         # test_institution_review_round2.)
         assert mine[0]["verified"] is True
