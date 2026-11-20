@@ -58,3 +58,5 @@ button { cursor: pointer; }
 button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid rgba(245,158,11,.45); outline-offset: 2px; }
 /* Let the search box shrink beside the toolbar Back button so mobile pages don't scroll sideways. */
 .global-search-shell { flex: 0 1 820px; min-width: 0; }
+/* Narrow admin header: keep the title readable and move the catalogue search onto its own row. */
+@media (max-width: 900px) { .web-admin-header { flex-wrap: wrap; row-gap: 8px; }.web-admin-heading { flex: 1 1 0; min-width: 0; }.web-admin-global-search { order: 10; flex: 1 1 100%; width: 100%; }.web-admin-global-search input { flex: 1 1 auto; min-width: 0; } }

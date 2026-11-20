@@ -404,7 +404,7 @@ export function GeneralDashboardScreen() {
                       value={fmtInt(s.selfSignedUp)}
                     />
                     <MiniStat
-                      label="Provisioned by you"
+                      label="Added by you"
                       value={fmtInt(s.provisionedByYou)}
                     />
                     {s.unclaimedCodes != null ? (

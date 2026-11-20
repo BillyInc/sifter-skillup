@@ -507,6 +507,8 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
     || /^\/explore\/domain\/[^/]+(\/subgroup\/[^/]+)?$/.test(route)
     || /^\/opportunities\/(opportunity|organisation)\//.test(path)
     || path === "/opportunities/scholarships"
+    // SettingsScreen renders its own "Back to Profile" link.
+    || path === "/settings"
   );
   const showPlatformBack = !isAdminRoute && !routeHasOwnBack && (focusedGuidance || !isRootPlatformRoute);
 
