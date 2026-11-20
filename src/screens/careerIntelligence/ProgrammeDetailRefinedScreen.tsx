@@ -56,6 +56,9 @@ export interface ProgrammeDetailRefinedScreenProps {
   journeyMode?: string;
 }
 
+/** Height of the collapsed learning-plan dock (56px icon button plus its 2 x 16px margin). */
+const DOCK_CLEARANCE = 88;
+
 type ProgrammeTab = "overview" | "requirements" | "schools";
 
 function displayRequirement(field: RequirementField, value?: string | null): string {
@@ -946,7 +949,7 @@ export function ProgrammeDetailBody({
   };
 
   return (
-    <View style={styles.content}>
+    <View style={[styles.content, showCareerGuidance && !viewOnly ? styles.contentDockClearance : null]}>
       {showCareerGuidance && !viewOnly && !persistentDock ? <ProgrammePageLearningTray
         programmeId={String(data.id)}
         programmeName={programmeName}
@@ -1078,6 +1081,13 @@ export function ProgrammeDetailBody({
                       </View>
                     ))}
                   </View>
+                  <ProgrammeTrustPanel
+                    trust={programmeTrust(requirements, selectedSchool)}
+                    programmeId={String(selectedSchool.jambProgrammeId ?? data.id)}
+                    programmeLabel={data.name}
+                    schoolId={selectedSchool.schoolId}
+                    schoolLabel={institutionLabel(selectedSchool)}
+                  />
                 </View>
               ) : null}
                {programmeOverviewSections?.length ? (
@@ -1378,6 +1388,8 @@ function UniversityComparisonPanel({
 const styles = StyleSheet.create({
   tabs: { marginTop: Spacing.md },
   content: { gap: Spacing.lg, paddingBottom: Spacing.xxl },
+  // The collapsed learning-plan dock floats over the bottom of the page; keep the last card and the disclaimer clear of it.
+  contentDockClearance: { paddingBottom: Spacing.xxl + DOCK_CLEARANCE },
   programmeTrayOverlay: { ...StyleSheet.absoluteFillObject, justifyContent: "flex-end", alignItems: "flex-end", padding: Spacing.md },
   programmeTrayHost: { maxHeight: "78vh" as any, alignItems: "stretch", justifyContent: "flex-end" },
   programmeTrayFull: { height: "78vh" as any, maxHeight: "78vh" as any, flex: 1 },

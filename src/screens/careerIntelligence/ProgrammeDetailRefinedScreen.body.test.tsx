@@ -31,6 +31,8 @@ jest.mock("@/components/careerIntelligence", () => ({
   TextTabs: () => null,
   invalidateGuidancePathCache: jest.fn(),
   ExternalLinkGuard: () => null,
+  // The real panel is covered by ProgrammeDetailRefinedScreen.trust.test.tsx.
+  ProgrammeTrustPanel: () => null,
 }));
 jest.mock("@expo/vector-icons", () => ({ Feather: () => null }));
 
