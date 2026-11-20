@@ -87,3 +87,26 @@ describe("LiveSubjectMultiSelect stream scoping", () => {
     await waitFor(() => expect(onChange).toHaveBeenCalledWith(["English Language", "Mathematics", "Economics"]));
   });
 });
+
+describe("LiveSubjectMultiSelect selected summary", () => {
+  beforeEach(() => {
+    mockGetSubjects.mockReset();
+    mockGetSubjects.mockResolvedValue({ status: "real", data: catalogue, meta: {} });
+  });
+
+  it("does not repeat chosen subjects as a second tag row when the grid already shows them", async () => {
+    const ui = render(
+      <LiveSubjectMultiSelect label="O-level subjects" value={["Biology"]} onChange={jest.fn()} showSearch={false} minSelected={1} maxSelected={6} />,
+    );
+    await waitFor(() => expect(ui.getAllByText("Biology").length).toBeGreaterThan(0));
+    expect(ui.getAllByText("Biology")).toHaveLength(1);
+    expect(ui.queryByText("Biology x")).toBeNull();
+  });
+
+  it("keeps the removable tag row when search can hide a chosen subject", async () => {
+    const ui = render(
+      <LiveSubjectMultiSelect label="O-level subjects" value={["Biology"]} onChange={jest.fn()} minSelected={1} maxSelected={6} />,
+    );
+    await waitFor(() => expect(ui.getByText("Biology x")).toBeTruthy());
+  });
+});
