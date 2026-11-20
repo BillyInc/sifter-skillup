@@ -21,13 +21,12 @@ import random
 import re
 import uuid
 from datetime import datetime
-from typing import Optional, List, Dict, Any
+from typing import Optional, List, Dict
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
 from auth import Auth
-from config import settings
 from database import db
 from logger import log
 from models import ResponseModel

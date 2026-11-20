@@ -4363,7 +4363,6 @@ async def discover_by_skills(
             if terms and ((match_mode == "both" and len(matched) != len(terms)) or (match_mode == "either" and not matched)):
                 continue
             matched_domains.append((domain, matched))
-        matched_ids = {domain.get("id") for domain, _ in matched_domains}
 
         contextual_rows: list[dict] = []
         if matched_domains and (terms or category):

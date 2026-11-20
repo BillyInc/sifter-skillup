@@ -375,9 +375,9 @@ async def list_collection_items(
         links = _links(svc, collection_id)
         if not links:
             return _real([])
-        saved = {r["id"]: r for r in _owned_saved_items(svc, uid, [l["saved_item_id"] for l in links])}
+        saved = {r["id"]: r for r in _owned_saved_items(svc, uid, [link["saved_item_id"] for link in links])}
         # A membership whose saved item is not the caller's is never returned.
-        return _real([_saved_out(saved[l["saved_item_id"]], l) for l in links if l["saved_item_id"] in saved])
+        return _real([_saved_out(saved[link["saved_item_id"]], link) for link in links if link["saved_item_id"] in saved])
 
     return _run("items", work)
 
@@ -400,14 +400,14 @@ async def add_collection_items(
             # Some id is not the caller's saved item: reveal nothing about which.
             raise HTTPException(status_code=404, detail="Saved item not found.")
         links = _links(svc, collection_id)
-        present = {l["saved_item_id"] for l in links}
+        present = {link["saved_item_id"] for link in links}
         fresh = [i for i in ids if i not in present]
         if len(links) + len(fresh) > MAX_ITEMS_PER_COLLECTION:
             raise HTTPException(
                 status_code=400,
                 detail=f"A collection can hold up to {MAX_ITEMS_PER_COLLECTION} items.",
             )
-        position = max((l.get("position") or 0 for l in links), default=-1) + 1
+        position = max((link.get("position") or 0 for link in links), default=-1) + 1
         for offset, saved_id in enumerate(fresh):
             svc.table("collection_items").insert({
                 "collection_id": collection_id,
@@ -526,10 +526,10 @@ async def move_collection_item(
         if not _owned_saved_items(svc, uid, [saved_item_id]):
             raise HTTPException(status_code=404, detail="Saved item not found.")
         source_links = _links(svc, collection_id)
-        if not any(l["saved_item_id"] == saved_item_id for l in source_links):
+        if not any(link["saved_item_id"] == saved_item_id for link in source_links):
             raise HTTPException(status_code=404, detail="That item is not in this collection.")
         target_links = _links(svc, target_id)
-        if not any(l["saved_item_id"] == saved_item_id for l in target_links):
+        if not any(link["saved_item_id"] == saved_item_id for link in target_links):
             if len(target_links) >= MAX_ITEMS_PER_COLLECTION:
                 raise HTTPException(
                     status_code=400,
@@ -538,7 +538,7 @@ async def move_collection_item(
             svc.table("collection_items").insert({
                 "collection_id": target_id,
                 "saved_item_id": saved_item_id,
-                "position": max((l.get("position") or 0 for l in target_links), default=-1) + 1,
+                "position": max((link.get("position") or 0 for link in target_links), default=-1) + 1,
             }).execute()
         (
             svc.table("collection_items")

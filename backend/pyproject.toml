@@ -39,3 +39,13 @@ dev-dependencies = [
     "pytest-asyncio>=1.0.0",
     "ruff>=0.4.0",
 ]
+
+[tool.ruff.lint.per-file-ignores]
+# Each router is imported next to its include_router() call, after the app and
+# middleware exist. Moving them to the top is a structural change, not a lint fix.
+"main.py" = ["E402"]
+# sys.path is extended before the parser modules can be imported.
+"tests/test_subject_option_parser.py" = ["E402"]
+# The guided-content table repeats two keys; which entry should win is a content
+# decision for the owner, so the duplicates are reported here rather than edited.
+"d078_guided_content.py" = ["F601"]

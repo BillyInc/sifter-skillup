@@ -2,7 +2,9 @@
 # Sifter LevelUp - FastAPI Backend v2
 # All routers registered, all middleware wired
 # ============================================
-import uuid, bcrypt, base64, secrets, urllib.parse, httpx
+import uuid
+import bcrypt
+import secrets
 import re
 from contextlib import asynccontextmanager
 from datetime import datetime, date, timedelta
@@ -17,7 +19,14 @@ import db_email_codes
 import email_delivery
 from config import settings
 from database import db
-from models import *
+from models import (
+    GameState,
+    LegalAcceptanceInput,
+    LevelComplete,
+    ResponseModel,
+    TrackType,
+    UserUpdate,
+)
 from auth import Auth
 from logger import log
 from middleware.session_middleware import DeviceSessionMiddleware
@@ -1109,8 +1118,10 @@ async def complete_level(level_data: LevelComplete, background_tasks: Background
     xp = settings.LEVEL_COMPLETE_XP if is_new else 50
     if level_data.is_perfect and str(level_id) not in perfect:
         xp += settings.PERFECT_LEVEL_BONUS
-    if is_new: completed.append(str(level_id))
-    if level_data.is_perfect and str(level_id) not in perfect: perfect.append(str(level_id))
+    if is_new:
+        completed.append(str(level_id))
+    if level_data.is_perfect and str(level_id) not in perfect:
+        perfect.append(str(level_id))
     python_chapters = current_user.get("python_chapters_completed", [])
     if level_data.track == TrackType.PYTHON:
         chapter = _get_python_chapter(level_id)
@@ -1163,7 +1174,8 @@ async def quant_gate_status(current_user: dict = Depends(Auth.get_current_user))
 
 # HELPERS
 def _get_python_chapter(level_id: int) -> Optional[int]:
-    if 2001 <= level_id <= 2080: return ((level_id - 2001) // 10) + 1
+    if 2001 <= level_id <= 2080:
+        return ((level_id - 2001) // 10) + 1
     return None
 
 def _chapter_fully_complete(chapter: int, completed: list) -> bool:
@@ -1174,7 +1186,8 @@ async def _check_achievements(user_id: str, completed: list, streak: int):
     count = len(completed)
     milestones = {1: "first_level", 15: "island_1", 30: "island_2", 45: "island_3", 60: "island_4"}
     user = db.get_client().table("users").select("achievements").eq("id", user_id).single().execute()
-    if not user.data: return
+    if not user.data:
+        return
     current = set(user.data.get("achievements", []))
     new_ach = []
     for threshold, aid in milestones.items():
