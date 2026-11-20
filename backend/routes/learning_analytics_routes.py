@@ -142,14 +142,31 @@ async def _aggregate(
     })
 
 
+def _is_missing_seat_status(exc: Exception) -> bool:
+    text = str(exc).lower()
+    return "seat_status" in text and any(
+        marker in text for marker in ("column", "schema cache", "does not exist", "not found")
+    )
+
+
 def _verified_school_memberships(user_id: str) -> list[dict]:
-    memberships = (_service().table("institution_members").select("school_id, role, seat_status, verified")
-                   .eq("user_id", user_id).neq("seat_status", "revoked")
-                   .order("verified", desc=True).limit(100).execute().data or [])
+    # Analytics scope needs an ACTIVE seat. Pending claims ('invited'), suspended
+    # and revoked seats never count, even when their verified flag is set. Only a
+    # schema that has no seat_status column at all falls back to the older lookup.
+    try:
+        memberships = (_service().table("institution_members").select("school_id, role, seat_status, verified")
+                       .eq("user_id", user_id).eq("seat_status", "active")
+                       .order("verified", desc=True).limit(100).execute().data or [])
+    except Exception as exc:  # noqa: BLE001
+        if not _is_missing_seat_status(exc):
+            raise
+        memberships = (_service().table("institution_members").select("school_id, role, verified")
+                       .eq("user_id", user_id)
+                       .order("verified", desc=True).limit(100).execute().data or [])
     school_ids = list(dict.fromkeys(
         str(row["school_id"]) for row in memberships
         if row.get("role") in _SCHOOL_ROLES and row.get("school_id")
-        and row.get("verified") is True and row.get("seat_status") != "revoked"
+        and row.get("verified") is True and row.get("seat_status") in (None, "active")
     ))
     if not school_ids:
         return []

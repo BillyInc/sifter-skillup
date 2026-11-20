@@ -353,21 +353,28 @@ class TestInviteVerifiedFlag:
         _verify(_claim(), _user("guest", "guest@example.com"))
         assert _members(svc, "guest")[0]["verified"] is True
 
-    def test_invited_by_someone_without_authority_is_not_verified(self, svc):
+    # An invitation from someone without admin authority, or from an admin who no
+    # longer holds an active seat, is no longer merely "unverified": it is refused
+    # and voided (second review round, finding R1).
+    def test_invited_by_someone_without_authority_is_refused(self, svc):
         _school(svc)
         _member(svc, "owner", role="owner", verified=True)
         _member(svc, "viewer", role="data_viewer", verified=True)
         self._invite(svc, "viewer")
-        _verify(_claim(), _user("guest", "guest@example.com"))
-        assert _members(svc, "guest")[0]["verified"] is False
+        with pytest.raises(HTTPException) as exc:
+            _verify(_claim(), _user("guest", "guest@example.com"))
+        assert exc.value.status_code == 403
+        assert _members(svc, "guest") == []
 
-    def test_invited_by_a_revoked_admin_is_not_verified(self, svc):
+    def test_invited_by_a_revoked_admin_is_refused(self, svc):
         _school(svc)
         _member(svc, "owner", role="owner", verified=True)
         _member(svc, "gone", role="owner", seat="revoked", verified=True)
         self._invite(svc, "gone")
-        _verify(_claim(), _user("guest", "guest@example.com"))
-        assert _members(svc, "guest")[0]["verified"] is False
+        with pytest.raises(HTTPException) as exc:
+            _verify(_claim(), _user("guest", "guest@example.com"))
+        assert exc.value.status_code == 403
+        assert _members(svc, "guest") == []
 
 
 # --- M4: revoked seats stay revoked ----------------------------------------

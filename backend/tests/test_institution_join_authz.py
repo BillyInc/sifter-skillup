@@ -284,7 +284,8 @@ class TestVerifyRoute:
         monkeypatch.setattr(ir, "_require_school_identity_schema", lambda _svc: None)
         svc.store["institution_member_invites"] = [
             {"id": "i1", "school_id": "school-b", "invited_email": "attacker@example.com",
-             "role": "counsellor", "status": "pending", "expires_at": _future()}
+             "role": "counsellor", "status": "pending", "expires_at": _future(),
+             "invited_by": "owner"}
         ]
         user = dict(ATTACKER, admin_access_granted_at="2026-01-01T00:00:00Z")
         claim = ir.VerificationClaim(
@@ -295,7 +296,10 @@ class TestVerifyRoute:
         mine = [m for m in svc.store["institution_members"] if m["user_id"] == "attacker"]
         assert len(mine) == 1
         assert mine[0]["role"] == "counsellor", "an invite must not be upgradable by the claim body"
-        assert mine[0]["verified"] is False
+        # The inviter is an active owner who still holds their seat, so the invited
+        # member is vouched for. (An invite whose inviter is gone is refused: see
+        # test_institution_review_round2.)
+        assert mine[0]["verified"] is True
         assert svc.store["institution_member_invites"][0]["status"] == "accepted"
         assert svc.store["institution_member_invites"][0]["accepted_by"] == "attacker"
 

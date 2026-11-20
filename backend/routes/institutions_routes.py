@@ -414,10 +414,31 @@ def _restore_invite(current_user: dict, invite: dict) -> None:
         log.error("institutions: invitation could not be restored", error=str(exc))
 
 
-def _inviter_is_authorised(school_id: str, invited_by: Optional[str]) -> bool:
-    """True when the inviter still holds an active admin-level seat in the school."""
+_ADMIN_ROLES = frozenset({"owner", "institution_admin", "admin"})
+# Higher number = more privilege. An invitation may raise a member's role, never lower it.
+_ROLE_RANK = {
+    "owner": 100,
+    "institution_admin": 90,
+    "admin": 80,
+    "educator": 60,
+    "provisioning_manager": 55,
+    "dean": 40,
+    "hod": 40,
+    "admissions_officer": 35,
+    "course_advisor": 30,
+    "counsellor": 20,
+    "data_viewer": 10,
+}
+
+
+def _role_rank(role: Optional[str]) -> int:
+    return _ROLE_RANK.get(role or "", 0)
+
+
+def _inviter_row(school_id: str, invited_by: Optional[str]) -> Optional[dict]:
+    """The inviter's seat in this school, or None."""
     if not invited_by:
-        return False
+        return None
     try:
         rows = (
             _svc()
@@ -432,12 +453,58 @@ def _inviter_is_authorised(school_id: str, invited_by: Optional[str]) -> bool:
         )
     except Exception as exc:  # noqa: BLE001
         log.warning("institutions: inviter lookup failed", error=str(exc))
+        return None
+    return rows[0] if rows else None
+
+
+def _inviter_is_authorised(school_id: str, invited_by: Optional[str]) -> bool:
+    """True when the inviter still holds an active admin-level seat in the school."""
+    row = _inviter_row(school_id, invited_by)
+    return bool(row) and _seat_is_active(row) and row.get("role") in _ADMIN_ROLES
+
+
+def _invite_is_honourable(school_id: str, invite: dict, invitee_id: str) -> bool:
+    """Whether this invitation may still grant a seat.
+
+    The inviter must STILL hold an active admin seat (a revoked or suspended admin's
+    pending invitations die with their access), nobody can invite themselves, and
+    only an active OWNER can issue an `owner` invitation (so an admin cannot
+    promote themselves by inviting their own address as owner).
+    """
+    inviter = _inviter_row(school_id, invite.get("invited_by"))
+    if not inviter or not _seat_is_active(inviter) or inviter.get("role") not in _ADMIN_ROLES:
         return False
-    return bool(rows) and _seat_is_active(rows[0]) and rows[0].get("role") in {
-        "owner",
-        "institution_admin",
-        "admin",
-    }
+    if inviter.get("user_id") == invitee_id:
+        return False
+    if invite.get("role") == "owner" and inviter.get("role") != "owner":
+        return False
+    return True
+
+
+def _void_invite(invite: dict) -> None:
+    """Mark an invitation that can no longer be honoured as revoked (best effort)."""
+    try:
+        _svc().table("institution_member_invites").update({"status": "revoked"}).eq(
+            "id", invite["id"]
+        ).eq("status", "pending").execute()
+    except Exception as exc:  # noqa: BLE001
+        log.warning("institutions: could not void a dead invitation", error=str(exc))
+
+
+def _may_submit_proof(member: Optional[dict]) -> bool:
+    """A pending claimant submits proof for review; an active seat needs an admin role."""
+    if not member:
+        return False
+    if member.get("seat_status") == _PENDING_SEAT:
+        return True
+    return _seat_is_active(member) and member.get("role") in _ADMIN_ROLES
+
+
+def _proof_may_change_school_status(current_status: Optional[str], *, pending_seat: bool) -> bool:
+    """A pending claimant's proof never overwrites a status someone already decided."""
+    if not pending_seat:
+        return True
+    return (current_status or "unverified") in {"unverified", "claimed"}
 
 
 def _existing_member_row(user_id: str, school_id: str) -> Optional[dict]:
@@ -2075,8 +2142,23 @@ async def submit_verification(
         #     until a reviewer activates it
         invite = _invite_for_user(current_user, org.id)
         existing_member = _existing_member_row(current_user["id"], org.id)
+        if invite and not _invite_is_honourable(org.id, invite, current_user["id"]):
+            # The inviter lost their seat, is not an owner inviting an owner, or is
+            # inviting themselves: the invitation dies and grants nothing.
+            _void_invite(invite)
+            raise HTTPException(
+                status_code=403,
+                detail="This invitation is no longer valid. Ask an owner or admin to invite you again.",
+            )
         if invite:
             invited_role = invite.get("role")
+            keep_role = None
+            if existing_member and _seat_is_active(existing_member):
+                # An invitation never lowers a role the member already holds.
+                if _role_rank(invited_role) <= _role_rank(existing_member.get("role")):
+                    keep_role = existing_member.get("role")
+            if keep_role:
+                invited_role = keep_role
             if invited_role:
                 account_type = _normal_account_type(None, invited_role)
             _consume_invite(current_user, invite)
@@ -2087,7 +2169,7 @@ async def submit_verification(
                     account_type,
                     invited_role or claim.role,
                     seat_status=_ACTIVE_SEAT,
-                    verified=_inviter_is_authorised(org.id, invite.get("invited_by")),
+                    verified=True,
                     update_existing=True,
                     invited_by=invite.get("invited_by"),
                 )
@@ -2106,8 +2188,11 @@ async def submit_verification(
         elif org.id in _created_schools.get():
             _attach_member(current_user, org.id, account_type, claim.role)
         else:
+            # A claim on a school nobody administers: never keep the role the body
+            # asked for. The reviewer decides the role when they activate the seat.
+            account_type = "educator"
             _attach_member(
-                current_user, org.id, account_type, claim.role, seat_status=_PENDING_SEAT
+                current_user, org.id, account_type, "educator", seat_status=_PENDING_SEAT
             )
             pending_claim = True
         try:
@@ -2164,7 +2249,12 @@ def _proof_org_for_user(current_user: dict) -> tuple[dict, Optional[dict]]:
     org = _org_from_school(school_id)
     if not org:
         raise HTTPException(status_code=404, detail="Your organisation could not be found.")
-    return {"id": school_id, "type": org.type, "name": org.name}, member
+    return {
+        "id": school_id,
+        "type": org.type,
+        "name": org.name,
+        "verification_status": org.verification_status,
+    }, member
 
 
 def _proof_filename(filename: Optional[str], content_type: str) -> str:
@@ -2179,19 +2269,19 @@ def _proof_filename(filename: Optional[str], content_type: str) -> str:
 @router.get("/verification-proof", response_model=ResponseModel)
 async def get_verification_proof(current_user: dict = Depends(Auth.get_current_user)):
     """Return metadata for the caller's latest private proof submission."""
-    org, _member = _proof_org_for_user(current_user)
+    org, member = _proof_org_for_user(current_user)
     try:
-        row = (
+        query = (
             _svc()
             .table("institution_verification_submissions")
             .select("id, file_name, content_type, file_size, verification_method, status, submitted_at, reviewed_at, review_note")
             .eq("school_id", org["id"])
-            .order("submitted_at", desc=True)
-            .limit(1)
-            .execute()
-            .data
-            or []
         )
+        if (member or {}).get("seat_status") == _PENDING_SEAT:
+            # A pending claimant is not part of the school's team: it sees only what
+            # it submitted itself, never another claimant's submission or reviewer note.
+            query = query.eq("submitted_by", current_user["id"])
+        row = query.order("submitted_at", desc=True).limit(1).execute().data or []
         return ResponseModel(data=row[0] if row else None)
     except Exception as exc:  # noqa: BLE001
         log.warning("institutions: verification proof metadata unavailable", error=str(exc))
@@ -2206,8 +2296,9 @@ async def submit_verification_proof(
 ):
     """Store one private proof file and atomically move the organisation to review."""
     org, member = _proof_org_for_user(current_user)
-    if (member or {}).get("role") not in {"owner", "institution_admin", "admin"}:
+    if not _may_submit_proof(member):
         raise HTTPException(status_code=403, detail="Only an organisation owner or administrator can submit verification proof.")
+    pending_seat = (member or {}).get("seat_status") == _PENDING_SEAT
 
     content_type = (proof.content_type or "").lower().strip()
     if content_type not in _ALLOWED_VERIFICATION_TYPES:
@@ -2253,20 +2344,23 @@ async def submit_verification_proof(
         )
         if not inserted:
             raise RuntimeError("verification proof insert returned no row")
-        updated = (
-            _svc()
-            .table("schools")
-            .update({
-                "verification_status": "pending",
-                "verification_method": method,
-                "verification_proof_submitted_at": submitted_at,
-            })
-            .eq("id", org["id"])
-            .select("id")
-            .execute()
-        )
-        if not updated.data:
-            raise RuntimeError("school verification status update returned no row")
+        # A pending claimant's proof is stored for the reviewer, but it never
+        # overwrites a verification status someone already decided.
+        if _proof_may_change_school_status(org.get("verification_status"), pending_seat=pending_seat):
+            updated = (
+                _svc()
+                .table("schools")
+                .update({
+                    "verification_status": "pending",
+                    "verification_method": method,
+                    "verification_proof_submitted_at": submitted_at,
+                })
+                .eq("id", org["id"])
+                .select("id")
+                .execute()
+            )
+            if not updated.data:
+                raise RuntimeError("school verification status update returned no row")
     except Exception as exc:  # noqa: BLE001
         try:
             storage.remove([storage_path])
