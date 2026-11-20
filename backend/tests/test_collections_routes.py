@@ -318,3 +318,91 @@ def test_purge_user_collections_only_touches_that_user(fake, as_user):
 def test_purge_swallows_missing_tables(monkeypatch):
     monkeypatch.setattr(cr, "db", FakeDB(tables=()))
     cr.purge_user_collections(ME)  # must not raise
+
+
+# ── Ordering and private notes ────────────────────────────────
+
+
+def _fill(fake, as_user, count=3):
+    col = _create(as_user, "Ordered")
+    ids = [f"s{i}" for i in range(1, count + 1)]
+    for sid in ids:
+        _saved(fake, sid, ME, f"Item {sid}")
+    as_user.post(f"/api/career/collections/{col['id']}/items", json={"savedItemIds": ids})
+    return col, ids
+
+
+def _order(as_user, col):
+    rows = as_user.get(f"/api/career/collections/{col['id']}/items").json()["data"]["data"]
+    return [r["savedItemId"] for r in rows]
+
+
+def test_reorder_persists_and_returns_positions(fake, as_user):
+    col, ids = _fill(fake, as_user)
+    assert _order(as_user, col) == ["s1", "s2", "s3"]
+    r = as_user.patch(f"/api/career/collections/{col['id']}/order", json={"savedItemIds": ["s3", "s1", "s2"]})
+    assert r.json()["data"]["data"] == {"count": 3}
+    assert _order(as_user, col) == ["s3", "s1", "s2"]
+    rows = as_user.get(f"/api/career/collections/{col['id']}/items").json()["data"]["data"]
+    assert [r["position"] for r in rows] == [0, 1, 2]
+
+
+def test_reorder_must_list_every_member_exactly_once(fake, as_user):
+    col, _ = _fill(fake, as_user)
+    path = f"/api/career/collections/{col['id']}/order"
+    assert as_user.patch(path, json={"savedItemIds": ["s1", "s2"]}).status_code == 409  # missing one
+    assert as_user.patch(path, json={"savedItemIds": ["s1", "s2", "s3", "s9"]}).status_code == 409  # extra
+    assert as_user.patch(path, json={"savedItemIds": []}).status_code == 400
+    assert _order(as_user, col) == ["s1", "s2", "s3"]  # unchanged
+
+
+def test_reorder_other_users_collection_is_not_found(fake, as_user):
+    col, _ = _fill(fake, as_user)
+    as_user.switch(OTHER)
+    r = as_user.patch(f"/api/career/collections/{col['id']}/order", json={"savedItemIds": ["s1", "s2", "s3"]})
+    assert r.status_code == 404
+    as_user.switch(ME)
+    assert _order(as_user, col) == ["s1", "s2", "s3"]
+
+
+def test_note_set_trim_clear_and_validation(fake, as_user):
+    col, _ = _fill(fake, as_user)
+    path = f"/api/career/collections/{col['id']}/items/s2"
+    r = as_user.patch(path, json={"note": "  Ask about fees.  \r\nCheck cut-off. "})
+    assert r.json()["data"]["data"] == {"savedItemId": "s2", "note": "Ask about fees.\nCheck cut-off."}
+    rows = as_user.get(f"/api/career/collections/{col['id']}/items").json()["data"]["data"]
+    assert {r["savedItemId"]: r["note"] for r in rows} == {"s1": None, "s2": "Ask about fees.\nCheck cut-off.", "s3": None}
+    assert as_user.patch(path, json={"note": "   "}).json()["data"]["data"]["note"] is None  # blank clears
+    assert as_user.patch(path, json={"note": "x" * 501}).status_code == 400
+    assert as_user.patch(path, json={"note": "x" * 500}).status_code == 200
+    assert as_user.patch(path, json={"note": "a\x00b"}).status_code == 400
+    assert as_user.patch(path, json={"note": 12}).status_code == 400
+    assert as_user.patch(path, json={}).status_code == 400
+    assert as_user.patch(path, json={"note": None}).json()["data"]["data"]["note"] is None
+
+
+def test_note_on_item_outside_collection_is_not_found(fake, as_user):
+    col, _ = _fill(fake, as_user)
+    _saved(fake, "loose", ME)
+    r = as_user.patch(f"/api/career/collections/{col['id']}/items/loose", json={"note": "hi"})
+    assert r.status_code == 404
+
+
+def test_notes_are_private_to_the_owner(fake, as_user):
+    col, _ = _fill(fake, as_user)
+    as_user.patch(f"/api/career/collections/{col['id']}/items/s1", json={"note": "private thought"})
+    as_user.switch(OTHER)
+    assert as_user.get(f"/api/career/collections/{col['id']}/items").status_code == 404
+    assert as_user.patch(f"/api/career/collections/{col['id']}/items/s1", json={"note": "overwrite"}).status_code == 404
+    as_user.switch(ME)
+    rows = as_user.get(f"/api/career/collections/{col['id']}/items").json()["data"]["data"]
+    assert rows[0]["note"] == "private thought"
+    # No route exposes notes without ownership: there is no sharing endpoint.
+    assert not [r for r in cr.router.routes if "share" in r.path]
+
+
+def test_order_and_note_report_coming_soon_when_tables_missing(monkeypatch, as_user):
+    monkeypatch.setattr(cr, "db", FakeDB(tables=()))
+    a = as_user.patch("/api/career/collections/c1/order", json={"savedItemIds": ["s1"]})
+    b = as_user.patch("/api/career/collections/c1/items/s1", json={"note": "x"})
+    assert a.json()["data"]["status"] == "coming_soon" and b.json()["data"]["status"] == "coming_soon"

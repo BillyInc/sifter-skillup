@@ -14,6 +14,8 @@ const mockData = {
   addItems: jest.fn(),
   removeItem: jest.fn(),
   moveItem: jest.fn(),
+  reorder: jest.fn(),
+  setNote: jest.fn(),
 };
 jest.mock("@/lib/collectionsData", () => ({ collectionsData: new Proxy({}, { get: (_t, k: string) => (mockData as never)[k] }) }));
 
@@ -106,7 +108,7 @@ describe("CollectionsSection", () => {
     fireEvent.press(screen.getByRole("button", { name: "Remove BSc Sociology from this collection" }));
     expect(await screen.findByText(REMOVE_FROM_COLLECTION_COPY)).toBeTruthy();
     expect(REMOVE_FROM_COLLECTION_COPY).toBe(
-      "This removes it from this collection. It does not delete the original programme, role or task item.",
+      "This removes it from this collection. It does not delete the item you saved.",
     );
     expect(mockData.removeItem).not.toHaveBeenCalled();
     fireEvent.press(screen.getByRole("button", { name: "Remove from collection" }));
@@ -126,5 +128,88 @@ describe("CollectionsSection", () => {
     await screen.findByText(REMOVE_FROM_COLLECTION_COPY);
     fireEvent.press(screen.getByRole("button", { name: "Cancel" }));
     expect(mockData.removeItem).not.toHaveBeenCalled();
+  });
+
+  describe("ordering, notes and export", () => {
+    const THREE = [
+      { savedItemId: "s1", entityType: "programme", entityId: "p1", label: "BSc Sociology", position: 0, note: "Ask about fees." },
+      { savedItemId: "s2", entityType: "role", entityId: "r1", label: "Data Analyst", position: 1, note: null },
+      { savedItemId: "s3", entityType: "programme", entityId: "p3", label: "BA History", position: 2, note: null },
+    ];
+
+    async function openDetail() {
+      mockData.list.mockResolvedValue({ status: "real", data: [{ id: "c1", name: "Shortlist", kind: "custom", itemCount: 3 }] });
+      mockData.items.mockResolvedValue({ status: "real", data: THREE });
+      renderSection();
+      fireEvent.press(await screen.findByRole("button", { name: "Open collection Shortlist, 3 items" }));
+      await waitFor(() => expect(screen.getByText("BSc Sociology")).toBeTruthy());
+    }
+
+    const order = () => screen.getAllByRole("button", { name: /^Move .* up$/ }).map((b) => b.props.accessibilityLabel.replace(/^Move | up$/g, ""));
+
+    it("moves an item with the buttons, saves the whole order, and disables the ends", async () => {
+      mockData.reorder.mockResolvedValue({ status: "real", data: { count: 3 } });
+      await openDetail();
+      expect(screen.getByRole("button", { name: "Move BSc Sociology up" }).props.accessibilityState.disabled).toBe(true);
+      expect(screen.getByRole("button", { name: "Move BA History down" }).props.accessibilityState.disabled).toBe(true);
+      fireEvent.press(screen.getByRole("button", { name: "Move Data Analyst up" }));
+      await waitFor(() => expect(mockData.reorder).toHaveBeenCalledWith("c1", ["s2", "s1", "s3"]));
+      await waitFor(() => expect(order()).toEqual(["Data Analyst", "BSc Sociology", "BA History"]));
+    });
+
+    it("puts the old order back and says so when saving the order fails", async () => {
+      mockData.reorder.mockResolvedValue({ status: "error", data: null, meta: { notice: "This collection changed. Reload it and try again." } });
+      await openDetail();
+      fireEvent.press(screen.getByRole("button", { name: "Move BA History up" }));
+      expect(await screen.findByText("This collection changed. Reload it and try again.")).toBeTruthy();
+      await waitFor(() => expect(order()).toEqual(["BSc Sociology", "Data Analyst", "BA History"]));
+    });
+
+    it("shows an existing note and keeps it private-labelled in the editor", async () => {
+      await openDetail();
+      expect(screen.getByText("Ask about fees.")).toBeTruthy();
+      fireEvent.press(screen.getByRole("button", { name: "Edit note on BSc Sociology" }));
+      expect(await screen.findByText("Only you can see this note. It is not shared with anyone.")).toBeTruthy();
+      expect(screen.getByLabelText("Note").props.value).toBe("Ask about fees.");
+    });
+
+    it("saves a note, trimmed, and shows it", async () => {
+      mockData.setNote.mockResolvedValue({ status: "real", data: { savedItemId: "s2", note: "Check entry rules." } });
+      await openDetail();
+      fireEvent.press(screen.getByRole("button", { name: "Add note to Data Analyst" }));
+      fireEvent.changeText(await screen.findByLabelText("Note"), "  Check entry rules.  ");
+      fireEvent.press(screen.getByRole("button", { name: "Save note" }));
+      await waitFor(() => expect(mockData.setNote).toHaveBeenCalledWith("c1", "s2", "Check entry rules."));
+      expect(await screen.findByText("Check entry rules.")).toBeTruthy();
+    });
+
+    it("keeps the typed note and offers retry when saving fails", async () => {
+      mockData.setNote.mockResolvedValueOnce({ status: "error", data: null, meta: { notice: "Could not save the note." } });
+      await openDetail();
+      fireEvent.press(screen.getByRole("button", { name: "Add note to Data Analyst" }));
+      fireEvent.changeText(await screen.findByLabelText("Note"), "Important");
+      fireEvent.press(screen.getByRole("button", { name: "Save note" }));
+      expect(await screen.findByText("Could not save the note.")).toBeTruthy();
+      expect(screen.getByLabelText("Note").props.value).toBe("Important");
+      // Retry resends exactly what was typed.
+      mockData.setNote.mockResolvedValueOnce({ status: "real", data: { savedItemId: "s2", note: "Important" } });
+      fireEvent.press(screen.getByRole("button", { name: "Try again" }));
+      await waitFor(() => expect(mockData.setNote).toHaveBeenLastCalledWith("c1", "s2", "Important"));
+      expect(mockData.setNote).toHaveBeenCalledTimes(2);
+    });
+
+    it("sends null to clear a note when the text is blank", async () => {
+      mockData.setNote.mockResolvedValue({ status: "real", data: { savedItemId: "s1", note: null } });
+      await openDetail();
+      fireEvent.press(screen.getByRole("button", { name: "Edit note on BSc Sociology" }));
+      fireEvent.changeText(await screen.findByLabelText("Note"), "   ");
+      fireEvent.press(screen.getByRole("button", { name: "Save note" }));
+      await waitFor(() => expect(mockData.setNote).toHaveBeenCalledWith("c1", "s1", null));
+    });
+
+    it("offers print only when the collection has items", async () => {
+      await openDetail();
+      expect(screen.getByRole("button", { name: /Print or save as PDF|Share this list/ })).toBeTruthy();
+    });
   });
 });
