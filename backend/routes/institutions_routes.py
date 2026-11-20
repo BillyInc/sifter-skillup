@@ -1707,23 +1707,35 @@ async def invite_team_member(
         )
 
 
-# Failed access-code attempts per caller. Only failures are recorded, so a
-# legitimate code holder is never locked out by their own successes; the limit
-# stops guessing of the shared owner code by user and by source address.
+# Failed access-code attempts. Only failures are recorded, so a legitimate code
+# holder is never locked out by their own successes.
+#
+# Two limiters on purpose. The per-user limit is strict: it is what stops
+# guessing of the shared owner code. The per-address limit is much looser,
+# because behind the nginx reverse proxy request.client.host is the proxy's
+# address for EVERY caller (the app does not read X-Forwarded-For, which a
+# client can spoof). A strict address limit would let one account's failures
+# lock every educator out of validation for the whole window.
 ACCESS_CODE_FAILURES_PER_WINDOW = 10
+ACCESS_CODE_IP_FAILURES_PER_WINDOW = 100
 access_code_limiter = UploadRateLimiter(
     limits=((900, ACCESS_CODE_FAILURES_PER_WINDOW, "15 minutes"),
             (86400, ACCESS_CODE_FAILURES_PER_WINDOW * 5, "day")),
 )
+access_code_ip_limiter = UploadRateLimiter(
+    limits=((900, ACCESS_CODE_IP_FAILURES_PER_WINDOW, "15 minutes"),
+            (86400, ACCESS_CODE_IP_FAILURES_PER_WINDOW * 5, "day")),
+)
 
 
-def _access_code_keys(request: Optional[Request], current_user: dict) -> list:
-    keys = [f"user:{current_user.get('id')}"]
+def _access_code_scopes(request: Optional[Request], current_user: dict) -> list:
+    """(limiter, key) pairs that apply to this caller."""
+    scopes = [(access_code_limiter, f"user:{current_user.get('id')}")]
     client = getattr(request, "client", None)
     host = getattr(client, "host", None)
     if host:
-        keys.append(f"ip:{host}")
-    return keys
+        scopes.append((access_code_ip_limiter, f"ip:{host}"))
+    return scopes
 
 
 @router.post("/access-code/validate", response_model=ResponseModel)
@@ -1738,8 +1750,8 @@ async def validate_admin_access_code(
     centres while proof review remains manual. It does not verify ownership,
     create an institution membership, or replace school/student claim codes.
     """
-    keys = _access_code_keys(request, current_user)
-    waits = [w for w in (access_code_limiter.check(k) for k in keys) if w]
+    scopes = _access_code_scopes(request, current_user)
+    waits = [w for w in (limiter.check(key) for limiter, key in scopes) if w]
     if waits:
         raise HTTPException(
             status_code=429,
@@ -1752,8 +1764,8 @@ async def validate_admin_access_code(
         for configured in settings.EDUCATOR_ACCESS_CODES
     )
     if not ok:
-        for key in keys:
-            access_code_limiter.record(key)
+        for limiter, key in scopes:
+            limiter.record(key)
         log.info(
             "Institution access code rejected",
             user_id=current_user["id"],

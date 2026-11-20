@@ -300,22 +300,27 @@ class TestVerifyRoute:
         assert svc.store["institution_member_invites"][0]["accepted_by"] == "attacker"
 
 
+def _reset_limiters():
+    ir.access_code_limiter.reset()
+    ir.access_code_ip_limiter.reset()
+
+
 class TestAccessCodeRateLimit:
     def test_failed_attempts_are_limited_per_user_and_ip(self):
         limiter = ir.access_code_limiter
-        limiter.reset()
+        _reset_limiters()
         for _ in range(ir.ACCESS_CODE_FAILURES_PER_WINDOW):
             assert limiter.check("user:u1") is None
             limiter.record("user:u1")
         assert limiter.check("user:u1") is not None
         assert limiter.check("user:u2") is None, "another user is unaffected"
-        limiter.reset()
+        _reset_limiters()
 
     def test_wrong_code_attempts_return_429_with_retry_after(self, monkeypatch):
         from types import SimpleNamespace
 
         monkeypatch.setattr(ir.settings, "EDUCATOR_ACCESS_CODES", ["REAL-CODE"], raising=False)
-        ir.access_code_limiter.reset()
+        _reset_limiters()
         request = SimpleNamespace(client=SimpleNamespace(host="203.0.113.9"), headers={})
         user = {"id": "u1"}
 
@@ -331,14 +336,14 @@ class TestAccessCodeRateLimit:
             asyncio.run(attempt("WRONG"))
         assert exc.value.status_code == 429
         assert int(exc.value.headers["Retry-After"]) >= 1
-        ir.access_code_limiter.reset()
+        _reset_limiters()
 
     def test_successful_validation_is_not_counted(self, monkeypatch, svc):
         from types import SimpleNamespace
 
         svc.store["users"] = [{"id": "u1"}]
         monkeypatch.setattr(ir.settings, "EDUCATOR_ACCESS_CODES", ["REAL-CODE"], raising=False)
-        ir.access_code_limiter.reset()
+        _reset_limiters()
         request = SimpleNamespace(client=SimpleNamespace(host="203.0.113.10"), headers={})
         for _ in range(ir.ACCESS_CODE_FAILURES_PER_WINDOW + 3):
             result = asyncio.run(
@@ -347,7 +352,104 @@ class TestAccessCodeRateLimit:
                 )
             )
             assert result.success is not False
-        ir.access_code_limiter.reset()
+        _reset_limiters()
+
+    def test_one_users_failures_do_not_lock_out_another_user_on_the_same_address(self, monkeypatch):
+        """Behind the nginx proxy every caller shares one client address, so the
+        strict limit must be per user, not per address."""
+        from types import SimpleNamespace
+
+        monkeypatch.setattr(ir.settings, "EDUCATOR_ACCESS_CODES", ["REAL-CODE"], raising=False)
+        _reset_limiters()
+        shared = SimpleNamespace(client=SimpleNamespace(host="127.0.0.1"), headers={})
+
+        def attempt(user_id, code):
+            return asyncio.run(
+                ir.validate_admin_access_code(
+                    ir.AdminAccessCodeRequest(code=code), shared, {"id": user_id}
+                )
+            )
+
+        for _ in range(ir.ACCESS_CODE_FAILURES_PER_WINDOW):
+            assert attempt("noisy", "WRONG").success is False
+        with pytest.raises(HTTPException) as exc:
+            attempt("noisy", "WRONG")
+        assert exc.value.status_code == 429
+        # a different account behind the same proxy address is unaffected
+        assert attempt("quiet", "WRONG").success is False
+        _reset_limiters()
+
+    def test_the_address_limit_still_stops_a_flood_from_one_address(self, monkeypatch):
+        from types import SimpleNamespace
+
+        monkeypatch.setattr(ir.settings, "EDUCATOR_ACCESS_CODES", ["REAL-CODE"], raising=False)
+        _reset_limiters()
+        request = SimpleNamespace(client=SimpleNamespace(host="198.51.100.7"), headers={})
+        # many different accounts, each below its own limit, from one address
+        blocked = None
+        for n in range(ir.ACCESS_CODE_IP_FAILURES_PER_WINDOW + 5):
+            try:
+                asyncio.run(
+                    ir.validate_admin_access_code(
+                        ir.AdminAccessCodeRequest(code="WRONG"), request, {"id": f"user-{n}"}
+                    )
+                )
+            except HTTPException as exc:
+                blocked = (n, exc.status_code)
+                break
+        assert blocked is not None, "a flood from one address was never limited"
+        assert blocked[1] == 429
+        assert blocked[0] >= ir.ACCESS_CODE_IP_FAILURES_PER_WINDOW
+        _reset_limiters()
+
+
+class TestAccessCodeRouteThroughFastAPI:
+    """The unit tests above call the coroutine directly. These go through the
+    real route so FastAPI has to inject the ``Request`` itself."""
+
+    USER_ID = "test-user-123"  # matches the auth_header fixture's JWT sub
+
+    @pytest.fixture
+    def inst_db(self, mock_db, monkeypatch):
+        from unittest.mock import MagicMock
+
+        monkeypatch.setattr(ir, "db", mock_db, raising=False)
+        sc = mock_db.get_service_client.return_value
+        (
+            sc.table.return_value.select.return_value.eq.return_value
+            .single.return_value.execute.return_value
+        ) = MagicMock(data={
+            "id": self.USER_ID, "username": "Tester", "auth_provider": "guest",
+            "account_type": "student",
+        })
+        return mock_db
+
+    def test_wrong_codes_are_limited_through_the_real_route(
+        self, client, auth_header, inst_db, monkeypatch
+    ):
+        monkeypatch.setattr(ir.settings, "EDUCATOR_ACCESS_CODES", ["REAL-CODE"], raising=False)
+        _reset_limiters()
+        seen = []
+        real_scopes = ir._access_code_scopes
+
+        def spy(request, current_user):
+            seen.append(request)
+            return real_scopes(request, current_user)
+
+        monkeypatch.setattr(ir, "_access_code_scopes", spy)
+        url = "/api/institutions/access-code/validate"
+        for _ in range(ir.ACCESS_CODE_FAILURES_PER_WINDOW):
+            r = client.post(url, headers=auth_header, json={"code": "WRONG"})
+            assert r.status_code == 200, r.text
+            assert r.json()["success"] is False
+        r = client.post(url, headers=auth_header, json={"code": "WRONG"})
+        assert r.status_code == 429, r.text
+        assert int(r.headers["Retry-After"]) >= 1
+        # FastAPI really injected the Request (with a client address), so the
+        # per-address limiter is active in production, not silently skipped.
+        assert seen and all(req is not None for req in seen)
+        assert getattr(seen[0].client, "host", None)
+        _reset_limiters()
 
 
 def _load_private_config():
