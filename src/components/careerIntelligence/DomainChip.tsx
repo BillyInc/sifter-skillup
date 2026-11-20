@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
   },
   typeText: {
-    fontSize: 9,
+    fontSize: FontSize.sm,
     fontWeight: "900",
     letterSpacing: 0.4,
     textTransform: "uppercase",

@@ -176,6 +176,10 @@ class Settings:
         if t.strip()
     ]
     AIRTABLE_SYNC_INTERVAL_MINUTES: int = int(os.getenv("AIRTABLE_SYNC_INTERVAL_MINUTES", "30"))
+    # Scheduled hard delete of self-deleted accounts. Dry run unless explicitly enabled.
+    ACCOUNT_HARD_DELETE_ENABLED: bool = os.getenv("ACCOUNT_HARD_DELETE_ENABLED", "false").strip().lower() in ("1", "true", "yes")
+    ACCOUNT_HARD_DELETE_RETENTION_DAYS: int = int(os.getenv("ACCOUNT_HARD_DELETE_RETENTION_DAYS", "30"))
+    ACCOUNT_HARD_DELETE_BATCH_SIZE: int = int(os.getenv("ACCOUNT_HARD_DELETE_BATCH_SIZE", "100"))
 
     # ── Push Notifications (FCM) ──────────────────────────────
     FCM_SERVER_KEY: str = os.getenv("FCM_SERVER_KEY", "")

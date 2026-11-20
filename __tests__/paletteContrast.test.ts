@@ -19,7 +19,7 @@
  * keyboard focus ring, not just buttons.
  */
 
-import { LightColors, DarkColors } from "../src/theme";
+import { LightColors, DarkColors, Brand } from "../src/theme";
 
 // ── WCAG 2.1 relative luminance / contrast ───────────────────────────────
 function channel(v: number): number {
@@ -215,5 +215,12 @@ describe("semantic colours stay distinguishable from the action", () => {
     expect(contrast(DarkColors.textRole.placeholder, DarkColors.surface.raised)).toBeGreaterThanOrEqual(4.5);
     expect(contrast(DarkColors.textRole.muted, DarkColors.surface.raised))
       .toBeGreaterThan(contrast(DarkColors.textRole.placeholder, DarkColors.surface.raised));
+  });
+
+  it("uses one primary: Brand.primary is the action colour and carries white text at AA", () => {
+    expect(Brand.primary.toLowerCase()).toBe(LightColors.accentRole.action.toLowerCase());
+    expect(contrast(Brand.onPrimary, Brand.primary)).toBeGreaterThanOrEqual(4.5);
+    // The amber mark is decorative only and must not be used as a text-bearing fill.
+    expect(contrast(Brand.onPrimary, Brand.mark)).toBeLessThan(4.5);
   });
 });

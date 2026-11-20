@@ -21,6 +21,7 @@ import {
 import { adminData } from "@/lib/adminData";
 import type { DataState } from "../../types/career";
 import { AdminShell } from "./AdminShell";
+import { GlyphIcon } from "../../components/icons/GlyphIcon";
 
 const REQUIREMENTS = [
   {
@@ -78,7 +79,7 @@ export function StudentManagementScreen() {
           ]}
         >
           <View style={[styles.lockBadge, { backgroundColor: colors.bgSecondary }]}>
-            <Text style={styles.lockGlyph}>🔒</Text>
+            <GlyphIcon glyph="🔒" size={22} color={colors.text} />
           </View>
           <Text style={[styles.heroTitle, CompassFonts.displayBold, { color: colors.text }]}>
             Individual student data is private
@@ -102,7 +103,7 @@ export function StudentManagementScreen() {
                   { backgroundColor: colors.card, borderColor: colors.border },
                 ]}
               >
-                <Text style={styles.cardIcon}>{r.icon}</Text>
+                <GlyphIcon glyph={r.icon} size={20} color={colors.text} fallbackStyle={styles.cardIcon} />
                 <Text style={[styles.cardTitle, CompassFonts.bodyBold, { color: colors.text }]}>
                   {r.title}
                 </Text>

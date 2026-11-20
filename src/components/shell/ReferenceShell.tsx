@@ -24,6 +24,7 @@ import { Spring, useReducedMotion } from '@/theme/motion';
 import { careerData } from '@/lib/careerData';
 // The fourth destination names itself the same way everywhere; see worldNav.
 import { WORLD_NAV } from '@/lib/worldNav';
+import { getActiveNavId, type NavId } from '@/lib/shellNav';
 import { toSearchGroups, resolveSearchHref } from '@/lib/searchResults';
 import { exploreQueryHref } from '@/lib/exploreQuery';
 import { getRecentSearches, addRecentSearch } from '@/lib/recentSearches';
@@ -32,15 +33,6 @@ import type { CareerSearchResult, SearchIntent, SearchScope } from '@/types/care
 import { getStartingPoint } from '@/lib/startingPoint';
 import { SearchLauncherProvider } from '@/components/shell/searchLauncher';
 import { PersistentLearningPlanDockProvider } from '@/components/careerIntelligence/PersistentLearningPlanDock';
-
-type NavId =
-  | 'home'
-  | 'explore'
-  | 'build'
-  | 'entrepreneurship'
-  | 'opportunities'
-  | 'myworld'
-  | 'profile';
 
 interface ShellNavItem {
   id: NavId;
@@ -90,29 +82,6 @@ function getPageMeta(_trackContext: TrackContext, _activeId: NavId, activeItem: 
   };
 }
 
-function getActiveNavId(pathname: string | null): NavId {
-  if (!pathname) return 'home';
-  if (pathname.includes('/profile') || pathname.includes('/settings')) return 'profile';
-  if (pathname === '/build' || pathname.startsWith('/build/')) return 'build';
-  if (pathname.includes('/pathways/entrepreneurship')) return 'entrepreneurship';
-  if (pathname.includes('/explore') || pathname.includes('/programme')
-    || pathname.includes('/domain') || pathname.includes('/role')) return 'explore';
-  if (pathname.includes('/opportunities') || pathname.includes('/opportunity')
-    || pathname.includes('/company') || pathname.includes('/scholarship')) return 'opportunities';
-  // Everything from the legacy learning app now lives under My World.
-  if (
-    pathname.includes('/myworld')
-    || pathname.includes('/map') || pathname.includes('/world')
-    || pathname.includes('/starknet-track') || pathname.includes('/ecosystem-track')
-    || pathname.includes('/cairo-builder-track') || pathname.includes('/track-room')
-    || pathname.includes('/quant') || pathname.includes('/fields') || pathname.includes('/skills')
-    || pathname.includes('/guild') || pathname.includes('/community')
-    || pathname.includes('/portfolio') || pathname.includes('/streaks')
-    || pathname.includes('/feed') || pathname.includes('/merchandise')
-  ) return 'myworld';
-  if (pathname.includes('/home')) return 'home';
-  return 'home';
-}
 
 function getActiveMobileNavId(activeId: NavId): NavId {
   // Entrepreneurship has a first-class desktop/drawer destination but remains

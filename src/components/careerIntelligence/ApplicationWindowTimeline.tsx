@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   monthLabel: {
-    fontSize: 9,
+    fontSize: FontSize.sm,
   },
   timelineRow: {
     flexDirection: "row",
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     borderRadius: 0.75,
   },
   barLabel: {
-    fontSize: FontSize.xs,
+    fontSize: FontSize.sm,
     paddingLeft: 2,
   },
   legend: {
@@ -210,6 +210,6 @@ const styles = StyleSheet.create({
     borderRadius: 3,
   },
   legendLabel: {
-    fontSize: 9,
+    fontSize: FontSize.sm,
   },
 });

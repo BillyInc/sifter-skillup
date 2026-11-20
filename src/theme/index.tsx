@@ -578,13 +578,17 @@ export const Brand = {
   short: 'LevelUp',
   tagline: 'Be the best you can be.',
   promise: 'See the domains, roles and Opportunities your programme connects to — local, global, remote.',
-  // Accent used across brand surfaces (logo, splash, intro). Aligned to the
-  // existing gold/amber accent so it never clashes with the neutral UI.
-  primary: '#F59E0B',
-  primaryDeep: '#B45309',
+  // The brand MARK colour (logo, splash, intro). Amber; decorative only, never
+  // a button fill, because white on it is 2.1:1.
+  mark: '#F59E0B',
+  // The primary action colour for UI fills (buttons, selected chips, checkboxes).
+  // Same value as accentRole.action: white text on it is 5.2:1 (AA). One primary
+  // across the app; do not hardcode another orange.
+  primary: '#C2410C',
+  primaryDeep: '#9A3412',
   onPrimary: '#FFFFFF',
   primaryLight: '#FDE68A',
-  primarySoft: '#FFFBEB',
+  primarySoft: '#FBEDE6',
   warning: '#F97316',
   danger: '#EF4444',
 } as const;

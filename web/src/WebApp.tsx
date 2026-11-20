@@ -18,7 +18,17 @@ import { getDisplayName } from "../../src/lib/displayName";
 import Avatar from "../../src/components/account/Avatar";
 import { parentRouteFor } from "../../src/lib/backFallback";
 import { canGoBackInApp, pushWithDepth, replaceKeepingDepth } from "./historyIndex";
+import { getActiveNavId, type NavId } from "../../src/lib/shellNav";
 import "./styles.css";
+
+const PLATFORM_NAV: { id: NavId; href: string; label: string }[] = [
+  { id: "home", href: "/home", label: "Home" },
+  { id: "explore", href: "/explore", label: "Explore" },
+  { id: "build", href: "/build", label: "Build" },
+  { id: "opportunities", href: "/opportunities", label: "Opportunities" },
+  { id: "myworld", href: "/myworld", label: "My World" },
+  { id: "profile", href: "/profile", label: "Profile" },
+];
 
 const TOKEN_KEY = "sifter_auth_token_v2";
 const TERMS_VERSION = "2026-08-14";
@@ -507,6 +517,8 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
     || /^\/explore\/domain\/[^/]+(\/subgroup\/[^/]+)?$/.test(route)
     || /^\/opportunities\/(opportunity|organisation)\//.test(path)
     || path === "/opportunities/scholarships"
+    // SettingsScreen renders its own "Back to Profile" link.
+    || path === "/settings"
   );
   const showPlatformBack = !isAdminRoute && !routeHasOwnBack && (focusedGuidance || !isRootPlatformRoute);
 
@@ -693,12 +705,10 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
         <LevelUpWebWordmark variant="light" width={188} height={50} />
       </a>
       <nav className="platform-nav" aria-label="Main navigation">
-        <a href="/home" onClick={(e) => { e.preventDefault(); go("/home"); }}>Home</a>
-        <a href="/explore" onClick={(e) => { e.preventDefault(); go("/explore"); }}>Explore</a>
-        <a href="/build" onClick={(e) => { e.preventDefault(); go("/build"); }}>Build</a>
-        <a href="/opportunities" onClick={(e) => { e.preventDefault(); go("/opportunities"); }}>Opportunities</a>
-        <a href="/myworld" onClick={(e) => { e.preventDefault(); go("/myworld"); }}>My World</a>
-        <a href="/profile" onClick={(e) => { e.preventDefault(); go("/profile"); }}>Profile</a>
+        {PLATFORM_NAV.map((item) => {
+          const active = getActiveNavId(window.location.pathname) === item.id;
+          return <a key={item.id} href={item.href} className={active ? "is-active" : undefined} aria-current={active ? "page" : undefined} onClick={(e) => { e.preventDefault(); go(item.href); }}>{item.label}</a>;
+        })}
       </nav>
       <div className="platform-sidebar-account"><div className="platform-sidebar-identity"><Avatar user={user} size={28} /><span>{getDisplayName(user) || user.email || "Account"}</span></div><button className="text-button" onClick={() => { void signOut().then(() => go("/", true)); }}>Sign out</button></div>
     </aside> : null}

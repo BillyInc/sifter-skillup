@@ -9,10 +9,17 @@ on:
 permissions:
   contents: read
 
+# A newer push to the same PR supersedes the in-flight run. Pushes to main are
+# never cancelled, so every main commit keeps its own result.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   frontend:
     name: Frontend Checks
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -33,6 +40,10 @@ jobs:
         run: |
           OUTPUT=$(npx tsc --noEmit 2>&1 || true)
           FILTERED=$(echo "$OUTPUT" | grep -v 'src/data/' | grep '^src/' || true)
+          TOTAL=$(echo "$OUTPUT" | grep -c 'error TS' || true)
+          GATED=$(echo "$FILTERED" | grep -c . || true)
+          echo "tsc errors: $TOTAL total, $GATED gating (src/ excluding src/data/)"
+          echo "tsc errors: $TOTAL total, $GATED gating" >> "$GITHUB_STEP_SUMMARY"
           if [ -n "$FILTERED" ]; then
             echo "$FILTERED"
             exit 1
@@ -54,16 +65,27 @@ jobs:
   backend:
     name: Backend Checks
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     defaults:
       run:
         working-directory: backend
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: backend/uv.lock
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
       - run: uv sync --extra test
+      # Advisory only: reports the ruff backlog so it stays visible without
+      # gating (it is large today). Make it blocking once the count is cleared.
+      - name: Ruff (advisory, not gating)
+        run: |
+          COUNT=$(uv run ruff check . --output-format concise 2>/dev/null | grep -c '^[^ ]*:[0-9]' || true)
+          echo "ruff findings: $COUNT (not gating)"
+          echo "ruff findings: $COUNT (not gating)" >> "$GITHUB_STEP_SUMMARY"
       # The whole suite, not a hand-maintained list of five files.
       #
       # This step named its test files explicitly, so every file added since
@@ -83,3 +105,20 @@ jobs:
           SUPABASE_SERVICE_KEY: placeholder
           REDIS_URL: redis://localhost:6379/0
           SINGLE_DEVICE_ENFORCEMENT: 'false'
+
+  # One stable check name for branch protection. It fails if either job failed,
+  # was cancelled, or was skipped, so a skipped job can never read as a pass.
+  ci-gate:
+    name: CI gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: [frontend, backend]
+    if: always()
+    steps:
+      - name: Require every job to have succeeded
+        run: |
+          echo "frontend: ${{ needs.frontend.result }}"
+          echo "backend:  ${{ needs.backend.result }}"
+          if [ "${{ needs.frontend.result }}" != "success" ] || [ "${{ needs.backend.result }}" != "success" ]; then
+            exit 1
+          fi

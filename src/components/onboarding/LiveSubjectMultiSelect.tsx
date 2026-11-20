@@ -242,7 +242,10 @@ export function LiveSubjectMultiSelect({
         </TouchableOpacity>
       ) : null}
 
-      {selected.length ? (
+      {/* The option grid already shows which subjects are chosen. The removable
+          tag row is kept only where it adds information: search can hide a chosen
+          subject from the grid, and core / outside-stream subjects carry labels. */}
+      {selected.length && (showSearch || fixedSet.size > 0 || (streamScoped && stream)) ? (
         <View style={styles.wrap}>
           {selected.map((subject) => (
             <TouchableOpacity
@@ -384,7 +387,7 @@ const styles = StyleSheet.create({
     borderRadius: Radius.full,
     paddingHorizontal: Spacing.md,
     paddingVertical: 9,
-    minHeight: 40,
+    minHeight: 44,
     justifyContent: "center",
   },
   optionText: { fontSize: FontSize.sm, fontWeight: "700" },
@@ -394,7 +397,7 @@ const styles = StyleSheet.create({
     borderRadius: Radius.full,
     paddingHorizontal: Spacing.md,
     paddingVertical: 9,
-    minHeight: 40,
+    minHeight: 44,
     justifyContent: "center",
   },
   selectedText: { fontSize: FontSize.sm, fontWeight: "800" },
