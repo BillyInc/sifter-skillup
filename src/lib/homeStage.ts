@@ -153,3 +153,93 @@ export function undergraduateProgramme(p: StartingPointProfile): {
     programme: clean(p.programmeName) ?? clean(p.intendedProgramme),
   };
 }
+
+export type ConnectionTier = "direct" | "functional" | "adjacent";
+
+export interface HomeConnectionDomain {
+  domainId: string;
+  domainName: string;
+}
+
+export interface HomeConnectionGroup {
+  key: ConnectionTier;
+  title: string;
+  /** Short plain-language definition of the relationship label. */
+  hint: string;
+  domains: HomeConnectionDomain[];
+}
+
+/**
+ * Relationship labels and their definitions, in display order. The wording is
+ * the one already used by DomainMappingExplainer, so the labels are never shown
+ * as unexplained badges.
+ */
+const CONNECTION_TIERS: Array<{
+  key: ConnectionTier;
+  title: string;
+  hint: string;
+}> = [
+  {
+    key: "direct",
+    title: "Direct",
+    hint: "The programme's stated purpose is the domain's core function.",
+  },
+  {
+    key: "functional",
+    title: "Functional",
+    hint: "The curriculum content maps into the domain even though the title points elsewhere.",
+  },
+  {
+    key: "adjacent",
+    title: "Adjacent",
+    hint: "Foundational or transferable overlap only; bridging skills are needed first.",
+  },
+];
+
+/**
+ * The JAMB programme id that the programme-to-domain links are stored under.
+ * Only an explicit JAMB id counts: a CCMAS or custom programme id would query
+ * a different registry, so it is never substituted. `savedJambProgrammeId` is
+ * the id from the saved guidance path, when there is one.
+ */
+export function undergraduateJambProgrammeId(
+  p: StartingPointProfile | null | undefined,
+  savedJambProgrammeId?: string | null,
+): string | null {
+  const clean = (v?: string | null) => (v && v.trim() ? v.trim() : null);
+  return clean(p?.intendedJambProgrammeId) ?? clean(savedJambProgrammeId);
+}
+
+/**
+ * Groups the programme's existing domain links by their stored match type
+ * (`direct | functional | adjacent`). Nothing is inferred: a link with any
+ * other match type is left out, a domain appears once (under its strongest
+ * tier) and an empty tier is dropped. No links means no groups, so the block
+ * stays hidden.
+ */
+export function groupProgrammeConnections(
+  domains:
+    | ReadonlyArray<{
+        domainId?: string | null;
+        domainName?: string | null;
+        matchType?: string | null;
+      }>
+    | null
+    | undefined,
+): HomeConnectionGroup[] {
+  if (!domains?.length) return [];
+  const seen = new Set<string>();
+  const groups: HomeConnectionGroup[] = [];
+  for (const tier of CONNECTION_TIERS) {
+    const items: HomeConnectionDomain[] = [];
+    for (const d of domains) {
+      const id = d.domainId?.trim();
+      const name = d.domainName?.trim();
+      if (d.matchType !== tier.key || !id || !name || seen.has(id)) continue;
+      seen.add(id);
+      items.push({ domainId: id, domainName: name });
+    }
+    if (items.length) groups.push({ ...tier, domains: items });
+  }
+  return groups;
+}

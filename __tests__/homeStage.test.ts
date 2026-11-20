@@ -3,6 +3,8 @@ import {
   homeRoutesFor,
   subjectReason,
   undergraduateProgramme,
+  undergraduateJambProgrammeId,
+  groupProgrammeConnections,
 } from "../src/lib/homeStage";
 import type { StartingPointProfile } from "../src/types/onboarding";
 
@@ -71,5 +73,66 @@ describe("undergraduateProgramme", () => {
   });
   it("is empty when nothing is saved", () => {
     expect(undergraduateProgramme(p({}))).toEqual({ university: null, programme: null });
+  });
+});
+
+describe("groupProgrammeConnections", () => {
+  const link = (domainId: string, domainName: string, matchType: string) => ({ domainId, domainName, matchType });
+
+  it("groups the stored match types in Direct, Functional, Adjacent order", () => {
+    const out = groupProgrammeConnections([
+      link("d3", "Public Policy", "adjacent"),
+      link("d1", "Research", "direct"),
+      link("d2", "Data", "functional"),
+      link("d4", "Education", "direct"),
+    ]);
+    expect(out.map((g) => g.key)).toEqual(["direct", "functional", "adjacent"]);
+    expect(out[0].domains.map((d) => d.domainName)).toEqual(["Research", "Education"]);
+    expect(out[1].domains.map((d) => d.domainName)).toEqual(["Data"]);
+    expect(out[2].domains.map((d) => d.domainName)).toEqual(["Public Policy"]);
+    out.forEach((g) => expect(g.hint.length).toBeGreaterThan(20));
+  });
+
+  it("drops empty tiers instead of inventing entries", () => {
+    const out = groupProgrammeConnections([link("d1", "Research", "direct")]);
+    expect(out.map((g) => g.key)).toEqual(["direct"]);
+  });
+
+  it("ignores links with an unknown match type, a missing id or a missing name", () => {
+    const out = groupProgrammeConnections([
+      link("d1", "Research", "elite"),
+      link("", "No id", "direct"),
+      { domainId: "d2", domainName: "  ", matchType: "direct" },
+      { domainId: "d3", domainName: "Kept" },
+    ]);
+    expect(out).toEqual([]);
+  });
+
+  it("shows a domain once, under its strongest tier", () => {
+    const out = groupProgrammeConnections([
+      link("d1", "Research", "adjacent"),
+      link("d1", "Research", "direct"),
+    ]);
+    expect(out).toHaveLength(1);
+    expect(out[0].key).toBe("direct");
+  });
+
+  it("returns nothing when there are no links", () => {
+    expect(groupProgrammeConnections(null)).toEqual([]);
+    expect(groupProgrammeConnections(undefined)).toEqual([]);
+    expect(groupProgrammeConnections([])).toEqual([]);
+  });
+});
+
+describe("undergraduateJambProgrammeId", () => {
+  it("uses only an explicit JAMB programme id", () => {
+    expect(undergraduateJambProgrammeId(p({ intendedJambProgrammeId: " J1 " }))).toBe("J1");
+    expect(undergraduateJambProgrammeId(p({}), "J2")).toBe("J2");
+    expect(undergraduateJambProgrammeId(p({ intendedJambProgrammeId: "J1" }), "J2")).toBe("J1");
+  });
+  it("never substitutes another programme id", () => {
+    expect(undergraduateJambProgrammeId(p({ intendedProgrammeId: "ccmas-1" }))).toBeNull();
+    expect(undergraduateJambProgrammeId(null)).toBeNull();
+    expect(undergraduateJambProgrammeId(p({}), "  ")).toBeNull();
   });
 });

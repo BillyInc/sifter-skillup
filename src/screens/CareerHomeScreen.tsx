@@ -53,7 +53,10 @@ import {
   homeRoutesFor,
   subjectReason,
   undergraduateProgramme,
+  undergraduateJambProgrammeId,
+  groupProgrammeConnections,
   type HomeRoute,
+  type HomeConnectionGroup,
 } from "../lib/homeStage";
 import { StageHome } from "../components/home/StageHome";
 
@@ -75,7 +78,7 @@ const QUICK = [
   {
     icon: "Lock",
     title: "My World",
-    body: "Locked tracks, portfolio proof and guild progress",
+    body: "Your saved items, notes and collections",
     href: "/(tabs)/myworld" as const,
     locked: true,
   },
@@ -288,6 +291,7 @@ export default function CareerHomeScreen() {
 
   const [starting, setStarting] = useState<StartingPointProfile | null>(null);
   const [startingLoaded, setStartingLoaded] = useState(false);
+  const [connections, setConnections] = useState<HomeConnectionGroup[]>([]);
   const [guidance, setGuidance] = useState<DataState<GuidanceReportPath | null>>(() =>
     pending<GuidanceReportPath | null>("Loading your saved guidance…"),
   );
@@ -404,6 +408,50 @@ export default function CareerHomeScreen() {
     nextAction?.href.startsWith("/(tabs)/explore/programme/")
       ? nextAction.href
       : null;
+  // The programme's existing domain links, grouped Direct / Functional /
+  // Adjacent. Only for an undergraduate with an explicit JAMB programme id; if
+  // the links are unavailable the block simply stays hidden.
+  const undergraduateJambId =
+    stage?.key === "undergraduate"
+      ? undergraduateJambProgrammeId(
+          starting,
+          recordText(realGuidance?.path.programme, "jambProgrammeId", "jamb_programme_id"),
+        )
+      : null;
+  useEffect(() => {
+    if (!undergraduateJambId) {
+      setConnections([]);
+      return;
+    }
+    let active = true;
+    careerData
+      .getJambProgrammeDomains(undergraduateJambId)
+      .then((state) => {
+        if (!active) return;
+        setConnections(
+          state.status === "real" && state.data
+            ? groupProgrammeConnections(state.data.domains)
+            : [],
+        );
+      })
+      .catch(() => {
+        if (active) setConnections([]);
+      });
+    return () => {
+      active = false;
+    };
+  }, [undergraduateJambId]);
+  const openStageDomain = (domainId: string, matchType: string) =>
+    exploreNav.domain(
+      router,
+      domainId,
+      {
+        jambProgrammeId: undergraduateJambId ?? undefined,
+        userType: starting?.userType,
+        entryPath: "/(tabs)/home",
+      },
+      matchType,
+    );
   const openStageRoute = (route: HomeRoute) =>
     exploreNav.admissionHub(router, route.mode, null, route.options);
   const homeQuickActions = earlySecondary
@@ -526,6 +574,9 @@ export default function CareerHomeScreen() {
             onOpenRoute={openStageRoute}
             onOpenProgramme={() => stageProgrammeHref && router.push(stageProgrammeHref as never)}
             onEditStage={() => router.push("/(auth)/onboarding?restart=1")}
+            connections={stage.key === "undergraduate" ? connections : undefined}
+            onOpenDomain={openStageDomain}
+            onOpenSkillsMatcher={() => exploreNav.skillsMatcher(router)}
           />
           {contextCardEl}
         </>
