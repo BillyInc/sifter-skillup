@@ -16,6 +16,7 @@ import {
   CompassFonts,
 } from "@/theme";
 import type { DataState } from "../../types/career";
+import { GlyphIcon } from "../../components/icons/GlyphIcon";
 
 export interface StatCardProps<T> {
   icon: string;
@@ -56,7 +57,7 @@ export function StatCard<T>({
         <View
           style={[styles.iconWrap, { backgroundColor: colors.surface.subtle }]}
         >
-          <Text style={styles.icon}>{icon}</Text>
+          <GlyphIcon glyph={icon} size={18} color={colors.textRole.secondary} fallbackStyle={styles.icon} />
         </View>
         <Text
           style={[styles.label, CompassFonts.bodySemibold, { color: colors.textRole.muted }]}

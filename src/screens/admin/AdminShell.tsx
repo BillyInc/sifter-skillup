@@ -27,6 +27,7 @@ import {
   useWindowDimensions,
 } from "react-native";
 import { useRouter, usePathname, useGlobalSearchParams } from "expo-router";
+import { GlyphIcon } from "../../components/icons/GlyphIcon";
 import {
   useTheme,
   Spacing,
@@ -347,7 +348,7 @@ export function AdminShell({
               style={styles.menuBtn}
               accessibilityLabel="Open navigation"
             >
-              <Text style={[styles.menuIcon, CompassFonts.displayBold, { color: colors.text }]}>☰</Text>
+              <GlyphIcon glyph="☰" size={20} color={colors.text} />
             </TouchableOpacity>
           ) : null}
 
@@ -517,7 +518,7 @@ function WebAdminShell({
             <p>{group.title}</p>
             {group.items.map((item) => (
               <button key={item.key} className={item.key === activeKey ? "active" : ""} onClick={() => onNavigate(item)}>
-                <span aria-hidden="true">{item.icon}</span><span>{item.label}</span>{item.locked ? <small>Locked</small> : null}
+                <span aria-hidden="true" className="web-admin-nav-icon"><GlyphIcon glyph={item.icon} size={16} color="currentColor" /></span><span>{item.label}</span>{item.locked ? <small>Locked</small> : null}
               </button>
             ))}
           </section>
@@ -537,7 +538,7 @@ function WebAdminShell({
       {drawerOpen && !focusedGuidance ? <div className="web-admin-drawer-layer"><button className="web-admin-drawer-backdrop" onClick={onDrawerClose} aria-label="Close navigation" /><aside className="web-admin-drawer">{nav}</aside></div> : null}
       <section className="web-admin-main">
         <header className="web-admin-header">
-          <button className="web-admin-menu" onClick={onDrawerOpen} aria-label="Open navigation">☰</button>
+          <button className="web-admin-menu" onClick={onDrawerOpen} aria-label="Open navigation"><GlyphIcon glyph="☰" size={20} color="currentColor" /></button>
           {!isHome ? <button className="web-admin-back" onClick={onBack}>{focusedGuidance ? "Exit guidance" : "Back"}</button> : null}
           <div className="web-admin-heading">
             {focusedGuidance ? <><span className="web-admin-guidance-brand-full"><Image source={{ uri: "/brand/levelup-lockup-light.png" }} accessibilityLabel="LevelUp" accessible resizeMode="contain" style={{ width: 132, height: 35, flexShrink: 0 }} /></span><span className="web-admin-guidance-brand-compact"><Image source={{ uri: "/brand/levelup-icon-light.png" }} accessibilityLabel="LevelUp icon" accessible resizeMode="contain" style={{ width: 34, height: 34, flexShrink: 0 }} /></span></> : null}
@@ -654,7 +655,7 @@ function NavList({
                       active && { backgroundColor: colors.surface.inverse },
                     ]}
                   >
-                    <Text style={styles.navIcon}>{item.icon}</Text>
+                    <GlyphIcon glyph={item.icon} size={16} color={active ? colors.textRole.inverse : colors.textRole.secondary} fallbackStyle={styles.navIcon} />
                     <Text
                       style={[
                         styles.navLabel,
@@ -668,7 +669,7 @@ function NavList({
                     {item.label}
                   </Text>
                   {item.locked ? (
-                    <Text style={styles.lock}>🔒</Text>
+                    <GlyphIcon glyph="🔒" size={13} color={colors.textRole.muted} accessibilityLabel="Locked" />
                   ) : null}
                 </TouchableOpacity>
               );

@@ -16,6 +16,7 @@
  *   </WebShell>
  */
 
+import { GlyphIcon } from '../icons/GlyphIcon';
 import React from 'react';
 import {
   View, Text, ScrollView, StyleSheet, TouchableOpacity,
@@ -299,7 +300,7 @@ export function WebListRow({
       activeOpacity={0.75}
       accessibilityRole={onPress ? 'button' : undefined}
     >
-      <Text style={styles.listRowIcon}>{icon}</Text>
+      <GlyphIcon glyph={icon} size={18} color={colors.textMuted} fallbackStyle={styles.listRowIcon} />
       <View style={{ flex: 1 }}>
         <Text style={[styles.listRowTitle, { color: colors.text }]}>{title}</Text>
         {sub && <Text style={[styles.listRowSub, { color: colors.textMuted }]}>{sub}</Text>}
