@@ -15,7 +15,7 @@ from config import settings
 from database import db
 from logger import log
 from models import FeedItemReact, FeedItemSubscribe, ResponseModel
-from twitter_service import TwitterService
+from services.twitter_service import TwitterService
 
 router = APIRouter(prefix="/api/feed", tags=["feed"])
 

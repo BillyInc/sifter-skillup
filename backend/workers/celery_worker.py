@@ -100,7 +100,7 @@ def process_withdrawals():
 def sync_airtable():
     """Pull content metadata from Airtable into Supabase content_cache."""
     try:
-        from airtable_sync import run_airtable_sync
+        from services.airtable_sync import run_airtable_sync
         # Run the async function in a new event loop
         results = asyncio.get_event_loop().run_until_complete(run_airtable_sync())
         total = sum(r.records_synced for r in results)
@@ -168,7 +168,7 @@ def ingest_track_feeds():
                 log.warning("RSS fetch failed", url=url, error=str(e))
 
         if items:
-            from feed_routes import ingest_feed_for_track
+            from routes.feed_routes import ingest_feed_for_track
             saved = asyncio.get_event_loop().run_until_complete(
                 ingest_feed_for_track(track_id, items)
             )
