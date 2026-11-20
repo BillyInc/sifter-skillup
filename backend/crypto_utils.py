@@ -1,7 +1,6 @@
 # ============================================
 # Sifter LevelUp — Token Encryption Utilities
 # ============================================
-import os
 
 from cryptography.fernet import Fernet, InvalidToken
 

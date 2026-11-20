@@ -9,7 +9,6 @@
 # ============================================================
 import uuid
 from datetime import datetime
-from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
@@ -200,7 +199,7 @@ async def navigator_lab_complete(
         "boss_level_id": boss_level_id,
         "xp_awarded": xp,
         "new_points": new_pts,
-        "completed_labs": [int(l) - 3000 for l in completed if l.isdigit() and 3001 <= int(l) <= 3011],
+        "completed_labs": [int(lab) - 3000 for lab in completed if lab.isdigit() and 3001 <= int(lab) <= 3011],
     })
 
 
@@ -264,7 +263,7 @@ async def cairo_lab_complete(
         "boss_level_id": boss_level,
         "xp_awarded": xp,
         "new_points": new_pts,
-        "completed_cairo_labs": [int(l) - 5000 for l in completed if l.isdigit() and 5001 <= int(l) <= 5020],
+        "completed_cairo_labs": [int(lab) - 5000 for lab in completed if lab.isdigit() and 5001 <= int(lab) <= 5020],
     })
 
 
@@ -327,5 +326,5 @@ async def ecosystem_lab_complete(
         "boss_level_id": boss_level,
         "xp_awarded": xp,
         "new_points": new_pts,
-        "completed_ecosystem_labs": [int(l) - 4000 for l in completed if l.isdigit() and 4001 <= int(l) <= 4015],
+        "completed_ecosystem_labs": [int(lab) - 4000 for lab in completed if lab.isdigit() and 4001 <= int(lab) <= 4015],
     })

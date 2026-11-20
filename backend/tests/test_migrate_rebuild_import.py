@@ -88,8 +88,8 @@ def test_a_reason_in_a_separate_field_alone_does_not_count(tmp_path):
 
 
 def test_baseline_command_output_is_accepted_by_import(
-    tmp_path, capsys, sqlite_bootstrap
-):  # noqa: F811
+    tmp_path, capsys, sqlite_bootstrap  # noqa: F811
+):
     root, mpath, manifest = setup(tmp_path)
     pre = tmp_path / "preflight.json"
     pre.write_text(json.dumps({"ok": True}))

@@ -9,11 +9,10 @@ from typing import Optional
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query
 
 from auth import Auth
-from config import settings
 from database import db
 from logger import log
 from models import (
-    BadgeAward, ChallengeJoin, ChallengeSubmit,
+    ChallengeJoin, ChallengeSubmit,
     ResponseModel, XPEvent,
 )
 

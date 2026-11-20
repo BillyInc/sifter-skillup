@@ -11,12 +11,11 @@
 # expo-crypto UUID), stored in expo-secure-store, never changes.
 # ============================================
 import uuid
-from datetime import datetime, timedelta
+from datetime import datetime
 from typing import Optional
 
 import httpx
 from fastapi import APIRouter, Depends, HTTPException, Header
-from fastapi.responses import JSONResponse
 
 from auth import Auth
 from config import settings
@@ -135,7 +134,6 @@ async def register_device_for_user(
 
         # Different device — revoke old, notify, create new
         old_push = existing.get("push_token")
-        old_name = existing.get("device_name", "previous device")
         log.warning(
             "Second device login detected — revoking old session",
             user_id=user_id,

@@ -26,6 +26,8 @@ from typing import Optional, List
 import httpx
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
+from pydantic import BaseModel as PBM
+from typing import Optional as Opt
 
 from auth import Auth
 from database import db
@@ -571,8 +573,8 @@ async def trigger_notification(
                 "body": f"You're on a roll in {body.trackId}. 5 minutes today keeps the streak going.",
             },
             "streak_urgent": {
-                "title": f"🔥 Streak expiring soon!",
-                "body": f"Your streak expires in under 2 hours. One quick level keeps it alive.",
+                "title": "🔥 Streak expiring soon!",
+                "body": "Your streak expires in under 2 hours. One quick level keeps it alive.",
             },
             "level_complete": {
                 "title": "🏆 Level complete!",
@@ -839,9 +841,6 @@ async def join_project(
 # ─────────────────────────────────────────────────────────────
 # Router: Comments, Quotes, Bookmarks, Friends
 # ─────────────────────────────────────────────────────────────
-
-from pydantic import BaseModel as PBM
-from typing import Optional as Opt, List as Lst
 
 class CommentCreate(PBM):
     postId: str

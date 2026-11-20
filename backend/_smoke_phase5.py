@@ -2,7 +2,11 @@
 """Phase 5 live smoke test — run AFTER applying migration_career_v2.sql + seed_career_v2.sql
 and starting the API. Hits each new endpoint for a flagship case and asserts real data.
 Usage: python backend/_smoke_phase5.py [BASE_URL]  (default http://localhost:8000)"""
-import sys, json, urllib.request, urllib.parse
+import os
+import sys
+import json
+import urllib.request
+import urllib.parse
 
 BASE = sys.argv[1] if len(sys.argv) > 1 else "http://localhost:8000"
 
@@ -24,7 +28,8 @@ def check(label, path, want_status="real", probe=None):
         try:
             extra = probe(data.get("data"))
         except Exception as e:
-            ok = False; extra = f"probe failed: {e}"
+            ok = False
+            extra = f"probe failed: {e}"
     print(f"  [{'✓' if ok else '✗'}] {label:42} status={status} {extra}")
     return ok
 
@@ -77,7 +82,6 @@ results.append(check("pivot/gap D151→D004", "/api/career/pivot/gap?from_domain
 
 # ── Authenticated round-trips (Phase 1 S2 writes) ─────────────
 # Needs a bearer token. Pass one as argv[2], or set SMOKE_TOKEN. Skipped if absent.
-import os
 TOKEN = sys.argv[2] if len(sys.argv) > 2 else os.environ.get("SMOKE_TOKEN")
 
 def auth_req(method, path, body=None):

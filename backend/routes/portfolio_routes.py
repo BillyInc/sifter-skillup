@@ -10,11 +10,7 @@
 #   - Generate submission packages (PDF + files) for manual-upload platforms
 # ============================================================
 
-import base64
-import hashlib
-import hmac
 import httpx
-import json
 import os
 import secrets
 import urllib.parse
@@ -485,18 +481,18 @@ async def _create_account_on_platform(platform_id: str, body: CreateAccountReque
     deep_link_platforms = {
         "github": f"https://github.com/signup?email={urllib.parse.quote(body.email)}&username={urllib.parse.quote(body.username)}",
         "linkedin": f"https://www.linkedin.com/signup?email={urllib.parse.quote(body.email)}&firstName={urllib.parse.quote(body.displayName or body.username)}",
-        "kaggle": f"https://www.kaggle.com/account/login?phase=startSignInTab&returnUrl=%2F",
+        "kaggle": "https://www.kaggle.com/account/login?phase=startSignInTab&returnUrl=%2F",
         "reddit": f"https://www.reddit.com/register?username={urllib.parse.quote(body.username)}&email={urllib.parse.quote(body.email)}",
         "medium": f"https://medium.com/signup?email={urllib.parse.quote(body.email)}",
-        "behance": f"https://www.behance.net/signup",
-        "dribbble": f"https://dribbble.com/signup",
-        "twitter": f"https://twitter.com/i/flow/signup",
-        "instagram": f"https://www.instagram.com/accounts/emailsignup/",
-        "youtube": f"https://accounts.google.com/signup",
-        "vimeo": f"https://vimeo.com/join",
+        "behance": "https://www.behance.net/signup",
+        "dribbble": "https://dribbble.com/signup",
+        "twitter": "https://twitter.com/i/flow/signup",
+        "instagram": "https://www.instagram.com/accounts/emailsignup/",
+        "youtube": "https://accounts.google.com/signup",
+        "vimeo": "https://vimeo.com/join",
         "upwork": f"https://www.upwork.com/signup/?email={urllib.parse.quote(body.email)}",
-        "freelancer": f"https://www.freelancer.com/signup",
-        "fiverr": f"https://www.fiverr.com/join",
+        "freelancer": "https://www.freelancer.com/signup",
+        "fiverr": "https://www.fiverr.com/join",
     }
     if platform_id in deep_link_platforms:
         return {

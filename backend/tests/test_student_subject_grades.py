@@ -25,20 +25,44 @@ class _Q:
         self.filters, self.op, self.payload = [], "select", None
         self._order = None
 
-    def select(self, *_a, **_k): return self
-    def limit(self, *_a, **_k): return self
-    def eq(self, k, v): self.filters.append((k, "eq", v)); return self
-    def lt(self, k, v): self.filters.append((k, "lt", v)); return self
-    def is_(self, k, v): self.filters.append((k, "is", v)); return self
-    def order(self, k, desc=False): self._order = (k, desc); return self
-    def insert(self, row): self.op, self.payload = "insert", row; return self
-    def update(self, row): self.op, self.payload = "update", row; return self
+    def select(self, *_a, **_k):
+        return self
+
+    def limit(self, *_a, **_k):
+        return self
+
+    def eq(self, k, v):
+        self.filters.append((k, "eq", v))
+        return self
+
+    def lt(self, k, v):
+        self.filters.append((k, "lt", v))
+        return self
+
+    def is_(self, k, v):
+        self.filters.append((k, "is", v))
+        return self
+
+    def order(self, k, desc=False):
+        self._order = (k, desc)
+        return self
+
+    def insert(self, row):
+        self.op, self.payload = "insert", row
+        return self
+
+    def update(self, row):
+        self.op, self.payload = "update", row
+        return self
 
     def _match(self, row):
         for k, kind, v in self.filters:
-            if kind == "eq" and row.get(k) != v: return False
-            if kind == "lt" and not (row.get(k) < v): return False
-            if kind == "is" and v == "null" and row.get(k) is not None: return False
+            if kind == "eq" and row.get(k) != v:
+                return False
+            if kind == "lt" and not (row.get(k) < v):
+                return False
+            if kind == "is" and v == "null" and row.get(k) is not None:
+                return False
         return True
 
     def execute(self):
@@ -53,7 +77,8 @@ class _Q:
             return _Res([row])
         if self.op == "update":
             hit = [r for r in rows if self._match(r)]
-            for r in hit: r.update(self.payload)
+            for r in hit:
+                r.update(self.payload)
             return _Res(hit)
         out = [r for r in rows if self._match(r)]
         if self._order:

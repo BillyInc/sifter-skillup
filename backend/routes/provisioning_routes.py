@@ -22,7 +22,6 @@
 # Admin routes gated by Auth.require_admin. Student-side routes
 # (claim/affiliate/consent) gated by Auth.get_current_user.
 # ============================================================
-import secrets
 import uuid
 from datetime import datetime, timedelta, timezone
 from typing import Any, List, Optional
@@ -1833,7 +1832,7 @@ async def save_student_guidance_path(
 ):
     """Save a selected path or an unfinished resume checkpoint for one Student."""
     school_id = _require_school(current_user)
-    student = _load_school_student(user_id, school_id)
+    _load_school_student(user_id, school_id)  # 404s unless the student belongs to this school
     raw_path = payload.get("path") if isinstance(payload.get("path"), dict) else {}
     path = _guidance_path_snapshot(raw_path)
     if not path:

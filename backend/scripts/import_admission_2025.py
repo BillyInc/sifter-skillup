@@ -3,7 +3,8 @@
 Import admission data for a specific year.
 Usage: python import_admission_2025.py
 """
-import csv, os, sys
+import csv
+import os
 from database import db
 
 SCHEMA = "skillup_dev"

@@ -35,8 +35,6 @@
 
 import uuid
 import json
-import os
-import httpx
 from datetime import datetime, timedelta, timezone
 from typing import Optional, List
 
