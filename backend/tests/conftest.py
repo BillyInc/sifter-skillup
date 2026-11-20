@@ -1,7 +1,12 @@
 import gzip
+import os
 import shutil
 import sys
 from pathlib import Path
+
+# config refuses to start in production mode with a default or short JWT secret.
+# Set one before anything imports config (CI sets its own).
+os.environ.setdefault("JWT_SECRET", "test-secret-for-the-backend-suite-0123456789")
 
 import pytest
 from unittest.mock import MagicMock, patch
@@ -108,9 +113,31 @@ def patch_all_db_modules(monkeypatch):
     return mock
 
 
+@pytest.fixture(autouse=True)
+def _reset_auth_rate_limits():
+    """The limiter is process-wide; no test may inherit another's failures."""
+    import auth_rate_limit
+    auth_rate_limit.reset_all()
+    yield
+    auth_rate_limit.reset_all()
+
+
 @pytest.fixture
 def mock_db(patch_all_db_modules):
     return patch_all_db_modules
+
+
+@pytest.fixture
+def login_as(mock_db):
+    """Make Auth.get_current_user resolve tokens to ``user``.
+
+    The dependency loads the user row and checks the token against it (subject,
+    deletion, revocation counter), so a test that wants to act as a user must
+    supply a real row, not an unconfigured MagicMock.
+    """
+    def _login(user: dict) -> None:
+        mock_db.get_service_client().table().select().eq().single().execute.return_value = MagicMock(data=user)
+    return _login
 
 
 @pytest.fixture

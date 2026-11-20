@@ -642,6 +642,14 @@ class ResponseModel(BaseModel):
     message: Optional[str] = None
     data:    Optional[Any] = None
 
+    @field_validator("data", mode="after")
+    @classmethod
+    def _never_expose_secrets(cls, value):
+        """Last line of defence: no response envelope carries a password hash,
+        token version or other server-only user column, whatever the route did."""
+        from user_sanitize import strip_secrets
+        return strip_secrets(value)
+
 class ErrorResponse(BaseModel):
     success: bool          = False
     error:   str

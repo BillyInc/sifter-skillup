@@ -43,7 +43,11 @@ def _extract_user_id_from_bearer(request: Request) -> Optional[str]:
     """
     Lightweight JWT decode to get user_id without hitting the DB.
     Full JWT validation still happens in Auth.get_current_user —
-    this is just for correlation with the device table.
+    this is just for correlation with the device table. It can only DENY a
+    request (device mismatch), never authorise one, so it does not need the
+    token-version check: a revoked token (``tv`` behind the user's counter) is
+    rejected by Auth.get_current_user, and by the same rule in the Starknet
+    helpers, before any handler runs.
     """
     auth = request.headers.get("Authorization", "")
     if not auth.startswith("Bearer "):

@@ -3,12 +3,18 @@
 # Handles: Telegram WebApp, Base wallet, email, guest
 # ============================================
 import hashlib
+import asyncio
 import hmac
 import json
+import os
 import urllib.parse
+import weakref
 from datetime import datetime, timedelta, timezone
 from typing import Optional
 
+import anyio
+import anyio.to_thread
+import bcrypt
 import jwt
 from jwt import PyJWTError
 from fastapi import Depends, HTTPException
@@ -16,10 +22,71 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
 from config import settings
 from database import db
+from logger import log
 
 security = HTTPBearer(auto_error=False)
 
+
+_MISSING_TABLE_CODES = {"PGRST205", "42P01"}
+
+
+def _error_code(exc: Exception) -> str:
+    """The structured Postgres/PostgREST code, or "" when the error has none."""
+    code = getattr(exc, "code", None)
+    if not code and exc.args and isinstance(exc.args[0], dict):
+        code = exc.args[0].get("code")
+    return str(code or "").upper()
+
+
+def _is_missing_table(exc: Exception) -> bool:
+    """True only for a structured "table absent" code (pre-migration).
+
+    Message text is never matched: a missing COLUMN (42703/PGRST204) or a dropped
+    connection must not read as "MFA not configured", which would skip the check.
+    """
+    return _error_code(exc) in _MISSING_TABLE_CODES
+
+
+_bcrypt_limiters: "weakref.WeakKeyDictionary" = weakref.WeakKeyDictionary()
+
+
+def _bcrypt_limiter() -> "anyio.CapacityLimiter":
+    """One limiter per running event loop, so bcrypt cannot occupy every worker thread."""
+    loop = asyncio.get_running_loop()
+    limiter = _bcrypt_limiters.get(loop)
+    if limiter is None:
+        limiter = anyio.CapacityLimiter(Auth.bcrypt_capacity())
+        _bcrypt_limiters[loop] = limiter
+    return limiter
+
+
+async def _in_bcrypt_thread(fn, *args):
+    return await anyio.to_thread.run_sync(fn, *args, limiter=_bcrypt_limiter())
+
+
 class Auth:
+
+    @staticmethod
+    def bcrypt_capacity() -> int:
+        return max(2, os.cpu_count() or 2)
+
+    # ── Passwords (bcrypt runs in a worker thread, never on the event loop) ──
+    @staticmethod
+    async def hash_password(password: str) -> str:
+        raw = password.encode("utf-8")
+        if len(raw) > 72:
+            raise HTTPException(status_code=400, detail="Password must be at most 72 bytes.")
+        return (await _in_bcrypt_thread(bcrypt.hashpw, raw, bcrypt.gensalt())).decode("utf-8")
+
+    @staticmethod
+    async def verify_password(password: str, hashed: str) -> bool:
+        raw = password.encode("utf-8")
+        if len(raw) > 72:
+            # bcrypt cannot hash this, so it cannot be the stored password; burn the
+            # same time as a normal check and answer False (a counted failure).
+            await _in_bcrypt_thread(bcrypt.checkpw, b"x", hashed.encode("utf-8"))
+            return False
+        return bool(await _in_bcrypt_thread(bcrypt.checkpw, raw, hashed.encode("utf-8")))
 
     # ── Telegram ────────────────────────────────────────────────
     @staticmethod
@@ -66,13 +133,62 @@ class Auth:
 
     # ── JWT ─────────────────────────────────────────────────────
     @staticmethod
-    def create_jwt(user_id: str, mfa_verified: bool = False) -> str:
+    def create_jwt(user_id: str, mfa_verified: bool = False, token_version: int = 0) -> str:
+        """Issue a session token.
+
+        ``token_version`` is the user's current revocation counter (the ``tv``
+        claim). A password reset bumps the counter, which invalidates every
+        token issued before it. Tokens without the claim count as version 0,
+        so sessions issued before this existed keep working until a reset.
+        """
         expire = datetime.now(timezone.utc) + timedelta(hours=settings.JWT_EXPIRE_HOURS)
         return jwt.encode(
-            {"sub": user_id, "exp": expire, "mfa_verified": bool(mfa_verified)},
+            {
+                "sub": user_id,
+                "exp": expire,
+                "mfa_verified": bool(mfa_verified),
+                "tv": int(token_version or 0),
+            },
             settings.JWT_SECRET,
             algorithm=settings.JWT_ALGORITHM,
         )
+
+    @staticmethod
+    def token_version_of(user: dict | None) -> int:
+        """The user's revocation counter; 0 when the column is not migrated.
+
+        Only a real integer on a real row counts. Anything else (a missing
+        column, NULL, a non-dict row) reads as 0, so a database that has not been
+        migrated yet behaves exactly as before.
+        """
+        if not isinstance(user, dict):
+            return 0
+        value = user.get("token_version")
+        if isinstance(value, bool) or not isinstance(value, int):
+            return 0
+        return value
+
+    @staticmethod
+    def token_matches_user(payload: dict | None, user: dict | None) -> bool:
+        """True only if a decoded token still belongs to this user's live session.
+
+        The one rule every code path that turns a JWT into a user must apply:
+        the subject is the user, the account is not deleted, and the ``tv``
+        claim equals the user's current revocation counter (a password reset
+        bumps it). A row without the counter column reads as 0, so tokens
+        issued before the migration keep working until the first reset.
+        """
+        if not isinstance(payload, dict) or not isinstance(user, dict):
+            return False
+        if not payload.get("sub") or str(payload.get("sub")) != str(user.get("id")):
+            return False
+        if user.get("is_deleted") is True:
+            return False
+        try:
+            token_tv = int(payload.get("tv") or 0)
+        except (TypeError, ValueError):
+            return False
+        return token_tv == Auth.token_version_of(user)
 
     @staticmethod
     def decode_jwt(token: str) -> dict:
@@ -107,10 +223,37 @@ class Auth:
             # persona. Keep that state pending so the client can send only
             # those accounts back through the account-type gate.
             user.setdefault("account_type", "pending")
+            # A password reset bumps users.token_version; older tokens stop
+            # working. Without the column both sides read as 0 (unchanged).
+            if not Auth.token_matches_user(payload, user):
+                raise HTTPException(status_code=401, detail="Session expired. Please sign in again.")
             user["_mfa_verified"] = bool(payload.get("mfa_verified"))
             return user
         except PyJWTError:
             raise HTTPException(status_code=401, detail="Invalid token")
+
+    @staticmethod
+    def admin_mfa_status(user_id: str) -> Optional[str]:
+        """The stored admin MFA status; None when there is no row or no table yet.
+
+        ONE lookup for every caller. A table that does not exist yet (the
+        security migration has not been applied) reads as "not configured",
+        exactly as before. Any other error must NOT read as "not enabled": the
+        callers use this to decide whether a session may act as an admin or
+        change MFA, so an outage would turn into a downgrade. It is a 503.
+        """
+        try:
+            rows = db.get_service_client().table("user_mfa_settings").select(
+                "status"
+            ).eq("user_id", user_id).limit(1).execute().data or []
+        except Exception as exc:  # noqa: BLE001
+            if _is_missing_table(exc):
+                return None
+            log.warning("Admin MFA status lookup failed", error=type(exc).__name__)
+            raise HTTPException(
+                status_code=503, detail="Admin security status is unavailable. Try again shortly."
+            ) from exc
+        return rows[0].get("status") if rows else None
 
     @staticmethod
     async def require_admin(
@@ -128,15 +271,7 @@ class Auth:
         """
         if current_user.get("account_type") not in ("institution_admin", "educator"):
             raise HTTPException(status_code=403, detail="Admin access required")
-        try:
-            mfa = db.get_service_client().table("user_mfa_settings").select(
-                "status"
-            ).eq("user_id", current_user["id"]).limit(1).execute().data or []
-        except Exception:
-            # Older installations can continue using admin access until the
-            # security migration has been applied.
-            mfa = []
-        if mfa and mfa[0].get("status") == "enabled" and not current_user.get("_mfa_verified"):
+        if Auth.admin_mfa_status(current_user["id"]) == "enabled" and not current_user.get("_mfa_verified"):
             raise HTTPException(status_code=428, detail="Admin MFA verification required.")
         return current_user
 

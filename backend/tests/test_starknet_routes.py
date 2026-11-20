@@ -160,7 +160,7 @@ class TestStarknetAuthEmail:
                 "public_key": "pub-n",
             }, True)),
         )
-        monkeypatch.setattr(starknet_routes.Auth, "create_jwt", lambda user_id: f"jwt-{user_id}")
+        monkeypatch.setattr(starknet_routes.Auth, "create_jwt", lambda user_id, *a, **kw: f"jwt-{user_id}")
 
         result = asyncio.run(starknet_routes.starknet_auth_email(
             StarknetAuthRequest(email="newbie@example.com", privy_token=VALID_PRIVY_TOKEN),
@@ -200,7 +200,7 @@ class TestStarknetAuthEmail:
                 "public_key": "pub-1",
             }, True)),
         )
-        monkeypatch.setattr(starknet_routes.Auth, "create_jwt", lambda user_id: f"jwt-{user_id}")
+        monkeypatch.setattr(starknet_routes.Auth, "create_jwt", lambda user_id, *a, **kw: f"jwt-{user_id}")
 
         result = asyncio.run(starknet_routes.starknet_auth_email(
             StarknetAuthRequest(email="alice@example.com", privy_token=VALID_PRIVY_TOKEN),
@@ -238,7 +238,7 @@ class TestStarknetAuthEmail:
                 "public_key": "pub-2",
             }, False)),
         )
-        monkeypatch.setattr(starknet_routes.Auth, "create_jwt", lambda user_id: f"jwt-{user_id}")
+        monkeypatch.setattr(starknet_routes.Auth, "create_jwt", lambda user_id, *a, **kw: f"jwt-{user_id}")
 
         result = asyncio.run(starknet_routes.starknet_auth_email(
             StarknetAuthRequest(email="alice@example.com", privy_token=VALID_PRIVY_TOKEN),

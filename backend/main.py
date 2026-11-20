@@ -10,7 +10,7 @@ from contextlib import asynccontextmanager
 from datetime import datetime, date, timedelta
 from typing import Optional
 
-from fastapi import FastAPI, Depends, HTTPException, BackgroundTasks, Request, Header, UploadFile, File
+from fastapi import FastAPI, Depends, HTTPException, BackgroundTasks, Body, Request, Header, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
@@ -27,10 +27,12 @@ from models import (
     TrackType,
     UserUpdate,
 )
-from auth import Auth
+from auth import Auth, _is_missing_table
 from logger import log
 from middleware.session_middleware import DeviceSessionMiddleware
+import auth_rate_limit
 import avatar_storage
+from user_sanitize import sanitize_user_row
 from privacy import (
     cooldown_row,
     deletion_user_fields,
@@ -272,39 +274,95 @@ async def _require_valid_email_code(email: str, code: str):
     raise HTTPException(status_code=400, detail=_CODE_FAILURE_DETAIL[outcome])
 
 
+async def _issue_signup_code_quietly(email: str) -> None:
+    """Send the signup code after the response has gone out.
+
+    Done in a background task for registered and unknown addresses alike, so
+    neither the latency nor a delivery failure (502) tells a caller which
+    addresses have accounts.
+    """
+    try:
+        await _issue_email_code(email, email_codes.PURPOSE_SIGNUP)
+    except Exception as exc:  # noqa: BLE001 - never surfaces to the requester
+        log.warning("Signup code delivery failed", error=type(exc).__name__)
+
+
+async def _send_account_exists_notice(email: str) -> None:
+    """Tell a registered address that someone asked to sign up with it.
+
+    No code is sent. The owner is pointed at sign-in and password reset.
+    """
+    await email_delivery.send_account_exists_notice(email)
+
+
+async def _send_account_exists_notice_quietly(email: str) -> None:
+    try:
+        await _send_account_exists_notice(email)
+    except Exception as exc:  # noqa: BLE001 - never surfaces to the requester
+        log.warning("Account-exists notice failed", error=type(exc).__name__)
+
+
 @app.post("/api/auth/email-code/request", response_model=ResponseModel)
-async def request_email_code(body: dict):
+async def request_email_code(body: dict, request: Request, background_tasks: BackgroundTasks):
     email = _normalise_email(body.get("email", ""))
     if not email or "@" not in email:
         raise HTTPException(status_code=400, detail="Valid email is required")
 
-    existing = db.get_service_client().table("users").select("id,password_hash").eq("email", email).execute()
-    if existing.data and existing.data[0].get("password_hash"):
-        raise HTTPException(status_code=409, detail="Email already registered. Try Log in instead.")
+    # Limit before doing any work (and before any lookup), per email and, when
+    # the real client address is known, per (email, address) and per address.
+    ip = auth_rate_limit.client_ip(request)
+    may_send = auth_rate_limit.request_gate("email_code", email, ip)
 
-    code = await _issue_email_code(email, email_codes.PURPOSE_SIGNUP)
     data = {"sent": True, "expiresInMinutes": settings.EMAIL_CODE_TTL_MINUTES}
-    if settings.EMAIL_VERIFICATION_DEV_CODES:
+    if not may_send:
+        # Per-email ceiling reached: send nothing, answer exactly as before, so a
+        # flood cannot make a real owner's own request fail with a 429.
+        return ResponseModel(data=data)
+    existing = db.get_service_client().table("users").select("id,password_hash").eq("email", email).execute()
+    registered = bool(existing.data and existing.data[0].get("password_hash"))
+
+    if settings.EMAIL_VERIFICATION_DEV_CODES and not registered:
+        # Development only: the code is returned in the response, so it must be
+        # issued before answering. Production never takes this branch.
+        code = await _issue_email_code(email, email_codes.PURPOSE_SIGNUP)
         data["devCode"] = code
+        return ResponseModel(data=data)
+
+    # Same answer, same work shape for both cases: a background task and a
+    # uniform response. A registered address gets a notice with no code; signup
+    # itself still refuses a duplicate, but only after a valid code, which an
+    # outsider cannot obtain.
+    if registered:
+        # At most one notice per address per day, so the notice cannot be used to
+        # flood a registered owner. The response is the same either way; the limit
+        # is per worker process (see auth_rate_limit).
+        if auth_rate_limit.allow_once("account_exists_notice_email", email):
+            background_tasks.add_task(_send_account_exists_notice_quietly, email)
+    else:
+        background_tasks.add_task(_issue_signup_code_quietly, email)
     return ResponseModel(data=data)
 
 
 @app.post("/api/auth/password-reset/request", response_model=ResponseModel)
-async def request_password_reset_code(body: dict):
+async def request_password_reset_code(body: dict, request: Request):
     """Start a password reset without revealing whether an email exists."""
     email = _normalise_email(body.get("email", ""))
     if not email or "@" not in email:
         raise HTTPException(status_code=400, detail="Valid email is required")
+    ip = auth_rate_limit.client_ip(request)
+    may_send = auth_rate_limit.request_gate("reset_request", email, ip)
+    data = {"sent": True, "expiresInMinutes": settings.EMAIL_CODE_TTL_MINUTES}
+    if not may_send:
+        return ResponseModel(data=data)
 
     code = await _issue_email_code(email, email_codes.PURPOSE_PASSWORD_RESET)
-    data = {"sent": True, "expiresInMinutes": settings.EMAIL_CODE_TTL_MINUTES}
     if settings.EMAIL_VERIFICATION_DEV_CODES:
         data["devCode"] = code
     return ResponseModel(data=data)
 
 
 @app.post("/api/auth/password-reset/confirm", response_model=ResponseModel)
-async def confirm_password_reset(body: dict):
+async def confirm_password_reset(body: dict, request: Request):
     email = _normalise_email(body.get("email", ""))
     code = str(body.get("code") or "").strip()
     password = body.get("password") or ""
@@ -312,18 +370,47 @@ async def confirm_password_reset(body: dict):
         raise HTTPException(status_code=400, detail="Email and reset code are required")
     if len(password) < 6:
         raise HTTPException(status_code=400, detail="Password must be at least 6 characters")
+    if len(password.encode("utf-8")) > 72:
+        raise HTTPException(status_code=400, detail="Password must be at most 72 bytes.")
+
+    ip = auth_rate_limit.client_ip(request)
+    auth_rate_limit.enforce("reset_confirm_fail_email", email)
+    auth_rate_limit.enforce("reset_confirm_fail_ip", ip or "")  # skipped when the address is unknown
 
     if not (settings.EMAIL_VERIFICATION_DEV_CODES and code == "000000"):
         outcome = await email_codes.verify_code(
             email, code, purpose=email_codes.PURPOSE_PASSWORD_RESET
         )
         if outcome != email_codes.OK:
+            auth_rate_limit.record("reset_confirm_fail_email", email)
+            auth_rate_limit.record("reset_confirm_fail_ip", ip or "")
             raise HTTPException(status_code=400, detail=_RESET_FAILURE_DETAIL[outcome])
+    auth_rate_limit.clear("reset_confirm_fail_email", email)
 
-    existing = db.get_service_client().table("users").select("id").eq("email", email).limit(1).execute()
+    service = db.get_service_client()
+    existing = service.table("users").select("*").eq("email", email).limit(1).execute()
     if existing.data:
-        password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
-        db.get_service_client().table("users").update({"password_hash": password_hash}).eq("id", existing.data[0]["id"]).execute()
+        user = existing.data[0]
+        password_hash = await Auth.hash_password(password)
+        update = {"password_hash": password_hash}
+        # Revoke every session issued before the reset. The counter column is
+        # added by migration_token_version_2026-11-21.sql; until it exists the
+        # device-session revocation below is the only effect.
+        if "token_version" in user:
+            update["token_version"] = Auth.token_version_of(user) + 1
+        try:
+            service.table("users").update(update).eq("id", user["id"]).execute()
+        except Exception as exc:
+            if "token_version" not in update or "token_version" not in str(exc):
+                raise
+            log.warning("token_version column unavailable; reset without token revocation")
+            service.table("users").update({"password_hash": password_hash}).eq("id", user["id"]).execute()
+        try:
+            service.table("active_sessions").update({
+                "is_active": False, "revoked_at": datetime.now().isoformat(),
+            }).eq("user_id", user["id"]).execute()
+        except Exception as exc:
+            log.warning("Could not revoke device sessions after password reset", error=str(exc))
     return ResponseModel(data={"updated": True})
 
 
@@ -340,12 +427,24 @@ async def get_admin_mfa(current_user: dict = Depends(Auth.get_current_user)):
         rows = db.get_service_client().table("user_mfa_settings").select(
             "status,method,last_verified_at,deferred_until"
         ).eq("user_id", current_user["id"]).limit(1).execute().data or []
-    except Exception:
-        rows = []
+    except Exception as exc:
+        if not _is_missing_table(exc):
+            log.error("MFA status lookup failed: %s", exc)
+            raise HTTPException(status_code=503, detail="Could not check admin security right now.")
+        rows = []  # table not created yet (pre-migration)
     return ResponseModel(data=rows[0] if rows else {
         "status": "recommended", "method": "email_otp",
         "last_verified_at": None, "deferred_until": None,
     })
+
+
+def _admin_mfa_status(user_id: str) -> Optional[str]:
+    """The stored MFA status; one shared lookup (see Auth.admin_mfa_status).
+
+    None only when there is genuinely no row, or the security migration has not
+    created the table yet. A failed lookup is a 503, never "not enabled".
+    """
+    return Auth.admin_mfa_status(user_id)
 
 
 @app.post("/api/auth/mfa/request", response_model=ResponseModel)
@@ -354,14 +453,21 @@ async def request_admin_mfa(current_user: dict = Depends(Auth.get_current_user))
     email = (current_user.get("email") or "").strip().lower()
     if not email:
         raise HTTPException(status_code=400, detail="An email address is required for admin MFA.")
+    auth_rate_limit.enforce("mfa_request_user", current_user["id"])
+    auth_rate_limit.record("mfa_request_user", current_user["id"])
+    already_enabled = _admin_mfa_status(current_user["id"]) == "enabled"
     code = await _issue_email_code(email, email_codes.PURPOSE_ADMIN_MFA)
-    try:
-        db.get_service_client().table("user_mfa_settings").upsert({
-            "user_id": current_user["id"], "status": "pending_setup",
-            "method": "email_otp", "updated_at": datetime.now().isoformat(),
-        }, on_conflict="user_id").execute()
-    except Exception as exc:
-        log.warning("Admin MFA state update skipped", error=str(exc), user_id=current_user["id"])
+    if not already_enabled:
+        # First-time setup (or setup after a deferral). An account whose MFA is
+        # already enabled keeps that status: asking for a code must never turn
+        # enforcement off.
+        try:
+            db.get_service_client().table("user_mfa_settings").upsert({
+                "user_id": current_user["id"], "status": "pending_setup",
+                "method": "email_otp", "updated_at": datetime.now().isoformat(),
+            }, on_conflict="user_id").execute()
+        except Exception as exc:
+            log.warning("Admin MFA state update skipped", error=str(exc), user_id=current_user["id"])
     data = {"sent": True, "expiresInMinutes": settings.EMAIL_CODE_TTL_MINUTES}
     if settings.EMAIL_VERIFICATION_DEV_CODES:
         data["devCode"] = code
@@ -374,6 +480,7 @@ async def verify_admin_mfa(body: dict, current_user: dict = Depends(Auth.get_cur
     code = str(body.get("code") or "").strip()
     if not code:
         raise HTTPException(status_code=400, detail="Admin MFA code is required.")
+    auth_rate_limit.enforce("mfa_verify_fail_user", current_user["id"])
     if settings.EMAIL_VERIFICATION_DEV_CODES and code == "000000":
         outcome = email_codes.OK
     elif settings.EMAIL_CODE_STORAGE == "database":
@@ -387,7 +494,9 @@ async def verify_admin_mfa(body: dict, current_user: dict = Depends(Auth.get_cur
             purpose=email_codes.PURPOSE_ADMIN_MFA,
         )
     if outcome != email_codes.OK:
+        auth_rate_limit.record("mfa_verify_fail_user", current_user["id"])
         raise HTTPException(status_code=400, detail="Invalid or expired admin MFA code.")
+    auth_rate_limit.clear("mfa_verify_fail_user", current_user["id"])
     try:
         db.get_service_client().table("user_mfa_settings").upsert({
             "user_id": current_user["id"], "status": "enabled", "method": "email_otp",
@@ -396,13 +505,26 @@ async def verify_admin_mfa(body: dict, current_user: dict = Depends(Auth.get_cur
         }, on_conflict="user_id").execute()
     except Exception:
         raise HTTPException(status_code=503, detail="Admin MFA storage is not ready. Apply the security migration first.")
-    token = Auth.create_jwt(current_user["id"], mfa_verified=True)
+    token = Auth.create_jwt(current_user["id"], mfa_verified=True, token_version=Auth.token_version_of(current_user))
     return ResponseModel(data={"token": token, "status": "enabled"})
 
 
 @app.post("/api/auth/mfa/defer", response_model=ResponseModel)
-async def defer_admin_mfa(current_user: dict = Depends(Auth.get_current_user)):
+async def defer_admin_mfa(body: Optional[dict] = Body(default=None), current_user: dict = Depends(Auth.get_current_user)):
     _admin_user(current_user)
+    # A session that has not proved MFA must not be able to switch MFA off.
+    if _admin_mfa_status(current_user["id"]) == "enabled" and not current_user.get("_mfa_verified"):
+        raise HTTPException(status_code=428, detail="Admin MFA verification required.")
+    # Deferring is a security downgrade: ask for the password again, so a stolen
+    # token alone cannot do it.
+    stored_hash = current_user.get("password_hash")
+    if stored_hash:
+        auth_rate_limit.enforce("mfa_defer_fail_user", current_user["id"])
+        password = str((body or {}).get("password") or "")
+        if not password or not await Auth.verify_password(password, stored_hash):
+            auth_rate_limit.record("mfa_defer_fail_user", current_user["id"])
+            raise HTTPException(status_code=403, detail="Enter your password to defer admin security.")
+        auth_rate_limit.clear("mfa_defer_fail_user", current_user["id"])
     deferred_until = datetime.now() + timedelta(days=30)
     try:
         db.get_service_client().table("user_mfa_settings").upsert({
@@ -532,9 +654,9 @@ async def auth_telegram(body: dict, request: Request):
         db.get_service_client().table("users").update({"last_login": datetime.now().isoformat()}).eq("id", user["id"]).execute()
     else:
         user = _create_user(telegram_id=telegram_id, username=username, avatar_url=avatar_url, auth_provider="telegram")
-    token = Auth.create_jwt(user["id"])
+    token = Auth.create_jwt(user["id"], token_version=Auth.token_version_of(user))
     await _post_auth_device_register(user["id"], body, request)
-    return ResponseModel(data={"token": token, "user": user})
+    return ResponseModel(data={"token": token, "user": sanitize_user_row(user)})
 
 
 @app.post("/api/auth/base-wallet", response_model=ResponseModel)
@@ -549,16 +671,16 @@ async def auth_base_wallet(body: dict, request: Request):
         user = existing.data[0]
     else:
         user = _create_user(wallet_address=wallet_address, username=f"0x{wallet_address[2:6]}...{wallet_address[-4:]}", auth_provider="base")
-    token = Auth.create_jwt(user["id"])
+    token = Auth.create_jwt(user["id"], token_version=Auth.token_version_of(user))
     await _post_auth_device_register(user["id"], body, request)
-    return ResponseModel(data={"token": token, "user": user})
+    return ResponseModel(data={"token": token, "user": sanitize_user_row(user)})
 
 
 @app.post("/api/auth/guest", response_model=ResponseModel)
 async def auth_guest(request: Request):
     uid = uuid.uuid4().hex[:8]
     user = _create_user(username=f"Guest_{uid}", auth_provider="guest")
-    token = Auth.create_jwt(user["id"])
+    token = Auth.create_jwt(user["id"], token_version=Auth.token_version_of(user))
     # Guest was the only auth route that skipped device registration: telegram,
     # base-wallet, signup and login all call this. Without it no active_sessions
     # row exists, so validate_device_header rejects ("no session row at all")
@@ -572,7 +694,7 @@ async def auth_guest(request: Request):
     except Exception:  # noqa: BLE001 - empty or non-JSON body is fine here
         pass
     await _post_auth_device_register(user["id"], body, request)
-    return ResponseModel(data={"token": token, "user": user})
+    return ResponseModel(data={"token": token, "user": sanitize_user_row(user)})
 
 
 @app.post("/api/auth/signup", response_model=ResponseModel)
@@ -612,20 +734,20 @@ async def auth_signup(body: dict, request: Request):
             # their known dev password so repeated preset clicks can sign in;
             # never apply this behavior to real accounts or production.
             if _is_dev_account_email(email) and existing_user.get("password_hash"):
-                password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+                password_hash = await Auth.hash_password(password)
                 user = _update_user_returning(db.get_service_client(), existing_user["id"], {
                     "password_hash": password_hash,
                     "last_login": datetime.now().isoformat(),
                 })
                 user = _attach_legal_acceptance(db.get_service_client(), user, legal_acceptance)
                 user.pop("password_hash", None)
-                token = Auth.create_jwt(user["id"])
+                token = Auth.create_jwt(user["id"], token_version=Auth.token_version_of(user))
                 await _post_auth_device_register(user["id"], body, request)
-                return ResponseModel(data={"token": token, "user": user})
+                return ResponseModel(data={"token": token, "user": sanitize_user_row(user)})
             # A failed post-signup step can leave the user row without credentials.
             # Complete that partial row instead of making the user retry into a 409.
             if not existing_user.get("password_hash"):
-                password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+                password_hash = await Auth.hash_password(password)
                 user = _update_user_returning(db.get_service_client(), existing_user["id"], {
                     "username": username,
                     "first_name": first_name or None,
@@ -641,19 +763,19 @@ async def auth_signup(body: dict, request: Request):
                 })
                 user = _attach_legal_acceptance(db.get_service_client(), user, legal_acceptance)
                 user["onboarding_completed"] = False
-                token = Auth.create_jwt(user["id"])
+                token = Auth.create_jwt(user["id"], token_version=Auth.token_version_of(user))
                 await _post_auth_device_register(user["id"], body, request)
-                return ResponseModel(data={"token": token, "user": user})
+                return ResponseModel(data={"token": token, "user": sanitize_user_row(user)})
             raise HTTPException(status_code=409, detail="Email already registered. Try Log in instead.")
-        password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+        password_hash = await Auth.hash_password(password)
         user = _create_user(username=username, auth_provider="email", email=email, password_hash=password_hash,
                             first_name=first_name, middle_name=middle_name, last_name=last_name,
                             date_of_birth=date_of_birth, display_name=display_name)
         user = _attach_legal_acceptance(db.get_service_client(), user, legal_acceptance)
         user["onboarding_completed"] = False
-        token = Auth.create_jwt(user["id"])
+        token = Auth.create_jwt(user["id"], token_version=Auth.token_version_of(user))
         await _post_auth_device_register(user["id"], body, request)
-        return ResponseModel(data={"token": token, "user": user})
+        return ResponseModel(data={"token": token, "user": sanitize_user_row(user)})
     except HTTPException:
         raise
     except Exception as exc:
@@ -673,23 +795,38 @@ async def auth_signup(body: dict, request: Request):
         )
 
 
+# bcrypt hash of a random throwaway string. Never matches a real password; it
+# exists so a login for an unknown address costs the same as a real check.
+_DUMMY_PASSWORD_HASH = bcrypt.hashpw(secrets.token_bytes(24), bcrypt.gensalt()).decode()
+
+
 @app.post("/api/auth/login", response_model=ResponseModel)
 async def auth_login(body: dict, request: Request):
     email = (body.get("email") or "").strip().lower()
     password = body.get("password") or ""
     if not email or not password:
         raise HTTPException(status_code=400, detail="Email and password are required")
+    # Online guessing: count FAILURES per account and, when the real client
+    # address is known, per address. A correct password is never counted.
+    ip = auth_rate_limit.client_ip(request)
+    login_buckets = auth_rate_limit.login_buckets(email, ip)
+    auth_rate_limit.enforce_all(login_buckets)
     result = db.get_service_client().table("users").select("*").eq("email", email).execute()
     result.data = [row for row in (result.data or []) if row.get("is_deleted") is not True]
-    if not result.data:
+    user = result.data[0] if result.data else None
+    # Always run exactly one bcrypt comparison, against a fixed dummy hash when
+    # there is no usable account, so unknown and known addresses take the same
+    # time and the response cannot be used to find registered emails.
+    stored_hash = (user or {}).get("password_hash") or _DUMMY_PASSWORD_HASH
+    password_ok = await Auth.verify_password(password, stored_hash)
+    if not user or not user.get("password_hash") or not password_ok:
+        auth_rate_limit.record_all(login_buckets)
         raise HTTPException(status_code=401, detail="Invalid email or password")
-    user = result.data[0]
-    if not user.get("password_hash") or not bcrypt.checkpw(password.encode(), user["password_hash"].encode()):
-        raise HTTPException(status_code=401, detail="Invalid email or password")
+    auth_rate_limit.clear_login(email, ip)
     db.get_service_client().table("users").update({"last_login": datetime.now().isoformat()}).eq("id", user["id"]).execute()
-    token = Auth.create_jwt(user["id"])
+    token = Auth.create_jwt(user["id"], token_version=Auth.token_version_of(user))
     _hydrate_account_type_selection(user)
-    user.pop("password_hash", None)
+    user = sanitize_user_row(user)
     await _post_auth_device_register(user["id"], body, request)
     return ResponseModel(data={"token": token, "user": user})
 
@@ -734,7 +871,7 @@ async def complete_onboarding(body: dict, current_user: dict = Depends(Auth.get_
         user = _update_user_returning(svc, current_user["id"], fallback_updates)
     if updates.get("account_type_selected_at"):
         user["account_type_selected_at"] = updates["account_type_selected_at"]
-    return ResponseModel(data=user)
+    return ResponseModel(data=sanitize_user_row(user))
 
 
 
@@ -839,6 +976,7 @@ async def get_me(current_user: dict = Depends(Auth.get_current_user)):
     # Guild/leaderboard routes can resolve rank when those screens are opened.
     current_user["rank"] = None
     current_user.pop("password_hash", None)
+    current_user.pop("token_version", None)
     # Legacy accounts may have completed the old flow without a persona.
     # Keep them pending so the client routes them to user-type selection.
     current_user.setdefault("account_type", "pending")
@@ -1003,7 +1141,7 @@ async def record_legal_acceptance(
         db.get_client(), current_user["id"], {"settings": next_settings}
     )
     user.pop("password_hash", None)
-    return ResponseModel(data={"accepted": True, "user": user})
+    return ResponseModel(data={"accepted": True, "user": sanitize_user_row(user)})
 
 
 @app.delete("/api/users/me", response_model=ResponseModel)

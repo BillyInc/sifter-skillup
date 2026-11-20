@@ -309,7 +309,7 @@ class TestGuestAuthRegistersDevice:
             lambda **kw: {"id": "guest-1", "username": "Guest_x",
                           "auth_provider": "guest", "points": 0},
         )
-        monkeypatch.setattr(Auth, "create_jwt", lambda uid: "test.jwt.token")
+        monkeypatch.setattr(Auth, "create_jwt", lambda uid, *a, **kw: "test.jwt.token")
 
     def test_guest_auth_registers_the_device(self, monkeypatch):
         self._stub_user(monkeypatch)

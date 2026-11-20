@@ -54,6 +54,7 @@ export default function SettingsScreen() {
   const [legalPage, setLegalPage] = useState<'terms' | 'privacy' | null>(null);
   const [mfaStatus, setMfaStatus] = useState('recommended');
   const [mfaCode, setMfaCode] = useState('');
+  const [deferPassword, setDeferPassword] = useState('');
   const [mfaMessage, setMfaMessage] = useState<string | null>(null);
   const [mfaBusy, setMfaBusy] = useState(false);
   const isGuest = user?.auth_provider === 'guest';
@@ -112,7 +113,8 @@ export default function SettingsScreen() {
     if (mfaBusy) return;
     setMfaBusy(true);
     try {
-      const result = await API.deferAdminMfa();
+      const result = await API.deferAdminMfa(deferPassword);
+      setDeferPassword('');
       setMfaStatus(result.status);
       setMfaMessage('Admin security setup deferred for 30 days.');
     } catch (error) {
@@ -217,15 +219,28 @@ export default function SettingsScreen() {
               </Text>
             </TouchableOpacity>
             {mfaStatus !== 'enabled' ? (
-              <TouchableOpacity
-                activeOpacity={0.85}
-                onPress={() => void deferMfa()}
-                style={[styles.linkBtn, { borderColor: colors.borderRole.subtle }]}
-              >
-                <Text style={[styles.linkBtnText, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
-                  Remind me later
-                </Text>
-              </TouchableOpacity>
+              <View style={styles.mfaVerifyBox}>
+                <TextInput
+                  value={deferPassword}
+                  onChangeText={setDeferPassword}
+                  placeholder="Your password, to remind me later"
+                  accessibilityLabel="Your password, to defer admin security"
+                  secureTextEntry
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  style={[styles.mfaInput, { color: colors.textRole.primary, borderColor: colors.borderRole.subtle }]}
+                />
+                <TouchableOpacity
+                  activeOpacity={0.85}
+                  onPress={() => void deferMfa()}
+                  disabled={mfaBusy}
+                  style={[styles.linkBtn, { borderColor: colors.borderRole.subtle, opacity: mfaBusy ? 0.5 : 1 }]}
+                >
+                  <Text style={[styles.linkBtnText, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
+                    Remind me later
+                  </Text>
+                </TouchableOpacity>
+              </View>
             ) : null}
             {mfaStatus === 'pending_setup' ? (
               <View style={styles.mfaVerifyBox}>

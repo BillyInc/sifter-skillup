@@ -3,10 +3,72 @@
 # Extended: device sessions, Starknet, Airtable,
 #           offline sync, feed, social rewards
 # ============================================
+import logging
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
+
+
+
+def dev_codes_enabled(debug: bool, allow_insecure: bool, flag: bool) -> bool:
+    """The "000000" / devCode bypass needs every switch on, never DEBUG alone."""
+    return bool(debug and allow_insecure and flag)
+
+
+MIN_JWT_SECRET_LENGTH = 32
+MIN_JWT_SECRET_DISTINCT_CHARS = 10
+_DEFAULT_JWT_SECRET = "change-me-in-production"
+# Values that ship in the repo, its docs or its public CI files. A secret that
+# contains any of them is public knowledge however long it is.
+_PLACEHOLDER_MARKERS = (
+    "generate-a-strong", "change-me", "changeme", "ci-test-secret", "secret-must-be",
+    "min_32", "min-32", "your-", "your_", "example", "placeholder",
+)
+
+
+def _weak_jwt_secret_reason(secret: str) -> str | None:
+    """Why ``secret`` cannot sign production tokens, or None when it can."""
+    if not secret:
+        return "it is missing"
+    if secret == _DEFAULT_JWT_SECRET:
+        return "it is the default value"
+    if len(secret) < MIN_JWT_SECRET_LENGTH:
+        return f"it is shorter than {MIN_JWT_SECRET_LENGTH} characters"
+    lowered = secret.lower()
+    for marker in _PLACEHOLDER_MARKERS:
+        if marker in lowered:
+            return "it looks like a placeholder or a value published in the repository"
+    if len(set(secret)) < MIN_JWT_SECRET_DISTINCT_CHARS:
+        return f"it has fewer than {MIN_JWT_SECRET_DISTINCT_CHARS} distinct characters"
+    return None
+
+
+def check_jwt_secret(secret: str, debug: bool) -> None:
+    """Refuse to run a production process that signs tokens with a guessable key.
+
+    This runs when ``config`` is imported, so it applies to EVERY process that
+    imports it: the API (main), the Celery worker and beat (celery_worker.py and
+    workers/celery_worker.py), the database/auth helpers, scheduled jobs and
+    scripts. Each of them needs the same JWT_SECRET (32+ random characters, not
+    a placeholder) in its environment when DEBUG is off, or it exits at startup.
+    Generate one with: python -c "import secrets;print(secrets.token_urlsafe(48))"
+    """
+    if debug:
+        return
+    reason = _weak_jwt_secret_reason(secret)
+    if reason:
+        message = (
+            f"JWT_SECRET is not acceptable: {reason}. It must be a random value of at least "
+            f"{MIN_JWT_SECRET_LENGTH} characters when DEBUG is false, set in every process "
+            "that imports config (the API, the Celery worker and beat, scheduled jobs and "
+            "scripts). Generate one with: python -c \"import secrets;print(secrets.token_urlsafe(48))\". "
+            "Refusing to start."
+        )
+        # Loud, and visible even if the process manager hides the traceback.
+        logging.getLogger("config").critical(message)
+        raise RuntimeError(message)
+
 
 class Settings:
     APP_NAME: str = "Sifter LevelUp API"
@@ -14,11 +76,15 @@ class Settings:
     DEBUG: bool = os.getenv("DEBUG", "false").lower() == "true"
 
     # Dev codes return the verification code in the API response and accept
-    # "000000" for any address. That is a full authentication bypass, so the
-    # flag is ANDed with DEBUG: setting EMAIL_VERIFICATION_DEV_CODES=true on a
-    # production box does nothing. Previously the env var alone decided it.
-    EMAIL_VERIFICATION_DEV_CODES: bool = DEBUG and (
-        os.getenv("EMAIL_VERIFICATION_DEV_CODES", "true").lower() == "true"
+    # "000000" for any address. That is a full authentication bypass, so it
+    # needs THREE independent opt-ins: DEBUG, ALLOW_INSECURE_DEV_CODES and the
+    # EMAIL_VERIFICATION_DEV_CODES flag. DEBUG alone (which several deployed dev
+    # servers run with) no longer enables it.
+    ALLOW_INSECURE_DEV_CODES: bool = os.getenv("ALLOW_INSECURE_DEV_CODES", "false").lower() == "true"
+    EMAIL_VERIFICATION_DEV_CODES: bool = dev_codes_enabled(
+        DEBUG,
+        ALLOW_INSECURE_DEV_CODES,
+        os.getenv("EMAIL_VERIFICATION_DEV_CODES", "true").lower() == "true",
     )
 
     # ── Email delivery (Resend) ──────────────────────────────
@@ -50,6 +116,18 @@ class Settings:
     # Long-lived: 90 days. App never asks user to log in again.
     # Revoked only on device violation or explicit sign-out.
     JWT_EXPIRE_HOURS: int = 24 * 90
+
+    # ── Authentication abuse limits (in-memory, per worker process) ──
+    AUTH_RATE_LIMIT_ENABLED: bool = os.getenv("AUTH_RATE_LIMIT_ENABLED", "true").lower() == "true"
+    # Per-IP limits are applied only when the real client address is known.
+    # Behind a reverse proxy every request arrives from loopback, so counting
+    # that "address" would let one abuser lock everybody out. Set this to true
+    # only when the proxy overwrites X-Forwarded-For.
+    TRUST_PROXY_HEADERS: bool = os.getenv("TRUST_PROXY_HEADERS", "false").lower() == "true"
+    # How many reverse proxies you run in front of the API. The client address is
+    # taken that many places from the RIGHT of X-Forwarded-For (each proxy appends
+    # the address it saw); entries further left are client-supplied and ignored.
+    TRUSTED_PROXY_HOPS: int = max(1, int(os.getenv("TRUSTED_PROXY_HOPS", "1")))
 
     # ── Privy (Starknet embedded wallet auth) ────────────────
     PRIVY_APP_ID: str = os.getenv("PRIVY_APP_ID", "")
@@ -241,3 +319,4 @@ class Settings:
     )
 
 settings = Settings()
+check_jwt_secret(settings.JWT_SECRET, settings.DEBUG)
