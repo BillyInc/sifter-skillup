@@ -224,3 +224,58 @@ describe("semantic colours stay distinguishable from the action", () => {
     expect(contrast(Brand.onPrimary, Brand.mark)).toBeLessThan(4.5);
   });
 });
+
+// ── Review findings 2, 3, 8, 9: soft-tint badges and control borders ──────
+describe("soft-tint badge pairs meet AA text contrast in both themes", () => {
+  const pairs = (P: typeof LightColors): Array<[string, string, string]> => [
+    ["pending on pendingSoft", P.state.pending, P.state.pendingSoft],
+    ["locked on lockedSoft", P.state.locked, P.state.lockedSoft],
+    ["danger on dangerSoft", P.danger, P.dangerSoft],
+    ["red on redSoft", P.red, P.redSoft],
+    ["gold on goldSoft", P.gold, P.goldSoft],
+    ["elite on eliteSoft", P.elite, P.eliteSoft],
+    ["orange on orangeSoft", P.orange, P.orangeSoft],
+    ["warning on warningSoft", P.warning, P.warningSoft],
+    ["demand on demandSoft", P.demand, P.demandSoft],
+    ["accent warning on subtle surface", P.accentRole.warning, P.surface.subtle],
+    ["accent danger on dangerSoft", P.accentRole.danger, P.dangerSoft],
+  ];
+  for (const [name, P] of [["light", LightColors], ["dark", DarkColors]] as const) {
+    for (const [label, fg, bg] of pairs(P)) {
+      it(`${name}: ${label} >= 4.5:1`, () => {
+        expect(contrast(fg, bg)).toBeGreaterThanOrEqual(4.5);
+      });
+    }
+  }
+
+  it("keeps the darkened tints distinguishable from the action colour by hue", () => {
+    expect(hueGap(LightColors.accentRole.action, LightColors.accentRole.warning)).toBeGreaterThanOrEqual(15);
+    expect(hueGap(LightColors.accentRole.action, LightColors.accentRole.danger)).toBeGreaterThanOrEqual(10);
+  });
+});
+
+describe("control borders meet 3:1 non-text contrast (WCAG 1.4.11)", () => {
+  for (const [name, P] of [["light", LightColors], ["dark", DarkColors]] as const) {
+    const surfaces = {
+      raised: P.surface.raised,
+      base: P.surface.base,
+      subtle: P.surface.subtle,
+    };
+    for (const [sname, bg] of Object.entries(surfaces)) {
+      it(`${name}: borderRole.control on ${sname}`, () => {
+        expect(contrast(P.borderRole.control, bg)).toBeGreaterThanOrEqual(3);
+      });
+    }
+    it(`${name}: inputBorder on inputBg`, () => {
+      expect(contrast(P.inputBorder, P.inputBg)).toBeGreaterThanOrEqual(3);
+    });
+    it(`${name}: strong border is the control border`, () => {
+      expect(P.borderRole.strong).toBe(P.borderRole.control);
+    });
+    it(`${name}: subtle stays a decorative edge, lighter than the control border`, () => {
+      expect(contrast(P.borderRole.subtle, P.surface.raised)).toBeLessThan(
+        contrast(P.borderRole.control, P.surface.raised),
+      );
+    });
+  }
+});
