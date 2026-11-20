@@ -713,7 +713,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.6,
     textTransform: "uppercase",
   },
-  link: { alignSelf: "flex-start", paddingTop: Spacing.xs },
+  link: { alignSelf: "flex-start", minHeight: 44, justifyContent: "center", paddingTop: Spacing.xs },
   linkText: { fontSize: FontSize.sm },
   footNote: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.6 },
 });

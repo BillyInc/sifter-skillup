@@ -491,7 +491,7 @@ const styles = StyleSheet.create({
   interestName: { flex: 1, fontSize: FontSize.sm },
   interestDelta: { fontSize: FontSize.xs },
   interestPct: { fontSize: FontSize.sm, letterSpacing: 0 },
-  link: { alignSelf: "flex-start", paddingTop: Spacing.xs },
+  link: { alignSelf: "flex-start", minHeight: 44, justifyContent: "center", paddingTop: Spacing.xs },
   linkText: { fontSize: FontSize.sm },
   footNote: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.6 },
 });

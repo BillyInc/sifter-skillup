@@ -63,6 +63,9 @@ describe("LearningInterestScreen", () => {
     expect(screen.getAllByText("Sociology → Social Sciences → Qualitative research").length).toBeGreaterThanOrEqual(2);
     expect(screen.getByText("Learners who added a choice")).toBeTruthy();
     expect(screen.getByText("Learners with choices selected now")).toBeTruthy();
+    // The long caveats live in one disclosure, collapsed by default.
+    expect(screen.queryByText(/A zero means no matching opted-in choices were recorded/)).toBeNull();
+    fireEvent.press(screen.getByLabelText("How to read this"));
     expect(screen.getByText(/A zero means no matching opted-in choices were recorded/)).toBeTruthy();
     const firstMetric = screen.getAllByTestId(/^learning-interest-metric-/)[0];
     expect(within(firstMetric).getByText("Learners with choices selected now")).toBeTruthy();
@@ -364,5 +367,55 @@ describe("LearningInterestScreen", () => {
     fireEvent.changeText(screen.getByPlaceholderText("For example, Sociology, Social Sciences, Python, Lagos or school name"), "Python");
     expect(await screen.findByText("Could not load filter options. Try again in a moment.")).toBeTruthy();
     expect(screen.queryByText("No matching current selections or recent activity found.")).toBeNull();
+  });
+  it("keeps every required caveat, grouped by what it explains, inside one 'How to read this' disclosure", async () => {
+    (useAuth as jest.Mock).mockReturnValue({ user: { is_internal_staff: true } });
+    render(<ThemeProvider><LearningInterestScreen /></ThemeProvider>);
+    await screen.findByText("Learning choices selected now and recently");
+    const toggle = screen.getByLabelText("How to read this");
+    expect(toggle.props.accessibilityState).toEqual(expect.objectContaining({ expanded: false }));
+    expect(screen.queryByTestId("learning-interest-guide")).toBeNull();
+    fireEvent.press(toggle);
+    const guide = screen.getByTestId("learning-interest-guide");
+    expect(screen.getByLabelText("How to read this").props.accessibilityState).toEqual(expect.objectContaining({ expanded: true }));
+    for (const heading of ["Current selections", "Recent activity", "Route patterns", "Privacy"]) {
+      expect(within(guide).getByText(heading)).toBeTruthy();
+    }
+    expect(within(guide).getByText(/Current selections are not limited by the selected date window; adds and removals are\./)).toBeTruthy();
+    expect(within(guide).getByText(/not a complete, saved or completed pathway/)).toBeTruthy();
+    expect(within(guide).getByText(/not proof that a complete route was saved or completed/)).toBeTruthy();
+    expect(within(guide).getByText(/may be inferable in a very small school cohort/)).toBeTruthy();
+    expect(within(guide).getByText(/saved path remains available to its owner independently of analytics consent/)).toBeTruthy();
+    expect(within(guide).getByText(/No names, emails, grades, or individual learner histories/)).toBeTruthy();
+    // Measure definitions stay visible on the cards, not hidden behind the disclosure.
+    expect(screen.getByText(/Unique opted-in learners with at least one active selection; independent of the date window/)).toBeTruthy();
+    fireEvent.press(screen.getByLabelText("How to read this"));
+    expect(screen.queryByTestId("learning-interest-guide")).toBeNull();
+  });
+
+  it("tells added from removed by sign, fill and position, not colour alone", async () => {
+    (useAuth as jest.Mock).mockReturnValue({ user: { is_internal_staff: true } });
+    render(<ThemeProvider><LearningInterestScreen /></ThemeProvider>);
+    await screen.findByText("Selection activity over time");
+    expect(screen.getByText("+ Added choices (filled bar, left)")).toBeTruthy();
+    expect(screen.getByText("− Removed choices (outlined bar, right)")).toBeTruthy();
+    expect(screen.getByText("+7")).toBeTruthy();
+    expect(screen.getByText("−3")).toBeTruthy();
+    expect(screen.getByLabelText("10/26: 7 additions and 3 removals")).toBeTruthy();
+  });
+
+  it("gives filter chips a touch-sized target on narrow screens and a 32px target on desktop", async () => {
+    (useAuth as jest.Mock).mockReturnValue({ user: { is_internal_staff: true } });
+    const heights = async (width: number) => {
+      jest.spyOn(Dimensions, "get").mockReturnValue({ width, height: 900, scale: 1, fontScale: 1 });
+      const view = render(<ThemeProvider><LearningInterestScreen /></ThemeProvider>);
+      const chip = await screen.findByText("7 days");
+      const touchable = chip.parent?.parent;
+      const flat = Object.assign({}, ...[touchable?.props.style].flat(Infinity).filter(Boolean));
+      view.unmount();
+      return flat.minHeight as number;
+    };
+    expect(await heights(390)).toBe(44);
+    expect(await heights(1440)).toBe(32);
   });
 });

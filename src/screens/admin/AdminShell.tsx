@@ -39,6 +39,7 @@ import {
 import { adminNav, getAdminNavGroups } from "@/lib/adminNav";
 import { getEducatorProfile } from "@/lib/educatorProfile";
 import { useAuth } from "@/hooks/useAuth";
+import { useEscapeToClose } from "@/hooks/useEscapeToClose";
 import { ADMIN_EXPLORE_SEGMENT } from "@/lib/exploreNav";
 import {
   adminAudienceForProfile,
@@ -499,6 +500,14 @@ function WebAdminShell({
   onAdminSearchSubmit: () => void;
 }) {
   const workspaceName = profile?.organizationName || adminAudienceLabel(audience);
+  const drawerRef = useRef<HTMLElement | null>(null);
+  const drawerActive = drawerOpen && !focusedGuidance;
+  // Escape closes the mobile drawer, Tab stays inside it, and focus returns to
+  // the menu button that opened it.
+  useEscapeToClose(drawerActive, onDrawerClose, () => drawerRef.current);
+  useEffect(() => {
+    if (drawerActive) drawerRef.current?.focus();
+  }, [drawerActive]);
   const nav = (
     <div className="web-admin-nav-inner">
       <div className="web-admin-brand">
@@ -534,8 +543,9 @@ function WebAdminShell({
 
   return (
     <div className={`web-admin-shell${focusedGuidance ? " is-focused" : ""}`}>
+      {!focusedGuidance ? <a className="skip-link" href="#main-content" onClick={(event) => { event.preventDefault(); const target = document.getElementById("main-content"); target?.focus(); target?.scrollIntoView?.(); }}>Skip to content</a> : null}
       {!focusedGuidance ? <aside className="web-admin-sidebar">{nav}</aside> : null}
-      {drawerOpen && !focusedGuidance ? <div className="web-admin-drawer-layer"><button className="web-admin-drawer-backdrop" onClick={onDrawerClose} aria-label="Close navigation" /><aside className="web-admin-drawer">{nav}</aside></div> : null}
+      {drawerOpen && !focusedGuidance ? <div className="web-admin-drawer-layer"><button className="web-admin-drawer-backdrop" onClick={onDrawerClose} aria-label="Close navigation" /><aside className="web-admin-drawer" ref={drawerRef} tabIndex={-1} aria-label="Administrator navigation drawer">{nav}</aside></div> : null}
       <section className="web-admin-main">
         <header className="web-admin-header">
           <button className="web-admin-menu" onClick={onDrawerOpen} aria-label="Open navigation"><GlyphIcon glyph="☰" size={20} color="currentColor" /></button>
@@ -559,7 +569,7 @@ function WebAdminShell({
           {actions ? <div className="web-admin-actions">{actions}</div> : null}
         </header>
         {focusedGuidance ? <div className="web-admin-context" role="status"><strong>Focused guidance workspace</strong><span>{guidancePathLabel ? `Route context: ${guidancePathLabel}. ` : ""}Navigation is collapsed while you work. Your target and resume context remain attached to this route.</span></div> : null}
-        <main className="web-admin-content">{children}</main>
+        <main className="web-admin-content" id="main-content" tabIndex={-1}>{children}</main>
       </section>
       {accountAction ? <div className="web-admin-modal-backdrop" role="presentation"><section className="web-admin-modal" role="dialog" aria-modal="true" aria-labelledby="web-admin-action-title"><h2 id="web-admin-action-title">{accountAction === "delete" ? "Delete this account?" : "Sign out?"}</h2><p>{accountAction === "delete" ? "Your account will be marked for deletion. A 24-hour recovery cooldown starts immediately." : "You will need to sign in again to continue."}</p><div><button className="secondary" onClick={onCancelAction} disabled={actionBusy}>Cancel</button><button className="danger-button" onClick={onRunAction} disabled={actionBusy}>{accountAction === "delete" ? "Delete account" : "Sign out"}</button></div></section></div> : null}
     </div>

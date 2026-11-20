@@ -87,6 +87,8 @@ const CharteredCredentialsScreen = lazy(() => import("../../src/screens/careerIn
 const PhdPathwayScreen = lazy(() => import("../../src/screens/careerIntelligence/PhdPathwayScreen"));
 const ElitePathwaysHubScreen = lazy(() => import("../../src/screens/careerIntelligence/ElitePathwaysHubScreen"));
 const ElitePathwayDetailScreen = lazy(() => import("../../src/screens/careerIntelligence/ElitePathwayDetailScreen"));
+// Named export, so map it to the default shape lazy() expects (preview shell only; Metro mounts it from app/).
+const AdminLearningInterestScreen = lazy(() => import("../../src/screens/admin/LearningInterestScreen").then((module) => ({ default: module.LearningInterestScreen })));
 const AdminMarketScreen = lazy(() => import("../../src/screens/admin/MarketIntelligenceScreen"));
 const AdminPeersScreen = lazy(() => import("../../src/screens/admin/PeersScreen"));
 const AdminDomainReachScreen = lazy(() => import("../../src/screens/admin/DomainReachAuditScreen"));
@@ -588,6 +590,7 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
     if (/^\/admin\/students\/[^/]+\/guidance$/.test(path)) return <Suspense fallback={<RouteLoading />}><AdminStudentGuidanceRoute /></Suspense>;
     if (path === "/admin/verify") return <Suspense fallback={<RouteLoading />}><AdminVerifyScreen /></Suspense>;
     if (path === "/admin/skills-gap") return <Suspense fallback={<RouteLoading />}><AdminSkillsGapScreen /></Suspense>;
+    if (path === "/admin/analytics") return <Suspense fallback={<RouteLoading />}><AdminLearningInterestScreen /></Suspense>;
     if (path === "/admin/market-intelligence") return <Suspense fallback={<RouteLoading />}><AdminMarketScreen /></Suspense>;
     if (path === "/admin/peers") return <Suspense fallback={<RouteLoading />}><AdminPeersScreen /></Suspense>;
     if (path === "/admin/domain-reach") return <Suspense fallback={<RouteLoading />}><AdminDomainReachScreen /></Suspense>;
@@ -700,6 +703,7 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
     // systems and made browser admin pages look like student pages.
     <Suspense fallback={<RouteLoading />}>{content()}</Suspense>
   ) : <main className={`platform-shell${focusedGuidance ? " is-guidance-workspace" : ""}`}>
+    {!focusedGuidance ? <a className="skip-link" href="#main-content" onClick={(event) => { event.preventDefault(); const target = document.getElementById("main-content"); target?.focus(); target?.scrollIntoView?.(); }}>Skip to content</a> : null}
     {!focusedGuidance ? <aside className="platform-sidebar">
       <a className="brand" href="/home" onClick={(event) => { event.preventDefault(); go("/home"); }} aria-label="LevelUp home">
         <LevelUpWebWordmark variant="light" width={188} height={50} />
@@ -730,7 +734,7 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
         {searchOpen ? <GlobalSearchDropdown query={globalQuery} intent={searchIntent} onIntentChange={setSearchIntent} loading={searchLoading} result={searchPayload} onSelect={openSearchResult} onClose={() => setSearchOpen(false)} /> : null}
         </div>}
       </header>
-      <div className="platform-content"><Suspense fallback={<RouteLoading />}>{content()}</Suspense></div>
+      <div className="platform-content" id="main-content" tabIndex={-1}><Suspense fallback={<RouteLoading />}>{content()}</Suspense></div>
     </section>
   </main>;
   return <PersistentLearningPlanDockProvider>{shell}</PersistentLearningPlanDockProvider>;

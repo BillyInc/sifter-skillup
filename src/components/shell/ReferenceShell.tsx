@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { MAIN_CONTENT_ID, SkipToContent } from "./SkipToContent";
 import {
   Modal,
   Pressable,
@@ -300,6 +301,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
     <SearchLauncherProvider onOpen={(query, scope) => { if (query !== undefined) setSearchQuery(query); if (scope) setOverlayScope(scope); setOverlayVisible(true); }}>
     <PersistentLearningPlanDockProvider>
     <View style={[styles.root, { backgroundColor: colors.surface.base }]}>
+      {isWide ? <SkipToContent /> : null}
       {isWide && (
         <View
           style={[
@@ -424,7 +426,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
           </View>
         </View>
 
-        <View style={[styles.content, !isWide && { paddingBottom: 18 }]}>{children}</View>
+        <View nativeID={MAIN_CONTENT_ID} tabIndex={-1} style={[styles.content, !isWide && { paddingBottom: 18 }]}>{children}</View>
 
         {!isWide && (() => {
           const DOT_W = 16;
