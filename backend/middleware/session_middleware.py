@@ -10,27 +10,28 @@
 # Skipped routes (no auth needed):
 #   /health, /api/auth/*, /api/github/callback
 # ============================================
-from datetime import datetime
 from typing import Optional
 
-import jwt
 from jwt import PyJWTError
 from fastapi import Request
 from fastapi.responses import JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
 
+from auth import Auth
 from config import settings
 from middleware.device_sessions import validate_device_header
 from logger import log
 
-# Routes that bypass device validation entirely
+# Routes that bypass device validation entirely.
+# NOTE: /api/sync/drain is deliberately NOT here. It is a high-value mutation
+# route, so it goes through full device enforcement like every other
+# authenticated route (a valid session and a registered X-Device-Id).
 _SKIP_PREFIXES = (
     "/health",
     "/docs",
     "/openapi",
     "/api/auth/",
     "/api/github/callback",
-    "/api/sync/drain",  # offline sync must always work on reconnect
 )
 
 
@@ -49,14 +50,11 @@ def _extract_user_id_from_bearer(request: Request) -> Optional[str]:
         return None
     token = auth[7:]
     try:
-        payload = jwt.decode(
-            token,
-            settings.JWT_SECRET,
-            algorithms=[settings.JWT_ALGORITHM],
-            options={"verify_exp": True},
-        )
+        payload = Auth.decode_jwt(token)
         return payload.get("sub")
     except PyJWTError:
+        return None
+    except Exception:
         return None
 
 
@@ -82,6 +80,9 @@ class DeviceSessionMiddleware(BaseHTTPMiddleware):
         user_id = _extract_user_id_from_bearer(request)
         if not user_id:
             return await call_next(request)
+
+        # Cache for downstream handlers (rate limiters, etc.)
+        request.state.user_id = user_id
 
         device_id = request.headers.get("X-Device-Id", "").strip()
 
@@ -129,4 +130,5 @@ class DeviceSessionMiddleware(BaseHTTPMiddleware):
                 },
             )
 
+        request.state.device_id = device_id
         return await call_next(request)
