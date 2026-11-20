@@ -258,7 +258,7 @@ def test_allow_destructive_reason_must_be_non_empty():
         build([entry("migration_a", allow_destructive_reason=" ")])
 
 
-def test_plan_reports_unresolved_dependency_without_blocking(tmp_path):
+def test_unresolved_dependency_blocks_until_it_is_recorded_in_the_ledger(tmp_path):
     root = make_root(tmp_path, ("migration_a.sql", "migration_u.sql"))
     manifest = build(
         [
@@ -270,13 +270,22 @@ def test_plan_reports_unresolved_dependency_without_blocking(tmp_path):
         unordered=[{"path": "migration_u.sql", "reason": "r"}],
     )
     plan = pl.build_plan(manifest, InMemoryLedger(), pl.default_checksummer(root))
-    assert [row.status for row in plan.rows] == [pl.PENDING]
+    assert [row.status for row in plan.rows] == [pl.BLOCKED]
     assert plan.rows[0].unresolved == ["migration_u.sql"]
     assert any("unresolved dependency on 'migration_u.sql'" in w for w in plan.warnings)
     assert "unresolved dependency: migration_u.sql" in pl.format_plan(plan)
     assert pl.plan_to_dict(plan)["unresolved_dependencies"] == {
         "migration_a": ["migration_u.sql"]
     }
+    # Once the operator records the unordered file as already present, it is satisfied.
+    ledger = InMemoryLedger()
+    ledger.record_baseline(
+        "migration_u.sql", "x", operator="op", preflight_sha256="h"
+    )
+    satisfied = pl.build_plan(manifest, ledger, pl.default_checksummer(root))
+    assert [row.status for row in satisfied.rows] == [pl.PENDING]
+    assert satisfied.rows[0].unresolved == []
+    assert not any("not in the manifest" in w for w in satisfied.warnings)
 
 
 # ---------------------------------------------------------------------------

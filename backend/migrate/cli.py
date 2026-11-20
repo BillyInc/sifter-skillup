@@ -89,7 +89,7 @@ def cmd_plan(args: argparse.Namespace) -> int:
             manifest,
             ledger,
             plan_mod.default_checksummer(root),
-            checksum_pending=args.checksums,
+            checksum_pending=True,  # the plan-sha needs every pending file's checksum
             allow_rebuild=args.allow_rebuild,
             rebuild_approval=args.rebuild_approval,
         )
@@ -111,7 +111,12 @@ def cmd_baseline(args: argparse.Namespace) -> int:
         return 1
     try:
         rows = build_baseline(
-            manifest, root, args.entries, Path(args.preflight), args.operator
+            manifest,
+            root,
+            args.entries,
+            Path(args.preflight),
+            args.operator,
+            reason=args.reason,
         )
     except BaselineError as exc:
         print(f"baseline refused: {exc}", file=sys.stderr)
@@ -156,6 +161,13 @@ def cmd_status(args: argparse.Namespace, connect: Connect) -> int:
 
 def cmd_apply(args: argparse.Namespace, connect: Connect) -> int:
     manifest, root = _load(args)
+    if args.apply and not (args.plan_sha and args.plan_sha.strip()):
+        print(
+            "apply refused: --apply needs --plan-sha, the 'plan-sha:' printed by a dry run "
+            "of this same plan (review the dry run first)",
+            file=sys.stderr,
+        )
+        return 1
     try:
         executor = connect()
     except ex_mod.ExecutorError as exc:
@@ -171,6 +183,7 @@ def cmd_apply(args: argparse.Namespace, connect: Connect) -> int:
             approval_ref=args.approval_ref,
             empty_database=args.empty_database,
             schema=args.schema,
+            expected_plan_sha=args.plan_sha if args.apply else None,
         )
     except (ex_mod.ExecutorError, apply_mod.RefusedError) as exc:
         print(f"apply failed: {exc}", file=sys.stderr)
@@ -180,6 +193,8 @@ def cmd_apply(args: argparse.Namespace, connect: Connect) -> int:
     mode = "APPLY" if args.apply else "DRY RUN (nothing executed; pass --apply to run)"
     print(f"mode: {mode}")
     _print_outcomes(result)
+    if result.plan is not None and plan_mod._sha_is_reliable(result.plan):
+        print(f"plan-sha: {plan_mod.plan_sha(result.plan)}")
     applied = sum(1 for o in result.outcomes if o.status == "applied")
     print(
         f"summary: {applied} applied, {len(result.outcomes)} considered, exit {result.exit_code}"
@@ -198,7 +213,9 @@ def cmd_import_baseline(args: argparse.Namespace, connect: Connect) -> int:
     if not rows:
         print("no baseline rows in file", file=sys.stderr)
         return 1
-    ids = {entry.id for entry in manifest.entries}
+    ids = {entry.id for entry in manifest.entries} | {
+        item.path for item in manifest.unordered
+    }
     unknown = sorted(set(rows) - ids)
     if unknown:
         print(
@@ -333,6 +350,11 @@ def build_parser() -> argparse.ArgumentParser:
     baseline.add_argument("--entries", nargs="+", required=True, metavar="ID")
     baseline.add_argument("--operator", required=True)
     baseline.add_argument(
+        "--reason",
+        help="required for a rebuild entry such as migration_career_v2: why the database "
+        "is known to already have it (recorded; the entry never becomes runnable)",
+    )
+    baseline.add_argument(
         "--out", required=True, metavar="FILE", help="applied.json to write"
     )
     baseline.set_defaults(func=cmd_baseline)
@@ -362,6 +384,12 @@ def build_parser() -> argparse.ArgumentParser:
         "--empty-database",
         action="store_true",
         help="the database is known to be empty: allow an empty ledger to start from zero",
+    )
+    apply.add_argument(
+        "--plan-sha",
+        metavar="SHA",
+        help="the plan-sha printed by a dry run; required with --apply and must still "
+        "match, so a run cannot be approved blind or after the plan changed",
     )
     apply.add_argument("--schema", default="skillup_dev")
     apply.set_defaults(func=cmd_apply, db=True)

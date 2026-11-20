@@ -9,6 +9,7 @@ only point backwards. Files whose order is not documented unambiguously go in
 from __future__ import annotations
 
 import hashlib
+import re
 import tomllib
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
@@ -48,6 +49,22 @@ class ExternalRequire:
     evidence: str
 
 
+_IDENT = re.compile(r"[a-z_][a-z0-9_]*\Z")
+
+
+@dataclass(frozen=True)
+class RowCheck:
+    """A row-count assertion the runner makes inside the entry's transaction, before COMMIT.
+
+    A seed that "succeeds" but writes nothing (RLS, a wrong schema, an empty source) would
+    otherwise be recorded as applied. ``min_rows`` must come from the owner's reviewed
+    expectation; the manifest never invents one.
+    """
+
+    table: str
+    min_rows: int
+
+
 @dataclass(frozen=True)
 class LintWaiver:
     """A reviewed, visible acknowledgement of one lint finding code for one entry."""
@@ -70,6 +87,8 @@ class Entry:
     authoritative_reason: str | None = None
     lint_waivers: tuple[LintWaiver, ...] = ()
     verify: tuple[str, ...] = ()
+    verify_rows: tuple[RowCheck, ...] = ()
+    must_apply_with: tuple[str, ...] = ()
     down: str | None = None
     manual_only: bool = False
     approval: str | None = None
@@ -132,6 +151,30 @@ def _external_requires(value: Any, where: str) -> tuple[ExternalRequire, ...]:
             )
         result.append(ExternalRequire(ref=item["ref"], evidence=item["evidence"]))
     return tuple(result)
+
+
+def _row_checks(value: Any, where: str) -> tuple[RowCheck, ...]:
+    if value is None:
+        return ()
+    if not isinstance(value, list):
+        raise ManifestError(f"{where}: 'verify_rows' must be an array of tables")
+    checks: list[RowCheck] = []
+    for item in value:
+        table = item.get("table") if isinstance(item, dict) else None
+        minimum = item.get("min_rows") if isinstance(item, dict) else None
+        if (
+            not isinstance(table, str)
+            or not _IDENT.match(table)
+            or not isinstance(minimum, int)
+            or isinstance(minimum, bool)
+            or minimum < 1
+        ):
+            raise ManifestError(
+                f"{where}: each verify_rows item needs a lowercase 'table' name "
+                "(no schema prefix) and an integer 'min_rows' >= 1"
+            )
+        checks.append(RowCheck(table=table, min_rows=minimum))
+    return tuple(checks)
 
 
 def parse_manifest(data: dict[str, Any]) -> Manifest:
@@ -219,6 +262,10 @@ def parse_manifest(data: dict[str, Any]) -> Manifest:
                 authoritative_reason=auth_reason if authoritative else None,
                 lint_waivers=tuple(waivers),
                 verify=_str_list(raw.get("verify"), "verify", where),
+                verify_rows=_row_checks(raw.get("verify_rows"), where),
+                must_apply_with=_str_list(
+                    raw.get("must_apply_with"), "must_apply_with", where
+                ),
                 down=down,
                 manual_only=manual_only,
                 approval=approval or None,
@@ -575,6 +622,31 @@ def validate(manifest: Manifest, root: Path) -> list[Issue]:
                     f"{entry.id}: external_requires '{ext.ref}' is neither an "
                     "[[unordered]] path nor a later ordered id",
                 )
+    by_id = {entry.id: entry for entry in manifest.entries}
+    for entry in manifest.entries:
+        for partner in entry.must_apply_with:
+            if partner == entry.id:
+                err("MUST_APPLY_WITH", f"{entry.id} lists itself in must_apply_with")
+            elif partner not in by_id:
+                err(
+                    "MUST_APPLY_WITH",
+                    f"{entry.id}: must_apply_with names unknown id '{partner}'",
+                )
+            elif entry.id not in by_id[partner].must_apply_with:
+                err(
+                    "MUST_APPLY_WITH",
+                    f"{entry.id} must apply with '{partner}', but '{partner}' does not "
+                    "list it back (the group must be symmetric)",
+                )
+        if entry.id.startswith("seed_") and not entry.verify_rows:
+            issues.append(
+                Issue(
+                    "SEED_NO_ROW_CHECK",
+                    f"{entry.id} has no verify_rows: a seed that commits while writing "
+                    "nothing would be recorded as applied",
+                    severity="warning",
+                )
+            )
     graph = {entry.id: entry.requires for entry in manifest.entries}
     cycle = _find_cycle(graph)
     if cycle:

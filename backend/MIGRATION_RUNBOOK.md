@@ -1435,26 +1435,33 @@ rows are retained for staff audit but are filtered from student responses.
 Migrations can be applied by the runner instead of by hand. It does not change which files exist or
 their order (the manifest records the order stated in this runbook and CLAUDE.md); it applies the
 missing ones, one transaction each, and records them in `skillup_dev.schema_migrations`.
-Full behaviour and safety rules: `backend/migrate/README.md`.
+Full behaviour, safety rules and recovery guidance: `backend/migrate/README.md`.
+
+**The runner does not override manual-only mode.** If the owner says they will run SQL manually,
+nobody triggers the database jobs; the "keep this manual" and "back up first" instructions above
+still apply, and the runner takes **no backup** and writes no `_bak` snapshot.
 
 One-time owner setup:
 
-1. GitHub: Settings > Environments > New environment `production`; add **required reviewers**
-   (every database job waits for approval) and restrict deployment to the `main` branch.
-2. In that environment add the secret **`DATABASE_URL`**: the Supabase **Session pooler**
-   connection string (GitHub runners are IPv4-only; do not use the direct `db.<ref>.supabase.co`
-   host). It is exposed to the job as `MIGRATE_DATABASE_URL` and never printed.
+1. GitHub: Settings > Environments > New environment **`production-db`** (a dedicated one; do not
+   reuse `production`). Add **required reviewers**, turn **Prevent self-review** on, and restrict
+   deployment to the `main` branch.
+2. In that environment add the secret **`DATABASE_URL`**: a Supabase Session pooler (5432) or direct
+   connection string (GitHub runners are IPv4-only; never the transaction pooler on 6543). It is
+   exposed only to the step that runs the runner, as `MIGRATE_DATABASE_URL`, and never printed.
 3. Record a baseline of what production already has (README, "Onboarding an existing database").
-   Until then `apply` refuses because the ledger is missing/empty.
+   Until then `apply` refuses because the ledger is missing/empty. `migration_career_v2` is
+   recorded with `baseline --reason ...`; see README "Fresh database or rebuilt taxonomy".
 
 Running it: Actions > Migrations > Run workflow (on `main`).
 
 - `mode = status`: read-only ledger and plan.
-- `mode = apply`, `confirm_apply` unticked: dry run, prints what would run.
-- `mode = apply`, `confirm_apply` ticked: runs the pending `schema`/`seed` entries in order and stops
-  at the first error. A `destructive`/`data_destructive` entry runs only if its id is listed in
-  `approve_ids` with an `approval_ref`; `rebuild` (`migration_career_v2`) and `manual_only` entries
-  never run: apply those by hand as before.
+- `mode = apply`, `confirm_apply` unticked: dry run. Read it, then copy the `plan-sha:` line.
+- `mode = apply`, `confirm_apply` ticked **and** `plan_sha` filled in: runs the pending
+  `schema`/`seed` entries in order and stops at the first error. It refuses if the plan changed
+  since the dry run. A `destructive`/`data_destructive` entry runs only if its id is listed in
+  `approve_ids` with an `approval_ref`; the two replacement subject seeds must be approved together;
+  `rebuild` (`migration_career_v2`) and `manual_only` entries never run: apply those by hand.
 
 Pull requests only run the static job (lint, manifest, plan, unit tests); they never reach the
 database. The six migrations prepared on 2026-11-19 and 2026-10-26/28 (display name, avatars bucket,

@@ -196,7 +196,7 @@ def test_parts_group_numbering_and_expected_count(tmp_path):
     assert "PARTS_GAP" in codes(build([group]), tmp_path)
     with gzip.open(parts / "part-003.sql.gz", "wb") as handle:
         handle.write(b"SELECT 1;\n")
-    assert mf.validate(build([group]), tmp_path) == []
+    assert [i for i in mf.validate(build([group]), tmp_path) if i.severity == "error"] == []
     assert "PARTS_GAP" in codes(build([dict(group, expected_parts=5)]), tmp_path)
 
 

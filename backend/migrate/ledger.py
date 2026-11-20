@@ -117,14 +117,21 @@ def build_baseline(
     entry_ids: Sequence[str],
     preflight_file: Path,
     operator: str,
+    reason: str | None = None,
 ) -> list[dict[str, Any]]:
     """Baseline rows for entries the operator names explicitly.
 
     The preflight file is the saved output of a read-only preflight; only its hash is
     recorded (proof of which evidence the operator relied on). Nothing is inferred:
     there is no "all" and no wildcard, ``rebuild`` entries are refused, and every id
-    must exist in the manifest. The recorded checksum is the file's checksum now, so
-    later edits show up as drift.
+    must exist in the manifest (an ordered entry id, or the path of an ``[[unordered]]``
+    file, which can be recorded as already present but is never run by the runner).
+    The recorded checksum is the file's checksum now, so later edits show up as drift.
+
+    A ``rebuild`` entry (``migration_career_v2``) can be recorded as present only with a
+    written ``reason``: it declares that the database already has that taxonomy, it
+    never makes the entry runnable, and the reason is kept in the ledger's operator
+    text. Other entries ignore ``reason``.
     """
     if not operator.strip():
         raise BaselineError("an operator name is required")
@@ -136,16 +143,23 @@ def build_baseline(
     except (OSError, ValueError) as exc:
         raise BaselineError(f"cannot read preflight result {preflight_file}: {exc}")
     by_id = {entry.id: entry for entry in manifest.entries}
+    for item in manifest.unordered:
+        by_id.setdefault(item.path, mf.Entry(id=item.path, kind="schema", path=item.path))
     preflight_sha = hashlib.sha256(raw).hexdigest()
     rows: list[dict[str, Any]] = []
     for entry_id in dict.fromkeys(entry_ids):
         entry = by_id.get(entry_id)
         if entry is None:
             raise BaselineError(f"'{entry_id}' is not a manifest entry")
+        recorded_by = operator.strip()
         if entry.kind == "rebuild":
-            raise BaselineError(
-                f"'{entry_id}' is a rebuild entry: it can never be baselined"
-            )
+            if not (reason and reason.strip()):
+                raise BaselineError(
+                    f"'{entry_id}' is a rebuild entry: recording it as already present "
+                    "needs --reason (why the database is known to have it); it never "
+                    "makes the rebuild runnable"
+                )
+            recorded_by = f"{recorded_by} (rebuild baseline reason: {reason.strip()})"
         try:
             checksum = mf.entry_checksum(entry, root)
         except FileNotFoundError as exc:
@@ -155,8 +169,9 @@ def build_baseline(
                 "id": entry_id,
                 "checksum": checksum,
                 "kind": BASELINE,
-                "operator": operator.strip(),
+                "operator": recorded_by,
                 "preflight_sha256": preflight_sha,
+                **({"reason": reason.strip()} if entry.kind == "rebuild" else {}),
             }
         )
     return rows

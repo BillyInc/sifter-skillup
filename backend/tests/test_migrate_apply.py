@@ -544,7 +544,16 @@ def test_cli_apply_defaults_to_dry_run_and_apply_flag_executes(tmp_path, capsys)
     ex = seeded(FakeExecutor())
     assert run_cli(["apply"], ex, tmp_path) == 0
     assert "DRY RUN" in capsys.readouterr().out and not ex.has_table("a")
-    assert run_cli(["apply", "--apply"], seeded(ex2 := FakeExecutor()), tmp_path) == 0
+    assert run_cli(["apply", "--apply"], seeded(FakeExecutor()), tmp_path) == 1  # needs --plan-sha
+    capsys.readouterr()
+    run_cli(["apply"], seeded(FakeExecutor()), tmp_path)
+    sha = [
+        line.split(": ", 1)[1]
+        for line in capsys.readouterr().out.splitlines()
+        if line.startswith("plan-sha: ")
+    ][0]
+    argv = ["apply", "--apply", "--plan-sha", sha]
+    assert run_cli(argv, seeded(ex2 := FakeExecutor()), tmp_path) == 0
     assert ex2.has_table("a") and ex2.has_table("b") and ex2.closed
 
 
@@ -603,7 +612,7 @@ def test_workflow_gates_database_jobs():
     text = (
         Path(__file__).resolve().parents[2] / ".github" / "workflows" / "migrations.yml"
     ).read_text()
-    assert "workflow_dispatch" in text and "environment: production" in text
+    assert "workflow_dispatch" in text and "environment: production-db" in text
     assert "MIGRATE_DATABASE_URL: ${{ secrets.DATABASE_URL }}" in text
     assert "postgres://" not in text and "postgresql://" not in text
     # database jobs are dispatch-only and main-only; PR runs never reach them

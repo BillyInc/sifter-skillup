@@ -29,6 +29,7 @@ from . import manifest as mf
 from . import plan as plan_mod
 from . import sqlio
 from .executor import ADVISORY_LOCK_KEY, Executor, ExecutorError
+from .rowchecks import run_row_checks
 from .sqlledger import LEDGER_DDL, SqlLedger
 
 _TX_CONTROL = re.compile(
@@ -167,6 +168,7 @@ def run_apply(
     approval_ref: str | None = None,
     empty_database: bool = False,
     schema: str = "skillup_dev",
+    expected_plan_sha: str | None = None,
 ) -> ApplyResult:
     result = ApplyResult()
     approved = set(approve)
@@ -241,6 +243,20 @@ def run_apply(
             return result.fail(
                 2, "checksum drift in applied entries: " + ", ".join(drifted)
             )
+        if expected_plan_sha is not None:
+            actual_sha = plan_mod.plan_sha(plan)
+            if actual_sha != expected_plan_sha.strip().lower():
+                return result.fail(
+                    1,
+                    "plan-sha mismatch: the plan changed since it was reviewed "
+                    f"(reviewed {expected_plan_sha.strip()[:12]}, now {actual_sha[:12]}); "
+                    "dry-run again and review the new plan",
+                )
+        group_problems = plan_mod.group_violations(
+            manifest, approved, ledger.applied()
+        )
+        if group_problems:
+            return result.fail(1, group_problems[0])
         applied_bad = [
             w
             for w in plan.warnings
@@ -284,6 +300,7 @@ def run_apply(
             try:
                 for _name, body in scripts:
                     executor.execute(body)
+                run_row_checks(executor, entry, schema)
                 ledger.record_applied(
                     row.id,
                     row.checksum or "",

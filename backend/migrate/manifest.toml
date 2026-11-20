@@ -191,7 +191,8 @@ requires = [
   "seed_career_pilot",
 ]
 verify = []
-approval = "replacement seed: snapshot programme_subject_rule_records into _bak first, deploy together with seed_subject_options, explicit approval"
+approval = "replacement seed: back up programme_subject_rule_records yourself first (the runner takes no backup); must be applied in the same run as seed_subject_options; explicit approval"
+must_apply_with = ["seed_subject_options"]
 note = "Replacement seed (DELETE FROM programme_subject_rule_records); CLAUDE.md: both replacement subject seeds must be deployed together."
 authoritative = "sql"
 authoritative_reason = "the .sql is the later generation (last commit 2026-10-24 vs 2026-10-17 for the .sql.gz); the committed Sociology matcher audit of 2026-10-24 is generated against it; the two copies differ in row content with the same 1260 INSERTs"
@@ -209,7 +210,8 @@ requires = [
   "migration_student_pipeline_live",
 ]
 verify = []
-approval = "replacement seed: snapshot the two matcher tables into _bak first, then explicit approval"
+approval = "replacement seed: back up the two matcher tables yourself first (the runner takes no backup); must be applied in the same run as seed_subject_rule_records; explicit approval"
+must_apply_with = ["seed_subject_rule_records"]
 note = "Documented replacement seed: DELETEs and rebuilds programme_subject_options and programme_subject_option_items."
 authoritative = "sql"
 authoritative_reason = "the .sql is the later generation (last commit 2026-10-24 vs 2026-10-22 for the .sql.gz): parsed_at stamps 2026-10-24T12:20:17Z against 2026-10-22T17:10:18Z, 9378 vs 8781 INSERT statements, and it is paired with the 2026-10-24 rule-record seed that must deploy with it"
@@ -279,7 +281,7 @@ requires = [
 ]
 verify = []
 note = "Removes 715 programme-domain edges (DELETE FROM programme_domain_evidence line 728 and programme_domain line 1453); classified data_destructive by owner default."
-approval = "deletes 715 reviewed programme-domain edges and their evidence rows; approve after a _bak snapshot of programme_domain and programme_domain_evidence"
+approval = "deletes 715 reviewed programme-domain edges and their evidence rows; approve after you have taken a _bak snapshot yourself (the runner takes none) of programme_domain and programme_domain_evidence"
 source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 1 #2"
 
 [[entry]]
@@ -427,7 +429,7 @@ requires = [
 verify = []
 authoritative = "sql"
 authoritative_reason = "the .sql is later (last commit 2026-10-23 vs 2026-10-22) and is the only copy that parses under standard_conforming_strings=on: line 630 doubles the apostrophe in the .sql but uses backslash-apostrophe in the .sql.gz (a backslash-quote that ends the string literal early and is a syntax error on Supabase); otherwise the copies differ only by CRLF"
-approval = "scoped delete-then-reinsert: DELETE FROM career_guidance_foundations for D078 (line 106) and DELETE FROM career_learning_resources for the listed guidance layers (line 162); approve after a _bak snapshot of both tables"
+approval = "scoped delete-then-reinsert: DELETE FROM career_guidance_foundations for D078 (line 106) and DELETE FROM career_learning_resources for the listed guidance layers (line 162); approve after you have taken a _bak snapshot yourself (the runner takes none) of both tables"
 source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 1 #15"
 
 [[entry]]
@@ -464,7 +466,7 @@ requires = [
 verify = []
 authoritative = "sql"
 authoritative_reason = "the .sql is later (last commit 2026-10-22 vs 2026-10-18); the .sql.gz resource VALUES rows (10 rows, lines 163-172) use a shortened third column and append 'Access: ...' to the description; the .sql keeps the full access text in that column; no other difference"
-approval = "scoped delete-then-reinsert: DELETE FROM career_learning_resources for the social_sciences_domain_tool_path_v1 layer (line 134); approve after a _bak snapshot"
+approval = "scoped delete-then-reinsert: DELETE FROM career_learning_resources for the social_sciences_domain_tool_path_v1 layer (line 134); approve after you have taken a _bak snapshot yourself (the runner takes none)"
 source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 1 #18"
 
 [[entry]]
@@ -527,7 +529,7 @@ requires = [
   "migration_programme_curriculum_contract_general_2026-09-18",
 ]
 verify = []
-approval = "scoped delete-then-reinsert: DELETE FROM programme_curriculum_outcomes and programme_abilities for the Sociology programme, then re-insert in the same file; approve after a _bak snapshot"
+approval = "scoped delete-then-reinsert: DELETE FROM programme_curriculum_outcomes and programme_abilities for the Sociology programme, then re-insert in the same file; approve after you have taken a _bak snapshot yourself (the runner takes none)"
 source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 2 #2"
 
 [[entry]]
@@ -605,7 +607,7 @@ requires = [
 ]
 verify = []
 note = "Data-loading migration_ file; replaces the generated global domain-foundation layer (DELETE FROM career_guidance_foundations line 70); classified data_destructive by owner default."
-approval = "deletes the generated global_domain_foundation_v1 rows then reloads them; approve after a _bak snapshot of career_guidance_foundations"
+approval = "deletes the generated global_domain_foundation_v1 rows then reloads them; approve after you have taken a _bak snapshot yourself (the runner takes none) of career_guidance_foundations"
 source = "MIGRATION_RUNBOOK.md 'Authoritative D078/Sociology apply order (15 October 2026)' step 2 #8"
 
 [[entry]]
