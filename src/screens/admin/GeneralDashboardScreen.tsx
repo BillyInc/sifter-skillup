@@ -58,6 +58,7 @@ import type {
 import { AdminShell } from "./AdminShell";
 import { StatCard } from "./StatCard";
 import { StudentStageTable } from "@/components/admin/StudentStageTable";
+import { AdminWorkbench } from "@/components/admin/AdminWorkbench";
 import { ComingSoonPanel } from "./ComingSoonPanel";
 import { IntelligenceAlerts } from "./IntelligenceAlerts";
 
@@ -266,6 +267,9 @@ export function GeneralDashboardScreen() {
             {summary.meta.notice}
           </Text>
         ) : null}
+
+        {/* ── Workbench: what needs attention, and where to pick up ── */}
+        <AdminWorkbench students={students} wide={wide} />
 
         {/* ── Intelligence alerts ── */}
         <Section title="Intelligence alerts">
