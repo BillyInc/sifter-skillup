@@ -23,8 +23,11 @@ jest.mock("../src/lib/startingPoint", () => ({ getStartingPoint: jest.fn(() => P
 jest.mock("../src/lib/onboardingDraft", () => ({ getOnboardingDraft: jest.fn(() => Promise.resolve(null)) }));
 
 let mockGuidance: any = { status: "real", data: null };
+let mockDomains: any = { status: "real", data: { jambName: "Sociology", domains: [] } };
+const mockGetDomains = jest.fn((_id: string) => Promise.resolve(mockDomains));
 jest.mock("../src/lib/careerData", () => ({
   careerData: {
+    getJambProgrammeDomains: (id: string) => mockGetDomains(id),
     getSavedItems: jest.fn(() => Promise.resolve({ status: "real", data: [] })),
     getGuidancePath: jest.fn(() => Promise.resolve(mockGuidance)),
   },
@@ -43,6 +46,8 @@ beforeEach(() => {
   mockPush.mockClear();
   mockUser = { id: "u1", username: "Ada Obi", auth_provider: "email" };
   mockGuidance = { status: "real", data: null };
+  mockDomains = { status: "real", data: { jambName: "Sociology", domains: [] } };
+  mockGetDomains.mockClear();
 });
 
 describe("CareerHomeScreen stage-aware Home", () => {
@@ -86,6 +91,80 @@ describe("CareerHomeScreen stage-aware Home", () => {
     expect(screen.queryByText(/year/i)).toBeNull();
     fireEvent.press(screen.getByTestId("home-open-programme"));
     expect(mockPush).toHaveBeenCalledWith(expect.stringContaining("/(tabs)/explore/programme/p1"));
+  });
+
+  it("Undergraduate shows where the programme can take them, grouped from the stored link types", async () => {
+    mockStarting = { userType: "student", schoolName: "UNILAG", programmeName: "Sociology", intendedJambProgrammeId: "J1" };
+    mockDomains = {
+      status: "real",
+      data: {
+        jambName: "Sociology",
+        domains: [
+          { domainId: "d3", domainName: "Public Policy", matchType: "adjacent" },
+          { domainId: "d1", domainName: "Research", matchType: "direct" },
+          { domainId: "d2", domainName: "Data", matchType: "functional" },
+        ],
+      },
+    };
+    renderHome();
+    expect(await screen.findByText("Where your programme can take you")).toBeTruthy();
+    expect(mockGetDomains).toHaveBeenCalledWith("J1");
+    expect(screen.getByTestId("home-connections-direct")).toBeTruthy();
+    expect(screen.getByTestId("home-connections-functional")).toBeTruthy();
+    expect(screen.getByTestId("home-connections-adjacent")).toBeTruthy();
+    expect(screen.getByText("Direct · 1")).toBeTruthy();
+    expect(screen.getByText(/grouped by how closely they connect/)).toBeTruthy();
+    fireEvent.press(screen.getByTestId("home-domain-d2"));
+    expect(mockPush).toHaveBeenCalledWith(expect.stringMatching(/\/domain\/d2\?.*match_type=functional/));
+  });
+
+  it("Undergraduate hides the block without a JAMB programme id, and when no links come back", async () => {
+    mockStarting = { userType: "student", schoolName: "UNILAG", programmeName: "Sociology", intendedProgrammeId: "ccmas-1" };
+    const { unmount } = renderHome();
+    await screen.findByTestId("home-programme");
+    expect(mockGetDomains).not.toHaveBeenCalled();
+    expect(screen.queryByTestId("home-connections")).toBeNull();
+    unmount();
+
+    mockStarting = { userType: "student", programmeName: "Sociology", intendedJambProgrammeId: "J1" };
+    mockDomains = { status: "real", data: { jambName: "Sociology", domains: [] } };
+    renderHome();
+    await screen.findByTestId("home-programme");
+    await waitFor(() => expect(mockGetDomains).toHaveBeenCalledWith("J1"));
+    expect(screen.queryByTestId("home-connections")).toBeNull();
+  });
+
+  it("Undergraduate hides the block when the links are unavailable", async () => {
+    mockStarting = { userType: "student", programmeName: "Sociology", intendedJambProgrammeId: "J1" };
+    mockDomains = { status: "coming_soon", data: null };
+    renderHome();
+    await screen.findByTestId("home-programme");
+    await waitFor(() => expect(mockGetDomains).toHaveBeenCalled());
+    expect(screen.queryByTestId("home-connections")).toBeNull();
+    expect(screen.queryByText("Where your programme can take you")).toBeNull();
+  });
+
+  it("every stage shows a Skills Matcher card that opens the student Skills Matcher", async () => {
+    for (const starting of [
+      { userType: "senior_secondary", ssClass: "ss1" },
+      { userType: "jamb" },
+      { userType: "student", programmeName: "Sociology" },
+    ]) {
+      mockStarting = starting;
+      mockPush.mockClear();
+      const { unmount } = renderHome();
+      await screen.findByTestId("stage-home");
+      fireEvent.press(screen.getByTestId("home-skills-matcher"));
+      expect(mockPush).toHaveBeenCalledWith("/(tabs)/explore/skills-matcher");
+      unmount();
+    }
+  });
+
+  it("Home copy no longer mentions portfolio", async () => {
+    mockStarting = { userType: "jamb" };
+    renderHome();
+    await screen.findByTestId("stage-home");
+    expect(screen.queryByText(/portfolio/i)).toBeNull();
   });
 
   it("shows Continue where you left off only when a real saved state exists", async () => {
