@@ -82,7 +82,7 @@ def test_only_accounts_past_retention_are_removed(monkeypatch):
         {"id": "active", "is_deleted": False, "deletion_cooldown_until": None},
     ])
     out = ahd.hard_delete_expired_accounts(NOW)
-    assert out == {"dry_run": False, "eligible": 1, "deleted": 1, "failed": 0}
+    assert out == {"dry_run": False, "eligible": 1, "deleted": 1, "failed": 0, "blocked": {}, "abandoned": 0}
     assert purged == ["old"]
     assert sorted(r["id"] for r in f.tables["users"]) == ["active", "recent"]
 
@@ -105,13 +105,17 @@ def test_provisioned_and_claimed_records_are_never_touched(monkeypatch):
     assert sorted(r["id"] for r in f.tables["users"]) == ["claimed", "shell"]
 
 
-def test_batch_cap_takes_oldest_first_and_rest_wait(monkeypatch):
+def test_batch_cap_limits_each_run_and_the_rest_wait(monkeypatch):
+    # Without the backoff columns the batch is a rotating slice (see the module
+    # docstring), so which rows go first depends on the date. What matters: a
+    # run never exceeds the cap, and repeated runs finish everything.
     f, purged = _setup(monkeypatch, [_user("a", 100), _user("b", 80), _user("c", 60)], batch=2)
-    out = ahd.hard_delete_expired_accounts(NOW)
-    assert out["deleted"] == 2 and purged == ["a", "b"]
-    assert [r["id"] for r in f.tables["users"]] == ["c"]
-    assert ahd.hard_delete_expired_accounts(NOW)["deleted"] == 1  # idempotent next run
+    first = ahd.hard_delete_expired_accounts(NOW)["deleted"]
+    assert 1 <= first <= 2 and len(purged) == first
+    for _ in range(3):
+        assert ahd.hard_delete_expired_accounts(NOW)["deleted"] <= 2
     assert f.tables["users"] == []
+    assert sorted(purged) == ["a", "b", "c"]
 
 
 def test_one_failure_does_not_stop_the_run(monkeypatch):
