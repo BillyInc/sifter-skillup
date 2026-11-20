@@ -65,3 +65,18 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid 
 
 /* Narrow admin header: keep the title readable and move the catalogue search onto its own row. */
 @media (max-width: 900px) { .web-admin-header { flex-wrap: wrap; row-gap: 8px; }.web-admin-heading { flex: 1 1 0; min-width: 0; }.web-admin-global-search { order: 10; flex: 1 1 100%; width: 100%; }.web-admin-global-search input { flex: 1 1 auto; min-width: 0; } }
+
+/* === Touch targets, skip link (fix/admin-targets-escape-skip-link). Layout only; colours live in the theme block above. === */
+.skip-link { position: fixed; top: 8px; left: 8px; z-index: 1000; transform: translateY(-200%); padding: 0 16px; min-height: 44px; display: inline-flex; align-items: center; border-radius: 10px; color: #fff; background: #c2410c; font-size: 14px; font-weight: 800; text-decoration: none; }
+.skip-link:focus, .skip-link:focus-visible { transform: translateY(0); }
+#main-content:focus { outline: none; }
+.global-search input { min-height: 44px; }
+.global-search-close { min-height: 36px; padding: 0 12px; }
+.platform-sidebar-account .text-button { min-height: 36px; padding: 0 8px; text-align: left; }
+.web-admin-account button { min-height: 36px; }
+@media (max-width: 900px) {
+  .global-search-close, .platform-sidebar-account .text-button, .web-admin-account button, .web-admin-nav-group button, .web-admin-back, .web-admin-menu, .web-admin-close { min-height: 44px; }
+  .global-search-context button { min-height: 44px; padding: 0 12px; }
+}
+@media (max-width: 760px) { .platform-sidebar-account .text-button, .global-search button { min-height: 44px; } }
+/* === end touch targets === */
