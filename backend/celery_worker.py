@@ -33,6 +33,7 @@ celery.conf.update(
         # New
         "sync-airtable":         {"task": "celery_worker.sync_airtable",         "schedule": crontab(minute=f"*/{settings.AIRTABLE_SYNC_INTERVAL_MINUTES}")},
         "cleanup-expired-sessions": {"task": "celery_worker.cleanup_expired_sessions", "schedule": crontab(hour=3, minute=30)},
+        "hard-delete-expired-accounts": {"task": "celery_worker.hard_delete_expired_accounts", "schedule": crontab(hour=3, minute=45)},
         "ingest-track-feeds":    {"task": "celery_worker.ingest_track_feeds",    "schedule": crontab(hour="*/2", minute=15)},
         "expire-old-sync-log":   {"task": "celery_worker.expire_old_sync_log",   "schedule": crontab(hour=4, minute=0, day_of_week="sunday")},
         "fetch-labour-market-demand": {"task": "celery_worker.fetch_labour_market_demand", "schedule": crontab(hour="*/6", minute=30)},
@@ -354,6 +355,17 @@ def cleanup_expired_sessions():
         return {"status": "success", "deleted": deleted}
     except Exception as e:
         log.error("Session cleanup failed", error=str(e))
+        raise
+
+
+@celery.task
+def hard_delete_expired_accounts():
+    """Hard delete self-deleted accounts past their retention window (dry run unless enabled)."""
+    from account_hard_delete import hard_delete_expired_accounts as run
+    try:
+        return {"status": "success", **run()}
+    except Exception as e:
+        log.error("Account hard delete task failed", error=type(e).__name__)
         raise
 
 
