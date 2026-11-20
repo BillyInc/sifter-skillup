@@ -223,22 +223,26 @@ class TestEmailCodeRequests:
 
     def test_email_bombing_one_address_is_limited(self, client, mock_db):
         _install(mock_db, {"users": []})
-        with patch("main._issue_email_code", new=AsyncMock(return_value="123456")):
+        issue = AsyncMock(return_value=None)
+        with patch("main._issue_signup_code_quietly", new=issue):
             codes = [
                 client.post("/api/auth/email-code/request", json={"email": "v@x.test"}).status_code
                 for _ in range(14)   # per-email ceiling is 10 an hour
             ]
-        assert codes[0] == 200
-        assert 429 in codes, codes
+        # past the ceiling nothing more is sent, and the answer stays 200 (never 429)
+        assert set(codes) == {200}, codes
+        assert issue.await_count == 10
 
     def test_password_reset_requests_are_limited(self, client, mock_db):
         _install(mock_db, {"users": []})
-        with patch("main._issue_email_code", new=AsyncMock(return_value="123456")):
+        issue = AsyncMock(return_value="123456")
+        with patch("main._issue_email_code", new=issue):
             codes = [
                 client.post("/api/auth/password-reset/request", json={"email": "v@x.test"}).status_code
                 for _ in range(14)   # per-email ceiling is 10 an hour
             ]
-        assert 429 in codes, codes
+        assert set(codes) == {200}, codes
+        assert issue.await_count == 10
 
     def test_wrong_reset_codes_are_limited(self, client, mock_db):
         _install(mock_db, {"users": [_admin(email="v@x.test")]})

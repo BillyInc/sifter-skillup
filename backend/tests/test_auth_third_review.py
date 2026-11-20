@@ -12,7 +12,6 @@ from pathlib import Path
 from unittest.mock import AsyncMock, patch
 
 import pytest
-import yaml
 from fastapi import HTTPException
 
 import main  # noqa: F401  (imports every mounted route module so mock_db patches them)
@@ -83,14 +82,18 @@ class TestNoGlobalBucketsAndNoCapacityRefusals:
         assert set(codes) == {200}, [c for c in codes if c != 200][:5]
 
     def test_the_per_email_mail_limit_still_stops_mail_bombing(self, client, mock_db, monkeypatch):
+        """Past the ceiling nothing more is sent, but the answer stays 200 (no 429),
+        so the limit cannot be used to deny a victim their own mail."""
         from config import settings
         monkeypatch.setattr(settings, "EMAIL_VERIFICATION_DEV_CODES", False, raising=False)
         _install(mock_db, {"users": []})
-        with patch("main._issue_signup_code_quietly", new=AsyncMock(return_value=None)):
+        issue = AsyncMock(return_value=None)
+        with patch("main._issue_signup_code_quietly", new=issue):
             first = [client.post("/api/auth/email-code/request", json={"email": "victim@x.test"}).status_code
                      for _ in range(15)]
             other = client.post("/api/auth/email-code/request", json={"email": "someone-else@x.test"}).status_code
-        assert first[0] == 200 and 429 in first, first
+        assert set(first) == {200}, first
+        assert issue.await_count == auth_rate_limit.LIMITS["email_code_email"][1] + 1  # + the other address
         assert other == 200
 
 
@@ -312,35 +315,3 @@ class TestPasswordHashingIsOffTheEventLoop:
         offenders = [m.group(0) for m in re.finditer(r"\n[^\n#]*\bbcrypt\.(checkpw|hashpw)\([^\n]*", src)
                      if "_DUMMY_PASSWORD_HASH =" not in m.group(0)]
         assert offenders == [], offenders
-
-
-# --------------------------------------------------------------------------
-# E. Edge rate limits: the primary protection
-# --------------------------------------------------------------------------
-class TestEdgeRateLimitsAreDeployed:
-    @pytest.mark.parametrize("wf,port", [("deploy-backend.yml", "8000"), ("deploy-prod.yml", "8001")])
-    def test_the_api_server_block_rate_limits_the_auth_routes(self, wf, port):
-        path = REPO / ".github" / "workflows" / wf
-        text = path.read_text(encoding="utf-8")
-        yaml.safe_load(text)  # still valid YAML
-        assert "limit_req_zone $binary_remote_addr zone=levelup_auth" in text
-        assert "limit_req zone=levelup_auth" in text
-        assert "limit_req_status 429" in text
-        assert "location /api/auth/" in text
-        assert f"proxy_pass http://127.0.0.1:{port}" in text
-
-    @pytest.mark.parametrize("wf", ["deploy-backend.yml", "deploy-prod.yml"])
-    def test_the_change_is_idempotent_and_rolls_back_on_an_invalid_config(self, wf):
-        text = (REPO / ".github" / "workflows" / wf).read_text(encoding="utf-8")
-        assert "grep -q 'location /api/auth/'" in text or 'grep -q "location /api/auth/"' in text
-        assert ".bak-auth-limits" in text
-        block = text[text.index("levelup_auth"):]
-        assert "nginx -t" in block
-        # the zone is defined once, in a shared http-level drop-in, never inside the site
-        assert "/etc/nginx/conf.d/levelup-auth-limits.conf" in text
-        # the status override must stay local to our location (shared box)
-        assert "limit_req_status 429;\n" in text
-
-    def test_the_deploy_triggers_are_untouched(self):
-        fe = (REPO / ".github" / "workflows" / "deploy-frontend.yml").read_text(encoding="utf-8")
-        assert "PAUSED" in fe

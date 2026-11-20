@@ -304,11 +304,13 @@ async def request_email_code(body: dict, request: Request, background_tasks: Bac
     # Limit before doing any work (and before any lookup), per email and, when
     # the real client address is known, per (email, address) and per address.
     ip = auth_rate_limit.client_ip(request)
-    buckets = auth_rate_limit.request_buckets("email_code", email, ip)
-    auth_rate_limit.enforce_all(buckets)
-    auth_rate_limit.record_all(buckets)
+    may_send = auth_rate_limit.request_gate("email_code", email, ip)
 
     data = {"sent": True, "expiresInMinutes": settings.EMAIL_CODE_TTL_MINUTES}
+    if not may_send:
+        # Per-email ceiling reached: send nothing, answer exactly as before, so a
+        # flood cannot make a real owner's own request fail with a 429.
+        return ResponseModel(data=data)
     existing = db.get_service_client().table("users").select("id,password_hash").eq("email", email).execute()
     registered = bool(existing.data and existing.data[0].get("password_hash"))
 
@@ -341,12 +343,12 @@ async def request_password_reset_code(body: dict, request: Request):
     if not email or "@" not in email:
         raise HTTPException(status_code=400, detail="Valid email is required")
     ip = auth_rate_limit.client_ip(request)
-    buckets = auth_rate_limit.request_buckets("reset_request", email, ip)
-    auth_rate_limit.enforce_all(buckets)
-    auth_rate_limit.record_all(buckets)
+    may_send = auth_rate_limit.request_gate("reset_request", email, ip)
+    data = {"sent": True, "expiresInMinutes": settings.EMAIL_CODE_TTL_MINUTES}
+    if not may_send:
+        return ResponseModel(data=data)
 
     code = await _issue_email_code(email, email_codes.PURPOSE_PASSWORD_RESET)
-    data = {"sent": True, "expiresInMinutes": settings.EMAIL_CODE_TTL_MINUTES}
     if settings.EMAIL_VERIFICATION_DEV_CODES:
         data["devCode"] = code
     return ResponseModel(data=data)

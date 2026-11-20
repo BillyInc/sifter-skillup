@@ -227,6 +227,9 @@ def _normalise(host: str) -> str:
     return str(ip)
 
 
+_warned_no_client_ip = False
+
+
 def client_ip(request: Request) -> Optional[str]:
     """The real client address, or None when it cannot be trusted.
 
@@ -236,6 +239,7 @@ def client_ip(request: Request) -> Optional[str]:
     it, only a public peer address counts (loopback/private peers mean a proxy
     sits in front of us and every request would look like one client).
     """
+    global _warned_no_client_ip
     peer = request.client.host if request.client else ""
     if settings.TRUST_PROXY_HEADERS:
         hops = max(1, int(getattr(settings, "TRUSTED_PROXY_HOPS", 1) or 1))
@@ -246,7 +250,16 @@ def client_ip(request: Request) -> Optional[str]:
             if _is_public(candidate):
                 return _normalise(candidate)
             return None
-    return _normalise(peer) if _is_public(peer) else None
+    if _is_public(peer):
+        return _normalise(peer)
+    if not _warned_no_client_ip and not settings.DEBUG and not settings.TRUST_PROXY_HEADERS:
+        _warned_no_client_ip = True
+        log.warning(
+            "auth rate limits: only private/loopback peers are visible and TRUST_PROXY_HEADERS "
+            "is off, so per-address limits are inactive. Set TRUST_PROXY_HEADERS and "
+            "TRUSTED_PROXY_HOPS behind a proxy, and apply docs/ops/nginx-auth-rate-limit.md."
+        )
+    return None
 
 
 def _key(value: str) -> str:
@@ -328,3 +341,18 @@ def clear_login(email: str, ip: Optional[str]) -> None:
     for bucket, key in login_buckets(email, ip):
         if bucket == "login_fail_pair":
             clear(bucket, key)
+
+
+def request_gate(prefix: str, email: str, ip: Optional[str]) -> bool:
+    """Gate for mail-sending endpoints. Returns True when mail may be sent.
+
+    The (email, address) pair and the address buckets answer 429 as usual. The
+    per-email ceiling never raises: past it we return False so the caller skips
+    sending and gives the same 200 answer, so a flood cannot keep a victim's own
+    request failing.
+    """
+    if ip:
+        for bucket, key in ((f"{prefix}_pair", f"{_key(email)}|{ip}"), (f"{prefix}_ip", ip)):
+            enforce(bucket, key)
+            record(bucket, key)
+    return allow_once(f"{prefix}_email", _key(email))

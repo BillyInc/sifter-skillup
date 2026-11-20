@@ -3,17 +3,21 @@
 # Handles: Telegram WebApp, Base wallet, email, guest
 # ============================================
 import hashlib
+import asyncio
 import hmac
 import json
+import os
 import urllib.parse
+import weakref
 from datetime import datetime, timedelta, timezone
 from typing import Optional
 
+import anyio
+import anyio.to_thread
 import bcrypt
 import jwt
 from jwt import PyJWTError
 from fastapi import Depends, HTTPException
-from fastapi.concurrency import run_in_threadpool
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
 from config import settings
@@ -43,7 +47,28 @@ def _is_missing_table(exc: Exception) -> bool:
     return _error_code(exc) in _MISSING_TABLE_CODES
 
 
+_bcrypt_limiters: "weakref.WeakKeyDictionary" = weakref.WeakKeyDictionary()
+
+
+def _bcrypt_limiter() -> "anyio.CapacityLimiter":
+    """One limiter per running event loop, so bcrypt cannot occupy every worker thread."""
+    loop = asyncio.get_running_loop()
+    limiter = _bcrypt_limiters.get(loop)
+    if limiter is None:
+        limiter = anyio.CapacityLimiter(Auth.bcrypt_capacity())
+        _bcrypt_limiters[loop] = limiter
+    return limiter
+
+
+async def _in_bcrypt_thread(fn, *args):
+    return await anyio.to_thread.run_sync(fn, *args, limiter=_bcrypt_limiter())
+
+
 class Auth:
+
+    @staticmethod
+    def bcrypt_capacity() -> int:
+        return max(2, os.cpu_count() or 2)
 
     # ── Passwords (bcrypt runs in a worker thread, never on the event loop) ──
     @staticmethod
@@ -51,7 +76,7 @@ class Auth:
         raw = password.encode("utf-8")
         if len(raw) > 72:
             raise HTTPException(status_code=400, detail="Password must be at most 72 bytes.")
-        return (await run_in_threadpool(bcrypt.hashpw, raw, bcrypt.gensalt())).decode("utf-8")
+        return (await _in_bcrypt_thread(bcrypt.hashpw, raw, bcrypt.gensalt())).decode("utf-8")
 
     @staticmethod
     async def verify_password(password: str, hashed: str) -> bool:
@@ -59,9 +84,9 @@ class Auth:
         if len(raw) > 72:
             # bcrypt cannot hash this, so it cannot be the stored password; burn the
             # same time as a normal check and answer False (a counted failure).
-            await run_in_threadpool(bcrypt.checkpw, b"x", hashed.encode("utf-8"))
+            await _in_bcrypt_thread(bcrypt.checkpw, b"x", hashed.encode("utf-8"))
             return False
-        return bool(await run_in_threadpool(bcrypt.checkpw, raw, hashed.encode("utf-8")))
+        return bool(await _in_bcrypt_thread(bcrypt.checkpw, raw, hashed.encode("utf-8")))
 
     # ── Telegram ────────────────────────────────────────────────
     @staticmethod
