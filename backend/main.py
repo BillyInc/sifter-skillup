@@ -30,7 +30,9 @@ from models import (
 from auth import Auth
 from logger import log
 from middleware.session_middleware import DeviceSessionMiddleware
+import auth_rate_limit
 import avatar_storage
+from user_sanitize import sanitize_user_row
 from profile_validation import DisplayNameError, validate_display_name
 from legal_versions import CURRENT_PRIVACY_VERSION, CURRENT_TERMS_VERSION
 
@@ -266,28 +268,44 @@ async def _require_valid_email_code(email: str, code: str):
 
 
 @app.post("/api/auth/email-code/request", response_model=ResponseModel)
-async def request_email_code(body: dict):
+async def request_email_code(body: dict, request: Request):
     email = _normalise_email(body.get("email", ""))
     if not email or "@" not in email:
         raise HTTPException(status_code=400, detail="Valid email is required")
 
+    # Limit before doing any work, per address and (when known) per client.
+    ip = auth_rate_limit.client_ip(request)
+    auth_rate_limit.enforce("email_code_email", email)
+    auth_rate_limit.enforce("email_code_ip", ip or "")
+    auth_rate_limit.record("email_code_email", email)
+    auth_rate_limit.record("email_code_ip", ip or "")
+
+    data = {"sent": True, "expiresInMinutes": settings.EMAIL_CODE_TTL_MINUTES}
     existing = db.get_service_client().table("users").select("id,password_hash").eq("email", email).execute()
     if existing.data and existing.data[0].get("password_hash"):
-        raise HTTPException(status_code=409, detail="Email already registered. Try Log in instead.")
+        # Same answer as for an unknown address (no 409): the response must not
+        # reveal which emails have accounts, and a registered address is not
+        # mailed a signup code. Signup itself still refuses a duplicate, but
+        # only after a valid code, which an outsider cannot obtain.
+        return ResponseModel(data=data)
 
     code = await _issue_email_code(email, email_codes.PURPOSE_SIGNUP)
-    data = {"sent": True, "expiresInMinutes": settings.EMAIL_CODE_TTL_MINUTES}
     if settings.EMAIL_VERIFICATION_DEV_CODES:
         data["devCode"] = code
     return ResponseModel(data=data)
 
 
 @app.post("/api/auth/password-reset/request", response_model=ResponseModel)
-async def request_password_reset_code(body: dict):
+async def request_password_reset_code(body: dict, request: Request):
     """Start a password reset without revealing whether an email exists."""
     email = _normalise_email(body.get("email", ""))
     if not email or "@" not in email:
         raise HTTPException(status_code=400, detail="Valid email is required")
+    ip = auth_rate_limit.client_ip(request)
+    auth_rate_limit.enforce("reset_request_email", email)
+    auth_rate_limit.enforce("reset_request_ip", ip or "")
+    auth_rate_limit.record("reset_request_email", email)
+    auth_rate_limit.record("reset_request_ip", ip or "")
 
     code = await _issue_email_code(email, email_codes.PURPOSE_PASSWORD_RESET)
     data = {"sent": True, "expiresInMinutes": settings.EMAIL_CODE_TTL_MINUTES}
@@ -297,7 +315,7 @@ async def request_password_reset_code(body: dict):
 
 
 @app.post("/api/auth/password-reset/confirm", response_model=ResponseModel)
-async def confirm_password_reset(body: dict):
+async def confirm_password_reset(body: dict, request: Request):
     email = _normalise_email(body.get("email", ""))
     code = str(body.get("code") or "").strip()
     password = body.get("password") or ""
@@ -306,17 +324,44 @@ async def confirm_password_reset(body: dict):
     if len(password) < 6:
         raise HTTPException(status_code=400, detail="Password must be at least 6 characters")
 
+    ip = auth_rate_limit.client_ip(request)
+    auth_rate_limit.enforce("reset_confirm_fail_email", email)
+    auth_rate_limit.enforce("reset_confirm_fail_ip", ip or "")
+
     if not (settings.EMAIL_VERIFICATION_DEV_CODES and code == "000000"):
         outcome = await email_codes.verify_code(
             email, code, purpose=email_codes.PURPOSE_PASSWORD_RESET
         )
         if outcome != email_codes.OK:
+            auth_rate_limit.record("reset_confirm_fail_email", email)
+            auth_rate_limit.record("reset_confirm_fail_ip", ip or "")
             raise HTTPException(status_code=400, detail=_RESET_FAILURE_DETAIL[outcome])
+    auth_rate_limit.clear("reset_confirm_fail_email", email)
 
-    existing = db.get_service_client().table("users").select("id").eq("email", email).limit(1).execute()
+    service = db.get_service_client()
+    existing = service.table("users").select("*").eq("email", email).limit(1).execute()
     if existing.data:
+        user = existing.data[0]
         password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
-        db.get_service_client().table("users").update({"password_hash": password_hash}).eq("id", existing.data[0]["id"]).execute()
+        update = {"password_hash": password_hash}
+        # Revoke every session issued before the reset. The counter column is
+        # added by migration_token_version_2026-11-21.sql; until it exists the
+        # device-session revocation below is the only effect.
+        if "token_version" in user:
+            update["token_version"] = Auth.token_version_of(user) + 1
+        try:
+            service.table("users").update(update).eq("id", user["id"]).execute()
+        except Exception as exc:
+            if "token_version" not in update or "token_version" not in str(exc):
+                raise
+            log.warning("token_version column unavailable; reset without token revocation")
+            service.table("users").update({"password_hash": password_hash}).eq("id", user["id"]).execute()
+        try:
+            service.table("active_sessions").update({
+                "is_active": False, "revoked_at": datetime.now().isoformat(),
+            }).eq("user_id", user["id"]).execute()
+        except Exception as exc:
+            log.warning("Could not revoke device sessions after password reset", error=str(exc))
     return ResponseModel(data={"updated": True})
 
 
@@ -341,20 +386,38 @@ async def get_admin_mfa(current_user: dict = Depends(Auth.get_current_user)):
     })
 
 
+def _admin_mfa_status(user_id: str) -> Optional[str]:
+    """The stored MFA status, or None when there is no row or no table yet."""
+    try:
+        rows = db.get_service_client().table("user_mfa_settings").select(
+            "status"
+        ).eq("user_id", user_id).limit(1).execute().data or []
+    except Exception:
+        return None
+    return rows[0].get("status") if rows else None
+
+
 @app.post("/api/auth/mfa/request", response_model=ResponseModel)
 async def request_admin_mfa(current_user: dict = Depends(Auth.get_current_user)):
     _admin_user(current_user)
     email = (current_user.get("email") or "").strip().lower()
     if not email:
         raise HTTPException(status_code=400, detail="An email address is required for admin MFA.")
+    auth_rate_limit.enforce("mfa_request_user", current_user["id"])
+    auth_rate_limit.record("mfa_request_user", current_user["id"])
+    already_enabled = _admin_mfa_status(current_user["id"]) == "enabled"
     code = await _issue_email_code(email, email_codes.PURPOSE_ADMIN_MFA)
-    try:
-        db.get_service_client().table("user_mfa_settings").upsert({
-            "user_id": current_user["id"], "status": "pending_setup",
-            "method": "email_otp", "updated_at": datetime.now().isoformat(),
-        }, on_conflict="user_id").execute()
-    except Exception as exc:
-        log.warning("Admin MFA state update skipped", error=str(exc), user_id=current_user["id"])
+    if not already_enabled:
+        # First-time setup (or setup after a deferral). An account whose MFA is
+        # already enabled keeps that status: asking for a code must never turn
+        # enforcement off.
+        try:
+            db.get_service_client().table("user_mfa_settings").upsert({
+                "user_id": current_user["id"], "status": "pending_setup",
+                "method": "email_otp", "updated_at": datetime.now().isoformat(),
+            }, on_conflict="user_id").execute()
+        except Exception as exc:
+            log.warning("Admin MFA state update skipped", error=str(exc), user_id=current_user["id"])
     data = {"sent": True, "expiresInMinutes": settings.EMAIL_CODE_TTL_MINUTES}
     if settings.EMAIL_VERIFICATION_DEV_CODES:
         data["devCode"] = code
@@ -389,13 +452,26 @@ async def verify_admin_mfa(body: dict, current_user: dict = Depends(Auth.get_cur
         }, on_conflict="user_id").execute()
     except Exception:
         raise HTTPException(status_code=503, detail="Admin MFA storage is not ready. Apply the security migration first.")
-    token = Auth.create_jwt(current_user["id"], mfa_verified=True)
+    token = Auth.create_jwt(current_user["id"], mfa_verified=True, token_version=Auth.token_version_of(current_user))
     return ResponseModel(data={"token": token, "status": "enabled"})
 
 
 @app.post("/api/auth/mfa/defer", response_model=ResponseModel)
-async def defer_admin_mfa(current_user: dict = Depends(Auth.get_current_user)):
+async def defer_admin_mfa(body: dict, current_user: dict = Depends(Auth.get_current_user)):
     _admin_user(current_user)
+    # A session that has not proved MFA must not be able to switch MFA off.
+    if _admin_mfa_status(current_user["id"]) == "enabled" and not current_user.get("_mfa_verified"):
+        raise HTTPException(status_code=428, detail="Admin MFA verification required.")
+    # Deferring is a security downgrade: ask for the password again, so a stolen
+    # token alone cannot do it.
+    stored_hash = current_user.get("password_hash")
+    if stored_hash:
+        auth_rate_limit.enforce("mfa_defer_fail_user", current_user["id"])
+        password = str((body or {}).get("password") or "")
+        if not password or not bcrypt.checkpw(password.encode(), stored_hash.encode()):
+            auth_rate_limit.record("mfa_defer_fail_user", current_user["id"])
+            raise HTTPException(status_code=403, detail="Enter your password to defer admin security.")
+        auth_rate_limit.clear("mfa_defer_fail_user", current_user["id"])
     deferred_until = datetime.now() + timedelta(days=30)
     try:
         db.get_service_client().table("user_mfa_settings").upsert({
@@ -525,9 +601,9 @@ async def auth_telegram(body: dict, request: Request):
         db.get_service_client().table("users").update({"last_login": datetime.now().isoformat()}).eq("id", user["id"]).execute()
     else:
         user = _create_user(telegram_id=telegram_id, username=username, avatar_url=avatar_url, auth_provider="telegram")
-    token = Auth.create_jwt(user["id"])
+    token = Auth.create_jwt(user["id"], token_version=Auth.token_version_of(user))
     await _post_auth_device_register(user["id"], body, request)
-    return ResponseModel(data={"token": token, "user": user})
+    return ResponseModel(data={"token": token, "user": sanitize_user_row(user)})
 
 
 @app.post("/api/auth/base-wallet", response_model=ResponseModel)
@@ -542,16 +618,16 @@ async def auth_base_wallet(body: dict, request: Request):
         user = existing.data[0]
     else:
         user = _create_user(wallet_address=wallet_address, username=f"0x{wallet_address[2:6]}...{wallet_address[-4:]}", auth_provider="base")
-    token = Auth.create_jwt(user["id"])
+    token = Auth.create_jwt(user["id"], token_version=Auth.token_version_of(user))
     await _post_auth_device_register(user["id"], body, request)
-    return ResponseModel(data={"token": token, "user": user})
+    return ResponseModel(data={"token": token, "user": sanitize_user_row(user)})
 
 
 @app.post("/api/auth/guest", response_model=ResponseModel)
 async def auth_guest(request: Request):
     uid = uuid.uuid4().hex[:8]
     user = _create_user(username=f"Guest_{uid}", auth_provider="guest")
-    token = Auth.create_jwt(user["id"])
+    token = Auth.create_jwt(user["id"], token_version=Auth.token_version_of(user))
     # Guest was the only auth route that skipped device registration: telegram,
     # base-wallet, signup and login all call this. Without it no active_sessions
     # row exists, so validate_device_header rejects ("no session row at all")
@@ -565,7 +641,7 @@ async def auth_guest(request: Request):
     except Exception:  # noqa: BLE001 - empty or non-JSON body is fine here
         pass
     await _post_auth_device_register(user["id"], body, request)
-    return ResponseModel(data={"token": token, "user": user})
+    return ResponseModel(data={"token": token, "user": sanitize_user_row(user)})
 
 
 @app.post("/api/auth/signup", response_model=ResponseModel)
@@ -637,9 +713,9 @@ async def auth_signup(body: dict, request: Request):
                 })
                 user = _attach_legal_acceptance(db.get_service_client(), user, legal_acceptance)
                 user.pop("password_hash", None)
-                token = Auth.create_jwt(user["id"])
+                token = Auth.create_jwt(user["id"], token_version=Auth.token_version_of(user))
                 await _post_auth_device_register(user["id"], body, request)
-                return ResponseModel(data={"token": token, "user": user})
+                return ResponseModel(data={"token": token, "user": sanitize_user_row(user)})
             # A failed post-signup step can leave the user row without credentials.
             # Complete that partial row instead of making the user retry into a 409.
             if not existing_user.get("password_hash"):
@@ -659,9 +735,9 @@ async def auth_signup(body: dict, request: Request):
                 })
                 user = _attach_legal_acceptance(db.get_service_client(), user, legal_acceptance)
                 user["onboarding_completed"] = False
-                token = Auth.create_jwt(user["id"])
+                token = Auth.create_jwt(user["id"], token_version=Auth.token_version_of(user))
                 await _post_auth_device_register(user["id"], body, request)
-                return ResponseModel(data={"token": token, "user": user})
+                return ResponseModel(data={"token": token, "user": sanitize_user_row(user)})
             raise HTTPException(status_code=409, detail="Email already registered. Try Log in instead.")
         password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
         user = _create_user(username=username, auth_provider="email", email=email, password_hash=password_hash,
@@ -669,9 +745,9 @@ async def auth_signup(body: dict, request: Request):
                             date_of_birth=date_of_birth, display_name=display_name)
         user = _attach_legal_acceptance(db.get_service_client(), user, legal_acceptance)
         user["onboarding_completed"] = False
-        token = Auth.create_jwt(user["id"])
+        token = Auth.create_jwt(user["id"], token_version=Auth.token_version_of(user))
         await _post_auth_device_register(user["id"], body, request)
-        return ResponseModel(data={"token": token, "user": user})
+        return ResponseModel(data={"token": token, "user": sanitize_user_row(user)})
     except HTTPException:
         raise
     except Exception as exc:
@@ -697,17 +773,23 @@ async def auth_login(body: dict, request: Request):
     password = body.get("password") or ""
     if not email or not password:
         raise HTTPException(status_code=400, detail="Email and password are required")
+    # Online guessing: count FAILURES per account and, when the real client
+    # address is known, per address. A correct password is never counted.
+    ip = auth_rate_limit.client_ip(request)
+    auth_rate_limit.enforce("login_fail_email", email)
+    auth_rate_limit.enforce("login_fail_ip", ip or "")
     result = db.get_service_client().table("users").select("*").eq("email", email).execute()
     result.data = [row for row in (result.data or []) if row.get("is_deleted") is not True]
-    if not result.data:
+    user = result.data[0] if result.data else None
+    if not user or not user.get("password_hash") or not bcrypt.checkpw(password.encode(), user["password_hash"].encode()):
+        auth_rate_limit.record("login_fail_email", email)
+        auth_rate_limit.record("login_fail_ip", ip or "")
         raise HTTPException(status_code=401, detail="Invalid email or password")
-    user = result.data[0]
-    if not user.get("password_hash") or not bcrypt.checkpw(password.encode(), user["password_hash"].encode()):
-        raise HTTPException(status_code=401, detail="Invalid email or password")
+    auth_rate_limit.clear("login_fail_email", email)
     db.get_service_client().table("users").update({"last_login": datetime.now().isoformat()}).eq("id", user["id"]).execute()
-    token = Auth.create_jwt(user["id"])
+    token = Auth.create_jwt(user["id"], token_version=Auth.token_version_of(user))
     _hydrate_account_type_selection(user)
-    user.pop("password_hash", None)
+    user = sanitize_user_row(user)
     await _post_auth_device_register(user["id"], body, request)
     return ResponseModel(data={"token": token, "user": user})
 
@@ -752,7 +834,7 @@ async def complete_onboarding(body: dict, current_user: dict = Depends(Auth.get_
         user = _update_user_returning(svc, current_user["id"], fallback_updates)
     if updates.get("account_type_selected_at"):
         user["account_type_selected_at"] = updates["account_type_selected_at"]
-    return ResponseModel(data=user)
+    return ResponseModel(data=sanitize_user_row(user))
 
 
 
@@ -857,6 +939,7 @@ async def get_me(current_user: dict = Depends(Auth.get_current_user)):
     # Guild/leaderboard routes can resolve rank when those screens are opened.
     current_user["rank"] = None
     current_user.pop("password_hash", None)
+    current_user.pop("token_version", None)
     # Legacy accounts may have completed the old flow without a persona.
     # Keep them pending so the client routes them to user-type selection.
     current_user.setdefault("account_type", "pending")
@@ -1021,7 +1104,7 @@ async def record_legal_acceptance(
         db.get_client(), current_user["id"], {"settings": next_settings}
     )
     user.pop("password_hash", None)
-    return ResponseModel(data={"accepted": True, "user": user})
+    return ResponseModel(data={"accepted": True, "user": sanitize_user_row(user)})
 
 
 @app.delete("/api/users/me", response_model=ResponseModel)

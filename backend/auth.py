@@ -66,13 +66,40 @@ class Auth:
 
     # ── JWT ─────────────────────────────────────────────────────
     @staticmethod
-    def create_jwt(user_id: str, mfa_verified: bool = False) -> str:
+    def create_jwt(user_id: str, mfa_verified: bool = False, token_version: int = 0) -> str:
+        """Issue a session token.
+
+        ``token_version`` is the user's current revocation counter (the ``tv``
+        claim). A password reset bumps the counter, which invalidates every
+        token issued before it. Tokens without the claim count as version 0,
+        so sessions issued before this existed keep working until a reset.
+        """
         expire = datetime.now(timezone.utc) + timedelta(hours=settings.JWT_EXPIRE_HOURS)
         return jwt.encode(
-            {"sub": user_id, "exp": expire, "mfa_verified": bool(mfa_verified)},
+            {
+                "sub": user_id,
+                "exp": expire,
+                "mfa_verified": bool(mfa_verified),
+                "tv": int(token_version or 0),
+            },
             settings.JWT_SECRET,
             algorithm=settings.JWT_ALGORITHM,
         )
+
+    @staticmethod
+    def token_version_of(user: dict | None) -> int:
+        """The user's revocation counter; 0 when the column is not migrated.
+
+        Only a real integer on a real row counts. Anything else (a missing
+        column, NULL, a non-dict row) reads as 0, so a database that has not been
+        migrated yet behaves exactly as before.
+        """
+        if not isinstance(user, dict):
+            return 0
+        value = user.get("token_version")
+        if isinstance(value, bool) or not isinstance(value, int):
+            return 0
+        return value
 
     @staticmethod
     def decode_jwt(token: str) -> dict:
@@ -107,6 +134,14 @@ class Auth:
             # persona. Keep that state pending so the client can send only
             # those accounts back through the account-type gate.
             user.setdefault("account_type", "pending")
+            # A password reset bumps users.token_version; older tokens stop
+            # working. Without the column both sides read as 0 (unchanged).
+            try:
+                token_tv = int(payload.get("tv") or 0)
+            except (TypeError, ValueError):
+                token_tv = -1
+            if token_tv != Auth.token_version_of(user):
+                raise HTTPException(status_code=401, detail="Session expired. Please sign in again.")
             user["_mfa_verified"] = bool(payload.get("mfa_verified"))
             return user
         except PyJWTError:

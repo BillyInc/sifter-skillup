@@ -781,6 +781,15 @@ note = "Adds users.display_name. Needs skillup_dev.users, created by supabase-sc
 source = "Header of migration_display_name_2026-11-19.sql (additive, idempotent); placed by the 2026-11-20 ordering review"
 
 [[entry]]
+id = "migration_token_version_2026-11-21"
+kind = "schema"
+path = "migration_token_version_2026-11-21.sql"
+requires = []
+verify = []
+note = "Adds users.token_version (session revocation counter, NOT NULL DEFAULT 0). Needs skillup_dev.users, created by supabase-schema.sql (not a migration_ file), so there is no ordered edge."
+source = "Header of migration_token_version_2026-11-21.sql (additive, idempotent); auth hardening 2026-11-21"
+
+[[entry]]
 id = "migration_avatars_bucket_2026-11-19"
 kind = "schema"
 path = "migration_avatars_bucket_2026-11-19.sql"

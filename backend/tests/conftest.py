@@ -1,7 +1,12 @@
 import gzip
+import os
 import shutil
 import sys
 from pathlib import Path
+
+# config refuses to start in production mode with a default or short JWT secret.
+# Set one before anything imports config (CI sets its own).
+os.environ.setdefault("JWT_SECRET", "test-secret-for-the-backend-suite-0123456789")
 
 import pytest
 from unittest.mock import MagicMock, patch
@@ -106,6 +111,15 @@ def patch_all_db_modules(monkeypatch):
     except Exception:
         pass
     return mock
+
+
+@pytest.fixture(autouse=True)
+def _reset_auth_rate_limits():
+    """The limiter is process-wide; no test may inherit another's failures."""
+    import auth_rate_limit
+    auth_rate_limit.reset_all()
+    yield
+    auth_rate_limit.reset_all()
 
 
 @pytest.fixture

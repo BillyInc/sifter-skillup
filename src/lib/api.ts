@@ -252,9 +252,10 @@ export const API = {
       method: 'POST', body: JSON.stringify({ code }),
     }),
 
-  deferAdminMfa: () =>
+  // Deferring admin security is a downgrade, so the server asks for the password again.
+  deferAdminMfa: (password?: string) =>
     request<{ status: string }>('/api/auth/mfa/defer', {
-      method: 'POST', body: JSON.stringify({}),
+      method: 'POST', body: JSON.stringify(password ? { password } : {}),
     }),
 
   confirmPasswordReset: (email: string, code: string, password: string) =>

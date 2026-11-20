@@ -15,6 +15,7 @@ from config import settings
 from database import db
 from logger import log
 from models import ResponseModel, StarknetAuthRequest, StarknetRPCRequest
+from user_sanitize import sanitize_user_row
 from services.privy_starknet import create_starknet_wallet, get_user_email, get_user_wallets
 
 
@@ -579,7 +580,7 @@ async def starknet_auth_email(
     user_id = updated_user["id"]
 
     background_tasks.add_task(_unlock_starknet_island, user_id)
-    sifter_jwt = Auth.create_jwt(user_id)
+    sifter_jwt = Auth.create_jwt(user_id, token_version=Auth.token_version_of(updated_user))
 
     log.info(
         "Starknet auth completed",
@@ -591,7 +592,7 @@ async def starknet_auth_email(
 
     return ResponseModel(data={
         "token": sifter_jwt,
-        "user": updated_user,
+        "user": sanitize_user_row(updated_user),
         "is_new_user": is_new_user,
     })
 

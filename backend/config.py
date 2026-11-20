@@ -8,17 +8,44 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
+
+def dev_codes_enabled(debug: bool, allow_insecure: bool, flag: bool) -> bool:
+    """The "000000" / devCode bypass needs every switch on, never DEBUG alone."""
+    return bool(debug and allow_insecure and flag)
+
+
+MIN_JWT_SECRET_LENGTH = 32
+_DEFAULT_JWT_SECRET = "change-me-in-production"
+
+
+def check_jwt_secret(secret: str, debug: bool) -> None:
+    """Refuse to run a production process that signs tokens with a guessable key."""
+    if debug:
+        return
+    if not secret or secret == _DEFAULT_JWT_SECRET or len(secret) < MIN_JWT_SECRET_LENGTH:
+        raise RuntimeError(
+            "JWT_SECRET must be set to a random value of at least "
+            f"{MIN_JWT_SECRET_LENGTH} characters when DEBUG is false. "
+            "Refusing to start with a default or short signing secret."
+        )
+
+
 class Settings:
     APP_NAME: str = "Sifter LevelUp API"
     APP_VERSION: str = "2.0.0"
     DEBUG: bool = os.getenv("DEBUG", "false").lower() == "true"
 
     # Dev codes return the verification code in the API response and accept
-    # "000000" for any address. That is a full authentication bypass, so the
-    # flag is ANDed with DEBUG: setting EMAIL_VERIFICATION_DEV_CODES=true on a
-    # production box does nothing. Previously the env var alone decided it.
-    EMAIL_VERIFICATION_DEV_CODES: bool = DEBUG and (
-        os.getenv("EMAIL_VERIFICATION_DEV_CODES", "true").lower() == "true"
+    # "000000" for any address. That is a full authentication bypass, so it
+    # needs THREE independent opt-ins: DEBUG, ALLOW_INSECURE_DEV_CODES and the
+    # EMAIL_VERIFICATION_DEV_CODES flag. DEBUG alone (which several deployed dev
+    # servers run with) no longer enables it.
+    ALLOW_INSECURE_DEV_CODES: bool = os.getenv("ALLOW_INSECURE_DEV_CODES", "false").lower() == "true"
+    EMAIL_VERIFICATION_DEV_CODES: bool = dev_codes_enabled(
+        DEBUG,
+        ALLOW_INSECURE_DEV_CODES,
+        os.getenv("EMAIL_VERIFICATION_DEV_CODES", "true").lower() == "true",
     )
 
     # ── Email delivery (Resend) ──────────────────────────────
@@ -50,6 +77,14 @@ class Settings:
     # Long-lived: 90 days. App never asks user to log in again.
     # Revoked only on device violation or explicit sign-out.
     JWT_EXPIRE_HOURS: int = 24 * 90
+
+    # ── Authentication abuse limits (in-memory, per worker process) ──
+    AUTH_RATE_LIMIT_ENABLED: bool = os.getenv("AUTH_RATE_LIMIT_ENABLED", "true").lower() == "true"
+    # Per-IP limits are applied only when the real client address is known.
+    # Behind a reverse proxy every request arrives from loopback, so counting
+    # that "address" would let one abuser lock everybody out. Set this to true
+    # only when the proxy overwrites X-Forwarded-For.
+    TRUST_PROXY_HEADERS: bool = os.getenv("TRUST_PROXY_HEADERS", "false").lower() == "true"
 
     # ── Privy (Starknet embedded wallet auth) ────────────────
     PRIVY_APP_ID: str = os.getenv("PRIVY_APP_ID", "")
@@ -236,3 +271,4 @@ class Settings:
     )
 
 settings = Settings()
+check_jwt_secret(settings.JWT_SECRET, settings.DEBUG)
