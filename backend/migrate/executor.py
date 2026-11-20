@@ -26,6 +26,9 @@ class Executor(Protocol):
     def execute(self, sql: str, params: Sequence[Any] = ()) -> None: ...
     def query(self, sql: str, params: Sequence[Any] = ()) -> list[tuple]: ...
     def table_exists(self, schema: str, name: str) -> bool: ...
+    def list_tables(self, schema: str) -> list[str]: ...
+    def backend_pid(self) -> int: ...
+    def set_timeouts(self, lock_timeout_ms: int, statement_timeout_ms: int) -> None: ...
     def reset_session(self) -> None: ...
     def try_advisory_lock(self, key: int) -> bool: ...
     def advisory_unlock(self, key: int) -> None: ...
@@ -74,12 +77,30 @@ class PsycopgExecutor:
         return list(self._run(sql, params).fetchall())
 
     def table_exists(self, schema: str, name: str) -> bool:
-        rows = self.query(
-            "SELECT 1 FROM information_schema.tables "
-            "WHERE table_schema = %s AND table_name = %s",
-            (schema, name),
+        # to_regclass sees the relation whatever the role's privileges are. The standard
+        # catalogue views hide tables the role cannot touch, which would let an existing
+        # ledger look missing and be "bootstrapped" and re-applied.
+        qualified = f'"{schema}"."{name}"'
+        return bool(
+            self.query("SELECT to_regclass(%s) IS NOT NULL", (qualified,))[0][0]
         )
-        return bool(rows)
+
+    def list_tables(self, schema: str) -> list[str]:
+        rows = self.query(
+            "SELECT c.relname FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace "
+            "WHERE n.nspname = %s AND c.relkind IN ('r', 'p', 'v', 'm', 'f') "
+            "ORDER BY c.relname",
+            (schema,),
+        )
+        return [str(r[0]) for r in rows]
+
+    def backend_pid(self) -> int:
+        return int(self.query("SELECT pg_backend_pid()")[0][0])
+
+    def set_timeouts(self, lock_timeout_ms: int, statement_timeout_ms: int) -> None:
+        # SET LOCAL: scoped to the entry's transaction, gone at COMMIT/ROLLBACK.
+        self._run(f"SET LOCAL lock_timeout = {int(lock_timeout_ms)}")
+        self._run(f"SET LOCAL statement_timeout = {int(statement_timeout_ms)}")
 
     def reset_session(self) -> None:
         self._run("RESET ALL")
@@ -94,9 +115,33 @@ class PsycopgExecutor:
         self._conn.close()
 
 
+def check_connection_url(url: str) -> None:
+    """Refuse a transaction-mode pooler URL.
+
+    Supabase's transaction pooler (port 6543, pgbouncer) hands each statement to any
+    backend: BEGIN, the migration and COMMIT could run on different connections and the
+    advisory lock would protect nothing. Use the direct connection or the *session* pooler
+    (port 5432). Errors never echo the URL.
+    """
+    from urllib.parse import parse_qs, urlsplit
+
+    try:
+        parts = urlsplit(url)
+        port = parts.port
+        query = parse_qs(parts.query)
+    except ValueError:
+        raise ExecutorError(f"{URL_ENV} is not a valid connection URL") from None
+    if port == 6543 or "pgbouncer" in query:
+        raise ExecutorError(
+            "refusing a transaction-mode pooler URL (port 6543 / pgbouncer): use the "
+            "direct connection or the Supabase session pooler (port 5432)"
+        )
+
+
 def connect_from_env(environ: dict[str, str] | None = None) -> Executor:
     env = os.environ if environ is None else environ
     url = env.get(URL_ENV, "").strip()
     if not url:
         raise ExecutorError(f"{URL_ENV} is not set")
+    check_connection_url(url)
     return PsycopgExecutor(url)

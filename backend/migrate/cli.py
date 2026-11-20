@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Callable, Sequence
@@ -171,6 +172,9 @@ def cmd_apply(args: argparse.Namespace, connect: Connect) -> int:
             approval_ref=args.approval_ref,
             empty_database=args.empty_database,
             schema=args.schema,
+            allow_unknown_ledger_ids=args.allow_unknown_ledger_ids,
+            lock_timeout_ms=args.lock_timeout_ms,
+            statement_timeout_ms=args.statement_timeout_ms,
         )
     except (ex_mod.ExecutorError, apply_mod.RefusedError) as exc:
         print(f"apply failed: {exc}", file=sys.stderr)
@@ -205,6 +209,41 @@ def cmd_import_baseline(args: argparse.Namespace, connect: Connect) -> int:
             f"unknown entries in baseline file: {', '.join(unknown)}", file=sys.stderr
         )
         return 1
+    # The file is hand-editable: re-verify every row against the manifest as it is now.
+    by_id = {entry.id: entry for entry in manifest.entries}
+    applied_by = ledger_file.applied()
+    for entry_id, meta in rows.items():
+        entry = by_id[entry_id]
+        if entry.kind == "rebuild":
+            print(
+                f"baseline import refused: '{entry_id}' is a rebuild entry and can "
+                "never be baselined",
+                file=sys.stderr,
+            )
+            return 1
+        try:
+            current = mf.entry_checksum(entry, root)
+        except FileNotFoundError as exc:
+            print(f"baseline import refused: {exc}", file=sys.stderr)
+            return 1
+        if applied_by.get(entry_id) != current:
+            print(
+                f"baseline import refused: checksum for '{entry_id}' in the file does not "
+                "match the manifest's files now (edited file or stale baseline)",
+                file=sys.stderr,
+            )
+            return 1
+        sha = str(meta.get("preflight_sha256", ""))
+        if (
+            not re.fullmatch(r"[0-9a-f]{64}", sha)
+            or not str(meta.get("operator", "")).strip()
+        ):
+            print(
+                f"baseline import refused: '{entry_id}' lacks an operator or a "
+                "64-hex preflight_sha256",
+                file=sys.stderr,
+            )
+            return 1
     if not args.apply:
         print(f"DRY RUN: would record {len(rows)} baseline row(s): {', '.join(rows)}")
         return 0
@@ -223,7 +262,6 @@ def cmd_import_baseline(args: argparse.Namespace, connect: Connect) -> int:
         if not ledger.exists():
             apply_mod.bootstrap_ledger(executor, args.schema)
         existing = ledger.applied()
-        applied_by = ledger_file.applied()
         executor.begin()
         try:
             for entry_id, meta in rows.items():
@@ -362,6 +400,24 @@ def build_parser() -> argparse.ArgumentParser:
         "--empty-database",
         action="store_true",
         help="the database is known to be empty: allow an empty ledger to start from zero",
+    )
+    apply.add_argument(
+        "--allow-unknown-ledger-ids",
+        action="store_true",
+        help="do not refuse when the ledger holds ids the manifest does not know "
+        "(normally a renamed entry, which would run twice)",
+    )
+    apply.add_argument(
+        "--lock-timeout-ms",
+        type=int,
+        default=apply_mod.DEFAULT_LOCK_TIMEOUT_MS,
+        help="SET LOCAL lock_timeout per entry (default %(default)s; 0 = wait forever)",
+    )
+    apply.add_argument(
+        "--statement-timeout-ms",
+        type=int,
+        default=apply_mod.DEFAULT_STATEMENT_TIMEOUT_MS,
+        help="SET LOCAL statement_timeout per entry (default %(default)s; 0 = none)",
     )
     apply.add_argument("--schema", default="skillup_dev")
     apply.set_defaults(func=cmd_apply, db=True)

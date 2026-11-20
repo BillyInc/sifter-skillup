@@ -17,6 +17,7 @@ from typing import Any, Iterable
 
 from . import manifest as mf
 from . import sqlio
+from . import sqltx
 
 # Files larger than this (decompressed) are hashed but not content-analysed.
 MAX_ANALYSE_BYTES = 128 * 1024 * 1024
@@ -32,9 +33,6 @@ _TOKEN = re.compile(
     re.S | re.X,
 )
 
-_BEGIN = re.compile(r"^\s*(?:BEGIN|START\s+TRANSACTION)\b[^;\n]*;", re.I | re.M)
-_COMMIT = re.compile(r"^\s*COMMIT\b[^;\n]*;", re.I | re.M)
-_ROLLBACK = re.compile(r"^\s*ROLLBACK\b[^;\n]*;", re.I | re.M)
 _DROP_TABLE = re.compile(r"\bDROP\s+TABLE\b", re.I)
 _DROP_SCHEMA = re.compile(r"\bDROP\s+SCHEMA\b", re.I)
 _DROP_VIEW = re.compile(r"\bDROP\s+(?:MATERIALIZED\s+)?VIEW\b", re.I)
@@ -363,12 +361,11 @@ class Analysis:
 
 def analyse_sql(text: str) -> Analysis:
     """Analyse SQL text; pure function used by tests and the file linter."""
-    top = strip_sql(text, keep_bodies=False)
     flat = strip_sql(text, keep_bodies=True)
     result = Analysis()
-    result.begin_count = len(_BEGIN.findall(top))
-    result.commit_count = len(_COMMIT.findall(top))
-    result.rollback_count = len(_ROLLBACK.findall(top))
+    result.begin_count, result.commit_count, result.rollback_count = (
+        sqltx.count_transaction_control(text)
+    )
     result.explicit_transaction = result.begin_count > 0 and result.commit_count > 0
     for name, value in _destructive_counts(flat).items():
         setattr(result, name, value)
@@ -716,7 +713,9 @@ def collect_findings(
     findings: list[Finding] = []
     for issue in mf.validate(manifest, root):
         if issue.code in ("DUPLICATE_SOURCE_DIFFERS", "STALE_DUPLICATE"):
-            findings.append(Finding(issue.code, "manifest", issue.message, issue.severity))
+            findings.append(
+                Finding(issue.code, "manifest", issue.message, issue.severity)
+            )
     covered: set[Path] = set()
     for entry in manifest.entries:
         waivers = {w.code: w.reason for w in entry.lint_waivers}
@@ -745,7 +744,8 @@ def collect_findings(
                                 Finding(
                                     "STALE_COPY_BACKSLASH_QUOTE",
                                     finding.path,
-                                    "ignored (non-authoritative) copy: " + finding.message,
+                                    "ignored (non-authoritative) copy: "
+                                    + finding.message,
                                     severity="warning",
                                 )
                             )
@@ -758,7 +758,10 @@ def collect_findings(
             continue
         rel = path.relative_to(root).as_posix()
         if path.suffix == ".sql" and path.with_name(path.name + ".gz").is_file():
-            if _compare_counterpart(path, path.with_name(path.name + ".gz")) == "MISMATCH":
+            if (
+                _compare_counterpart(path, path.with_name(path.name + ".gz"))
+                == "MISMATCH"
+            ):
                 findings.append(
                     Finding(
                         "DUPLICATE_SOURCE_DIFFERS",
