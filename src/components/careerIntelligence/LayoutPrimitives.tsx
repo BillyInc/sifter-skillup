@@ -505,7 +505,7 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   headerEyebrow: {
-    fontSize: 10,
+    fontSize: FontSize.sm,
     fontWeight: FontWeight.semibold,
     letterSpacing: 0.9,
     textTransform: "uppercase",
@@ -550,7 +550,7 @@ const styles = StyleSheet.create({
     lineHeight: FontSize.sm * 1.45,
   },
   bannerAction: {
-    fontSize: FontSize.xs,
+    fontSize: FontSize.sm,
     fontWeight: FontWeight.bold,
     flexShrink: 0,
   },
@@ -654,8 +654,8 @@ const styles = StyleSheet.create({
     fontWeight: FontWeight.semibold,
   },
   infoCardBody: {
-    fontSize: FontSize.xs,
-    lineHeight: FontSize.xs * 1.5,
+    fontSize: FontSize.sm,
+    lineHeight: FontSize.sm * 1.5,
   },
   // Callout
   callout: {
@@ -680,7 +680,7 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   statCardLabel: {
-    fontSize: 10,
+    fontSize: FontSize.sm,
     fontWeight: FontWeight.semibold,
     letterSpacing: 0.6,
     textTransform: "uppercase",
@@ -690,7 +690,7 @@ const styles = StyleSheet.create({
     lineHeight: FontSize.xxl * 1.2,
   },
   statCardDelta: {
-    fontSize: FontSize.xs,
+    fontSize: FontSize.sm,
     fontWeight: FontWeight.semibold,
   },
   // EmptyState

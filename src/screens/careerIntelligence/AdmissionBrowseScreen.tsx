@@ -1701,12 +1701,12 @@ function ModeButton({
       style={[
         styles.modeBtn,
         {
-          backgroundColor: active ? colors.text : colors.card,
-          borderColor: active ? colors.text : colors.border,
+          backgroundColor: active ? colors.accentRole.action : colors.card,
+          borderColor: active ? colors.accentRole.action : colors.border,
         },
       ]}
     >
-      <Text style={[styles.modeText, { color: active ? colors.textInverse : colors.text }]}>
+      <Text style={[styles.modeText, { color: active ? colors.textRole.inverse : colors.text }]}>
         {label}
       </Text>
     </TouchableOpacity>
