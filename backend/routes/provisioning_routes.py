@@ -31,6 +31,7 @@ from fastapi import APIRouter, Body, Depends, HTTPException, Query, Response
 
 from pydantic import BaseModel, Field
 
+from account_purge import hard_delete_learner_content
 from auth import Auth
 from database import db
 from logger import log
@@ -869,6 +870,9 @@ def _delete_unclaimed_student(svc, user_id: str) -> None:
         "source", "provisioned"
     ).execute()
     svc.table("student_provision_drafts").delete().eq("generated_user_id", user_id).execute()
+    # Hard delete: also remove any saved items / notes / collections the shell
+    # holds, so nothing is left keyed to a user id that no longer exists.
+    hard_delete_learner_content(user_id)
     _users().delete().eq("id", user_id).execute()
 
 
