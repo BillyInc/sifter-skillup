@@ -177,6 +177,9 @@ class Settings:
     ]
     AIRTABLE_SYNC_INTERVAL_MINUTES: int = int(os.getenv("AIRTABLE_SYNC_INTERVAL_MINUTES", "30"))
     # Scheduled hard delete of self-deleted accounts. Dry run unless explicitly enabled.
+    # Keyed-hash secret for account-deletion cooldown rows (email and device id are
+    # stored only as HMAC hashes). Set it in production; it falls back to JWT_SECRET.
+    ACCOUNT_DELETION_HASH_SECRET: str = os.getenv("ACCOUNT_DELETION_HASH_SECRET", "")
     ACCOUNT_HARD_DELETE_ENABLED: bool = os.getenv("ACCOUNT_HARD_DELETE_ENABLED", "false").strip().lower() in ("1", "true", "yes")
     ACCOUNT_HARD_DELETE_RETENTION_DAYS: int = int(os.getenv("ACCOUNT_HARD_DELETE_RETENTION_DAYS", "30"))
     ACCOUNT_HARD_DELETE_BATCH_SIZE: int = int(os.getenv("ACCOUNT_HARD_DELETE_BATCH_SIZE", "100"))

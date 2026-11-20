@@ -31,6 +31,7 @@ from auth import Auth
 from logger import log
 from middleware.session_middleware import DeviceSessionMiddleware
 import avatar_storage
+from privacy import cooldown_row, deletion_user_fields, device_cooldown_active
 from profile_validation import DisplayNameError, validate_display_name
 from legal_versions import CURRENT_PRIVACY_VERSION, CURRENT_TERMS_VERSION
 
@@ -591,34 +592,9 @@ async def auth_signup(body: dict, request: Request):
     legal_acceptance = _validated_signup_legal_acceptance(body)
     await _require_valid_email_code(email, email_code)
     if device_id:
-        try:
-            cooldown = (
-                db.get_service_client().table("account_deletion_cooldowns")
-                .select("available_at")
-                .eq("device_id", device_id)
-                .gt("available_at", datetime.now().isoformat())
-                .order("available_at", desc=True)
-                .limit(1).execute().data or []
-            )
-        except Exception as exc:
-            # The cooldown table is introduced by the lifecycle migration. A
-            # pre-migration dev database must still enforce the cooldown saved
-            # on the deleted user row itself.
-            log.warning("Signup cooldown lookup skipped", error=str(exc))
-            cooldown = []
-            try:
-                cooldown = (
-                    db.get_service_client().table("users")
-                    .select("deletion_cooldown_until")
-                    .eq("deleted_device_id", device_id)
-                    .gt("deletion_cooldown_until", datetime.now().isoformat())
-                    .limit(1).execute().data or []
-                )
-            except Exception as fallback_exc:
-                # Very old schemas may not have either lifecycle surface. The
-                # migration remains the durable fix; keep this compatibility
-                # path non-fatal for those databases.
-                log.warning("Signup user-row cooldown lookup skipped", error=str(fallback_exc))
+        cooldown = device_cooldown_active(
+            db.get_service_client(), device_id, datetime.now().isoformat()
+        )
         if cooldown:
             raise HTTPException(status_code=429, detail="This device must wait before creating another account.")
     try:
@@ -1036,28 +1012,18 @@ async def delete_me(
     available_at = (datetime.now() + timedelta(hours=24)).isoformat()
     service = db.get_service_client()
     try:
-        service.table("account_deletion_cooldowns").insert({
-            "user_id": current_user["id"],
-            "device_id": device_id or "unknown",
-            "email": current_user.get("email"),
-            "deleted_at": deleted_at,
-            "available_at": available_at,
-        }).execute()
+        # Hashes only: the raw email and device id are not kept after deletion.
+        service.table("account_deletion_cooldowns").insert(
+            cooldown_row(
+                current_user["id"], device_id, current_user.get("email"), deleted_at, available_at
+            )
+        ).execute()
     except Exception as exc:
         # Lifecycle migrations are additive. Account deletion must still work
         # against an older local schema; the cooldown is an extra safeguard,
         # not a reason to leave the account active.
         log.warning("Account deletion cooldown table unavailable", error=str(exc))
-    deletion_updates = {
-        "is_deleted": True,
-        "deleted_at": deleted_at,
-        "deletion_cooldown_until": available_at,
-        "deleted_device_id": device_id or None,
-        "email": f"deleted-{current_user['id']}@deleted.invalid",
-        "password_hash": None,
-        "onboarding_completed": False,
-        "avatar_url": None,
-    }
+    deletion_updates = deletion_user_fields(current_user["id"], device_id, deleted_at, available_at)
     # Purge the stored photo immediately (it is personal data); best effort so
     # a storage outage never leaves the account active.
     try:

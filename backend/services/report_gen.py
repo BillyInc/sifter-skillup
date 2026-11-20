@@ -778,18 +778,35 @@ def _d078_route_html(path: dict) -> str:
     return "".join(sections)
 
 
+
+def _local_qr_img(url: str, css_class: str, alt: str) -> str:
+    """Claim QR generated on the server and embedded as a data URI.
+
+    The claim URL carries the claim code, so it must never be sent to a
+    third-party QR service. If the optional ``segno`` package is not installed,
+    nothing is embedded and the caller prints the URL as text instead.
+    """
+    try:
+        import segno  # optional, pure Python
+
+        data_uri = segno.make(url, error="m").svg_data_uri(scale=4, border=2)
+    except Exception:  # noqa: BLE001 - missing package or any encoder failure
+        return ""
+    return f'<img class="{css_class}" src="{html.escape(data_uri)}" alt="{html.escape(alt)}" />'
+
 def _report_access_block(access_code: object) -> str:
     """Render a real provisioned-student handoff, when one exists."""
     if not access_code:
         return ""
     code = str(access_code)
     claim_url = f"https://levelup.com.ng/settings/my-school?claim={quote(code)}"
-    qr_url = "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=" + quote(claim_url, safe="")
+    qr = _local_qr_img(claim_url, "qr", "Scan to open the student claim page")
     return f"""<section class='access entity'>
       <h2>Student access</h2>
       <p>Use this code to claim the school-created account. Keep it private.</p>
       <div class='access-code'>{html.escape(code)}</div>
-      <img class='qr' src='{html.escape(qr_url)}' alt='Scan to open the student claim page' />
+      {qr}
+      <p class='claim-url'>{html.escape(claim_url)}</p>
     </section>"""
 
 
@@ -1052,7 +1069,7 @@ def build_login_card_html(
     meta = " · ".join(part for part in [student_class, stream] if part)
     cls = f" · {e(meta)}" if meta else ""
     claim_url = f"https://levelup.com.ng/settings/my-school?claim={quote(claim_code)}"
-    qr_url = "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=" + quote(claim_url, safe="")
+    qr = _local_qr_img(claim_url, "qr", "Scan to open the claim page")
     return f"""<!doctype html>
 <html><head><meta charset="utf-8"><title>Login card — {e(student_name)}</title>
 <style>
@@ -1075,9 +1092,10 @@ def build_login_card_html(
     <div class="sub">Sifter LevelUp{cls}</div>
     <div class="label">Your claim code</div>
     <div class="code">{e(claim_code)}</div>
-    <img class="qr" src="{e(qr_url)}" alt="Scan to open the claim page" />
+    {qr}
+    <div class="how claim-url">{e(claim_url)}</div>
     <div class="how">
-      Scan the code or open Sifter LevelUp → Settings → My School → “Have a claim
+      Scan the code, open the link above, or open Sifter LevelUp → Settings → My School → “Have a claim
       code?” and enter this code to make your account yours. Keep this card private.
     </div>
   </div>

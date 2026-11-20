@@ -13,6 +13,11 @@ Safety:
   deletion gate.
 - At most ``ACCOUNT_HARD_DELETE_BATCH_SIZE`` accounts per run, oldest first.
 - One account failing never stops the run; the next run retries it.
+- The user row is deleted ONLY if every content purge step succeeded; a failed or
+  skipped step leaves the account for the next run (retries are bounded by the
+  daily schedule and the batch cap) instead of orphaning its saved items.
+- Expired deletion-cooldown rows (which hold hashed email and device id) are
+  removed each run once enabled.
 - Logs counts only, never ids, emails or names.
 """
 from datetime import datetime, timedelta, timezone
@@ -21,6 +26,7 @@ from account_purge import hard_delete_learner_content
 from config import settings
 from database import db
 from logger import log
+from privacy import purge_expired_cooldowns
 
 _SCHEMA = "skillup_dev"
 
@@ -56,13 +62,21 @@ def hard_delete_expired_accounts(now: datetime | None = None) -> dict:
         log.info("Account hard delete dry run", **result)
         return result
 
+    incomplete = 0
     for row in batch:
         try:
-            hard_delete_learner_content(row["id"])
+            outcome = hard_delete_learner_content(row["id"])
+            if isinstance(outcome, dict) and any(v in ("error", "skipped") for v in outcome.values()):
+                # Keep the user row: deleting it now would orphan whatever the
+                # failed step did not remove. The next run tries again.
+                incomplete += 1
+                result["failed"] += 1
+                continue
             svc.table("users").delete().eq("id", row["id"]).eq("is_deleted", True).execute()
             result["deleted"] += 1
         except Exception as exc:  # noqa: BLE001
             result["failed"] += 1
             log.warning("Account hard delete failed", error=type(exc).__name__)
-    log.info("Account hard delete run", **result)
+    cooldowns_purged = purge_expired_cooldowns(svc, now.isoformat())
+    log.info("Account hard delete run", purge_incomplete=incomplete, cooldowns_purged=cooldowns_purged, **result)
     return result
