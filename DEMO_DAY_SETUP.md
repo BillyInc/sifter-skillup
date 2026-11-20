@@ -213,13 +213,13 @@ data/tracks/
 ```
 main.py                Router registration
 auth.py                Privy JWKS verification + legacy guest/wallet auth
-starknet_routes.py     RPC proxy, tx logging
-game_extra_routes.py   lab-complete endpoints
+routes/starknet_routes.py RPC proxy, tx logging
+routes/game_extra_routes.py lab-complete endpoints
 boss_routes.py         Boss scoring
-interview_routes.py    Deterministic question scoring
+routes/interview_routes.py Deterministic question scoring
 deterministic_score.py Python port of deterministicScorer.ts
 guild_routes.py        Guild API
-portfolio_routes.py    OAuth + manual-link + submission packages
+routes/portfolio_routes.py OAuth + manual-link + submission packages
 ```
 
 ### Database (`supabase/`)

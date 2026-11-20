@@ -1287,7 +1287,7 @@ Counts from source at authoring time. Verify against
 | `provisioning` | `backend/routes/provisioning_routes.py` | 25 | **Supporting** |
 | `institutions` | `backend/routes/institutions_routes.py` | 19 | **Core** |
 | `student_pipeline` | `backend/routes/student_pipeline_routes.py` | 17 | **Supporting** |
-| `phase5` (×2 files) | `backend/routes/phase5_routes.py` · `backend/phase5_routes.py` | 9 + 9 | **Legacy** |
+| `phase5` (×2 files) | `backend/routes/phase5_routes.py` (the root copy was removed) | 9 | **Legacy** |
 | `admission` | `backend/routes/admission_routes.py` | 9 | **Core** |
 | `feed` (×2 files) | `backend/feed_routes.py` · `backend/routes/feed_routes.py` | 6 + 5 | **Legacy** |
 | `social_rewards` (×2) | (two files) | 5 + 5 | **Legacy** |
