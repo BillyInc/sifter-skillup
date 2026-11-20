@@ -644,6 +644,7 @@ export function SearchOverlay({
                   onResultPress={onResultPress}
                   onMorePress={isGuest ? onSignIn : undefined}
                   maxRows={isGuest ? 2 : 5}
+                  showSave={!isGuest}
                 />
               ) : null,
             )}
