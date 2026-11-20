@@ -247,7 +247,9 @@ psql "postgresql://postgres:[PASSWORD]@db.[REF].supabase.co:5432/postgres" `
 
 If the SQL Editor must be used, decompress and run the numbered parts
 separately in numeric order. Each part is a complete transaction. Do not paste
-or upload `.sql.gz` bytes to Supabase.
+or upload `.sql.gz` bytes to Supabase. (This is the manual path. The migration
+runner instead applies all 35 contextual parts in one transaction with one ledger
+row; see `backend/migrate/README.md`, "Large group entries".)
 
 ### Manual-only deployment mode
 

@@ -189,8 +189,8 @@ sqlite-backed fake behind the `Executor` seam (`executor.py`).
   without it, and the run refuses if the plan changed since: see "Reviewing a run");
 - an entry with `must_apply_with` (the two replacement subject seeds) is only run when its partner
   is approved in the same run or already in the ledger;
-- an entry with `verify_rows` has each `SELECT count(*)` checked before COMMIT; a shortfall rolls
-  the entry back and records nothing;
+- an entry with `verify_rows` has each `SELECT count(*)` (optionally scoped with `where`) checked
+  before COMMIT; a shortfall rolls the entry back and records nothing;
 - one transaction per entry (all parts of a group together) that also inserts the ledger row, so
   an entry is applied-and-recorded or neither; the first failure rolls back, stops the run and
   reports `ExceptionType: first line` (never the SQL);
@@ -213,8 +213,28 @@ The ledger table is `skillup_dev.schema_migrations`; its DDL is `backend/migrate
 creates it itself the first time `apply --apply --empty-database` (or `import-baseline --apply`)
 runs against a database without one.
 
-Group entries (the 35 contextual seed parts) run as one transaction. If that proves too large for
-the database, the group needs an owner decision (see the runbook).
+#### Large group entries: the 35 contextual seed parts run as ONE transaction
+
+Decision (measured from the decompressed parts): 35 files, 696,420,888 bytes (about 664 MiB),
+largest part 30.5 MB, writing 121,377 distinct `career_context_items` rows and 408,163
+`career_item_relationships` rows. Every statement is an upsert (`ON CONFLICT ... DO UPDATE` /
+`DO NOTHING`), the parts have no ordering dependency between them, and the entry has one ledger row.
+The runner therefore applies all 35 parts in one transaction:
+
+- **Exactness:** the group is applied-and-recorded or neither. Per-part transactions would leave
+  a half-loaded table with no ledger row (the ledger records an entry, not a part).
+- **Message size:** the runner sends each part as its own statement inside the one transaction, so no
+  single message exceeds about 30.5 MB, far below PostgreSQL's 1 GB message limit.
+- **Timeouts:** `statement_timeout` (15 minutes by default) applies per statement, that is per part.
+  `lock_timeout` stops it waiting forever behind another session.
+- **Cost, accepted:** the transaction is long (all parts' writes and WAL are held until COMMIT), and the runner
+  holds the SQL in memory (about 1.5 GB peak on the CI runner). If the connection drops, the whole
+  group rolls back and can be re-run safely because the parts are idempotent.
+- **Verification:** `verify_rows` requires at least 121,377 rows in `career_context_items` before COMMIT
+  (the relationship rows are not counted: their conflict key has no target, so duplicates cannot be counted).
+
+If the database ever cannot hold this in one transaction, split the manifest entry into several
+group entries (one ledger row each) rather than running parts outside the runner.
 
 ### Onboarding an existing database (production)
 
@@ -239,8 +259,17 @@ be approved blind or after a later PR added an entry. The workflow does the same
 - `verify_rows = [{ table = "programme_subject_options", min_rows = N }]` asserts a minimum row
   count inside the entry's transaction. A seed that commits while writing nothing (row-level
   security, empty source) would otherwise be recorded as applied. `verify-manifest` warns
-  (`SEED_NO_ROW_CHECK`) for each `seed_` entry without it. **No counts are filled in yet**: the
-  owner must supply expected minimums from the reviewed seed output; the manifest never invents them.
+  (`SEED_NO_ROW_CHECK`) for each `seed_` entry without it. Every `seed_` entry now has one. Each
+  minimum is a floor derived from the seed SQL itself (distinct conflict keys the file writes), with the
+  derivation in a comment next to it; the manifest never invents counts. Counting is table-wide unless
+  scoped: `where = [{ column = "context_level", op = "=", value = "role" }, { column = "context_key",
+  op = "like", value = "D078|%" }, { column = "item_type", op = "in", values = ["tool"] }]` ANDs
+  terms (ops `=`, `like`, `in`; values are bound parameters; columns must be lowercase identifiers).
+  Use a scope whenever the table also holds rows from other seeds, otherwise they hide a seed that wrote
+  nothing. Floors are lower bounds: re-running an idempotent seed never fails them. Left unchecked on
+  purpose (no safe floor can be derived): `programme_subject_option_items` (UNIQUE key plus
+  `ON CONFLICT DO NOTHING` can collapse rows), `career_item_relationships` of the contextual parts (no
+  conflict target), and `school_programme_subject_option_items`.
 
 ## Fresh database or rebuilt taxonomy
 
@@ -278,8 +307,9 @@ rebuild is not reported as "applied out of order".
   releases it when the connection ends. If a run reports "another migration run holds the advisory
   lock", check for a live run (`pg_stat_activity`) before doing anything; do not start a second one.
 - **The contextual seed group (35 parts)** runs as **one** transaction (all parts, one ledger row),
-  not one per part as the runbook's manual instructions describe. If that is too large for the
-  database, the group needs an owner decision (split it in the manifest).
+  not one per part as the runbook's manual instructions describe; see "Large group entries" above for
+  the measurements and the reasoning. If a run fails, nothing from the group is committed: fix the cause
+  and re-run (the parts are idempotent).
 
 ## Production setup (owner, one time)
 
