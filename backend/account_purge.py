@@ -293,18 +293,50 @@ def _paged(query_factory, label: str) -> list[dict]:
     raise RuntimeError(f"{label} scan limit reached")
 
 
-def _school_ids_for_user(svc, user_id: str) -> set[str]:
-    """Schools this user may have uploaded proof to: any seat status, any affiliation."""
-    ids: set[str] = set()
-    for table, col in (("institution_members", "user_id"), ("student_affiliations", "student_id")):
-        try:
-            rows = _paged(lambda t=table, c=col: svc.table(t).select("id, school_id").eq(c, user_id), table)
-        except Exception as exc:  # noqa: BLE001
-            if _is_missing_table(exc, table):
-                continue
+# Roles that can POST /verification-proof while their seat is active. Mirrors
+# ``routes.institutions_routes._ADMIN_ROLES`` (a test keeps the two in step); a
+# pending (``invited``) seat can also submit, whatever its role.
+_PROOF_SUBMIT_ROLES = frozenset({"owner", "institution_admin", "admin"})
+_PENDING_SEAT = "invited"
+
+
+def _valid_id(value) -> bool:
+    """A non-empty id that is safe to use as one storage path segment."""
+    return (
+        isinstance(value, str)
+        and bool(value.strip())
+        and value == value.strip()
+        and "/" not in value
+        and "\\" not in value
+        and ".." not in value
+    )
+
+
+def _proof_school_ids_for_user(svc, user_id: str) -> set[str]:
+    """Schools where this user could have uploaded a verification proof.
+
+    ``submit_verification_proof`` accepts a pending claimant or an admin-role
+    member, so only ``institution_members`` rows with such a role (any seat
+    status: a revoked admin may have uploaded earlier) or a pending seat count.
+    ``student_affiliations`` never can upload and is not read, so a learner
+    whose school merely affiliated them has no storage dependency.
+    """
+    table = "institution_members"
+    cols = "id, school_id, role, seat_status"
+    try:
+        rows = _paged(lambda: svc.table(table).select(cols).eq("user_id", user_id), table)
+    except Exception as exc:  # noqa: BLE001
+        if _is_missing_table(exc, table):
+            return set()
+        if not _missing_column(exc, "seat_status"):
             raise
-        ids |= {r["school_id"] for r in rows if r.get("school_id")}
-    return ids
+        cols = "id, school_id, role"  # a schema without seat_status
+        rows = _paged(lambda: svc.table(table).select(cols).eq("user_id", user_id), table)
+    return {
+        r["school_id"]
+        for r in rows
+        if r.get("school_id") and (r.get("role") in _PROOF_SUBMIT_ROLES or r.get("seat_status") == _PENDING_SEAT)
+    }
 
 
 def _safe_object_path(path: str) -> bool:
@@ -313,12 +345,31 @@ def _safe_object_path(path: str) -> bool:
 
 
 def _is_bucket_missing(exc: Exception) -> bool:
-    text = f"{type(exc).__name__} {exc}".lower()
-    return "bucket not found" in text or "bucket does not exist" in text
+    """The bucket itself is absent, so it holds nothing (variants across versions)."""
+    text = f"{type(exc).__name__} {exc} {getattr(exc, 'status', '')} {getattr(exc, 'code', '')}".lower()
+    return any(
+        m in text
+        for m in ("bucket not found", "bucket does not exist", "no such bucket", "not found", "not_found", "does not exist", "404")
+    )
 
 
-def _list_prefix(storage, prefix: str) -> list[str]:
-    """Object paths directly under ``prefix`` (no trailing slash), all pages."""
+_MAX_PREFIX_DEPTH = 3  # folders below the ``<school>/<user>`` prefix that are followed
+
+
+def _is_folder(entry: dict) -> bool:
+    """Supabase ``list()`` returns sub-folders as entries whose ``id`` is null."""
+    return "id" in entry and entry["id"] is None
+
+
+def _list_prefix(storage, prefix: str, _depth: int = 0) -> list[str]:
+    """Object paths under ``prefix`` (no trailing slash), all pages.
+
+    Folder entries are followed to ``_MAX_PREFIX_DEPTH`` levels and never
+    returned as objects (removing a folder key is a no-op). Deeper nesting
+    raises, so the caller fails closed instead of leaving files behind.
+    """
+    if not prefix or not all(_valid_id(seg) for seg in prefix.split("/")):
+        raise ValueError("invalid storage prefix")
     found: list[str] = []
     for page in range(_MAX_GUILD_PAGES):
         try:
@@ -327,7 +378,16 @@ def _list_prefix(storage, prefix: str) -> list[str]:
             if _is_bucket_missing(exc):
                 return found
             raise
-        found += [f"{prefix}/{i['name']}" for i in items if i.get("name")]
+        for i in items:
+            name = i.get("name")
+            if not name:
+                continue
+            if _is_folder(i):
+                if _depth >= _MAX_PREFIX_DEPTH:
+                    raise RuntimeError("proof prefix nesting limit reached")
+                found += _list_prefix(storage, f"{prefix}/{name}", _depth + 1)
+            else:
+                found.append(f"{prefix}/{name}")
         if len(items) < _MEMBER_PAGE:
             return found
     raise RuntimeError("proof prefix scan limit reached")
@@ -343,13 +403,17 @@ def _purge_verification_submissions(svc, user_id: str) -> str:
     decision awaiting the maintainer, not something this purge decides.
 
     Besides the paths recorded on rows, the ``<school_id>/<user_id>/`` prefix
-    of every school the user submitted to, is a member of or is affiliated
-    with is listed and emptied: an upload whose insert failed, and whose own
-    cleanup also failed, leaves an object with no row.
+    of every school the user submitted to, or holds a seat that can submit
+    proof at (see ``_proof_school_ids_for_user``), is listed and emptied: an
+    upload whose insert failed, and whose own cleanup also failed, leaves an
+    object with no row. A listing failure for such a school blocks (the row is
+    kept); schools where the user could not have uploaded are never listed.
     """
+    if not _valid_id(user_id):
+        raise ValueError("invalid user id")
     table = "institution_verification_submissions"
     rows = _paged(lambda: svc.table(table).select("id, school_id, storage_path").eq("submitted_by", user_id), table)
-    school_ids = _school_ids_for_user(svc, user_id) | {r["school_id"] for r in rows if r.get("school_id")}
+    school_ids = _proof_school_ids_for_user(svc, user_id) | {r["school_id"] for r in rows if r.get("school_id")}
     if not rows and not school_ids:
         return "clear"
     storage = db.get_service_client().storage.from_(_VERIFICATION_BUCKET)
@@ -368,6 +432,9 @@ def _purge_verification_submissions(svc, user_id: str) -> str:
             failed = True  # row kept so the odd path is reviewed, never silently dropped
             log.warning("Verification proof path skipped: unexpected shape")
     for sid in sorted(school_ids):
+        if not _valid_id(sid):
+            log.warning("Verification proof listing skipped: unexpected school id shape")
+            continue
         prefix = f"{sid}/{user_id}"
         try:
             listed = _list_prefix(storage, prefix)
@@ -411,29 +478,38 @@ def _purge_avatars(svc, user_id: str) -> str:
     """Remove any profile photo still in the private ``avatars`` bucket.
 
     Soft delete removes ``<user_id>/*.webp`` best effort and swallows failures,
-    so a failed removal would otherwise leave the photo forever. A storage that
-    cannot be built, or a bucket that is absent, holds nothing: ``clear``. A
-    list or remove failure raises (-> ``error``), keeping the user row.
+    so a failed removal would otherwise leave the photo forever. ``get_storage``
+    never raises (it builds a lazy adapter), so a misconfigured client surfaces
+    from ``list_keys`` and is an ``error``; only an absent bucket is ``clear``.
+    A list or remove failure raises (-> ``error``), keeping the user row.
+    Folder entries are skipped by ``list_keys`` (a key that cannot be removed).
+    If a re-listing returns exactly the keys just deleted, the delete is not
+    taking effect: the key names are logged and the outcome is ``error``.
     """
     import avatar_storage
 
-    try:
-        storage = avatar_storage.get_storage()
-    except Exception:  # noqa: BLE001 - not configured
-        return "clear"
+    if not _valid_id(user_id):
+        raise ValueError("invalid user id")
+    storage = avatar_storage.get_storage()
     removed = False
+    previous: list[str] | None = None
     for _ in range(20):  # a listing returns one page; re-list until empty
         try:
             keys = [k for k in storage.list_keys(user_id) if k.startswith(f"{user_id}/") and _safe_object_path(k)]
         except Exception as exc:  # noqa: BLE001
             if _is_bucket_missing(exc):
-                return "clear"
+                return "deleted" if removed else "clear"
             raise
         if not keys:
             return "deleted" if removed else "clear"
+        if sorted(keys) == previous:
+            log.warning("Avatar purge made no progress", keys=sorted(keys)[:20], count=len(keys))
+            return "error"
         storage.delete(keys)
         removed = True
-    raise RuntimeError("avatar purge did not converge")
+        previous = sorted(keys)
+    log.warning("Avatar purge did not converge", keys=previous[:20] if previous else [])
+    return "error"
 
 
 _DRAFT_PII_SCRUB = {
@@ -520,6 +596,11 @@ def hard_delete_learner_content(user_id: str) -> dict:
     outcome is ``error``, ``blocked`` or ``skipped``.
     """
     outcome: dict = {}
+    if not _valid_id(user_id):
+        # An empty id would turn a storage prefix into the bucket root. Refuse
+        # before any database or storage call; the row is kept (error blocks).
+        log.warning("Learner content purge refused: invalid user id")
+        return {t: "error" for t in _LEARNER_CONTENT_TABLES + _UNLINKED_ON_DELETE_TABLES + _GUARDED}
     try:
         svc = db.get_service_client().schema(_SCHEMA)
     except Exception as exc:  # noqa: BLE001

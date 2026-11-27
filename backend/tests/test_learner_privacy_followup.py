@@ -11,6 +11,8 @@ existence so the missing-migration paths are exercised too.
 """
 from datetime import datetime, timedelta, timezone
 
+import pytest
+
 import account_hard_delete as ahd
 import account_purge as ap
 import privacy
@@ -502,13 +504,29 @@ class _Storage:
     def __init__(self, fail=False, fail_paths=(), objects=(), fail_list=False):
         self.removed, self.fail, self.fail_paths = [], fail, set(fail_paths)
         self.objects, self.fail_list = list(objects), fail_list  # objects with no row
+        self.list_calls = []
+
+    def _entries(self, prefix):
+        # Models Supabase list(): direct children only; a nested path comes back as a
+        # folder entry with a null id, a file with an id. Not verified against a real bucket.
+        out, seen = [], set()
+        for o in self.objects:
+            if not o.startswith(prefix + "/") or o in self.removed:
+                continue
+            rest = o[len(prefix) + 1:]
+            head = rest.split("/")[0]
+            if head in seen:
+                continue
+            seen.add(head)
+            out.append({"name": head, "id": None} if "/" in rest else {"name": head, "id": "id-" + head})
+        return out
 
     def list(self, prefix, options=None):
+        self.list_calls.append(prefix)
         if self.fail_list:
-            raise RuntimeError("storage list down")
-        names = [o[len(prefix) + 1:] for o in self.objects if o.startswith(prefix + "/") and o not in self.removed]
+            raise RuntimeError(self.fail_list if isinstance(self.fail_list, str) else "storage list down")
         o = options or {}
-        return [{"name": n} for n in names[o.get("offset", 0): o.get("offset", 0) + o.get("limit", 100)]]
+        return self._entries(prefix)[o.get("offset", 0): o.get("offset", 0) + o.get("limit", 100)]
 
     def from_(self, bucket):
         assert bucket == "verification-proofs"
@@ -609,18 +627,22 @@ def test_submission_scan_cap_deletes_nothing(monkeypatch):
 def test_a_proof_object_with_no_row_is_found_by_prefix_and_removed(monkeypatch):
     # the upload succeeded, the insert failed and the route's own cleanup failed too
     svc = _purge_db(monkeypatch, tables={
-        "institution_members": [{"id": "im1", "user_id": "u1", "school_id": "org", "seat_status": "revoked"}],
+        "institution_members": [{"id": "im1", "user_id": "u1", "school_id": "org", "role": "owner",
+                                 "seat_status": "revoked"}],
         "student_affiliations": [{"id": "sa1", "student_id": "u1", "school_id": "org2"}],
     })
     storage = _with_storage(svc, _Storage(objects=["org/u1/orphan.pdf", "org2/u1/o2.pdf", "org/u2/other.pdf"])).storage
     out = ap.hard_delete_learner_content("u1")
     assert out["institution_verification_submissions"] == "deleted"
-    assert sorted(storage.removed) == ["org/u1/orphan.pdf", "org2/u1/o2.pdf"]  # never another user's prefix
+    # never another user's prefix, and never a school the user was merely affiliated with
+    assert storage.removed == ["org/u1/orphan.pdf"]
+    assert storage.list_calls == ["org/u1"]
     assert ap.hard_delete_learner_content("u1")["institution_verification_submissions"] == "clear"
 
 
 def test_a_failed_prefix_listing_is_an_error_so_the_user_row_is_kept(monkeypatch):
-    svc = _purge_db(monkeypatch, tables={"institution_members": [{"id": "im1", "user_id": "u1", "school_id": "org"}]})
+    svc = _purge_db(monkeypatch, tables={"institution_members": [
+        {"id": "im1", "user_id": "u1", "school_id": "org", "role": "admin"}]})
     _with_storage(svc, _Storage(fail_list=True))
     assert ap.hard_delete_learner_content("u1")["institution_verification_submissions"] == "error"
 
@@ -666,7 +688,7 @@ def test_an_avatar_removal_failure_is_an_error_not_clear(monkeypatch):
     assert ap.hard_delete_learner_content("u1")["avatars"] == "error"
 
 
-def test_an_unconfigured_avatar_storage_or_missing_bucket_counts_as_clear(monkeypatch):
+def test_a_missing_avatar_bucket_counts_as_clear(monkeypatch):
     import avatar_storage
 
     _purge_db(monkeypatch, tables={})
@@ -678,11 +700,19 @@ def test_an_unconfigured_avatar_storage_or_missing_bucket_counts_as_clear(monkey
     avatar_storage.set_storage(_NoBucket())
     assert ap.hard_delete_learner_content("u1")["avatars"] == "clear"
 
-    def _boom():
-        raise RuntimeError("not configured")
 
-    monkeypatch.setattr(avatar_storage, "get_storage", _boom)
-    assert ap.hard_delete_learner_content("u1")["avatars"] == "clear"
+def test_a_storage_client_that_cannot_be_built_is_an_error_not_clear(monkeypatch):
+    # get_storage() never raises (lazy adapter): a broken client fails in list_keys.
+    import avatar_storage
+
+    _purge_db(monkeypatch, tables={})
+
+    class _Broken(avatar_storage.InMemoryAvatarStorage):
+        def list_keys(self, user_id):
+            raise RuntimeError("supabase not configured")
+
+    avatar_storage.set_storage(_Broken())
+    assert ap.hard_delete_learner_content("u1")["avatars"] == "error"
 
 
 def test_more_than_a_page_of_collections_is_read_in_pages_and_deleted_in_chunks(monkeypatch):
@@ -1077,3 +1107,160 @@ def test_hard_delete_migrations_set_a_lock_timeout_inside_the_transaction_before
         assert begin < lock < ddl, name
         assert sql.count("BEGIN;") == 1 and sql.count("COMMIT;") == 1, name
         assert "statement_timeout" not in sql, name
+
+
+# --- PR #326 re-review: avatar convergence, proof listing scope, folders, ids -----
+
+def test_an_avatar_listing_that_never_empties_is_an_error_after_one_repeat_and_logs_keys(monkeypatch):
+    import avatar_storage
+
+    _purge_db(monkeypatch, tables={})
+    logged = []
+    monkeypatch.setattr(ap.log, "warning", lambda msg, **kw: logged.append((msg, kw)))
+
+    class _Sticky(avatar_storage.InMemoryAvatarStorage):
+        deletes = 0
+
+        def list_keys(self, user_id):
+            return [f"{user_id}/stuck.webp"]
+
+        def delete(self, keys):
+            self.deletes += 1  # accepted but the object stays
+
+    store = _Sticky()
+    avatar_storage.set_storage(store)
+    assert ap.hard_delete_learner_content("u1")["avatars"] == "error"
+    assert store.deletes == 1  # second identical listing stops the loop; no 20 retries
+    assert ("Avatar purge made no progress", {"keys": ["u1/stuck.webp"], "count": 1}) in logged
+
+
+def test_supabase_avatar_listing_skips_folder_entries(monkeypatch):
+    import avatar_storage
+
+    class _Bucket:
+        def list(self, prefix):
+            return [{"name": "a.webp", "id": "i1"}, {"name": "sub", "id": None}]
+
+    store = avatar_storage.SupabaseAvatarStorage()
+    monkeypatch.setattr(store, "_bucket", lambda: _Bucket())
+    assert store.list_keys("u1") == ["u1/a.webp"]
+
+
+def test_a_learner_only_affiliated_with_a_school_never_lists_the_proof_bucket(monkeypatch):
+    svc = _purge_db(monkeypatch, tables={
+        "student_affiliations": [{"id": "sa1", "student_id": "u1", "school_id": "org"}],
+        "institution_members": [{"id": "im1", "user_id": "u1", "school_id": "org3", "role": "student",
+                                 "seat_status": "active"}],
+    })
+    svc.storage = None  # any storage access would raise
+    assert ap.hard_delete_learner_content("u1")["institution_verification_submissions"] == "clear"
+
+
+def test_a_storage_outage_does_not_block_a_learner_who_could_not_upload(monkeypatch):
+    svc = _purge_db(monkeypatch, tables={"student_affiliations": [{"id": "sa1", "student_id": "u1", "school_id": "org"}]})
+    _with_storage(svc, _Storage(fail_list="403 Forbidden"))
+    assert ap.hard_delete_learner_content("u1")["institution_verification_submissions"] == "clear"
+
+
+@pytest.mark.parametrize("member", [
+    {"role": "owner", "seat_status": "active"},
+    {"role": "institution_admin", "seat_status": "suspended"},
+    {"role": "educator", "seat_status": "invited"},  # a pending claimant can submit proof
+])
+def test_a_seat_that_could_upload_is_listed_and_a_listing_failure_blocks(monkeypatch, member):
+    svc = _purge_db(monkeypatch, tables={"institution_members": [
+        {"id": "im1", "user_id": "u1", "school_id": "org", **member}]})
+    storage = _with_storage(svc, _Storage(objects=["org/u1/p.pdf"])).storage
+    assert ap.hard_delete_learner_content("u1")["institution_verification_submissions"] == "deleted"
+    assert storage.list_calls == ["org/u1"]
+    storage.fail_list = "503 Service Unavailable"
+    assert ap.hard_delete_learner_content("u1")["institution_verification_submissions"] == "error"
+
+
+def test_the_submission_rows_school_is_listed_even_without_a_seat(monkeypatch):
+    svc = _purge_db(monkeypatch, tables={"institution_verification_submissions": [
+        {"id": "v1", "school_id": "org", "submitted_by": "u1", "storage_path": None}]})
+    storage = _with_storage(svc, _Storage(objects=["org/u1/o.pdf"])).storage
+    assert ap.hard_delete_learner_content("u1")["institution_verification_submissions"] == "deleted"
+    assert storage.removed == ["org/u1/o.pdf"]
+
+
+def test_the_proof_roles_match_the_route_that_accepts_uploads():
+    import routes.institutions_routes as ir
+
+    assert ap._PROOF_SUBMIT_ROLES == ir._ADMIN_ROLES
+    assert ap._PENDING_SEAT == ir._PENDING_SEAT
+
+
+@pytest.mark.parametrize("message", [
+    "Bucket not found", "The related resource does not exist", "404 Not Found", "No such bucket", "not_found",
+])
+def test_bucket_missing_variants_are_recognised(message):
+    assert ap._is_bucket_missing(RuntimeError(message))
+    assert not ap._is_bucket_missing(RuntimeError("403 Forbidden"))
+    assert not ap._is_bucket_missing(RuntimeError("503 Service Unavailable"))
+
+
+def test_folders_in_a_proof_prefix_are_followed_and_never_reported_as_removed_objects(monkeypatch):
+    svc = _purge_db(monkeypatch, tables={"institution_members": [
+        {"id": "im1", "user_id": "u1", "school_id": "org", "role": "owner"}]})
+    storage = _with_storage(svc, _Storage(objects=["org/u1/a.pdf", "org/u1/sub/b.pdf", "org/u1/sub/deeper/c.pdf"])).storage
+    out = ap.hard_delete_learner_content("u1")
+    assert out["institution_verification_submissions"] == "deleted"
+    assert sorted(storage.removed) == ["org/u1/a.pdf", "org/u1/sub/b.pdf", "org/u1/sub/deeper/c.pdf"]
+    assert not any(k in storage.removed for k in ("org/u1/sub", "org/u1/sub/deeper"))
+
+
+def test_a_folder_only_prefix_removes_nothing_and_is_not_reported_deleted(monkeypatch):
+    class _OnlyFolder(_Storage):
+        def _entries(self, prefix):
+            return [{"name": "ghost", "id": None}] if prefix == "org/u1" else []
+
+    svc = _purge_db(monkeypatch, tables={"institution_members": [
+        {"id": "im1", "user_id": "u1", "school_id": "org", "role": "owner"}]})
+    storage = _with_storage(svc, _OnlyFolder()).storage
+    assert ap.hard_delete_learner_content("u1")["institution_verification_submissions"] == "clear"
+    assert storage.removed == []
+
+
+def test_folder_nesting_beyond_the_bound_fails_closed(monkeypatch):
+    deep = "/".join(["org/u1"] + ["d"] * (ap._MAX_PREFIX_DEPTH + 2) + ["x.pdf"])
+    svc = _purge_db(monkeypatch, tables={"institution_members": [
+        {"id": "im1", "user_id": "u1", "school_id": "org", "role": "owner"}]})
+    storage = _with_storage(svc, _Storage(objects=[deep])).storage
+    assert ap.hard_delete_learner_content("u1")["institution_verification_submissions"] == "error"
+    assert storage.removed == []
+
+
+@pytest.mark.parametrize("bad", ["", "   ", None, 7, "a/b", "..", "a\\b"])
+def test_an_invalid_user_id_never_reaches_the_database_or_storage(monkeypatch, bad):
+    import avatar_storage
+
+    svc = _purge_db(monkeypatch, tables={})
+    svc.storage = None
+    store = avatar_storage.InMemoryAvatarStorage()
+    store.list_keys = lambda uid: (_ for _ in ()).throw(AssertionError("storage touched"))
+    avatar_storage.set_storage(store)
+    out = ap.hard_delete_learner_content(bad)
+    assert set(out.values()) == {"error"} and svc.calls == []
+
+
+def test_an_empty_id_is_refused_by_the_prefix_lister_and_the_avatar_adapter():
+    with pytest.raises(ValueError):
+        ap._list_prefix(_Storage(), "")
+    with pytest.raises(ValueError):
+        ap._list_prefix(_Storage(), "/u1")
+    with pytest.raises(ValueError):
+        ap._list_prefix(_Storage(), "org/")
+    import avatar_storage
+
+    with pytest.raises(ValueError):
+        avatar_storage.SupabaseAvatarStorage().list_keys("")
+
+
+def test_an_empty_school_id_on_a_member_row_is_skipped_not_listed(monkeypatch):
+    svc = _purge_db(monkeypatch, tables={"institution_members": [
+        {"id": "im1", "user_id": "u1", "school_id": "a/b", "role": "owner"}]})
+    storage = _with_storage(svc, _Storage()).storage
+    ap.hard_delete_learner_content("u1")
+    assert storage.list_calls == []

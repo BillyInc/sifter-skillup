@@ -6,7 +6,8 @@ such accounts for good once ``deletion_cooldown_until`` plus the retention
 window has passed, after purging their content (see ``account_purge``).
 
 Safety:
-- Dry run unless ``ACCOUNT_HARD_DELETE_ENABLED`` is true; a dry run only counts.
+- Dry run unless ``ACCOUNT_HARD_DELETE_ENABLED`` is true; a dry run purges and
+  deletes no account (it only counts), apart from the expired cooldown rows below.
 - Only rows with ``is_deleted = true`` and an elapsed retention window. The
   window is never shorter than ``MIN_RETENTION_DAYS``: a configured 0 or a
   negative value would otherwise delete right after the 24 h cooldown.
