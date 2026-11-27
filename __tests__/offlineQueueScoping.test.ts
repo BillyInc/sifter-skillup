@@ -17,6 +17,7 @@ import {
   AUTH_HOLD_MAX_AGE_MS,
   BACKOFF_MAX_MS,
   FORBIDDEN_MAX_AGE_MS,
+  NEVER_RETRY_REFUSAL_PREFIXES,
 } from "../src/lib/offlineQueue";
 import {
   saveAdminProvisioningDrafts,
@@ -60,9 +61,14 @@ function goOnline() {
 }
 
 /** Queue a write without draining it. */
-async function enqueueOffline(body: unknown, priority: "normal" | "high" | "critical" = "normal") {
+async function enqueueOffline(
+  body: unknown,
+  priority: "normal" | "high" | "critical" = "normal",
+  options: { retryForbidden?: boolean; retryNotFound?: boolean } = {},
+  endpoint = "/api/flags",
+) {
   goOffline();
-  const result = await offlineWrite("/api/flags", "POST", body, priority);
+  const result = await offlineWrite(endpoint, "POST", body, priority, options);
   await flush();
   goOnline();
   return result;
@@ -236,8 +242,8 @@ describe("offline queue error handling", () => {
     expect(pending()).toBe(0);
   });
 
-  it("retries a 403 (consent guards answer it temporarily) with backoff instead of dropping it", async () => {
-    await enqueueOffline({ n: 1 });
+  it("retries an opted-in 403 (consent guards answer it temporarily) with backoff instead of dropping it", async () => {
+    await enqueueOffline({ n: 1 }, "normal", { retryForbidden: true });
     fetchMock.mockResolvedValueOnce({ ok: false, status: 403 });
     await drain();
     expect(fetchMock).toHaveBeenCalledTimes(1);
@@ -270,7 +276,7 @@ describe("offline queue error handling", () => {
   }
 
   it("keeps retrying a 403 well past five attempts, until the write is a day old (normal)", async () => {
-    await enqueueOffline({ n: 1 });
+    await enqueueOffline({ n: 1 }, "normal", { retryForbidden: true });
     fetchMock.mockResolvedValue({ ok: false, status: 403 });
     // Every 16 minutes for 23 hours: far more than the old five attempts.
     for (let t = 0; t <= 23 * 60; t += 16) await drainAt(t * 60 * 1000);
@@ -284,7 +290,7 @@ describe("offline queue error handling", () => {
   });
 
   it("a high-priority 403 outlives the normal horizon and is dropped after seven days", async () => {
-    await enqueueOffline({ n: 1 }, "high");
+    await enqueueOffline({ n: 1 }, "high", { retryForbidden: true });
     fetchMock.mockResolvedValue({ ok: false, status: 403 });
     await drainAt(0);
     await drainAt(3 * 24 * 60 * 60 * 1000);
@@ -295,8 +301,8 @@ describe("offline queue error handling", () => {
 
   it("a backed-off 403 does not block a later write to another endpoint, but keeps order for its own", async () => {
     goOffline();
-    await offlineWrite("/api/consent-gated", "POST", { n: 1 });
-    await offlineWrite("/api/consent-gated", "POST", { n: 2 });
+    await offlineWrite("/api/consent-gated", "POST", { n: 1 }, "normal", { retryForbidden: true });
+    await offlineWrite("/api/consent-gated", "POST", { n: 2 }, "normal", { retryForbidden: true });
     await offlineWrite("/api/other", "POST", { n: 3 });
     await flush();
     goOnline();
@@ -310,6 +316,89 @@ describe("offline queue error handling", () => {
     expect(urls.filter((u) => u.endsWith("/api/consent-gated"))).toHaveLength(1);
     expect(urls.filter((u) => u.endsWith("/api/other"))).toHaveLength(1);
     expect(pending()).toBe(2);
+  });
+
+  describe("403/404 are permanent refusals unless a write opts in", () => {
+    it("drops a DM send 403 on the first drain: one fetch, queue empty, later items to other endpoints still go", async () => {
+      goOffline();
+      await offlineWrite("/api/dms/send", "POST", { n: 1 }, "high");
+      await offlineWrite("/api/other", "POST", { n: 2 });
+      await flush();
+      goOnline();
+      fetchMock.mockImplementation(async (url: string) =>
+        String(url).endsWith("/api/dms/send") ? { ok: false, status: 403 } : { ok: true, status: 200 },
+      );
+      await drain();
+      const urls = fetchMock.mock.calls.map((c) => String(c[0]));
+      expect(urls.filter((u) => u.endsWith("/api/dms/send"))).toHaveLength(1);
+      expect(urls.filter((u) => u.endsWith("/api/other"))).toHaveLength(1);
+      expect(pending()).toBe(0);
+      fetchMock.mockClear();
+      await drainAt(FORBIDDEN_MAX_AGE_MS.high);
+      expect(fetchMock).not.toHaveBeenCalled();
+    });
+
+    it("drops a 404 on follow at once", async () => {
+      await enqueueOffline({ n: 1 }, "normal", {}, "/api/users/follow");
+      fetchMock.mockResolvedValue({ ok: false, status: 404 });
+      await drain();
+      expect(fetchMock).toHaveBeenCalledTimes(1);
+      expect(pending()).toBe(0);
+    });
+
+    it("drops a default (not opted in) 403 and 404 on an ordinary endpoint", async () => {
+      for (const status of [403, 404]) {
+        await enqueueOffline({ n: status });
+        fetchMock.mockReset();
+        fetchMock.mockResolvedValue({ ok: false, status });
+        await drain();
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(pending()).toBe(0);
+      }
+    });
+
+    it("retries an opted-in 404 with backoff", async () => {
+      await enqueueOffline({ n: 1 }, "normal", { retryNotFound: true });
+      fetchMock.mockResolvedValue({ ok: false, status: 404 });
+      await drain();
+      expect(pending()).toBe(1);
+      expect(OfflineQueue.getItems()[0].attempts).toBe(1);
+      expect(OfflineQueue.getItems()[0].nextAttemptAt).toBeDefined();
+    });
+
+    it.each(NEVER_RETRY_REFUSAL_PREFIXES.map((p) => [p === "/api/dms/" ? "/api/dms/send" : p === "/api/users/follow" ? "/api/users/follow-request/respond" : p]))(
+      "the denylist wins over the opt-in: %s",
+      async (endpoint) => {
+        for (const status of [403, 404]) {
+          await enqueueOffline({ n: status }, "high", { retryForbidden: true, retryNotFound: true }, endpoint);
+          fetchMock.mockReset();
+          fetchMock.mockResolvedValue({ ok: false, status });
+          await drain();
+          expect(fetchMock).toHaveBeenCalledTimes(1);
+          expect(pending()).toBe(0);
+        }
+      },
+    );
+
+    it("ignores a query string when matching the denylist", async () => {
+      await enqueueOffline({ n: 1 }, "normal", { retryForbidden: true }, "/api/dms/send?x=1");
+      fetchMock.mockResolvedValue({ ok: false, status: 403 });
+      await drain();
+      expect(pending()).toBe(0);
+    });
+
+    it("keeps backing off 401 / 429 / 5xx regardless of the opt-in", async () => {
+      for (const status of [429, 500, 503]) {
+        await enqueueOffline({ n: status });
+        fetchMock.mockReset();
+        fetchMock.mockResolvedValue({ ok: false, status });
+        await drain();
+        expect(pending()).toBe(1);
+        expect(OfflineQueue.getItems()[0].nextAttemptAt).toBeDefined();
+        await OfflineQueue.clear();
+        await AsyncStorage.clear();
+      }
+    });
   });
 
   it("honours an explicit maxAttempts passed to enqueue", async () => {

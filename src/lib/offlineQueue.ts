@@ -66,6 +66,54 @@ export interface QueueItem {
    * is bounded by the write's age (FORBIDDEN_MAX_AGE_MS), not an attempt cap.
    */
   forbiddenAttempts?: number;
+  /**
+   * Opt in to retrying 403 (consent-gated writes whose refusal clears later).
+   * Default false: a 403 is a permanent refusal and the item is dropped.
+   * Ignored for NEVER_RETRY_REFUSAL_PREFIXES.
+   */
+  retryForbidden?: boolean;
+  /**
+   * Opt in to retrying 404 (a route that is not deployed yet). Default false:
+   * a 404 is a permanent refusal. Ignored for NEVER_RETRY_REFUSAL_PREFIXES.
+   */
+  retryNotFound?: boolean;
+}
+
+/** Per-write options for offlineWrite / enqueue. */
+export interface OfflineWriteOptions {
+  retryForbidden?: boolean;
+  retryNotFound?: boolean;
+}
+
+/**
+ * Endpoints whose 403/404 is ALWAYS a permanent refusal, whatever the caller
+ * opts into. The social/DM backend answers a uniform 403 ("You can't message
+ * this user.") or 404 ("User not found") for blocked, missing, deleted or
+ * not-permitted targets. Retrying would deliver a refused message or apply a
+ * refused follow later, for example once a follow becomes mutual. Matched by
+ * path prefix on the endpoint path (query string ignored).
+ */
+export const NEVER_RETRY_REFUSAL_PREFIXES: readonly string[] = [
+  '/api/dms/',
+  '/api/users/follow',
+  '/api/users/block',
+  '/api/users/unblock',
+  '/api/users/mute',
+  '/api/users/unmute',
+];
+
+/** True when a 403/404 for this endpoint must never be retried. */
+export function isNeverRetryRefusalEndpoint(endpoint: string): boolean {
+  const path = endpoint.split(/[?#]/)[0];
+  return NEVER_RETRY_REFUSAL_PREFIXES.some(p => path.startsWith(p));
+}
+
+function retriesForbidden(item: QueueItem): boolean {
+  return item.retryForbidden === true && !isNeverRetryRefusalEndpoint(item.endpoint);
+}
+
+function retriesNotFound(item: QueueItem): boolean {
+  return item.retryNotFound === true && !isNeverRetryRefusalEndpoint(item.endpoint);
 }
 
 async function currentOwnerId(): Promise<string | null> {
@@ -109,16 +157,14 @@ export const FORBIDDEN_MAX_AGE_MS: Record<QueuePriority, number> = {
 const AUTH_HOLD_AFTER_CONSECUTIVE_401 = 2;
 
 /**
- * Statuses worth retrying later even though they are 4xx. 404 is here because
- * a deploy that has not finished (or a client ahead of the API) answers 404 for
- * a route that exists a minute later. 403 is here because the backend's
- * consent guards answer 403 (for example while parental consent is pending),
- * which clears later; dropping it at once would silently discard a minor's
- * write. 403 is handled apart (see FORBIDDEN_MAX_AGE_MS: an age horizon, and
- * it does not block later writes). The rest are bounded by maxAttempts and
- * backed off.
+ * Statuses always worth retrying later even though they are 4xx. 403 and 404
+ * are NOT here: they are permanent refusals unless the item opts in
+ * (retryForbidden: consent guards that clear later, handled apart with an age
+ * horizon, see FORBIDDEN_MAX_AGE_MS; retryNotFound: a deploy that has not
+ * finished), and never for NEVER_RETRY_REFUSAL_PREFIXES. The rest are bounded
+ * by maxAttempts and backed off.
  */
-const RETRYABLE_STATUS = new Set([404, 408, 425, 429]);
+const RETRYABLE_STATUS = new Set([408, 425, 429]);
 
 /** A request that has not answered by now is abandoned (and counted). */
 export const REQUEST_TIMEOUT_MS = 30 * 1000;
@@ -647,8 +693,8 @@ export class OfflineQueueManager {
               await this._saveAuthHold(epoch);
               break;
             }
-          } else if (res.status === 403) {
-            // Consent guards answer 403 until consent is given. Retry with
+          } else if (res.status === 403 && retriesForbidden(item)) {
+            // Opted-in write: consent guards answer 403 until consent is given. Retry with
             // capped backoff until the write is older than its horizon; the
             // writes behind it are not blocked (the find above skips it).
             item.forbiddenAttempts = (item.forbiddenAttempts ?? 0) + 1;
@@ -662,7 +708,11 @@ export class OfflineQueueManager {
               this._backOff(item, res, item.forbiddenAttempts, BACKOFF_BASE_MS);
             }
             await this._saveQueue(epoch);
-          } else if (RETRYABLE_STATUS.has(res.status) || res.status >= 500) {
+          } else if (
+            RETRYABLE_STATUS.has(res.status) ||
+            (res.status === 404 && retriesNotFound(item)) ||
+            res.status >= 500
+          ) {
             item.attempts++;
             if (item.attempts >= item.maxAttempts) {
               this._remove(item); // give up
@@ -673,8 +723,13 @@ export class OfflineQueueManager {
             break; // back off, try next sync window
           } else if (res.status >= 400 && res.status < 500) {
             // Permanent client error — it will not succeed on retry, and must
-            // not block the writes behind it. (403 is retried above: consent
-            // guards answer it temporarily, for up to FORBIDDEN_MAX_AGE_MS.)
+            // not block the writes behind it. This includes a 403/404 refusal
+            // (default, and always for NEVER_RETRY_REFUSAL_PREFIXES): the item
+            // is removed and never re-sent. offlineWrite has already returned
+            // {queued:true} by now and there is no dropped-item callback in
+            // this queue, so a drain-time refusal is not reported to the
+            // original caller; callers that need to show a refusal must
+            // re-read server state (for example the follow/DM status).
             this._remove(item);
             await this._saveQueue(epoch);
           } else {
@@ -1058,8 +1113,16 @@ export async function offlineWrite(
   method: QueueItem['method'],
   body: any,
   priority: QueuePriority = 'normal',
+  options: OfflineWriteOptions = {},
 ): Promise<EnqueueResult> {
-  return OfflineQueue.enqueue({ endpoint, method, body, priority });
+  return OfflineQueue.enqueue({
+    endpoint,
+    method,
+    body,
+    priority,
+    ...(options.retryForbidden ? { retryForbidden: true } : {}),
+    ...(options.retryNotFound ? { retryNotFound: true } : {}),
+  });
 }
 
 // Cache layer for reads

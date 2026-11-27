@@ -43,9 +43,9 @@ const goOffline = () => netFetch.mockResolvedValue({ isConnected: false, isInter
 const goOnline = () => netFetch.mockResolvedValue({ isConnected: true, isInternetReachable: true });
 const OK = { ok: true, status: 200 };
 
-async function enqueueOffline(q: OfflineQueueManager, body: unknown) {
+async function enqueueOffline(q: OfflineQueueManager, body: unknown, extra: Partial<QueueItem> = {}) {
   goOffline();
-  const r = await q.enqueue({ endpoint: "/api/flags", method: "POST", body, priority: "normal", maxAttempts: 5 });
+  const r = await q.enqueue({ endpoint: "/api/flags", method: "POST", body, priority: "normal", maxAttempts: 5, ...extra });
   await flush();
   goOnline();
   return r;
@@ -253,9 +253,9 @@ describe("10. request timeout, poison items and statuses", () => {
     item = undefined as any;
   });
 
-  it("treats 404 as retryable up to maxAttempts instead of dropping at once", async () => {
+  it("treats an opted-in 404 as retryable up to maxAttempts instead of dropping at once", async () => {
     const q = make();
-    await enqueueOffline(q, { n: 1 });
+    await enqueueOffline(q, { n: 1 }, { retryNotFound: true });
     fetchMock.mockResolvedValue({ ok: false, status: 404 });
     await q.sync();
     expect(q.pendingCount).toBe(1);

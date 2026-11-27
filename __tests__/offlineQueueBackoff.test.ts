@@ -329,7 +329,10 @@ describe("403 with a zero or past Retry-After", () => {
     ["Retry-After: 0", () => "0"],
     ["a past HTTP date", () => new Date(Date.now() - 3_600_000).toUTCString()],
   ])("sends exactly once per pass and backs off by at least the base delay (%s)", async (_label, header) => {
-    await enqueueOffline({ n: 1 });
+    goOffline();
+    await offlineWrite("/api/flags", "POST", { n: 1 }, "normal", { retryForbidden: true });
+    await flush();
+    goOnline();
     fetchMock.mockResolvedValue({ ok: false, status: 403, headers: { get: () => header() } });
     const before = Date.now();
     await OfflineQueue.sync();
