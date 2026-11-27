@@ -88,16 +88,32 @@ def env(monkeypatch):
     merges, user_updates = [], []
     monkeypatch.setattr(pr, "_svc", lambda: store)
 
+    claim_state = {}  # user id -> claim_state, as the real users table would hold it
+
     class _Users:
         def update(self, values):
             user_updates.append(values)
-            return SimpleNamespace(eq=lambda *a: SimpleNamespace(execute=lambda: None))
+
+            def _eq(_col, uid):
+                claim_state[uid] = values.get("claim_state", claim_state.get(uid))
+                return SimpleNamespace(execute=lambda: None)
+
+            return SimpleNamespace(eq=_eq)
+
+        def select(self, *_a):
+            q = SimpleNamespace(uid=None)
+            q.eq = lambda _c, uid: (setattr(q, "uid", uid), q)[1]
+            q.limit = lambda _n: q
+            q.execute = lambda: SimpleNamespace(
+                data=[{"claim_state": claim_state.get(q.uid)}])
+            return q
 
     monkeypatch.setattr(pr, "_users", lambda: _Users())
     monkeypatch.setattr(pr, "merge_provisioned_into_student", lambda **kw: merges.append(kw) or {})
     pr.claim_limiter.reset()
     pr.claim_ip_limiter.reset()
-    yield SimpleNamespace(store=store, merges=merges, user_updates=user_updates)
+    yield SimpleNamespace(store=store, merges=merges, user_updates=user_updates,
+                          claim_state=claim_state)
     pr.claim_limiter.reset()
     pr.claim_ip_limiter.reset()
 
@@ -208,29 +224,46 @@ def _guest(i):
     return {"id": f"g{i}", "auth_provider": "guest"}
 
 
-def test_address_limit_is_300_per_window_and_throttles_guests_only(env):
+def _email_user(i):
+    return {"id": f"u{i}", "auth_provider": "email"}
+
+
+def test_address_limit_is_300_per_window_for_every_provider(env):
     assert pr.CLAIM_IP_FAILURES_PER_WINDOW >= 300
     n = pr.CLAIM_IP_FAILURES_PER_WINDOW
-    # Many different guests from one public address trip the address limit...
     for i in range(n):
         assert _status(f"BAD-{i}", user=_guest(i), request=_req()).status_code == 404
     assert _status("BAD-x", user=_guest("x"), request=_req()).status_code == 429
-    # ...the address cap is a single 15-minute window (no daily cap, so a
-    # lockout cannot outlast 15 minutes)...
+    # a single 15-minute window: no daily cap, so a lockout cannot outlast 15 min
     assert [w for (w, _m, _l) in pr.claim_ip_limiter._limits] == [900]
-    # ...a different address is unaffected...
+    # a different address is unaffected
     assert _status("BAD-x", user=_guest("y"), request=_req("1.1.1.1")).status_code == 404
-    # ...and a signed-in (non-guest) student behind the same address is never
-    # blocked, even with the correct code.
-    res = _call("ACME-SS1-ABCDEF12", user={"id": "student", "auth_provider": "email"},
-                request=_req())
-    assert res.data["claimed"] is True
 
 
-def test_non_guest_failures_do_not_fill_the_address_bucket(env):
-    for i in range(pr.CLAIM_IP_FAILURES_PER_WINDOW + 5):
-        _status("BAD", user={"id": f"u{i}", "auth_provider": "email"}, request=_req())
-    assert _call("ACME-SS1-ABCDEF12", user=_guest("z"), request=_req()).data["claimed"] is True
+@pytest.mark.parametrize("provider", ["email", "base", "telegram", "guest"])
+def test_address_bucket_applies_to_non_guests(env, provider):
+    n = pr.CLAIM_IP_FAILURES_PER_WINDOW
+    for i in range(n):
+        user = {"id": f"u{i}", "auth_provider": provider}
+        assert _status(f"BAD-{i}", user=user, request=_req()).status_code == 404
+    fresh = {"id": "fresh", "auth_provider": provider}
+    # Documented trade-off: even a fresh non-guest with the correct code is held
+    # (exempting zero-failure accounts would reopen the guessing hole).
+    assert _status("ACME-SS1-ABCDEF12", user=fresh, request=_req()).status_code == 429
+    assert _call("ACME-SS1-ABCDEF12", user=fresh, request=_req("1.1.1.1")).data["claimed"]
+
+
+def test_non_guest_failures_fill_the_address_bucket_and_clear_after_15_min(env):
+    for i in range(pr.CLAIM_IP_FAILURES_PER_WINDOW):
+        _status("BAD", user=_email_user(i), request=_req())
+    err = _status("BAD", user=_guest("z"), request=_req())
+    assert err.status_code == 429
+    assert int(err.headers["Retry-After"]) <= 900
+
+
+def test_successes_never_count_toward_the_address_bucket(env):
+    _call("ACME-SS1-ABCDEF12", user=_email_user(1), request=_req(), phone="0800")
+    assert pr.claim_ip_limiter.check("ip:8.8.8.8") is None
 
 
 def test_shared_proxy_address_never_locks_everyone_out(env):
@@ -326,3 +359,25 @@ def test_redeemed_code_is_not_an_oracle_for_other_callers(env):
 def test_revoked_code_is_not_idempotent_for_its_student(env):
     env.store.tables["claim_codes"][0].update(redeemed_at="2026-01-01", revoked_at="2026-01-02")
     assert _status("ACME-SS1-ABCDEF12", user_id="prov-1", phone="0800").status_code == 404
+
+
+def test_idempotent_success_requires_claim_state_claimed(env):
+    # Request 1 holds the stamp but has not finished (or failed): the user row is
+    # not claimed, so a second request must NOT be told it succeeded.
+    env.store.tables["claim_codes"][0]["redeemed_at"] = "2026-01-01"
+    assert _status("ACME-SS1-ABCDEF12", user_id="prov-1", phone="0800").status_code == 404
+    env.claim_state["prov-1"] = "claimed"
+    res = _call("ACME-SS1-ABCDEF12", user_id="prov-1", phone="0800")
+    assert res.data == {"claimed": True, "school_id": "school-1"}
+
+
+def test_unknown_and_redeemed_codes_return_identical_bodies_and_same_lookups(env, monkeypatch):
+    _call("ACME-SS1-ABCDEF12", user_id="prov-1", phone="0800")
+    calls = []
+    real = pr._already_claimed_by_caller
+    monkeypatch.setattr(pr, "_already_claimed_by_caller",
+                        lambda c, u: calls.append(c) or real(c, u))
+    redeemed = _status("ACME-SS1-ABCDEF12", user_id="other")
+    unknown = _status("NOPE-SS1-00000000", user_id="other")
+    assert (redeemed.status_code, redeemed.detail) == (unknown.status_code, unknown.detail)
+    assert len(calls) == 2  # the extra lookup runs for both

@@ -57,6 +57,9 @@ LIMITS: dict[str, tuple[int, int]] = {
     # code guessing: the code space is small, so this stays tight per email
     "reset_confirm_fail_email": (15 * 60, 5),
     "reset_confirm_fail_ip": (15 * 60, 100),
+    # account creation (successes), per address; generous, skipped without an address
+    "guest_create_ip": (60 * 60, 60),
+    "wallet_create_ip": (60 * 60, 60),
     # admin MFA
     "mfa_request_user": (60 * 60, 6),
     "mfa_verify_fail_user": (15 * 60, 8),
@@ -74,6 +77,8 @@ BACKOFF_CAPS: dict[str, int] = {
     "email_code_ip": 15 * 60,
     "reset_request_ip": 15 * 60,
     "reset_confirm_fail_ip": 15 * 60,
+    "guest_create_ip": 15 * 60,
+    "wallet_create_ip": 15 * 60,
 }
 STRIKE_DECAY_SECONDS = 24 * 60 * 60
 SWEEP_INTERVAL_SECONDS = 60

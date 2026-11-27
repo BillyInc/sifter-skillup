@@ -1245,22 +1245,33 @@ class ClaimRequest(BaseModel):
 #
 # Two limiters, aligned with auth_rate_limit.py (availability beats strictness):
 # - Per user (strict, with a daily cap): stops guessing from one account.
-# - Per client address (loose, 15 minutes only, no daily cap, so a block can
-#   never outlast 15 minutes): guest accounts are cheap to create, so it covers
-#   one address across many throwaway guests. It is applied ONLY to guest
-#   callers. A school shares one NAT address, and a hostile user could otherwise
-#   fill that bucket and make a 429 block every student's CORRECT code. A
-#   signed-in (non-guest) caller is limited per account only, never counted
-#   against or blocked by the address bucket. It is also used only when the real
-#   client address is known (auth_rate_limit.client_ip returns None for a
-#   private/loopback proxy peer).
+# - Per client address (loose: 300 failures per 15 minutes, no daily cap, so a
+#   block can never outlast 15 minutes): accounts are cheap to create, so it
+#   covers one address across many throwaway accounts. It applies to EVERY
+#   authenticated provider type (guest, base-wallet, email, telegram): a
+#   guest-only bucket is bypassed by minting non-guest accounts, which made
+#   guessing the legacy 8-hex (32-bit) codes effectively unthrottled. It is
+#   used only when the real client address is known (auth_rate_limit.client_ip
+#   returns None for a private/loopback proxy peer).
 #
-# Known limits, accepted on purpose: both limiters are in memory and per worker,
-# so with N workers the effective ceiling is up to N times these numbers and the
-# counts are not atomic across workers (no global counter, which would itself be
-# a denial-of-service lever). The edge rate limit is the primary defence, and
-# the rate limits on guest-account creation are what keeps the per-address
-# limit meaningful: a signed-in attacker bypasses it by minting accounts.
+# Trade-off, accepted on purpose: the 429 pre-check runs BEFORE the code is
+# validated (validating first would turn 404-vs-success into a guessing oracle
+# behind the block). So a hostile user at a shared address (a school NAT) can
+# fill the bucket with 300 failures and block everyone's correct codes at that
+# address for up to 15 minutes. A signed-in user with zero failures of their
+# own presenting a correct code cannot be exempted safely: a freshly minted
+# attacker account also has zero failures, so the exemption would reopen the
+# guessing hole. Mitigations: the 300 ceiling is far above normal school use,
+# the lockout is capped at 15 minutes, and per-address limits on guest and
+# base-wallet account creation (auth_rate_limit: guest_create_ip,
+# wallet_create_ip) make filling the bucket expensive.
+#
+# Known limits: both limiters are in memory and per worker, so with N workers
+# the effective ceiling is up to N times these numbers and the counts are not
+# atomic across workers (no global counter, which would itself be a
+# denial-of-service lever). The edge rate limit is the primary defence. Legacy
+# 8-hex codes remain guessable at the edge-limited rate; reissuing them is a
+# product decision.
 CLAIM_FAILURES_PER_WINDOW = 10
 CLAIM_IP_FAILURES_PER_WINDOW = 300
 claim_limiter = UploadRateLimiter(
@@ -1280,8 +1291,8 @@ _CLAIM_REJECTED = "Invalid or expired code. Check it, or ask your school to reis
 def _claim_scopes(request: Optional[Request], current_user: dict) -> list:
     scopes = [(claim_limiter, f"user:{current_user.get('id')}")]
     ip = client_ip(request) if request is not None else None
-    # Address bucket: guests only (see the note above the limiters).
-    if ip and current_user.get("auth_provider") == "guest":
+    # Address bucket: every provider type (see the note above the limiters).
+    if ip:
         scopes.append((claim_ip_limiter, f"ip:{ip}"))
     return scopes
 
@@ -1300,14 +1311,23 @@ def _already_claimed_by_caller(code: str, caller_id: str) -> Optional[str]:
     it; every other caller gets the same uniform rejection as an unknown code.
     A merge redemption deletes the provisioned row (and its code, by cascade),
     so only the in-place claim can be recognised here.
+
+    Success requires the users row to show claim_state == 'claimed': the stamp
+    on the code is set BEFORE the user update, so a request that still holds the
+    stamp may yet fail and reopen the code. Both reads always run (for unknown
+    and redeemed codes alike) so latency does not distinguish them.
     """
     res = _svc().table("claim_codes").select(
         "id, student_id, school_id, redeemed_at, revoked_at"
     ).eq("code", code).eq("student_id", caller_id).limit(5).execute()
+    urow = _users().select("claim_state").eq("id", caller_id).limit(1).execute()
+    claimed = any(r.get("claim_state") == "claimed" for r in (urow.data or []))
+    school = None
     for row in res.data or []:
         if row.get("redeemed_at") and not row.get("revoked_at"):
-            return row.get("school_id") or ""
-    return None
+            school = row.get("school_id") or ""
+            break
+    return school if claimed else None
 
 
 @router.post("/students/claim", response_model=ResponseModel)
@@ -1351,7 +1371,10 @@ async def claim_account(
         ).limit(1).execute()
         cc = (cres.data or [None])[0]
         if not cc or (cc.get("expires_at") and cc["expires_at"] < _now()):
-            prior = None if cc else _already_claimed_by_caller(code, current_user["id"])
+            # Always run the lookup so unknown and redeemed codes take equal time.
+            prior = _already_claimed_by_caller(code, current_user["id"])
+            if cc:
+                prior = None  # expired but unredeemed: never a success
             if prior is not None:
                 # Double tap: the first request already claimed this account.
                 return ResponseModel(

@@ -670,6 +670,11 @@ async def auth_base_wallet(body: dict, request: Request):
     if existing.data:
         user = existing.data[0]
     else:
+        # Per-address cap on NEW wallet accounts (fresh keypairs are free). Skipped
+        # when the address is unknown; existing wallets are never limited.
+        ip = auth_rate_limit.client_ip(request)
+        auth_rate_limit.enforce("wallet_create_ip", ip or "")
+        auth_rate_limit.record("wallet_create_ip", ip or "")
         user = _create_user(wallet_address=wallet_address, username=f"0x{wallet_address[2:6]}...{wallet_address[-4:]}", auth_provider="base")
     token = Auth.create_jwt(user["id"], token_version=Auth.token_version_of(user))
     await _post_auth_device_register(user["id"], body, request)
@@ -678,6 +683,10 @@ async def auth_base_wallet(body: dict, request: Request):
 
 @app.post("/api/auth/guest", response_model=ResponseModel)
 async def auth_guest(request: Request):
+    # Per-address cap on guest creation (skipped when the address is unknown).
+    ip = auth_rate_limit.client_ip(request)
+    auth_rate_limit.enforce("guest_create_ip", ip or "")
+    auth_rate_limit.record("guest_create_ip", ip or "")
     uid = uuid.uuid4().hex[:8]
     user = _create_user(username=f"Guest_{uid}", auth_provider="guest")
     token = Auth.create_jwt(user["id"], token_version=Auth.token_version_of(user))
