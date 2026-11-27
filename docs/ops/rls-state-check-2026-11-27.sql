@@ -12,8 +12,9 @@
 --           pg_policies / storage metadata only. No DDL, no DML. The only
 --           functions used are catalog and privilege-inspection functions
 --           (has_*_privilege, pg_has_role, pg_get_*, aclexplode, acldefault,
---           row_security_active, to_regclass) plus query_to_xml() over ONE fixed, constant
---           SELECT on storage.buckets (section 7, G7). Nothing here writes.
+--           row_security_active, to_regclass) plus query_to_xml() (read back with xmltable)
+--           over ONE fixed, constant SELECT on storage.buckets (section 7, G7).
+--           Nothing here writes.
 -- Secrets : the script is DESIGNED not to print secrets: it never prints
 --           role settings other than the PostgREST exposed-schema names
 --           (3d filters to pgrst.db_schemas / pgrst.db_extra_search_path,
@@ -26,14 +27,22 @@
 --           literal (an e-mail address, a UUID, a token, a bucket id).
 --           Section 2b does the same for the other scanned schemas (public,
 --           exposed schemas, realtime schemas; storage is in 6c).
---           Section 6a prints bucket ids and names (and section 7 prints
---           bucket names), and section 1d prints column names. Section 7
---           replaces quoted string literals in policy text by '?' and every
---           double-quoted identifier by "?", and shows at most about 300
---           characters of each expression (around the part that triggered the
---           flag, with ... where text was cut), but object names are still
---           printed. Skim sections 2, 2b, 6a and 6c (and 3d, 7) before sharing
---           the output; review_literals marks likely literal-bearing rows.
+--           Section 6a prints bucket ids, names and allowed_mime_types (and
+--           section 7 prints bucket names), and section 1d prints column names.
+--           Section 7 replaces quoted string literals in policy text by '?',
+--           every double-quoted identifier by "?" and every bare numeric
+--           literal by # (a lone 0 or 1 is kept so 1=1 stays readable), and
+--           shows at most about 300 characters of each expression (around the
+--           part that triggered the flag, with ... where text was cut). It
+--           does NOT hide names: unquoted column, function and type names in
+--           policy expressions print as written (section 7 detail, sections
+--           2, 2b and 6c), as do object names and the schema-name-shaped
+--           entries of a function's search_path (section 4 prints other
+--           entries as ?). A flagged row can look harmless after masking
+--           (c = 'x or true or y' is shown as c = '?'); read the verbatim
+--           policy in section 2, 2b or 6c. Skim sections 2, 2b, 4, 6a and 6c
+--           (and 3d, 7) before sharing the output; review_literals marks
+--           likely literal-bearing rows.
 -- How     : the SQL editor shows only the LAST statement's result, so run
 --           each numbered section on its own (select the section, Run), or
 --           run section 7 first for the one-screen summary. See
@@ -458,7 +467,13 @@ SELECT
   p.prosecdef                                            AS security_definer,
   -- Only the search_path entry is shown; any other function setting could
   -- hold a value that should not be printed, so only its count is shown.
-  (SELECT string_agg(o, '; ') FROM unnest(p.proconfig) o
+  -- Free text could hide in the value, so only schema-name-shaped entries (lower-case
+  -- identifiers, "$user", "") are printed; any other entry is shown as ?.
+  (SELECT 'search_path=' || string_agg(CASE WHEN btrim(t.v) ~ '^([a-z_][a-z0-9_$]*|"\$user"|"")$'
+                                            THEN btrim(t.v) ELSE '?' END, ', ' ORDER BY t.ord)
+     FROM unnest(p.proconfig) o
+     CROSS JOIN LATERAL regexp_split_to_table(regexp_replace(o, '^search_path=', '', 'i'), ',')
+                        WITH ORDINALITY AS t(v, ord)
     WHERE o ~* '^search_path=')                          AS search_path_setting,
   EXISTS (SELECT 1 FROM unnest(p.proconfig) o
            WHERE o ~* '^search_path=')                   AS has_search_path,
@@ -837,14 +852,23 @@ expr AS (  -- one row per USING / WITH CHECK expression, normalised
   -- kind cannot desynchronise the quote pairing: a '...' string literal becomes
   -- '?' (a literal that is exactly a role name or JWT claim key the patterns use
   -- is kept); a "..." identifier (any name, including one that holds an
-  -- apostrophe, a space or a doubled quote) becomes "?". Everything else is kept.
+  -- apostrophe, a space or a doubled quote) becomes "?"; a bare numeric literal
+  -- becomes # (a lone 0 or 1 is kept, see above). Everything else is kept (unquoted
+  -- column, function and type names print as written). Masking affects the DISPLAY
+  -- only: detection (the n column above) runs on the unredacted text.
   CROSS JOIN LATERAL (
     SELECT coalesce(string_agg(
              CASE WHEN m.g[1] IS NOT NULL THEN
                     CASE WHEN m.g[1] ~ '^''(anon|authenticated|service_role|role|email|sub|app_metadata|user_metadata|request\.jwt\.claims|request\.jwt\.claim\.role)''$'
                          THEN m.g[1] ELSE '''?''' END
                   WHEN m.g[2] IS NOT NULL THEN '"?"'
-                  ELSE coalesce(m.g[3], m.g[4]) END,
+                  ELSE coalesce(regexp_replace(m.g[3],
+                         -- bare numeric literals become #: decimal, 3.14, .5, 1e9, 1.5e-3, 1_000,
+                         -- 0x.. / 0b.. / 0o.. (negative numbers keep their minus sign). A lone 0 or 1
+                         -- is kept so an always-true arm such as 1=1 stays readable. Digits inside
+                         -- names (col1, int4) are not literals: \m only matches at the start of a word.
+                         '(?![01](?![0-9A-Za-z_]|\.[0-9A-Za-z_]))(?:\m0[xX][0-9a-fA-F_]+|\m0[bB][01_]+|\m0[oO][0-7_]+|\m[0-9][0-9_]*(?:\.[0-9_]*)?(?:[eE][+-]?[0-9]+)?|\.[0-9][0-9_]*(?:[eE][+-]?[0-9]+)?)',
+                         '#', 'g'), m.g[4]) END,
              '' ORDER BY m.ord), '') AS full
     FROM regexp_matches(k.raw, '(''(?:[^'']|'''')*'')|("(?:[^"]|"")*")|([^''"]+)|([''"])', 'g')
          WITH ORDINALITY AS m(g, ord)
@@ -979,11 +1003,16 @@ openpol2 AS (
          OR ((o.u_rev OR o.ce_rev) AND (o.hits_anon OR o.hits_auth)))
 ),
 buckets AS (   -- one fixed constant SELECT on storage.buckets, only if it exists
-  SELECT (xpath('/row/name/text()', x))[1]::text           AS name,
-         coalesce((xpath('/row/public/text()', x))[1]::text, 'false')::boolean AS is_public
-  FROM unnest(xpath('/table/row',
-         CASE WHEN to_regclass('storage.buckets') IS NOT NULL
-              THEN query_to_xml('SELECT name, public FROM storage.buckets', false, false, '') END)) AS x
+  -- Control characters (including tab, newline and the ones XML 1.0 cannot carry) are replaced by ?
+  -- inside that SELECT, so a hostile bucket name can neither make query_to_xml produce a document
+  -- the parser rejects (which would abort the whole statement) nor break the one-line display. xmltable returns the text unescaped (a<b&c stays a<b&c) and an empty
+  -- name stays an empty string.
+  SELECT coalesce(x.name, '')                  AS name,
+         coalesce(x.is_public = 'true', false) AS is_public
+  FROM xmltable('/table/row'
+         PASSING CASE WHEN to_regclass('storage.buckets') IS NOT NULL
+                      THEN query_to_xml('SELECT regexp_replace(name, ''[\x01-\x1F\x7F\uFFFE\uFFFF]'', ''?'', ''g'') AS name, public FROM storage.buckets', false, false, '') END
+         COLUMNS name text PATH 'name', is_public text PATH 'public') AS x
 ),
 bucket_rls AS (
   SELECT CASE WHEN to_regclass('storage.buckets') IS NOT NULL
@@ -1171,7 +1200,7 @@ flags AS (
 
   -- G7: storage ------------------------------------------------------
   UNION ALL
-  SELECT 'G7', 'MEDIUM', 'storage.bucket ' || b.name,
+  SELECT 'G7', 'MEDIUM', 'storage.bucket ' || CASE WHEN b.name = '' THEN '(empty name)' ELSE b.name END,
          'public bucket: objects are readable by URL without authentication'
   FROM buckets b WHERE b.is_public
   UNION ALL
