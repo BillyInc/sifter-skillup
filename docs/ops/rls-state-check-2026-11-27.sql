@@ -1,23 +1,43 @@
 -- =====================================================================
 -- READ-ONLY. Run in the Supabase SQL editor. Share the output with the
--- maintainer.
+-- maintainer only after skimming it (see "Before sharing" in
+-- docs/ops/rls-state-check-README.md).
 --
 -- Purpose : establish the LIVE row-level-security and grant state of the
 --           skillup_dev schema (audit finding C1), which cannot be known
---           from the repository files alone.
--- Contents: SELECT statements against pg_catalog / information_schema /
---           pg_policies / storage metadata only. No DDL, no DML, no
---           function with side effects. Nothing here contains a secret.
+--           from the repository files alone. Sections 6c-6e and 7 also
+--           cover public, other API-exposed schemas, storage, realtime
+--           and extensions.
+-- Contents: SELECT statements and read-only CTEs against pg_catalog /
+--           pg_policies / storage metadata only. No DDL, no DML. The only
+--           functions used are catalog and privilege-inspection functions
+--           (has_*_privilege, pg_get_*, aclexplode, row_security_active,
+--           to_regclass) plus query_to_xml() over ONE fixed, constant
+--           SELECT on storage.buckets (section 7, G7). Nothing here writes.
+-- Secrets : the script is DESIGNED not to print secrets: it never prints
+--           role settings other than the PostgREST exposed-schema names
+--           (3d filters to pgrst.db_schemas / pgrst.db_extra_search_path;
+--           pgrst.jwt_secret and any other setting are never selected),
+--           function bodies, function settings other than search_path,
+--           column defaults, connection strings or table data. It is NOT
+--           guaranteed secret-free: section 2 prints every policy
+--           expression verbatim, and an expression can embed a literal
+--           (an e-mail address, a UUID, a token). Skim section 2 (and the
+--           section 7 detail column) before sharing the output.
 -- How     : the SQL editor shows only the LAST statement's result, so run
 --           each numbered section on its own (select the section, Run), or
 --           run section 7 first for the one-screen summary. See
---           docs/ops/rls-state-check-README.md.
+--           docs/ops/rls-state-check-README.md. Section 7 is a heuristic
+--           summary: reading section 2 is mandatory, not optional.
 -- Schema  : edit nothing; the schema name 'skillup_dev' is spelled out in
 --           each section. Sections look the schema up by name in
 --           pg_namespace, so a missing schema yields empty results rather
---           than an error. Exceptions: 6a reads storage.buckets, and the
---           roles anon / authenticated / service_role must exist (they do
---           on every Supabase project); otherwise those sections error.
+--           than an error (section 7 then prints a G0 "schema missing"
+--           row, so empty is never mistaken for clean). The roles anon /
+--           authenticated / service_role must exist (they do on every
+--           Supabase project); otherwise the privilege functions error.
+--           Requires PostgreSQL 15+ for the security_invoker view option
+--           (the query itself only reads reloptions).
 -- =====================================================================
 
 
@@ -57,6 +77,15 @@ SELECT
   has_any_column_privilege('authenticated', c.oid, 'SELECT') AS auth_any_col_select,
   has_any_column_privilege('authenticated', c.oid, 'INSERT') AS auth_any_col_insert,
   has_any_column_privilege('authenticated', c.oid, 'UPDATE') AS auth_any_col_update,
+  -- TRUNCATE bypasses RLS entirely; TRIGGER and REFERENCES are rarely wanted.
+  concat_ws(',',
+    CASE WHEN has_table_privilege('anon', c.oid, 'TRUNCATE')   THEN 'TRUNCATE'   END,
+    CASE WHEN has_table_privilege('anon', c.oid, 'TRIGGER')    THEN 'TRIGGER'    END,
+    CASE WHEN has_any_column_privilege('anon', c.oid, 'REFERENCES') THEN 'REFERENCES' END) AS anon_truncate_trigger_refs,
+  concat_ws(',',
+    CASE WHEN has_table_privilege('authenticated', c.oid, 'TRUNCATE')   THEN 'TRUNCATE'   END,
+    CASE WHEN has_table_privilege('authenticated', c.oid, 'TRIGGER')    THEN 'TRIGGER'    END,
+    CASE WHEN has_any_column_privilege('authenticated', c.oid, 'REFERENCES') THEN 'REFERENCES' END) AS auth_truncate_trigger_refs,
   has_table_privilege('service_role', c.oid, 'SELECT')      AS service_select,
   has_table_privilege('service_role', c.oid, 'INSERT')      AS service_insert,
   has_table_privilege('service_role', c.oid, 'UPDATE')      AS service_update,
@@ -113,8 +142,15 @@ ORDER BY t.name;
 --     supabase_admin). A NULL relacl is shown as the owner-default ACL.
 --     grantee PUBLIC = granted to everyone. Compare with 1a, which is the
 --     effective result.
+--     SIZE: one row per (object, grantee, grantor). The SQL editor caps the
+--     displayed result at 1000 rows. result_rows (same on every row) is the
+--     true total and `warning` is set on every row once it reaches 900:
+--     then run 1c-compact below instead (one row per object).
 -- ---------------------------------------------------------------------
-SELECT c.relname AS object_name,
+SELECT count(*) OVER ()                                      AS result_rows,
+       CASE WHEN count(*) OVER () >= 900
+            THEN 'WARNING: near/over the 1000-row editor cap; run 1c-compact instead' END AS warning,
+       c.relname AS object_name,
        CASE c.relkind WHEN 'r' THEN 'table' WHEN 'p' THEN 'partitioned table'
             WHEN 'v' THEN 'view' WHEN 'm' THEN 'materialized view'
             WHEN 'f' THEN 'foreign table' END AS kind,
@@ -131,6 +167,41 @@ WHERE n.nspname = 'skillup_dev'
                          WHERE rolname IN ('anon', 'authenticated', 'service_role')))
 GROUP BY c.relname, c.relkind, a.grantee, a.grantor
 ORDER BY c.relname, grantee, grantor;
+
+
+-- ---------------------------------------------------------------------
+-- 1c-compact. Same ACL information, one row per object (grants collapsed
+--     into one string: grantee=privileges[grantor]; ...). Privilege codes:
+--     a=INSERT r=SELECT w=UPDATE d=DELETE D=TRUNCATE x=REFERENCES t=TRIGGER.
+-- ---------------------------------------------------------------------
+SELECT g.object_name, g.kind,
+       count(*) OVER ()                                   AS result_rows,
+       string_agg(g.grantee || '=' || g.codes || '/' || g.grantor, '; '
+                  ORDER BY g.grantee, g.grantor)          AS grants
+FROM (
+  SELECT c.oid, c.relname AS object_name,
+         CASE c.relkind WHEN 'r' THEN 'table' WHEN 'p' THEN 'partitioned table'
+              WHEN 'v' THEN 'view' WHEN 'm' THEN 'materialized view'
+              WHEN 'f' THEN 'foreign table' END            AS kind,
+         CASE a.grantee WHEN 0 THEN 'PUBLIC' ELSE pg_get_userbyid(a.grantee) END AS grantee,
+         pg_get_userbyid(a.grantor)                        AS grantor,
+         string_agg(CASE a.privilege_type
+                      WHEN 'INSERT' THEN 'a' WHEN 'SELECT' THEN 'r' WHEN 'UPDATE' THEN 'w'
+                      WHEN 'DELETE' THEN 'd' WHEN 'TRUNCATE' THEN 'D'
+                      WHEN 'REFERENCES' THEN 'x' WHEN 'TRIGGER' THEN 't'
+                      ELSE a.privilege_type END, '' ORDER BY a.privilege_type) AS codes
+  FROM pg_class c
+  JOIN pg_namespace n ON n.oid = c.relnamespace
+  CROSS JOIN LATERAL aclexplode(coalesce(c.relacl, acldefault('r', c.relowner))) a
+  WHERE n.nspname = 'skillup_dev'
+    AND c.relkind IN ('r', 'p', 'v', 'm', 'f')
+    AND (a.grantee = 0
+         OR a.grantee IN (SELECT oid FROM pg_roles
+                           WHERE rolname IN ('anon', 'authenticated', 'service_role')))
+  GROUP BY c.oid, c.relname, c.relkind, a.grantee, a.grantor
+) g
+GROUP BY g.oid, g.object_name, g.kind
+ORDER BY g.object_name;
 
 
 -- ---------------------------------------------------------------------
@@ -158,10 +229,17 @@ ORDER BY c.relname, at.attname, grantee;
 
 
 -- ---------------------------------------------------------------------
--- 2. Policies on skillup_dev (every policy, verbatim)
+-- 2. Policies on skillup_dev (every policy, verbatim). MANDATORY REVIEW:
+--    section 7 only pattern-matches. Expressions are printed as stored, so
+--    one can embed a literal e-mail address, UUID or token:
+--    review_literals = true marks expressions that look like they contain
+--    one. Skim this output before sharing it.
 -- ---------------------------------------------------------------------
 SELECT schemaname, tablename, policyname, permissive,
        roles::text AS roles, cmd,
+       (coalesce(qual, '') || ' ' || coalesce(with_check, ''))
+         ~* '([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}|[a-z0-9_=+/-]{32,})'
+                                                                  AS review_literals,
        qual        AS using_expr,
        with_check  AS with_check_expr
 FROM pg_policies
@@ -186,9 +264,19 @@ LEFT JOIN pg_namespace n ON n.nspname = s.schema_name;
 
 -- ---------------------------------------------------------------------
 -- 3b. Default privileges (pg_default_acl): what NEW tables / sequences /
---     functions created by each role automatically grant. One row per
+--     functions automatically grant to anon / authenticated / service_role
+--     / PUBLIC. Scoped to the relevant schemas (skillup_dev, public,
+--     storage, or "all schemas") and to the roles that actually create
+--     objects there (owners of existing objects in those schemas, plus
+--     postgres, supabase_admin and the current user). One row per
 --     (creating role, schema, object type, grantee).
 -- ---------------------------------------------------------------------
+WITH scope AS (SELECT oid FROM pg_namespace WHERE nspname IN ('skillup_dev', 'public', 'storage')),
+creators AS (
+  SELECT relowner AS role_oid FROM pg_class WHERE relnamespace IN (SELECT oid FROM scope)
+  UNION SELECT proowner FROM pg_proc WHERE pronamespace IN (SELECT oid FROM scope)
+  UNION SELECT oid FROM pg_roles WHERE rolname IN ('postgres', 'supabase_admin', current_user)
+)
 SELECT pg_get_userbyid(d.defaclrole)                     AS objects_created_by,
        coalesce(n.nspname, '(all schemas)')              AS in_schema,
        CASE d.defaclobjtype
@@ -200,6 +288,11 @@ SELECT pg_get_userbyid(d.defaclrole)                     AS objects_created_by,
 FROM pg_default_acl d
 LEFT JOIN pg_namespace n ON n.oid = d.defaclnamespace
 CROSS JOIN LATERAL aclexplode(d.defaclacl) a
+WHERE d.defaclrole IN (SELECT role_oid FROM creators)
+  AND (d.defaclnamespace = 0 OR d.defaclnamespace IN (SELECT oid FROM scope))
+  AND (a.grantee = 0
+       OR a.grantee IN (SELECT oid FROM pg_roles
+                         WHERE rolname IN ('anon', 'authenticated', 'service_role')))
 GROUP BY 1, 2, 3, 4
 ORDER BY 1, 2, 3, 4;
 
@@ -220,14 +313,18 @@ ORDER BY c.relname;
 
 -- ---------------------------------------------------------------------
 -- 3d. Best-effort hint: which schemas the REST API exposes. Supabase
---     usually stores this as a setting on the 'authenticator' role. An
---     empty result does not mean "not exposed": confirm in Dashboard ->
---     Project Settings -> API -> Exposed schemas.
+--     usually stores this as a setting on the 'authenticator' role. The
+--     query selects ONLY the exposed-schema settings (pgrst.db_schemas,
+--     pgrst.db_extra_search_path). Other settings on the same role, such as
+--     pgrst.jwt_secret, are filtered out and never printed. An empty result
+--     does not mean "not exposed": confirm in Dashboard -> Project Settings
+--     -> API -> Exposed schemas.
 -- ---------------------------------------------------------------------
-SELECT r.rolname, s.setconfig::text AS role_settings
+SELECT r.rolname, c AS setting
 FROM pg_db_role_setting s
 JOIN pg_roles r ON r.oid = s.setrole
-WHERE s.setconfig::text ILIKE '%pgrst%';
+CROSS JOIN LATERAL unnest(s.setconfig) AS c
+WHERE c ~* '^pgrst\.db_(schemas|extra_search_path)=';
 
 
 -- ---------------------------------------------------------------------
@@ -241,8 +338,14 @@ SELECT
   pg_get_function_identity_arguments(p.oid)              AS arguments,
   CASE p.prokind WHEN 'f' THEN 'function' WHEN 'p' THEN 'procedure' ELSE p.prokind::text END AS kind,
   p.prosecdef                                            AS security_definer,
-  p.proconfig::text                                      AS proconfig,   -- look for search_path=...
-  (p.proconfig IS NOT NULL AND p.proconfig::text ILIKE '%search_path%') AS has_search_path,
+  -- Only the search_path entry is shown; any other function setting could
+  -- hold a value that should not be printed, so only its count is shown.
+  (SELECT string_agg(o, '; ') FROM unnest(p.proconfig) o
+    WHERE o ~* '^search_path=')                          AS search_path_setting,
+  EXISTS (SELECT 1 FROM unnest(p.proconfig) o
+           WHERE o ~* '^search_path=')                   AS has_search_path,
+  (SELECT count(*) FROM unnest(p.proconfig) o
+    WHERE o !~* '^search_path=')                         AS other_settings_hidden,
   pg_get_userbyid(p.proowner)                            AS owner,
   EXISTS (SELECT 1
             FROM aclexplode(coalesce(p.proacl, acldefault('f', p.proowner))) a
@@ -283,11 +386,33 @@ ORDER BY c.relname;
 
 
 -- ---------------------------------------------------------------------
--- 6a. Storage buckets: public flag, size and MIME limits
+-- 6a. Storage buckets: public flag, size and MIME limits. If the running
+--     role is itself subject to RLS on storage.buckets (or there are no
+--     buckets) an extra first row with a `note` explains that the list may
+--     be incomplete, so an empty result is never read as "no buckets".
 -- ---------------------------------------------------------------------
-SELECT id, name, public, file_size_limit, allowed_mime_types, created_at, updated_at
-FROM storage.buckets
-ORDER BY name;
+WITH b AS (
+  SELECT id, name, public, file_size_limit, allowed_mime_types, created_at, updated_at
+  FROM storage.buckets
+),
+w AS (SELECT row_security_active('storage.buckets') AS rls_active, (SELECT count(*) FROM b) AS n)
+SELECT note, id, name, public, file_size_limit, allowed_mime_types, created_at, updated_at
+FROM (
+SELECT 0 AS sort_key,
+       CASE WHEN w.rls_active
+            THEN 'WARNING: row-level security applies to ' || current_user
+                 || ' on storage.buckets; the buckets below may be incomplete. Re-run as a role that bypasses RLS (postgres in the SQL editor).'
+            ELSE 'No buckets exist.' END AS note,
+       NULL::text AS id, NULL::text AS name, NULL::boolean AS public,
+       NULL::bigint AS file_size_limit, NULL::text[] AS allowed_mime_types,
+       NULL::timestamptz AS created_at, NULL::timestamptz AS updated_at
+FROM w WHERE w.rls_active OR w.n = 0
+UNION ALL
+SELECT 1, NULL, b.id::text, b.name::text, b.public, b.file_size_limit::bigint,
+       b.allowed_mime_types::text[], b.created_at::timestamptz, b.updated_at::timestamptz
+FROM b
+) u
+ORDER BY sort_key, name;
 
 
 -- ---------------------------------------------------------------------
@@ -313,46 +438,144 @@ ORDER BY tablename, cmd, policyname;
 
 
 -- ---------------------------------------------------------------------
--- 7. SUMMARY of red flags (one screen). Empty result = nothing flagged.
---    These flags are heuristics over catalog data; they point at things to
---    read, they are not proof. Sections 1a, 2 and 4 are the evidence.
+-- 6d. Realtime: tables in the supabase_realtime publication, with RLS flag
+--     and policy count. Realtime delivers changes only to roles that pass
+--     RLS, so a published table with RLS off (or an open SELECT policy)
+--     streams its rows to anyone with the anon key.
+-- ---------------------------------------------------------------------
+SELECT pt.schemaname, pt.tablename,
+       c.relrowsecurity AS rls_enabled,
+       (SELECT count(*) FROM pg_policies p
+         WHERE p.schemaname = pt.schemaname AND p.tablename = pt.tablename) AS policy_count,
+       has_any_column_privilege('anon', c.oid, 'SELECT')          AS anon_select,
+       has_any_column_privilege('authenticated', c.oid, 'SELECT') AS authenticated_select
+FROM pg_publication_tables pt
+LEFT JOIN pg_class c ON c.relname = pt.tablename
+ AND c.relnamespace = (SELECT oid FROM pg_namespace WHERE nspname = pt.schemaname)
+WHERE pt.pubname = 'supabase_realtime'
+ORDER BY pt.schemaname, pt.tablename;
+
+
+-- ---------------------------------------------------------------------
+-- 6e. Installed extensions (names, versions, schemas only).
+-- ---------------------------------------------------------------------
+SELECT e.extname, e.extversion, n.nspname AS installed_in_schema,
+       e.extname IN ('dblink', 'pg_net', 'http', 'postgres_fdw', 'file_fdw',
+                     'plpython3u', 'plperlu', 'pltclu', 'plv8', 'pg_cron',
+                     'supabase_vault', 'pgsodium', 'wrappers')   AS outbound_or_privileged
+FROM pg_extension e
+JOIN pg_namespace n ON n.oid = e.extnamespace
+ORDER BY e.extname;
+
+
+-- ---------------------------------------------------------------------
+-- 7. SUMMARY of red flags (one screen). The result is NEVER empty: the
+--    first rows are always G0 rows saying what was scanned. A section 7
+--    result with only G0 INFO rows means "nothing matched these patterns",
+--    not "clean": the flags are heuristics over catalog data that point at
+--    things to read, they are not proof. Sections 1a, 2 and 4 are the
+--    evidence, and reading section 2 is mandatory.
+--    Scope: skillup_dev, public, storage, every schema named in the
+--    pgrst.db_schemas setting (if present) and every schema that has a
+--    table in the supabase_realtime publication. Extension-owned objects
+--    are skipped.
 --    check_id:
+--      G0  always present. "scanned N tables, M policies, K functions,
+--          J views in <schema>" per scanned schema (views include
+--          materialized views), plus "schema missing" (HIGH if tables
+--          exist in public instead, else INFO) or "schema has no tables".
 --      G1  anon/authenticated holds SELECT/INSERT/UPDATE/DELETE (table or
---          column level) on a table that has RLS DISABLED.
+--          column level) on a table that has RLS DISABLED. HIGH when the
+--          role also has USAGE on the schema; MEDIUM when the schema is
+--          known not to be in pgrst.db_schemas; INFO when no API role has
+--          schema USAGE (unreachable).
 --      G2  PERMISSIVE policy that applies to public/anon/authenticated and
---          whose USING or WITH CHECK is always-true: literally true, 1=1,
---          auth.role()='anon'/'authenticated', or auth.uid() IS NOT NULL.
---          HIGH = sensitive table and one of those roles actually holds the
---          matching privilege; REVIEW = same on a non-sensitive table
---          (fine only for genuine reference data); INFO = open policy but
---          the roles hold no matching privilege. Policies limited to
---          service_role are NOT flagged. Anything cleverer than the
---          patterns above is caught only by reading section 2.
---      G3  SECURITY DEFINER function executable by PUBLIC/anon (HIGH) or by
---          authenticated only (MEDIUM). Detail shows whether search_path
---          is pinned.
+--          whose USING or WITH CHECK is always true for that role:
+--          literally true, 1=1, auth.role()/auth.jwt()->>'role' equal to
+--          or IN a list containing anon/authenticated, auth.uid()/auth.jwt()
+--          IS NOT NULL, including the Supabase "(select auth.uid())"
+--          initplan style. HIGH = anon holds the matching privilege (any
+--          table), or authenticated holds it on a sensitive table;
+--          REVIEW = authenticated-only on a non-sensitive table (fine only
+--          for genuine reference data); INFO = open policy but no matching
+--          privilege is held. Restrictive policies are NOT evaluated (their
+--          count is shown), so a permissive true policy neutralised by a
+--          restrictive one is still flagged. Policies limited to
+--          service_role are not flagged. Anything cleverer is caught only
+--          by reading section 2. Also applies to storage.objects.
+--      G3  SECURITY DEFINER function (not a trigger function) executable
+--          by PUBLIC/anon (HIGH) or by authenticated only (MEDIUM, raised
+--          to HIGH when search_path is not pinned).
 --      G4  (info) RLS on, API roles hold grants, but the table has NO
 --          policy: SELECT returns no rows, UPDATE/DELETE silently affect 0
 --          rows, INSERT/upsert raises 42501 (audit C1a).
 --      G5  (info) RLS on, policies exist, an API role holds a write grant,
 --          but no permissive write policy for that role works without
---          auth.uid()/auth.jwt(). A caller with no Supabase JWT (e.g. the
---          anon key plus the app's own JWT) gets 42501 on INSERT and
---          silent 0-row UPDATE/DELETE. Heuristic: a policy that calls a
---          helper function wrapping auth.uid() looks independent here.
---      G6  View (HIGH) or materialized view (MEDIUM) that runs with owner
---          rights (no security_invoker=true) and that anon/authenticated
---          can SELECT: it can expose rows RLS on the base tables hides.
+--          auth.uid()/auth.jwt(). Expected for normal tables on a standard
+--          Supabase layout; only relevant if the backend uses that role
+--          without a Supabase JWT. A row appears only if a write policy
+--          targets that role (no policy for the role = simply blocked).
+--      G6  View or materialized view that runs with owner rights (no
+--          security_invoker=true) and that anon/authenticated can SELECT
+--          (HIGH for both: a matview copies base rows with no RLS).
+--      G7  Storage: public bucket (MEDIUM), or a warning that the running
+--          role is subject to RLS on storage.buckets so the bucket list
+--          may be incomplete. Open storage.objects policies and RLS-off
+--          storage tables appear as G2 / G1 rows.
+--      G8  Realtime: supabase_realtime publication summary (INFO), and
+--          published tables with RLS off (HIGH if anon/authenticated can
+--          SELECT, else MEDIUM) or with an open SELECT/ALL policy.
+--      G9  anon/authenticated holds TRUNCATE (bypasses RLS), TRIGGER or
+--          REFERENCES on a table. One row per table and role.
+--      G10 Installed extensions (INFO); dblink/pg_net/http-style ones are
+--          marked as outbound-capable or privileged.
 -- ---------------------------------------------------------------------
 WITH sensitive(name) AS (
   VALUES ('users'), ('game_states'), ('level_scores'), ('posts'), ('post_likes'),
-         ('comments'), ('notifications'), ('guild_messages'), ('guilds'),
-         ('guild_members'), ('career_context_items'), ('portfolio_accounts'),
-         ('claim_codes'), ('transactions'), ('withdrawals'), ('feedback'),
-         ('dm_threads'), ('dm_messages')
+         ('post_comments'), ('post_reports'), ('comments'), ('notifications'),
+         ('guild_messages'), ('guilds'), ('guild_members'), ('career_context_items'),
+         ('portfolio_accounts'), ('claim_codes'), ('transactions'), ('withdrawals'),
+         ('feedback'), ('user_feedback'), ('mapping_feedback'), ('dm_threads'),
+         ('dm_messages'), ('thread_participants'),
+         ('user_mfa_settings'), ('user_roles'), ('user_notes'), ('user_blocks'),
+         ('user_mutes'), ('user_last_position'), ('active_sessions'),
+         ('auth_email_codes'), ('oauth_states'), ('push_tokens'), ('onboarding_drafts'),
+         ('student_consents'), ('student_consent_requests'), ('student_affiliations'),
+         ('student_subject_choices'), ('student_subject_grade_sets'),
+         ('student_starting_points'), ('student_provision_drafts'),
+         ('student_pathway_choices'), ('student_merge_candidates'),
+         ('student_entrepreneurship_preferences'),
+         ('account_deletion_cooldowns'), ('institution_verification_submissions'),
+         ('institution_members'), ('institution_member_invites'),
+         ('learning_interest_events'), ('learning_interest_active_selections'),
+         ('referrals'), ('saved_items'), ('guidance_report_paths'), ('bookmarks'),
+         ('bookmark_folders'), ('collections'), ('friends'), ('friend_requests'),
+         ('follows'), ('follow_requests'), ('interview_sessions'),
+         ('merchandise_orders'), ('starknet_transactions'), ('xp_events'),
+         ('analytics_events'), ('notification_prefs'), ('project_members')
+),
+exposed_cfg AS (   -- ONLY the exposed-schema names; no other role setting is read
+  SELECT btrim(s) AS nspname
+  FROM pg_db_role_setting st
+  CROSS JOIN LATERAL unnest(st.setconfig) AS c
+  CROSS JOIN LATERAL unnest(string_to_array(regexp_replace(c, '^[^=]*=', ''), ',')) AS s
+  WHERE c ~* '^pgrst\.db_schemas='
+),
+rt AS (SELECT schemaname, tablename FROM pg_publication_tables WHERE pubname = 'supabase_realtime'),
+sc AS (
+  SELECT n.oid, n.nspname
+  FROM pg_namespace n
+  WHERE n.nspname !~ '^pg_' AND n.nspname <> 'information_schema'
+    AND ( n.nspname IN ('skillup_dev', 'public', 'storage')
+       OR n.nspname IN (SELECT nspname FROM exposed_cfg)
+       OR n.nspname IN (SELECT schemaname FROM rt) )
 ),
 tbl AS (
-  SELECT c.oid, c.relname, c.relrowsecurity,
+  SELECT c.oid, n.nspname, c.relname, c.relrowsecurity,
+         has_schema_privilege('anon', n.oid, 'USAGE')           AS anon_usage,
+         has_schema_privilege('authenticated', n.oid, 'USAGE')  AS auth_usage,
+         CASE WHEN NOT EXISTS (SELECT 1 FROM exposed_cfg) THEN 'unknown'
+              WHEN n.nspname IN (SELECT nspname FROM exposed_cfg) THEN 'yes' ELSE 'no' END AS exposed,
          (has_any_column_privilege('anon', c.oid, 'SELECT')
           OR has_any_column_privilege('anon', c.oid, 'INSERT')
           OR has_any_column_privilege('anon', c.oid, 'UPDATE')
@@ -366,26 +589,83 @@ tbl AS (
           OR has_table_privilege('anon', c.oid, 'DELETE'))          AS anon_write,
          (has_any_column_privilege('authenticated', c.oid, 'INSERT')
           OR has_any_column_privilege('authenticated', c.oid, 'UPDATE')
-          OR has_table_privilege('authenticated', c.oid, 'DELETE')) AS auth_write
+          OR has_table_privilege('authenticated', c.oid, 'DELETE')) AS auth_write,
+         concat_ws(',',
+           CASE WHEN has_table_privilege('anon', c.oid, 'TRUNCATE') THEN 'TRUNCATE' END,
+           CASE WHEN has_table_privilege('anon', c.oid, 'TRIGGER') THEN 'TRIGGER' END,
+           CASE WHEN has_any_column_privilege('anon', c.oid, 'REFERENCES') THEN 'REFERENCES' END) AS anon_extra,
+         concat_ws(',',
+           CASE WHEN has_table_privilege('authenticated', c.oid, 'TRUNCATE') THEN 'TRUNCATE' END,
+           CASE WHEN has_table_privilege('authenticated', c.oid, 'TRIGGER') THEN 'TRIGGER' END,
+           CASE WHEN has_any_column_privilege('authenticated', c.oid, 'REFERENCES') THEN 'REFERENCES' END) AS auth_extra
   FROM pg_class c
-  WHERE c.relnamespace IN (SELECT oid FROM pg_namespace WHERE nspname = 'skillup_dev')
-    AND c.relkind IN ('r', 'p')
+  JOIN sc n ON n.oid = c.relnamespace
+  WHERE c.relkind IN ('r', 'p')
+    AND NOT EXISTS (SELECT 1 FROM pg_depend d
+                     WHERE d.classid = 'pg_class'::regclass AND d.objid = c.oid AND d.deptype = 'e')
 ),
 pol AS (   -- permissive policies with a normalised expression
-  SELECT t.oid AS tbl_oid, p.tablename, p.policyname, p.cmd, p.roles,
+  SELECT t.oid AS tbl_oid, t.nspname, p.tablename, p.policyname, p.cmd, p.roles,
          p.qual, p.with_check,
          (p.roles && ARRAY['public', 'anon']::name[])           AS hits_anon,
          (p.roles && ARRAY['public', 'authenticated']::name[])  AS hits_auth,
-         lower(regexp_replace(coalesce(p.qual, ''),       '[()\s]|::[a-z ]+', '', 'g')) AS nq,
-         lower(regexp_replace(coalesce(p.with_check, ''), '[()\s]|::[a-z ]+', '', 'g')) AS nw,
-         ((coalesce(p.qual, '') || ' ' || coalesce(p.with_check, '')) ~* 'auth\.(uid|jwt)\s*\(') AS uses_auth_fn
+         ((coalesce(p.qual, '') || ' ' || coalesce(p.with_check, ''))
+            ~* '(auth\.(uid|jwt|role|email)\s*\(|request\.jwt)') AS uses_auth_fn
   FROM pg_policies p
-  JOIN tbl t ON t.relname = p.tablename
-  WHERE p.schemaname = 'skillup_dev'
-    AND p.permissive = 'PERMISSIVE'
+  JOIN tbl t ON t.nspname = p.schemaname AND t.relname = p.tablename
+  WHERE p.permissive = 'PERMISSIVE'
 ),
-openpol AS (  -- always-true-looking policies applying to an API role
+expr AS (  -- one row per USING / WITH CHECK expression, normalised
+  SELECT o.nspname, o.tablename, o.policyname, k.kind, k.raw,
+         -- lower-case; drop "AS alias" and ::type casts; drop the word
+         -- "select" (initplan wrapper); drop parentheses and whitespace
+         regexp_replace(
+           regexp_replace(
+             regexp_replace(
+               regexp_replace(lower(k.raw), '\s+as\s+[a-z_][a-z0-9_]*', '', 'g'),
+               '::(text|character varying|varchar|name|bpchar|uuid|boolean|bool|integer|int4|bigint|int8|jsonb|json|regclass|regrole)(\[\])?', '', 'g'),
+             '\mselect\M', '', 'g'),
+           '[()\s]', '', 'g') AS n
+  FROM pol o
+  CROSS JOIN LATERAL (VALUES ('USING', o.qual), ('WITH CHECK', o.with_check)) AS k(kind, raw)
+  WHERE k.raw IS NOT NULL
+),
+pat AS (   -- R = an expression that yields the caller's role
+  SELECT '(auth\.role|auth\.jwt->>''role''|current_setting''request\.jwt\.claim\.role''(,(true|false))?)' AS r,
+         '(''(anon|authenticated|service_role)'',?)+' AS lst
+),
+exprflag AS (
+  SELECT e.nspname, e.tablename, e.policyname, e.kind, e.raw,
+         -- true for every caller
+         (e.n ~ '^(true|1=1|true=true|notfalse|nottrue=false)$') AS p_all,
+         -- true for anon
+         (e.n ~ ('^' || pat.r || '=''anon''$') OR e.n ~ ('^''anon''=' || pat.r || '$')
+          OR (e.n ~ ('^' || pat.r || 'in' || pat.lst || '$') AND e.n LIKE '%''anon''%')
+          OR (e.n ~ ('^' || pat.r || '=anyarray\[' || pat.lst || '\]$') AND e.n LIKE '%''anon''%')
+          OR e.n ~ ('^' || pat.r || '(<>|!=)''authenticated''$')) AS p_anon,
+         -- true for authenticated
+         (e.n ~ ('^' || pat.r || '=''authenticated''$') OR e.n ~ ('^''authenticated''=' || pat.r || '$')
+          OR (e.n ~ ('^' || pat.r || 'in' || pat.lst || '$') AND e.n LIKE '%''authenticated''%')
+          OR (e.n ~ ('^' || pat.r || '=anyarray\[' || pat.lst || '\]$') AND e.n LIKE '%''authenticated''%')
+          OR e.n ~ ('^' || pat.r || '(<>|!=)''anon''$')
+          OR e.n ~ '^(auth\.(uid|jwt|role)isnotnull|notauth\.(uid|jwt|role)isnull)$') AS p_auth
+  FROM expr e CROSS JOIN pat
+),
+openpol AS (  -- policies that are always-true for an API role they apply to
   SELECT o.*,
+         bool_or(f.p_all OR f.p_anon) OVER w AS pass_anon,
+         bool_or(f.p_all OR f.p_auth) OVER w AS pass_auth,
+         string_agg(f.kind || ' ' || f.raw, ' / ') FILTER (WHERE f.p_all OR f.p_anon OR f.p_auth) OVER w AS matched_expr
+  FROM pol o
+  JOIN exprflag f ON f.nspname = o.nspname AND f.tablename = o.tablename AND f.policyname = o.policyname
+  WINDOW w AS (PARTITION BY o.nspname, o.tablename, o.policyname)
+),
+openpol2 AS (
+  SELECT DISTINCT ON (o.nspname, o.tablename, o.policyname)
+         o.nspname, o.tbl_oid, o.tablename, o.policyname, o.cmd, o.roles,
+         (o.hits_anon AND o.pass_anon) AS anon_open,
+         (o.hits_auth AND o.pass_auth) AS auth_open,
+         o.matched_expr,
          CASE o.cmd
            WHEN 'SELECT' THEN has_any_column_privilege('anon', o.tbl_oid, 'SELECT')
            WHEN 'INSERT' THEN has_any_column_privilege('anon', o.tbl_oid, 'INSERT')
@@ -404,68 +684,153 @@ openpol AS (  -- always-true-looking policies applying to an API role
               OR has_any_column_privilege('authenticated', o.tbl_oid, 'INSERT')
               OR has_any_column_privilege('authenticated', o.tbl_oid, 'UPDATE')
               OR has_table_privilege('authenticated', o.tbl_oid, 'DELETE')) END AS auth_holds
-  FROM pol o
-  WHERE (o.hits_anon OR o.hits_auth)
-    AND ( o.nq IN ('true', '1=1', 'true=true', 'auth.role=''anon''', 'auth.role=''authenticated''', 'auth.uidisnotnull')
-       OR o.nw IN ('true', '1=1', 'true=true', 'auth.role=''anon''', 'auth.role=''authenticated''', 'auth.uidisnotnull') )
+  FROM openpol o
+  WHERE o.matched_expr IS NOT NULL
+    AND ((o.hits_anon AND o.pass_anon) OR (o.hits_auth AND o.pass_auth))
+),
+buckets AS (   -- one fixed constant SELECT on storage.buckets, only if it exists
+  SELECT (xpath('/row/name/text()', x))[1]::text           AS name,
+         coalesce((xpath('/row/public/text()', x))[1]::text, 'false')::boolean AS is_public
+  FROM unnest(xpath('/table/row',
+         CASE WHEN to_regclass('storage.buckets') IS NOT NULL
+              THEN query_to_xml('SELECT name, public FROM storage.buckets', false, false, '') END)) AS x
+),
+bucket_rls AS (
+  SELECT CASE WHEN to_regclass('storage.buckets') IS NOT NULL
+              THEN row_security_active('storage.buckets') END AS rls_active
+),
+schema_counts AS (
+  SELECT s.nspname,
+         EXISTS (SELECT 1 FROM pg_namespace x WHERE x.nspname = s.nspname)           AS schema_exists,
+         (SELECT count(*) FROM tbl t WHERE t.nspname = s.nspname)                    AS n_tables,
+         (SELECT count(*) FROM pg_policies p WHERE p.schemaname = s.nspname)         AS n_policies,
+         (SELECT count(*) FROM pg_proc p JOIN pg_namespace pn ON pn.oid = p.pronamespace
+           WHERE pn.nspname = s.nspname AND p.prokind IN ('f', 'p')
+             AND NOT EXISTS (SELECT 1 FROM pg_depend d WHERE d.classid = 'pg_proc'::regclass
+                               AND d.objid = p.oid AND d.deptype = 'e'))             AS n_functions,
+         (SELECT count(*) FROM pg_class v JOIN pg_namespace vn ON vn.oid = v.relnamespace
+           WHERE vn.nspname = s.nspname AND v.relkind IN ('v', 'm')
+             AND NOT EXISTS (SELECT 1 FROM pg_depend d WHERE d.classid = 'pg_class'::regclass
+                               AND d.objid = v.oid AND d.deptype = 'e'))             AS n_views
+  FROM (SELECT 'skillup_dev'::name AS nspname UNION SELECT nspname FROM sc) s
 ),
 flags AS (
-  SELECT 'G1'::text AS check_id, 'HIGH'::text AS severity, t.relname::text AS object,
-         concat('RLS disabled; anon=', t.anon_any, ' authenticated=', t.auth_any) AS detail
+  -- G0: what was scanned (always at least one row) -------------------
+  SELECT 'G0'::text AS check_id, 'INFO'::text AS severity, k.nspname::text AS object,
+         concat('scanned ', k.n_tables, ' tables, ', k.n_policies, ' policies, ',
+                k.n_functions, ' functions, ', k.n_views, ' views in ', k.nspname) AS detail
+  FROM schema_counts k
+  UNION ALL
+  SELECT 'G0',
+         CASE WHEN (SELECT n_tables FROM schema_counts WHERE nspname = 'skillup_dev') = 0
+                   AND (SELECT n_tables FROM schema_counts WHERE nspname = 'public') > 0 THEN 'HIGH' ELSE 'INFO' END,
+         'skillup_dev',
+         concat('schema missing: skillup_dev does not exist, so nothing in it was checked',
+                CASE WHEN (SELECT n_tables FROM schema_counts WHERE nspname = 'public') > 0
+                     THEN concat('; ', (SELECT n_tables FROM schema_counts WHERE nspname = 'public'),
+                                 ' tables live in public instead (see the public G0 row and G1-G9 rows for public)')
+                     ELSE '' END)
+  FROM schema_counts k
+  WHERE k.nspname = 'skillup_dev' AND NOT k.schema_exists
+  UNION ALL
+  SELECT 'G0', 'MEDIUM', 'skillup_dev',
+         'schema exists but contains no tables: the app data may live in another schema'
+  FROM schema_counts k
+  WHERE k.nspname = 'skillup_dev' AND k.schema_exists AND k.n_tables = 0
+  UNION ALL
+  SELECT 'G0', 'INFO', 'pgrst.db_schemas',
+         CASE WHEN EXISTS (SELECT 1 FROM exposed_cfg)
+              THEN 'exposed schemas per role setting: ' || (SELECT string_agg(nspname, ', ' ORDER BY nspname) FROM exposed_cfg)
+              ELSE 'no pgrst.db_schemas role setting found (exposure unknown: confirm in Dashboard -> API settings)' END
+
+  -- G1 ---------------------------------------------------------------
+  UNION ALL
+  SELECT 'G1',
+         CASE WHEN NOT ((t.anon_any AND t.anon_usage) OR (t.auth_any AND t.auth_usage)) THEN 'INFO'
+              WHEN t.exposed = 'no' THEN 'MEDIUM' ELSE 'HIGH' END,
+         t.nspname || '.' || t.relname,
+         concat('RLS disabled; anon=', t.anon_any, ' authenticated=', t.auth_any,
+                '; schema USAGE anon=', t.anon_usage, ' authenticated=', t.auth_usage,
+                '; schema in pgrst.db_schemas: ', t.exposed,
+                CASE WHEN NOT (t.anon_usage OR t.auth_usage)
+                     THEN ' (no API role has schema USAGE: unreachable through the API)' ELSE '' END)
   FROM tbl t
   WHERE NOT t.relrowsecurity AND (t.anon_any OR t.auth_any)
 
+  -- G2 ---------------------------------------------------------------
   UNION ALL
   SELECT 'G2',
-         CASE WHEN NOT (o.hits_anon AND o.anon_holds OR o.hits_auth AND o.auth_holds) THEN 'INFO'
-              WHEN s.name IS NOT NULL THEN 'HIGH' ELSE 'REVIEW' END,
-         o.tablename::text,
-         concat('policy ', o.policyname, ' (', o.cmd, ', roles ', o.roles::text, '): USING ',
-                coalesce(o.qual, '-'), ' / WITH CHECK ', coalesce(o.with_check, '-'),
-                '; anon holds matching privilege=', (o.hits_anon AND o.anon_holds),
-                ' authenticated holds matching privilege=', (o.hits_auth AND o.auth_holds))
-  FROM openpol o
+         CASE WHEN o.anon_open AND o.anon_holds THEN 'HIGH'
+              WHEN o.auth_open AND o.auth_holds AND s.name IS NOT NULL THEN 'HIGH'
+              WHEN o.auth_open AND o.auth_holds THEN 'REVIEW'
+              ELSE 'INFO' END,
+         o.nspname || '.' || o.tablename,
+         concat('policy ', o.policyname, ' (', o.cmd, ', roles ', o.roles::text, '): ',
+                o.matched_expr,
+                '; open to anon=', o.anon_open, ' and anon holds matching privilege=', (o.anon_open AND o.anon_holds),
+                '; open to authenticated=', o.auth_open, ' and authenticated holds matching privilege=', (o.auth_open AND o.auth_holds),
+                '; sensitive table=', (s.name IS NOT NULL),
+                '; restrictive policies on table (not evaluated)=',
+                (SELECT count(*) FROM pg_policies r
+                  WHERE r.schemaname = o.nspname AND r.tablename = o.tablename AND r.permissive = 'RESTRICTIVE'))
+  FROM openpol2 o
   LEFT JOIN sensitive s ON s.name = o.tablename
 
+  -- G3 ---------------------------------------------------------------
   UNION ALL
   SELECT 'G3',
-         CASE WHEN has_function_privilege('anon', p.oid, 'EXECUTE') THEN 'HIGH' ELSE 'MEDIUM' END,
-         concat(p.proname, '(', pg_get_function_identity_arguments(p.oid), ')'),
+         CASE WHEN has_function_privilege('anon', p.oid, 'EXECUTE') THEN 'HIGH'
+              WHEN NOT EXISTS (SELECT 1 FROM unnest(p.proconfig) o WHERE o ~* '^search_path=') THEN 'HIGH'
+              ELSE 'MEDIUM' END,
+         pn.nspname || '.' || p.proname || '(' || pg_get_function_identity_arguments(p.oid) || ')',
          concat('SECURITY DEFINER; public_execute=',
                 EXISTS (SELECT 1 FROM aclexplode(coalesce(p.proacl, acldefault('f', p.proowner))) a
                          WHERE a.grantee = 0 AND a.privilege_type = 'EXECUTE'),
                 ' anon_execute=', has_function_privilege('anon', p.oid, 'EXECUTE'),
                 ' authenticated_execute=', has_function_privilege('authenticated', p.oid, 'EXECUTE'),
-                '; search_path set=', (p.proconfig IS NOT NULL AND p.proconfig::text ILIKE '%search_path%'))
+                '; search_path pinned=',
+                EXISTS (SELECT 1 FROM unnest(p.proconfig) o WHERE o ~* '^search_path='),
+                CASE WHEN NOT EXISTS (SELECT 1 FROM unnest(p.proconfig) o WHERE o ~* '^search_path=')
+                     THEN ' (NOT pinned: search-path hijack risk)' ELSE '' END)
   FROM pg_proc p
-  WHERE p.pronamespace IN (SELECT oid FROM pg_namespace WHERE nspname = 'skillup_dev')
-    AND p.prokind IN ('f', 'p')
+  JOIN sc pn ON pn.oid = p.pronamespace
+  WHERE p.prokind IN ('f', 'p')
     AND p.prosecdef
+    AND p.prorettype NOT IN ('trigger'::regtype, 'event_trigger'::regtype)
+    AND NOT EXISTS (SELECT 1 FROM pg_depend d WHERE d.classid = 'pg_proc'::regclass
+                      AND d.objid = p.oid AND d.deptype = 'e')
     AND ( has_function_privilege('anon', p.oid, 'EXECUTE')
        OR has_function_privilege('authenticated', p.oid, 'EXECUTE')
        OR EXISTS (SELECT 1 FROM aclexplode(coalesce(p.proacl, acldefault('f', p.proowner))) a
                    WHERE a.grantee = 0 AND a.privilege_type = 'EXECUTE'))
 
+  -- G4 ---------------------------------------------------------------
   UNION ALL
-  SELECT 'G4', 'INFO', t.relname::text,
+  SELECT 'G4', 'INFO', t.nspname || '.' || t.relname,
          concat('RLS on, no policy at all; anon=', t.anon_any, ' authenticated=', t.auth_any,
                 ' (SELECT returns no rows; UPDATE/DELETE silently affect 0 rows; INSERT/upsert raises 42501)')
   FROM tbl t
   WHERE t.relrowsecurity
     AND (t.anon_any OR t.auth_any)
     AND NOT EXISTS (SELECT 1 FROM pg_policies p
-                     WHERE p.schemaname = 'skillup_dev' AND p.tablename = t.relname)
+                     WHERE p.schemaname = t.nspname AND p.tablename = t.relname)
 
+  -- G5 ---------------------------------------------------------------
   UNION ALL
-  SELECT 'G5', 'INFO', t.relname::text || ' [' || r.role_name || ']',
+  SELECT 'G5', 'INFO', t.nspname || '.' || t.relname || ' [' || r.role_name || ']',
          concat('RLS on; ', r.role_name, ' holds a write grant; no permissive INSERT/UPDATE/DELETE/ALL policy for it ',
-                'works without auth.uid()/auth.jwt() (no-JWT callers: INSERT raises 42501, UPDATE/DELETE affect 0 rows)')
+                'works without auth.uid()/auth.jwt(). Expected for normal tables; only relevant if the backend uses ',
+                'this role WITHOUT a Supabase JWT (then INSERT raises 42501, UPDATE/DELETE affect 0 rows)')
   FROM tbl t
   CROSS JOIN LATERAL (VALUES ('anon', t.anon_write), ('authenticated', t.auth_write)) AS r(role_name, has_write)
   WHERE t.relrowsecurity
     AND r.has_write
     AND EXISTS (SELECT 1 FROM pg_policies p
-                 WHERE p.schemaname = 'skillup_dev' AND p.tablename = t.relname)   -- no-policy tables are G4
+                 WHERE p.schemaname = t.nspname AND p.tablename = t.relname)   -- no-policy tables are G4
+    AND EXISTS (SELECT 1 FROM pol o        -- a write policy must target this role; otherwise it is simply blocked
+                 WHERE o.tbl_oid = t.oid AND o.cmd IN ('ALL', 'INSERT', 'UPDATE', 'DELETE')
+                   AND ((r.role_name = 'anon' AND o.hits_anon)
+                     OR (r.role_name = 'authenticated' AND o.hits_auth)))
     AND NOT EXISTS (SELECT 1 FROM pol o
                      WHERE o.tbl_oid = t.oid
                        AND o.cmd IN ('ALL', 'INSERT', 'UPDATE', 'DELETE')
@@ -473,25 +838,96 @@ flags AS (
                          OR (r.role_name = 'authenticated' AND o.hits_auth))
                        AND NOT o.uses_auth_fn)
 
+  -- G6 ---------------------------------------------------------------
   UNION ALL
-  SELECT 'G6',
-         CASE c.relkind WHEN 'v' THEN 'HIGH' ELSE 'MEDIUM' END,
-         c.relname::text,
+  SELECT 'G6', 'HIGH',
+         vn.nspname || '.' || c.relname,
          concat(CASE c.relkind WHEN 'v' THEN 'view' ELSE 'materialized view' END,
                 ' without security_invoker=true (owner ', pg_get_userbyid(c.relowner),
                 '); anon select=', has_any_column_privilege('anon', c.oid, 'SELECT'),
                 ' authenticated select=', has_any_column_privilege('authenticated', c.oid, 'SELECT'),
-                CASE c.relkind WHEN 'm' THEN '; materialized views never apply RLS' ELSE '' END)
+                CASE c.relkind WHEN 'm' THEN '; a materialized view holds a copy of the base rows and never applies RLS'
+                     ELSE '; runs with owner rights, bypassing RLS on its base tables' END)
   FROM pg_class c
-  WHERE c.relnamespace IN (SELECT oid FROM pg_namespace WHERE nspname = 'skillup_dev')
-    AND c.relkind IN ('v', 'm')
-    AND NOT coalesce((SELECT bool_or(o ~* '^security_invoker=(true|on|1|yes)$')
-                        FROM unnest(c.reloptions) o), false)
+  JOIN sc vn ON vn.oid = c.relnamespace
+  WHERE c.relkind IN ('v', 'm')
+    AND NOT EXISTS (SELECT 1 FROM pg_depend d WHERE d.classid = 'pg_class'::regclass
+                      AND d.objid = c.oid AND d.deptype = 'e')
+    AND (c.relkind = 'm'
+         OR NOT coalesce((SELECT bool_or(o ~* '^security_invoker=(true|on|1|yes)$')
+                            FROM unnest(c.reloptions) o), false))
     AND ( has_any_column_privilege('anon', c.oid, 'SELECT')
        OR has_any_column_privilege('authenticated', c.oid, 'SELECT'))
+
+  -- G7: storage ------------------------------------------------------
+  UNION ALL
+  SELECT 'G7', 'MEDIUM', 'storage.bucket ' || b.name,
+         'public bucket: objects are readable by URL without authentication'
+  FROM buckets b WHERE b.is_public
+  UNION ALL
+  SELECT 'G7', 'MEDIUM', 'storage.buckets',
+         concat('row-level security applies to ', current_user,
+                ' on storage.buckets: the bucket list (and any public-bucket finding) may be incomplete; re-run as postgres')
+  FROM bucket_rls WHERE rls_active
+  UNION ALL
+  SELECT 'G7', 'INFO', 'storage.buckets',
+         concat((SELECT count(*) FROM buckets), ' buckets visible, ',
+                (SELECT count(*) FROM buckets WHERE is_public), ' public')
+  FROM bucket_rls WHERE rls_active IS NOT NULL
+
+  -- G8: realtime -----------------------------------------------------
+  UNION ALL
+  SELECT 'G8', 'INFO', 'supabase_realtime',
+         CASE WHEN EXISTS (SELECT 1 FROM pg_publication WHERE pubname = 'supabase_realtime')
+              THEN concat('publication supabase_realtime publishes ', (SELECT count(*) FROM rt), ' tables')
+              ELSE 'publication supabase_realtime not found' END
+  UNION ALL
+  SELECT 'G8',
+         CASE WHEN t.anon_any OR t.auth_any THEN 'HIGH' ELSE 'MEDIUM' END,
+         t.nspname || '.' || t.relname,
+         concat('published to realtime with RLS DISABLED; anon=', t.anon_any, ' authenticated=', t.auth_any)
+  FROM rt JOIN tbl t ON t.nspname = rt.schemaname AND t.relname = rt.tablename
+  WHERE NOT t.relrowsecurity
+  UNION ALL
+  SELECT 'G8',
+         CASE WHEN o.anon_open AND o.anon_holds THEN 'HIGH'
+              WHEN o.auth_open AND o.auth_holds AND s.name IS NOT NULL THEN 'HIGH'
+              ELSE 'REVIEW' END,
+         o.nspname || '.' || o.tablename,
+         concat('published to realtime and open SELECT/ALL policy ', o.policyname, ' (', o.matched_expr, ')')
+  FROM rt
+  JOIN openpol2 o ON o.nspname = rt.schemaname AND o.tablename = rt.tablename
+  LEFT JOIN sensitive s ON s.name = o.tablename
+  WHERE o.cmd IN ('SELECT', 'ALL') AND (o.anon_open OR o.auth_open)
+
+  -- G9: TRUNCATE / TRIGGER / REFERENCES ------------------------------
+  UNION ALL
+  SELECT 'G9',
+         CASE WHEN r.role_name = 'anon' AND r.privs LIKE '%TRUNCATE%' THEN 'HIGH'
+              WHEN r.role_name = 'anon' THEN 'MEDIUM'
+              WHEN r.privs LIKE '%TRUNCATE%' THEN 'MEDIUM' ELSE 'REVIEW' END,
+         t.nspname || '.' || t.relname || ' [' || r.role_name || ']',
+         concat(r.role_name, ' holds ', r.privs, CASE WHEN r.privs LIKE '%TRUNCATE%'
+                THEN ' (TRUNCATE bypasses RLS and empties the table)' ELSE '' END,
+                '; RLS enabled=', t.relrowsecurity)
+  FROM tbl t
+  CROSS JOIN LATERAL (VALUES ('anon', t.anon_extra), ('authenticated', t.auth_extra)) AS r(role_name, privs)
+  WHERE r.privs <> ''
+
+  -- G10: extensions --------------------------------------------------
+  UNION ALL
+  SELECT 'G10', 'INFO', 'extension ' || e.extname,
+         concat('version ', e.extversion, ', schema ', n.nspname,
+                CASE WHEN e.extname IN ('dblink', 'pg_net', 'http', 'postgres_fdw', 'file_fdw',
+                                        'plpython3u', 'plperlu', 'pltclu', 'plv8', 'pg_cron',
+                                        'supabase_vault', 'pgsodium', 'wrappers')
+                     THEN '; OUTBOUND-CAPABLE or PRIVILEGED: check who may call its functions (a SECURITY DEFINER wrapper or an exposed function reachable by anon/authenticated)'
+                     ELSE '' END)
+  FROM pg_extension e
+  JOIN pg_namespace n ON n.oid = e.extnamespace
 )
 SELECT check_id, severity, object, detail
 FROM flags
-ORDER BY check_id,
+ORDER BY substr(check_id, 2)::int,
          CASE severity WHEN 'HIGH' THEN 1 WHEN 'MEDIUM' THEN 2 WHEN 'REVIEW' THEN 3 ELSE 4 END,
          object;
