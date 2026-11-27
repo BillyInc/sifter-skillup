@@ -914,8 +914,8 @@ def _live_codes(rows: list) -> list:
     return [r for r in rows if not r.get("revoked_at") and not r.get("redeemed_at")]
 
 
-def _revoke_if_still_open(row_id: str) -> None:
-    _svc().table("claim_codes").update({"revoked_at": _now()}).eq("id", row_id).is_(
+def _revoke_if_still_open(row_id: str, stamp: str | None = None) -> None:
+    _svc().table("claim_codes").update({"revoked_at": stamp or _now()}).eq("id", row_id).is_(
         "revoked_at", "null"
     ).is_("redeemed_at", "null").execute()
 
@@ -939,6 +939,24 @@ def _retire_superseded_codes(
     survives, deterministically (latest created_at, ties by id), whichever racer
     runs this. Returns False when keep_id itself lost and was revoked.
 
+    Two arbiters exist (``known_older`` bypasses the clock, the ordering loop
+    uses it), and with clock skew between racers they can disagree: each racer
+    revokes the other's code and nothing stays live. Safety net: every revoke
+    of this call carries one shared ``revoked_at`` stamp and its id is tracked.
+    If the final re-read finds NO live code, the newest (created_at, id) code
+    among the ids revoked BY THIS CALL is reopened, guarded on that exact stamp
+    and ``redeemed_at IS NULL`` so a code revoked by someone else (or redeemed)
+    is never resurrected. The return value then follows the re-read: True only
+    when keep_id is the live code; False when another live code exists (the
+    caller reports the 409 "reissued at the same time"). False with no live code
+    at all (reopen impossible) is also returned, never a success for a dead code.
+
+    Inherent, harmless case (no skew needed): B regenerates, retires and gets
+    200; A, whose snapshot predates B's insert, inserts later and its winner
+    step revokes B. B's admin holds a printed card that is now dead while A's
+    admin also gets 200; at least one live code always remains. Callers should
+    tell the admin to refresh to see the current code.
+
     If keep_id is not in the (newest-first) page read, nothing is revoked.
     """
     known_older = known_older or set()
@@ -949,6 +967,8 @@ def _retire_superseded_codes(
                     student_id=user_id)
         return True
     keep_key = _code_order_key(keep)
+    stamp_now = _now()
+    revoked_here: set = set()
     for row in rows:
         if row.get("id") == keep_id or row.get("revoked_at"):
             continue
@@ -957,21 +977,36 @@ def _retire_superseded_codes(
         stamp = row.get("redeemed_at")
         if stamp and _stamp_is_fresh(stamp):
             continue
-        q = _svc().table("claim_codes").update({"revoked_at": _now()}).eq("id", row["id"]).is_(
+        q = _svc().table("claim_codes").update({"revoked_at": stamp_now}).eq("id", row["id"]).is_(
             "revoked_at", "null"
         )
         q = q.eq("redeemed_at", stamp) if stamp else q.is_("redeemed_at", "null")
         q.execute()
+        revoked_here.add(row["id"])
 
-    live = _live_codes(_student_codes(user_id))
+    after = _student_codes(user_id)
+    live = _live_codes(after)
+    if not live and revoked_here:
+        # Safety net: skewed racers revoked each other. Reopen only a code that
+        # THIS call revoked (same stamp, never redeemed), the newest by key.
+        ours = [r for r in after if r.get("id") in revoked_here
+                and r.get("revoked_at") == stamp_now and not r.get("redeemed_at")]
+        if ours:
+            back = max(ours, key=_code_order_key)
+            _svc().table("claim_codes").update({"revoked_at": None}).eq("id", back["id"]).eq(
+                "revoked_at", stamp_now
+            ).is_("redeemed_at", "null").execute()
+            log.warning("provisioning: no live claim code after racing retires; reopened the newest revoked here",
+                        student_id=user_id, code_id=back["id"])
+            live = _live_codes(_student_codes(user_id))
     if keep_id not in {r.get("id") for r in live}:
-        return False  # someone already revoked ours
+        return False  # ours was revoked (by the racer, or no live code could be restored)
     if len(live) <= 1:
         return True
     winner = max(live, key=_code_order_key)
     for row in live:
         if row.get("id") != winner.get("id"):
-            _revoke_if_still_open(row["id"])
+            _revoke_if_still_open(row["id"], stamp_now)
     return winner.get("id") == keep_id
 
 

@@ -588,6 +588,58 @@ def test_retire_known_older_codes_go_even_when_their_clock_is_ahead(db):
     assert [c["id"] for c in _live(db)] == ["mine"]
 
 
+@pytest.mark.parametrize("a_first", [True, False])
+def test_skewed_racers_with_both_snapshots_leave_exactly_one_live_code(db, a_first):
+    # O is live. B (clock ~10s ahead) inserts first. A snapshots known_older
+    # AFTER B's insert (so it contains O and B), inserts, and both retire.
+    db.tables["claim_codes"] = [
+        _code(id="o", code="O", created_at=_ts(days=-2)),
+        _code(id="b", code="B", created_at=_ts(seconds=10)),
+        _code(id="a", code="A", created_at=_ts()),
+    ]
+    a_snap, b_snap = {"o", "b"}, {"o"}
+
+    def run_a():
+        return pr._retire_superseded_codes("prov-1", "a", a_snap)
+
+    def run_b():
+        return pr._retire_superseded_codes("prov-1", "b", b_snap)
+
+    if a_first:
+        a_ok, b_ok = run_a(), run_b()
+    else:
+        b_ok, a_ok = run_b(), run_a()
+    live = [c["id"] for c in _live(db)]
+    assert len(live) == 1
+    # Exactly one racer is told success and it owns the live code; the other
+    # gets False (the route turns that into the 409 "reissued at the same time").
+    assert (a_ok, b_ok).count(True) == 1
+    assert live == ["a" if a_ok else "b"]
+
+
+def test_retire_never_reopens_a_code_revoked_by_someone_else(db):
+    # No live code and nothing revoked by this call: a code that was revoked
+    # for a reason elsewhere must stay revoked.
+    db.tables["claim_codes"] = [
+        _code(id="x", code="X", created_at=_ts(days=-1), revoked_at=_ts(minutes=-5)),
+        _code(id="mine", code="MINE", created_at=_ts(), revoked_at=_ts(minutes=-1)),
+    ]
+    assert pr._retire_superseded_codes("prov-1", "mine") is False
+    assert _live(db) == []
+
+
+def test_retire_reopens_only_the_code_it_revoked_not_an_earlier_revoke(db):
+    # keep was revoked by a racer; this call revokes "old"; "gone" was revoked
+    # earlier by someone else and must not come back.
+    db.tables["claim_codes"] = [
+        _code(id="gone", code="G", created_at=_ts(days=-3), revoked_at=_ts(days=-1)),
+        _code(id="old", code="OLD", created_at=_ts(days=-2)),
+        _code(id="mine", code="MINE", created_at=_ts(), revoked_at=_ts(seconds=-1)),
+    ]
+    assert pr._retire_superseded_codes("prov-1", "mine", {"old"}) is False
+    assert [c["id"] for c in _live(db)] == ["old"]
+
+
 def test_retire_with_an_unparseable_keep_created_at_never_mass_revokes(db):
     for bad in (None, "not-a-date"):
         db.tables["claim_codes"] = [
