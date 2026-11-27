@@ -21,12 +21,15 @@
 -- already SET NULL are replaced, in one transaction, with the same column and
 -- target; no rows are changed. Skips a table or column that is absent.
 --
--- Verify after applying (both expect 'n' = SET NULL):
---   SELECT conrelid::regclass, confdeltype FROM pg_constraint
---    WHERE contype = 'f' AND confrelid = 'skillup_dev.users'::regclass
---      AND conrelid IN ('skillup_dev.notifications'::regclass, 'skillup_dev.guilds'::regclass)
---      AND conkey = ARRAY[(SELECT attnum FROM pg_attribute WHERE attrelid = conrelid
---                           AND attname IN ('actor_id', 'owner_id'))];
+-- Verify after applying (expects confdeltype 'n' = SET NULL for both rows;
+-- a table or column that is absent simply returns no row):
+--   SELECT c.conrelid::regclass AS tbl, a.attname AS col, c.confdeltype
+--     FROM pg_constraint c
+--     JOIN pg_attribute a ON a.attrelid = c.conrelid AND a.attnum = ANY (c.conkey)
+--    WHERE c.contype = 'f'
+--      AND c.confrelid = 'skillup_dev.users'::regclass
+--      AND ((c.conrelid = 'skillup_dev.notifications'::regclass AND a.attname = 'actor_id')
+--        OR (c.conrelid = 'skillup_dev.guilds'::regclass        AND a.attname = 'owner_id'));
 -- Roll back (only if needed): re-create the constraints without ON DELETE SET NULL.
 
 BEGIN;
