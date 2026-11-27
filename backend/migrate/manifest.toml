@@ -866,6 +866,16 @@ verify = []
 note = "Additive: users.purge_attempts (NOT NULL DEFAULT 0), users.last_purge_attempt_at and a partial index for the scheduled hard delete's queue. The job works without it (rotating fallback), so apply any time. Baseline migration_account_lifecycle_patch.sql first if production already has it."
 source = "Header of migration_hard_delete_backoff_2026-11-21.sql (PROPOSED, NOT APPLIED); added with the learner-privacy review fixes"
 
+[[entry]]
+id = "migration_hard_delete_fk_2026-11-27"
+kind = "schema"
+allow_destructive_reason = "ALTER TABLE ... DROP CONSTRAINT inside a DO block (migration_hard_delete_fk_2026-11-27.sql) replaces the notifications.actor_id and guilds.owner_id foreign keys, only when their delete action is not already SET NULL, with the same constraint name, column and target plus ON DELETE SET NULL, in the same transaction; no table or row data is removed"
+path = "migration_hard_delete_fk_2026-11-27.sql"
+requires = []
+verify = []
+note = "Additive/idempotent: makes notifications.actor_id and guilds.owner_id ON DELETE SET NULL so the scheduled hard delete cannot hit a foreign-key violation. institution_verification_submissions.submitted_by stays RESTRICT on purpose (the app purges the proof file first). The job works without it, so apply any time; the job stays disabled (ACCOUNT_HARD_DELETE_ENABLED=false) until the owner enables it."
+source = "Header of migration_hard_delete_fk_2026-11-27.sql (PROPOSED, NOT APPLIED); audit finding H1"
+
 # ======================================================================
 # UNORDERED: order not stated unambiguously in the docs. Never applied automatically.
 # ======================================================================

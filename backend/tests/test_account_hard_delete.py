@@ -94,15 +94,29 @@ def test_dry_run_deletes_nothing(monkeypatch):
     assert purged == [] and len(f.tables["users"]) == 1
 
 
-def test_provisioned_and_claimed_records_are_never_touched(monkeypatch):
+def test_unclaimed_shells_are_never_touched_but_claimed_provisioned_learners_are_purged(monkeypatch):
     f, purged = _setup(monkeypatch, [
-        _user("shell", 90, provisioning_school_id="s1"),
+        _user("shell", 90, provisioning_school_id="s1", claim_state="unclaimed"),
+        _user("minor", 90, provisioning_school_id="s1", claim_state="claimed"),
         _user("claimed", 90, claim_state="claimed"),
         _user("self", 90),
+        _user("minor-recent", 3, provisioning_school_id="s1", claim_state="claimed"),
     ])
     ahd.hard_delete_expired_accounts(NOW)
-    assert purged == ["self"]
-    assert sorted(r["id"] for r in f.tables["users"]) == ["claimed", "shell"]
+    assert sorted(purged) == ["claimed", "minor", "self"]
+    # the retention window still applies to provisioned learners (never shortened)
+    assert sorted(r["id"] for r in f.tables["users"]) == ["minor-recent", "shell"]
+
+
+def test_expired_cooldown_rows_are_purged_even_in_a_dry_run(monkeypatch):
+    f, purged = _setup(monkeypatch, [_user("old", 45)], enabled=False)
+    f.tables["account_deletion_cooldowns"] = [
+        {"user_id": "a", "available_at": _iso(2)},
+        {"user_id": "b", "available_at": (NOW + timedelta(hours=5)).isoformat()},
+    ]
+    out = ahd.hard_delete_expired_accounts(NOW)
+    assert out["dry_run"] is True and out["deleted"] == 0 and purged == []
+    assert [r["user_id"] for r in f.tables["account_deletion_cooldowns"]] == ["b"]
 
 
 def test_batch_cap_limits_each_run_and_the_rest_wait(monkeypatch):

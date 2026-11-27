@@ -10,10 +10,17 @@ Safety:
 - Only rows with ``is_deleted = true`` and an elapsed retention window. The
   window is never shorter than ``MIN_RETENTION_DAYS``: a configured 0 or a
   negative value would otherwise delete right after the 24 h cooldown.
-- Rows that belong to a school's provisioning flow (``provisioning_school_id``
-  or ``claim_state`` set) are never touched; those follow the school's own
-  deletion gate. The filter runs in the database query, so those rows cannot
-  fill the batch and starve every other account.
+- A school-provisioned shell that nobody has claimed (``claim_state`` =
+  ``unclaimed``) is never touched here; it follows the school's own deletion
+  gate. A provisioned learner who CLAIMED the account and then deleted it
+  (``claim_state`` = ``claimed``, ``provisioning_school_id`` still set) is
+  eligible on the same retention window as everyone else: the school can no
+  longer delete a claimed account, so without this those learners, often
+  minors, would never be purged. The filter runs in the database query, so
+  unclaimed shells cannot fill the batch and starve every other account.
+- Expired ``account_deletion_cooldowns`` rows are deleted on every run, also
+  while the job is a dry run: an expired cooldown has no effect and holds only a
+  hashed device id.
 - At most ``ACCOUNT_HARD_DELETE_BATCH_SIZE`` accounts per run.
 - One account failing never stops the run.
 - The user row is deleted ONLY if every purge step succeeded. An ``error``,
@@ -53,16 +60,16 @@ def _query(svc, cutoff_iso: str, *, db_filters: bool, backoff: bool):
         .lt("deletion_cooldown_until", cutoff_iso)
     )
     if db_filters:
-        q = q.is_("provisioning_school_id", "null").is_("claim_state", "null")
+        q = q.or_("claim_state.is.null,claim_state.neq.unclaimed")
     if backoff:
         q = q.lt("purge_attempts", MAX_PURGE_ATTEMPTS).order("last_purge_attempt_at", nullsfirst=True)
     return q.order("deletion_cooldown_until")
 
 
 def _guard(rows: list[dict]) -> list[dict]:
-    # Re-check in code so a provisioned/claimed record is never removed even if
-    # a query filter is dropped on an older schema or a fake.
-    return [r for r in rows if not r.get("provisioning_school_id") and not r.get("claim_state")]
+    # Re-check in code so a school-owned, unclaimed shell is never removed even
+    # if a query filter is dropped on an older schema or a fake.
+    return [r for r in rows if r.get("claim_state") != "unclaimed"]
 
 
 def _eligible_batch(svc, cutoff_iso: str, limit: int, today: int) -> tuple[list[dict], bool]:
@@ -123,8 +130,10 @@ def hard_delete_expired_accounts(now: datetime | None = None) -> dict:
 
     batch, backoff = _eligible_batch(svc, cutoff, batch_size, now.toordinal())
     result = {"dry_run": not enabled, "eligible": len(batch), "deleted": 0, "failed": 0, "blocked": {}, "abandoned": 0}
+    # Independent of the flag: expired cooldowns are inert and hold a hashed device id.
+    cooldowns_purged = purge_expired_cooldowns(svc, now.isoformat())
     if not enabled:
-        log.info("Account hard delete dry run", **result)
+        log.info("Account hard delete dry run", cooldowns_purged=cooldowns_purged, **result)
         return result
 
     incomplete = 0
@@ -147,7 +156,6 @@ def hard_delete_expired_accounts(now: datetime | None = None) -> dict:
             result["failed"] += 1
             _record_failure(svc, row, now.isoformat())
             log.warning("Account hard delete failed", error=type(exc).__name__)
-    cooldowns_purged = purge_expired_cooldowns(svc, now.isoformat())
     if backoff:
         abandoned = _abandoned_count(svc)
         result["abandoned"] = abandoned

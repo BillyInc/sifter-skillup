@@ -1,0 +1,72 @@
+-- PROPOSED, NOT APPLIED.
+-- Foreign keys that stop the scheduled account hard delete (account_hard_delete.py).
+--
+-- Why: deleting a user row fails with a foreign-key violation when the user
+-- triggered notifications (notifications.actor_id) or owns a guild
+-- (guilds.owner_id). Both were created without an ON DELETE action on some
+-- databases (supabase-schema.sql adds actor_id with ALTER ... ADD COLUMN IF NOT
+-- EXISTS, which keeps an existing column's constraint). This makes both
+-- ON DELETE SET NULL so the user row can always be removed.
+--
+-- institution_verification_submissions.submitted_by stays ON DELETE RESTRICT on
+-- purpose: a database cascade would delete the row but leave the proof file in
+-- the verification-proofs bucket. account_purge.py removes the file first, then
+-- the rows.
+--
+-- The application code works WITHOUT this migration (account_purge.py deletes
+-- the actor notifications and transfers or deletes owned guilds itself), and
+-- also after it. Apply any time.
+--
+-- Idempotent and non-destructive: only constraints whose delete action is not
+-- already SET NULL are replaced, in one transaction, with the same column and
+-- target; no rows are changed. Skips a table or column that is absent.
+--
+-- Verify after applying (both expect 'n' = SET NULL):
+--   SELECT conrelid::regclass, confdeltype FROM pg_constraint
+--    WHERE contype = 'f' AND confrelid = 'skillup_dev.users'::regclass
+--      AND conrelid IN ('skillup_dev.notifications'::regclass, 'skillup_dev.guilds'::regclass)
+--      AND conkey = ARRAY[(SELECT attnum FROM pg_attribute WHERE attrelid = conrelid
+--                           AND attname IN ('actor_id', 'owner_id'))];
+-- Roll back (only if needed): re-create the constraints without ON DELETE SET NULL.
+
+BEGIN;
+
+DO $$
+DECLARE
+  target RECORD;
+  fk RECORD;
+BEGIN
+  FOR target IN
+    SELECT * FROM (VALUES ('notifications', 'actor_id'), ('guilds', 'owner_id')) AS t(tbl, col)
+  LOOP
+    IF to_regclass('skillup_dev.' || target.tbl) IS NULL THEN
+      CONTINUE;
+    END IF;
+    IF NOT EXISTS (
+      SELECT 1 FROM information_schema.columns
+       WHERE table_schema = 'skillup_dev' AND table_name = target.tbl AND column_name = target.col
+    ) THEN
+      CONTINUE;
+    END IF;
+    FOR fk IN
+      SELECT c.conname
+        FROM pg_constraint c
+        JOIN pg_attribute a ON a.attrelid = c.conrelid AND a.attnum = ANY (c.conkey)
+       WHERE c.contype = 'f'
+         AND c.conrelid = ('skillup_dev.' || target.tbl)::regclass
+         AND c.confrelid = 'skillup_dev.users'::regclass
+         AND array_length(c.conkey, 1) = 1
+         AND a.attname = target.col
+         AND c.confdeltype <> 'n'
+    LOOP
+      EXECUTE format('ALTER TABLE skillup_dev.%I DROP CONSTRAINT %I', target.tbl, fk.conname);
+      EXECUTE format(
+        'ALTER TABLE skillup_dev.%I ADD CONSTRAINT %I FOREIGN KEY (%I) REFERENCES skillup_dev.users(id) ON DELETE SET NULL',
+        target.tbl, fk.conname, target.col
+      );
+    END LOOP;
+  END LOOP;
+END
+$$;
+
+COMMIT;

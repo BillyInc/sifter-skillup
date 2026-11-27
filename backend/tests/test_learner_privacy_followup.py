@@ -54,6 +54,13 @@ class _Q:
     def gte(self, c, v): return self._f("gte", c, v)
     def gt(self, c, v): return self._f("gt", c, v)
 
+    def or_(self, spec):
+        # only the shape the hard-delete job sends: "<col>.is.null,<col>.neq.<value>"
+        col = spec.split(",")[0].split(".")[0]
+        self.filters.append(("or_null_or_neq", col, spec.split(",")[1].split(".neq.")[1]))
+        self.cols.append(col)
+        return self
+
     def order(self, col, desc=False, nullsfirst=None, **_k):
         self.orders.append((col, desc, nullsfirst))
         self.cols.append(col)
@@ -84,6 +91,7 @@ class _Q:
         "lt": lambda x, v: x is not None and x < v,
         "gte": lambda x, v: x is not None and x >= v,
         "gt": lambda x, v: x is not None and x > v,
+        "or_null_or_neq": lambda x, v: x is None or x != v,
     }
 
     def _match(self, r):
@@ -138,7 +146,7 @@ PERSONAL_NULLED = (
     "telegram_id", "wallet_address", "starknet_address", "starknet_wallet_id", "starknet_email",
     "starknet_public_key", "github_token", "github_username", "github_avatar", "last_seen_device_id",
     "chosen_direction", "last_post_auth_path", "student_class", "stream", "phone", "date_of_birth",
-    "first_name", "middle_name", "last_name", "display_name", "avatar_url",
+    "first_name", "middle_name", "last_name", "display_name", "avatar_url", "privy_did", "guardian_consent_at",
 )
 
 
@@ -155,7 +163,7 @@ def test_deletion_fields_leave_not_null_and_guard_columns_alone():
     fields = privacy.deletion_user_fields("u1", "dev-1", "t0", "t1")
     # NOT NULL columns, or the markers the hard-delete guard relies on.
     for key in ("provenance", "claim_state", "provisioning_school_id", "account_type", "auth_provider",
-                "is_admin", "is_internal_staff", "guardian_consent_at", "created_at"):
+                "is_admin", "is_internal_staff", "created_at"):
         assert key not in fields, key
 
 
@@ -258,6 +266,7 @@ def test_purge_removes_feedback_and_events_of_only_that_user(monkeypatch):
         assert out[t] == "deleted", t
         assert [r["user_id"] for r in svc.tables[t]] == ["u2"], t
     assert out["guilds"] == "clear" and out["institution_verification_submissions"] == "clear"
+    assert out["notifications"] == "clear"
 
 
 def test_purge_reports_missing_tables_cleanly(monkeypatch):
@@ -275,18 +284,98 @@ def test_an_owned_guild_with_no_other_members_is_removed(monkeypatch):
     assert out["guilds"] == "deleted" and svc.tables["guilds"] == []
 
 
-def test_an_owned_guild_with_other_members_blocks_the_delete(monkeypatch):
+def test_an_owned_guild_with_other_members_is_transferred_not_blocked(monkeypatch):
     svc = _purge_db(monkeypatch, tables={
         "guilds": [{"id": "g1", "owner_id": "u1"}],
-        "guild_members": [{"guild_id": "g1", "user_id": "u1"}, {"guild_id": "g1", "user_id": "u2"}],
+        "guild_members": [
+            {"guild_id": "g1", "user_id": "u1", "joined_at": "2026-01-01"},
+            {"guild_id": "g1", "user_id": "u3", "joined_at": "2026-03-01"},
+            {"guild_id": "g1", "user_id": "u2", "joined_at": "2026-02-01"},
+        ],
     })
     out = ap.hard_delete_learner_content("u1")
-    assert out["guilds"] == "blocked" and len(svc.tables["guilds"]) == 1
+    assert out["guilds"] == "transferred" and "blocked" not in out.values()
+    assert svc.tables["guilds"] == [{"id": "g1", "owner_id": "u2"}]  # longest-standing other member
 
 
-def test_verification_submissions_block_the_delete(monkeypatch):
-    _purge_db(monkeypatch, tables={"institution_verification_submissions": [{"id": "v1", "submitted_by": "u1"}]})
-    assert ap.hard_delete_learner_content("u1")["institution_verification_submissions"] == "blocked"
+def test_guild_owned_by_someone_else_is_untouched(monkeypatch):
+    svc = _purge_db(monkeypatch, tables={
+        "guilds": [{"id": "g9", "owner_id": "u2"}],
+        "guild_members": [{"guild_id": "g9", "user_id": "u1"}, {"guild_id": "g9", "user_id": "u2"}],
+    })
+    assert ap.hard_delete_learner_content("u1")["guilds"] == "clear"
+    assert svc.tables["guilds"] == [{"id": "g9", "owner_id": "u2"}]
+
+
+def test_notifications_triggered_by_the_user_are_deleted_before_the_user_row(monkeypatch):
+    svc = _purge_db(monkeypatch, tables={"notifications": [
+        {"id": "n1", "recipient_id": "u2", "actor_id": "u1"},
+        {"id": "n2", "recipient_id": "u1", "actor_id": "u2"},  # u1's own inbox: cascades with the user
+        {"id": "n3", "recipient_id": "u3", "actor_id": "u2"},
+    ]})
+    out = ap.hard_delete_learner_content("u1")
+    assert out["notifications"] == "deleted"
+    assert [n["id"] for n in svc.tables["notifications"]] == ["n2", "n3"]
+    assert ap.hard_delete_learner_content("u1")["notifications"] == "clear"  # idempotent
+
+
+def test_a_schema_without_actor_id_does_not_fail_the_purge(monkeypatch):
+    _purge_db(monkeypatch, tables={"notifications": []}, missing_columns={"notifications": {"actor_id"}})
+    assert ap.hard_delete_learner_content("u1")["notifications"] == "clear"
+
+
+class _Storage:
+    def __init__(self, fail=False):
+        self.removed, self.fail = [], fail
+
+    def from_(self, bucket):
+        assert bucket == "verification-proofs"
+        return self
+
+    def remove(self, paths):
+        if self.fail:
+            raise RuntimeError("storage down")
+        self.removed += list(paths)
+
+
+def _with_storage(svc, storage):
+    svc.storage = storage
+    return svc
+
+
+def test_verification_proof_files_and_rows_are_purged(monkeypatch):
+    svc = _purge_db(monkeypatch, tables={"institution_verification_submissions": [
+        {"id": "v1", "submitted_by": "u1", "storage_path": "org/u1/a.pdf"},
+        {"id": "v2", "submitted_by": "u1", "storage_path": "org/u1/b.png"},
+        {"id": "v3", "submitted_by": "u2", "storage_path": "org/u2/c.pdf"},
+    ]})
+    storage = _with_storage(svc, _Storage()).storage
+    out = ap.hard_delete_learner_content("u1")
+    assert out["institution_verification_submissions"] == "deleted"
+    assert sorted(storage.removed) == ["org/u1/a.pdf", "org/u1/b.png"]
+    assert [r["id"] for r in svc.tables["institution_verification_submissions"]] == ["v3"]
+
+
+def test_a_storage_failure_keeps_the_submission_rows_for_a_retry(monkeypatch):
+    svc = _purge_db(monkeypatch, tables={"institution_verification_submissions": [
+        {"id": "v1", "submitted_by": "u1", "storage_path": "org/u1/a.pdf"}]})
+    _with_storage(svc, _Storage(fail=True))
+    out = ap.hard_delete_learner_content("u1")
+    assert out["institution_verification_submissions"] == "error"
+    assert len(svc.tables["institution_verification_submissions"]) == 1
+
+
+def test_a_user_with_every_blocker_gets_a_clean_purge_and_the_row_can_go(monkeypatch):
+    svc = _purge_db(monkeypatch, tables={
+        "notifications": [{"id": "n1", "recipient_id": "u2", "actor_id": "u1"}],
+        "guilds": [{"id": "g1", "owner_id": "u1"}],
+        "guild_members": [{"guild_id": "g1", "user_id": "u1"}],
+        "institution_verification_submissions": [{"id": "v1", "submitted_by": "u1", "storage_path": "p"}],
+    })
+    _with_storage(svc, _Storage())
+    out = ap.hard_delete_learner_content("u1")
+    assert not any(v in ahd._BLOCKING_OUTCOMES for v in out.values()), out
+    assert svc.tables["notifications"] == [] and svc.tables["guilds"] == []
 
 
 # --- 6. hard-delete job: blocked rows, starvation, backoff, floor ------------
@@ -320,14 +409,14 @@ def test_a_blocked_purge_keeps_the_user_row(monkeypatch):
     assert [r["id"] for r in svc.tables["users"]] == ["a"]
 
 
-def test_provisioned_rows_filtered_in_the_database_cannot_starve_the_rest(monkeypatch):
-    users = [_u(f"shell{i}", 200 - i, provisioning_school_id="s1") for i in range(150)]
+def test_unclaimed_shells_filtered_in_the_database_cannot_starve_the_rest(monkeypatch):
+    users = [_u(f"shell{i}", 200 - i, provisioning_school_id="s1", claim_state="unclaimed") for i in range(150)]
     users += [_u(f"plain{i}", 60 - i) for i in range(20)]
     svc, purged = _job(monkeypatch, users, batch=10)
     out = ahd.hard_delete_expired_accounts(NOW)
     assert out["deleted"] == 10 and all(p.startswith("plain") for p in purged)
-    assert any(op == "is" and c == "provisioning_school_id"
-               for (_n, _m, flt, _o) in svc.calls for (op, c, _v) in flt)
+    assert any(op == "or_null_or_neq" and c == "claim_state" and v == "unclaimed"
+               for (_n, _m, flt, _o) in svc.calls for (op, c, v) in flt)
     assert sum(1 for r in svc.tables["users"] if r["id"].startswith("shell")) == 150  # never touched
 
 
@@ -423,3 +512,60 @@ def test_real_segno_renders_the_claim_qr_locally():
     assert '<img class="qr" src="data:image/svg+xml' in html
     assert "qrserver" not in html and "http://" not in html.replace("https://levelup.com.ng", "")
     assert "levelup.com.ng/settings/my-school?claim=ABC123XYZ" in html  # printable fallback stays
+
+
+# --- 9. FK blockers: end to end through the job -------------------------------
+
+def _real_purge_job(monkeypatch, users, tables, **kw):
+    svc = FakeSvc({"users": users, **tables}, **kw)
+    monkeypatch.setattr(ahd, "db", svc)
+    monkeypatch.setattr(ap, "db", svc)
+    for k, v in (("ACCOUNT_HARD_DELETE_ENABLED", True), ("ACCOUNT_HARD_DELETE_RETENTION_DAYS", 30),
+                 ("ACCOUNT_HARD_DELETE_BATCH_SIZE", 10)):
+        monkeypatch.setattr(ahd.settings, k, v, raising=False)
+    svc.storage = _Storage()
+    return svc
+
+
+def test_a_user_who_triggered_notifications_and_owns_a_guild_is_deleted(monkeypatch):
+    svc = _real_purge_job(
+        monkeypatch, [_u("u1", 90)],
+        {"notifications": [{"id": "n1", "recipient_id": "u2", "actor_id": "u1"}],
+         "guilds": [{"id": "g1", "owner_id": "u1"}],
+         "guild_members": [{"guild_id": "g1", "user_id": "u1", "joined_at": "1"},
+                           {"guild_id": "g1", "user_id": "u2", "joined_at": "2"}]},
+    )
+    out = ahd.hard_delete_expired_accounts(NOW)
+    assert out["deleted"] == 1 and out["failed"] == 0 and out["blocked"] == {}
+    assert svc.tables["users"] == [] and svc.tables["notifications"] == []
+    assert svc.tables["guilds"][0]["owner_id"] == "u2"
+
+
+def test_a_provisioned_minor_who_claimed_and_deleted_is_purged_with_proof_files(monkeypatch):
+    svc = _real_purge_job(
+        monkeypatch,
+        [_u("minor", 90, provisioning_school_id="s1", claim_state="claimed", provenance="provisioned")],
+        {"saved_items": [{"id": "s1", "user_id": "minor"}],
+         "institution_verification_submissions": [{"id": "v1", "submitted_by": "minor", "storage_path": "o/minor/x.pdf"}]},
+    )
+    out = ahd.hard_delete_expired_accounts(NOW)
+    assert out["deleted"] == 1 and svc.tables["users"] == []
+    assert svc.tables["saved_items"] == [] and svc.storage.removed == ["o/minor/x.pdf"]
+
+
+def test_a_persistent_failure_is_retried_then_abandoned_with_pii_intact(monkeypatch):
+    svc = _real_purge_job(
+        monkeypatch, [_u("u1", 90)],
+        {"institution_verification_submissions": [{"id": "v1", "submitted_by": "u1", "storage_path": "p"}]},
+    )
+    svc.storage = _Storage(fail=True)
+    for day in range(ahd.MAX_PURGE_ATTEMPTS):
+        out = ahd.hard_delete_expired_accounts(NOW + timedelta(days=day))
+        assert out["failed"] == 1 and out["deleted"] == 0
+    assert svc.tables["users"][0]["purge_attempts"] == ahd.MAX_PURGE_ATTEMPTS
+    out = ahd.hard_delete_expired_accounts(NOW + timedelta(days=99))
+    assert out["eligible"] == 0 and out["abandoned"] == 1  # stops retrying, reported
+    # once storage recovers an operator can reset attempts and the same row completes
+    svc.storage = _Storage()
+    svc.tables["users"][0]["purge_attempts"] = 0
+    assert ahd.hard_delete_expired_accounts(NOW + timedelta(days=100))["deleted"] == 1

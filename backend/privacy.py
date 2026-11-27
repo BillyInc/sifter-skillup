@@ -140,7 +140,10 @@ def deletion_user_fields(user_id: str, device_id: str, deleted_at: str, availabl
 
     Only nullable personal columns are listed. NOT NULL columns (provenance,
     account_type, ...) and the markers the hard-delete guard reads
-    (claim_state, provisioning_school_id) are deliberately left alone. Columns
+    (claim_state, provisioning_school_id) are deliberately left alone.
+    ``privy_did`` (a sign-in identifier) and ``guardian_consent_at`` (a
+    school-provisioned minor's consent timestamp) are personal data and are
+    cleared; both are nullable. Columns
     that an older schema lacks are dropped by the caller's compatibility
     retry, so listing them here is safe. ``settings`` is reset to an empty
     object, which also withdraws analytics consent stored there.
@@ -172,6 +175,8 @@ def deletion_user_fields(user_id: str, device_id: str, deleted_at: str, availabl
         "github_token": None,
         "github_username": None,
         "github_avatar": None,
+        "privy_did": None,
+        "guardian_consent_at": None,
         # Where the learner was and what they chose.
         "last_seen_device_id": None,
         "last_post_auth_path": None,
