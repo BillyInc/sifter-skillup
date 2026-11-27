@@ -101,6 +101,28 @@ class NotificationTrigger(BaseModel):
     data: Optional[dict] = None
     channels: Optional[List[str]] = None  # ['push', 'sms', 'email']
 
+_NOTIFICATION_CHANNELS = {"push", "sms", "email"}
+
+
+def _clean_notification_text(value, limit: int) -> str:
+    """Strip control characters and cap length of text that reaches a push body."""
+    text = "".join(ch for ch in str(value or "") if ch.isprintable())
+    return text.strip()[:limit]
+
+
+def _clean_notification_data(data) -> dict:
+    """Keep only short scalar values so free text cannot be smuggled into pushes."""
+    if not isinstance(data, dict):
+        return {}
+    cleaned = {}
+    for key, val in list(data.items())[:10]:
+        if isinstance(val, (int, float, bool)):
+            cleaned[_clean_notification_text(key, 40)] = val
+        elif isinstance(val, str):
+            cleaned[_clean_notification_text(key, 40)] = _clean_notification_text(val, 80)
+    return cleaned
+
+
 class PostCreate(BaseModel):
     content: str
     field: str = "general"
@@ -542,7 +564,22 @@ async def trigger_notification(
       portfolio_earned   — portfolio artifact awarded
       weekly_progress    — Sunday weekly summary
       monthly_leaderboard — monthly rank update
+
+    A caller may only trigger notifications for their own account. There is no
+    caller in the repository that notifies another user, so no admin/system
+    path exists here; a cross-user dispatch must be a separate, reviewed
+    server-side job, not a client-callable route.
     """
+    # Same response for every other id, existing or not (no account probing).
+    if str(body.userId) != str(current_user["id"]):
+        raise HTTPException(status_code=403, detail="You can only send notifications to yourself.")
+
+    body.userName = _clean_notification_text(body.userName, 40)
+    body.trackId = _clean_notification_text(body.trackId, 60)
+    body.type = _clean_notification_text(body.type, 40)
+    body.data = _clean_notification_data(body.data)
+    body.channels = [c for c in (body.channels or ["push"]) if c in _NOTIFICATION_CHANNELS] or ["push"]
+
     # Fetch target user's push tokens
     tokens_result = (
         db.get_service_client()

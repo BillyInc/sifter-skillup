@@ -24,7 +24,7 @@
 #   POST   /api/users/unmute            — unmute user
 #   GET    /api/dms/threads             — DM inbox (current user only)
 #   GET    /api/dms/thread/{id}         — single thread messages
-#   POST   /api/dms/send                — send DM (you must initiate)
+#   POST   /api/dms/send                — send DM (existing thread or mutual follow; not guests)
 #   POST   /api/dms/read                — mark thread read
 #   POST   /api/ai/score                — AI simulator scoring proxy (key never in client)
 #   GET    /api/notifications           — get notifications for current user
@@ -730,20 +730,36 @@ async def send_dm(body: DMSend, current_user: dict = Depends(Auth.get_current_us
     """
     sender_id = current_user["id"]
     recipient_id = body.recipientId
+    content = (body.content or "").strip()
 
     if sender_id == recipient_id:
         raise HTTPException(400, "Cannot message yourself")
+    if not content:
+        raise HTTPException(400, "Message cannot be empty")
 
-    # Check if recipient has blocked sender
-    blocked = db.get_service_client().table("user_blocks").select("id").eq("user_id", recipient_id).eq("target_id", sender_id).execute()
+    # One error for every refusal (blocked, no relationship, guest, unknown id)
+    # so the response never reveals whether a target exists or why it refused.
+    refused = HTTPException(403, "You can't message this user.")
+
+    svc = db.get_service_client()
+
+    # Blocks apply in both directions, to new and existing threads alike.
+    blocked = svc.table("user_blocks").select("id").eq("user_id", recipient_id).eq("target_id", sender_id).execute()
     if blocked.data:
-        raise HTTPException(403, "Cannot send message to this user")
+        raise refused
+    blocked_by_sender = svc.table("user_blocks").select("id").eq("user_id", sender_id).eq("target_id", recipient_id).execute()
+    if blocked_by_sender.data:
+        raise refused
 
-    # Find or create thread
+    # Find or create thread. Existing threads keep working.
     existing_thread = _find_dm_thread(sender_id, recipient_id)
     if existing_thread:
         thread_id = existing_thread
     else:
+        # Starting a conversation needs a relationship the recipient took part
+        # in: a mutual follow. Guest accounts cannot start conversations.
+        if current_user.get("auth_provider") == "guest" or not _mutual_follow(sender_id, recipient_id):
+            raise refused
         thread_id = str(uuid.uuid4())
         db.get_service_client().table("dm_threads").insert({
             "id": thread_id, "created_at": datetime.now(timezone.utc).isoformat(),
@@ -760,7 +776,7 @@ async def send_dm(body: DMSend, current_user: dict = Depends(Auth.get_current_us
         "id": msg_id,
         "thread_id": thread_id,
         "sender_id": sender_id,
-        "content": body.content[:2000],
+        "content": content[:2000],
         "is_read": False,
         "created_at": datetime.now(timezone.utc).isoformat(),
     }
@@ -768,6 +784,19 @@ async def send_dm(body: DMSend, current_user: dict = Depends(Auth.get_current_us
     db.get_service_client().table("dm_threads").update({"updated_at": datetime.now(timezone.utc).isoformat()}).eq("id", thread_id).execute()
 
     return ResponseModel(data={"messageId": msg_id, "threadId": thread_id})
+
+
+def _mutual_follow(user_a: str, user_b: str) -> bool:
+    """True when each user follows the other (the recipient has opted in)."""
+    try:
+        svc = db.get_service_client()
+        a_to_b = svc.table("follows").select("id").eq("follower_id", user_a).eq("following_id", user_b).limit(1).execute()
+        if not a_to_b.data:
+            return False
+        b_to_a = svc.table("follows").select("id").eq("follower_id", user_b).eq("following_id", user_a).limit(1).execute()
+        return bool(b_to_a.data)
+    except Exception:
+        return False
 
 
 def _find_dm_thread(user_a: str, user_b: str) -> Optional[str]:

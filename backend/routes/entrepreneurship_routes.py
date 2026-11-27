@@ -2,8 +2,9 @@ from __future__ import annotations
 
 from typing import Any, Optional
 
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 
+from auth import Auth
 from database import db
 from logger import log
 from models import ResponseModel
@@ -104,8 +105,43 @@ async def opportunity_map(
         return ResponseModel(data=_coming_soon("Opportunity Map is temporarily unavailable."))
 
 
+def _has_active_seat(user_id: str, institution_id: str) -> bool:
+    """True only for an ACTIVE institution_members seat at this institution."""
+    from routes.institutions_routes import _is_missing_column_error, _seat_is_active
+
+    try:
+        res = (
+            _svc()
+            .table("institution_members")
+            .select("*")
+            .eq("user_id", user_id)
+            .eq("school_id", institution_id)
+            .execute()
+        )
+    except Exception as exc:  # noqa: BLE001
+        if _is_missing_column_error(exc):
+            log.warning("entrepreneurship: seat_status column missing", error=str(exc))
+        else:
+            log.warning("entrepreneurship: seat lookup failed", error=str(exc))
+        return False
+    return any(_seat_is_active(row) for row in (res.data or []))
+
+
 @router.get("/institutions/{institution_id}/aggregate", response_model=ResponseModel)
-async def institution_aggregate(institution_id: str):
+async def institution_aggregate(
+    institution_id: str,
+    current_user: dict = Depends(Auth.get_current_user),
+):
+    # Internal staff may read any institution. Everyone else must be an
+    # institution admin/educator (MFA enforced) holding an active seat here.
+    # The same 403 covers every refusal so institution ids are not probed.
+    if current_user.get("is_internal_staff") is not True:
+        denied = HTTPException(status_code=403, detail="You do not have access to this institution.")
+        if current_user.get("account_type") not in ("institution_admin", "educator"):
+            raise denied
+        await Auth.require_admin(current_user)
+        if not _has_active_seat(current_user["id"], institution_id):
+            raise denied
     try:
         rows = (
             _svc()
