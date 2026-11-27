@@ -237,6 +237,55 @@ def _normalise(host: str) -> str:
 _warned_no_client_ip = False
 
 
+def _is_loopback(host: str) -> bool:
+    try:
+        return ipaddress.ip_address(host).is_loopback
+    except ValueError:
+        return False
+
+
+def _warn_no_client_ip(peer: str) -> None:
+    """One loud warning per process: per-address limits are silently inactive.
+
+    Surfaced in the logs the first time a production request arrives without a
+    usable client address. Address limits (claim-code address bucket, guest and
+    wallet creation) all fail open in that state.
+    """
+    global _warned_no_client_ip
+    if _warned_no_client_ip or settings.DEBUG:
+        return
+    if settings.TRUST_PROXY_HEADERS:
+        # A trusted proxy was configured but the entry it should have appended is
+        # missing or not a public address: the hop count is wrong, or the app is
+        # being reached without the proxy.
+        if _is_loopback(peer):
+            return
+        reason = (
+            "TRUST_PROXY_HEADERS is on but X-Forwarded-For has no public client address at "
+            f"TRUSTED_PROXY_HOPS={max(1, int(getattr(settings, 'TRUSTED_PROXY_HOPS', 1) or 1))} "
+            "(wrong hop count, or requests are reaching the app without the proxy)"
+        )
+    else:
+        reason = "only private/loopback peers are visible and TRUST_PROXY_HEADERS is off"
+    _warned_no_client_ip = True
+    log.warning(
+        "auth rate limits: %s, so per-address limits are inactive (claim-code address "
+        "bucket, guest and wallet creation limits). Behind exactly one trusted proxy set "
+        "TRUST_PROXY_HEADERS=true and TRUSTED_PROXY_HOPS=1, and never expose the app "
+        "port directly; see docs/ops/nginx-auth-rate-limit.md (Deployment requirement "
+        "for address limits).", reason,
+    )
+
+
+def address_limits_blind() -> bool:
+    """True once a production request arrived without a usable client address.
+
+    Reported by /health so operators can see misconfigured proxy settings
+    without reading logs. Process-local, like the limits themselves.
+    """
+    return _warned_no_client_ip
+
+
 def client_ip(request: Request) -> Optional[str]:
     """The real client address, or None when it cannot be trusted.
 
@@ -245,8 +294,12 @@ def client_ip(request: Request) -> Optional[str]:
     The leftmost entries are supplied by the client and are never used. Without
     it, only a public peer address counts (loopback/private peers mean a proxy
     sits in front of us and every request would look like one client).
+
+    Deployment requirement: both settings must describe exactly the proxies in
+    front of the app, and the app port must not be reachable except through
+    them. Otherwise the limits are off (unset/wrong) or X-Forwarded-For can be
+    spoofed to mint a fresh address key per request.
     """
-    global _warned_no_client_ip
     peer = request.client.host if request.client else ""
     if settings.TRUST_PROXY_HEADERS:
         hops = max(1, int(getattr(settings, "TRUSTED_PROXY_HOPS", 1) or 1))
@@ -256,16 +309,11 @@ def client_ip(request: Request) -> Optional[str]:
             candidate = parts[-hops]
             if _is_public(candidate):
                 return _normalise(candidate)
+            _warn_no_client_ip(peer)
             return None
     if _is_public(peer):
         return _normalise(peer)
-    if not _warned_no_client_ip and not settings.DEBUG and not settings.TRUST_PROXY_HEADERS:
-        _warned_no_client_ip = True
-        log.warning(
-            "auth rate limits: only private/loopback peers are visible and TRUST_PROXY_HEADERS "
-            "is off, so per-address limits are inactive. Set TRUST_PROXY_HEADERS and "
-            "TRUSTED_PROXY_HOPS behind a proxy, and apply docs/ops/nginx-auth-rate-limit.md."
-        )
+    _warn_no_client_ip(peer)
     return None
 
 

@@ -133,7 +133,12 @@ async def logging_middleware(request: Request, call_next):
 # Health
 @app.get("/health")
 async def health():
-    return {"status": "ok", "version": settings.APP_VERSION, "timestamp": datetime.now().isoformat()}
+    body = {"status": "ok", "version": settings.APP_VERSION, "timestamp": datetime.now().isoformat()}
+    if auth_rate_limit.address_limits_blind():
+        # Per-address limits are inactive: TRUST_PROXY_HEADERS / TRUSTED_PROXY_HOPS
+        # do not match the deployment (see docs/ops/nginx-auth-rate-limit.md).
+        body["address_limits"] = "inactive"
+    return body
 
 
 def _normalise_email(value: str) -> str:

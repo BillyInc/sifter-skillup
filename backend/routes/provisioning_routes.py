@@ -46,6 +46,7 @@ from services.report_gen import (
 )
 from services.guidance_report import resolve_guidance_report_context
 from services.provisioning_reconcile import (
+    MergeRefused,
     merge_provisioned_into_student,
     normalize_stream,
     reconcile_school_merge_candidates,
@@ -874,6 +875,19 @@ async def generate_accounts(
     )
 
 
+def _redeem_in_progress(user_id: str) -> bool:
+    """True when a code of this student has been stamped redeemed and not revoked.
+
+    Between the redeem stamp and the user's claim_state='claimed' update the
+    account still reads 'unclaimed'; reissuing then would leave a live code on
+    an account that ends up claimed.
+    """
+    res = _svc().table("claim_codes").select("id, redeemed_at, revoked_at").eq(
+        "student_id", user_id
+    ).limit(50).execute()
+    return any(r.get("redeemed_at") and not r.get("revoked_at") for r in (res.data or []))
+
+
 @router.post("/students/{user_id}/regenerate-code", response_model=ResponseModel)
 async def regenerate_code(
     user_id: str,
@@ -891,6 +905,8 @@ async def regenerate_code(
             raise HTTPException(status_code=404, detail="Student not found for your school.")
         if u.get("claim_state") != "unclaimed":
             raise HTTPException(status_code=409, detail="Account already claimed — code cannot be reissued.")
+        if _redeem_in_progress(user_id):
+            raise HTTPException(status_code=409, detail="A claim is in progress for this account — code cannot be reissued.")
         # Revoke live codes, issue a fresh one.
         _svc().table("claim_codes").update({"revoked_at": _now()}).eq(
             "student_id", user_id
@@ -903,6 +919,16 @@ async def regenerate_code(
             "code": code, "student_id": user_id, "school_id": school_id,
             "expires_at": expires,
         }).execute()
+        # A redeem may have stamped the old code (or the student may have
+        # claimed) between the checks above and the insert. Re-check and take
+        # the new code back so a claimed account never keeps a live code.
+        recheck = _users().select("claim_state").eq("id", user_id).limit(1).execute()
+        now_state = ((recheck.data or [{}])[0]).get("claim_state")
+        if now_state != "unclaimed" or _redeem_in_progress(user_id):
+            _svc().table("claim_codes").update({"revoked_at": _now()}).eq(
+                "student_id", user_id
+            ).eq("code", code).is_("redeemed_at", "null").is_("revoked_at", "null").execute()
+            raise HTTPException(status_code=409, detail="A claim is in progress for this account — code cannot be reissued.")
         return ResponseModel(data={"user_id": user_id, "claim_code": code, "claim_expires_at": expires})
     except HTTPException:
         raise
@@ -1182,11 +1208,17 @@ async def confirm_merge_candidate(
         if not provisioned_id or not real_id:
             raise HTTPException(status_code=409, detail="Merge candidate is missing a student account.")
 
-        result = merge_provisioned_into_student(
-            provisioned_student_id=provisioned_id,
-            real_student_id=real_id,
-            school_id=school_id,
-        )
+        try:
+            result = merge_provisioned_into_student(
+                provisioned_student_id=provisioned_id,
+                real_student_id=real_id,
+                school_id=school_id,
+            )
+        except MergeRefused:
+            raise HTTPException(
+                status_code=409,
+                detail="The provisioned account is already claimed or no longer exists.",
+            )
         _svc().table("student_merge_candidates").update({
             "status": "confirmed",
             "confirmed_by": current_user["id"],
@@ -1425,13 +1457,19 @@ async def claim_account(
         else:
             # MERGE: an existing self-account redeems the provisioned code. Move the
             # provisioned row's school context onto the caller, retire the provisioned row.
-            merge_provisioned_into_student(
-                provisioned_student_id=provisioned_id,
-                real_student_id=caller_id,
-                school_id=school_id,
-                phone=payload.phone,
-                email=payload.email,
-            )
+            try:
+                merge_provisioned_into_student(
+                    provisioned_student_id=provisioned_id,
+                    real_student_id=caller_id,
+                    school_id=school_id,
+                    phone=payload.phone,
+                    email=payload.email,
+                )
+            except MergeRefused:
+                # The target is already claimed (or gone): never merge it away.
+                # Same uniform answer as an unknown code; the stamped code stays
+                # closed (it must not become redeemable again).
+                raise _claim_rejected(scopes)
 
         return ResponseModel(
             data={"claimed": True, "school_id": school_id},
@@ -1455,9 +1493,24 @@ async def claim_account(
                 if any(r.get("id") != claim_id for r in (newer.data or [])):
                     log.warning("provisioning: claim not reopened, newer live code exists")
                 else:
-                    _svc().table("claim_codes").update({"redeemed_at": None}).eq(
+                    reopened = _svc().table("claim_codes").update({"redeemed_at": None}).eq(
                         "id", claim_id
                     ).eq("redeemed_at", redeemed_stamp).is_("revoked_at", "null").execute()
+                    # The check above and the reopen are two statements: an admin
+                    # regenerate can land between them. Re-check and, if another
+                    # live code now exists, revoke the reopened (older) one again,
+                    # guarded so only our own still-open reopen is touched. A
+                    # SQL-level conditional update (NOT EXISTS, via an RPC) would
+                    # close this window entirely; that needs a migration.
+                    if reopened.data:
+                        again = _svc().table("claim_codes").select("id").eq(
+                            "student_id", claim_student_id
+                        ).is_("redeemed_at", "null").is_("revoked_at", "null").limit(5).execute()
+                        if any(r.get("id") != claim_id for r in (again.data or [])):
+                            _svc().table("claim_codes").update({"revoked_at": _now()}).eq(
+                                "id", claim_id
+                            ).is_("redeemed_at", "null").is_("revoked_at", "null").execute()
+                            log.warning("provisioning: reopened claim revoked, newer live code appeared")
             except Exception as release_exc:  # noqa: BLE001
                 log.error("provisioning: claim release failed", error=str(release_exc))
         raise HTTPException(status_code=500, detail="Could not claim the account.")

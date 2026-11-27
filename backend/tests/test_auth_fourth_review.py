@@ -152,6 +152,41 @@ class TestProxyWarning:
             assert auth_rate_limit.client_ip(self._request("8.8.8.8")) == "8.8.8.8"
         assert not [r for r in caplog.records if "TRUST_PROXY_HEADERS" in r.getMessage()]
 
+    def _xff_request(self, xff, peer="10.0.0.5"):
+        return SimpleNamespace(client=SimpleNamespace(host=peer),
+                               headers={"x-forwarded-for": xff})
+
+    def test_warns_once_when_trusted_proxy_headers_yield_no_public_address(self, monkeypatch, caplog):
+        from config import settings
+        monkeypatch.setattr(settings, "DEBUG", False, raising=False)
+        monkeypatch.setattr(settings, "TRUST_PROXY_HEADERS", True, raising=False)
+        monkeypatch.setattr(settings, "TRUSTED_PROXY_HOPS", 2, raising=False)
+        with caplog.at_level(logging.WARNING):
+            # wrong hop count: only one entry for two hops; then a private entry
+            assert auth_rate_limit.client_ip(self._xff_request("8.8.8.8")) is None
+            assert auth_rate_limit.client_ip(self._xff_request("1.1.1.1, 192.168.0.9, 8.8.8.8")) is None
+        hits = [r for r in caplog.records if "inactive" in r.getMessage()]
+        assert len(hits) == 1
+        text = hits[0].getMessage()
+        assert "TRUSTED_PROXY_HOPS=2" in text and "docs/ops/nginx-auth-rate-limit.md" in text
+        assert auth_rate_limit.address_limits_blind() is True
+
+    def test_health_reports_inactive_address_limits_after_the_warning(self, monkeypatch):
+        from config import settings
+        monkeypatch.setattr(settings, "DEBUG", False, raising=False)
+        monkeypatch.setattr(settings, "TRUST_PROXY_HEADERS", False, raising=False)
+        assert "address_limits" not in asyncio.run(main.health())
+        auth_rate_limit.client_ip(self._request("10.0.0.5"))
+        assert asyncio.run(main.health())["address_limits"] == "inactive"
+
+    def test_loopback_peer_with_trusted_headers_does_not_warn(self, monkeypatch, caplog):
+        from config import settings
+        monkeypatch.setattr(settings, "DEBUG", False, raising=False)
+        monkeypatch.setattr(settings, "TRUST_PROXY_HEADERS", True, raising=False)
+        with caplog.at_level(logging.WARNING):
+            assert auth_rate_limit.client_ip(self._request()) is None
+        assert not [r for r in caplog.records if "inactive" in r.getMessage()]
+
 
 # --------------------------------------------------------------------------
 # 4. bcrypt has its own capacity limiter

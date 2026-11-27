@@ -251,6 +251,24 @@ def reconcile_all_schools(limit_schools: int = 200) -> dict:
     return totals
 
 
+class MergeRefused(Exception):
+    """The provisioned account may not be merged (it is gone or already claimed).
+
+    Callers map this to their own response: the claim route answers the same
+    uniform 404 as an unknown code; the admin confirm route answers 409.
+    """
+
+
+def _require_unclaimed_shell(provisioned_student_id: str) -> dict:
+    res = _users().select(
+        "student_class, stream, chosen_direction, guardian_consent_at, claim_state"
+    ).eq("id", provisioned_student_id).limit(1).execute()
+    row = (res.data or [None])[0]
+    if not row or row.get("claim_state") != "unclaimed":
+        raise MergeRefused("provisioned account is missing or already claimed")
+    return row
+
+
 def merge_provisioned_into_student(
     *,
     provisioned_student_id: str,
@@ -260,10 +278,9 @@ def merge_provisioned_into_student(
     email: Optional[str] = None,
 ) -> dict:
     """Move useful provisioned data to the real student, then retire the shell."""
-    pres = _users().select(
-        "student_class, stream, chosen_direction, guardian_consent_at"
-    ).eq("id", provisioned_student_id).limit(1).execute()
-    provisioned = (pres.data or [{}])[0]
+    # Only an unclaimed shell may be merged away: a claimed account belongs to
+    # its student and must never be deleted by a code redeemed elsewhere.
+    provisioned = _require_unclaimed_shell(provisioned_student_id)
 
     updates = {"last_login": _now()}
     for field in ("student_class", "stream", "chosen_direction", "guardian_consent_at"):
@@ -287,10 +304,16 @@ def merge_provisioned_into_student(
         "student_id", provisioned_student_id
     ).eq("school_id", school_id).execute()
 
+    # Re-read immediately before the destructive step: the student may have
+    # claimed the shell since the first read. The delete itself is also guarded
+    # on claim_state so a claim landing after this read still cannot be erased.
+    _require_unclaimed_shell(provisioned_student_id)
     _svc().table("claim_codes").update({"revoked_at": _now()}).eq(
         "student_id", provisioned_student_id
     ).is_("redeemed_at", "null").is_("revoked_at", "null").execute()
-    _users().delete().eq("id", provisioned_student_id).execute()
+    _users().delete().eq("id", provisioned_student_id).eq(
+        "claim_state", "unclaimed"
+    ).execute()
 
     return {
         "provisioned_student_id": provisioned_student_id,
