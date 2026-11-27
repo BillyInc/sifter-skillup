@@ -139,14 +139,17 @@ _MAX_GUILD_PAGES = 100  # 100 000 members; beyond this the guild is kept and ret
 
 
 def _live_guild_users(svc, guild_id: str, user_id: str) -> list[str] | None:
-    """Live users whose ``users.guild_id`` is this guild (the app's real membership).
+    """Every live user whose ``users.guild_id`` is this guild (the app's real membership).
 
     Pages through ``users`` (PostgREST caps one response at 1000 rows) and
-    returns the first page that contains an eligible user, so a page made up
-    entirely of deleted or unclaimed accounts does not hide a live member on
-    the next one. An empty list means no eligible member exists at all.
-    ``None`` means the schema has no ``users.guild_id`` column.
+    collects the eligible ids from ALL pages before returning, so the caller
+    ranks the complete candidate set: an eligible admin on a later page can
+    still inherit. An empty list means no eligible member exists at all.
+    ``None`` means the schema has no ``users.guild_id`` column. If the page cap
+    is reached before the last page the set is incomplete, so this raises and
+    the guild (and the user row) are kept for the next run.
     """
+    live: list[str] = []
     for page in range(_MAX_GUILD_PAGES):
         lo = page * _MEMBER_PAGE
         try:
@@ -165,11 +168,10 @@ def _live_guild_users(svc, guild_id: str, user_id: str) -> list[str] | None:
             if _missing_column(exc, "guild_id"):
                 return None
             raise
-        live = [r["id"] for r in rows if not r.get("is_deleted") and r.get("claim_state") != "unclaimed"]
-        if live or len(rows) < _MEMBER_PAGE:
+        live += [r["id"] for r in rows if not r.get("is_deleted") and r.get("claim_state") != "unclaimed"]
+        if len(rows) < _MEMBER_PAGE:
             return live
-    # Every page up to the cap held only ineligible rows: do not guess. Raising
-    # keeps the guild and the user row; the next run retries.
+    # The cap was reached with more rows possibly left: do not rank a partial set.
     raise RuntimeError("guild membership scan limit reached")
 
 
@@ -251,35 +253,64 @@ def _purge_verification_submissions(svc, user_id: str) -> str:
     approved school should keep its evidence (or be re-verified) is a product
     decision awaiting the maintainer, not something this purge decides.
     """
-    rows = (
-        svc.table("institution_verification_submissions")
-        .select("id, school_id, storage_path")
-        .eq("submitted_by", user_id)
-        .execute()
-        .data
-        or []
-    )
+    table = "institution_verification_submissions"
+    rows: list[dict] = []
+    for page in range(_MAX_GUILD_PAGES):
+        lo = page * _MEMBER_PAGE
+        chunk = (
+            svc.table(table)
+            .select("id, school_id, storage_path")
+            .eq("submitted_by", user_id)
+            .order("id")
+            .range(lo, lo + _MEMBER_PAGE - 1)
+            .execute()
+            .data
+            or []
+        )
+        rows += chunk
+        if len(chunk) < _MEMBER_PAGE:
+            break
+    else:
+        return "error"  # not every row was read: delete nothing, retry next run
     if not rows:
         return "clear"
-    paths, bad = [], False
+    storage = db.get_service_client().storage.from_(_VERIFICATION_BUCKET)
+    removable: list[str] = []  # row ids whose file is gone (or that never had one)
+    paths: dict[str, list[str]] = {}  # conforming storage path -> row ids
+    failed = False
     for r in rows:
         path = r.get("storage_path")
         if not path:
-            continue
+            removable.append(r["id"])
         # Defence in depth: the server builds '<school_id>/<user_id>/<file>'. Never
         # remove a path outside that shape, whatever the row says.
-        if r.get("school_id") and path.startswith(f"{r['school_id']}/{user_id}/"):
-            paths.append(path)
+        elif r.get("school_id") and path.startswith(f"{r['school_id']}/{user_id}/"):
+            paths.setdefault(path, []).append(r["id"])
         else:
-            bad = True
+            failed = True  # row kept so the odd path is reviewed, never silently dropped
             log.warning("Verification proof path skipped: unexpected shape")
-    if paths:
-        # Raises on a storage failure, which keeps the rows (and the paths) for the next run.
-        db.get_service_client().storage.from_(_VERIFICATION_BUCKET).remove(paths)
-    if bad:
-        return "error"  # rows kept so the odd path is reviewed, never silently dropped
-    svc.table("institution_verification_submissions").delete().eq("submitted_by", user_id).execute()
-    return "deleted"
+    items = list(paths)
+    for i in range(0, len(items), _IN_CHUNK):
+        batch = items[i : i + _IN_CHUNK]
+        try:
+            storage.remove(batch)
+            done = batch
+        except Exception as exc:  # noqa: BLE001
+            # Isolate the failing file so only its row is kept for the next run.
+            log.warning("Verification proof removal failed", error=type(exc).__name__)
+            done = []
+            for path in batch:
+                try:
+                    storage.remove([path])
+                    done.append(path)
+                except Exception:  # noqa: BLE001
+                    failed = True
+        for path in done:
+            removable += paths[path]
+    # Only rows whose file was removed are deleted; the rest stay for a retry.
+    for i in range(0, len(removable), _IN_CHUNK):
+        svc.table(table).delete().in_("id", removable[i : i + _IN_CHUNK]).execute()
+    return "error" if failed else "deleted"
 
 
 _DRAFT_PII_SCRUB = {

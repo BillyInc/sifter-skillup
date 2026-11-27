@@ -427,6 +427,25 @@ def test_a_guild_whose_every_page_is_ineligible_up_to_the_cap_is_kept_and_report
     assert svc.tables["guilds"] == [{"id": "g1", "owner_id": "u1"}]
 
 
+def test_an_admin_on_a_later_page_beats_an_ordinary_member_on_the_first(monkeypatch):
+    monkeypatch.setattr(ap, "_MEMBER_PAGE", 3)
+    users = [{"id": f"u{i}", "is_deleted": False, "claim_state": None, "guild_id": "g1"} for i in range(2, 9)]
+    svc = _purge_db(monkeypatch, tables=_guild_tables(
+        [{"guild_id": "g1", "user_id": "u8", "role": "admin", "joined_at": "2026-09-01"},
+         {"guild_id": "g1", "user_id": "u2", "role": "member", "joined_at": "2026-01-01"}], users))
+    assert ap.hard_delete_learner_content("u1")["guilds"] == "transferred"
+    assert svc.tables["guilds"][0]["owner_id"] == "u8"  # page 3, admin
+
+
+def test_a_member_scan_that_hits_the_cap_keeps_the_guild_even_with_eligible_members(monkeypatch):
+    monkeypatch.setattr(ap, "_MAX_GUILD_PAGES", 2)
+    monkeypatch.setattr(ap, "_MEMBER_PAGE", 3)
+    users = [{"id": f"u{i}", "is_deleted": False, "claim_state": None, "guild_id": "g1"} for i in range(2, 9)]
+    svc = _purge_db(monkeypatch, tables=_guild_tables([], users))
+    assert ap.hard_delete_learner_content("u1")["guilds"] == "error"
+    assert svc.tables["guilds"] == [{"id": "g1", "owner_id": "u1"}]
+
+
 def test_transfer_is_reported_only_if_the_update_matched_a_row(monkeypatch):
     svc = _purge_db(monkeypatch, tables=_guild_tables(
         [{"guild_id": "g1", "user_id": "u2", "joined_at": "2026-01-01"}], _guild_users()))
@@ -475,8 +494,8 @@ def test_a_schema_without_actor_id_does_not_fail_the_purge(monkeypatch):
 
 
 class _Storage:
-    def __init__(self, fail=False):
-        self.removed, self.fail = [], fail
+    def __init__(self, fail=False, fail_paths=()):
+        self.removed, self.fail, self.fail_paths = [], fail, set(fail_paths)
 
     def from_(self, bucket):
         assert bucket == "verification-proofs"
@@ -485,6 +504,8 @@ class _Storage:
     def remove(self, paths):
         if self.fail:
             raise RuntimeError("storage down")
+        if self.fail_paths & set(paths):
+            raise RuntimeError("storage rejected a file")
         self.removed += list(paths)
 
 
@@ -528,7 +549,48 @@ def test_a_proof_path_outside_the_server_built_shape_is_never_removed(monkeypatc
     out = ap.hard_delete_learner_content("u1")
     assert out["institution_verification_submissions"] == "error"
     assert storage.removed == ["org/u1/a.pdf"]  # only the conforming path
-    assert len(svc.tables["institution_verification_submissions"]) == 5  # rows kept for review
+    # the conforming row's file is gone so it is deleted; the four odd rows stay for review
+    assert sorted(r["id"] for r in svc.tables["institution_verification_submissions"]) == [
+        "no-school", "other-school", "other-user", "traversal"]
+
+
+def test_more_than_one_page_of_submissions_all_files_and_rows_are_purged(monkeypatch):
+    n = ap._MEMBER_PAGE + 5
+    rows = [{"id": f"v{i:05d}", "school_id": "org", "submitted_by": "u1", "storage_path": f"org/u1/{i}.pdf"}
+            for i in range(n)]
+    rows.append({"id": "keep", "school_id": "org", "submitted_by": "u2", "storage_path": "org/u2/x.pdf"})
+    svc = _purge_db(monkeypatch, tables={"institution_verification_submissions": rows})
+    storage = _with_storage(svc, _Storage()).storage
+    out = ap.hard_delete_learner_content("u1")
+    assert out["institution_verification_submissions"] == "deleted"
+    assert len(storage.removed) == n and len(set(storage.removed)) == n
+    assert [r["id"] for r in svc.tables["institution_verification_submissions"]] == ["keep"]
+    assert ap.hard_delete_learner_content("u1")["institution_verification_submissions"] == "clear"
+
+
+def test_one_failing_file_keeps_only_its_row_and_blocks(monkeypatch):
+    rows = [{"id": f"v{i}", "school_id": "org", "submitted_by": "u1", "storage_path": f"org/u1/{i}.pdf"}
+            for i in range(3)]
+    svc = _purge_db(monkeypatch, tables={"institution_verification_submissions": rows})
+    storage = _with_storage(svc, _Storage(fail_paths={"org/u1/1.pdf"})).storage
+    out = ap.hard_delete_learner_content("u1")
+    assert out["institution_verification_submissions"] == "error"
+    assert sorted(storage.removed) == ["org/u1/0.pdf", "org/u1/2.pdf"]
+    assert [r["id"] for r in svc.tables["institution_verification_submissions"]] == ["v1"]
+    storage.fail_paths.clear()  # retry succeeds
+    assert ap.hard_delete_learner_content("u1")["institution_verification_submissions"] == "deleted"
+    assert svc.tables["institution_verification_submissions"] == []
+
+
+def test_submission_scan_cap_deletes_nothing(monkeypatch):
+    monkeypatch.setattr(ap, "_MAX_GUILD_PAGES", 2)
+    monkeypatch.setattr(ap, "_MEMBER_PAGE", 3)
+    rows = [{"id": f"v{i}", "school_id": "org", "submitted_by": "u1", "storage_path": f"org/u1/{i}.pdf"}
+            for i in range(6)]
+    svc = _purge_db(monkeypatch, tables={"institution_verification_submissions": rows})
+    storage = _with_storage(svc, _Storage()).storage
+    assert ap.hard_delete_learner_content("u1")["institution_verification_submissions"] == "error"
+    assert storage.removed == [] and len(svc.tables["institution_verification_submissions"]) == 6
 
 
 # --- school-side copies of a claimed (possibly minor) learner's identity -----
