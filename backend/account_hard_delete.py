@@ -36,7 +36,9 @@ Starvation: an account that keeps failing must not hold up newer ones.
   rotating slice of a larger window chosen by the run date, so a block of
   permanently failing rows cannot occupy every run.
 
-Logs counts only, never ids, emails or names.
+Logs counts only, never emails or names. The one exception is an ERROR line
+when an account uses its last attempt: it carries the user id and the names of
+the failing steps (no other personal data), once per run.
 """
 from datetime import datetime, timedelta, timezone
 
@@ -98,7 +100,15 @@ def _eligible_batch(svc, cutoff_iso: str, limit: int, today: int) -> tuple[list[
     return window[start : start + limit], False
 
 
-def _record_failure(svc, row: dict, now_iso: str) -> None:
+def _record_failure(svc, row: dict, now_iso: str, steps: list[str] | None = None, abandoned: list | None = None) -> None:
+    """Record a failed attempt; note a row that has just used its last attempt.
+
+    The ID of an account that reaches ``MAX_PURGE_ATTEMPTS`` (and the names of
+    the steps that failed, never any personal data) is appended to
+    ``abandoned`` so the run can log it once at ERROR.
+    """
+    if abandoned is not None and int(row.get("purge_attempts") or 0) + 1 >= MAX_PURGE_ATTEMPTS:
+        abandoned.append((row["id"], list(steps or [])))
     try:
         svc.table("users").update(
             {"purge_attempts": int(row.get("purge_attempts") or 0) + 1, "last_purge_attempt_at": now_iso}
@@ -138,6 +148,7 @@ def hard_delete_expired_accounts(now: datetime | None = None) -> dict:
         return result
 
     incomplete = 0
+    just_abandoned: list = []
     for row in batch:
         try:
             outcome = hard_delete_learner_content(row["id"])
@@ -149,14 +160,18 @@ def hard_delete_expired_accounts(now: datetime | None = None) -> dict:
                 for table, state in outcome.items():
                     if state == "blocked":
                         result["blocked"][table] = result["blocked"].get(table, 0) + 1
-                _record_failure(svc, row, now.isoformat())
+                steps = sorted(t for t, v in outcome.items() if v in _BLOCKING_OUTCOMES)
+                _record_failure(svc, row, now.isoformat(), steps, just_abandoned)
                 continue
             svc.table("users").delete().eq("id", row["id"]).eq("is_deleted", True).execute()
             result["deleted"] += 1
         except Exception as exc:  # noqa: BLE001
             result["failed"] += 1
-            _record_failure(svc, row, now.isoformat())
+            _record_failure(svc, row, now.isoformat(), ["exception:" + type(exc).__name__], just_abandoned)
             log.warning("Account hard delete failed", error=type(exc).__name__)
+    if backoff:
+        for uid, steps in just_abandoned:
+            log.error("Account hard delete abandoned after repeated failures", user_id=uid, failing_steps=steps)
     if backoff:
         abandoned = _abandoned_count(svc)
         result["abandoned"] = abandoned

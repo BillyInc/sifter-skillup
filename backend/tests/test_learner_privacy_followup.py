@@ -154,7 +154,7 @@ PERSONAL_NULLED = (
     "telegram_id", "wallet_address", "starknet_address", "starknet_wallet_id", "starknet_email",
     "starknet_public_key", "github_token", "github_username", "github_avatar", "last_seen_device_id",
     "chosen_direction", "last_post_auth_path", "student_class", "stream", "phone", "date_of_birth",
-    "first_name", "middle_name", "last_name", "display_name", "avatar_url", "privy_did", "guardian_consent_at",
+    "first_name", "middle_name", "last_name", "display_name", "avatar_url", "guardian_consent_at",
 )
 
 
@@ -165,6 +165,11 @@ def test_deletion_fields_clear_every_personal_identifier():
     assert fields["settings"] == {}  # also withdraws analytics consent stored in settings
     assert fields["username"] == "Deleted learner"
     assert fields["email"].endswith("@deleted.invalid")
+
+
+def test_privy_did_is_kept_through_soft_delete_so_a_returning_user_stays_locked_out():
+    fields = privacy.deletion_user_fields("u1", "dev-1", "t0", "t1")
+    assert "privy_did" not in fields  # released only by the hard delete of the row
 
 
 def test_deletion_fields_leave_not_null_and_guard_columns_alone():
@@ -404,7 +409,7 @@ def test_a_missing_guild_members_table_is_an_empty_member_list_not_a_retry_loop(
         "users": [{"id": "u2", "is_deleted": False, "claim_state": None, "guild_id": "g2"}],
     })
     out = ap.hard_delete_learner_content("u1")
-    assert out["guilds"] in ("deleted", "transferred") and "error" not in out.values()
+    assert out["guilds"] == "deleted_and_transferred" and "error" not in out.values()
     assert [g["id"] for g in svc.tables["guilds"]] == ["g2"]  # g1 empty: deleted; g2 handed over
     assert svc.tables["guilds"][0]["owner_id"] == "u2"
 
@@ -494,8 +499,16 @@ def test_a_schema_without_actor_id_does_not_fail_the_purge(monkeypatch):
 
 
 class _Storage:
-    def __init__(self, fail=False, fail_paths=()):
+    def __init__(self, fail=False, fail_paths=(), objects=(), fail_list=False):
         self.removed, self.fail, self.fail_paths = [], fail, set(fail_paths)
+        self.objects, self.fail_list = list(objects), fail_list  # objects with no row
+
+    def list(self, prefix, options=None):
+        if self.fail_list:
+            raise RuntimeError("storage list down")
+        names = [o[len(prefix) + 1:] for o in self.objects if o.startswith(prefix + "/") and o not in self.removed]
+        o = options or {}
+        return [{"name": n} for n in names[o.get("offset", 0): o.get("offset", 0) + o.get("limit", 100)]]
 
     def from_(self, bucket):
         assert bucket == "verification-proofs"
@@ -591,6 +604,145 @@ def test_submission_scan_cap_deletes_nothing(monkeypatch):
     storage = _with_storage(svc, _Storage()).storage
     assert ap.hard_delete_learner_content("u1")["institution_verification_submissions"] == "error"
     assert storage.removed == [] and len(svc.tables["institution_verification_submissions"]) == 6
+
+
+def test_a_proof_object_with_no_row_is_found_by_prefix_and_removed(monkeypatch):
+    # the upload succeeded, the insert failed and the route's own cleanup failed too
+    svc = _purge_db(monkeypatch, tables={
+        "institution_members": [{"id": "im1", "user_id": "u1", "school_id": "org", "seat_status": "revoked"}],
+        "student_affiliations": [{"id": "sa1", "student_id": "u1", "school_id": "org2"}],
+    })
+    storage = _with_storage(svc, _Storage(objects=["org/u1/orphan.pdf", "org2/u1/o2.pdf", "org/u2/other.pdf"])).storage
+    out = ap.hard_delete_learner_content("u1")
+    assert out["institution_verification_submissions"] == "deleted"
+    assert sorted(storage.removed) == ["org/u1/orphan.pdf", "org2/u1/o2.pdf"]  # never another user's prefix
+    assert ap.hard_delete_learner_content("u1")["institution_verification_submissions"] == "clear"
+
+
+def test_a_failed_prefix_listing_is_an_error_so_the_user_row_is_kept(monkeypatch):
+    svc = _purge_db(monkeypatch, tables={"institution_members": [{"id": "im1", "user_id": "u1", "school_id": "org"}]})
+    _with_storage(svc, _Storage(fail_list=True))
+    assert ap.hard_delete_learner_content("u1")["institution_verification_submissions"] == "error"
+
+
+def test_a_user_with_no_school_and_no_rows_never_touches_storage(monkeypatch):
+    svc = _purge_db(monkeypatch, tables={})
+    svc.storage = None  # any storage access would raise
+    assert ap.hard_delete_learner_content("u1")["institution_verification_submissions"] == "clear"
+
+
+def test_traversal_empty_segment_and_backslash_paths_are_rejected_even_after_a_valid_prefix(monkeypatch):
+    bad = ["org/u1/../u2/x.pdf", "org/u1//x.pdf", "org/u1/a\\b.pdf"]
+    rows = [{"id": f"b{i}", "school_id": "org", "submitted_by": "u1", "storage_path": p} for i, p in enumerate(bad)]
+    rows.append({"id": "ok", "school_id": "org", "submitted_by": "u1", "storage_path": "org/u1/fine.pdf"})
+    svc = _purge_db(monkeypatch, tables={"institution_verification_submissions": rows})
+    storage = _with_storage(svc, _Storage()).storage
+    out = ap.hard_delete_learner_content("u1")
+    assert out["institution_verification_submissions"] == "error"
+    assert storage.removed == ["org/u1/fine.pdf"]
+    assert sorted(r["id"] for r in svc.tables["institution_verification_submissions"]) == ["b0", "b1", "b2"]
+
+
+def test_a_leftover_avatar_is_removed_by_the_hard_delete_purge(monkeypatch):
+    import avatar_storage
+
+    _purge_db(monkeypatch, tables={})
+    store = avatar_storage.InMemoryAvatarStorage()
+    store.objects.update({"u1/a.webp": b"x", "u1/b.webp": b"x", "u2/c.webp": b"x"})
+    avatar_storage.set_storage(store)
+    assert ap.hard_delete_learner_content("u1")["avatars"] == "deleted"
+    assert list(store.objects) == ["u2/c.webp"]  # another user's photo untouched
+    assert ap.hard_delete_learner_content("u1")["avatars"] == "clear"
+
+
+def test_an_avatar_removal_failure_is_an_error_not_clear(monkeypatch):
+    import avatar_storage
+
+    _purge_db(monkeypatch, tables={})
+    store = avatar_storage.InMemoryAvatarStorage()
+    store.objects["u1/a.webp"] = b"x"
+    store.delete = lambda keys: (_ for _ in ()).throw(RuntimeError("storage down"))
+    avatar_storage.set_storage(store)
+    assert ap.hard_delete_learner_content("u1")["avatars"] == "error"
+
+
+def test_an_unconfigured_avatar_storage_or_missing_bucket_counts_as_clear(monkeypatch):
+    import avatar_storage
+
+    _purge_db(monkeypatch, tables={})
+
+    class _NoBucket(avatar_storage.InMemoryAvatarStorage):
+        def list_keys(self, user_id):
+            raise RuntimeError("Bucket not found")
+
+    avatar_storage.set_storage(_NoBucket())
+    assert ap.hard_delete_learner_content("u1")["avatars"] == "clear"
+
+    def _boom():
+        raise RuntimeError("not configured")
+
+    monkeypatch.setattr(avatar_storage, "get_storage", _boom)
+    assert ap.hard_delete_learner_content("u1")["avatars"] == "clear"
+
+
+def test_more_than_a_page_of_collections_is_read_in_pages_and_deleted_in_chunks(monkeypatch):
+    # NOTE on the fake: it does not enforce PostgREST's 1000-row cap or URL length,
+    # so this proves the paging/chunking shape (range() used, bounded in.() lists),
+    # not the real server limits.
+    n = ap._MEMBER_PAGE + 250
+    svc = _purge_db(monkeypatch, tables={
+        "collections": [{"id": f"c{i:05d}", "user_id": "u1"} for i in range(n)] + [{"id": "cx", "user_id": "u2"}],
+        "collection_items": [{"id": f"i{i}", "collection_id": f"c{i:05d}"} for i in range(n)]
+        + [{"id": "ix", "collection_id": "cx"}],
+    })
+    out = ap.hard_delete_learner_content("u1")
+    assert out["collections"] == "deleted"
+    assert [r["id"] for r in svc.tables["collections"]] == ["cx"]
+    assert [r["id"] for r in svc.tables["collection_items"]] == ["ix"]
+    sizes = [len(v) for name, mode, filters, _o in svc.calls if name == "collection_items" and mode == "delete"
+             for op, _c, v in filters if op == "in"]
+    assert sizes and max(sizes) <= ap._IN_CHUNK and sum(sizes) == n
+
+
+def test_collections_scan_that_hits_the_page_cap_fails_closed(monkeypatch):
+    monkeypatch.setattr(ap, "_MAX_GUILD_PAGES", 2)
+    monkeypatch.setattr(ap, "_MEMBER_PAGE", 3)
+    svc = _purge_db(monkeypatch, tables={"collections": [{"id": f"c{i}", "user_id": "u1"} for i in range(6)]})
+    assert ap.hard_delete_learner_content("u1")["collections"] == "error"
+    assert len(svc.tables["collections"]) == 6
+
+
+def test_guild_outcome_reports_both_deleted_and_transferred_when_both_happen(monkeypatch):
+    svc = _purge_db(monkeypatch, tables={
+        "guilds": [{"id": "g1", "owner_id": "u1"}, {"id": "g2", "owner_id": "u1"}],
+        "users": [{"id": "u2", "is_deleted": False, "guild_id": "g1"}],
+    })
+    assert ap.hard_delete_learner_content("u1")["guilds"] == "deleted_and_transferred"
+    assert svc.tables["guilds"] == [{"id": "g1", "owner_id": "u2"}]
+
+
+def test_owned_guilds_are_read_in_pages(monkeypatch):
+    monkeypatch.setattr(ap, "_MEMBER_PAGE", 2)
+    svc = _purge_db(monkeypatch, tables={"guilds": [{"id": f"g{i}", "owner_id": "u1"} for i in range(5)]})
+    assert ap.hard_delete_learner_content("u1")["guilds"] == "deleted" and svc.tables["guilds"] == []
+    monkeypatch.setattr(ap, "_MAX_GUILD_PAGES", 2)
+    svc = _purge_db(monkeypatch, tables={"guilds": [{"id": f"g{i}", "owner_id": "u1"} for i in range(5)]})
+    assert ap.hard_delete_learner_content("u1")["guilds"] == "error" and len(svc.tables["guilds"]) == 5
+
+
+def test_an_account_that_uses_its_last_attempt_is_logged_at_error_once_with_failing_steps(monkeypatch):
+    svc = _real_purge_job(
+        monkeypatch, [_u("u1", 90, purge_attempts=ahd.MAX_PURGE_ATTEMPTS - 1)],
+        {"institution_verification_submissions": [{"id": "v1", "school_id": "o", "submitted_by": "u1", "storage_path": "o/u1/p"}]},
+    )
+    svc.storage = _Storage(fail=True)
+    errors = []
+    monkeypatch.setattr(ahd.log, "error", lambda msg, **kw: errors.append((msg, kw)))
+    ahd.hard_delete_expired_accounts(NOW)
+    assert len(errors) == 1
+    assert errors[0][1]["user_id"] == "u1" and errors[0][1]["failing_steps"] == ["institution_verification_submissions"]
+    ahd.hard_delete_expired_accounts(NOW + timedelta(days=1))  # now abandoned: not retried, not re-logged
+    assert len(errors) == 1
 
 
 # --- school-side copies of a claimed (possibly minor) learner's identity -----
@@ -907,3 +1059,21 @@ def test_hard_delete_fk_migrations_add_not_valid_then_validate_separately():
     entry = entries["migration_hard_delete_fk_validate_2026-11-27"]
     assert entry.path == "migration_hard_delete_fk_validate_2026-11-27.sql"
     assert "migration_hard_delete_fk_2026-11-27" in entry.requires
+
+
+def test_hard_delete_migrations_set_a_lock_timeout_inside_the_transaction_before_any_ddl():
+    # Structural check of the SQL text only (no database is available in the unit
+    # suite). The proof that both files run, and run twice, is the scratch
+    # PostgreSQL 16 run recorded in the PR notes.
+    import re
+    from pathlib import Path
+
+    backend = Path(__file__).resolve().parents[1]
+    for name in ("migration_hard_delete_fk_2026-11-27.sql", "migration_hard_delete_fk_validate_2026-11-27.sql"):
+        sql = re.sub(r"--[^\n]*", "", (backend / name).read_text())
+        begin = sql.index("BEGIN;")
+        lock = sql.index("SET LOCAL lock_timeout = '5s';")
+        ddl = min(i for i in (sql.find("ALTER TABLE"), sql.find("DO $$")) if i != -1)
+        assert begin < lock < ddl, name
+        assert sql.count("BEGIN;") == 1 and sql.count("COMMIT;") == 1, name
+        assert "statement_timeout" not in sql, name

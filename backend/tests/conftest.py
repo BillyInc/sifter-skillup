@@ -194,3 +194,13 @@ def client(mock_db):
          patch("database.db", mock_db):
         from main import app
         yield TestClient(app)
+
+
+@pytest.fixture(autouse=True)
+def _inmemory_avatar_storage():
+    """Never reach the real avatars bucket: the hard-delete purge now lists it."""
+    import avatar_storage
+
+    avatar_storage.set_storage(avatar_storage.InMemoryAvatarStorage())
+    yield
+    avatar_storage.set_storage(None)

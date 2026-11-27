@@ -19,6 +19,12 @@
 -- violate a constraint the statement fails and the transaction rolls back; fix
 -- the orphaned rows and re-run.
 --
+-- Lock timeout: the transaction sets lock_timeout = 5s so it fails fast rather
+-- than queueing behind a conflicting lock. A "lock timeout" error means nothing
+-- changed: retry at a quiet time. No statement_timeout is set, because
+-- VALIDATE CONSTRAINT legitimately scans the table and a cancel would only
+-- waste the scan.
+--
 -- Verify after applying (expects convalidated = true for both rows):
 --   SELECT c.conrelid::regclass AS tbl, a.attname AS col, c.confdeltype, c.convalidated
 --     FROM pg_constraint c
@@ -29,6 +35,8 @@
 --        OR (c.conrelid = 'skillup_dev.guilds'::regclass        AND a.attname = 'owner_id'));
 
 BEGIN;
+
+SET LOCAL lock_timeout = '5s';
 
 DO $$
 DECLARE

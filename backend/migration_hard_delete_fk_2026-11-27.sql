@@ -29,6 +29,13 @@
 -- afterwards, as its own transaction, to validate them (it takes only a
 -- SHARE UPDATE EXCLUSIVE lock, so reads and writes continue).
 --
+-- Lock timeout: the transaction sets lock_timeout = 5s before the DDL, so it
+-- fails fast instead of queueing behind a long transaction (an ACCESS
+-- EXCLUSIVE request on notifications or guilds blocks every later read and
+-- write while it waits). If it fails with "canceling statement due to lock
+-- timeout", nothing was changed: retry at a quiet time. No statement_timeout
+-- is set; the DDL does no table scan, and cancelling it midway gains nothing.
+--
 -- Verify after applying (expects confdeltype 'n' = SET NULL for both rows;
 -- convalidated is false until the validate migration has run; a table or
 -- column that is absent simply returns no row):
@@ -42,6 +49,8 @@
 -- Roll back (only if needed): re-create the constraints without ON DELETE SET NULL.
 
 BEGIN;
+
+SET LOCAL lock_timeout = '5s';
 
 DO $$
 DECLARE

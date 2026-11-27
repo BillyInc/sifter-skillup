@@ -50,6 +50,24 @@ step is idempotent, so a retry after a partial failure just continues:
   confirmed/dismissed ones keep the admins' decision with the personal
   snapshots blanked. See each function for the reasoning.
 
+Profile photos are removed from the private ``avatars`` bucket here as well
+(soft delete removes them best effort and swallows failures, so this step
+re-lists ``<user_id>/`` and deletes whatever is left). A storage that is not
+configured, or a bucket that does not exist, counts as clear; any other
+failure is ``error`` and keeps the user row for the next run. Verification
+proofs are likewise removed from the ``<school_id>/<user_id>/`` prefixes of
+every school the user submitted to, belongs to or is affiliated with, so an
+object whose row was never written (the upload succeeded, the insert and the
+cleanup both failed) is not left behind.
+
+Known remaining gaps (text that stays, unlinked, after the user row is gone;
+NOT a claim of complete erasure):
+
+- ``projects.creator_id``: the project title and description.
+- ``student_consent_requests.requested_by``: the request message.
+- ``guild_challenges.initiator_id``: the challenge text.
+- ``content_flags``: moderation reports, kept on purpose.
+
 Every other table that references ``users`` does so with ON DELETE CASCADE
 (sessions, device tokens, memberships, affiliations, claim codes, referrals,
 notifications, messages, learning-interest events and selections, grade sets,
@@ -83,6 +101,7 @@ _GUARDED = (
     "institution_verification_submissions",
     "student_provision_drafts",
     "student_merge_candidates",
+    "avatars",
 )
 _MEMBER_PAGE = 1000  # PostgREST caps a select at 1000 rows; the limit is explicit
 _IN_CHUNK = 100  # keeps ``in.(...)`` URLs short
@@ -216,9 +235,25 @@ def _purge_owned_guilds(svc, user_id: str) -> str:
     then the earliest ``joined_at``, then id). If a database has no
     ``users.guild_id`` column at all, ``guild_members`` is the only source and
     its rows are checked for liveness only.
+
+    The outcome is ``deleted``, ``transferred``, ``deleted_and_transferred``
+    when the user owned both kinds, or ``clear``. ``users.guild_role`` is not
+    touched: the app only ever writes ``member`` (and NULL on leaving), it has
+    no owner/admin value, and ``guilds.owner_id`` is what records ownership.
     """
-    guilds = svc.table("guilds").select("id").eq("owner_id", user_id).execute().data or []
-    outcome = "clear"
+    guilds: list[dict] = []
+    for page in range(_MAX_GUILD_PAGES):
+        lo = page * _MEMBER_PAGE
+        chunk = (
+            svc.table("guilds").select("id").eq("owner_id", user_id).order("id").range(lo, lo + _MEMBER_PAGE - 1).execute().data
+            or []
+        )
+        guilds += chunk
+        if len(chunk) < _MEMBER_PAGE:
+            break
+    else:
+        raise RuntimeError("owned guild scan limit reached")  # not all read: keep the user row
+    deleted = transferred = False
     for guild in guilds:
         gid = guild["id"]
         real = _live_guild_users(svc, gid, user_id)
@@ -229,7 +264,7 @@ def _purge_owned_guilds(svc, user_id: str) -> str:
         if not real:
             _delete_guild_member_rows(svc, gid)
             svc.table("guilds").delete().eq("id", gid).execute()
-            outcome = "deleted"
+            deleted = True
             continue
         meta = {m["user_id"]: m for m in _guild_member_rows(svc, gid, real) if m.get("user_id")}
 
@@ -239,9 +274,63 @@ def _purge_owned_guilds(svc, user_id: str) -> str:
 
         heir = min(real, key=rank)
         moved = svc.table("guilds").update({"owner_id": heir}).eq("id", gid).eq("owner_id", user_id).execute().data
-        if moved and outcome == "clear":
-            outcome = "transferred"
-    return outcome
+        if moved:
+            transferred = True
+    if deleted and transferred:
+        return "deleted_and_transferred"
+    return "transferred" if transferred else "deleted" if deleted else "clear"
+
+
+def _paged(query_factory, label: str) -> list[dict]:
+    """Read every page of a select; raise if the page cap leaves rows unread."""
+    out: list[dict] = []
+    for page in range(_MAX_GUILD_PAGES):
+        lo = page * _MEMBER_PAGE
+        chunk = query_factory().order("id").range(lo, lo + _MEMBER_PAGE - 1).execute().data or []
+        out += chunk
+        if len(chunk) < _MEMBER_PAGE:
+            return out
+    raise RuntimeError(f"{label} scan limit reached")
+
+
+def _school_ids_for_user(svc, user_id: str) -> set[str]:
+    """Schools this user may have uploaded proof to: any seat status, any affiliation."""
+    ids: set[str] = set()
+    for table, col in (("institution_members", "user_id"), ("student_affiliations", "student_id")):
+        try:
+            rows = _paged(lambda t=table, c=col: svc.table(t).select("id, school_id").eq(c, user_id), table)
+        except Exception as exc:  # noqa: BLE001
+            if _is_missing_table(exc, table):
+                continue
+            raise
+        ids |= {r["school_id"] for r in rows if r.get("school_id")}
+    return ids
+
+
+def _safe_object_path(path: str) -> bool:
+    """A storage path with no traversal, empty segment or backslash."""
+    return ".." not in path and "//" not in path and "\\" not in path
+
+
+def _is_bucket_missing(exc: Exception) -> bool:
+    text = f"{type(exc).__name__} {exc}".lower()
+    return "bucket not found" in text or "bucket does not exist" in text
+
+
+def _list_prefix(storage, prefix: str) -> list[str]:
+    """Object paths directly under ``prefix`` (no trailing slash), all pages."""
+    found: list[str] = []
+    for page in range(_MAX_GUILD_PAGES):
+        try:
+            items = storage.list(prefix, {"limit": _MEMBER_PAGE, "offset": page * _MEMBER_PAGE}) or []
+        except Exception as exc:  # noqa: BLE001
+            if _is_bucket_missing(exc):
+                return found
+            raise
+        found += [f"{prefix}/{i['name']}" for i in items if i.get("name")]
+        if len(items) < _MEMBER_PAGE:
+            return found
+    raise RuntimeError("proof prefix scan limit reached")
 
 
 def _purge_verification_submissions(svc, user_id: str) -> str:
@@ -252,31 +341,20 @@ def _purge_verification_submissions(svc, user_id: str) -> str:
     it, and the school's ``verification_status`` is left unchanged. Whether an
     approved school should keep its evidence (or be re-verified) is a product
     decision awaiting the maintainer, not something this purge decides.
+
+    Besides the paths recorded on rows, the ``<school_id>/<user_id>/`` prefix
+    of every school the user submitted to, is a member of or is affiliated
+    with is listed and emptied: an upload whose insert failed, and whose own
+    cleanup also failed, leaves an object with no row.
     """
     table = "institution_verification_submissions"
-    rows: list[dict] = []
-    for page in range(_MAX_GUILD_PAGES):
-        lo = page * _MEMBER_PAGE
-        chunk = (
-            svc.table(table)
-            .select("id, school_id, storage_path")
-            .eq("submitted_by", user_id)
-            .order("id")
-            .range(lo, lo + _MEMBER_PAGE - 1)
-            .execute()
-            .data
-            or []
-        )
-        rows += chunk
-        if len(chunk) < _MEMBER_PAGE:
-            break
-    else:
-        return "error"  # not every row was read: delete nothing, retry next run
-    if not rows:
+    rows = _paged(lambda: svc.table(table).select("id, school_id, storage_path").eq("submitted_by", user_id), table)
+    school_ids = _school_ids_for_user(svc, user_id) | {r["school_id"] for r in rows if r.get("school_id")}
+    if not rows and not school_ids:
         return "clear"
     storage = db.get_service_client().storage.from_(_VERIFICATION_BUCKET)
     removable: list[str] = []  # row ids whose file is gone (or that never had one)
-    paths: dict[str, list[str]] = {}  # conforming storage path -> row ids
+    paths: dict[str, list[str]] = {}  # conforming storage path -> row ids (empty: orphan object)
     failed = False
     for r in rows:
         path = r.get("storage_path")
@@ -284,11 +362,25 @@ def _purge_verification_submissions(svc, user_id: str) -> str:
             removable.append(r["id"])
         # Defence in depth: the server builds '<school_id>/<user_id>/<file>'. Never
         # remove a path outside that shape, whatever the row says.
-        elif r.get("school_id") and path.startswith(f"{r['school_id']}/{user_id}/"):
+        elif r.get("school_id") and path.startswith(f"{r['school_id']}/{user_id}/") and _safe_object_path(path):
             paths.setdefault(path, []).append(r["id"])
         else:
             failed = True  # row kept so the odd path is reviewed, never silently dropped
             log.warning("Verification proof path skipped: unexpected shape")
+    for sid in sorted(school_ids):
+        prefix = f"{sid}/{user_id}"
+        try:
+            listed = _list_prefix(storage, prefix)
+        except Exception as exc:  # noqa: BLE001
+            log.warning("Verification proof listing failed", error=type(exc).__name__)
+            failed = True
+            continue
+        for path in listed:
+            if _safe_object_path(path):
+                paths.setdefault(path, [])
+            else:
+                failed = True
+                log.warning("Verification proof path skipped: unexpected shape")
     items = list(paths)
     for i in range(0, len(items), _IN_CHUNK):
         batch = items[i : i + _IN_CHUNK]
@@ -310,7 +402,38 @@ def _purge_verification_submissions(svc, user_id: str) -> str:
     # Only rows whose file was removed are deleted; the rest stay for a retry.
     for i in range(0, len(removable), _IN_CHUNK):
         svc.table(table).delete().in_("id", removable[i : i + _IN_CHUNK]).execute()
-    return "error" if failed else "deleted"
+    if failed:
+        return "error"
+    return "deleted" if (rows or items) else "clear"
+
+
+def _purge_avatars(svc, user_id: str) -> str:
+    """Remove any profile photo still in the private ``avatars`` bucket.
+
+    Soft delete removes ``<user_id>/*.webp`` best effort and swallows failures,
+    so a failed removal would otherwise leave the photo forever. A storage that
+    cannot be built, or a bucket that is absent, holds nothing: ``clear``. A
+    list or remove failure raises (-> ``error``), keeping the user row.
+    """
+    import avatar_storage
+
+    try:
+        storage = avatar_storage.get_storage()
+    except Exception:  # noqa: BLE001 - not configured
+        return "clear"
+    removed = False
+    for _ in range(20):  # a listing returns one page; re-list until empty
+        try:
+            keys = [k for k in storage.list_keys(user_id) if k.startswith(f"{user_id}/") and _safe_object_path(k)]
+        except Exception as exc:  # noqa: BLE001
+            if _is_bucket_missing(exc):
+                return "clear"
+            raise
+        if not keys:
+            return "deleted" if removed else "clear"
+        storage.delete(keys)
+        removed = True
+    raise RuntimeError("avatar purge did not converge")
 
 
 _DRAFT_PII_SCRUB = {
@@ -390,7 +513,8 @@ def hard_delete_learner_content(user_id: str) -> dict:
     """Delete the user's content and report per table.
 
     Outcomes: ``deleted``, ``clear`` (nothing to remove), ``missing_table``,
-    ``error``, ``transferred`` (guild handed to another member), ``blocked``
+    ``error``, ``transferred`` (guild handed to another member; or
+    ``deleted_and_transferred`` when both happened), ``blocked``
     (the user row cannot be deleted yet) or ``skipped``
     (no database client). The caller must delete the user row only when no
     outcome is ``error``, ``blocked`` or ``skipped``.
@@ -404,10 +528,13 @@ def hard_delete_learner_content(user_id: str) -> dict:
     for table in _LEARNER_CONTENT_TABLES + _UNLINKED_ON_DELETE_TABLES:
         try:
             if table == "collections":
-                rows = svc.table("collections").select("id").eq("user_id", user_id).execute().data or []
+                # Page the select (PostgREST caps it at 1000) and chunk the
+                # delete so the ``in.(...)`` URL stays short; fail closed if
+                # the page cap leaves collections unread.
+                rows = _paged(lambda: svc.table("collections").select("id").eq("user_id", user_id), "collections")
                 ids = [r["id"] for r in rows]
-                if ids:
-                    svc.table("collection_items").delete().in_("collection_id", ids).execute()
+                for i in range(0, len(ids), _IN_CHUNK):
+                    svc.table("collection_items").delete().in_("collection_id", ids[i : i + _IN_CHUNK]).execute()
             svc.table(table).delete().eq("user_id", user_id).execute()
             outcome[table] = "deleted"
         except Exception as exc:  # noqa: BLE001
@@ -422,6 +549,7 @@ def hard_delete_learner_content(user_id: str) -> dict:
         ("institution_verification_submissions", _purge_verification_submissions),
         ("student_provision_drafts", _purge_provision_drafts),
         ("student_merge_candidates", _purge_merge_candidates),
+        ("avatars", _purge_avatars),
     ):
         try:
             outcome[table] = check(svc, user_id)
