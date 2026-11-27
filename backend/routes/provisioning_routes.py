@@ -26,12 +26,14 @@ import uuid
 from datetime import datetime, timedelta, timezone
 from typing import Any, List, Optional
 
-from fastapi import APIRouter, Body, Depends, HTTPException, Query, Response
+from fastapi import APIRouter, Body, Depends, HTTPException, Query, Request, Response
 
 from pydantic import BaseModel, Field
 
 from account_purge import hard_delete_learner_content
 from auth import Auth
+from auth_rate_limit import client_ip
+from avatar_storage import UploadRateLimiter
 from database import db
 from logger import log
 from models import ResponseModel
@@ -371,7 +373,9 @@ def _gen_claim_code(school_name: Optional[str] = None, context: Optional[str] = 
     """
     school = _code_slug(school_name)
     scope = _code_slug(context, "Student")[:8]
-    suffix = uuid.uuid4().hex[:8].upper()
+    # 12 hex characters (48 bits) for NEW codes. Codes already issued keep their
+    # 8-character suffix and still redeem: lookup is by exact string.
+    suffix = uuid.uuid4().hex[:12].upper()
     return f"{school}-{scope}-{suffix}"
 
 
@@ -1236,9 +1240,50 @@ class ClaimRequest(BaseModel):
     email: Optional[str] = None
 
 
+# Failed claim attempts. Only failures are recorded, so a student with the right
+# code is never locked out by their own success.
+#
+# Two limiters, as for the admin access code. The per-user limit is strict and is
+# what stops guessing from one account. Guest accounts are cheap to create, so
+# the per-address limit also applies, but it is loose and is used only when the
+# real client address is known (auth_rate_limit.client_ip returns None for a
+# private/loopback proxy peer): a shared school or proxy address must never lock
+# every student out. Both are in memory, bounded (max_keys) and per worker.
+CLAIM_FAILURES_PER_WINDOW = 10
+CLAIM_IP_FAILURES_PER_WINDOW = 100
+claim_limiter = UploadRateLimiter(
+    limits=((900, CLAIM_FAILURES_PER_WINDOW, "15 minutes"),
+            (86400, CLAIM_FAILURES_PER_WINDOW * 5, "day")),
+)
+claim_ip_limiter = UploadRateLimiter(
+    limits=((900, CLAIM_IP_FAILURES_PER_WINDOW, "15 minutes"),
+            (86400, CLAIM_IP_FAILURES_PER_WINDOW * 5, "day")),
+)
+
+# One answer for every reason a code cannot be redeemed (unknown, already used,
+# revoked, expired, lost a race), so a guesser learns nothing about whether a
+# code exists.
+_CLAIM_REJECTED = "Invalid or expired code. Check it, or ask your school to reissue it."
+
+
+def _claim_scopes(request: Optional[Request], current_user: dict) -> list:
+    scopes = [(claim_limiter, f"user:{current_user.get('id')}")]
+    ip = client_ip(request) if request is not None else None
+    if ip:
+        scopes.append((claim_ip_limiter, f"ip:{ip}"))
+    return scopes
+
+
+def _claim_rejected(scopes: list) -> HTTPException:
+    for limiter, key in scopes:
+        limiter.record(key)
+    return HTTPException(status_code=404, detail=_CLAIM_REJECTED)
+
+
 @router.post("/students/claim", response_model=ResponseModel)
 async def claim_account(
     payload: ClaimRequest = Body(...),
+    request: Request = None,
     current_user: dict = Depends(Auth.get_current_user),
 ):
     """Redeem a printed claim code → own the account.
@@ -1248,10 +1293,25 @@ async def claim_account(
     rows, we MERGE — the provisioned row's school-owned context transfers to the
     caller, the provisioned row is retired, and the claim closes. Zero school
     effort. (Fuzzy/background matching lives in the Celery reconciler.)
+
+    The redemption is claimed with one conditional update (only while the code
+    is still unredeemed and unrevoked) BEFORE anything is merged, so two
+    concurrent redeemers cannot both succeed. Failed attempts are limited per
+    account and per known client address.
     """
     code = (payload.code or "").strip().upper()
     if not code:
         raise HTTPException(status_code=400, detail="Claim code is required.")
+    scopes = _claim_scopes(request, current_user)
+    waits = [w for w in (limiter.check(key) for limiter, key in scopes) if w]
+    if waits:
+        raise HTTPException(
+            status_code=429,
+            detail="Too many incorrect codes. Try again later.",
+            headers={"Retry-After": str(max(waits))},
+        )
+    redeemed_stamp: Optional[str] = None
+    claim_id: Optional[str] = None
     try:
         cres = _svc().table("claim_codes").select(
             "id, student_id, school_id, expires_at"
@@ -1259,10 +1319,8 @@ async def claim_account(
             "revoked_at", "null"
         ).limit(1).execute()
         cc = (cres.data or [None])[0]
-        if not cc:
-            raise HTTPException(status_code=404, detail="Invalid or already-used code.")
-        if cc.get("expires_at") and cc["expires_at"] < _now():
-            raise HTTPException(status_code=410, detail="This code has expired. Ask your school to reissue it.")
+        if not cc or (cc.get("expires_at") and cc["expires_at"] < _now()):
+            raise _claim_rejected(scopes)
 
         provisioned_id = cc["student_id"]
         school_id = cc["school_id"]
@@ -1280,6 +1338,20 @@ async def claim_account(
                     status_code=400,
                     detail="Add a phone number or email so you can sign in again later.",
                 )
+
+        # Atomic redeem: succeeds for exactly one caller.
+        redeemed_stamp = _now()
+        won = _svc().table("claim_codes").update(
+            {"redeemed_at": redeemed_stamp}
+        ).eq("id", cc["id"]).is_("redeemed_at", "null").is_(
+            "revoked_at", "null"
+        ).execute()
+        if not (won.data or []):
+            redeemed_stamp = None
+            raise _claim_rejected(scopes)
+        claim_id = cc["id"]
+
+        if caller_id == provisioned_id:
             updates = {"claim_state": "claimed", "last_login": _now()}
             if payload.phone:
                 updates["phone"] = payload.phone.strip()
@@ -1297,10 +1369,6 @@ async def claim_account(
                 email=payload.email,
             )
 
-        _svc().table("claim_codes").update(
-            {"redeemed_at": _now()}
-        ).eq("id", cc["id"]).execute()
-
         return ResponseModel(
             data={"claimed": True, "school_id": school_id},
             message="Account claimed. It's yours now.",
@@ -1309,6 +1377,15 @@ async def claim_account(
         raise
     except Exception as exc:  # noqa: BLE001
         log.error("provisioning: claim failed", error=str(exc))
+        if claim_id and redeemed_stamp:
+            # The merge did not complete: reopen the code (only our own stamp) so
+            # the student can retry instead of being locked out of it.
+            try:
+                _svc().table("claim_codes").update({"redeemed_at": None}).eq(
+                    "id", claim_id
+                ).eq("redeemed_at", redeemed_stamp).execute()
+            except Exception as release_exc:  # noqa: BLE001
+                log.error("provisioning: claim release failed", error=str(release_exc))
         raise HTTPException(status_code=500, detail="Could not claim the account.")
 
 
