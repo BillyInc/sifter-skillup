@@ -669,7 +669,13 @@ ORDER BY e.extname;
 --          WITH CHECK needs INSERT (cmd INSERT), UPDATE or INSERT/UPDATE (ALL);
 --          an ALL/UPDATE policy without WITH CHECK uses its USING as the check.
 --          So ALL USING (false) WITH CHECK (true) is not HIGH for a role that
---          holds only SELECT. HIGH = anon holds the matching privilege (any
+--          holds only SELECT. An UPDATE
+--          also has to pass USING, so when USING is constant false (false,
+--          NULL, 1=0, 0=1, NOT true) an open WITH CHECK gives no UPDATE
+--          exposure: UPDATE-only is INFO, and ALL is HIGH only through
+--          INSERT. A USING the patterns cannot evaluate keeps the
+--          conservative flag (HIGH is then a flag, not proof of an
+--          accessible UPDATE). HIGH = anon holds the matching privilege (any
 --          table), or authenticated holds it on a sensitive table;
 --          REVIEW = authenticated-only on a non-sensitive table (fine only
 --          for genuine reference data); INFO = open policy but no matching
@@ -689,12 +695,14 @@ ORDER BY e.extname;
 --          REFERENCES an auth function (auth.uid()/auth.jwt()/auth.role()/
 --          request.jwt). The rejection claim (INSERT raises 42501, UPDATE/
 --          DELETE affect 0 rows when no user JWT is sent) is made only when
---          every such policy is written so that it REQUIRES an identity
---          (auth.uid() = col, IS NOT NULL, auth.role() = 'authenticated').
---          A policy containing IS NULL, NOT, <>, !=, OR, true, coalesce,
---          CASE, IS DISTINCT or 'anon' (for example WITH CHECK
---          (auth.uid() IS NULL), which PASSES without a JWT) gets neutral
---          wording instead: no rejection is claimed. A row appears only if a
+--          every such policy (USING and WITH CHECK each) is on a positive
+--          allow-list of identity-required forms: auth.uid() = col (either
+--          order, also (select auth.uid())), auth.uid()/auth.jwt() IS NOT
+--          NULL, auth.role() = 'authenticated' or auth.jwt()->>'role' =
+--          'authenticated', auth.jwt()->>'sub' = col, or an AND of these.
+--          Anything else (IS NULL, NOT, OR, true, coalesce, concat(...) = '',
+--          CASE, <>, ANY, helper functions) gets the neutral wording "may
+--          still pass without a user JWT" and no rejection claim. A row appears only if a
 --          write policy targets that role (no policy for the role = blocked).
 --      G6  View or materialized view that runs with owner rights (no
 --          security_invoker=true) and that anon/authenticated can SELECT
@@ -808,19 +816,40 @@ pol AS (   -- permissive policies with a normalised expression
          (p.roles && eff.auth_roles)                             AS hits_auth,
          ((coalesce(p.qual, '') || ' ' || coalesce(p.with_check, ''))
             ~* '(auth\.(uid|jwt|role|email)\s*\(|request\.jwt)') AS uses_auth_fn,
-         -- id_req: references an auth function AND is written in a form that REQUIRES an
-         -- identity (auth.uid() = col, auth.uid() IS NOT NULL, auth.role() = 'authenticated').
-         -- Any IS NULL / NOT / <> / != / OR / true / coalesce / nullif / CASE / IS DISTINCT /
-         -- 'anon' in the text makes this false: such a policy may PASS without a user JWT, so
-         -- G5 must not claim it is rejected. (Conservative: a word inside a literal also does.)
-         (((coalesce(p.qual, '') || ' ' || coalesce(p.with_check, ''))
-             ~* '(auth\.(uid|jwt|role|email)\s*\(|request\.jwt)')
-          AND NOT (regexp_replace(lower(coalesce(p.qual, '') || ' ' || coalesce(p.with_check, '')),
-                                  'is\s+not\s+null', '', 'g')
-                   ~ '(\mis\s+null\M|\mnot\M|<>|!=|\mor\M|\mcoalesce\M|\mnullif\M|\mtrue\M|\mcase\M|\mis\s+distinct\M|''anon'')')) AS id_req
+         -- id_req: POSITIVE allow-list. true only when EVERY non-null expression (USING and WITH CHECK
+         -- each on its own) is a recognised identity-required form, or an AND of such forms:
+         --   auth.uid() = col | col = auth.uid()          (also (select auth.uid()), casts, aliases)
+         --   auth.uid() IS NOT NULL | auth.jwt() IS NOT NULL
+         --   auth.role() = 'authenticated' | auth.jwt()->>'role' = 'authenticated' (either order)
+         --   auth.jwt()->>'sub' = col | col = auth.jwt()->>'sub'
+         -- Anything else (IS NULL, NOT, OR, true, coalesce, concat(...) = '', CASE, <>, ANY, helper
+         -- functions, mixed AND/OR, ...) is not on the list, so G5 uses neutral wording for it.
+         -- Matching runs on the lower-cased text with casts, "AS alias", the word select and
+         -- parentheses removed and whitespace collapsed to single spaces (spaces are kept, so a
+         -- column name cannot swallow an OR arm). Detection only; nothing here is displayed.
+         coalesce(idx.ok, false) AS id_req
   FROM pg_policies p
   CROSS JOIN eff
   JOIN tbl t ON t.nspname = p.schemaname AND t.relname = p.tablename
+  CROSS JOIN LATERAL (
+    SELECT bool_and(regexp_replace(regexp_replace(regexp_replace(regexp_replace(regexp_replace(regexp_replace(
+               lower(v.raw), '\s+as\s+[a-z_][a-z0-9_]*', '', 'g'),
+               '::(text|character varying|varchar|name|bpchar|uuid|boolean|bool|integer|int4|bigint|int8|jsonb|json)(\[\])?', '', 'g'),
+               'auth\.(uid|role|jwt)\s*\(\s*\)', 'auth.\1', 'g'),
+               '\mselect\M', ' ', 'g'),
+               '[()]', ' ', 'g'),
+               '\s+', ' ', 'g')
+             ~ ('^\s*' || ap.atom || '(\s+and\s+' || ap.atom || ')*\s*$')) AS ok
+    FROM (VALUES (p.qual), (p.with_check)) AS v(raw)
+    CROSS JOIN (SELECT
+        '(?:auth\.uid ?= ?' || c.col || '|' || c.col || ' ?= ?auth\.uid'
+        || '|auth\.(?:uid|jwt) is not null'
+        || '|auth\.role ?= ?''authenticated''|''authenticated'' ?= ?auth\.role'
+        || '|auth\.jwt ?->> ?''role'' ?= ?''authenticated''|''authenticated'' ?= ?auth\.jwt ?->> ?''role'''
+        || '|auth\.jwt ?->> ?''sub'' ?= ?' || c.col || '|' || c.col || ' ?= ?auth\.jwt ?->> ?''sub'')' AS atom
+      FROM (SELECT '(?:[a-z_][a-z0-9_]*(?:\.[a-z_][a-z0-9_]*)*|"[^"]*")' AS col) c) ap
+    WHERE v.raw IS NOT NULL
+  ) idx
   WHERE p.permissive = 'PERMISSIVE'
 ),
 expr AS (  -- one row per USING / WITH CHECK expression, normalised
@@ -914,6 +943,8 @@ exprflag AS (
           OR e.n ~ ('^' || pat2.r || replace(pat2.any_tpl, 'W', 'authenticated') || '$')
           OR e.n ~ ('^' || pat2.r || '(<>|!=)''anon''$')
           OR e.n ~ '^(auth\.(uid|jwt|role)isnotnull|notauth\.(uid|jwt|role)isnull)$') AS p_auth,
+         -- constant false / NULL for every caller (an UPDATE needs USING to pass, so it can touch no row)
+         (e.n ~ '^(false|null|1=0|0=1|nottrue|not1=1)$') AS p_false,
          -- cheap "possibly open" flag (reported as REVIEW/MEDIUM, never HIGH):
          -- an OR arm that is open to an API role (auth.role()='authenticated'
          -- OR auth.uid()=id), an always-true OR arm in any position ("true OR x",
@@ -934,6 +965,7 @@ openpol AS (  -- policies that are always-true for an API role they apply to, ke
          coalesce(bool_or(f.p_all OR f.p_auth) FILTER (WHERE f.kind = 'USING')      OVER w, false) AS u_auth,
          coalesce(bool_or(f.p_all OR f.p_anon) FILTER (WHERE f.kind = 'WITH CHECK') OVER w, false) AS c_anon,
          coalesce(bool_or(f.p_all OR f.p_auth) FILTER (WHERE f.kind = 'WITH CHECK') OVER w, false) AS c_auth,
+         coalesce(bool_or(f.p_false)           FILTER (WHERE f.kind = 'USING')      OVER w, false) AS u_false,
          coalesce(bool_or(f.p_rev)             FILTER (WHERE f.kind = 'USING')      OVER w, false) AS u_rev,
          coalesce(bool_or(f.p_rev)             FILTER (WHERE f.kind = 'WITH CHECK') OVER w, false) AS c_rev,
          string_agg(f.kind || ' ' || f.raw_red, ' / ') FILTER (WHERE f.p_all OR f.p_anon OR f.p_auth OR f.p_rev) OVER w AS matched_expr
@@ -956,28 +988,31 @@ openpol2 AS (
          ((o.u_rev OR o.ce_rev) AND (o.hits_anon OR o.hits_auth)
             AND NOT ((o.hits_anon AND (o.u_anon OR o.ce_anon)) OR (o.hits_auth AND (o.u_auth OR o.ce_auth)))) AS maybe_open,
          o.hits_anon, o.hits_auth,
-         o.matched_expr,
+         o.matched_expr, o.u_false,
          -- *_holds: an always-true expression is matched to the privilege it needs.
          --   USING          needs SELECT (cmd SELECT), UPDATE (UPDATE), DELETE (DELETE), any of the three (ALL)
          --   WITH CHECK     needs INSERT (cmd INSERT), UPDATE (UPDATE), INSERT or UPDATE (ALL)
          -- so ALL USING (false) WITH CHECK (true) is not "held" by a role with only SELECT.
+         -- An UPDATE must also pass USING to touch any row: when USING is constant false (u_false) the
+         -- WITH CHECK side contributes no UPDATE exposure (ALL still contributes INSERT, which only
+         -- needs WITH CHECK). A USING the patterns cannot evaluate keeps the conservative flag.
          (o.u_anon AND CASE o.cmd WHEN 'SELECT' THEN pr.a_sel WHEN 'UPDATE' THEN pr.a_upd WHEN 'DELETE' THEN pr.a_del
                                   WHEN 'ALL' THEN (pr.a_sel OR pr.a_upd OR pr.a_del) ELSE false END)
-          OR (o.ce_anon AND CASE o.cmd WHEN 'INSERT' THEN pr.a_ins WHEN 'UPDATE' THEN pr.a_upd
-                                       WHEN 'ALL' THEN (pr.a_ins OR pr.a_upd) ELSE false END) AS anon_holds,
+          OR (o.ce_anon AND CASE o.cmd WHEN 'INSERT' THEN pr.a_ins WHEN 'UPDATE' THEN (pr.a_upd AND NOT o.u_false)
+                                       WHEN 'ALL' THEN (pr.a_ins OR (pr.a_upd AND NOT o.u_false)) ELSE false END) AS anon_holds,
          (o.u_auth AND CASE o.cmd WHEN 'SELECT' THEN pr.u_sel WHEN 'UPDATE' THEN pr.u_upd WHEN 'DELETE' THEN pr.u_del
                                   WHEN 'ALL' THEN (pr.u_sel OR pr.u_upd OR pr.u_del) ELSE false END)
-          OR (o.ce_auth AND CASE o.cmd WHEN 'INSERT' THEN pr.u_ins WHEN 'UPDATE' THEN pr.u_upd
-                                       WHEN 'ALL' THEN (pr.u_ins OR pr.u_upd) ELSE false END) AS auth_holds,
+          OR (o.ce_auth AND CASE o.cmd WHEN 'INSERT' THEN pr.u_ins WHEN 'UPDATE' THEN (pr.u_upd AND NOT o.u_false)
+                                       WHEN 'ALL' THEN (pr.u_ins OR (pr.u_upd AND NOT o.u_false)) ELSE false END) AS auth_holds,
          -- the same matching for the "possibly open" heuristic
          (o.u_rev AND CASE o.cmd WHEN 'SELECT' THEN pr.a_sel WHEN 'UPDATE' THEN pr.a_upd WHEN 'DELETE' THEN pr.a_del
                                  WHEN 'ALL' THEN (pr.a_sel OR pr.a_upd OR pr.a_del) ELSE false END)
-          OR (o.ce_rev AND CASE o.cmd WHEN 'INSERT' THEN pr.a_ins WHEN 'UPDATE' THEN pr.a_upd
-                                      WHEN 'ALL' THEN (pr.a_ins OR pr.a_upd) ELSE false END) AS anon_rev_holds,
+          OR (o.ce_rev AND CASE o.cmd WHEN 'INSERT' THEN pr.a_ins WHEN 'UPDATE' THEN (pr.a_upd AND NOT o.u_false)
+                                      WHEN 'ALL' THEN (pr.a_ins OR (pr.a_upd AND NOT o.u_false)) ELSE false END) AS anon_rev_holds,
          (o.u_rev AND CASE o.cmd WHEN 'SELECT' THEN pr.u_sel WHEN 'UPDATE' THEN pr.u_upd WHEN 'DELETE' THEN pr.u_del
                                  WHEN 'ALL' THEN (pr.u_sel OR pr.u_upd OR pr.u_del) ELSE false END)
-          OR (o.ce_rev AND CASE o.cmd WHEN 'INSERT' THEN pr.u_ins WHEN 'UPDATE' THEN pr.u_upd
-                                      WHEN 'ALL' THEN (pr.u_ins OR pr.u_upd) ELSE false END) AS auth_rev_holds,
+          OR (o.ce_rev AND CASE o.cmd WHEN 'INSERT' THEN pr.u_ins WHEN 'UPDATE' THEN (pr.u_upd AND NOT o.u_false)
+                                      WHEN 'ALL' THEN (pr.u_ins OR (pr.u_upd AND NOT o.u_false)) ELSE false END) AS auth_rev_holds,
          -- Realtime (G8) delivers rows by the USING side of a SELECT or ALL policy and needs SELECT:
          (o.hits_anon AND o.u_anon) AS rt_anon_open,
          (o.hits_auth AND o.u_auth) AS rt_auth_open,
@@ -1098,6 +1133,10 @@ flags AS (
                 '; open to anon=', o.anon_open, ' and anon holds the privilege that expression needs=', (o.anon_open AND o.anon_holds),
                 '; open to authenticated=', o.auth_open, ' and authenticated holds the privilege that expression needs=', (o.auth_open AND o.auth_holds),
                 CASE WHEN o.open_kinds <> '' THEN '; always-true expression kind(s): ' || o.open_kinds ELSE '' END,
+                CASE WHEN o.u_false AND o.cmd IN ('UPDATE', 'ALL') AND o.open_kinds ~ 'WITH CHECK'
+                     THEN '; USING is constant false: an UPDATE must pass USING to touch any row, so the open WITH CHECK gives no UPDATE access' ||
+                          CASE WHEN o.cmd = 'ALL' THEN ' (INSERT is gated by WITH CHECK alone)' ELSE '' END
+                     ELSE '' END,
                 '; sensitive table=', (s.name IS NOT NULL),
                 '; restrictive policies on table (not evaluated)=',
                 (SELECT count(*) FROM pg_policies r
@@ -1153,12 +1192,12 @@ flags AS (
                                     OR (r.role_name = 'authenticated' AND o.hits_auth))
                                   AND NOT o.id_req)
               THEN concat('RLS on; ', r.role_name, ' holds a write grant; every permissive INSERT/UPDATE/DELETE/ALL policy that applies to it ',
-                          'references an auth function in a form that REQUIRES an identity (auth.uid() = col, IS NOT NULL, ',
-                          'auth.role() = ''authenticated''). Expected for normal tables; only relevant if the backend uses ',
+                          'is a recognised identity-required form (auth.uid() = col, auth.uid() IS NOT NULL, auth.role() = ''authenticated'', ',
+                          'or an AND of these). Expected for normal tables; only relevant if the backend uses ',
                           'this role WITHOUT a Supabase user JWT (then INSERT raises 42501, UPDATE/DELETE affect 0 rows)')
               ELSE concat('RLS on; ', r.role_name, ' holds a write grant; every permissive write policy that applies to it references an auth function ',
-                          '(auth.uid()/auth.jwt()/auth.role()/request.jwt). At least one is written in a form that may still PASS ',
-                          'without a user JWT (IS NULL, NOT, <>, OR, true, coalesce, CASE, ''anon''): no rejection is claimed; read the expression in sections 2/2b')
+                          '(auth.uid()/auth.jwt()/auth.role()/request.jwt). At least one is NOT a recognised identity-required form, ',
+                          'so it may still pass without a user JWT: no rejection is claimed; read the expression in sections 2/2b')
          END
   FROM tbl t
   CROSS JOIN LATERAL (VALUES ('anon', t.anon_write), ('authenticated', t.auth_write)) AS r(role_name, has_write)
