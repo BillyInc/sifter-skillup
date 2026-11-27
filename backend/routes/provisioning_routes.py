@@ -1243,21 +1243,32 @@ class ClaimRequest(BaseModel):
 # Failed claim attempts. Only failures are recorded, so a student with the right
 # code is never locked out by their own success.
 #
-# Two limiters, as for the admin access code. The per-user limit is strict and is
-# what stops guessing from one account. Guest accounts are cheap to create, so
-# the per-address limit also applies, but it is loose and is used only when the
-# real client address is known (auth_rate_limit.client_ip returns None for a
-# private/loopback proxy peer): a shared school or proxy address must never lock
-# every student out. Both are in memory, bounded (max_keys) and per worker.
+# Two limiters, aligned with auth_rate_limit.py (availability beats strictness):
+# - Per user (strict, with a daily cap): stops guessing from one account.
+# - Per client address (loose, 15 minutes only, no daily cap, so a block can
+#   never outlast 15 minutes): guest accounts are cheap to create, so it covers
+#   one address across many throwaway guests. It is applied ONLY to guest
+#   callers. A school shares one NAT address, and a hostile user could otherwise
+#   fill that bucket and make a 429 block every student's CORRECT code. A
+#   signed-in (non-guest) caller is limited per account only, never counted
+#   against or blocked by the address bucket. It is also used only when the real
+#   client address is known (auth_rate_limit.client_ip returns None for a
+#   private/loopback proxy peer).
+#
+# Known limits, accepted on purpose: both limiters are in memory and per worker,
+# so with N workers the effective ceiling is up to N times these numbers and the
+# counts are not atomic across workers (no global counter, which would itself be
+# a denial-of-service lever). The edge rate limit is the primary defence, and
+# the rate limits on guest-account creation are what keeps the per-address
+# limit meaningful: a signed-in attacker bypasses it by minting accounts.
 CLAIM_FAILURES_PER_WINDOW = 10
-CLAIM_IP_FAILURES_PER_WINDOW = 100
+CLAIM_IP_FAILURES_PER_WINDOW = 300
 claim_limiter = UploadRateLimiter(
     limits=((900, CLAIM_FAILURES_PER_WINDOW, "15 minutes"),
             (86400, CLAIM_FAILURES_PER_WINDOW * 5, "day")),
 )
 claim_ip_limiter = UploadRateLimiter(
-    limits=((900, CLAIM_IP_FAILURES_PER_WINDOW, "15 minutes"),
-            (86400, CLAIM_IP_FAILURES_PER_WINDOW * 5, "day")),
+    limits=((900, CLAIM_IP_FAILURES_PER_WINDOW, "15 minutes"),),
 )
 
 # One answer for every reason a code cannot be redeemed (unknown, already used,
@@ -1269,7 +1280,8 @@ _CLAIM_REJECTED = "Invalid or expired code. Check it, or ask your school to reis
 def _claim_scopes(request: Optional[Request], current_user: dict) -> list:
     scopes = [(claim_limiter, f"user:{current_user.get('id')}")]
     ip = client_ip(request) if request is not None else None
-    if ip:
+    # Address bucket: guests only (see the note above the limiters).
+    if ip and current_user.get("auth_provider") == "guest":
         scopes.append((claim_ip_limiter, f"ip:{ip}"))
     return scopes
 
@@ -1278,6 +1290,24 @@ def _claim_rejected(scopes: list) -> HTTPException:
     for limiter, key in scopes:
         limiter.record(key)
     return HTTPException(status_code=404, detail=_CLAIM_REJECTED)
+
+
+def _already_claimed_by_caller(code: str, caller_id: str) -> Optional[str]:
+    """School id when ``code`` was already redeemed by the caller's own account.
+
+    Makes a double tap idempotent. Not an oracle: it answers only for the
+    account the code was issued to (the redeemer of record), who already owns
+    it; every other caller gets the same uniform rejection as an unknown code.
+    A merge redemption deletes the provisioned row (and its code, by cascade),
+    so only the in-place claim can be recognised here.
+    """
+    res = _svc().table("claim_codes").select(
+        "id, student_id, school_id, redeemed_at, revoked_at"
+    ).eq("code", code).eq("student_id", caller_id).limit(5).execute()
+    for row in res.data or []:
+        if row.get("redeemed_at") and not row.get("revoked_at"):
+            return row.get("school_id") or ""
+    return None
 
 
 @router.post("/students/claim", response_model=ResponseModel)
@@ -1311,7 +1341,8 @@ async def claim_account(
             headers={"Retry-After": str(max(waits))},
         )
     redeemed_stamp: Optional[str] = None
-    claim_id: Optional[str] = None
+    claim_id: Optional[str] = None  # set before the UPDATE: it may apply and still raise
+    claim_student_id: Optional[str] = None
     try:
         cres = _svc().table("claim_codes").select(
             "id, student_id, school_id, expires_at"
@@ -1320,6 +1351,13 @@ async def claim_account(
         ).limit(1).execute()
         cc = (cres.data or [None])[0]
         if not cc or (cc.get("expires_at") and cc["expires_at"] < _now()):
+            prior = None if cc else _already_claimed_by_caller(code, current_user["id"])
+            if prior is not None:
+                # Double tap: the first request already claimed this account.
+                return ResponseModel(
+                    data={"claimed": True, "school_id": prior},
+                    message="Account claimed. It's yours now.",
+                )
             raise _claim_rejected(scopes)
 
         provisioned_id = cc["student_id"]
@@ -1341,6 +1379,8 @@ async def claim_account(
 
         # Atomic redeem: succeeds for exactly one caller.
         redeemed_stamp = _now()
+        claim_id = cc["id"]
+        claim_student_id = provisioned_id
         won = _svc().table("claim_codes").update(
             {"redeemed_at": redeemed_stamp}
         ).eq("id", cc["id"]).is_("redeemed_at", "null").is_(
@@ -1349,7 +1389,6 @@ async def claim_account(
         if not (won.data or []):
             redeemed_stamp = None
             raise _claim_rejected(scopes)
-        claim_id = cc["id"]
 
         if caller_id == provisioned_id:
             updates = {"claim_state": "claimed", "last_login": _now()}
@@ -1378,12 +1417,22 @@ async def claim_account(
     except Exception as exc:  # noqa: BLE001
         log.error("provisioning: claim failed", error=str(exc))
         if claim_id and redeemed_stamp:
-            # The merge did not complete: reopen the code (only our own stamp) so
-            # the student can retry instead of being locked out of it.
+            # The merge did not complete (or the redeem UPDATE raised after the
+            # database applied it): reopen the code so the student can retry.
+            # The stamp guard means only OUR redemption is undone, never one
+            # made by another caller. Skip it when a newer live code exists for
+            # the student (an admin reissued meanwhile; the superseded code must
+            # not become live next to the new one).
             try:
-                _svc().table("claim_codes").update({"redeemed_at": None}).eq(
-                    "id", claim_id
-                ).eq("redeemed_at", redeemed_stamp).execute()
+                newer = _svc().table("claim_codes").select("id").eq(
+                    "student_id", claim_student_id
+                ).is_("redeemed_at", "null").is_("revoked_at", "null").limit(5).execute()
+                if any(r.get("id") != claim_id for r in (newer.data or [])):
+                    log.warning("provisioning: claim not reopened, newer live code exists")
+                else:
+                    _svc().table("claim_codes").update({"redeemed_at": None}).eq(
+                        "id", claim_id
+                    ).eq("redeemed_at", redeemed_stamp).is_("revoked_at", "null").execute()
             except Exception as release_exc:  # noqa: BLE001
                 log.error("provisioning: claim release failed", error=str(release_exc))
         raise HTTPException(status_code=500, detail="Could not claim the account.")

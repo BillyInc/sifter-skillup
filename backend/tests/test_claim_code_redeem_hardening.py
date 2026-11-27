@@ -53,6 +53,8 @@ class _Query:
                 for r in rows:
                     r.update(self.values)
             snapshot = [dict(r) for r in rows]
+        if self.op == "update" and self.store.update_hook:
+            self.store.update_hook(self, rows)  # may raise AFTER the write applied
         if self.op == "select" and self.hook:
             self.hook()  # lets a test hold two readers before either writes
         return SimpleNamespace(data=snapshot)
@@ -63,6 +65,7 @@ class _Store:
         self.tables = {"claim_codes": codes}
         self.lock = threading.Lock()
         self.select_hook = None
+        self.update_hook = None
 
     def table(self, name):
         return _Query(self, name, self.select_hook)
@@ -201,13 +204,33 @@ def _req(peer="8.8.8.8"):
     return SimpleNamespace(client=SimpleNamespace(host=peer), headers={})
 
 
-def test_address_limit_is_looser_and_per_known_address(env):
+def _guest(i):
+    return {"id": f"g{i}", "auth_provider": "guest"}
+
+
+def test_address_limit_is_300_per_window_and_throttles_guests_only(env):
+    assert pr.CLAIM_IP_FAILURES_PER_WINDOW >= 300
+    n = pr.CLAIM_IP_FAILURES_PER_WINDOW
     # Many different guests from one public address trip the address limit...
-    for i in range(pr.CLAIM_IP_FAILURES_PER_WINDOW):
-        assert _status(f"BAD-{i}", user_id=f"g{i}", request=_req()).status_code == 404
-    assert _status("BAD-x", user_id="fresh", request=_req()).status_code == 429
-    # ...a different address is unaffected.
-    assert _status("BAD-x", user_id="fresh2", request=_req("1.1.1.1")).status_code == 404
+    for i in range(n):
+        assert _status(f"BAD-{i}", user=_guest(i), request=_req()).status_code == 404
+    assert _status("BAD-x", user=_guest("x"), request=_req()).status_code == 429
+    # ...the address cap is a single 15-minute window (no daily cap, so a
+    # lockout cannot outlast 15 minutes)...
+    assert [w for (w, _m, _l) in pr.claim_ip_limiter._limits] == [900]
+    # ...a different address is unaffected...
+    assert _status("BAD-x", user=_guest("y"), request=_req("1.1.1.1")).status_code == 404
+    # ...and a signed-in (non-guest) student behind the same address is never
+    # blocked, even with the correct code.
+    res = _call("ACME-SS1-ABCDEF12", user={"id": "student", "auth_provider": "email"},
+                request=_req())
+    assert res.data["claimed"] is True
+
+
+def test_non_guest_failures_do_not_fill_the_address_bucket(env):
+    for i in range(pr.CLAIM_IP_FAILURES_PER_WINDOW + 5):
+        _status("BAD", user={"id": f"u{i}", "auth_provider": "email"}, request=_req())
+    assert _call("ACME-SS1-ABCDEF12", user=_guest("z"), request=_req()).data["claimed"] is True
 
 
 def test_shared_proxy_address_never_locks_everyone_out(env):
@@ -215,7 +238,7 @@ def test_shared_proxy_address_never_locks_everyone_out(env):
     # per-address bucket, so one user's failures cannot block another user.
     proxy = _req("10.0.0.5")
     for i in range(pr.CLAIM_IP_FAILURES_PER_WINDOW + 20):
-        _status(f"BAD-{i % 5}", user_id=f"g{i}", request=proxy)
+        _status(f"BAD-{i % 5}", user=_guest(i), request=proxy)
     assert _call("ACME-SS1-ABCDEF12", user_id="student", request=proxy).data["claimed"] is True
 
 
@@ -233,3 +256,73 @@ def test_new_codes_have_48_bit_suffix_and_old_codes_still_redeem(env):
     env.store.tables["claim_codes"].append(_code_row(id="new", code=new))
     assert _call(new, user_id="g-new").data["claimed"] is True
     assert _call("ACME-SS1-ABCDEF12").data["claimed"] is True  # 8-char legacy code
+
+
+def test_update_raising_after_it_applied_still_reopens_the_code(env):
+    def apply_then_raise(query, _rows):
+        if query.values.get("redeemed_at"):
+            raise RuntimeError("connection lost after commit")
+
+    env.store.update_hook = apply_then_raise
+    assert _status("ACME-SS1-ABCDEF12").status_code == 500
+    env.store.update_hook = None
+    assert env.store.tables["claim_codes"][0]["redeemed_at"] is None
+    assert _call("ACME-SS1-ABCDEF12").data["claimed"] is True
+
+
+def test_reopen_does_not_clobber_another_callers_redemption(env, monkeypatch):
+    def merge_fails_after_someone_else_redeemed(**_kw):
+        # Another caller's redemption replaced ours before our cleanup runs.
+        env.store.tables["claim_codes"][0]["redeemed_at"] = "OTHER-CALLER-STAMP"
+        raise RuntimeError("merge failed")
+
+    monkeypatch.setattr(pr, "merge_provisioned_into_student", merge_fails_after_someone_else_redeemed)
+    assert _status("ACME-SS1-ABCDEF12").status_code == 500
+    assert env.store.tables["claim_codes"][0]["redeemed_at"] == "OTHER-CALLER-STAMP"
+
+
+def test_reopen_is_skipped_when_admin_reissued_a_newer_live_code(env, monkeypatch):
+    def merge_fails_after_reissue(**_kw):
+        env.store.tables["claim_codes"].append(
+            _code_row(id="cc-2", code="ACME-SS1-NEWCODE12345"))
+        raise RuntimeError("merge failed")
+
+    monkeypatch.setattr(pr, "merge_provisioned_into_student", merge_fails_after_reissue)
+    assert _status("ACME-SS1-ABCDEF12").status_code == 500
+    old, new = env.store.tables["claim_codes"]
+    assert old["redeemed_at"] is not None  # superseded code stays closed
+    assert new["redeemed_at"] is None and new["revoked_at"] is None
+
+
+def test_reopen_is_skipped_when_the_code_was_revoked(env, monkeypatch):
+    def merge_fails_after_revoke(**_kw):
+        env.store.tables["claim_codes"][0]["revoked_at"] = "2026-01-01"
+        raise RuntimeError("merge failed")
+
+    monkeypatch.setattr(pr, "merge_provisioned_into_student", merge_fails_after_revoke)
+    assert _status("ACME-SS1-ABCDEF12").status_code == 500
+    assert env.store.tables["claim_codes"][0]["redeemed_at"] is not None
+
+
+def test_double_tap_by_the_same_user_is_idempotent_success(env):
+    first = _call("ACME-SS1-ABCDEF12", user_id="prov-1", phone="0800")
+    again = _call("ACME-SS1-ABCDEF12", user_id="prov-1", phone="0800")
+    assert first.data == again.data == {"claimed": True, "school_id": "school-1"}
+    assert len(env.user_updates) == 1  # nothing was redone
+    # Not counted as a failure.
+    for _ in range(pr.CLAIM_FAILURES_PER_WINDOW + 2):
+        _call("ACME-SS1-ABCDEF12", user_id="prov-1", phone="0800")
+
+
+def test_redeemed_code_is_not_an_oracle_for_other_callers(env):
+    _call("ACME-SS1-ABCDEF12", user_id="prov-1", phone="0800")
+    for uid in ("someone-else", "guest-9"):
+        err = _status("ACME-SS1-ABCDEF12", user_id=uid)
+        assert err.status_code == 404 and err.detail == pr._CLAIM_REJECTED
+    unknown = _status("NOPE-SS1-00000000", user_id="someone-else")
+    assert unknown.detail == pr._CLAIM_REJECTED
+
+
+def test_revoked_code_is_not_idempotent_for_its_student(env):
+    env.store.tables["claim_codes"][0].update(redeemed_at="2026-01-01", revoked_at="2026-01-02")
+    assert _status("ACME-SS1-ABCDEF12", user_id="prov-1", phone="0800").status_code == 404
