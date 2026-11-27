@@ -28,6 +28,19 @@ export function useBrowserSessionWatch(
   // Read through a ref so the listeners are not re-registered on every render.
   const handlersRef = useRef(handlers);
   handlersRef.current = handlers;
+  const userRef = useRef(user);
+  userRef.current = user;
+  // The adopt timer outlives the effect: onSignedOut sets the user to null,
+  // which re-runs the effect, and its cleanup must not cancel the pending
+  // re-read of the session another tab created.
+  const adoptTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(
+    () => () => {
+      if (adoptTimerRef.current) clearTimeout(adoptTimerRef.current);
+      adoptTimerRef.current = null;
+    },
+    [],
+  );
 
   useEffect(() => {
     // Feature-detect, don't infer from `typeof window`. React Native defines a
@@ -36,7 +49,6 @@ export function useBrowserSessionWatch(
     // "window.addEventListener is not a function" for every signed-in user.
     // The same is true under the jest react-native environment.
     if (
-      !user ||
       typeof window === 'undefined' ||
       typeof window.addEventListener !== 'function' ||
       typeof document === 'undefined' ||
@@ -47,17 +59,36 @@ export function useBrowserSessionWatch(
 
     let active = true;
     let reconciling = false;
-    let adoptTimer: ReturnType<typeof setTimeout> | null = null;
+
+    /**
+     * After a short delay (the other tab is still finishing its sign-in), adopt
+     * the stored session if it is still a different one from what this tab
+     * shows: a token is present and, for a signed-out tab, a saved profile
+     * exists and no sign-out marker is set.
+     */
+    const scheduleAdopt = () => {
+      if (adoptTimerRef.current) return;
+      adoptTimerRef.current = setTimeout(async () => {
+        adoptTimerRef.current = null;
+        const current = userRef.current;
+        const token = await API.getToken();
+        if (!token) return;
+        const subject = tokenSubject(token);
+        if (current && (!subject || subject === String(current.id))) return;
+        if (!current) {
+          const saved = await getSavedSessionProfile<{ id?: string | number }>();
+          if (saved?.id == null) return;
+          if (subject && subject !== String(saved.id)) return;
+          if (await hasExplicitLogout()) return;
+        }
+        handlersRef.current.onForeignSession();
+      }, FOREIGN_SESSION_ADOPT_MS);
+    };
 
     /** React state is stale: clear it, then re-read whatever session is stored. */
     const adoptStoredSession = () => {
       handlersRef.current.onSignedOut();
-      if (!adoptTimer) {
-        adoptTimer = setTimeout(() => {
-          adoptTimer = null;
-          handlersRef.current.onForeignSession();
-        }, FOREIGN_SESSION_ADOPT_MS);
-      }
+      scheduleAdopt();
     };
 
     const reconcileBrowserRestore = async () => {
@@ -65,6 +96,12 @@ export function useBrowserSessionWatch(
       const stored = API.hasStoredToken();
       const token = stored === false ? null : await API.getToken();
       if (!active) return;
+      if (!user) {
+        // Signed-out tab: adopt a session another tab created (checked again
+        // after a short delay; see scheduleAdopt). Nothing to clear here.
+        if (token) scheduleAdopt();
+        return;
+      }
       if (token) {
         // A token is present, but is it this tab's user's? A tab that missed
         // the removal event (frozen, bfcache) while another account signed in
@@ -106,7 +143,16 @@ export function useBrowserSessionWatch(
         // Without the marker the token vanished for another reason (expiry,
         // another device, deletion) and everything is cleared as before.
         if (await hasPreserveLocalState()) return;
-        await completeSignOut({ userId });
+        // Re-checked before every destructive step: another tab may sign in
+        // between the check above and the wipe.
+        await completeSignOut({
+          userId,
+          guard: async () => {
+            if (await API.getToken()) return false;
+            const now = await getSavedSessionProfile<{ id?: string | number }>();
+            return !(now?.id != null && String(now.id) !== String(userId));
+          },
+        });
       } finally {
         reconciling = false;
       }
@@ -125,7 +171,6 @@ export function useBrowserSessionWatch(
     document.addEventListener('visibilitychange', onVisible);
     return () => {
       active = false;
-      if (adoptTimer) clearTimeout(adoptTimer);
       window.removeEventListener('pageshow', reconcileBrowserRestore);
       window.removeEventListener('popstate', reconcileBrowserRestore);
       window.removeEventListener('storage', onStorage);

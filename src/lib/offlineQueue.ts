@@ -61,6 +61,11 @@ export interface QueueItem {
   networkFailures?: number;
   /** A 409 was already retried once; a second one settles the item. */
   conflictRetried?: boolean;
+  /**
+   * 403 responses seen (consent guards). Counted apart from `attempts`: a 403
+   * is bounded by the write's age (FORBIDDEN_MAX_AGE_MS), not an attempt cap.
+   */
+  forbiddenAttempts?: number;
 }
 
 async function currentOwnerId(): Promise<string | null> {
@@ -88,6 +93,18 @@ export const FOREIGN_OWNER_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;
 export const BACKOFF_BASE_MS = 30 * 1000;
 export const BACKOFF_MAX_MS = 15 * 60 * 1000;
 
+/**
+ * How long, measured from enqueue time, a write that keeps getting 403 is
+ * retried. 403 is the backend's answer while parental consent is pending,
+ * which can take a day or more to clear, so it has a time horizon instead of
+ * an attempt cap. Backoff is capped at BACKOFF_MAX_MS.
+ */
+export const FORBIDDEN_MAX_AGE_MS: Record<QueuePriority, number> = {
+  normal: 24 * 60 * 60 * 1000,
+  high: 7 * 24 * 60 * 60 * 1000,
+  critical: 7 * 24 * 60 * 60 * 1000,
+};
+
 /** Consecutive 401s (different items, same token) after which the token is held. */
 const AUTH_HOLD_AFTER_CONSECUTIVE_401 = 2;
 
@@ -97,9 +114,11 @@ const AUTH_HOLD_AFTER_CONSECUTIVE_401 = 2;
  * a route that exists a minute later. 403 is here because the backend's
  * consent guards answer 403 (for example while parental consent is pending),
  * which clears later; dropping it at once would silently discard a minor's
- * write. All are bounded by maxAttempts and backed off.
+ * write. 403 is handled apart (see FORBIDDEN_MAX_AGE_MS: an age horizon, and
+ * it does not block later writes). The rest are bounded by maxAttempts and
+ * backed off.
  */
-const RETRYABLE_STATUS = new Set([403, 404, 408, 425, 429]);
+const RETRYABLE_STATUS = new Set([404, 408, 425, 429]);
 
 /** A request that has not answered by now is abandoned (and counted). */
 export const REQUEST_TIMEOUT_MS = 30 * 1000;
@@ -196,6 +215,8 @@ function mergeItemCopies(m: QueueItem, s: QueueItem): QueueItem {
   const nf = Math.max(m.networkFailures ?? 0, s.networkFailures ?? 0);
   if (nf > 0) out.networkFailures = nf;
   if (m.conflictRetried || s.conflictRetried) out.conflictRetried = true;
+  const fa = Math.max(m.forbiddenAttempts ?? 0, s.forbiddenAttempts ?? 0);
+  if (fa > 0) out.forbiddenAttempts = fa;
   const times = [m.nextAttemptAt, s.nextAttemptAt]
     .filter((t): t is string => !!t && !Number.isNaN(Date.parse(t)))
     .sort((a, b) => Date.parse(b) - Date.parse(a));
@@ -265,7 +286,10 @@ export class OfflineQueueManager {
 
   /** Enqueue an action. Returns immediately — never blocks the user. */
   async enqueue(
-    item: Omit<QueueItem, 'id' | 'createdAt' | 'attempts' | 'ownerId'>,
+    item: Omit<QueueItem, 'id' | 'createdAt' | 'attempts' | 'ownerId' | 'maxAttempts'> & {
+      /** Optional: defaults by priority (critical 20, high 10, normal 5). */
+      maxAttempts?: number;
+    },
   ): Promise<EnqueueResult> {
     await this._ensureLoaded();
     // A body that cannot be serialised can never be sent, and persisting it
@@ -288,7 +312,10 @@ export class OfflineQueueManager {
       createdAt: new Date().toISOString(),
       attempts: 0,
       ownerId,
-      maxAttempts: item.priority === 'critical' ? 20 : item.priority === 'high' ? 10 : 5,
+      maxAttempts:
+        typeof item.maxAttempts === 'number' && item.maxAttempts > 0
+          ? item.maxAttempts
+          : item.priority === 'critical' ? 20 : item.priority === 'high' ? 10 : 5,
     };
 
     this._pruneForeign(ownerId);
@@ -511,9 +538,19 @@ export class OfflineQueueManager {
 
         // An item this token already failed on is skipped (it does not block
         // the writes behind it) until the token changes.
-        const item = this.queue.find(
-          i => i.ownerId === owner && i.authFailedFor !== fp && !this.inFlight.has(i.id),
-        );
+        // A write backing off after a 403 (consent pending) is skipped too, as
+        // are later writes to the same endpoint (their order is kept); other
+        // endpoints are not held up behind it.
+        const heldEndpoints = new Set<string>();
+        const item = this.queue.find(i => {
+          if (String(i.ownerId) !== owner || i.authFailedFor === fp || this.inFlight.has(i.id)) return false;
+          const key = `${i.method} ${i.endpoint}`;
+          if (i.forbiddenAttempts && this._isBackedOff(i)) {
+            heldEndpoints.add(key);
+            return false;
+          }
+          return !heldEndpoints.has(key);
+        });
         if (!item) break;
         // Backing off (rate limit / server error): wait without sending and
         // without counting an attempt. Later items wait too, to keep order and
@@ -598,6 +635,19 @@ export class OfflineQueueManager {
               await this._saveAuthHold(epoch);
               break;
             }
+          } else if (res.status === 403) {
+            // Consent guards answer 403 until consent is given. Retry with
+            // capped backoff until the write is older than its horizon; the
+            // writes behind it are not blocked (the find above skips it).
+            item.forbiddenAttempts = (item.forbiddenAttempts ?? 0) + 1;
+            const age = Date.now() - Date.parse(item.createdAt);
+            const horizon = FORBIDDEN_MAX_AGE_MS[item.priority] ?? FORBIDDEN_MAX_AGE_MS.normal;
+            if (!(age <= horizon)) {
+              this._remove(item);
+            } else {
+              this._backOff(item, res, item.forbiddenAttempts);
+            }
+            await this._saveQueue(epoch);
           } else if (RETRYABLE_STATUS.has(res.status) || res.status >= 500) {
             item.attempts++;
             if (item.attempts >= item.maxAttempts) {
@@ -610,7 +660,7 @@ export class OfflineQueueManager {
           } else if (res.status >= 400 && res.status < 500) {
             // Permanent client error — it will not succeed on retry, and must
             // not block the writes behind it. (403 is retried above: consent
-            // guards answer it temporarily.)
+            // guards answer it temporarily, for up to FORBIDDEN_MAX_AGE_MS.)
             this._remove(item);
             await this._saveQueue(epoch);
           } else {
@@ -670,14 +720,18 @@ export class OfflineQueueManager {
     return wait > 0;
   }
 
-  private _backOff(item: QueueItem, res: { headers?: { get?: (n: string) => string | null } }) {
+  private _backOff(
+    item: QueueItem,
+    res: { headers?: { get?: (n: string) => string | null } },
+    count: number = item.attempts,
+  ) {
     let retryAfter: string | null = null;
     try {
       retryAfter = res.headers?.get?.('Retry-After') ?? null;
     } catch {
       retryAfter = null;
     }
-    item.nextAttemptAt = new Date(Date.now() + retryDelayMs(item.attempts, retryAfter)).toISOString();
+    item.nextAttemptAt = new Date(Date.now() + retryDelayMs(count, retryAfter)).toISOString();
   }
 
   /** Drop writes owned by other accounts that have waited too long. */
@@ -685,7 +739,7 @@ export class OfflineQueueManager {
     const cutoff = Date.now() - FOREIGN_OWNER_MAX_AGE_MS;
     const keep: QueueItem[] = [];
     for (const i of this.queue) {
-      if (i.ownerId === currentOwner || !(Date.parse(i.createdAt) < cutoff)) keep.push(i);
+      if (String(i.ownerId) === String(currentOwner) || !(Date.parse(i.createdAt) < cutoff)) keep.push(i);
       else this.removedIds.add(i.id);
     }
     this.queue = keep;
@@ -697,11 +751,11 @@ export class OfflineQueueManager {
     const epoch = this.epoch;
     const keep: QueueItem[] = [];
     for (const i of this.queue) {
-      if (i.ownerId !== ownerId) keep.push(i);
+      if (String(i.ownerId) !== String(ownerId)) keep.push(i);
       else this.removedIds.add(i.id);
     }
     this.queue = keep;
-    this.authHold.delete(ownerId);
+    this.authHold.delete(String(ownerId));
     await this._saveQueue(epoch);
     await this._saveAuthHold(epoch);
   }
@@ -719,13 +773,13 @@ export class OfflineQueueManager {
     const keep: QueueItem[] = [];
     let dropped = false;
     for (const i of this.queue) {
-      if (i.ownerId === ownerId) keep.push(i);
+      if (String(i.ownerId) === String(ownerId)) keep.push(i);
       else { this.removedIds.add(i.id); dropped = true; }
     }
     this.queue = keep;
     let holdChanged = false;
     for (const owner of [...this.authHold.keys()]) {
-      if (owner !== ownerId) { this.authHold.delete(owner); holdChanged = true; }
+      if (String(owner) !== String(ownerId)) { this.authHold.delete(owner); holdChanged = true; }
     }
     await this._saveQueue(epoch);
     if (dropped || holdChanged) await this._saveAuthHold(epoch);
@@ -988,7 +1042,7 @@ export async function offlineWrite(
   body: any,
   priority: QueuePriority = 'normal',
 ): Promise<EnqueueResult> {
-  return OfflineQueue.enqueue({ endpoint, method, body, priority, maxAttempts: 10 });
+  return OfflineQueue.enqueue({ endpoint, method, body, priority });
 }
 
 // Cache layer for reads

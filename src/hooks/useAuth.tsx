@@ -239,6 +239,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         // The session was taken over by another device: this is a forced
         // logout like any other, so the previous learner's data goes too.
         const stale = await getSavedSessionProfile<UserProfile>();
+        await beginSignOut(); // flag first: other tabs react to the token's removal
         await API.clearToken();
         await completeSignOut({ userId: stale?.id });
       } else if (isNetworkFailure(e)) {
@@ -452,6 +453,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await API.deleteMe();
     } finally {
       sessionEpoch.current++;
+      await beginSignOut();
       await API.clearToken();
       await completeSignOut({ userId: user?.id });
       setUser(null);

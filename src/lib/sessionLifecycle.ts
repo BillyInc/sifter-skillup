@@ -55,6 +55,9 @@ export async function completeSignIn(profile: SessionProfileLike): Promise<void>
  * meant to stay.
  */
 export async function beginSignOut(options: { preserveLocalUserState?: boolean } = {}): Promise<void> {
+  // The explicit-logout flag is written first too: a guest tab has no token to
+  // lose and only reacts to the removal when it can already see this flag.
+  await markExplicitLogout({ preserveLocalUserState: options.preserveLocalUserState });
   if (options.preserveLocalUserState) await markPreserveLocalState();
 }
 
@@ -73,14 +76,26 @@ export async function beginSignOut(options: { preserveLocalUserState?: boolean }
 export async function completeSignOut(options: {
   userId?: string | null;
   preserveLocalUserState?: boolean;
+  /**
+   * Checked before each destructive step; a false answer stops the clean-up.
+   * Used by a tab that learned of a sign-out from another tab: if a sign-in
+   * landed in the meantime, its profile and data must not be wiped.
+   */
+  guard?: () => Promise<boolean>;
 }): Promise<void> {
+  const ok = async () => !options.guard || (await options.guard());
+  if (!(await ok())) return;
   await clearSessionProfile();
+  if (!(await ok())) return;
   await markExplicitLogout({ preserveLocalUserState: options.preserveLocalUserState });
   if (!options.preserveLocalUserState) {
+    if (!(await ok())) return;
     await clearAllDeviceUserData(options.userId);
   }
+  if (!(await ok())) return;
   await setCareerCacheIdentity(null);
   if (!options.preserveLocalUserState) {
+    if (!(await ok())) return;
     await switchLocalUser('__signed_out__');
   }
 }

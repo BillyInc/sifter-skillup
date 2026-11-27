@@ -16,6 +16,7 @@ import {
   tokenSubject,
   AUTH_HOLD_MAX_AGE_MS,
   BACKOFF_MAX_MS,
+  FORBIDDEN_MAX_AGE_MS,
 } from "../src/lib/offlineQueue";
 import {
   saveAdminProvisioningDrafts,
@@ -242,7 +243,7 @@ describe("offline queue error handling", () => {
     expect(fetchMock).toHaveBeenCalledTimes(1);
     expect(pending()).toBe(1);
     const [item] = JSON.parse((await AsyncStorage.getItem("sifter_offline_queue")) ?? "[]");
-    expect(item.attempts).toBe(1);
+    expect(item.forbiddenAttempts).toBe(1);
     expect(item.nextAttemptAt).toBeDefined();
 
     // Consent granted later: the same write goes through.
@@ -257,20 +258,72 @@ describe("offline queue error handling", () => {
     expect(pending()).toBe(0);
   });
 
-  it("gives up on a 403 that never clears once maxAttempts is reached", async () => {
-    await enqueueOffline({ n: 1 });
-    fetchMock.mockResolvedValue({ ok: false, status: 403 });
+  /** Run `drain` with the clock moved `ms` past real time. */
+  async function drainAt(ms: number) {
     const realNow = Date.now;
+    Date.now = () => realNow() + ms;
     try {
-      for (let i = 0; i < 10 && pending() > 0; i++) {
-        Date.now = () => realNow() + (i + 1) * BACKOFF_MAX_MS * 2;
-        await drain();
-      }
+      await drain();
     } finally {
       Date.now = realNow;
     }
+  }
+
+  it("keeps retrying a 403 well past five attempts, until the write is a day old (normal)", async () => {
+    await enqueueOffline({ n: 1 });
+    fetchMock.mockResolvedValue({ ok: false, status: 403 });
+    // Every 16 minutes for 23 hours: far more than the old five attempts.
+    for (let t = 0; t <= 23 * 60; t += 16) await drainAt(t * 60 * 1000);
+    expect(fetchMock.mock.calls.length).toBeGreaterThan(20);
+    expect(pending()).toBe(1);
+    const [item] = JSON.parse((await AsyncStorage.getItem("sifter_offline_queue")) ?? "[]");
+    expect(item.attempts).toBe(0); // a 403 does not use the attempt cap
+
+    await drainAt(FORBIDDEN_MAX_AGE_MS.normal + 60 * 1000);
     expect(pending()).toBe(0);
-    expect(fetchMock.mock.calls.length).toBe(5); // maxAttempts of the item
+  });
+
+  it("a high-priority 403 outlives the normal horizon and is dropped after seven days", async () => {
+    await enqueueOffline({ n: 1 }, "high");
+    fetchMock.mockResolvedValue({ ok: false, status: 403 });
+    await drainAt(0);
+    await drainAt(3 * 24 * 60 * 60 * 1000);
+    expect(pending()).toBe(1);
+    await drainAt(FORBIDDEN_MAX_AGE_MS.high + 60 * 1000);
+    expect(pending()).toBe(0);
+  });
+
+  it("a backed-off 403 does not block a later write to another endpoint, but keeps order for its own", async () => {
+    goOffline();
+    await offlineWrite("/api/consent-gated", "POST", { n: 1 });
+    await offlineWrite("/api/consent-gated", "POST", { n: 2 });
+    await offlineWrite("/api/other", "POST", { n: 3 });
+    await flush();
+    goOnline();
+    fetchMock.mockImplementation(async (url: string) =>
+      String(url).endsWith("/api/consent-gated") ? { ok: false, status: 403 } : { ok: true, status: 200 },
+    );
+    await drain();
+    // The gated head 403'd once, then /api/other went through; the second
+    // gated write was not sent ahead of the first.
+    const urls = fetchMock.mock.calls.map((c) => String(c[0]));
+    expect(urls.filter((u) => u.endsWith("/api/consent-gated"))).toHaveLength(1);
+    expect(urls.filter((u) => u.endsWith("/api/other"))).toHaveLength(1);
+    expect(pending()).toBe(2);
+  });
+
+  it("honours an explicit maxAttempts passed to enqueue", async () => {
+    goOffline();
+    const q = OfflineQueue;
+    expect((await q.enqueue({ endpoint: "/api/flags", method: "POST", body: {}, priority: "normal", maxAttempts: 2 })).queued).toBe(true);
+    await flush();
+    goOnline();
+    expect(JSON.parse((await AsyncStorage.getItem("sifter_offline_queue")) ?? "[]")[0].maxAttempts).toBe(2);
+    fetchMock.mockResolvedValue({ ok: false, status: 500 });
+    await drainAt(0);
+    await drainAt(BACKOFF_MAX_MS * 2);
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    expect(pending()).toBe(0);
   });
 
   it("a permanent 4xx does not block later items", async () => {
@@ -355,5 +408,25 @@ describe("sign-out clearing", () => {
     await AsyncStorage.setItem("unrelated", "1");
     await clearOfflineData();
     expect(await AsyncStorage.getItem("unrelated")).toBe("1");
+  });
+});
+
+describe("owner id comparison", () => {
+  it("dropForeign and dropOwner treat a numeric stored ownerId like its string form", async () => {
+    await AsyncStorage.setItem(
+      "sifter_offline_queue",
+      JSON.stringify([
+        { id: "a", ownerId: 7, endpoint: "/x", method: "POST", body: {}, priority: "normal", attempts: 0, maxAttempts: 5, createdAt: new Date().toISOString() },
+        { id: "b", ownerId: "8", endpoint: "/x", method: "POST", body: {}, priority: "normal", attempts: 0, maxAttempts: 5, createdAt: new Date().toISOString() },
+      ]),
+    );
+    const q = new OfflineQueueManager();
+    goOffline();
+    await q.init();
+    await q.dropForeign("7");
+    expect(q.getItems().map((i) => i.id)).toEqual(["a"]);
+    await q.dropOwner("7");
+    expect(q.pendingCount).toBe(0);
+    q.destroy();
   });
 });

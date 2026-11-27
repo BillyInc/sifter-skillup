@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import { Text } from 'react-native';
-import { render, waitFor, act } from '@testing-library/react-native';
+import { render, waitFor, act, cleanup } from '@testing-library/react-native';
 
 import { AuthProvider, useAuth } from '../src/hooks/useAuth';
 
@@ -148,6 +148,7 @@ describe('device data clearing', () => {
       await waitFor(() => expect(mockClearAll).toHaveBeenCalledWith('u1'));
       await waitFor(() => expect(auth.user).toBeNull());
     } finally {
+      await act(async () => { cleanup(); }); // unmount while the listener stubs still exist
       w.addEventListener = prev.wa; w.removeEventListener = prev.wr;
       if (hadDocument) g.document = prevDocument; else delete g.document;
     }
@@ -201,6 +202,7 @@ describe('forced logouts', () => {
       await waitFor(() => expect(auth.user).toBeNull());
       expect(mockClearAll).not.toHaveBeenCalled();
     } finally {
+      await act(async () => { cleanup(); }); // unmount while the listener stubs still exist
       w.addEventListener = prev.wa; w.removeEventListener = prev.wr;
       if (hadDocument) g.document = prevDocument; else delete g.document;
     }

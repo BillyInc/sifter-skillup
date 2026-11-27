@@ -8,7 +8,7 @@ import React from "react";
 import { Text } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import NetInfo from "@react-native-community/netinfo";
-import { render, waitFor, act } from "@testing-library/react-native";
+import { render, waitFor, act, cleanup } from "@testing-library/react-native";
 
 import { WebAuthProvider, useAuth } from "../web/src/webAuth";
 import { OfflineQueue, offlineWrite } from "../src/lib/offlineQueue";
@@ -208,6 +208,7 @@ describe("web forced logout", () => {
       await waitFor(() => expect(OfflineQueue.pendingCount).toBe(0));
       expect(await AsyncStorage.getItem(PROFILE_KEY)).toBeNull();
     } finally {
+      await act(async () => { cleanup(); }); // the signed-out watcher is mounted too: unmount before the stubs go
       w.addEventListener = prev.wa; w.removeEventListener = prev.wr;
       if (hadDocument) g.document = prevDocument; else delete g.document;
     }
@@ -258,6 +259,76 @@ describe("web restore failures (match native)", () => {
     await mount();
     expect(auth.user).toBeNull();
     expect(mockCalls).toContain("clearToken");
+  });
+
+  it("a 401 keeps the unsent writes and writes the preserve marker before the token is cleared", async () => {
+    await withCachedSession();
+    await offlineWrite("/api/flags", "POST", { n: 1 }).catch(() => undefined);
+    await AsyncStorage.setItem("sifter_offline_queue", JSON.stringify([
+      { id: "q1", ownerId: "u7", endpoint: "/api/flags", method: "POST", body: {}, priority: "normal", attempts: 0, maxAttempts: 5, createdAt: new Date().toISOString() },
+    ]));
+    const { hasPreserveLocalState } = jest.requireActual("../src/lib/logoutState");
+    const { API } = jest.requireMock("../src/lib/api");
+    let markerAtClear: boolean | null = null;
+    API.clearToken.mockImplementationOnce(async () => {
+      markerAtClear = await hasPreserveLocalState();
+      mockTokenValue = null;
+    });
+    mockGetMe.mockRejectedValue(apiError("Unauthorized", 401));
+    await mount();
+    expect(auth.user).toBeNull();
+    expect(markerAtClear).toBe(true);
+    expect(await AsyncStorage.getItem(DEVICE_OWNER_KEY)).toBe("u7");
+    expect(await AsyncStorage.getItem("@sifter_xp_v1")).toBe("u7-xp");
+    expect(JSON.parse((await AsyncStorage.getItem("sifter_offline_queue")) ?? "[]")).toHaveLength(1);
+  });
+
+  it("a 401 does not clear a token another tab has already replaced", async () => {
+    await withCachedSession();
+    mockGetMe.mockImplementation(async () => {
+      mockTokenValue = "fresh-token"; // another tab signed in while we waited
+      throw apiError("Unauthorized", 401);
+    });
+    await mount();
+    expect(mockCalls).not.toContain("clearToken");
+    expect(mockTokenValue).toBe("fresh-token");
+  });
+
+  it("a 401 in a second tab leaves the first tab's unsent writes alone", async () => {
+    const listeners: Record<string, ((e?: unknown) => void)[]> = {};
+    const w = window as any;
+    const g = globalThis as any;
+    const hadDocument = "document" in g;
+    const prevDocument = g.document;
+    const prev = { wa: w.addEventListener, wr: w.removeEventListener };
+    g.document = { addEventListener: jest.fn(), removeEventListener: jest.fn(), visibilityState: "visible" };
+    w.addEventListener = (n: string, h: () => void) => { (listeners[n] ??= []).push(h); };
+    w.removeEventListener = (n: string, h: () => void) => { listeners[n] = (listeners[n] ?? []).filter((x) => x !== h); };
+    try {
+      await mount(); // tab 1
+      await login("u1");
+      expect((await offlineWrite("/api/flags", "POST", { n: 1 })).queued).toBe(true);
+
+      // Tab 2 opens after the token expired: its restore gets a 401.
+      mockGetMe.mockRejectedValue(apiError("Unauthorized", 401));
+      let auth2: any;
+      function Probe2() { auth2 = useAuth(); return null; }
+      render(<WebAuthProvider><Probe2 /></WebAuthProvider>);
+      await waitFor(() => expect(auth2?.loading).toBe(false));
+      expect(mockTokenValue).toBeNull();
+
+      // Tab 1 now sees the token removal.
+      await act(async () => { (listeners.storage ?? []).forEach((h) => h({ key: "sifter_auth_token_v2" })); });
+      await waitFor(() => expect(auth.user).toBeNull());
+      await act(async () => { await flush(); await flush(); });
+      expect(OfflineQueue.pendingCount).toBe(1);
+      expect(await AsyncStorage.getItem(DEVICE_OWNER_KEY)).toBe("u1");
+      expect(JSON.parse((await AsyncStorage.getItem("sifter_offline_queue")) ?? "[]")[0].ownerId).toBe("u1");
+    } finally {
+      await act(async () => { cleanup(); }); // unmount both tabs while the listener stubs still exist
+      w.addEventListener = prev.wa; w.removeEventListener = prev.wr;
+      if (hadDocument) g.document = prevDocument; else delete g.document;
+    }
   });
 
   it.each(["device_mismatch", "device_required"])("%s is a forced logout that clears the previous learner's data", async (message) => {

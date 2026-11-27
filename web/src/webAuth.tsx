@@ -110,6 +110,7 @@ export function WebAuthProvider({ children }: { children: ReactNode }) {
         // The session was taken over by another device: a forced logout, so
         // the previous learner's data goes too (same as native).
         const stale = await getSavedSessionProfile<WebUser>();
+        await beginSignOut(); // flag first: other tabs react to the token's removal
         await API.clearToken();
         await completeSignOut({ userId: stale?.id });
       } else if (isNetworkFailure(e)) {
@@ -124,7 +125,17 @@ export function WebAuthProvider({ children }: { children: ReactNode }) {
       } else if ((e as { status?: number })?.status === 401) {
         // The server rejected the token itself: it is dead. Anything else
         // (5xx, unknown) is transient and must not discard a valid session.
-        await API.clearToken();
+        // The learner's unsent writes are theirs to keep (same as the 7-day
+        // AUTH_HOLD in the queue): use the "continue later" path, with the
+        // preserve marker written BEFORE the token goes so other tabs, which
+        // react to its removal, leave the queue, owner and drafts alone. A
+        // token another tab has replaced since is not this restore's to clear.
+        const stale = await getSavedSessionProfile<WebUser>();
+        if ((await API.getToken()) === token) {
+          await beginSignOut({ preserveLocalUserState: true });
+          await API.clearToken();
+          await completeSignOut({ userId: stale?.id, preserveLocalUserState: true });
+        }
       }
     }
   }
@@ -169,6 +180,7 @@ export function WebAuthProvider({ children }: { children: ReactNode }) {
         await API.deleteMe();
       } finally {
         sessionEpoch.current++;
+        await beginSignOut();
         await API.clearToken();
         await completeSignOut({ userId: user?.id });
         setUser(null);
