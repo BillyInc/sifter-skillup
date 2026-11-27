@@ -322,7 +322,13 @@ export function useCommunity(currentUserId: string, currentUserTrack?: string) {
     }
     setFeed(s => ({ ...s, posts: [optimistic, ...s.posts] }));
     if (Haptics) Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-    await offlineWrite('/api/posts', 'POST', { ...params, hashtags, mentions }, 'high');
+    const result = await offlineWrite('/api/posts', 'POST', { ...params, hashtags, mentions }, 'high');
+    if (!result.queued) {
+      // Nothing was saved (no signed-in profile): take the optimistic post back
+      // and let the caller show the failure instead of losing it silently.
+      setFeed(s => ({ ...s, posts: s.posts.filter(p => p.id !== optimistic.id) }));
+      throw new Error('Could not save your post. Please sign in again and retry.');
+    }
   }, [currentUserId, currentUserTrack]);
 
   const votePoll = useCallback(async (postId: string, optionId: string) => {

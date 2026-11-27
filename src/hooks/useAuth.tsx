@@ -16,7 +16,8 @@ import { logger } from '../lib/logger';
 import { setPendingPostAuthRedirect } from '../lib/postAuthRedirect';
 import { resolvePostAuthHref } from '../lib/resumeNavigation';
 import { clearExplicitLogout, hasExplicitLogout, markExplicitLogout } from '../lib/logoutState';
-import { clearAllDeviceUserData, clearLocalUserState } from '../lib/localUserState';
+import { OfflineQueue } from '../lib/offlineQueue';
+import { clearAllDeviceUserData, clearLocalUserState, reconcileDeviceOwner } from '../lib/localUserState';
 import { clearSessionProfile, getSavedSessionProfile, saveSessionProfile } from '../lib/sessionProfile';
 import type { StarkzapWallet } from '../lib/starkzap';
 import {
@@ -190,6 +191,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [user?.id]);
 
   useEffect(() => {
+    // Hydrate the offline write queue and start its connectivity watcher once a
+    // profile is available (init is idempotent; enqueue also hydrates lazily).
+    if (user?.id) void OfflineQueue.init().catch(() => {});
+  }, [user?.id]);
+
+  useEffect(() => {
     // Feature-detect, don't infer from `typeof window`. React Native defines a
     // `window` global WITHOUT addEventListener, so a bare existence check
     // passes on native and then throws
@@ -294,11 +301,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   async function _handleAuthResponse(data: { token: string; user: any }) {
-    await API.saveToken(data.token);
-    await clearLocalUserState();
-    await clearExplicitLogout();
     const profile = _normalise(data.user);
+    // Profile first, token second: queued writes are owned by the stored
+    // profile's id, so the new token must never be live while the previous
+    // account's profile is still stored (the drain also checks the token's
+    // subject against the item owner).
+    await clearLocalUserState();
+    await reconcileDeviceOwner(profile.id);
     await saveSessionProfile(profile);
+    await API.saveToken(data.token);
+    await clearExplicitLogout();
     await switchLocalUser(profile.id);
     await setCareerCacheIdentity(profile.id);
     setPendingPostAuthRedirect(

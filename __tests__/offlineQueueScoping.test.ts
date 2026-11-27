@@ -1,9 +1,27 @@
 /**
  * The offline write queue must never send one account's writes with another
- * account's token, must keep writes when the session has expired, and must be
- * emptied (with the read cache and admin drafts) on sign-out / deletion.
+ * account's token, must survive an app restart, must keep writes when the
+ * session has expired (but not forever), must not let one rejected write block
+ * the ones behind it, and must be emptied on sign-out / deletion.
  */
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import NetInfo from "@react-native-community/netinfo";
+
+import { clearAllDeviceUserData } from "../src/lib/localUserState";
+import {
+  OfflineQueue,
+  OfflineQueueManager,
+  offlineWrite,
+  clearOfflineData,
+  tokenSubject,
+  AUTH_HOLD_MAX_AGE_MS,
+} from "../src/lib/offlineQueue";
+import {
+  saveAdminProvisioningDrafts,
+  getAdminProvisioningDrafts,
+  saveAdminResume,
+  getAdminResume,
+} from "../src/lib/adminResume";
 
 let mockProfile: { id: string } | null = { id: "user-a" };
 let mockToken: string | null = "token-a";
@@ -18,46 +36,48 @@ jest.mock("@react-native-community/netinfo", () => ({
 jest.mock("../src/lib/sessionProfile", () => ({
   getSavedSessionProfile: jest.fn(async () => mockProfile),
 }));
+jest.mock("../src/lib/deviceId", () => ({
+  getOrCreateDeviceId: jest.fn(async () => "device-123"),
+}));
 jest.mock("../src/lib/api", () => ({
   API_BASE: "http://api.test",
   API: { getToken: jest.fn(async () => mockToken) },
 }));
 
-import NetInfo from "@react-native-community/netinfo";
-import { OfflineQueue, offlineWrite, clearOfflineData } from "../src/lib/offlineQueue";
-import { clearAllDeviceUserData } from "../src/lib/localUserState";
-import {
-  saveAdminProvisioningDrafts,
-  getAdminProvisioningDrafts,
-  saveAdminResume,
-  getAdminResume,
-} from "../src/lib/adminResume";
-
 const netFetch = NetInfo.fetch as jest.Mock;
 const fetchMock = jest.fn();
 const flush = () => new Promise((r) => setTimeout(r, 0));
-const pending = () => (OfflineQueue as any).queue.length;
+const pending = () => OfflineQueue.pendingCount;
+const jwt = (sub: string) => `h.${btoa(JSON.stringify({ sub }))}.s`;
 
-async function enqueueOffline(body: unknown) {
-  // Network down so enqueue does not drain immediately.
-  netFetch.mockResolvedValueOnce({ isConnected: false, isInternetReachable: false });
-  await offlineWrite("/api/flags", "POST", body);
+function goOffline() {
+  netFetch.mockResolvedValue({ isConnected: false, isInternetReachable: false });
+}
+function goOnline() {
+  netFetch.mockResolvedValue({ isConnected: true, isInternetReachable: true });
+}
+
+/** Queue a write without draining it. */
+async function enqueueOffline(body: unknown, priority: "normal" | "high" | "critical" = "normal") {
+  goOffline();
+  const result = await offlineWrite("/api/flags", "POST", body, priority);
   await flush();
+  goOnline();
+  return result;
 }
 
 async function drain() {
-  await (OfflineQueue as any)._trySync();
+  await OfflineQueue.sync();
 }
 
 beforeEach(async () => {
   mockProfile = { id: "user-a" };
   mockToken = "token-a";
   fetchMock.mockReset();
-  netFetch.mockReset().mockResolvedValue({ isConnected: true, isInternetReachable: true });
+  goOnline();
   (global as any).fetch = fetchMock;
   await AsyncStorage.clear();
   await OfflineQueue.clear();
-  (OfflineQueue as any).syncing = false;
 });
 
 describe("offline queue ownership", () => {
@@ -74,39 +94,216 @@ describe("offline queue ownership", () => {
     expect(pending()).toBe(1);
   });
 
-  it("drains the owner's writes with the owner's token", async () => {
+  it("does not send A's writes while the token still belongs to another account", async () => {
+    await enqueueOffline({ n: 1 });
+    mockToken = jwt("user-b"); // profile is still user-a
+    fetchMock.mockResolvedValue({ ok: true, status: 200 });
+    await drain();
+    expect(fetchMock).not.toHaveBeenCalled();
+
+    mockToken = jwt("user-a");
+    await drain();
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(pending()).toBe(0);
+  });
+
+  it("drains the owner's writes with the owner's token and the device id", async () => {
     await enqueueOffline({ n: 1 });
     fetchMock.mockResolvedValue({ ok: true, status: 200 });
     await drain();
 
     expect(fetchMock).toHaveBeenCalledTimes(1);
-    expect(fetchMock.mock.calls[0][1].headers.Authorization).toBe("Bearer token-a");
+    const headers = fetchMock.mock.calls[0][1].headers;
+    expect(headers.Authorization).toBe("Bearer token-a");
+    expect(headers["X-Device-Id"]).toBe("device-123");
+    expect(headers["Content-Type"]).toBe("application/json");
     expect(pending()).toBe(0);
   });
 
-  it("does not queue a write when nobody is signed in", async () => {
-    mockProfile = null;
+  it("keeps user A's queued writes across a same-user sign-out and sign-in", async () => {
     await enqueueOffline({ n: 1 });
+    mockProfile = null;
+    mockToken = null;
+    await drain();
+    expect(pending()).toBe(1);
+
+    mockProfile = { id: "user-a" };
+    mockToken = "token-a2";
+    fetchMock.mockResolvedValue({ ok: true, status: 200 });
+    await drain();
+    expect(fetchMock.mock.calls[0][1].headers.Authorization).toBe("Bearer token-a2");
     expect(pending()).toBe(0);
   });
 });
 
-describe("offline queue error handling", () => {
-  it.each([401, 403])("keeps the item and stops draining on %s", async (status) => {
+describe("enqueue result", () => {
+  it("reports success with the queued id", async () => {
+    const result = await enqueueOffline({ n: 1 });
+    expect(result).toEqual({ queued: true, id: expect.any(String) });
+  });
+
+  it("reports failure instead of silently dropping when no profile is loaded", async () => {
+    mockProfile = null;
+    const result = await enqueueOffline({ n: 1 });
+    expect(result).toEqual({ queued: false, reason: "no_profile" });
+    expect(pending()).toBe(0);
+  });
+});
+
+describe("restart and hydration", () => {
+  it("a new instance keeps the previous session's items after init", async () => {
     await enqueueOffline({ n: 1 });
-    await enqueueOffline({ n: 2 });
-    fetchMock.mockResolvedValue({ ok: false, status });
+    const restarted = new OfflineQueueManager();
+    await restarted.init();
+    expect(restarted.getItems().map((i) => i.body)).toEqual([{ n: 1 }]);
+    restarted.destroy();
+  });
+
+  it("the first enqueue after a restart does not overwrite the persisted queue", async () => {
+    await enqueueOffline({ n: 1 });
+    const restarted = new OfflineQueueManager(); // no init() call
+    goOffline();
+    await restarted.enqueue({ endpoint: "/api/flags", method: "POST", body: { n: 2 }, priority: "normal", maxAttempts: 5 });
+    expect(restarted.getItems().map((i) => i.body)).toEqual([{ n: 1 }, { n: 2 }]);
+    const stored = JSON.parse((await AsyncStorage.getItem("sifter_offline_queue")) as string);
+    expect(stored).toHaveLength(2);
+  });
+
+  it("init is idempotent: one network watcher", async () => {
+    const q = new OfflineQueueManager();
+    (NetInfo.addEventListener as jest.Mock).mockClear();
+    await q.init();
+    await q.init();
+    expect(NetInfo.addEventListener).toHaveBeenCalledTimes(1);
+    q.destroy();
+  });
+
+  it("ignores stored entries that have no owner", async () => {
+    await AsyncStorage.setItem(
+      "sifter_offline_queue",
+      JSON.stringify([{ id: "old", endpoint: "/x", method: "POST", body: {}, priority: "normal", attempts: 0, maxAttempts: 5 }]),
+    );
+    const q = new OfflineQueueManager();
+    await q.init();
+    expect(q.pendingCount).toBe(0);
+    q.destroy();
+  });
+});
+
+describe("offline queue error handling", () => {
+  it("holds a 401 item for the next sign-in and does not retry the same token", async () => {
+    await enqueueOffline({ n: 1 });
+    fetchMock.mockResolvedValue({ ok: false, status: 401 });
+    await drain();
     await drain();
 
+    expect(fetchMock).toHaveBeenCalledTimes(1); // same token is not retried
+    expect(pending()).toBe(1);
+
+    mockToken = "token-a-fresh";
+    fetchMock.mockResolvedValue({ ok: true, status: 200 });
+    await drain();
+    expect(pending()).toBe(0);
+  });
+
+  it("eventually drops a write that keeps getting 401", async () => {
+    await enqueueOffline({ n: 1 }); // normal => maxAttempts 5
+    fetchMock.mockResolvedValue({ ok: false, status: 401 });
+    for (let i = 0; i < 5; i++) {
+      mockToken = `token-${i}`;
+      await drain();
+    }
+    expect(fetchMock).toHaveBeenCalledTimes(5);
+    expect(pending()).toBe(0);
+  });
+
+  it("drops a 401-held write after the maximum age", async () => {
+    await enqueueOffline({ n: 1 });
+    fetchMock.mockResolvedValue({ ok: false, status: 401 });
+    await drain();
+    expect(pending()).toBe(1);
+
+    const realNow = Date.now;
+    Date.now = () => realNow() + AUTH_HOLD_MAX_AGE_MS + 1000;
+    try {
+      mockToken = "token-next";
+      await drain();
+    } finally {
+      Date.now = realNow;
+    }
+    expect(pending()).toBe(0);
+  });
+
+  it("drops a 403 and keeps draining the writes behind it", async () => {
+    await enqueueOffline({ n: 1 });
+    await enqueueOffline({ n: 2 });
+    fetchMock
+      .mockResolvedValueOnce({ ok: false, status: 403 })
+      .mockResolvedValueOnce({ ok: true, status: 200 });
+    await drain();
+
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    expect(pending()).toBe(0);
+  });
+
+  it("a permanent 4xx does not block later items", async () => {
+    await enqueueOffline({ n: 1 });
+    await enqueueOffline({ n: 2 });
+    fetchMock
+      .mockResolvedValueOnce({ ok: false, status: 422 })
+      .mockResolvedValueOnce({ ok: true, status: 200 });
+    await drain();
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    expect(pending()).toBe(0);
+  });
+
+  it("counts a server error against maxAttempts and backs off", async () => {
+    await enqueueOffline({ n: 1 });
+    await enqueueOffline({ n: 2 });
+    fetchMock.mockResolvedValue({ ok: false, status: 503 });
+    await drain();
     expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(OfflineQueue.getItems()[0].attempts).toBe(1);
     expect(pending()).toBe(2);
   });
 
-  it("still drops other permanent 4xx errors", async () => {
+  it("treats 429 as retryable, not permanent", async () => {
     await enqueueOffline({ n: 1 });
-    fetchMock.mockResolvedValue({ ok: false, status: 422 });
+    fetchMock.mockResolvedValue({ ok: false, status: 429 });
     await drain();
+    expect(pending()).toBe(1);
+  });
+});
+
+describe("clear() racing with an in-flight enqueue", () => {
+  it("does not re-persist an item after the user signed out", async () => {
+    goOffline();
+    let release!: () => void;
+    const gate = new Promise<void>((r) => { release = r; });
+    const sessionProfile = jest.requireMock("../src/lib/sessionProfile");
+    sessionProfile.getSavedSessionProfile.mockImplementationOnce(async () => {
+      await gate;
+      return { id: "user-a" };
+    });
+
+    const inFlight = offlineWrite("/api/flags", "POST", { n: 1 });
+    await flush();
+    await OfflineQueue.clear(); // sign-out while enqueue is resolving the owner
+    release();
+    const result = await inFlight;
+    await flush();
+
+    expect(result.queued).toBe(false);
     expect(pending()).toBe(0);
+    expect(await AsyncStorage.getItem("sifter_offline_queue")).toBeNull();
+  });
+});
+
+describe("tokenSubject", () => {
+  it("reads the sub claim and tolerates malformed tokens", () => {
+    expect(tokenSubject(jwt("abc"))).toBe("abc");
+    expect(tokenSubject("not-a-jwt")).toBeNull();
+    expect(tokenSubject("a.b.c")).toBeNull();
   });
 });
 

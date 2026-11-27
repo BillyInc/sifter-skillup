@@ -193,6 +193,10 @@ export function AuthField({
   return (
     <View style={styles.fieldGroup}>
       <Text
+        // The input carries this text as its accessible name; reading the
+        // visible label too would announce "Password" twice.
+        accessibilityElementsHidden
+        importantForAccessibility="no-hide-descendants"
         style={[
           styles.label,
           { color: focused ? colors.accentRole.action : colors.textRole.secondary },
@@ -244,8 +248,10 @@ export function AuthField({
         ) : null}
         {secure ? (
           <TouchableOpacity
-            accessibilityRole="button"
-            accessibilityLabel={hidden ? "Show password" : "Hide password"}
+            // A switch with a constant name: the state ("on"/"off") says
+            // whether the password is shown, so the label must not flip too.
+            accessibilityRole="switch"
+            accessibilityLabel="Show password"
             accessibilityState={{ checked: !hidden }}
             onPress={() => setHidden((h) => !h)}
             hitSlop={10}
@@ -399,9 +405,10 @@ const styles = StyleSheet.create({
     borderRadius: Radius.md,
     paddingHorizontal: Spacing.md,
   },
-  input: { flex: 1, paddingVertical: 13, fontSize: FontSize.md },
+  input: { flex: 1, minWidth: 0, paddingVertical: 13, fontSize: FontSize.md },
   eyeBtn: {
-    paddingLeft: Spacing.sm,
+    // Fixed 44px square, no extra padding, so the input keeps its width.
+    flexShrink: 0,
     minWidth: TOUCH_TARGET_MIN,
     minHeight: TOUCH_TARGET_MIN,
     alignItems: "center",
@@ -409,6 +416,8 @@ const styles = StyleSheet.create({
   },
   eye: { fontSize: 18 },
   clearBtn: {
+    // Text-width only (hitSlop widens the target); never grows the row.
+    flexShrink: 0,
     paddingHorizontal: Spacing.xs,
     minHeight: TOUCH_TARGET_MIN,
     justifyContent: "center",

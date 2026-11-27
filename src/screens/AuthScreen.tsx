@@ -420,7 +420,6 @@ export default function AuthScreen({ initialMode = "login" }: { initialMode?: Ex
             >
               <TouchableOpacity
                 accessibilityRole="button"
-                accessibilityLabel="Back"
                 onPress={goToWelcome}
                 style={styles.backBtn}
                 hitSlop={8}
@@ -492,7 +491,6 @@ export default function AuthScreen({ initialMode = "login" }: { initialMode?: Ex
 
               <TouchableOpacity
                 accessibilityRole="link"
-                accessibilityLabel="Forgot password?"
                 style={{ alignSelf: "flex-end", minHeight: TOUCH_TARGET_MIN, justifyContent: "center" }}
                 onPress={() =>
                   router.replace("/(auth)/forgot-password?intent=reset" as any)
@@ -524,7 +522,6 @@ export default function AuthScreen({ initialMode = "login" }: { initialMode?: Ex
 
               <TouchableOpacity
                 accessibilityRole="button"
-                accessibilityLabel="Create an account"
                 style={{ alignSelf: "center", minHeight: TOUCH_TARGET_MIN, justifyContent: "center" }}
                 onPress={requestSignup}
                 hitSlop={8}

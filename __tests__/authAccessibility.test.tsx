@@ -18,18 +18,42 @@ const renderField = (props = {}) =>
   );
 
 describe("AuthField accessibility", () => {
-  it("labels the input with its visible label", () => {
+  it("names the input with its label", () => {
     renderField();
     expect(screen.getByLabelText("Password")).toBeTruthy();
   });
 
-  it("exposes a labelled, stateful show/hide password button", () => {
+  it("hides the visible label from assistive technology so it is not read twice", () => {
     renderField();
-    const toggle = screen.getByRole("button", { name: "Show password" });
+    const label = screen.getByText("Password", { includeHiddenElements: true });
+    expect(label.props.accessibilityElementsHidden).toBe(true);
+    expect(label.props.importantForAccessibility).toBe("no-hide-descendants");
+    // Only the input is exposed under that name.
+    expect(screen.getAllByLabelText("Password")).toHaveLength(1);
+    expect(screen.queryAllByText("Password")).toHaveLength(0);
+  });
+
+  it("exposes show password as a switch with a constant name and a checked state", () => {
+    renderField();
+    const toggle = screen.getByRole("switch", { name: "Show password" });
     expect(flatten(toggle.props.style).minHeight).toBeGreaterThanOrEqual(TOUCH_TARGET_MIN);
     expect(flatten(toggle.props.style).minWidth).toBeGreaterThanOrEqual(TOUCH_TARGET_MIN);
+    expect(toggle.props.accessibilityState).toMatchObject({ checked: false });
+
     fireEvent.press(toggle);
-    expect(screen.getByRole("button", { name: "Hide password" })).toBeTruthy();
+    const after = screen.getByRole("switch", { name: "Show password" }); // name does not flip
+    expect(after.props.accessibilityState).toMatchObject({ checked: true });
+    expect(screen.queryByRole("switch", { name: "Hide password" })).toBeNull();
+  });
+
+  it("never lets Clear or the eye grow wide enough to squeeze the input", () => {
+    renderField({ secure: true });
+    const clear = screen.getByRole("button", { name: "Clear password" });
+    const eye = screen.getByRole("switch", { name: "Show password" });
+    for (const el of [clear, eye]) expect(flatten(el.props.style).flexShrink).toBe(0);
+    expect(flatten(eye.props.style).minWidth).toBe(TOUCH_TARGET_MIN);
+    expect(flatten(eye.props.style).paddingLeft).toBeUndefined();
+    expect(flatten(screen.getByLabelText("Password").props.style).minWidth).toBe(0);
   });
 
   it("keeps the clear button at 44px", () => {

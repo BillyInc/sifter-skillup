@@ -62,6 +62,7 @@ jest.mock('../src/lib/logoutState', () => ({
 jest.mock('../src/lib/localUserState', () => ({
   clearLocalUserState: jest.fn().mockResolvedValue(undefined),
   clearAllDeviceUserData: jest.fn().mockResolvedValue(undefined),
+  reconcileDeviceOwner: jest.fn().mockResolvedValue(undefined),
 }));
 
 jest.mock('../src/lib/sessionProfile', () => ({
