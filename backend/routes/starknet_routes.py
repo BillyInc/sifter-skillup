@@ -479,8 +479,6 @@ async def starknet_auth_email(
         if email_lookup.data:
             user_row = email_lookup.data[0]
 
-    _refuse_soft_deleted(user_row)
-
     if user_row is None:
         wallet_lookup = (
             service.table("users")
@@ -491,6 +489,9 @@ async def starknet_auth_email(
         )
         if wallet_lookup.data:
             user_row = wallet_lookup.data[0]
+
+    # One check after every lookup (DID, email, wallet) and before any write.
+    _refuse_soft_deleted(user_row)
 
     if user_row is None and not email:
         raise HTTPException(400, "Could not determine email from Privy or the request")

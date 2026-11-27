@@ -688,6 +688,20 @@ def test_an_avatar_removal_failure_is_an_error_not_clear(monkeypatch):
     assert ap.hard_delete_learner_content("u1")["avatars"] == "error"
 
 
+def test_avatar_keys_rejected_by_the_path_check_are_an_error_not_clear(monkeypatch):
+    import avatar_storage
+
+    _purge_db(monkeypatch, tables={})
+
+    class _Odd(avatar_storage.InMemoryAvatarStorage):
+        def list_keys(self, user_id):
+            return ["u1/bad\\name.webp", "u1/ctl\x07.webp"]
+
+    store = _Odd()
+    avatar_storage.set_storage(store)
+    assert ap.hard_delete_learner_content("u1")["avatars"] == "error"
+
+
 def test_a_missing_avatar_bucket_counts_as_clear(monkeypatch):
     import avatar_storage
 

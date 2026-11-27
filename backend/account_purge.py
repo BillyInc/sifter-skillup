@@ -513,11 +513,19 @@ def _purge_avatars(svc, user_id: str) -> str:
     previous: list[str] | None = None
     for _ in range(20):  # a listing returns one page; re-list until empty
         try:
-            keys = [k for k in storage.list_keys(user_id) if k.startswith(f"{user_id}/") and _safe_object_path(k)]
+            listed = list(storage.list_keys(user_id))
         except Exception as exc:  # noqa: BLE001
             if _is_bucket_missing(exc):
                 return "deleted" if removed else "clear"
             raise
+        keys = [k for k in listed if k.startswith(f"{user_id}/") and _safe_object_path(k)]
+        rejected = [k for k in listed if k.startswith(f"{user_id}/") and not _safe_object_path(k)]
+        if rejected:
+            # Listed but unremovable by the path check: objects remain, so never "clear".
+            log.warning("Avatar purge skipped unsafe keys", keys=[repr(k) for k in rejected[:20]], count=len(rejected))
+            if keys:
+                storage.delete(keys)
+            return "error"
         if not keys:
             return "deleted" if removed else "clear"
         if sorted(keys) == previous:
