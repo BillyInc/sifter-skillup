@@ -394,7 +394,15 @@ def test_dm_messages_migration_is_prepared_not_applied_and_keeps_select():
     # SELECT/ALL policy exists. It is never granted to anon blindly.
     assert "pg_policies" in sql and "has_table_privilege" in sql
     assert "GRANT SELECT ON skillup_dev.dm_messages TO anon" not in sql
-    assert "TO anon, authenticated;\n" not in sql.split("REVOKE ALL")[1].split("service_role")[0].replace("FROM anon, authenticated;", "")
+    # Final state of the GRANT statements: the only literal GRANT targets
+    # service_role, and the single dynamic GRANT (role name from format %I) is
+    # SELECT only. No literal GRANT names anon, authenticated or PUBLIC.
+    import re
+
+    grants = re.findall(r"^\s*GRANT\s+(.+?)\s+ON\s+skillup_dev\.dm_messages\s+TO\s+(\S+?)\s*;", sql, re.MULTILINE | re.IGNORECASE)
+    assert grants == [("SELECT, INSERT, UPDATE, DELETE", "service_role")]
+    dynamic = re.findall(r"format\('GRANT\s+(\w+)\s+ON skillup_dev\.dm_messages TO %I'", sql)
+    assert dynamic == ["SELECT"]
     assert "RLS-on-with-no-policy" in sql
     assert "defence in depth" in sql.lower()
 
@@ -579,19 +587,38 @@ def test_follow_unfollow_follow_notifies_once(fake, monkeypatch):
     assert len([n for n in fake.tables["notifications"] if n["type"] == "follow"]) == 2
 
 
+def _use_real_notification_writer(fake, monkeypatch):
+    # The fixture stubs _create_notification; undo it so inserts really land in
+    # fake.tables["notifications"] (the real writer swallows insert errors, so
+    # only the stored rows can tell "not sent" from "failed").
+    monkeypatch.undo()
+    monkeypatch.setattr(cr.db, "get_service_client", lambda: fake, raising=False)
+
+
 def test_follow_notification_history_failure_still_follows_without_notifying(fake, monkeypatch):
-    real = fake.table
+    target = "00000000-0000-4000-8000-000000000008"
+    _use_real_notification_writer(fake, monkeypatch)
 
-    def boom(name):
-        if name == "notifications":
+    # Control: with a healthy history lookup the same call DOES create exactly
+    # one follow notification, so the failure case below is not vacuous.
+    assert _post(_client(ME), "follow", targetId=target).json()["data"]["status"] == "following"
+    assert [n["type"] for n in fake.tables["notifications"]] == ["follow"]
+    fake.tables["notifications"].clear()
+    fake.tables["follows"].clear()
+
+    # History lookup (a select on notifications) fails; inserts still work.
+    real_select = _Query.select
+
+    def failing_select(self, *a, **k):
+        if self.name == "notifications":
             raise RuntimeError("down")
-        return real(name)
+        return real_select(self, *a, **k)
 
-    monkeypatch.setattr(fake, "table", boom)
-    r = _post(_client(ME), "follow", targetId="00000000-0000-4000-8000-000000000008")
+    monkeypatch.setattr(_Query, "select", failing_select)
+    r = _post(_client(ME), "follow", targetId=target)
     assert r.json()["data"]["status"] == "following"
     assert len(fake.tables["follows"]) == 1
-    assert fake.tables.get("notes", []) == []
+    assert fake.tables["notifications"] == []
 
 
 def test_mutual_follow_db_error_is_503_not_false(fake, monkeypatch):
@@ -621,7 +648,12 @@ def test_dm_send_returns_503_on_mutual_follow_outage_and_403_when_not_mutual(fak
         return real(name)
 
     monkeypatch.setattr(fake, "table", boom)
-    assert c.post("/api/dms/send", json=body).status_code == 503
+    r = c.post("/api/dms/send", json=body)
+    assert r.status_code == 503
+    assert r.json()["detail"] == "Temporarily unavailable. Please try again."
+    assert "down" not in r.text
+    assert fake.tables.get("dm_threads", []) == []
+    assert fake.tables.get("dm_messages", []) == []
 
 
 @pytest.mark.parametrize("path", ["unblock", "mute", "unmute", "block"])
@@ -643,3 +675,27 @@ def test_unblock_and_mute_still_work_with_valid_ids(fake):
     assert len(fake.tables["user_mutes"]) == 1
     assert _post(c, "unmute", targetId=b).status_code == 200
     assert fake.tables["user_mutes"] == []
+
+
+def test_mute_mirrors_block_for_self_missing_and_deleted_targets(fake):
+    c = _client(ME)
+    deleted = "00000000-0000-4000-8000-000000000009"
+    missing = "00000000-0000-4000-8000-0000000000aa"
+    for target in (ME["id"], deleted, missing):
+        r = _post(c, "mute", targetId=target)
+        assert r.status_code == 404 and r.json()["detail"] == "User not found"
+    assert fake.tables.get("user_mutes", []) == []
+    # A repeated mute is a no-op, not a unique-violation 500.
+    b = "00000000-0000-4000-8000-000000000008"
+    assert _post(c, "mute", targetId=b).status_code == 200
+    assert _post(c, "mute", targetId=b).status_code == 200
+    assert len(fake.tables["user_mutes"]) == 1
+
+
+@pytest.mark.parametrize("path", ["unblock", "unmute"])
+def test_unblock_unmute_self_is_404_and_valid_nonexistent_is_a_noop_200(fake, path):
+    c = _client(ME)
+    r = _post(c, path, targetId=ME["id"])
+    assert r.status_code == 404 and r.json()["detail"] == "User not found"
+    # Documented leniency: a well-formed id with no active user is a no-op.
+    assert _post(c, path, targetId="00000000-0000-4000-8000-0000000000aa").status_code == 200

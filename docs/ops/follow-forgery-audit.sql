@@ -14,7 +14,9 @@
 -- request (requester = follower, target = following).
 --
 -- Forged row shape: follower_id = victim, following_id = attacker, with no
--- follow_request row from the victim to the attacker that the victim sent.
+-- follow_request row sent by the victim to the attacker (requester = victim,
+-- target = attacker). A request in the opposite direction (attacker -> victim,
+-- approved by the victim) may exist and does NOT clear the row.
 --
 -- LIMITS, stated plainly: a private account may legitimately follow someone
 -- without any follow_request row (follow_requests only exist for following a
@@ -26,8 +28,16 @@
 -- identify forged rows against public victims at all.
 
 -- 1. Review candidates: follows whose follower is a private account and where
---    no follow_request row, of any status and in either direction, exists
---    between the pair.
+--    no SAME-direction follow_request row (requester = follower, target =
+--    following, any status) exists. The reverse direction is deliberately NOT
+--    excluded: an attacker A forges follows(V -> A) and then asks to follow V
+--    (V approves), so follow_requests(A -> V, approve) exists, yet the
+--    forged V -> A row is the one that enables the DM. A forged row never has
+--    a request sent by the victim.
+--    Expected result shapes (fixtures):
+--      forged V->A, no requests at all                    -> returned
+--      forged V->A + approved request A->V (reverse)       -> returned
+--      legitimate V->A + approved request V->A (same dir)  -> NOT returned
 SELECT f.id            AS follow_id,
        f.follower_id   AS private_follower_id,
        f.following_id,
@@ -36,13 +46,15 @@ FROM skillup_dev.follows f
 JOIN skillup_dev.users v ON v.id = f.follower_id AND v.is_private = true
 WHERE NOT EXISTS (
     SELECT 1 FROM skillup_dev.follow_requests r
-    WHERE (r.requester_id = f.follower_id  AND r.target_id = f.following_id)
-       OR (r.requester_id = f.following_id AND r.target_id = f.follower_id)
+    WHERE r.requester_id = f.follower_id AND r.target_id = f.following_id
 )
 ORDER BY f.created_at;
 
 -- 2. Subset of query 1 that matters most for DMs: the other party also follows
 --    the private account back, so the pair is mutual and can open a DM.
+--    Same exclusion rule as query 1 (same-direction request only).
+--    Expected: the forged V->A + approved A->V pair is returned (via the
+--    V->A row; the A->V row is not a candidate because A is not private).
 SELECT f.id            AS follow_id,
        f.follower_id   AS private_follower_id,
        f.following_id,
@@ -53,8 +65,7 @@ JOIN skillup_dev.follows back
   ON back.follower_id = f.following_id AND back.following_id = f.follower_id
 WHERE NOT EXISTS (
     SELECT 1 FROM skillup_dev.follow_requests r
-    WHERE (r.requester_id = f.follower_id  AND r.target_id = f.following_id)
-       OR (r.requester_id = f.following_id AND r.target_id = f.follower_id)
+    WHERE r.requester_id = f.follower_id AND r.target_id = f.following_id
 )
 ORDER BY f.created_at;
 

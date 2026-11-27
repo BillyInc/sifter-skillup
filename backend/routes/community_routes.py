@@ -815,34 +815,42 @@ async def block_user(body: BlockAction, current_user: dict = Depends(Auth.get_cu
     return ResponseModel(data={"blocked": True})
 
 
+# unblock / unmute undo a relationship the caller created, so they are
+# deliberately more lenient than block / mute: yourself or a malformed id gets
+# the same uniform 404, but a well-formed id with no active user is a no-op 200
+# (so a stale row for a since-deleted account can still be cleaned up).
 @community_v2_router.post("/api/users/unblock", response_model=ResponseModel)
 async def unblock_user(body: BlockAction, current_user: dict = Depends(Auth.get_current_user)):
+    user_id = _norm_id(current_user["id"])
     target_id = _norm_id(body.targetId)
-    # Same uniform 404 as block for a malformed id (never reaches a uuid cast).
-    if not _is_uuid(target_id):
+    if target_id == user_id or not _is_uuid(target_id):
         raise HTTPException(404, "User not found")
-    db.get_service_client().table("user_blocks").delete().eq("user_id", current_user["id"]).eq("target_id", target_id).execute()
+    db.get_service_client().table("user_blocks").delete().eq("user_id", user_id).eq("target_id", target_id).execute()
     return ResponseModel(data={"blocked": False})
 
 
 @community_v2_router.post("/api/users/mute", response_model=ResponseModel)
 async def mute_user(body: BlockAction, current_user: dict = Depends(Auth.get_current_user)):
+    user_id = _norm_id(current_user["id"])
     target_id = _norm_id(body.targetId)
-    if not _is_uuid(target_id):
+    # Same uniform refusal as block: yourself, a malformed id, or a missing or
+    # deleted account (which would otherwise hit the user_mutes FK as a 500).
+    if target_id == user_id or not _is_uuid(target_id) or _active_user(target_id) is None:
         raise HTTPException(404, "User not found")
     db.get_service_client().table("user_mutes").upsert({
-        "id": str(uuid.uuid4()), "user_id": current_user["id"], "target_id": target_id,
+        "id": str(uuid.uuid4()), "user_id": user_id, "target_id": target_id,
         "created_at": datetime.now(timezone.utc).isoformat(),
-    }).execute()
+    }, on_conflict="user_id,target_id", ignore_duplicates=True).execute()
     return ResponseModel(data={"muted": True})
 
 
 @community_v2_router.post("/api/users/unmute", response_model=ResponseModel)
 async def unmute_user(body: BlockAction, current_user: dict = Depends(Auth.get_current_user)):
+    user_id = _norm_id(current_user["id"])
     target_id = _norm_id(body.targetId)
-    if not _is_uuid(target_id):
+    if target_id == user_id or not _is_uuid(target_id):
         raise HTTPException(404, "User not found")
-    db.get_service_client().table("user_mutes").delete().eq("user_id", current_user["id"]).eq("target_id", target_id).execute()
+    db.get_service_client().table("user_mutes").delete().eq("user_id", user_id).eq("target_id", target_id).execute()
     return ResponseModel(data={"muted": False})
 
 

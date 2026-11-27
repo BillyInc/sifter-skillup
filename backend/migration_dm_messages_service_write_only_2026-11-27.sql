@@ -36,6 +36,16 @@
 --      (anon cannot match dm_participant_read, which uses auth.uid()).
 --   4. Grants service_role full access (the backend writes through it).
 --
+-- Prerequisite: the roles anon, authenticated and service_role must exist
+-- (they do on Supabase). If one is missing the REVOKE/GRANT raises and the
+-- whole transaction rolls back, so nothing is half-applied (fail closed).
+--
+-- Note: has_table_privilege() also counts a privilege inherited from PUBLIC, so
+-- a PUBLIC SELECT grant makes anon/authenticated look like SELECT holders; they
+-- then get an explicit SELECT re-grant here (REVOKE ... FROM anon, authenticated
+-- does not remove a PUBLIC grant). Re-running supabase-schema.sql re-grants
+-- SELECT to authenticated unconditionally; row access is still gated by RLS.
+--
 -- Idempotent and non-destructive: no rows, tables or other policies are
 -- changed or dropped. supabase-schema.sql carries the equivalent REVOKE and no
 -- longer creates the insert policy, so re-running the base schema after this
