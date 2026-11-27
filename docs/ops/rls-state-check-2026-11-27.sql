@@ -11,8 +11,8 @@
 -- Contents: SELECT statements and read-only CTEs against pg_catalog /
 --           pg_policies / storage metadata only. No DDL, no DML. The only
 --           functions used are catalog and privilege-inspection functions
---           (has_*_privilege, pg_get_*, aclexplode, row_security_active,
---           to_regclass) plus query_to_xml() over ONE fixed, constant
+--           (has_*_privilege, pg_has_role, pg_get_*, aclexplode, acldefault,
+--           row_security_active, to_regclass) plus query_to_xml() over ONE fixed, constant
 --           SELECT on storage.buckets (section 7, G7). Nothing here writes.
 -- Secrets : the script is DESIGNED not to print secrets: it never prints
 --           role settings other than the PostgREST exposed-schema names
@@ -329,38 +329,78 @@ LEFT JOIN pg_namespace n ON n.nspname = s.schema_name;
 
 
 -- ---------------------------------------------------------------------
--- 3b. Default privileges (pg_default_acl): what NEW tables / sequences /
---     functions automatically grant to anon / authenticated / service_role
---     / PUBLIC. Scoped to the relevant schemas (skillup_dev, public,
---     storage, or "all schemas") and to the roles that actually create
---     objects there (owners of existing objects in those schemas, plus
---     postgres, supabase_admin and the current user). One row per
---     (creating role, schema, object type, grantee).
+-- 3b. Default privileges: what NEW tables / sequences / functions / types
+--     grant to anon / authenticated / service_role / PUBLIC. Two kinds of row,
+--     shown in the `source` column:
+--       configured          = a pg_default_acl entry (ALTER DEFAULT PRIVILEGES).
+--                             A schema-specific entry is ADDED to the object
+--                             type's global default for that creating role.
+--       built-in (no global entry) = the PostgreSQL built-in default, shown for
+--                             a creating role and object type that has NO global
+--                             (all-schemas) pg_default_acl entry. The built-in
+--                             default is NOT "closed": new functions and
+--                             procedures grant EXECUTE to PUBLIC, and new types
+--                             grant USAGE to PUBLIC. A global entry REPLACES the
+--                             built-in default; explicit grants to other roles
+--                             in a schema entry do not remove PUBLIC EXECUTE
+--                             (only REVOKE ... FROM PUBLIC in a global entry does).
+--     So an absent row means "nothing configured and no built-in grant to
+--     PUBLIC/API roles" ONLY for tables and sequences; read the built-in rows
+--     for functions. Scoped to the relevant schemas (skillup_dev, public,
+--     storage, or "all schemas") and to the roles that actually create objects
+--     there (owners of existing objects in those schemas, plus postgres,
+--     supabase_admin and the current user). One row per (creating role,
+--     schema, object type, grantee, source).
 -- ---------------------------------------------------------------------
 WITH scope AS (SELECT oid FROM pg_namespace WHERE nspname IN ('skillup_dev', 'public', 'storage')),
 creators AS (
   SELECT relowner AS role_oid FROM pg_class WHERE relnamespace IN (SELECT oid FROM scope)
   UNION SELECT proowner FROM pg_proc WHERE pronamespace IN (SELECT oid FROM scope)
   UNION SELECT oid FROM pg_roles WHERE rolname IN ('postgres', 'supabase_admin', current_user)
+),
+api AS (SELECT oid FROM pg_roles WHERE rolname IN ('anon', 'authenticated', 'service_role')),
+configured AS (
+  SELECT pg_get_userbyid(d.defaclrole)                     AS objects_created_by,
+         coalesce(n.nspname, '(all schemas)')              AS in_schema,
+         CASE d.defaclobjtype
+           WHEN 'r' THEN 'tables'  WHEN 'S' THEN 'sequences'
+           WHEN 'f' THEN 'functions' WHEN 'T' THEN 'types'
+           WHEN 'n' THEN 'schemas' ELSE d.defaclobjtype::text END AS object_type,
+         CASE a.grantee WHEN 0 THEN 'PUBLIC' ELSE pg_get_userbyid(a.grantee) END AS grantee,
+         a.privilege_type,
+         'configured'::text                                AS source
+  FROM pg_default_acl d
+  LEFT JOIN pg_namespace n ON n.oid = d.defaclnamespace
+  CROSS JOIN LATERAL aclexplode(d.defaclacl) a
+  WHERE d.defaclrole IN (SELECT role_oid FROM creators)
+    AND (d.defaclnamespace = 0 OR d.defaclnamespace IN (SELECT oid FROM scope))
+    AND (a.grantee = 0 OR a.grantee IN (SELECT oid FROM api))
+),
+builtin AS (   -- no global entry for (creator, type): the built-in default applies
+  SELECT pg_get_userbyid(c.role_oid)                       AS objects_created_by,
+         '(all schemas)'::text                             AS in_schema,
+         CASE t.code WHEN 'r' THEN 'tables' WHEN 'S' THEN 'sequences'
+                     WHEN 'f' THEN 'functions' WHEN 'T' THEN 'types' END AS object_type,
+         CASE a.grantee WHEN 0 THEN 'PUBLIC' ELSE pg_get_userbyid(a.grantee) END AS grantee,
+         a.privilege_type,
+         'built-in (no global entry)'::text                AS source
+  FROM creators c
+  -- t.code = pg_default_acl.defaclobjtype; t.acl_code = the matching acldefault() type letter
+  -- (the two differ only for sequences: 'S' in pg_default_acl, 's' in acldefault)
+  CROSS JOIN (VALUES ('r'::"char", 'r'::"char"), ('S'::"char", 's'::"char"),
+                     ('f'::"char", 'f'::"char"), ('T'::"char", 'T'::"char")) AS t(code, acl_code)
+  CROSS JOIN LATERAL aclexplode(acldefault(t.acl_code, c.role_oid)) a
+  WHERE NOT EXISTS (SELECT 1 FROM pg_default_acl d
+                     WHERE d.defaclrole = c.role_oid AND d.defaclnamespace = 0
+                       AND d.defaclobjtype = t.code)
+    AND (a.grantee = 0 OR a.grantee IN (SELECT oid FROM api))
 )
-SELECT pg_get_userbyid(d.defaclrole)                     AS objects_created_by,
-       coalesce(n.nspname, '(all schemas)')              AS in_schema,
-       CASE d.defaclobjtype
-         WHEN 'r' THEN 'tables'  WHEN 'S' THEN 'sequences'
-         WHEN 'f' THEN 'functions' WHEN 'T' THEN 'types'
-         WHEN 'n' THEN 'schemas' ELSE d.defaclobjtype::text END AS object_type,
-       CASE a.grantee WHEN 0 THEN 'PUBLIC' ELSE pg_get_userbyid(a.grantee) END AS grantee,
-       string_agg(a.privilege_type, ', ' ORDER BY a.privilege_type) AS privileges
-FROM pg_default_acl d
-LEFT JOIN pg_namespace n ON n.oid = d.defaclnamespace
-CROSS JOIN LATERAL aclexplode(d.defaclacl) a
-WHERE d.defaclrole IN (SELECT role_oid FROM creators)
-  AND (d.defaclnamespace = 0 OR d.defaclnamespace IN (SELECT oid FROM scope))
-  AND (a.grantee = 0
-       OR a.grantee IN (SELECT oid FROM pg_roles
-                         WHERE rolname IN ('anon', 'authenticated', 'service_role')))
-GROUP BY 1, 2, 3, 4
-ORDER BY 1, 2, 3, 4;
+SELECT objects_created_by, in_schema, object_type, grantee,
+       string_agg(privilege_type, ', ' ORDER BY privilege_type) AS privileges,
+       source
+FROM (SELECT * FROM configured UNION ALL SELECT * FROM builtin) u
+GROUP BY objects_created_by, in_schema, object_type, grantee, source
+ORDER BY objects_created_by, in_schema, object_type, grantee, source;
 
 
 -- ---------------------------------------------------------------------
@@ -584,13 +624,18 @@ ORDER BY e.extname;
 --          J views in <schema>" per scanned schema (views include
 --          materialized views), plus "schema missing" (HIGH if tables
 --          exist in public instead, else INFO) or "schema has no tables".
---      G1  anon/authenticated holds SELECT/INSERT/UPDATE/DELETE (table or
---          column level) on a table that has RLS DISABLED. HIGH when the
+--      G1  anon (anyone with the anon key) or authenticated (needs a login)
+--          holds SELECT/INSERT/UPDATE/DELETE (table or column level) on a
+--          table that has RLS DISABLED; the detail shows the SELECT flags
+--          separately. HIGH when the
 --          role also has USAGE on the schema; MEDIUM when the schema is
 --          known not to be in pgrst.db_schemas; INFO when no API role has
 --          schema USAGE (unreachable). Also covers foreign tables (relkind
 --          f), which cannot have RLS.
---      G2  PERMISSIVE policy that applies to public/anon/authenticated and
+--      G2  PERMISSIVE policy that applies to public/anon/authenticated (TO
+--          list, including a role that anon/authenticated EFFECTIVELY belongs
+--          to: pg_has_role(.., 'USAGE'), i.e. membership with INHERIT; a
+--          NOINHERIT membership does not count) and
 --          whose USING or WITH CHECK is always true for that role:
 --          literally true, true AND true, 1=1, auth.role()/auth.jwt()->>'role'
 --          /current_setting('request.jwt.claims')->>'role' equal to, or IN /
@@ -603,7 +648,13 @@ ORDER BY e.extname;
 --          HIGH): an OR arm that is open to an API role
 --          (auth.role()='authenticated' OR auth.uid()=id), "... OR true",
 --          the request.jwt.claims form with an anon/authenticated literal,
---          or "<column> IS NOT NULL". HIGH = anon holds the matching privilege (any
+--          or "<column> IS NOT NULL". The two expressions are matched to the
+--          privilege each one needs: an always-true USING needs SELECT (cmd
+--          SELECT), UPDATE, DELETE or any of the three (ALL); an always-true
+--          WITH CHECK needs INSERT (cmd INSERT), UPDATE or INSERT/UPDATE (ALL);
+--          an ALL/UPDATE policy without WITH CHECK uses its USING as the check.
+--          So ALL USING (false) WITH CHECK (true) is not HIGH for a role that
+--          holds only SELECT. HIGH = anon holds the matching privilege (any
 --          table), or authenticated holds it on a sensitive table;
 --          REVIEW = authenticated-only on a non-sensitive table (fine only
 --          for genuine reference data); INFO = open policy but no matching
@@ -619,11 +670,17 @@ ORDER BY e.extname;
 --          policy: SELECT returns no rows, UPDATE/DELETE silently affect 0
 --          rows, INSERT/upsert raises 42501 (audit C1a).
 --      G5  (info) RLS on, policies exist, an API role holds a write grant,
---          but no permissive write policy for that role works without
---          auth.uid()/auth.jwt(). Expected for normal tables on a standard
---          Supabase layout; only relevant if the backend uses that role
---          without a Supabase JWT. A row appears only if a write policy
---          targets that role (no policy for the role = simply blocked).
+--          but every permissive write policy that applies to that role
+--          REFERENCES an auth function (auth.uid()/auth.jwt()/auth.role()/
+--          request.jwt). The rejection claim (INSERT raises 42501, UPDATE/
+--          DELETE affect 0 rows when no user JWT is sent) is made only when
+--          every such policy is written so that it REQUIRES an identity
+--          (auth.uid() = col, IS NOT NULL, auth.role() = 'authenticated').
+--          A policy containing IS NULL, NOT, <>, !=, OR, true, coalesce,
+--          CASE, IS DISTINCT or 'anon' (for example WITH CHECK
+--          (auth.uid() IS NULL), which PASSES without a JWT) gets neutral
+--          wording instead: no rejection is claimed. A row appears only if a
+--          write policy targets that role (no policy for the role = blocked).
 --      G6  View or materialized view that runs with owner rights (no
 --          security_invoker=true) and that anon/authenticated can SELECT
 --          (HIGH for both: a matview copies base rows with no RLS).
@@ -632,10 +689,12 @@ ORDER BY e.extname;
 --          may be incomplete. Open storage.objects policies and RLS-off
 --          storage tables appear as G2 / G1 rows.
 --      G8  Realtime: supabase_realtime publication summary (INFO), and
---          published tables with RLS off (graded like G1: INFO when no API
+--          published tables with RLS off (graded like G1 but on the SELECT
+--          privilege only, since Realtime streams rows: INFO when no API
 --          role has schema USAGE, MEDIUM when the schema is not exposed or
---          no API role holds a privilege, else HIGH) or with an open (or
---          possibly open) SELECT/ALL policy.
+--          no API role holds SELECT (an INSERT-only grant is MEDIUM), else
+--          HIGH) or with a SELECT/ALL policy whose USING is open (or
+--          possibly open): HIGH only when the role holds SELECT.
 --      G9  anon/authenticated holds TRUNCATE (bypasses RLS), TRIGGER or
 --          REFERENCES on a table (including foreign tables). One row per
 --          table and role.
@@ -696,6 +755,8 @@ tbl AS (
           OR has_any_column_privilege('authenticated', c.oid, 'INSERT')
           OR has_any_column_privilege('authenticated', c.oid, 'UPDATE')
           OR has_table_privilege('authenticated', c.oid, 'DELETE')) AS auth_any,
+         has_any_column_privilege('anon', c.oid, 'SELECT')          AS anon_sel,
+         has_any_column_privilege('authenticated', c.oid, 'SELECT') AS auth_sel,
          (has_any_column_privilege('anon', c.oid, 'INSERT')
           OR has_any_column_privilege('anon', c.oid, 'UPDATE')
           OR has_table_privilege('anon', c.oid, 'DELETE'))          AS anon_write,
@@ -716,14 +777,34 @@ tbl AS (
     AND NOT EXISTS (SELECT 1 FROM pg_depend d
                      WHERE d.classid = 'pg_class'::regclass AND d.objid = c.oid AND d.deptype = 'e')
 ),
+eff AS (   -- EFFECTIVE role sets: PUBLIC plus every role the API role has the privileges of.
+  -- pg_has_role(.., 'USAGE') is the inheritance-aware membership test (a role granted
+  -- to anon WITH INHERIT counts; a NOINHERIT membership does not), the same test
+  -- PostgreSQL applies when it decides whether a policy's TO list covers the current role.
+  SELECT ARRAY['public'::name] || coalesce((SELECT array_agg(r.rolname) FROM pg_roles r
+                                              WHERE pg_has_role('anon', r.oid, 'USAGE')), '{}'::name[])          AS anon_roles,
+         ARRAY['public'::name] || coalesce((SELECT array_agg(r.rolname) FROM pg_roles r
+                                              WHERE pg_has_role('authenticated', r.oid, 'USAGE')), '{}'::name[]) AS auth_roles
+),
 pol AS (   -- permissive policies with a normalised expression
   SELECT t.oid AS tbl_oid, t.nspname, p.tablename, p.policyname, p.cmd, p.roles,
          p.qual, p.with_check,
-         (p.roles && ARRAY['public', 'anon']::name[])           AS hits_anon,
-         (p.roles && ARRAY['public', 'authenticated']::name[])  AS hits_auth,
+         (p.roles && eff.anon_roles)                             AS hits_anon,
+         (p.roles && eff.auth_roles)                             AS hits_auth,
          ((coalesce(p.qual, '') || ' ' || coalesce(p.with_check, ''))
-            ~* '(auth\.(uid|jwt|role|email)\s*\(|request\.jwt)') AS uses_auth_fn
+            ~* '(auth\.(uid|jwt|role|email)\s*\(|request\.jwt)') AS uses_auth_fn,
+         -- id_req: references an auth function AND is written in a form that REQUIRES an
+         -- identity (auth.uid() = col, auth.uid() IS NOT NULL, auth.role() = 'authenticated').
+         -- Any IS NULL / NOT / <> / != / OR / true / coalesce / nullif / CASE / IS DISTINCT /
+         -- 'anon' in the text makes this false: such a policy may PASS without a user JWT, so
+         -- G5 must not claim it is rejected. (Conservative: a word inside a literal also does.)
+         (((coalesce(p.qual, '') || ' ' || coalesce(p.with_check, ''))
+             ~* '(auth\.(uid|jwt|role|email)\s*\(|request\.jwt)')
+          AND NOT (regexp_replace(lower(coalesce(p.qual, '') || ' ' || coalesce(p.with_check, '')),
+                                  'is\s+not\s+null', '', 'g')
+                   ~ '(\mis\s+null\M|\mnot\M|<>|!=|\mor\M|\mcoalesce\M|\mnullif\M|\mtrue\M|\mcase\M|\mis\s+distinct\M|''anon'')')) AS id_req
   FROM pg_policies p
+  CROSS JOIN eff
   JOIN tbl t ON t.nspname = p.schemaname AND t.relname = p.tablename
   WHERE p.permissive = 'PERMISSIVE'
 ),
@@ -820,47 +901,82 @@ exprflag AS (
           OR e.n ~ '^[a-z_][a-z0-9_.]*isnotnull$') AS p_rev
   FROM expr e CROSS JOIN pat2
 ),
-openpol AS (  -- policies that are always-true for an API role they apply to
+openpol AS (  -- policies that are always-true for an API role they apply to, kept PER EXPRESSION KIND
+  -- USING and WITH CHECK are different expressions: USING gates SELECT/UPDATE/DELETE (and the
+  -- read side of ALL), WITH CHECK gates INSERT/UPDATE (and the write side of ALL). They are
+  -- evaluated separately and each is matched to the privileges it actually needs (openpol2).
   SELECT o.*,
-         bool_or(f.p_all OR f.p_anon) OVER w AS pass_anon,
-         bool_or(f.p_all OR f.p_auth) OVER w AS pass_auth,
-         bool_or(f.p_rev) OVER w AS pass_rev,
+         coalesce(bool_or(f.p_all OR f.p_anon) FILTER (WHERE f.kind = 'USING')      OVER w, false) AS u_anon,
+         coalesce(bool_or(f.p_all OR f.p_auth) FILTER (WHERE f.kind = 'USING')      OVER w, false) AS u_auth,
+         coalesce(bool_or(f.p_all OR f.p_anon) FILTER (WHERE f.kind = 'WITH CHECK') OVER w, false) AS c_anon,
+         coalesce(bool_or(f.p_all OR f.p_auth) FILTER (WHERE f.kind = 'WITH CHECK') OVER w, false) AS c_auth,
+         coalesce(bool_or(f.p_rev)             FILTER (WHERE f.kind = 'USING')      OVER w, false) AS u_rev,
+         coalesce(bool_or(f.p_rev)             FILTER (WHERE f.kind = 'WITH CHECK') OVER w, false) AS c_rev,
          string_agg(f.kind || ' ' || f.raw_red, ' / ') FILTER (WHERE f.p_all OR f.p_anon OR f.p_auth OR f.p_rev) OVER w AS matched_expr
   FROM pol o
   JOIN exprflag f ON f.nspname = o.nspname AND f.tablename = o.tablename AND f.policyname = o.policyname
   WINDOW w AS (PARTITION BY o.nspname, o.tablename, o.policyname)
 ),
+openpol1 AS (   -- an ALL or UPDATE policy with no WITH CHECK applies its USING expression as the check
+  SELECT o.*,
+         CASE WHEN o.with_check IS NULL AND o.cmd IN ('ALL', 'UPDATE') THEN o.u_anon ELSE o.c_anon END AS ce_anon,
+         CASE WHEN o.with_check IS NULL AND o.cmd IN ('ALL', 'UPDATE') THEN o.u_auth ELSE o.c_auth END AS ce_auth,
+         CASE WHEN o.with_check IS NULL AND o.cmd IN ('ALL', 'UPDATE') THEN o.u_rev  ELSE o.c_rev  END AS ce_rev
+  FROM openpol o
+),
 openpol2 AS (
   SELECT DISTINCT ON (o.nspname, o.tablename, o.policyname)
          o.nspname, o.tbl_oid, o.tablename, o.policyname, o.cmd, o.roles,
-         (o.hits_anon AND o.pass_anon) AS anon_open,
-         (o.hits_auth AND o.pass_auth) AS auth_open,
-         (o.pass_rev AND (o.hits_anon OR o.hits_auth)
-            AND NOT ((o.hits_anon AND o.pass_anon) OR (o.hits_auth AND o.pass_auth))) AS maybe_open,
+         (o.hits_anon AND (o.u_anon OR o.ce_anon)) AS anon_open,
+         (o.hits_auth AND (o.u_auth OR o.ce_auth)) AS auth_open,
+         ((o.u_rev OR o.ce_rev) AND (o.hits_anon OR o.hits_auth)
+            AND NOT ((o.hits_anon AND (o.u_anon OR o.ce_anon)) OR (o.hits_auth AND (o.u_auth OR o.ce_auth)))) AS maybe_open,
          o.hits_anon, o.hits_auth,
          o.matched_expr,
-         CASE o.cmd
-           WHEN 'SELECT' THEN has_any_column_privilege('anon', o.tbl_oid, 'SELECT')
-           WHEN 'INSERT' THEN has_any_column_privilege('anon', o.tbl_oid, 'INSERT')
-           WHEN 'UPDATE' THEN has_any_column_privilege('anon', o.tbl_oid, 'UPDATE')
-           WHEN 'DELETE' THEN has_table_privilege('anon', o.tbl_oid, 'DELETE')
-           ELSE (has_any_column_privilege('anon', o.tbl_oid, 'SELECT')
-              OR has_any_column_privilege('anon', o.tbl_oid, 'INSERT')
-              OR has_any_column_privilege('anon', o.tbl_oid, 'UPDATE')
-              OR has_table_privilege('anon', o.tbl_oid, 'DELETE')) END AS anon_holds,
-         CASE o.cmd
-           WHEN 'SELECT' THEN has_any_column_privilege('authenticated', o.tbl_oid, 'SELECT')
-           WHEN 'INSERT' THEN has_any_column_privilege('authenticated', o.tbl_oid, 'INSERT')
-           WHEN 'UPDATE' THEN has_any_column_privilege('authenticated', o.tbl_oid, 'UPDATE')
-           WHEN 'DELETE' THEN has_table_privilege('authenticated', o.tbl_oid, 'DELETE')
-           ELSE (has_any_column_privilege('authenticated', o.tbl_oid, 'SELECT')
-              OR has_any_column_privilege('authenticated', o.tbl_oid, 'INSERT')
-              OR has_any_column_privilege('authenticated', o.tbl_oid, 'UPDATE')
-              OR has_table_privilege('authenticated', o.tbl_oid, 'DELETE')) END AS auth_holds
-  FROM openpol o
+         -- *_holds: an always-true expression is matched to the privilege it needs.
+         --   USING          needs SELECT (cmd SELECT), UPDATE (UPDATE), DELETE (DELETE), any of the three (ALL)
+         --   WITH CHECK     needs INSERT (cmd INSERT), UPDATE (UPDATE), INSERT or UPDATE (ALL)
+         -- so ALL USING (false) WITH CHECK (true) is not "held" by a role with only SELECT.
+         (o.u_anon AND CASE o.cmd WHEN 'SELECT' THEN pr.a_sel WHEN 'UPDATE' THEN pr.a_upd WHEN 'DELETE' THEN pr.a_del
+                                  WHEN 'ALL' THEN (pr.a_sel OR pr.a_upd OR pr.a_del) ELSE false END)
+          OR (o.ce_anon AND CASE o.cmd WHEN 'INSERT' THEN pr.a_ins WHEN 'UPDATE' THEN pr.a_upd
+                                       WHEN 'ALL' THEN (pr.a_ins OR pr.a_upd) ELSE false END) AS anon_holds,
+         (o.u_auth AND CASE o.cmd WHEN 'SELECT' THEN pr.u_sel WHEN 'UPDATE' THEN pr.u_upd WHEN 'DELETE' THEN pr.u_del
+                                  WHEN 'ALL' THEN (pr.u_sel OR pr.u_upd OR pr.u_del) ELSE false END)
+          OR (o.ce_auth AND CASE o.cmd WHEN 'INSERT' THEN pr.u_ins WHEN 'UPDATE' THEN pr.u_upd
+                                       WHEN 'ALL' THEN (pr.u_ins OR pr.u_upd) ELSE false END) AS auth_holds,
+         -- the same matching for the "possibly open" heuristic
+         (o.u_rev AND CASE o.cmd WHEN 'SELECT' THEN pr.a_sel WHEN 'UPDATE' THEN pr.a_upd WHEN 'DELETE' THEN pr.a_del
+                                 WHEN 'ALL' THEN (pr.a_sel OR pr.a_upd OR pr.a_del) ELSE false END)
+          OR (o.ce_rev AND CASE o.cmd WHEN 'INSERT' THEN pr.a_ins WHEN 'UPDATE' THEN pr.a_upd
+                                      WHEN 'ALL' THEN (pr.a_ins OR pr.a_upd) ELSE false END) AS anon_rev_holds,
+         (o.u_rev AND CASE o.cmd WHEN 'SELECT' THEN pr.u_sel WHEN 'UPDATE' THEN pr.u_upd WHEN 'DELETE' THEN pr.u_del
+                                 WHEN 'ALL' THEN (pr.u_sel OR pr.u_upd OR pr.u_del) ELSE false END)
+          OR (o.ce_rev AND CASE o.cmd WHEN 'INSERT' THEN pr.u_ins WHEN 'UPDATE' THEN pr.u_upd
+                                      WHEN 'ALL' THEN (pr.u_ins OR pr.u_upd) ELSE false END) AS auth_rev_holds,
+         -- Realtime (G8) delivers rows by the USING side of a SELECT or ALL policy and needs SELECT:
+         (o.hits_anon AND o.u_anon) AS rt_anon_open,
+         (o.hits_auth AND o.u_auth) AS rt_auth_open,
+         (o.u_rev AND (o.hits_anon OR o.hits_auth)
+            AND NOT ((o.hits_anon AND o.u_anon) OR (o.hits_auth AND o.u_auth))) AS rt_maybe_open,
+         pr.a_sel AS anon_sel, pr.u_sel AS auth_sel,
+         concat_ws(' ', CASE WHEN o.hits_anon AND o.u_anon  THEN 'anon:USING' END,
+                        CASE WHEN o.hits_anon AND o.ce_anon THEN 'anon:WITH CHECK' END,
+                        CASE WHEN o.hits_auth AND o.u_auth  THEN 'authenticated:USING' END,
+                        CASE WHEN o.hits_auth AND o.ce_auth THEN 'authenticated:WITH CHECK' END) AS open_kinds
+  FROM openpol1 o
+  CROSS JOIN LATERAL (SELECT
+      has_any_column_privilege('anon', o.tbl_oid, 'SELECT')          AS a_sel,
+      has_any_column_privilege('anon', o.tbl_oid, 'INSERT')          AS a_ins,
+      has_any_column_privilege('anon', o.tbl_oid, 'UPDATE')          AS a_upd,
+      has_table_privilege('anon', o.tbl_oid, 'DELETE')               AS a_del,
+      has_any_column_privilege('authenticated', o.tbl_oid, 'SELECT') AS u_sel,
+      has_any_column_privilege('authenticated', o.tbl_oid, 'INSERT') AS u_ins,
+      has_any_column_privilege('authenticated', o.tbl_oid, 'UPDATE') AS u_upd,
+      has_table_privilege('authenticated', o.tbl_oid, 'DELETE')      AS u_del) pr
   WHERE o.matched_expr IS NOT NULL
-    AND ((o.hits_anon AND o.pass_anon) OR (o.hits_auth AND o.pass_auth)
-         OR (o.pass_rev AND (o.hits_anon OR o.hits_auth)))
+    AND ((o.hits_anon AND (o.u_anon OR o.ce_anon)) OR (o.hits_auth AND (o.u_auth OR o.ce_auth))
+         OR ((o.u_rev OR o.ce_rev) AND (o.hits_anon OR o.hits_auth)))
 ),
 buckets AS (   -- one fixed constant SELECT on storage.buckets, only if it exists
   SELECT (xpath('/row/name/text()', x))[1]::text           AS name,
@@ -923,7 +1039,8 @@ flags AS (
          CASE WHEN NOT ((t.anon_any AND t.anon_usage) OR (t.auth_any AND t.auth_usage)) THEN 'INFO'
               WHEN t.exposed = 'no' THEN 'MEDIUM' ELSE 'HIGH' END,
          t.nspname || '.' || t.relname,
-         concat('RLS disabled; anon=', t.anon_any, ' authenticated=', t.auth_any,
+         concat('RLS disabled; anon holds a table/column privilege=', t.anon_any,
+                ' (SELECT=', t.anon_sel, '), authenticated=', t.auth_any, ' (SELECT=', t.auth_sel, ')',
                 '; schema USAGE anon=', t.anon_usage, ' authenticated=', t.auth_usage,
                 '; schema in pgrst.db_schemas: ', t.exposed,
                 CASE WHEN NOT (t.anon_usage OR t.auth_usage)
@@ -939,9 +1056,9 @@ flags AS (
          CASE WHEN o.anon_open AND o.anon_holds THEN 'HIGH'
               WHEN o.auth_open AND o.auth_holds AND s.name IS NOT NULL THEN 'HIGH'
               WHEN o.auth_open AND o.auth_holds THEN 'REVIEW'
-              WHEN o.maybe_open AND ((o.hits_anon AND o.anon_holds)
-                                  OR (o.hits_auth AND o.auth_holds AND s.name IS NOT NULL)) THEN 'MEDIUM'
-              WHEN o.maybe_open AND o.hits_auth AND o.auth_holds THEN 'REVIEW'
+              WHEN o.maybe_open AND ((o.hits_anon AND o.anon_rev_holds)
+                                  OR (o.hits_auth AND o.auth_rev_holds AND s.name IS NOT NULL)) THEN 'MEDIUM'
+              WHEN o.maybe_open AND o.hits_auth AND o.auth_rev_holds THEN 'REVIEW'
               ELSE 'INFO' END,
          o.nspname || '.' || o.tablename,
          concat('policy ', o.policyname, ' (', o.cmd, ', roles ', o.roles::text, '): ',
@@ -949,8 +1066,9 @@ flags AS (
                      THEN '[POSSIBLY open: an OR arm or always-true form that the patterns only partly recognise (heuristic, not proof); read sections 2/2b/6c] '
                      ELSE '' END,
                 o.matched_expr,
-                '; open to anon=', o.anon_open, ' and anon holds matching privilege=', (o.anon_open AND o.anon_holds),
-                '; open to authenticated=', o.auth_open, ' and authenticated holds matching privilege=', (o.auth_open AND o.auth_holds),
+                '; open to anon=', o.anon_open, ' and anon holds the privilege that expression needs=', (o.anon_open AND o.anon_holds),
+                '; open to authenticated=', o.auth_open, ' and authenticated holds the privilege that expression needs=', (o.auth_open AND o.auth_holds),
+                CASE WHEN o.open_kinds <> '' THEN '; always-true expression kind(s): ' || o.open_kinds ELSE '' END,
                 '; sensitive table=', (s.name IS NOT NULL),
                 '; restrictive policies on table (not evaluated)=',
                 (SELECT count(*) FROM pg_policies r
@@ -1000,9 +1118,19 @@ flags AS (
   -- G5 ---------------------------------------------------------------
   UNION ALL
   SELECT 'G5', 'INFO', t.nspname || '.' || t.relname || ' [' || r.role_name || ']',
-         concat('RLS on; ', r.role_name, ' holds a write grant; no permissive INSERT/UPDATE/DELETE/ALL policy for it ',
-                'works without auth.uid()/auth.jwt(). Expected for normal tables; only relevant if the backend uses ',
-                'this role WITHOUT a Supabase JWT (then INSERT raises 42501, UPDATE/DELETE affect 0 rows)')
+         CASE WHEN NOT EXISTS (SELECT 1 FROM pol o        -- every applicable write policy REQUIRES an identity
+                                WHERE o.tbl_oid = t.oid AND o.cmd IN ('ALL', 'INSERT', 'UPDATE', 'DELETE')
+                                  AND ((r.role_name = 'anon' AND o.hits_anon)
+                                    OR (r.role_name = 'authenticated' AND o.hits_auth))
+                                  AND NOT o.id_req)
+              THEN concat('RLS on; ', r.role_name, ' holds a write grant; every permissive INSERT/UPDATE/DELETE/ALL policy that applies to it ',
+                          'references an auth function in a form that REQUIRES an identity (auth.uid() = col, IS NOT NULL, ',
+                          'auth.role() = ''authenticated''). Expected for normal tables; only relevant if the backend uses ',
+                          'this role WITHOUT a Supabase user JWT (then INSERT raises 42501, UPDATE/DELETE affect 0 rows)')
+              ELSE concat('RLS on; ', r.role_name, ' holds a write grant; every permissive write policy that applies to it references an auth function ',
+                          '(auth.uid()/auth.jwt()/auth.role()/request.jwt). At least one is written in a form that may still PASS ',
+                          'without a user JWT (IS NULL, NOT, <>, OR, true, coalesce, CASE, ''anon''): no rejection is claimed; read the expression in sections 2/2b')
+         END
   FROM tbl t
   CROSS JOIN LATERAL (VALUES ('anon', t.anon_write), ('authenticated', t.auth_write)) AS r(role_name, has_write)
   WHERE t.relrowsecurity
@@ -1066,11 +1194,12 @@ flags AS (
   UNION ALL
   SELECT 'G8',
          CASE WHEN NOT (t.anon_usage OR t.auth_usage) THEN 'INFO'      -- same rule as G1: unreachable
-              WHEN (t.anon_any AND t.anon_usage) OR (t.auth_any AND t.auth_usage)
+              WHEN (t.anon_sel AND t.anon_usage) OR (t.auth_sel AND t.auth_usage)   -- Realtime streams rows: SELECT is what matters
                    THEN CASE WHEN t.exposed = 'no' THEN 'MEDIUM' ELSE 'HIGH' END
               ELSE 'MEDIUM' END,
          t.nspname || '.' || t.relname,
-         concat('published to realtime with RLS DISABLED; anon=', t.anon_any, ' authenticated=', t.auth_any,
+         concat('published to realtime with RLS DISABLED; anon SELECT=', t.anon_sel, ' authenticated SELECT=', t.auth_sel,
+                ' (any privilege: anon=', t.anon_any, ' authenticated=', t.auth_any, ')',
                 '; schema USAGE anon=', t.anon_usage, ' authenticated=', t.auth_usage,
                 '; schema in pgrst.db_schemas: ', t.exposed,
                 CASE WHEN NOT (t.anon_usage OR t.auth_usage)
@@ -1079,15 +1208,18 @@ flags AS (
   WHERE NOT t.relrowsecurity
   UNION ALL
   SELECT 'G8',
-         CASE WHEN o.anon_open AND o.anon_holds THEN 'HIGH'
-              WHEN o.auth_open AND o.auth_holds AND s.name IS NOT NULL THEN 'HIGH'
+         CASE WHEN o.rt_anon_open AND o.anon_sel THEN 'HIGH'
+              WHEN o.rt_auth_open AND o.auth_sel AND s.name IS NOT NULL THEN 'HIGH'
               ELSE 'REVIEW' END,
          o.nspname || '.' || o.tablename,
-         concat('published to realtime and open SELECT/ALL policy ', o.policyname, ' (', o.matched_expr, ')')
+         concat('published to realtime and open SELECT/ALL policy ', o.policyname, ' (', o.matched_expr, ')',
+                '; USING open to anon=', o.rt_anon_open, ' authenticated=', o.rt_auth_open,
+                CASE WHEN o.rt_maybe_open THEN ' [POSSIBLY open: heuristic]' ELSE '' END,
+                '; SELECT privilege anon=', o.anon_sel, ' authenticated=', o.auth_sel)
   FROM rt
   JOIN openpol2 o ON o.nspname = rt.schemaname AND o.tablename = rt.tablename
   LEFT JOIN sensitive s ON s.name = o.tablename
-  WHERE o.cmd IN ('SELECT', 'ALL') AND (o.anon_open OR o.auth_open OR o.maybe_open)
+  WHERE o.cmd IN ('SELECT', 'ALL') AND (o.rt_anon_open OR o.rt_auth_open OR o.rt_maybe_open)
 
   -- G9: TRUNCATE / TRIGGER / REFERENCES ------------------------------
   UNION ALL
