@@ -4,7 +4,7 @@ import { clearStartingPoint } from "./startingPoint";
 import { clearOnboardingDraft } from "./onboardingDraft";
 import { clearAdminResume } from "./adminResume";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { clearOfflineData, clearReadCache } from "./offlineQueue";
+import { OfflineQueue, clearOfflineData, clearReadCache } from "./offlineQueue";
 
 export async function clearLocalUserState(userId?: string | null): Promise<void> {
   await Promise.all([
@@ -61,7 +61,9 @@ const DEVICE_OWNER_KEY = "@levelup_device_owner_v1";
  * Call when an account signs in. Cached reads and admin drafts survive a
  * "continue later" sign-out, but they are not all scoped by account, so if a
  * different account (or an unknown previous owner) now signs in they are
- * removed. The same user returning keeps them.
+ * removed. The same user returning keeps them. When the previous owner is
+ * known and different, their device learner data (DEVICE_USER_DATA_KEYS and
+ * prefixes) and queued writes are removed too.
  */
 export async function reconcileDeviceOwner(userId: string): Promise<void> {
   let previous: string | null = null;
@@ -74,6 +76,12 @@ export async function reconcileDeviceOwner(userId: string): Promise<void> {
     await clearReadCache();
     if (previous) await clearAdminResume(previous);
     await clearAdminResume();
+    if (previous) {
+      // A different account signed in after a "continue later" sign-out: the
+      // previous learner's unscoped data and unsent writes must not carry over.
+      await clearUnscopedUserKeys();
+      await OfflineQueue.dropOwner(previous);
+    }
   }
   try {
     await AsyncStorage.setItem(DEVICE_OWNER_KEY, userId);

@@ -195,8 +195,10 @@ export function AuthField({
       <Text
         // The input carries this text as its accessible name; reading the
         // visible label too would announce "Password" twice.
+        // react-native-web ignores the native props, so aria-hidden is set too.
         accessibilityElementsHidden
         importantForAccessibility="no-hide-descendants"
+        aria-hidden
         style={[
           styles.label,
           { color: focused ? colors.accentRole.action : colors.textRole.secondary },
@@ -253,11 +255,13 @@ export function AuthField({
             accessibilityRole="switch"
             accessibilityLabel="Show password"
             accessibilityState={{ checked: !hidden }}
+            // react-native-web does not map accessibilityState.checked.
+            aria-checked={!hidden}
             onPress={() => setHidden((h) => !h)}
             hitSlop={10}
             style={styles.eyeBtn}
           >
-            <Text style={styles.eye} accessibilityElementsHidden importantForAccessibility="no">{hidden ? "👁️" : "🙈"}</Text>
+            <Text style={styles.eye} accessibilityElementsHidden importantForAccessibility="no" aria-hidden>{hidden ? "👁️" : "🙈"}</Text>
           </TouchableOpacity>
         ) : null}
       </View>

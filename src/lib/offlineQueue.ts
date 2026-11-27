@@ -18,6 +18,7 @@ import NetInfo from '@react-native-community/netinfo';
 import { getSavedSessionProfile } from './sessionProfile';
 
 const QUEUE_KEY = 'sifter_offline_queue';
+const AUTH_HOLD_KEY = 'sifter_offline_queue_auth_hold';
 const MAX_QUEUE_SIZE = 2000;
 
 export type QueuePriority = 'critical' | 'high' | 'normal';
@@ -35,6 +36,14 @@ export interface QueueItem {
   ownerId?: string;
   /** When the server first rejected the item with 401 (session expired). */
   authHeldSince?: string;
+  /**
+   * Fingerprint (not the token) of the last token the server rejected this
+   * item with 401. The item is skipped until the token changes, so a restart
+   * does not re-send it, and it does not block later items.
+   */
+  authFailedFor?: string;
+  /** Do not send before this time (ISO). Set by backoff / Retry-After. */
+  nextAttemptAt?: string;
 }
 
 async function currentOwnerId(): Promise<string | null> {
@@ -55,6 +64,16 @@ export type EnqueueResult =
 /** How long a write may sit waiting for a fresh sign-in after a 401. */
 export const AUTH_HOLD_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
 
+/** Writes owned by another account are discarded after this long. */
+export const FOREIGN_OWNER_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;
+
+/** Backoff for retryable failures: 30s, 60s, 120s ... capped at 15 minutes. */
+export const BACKOFF_BASE_MS = 30 * 1000;
+export const BACKOFF_MAX_MS = 15 * 60 * 1000;
+
+/** Consecutive 401s (different items, same token) after which the token is held. */
+const AUTH_HOLD_AFTER_CONSECUTIVE_401 = 2;
+
 /** Statuses that are worth retrying later even though they are 4xx. */
 const TRANSIENT_4XX = new Set([408, 425, 429]);
 
@@ -72,6 +91,39 @@ export function tokenSubject(token: string): string | null {
   }
 }
 
+/**
+ * Short non-reversible fingerprint of a token, so the queue can remember
+ * "this token was rejected" in AsyncStorage without persisting the token.
+ */
+export function tokenFingerprint(token: string): string {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < token.length; i++) {
+    h ^= token.charCodeAt(i);
+    h = Math.imul(h, 0x01000193) >>> 0;
+  }
+  return `${token.length.toString(36)}.${h.toString(16)}`;
+}
+
+/** Milliseconds to wait before retrying, honouring Retry-After (seconds or HTTP-date). */
+export function retryDelayMs(
+  attempts: number,
+  retryAfter?: string | null,
+  now: number = Date.now(),
+): number {
+  if (retryAfter) {
+    const trimmed = retryAfter.trim();
+    let ms = NaN;
+    if (/^\d+$/.test(trimmed)) ms = parseInt(trimmed, 10) * 1000;
+    else {
+      const at = Date.parse(trimmed);
+      if (!Number.isNaN(at)) ms = at - now;
+    }
+    if (!Number.isNaN(ms)) return Math.min(Math.max(ms, 0), BACKOFF_MAX_MS);
+  }
+  const exp = BACKOFF_BASE_MS * 2 ** Math.max(0, attempts - 1);
+  return Math.min(exp, BACKOFF_MAX_MS);
+}
+
 export class OfflineQueueManager {
   private queue: QueueItem[] = [];
   private syncing = false;
@@ -81,7 +133,11 @@ export class OfflineQueueManager {
   private saveChain: Promise<void> = Promise.resolve();
   /** Bumped by clear() so work started before it cannot re-persist anything. */
   private epoch = 0;
-  /** Owner -> token that was rejected with 401; not retried until the token changes. */
+  /**
+   * Owner -> fingerprint of a token the server rejected on consecutive items.
+   * Persisted (AUTH_HOLD_KEY) so a restart does not re-send with that token.
+   * Cleared when the token changes.
+   */
   private authHold = new Map<string, string>();
 
   /**
@@ -116,19 +172,21 @@ export class OfflineQueueManager {
       maxAttempts: item.priority === 'critical' ? 20 : item.priority === 'high' ? 10 : 5,
     };
 
+    this._pruneForeign(ownerId);
     this.queue.push(entry);
 
     // Sort: critical first, then high, then normal; within each, FIFO
     const order = { critical: 0, high: 1, normal: 2 };
     this.queue.sort((a, b) => order[a.priority] - order[b.priority]);
 
-    // Cap queue size — drop oldest normal-priority items if over limit
-    if (this.queue.length > MAX_QUEUE_SIZE) {
+    // Cap queue size — drop the oldest normal-priority item if over limit
+    // (or, when there are none, the oldest item of any priority).
+    while (this.queue.length > MAX_QUEUE_SIZE) {
+      const oldest = (items: QueueItem[]) =>
+        items.reduce((a, b) => (Date.parse(b.createdAt) < Date.parse(a.createdAt) ? b : a));
       const normalItems = this.queue.filter(i => i.priority === 'normal');
-      if (normalItems.length > 0) {
-        const toRemove = new Set([normalItems[0].id]);
-        this.queue = this.queue.filter(i => !toRemove.has(i.id));
-      }
+      const victim = oldest(normalItems.length > 0 ? normalItems : this.queue);
+      this._remove(victim);
     }
 
     await this._saveQueue(epoch);
@@ -182,6 +240,7 @@ export class OfflineQueueManager {
     this.syncing = true;
     this._notify('syncing');
     const epoch = this.epoch;
+    let consecutive401 = 0;
 
     try {
       const { API_BASE, API } = await import('./api');
@@ -198,12 +257,19 @@ export class OfflineQueueManager {
         // sign-in the stored profile and token can briefly disagree.
         const subject = tokenSubject(token);
         if (subject && subject !== owner) break;
-        // A 401 for this exact token will not change on retry.
-        if (this.authHold.get(owner) === token) break;
-        this.authHold.delete(owner);
+        const fp = tokenFingerprint(token);
+        // Consecutive 401s for this exact token will not change on retry.
+        if (this.authHold.get(owner) === fp) break;
+        if (this.authHold.delete(owner)) await this._saveAuthHold(epoch);
 
-        const item = this.queue.find(i => i.ownerId === owner);
+        // An item this token already failed on is skipped (it does not block
+        // the writes behind it) until the token changes.
+        const item = this.queue.find(i => i.ownerId === owner && i.authFailedFor !== fp);
         if (!item) break;
+        // Backing off (rate limit / server error): wait without sending and
+        // without counting an attempt. Later items wait too, to keep order and
+        // not hammer a throttled server.
+        if (item.nextAttemptAt && Date.parse(item.nextAttemptAt) > Date.now()) break;
 
         // Re-check connectivity every 5 items
         if (drained > 0 && drained % 5 === 0) {
@@ -231,6 +297,7 @@ export class OfflineQueueManager {
             // 409 = conflict (already synced) — treat as success
             this._remove(item);
             drained++;
+            consecutive401 = 0;
             await this._saveQueue(epoch);
           } else if (res.status === 401) {
             // The session is expired or was replaced. The write may still be
@@ -240,14 +307,25 @@ export class OfflineQueueManager {
             const heldFor = Date.now() - Date.parse(item.authHeldSince);
             if (item.attempts >= item.maxAttempts || heldFor > AUTH_HOLD_MAX_AGE_MS) {
               this._remove(item);
+            } else {
+              item.authFailedFor = fp;
             }
-            this.authHold.set(owner, token);
+            // One rejected item is skipped and the next is tried; a second
+            // consecutive 401 means the token itself is dead, so hold it.
+            consecutive401++;
+            const tokenDead = consecutive401 >= AUTH_HOLD_AFTER_CONSECUTIVE_401;
+            if (tokenDead) this.authHold.set(owner, fp);
             await this._saveQueue(epoch);
-            break;
+            if (tokenDead) {
+              await this._saveAuthHold(epoch);
+              break;
+            }
           } else if (TRANSIENT_4XX.has(res.status) || res.status >= 500) {
             item.attempts++;
             if (item.attempts >= item.maxAttempts) {
               this._remove(item); // give up
+            } else {
+              this._backOff(item, res);
             }
             await this._saveQueue(epoch);
             break; // back off, try next sync window
@@ -259,6 +337,7 @@ export class OfflineQueueManager {
           } else {
             item.attempts++;
             if (item.attempts >= item.maxAttempts) this._remove(item);
+            else this._backOff(item, res);
             await this._saveQueue(epoch);
             break;
           }
@@ -270,7 +349,49 @@ export class OfflineQueueManager {
     } finally {
       this.syncing = false;
       this._notify(this.queue.length === 0 ? 'idle' : 'failed');
+      // clear() ran mid-drain: any enqueue/NetInfo trigger that arrived while
+      // this stale drain was still flagged as syncing was skipped.
+      if (epoch !== this.epoch) void this._trySync();
     }
+  }
+
+  private _backOff(item: QueueItem, res: { headers?: { get?: (n: string) => string | null } }) {
+    let retryAfter: string | null = null;
+    try {
+      retryAfter = res.headers?.get?.('Retry-After') ?? null;
+    } catch {
+      retryAfter = null;
+    }
+    item.nextAttemptAt = new Date(Date.now() + retryDelayMs(item.attempts, retryAfter)).toISOString();
+  }
+
+  /** Drop writes owned by other accounts that have waited too long. */
+  private _pruneForeign(currentOwner: string | null) {
+    const cutoff = Date.now() - FOREIGN_OWNER_MAX_AGE_MS;
+    this.queue = this.queue.filter(
+      i => i.ownerId === currentOwner || !(Date.parse(i.createdAt) < cutoff),
+    );
+  }
+
+  /** Remove every queued write (and 401 hold) belonging to one account. */
+  async dropOwner(ownerId: string) {
+    await this._ensureLoaded();
+    const epoch = this.epoch;
+    this.queue = this.queue.filter(i => i.ownerId !== ownerId);
+    this.authHold.delete(ownerId);
+    await this._saveQueue(epoch);
+    await this._saveAuthHold(epoch);
+  }
+
+  private _saveAuthHold(epoch: number = this.epoch): Promise<void> {
+    this.saveChain = this.saveChain.then(async () => {
+      if (epoch !== this.epoch) return;
+      try {
+        if (this.authHold.size === 0) await AsyncStorage.removeItem(AUTH_HOLD_KEY);
+        else await AsyncStorage.setItem(AUTH_HOLD_KEY, JSON.stringify(Object.fromEntries(this.authHold)));
+      } catch {}
+    });
+    return this.saveChain;
   }
 
   private _remove(item: QueueItem) {
@@ -292,6 +413,15 @@ export class OfflineQueueManager {
       // Keep anything enqueued while hydration was in flight.
       const known = new Set(this.queue.map(i => i.id));
       this.queue = [...stored.filter(i => !known.has(i.id)), ...this.queue];
+      this._pruneForeign(await currentOwnerId());
+      const holdRaw = await AsyncStorage.getItem(AUTH_HOLD_KEY);
+      if (epoch !== this.epoch) return;
+      const hold = holdRaw ? JSON.parse(holdRaw) : {};
+      if (hold && typeof hold === 'object') {
+        for (const [owner, fp] of Object.entries(hold)) {
+          if (typeof fp === 'string' && !this.authHold.has(owner)) this.authHold.set(owner, fp);
+        }
+      }
     } catch { /* keep the in-memory queue */ }
   }
 
@@ -304,6 +434,7 @@ export class OfflineQueueManager {
     this.hydration = Promise.resolve();
     try {
       await AsyncStorage.removeItem(QUEUE_KEY);
+      await AsyncStorage.removeItem(AUTH_HOLD_KEY);
     } catch {}
   }
 
