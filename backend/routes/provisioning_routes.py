@@ -22,6 +22,7 @@
 # Admin routes gated by Auth.require_admin. Student-side routes
 # (claim/affiliate/consent) gated by Auth.get_current_user.
 # ============================================================
+import threading
 import uuid
 from datetime import datetime, timedelta, timezone
 from typing import Any, List, Optional
@@ -920,10 +921,61 @@ def _revoke_if_still_open(row_id: str, stamp: str | None = None) -> None:
     ).is_("redeemed_at", "null").execute()
 
 
+_STAMP_LOCK = threading.Lock()
+_LAST_STAMP: list = [datetime.min.replace(tzinfo=timezone.utc)]
+_MAX_CONVERGE_STEPS = 6
+# A ``known_older`` code created within this window is treated as a concurrent
+# regenerate's code (inserted just before our snapshot), not as the lost card
+# the school meant to retire, so it may still be reopened to avoid zero live.
+_CONCURRENT_CODE_WINDOW = timedelta(minutes=2)
+
+
+def _unique_stamp() -> str:
+    """A ``revoked_at`` value no other call in this process shares.
+
+    ``timestamptz`` keeps microseconds, so the stamp is bumped by 1 microsecond
+    past the last one handed out whenever the clock has not advanced (coarse
+    clock, same-tick calls). Uniqueness ACROSS processes cannot be guaranteed
+    here; that needs the database-level fix (see
+    docs/ops/proposals/claim-codes-single-live-code-2026-11-27.sql).
+    """
+    with _STAMP_LOCK:
+        now = datetime.now(timezone.utc)
+        if now <= _LAST_STAMP[0]:
+            now = _LAST_STAMP[0] + timedelta(microseconds=1)
+        _LAST_STAMP[0] = now
+        return now.isoformat()
+
+
+def _same_instant(a, b) -> bool:
+    """Compare two stored timestamps by instant, not by string form (the
+    database may trim trailing zero microseconds or change the offset text)."""
+    try:
+        pa = datetime.fromisoformat(str(a).replace("Z", "+00:00"))
+        pb = datetime.fromisoformat(str(b).replace("Z", "+00:00"))
+    except (TypeError, ValueError):
+        return False
+    if pa.tzinfo is None:
+        pa = pa.replace(tzinfo=timezone.utc)
+    if pb.tzinfo is None:
+        pb = pb.replace(tzinfo=timezone.utc)
+    return pa == pb
+
+
+def _fresh_stamp_present(rows: list) -> bool:
+    """True when a redeem stamp within the TTL sits on an unrevoked code: a
+    claim may be mid-flight, so no code may be reopened beside it."""
+    return any(
+        r.get("redeemed_at") and not r.get("revoked_at") and _stamp_is_fresh(r["redeemed_at"])
+        for r in rows
+    )
+
+
 def _retire_superseded_codes(
     user_id: str, keep_id: str, known_older: Optional[set] = None
 ) -> bool:
-    """Revoke the live codes of the student that are OLDER than keep_id.
+    """Revoke the live codes of the student that are OLDER than keep_id and
+    converge on one live code. Best-effort at application level.
 
     Includes stale redeem stamps. ``known_older`` holds the ids that were live
     BEFORE keep_id was inserted: they are older by construction (no clock
@@ -934,28 +986,35 @@ def _retire_superseded_codes(
     leaves the student without a live code. A stale-stamped code is guarded on
     its own stamp value so a concurrent reopen/redeem is not clobbered.
 
-    Two racing regenerates can each miss the other's insert and so both leave
-    the other live. After retiring, the live codes are re-read and exactly one
-    survives, deterministically (latest created_at, ties by id), whichever racer
-    runs this. Returns False when keep_id itself lost and was revoked.
+    Racing regenerates read, revoke and re-read without a lock, and two arbiters
+    exist (``known_older`` bypasses the clock, the ordering loop uses it), so
+    with skew each racer can revoke the other's code. Every revoke of this call
+    (including the convergence step) carries one per-call unique ``revoked_at``
+    stamp and its id is tracked. After the first pass and again after every
+    convergence revoke the live codes are re-read:
 
-    Two arbiters exist (``known_older`` bypasses the clock, the ordering loop
-    uses it), and with clock skew between racers they can disagree: each racer
-    revokes the other's code and nothing stays live. Safety net: every revoke
-    of this call carries one shared ``revoked_at`` stamp and its id is tracked.
-    If the final re-read finds NO live code, the newest (created_at, id) code
-    among the ids revoked BY THIS CALL is reopened, guarded on that exact stamp
-    and ``redeemed_at IS NULL`` so a code revoked by someone else (or redeemed)
-    is never resurrected. The return value then follows the re-read: True only
-    when keep_id is the live code; False when another live code exists (the
-    caller reports the 409 "reissued at the same time"). False with no live code
-    at all (reopen impossible) is also returned, never a success for a dead code.
+    * no live code and no fresh redeem stamp: the newest (created_at, id) code
+      revoked BY THIS CALL is reopened, guarded on that exact stamp and
+      ``redeemed_at IS NULL``. A ``known_older`` code (the lost card the school
+      meant to retire) is never reopened unless it was created within the last
+      two minutes, i.e. it is a concurrent regenerate's code, not the lost card;
+      and a fresh redeem stamp (a claim in
+      progress) blocks any reopen;
+    * two or more live codes: the oldest is revoked and the codes are re-read,
+      one at a time, so the last live code is never revoked on a stale read.
 
-    Inherent, harmless case (no skew needed): B regenerates, retires and gets
-    200; A, whose snapshot predates B's insert, inserts later and its winner
-    step revokes B. B's admin holds a printed card that is now dead while A's
-    admin also gets 200; at least one live code always remains. Callers should
-    tell the admin to refresh to see the current code.
+    Returns True only when keep_id is live in the final read. False means keep_id
+    is not live (the caller reports the 409 "reissued at the same time"); the
+    live code, if any, is then another racer's.
+
+    Guarantees, honestly: at least one live code remains in all but a bounded
+    database-level race (a racer's revoke landing between another's read and its
+    own write). Two live codes can transiently coexist (safer than none). A 200
+    can go to a racer whose card is revoked right after its final read (stale
+    200), and a 409 can go to a racer whose code is the live one after skewed
+    double reopens; in both cases the admin must refresh to see the current
+    code. A partial unique index is the real fix; see
+    docs/ops/proposals/claim-codes-single-live-code-2026-11-27.sql.
 
     If keep_id is not in the (newest-first) page read, nothing is revoked.
     """
@@ -967,7 +1026,7 @@ def _retire_superseded_codes(
                     student_id=user_id)
         return True
     keep_key = _code_order_key(keep)
-    stamp_now = _now()
+    stamp_now = _unique_stamp()
     revoked_here: set = set()
     for row in rows:
         if row.get("id") == keep_id or row.get("revoked_at"):
@@ -984,30 +1043,48 @@ def _retire_superseded_codes(
         q.execute()
         revoked_here.add(row["id"])
 
-    after = _student_codes(user_id)
-    live = _live_codes(after)
-    if not live and revoked_here:
-        # Safety net: skewed racers revoked each other. Reopen only a code that
-        # THIS call revoked (same stamp, never redeemed), the newest by key.
-        ours = [r for r in after if r.get("id") in revoked_here
-                and r.get("revoked_at") == stamp_now and not r.get("redeemed_at")]
-        if ours:
-            back = max(ours, key=_code_order_key)
-            _svc().table("claim_codes").update({"revoked_at": None}).eq("id", back["id"]).eq(
-                "revoked_at", stamp_now
-            ).is_("redeemed_at", "null").execute()
-            log.warning("provisioning: no live claim code after racing retires; reopened the newest revoked here",
-                        student_id=user_id, code_id=back["id"])
-            live = _live_codes(_student_codes(user_id))
-    if keep_id not in {r.get("id") for r in live}:
-        return False  # ours was revoked (by the racer, or no live code could be restored)
-    if len(live) <= 1:
-        return True
-    winner = max(live, key=_code_order_key)
-    for row in live:
-        if row.get("id") != winner.get("id"):
-            _revoke_if_still_open(row["id"], stamp_now)
-    return winner.get("id") == keep_id
+    def _created_by_this_race(row: dict) -> bool:
+        # Reopen only codes created after this call began or by a racer around
+        # it. A pre-existing (known_older) code older than the window is the
+        # lost card the school meant to retire: it never goes live again.
+        if row.get("id") not in known_older:
+            return True
+        created = _code_order_key(row)[0]
+        return datetime.now(timezone.utc) - created < _CONCURRENT_CODE_WINDOW
+
+    def _reopen_if_none_live(current: list) -> list:
+        # Never beside a live code or a fresh redeem stamp; never a known-older
+        # (lost-card) code; only a code revoked by THIS call under its own stamp.
+        if _live_codes(current) or _fresh_stamp_present(current):
+            return current
+        ours = [r for r in current if r.get("id") in revoked_here
+                and _created_by_this_race(r)
+                and _same_instant(r.get("revoked_at"), stamp_now) and not r.get("redeemed_at")]
+        if not ours:
+            return current
+        back = max(ours, key=_code_order_key)
+        _svc().table("claim_codes").update({"revoked_at": None}).eq("id", back["id"]).eq(
+            "revoked_at", back.get("revoked_at")
+        ).is_("redeemed_at", "null").execute()
+        log.warning("provisioning: no live claim code after racing retires; reopened the newest revoked here",
+                    student_id=user_id, code_id=back["id"])
+        return _student_codes(user_id)
+
+    current = _student_codes(user_id)
+    for _ in range(_MAX_CONVERGE_STEPS):
+        current = _reopen_if_none_live(current)
+        live = _live_codes(current)
+        if len(live) <= 1:
+            break
+        # Two or more live (a concurrent regenerate): revoke ONE non-winner,
+        # then re-read, so a stale read can never take the last live code.
+        victim = min(live, key=_code_order_key)
+        _revoke_if_still_open(victim["id"], stamp_now)
+        revoked_here.add(victim["id"])
+        current = _student_codes(user_id)
+    else:
+        current = _reopen_if_none_live(current)
+    return keep_id in {r.get("id") for r in _live_codes(current)}
 
 
 @router.post("/students/{user_id}/regenerate-code", response_model=ResponseModel)
@@ -1061,7 +1138,12 @@ async def regenerate_code(
                 "id", new_id
             ).is_("redeemed_at", "null").is_("revoked_at", "null").execute()
             raise HTTPException(status_code=409, detail="A claim is in progress for this account — code cannot be reissued.")
-        return ResponseModel(data={"user_id": user_id, "claim_code": code, "claim_expires_at": expires})
+        return ResponseModel(data={
+            "user_id": user_id, "claim_code": code, "claim_expires_at": expires,
+            # Informational; clients may ignore it. Two admins reissuing at the
+            # same moment can leave this card superseded even after a 200.
+            "note": "If another admin reissued this code at the same moment, refresh to see the current code.",
+        })
     except HTTPException:
         raise
     except Exception as exc:  # noqa: BLE001

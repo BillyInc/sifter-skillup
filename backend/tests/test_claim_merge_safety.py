@@ -628,16 +628,17 @@ def test_retire_never_reopens_a_code_revoked_by_someone_else(db):
     assert _live(db) == []
 
 
-def test_retire_reopens_only_the_code_it_revoked_not_an_earlier_revoke(db):
-    # keep was revoked by a racer; this call revokes "old"; "gone" was revoked
-    # earlier by someone else and must not come back.
+def test_retire_never_reopens_the_lost_card_or_an_earlier_revoke(db):
+    # keep was revoked by a racer/admin; this call revoked "old" (the lost card,
+    # known_older, days old); "gone" was revoked earlier by someone else. Neither
+    # may come back: the card the school meant to retire stays dead.
     db.tables["claim_codes"] = [
         _code(id="gone", code="G", created_at=_ts(days=-3), revoked_at=_ts(days=-1)),
         _code(id="old", code="OLD", created_at=_ts(days=-2)),
         _code(id="mine", code="MINE", created_at=_ts(), revoked_at=_ts(seconds=-1)),
     ]
     assert pr._retire_superseded_codes("prov-1", "mine", {"old"}) is False
-    assert [c["id"] for c in _live(db)] == ["old"]
+    assert _live(db) == []
 
 
 def test_retire_with_an_unparseable_keep_created_at_never_mass_revokes(db):
