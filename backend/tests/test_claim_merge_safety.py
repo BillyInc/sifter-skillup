@@ -1,6 +1,7 @@
 """Claim merge safety: a claimed account is never merged away, a mid-redeem
 account is never reissued a code, and a reopened code never sits next to a new one."""
 import asyncio
+from datetime import UTC, datetime, timedelta
 from types import SimpleNamespace
 
 import pytest
@@ -13,10 +14,20 @@ from routes.provisioning_routes import ClaimRequest, claim_account
 FUTURE = "2999-01-01T00:00:00+00:00"
 
 
+def _ts(**delta):
+    """A timestamp relative to now (no hardcoded calendar dates)."""
+    return (datetime.now(UTC) + timedelta(**delta)).isoformat()
+
+
 class _Q:
     def __init__(self, db, name):
         self.db, self.name = db, name
         self.filters, self.op, self.values = [], "select", None
+        self.orders, self.max = [], None
+
+    def order(self, col, desc=False):
+        self.orders.append((col, desc))
+        return self
 
     def select(self, *_a):
         self.op = "select"
@@ -46,7 +57,8 @@ class _Q:
         self.filters.append((col, "is", val))
         return self
 
-    def limit(self, _n):
+    def limit(self, n):
+        self.max = n
         return self
 
     def _match(self, row):
@@ -75,6 +87,11 @@ class _Q:
                 rows.append(dict(self.values))
             return SimpleNamespace(data=[dict(self.values)])
         hit = [r for r in rows if self._match(r)]
+        if self.op == "select":
+            for col, desc in reversed(self.orders):  # stable multi-key sort
+                hit.sort(key=lambda r, c=col: str(r.get(c) or ""), reverse=desc)
+            if self.max is not None:
+                hit = hit[: self.max]
         if self.op == "update":
             for r in hit:
                 r.update(self.values)
@@ -479,6 +496,7 @@ def test_in_place_claim_never_says_claimed_when_the_shell_vanished(db):
         _redeem(uid="prov-1", phone="0801")
     assert (err.value.status_code, err.value.detail) == (404, pr._CLAIM_REJECTED)
     assert db.tables["claim_codes"][0]["redeemed_at"] is None  # code reopened
+    assert len(pr.claim_limiter._events["user:prov-1"]) == 1  # counted like any rejection
 
 
 def test_in_place_claim_still_succeeds_for_a_present_shell(db):
@@ -492,33 +510,22 @@ def _live(db):
     return [c for c in db.tables["claim_codes"] if not c.get("redeemed_at") and not c.get("revoked_at")]
 
 
-def test_concurrent_regenerates_leave_the_newest_code_live(db):
-    # Another admin's regenerate inserts a NEWER code right after ours.
+def test_concurrent_regenerates_leave_exactly_the_newest_code_live(db):
+    # Another admin's regenerate inserts a NEWER code right after ours, and its
+    # retire already ran: without a re-read both would stay live.
     def rival_inserts(q):
         if q.values and q.values.get("id") == "pending":
             return
         db.hooks.pop(("claim_codes", "insert"))
         db.tables["claim_codes"].append(_code(
-            id="cc-rival", code="ACME-SS1-RIVAL000",
-            created_at="2999-01-01T00:00:00+00:00"))
+            id="cc-rival", code="ACME-SS1-RIVAL000", created_at=_ts(seconds=30)))
 
     db.hooks[("claim_codes", "insert")] = rival_inserts
-    res = _regen(db)
-    live = _live(db)
-    assert {c["id"] for c in live} == {"cc-rival", next(
-        c["id"] for c in db.tables["claim_codes"] if c["code"] == res.data["claim_code"])}
-    # the original code is retired; neither new code was revoked by the other
+    with pytest.raises(HTTPException) as err:
+        _regen(db)  # we lost: our code is revoked, so it is not returned
+    assert err.value.status_code == 409
+    assert [c["id"] for c in _live(db)] == ["cc-rival"]
     assert db.tables["claim_codes"][0]["revoked_at"] is not None
-
-
-def test_retire_does_not_revoke_a_newer_code(db):
-    db.tables["claim_codes"] = [
-        _code(id="old", created_at="2026-01-01T00:00:00+00:00"),
-        _code(id="mine", code="MINE", created_at="2026-01-02T00:00:00+00:00"),
-        _code(id="newer", code="NEWER", created_at="2026-01-03T00:00:00+00:00"),
-    ]
-    pr._retire_superseded_codes("prov-1", "mine")
-    assert {c["id"] for c in _live(db)} == {"mine", "newer"}
 
 
 # -- affiliation rollback -------------------------------------------------------
@@ -537,3 +544,112 @@ def test_rollback_restores_a_pre_existing_affiliations_fields(db):
     aff = [a for a in db.tables["student_affiliations"] if a["student_id"] == "guest-1"]
     assert len(aff) == 1
     assert (aff[0]["source"], aff[0]["self_reported"]) == ("school_code", True)
+
+
+# -- retire: insert-order inversion, ties, bad created_at, paging ---------------
+def test_retire_winner_revokes_the_loser_that_missed_its_insert(db):
+    # Racer B (older created_at) committed and retired before A's insert was
+    # visible; A (newest) now retires and must not leave B live.
+    db.tables["claim_codes"] = [
+        _code(id="old", created_at=_ts(days=-2)),
+        _code(id="b", code="B", created_at=_ts(seconds=-5)),
+        _code(id="a", code="A", created_at=_ts(seconds=-1)),
+    ]
+    assert pr._retire_superseded_codes("prov-1", "a") is True
+    assert [c["id"] for c in _live(db)] == ["a"]
+
+
+def test_retire_loser_revokes_its_own_code(db):
+    db.tables["claim_codes"] = [
+        _code(id="old", created_at=_ts(days=-2)),
+        _code(id="mine", code="MINE", created_at=_ts(seconds=-5)),
+        _code(id="newer", code="NEWER", created_at=_ts(seconds=-1)),
+    ]
+    assert pr._retire_superseded_codes("prov-1", "mine") is False
+    assert [c["id"] for c in _live(db)] == ["newer"]
+
+
+def test_retire_ties_break_deterministically_by_id_from_either_racer(db):
+    same = _ts(minutes=-1)
+    for runner in ("a", "b"):
+        db.tables["claim_codes"] = [
+            _code(id="a", code="A", created_at=same), _code(id="b", code="B", created_at=same)]
+        pr._retire_superseded_codes("prov-1", runner)
+        assert [c["id"] for c in _live(db)] == ["b"]
+
+
+def test_retire_known_older_codes_go_even_when_their_clock_is_ahead(db):
+    # Skew: a pre-existing code carries a database timestamp later than ours.
+    db.tables["claim_codes"] = [
+        _code(id="old", created_at=_ts(minutes=10)),
+        _code(id="mine", code="MINE", created_at=_ts()),
+    ]
+    assert pr._retire_superseded_codes("prov-1", "mine", {"old"}) is True
+    assert [c["id"] for c in _live(db)] == ["mine"]
+
+
+def test_retire_with_an_unparseable_keep_created_at_never_mass_revokes(db):
+    for bad in (None, "not-a-date"):
+        db.tables["claim_codes"] = [
+            _code(id="n1", code="N1", created_at=_ts(days=-1)),
+            _code(id="mine", code="MINE", created_at=bad),
+            _code(id="n2", code="N2", created_at=_ts(days=-2)),
+        ]
+        pr._retire_superseded_codes("prov-1", "mine")
+        # Exactly one live code remains and it is the newest parseable one,
+        # not an empty set and not "everything but keep".
+        assert [c["id"] for c in _live(db)] == ["n1"]
+
+
+def test_retire_with_keep_outside_the_page_revokes_nothing(db, monkeypatch):
+    db.tables["claim_codes"] = [
+        _code(id="a", code="A", created_at=_ts(days=-1)),
+        _code(id="b", code="B", created_at=_ts(days=-2)),
+    ]
+    warnings = []
+    monkeypatch.setattr(pr, "log", SimpleNamespace(
+        warning=lambda msg, *a, **kw: warnings.append(msg),
+        error=lambda *a, **kw: None, info=lambda *a, **kw: None))
+    assert pr._retire_superseded_codes("prov-1", "missing") is True
+    assert {c["id"] for c in _live(db)} == {"a", "b"}
+    assert warnings
+
+
+def test_student_codes_are_read_newest_first(db):
+    db.tables["claim_codes"] = [
+        _code(id="a", created_at=_ts(days=-2)), _code(id="b", created_at=_ts(days=-1))]
+    assert [r["id"] for r in pr._student_codes("prov-1")] == ["b", "a"]
+
+
+# -- in-progress merge refusal is transient --------------------------------------
+def test_admin_confirm_during_an_in_progress_claim_is_a_409_and_keeps_the_candidate(db):
+    db.tables["claim_codes"][0]["redeemed_at"] = pr._now()  # student's claim mid-flight
+    db.tables["student_merge_candidates"] = [{
+        "id": "m1", "school_id": "school-1", "status": "pending",
+        "provisioned_student_id": "prov-1", "real_student_id": "guest-1"}]
+    with pytest.raises(HTTPException) as err:
+        asyncio.run(pr.confirm_merge_candidate(
+            candidate_id="m1", current_user={"id": "admin"}))
+    assert err.value.status_code == 409
+    assert "in progress" in err.value.detail
+    assert db.tables["student_merge_candidates"][0]["status"] == "pending"
+    assert "prov-1" in _users(db)
+
+
+def test_merge_in_progress_is_a_merge_refused_subclass():
+    assert issubclass(rec.MergeInProgress, rec.MergeRefused)
+
+
+def test_claim_merge_blocked_by_another_fresh_stamp_reopens_own_code_and_is_not_counted(db):
+    # The shell's other code is stamped by a different redeemer, mid-flight.
+    db.tables["claim_codes"] = [
+        _code(id="cc-1"),
+        _code(id="cc-other", code="OTHER", redeemed_at=pr._now()),
+    ]
+    with pytest.raises(HTTPException) as err:
+        _redeem()
+    assert (err.value.status_code, err.value.detail) == (404, pr._CLAIM_REJECTED)
+    assert db.tables["claim_codes"][0]["redeemed_at"] is None  # own code reopened
+    assert db.tables["claim_codes"][1]["redeemed_at"] is not None  # theirs untouched
+    assert pr.claim_limiter._events == {}  # not a failed guess
+    assert "prov-1" in _users(db)

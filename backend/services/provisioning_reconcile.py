@@ -282,6 +282,15 @@ class MergeRefused(Exception):
     """
 
 
+class MergeInProgress(MergeRefused):
+    """Refused only because another caller's redeem of the shell is in flight.
+
+    Transient: the stamp turns stale after _REDEEM_STAMP_TTL, or the claim
+    finishes or reopens its code. Callers must not treat the shell as
+    permanently unmergeable (no dismissing the merge candidate).
+    """
+
+
 def _require_unclaimed_shell(provisioned_student_id: str) -> dict:
     res = _users().select(
         "student_class, stream, chosen_direction, guardian_consent_at, claim_state"
@@ -310,7 +319,7 @@ def _require_no_redeem_in_progress(
         if own_claim_code_id and row.get("id") == own_claim_code_id:
             continue
         if row.get("redeemed_at") and not row.get("revoked_at") and _stamp_is_fresh(row["redeemed_at"]):
-            raise MergeRefused("a claim of the provisioned account is in progress")
+            raise MergeInProgress("a claim of the provisioned account is in progress")
 
 
 _MERGE_FIELDS = ("student_class", "stream", "chosen_direction", "guardian_consent_at")
