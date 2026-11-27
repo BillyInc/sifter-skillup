@@ -33,7 +33,11 @@ PostgreSQL 15.
 2. The editor shows only the result of the last statement it runs. Either run
    one numbered section at a time (select the section, press Run), or start
    with section 7, the one-screen summary. Section 6b and 6c are separate
-   statements for this reason; run each on its own.
+   statements for this reason; run each on its own. The editor shows at most
+   1000 rows and drops the rest silently: sections 1c, 2, 4 and 7 have a
+   `result_rows` column (the true total) and a `warning` column, set from 900
+   rows. If you see a warning, narrow the query (see "Large results" below)
+   before reading it.
 3. Copy or export each result (CSV is fine), skim it as described in
    "Before sharing the output", and share it with the maintainer. Do not paste
    keys or connection strings; none are needed.
@@ -50,21 +54,28 @@ PostgreSQL 15.
 | 1b | Same, for the tables named in the audit | Quick view of `users`, `game_states`, `level_scores`, `posts`, `post_likes`, `notifications`, `guild_messages`, `career_context_items` and others. `anon_privs` letters: S select, I insert, U update, D delete. |
 | 1c | Table-level ACL from `pg_class.relacl` (all grantors, tables, views, matviews), for `anon`, `authenticated`, `service_role` and `PUBLIC` | Complete ACL. A NULL ACL is shown as the owner default. Compare with 1a: a privilege in 1a with no row here for that role came from PUBLIC or role membership. One row per object, grantee and grantor, so a large schema can approach the SQL editor's 1000-row display cap: `result_rows` is the true total and `warning` is set from 900 rows. If it is, run **1c-compact** (one row per object, privileges as codes: a insert, r select, w update, d delete, D truncate, x references, t trigger). |
 | 1d | Column-level grants (`pg_attribute.attacl`) | Empty means no column-only grants. A row lets that role read or write just those columns even when 1c shows no table-level privilege. |
-| 2 | Every policy on `skillup_dev` (verbatim) | **Mandatory review.** Check `roles`, `cmd`, `using_expr`, `with_check_expr`. `auth.uid() = id` style policies only match requests that carry a Supabase JWT. This is the backstop for G2: read it for always-true expressions the flag patterns do not recognise. Restrictive policies are listed but G2 does not evaluate them. `review_literals = true` marks expressions that look like they embed a UUID, e-mail address or long token; check those before sharing. |
+| 2 | Every policy on `skillup_dev` (verbatim) | Has `result_rows` and `warning` (from 900 rows; filter by table on the marked line). **Mandatory review.** Check `roles`, `cmd`, `using_expr`, `with_check_expr`. `auth.uid() = id` style policies only match requests that carry a Supabase JWT. This is the backstop for G2: read it for always-true expressions the flag patterns do not recognise. Restrictive policies are listed but G2 does not evaluate them. `review_literals = true` marks expressions that look like they embed a UUID, e-mail address or a token-like run of 32+ characters containing a digit or an upper-case letter (plain identifiers of lower-case letters and underscores, such as a long table name inside an `EXISTS` subquery, are not marked). It does not detect short secrets, so skim every row anyway. |
 | 3a | Schema `USAGE` and `CREATE` | `anon_usage = false` on `skillup_dev` blocks the API for that role regardless of table grants. `*_create = true` is never wanted. |
 | 3b | Default privileges (`pg_default_acl`) | Scoped to `skillup_dev`, `public`, `storage` and "all schemas" defaults, for roles that own objects there (plus `postgres`, `supabase_admin` and the current user), and to grants for `anon`/`authenticated`/`service_role`/`PUBLIC`. Rows granting to `anon`/`authenticated`/`PUBLIC` mean every future table, sequence or function created by that role is granted automatically. No such rows means new objects start closed. |
 | 3c | Sequence privileges | `UPDATE` for API roles on a sequence lets them advance it. |
-| 3d | Hint for exposed schemas | Best effort. Prints only the `pgrst.db_schemas` and `pgrst.db_extra_search_path` settings of any role; every other setting (for example `pgrst.jwt_secret`) is filtered out and never printed. Confirm in Dashboard, Project Settings, API, Exposed schemas. If `skillup_dev` is not exposed, the REST API cannot reach it at all (but the backend's service client still can). |
-| 4 | Functions: `security_definer`, `search_path_setting`, who may execute | A definer function with `public_execute`, `anon_execute` or `authenticated_execute` true runs with owner rights for whoever may call it. `has_search_path = false` on a definer function is a hijack risk. Only the `search_path` function setting is printed; other settings are counted in `other_settings_hidden`. Trigger functions are listed here but are not flagged by G3. |
+| 3d | Hint for exposed schemas | Best effort. Prints only the `pgrst.db_schemas` and `pgrst.db_extra_search_path` settings, per role and at `ALTER DATABASE` level (shown as `(all roles)`, with the database name); every other setting (for example `pgrst.jwt_secret`) is filtered out and never printed. Confirm in Dashboard, Project Settings, API, Exposed schemas. If `skillup_dev` is not exposed, the REST API cannot reach it at all (but the backend's service client still can). |
+| 4 | Functions: `security_definer`, `search_path_setting`, who may execute | Has `result_rows` and `warning` (from 900 rows; definer functions are listed first; filter on the marked line). A definer function with `public_execute`, `anon_execute` or `authenticated_execute` true runs with owner rights for whoever may call it. `has_search_path = false` on a definer function is a hijack risk. Only the `search_path` function setting is printed; other settings are counted in `other_settings_hidden`. Trigger functions are listed here but are not flagged by G3. |
 | 5 | Views and `security_invoker` | `(not set: owner rights)` means the view bypasses RLS on its base tables; if `anon_select` or `authenticated_select` is true, the view can expose rows RLS would hide (for example `user_progress`). |
 | 6a | Storage buckets | `public = true` means objects are readable by URL without auth. Check `file_size_limit` and `allowed_mime_types` are set where uploads are accepted. If the running role is itself subject to RLS on `storage.buckets`, or there are no buckets, a first row with a `note` says so: an empty list is then not proof that no buckets exist. Run it as `postgres` in the SQL editor. |
 | 6b | RLS flags on `storage.objects` and `storage.buckets` | RLS should be on for `objects`. |
 | 6c | Policies on the `storage` schema | A bucket is only as private as these policies. No policies with RLS on means only the service role can touch objects. |
 | 6d | Tables in the `supabase_realtime` publication | Realtime streams a published table's changes to every role that passes RLS. A published table with RLS off, or an open SELECT policy, streams its rows to anyone with the key. |
 | 6e | Installed extensions | Names and versions only. `outbound_or_privileged = true` marks `dblink`, `pg_net`, `http`, FDWs, untrusted languages, vault and similar: check who can call their functions. |
-| 7 | Red-flag summary | See below. Never empty. |
+| 7 | Red-flag summary | See below. Never empty. The first row is a SUMMARY row with the total and a per-check count. |
 
 ## Section 7 flags
+
+Output order: a first `G0` row with severity `SUMMARY` (total flag rows, counts
+per severity and per check, and a WARNING when the total exceeds 900), then the
+`G0` scan rows, then HIGH, MEDIUM, REVIEW and INFO rows (inside a severity, the
+checks with fewer rows come first). The SQL editor shows at most 1000 rows and
+cuts the rest without saying so, so the most serious rows are placed first.
+`result_rows` is the number of rows in the current run.
 
 The flags are heuristics over catalog data. They point at things to read;
 sections 1a, 2 and 4 are the evidence. Privilege checks include column-level
@@ -75,16 +86,16 @@ setting (if the role setting exists) and every schema with a table in the
 
 | check_id | Meaning |
 | --- | --- |
-| G0 | Always present. `scanned N tables, M policies, K functions, J views in <schema>` for `skillup_dev` and each other scanned schema (views include materialized views), plus the `pgrst.db_schemas` value found. Also `schema missing` when `skillup_dev` does not exist (HIGH if tables live in `public` instead, otherwise INFO), and a MEDIUM row when the schema exists but has no tables. Read these before anything else: a section 7 result that has only G0 INFO rows means nothing matched the patterns, not that the project is clean. |
-| G1 | `anon` or `authenticated` holds SELECT, INSERT, UPDATE or DELETE (table or column level) on a table with RLS disabled. HIGH when that role also has USAGE on the schema; MEDIUM when the schema is known not to be in `pgrst.db_schemas`; INFO when no API role has schema USAGE (unreachable through the API). The detail shows both. |
-| G2 | A permissive policy that applies to `public`, `anon` or `authenticated` and whose `USING` or `WITH CHECK` is always true for that role: literally `true` or `1=1`; `auth.role()`, `auth.jwt()->>'role'` or the `request.jwt.claim.role` setting equal to, or `IN`/`= ANY` a list containing, `anon` or `authenticated`; or `auth.uid()`/`auth.jwt()` `IS NOT NULL`. Supabase's recommended initplan style `(select auth.uid()) is not null` and `(select auth.role()) = 'authenticated'` (including `as` aliases and `::text` casts) is recognised. HIGH when `anon` holds the matching privilege (any table name) or `authenticated` holds it on a table on the sensitive list; REVIEW for `authenticated`-only on other tables (acceptable only for true reference data); INFO when the policy is open but no matching privilege is held. The detail shows only the matching expression, and the number of restrictive policies on the table. Restrictive policies are not evaluated, so a permissive `true` policy neutralised by a restrictive one is still flagged. Policies limited to `service_role` are not flagged. Also applies to `storage.objects`. Expressions cleverer than these patterns are not caught: reading section 2 is mandatory. |
+| G0 | Always present. A `SUMMARY` row comes first (totals and per-check counts, plus a WARNING above 900 rows). Then `scanned N tables, M policies, K functions, J views in <schema>` for `skillup_dev` and each other scanned schema (views include materialized views), plus the `pgrst.db_schemas` value found. Also `schema missing` when `skillup_dev` does not exist (HIGH if tables live in `public` instead, otherwise INFO), and a MEDIUM row when the schema exists but has no tables. Read these before anything else: a section 7 result that has only G0 SUMMARY/INFO rows means nothing matched the patterns, not that the project is clean. |
+| G1 | `anon` or `authenticated` holds SELECT, INSERT, UPDATE or DELETE (table or column level) on a table, partitioned table or foreign table with RLS disabled. A foreign table cannot have RLS at all, so any such grant is flagged and the grants are the only control; remove it with `REVOKE` if it is not wanted. HIGH when that role also has USAGE on the schema; MEDIUM when the schema is known not to be in `pgrst.db_schemas`; INFO when no API role has schema USAGE (unreachable through the API). The detail shows both. |
+| G2 | A permissive policy that applies to `public`, `anon` or `authenticated` and whose `USING` or `WITH CHECK` is always true for that role: literally `true` or `1=1`; `auth.role()`, `auth.jwt()->>'role'` or the `request.jwt.claim.role` setting equal to, or `IN`/`= ANY` a list containing, `anon` or `authenticated`; or `auth.uid()`/`auth.jwt()` `IS NOT NULL`; `true AND true`; the `current_setting('request.jwt.claims', true)::jsonb->>'role'` form. Supabase's recommended initplan style `(select auth.uid()) is not null` and `(select auth.role()) = 'authenticated'` (including `as` aliases and `::text` casts) is recognised. HIGH when `anon` holds the matching privilege (any table name) or `authenticated` holds it on a table on the sensitive list; REVIEW for `authenticated`-only on other tables (acceptable only for true reference data); INFO when the policy is open but no matching privilege is held. The detail shows only the matching expression, and the number of restrictive policies on the table. Restrictive policies are not evaluated, so a permissive `true` policy neutralised by a restrictive one is still flagged. Policies limited to `service_role` are not flagged. Also applies to `storage.objects`. A second, cheaper heuristic marks a policy as POSSIBLY open (MEDIUM when `anon` holds the privilege or `authenticated` holds it on a sensitive table, otherwise REVIEW, never HIGH) when its normalised expression has an `OR` arm that is open to an API role (`auth.role() = 'authenticated' OR auth.uid() = id`, `auth.role() = 'anon' OR auth.role() = 'authenticated'`), contains `... OR true`, mixes `request.jwt.claims` with an `anon`/`authenticated` literal, or is `<column> IS NOT NULL`. Known blind spots (read section 2 for these): helper functions that return true or wrap `auth.uid()`; `EXISTS` subqueries that are always true; tautologies such as `id = id`, `1 < 2`, `'a' = 'a'` or `coalesce(...)`; negated or `<>` forms other than `<> 'anon'`/`<> 'authenticated'` on the role expression; `CASE` expressions; JSON comparisons such as `auth.jwt()->'role'`; `OR` arms inside nested parentheses or mixed with `AND` (precedence is not parsed); other custom claims; and any open expression written differently from the patterns. Expressions cleverer than these patterns are not caught: reading section 2 is mandatory. |
 | G3 | A SECURITY DEFINER function (trigger and event-trigger functions excluded: they cannot be called directly) executable by `PUBLIC` or `anon` (HIGH) or by `authenticated` only (MEDIUM, raised to HIGH when `search_path` is not pinned). The detail says whether `search_path` is pinned. |
 | G4 | Informational. RLS on, API roles hold grants, but no policy exists. SELECT returns no rows; UPDATE and DELETE silently affect 0 rows; INSERT (and upsert) raises error 42501 (row-level security violation). |
-| G5 | Informational. RLS on, an API role holds a write grant and a write policy targets that role, but no permissive INSERT/UPDATE/DELETE/ALL policy for it works without `auth.uid()`/`auth.jwt()`. Expected for normal tables; only relevant if the backend uses that role without a Supabase JWT, in which case INSERT raises 42501 and UPDATE/DELETE silently affect 0 rows. A role with a write grant but no policy at all for it is simply blocked and is not reported (tables with no policy are G4). Heuristic: a policy calling a helper function that wraps `auth.uid()` looks independent to this check. |
+| G5 | Informational. RLS on, an API role holds a write grant and a write policy targets that role, but no permissive INSERT/UPDATE/DELETE/ALL policy for it works without `auth.uid()`/`auth.jwt()`. Expected for normal tables; only relevant if the backend uses that role without a Supabase JWT, in which case INSERT raises 42501 and UPDATE/DELETE silently affect 0 rows. A role with a write grant but no policy at all for it is simply blocked and is not reported (tables with no policy are G4). Heuristic: a policy calling a helper function that wraps `auth.uid()` looks independent to this check. Caveat: a table whose only policy targets `service_role`, or whose write policies target only the other API role (for example `anon`) while `authenticated` holds the write grant, gets no G4 or G5 row for that role (G4 needs no policy at all; G5 needs a write policy that targets the role). The role is simply blocked, but a clean section 7 therefore does not mean every API-role grant is backed by a policy: compare sections 1a and 2. |
 | G6 | A view or materialized view that `anon` or `authenticated` can SELECT and that runs with owner rights (no `security_invoker=true`): HIGH. A view can expose rows that RLS on the base tables hides; a materialized view holds a copy of the base rows and never applies RLS, so it is always HIGH. `security_invoker` needs PostgreSQL 15 or later: on an older server every view is flagged and the fix is unavailable. Confirm what the base tables are. |
 | G7 | Storage. A public bucket (MEDIUM), or a MEDIUM warning that the running role is subject to RLS on `storage.buckets` so the bucket list may be incomplete. An INFO row gives the visible and public bucket counts. Open `storage.objects` policies and RLS-off storage tables appear as G2 and G1 rows. |
-| G8 | Realtime. An INFO summary of the `supabase_realtime` publication, and a row per published table with RLS off (HIGH if anon or authenticated can SELECT, otherwise MEDIUM) or with an open SELECT/ALL policy. |
-| G9 | `anon` or `authenticated` holds TRUNCATE (which bypasses RLS), TRIGGER or REFERENCES on a table, one row per table and role. `anon` TRUNCATE is HIGH. Supabase's default grants on `public` often include these, so expect rows there. |
+| G8 | Realtime. An INFO summary of the `supabase_realtime` publication, and a row per published table with RLS off or with an open (or possibly open) SELECT/ALL policy. Graded like G1: INFO when no API role has USAGE on the schema (unreachable), MEDIUM when the schema is known not to be exposed or no API role holds a privilege, otherwise HIGH. |
+| G9 | `anon` or `authenticated` holds TRUNCATE (which bypasses RLS), TRIGGER or REFERENCES on a table or foreign table, one row per table and role. `anon` TRUNCATE is HIGH. Supabase's default grants often include these, so expect many rows (HIGH included) for `public` tables on a stock project; see "Stock Supabase noise" below. |
 | G10 | Installed extensions (INFO). `dblink`, `pg_net`, `http`, FDWs, untrusted languages, vault and similar are marked as outbound-capable or privileged. |
 
 The sensitive list used by G2 and G8 covers the audit's tables and the
@@ -93,8 +104,31 @@ provisioning drafts, MFA, roles, feedback, notes, verification submissions,
 learning-interest tables, and others). Any open policy where `anon` holds the
 privilege is HIGH regardless of table name.
 
-Section 7 is never empty. If it shows only G0 INFO rows, nothing matched the
-patterns; that is not a clean bill of health until section 2 has been read.
+Section 7 is never empty. If it shows only G0 SUMMARY/INFO rows, nothing matched
+the patterns; that is not a clean bill of health until section 2 has been read.
+
+### Large results
+
+If the SUMMARY row (or a `warning` column) says the total exceeds 900, run
+section 7 once per check. At the very end of section 7, edit the line marked
+`EDIT POINT 1`, for example `check_id IN ('G3')`, run it, then repeat for each
+`check_id` the SUMMARY row lists with rows. If one check alone has more than
+900 rows (typically G1 or G9 on a project with many tables), also narrow
+`EDIT POINT 2` to one severity, for example `severity IN ('HIGH')`. The
+SUMMARY row is always kept and always counts the whole result. Sections 2 and 4
+have a similar optional marked line (remove the leading `--` and set a table or
+function name).
+
+### Stock Supabase noise
+
+On a stock Supabase project the default privileges grant ALL on new `public`
+tables and views to `anon` and `authenticated`. Expect many HIGH rows from
+G6 (views and materialized views without `security_invoker=true` that those
+roles can SELECT) and from G9 (TRUNCATE and the other privileges), and many G1
+rows if RLS was never enabled on those tables. They are real exposure only if
+the object is in an exposed schema and holds data that should not be public;
+treat them as a list to triage, not as 100 separate incidents, and revoke the
+default grants (audit M1) rather than object by object.
 
 ## Interpreting the C1 question
 
@@ -142,6 +176,13 @@ Other quick reads:
   connections, or the `authenticator` role's own grants.
 - Section 1c reads the full ACL from `pg_class`; it is not limited by the
   current user's visibility the way `information_schema` is.
+- Foreign tables cannot have RLS. Section 7 (G1, G9) and 1c, 1d list them;
+  sections 1a and 1b cover ordinary and partitioned tables only.
+- Section 3d reads `pg_db_role_setting` including database-level settings
+  (`ALTER DATABASE ... SET pgrst.db_schemas`), which section 7 also uses for
+  the exposed-schema list.
+- Remaining G2 blind spots are listed in the G2 row above; the script cannot
+  evaluate a policy, only pattern-match its text.
 
 ## Before sharing the output
 
@@ -153,8 +194,8 @@ and policy design. Before sending it:
   literal e-mail addresses, UUIDs or tokens (rows with `review_literals =
   true` are the likely ones). The section 7 detail column prints only the
   matched always-true part of an expression, but check it too.
-- Skim section 3d (exposed-schema names only), section 6a bucket names and
-  section 7 object names for anything environment-specific (internal names,
+- Skim section 3d (exposed-schema names only), section 6a bucket ids and
+  names (both are printed) and section 7 object names for anything environment-specific (internal names,
   customer or project identifiers).
 
 ## After you run it

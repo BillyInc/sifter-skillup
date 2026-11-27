@@ -16,7 +16,8 @@
 --           SELECT on storage.buckets (section 7, G7). Nothing here writes.
 -- Secrets : the script is DESIGNED not to print secrets: it never prints
 --           role settings other than the PostgREST exposed-schema names
---           (3d filters to pgrst.db_schemas / pgrst.db_extra_search_path;
+--           (3d filters to pgrst.db_schemas / pgrst.db_extra_search_path,
+--           per-role and ALTER DATABASE level;
 --           pgrst.jwt_secret and any other setting are never selected),
 --           function bodies, function settings other than search_path,
 --           column defaults, connection strings or table data. It is NOT
@@ -233,17 +234,30 @@ ORDER BY c.relname, at.attname, grantee;
 --    section 7 only pattern-matches. Expressions are printed as stored, so
 --    one can embed a literal e-mail address, UUID or token:
 --    review_literals = true marks expressions that look like they contain
---    one. Skim this output before sharing it.
+--    a UUID, an e-mail address, or a token-like run of 32+ characters that
+--    has a digit or an upper-case letter (plain identifiers made only of
+--    lower-case letters and underscores are NOT marked). It is a hint, not a
+--    guarantee: short secrets are not detected, so skim every row.
+--    SIZE: result_rows is the true total; `warning` is set from 900 rows
+--    (the SQL editor shows at most 1000). Then narrow it with the marked
+--    line below (remove the leading `--` and put a table name).
 -- ---------------------------------------------------------------------
-SELECT schemaname, tablename, policyname, permissive,
+SELECT count(*) OVER ()                                           AS result_rows,
+       CASE WHEN count(*) OVER () >= 900
+            THEN 'WARNING: near/over the 1000-row editor cap; rows may be cut. Filter by table (see the marked line) and re-run per table'
+       END                                                        AS warning,
+       schemaname, tablename, policyname, permissive,
        roles::text AS roles, cmd,
-       (coalesce(qual, '') || ' ' || coalesce(with_check, ''))
-         ~* '([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}|[a-z0-9_=+/-]{32,})'
-                                                                  AS review_literals,
+       ((coalesce(qual, '') || ' ' || coalesce(with_check, ''))
+         ~* '([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}|(?=[a-z0-9_=+/-]{32})[a-z_=+/-]*[0-9])'
+        OR (coalesce(qual, '') || ' ' || coalesce(with_check, ''))
+         ~ '(?=[A-Za-z0-9_=+/-]{32})[a-z_=+/-]*[A-Z]')            AS review_literals,
        qual        AS using_expr,
        with_check  AS with_check_expr
 FROM pg_policies
 WHERE schemaname = 'skillup_dev'
+  -- EDIT POINT (optional): remove the leading "--" and set a table name
+  -- AND tablename = 'users'
 ORDER BY tablename, cmd, policyname;
 
 
@@ -318,11 +332,15 @@ ORDER BY c.relname;
 --     pgrst.db_extra_search_path). Other settings on the same role, such as
 --     pgrst.jwt_secret, are filtered out and never printed. An empty result
 --     does not mean "not exposed": confirm in Dashboard -> Project Settings
---     -> API -> Exposed schemas.
+--     -> API -> Exposed schemas. Includes ALTER DATABASE-level settings
+--     (setrole = 0, shown as "(all roles)") as well as per-role ones.
 -- ---------------------------------------------------------------------
-SELECT r.rolname, c AS setting
+SELECT coalesce(r.rolname::text, '(all roles)')                      AS rolname,
+       CASE s.setdatabase WHEN 0 THEN '(all databases)'
+            ELSE coalesce((SELECT d.datname::text FROM pg_database d WHERE d.oid = s.setdatabase), 'db oid ' || s.setdatabase) END AS database,
+       c AS setting
 FROM pg_db_role_setting s
-JOIN pg_roles r ON r.oid = s.setrole
+LEFT JOIN pg_roles r ON r.oid = s.setrole
 CROSS JOIN LATERAL unnest(s.setconfig) AS c
 WHERE c ~* '^pgrst\.db_(schemas|extra_search_path)=';
 
@@ -332,8 +350,16 @@ WHERE c ~* '^pgrst\.db_(schemas|extra_search_path)=';
 --    setting, and who may EXECUTE. public_execute is derived from the
 --    ACL (grantee 0 = PUBLIC); a NULL proacl means the owner-default ACL,
 --    which grants EXECUTE to PUBLIC.
+--    SIZE: result_rows is the true total; `warning` is set from 900 rows
+--    (the SQL editor shows at most 1000). Rows are ordered SECURITY DEFINER
+--    first, so the riskiest functions are the last to be cut. Narrow it with
+--    the marked line below.
 -- ---------------------------------------------------------------------
 SELECT
+  count(*) OVER ()                                       AS result_rows,
+  CASE WHEN count(*) OVER () >= 900
+       THEN 'WARNING: near/over the 1000-row editor cap; rows may be cut. Filter by function name (see the marked line)'
+  END                                                    AS warning,
   p.proname                                              AS function_name,
   pg_get_function_identity_arguments(p.oid)              AS arguments,
   CASE p.prokind WHEN 'f' THEN 'function' WHEN 'p' THEN 'procedure' ELSE p.prokind::text END AS kind,
@@ -357,6 +383,8 @@ SELECT
 FROM pg_proc p
 WHERE p.pronamespace IN (SELECT oid FROM pg_namespace WHERE nspname = 'skillup_dev')
   AND p.prokind IN ('f', 'p')
+  -- EDIT POINT (optional): remove the leading "--" and set a function name
+  -- AND p.proname = 'my_function'
 ORDER BY p.prosecdef DESC, p.proname, arguments;
 
 
@@ -470,11 +498,22 @@ ORDER BY e.extname;
 
 -- ---------------------------------------------------------------------
 -- 7. SUMMARY of red flags (one screen). The result is NEVER empty: the
---    first rows are always G0 rows saying what was scanned. A section 7
---    result with only G0 INFO rows means "nothing matched these patterns",
---    not "clean": the flags are heuristics over catalog data that point at
---    things to read, they are not proof. Sections 1a, 2 and 4 are the
---    evidence, and reading section 2 is mandatory.
+--    FIRST row is always a G0 SUMMARY row (total flag rows, counts per
+--    severity and per check, and a WARNING when the total exceeds 900),
+--    followed by G0 rows saying what was scanned. A result with only G0
+--    INFO rows means "nothing matched these patterns", not "clean": the
+--    flags are heuristics over catalog data that point at things to read,
+--    they are not proof. Sections 1a, 2 and 4 are the evidence, and reading
+--    section 2 is mandatory.
+--    SIZE / ORDER: the SQL editor shows at most 1000 rows and silently drops
+--    the rest. Rows are ordered SUMMARY, G0 scan rows, HIGH, MEDIUM, REVIEW,
+--    INFO (inside a severity, checks with fewer rows first), so the most
+--    serious rows are the last to be cut. If the SUMMARY row warns, run the
+--    section once per check: at the very end of this section edit the line
+--    marked EDIT POINT 1 (for example check_id IN ('G3')), Run, repeat for
+--    each check_id that has rows (EDIT POINT 2 narrows by severity if one
+--    check alone is over 900 rows). result_rows is the number of rows
+--    returned by the current run.
 --    Scope: skillup_dev, public, storage, every schema named in the
 --    pgrst.db_schemas setting (if present) and every schema that has a
 --    table in the supabase_realtime publication. Extension-owned objects
@@ -488,13 +527,21 @@ ORDER BY e.extname;
 --          column level) on a table that has RLS DISABLED. HIGH when the
 --          role also has USAGE on the schema; MEDIUM when the schema is
 --          known not to be in pgrst.db_schemas; INFO when no API role has
---          schema USAGE (unreachable).
+--          schema USAGE (unreachable). Also covers foreign tables (relkind
+--          f), which cannot have RLS.
 --      G2  PERMISSIVE policy that applies to public/anon/authenticated and
 --          whose USING or WITH CHECK is always true for that role:
---          literally true, 1=1, auth.role()/auth.jwt()->>'role' equal to
---          or IN a list containing anon/authenticated, auth.uid()/auth.jwt()
+--          literally true, true AND true, 1=1, auth.role()/auth.jwt()->>'role'
+--          /current_setting('request.jwt.claims')->>'role' equal to or IN a
+--          list containing anon/authenticated, auth.uid()/auth.jwt()
 --          IS NOT NULL, including the Supabase "(select auth.uid())"
---          initplan style. HIGH = anon holds the matching privilege (any
+--          initplan style. A cheap secondary flag marks policies that are
+--          POSSIBLY open (MEDIUM when anon holds the privilege or
+--          authenticated holds it on a sensitive table, else REVIEW; never
+--          HIGH): an OR arm that is open to an API role
+--          (auth.role()='authenticated' OR auth.uid()=id), "... OR true",
+--          the request.jwt.claims form with an anon/authenticated literal,
+--          or "<column> IS NOT NULL". HIGH = anon holds the matching privilege (any
 --          table), or authenticated holds it on a sensitive table;
 --          REVIEW = authenticated-only on a non-sensitive table (fine only
 --          for genuine reference data); INFO = open policy but no matching
@@ -523,10 +570,13 @@ ORDER BY e.extname;
 --          may be incomplete. Open storage.objects policies and RLS-off
 --          storage tables appear as G2 / G1 rows.
 --      G8  Realtime: supabase_realtime publication summary (INFO), and
---          published tables with RLS off (HIGH if anon/authenticated can
---          SELECT, else MEDIUM) or with an open SELECT/ALL policy.
+--          published tables with RLS off (graded like G1: INFO when no API
+--          role has schema USAGE, MEDIUM when the schema is not exposed or
+--          no API role holds a privilege, else HIGH) or with an open (or
+--          possibly open) SELECT/ALL policy.
 --      G9  anon/authenticated holds TRUNCATE (bypasses RLS), TRIGGER or
---          REFERENCES on a table. One row per table and role.
+--          REFERENCES on a table (including foreign tables). One row per
+--          table and role.
 --      G10 Installed extensions (INFO); dblink/pg_net/http-style ones are
 --          marked as outbound-capable or privileged.
 -- ---------------------------------------------------------------------
@@ -571,7 +621,7 @@ sc AS (
        OR n.nspname IN (SELECT schemaname FROM rt) )
 ),
 tbl AS (
-  SELECT c.oid, n.nspname, c.relname, c.relrowsecurity,
+  SELECT c.oid, n.nspname, c.relname, c.relrowsecurity, c.relkind,
          has_schema_privilege('anon', n.oid, 'USAGE')           AS anon_usage,
          has_schema_privilege('authenticated', n.oid, 'USAGE')  AS auth_usage,
          CASE WHEN NOT EXISTS (SELECT 1 FROM exposed_cfg) THEN 'unknown'
@@ -600,7 +650,7 @@ tbl AS (
            CASE WHEN has_any_column_privilege('authenticated', c.oid, 'REFERENCES') THEN 'REFERENCES' END) AS auth_extra
   FROM pg_class c
   JOIN sc n ON n.oid = c.relnamespace
-  WHERE c.relkind IN ('r', 'p')
+  WHERE c.relkind IN ('r', 'p', 'f')     -- tables, partitioned tables, foreign tables (a foreign table cannot have RLS)
     AND NOT EXISTS (SELECT 1 FROM pg_depend d
                      WHERE d.classid = 'pg_class'::regclass AND d.objid = c.oid AND d.deptype = 'e')
 ),
@@ -631,31 +681,47 @@ expr AS (  -- one row per USING / WITH CHECK expression, normalised
   WHERE k.raw IS NOT NULL
 ),
 pat AS (   -- R = an expression that yields the caller's role
-  SELECT '(auth\.role|auth\.jwt->>''role''|current_setting''request\.jwt\.claim\.role''(,(true|false))?)' AS r,
+  SELECT '(auth\.role|auth\.jwt->>''role''|current_setting''request\.jwt\.claim\.role''(,(true|false))?|current_setting''request\.jwt\.claims''(,(true|false))?->>''role'')' AS r,
          '(''(anon|authenticated|service_role)'',?)+' AS lst
+),
+pat2 AS (   -- A = one OR arm that is open to an API role (used by the "possibly open" review flag)
+  SELECT pat.*,
+         '(' || pat.r || '=''(anon|authenticated)''|''(anon|authenticated)''=' || pat.r
+             || '|' || pat.r || 'in' || pat.lst || '|auth\.(uid|jwt|role)isnotnull)' AS arm
+  FROM pat
 ),
 exprflag AS (
   SELECT e.nspname, e.tablename, e.policyname, e.kind, e.raw,
          -- true for every caller
-         (e.n ~ '^(true|1=1|true=true|notfalse|nottrue=false)$') AS p_all,
+         (e.n ~ '^(true|1=1|true=true|notfalse|nottrue=false)$'
+          OR e.n ~ '^(true|1=1)(and(true|1=1))+$') AS p_all,
          -- true for anon
-         (e.n ~ ('^' || pat.r || '=''anon''$') OR e.n ~ ('^''anon''=' || pat.r || '$')
-          OR (e.n ~ ('^' || pat.r || 'in' || pat.lst || '$') AND e.n LIKE '%''anon''%')
-          OR (e.n ~ ('^' || pat.r || '=anyarray\[' || pat.lst || '\]$') AND e.n LIKE '%''anon''%')
-          OR e.n ~ ('^' || pat.r || '(<>|!=)''authenticated''$')) AS p_anon,
+         (e.n ~ ('^' || pat2.r || '=''anon''$') OR e.n ~ ('^''anon''=' || pat2.r || '$')
+          OR (e.n ~ ('^' || pat2.r || 'in' || pat2.lst || '$') AND e.n LIKE '%''anon''%')
+          OR (e.n ~ ('^' || pat2.r || '=anyarray\[' || pat2.lst || '\]$') AND e.n LIKE '%''anon''%')
+          OR e.n ~ ('^' || pat2.r || '(<>|!=)''authenticated''$')) AS p_anon,
          -- true for authenticated
-         (e.n ~ ('^' || pat.r || '=''authenticated''$') OR e.n ~ ('^''authenticated''=' || pat.r || '$')
-          OR (e.n ~ ('^' || pat.r || 'in' || pat.lst || '$') AND e.n LIKE '%''authenticated''%')
-          OR (e.n ~ ('^' || pat.r || '=anyarray\[' || pat.lst || '\]$') AND e.n LIKE '%''authenticated''%')
-          OR e.n ~ ('^' || pat.r || '(<>|!=)''anon''$')
-          OR e.n ~ '^(auth\.(uid|jwt|role)isnotnull|notauth\.(uid|jwt|role)isnull)$') AS p_auth
-  FROM expr e CROSS JOIN pat
+         (e.n ~ ('^' || pat2.r || '=''authenticated''$') OR e.n ~ ('^''authenticated''=' || pat2.r || '$')
+          OR (e.n ~ ('^' || pat2.r || 'in' || pat2.lst || '$') AND e.n LIKE '%''authenticated''%')
+          OR (e.n ~ ('^' || pat2.r || '=anyarray\[' || pat2.lst || '\]$') AND e.n LIKE '%''authenticated''%')
+          OR e.n ~ ('^' || pat2.r || '(<>|!=)''anon''$')
+          OR e.n ~ '^(auth\.(uid|jwt|role)isnotnull|notauth\.(uid|jwt|role)isnull)$') AS p_auth,
+         -- cheap "possibly open" flag (reported as REVIEW/MEDIUM, never HIGH):
+         -- an OR arm that is open to an API role (auth.role()='authenticated'
+         -- OR auth.uid()=id), "... OR true", the request.jwt.claims form with
+         -- an API role literal, or "<column> IS NOT NULL"
+         (e.n ~ ('(^|or)' || pat2.arm || '(or|$)')
+          OR e.n ~ 'or(true|1=1)(or|$)'
+          OR (e.n ~ 'request\.jwt\.claims' AND e.n ~ '''(anon|authenticated)''')
+          OR e.n ~ '^[a-z_][a-z0-9_.]*isnotnull$') AS p_rev
+  FROM expr e CROSS JOIN pat2
 ),
 openpol AS (  -- policies that are always-true for an API role they apply to
   SELECT o.*,
          bool_or(f.p_all OR f.p_anon) OVER w AS pass_anon,
          bool_or(f.p_all OR f.p_auth) OVER w AS pass_auth,
-         string_agg(f.kind || ' ' || f.raw, ' / ') FILTER (WHERE f.p_all OR f.p_anon OR f.p_auth) OVER w AS matched_expr
+         bool_or(f.p_rev) OVER w AS pass_rev,
+         string_agg(f.kind || ' ' || f.raw, ' / ') FILTER (WHERE f.p_all OR f.p_anon OR f.p_auth OR f.p_rev) OVER w AS matched_expr
   FROM pol o
   JOIN exprflag f ON f.nspname = o.nspname AND f.tablename = o.tablename AND f.policyname = o.policyname
   WINDOW w AS (PARTITION BY o.nspname, o.tablename, o.policyname)
@@ -665,6 +731,9 @@ openpol2 AS (
          o.nspname, o.tbl_oid, o.tablename, o.policyname, o.cmd, o.roles,
          (o.hits_anon AND o.pass_anon) AS anon_open,
          (o.hits_auth AND o.pass_auth) AS auth_open,
+         (o.pass_rev AND (o.hits_anon OR o.hits_auth)
+            AND NOT ((o.hits_anon AND o.pass_anon) OR (o.hits_auth AND o.pass_auth))) AS maybe_open,
+         o.hits_anon, o.hits_auth,
          o.matched_expr,
          CASE o.cmd
            WHEN 'SELECT' THEN has_any_column_privilege('anon', o.tbl_oid, 'SELECT')
@@ -686,7 +755,8 @@ openpol2 AS (
               OR has_table_privilege('authenticated', o.tbl_oid, 'DELETE')) END AS auth_holds
   FROM openpol o
   WHERE o.matched_expr IS NOT NULL
-    AND ((o.hits_anon AND o.pass_anon) OR (o.hits_auth AND o.pass_auth))
+    AND ((o.hits_anon AND o.pass_anon) OR (o.hits_auth AND o.pass_auth)
+         OR (o.pass_rev AND (o.hits_anon OR o.hits_auth)))
 ),
 buckets AS (   -- one fixed constant SELECT on storage.buckets, only if it exists
   SELECT (xpath('/row/name/text()', x))[1]::text           AS name,
@@ -740,7 +810,7 @@ flags AS (
   UNION ALL
   SELECT 'G0', 'INFO', 'pgrst.db_schemas',
          CASE WHEN EXISTS (SELECT 1 FROM exposed_cfg)
-              THEN 'exposed schemas per role setting: ' || (SELECT string_agg(nspname, ', ' ORDER BY nspname) FROM exposed_cfg)
+              THEN 'exposed schemas per role setting: ' || (SELECT string_agg(DISTINCT nspname, ', ' ORDER BY nspname) FROM exposed_cfg)
               ELSE 'no pgrst.db_schemas role setting found (exposure unknown: confirm in Dashboard -> API settings)' END
 
   -- G1 ---------------------------------------------------------------
@@ -753,7 +823,9 @@ flags AS (
                 '; schema USAGE anon=', t.anon_usage, ' authenticated=', t.auth_usage,
                 '; schema in pgrst.db_schemas: ', t.exposed,
                 CASE WHEN NOT (t.anon_usage OR t.auth_usage)
-                     THEN ' (no API role has schema USAGE: unreachable through the API)' ELSE '' END)
+                     THEN ' (no API role has schema USAGE: unreachable through the API)' ELSE '' END,
+                CASE WHEN t.relkind = 'f'
+                     THEN '; FOREIGN TABLE: it cannot have RLS, so the grants are the only control' ELSE '' END)
   FROM tbl t
   WHERE NOT t.relrowsecurity AND (t.anon_any OR t.auth_any)
 
@@ -763,9 +835,15 @@ flags AS (
          CASE WHEN o.anon_open AND o.anon_holds THEN 'HIGH'
               WHEN o.auth_open AND o.auth_holds AND s.name IS NOT NULL THEN 'HIGH'
               WHEN o.auth_open AND o.auth_holds THEN 'REVIEW'
+              WHEN o.maybe_open AND ((o.hits_anon AND o.anon_holds)
+                                  OR (o.hits_auth AND o.auth_holds AND s.name IS NOT NULL)) THEN 'MEDIUM'
+              WHEN o.maybe_open AND o.hits_auth AND o.auth_holds THEN 'REVIEW'
               ELSE 'INFO' END,
          o.nspname || '.' || o.tablename,
          concat('policy ', o.policyname, ' (', o.cmd, ', roles ', o.roles::text, '): ',
+                CASE WHEN o.maybe_open
+                     THEN '[POSSIBLY open: an OR arm or always-true form that the patterns only partly recognise (heuristic, not proof); read section 2] '
+                     ELSE '' END,
                 o.matched_expr,
                 '; open to anon=', o.anon_open, ' and anon holds matching privilege=', (o.anon_open AND o.anon_holds),
                 '; open to authenticated=', o.auth_open, ' and authenticated holds matching privilege=', (o.auth_open AND o.auth_holds),
@@ -883,9 +961,16 @@ flags AS (
               ELSE 'publication supabase_realtime not found' END
   UNION ALL
   SELECT 'G8',
-         CASE WHEN t.anon_any OR t.auth_any THEN 'HIGH' ELSE 'MEDIUM' END,
+         CASE WHEN NOT (t.anon_usage OR t.auth_usage) THEN 'INFO'      -- same rule as G1: unreachable
+              WHEN (t.anon_any AND t.anon_usage) OR (t.auth_any AND t.auth_usage)
+                   THEN CASE WHEN t.exposed = 'no' THEN 'MEDIUM' ELSE 'HIGH' END
+              ELSE 'MEDIUM' END,
          t.nspname || '.' || t.relname,
-         concat('published to realtime with RLS DISABLED; anon=', t.anon_any, ' authenticated=', t.auth_any)
+         concat('published to realtime with RLS DISABLED; anon=', t.anon_any, ' authenticated=', t.auth_any,
+                '; schema USAGE anon=', t.anon_usage, ' authenticated=', t.auth_usage,
+                '; schema in pgrst.db_schemas: ', t.exposed,
+                CASE WHEN NOT (t.anon_usage OR t.auth_usage)
+                     THEN ' (no API role has schema USAGE: unreachable through the API)' ELSE '' END)
   FROM rt JOIN tbl t ON t.nspname = rt.schemaname AND t.relname = rt.tablename
   WHERE NOT t.relrowsecurity
   UNION ALL
@@ -898,7 +983,7 @@ flags AS (
   FROM rt
   JOIN openpol2 o ON o.nspname = rt.schemaname AND o.tablename = rt.tablename
   LEFT JOIN sensitive s ON s.name = o.tablename
-  WHERE o.cmd IN ('SELECT', 'ALL') AND (o.anon_open OR o.auth_open)
+  WHERE o.cmd IN ('SELECT', 'ALL') AND (o.anon_open OR o.auth_open OR o.maybe_open)
 
   -- G9: TRUNCATE / TRIGGER / REFERENCES ------------------------------
   UNION ALL
@@ -925,9 +1010,51 @@ flags AS (
                      ELSE '' END)
   FROM pg_extension e
   JOIN pg_namespace n ON n.oid = e.extnamespace
+),
+totals AS (   -- counts over ALL flag rows, before any display filter
+  SELECT count(*)                                                         AS n_all,
+         count(*) FILTER (WHERE severity = 'HIGH')                        AS n_high,
+         count(*) FILTER (WHERE severity = 'MEDIUM')                      AS n_medium,
+         count(*) FILTER (WHERE severity = 'REVIEW')                      AS n_review,
+         count(*) FILTER (WHERE severity = 'INFO')                        AS n_info,
+         (SELECT string_agg(g.check_id || '=' || g.n, ', ' ORDER BY substr(g.check_id, 2)::int)
+            FROM (SELECT check_id, count(*) AS n FROM flags GROUP BY check_id) g) AS per_check
+  FROM flags
+),
+summary AS (   -- always-present first row: how many flag rows exist per check
+  SELECT 'G0'::text AS check_id, 'SUMMARY'::text AS severity, 'section 7 totals'::text AS object,
+         concat('total flag rows=', t.n_all,
+                ' (HIGH=', t.n_high, ', MEDIUM=', t.n_medium, ', REVIEW=', t.n_review, ', INFO=', t.n_info,
+                '); rows per check: ', t.per_check,
+                CASE WHEN t.n_all > 900
+                     THEN '. WARNING: more than 900 rows; the SQL editor shows at most 1000, so rows may be cut off. '
+                          || 'Rows are ordered HIGH first, but re-run per check: edit the line marked EDIT POINT 1 '
+                          || '(for example check_id IN (''G3'')), then Run, once per check_id with rows. '
+                          || 'If one check alone exceeds 900 rows, also narrow EDIT POINT 2 to one severity.'
+                     ELSE '. All rows fit within the 1000-row editor cap.' END) AS detail
+  FROM totals t
+),
+shown AS (
+  SELECT check_id, severity, object, detail,
+         CASE WHEN severity = 'SUMMARY' THEN 0
+              WHEN check_id = 'G0' AND severity = 'INFO' THEN 1   -- what was scanned
+              WHEN severity = 'HIGH' THEN 2
+              WHEN severity = 'MEDIUM' THEN 3
+              WHEN severity = 'REVIEW' THEN 4
+              ELSE 5 END AS sev_rank,
+         count(*) OVER (PARTITION BY check_id) AS check_rows
+  FROM (SELECT * FROM flags UNION ALL SELECT * FROM summary) u
 )
-SELECT check_id, severity, object, detail
-FROM flags
-ORDER BY substr(check_id, 2)::int,
-         CASE severity WHEN 'HIGH' THEN 1 WHEN 'MEDIUM' THEN 2 WHEN 'REVIEW' THEN 3 ELSE 4 END,
-         object;
+SELECT count(*) OVER ()                                          AS result_rows,
+       CASE WHEN count(*) OVER () >= 900
+            THEN 'WARNING: near/over the 1000-row editor cap; later rows may be cut. See the SUMMARY row, then filter per check'
+       END                                                       AS warning,
+       check_id, severity, object, detail
+FROM shown
+WHERE sev_rank = 0                                               -- the SUMMARY row is always kept
+   OR ( check_id IN ('G0', 'G1', 'G2', 'G3', 'G4', 'G5', 'G6', 'G7', 'G8', 'G9', 'G10')   -- EDIT POINT 1: keep only the checks you want, e.g. check_id IN ('G3')
+        AND severity IN ('HIGH', 'MEDIUM', 'REVIEW', 'INFO') )                            -- EDIT POINT 2: keep only some severities, e.g. severity IN ('HIGH')
+-- Order: SUMMARY row, what was scanned, then HIGH, MEDIUM, REVIEW, INFO; inside a
+-- severity the checks with FEWER rows come first, so a rare finding (for
+-- example a HIGH G3 function) is not pushed behind thousands of G9 rows.
+ORDER BY sev_rank, check_rows, substr(check_id, 2)::int, object;
