@@ -15,7 +15,7 @@
  */
 import { clearAllDeviceUserData, clearLocalUserState, reconcileDeviceOwner } from './localUserState';
 import { clearSessionProfile, saveSessionProfile } from './sessionProfile';
-import { clearExplicitLogout, markExplicitLogout, markPreserveLocalState } from './logoutState';
+import { clearExplicitLogout, hasExplicitLogout, markExplicitLogout, markPreserveLocalState } from './logoutState';
 import { switchLocalUser } from './offlineStorage';
 import { setCareerCacheIdentity } from './careerCache';
 
@@ -98,4 +98,24 @@ export async function completeSignOut(options: {
     if (!(await ok())) return;
     await switchLocalUser('__signed_out__');
   }
+}
+
+/**
+ * Guard for an async profile fetch (restore / adopt / refresh). Take it BEFORE
+ * the request; call the returned function after the await and BEFORE writing
+ * the saved profile, the device owner or React state. It answers false when
+ * the stored token is no longer the one the request used (another tab signed
+ * out or in) or an explicit sign-out landed since the guard was taken, so the
+ * stale response writes nothing. The epoch ref only sees this tab's own
+ * transitions; this covers other tabs.
+ */
+export async function startSessionGuard(
+  token: string | null,
+  getToken: () => Promise<string | null>,
+): Promise<() => Promise<boolean>> {
+  const loggedOutAtStart = await hasExplicitLogout();
+  return async () => {
+    if ((await getToken()) !== token) return false;
+    return loggedOutAtStart || !(await hasExplicitLogout());
+  };
 }

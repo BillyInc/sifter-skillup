@@ -19,7 +19,7 @@ import { OfflineQueue } from '../lib/offlineQueue';
 import { reconcileDeviceOwner, clearLocalUserState } from '../lib/localUserState';
 import { clearSessionProfile, getSavedSessionProfile, saveSessionProfile } from '../lib/sessionProfile';
 import { recordDeviceOwner } from '../lib/deviceOwner';
-import { beginSignOut, completeSignIn, completeSignOut, isNetworkFailure, prepareSignIn } from '../lib/sessionLifecycle';
+import { beginSignOut, completeSignIn, completeSignOut, isNetworkFailure, prepareSignIn, startSessionGuard } from '../lib/sessionLifecycle';
 import { useBrowserSessionWatch } from './useBrowserSessionWatch';
 import type { StarkzapWallet } from '../lib/starkzap';
 import {
@@ -219,16 +219,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setLoading(false);
       return;
     }
+    const stillCurrent = await startSessionGuard(token, () => API.getToken());
     try {
       const profile = await API.getMe() as UserProfile;
       // Signed out, deleted or signed in as someone else while getMe() was in
-      // flight: this profile is stale.
-      if (epoch !== sessionEpoch.current) return;
+      // flight (here or in another browser tab): this profile is stale.
+      if (epoch !== sessionEpoch.current || !(await stillCurrent())) return;
       const normalized = _normalise(profile);
       await saveSessionProfile(normalized); // also records the device owner
-      if (epoch !== sessionEpoch.current) return;
+      if (epoch !== sessionEpoch.current || !(await stillCurrent())) return;
       await setCareerCacheIdentity(normalized.id);
-      if (epoch !== sessionEpoch.current) return;
+      if (epoch !== sessionEpoch.current || !(await stillCurrent())) return;
       setUser(normalized);
       API.checkStreak().catch(() => {});
       onLoginSync(profile.id, API_BASE, () => Promise.resolve(token)).catch(() => {});
@@ -246,7 +247,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         // Keep the current route and local onboarding draft available during a
         // temporary API outage. A real 401 still falls through to sign-in.
         const cached = await getSavedSessionProfile<UserProfile>();
-        if (cached?.id && epoch === sessionEpoch.current) {
+        if (cached?.id && epoch === sessionEpoch.current && (await stillCurrent())) {
           // Sessions saved before the owner key existed get one now.
           await recordDeviceOwner(cached.id);
           await setCareerCacheIdentity(cached.id);
@@ -463,13 +464,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   async function refreshUser() {
     const epoch = sessionEpoch.current;
     try {
+      const stillCurrent = await startSessionGuard(await API.getToken(), () => API.getToken());
       const profile = await API.getMe() as UserProfile;
-      // A sign-out/sign-in finished while this was in flight: do not bring
-      // the old account's profile back.
-      if (epoch !== sessionEpoch.current) return;
+      // A sign-out/sign-in finished while this was in flight (here or in
+      // another tab): do not bring the old account's profile back.
+      if (epoch !== sessionEpoch.current || !(await stillCurrent())) return;
       const normalized = _normalise(profile);
       await saveSessionProfile(normalized); // also records the device owner
-      if (epoch !== sessionEpoch.current) return;
+      if (epoch !== sessionEpoch.current || !(await stillCurrent())) return;
       setUser(normalized);
     } catch {
       // Ignore transient refresh failures.

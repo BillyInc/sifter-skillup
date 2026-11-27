@@ -60,6 +60,7 @@ jest.mock('../src/lib/logoutState', () => ({
   markExplicitLogout: jest.fn().mockResolvedValue(undefined),
   markPreserveLocalState: jest.fn().mockResolvedValue(undefined),
   hasPreserveLocalState: jest.fn().mockResolvedValue(false),
+  hasExplicitLogout: jest.fn().mockResolvedValue(false),
 }));
 
 jest.mock('../src/lib/localUserState', () => ({

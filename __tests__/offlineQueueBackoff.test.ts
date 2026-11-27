@@ -323,3 +323,22 @@ describe("clear() during a drain", () => {
     expect(pending()).toBe(0);
   });
 });
+
+describe("403 with a zero or past Retry-After", () => {
+  it.each([
+    ["Retry-After: 0", () => "0"],
+    ["a past HTTP date", () => new Date(Date.now() - 3_600_000).toUTCString()],
+  ])("sends exactly once per pass and backs off by at least the base delay (%s)", async (_label, header) => {
+    await enqueueOffline({ n: 1 });
+    fetchMock.mockResolvedValue({ ok: false, status: 403, headers: { get: () => header() } });
+    const before = Date.now();
+    await OfflineQueue.sync();
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    const [item] = OfflineQueue.getItems();
+    expect(Date.parse(item.nextAttemptAt!) - before).toBeGreaterThanOrEqual(BACKOFF_BASE_MS - 1000);
+
+    fetchMock.mockClear();
+    await OfflineQueue.sync(); // still backing off: nothing is sent
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+});

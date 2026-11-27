@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useRef, useState, type R
 import { API } from "../../src/lib/api";
 import { OfflineQueue } from "../../src/lib/offlineQueue";
 import { getSavedSessionProfile, saveSessionProfile } from "../../src/lib/sessionProfile";
-import { beginSignOut, completeSignIn, completeSignOut, isNetworkFailure, prepareSignIn } from "../../src/lib/sessionLifecycle";
+import { beginSignOut, completeSignIn, completeSignOut, isNetworkFailure, prepareSignIn, startSessionGuard } from "../../src/lib/sessionLifecycle";
 import { recordDeviceOwner } from "../../src/lib/deviceOwner";
 import { setCareerCacheIdentity } from "../../src/lib/careerCache";
 import { useBrowserSessionWatch } from "../../src/hooks/useBrowserSessionWatch";
@@ -95,13 +95,16 @@ export function WebAuthProvider({ children }: { children: ReactNode }) {
     const epoch = sessionEpoch.current;
     const token = await API.getToken();
     if (!token) return;
+    // Another tab may sign out (or in) while getMe() is in flight; this tab's
+    // epoch cannot see that, the stored token and logout marker can.
+    const stillCurrent = await startSessionGuard(token, () => API.getToken());
     try {
       const profile = normalize(await restoreProfileOnce(token));
-      if (epoch !== sessionEpoch.current) return;
+      if (epoch !== sessionEpoch.current || !(await stillCurrent())) return;
       await saveSessionProfile(profile); // also records the device owner
-      if (epoch !== sessionEpoch.current) return;
+      if (epoch !== sessionEpoch.current || !(await stillCurrent())) return;
       await setCareerCacheIdentity(profile.id);
-      if (epoch !== sessionEpoch.current) return;
+      if (epoch !== sessionEpoch.current || !(await stillCurrent())) return;
       setUser(profile);
     } catch (e) {
       if (epoch !== sessionEpoch.current) return;
@@ -117,7 +120,7 @@ export function WebAuthProvider({ children }: { children: ReactNode }) {
         // Offline or a timeout: keep the token and show the cached session
         // rather than signing the learner out because the network is down.
         const cached = await getSavedSessionProfile<WebUser>();
-        if (cached?.id && epoch === sessionEpoch.current) {
+        if (cached?.id && epoch === sessionEpoch.current && (await stillCurrent())) {
           await recordDeviceOwner(cached.id); // sessions saved before the owner key
           await setCareerCacheIdentity(cached.id);
           setUser(normalize(cached));
@@ -189,10 +192,11 @@ export function WebAuthProvider({ children }: { children: ReactNode }) {
     refreshUser: async () => {
       const epoch = sessionEpoch.current;
       try {
+        const stillCurrent = await startSessionGuard(await API.getToken(), () => API.getToken());
         const profile = normalize(await API.getMe());
-        if (epoch !== sessionEpoch.current) return;
+        if (epoch !== sessionEpoch.current || !(await stillCurrent())) return;
         await saveSessionProfile(profile);
-        if (epoch !== sessionEpoch.current) return;
+        if (epoch !== sessionEpoch.current || !(await stillCurrent())) return;
         setUser(profile);
       } catch {}
     },

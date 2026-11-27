@@ -520,6 +520,9 @@ export class OfflineQueueManager {
       const { getOrCreateDeviceId } = await import('./deviceId');
 
       let drained = 0;
+      // Safety net: no item is sent twice in one drain pass, whatever its
+      // backoff says (a zero wait must never become a hot loop).
+      const sentThisPass = new Set<string>();
       while (epoch === this.epoch) {
         lease.renew();
         // Only the signed-in account's own writes are sent, with that account's
@@ -546,6 +549,12 @@ export class OfflineQueueManager {
           if (String(i.ownerId) !== owner || i.authFailedFor === fp || this.inFlight.has(i.id)) return false;
           const key = `${i.method} ${i.endpoint}`;
           if (i.forbiddenAttempts && this._isBackedOff(i)) {
+            heldEndpoints.add(key);
+            return false;
+          }
+          // Already sent in this pass: not again, and the writes behind it to
+          // the same endpoint keep waiting (order is kept).
+          if (sentThisPass.has(i.id)) {
             heldEndpoints.add(key);
             return false;
           }
@@ -577,6 +586,7 @@ export class OfflineQueueManager {
         }
 
         this.inFlight.add(item.id);
+        sentThisPass.add(item.id);
         const controller = typeof AbortController === 'function' ? new AbortController() : null;
         const timer = controller ? setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS) : null;
         try {
@@ -611,6 +621,8 @@ export class OfflineQueueManager {
               drained++;
             } else {
               item.conflictRetried = true;
+              // The one deliberate immediate resend; the flag bounds it.
+              sentThisPass.delete(item.id);
             }
             consecutive401 = 0;
             await this._saveQueue(epoch);
@@ -645,7 +657,9 @@ export class OfflineQueueManager {
             if (!(age <= horizon)) {
               this._remove(item);
             } else {
-              this._backOff(item, res, item.forbiddenAttempts);
+              // Floor at the base delay: Retry-After: 0 (or a past date) must
+              // still space out the retries of a consent-pending write.
+              this._backOff(item, res, item.forbiddenAttempts, BACKOFF_BASE_MS);
             }
             await this._saveQueue(epoch);
           } else if (RETRYABLE_STATUS.has(res.status) || res.status >= 500) {
@@ -724,6 +738,7 @@ export class OfflineQueueManager {
     item: QueueItem,
     res: { headers?: { get?: (n: string) => string | null } },
     count: number = item.attempts,
+    minDelayMs: number = 0,
   ) {
     let retryAfter: string | null = null;
     try {
@@ -731,7 +746,9 @@ export class OfflineQueueManager {
     } catch {
       retryAfter = null;
     }
-    item.nextAttemptAt = new Date(Date.now() + retryDelayMs(count, retryAfter)).toISOString();
+    item.nextAttemptAt = new Date(
+      Date.now() + Math.max(retryDelayMs(count, retryAfter), minDelayMs),
+    ).toISOString();
   }
 
   /** Drop writes owned by other accounts that have waited too long. */
