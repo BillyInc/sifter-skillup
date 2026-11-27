@@ -19,6 +19,7 @@
 #   POST   /api/projects/join             — join a guild project
 # ============================================================
 
+import math
 import uuid
 from datetime import datetime
 from typing import Optional, List
@@ -104,9 +105,24 @@ class NotificationTrigger(BaseModel):
 _NOTIFICATION_CHANNELS = {"push", "sms", "email"}
 
 
+# Unicode bidi controls can visually reorder or spoof push text.
+_BIDI_CONTROLS = {chr(c) for c in (*range(0x202A, 0x202F), *range(0x2066, 0x206A), 0x200E, 0x200F)}
+
+
+def _is_emoji(ch: str) -> bool:
+    cp = ord(ch)
+    return (
+        0x1F000 <= cp <= 0x1FAFF or 0x2600 <= cp <= 0x27BF or 0xFE00 <= cp <= 0xFE0F
+        or cp == 0x200D or 0x1F1E6 <= cp <= 0x1F1FF
+    )
+
+
 def _clean_notification_text(value, limit: int) -> str:
     """Strip control characters and cap length of text that reaches a push body."""
-    text = "".join(ch for ch in str(value or "") if ch.isprintable())
+    text = "".join(
+        ch for ch in str(value or "")
+        if ch.isprintable() and ch not in _BIDI_CONTROLS and not _is_emoji(ch)
+    )
     return text.strip()[:limit]
 
 
@@ -116,10 +132,18 @@ def _clean_notification_data(data) -> dict:
         return {}
     cleaned = {}
     for key, val in list(data.items())[:10]:
-        if isinstance(val, (int, float, bool)):
-            cleaned[_clean_notification_text(key, 40)] = val
+        clean_key = _clean_notification_text(key, 40)
+        # A key that cleans to '' or collides with an earlier one is dropped.
+        if not clean_key or clean_key in cleaned:
+            continue
+        if isinstance(val, bool):
+            cleaned[clean_key] = val
+        elif isinstance(val, (int, float)):
+            if isinstance(val, float) and not math.isfinite(val):
+                continue
+            cleaned[clean_key] = val
         elif isinstance(val, str):
-            cleaned[_clean_notification_text(key, 40)] = _clean_notification_text(val, 80)
+            cleaned[clean_key] = _clean_notification_text(val, 80)
     return cleaned
 
 
@@ -645,7 +669,7 @@ async def trigger_notification(
                 "to": t["token"],
                 "title": msg["title"],
                 "body": msg["body"],
-                "data": {"type": body.type, "trackId": body.trackId, **(body.data or {})},
+                "data": {**(body.data or {}), "type": body.type, "trackId": body.trackId},
                 "sound": "default",
                 "badge": 1,
             }

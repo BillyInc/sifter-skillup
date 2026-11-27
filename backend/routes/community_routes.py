@@ -36,7 +36,7 @@
 import uuid
 import json
 from datetime import datetime, timedelta, timezone
-from typing import Optional, List
+from typing import Literal, Optional, List
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel
@@ -71,7 +71,7 @@ class FollowAction(BaseModel):
 
 class FollowRequestRespond(BaseModel):
     requesterId: str
-    action: str  # 'approve' | 'reject'
+    action: Literal['approve', 'reject']
 
 class BlockAction(BaseModel):
     targetId: str
@@ -521,42 +521,56 @@ async def update_privacy(body: PrivacyUpdate, current_user: dict = Depends(Auth.
 @community_v2_router.post("/api/users/follow", response_model=ResponseModel)
 async def follow_user(body: FollowAction, current_user: dict = Depends(Auth.get_current_user)):
     """Follow a public account. Use /follow-request for private accounts."""
-    user_id = current_user["id"]
-    if body.targetId == user_id:
+    user_id = _norm_id(current_user["id"])
+    target_id = _norm_id(body.targetId)
+    if target_id == user_id:
         raise HTTPException(400, "Cannot follow yourself")
 
-    existing = db.get_service_client().table("follows").select("id").eq("follower_id", user_id).eq("following_id", body.targetId).execute()
+    # The only follow row this endpoint ever creates is caller -> target. A
+    # private account can only be followed through an approved request.
+    target = _active_user(target_id)
+    if target is None:
+        raise HTTPException(404, "User not found")
+    if target.get("is_private"):
+        raise HTTPException(403, "This account is private. Send a follow request instead.")
+
+    existing = db.get_service_client().table("follows").select("id").eq("follower_id", user_id).eq("following_id", target_id).execute()
     if existing.data:
         return ResponseModel(data={"status": "already_following"})
 
     db.get_service_client().table("follows").insert({
         "id": str(uuid.uuid4()),
         "follower_id": user_id,
-        "following_id": body.targetId,
+        "following_id": target_id,
         "created_at": datetime.now(timezone.utc).isoformat(),
     }).execute()
 
-    _create_notification(body.targetId, user_id, "follow")
+    _create_notification(target_id, user_id, "follow")
     return ResponseModel(data={"status": "following"})
 
 
 @community_v2_router.post("/api/users/follow-request", response_model=ResponseModel)
 async def request_follow(body: FollowAction, current_user: dict = Depends(Auth.get_current_user)):
     """Send a follow request to a private account."""
-    user_id = current_user["id"]
-    existing = db.get_service_client().table("follow_requests").select("id, status").eq("requester_id", user_id).eq("target_id", body.targetId).execute()
+    user_id = _norm_id(current_user["id"])
+    target_id = _norm_id(body.targetId)
+    if target_id == user_id:
+        raise HTTPException(400, "Cannot follow yourself")
+    if _active_user(target_id) is None:
+        raise HTTPException(404, "User not found")
+    existing = db.get_service_client().table("follow_requests").select("id, status").eq("requester_id", user_id).eq("target_id", target_id).execute()
     if existing.data:
         return ResponseModel(data={"status": existing.data[0]["status"]})
 
     db.get_service_client().table("follow_requests").insert({
         "id": str(uuid.uuid4()),
         "requester_id": user_id,
-        "target_id": body.targetId,
+        "target_id": target_id,
         "status": "pending",
         "created_at": datetime.now(timezone.utc).isoformat(),
     }).execute()
 
-    _create_notification(body.targetId, user_id, "follow_request")
+    _create_notification(target_id, user_id, "follow_request")
     return ResponseModel(data={"status": "pending"})
 
 
@@ -582,18 +596,34 @@ async def get_follow_requests(current_user: dict = Depends(Auth.get_current_user
 
 @community_v2_router.post("/api/users/follow-request/respond", response_model=ResponseModel)
 async def respond_follow_request(body: FollowRequestRespond, current_user: dict = Depends(Auth.get_current_user)):
-    user_id = current_user["id"]
+    user_id = _norm_id(current_user["id"])
+    requester_id = _norm_id(body.requesterId)
+    svc = db.get_service_client()
 
-    db.get_service_client().table("follow_requests").update({"status": body.action}).eq("requester_id", body.requesterId).eq("target_id", user_id).execute()
+    # A follow can only be created from a request the requester really made to
+    # the caller and that is still pending. Without this a caller could mint a
+    # follow row for any user, which also satisfies the mutual-follow DM rule.
+    pending = (
+        svc.table("follow_requests").select("id")
+        .eq("requester_id", requester_id).eq("target_id", user_id).eq("status", "pending")
+        .limit(1).execute()
+    )
+    if not pending.data:
+        raise HTTPException(404, "No pending follow request from this user.")
+
+    # Stored values follow the schema comment: 'approve' | 'reject'.
+    svc.table("follow_requests").update({"status": body.action}).eq("id", pending.data[0]["id"]).execute()
 
     if body.action == "approve":
-        db.get_service_client().table("follows").insert({
-            "id": str(uuid.uuid4()),
-            "follower_id": body.requesterId,
-            "following_id": user_id,
-            "created_at": datetime.now(timezone.utc).isoformat(),
-        }).execute()
-        _create_notification(body.requesterId, user_id, "follow")
+        already = svc.table("follows").select("id").eq("follower_id", requester_id).eq("following_id", user_id).limit(1).execute()
+        if not already.data:
+            svc.table("follows").insert({
+                "id": str(uuid.uuid4()),
+                "follower_id": requester_id,
+                "following_id": user_id,
+                "created_at": datetime.now(timezone.utc).isoformat(),
+            }).execute()
+        _create_notification(requester_id, user_id, "follow")
 
     return ResponseModel(data={"status": body.action})
 
@@ -728,8 +758,10 @@ async def send_dm(body: DMSend, current_user: dict = Depends(Auth.get_current_us
     Send a DM. Only the sender can initiate.
     Creates thread if one doesn't exist between these two users.
     """
-    sender_id = current_user["id"]
-    recipient_id = body.recipientId
+    # Normalise before comparing so an upper-case or padded UUID cannot slip
+    # past the self-message check or the follow/block lookups.
+    sender_id = _norm_id(current_user["id"])
+    recipient_id = _norm_id(body.recipientId)
     content = (body.content or "").strip()
 
     if sender_id == recipient_id:
@@ -737,11 +769,16 @@ async def send_dm(body: DMSend, current_user: dict = Depends(Auth.get_current_us
     if not content:
         raise HTTPException(400, "Message cannot be empty")
 
-    # One error for every refusal (blocked, no relationship, guest, unknown id)
-    # so the response never reveals whether a target exists or why it refused.
+    # One error for every refusal (blocked, no relationship, guest, unknown or
+    # deleted id) so the response never reveals whether a target exists or why
+    # it refused.
     refused = HTTPException(403, "You can't message this user.")
 
     svc = db.get_service_client()
+
+    # The recipient must exist and not be deleted, before any thread is made.
+    if _active_user(recipient_id) is None:
+        raise refused
 
     # Blocks apply in both directions, to new and existing threads alike.
     blocked = svc.table("user_blocks").select("id").eq("user_id", recipient_id).eq("target_id", sender_id).execute()
@@ -751,14 +788,20 @@ async def send_dm(body: DMSend, current_user: dict = Depends(Auth.get_current_us
     if blocked_by_sender.data:
         raise refused
 
-    # Find or create thread. Existing threads keep working.
+    # The mutual follow is re-checked on EVERY send, not only when a thread is
+    # created: an existing thread is no longer an exemption. If either side
+    # unfollows, the thread is frozen until the follow is mutual again; a
+    # thread between mutual followers keeps working.
+    if not _mutual_follow(sender_id, recipient_id):
+        raise refused
+
+    # Find or create thread (a two-person thread only).
     existing_thread = _find_dm_thread(sender_id, recipient_id)
     if existing_thread:
         thread_id = existing_thread
     else:
-        # Starting a conversation needs a relationship the recipient took part
-        # in: a mutual follow. Guest accounts cannot start conversations.
-        if current_user.get("auth_provider") == "guest" or not _mutual_follow(sender_id, recipient_id):
+        # Guest accounts cannot start conversations.
+        if current_user.get("auth_provider") == "guest":
             raise refused
         thread_id = str(uuid.uuid4())
         db.get_service_client().table("dm_threads").insert({
@@ -786,6 +829,22 @@ async def send_dm(body: DMSend, current_user: dict = Depends(Auth.get_current_us
     return ResponseModel(data={"messageId": msg_id, "threadId": thread_id})
 
 
+def _norm_id(value) -> str:
+    """Canonical form of a user id for comparisons (trimmed, lower-case)."""
+    return str(value or "").strip().lower()
+
+
+def _active_user(user_id: str) -> Optional[dict]:
+    """The users row for a non-deleted account, else None (also on lookup error)."""
+    if not user_id:
+        return None
+    try:
+        res = db.get_service_client().table("users").select("id, is_private").eq("id", user_id).eq("is_deleted", False).limit(1).execute()
+        return res.data[0] if res.data else None
+    except Exception:
+        return None
+
+
 def _mutual_follow(user_a: str, user_b: str) -> bool:
     """True when each user follows the other (the recipient has opted in)."""
     try:
@@ -800,14 +859,18 @@ def _mutual_follow(user_a: str, user_b: str) -> bool:
 
 
 def _find_dm_thread(user_a: str, user_b: str) -> Optional[str]:
-    """Find an existing DM thread between exactly two users."""
+    """Find an existing DM thread between exactly two users (never a group)."""
     try:
-        a_threads = db.get_service_client().table("thread_participants").select("thread_id").eq("user_id", user_a).execute()
-        b_threads = db.get_service_client().table("thread_participants").select("thread_id").eq("user_id", user_b).execute()
+        svc = db.get_service_client()
+        a_threads = svc.table("thread_participants").select("thread_id").eq("user_id", user_a).execute()
+        b_threads = svc.table("thread_participants").select("thread_id").eq("user_id", user_b).execute()
         a_ids = {r["thread_id"] for r in (a_threads.data or [])}
         b_ids = {r["thread_id"] for r in (b_threads.data or [])}
-        shared = a_ids & b_ids
-        return next(iter(shared)) if shared else None
+        for thread_id in sorted(a_ids & b_ids):
+            members = svc.table("thread_participants").select("user_id").eq("thread_id", thread_id).execute()
+            if {r["user_id"] for r in (members.data or [])} == {user_a, user_b} and len(members.data) == 2:
+                return thread_id
+        return None
     except Exception:
         return None
 
