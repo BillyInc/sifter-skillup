@@ -866,6 +866,16 @@ verify = []
 note = "Additive: users.purge_attempts (NOT NULL DEFAULT 0), users.last_purge_attempt_at and a partial index for the scheduled hard delete's queue. The job works without it (rotating fallback), so apply any time. Baseline migration_account_lifecycle_patch.sql first if production already has it."
 source = "Header of migration_hard_delete_backoff_2026-11-21.sql (PROPOSED, NOT APPLIED); added with the learner-privacy review fixes"
 
+[[entry]]
+id = "migration_dm_messages_service_write_only_2026-11-27"
+kind = "schema"
+path = "migration_dm_messages_service_write_only_2026-11-27.sql"
+requires = []
+allow_destructive_reason = "DROP POLICY IF EXISTS dm_participant_insert (supabase-schema.sql:669) deliberately removes the client INSERT policy so only the backend service role can write DMs; REVOKE INSERT, UPDATE, DELETE removes client write privileges only. No table or row data is removed and SELECT policies/grants (realtime reads) are kept"
+verify = []
+note = "Closes the direct-PostgREST bypass of the DM mutual-follow/block checks. Needs skillup_dev.dm_messages, created by supabase-schema.sql (not a migration_ file), so there is no ordered edge. Safe any time: no src/ or web/ code inserts into dm_messages."
+source = "Header of migration_dm_messages_service_write_only_2026-11-27.sql (PROPOSED, NOT APPLIED); PR #328 review"
+
 # ======================================================================
 # UNORDERED: order not stated unambiguously in the docs. Never applied automatically.
 # ======================================================================

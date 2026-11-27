@@ -528,8 +528,11 @@ async def follow_user(body: FollowAction, current_user: dict = Depends(Auth.get_
 
     # The only follow row this endpoint ever creates is caller -> target. A
     # private account can only be followed through an approved request.
+    # Missing, deleted and blocked (either direction) targets all get the same
+    # 404 so the endpoint does not reveal which it was. The private-account 403
+    # stays distinct on purpose: it tells the caller to use /follow-request.
     target = _active_user(target_id)
-    if target is None:
+    if target is None or _blocked_either_way(user_id, target_id):
         raise HTTPException(404, "User not found")
     if target.get("is_private"):
         raise HTTPException(403, "This account is private. Send a follow request instead.")
@@ -556,19 +559,30 @@ async def request_follow(body: FollowAction, current_user: dict = Depends(Auth.g
     target_id = _norm_id(body.targetId)
     if target_id == user_id:
         raise HTTPException(400, "Cannot follow yourself")
-    if _active_user(target_id) is None:
+    # Same 404 as /follow for a missing, deleted or blocked (either way) target.
+    if _active_user(target_id) is None or _blocked_either_way(user_id, target_id):
         raise HTTPException(404, "User not found")
-    existing = db.get_service_client().table("follow_requests").select("id, status").eq("requester_id", user_id).eq("target_id", target_id).execute()
+    svc = db.get_service_client()
+    now = datetime.now(timezone.utc).isoformat()
+    existing = svc.table("follow_requests").select("id, status").eq("requester_id", user_id).eq("target_id", target_id).execute()
     if existing.data:
-        return ResponseModel(data={"status": existing.data[0]["status"]})
-
-    db.get_service_client().table("follow_requests").insert({
-        "id": str(uuid.uuid4()),
-        "requester_id": user_id,
-        "target_id": target_id,
-        "status": "pending",
-        "created_at": datetime.now(timezone.utc).isoformat(),
-    }).execute()
+        row = existing.data[0]
+        if row["status"] == "pending":
+            return ResponseModel(data={"status": "pending"})
+        already = svc.table("follows").select("id").eq("follower_id", user_id).eq("following_id", target_id).limit(1).execute()
+        if already.data:
+            return ResponseModel(data={"status": row["status"]})
+        # A decided request (approved then unfollowed, or rejected) must not
+        # lock the pair out forever: reopen it as a fresh pending request.
+        svc.table("follow_requests").update({"status": "pending", "created_at": now}).eq("id", row["id"]).execute()
+    else:
+        svc.table("follow_requests").insert({
+            "id": str(uuid.uuid4()),
+            "requester_id": user_id,
+            "target_id": target_id,
+            "status": "pending",
+            "created_at": now,
+        }).execute()
 
     _create_notification(target_id, user_id, "follow_request")
     return ResponseModel(data={"status": "pending"})
@@ -600,6 +614,10 @@ async def respond_follow_request(body: FollowRequestRespond, current_user: dict 
     requester_id = _norm_id(body.requesterId)
     svc = db.get_service_client()
 
+    # Same refusal as a missing request when either side has blocked the other.
+    if _blocked_either_way(user_id, requester_id):
+        raise HTTPException(404, "No pending follow request from this user.")
+
     # A follow can only be created from a request the requester really made to
     # the caller and that is still pending. Without this a caller could mint a
     # follow row for any user, which also satisfies the mutual-follow DM rule.
@@ -615,14 +633,14 @@ async def respond_follow_request(body: FollowRequestRespond, current_user: dict 
     svc.table("follow_requests").update({"status": body.action}).eq("id", pending.data[0]["id"]).execute()
 
     if body.action == "approve":
-        already = svc.table("follows").select("id").eq("follower_id", requester_id).eq("following_id", user_id).limit(1).execute()
-        if not already.data:
-            svc.table("follows").insert({
-                "id": str(uuid.uuid4()),
-                "follower_id": requester_id,
-                "following_id": user_id,
-                "created_at": datetime.now(timezone.utc).isoformat(),
-            }).execute()
+        # UNIQUE(follower_id, following_id): an upsert that ignores duplicates
+        # keeps two concurrent approvals from failing with a unique violation.
+        svc.table("follows").upsert({
+            "id": str(uuid.uuid4()),
+            "follower_id": requester_id,
+            "following_id": user_id,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+        }, on_conflict="follower_id,following_id", ignore_duplicates=True).execute()
         _create_notification(requester_id, user_id, "follow")
 
     return ResponseModel(data={"status": body.action})
@@ -630,7 +648,13 @@ async def respond_follow_request(body: FollowRequestRespond, current_user: dict 
 
 @community_v2_router.post("/api/users/unfollow", response_model=ResponseModel)
 async def unfollow_user(body: FollowAction, current_user: dict = Depends(Auth.get_current_user)):
-    db.get_service_client().table("follows").delete().eq("follower_id", current_user["id"]).eq("following_id", body.targetId).execute()
+    user_id = _norm_id(current_user["id"])
+    target_id = _norm_id(body.targetId)
+    svc = db.get_service_client()
+    svc.table("follows").delete().eq("follower_id", user_id).eq("following_id", target_id).execute()
+    # Clear the caller's decided/pending request too, so a later re-follow of a
+    # private account starts from a clean slate.
+    svc.table("follow_requests").delete().eq("requester_id", user_id).eq("target_id", target_id).execute()
     return ResponseModel(data={"status": "unfollowed"})
 
 
@@ -640,16 +664,19 @@ async def unfollow_user(body: FollowAction, current_user: dict = Depends(Auth.ge
 
 @community_v2_router.post("/api/users/block", response_model=ResponseModel)
 async def block_user(body: BlockAction, current_user: dict = Depends(Auth.get_current_user)):
-    user_id = current_user["id"]
-    db.get_service_client().table("user_blocks").upsert({
-        "id": str(uuid.uuid4()), "user_id": user_id, "target_id": body.targetId,
+    user_id = _norm_id(current_user["id"])
+    target_id = _norm_id(body.targetId)
+    svc = db.get_service_client()
+    svc.table("user_blocks").upsert({
+        "id": str(uuid.uuid4()), "user_id": user_id, "target_id": target_id,
         "created_at": datetime.now(timezone.utc).isoformat(),
     }).execute()
-    # Also remove any follow relationship
-    db.get_service_client().table("follows").delete().or_(
-        f"and(follower_id.eq.{user_id},following_id.eq.{body.targetId})",
-        f"and(follower_id.eq.{body.targetId},following_id.eq.{user_id})"
-    ).execute()
+    # Also remove any follow relationship and any follow request (pending or
+    # decided), in both directions. Plain eq() filters keep the id out of a
+    # PostgREST filter string.
+    for a, b in ((user_id, target_id), (target_id, user_id)):
+        svc.table("follows").delete().eq("follower_id", a).eq("following_id", b).execute()
+        svc.table("follow_requests").delete().eq("requester_id", a).eq("target_id", b).execute()
     return ResponseModel(data={"blocked": True})
 
 
@@ -832,6 +859,16 @@ async def send_dm(body: DMSend, current_user: dict = Depends(Auth.get_current_us
 def _norm_id(value) -> str:
     """Canonical form of a user id for comparisons (trimmed, lower-case)."""
     return str(value or "").strip().lower()
+
+
+def _blocked_either_way(user_a: str, user_b: str) -> bool:
+    """True when a user_blocks row exists between the two users in either direction."""
+    svc = db.get_service_client()
+    for blocker, target in ((user_a, user_b), (user_b, user_a)):
+        res = svc.table("user_blocks").select("id").eq("user_id", blocker).eq("target_id", target).limit(1).execute()
+        if res.data:
+            return True
+    return False
 
 
 def _active_user(user_id: str) -> Optional[dict]:

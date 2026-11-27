@@ -595,7 +595,7 @@ async def trigger_notification(
     server-side job, not a client-callable route.
     """
     # Same response for every other id, existing or not (no account probing).
-    if str(body.userId) != str(current_user["id"]):
+    if str(body.userId or "").strip().lower() != str(current_user["id"] or "").strip().lower():
         raise HTTPException(status_code=403, detail="You can only send notifications to yourself.")
 
     body.userName = _clean_notification_text(body.userName, 40)

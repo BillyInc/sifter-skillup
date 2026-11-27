@@ -25,6 +25,13 @@ class _Query:
         self.op, self.payload = "insert", payload
         return self
 
+    def upsert(self, payload, on_conflict=None, ignore_duplicates=False):
+        cols = (on_conflict or "id").split(",")
+        self.op = "upsert"
+        self.payload = payload
+        self.conflict = (cols, ignore_duplicates)
+        return self
+
     def update(self, payload):
         self.op, self.payload = "update", payload
         return self
@@ -57,6 +64,11 @@ class _Query:
             items = self.payload if isinstance(self.payload, list) else [self.payload]
             rows.extend(dict(i) for i in items)
             return _Result(items)
+        if self.op == "upsert":
+            cols, ignore = self.conflict
+            if not any(all(r.get(c) == self.payload.get(c) for c in cols) for r in rows):
+                rows.append(dict(self.payload))
+            return _Result([self.payload])
         match = [r for r in rows if all(f(r) for f in self.filters)]
         if self.op == "update":
             for r in match:
