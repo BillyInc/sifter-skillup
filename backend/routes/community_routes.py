@@ -24,7 +24,7 @@
 #   POST   /api/users/unmute            — unmute user
 #   GET    /api/dms/threads             — DM inbox (current user only)
 #   GET    /api/dms/thread/{id}         — single thread messages
-#   POST   /api/dms/send                — send DM (existing thread or mutual follow; not guests)
+#   POST   /api/dms/send                — send DM (mutual follow on every send; not guests)
 #   POST   /api/dms/read                — mark thread read
 #   POST   /api/ai/score                — AI simulator scoring proxy (key never in client)
 #   GET    /api/notifications           — get notifications for current user
@@ -589,8 +589,12 @@ async def follow_user(body: FollowAction, current_user: dict = Depends(Auth.get_
     # The only follow row this endpoint ever creates is caller -> target. A
     # private account can only be followed through an approved request.
     # Missing, deleted and blocked (either direction) targets all get the same
-    # 404 so the endpoint does not reveal which it was. The private-account 403
-    # stays distinct on purpose: it tells the caller to use /follow-request.
+    # 404. This does NOT hide a block: a private target answers a blocked caller
+    # 404 but an unblocked one 403, and a public target answers a blocked caller
+    # 404 but an unblocked one succeeds, so a blocked user can detect the block
+    # by probing. The 404 only avoids saying whether the account exists. The
+    # private-account 403 is distinct on purpose: it tells the caller to use
+    # /follow-request.
     target = _active_user(target_id)
     if target is None or _blocked_either_way(user_id, target_id):
         raise HTTPException(404, "User not found")
@@ -612,7 +616,11 @@ async def follow_user(body: FollowAction, current_user: dict = Depends(Auth.get_
     if not created.data:
         return ResponseModel(data={"status": "already_following"})
 
-    _create_notification(target_id, user_id, "follow")
+    # At most one 'follow' notification per (actor, recipient) per cooldown, so
+    # follow/unfollow cycles cannot spam the target. The follow itself still
+    # succeeds; a failed history lookup sends no notification.
+    if not _follow_request_recently_notified(user_id, target_id, datetime.now(timezone.utc), "follow"):
+        _create_notification(target_id, user_id, "follow")
     return ResponseModel(data={"status": "following"})
 
 
@@ -671,8 +679,8 @@ async def request_follow(body: FollowAction, current_user: dict = Depends(Auth.g
     return ResponseModel(data={"status": "pending"})
 
 
-def _follow_request_recently_notified(requester_id: str, target_id: str, now: datetime) -> bool:
-    """True when this requester already pinged this target inside the cooldown.
+def _follow_request_recently_notified(requester_id: str, target_id: str, now: datetime, notif_type: str = "follow_request") -> bool:
+    """True when this actor already sent this recipient a `notif_type` notification inside the cooldown.
 
     Fails closed: if the history cannot be read, no notification is sent.
     """
@@ -680,7 +688,7 @@ def _follow_request_recently_notified(requester_id: str, target_id: str, now: da
         cutoff = (now - FOLLOW_REQUEST_COOLDOWN).isoformat()
         res = (
             db.get_service_client().table("notifications").select("id")
-            .eq("recipient_id", target_id).eq("actor_id", requester_id).eq("type", "follow_request")
+            .eq("recipient_id", target_id).eq("actor_id", requester_id).eq("type", notif_type)
             .gte("created_at", cutoff).limit(1).execute()
         )
         return bool(res.data)
@@ -809,14 +817,21 @@ async def block_user(body: BlockAction, current_user: dict = Depends(Auth.get_cu
 
 @community_v2_router.post("/api/users/unblock", response_model=ResponseModel)
 async def unblock_user(body: BlockAction, current_user: dict = Depends(Auth.get_current_user)):
-    db.get_service_client().table("user_blocks").delete().eq("user_id", current_user["id"]).eq("target_id", body.targetId).execute()
+    target_id = _norm_id(body.targetId)
+    # Same uniform 404 as block for a malformed id (never reaches a uuid cast).
+    if not _is_uuid(target_id):
+        raise HTTPException(404, "User not found")
+    db.get_service_client().table("user_blocks").delete().eq("user_id", current_user["id"]).eq("target_id", target_id).execute()
     return ResponseModel(data={"blocked": False})
 
 
 @community_v2_router.post("/api/users/mute", response_model=ResponseModel)
 async def mute_user(body: BlockAction, current_user: dict = Depends(Auth.get_current_user)):
+    target_id = _norm_id(body.targetId)
+    if not _is_uuid(target_id):
+        raise HTTPException(404, "User not found")
     db.get_service_client().table("user_mutes").upsert({
-        "id": str(uuid.uuid4()), "user_id": current_user["id"], "target_id": body.targetId,
+        "id": str(uuid.uuid4()), "user_id": current_user["id"], "target_id": target_id,
         "created_at": datetime.now(timezone.utc).isoformat(),
     }).execute()
     return ResponseModel(data={"muted": True})
@@ -824,7 +839,10 @@ async def mute_user(body: BlockAction, current_user: dict = Depends(Auth.get_cur
 
 @community_v2_router.post("/api/users/unmute", response_model=ResponseModel)
 async def unmute_user(body: BlockAction, current_user: dict = Depends(Auth.get_current_user)):
-    db.get_service_client().table("user_mutes").delete().eq("user_id", current_user["id"]).eq("target_id", body.targetId).execute()
+    target_id = _norm_id(body.targetId)
+    if not _is_uuid(target_id):
+        raise HTTPException(404, "User not found")
+    db.get_service_client().table("user_mutes").delete().eq("user_id", current_user["id"]).eq("target_id", target_id).execute()
     return ResponseModel(data={"muted": False})
 
 
@@ -1057,7 +1075,12 @@ def _active_user(user_id: str) -> Optional[dict]:
 
 
 def _mutual_follow(user_a: str, user_b: str) -> bool:
-    """True when each user follows the other (the recipient has opted in)."""
+    """True when each user follows the other (the recipient has opted in).
+
+    A database error raises 503 (like _active_user / _find_dm_thread) instead of
+    reading as "not mutual": the uniform 403 would be a permanent 4xx that the
+    offline queue drops, losing the queued message.
+    """
     try:
         svc = db.get_service_client()
         a_to_b = svc.table("follows").select("id").eq("follower_id", user_a).eq("following_id", user_b).limit(1).execute()
@@ -1066,7 +1089,7 @@ def _mutual_follow(user_a: str, user_b: str) -> bool:
         b_to_a = svc.table("follows").select("id").eq("follower_id", user_b).eq("following_id", user_a).limit(1).execute()
         return bool(b_to_a.data)
     except Exception:
-        return False
+        raise HTTPException(503, "Temporarily unavailable. Please try again.")
 
 
 def _find_dm_thread(user_a: str, user_b: str) -> Optional[str]:

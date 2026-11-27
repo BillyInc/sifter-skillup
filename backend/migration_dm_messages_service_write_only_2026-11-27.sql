@@ -1,6 +1,10 @@
 -- PROPOSED, NOT APPLIED. Do not execute from tooling; the owner applies this
 -- manually in the Supabase SQL Editor (or psql) after review.
 --
+-- Follow-up (not done here): follows, follow_requests, user_blocks, dm_threads
+-- and thread_participants rely on RLS-on-with-no-policy and could get the same
+-- REVOKE ALL as defence in depth in a later change.
+--
 -- Defence in depth: make skillup_dev.dm_messages writable only by the backend
 -- (service_role).
 --
@@ -26,8 +30,10 @@
 --   2. Revokes ALL privileges on dm_messages from anon and authenticated. ALL
 --      covers INSERT, UPDATE, DELETE, TRUNCATE, REFERENCES and TRIGGER (not just
 --      the row-level writes), so none of them can be exercised by a client role.
---   3. Re-grants SELECT to those roles only if a SELECT (or ALL) policy exists
---      on the table, so read access that a policy intends to allow is not lost.
+--   3. Restores SELECT only for roles that held it before the REVOKE (captured
+--      first), and only if a SELECT (or ALL) policy exists, so read access that
+--      was there is not lost. It never adds SELECT to a role that had none
+--      (anon cannot match dm_participant_read, which uses auth.uid()).
 --   4. Grants service_role full access (the backend writes through it).
 --
 -- Idempotent and non-destructive: no rows, tables or other policies are
@@ -39,17 +45,29 @@ BEGIN;
 
 DROP POLICY IF EXISTS dm_participant_insert ON skillup_dev.dm_messages;
 
-REVOKE ALL ON skillup_dev.dm_messages FROM anon, authenticated;
-
 DO $$
+DECLARE
+    had_select text[] := ARRAY[]::text[];
+    r text;
 BEGIN
+    -- Remember which client roles already held SELECT before the REVOKE.
+    FOREACH r IN ARRAY ARRAY['anon', 'authenticated'] LOOP
+        IF has_table_privilege(r, 'skillup_dev.dm_messages', 'SELECT') THEN
+            had_select := had_select || r;
+        END IF;
+    END LOOP;
+
+    REVOKE ALL ON skillup_dev.dm_messages FROM anon, authenticated;
+
     IF EXISTS (
         SELECT 1 FROM pg_policies
         WHERE schemaname = 'skillup_dev'
           AND tablename = 'dm_messages'
           AND cmd IN ('SELECT', 'ALL')
     ) THEN
-        GRANT SELECT ON skillup_dev.dm_messages TO anon, authenticated;
+        FOREACH r IN ARRAY had_select LOOP
+            EXECUTE format('GRANT SELECT ON skillup_dev.dm_messages TO %I', r);
+        END LOOP;
     END IF;
 END
 $$;

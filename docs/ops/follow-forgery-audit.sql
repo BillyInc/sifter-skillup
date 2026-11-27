@@ -1,43 +1,60 @@
 -- READ-ONLY, not applied. SELECT statements only: nothing here changes or
 -- deletes any row. Run manually in the Supabase SQL Editor / psql and review.
 --
--- Why: before the follow-request lifecycle fix, the old respond endpoint could
--- be driven to create follow rows the private account never approved (for
--- example follower = the private account, following = the attacker). Such a
--- row can still satisfy the mutual-follow rule used by /api/dms/send. Rows
--- created through the current code always have a matching 'approve' request.
+-- Why: the old /api/users/follow-request/respond endpoint (git history, before
+-- the follow-request lifecycle fix) did two things with no ownership check:
+--   * UPDATE follow_requests SET status = <free text> WHERE requester_id =
+--     <body.requesterId> AND target_id = <caller>  (matching nothing is fine)
+--   * if action == 'approve': INSERT follows (follower_id = body.requesterId,
+--     following_id = <caller>), whether or not any request existed.
+-- So an attacker (the caller) could name ANY user as requesterId and create a
+-- follows row where the VICTIM follows the ATTACKER. If the attacker then
+-- follows the victim, the pair is mutual and satisfies the rule used by
+-- /api/dms/send. Rows created by current code always have a matching 'approve'
+-- request (requester = follower, target = following).
 --
--- A follows row (X follows T) onto a PRIVATE account T is legitimate only if
--- T approved X's request. This lists private targets that have a follows row
--- without a matching 'approve' follow_requests row.
+-- Forged row shape: follower_id = victim, following_id = attacker, with no
+-- follow_request row from the victim to the attacker that the victim sent.
+--
+-- LIMITS, stated plainly: a private account may legitimately follow someone
+-- without any follow_request row (follow_requests only exist for following a
+-- private account, and a private account that follows a public user uses
+-- /follow). So every row below is a REVIEW CANDIDATE, not proof of forgery.
+-- Also, these queries can only look at PRIVATE victims. A forged row whose
+-- victim is a PUBLIC account is indistinguishable from a normal follow of a
+-- public account (public follows have no request row), so this audit cannot
+-- identify forged rows against public victims at all.
 
--- 1. Follows onto private accounts with no matching approved request.
+-- 1. Review candidates: follows whose follower is a private account and where
+--    no follow_request row, of any status and in either direction, exists
+--    between the pair.
 SELECT f.id            AS follow_id,
-       f.follower_id,
-       f.following_id  AS private_target_id,
+       f.follower_id   AS private_follower_id,
+       f.following_id,
        f.created_at
 FROM skillup_dev.follows f
-JOIN skillup_dev.users t ON t.id = f.following_id AND t.is_private = true
+JOIN skillup_dev.users v ON v.id = f.follower_id AND v.is_private = true
 WHERE NOT EXISTS (
     SELECT 1 FROM skillup_dev.follow_requests r
-    WHERE r.requester_id = f.follower_id
-      AND r.target_id    = f.following_id
-      AND r.status       = 'approve'
+    WHERE (r.requester_id = f.follower_id  AND r.target_id = f.following_id)
+       OR (r.requester_id = f.following_id AND r.target_id = f.follower_id)
 )
 ORDER BY f.created_at;
 
--- 2. Subset that matters most for DMs: the unmatched follow is half of a mutual
---    pair (the private account also follows that user), so it can open a DM.
-SELECT f.id AS follow_id, f.follower_id, f.following_id AS private_target_id, f.created_at
+-- 2. Subset of query 1 that matters most for DMs: the other party also follows
+--    the private account back, so the pair is mutual and can open a DM.
+SELECT f.id            AS follow_id,
+       f.follower_id   AS private_follower_id,
+       f.following_id,
+       f.created_at
 FROM skillup_dev.follows f
-JOIN skillup_dev.users t ON t.id = f.following_id AND t.is_private = true
+JOIN skillup_dev.users v ON v.id = f.follower_id AND v.is_private = true
 JOIN skillup_dev.follows back
   ON back.follower_id = f.following_id AND back.following_id = f.follower_id
 WHERE NOT EXISTS (
     SELECT 1 FROM skillup_dev.follow_requests r
-    WHERE r.requester_id = f.follower_id
-      AND r.target_id    = f.following_id
-      AND r.status       = 'approve'
+    WHERE (r.requester_id = f.follower_id  AND r.target_id = f.following_id)
+       OR (r.requester_id = f.following_id AND r.target_id = f.follower_id)
 )
 ORDER BY f.created_at;
 

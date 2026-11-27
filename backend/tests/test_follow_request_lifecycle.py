@@ -390,8 +390,12 @@ def test_dm_messages_migration_is_prepared_not_applied_and_keeps_select():
     assert "DROP POLICY IF EXISTS dm_participant_insert ON skillup_dev.dm_messages" in sql
     assert "REVOKE ALL ON skillup_dev.dm_messages FROM anon, authenticated" in sql
     assert "REVOKE SELECT" not in sql
-    # SELECT is re-granted only when a SELECT/ALL policy exists.
-    assert "pg_policies" in sql and "GRANT SELECT ON skillup_dev.dm_messages TO anon, authenticated" in sql
+    # SELECT is restored only to roles that already held it, and only when a
+    # SELECT/ALL policy exists. It is never granted to anon blindly.
+    assert "pg_policies" in sql and "has_table_privilege" in sql
+    assert "GRANT SELECT ON skillup_dev.dm_messages TO anon" not in sql
+    assert "TO anon, authenticated;\n" not in sql.split("REVOKE ALL")[1].split("service_role")[0].replace("FROM anon, authenticated;", "")
+    assert "RLS-on-with-no-policy" in sql
     assert "defence in depth" in sql.lower()
 
 
@@ -401,7 +405,9 @@ def test_base_schema_no_longer_recreates_the_insert_policy():
     schema = (Path(__file__).resolve().parents[2] / "supabase-schema.sql").read_text(encoding="utf-8")
     assert "CREATE POLICY dm_participant_insert" not in schema
     assert "REVOKE ALL ON skillup_dev.dm_messages FROM anon, authenticated" in schema
-    assert "GRANT SELECT ON skillup_dev.dm_messages TO anon, authenticated" in schema
+    assert "GRANT SELECT ON skillup_dev.dm_messages TO authenticated;" in schema
+    assert "GRANT SELECT ON skillup_dev.dm_messages TO anon" not in schema
+    assert "RLS-on-with-no-policy" in schema
 
 
 # ---------------- guests, rate limits, validation, races ----------------
@@ -549,3 +555,91 @@ def test_active_user_distinguishes_missing_column_from_outage(fake, monkeypatch)
     assert r.status_code == 503
     monkeypatch.setattr(_Query, "eq", real)
     assert cr._active_user("not-a-uuid") is None
+
+
+# ---------------- follow notification dedup, mutual-follow outage, id validation ----------------
+
+def test_follow_unfollow_follow_notifies_once(fake, monkeypatch):
+    # Real notification writer so the dedup reads real history.
+    monkeypatch.undo()
+    monkeypatch.setattr(cr.db, "get_service_client", lambda: fake, raising=False)
+    target = "00000000-0000-4000-8000-000000000008"
+    c = _client(ME)
+    for _ in range(5):
+        assert _post(c, "follow", targetId=target).json()["data"]["status"] == "following"
+        assert _post(c, "unfollow", targetId=target).status_code == 200
+    assert _post(c, "follow", targetId=target).json()["data"]["status"] == "following"
+    assert len(fake.tables["follows"]) == 1
+    sent = [n for n in fake.tables["notifications"] if n["type"] == "follow"]
+    assert len(sent) == 1
+    # Past the cooldown a fresh follow may notify again.
+    sent[0]["created_at"] = _ago(8)
+    _post(c, "unfollow", targetId=target)
+    _post(c, "follow", targetId=target)
+    assert len([n for n in fake.tables["notifications"] if n["type"] == "follow"]) == 2
+
+
+def test_follow_notification_history_failure_still_follows_without_notifying(fake, monkeypatch):
+    real = fake.table
+
+    def boom(name):
+        if name == "notifications":
+            raise RuntimeError("down")
+        return real(name)
+
+    monkeypatch.setattr(fake, "table", boom)
+    r = _post(_client(ME), "follow", targetId="00000000-0000-4000-8000-000000000008")
+    assert r.json()["data"]["status"] == "following"
+    assert len(fake.tables["follows"]) == 1
+    assert fake.tables.get("notes", []) == []
+
+
+def test_mutual_follow_db_error_is_503_not_false(fake, monkeypatch):
+    a, b = ME["id"], "00000000-0000-4000-8000-000000000008"
+    assert cr._mutual_follow(a, b) is False  # a real "not mutual"
+
+    def boom(name):
+        raise RuntimeError("connection refused")
+
+    monkeypatch.setattr(fake, "table", boom)
+    with pytest.raises(cr.HTTPException) as exc:
+        cr._mutual_follow(a, b)
+    assert exc.value.status_code == 503
+
+
+def test_dm_send_returns_503_on_mutual_follow_outage_and_403_when_not_mutual(fake, monkeypatch):
+    b = "00000000-0000-4000-8000-000000000008"
+    c = _client(ME)
+    body = {"senderId": "spoof", "recipientId": b, "content": "hi"}
+    r = c.post("/api/dms/send", json=body)
+    assert r.status_code == 403
+    real = fake.table
+
+    def boom(name):
+        if name == "follows":
+            raise RuntimeError("down")
+        return real(name)
+
+    monkeypatch.setattr(fake, "table", boom)
+    assert c.post("/api/dms/send", json=body).status_code == 503
+
+
+@pytest.mark.parametrize("path", ["unblock", "mute", "unmute", "block"])
+def test_block_mute_endpoints_reject_malformed_ids_uniformly(fake, path):
+    c = _client(ME)
+    for bad in ["not-a-uuid", "1' or '1'='1", "", "00000000-0000-4000-8000-00000000000g"]:
+        r = _post(c, path, targetId=bad)
+        assert r.status_code == 404 and r.json()["detail"] == "User not found"
+
+
+def test_unblock_and_mute_still_work_with_valid_ids(fake):
+    b = "00000000-0000-4000-8000-000000000008"
+    c = _client(ME)
+    assert _post(c, "block", targetId=b).status_code == 200
+    assert len(fake.tables["user_blocks"]) == 1
+    assert _post(c, "unblock", targetId=b).status_code == 200
+    assert fake.tables["user_blocks"] == []
+    assert _post(c, "mute", targetId=b).status_code == 200
+    assert len(fake.tables["user_mutes"]) == 1
+    assert _post(c, "unmute", targetId=b).status_code == 200
+    assert fake.tables["user_mutes"] == []
