@@ -55,7 +55,8 @@ class _Q:
     def gt(self, c, v): return self._f("gt", c, v)
 
     def or_(self, spec):
-        # only the shape the hard-delete job sends: "<col>.is.null,<col>.neq.<value>"
+        # HAND-WRITTEN STUB: it parses only the exact string the hard-delete job
+        # sends. It proves that string, not that PostgREST accepts it. Only the shape: "<col>.is.null,<col>.neq.<value>"
         col = spec.split(",")[0].split(".")[0]
         self.filters.append(("or_null_or_neq", col, spec.split(",")[1].split(".neq.")[1]))
         self.cols.append(col)
@@ -292,10 +293,91 @@ def test_an_owned_guild_with_other_members_is_transferred_not_blocked(monkeypatc
             {"guild_id": "g1", "user_id": "u3", "joined_at": "2026-03-01"},
             {"guild_id": "g1", "user_id": "u2", "joined_at": "2026-02-01"},
         ],
+        "users": [{"id": u, "is_deleted": False} for u in ("u2", "u3")],
     })
     out = ap.hard_delete_learner_content("u1")
     assert out["guilds"] == "transferred" and "blocked" not in out.values()
     assert svc.tables["guilds"] == [{"id": "g1", "owner_id": "u2"}]  # longest-standing other member
+
+
+def _guild_users(**extra):
+    users = [{"id": uid, "is_deleted": False, "claim_state": None, "guild_id": None} for uid in ("u1", "u2", "u3", "u4")]
+    for u in users:
+        u.update(extra.get(u["id"], {}))
+    return users
+
+
+def _guild_tables(members, users):
+    return {"guilds": [{"id": "g1", "owner_id": "u1"}], "guild_members": members, "users": users}
+
+
+def test_a_deleted_or_unclaimed_member_never_inherits_the_guild(monkeypatch):
+    svc = _purge_db(monkeypatch, tables=_guild_tables(
+        [
+            {"guild_id": "g1", "user_id": "u2", "joined_at": "2026-01-01"},  # deleted
+            {"guild_id": "g1", "user_id": "u3", "joined_at": "2026-02-01"},  # unclaimed shell
+            {"guild_id": "g1", "user_id": "u4", "joined_at": "2026-03-01"},
+        ],
+        _guild_users(u2={"is_deleted": True}, u3={"claim_state": "unclaimed"}),
+    ))
+    assert ap.hard_delete_learner_content("u1")["guilds"] == "transferred"
+    assert svc.tables["guilds"][0]["owner_id"] == "u4"
+
+
+def test_a_guild_whose_only_other_members_are_deleted_is_removed(monkeypatch):
+    svc = _purge_db(monkeypatch, tables=_guild_tables(
+        [{"guild_id": "g1", "user_id": "u2", "joined_at": "2026-01-01"}],
+        _guild_users(u2={"is_deleted": True}),
+    ))
+    assert ap.hard_delete_learner_content("u1")["guilds"] == "deleted"
+    assert svc.tables["guilds"] == []
+
+
+def test_an_admin_member_is_preferred_over_an_older_member(monkeypatch):
+    svc = _purge_db(monkeypatch, tables=_guild_tables(
+        [
+            {"guild_id": "g1", "user_id": "u2", "role": "member", "joined_at": "2026-01-01"},
+            {"guild_id": "g1", "user_id": "u3", "role": "admin", "joined_at": "2026-05-01"},
+        ],
+        _guild_users(),
+    ))
+    ap.hard_delete_learner_content("u1")
+    assert svc.tables["guilds"][0]["owner_id"] == "u3"
+
+
+def test_real_membership_on_users_guild_id_keeps_the_guild(monkeypatch):
+    # guild_members is not maintained by the app: the only member is on users.guild_id
+    svc = _purge_db(monkeypatch, tables=_guild_tables([], _guild_users(u2={"guild_id": "g1"})))
+    out = ap.hard_delete_learner_content("u1")
+    assert out["guilds"] == "transferred"
+    assert svc.tables["guilds"] == [{"id": "g1", "owner_id": "u2"}]
+
+
+def test_a_deleted_user_on_guild_id_does_not_keep_the_guild(monkeypatch):
+    _purge_db(monkeypatch, tables=_guild_tables(
+        [], _guild_users(u2={"guild_id": "g1", "is_deleted": True})))
+    assert ap.hard_delete_learner_content("u1")["guilds"] == "deleted"
+
+
+def test_transfer_is_reported_only_if_the_update_matched_a_row(monkeypatch):
+    svc = _purge_db(monkeypatch, tables=_guild_tables(
+        [{"guild_id": "g1", "user_id": "u2", "joined_at": "2026-01-01"}], _guild_users()))
+    orig_table = svc.table
+
+    def table(name):
+        q = orig_table(name)
+        if name == "guilds" and q.mode == "select":
+            orig_update = q.update
+
+            def update(row):  # ownership moved between the read and the write
+                svc.tables["guilds"][0]["owner_id"] = "someone-else"
+                return orig_update(row)
+            q.update = update
+        return q
+    monkeypatch.setattr(svc, "table", table)
+    assert ap._purge_owned_guilds(svc, "u1") == "clear"
+    assert svc.tables["guilds"][0]["owner_id"] == "someone-else"
+
 
 
 def test_guild_owned_by_someone_else_is_untouched(monkeypatch):
@@ -345,9 +427,9 @@ def _with_storage(svc, storage):
 
 def test_verification_proof_files_and_rows_are_purged(monkeypatch):
     svc = _purge_db(monkeypatch, tables={"institution_verification_submissions": [
-        {"id": "v1", "submitted_by": "u1", "storage_path": "org/u1/a.pdf"},
-        {"id": "v2", "submitted_by": "u1", "storage_path": "org/u1/b.png"},
-        {"id": "v3", "submitted_by": "u2", "storage_path": "org/u2/c.pdf"},
+        {"id": "v1", "school_id": "org", "submitted_by": "u1", "storage_path": "org/u1/a.pdf"},
+        {"id": "v2", "school_id": "org", "submitted_by": "u1", "storage_path": "org/u1/b.png"},
+        {"id": "v3", "school_id": "org", "submitted_by": "u2", "storage_path": "org/u2/c.pdf"},
     ]})
     storage = _with_storage(svc, _Storage()).storage
     out = ap.hard_delete_learner_content("u1")
@@ -358,11 +440,59 @@ def test_verification_proof_files_and_rows_are_purged(monkeypatch):
 
 def test_a_storage_failure_keeps_the_submission_rows_for_a_retry(monkeypatch):
     svc = _purge_db(monkeypatch, tables={"institution_verification_submissions": [
-        {"id": "v1", "submitted_by": "u1", "storage_path": "org/u1/a.pdf"}]})
+        {"id": "v1", "school_id": "org", "submitted_by": "u1", "storage_path": "org/u1/a.pdf"}]})
     _with_storage(svc, _Storage(fail=True))
     out = ap.hard_delete_learner_content("u1")
     assert out["institution_verification_submissions"] == "error"
     assert len(svc.tables["institution_verification_submissions"]) == 1
+
+
+def test_a_proof_path_outside_the_server_built_shape_is_never_removed(monkeypatch):
+    rows = [
+        {"id": "ok", "school_id": "org", "submitted_by": "u1", "storage_path": "org/u1/a.pdf"},
+        {"id": "other-user", "school_id": "org", "submitted_by": "u1", "storage_path": "org/u2/b.pdf"},
+        {"id": "other-school", "school_id": "org", "submitted_by": "u1", "storage_path": "evil/u1/c.pdf"},
+        {"id": "traversal", "school_id": "org", "submitted_by": "u1", "storage_path": "../org/u1/d.pdf"},
+        {"id": "no-school", "school_id": None, "submitted_by": "u1", "storage_path": "org/u1/e.pdf"},
+    ]
+    svc = _purge_db(monkeypatch, tables={"institution_verification_submissions": rows})
+    storage = _with_storage(svc, _Storage()).storage
+    out = ap.hard_delete_learner_content("u1")
+    assert out["institution_verification_submissions"] == "error"
+    assert storage.removed == ["org/u1/a.pdf"]  # only the conforming path
+    assert len(svc.tables["institution_verification_submissions"]) == 5  # rows kept for review
+
+
+# --- school-side copies of a claimed (possibly minor) learner's identity -----
+
+def test_claimed_minor_drafts_and_merge_candidates_are_deleted(monkeypatch):
+    svc = _purge_db(monkeypatch, tables={
+        "student_provision_drafts": [
+            {"id": "d1", "generated_user_id": "u1", "full_name": "Ada", "guardian_name": "Mum"},
+            {"id": "d2", "generated_user_id": "u2", "full_name": "Bola"},
+            {"id": "d3", "generated_user_id": None, "full_name": "Chi"},
+        ],
+        "student_merge_candidates": [
+            {"id": "m1", "provisioned_student_id": "u1", "real_student_id": "u9", "provisioned_snapshot": {"n": "Ada"}},
+            {"id": "m2", "provisioned_student_id": "u8", "real_student_id": "u1", "real_snapshot": {"n": "Ada"}},
+            {"id": "m3", "provisioned_student_id": "u2", "real_student_id": "u3"},
+        ],
+    })
+    out = ap.hard_delete_learner_content("u1")
+    assert out["student_provision_drafts"] == "deleted" and out["student_merge_candidates"] == "deleted"
+    assert [r["id"] for r in svc.tables["student_provision_drafts"]] == ["d2", "d3"]
+    assert [r["id"] for r in svc.tables["student_merge_candidates"]] == ["m3"]
+    again = ap.hard_delete_learner_content("u1")  # idempotent
+    assert again["student_provision_drafts"] == "clear" and again["student_merge_candidates"] == "clear"
+
+
+def test_missing_school_tables_or_columns_count_as_clear(monkeypatch):
+    _purge_db(monkeypatch, missing_tables={"student_provision_drafts"},
+              missing_columns={"student_merge_candidates": {"real_student_id"}},
+              tables={"student_merge_candidates": [{"id": "m1", "provisioned_student_id": "u1"}]})
+    out = ap.hard_delete_learner_content("u1")
+    assert out["student_provision_drafts"] == "missing_table"
+    assert out["student_merge_candidates"] == "deleted"
 
 
 def test_a_user_with_every_blocker_gets_a_clean_purge_and_the_row_can_go(monkeypatch):
@@ -370,12 +500,17 @@ def test_a_user_with_every_blocker_gets_a_clean_purge_and_the_row_can_go(monkeyp
         "notifications": [{"id": "n1", "recipient_id": "u2", "actor_id": "u1"}],
         "guilds": [{"id": "g1", "owner_id": "u1"}],
         "guild_members": [{"guild_id": "g1", "user_id": "u1"}],
-        "institution_verification_submissions": [{"id": "v1", "submitted_by": "u1", "storage_path": "p"}],
+        "institution_verification_submissions": [
+            {"id": "v1", "school_id": "org", "submitted_by": "u1", "storage_path": "org/u1/p"}],
+        "student_provision_drafts": [{"id": "d1", "generated_user_id": "u1"}],
+        "student_merge_candidates": [{"id": "m1", "real_student_id": "u1"}],
     })
-    _with_storage(svc, _Storage())
+    storage = _with_storage(svc, _Storage()).storage
     out = ap.hard_delete_learner_content("u1")
     assert not any(v in ahd._BLOCKING_OUTCOMES for v in out.values()), out
     assert svc.tables["notifications"] == [] and svc.tables["guilds"] == []
+    assert svc.tables["institution_verification_submissions"] == [] and storage.removed == ["org/u1/p"]
+    assert svc.tables["student_provision_drafts"] == [] and svc.tables["student_merge_candidates"] == []
 
 
 # --- 6. hard-delete job: blocked rows, starvation, backoff, floor ------------
@@ -529,7 +664,7 @@ def _real_purge_job(monkeypatch, users, tables, **kw):
 
 def test_a_user_who_triggered_notifications_and_owns_a_guild_is_deleted(monkeypatch):
     svc = _real_purge_job(
-        monkeypatch, [_u("u1", 90)],
+        monkeypatch, [_u("u1", 90), _u("u2", 1, is_deleted=False)],
         {"notifications": [{"id": "n1", "recipient_id": "u2", "actor_id": "u1"}],
          "guilds": [{"id": "g1", "owner_id": "u1"}],
          "guild_members": [{"guild_id": "g1", "user_id": "u1", "joined_at": "1"},
@@ -537,7 +672,7 @@ def test_a_user_who_triggered_notifications_and_owns_a_guild_is_deleted(monkeypa
     )
     out = ahd.hard_delete_expired_accounts(NOW)
     assert out["deleted"] == 1 and out["failed"] == 0 and out["blocked"] == {}
-    assert svc.tables["users"] == [] and svc.tables["notifications"] == []
+    assert [r["id"] for r in svc.tables["users"]] == ["u2"] and svc.tables["notifications"] == []
     assert svc.tables["guilds"][0]["owner_id"] == "u2"
 
 
@@ -546,17 +681,24 @@ def test_a_provisioned_minor_who_claimed_and_deleted_is_purged_with_proof_files(
         monkeypatch,
         [_u("minor", 90, provisioning_school_id="s1", claim_state="claimed", provenance="provisioned")],
         {"saved_items": [{"id": "s1", "user_id": "minor"}],
-         "institution_verification_submissions": [{"id": "v1", "submitted_by": "minor", "storage_path": "o/minor/x.pdf"}]},
+         "institution_verification_submissions": [{"id": "v1", "school_id": "o", "submitted_by": "minor",
+                                                       "storage_path": "o/minor/x.pdf"}],
+         "student_provision_drafts": [{"id": "d1", "generated_user_id": "minor", "full_name": "Ada", "guardian_name": "Mum"}],
+         "student_merge_candidates": [{"id": "m1", "provisioned_student_id": "minor", "real_student_id": "other",
+                                       "provisioned_snapshot": {"name": "Ada"}}]},
     )
     out = ahd.hard_delete_expired_accounts(NOW)
     assert out["deleted"] == 1 and svc.tables["users"] == []
     assert svc.tables["saved_items"] == [] and svc.storage.removed == ["o/minor/x.pdf"]
+    # the school-side copies of the minor's identity go with the account
+    assert svc.tables["student_provision_drafts"] == [] and svc.tables["student_merge_candidates"] == []
+    assert svc.tables["institution_verification_submissions"] == []
 
 
 def test_a_persistent_failure_is_retried_then_abandoned_with_pii_intact(monkeypatch):
     svc = _real_purge_job(
         monkeypatch, [_u("u1", 90)],
-        {"institution_verification_submissions": [{"id": "v1", "submitted_by": "u1", "storage_path": "p"}]},
+        {"institution_verification_submissions": [{"id": "v1", "school_id": "o", "submitted_by": "u1", "storage_path": "o/u1/p"}]},
     )
     svc.storage = _Storage(fail=True)
     for day in range(ahd.MAX_PURGE_ATTEMPTS):

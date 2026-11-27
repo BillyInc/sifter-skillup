@@ -552,7 +552,10 @@ CLAUDE.md.
 
 PII (email, name, school, phone) never in URLs, query strings, or logs.
 `DELETE /api/users/me` triggers a cooldown; hard delete after via
-`cleanup_expired_sessions`. Content cache expires weekly on Sunday via
+`cleanup_expired_sessions`. The hard-delete job is a dry run unless
+`ACCOUNT_HARD_DELETE_ENABLED` is true, but even a dry run deletes expired
+`account_deletion_cooldowns` rows (they hold only a hashed device id and have no
+effect). Content cache expires weekly on Sunday via
 `expire_old_sync_log`.
 
 ## 10. API design & response envelope

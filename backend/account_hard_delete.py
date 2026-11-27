@@ -19,8 +19,9 @@ Safety:
   minors, would never be purged. The filter runs in the database query, so
   unclaimed shells cannot fill the batch and starve every other account.
 - Expired ``account_deletion_cooldowns`` rows are deleted on every run, also
-  while the job is a dry run: an expired cooldown has no effect and holds only a
-  hashed device id.
+  while the job is a dry run. This is a deliberate write side effect of a dry
+  run: an expired cooldown has no effect and holds only a hashed device id, so
+  keeping it would only retain data. Nothing else is written in a dry run.
 - At most ``ACCOUNT_HARD_DELETE_BATCH_SIZE`` accounts per run.
 - One account failing never stops the run.
 - The user row is deleted ONLY if every purge step succeeded. An ``error``,
