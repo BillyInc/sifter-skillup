@@ -674,8 +674,10 @@ async def auth_base_wallet(body: dict, request: Request):
         # when the address is unknown; existing wallets are never limited.
         ip = auth_rate_limit.client_ip(request)
         auth_rate_limit.enforce("wallet_create_ip", ip or "")
-        auth_rate_limit.record("wallet_create_ip", ip or "")
         user = _create_user(wallet_address=wallet_address, username=f"0x{wallet_address[2:6]}...{wallet_address[-4:]}", auth_provider="base")
+        # Count only after the account exists, so a failed creation (DB error)
+        # does not consume allowance. Small race between enforce and record is accepted.
+        auth_rate_limit.record("wallet_create_ip", ip or "")
     token = Auth.create_jwt(user["id"], token_version=Auth.token_version_of(user))
     await _post_auth_device_register(user["id"], body, request)
     return ResponseModel(data={"token": token, "user": sanitize_user_row(user)})
@@ -686,9 +688,11 @@ async def auth_guest(request: Request):
     # Per-address cap on guest creation (skipped when the address is unknown).
     ip = auth_rate_limit.client_ip(request)
     auth_rate_limit.enforce("guest_create_ip", ip or "")
-    auth_rate_limit.record("guest_create_ip", ip or "")
     uid = uuid.uuid4().hex[:8]
     user = _create_user(username=f"Guest_{uid}", auth_provider="guest")
+    # Count only after the account exists, so a failed creation (DB error)
+    # does not consume allowance. Small race between enforce and record is accepted.
+    auth_rate_limit.record("guest_create_ip", ip or "")
     token = Auth.create_jwt(user["id"], token_version=Auth.token_version_of(user))
     # Guest was the only auth route that skipped device registration: telegram,
     # base-wallet, signup and login all call this. Without it no active_sessions

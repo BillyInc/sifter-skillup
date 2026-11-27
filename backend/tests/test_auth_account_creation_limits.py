@@ -59,10 +59,11 @@ def _limit(bucket):
     return auth_rate_limit.LIMITS[bucket][1]
 
 
-@pytest.mark.parametrize("bucket", ["guest_create_ip", "wallet_create_ip"])
-def test_limits_are_generous_and_capped(bucket):
-    assert _limit(bucket) >= 60
-    assert auth_rate_limit.BACKOFF_CAPS[bucket] <= 15 * 60
+def test_limit_numbers():
+    assert _limit("guest_create_ip") == 600  # a school shares one address
+    assert _limit("wallet_create_ip") == 60
+    for bucket in ("guest_create_ip", "wallet_create_ip"):
+        assert auth_rate_limit.BACKOFF_CAPS[bucket] == 15 * 60
 
 
 def test_guest_creation_is_limited_per_address(stubs):
@@ -98,3 +99,57 @@ def test_existing_wallet_login_is_never_limited(stubs, monkeypatch):
     monkeypatch.setattr(main.db, "get_service_client", lambda: SimpleNamespace(
         table=lambda _n: _query([{"id": "old", "token_version": 0}])))
     assert _wallet(1)  # returning wallet, same address, past the creation cap
+
+
+def test_failed_guest_creation_does_not_count(stubs, monkeypatch):
+    def boom(**kw):
+        raise RuntimeError("db down")
+
+    monkeypatch.setattr(main, "_create_user", boom)
+    for _ in range(_limit("guest_create_ip") + 5):
+        with pytest.raises(RuntimeError):
+            _guest()
+    monkeypatch.setattr(main, "_create_user", lambda **kw: {"id": "u", "token_version": 0})
+    assert _guest()  # allowance untouched by the failures
+
+
+def test_failed_wallet_creation_does_not_count(stubs, monkeypatch):
+    def boom(**kw):
+        raise RuntimeError("db down")
+
+    monkeypatch.setattr(main, "_create_user", boom)
+    for i in range(_limit("wallet_create_ip") + 5):
+        with pytest.raises(RuntimeError):
+            _wallet(i)
+    monkeypatch.setattr(main, "_create_user", lambda **kw: {"id": "u", "token_version": 0})
+    assert _wallet(999)
+
+
+def _fwd_req(xff, peer="10.0.0.5"):
+    async def _json():
+        return {}
+    return SimpleNamespace(client=SimpleNamespace(host=peer),
+                           headers={"x-forwarded-for": xff}, json=_json)
+
+
+def test_spoofed_leftmost_xff_is_ignored_when_proxy_trusted(stubs, monkeypatch):
+    monkeypatch.setattr(main.settings, "TRUST_PROXY_HEADERS", True, raising=False)
+    monkeypatch.setattr(auth_rate_limit.settings, "TRUST_PROXY_HEADERS", True, raising=False)
+    monkeypatch.setattr(auth_rate_limit.settings, "TRUSTED_PROXY_HOPS", 1, raising=False)
+    # the proxy appended 8.8.8.8; the attacker rotates the leftmost entry
+    for i in range(_limit("guest_create_ip")):
+        asyncio.run(main.auth_guest(_fwd_req(f"1.2.3.{i % 250 + 1}, 8.8.8.8")))
+    with pytest.raises(HTTPException) as e:
+        asyncio.run(main.auth_guest(_fwd_req("9.9.9.9, 8.8.8.8")))
+    assert e.value.status_code == 429
+    asyncio.run(main.auth_guest(_fwd_req("9.9.9.9, 1.1.1.1")))  # different real address
+
+
+def test_xff_ignored_entirely_when_proxy_not_trusted(stubs, monkeypatch):
+    monkeypatch.setattr(auth_rate_limit.settings, "TRUST_PROXY_HEADERS", False, raising=False)
+    # private peer, spoofed public XFF: no address is known, so no limit applies
+    assert auth_rate_limit.client_ip(_fwd_req("8.8.8.8")) is None
+    for _ in range(_limit("guest_create_ip") + 5):
+        asyncio.run(main.auth_guest(_fwd_req("8.8.8.8")))
+    # public peer: the header cannot change the key
+    assert auth_rate_limit.client_ip(_fwd_req("1.1.1.1", peer="8.8.8.8")) == "8.8.8.8"

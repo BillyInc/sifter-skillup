@@ -57,8 +57,10 @@ LIMITS: dict[str, tuple[int, int]] = {
     # code guessing: the code space is small, so this stays tight per email
     "reset_confirm_fail_email": (15 * 60, 5),
     "reset_confirm_fail_ip": (15 * 60, 100),
-    # account creation (successes), per address; generous, skipped without an address
-    "guest_create_ip": (60 * 60, 60),
+    # account creation (successes), per address; generous, skipped without an address.
+    # Guest sign-in is the main entry point and a whole school shares one NAT address,
+    # so it is sized for several classes an hour (edge limit: 30r/m, burst 100).
+    "guest_create_ip": (60 * 60, 600),
     "wallet_create_ip": (60 * 60, 60),
     # admin MFA
     "mfa_request_user": (60 * 60, 6),

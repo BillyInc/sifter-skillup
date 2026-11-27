@@ -1261,10 +1261,12 @@ class ClaimRequest(BaseModel):
 # address for up to 15 minutes. A signed-in user with zero failures of their
 # own presenting a correct code cannot be exempted safely: a freshly minted
 # attacker account also has zero failures, so the exemption would reopen the
-# guessing hole. Mitigations: the 300 ceiling is far above normal school use,
-# the lockout is capped at 15 minutes, and per-address limits on guest and
-# base-wallet account creation (auth_rate_limit: guest_create_ip,
-# wallet_create_ip) make filling the bucket expensive.
+# guessing hole. Mitigations: the 300 ceiling is far above normal school use
+# and the lockout is capped at 15 minutes. The per-address creation limits
+# (auth_rate_limit: guest_create_ip at 600/hour, wallet_create_ip at 60/hour)
+# only BOUND the cost of filling the bucket; they do not prevent the lockout:
+# at 600 guests an hour x 10 failures each, a single hostile student can still
+# fill the 300-failure bucket.
 #
 # Known limits: both limiters are in memory and per worker, so with N workers
 # the effective ceiling is up to N times these numbers and the counts are not
