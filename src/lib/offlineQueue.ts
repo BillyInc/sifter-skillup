@@ -15,6 +15,7 @@
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
+import { getSavedSessionProfile } from './sessionProfile';
 
 const QUEUE_KEY = 'sifter_offline_queue';
 const MAX_QUEUE_SIZE = 2000;
@@ -30,6 +31,17 @@ export interface QueueItem {
   createdAt: string;
   attempts: number;
   maxAttempts: number;
+  /** Account that made the write. Only that account's token may send it. */
+  ownerId?: string;
+}
+
+async function currentOwnerId(): Promise<string | null> {
+  try {
+    const profile = await getSavedSessionProfile<{ id?: string | number }>();
+    return profile?.id != null ? String(profile.id) : null;
+  } catch {
+    return null;
+  }
 }
 
 type SyncListener = (status: 'syncing' | 'idle' | 'failed') => void;
@@ -46,12 +58,17 @@ class OfflineQueueManager {
   }
 
   /** Enqueue an action. Returns immediately — never blocks the user. */
-  async enqueue(item: Omit<QueueItem, 'id' | 'createdAt' | 'attempts'>) {
+  async enqueue(item: Omit<QueueItem, 'id' | 'createdAt' | 'attempts' | 'ownerId'>) {
+    // A write with no signed-in owner can never be sent safely: it would be
+    // delivered with whichever account signs in next.
+    const ownerId = await currentOwnerId();
+    if (!ownerId) return;
     const entry: QueueItem = {
       ...item,
       id: `q_${Date.now()}_${Math.random().toString(36).slice(2)}`,
       createdAt: new Date().toISOString(),
       attempts: 0,
+      ownerId,
       maxAttempts: item.priority === 'critical' ? 20 : item.priority === 'high' ? 10 : 5,
     };
 
@@ -107,42 +124,51 @@ class OfflineQueueManager {
     this._notify('syncing');
 
     const { API_BASE, API } = await import('./api');
-    const token = await API.getToken();
 
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    };
+    let drained = 0;
+    while (true) {
+      // Only the signed-in account's own writes are sent, with that account's
+      // current token (re-read each item so a refreshed token is used).
+      const owner = await currentOwnerId();
+      const token = await API.getToken();
+      if (!owner || !token) break;
+      const item = this.queue.find(i => i.ownerId === owner);
+      if (!item) break;
 
-    while (this.queue.length > 0) {
       // Re-check connectivity every 5 items
-      if (this.queue.indexOf(this.queue[0]) % 5 === 0) {
+      if (drained > 0 && drained % 5 === 0) {
         const net = await NetInfo.fetch();
         if (!net.isConnected) break;
       }
 
-      const item = this.queue[0];
-
       try {
         const res = await fetch(`${API_BASE}${item.endpoint}`, {
           method: item.method,
-          headers,
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
           body: JSON.stringify(item.body),
         });
 
         if (res.ok || res.status === 409) {
           // 409 = conflict (already synced) — treat as success
-          this.queue.shift();
+          this._remove(item);
+          drained++;
           await this._saveQueue();
+        } else if (res.status === 401 || res.status === 403) {
+          // Expired or insufficient session: the write is still valid, so keep
+          // it and stop draining until the user is authenticated again.
+          break;
         } else if (res.status >= 400 && res.status < 500) {
-          // Client error — skip this item, it won't succeed on retry
-          this.queue.shift();
+          // Permanent client error — skip this item, it won't succeed on retry
+          this._remove(item);
           await this._saveQueue();
         } else {
           // Server error — increment attempts and back off
           item.attempts++;
           if (item.attempts >= item.maxAttempts) {
-            this.queue.shift(); // give up
+            this._remove(item); // give up
           }
           await this._saveQueue();
           break; // back off, try next sync window
@@ -157,11 +183,26 @@ class OfflineQueueManager {
     this._notify(this.queue.length === 0 ? 'idle' : 'failed');
   }
 
+  private _remove(item: QueueItem) {
+    this.queue = this.queue.filter(i => i.id !== item.id);
+  }
+
   private async _loadQueue() {
     try {
       const raw = await AsyncStorage.getItem(QUEUE_KEY);
-      if (raw) this.queue = JSON.parse(raw);
+      const parsed = raw ? JSON.parse(raw) : [];
+      // Entries written before owner tagging cannot be attributed to an
+      // account, so they are never sent.
+      this.queue = Array.isArray(parsed) ? parsed.filter((i: QueueItem) => !!i?.ownerId) : [];
     } catch { this.queue = []; }
+  }
+
+  /** Forget every queued write (sign-out / account deletion). */
+  async clear() {
+    this.queue = [];
+    try {
+      await AsyncStorage.removeItem(QUEUE_KEY);
+    } catch {}
   }
 
   private async _saveQueue() {
@@ -194,6 +235,16 @@ export async function offlineWrite(
 
 // Cache layer for reads
 const READ_CACHE_PREFIX = 'sifter_cache_';
+
+/** Remove the offline write queue and every cached read (sign-out / deletion). */
+export async function clearOfflineData(): Promise<void> {
+  await OfflineQueue.clear();
+  try {
+    const keys = await AsyncStorage.getAllKeys();
+    const cacheKeys = keys.filter(k => k.startsWith(READ_CACHE_PREFIX));
+    if (cacheKeys.length) await AsyncStorage.multiRemove(cacheKeys);
+  } catch {}
+}
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 export async function offlineRead<T>(

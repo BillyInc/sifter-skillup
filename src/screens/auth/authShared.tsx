@@ -34,6 +34,7 @@ import {
   CompassFonts,
 } from "../../theme";
 import { LevelUpLogo } from "../../components/brand/LevelUpLogo";
+import { TOUCH_TARGET_MIN } from "../../components/ui";
 import TermsScreen from "../TermsScreen";
 import PrivacyScreen from "../PrivacyScreen";
 
@@ -216,6 +217,7 @@ export function AuthField({
             { color: colors.textRole.primary },
             CompassFonts.body,
           ]}
+          accessibilityLabel={label}
           value={value}
           onChangeText={onChangeText}
           placeholder={placeholder}
@@ -242,11 +244,14 @@ export function AuthField({
         ) : null}
         {secure ? (
           <TouchableOpacity
+            accessibilityRole="button"
+            accessibilityLabel={hidden ? "Show password" : "Hide password"}
+            accessibilityState={{ checked: !hidden }}
             onPress={() => setHidden((h) => !h)}
             hitSlop={10}
             style={styles.eyeBtn}
           >
-            <Text style={styles.eye}>{hidden ? "👁️" : "🙈"}</Text>
+            <Text style={styles.eye} accessibilityElementsHidden importantForAccessibility="no">{hidden ? "👁️" : "🙈"}</Text>
           </TouchableOpacity>
         ) : null}
       </View>
@@ -395,9 +400,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.md,
   },
   input: { flex: 1, paddingVertical: 13, fontSize: FontSize.md },
-  eyeBtn: { paddingLeft: Spacing.sm, paddingVertical: 8 },
+  eyeBtn: {
+    paddingLeft: Spacing.sm,
+    minWidth: TOUCH_TARGET_MIN,
+    minHeight: TOUCH_TARGET_MIN,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   eye: { fontSize: 18 },
-  clearBtn: { paddingHorizontal: Spacing.xs, paddingVertical: 8 },
+  clearBtn: {
+    paddingHorizontal: Spacing.xs,
+    minHeight: TOUCH_TARGET_MIN,
+    justifyContent: "center",
+  },
   clearText: { fontSize: FontSize.xs, fontWeight: "700" },
   hint: { fontSize: FontSize.xs, marginTop: 2 },
   readyHint: { fontSize: FontSize.xs, marginTop: 2, fontWeight: "700" },

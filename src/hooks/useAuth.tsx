@@ -16,7 +16,7 @@ import { logger } from '../lib/logger';
 import { setPendingPostAuthRedirect } from '../lib/postAuthRedirect';
 import { resolvePostAuthHref } from '../lib/resumeNavigation';
 import { clearExplicitLogout, hasExplicitLogout, markExplicitLogout } from '../lib/logoutState';
-import { clearLocalUserState } from '../lib/localUserState';
+import { clearAllDeviceUserData, clearLocalUserState } from '../lib/localUserState';
 import { clearSessionProfile, getSavedSessionProfile, saveSessionProfile } from '../lib/sessionProfile';
 import type { StarkzapWallet } from '../lib/starkzap';
 import {
@@ -230,7 +230,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         await Promise.all([
           clearSessionProfile(),
           markExplicitLogout(),
-          clearLocalUserState(userId),
+          clearAllDeviceUserData(userId),
         ]);
         await switchLocalUser('__signed_out__');
       } finally {
@@ -456,7 +456,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await clearSessionProfile();
     await markExplicitLogout();
     if (!options.preserveLocalUserState) {
-      await clearLocalUserState(user?.id);
+      await clearAllDeviceUserData(user?.id);
     }
     await setCareerCacheIdentity(null);
     await switchLocalUser('__signed_out__');
@@ -470,7 +470,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await API.clearToken();
       await clearSessionProfile();
       await markExplicitLogout();
-      await clearLocalUserState(user?.id);
+      await clearAllDeviceUserData(user?.id);
       await setCareerCacheIdentity(null);
       setUser(null);
     }
