@@ -5,6 +5,8 @@ import { clearOnboardingDraft } from "./onboardingDraft";
 import { clearAdminResume } from "./adminResume";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { OfflineQueue, clearOfflineData, clearReadCache } from "./offlineQueue";
+import { DEVICE_OWNER_KEY, clearDeviceOwner, getDeviceOwner, recordDeviceOwner } from "./deviceOwner";
+import { getSavedSessionProfile } from "./sessionProfile";
 
 export async function clearLocalUserState(userId?: string | null): Promise<void> {
   await Promise.all([
@@ -33,6 +35,7 @@ export const DEVICE_USER_DATA_KEYS = [
   "sifter_bookmarks", // diaryEngine.ts bookmarks
   "sifter_diary_index", // diaryEngine.ts
   "sifter_last_position", // gameStore.ts
+  "pending_rewards", // rewardsEngine.ts: unsent reward results, each tagged with a userId
 ] as const;
 
 /** Key families (prefix match): per-item or per-user suffixes. */
@@ -40,6 +43,7 @@ export const DEVICE_USER_DATA_PREFIXES = [
   "@sifter_feed_comments_v1:", // useFeed.ts, one key per post
   "sifter_diary_", // diaryEngine.ts, one key per user's notes
   "levelup:admin-explore:saved-searches:", // AdminExplorePage.tsx
+  "sifter_track_setup_v1_", // TrackSetupScreen.tsx, one key per track
 ] as const;
 
 async function clearUnscopedUserKeys(): Promise<void> {
@@ -55,22 +59,42 @@ async function clearUnscopedUserKeys(): Promise<void> {
   }
 }
 
-const DEVICE_OWNER_KEY = "@levelup_device_owner_v1";
+export { DEVICE_OWNER_KEY };
 
 /**
- * Call when an account signs in. Cached reads and admin drafts survive a
- * "continue later" sign-out, but they are not all scoped by account, so if a
- * different account (or an unknown previous owner) now signs in they are
- * removed. The same user returning keeps them. When the previous owner is
+ * Call when an account signs in (BEFORE its profile is saved: the saved
+ * profile is still the previous account's). Cached reads and admin drafts
+ * survive a "continue later" sign-out, but they are not all scoped by account,
+ * so if a different account (or an unknown previous owner) now signs in they
+ * are removed. The same user returning keeps them. When the previous owner is
  * known and different, their device learner data (DEVICE_USER_DATA_KEYS and
- * prefixes) and queued writes are removed too.
+ * prefixes) is removed too.
+ *
+ * The previous owner is the recorded device owner or, for a session that
+ * predates the owner key, the id in the still-saved session profile.
+ *
+ * Queued writes: they carry their own ownerId and are only ever sent with that
+ * account's token, so they are never visible to the incoming account. A normal
+ * account that replaces the previous owner drops the previous owner's unsent
+ * writes (they must not carry over). A GUEST session is the exception: it
+ * clears the shared, unscoped data above (guest data must not mix with the
+ * previous learner's) but keeps the previous owner's queued writes, so trying
+ * the app as a guest after "continue later" cannot destroy that learner's
+ * unsent work. Those writes still expire after FOREIGN_OWNER_MAX_AGE_MS, and
+ * are dropped when a different non-guest account signs in.
  */
-export async function reconcileDeviceOwner(userId: string): Promise<void> {
-  let previous: string | null = null;
-  try {
-    previous = await AsyncStorage.getItem(DEVICE_OWNER_KEY);
-  } catch {
-    previous = null;
+export async function reconcileDeviceOwner(
+  userId: string,
+  options: { guest?: boolean } = {},
+): Promise<void> {
+  let previous: string | null = await getDeviceOwner();
+  if (!previous) {
+    try {
+      const saved = await getSavedSessionProfile<{ id?: string | number }>();
+      previous = saved?.id != null && saved.id !== "" ? String(saved.id) : null;
+    } catch {
+      previous = null;
+    }
   }
   if (previous !== userId) {
     await clearReadCache();
@@ -78,16 +102,12 @@ export async function reconcileDeviceOwner(userId: string): Promise<void> {
     await clearAdminResume();
     if (previous) {
       // A different account signed in after a "continue later" sign-out: the
-      // previous learner's unscoped data and unsent writes must not carry over.
+      // previous learner's unscoped data must not carry over.
       await clearUnscopedUserKeys();
-      await OfflineQueue.dropOwner(previous);
+      if (!options.guest) await OfflineQueue.dropOwner(previous);
     }
   }
-  try {
-    await AsyncStorage.setItem(DEVICE_OWNER_KEY, userId);
-  } catch {
-    // ignore
-  }
+  await recordDeviceOwner(userId);
 }
 
 /**
@@ -114,6 +134,6 @@ export async function clearAllDeviceUserData(userId?: string | null): Promise<vo
     userId ? clearAdminResume() : Promise.resolve(),
     clearOfflineData(),
     clearUnscopedUserKeys(),
-    AsyncStorage.removeItem(DEVICE_OWNER_KEY).catch(() => undefined),
+    clearDeviceOwner(userId),
   ]);
 }

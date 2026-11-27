@@ -290,6 +290,7 @@ describe("reconcileDeviceOwner with a different account", () => {
   });
 
   it("leaves learner data alone when the previous owner is unknown", async () => {
+    mockProfile = null; // no owner key and no saved profile
     await AsyncStorage.setItem("@sifter_xp_v1", "x");
     await reconcileDeviceOwner("user-b");
     expect(await AsyncStorage.getItem("@sifter_xp_v1")).toBe("x");

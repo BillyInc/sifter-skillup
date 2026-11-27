@@ -7,7 +7,7 @@
  *   - Hairline borders, one accent per screen (Brand.primary for CTA only)
  *   - 4px grid spacing
  */
-import React, { useEffect, useRef, useState, type ReactNode } from "react";
+import React, { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import {
   View,
   Text,
@@ -189,6 +189,7 @@ export function AuthField({
   const { colors } = useTheme();
   const [hidden, setHidden] = useState(!!secure);
   const [focused, setFocused] = useState(false);
+  const hintId = `${useId()}-hint`;
 
   return (
     <View style={styles.fieldGroup}>
@@ -224,6 +225,11 @@ export function AuthField({
             CompassFonts.body,
           ]}
           accessibilityLabel={label}
+          // The visible hint is the input's description (screen readers read it
+          // after the name). react-native-web maps aria-describedby to the hint
+          // element's nativeID; native uses accessibilityHint.
+          accessibilityHint={hint}
+          aria-describedby={hint ? hintId : undefined}
           value={value}
           onChangeText={onChangeText}
           placeholder={placeholder}
@@ -250,10 +256,11 @@ export function AuthField({
         ) : null}
         {secure ? (
           <TouchableOpacity
-            // A switch with a constant name: the state ("on"/"off") says
-            // whether the password is shown, so the label must not flip too.
+            // A switch whose name does not flip: the state ("on"/"off") says
+            // whether the value is shown. The name carries the field label so
+            // Password and Confirm password are told apart.
             accessibilityRole="switch"
-            accessibilityLabel="Show password"
+            accessibilityLabel={`Show ${label.toLowerCase()}`}
             accessibilityState={{ checked: !hidden }}
             // react-native-web does not map accessibilityState.checked.
             aria-checked={!hidden}
@@ -265,12 +272,11 @@ export function AuthField({
           </TouchableOpacity>
         ) : null}
       </View>
-      {focused ? (
-        <Text style={[styles.readyHint, { color: colors.accentRole.action }, CompassFonts.bodyMedium]}>
-          Ready to type
-        </Text>
-      ) : hint ? (
+      {hint ? (
+        // The hint stays visible while the field is focused: it is the
+        // description the input points at, so it is never swapped for filler.
         <Text
+          nativeID={hintId}
           style={[
             styles.hint,
             { color: colors.textRole.muted },
@@ -278,6 +284,10 @@ export function AuthField({
           ]}
         >
           {hint}
+        </Text>
+      ) : focused ? (
+        <Text style={[styles.readyHint, { color: colors.accentRole.action }, CompassFonts.bodyMedium]}>
+          Ready to type
         </Text>
       ) : null}
     </View>
@@ -420,10 +430,11 @@ const styles = StyleSheet.create({
   },
   eye: { fontSize: 18 },
   clearBtn: {
-    // Text-width only (hitSlop widens the target); never grows the row.
+    // A true 44px target (not a hitSlop that web ignores); never grows the row.
     flexShrink: 0,
-    paddingHorizontal: Spacing.xs,
+    minWidth: TOUCH_TARGET_MIN,
     minHeight: TOUCH_TARGET_MIN,
+    alignItems: "center",
     justifyContent: "center",
   },
   clearText: { fontSize: FontSize.xs, fontWeight: "700" },

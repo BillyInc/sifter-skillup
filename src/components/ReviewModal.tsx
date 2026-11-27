@@ -27,6 +27,9 @@ export default function ReviewModal({ visible, userId, context, onClose }: Props
   const [rating, setRating]     = useState(0);
   const [review, setReview]     = useState('');
   const [phase, setPhase]       = useState<'rating' | 'feedback' | 'store' | 'done'>('rating');
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
+  const [recorded, setRecorded] = useState(true);
 
   const handleRating = (r: number) => {
     setRating(r);
@@ -37,16 +40,30 @@ export default function ReviewModal({ visible, userId, context, onClose }: Props
   const handleStoreRedirect = async () => {
     const url = /iphone|ipad|ipod/i.test(navigator?.userAgent ?? '') ? APP_STORE_URL : PLAY_STORE_URL;
     await Linking.openURL(url).catch(() => {});
-    await offlineWrite('/api/reviews', 'POST', { userId, rating, context, redirectedToStore: true }, 'normal');
+    // The store rating itself is the user's action. This write only records
+    // that they were sent there; when nothing was queued, still move on, but
+    // the thank-you below does not claim feedback was received.
+    const result = await offlineWrite('/api/reviews', 'POST', { userId, rating, context, redirectedToStore: true }, 'normal');
+    setRecorded(result.queued);
     setPhase('done');
   };
 
   const handleSubmitFeedback = async () => {
-    await offlineWrite('/api/reviews', 'POST', { userId, rating, review, context, redirectedToStore: false }, 'normal');
+    if (submitting) return;
+    setSubmitting(true);
+    setSubmitError(false);
+    const reviewResult = await offlineWrite('/api/reviews', 'POST', { userId, rating, review, context, redirectedToStore: false }, 'normal');
+    if (!reviewResult.queued) {
+      // Nothing was stored (no signed-in profile): keep the text and say so
+      // rather than thanking the user for feedback that was never saved.
+      setSubmitError(true);
+      setSubmitting(false);
+      return;
+    }
     // Also route written feedback to the Sifter team so it is triaged
     // alongside bug/idea/content reports (Phase 12; outbound-only per §6A.1 —
     // this is not an inbox any institution admin can read).
-    await offlineWrite(
+    const feedbackResult = await offlineWrite(
       '/api/feedback',
       'POST',
       {
@@ -64,11 +81,15 @@ export default function ReviewModal({ visible, userId, context, onClose }: Props
       },
       'normal',
     );
+    // The review itself was stored; the team copy is best effort.
+    setRecorded(reviewResult.queued || feedbackResult.queued);
+    setSubmitting(false);
     setPhase('done');
   };
 
   const handleClose = () => {
     setRating(0); setReview(''); setPhase('rating');
+    setSubmitting(false); setSubmitError(false); setRecorded(true);
     onClose();
   };
 
@@ -111,8 +132,13 @@ export default function ReviewModal({ visible, userId, context, onClose }: Props
                 placeholderTextColor={Colors.textMuted}
                 multiline numberOfLines={4} textAlignVertical="top"
               />
-              <TouchableOpacity style={styles.submitBtn} onPress={handleSubmitFeedback}>
-                <Text style={styles.submitText}>Send Feedback</Text>
+              {submitError ? (
+                <Text accessibilityRole="alert" style={styles.errorText}>
+                  Your feedback could not be saved. Please sign in again and retry.
+                </Text>
+              ) : null}
+              <TouchableOpacity style={styles.submitBtn} onPress={handleSubmitFeedback} disabled={submitting}>
+                <Text style={styles.submitText}>{submitting ? 'Sending…' : 'Send Feedback'}</Text>
               </TouchableOpacity>
             </>
           )}
@@ -137,7 +163,11 @@ export default function ReviewModal({ visible, userId, context, onClose }: Props
             <>
               <Text style={styles.emoji}>💚</Text>
               <Text style={styles.title}>Thank you!</Text>
-              <Text style={styles.sub}>Your feedback helps us build a better learning experience for everyone.</Text>
+              <Text style={styles.sub}>
+                {recorded
+                  ? 'Your feedback helps us build a better learning experience for everyone.'
+                  : 'Your rating could not be recorded in the app, but it still counts in the store.'}
+              </Text>
               <TouchableOpacity style={styles.submitBtn} onPress={handleClose}>
                 <Text style={styles.submitText}>Continue</Text>
               </TouchableOpacity>
@@ -155,6 +185,7 @@ const styles = StyleSheet.create({
   emoji: { fontSize: 18, marginBottom: Spacing.md },
   title: { fontSize: FontSize.xl, fontWeight: '800', color: Colors.text, textAlign: 'center', marginBottom: Spacing.sm },
   sub: { fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center', lineHeight: 20, marginBottom: Spacing.lg },
+  errorText: { width: '100%', fontSize: FontSize.sm, color: Colors.danger, textAlign: 'center', marginBottom: Spacing.md },
   notice: { width: '100%', fontSize: FontSize.xs, color: Colors.textMuted, textAlign: 'center', lineHeight: 17, marginBottom: Spacing.md },
   stars: { flexDirection: 'row', gap: Spacing.sm, marginBottom: Spacing.lg },
   star: { fontSize: 18, color: Colors.border },

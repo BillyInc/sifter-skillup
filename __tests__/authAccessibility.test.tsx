@@ -54,6 +54,37 @@ describe("AuthField accessibility", () => {
     expect(screen.queryByRole("switch", { name: "Hide password" })).toBeNull();
   });
 
+  it("names each show switch after its own field", () => {
+    render(
+      <ThemeProvider>
+        <AuthField label="Password" value="a" onChangeText={() => undefined} secure />
+        <AuthField label="Confirm password" value="b" onChangeText={() => undefined} secure />
+      </ThemeProvider>,
+    );
+    expect(screen.getByRole("switch", { name: "Show password" })).toBeTruthy();
+    expect(screen.getByRole("switch", { name: "Show confirm password" })).toBeTruthy();
+  });
+
+  it("associates the visible hint with the input and keeps it while focused", () => {
+    renderField({ hint: "At least 8 characters" });
+    const input = screen.getByLabelText("Password");
+    expect(input.props.accessibilityHint).toBe("At least 8 characters");
+    const hint = screen.getByText("At least 8 characters");
+    expect(hint.props.nativeID).toBeTruthy();
+    expect(input.props["aria-describedby"]).toBe(hint.props.nativeID);
+
+    fireEvent(input, "focus");
+    expect(screen.getByText("At least 8 characters")).toBeTruthy();
+    expect(screen.queryByText("Ready to type")).toBeNull();
+  });
+
+  it("only shows the filler 'Ready to type' when there is no hint", () => {
+    renderField();
+    fireEvent(screen.getByLabelText("Password"), "focus");
+    expect(screen.getByText("Ready to type")).toBeTruthy();
+    expect(screen.getByLabelText("Password").props["aria-describedby"]).toBeUndefined();
+  });
+
   it("hides the decorative eye emoji from assistive technology on web too", () => {
     renderField();
     const eye = screen.getByText("👁️", { includeHiddenElements: true });
@@ -71,9 +102,10 @@ describe("AuthField accessibility", () => {
     expect(flatten(screen.getByLabelText("Password").props.style).minWidth).toBe(0);
   });
 
-  it("keeps the clear button at 44px", () => {
+  it("keeps the clear button a true 44px target", () => {
     renderField({ secure: false });
     const clear = screen.getByRole("button", { name: "Clear password" });
     expect(flatten(clear.props.style).minHeight).toBeGreaterThanOrEqual(TOUCH_TARGET_MIN);
+    expect(flatten(clear.props.style).minWidth).toBeGreaterThanOrEqual(TOUCH_TARGET_MIN);
   });
 });

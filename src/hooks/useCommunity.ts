@@ -16,8 +16,19 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Platform } from 'react-native';
 import { supabase } from '../lib/supabase';
-import { offlineWrite } from '../lib/offlineQueue';
+import { offlineWrite, type EnqueueResult } from '../lib/offlineQueue';
+
 import { API_BASE } from '../lib/config';
+
+/**
+ * offlineWrite resolves `{ queued: false }` (it does not throw) when nothing
+ * was stored, e.g. there is no signed-in profile. Callers must not treat that
+ * as success: roll back any optimistic change, then throw so the screen can
+ * show its own error.
+ */
+function assertQueued(result: EnqueueResult, message: string): void {
+  if (!result.queued) throw new Error(message);
+}
 
 let Haptics: any = null;
 if (Platform.OS !== 'web') {
@@ -154,6 +165,11 @@ export function useCommunity(currentUserId: string, currentUserTrack?: string) {
   const [searchResults, setSearchResults] = useState<Post[]>([]);
   const [searchLoading, setSearchLoading] = useState(false);
   const realtimeRef = useRef<any>(null);
+  // Latest committed state, read when an optimistic change needs rolling back.
+  const feedRef = useRef(feed);
+  feedRef.current = feed;
+  const notificationsRef = useRef({ notifications, unreadCount });
+  notificationsRef.current = { notifications, unreadCount };
 
   // ── Load initial feed ───────────────────────────────────────────────────────
 
@@ -278,6 +294,7 @@ export function useCommunity(currentUserId: string, currentUserTrack?: string) {
 
   const react = useCallback(async (postId: string, reaction: ReactionType) => {
     if (Haptics) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    const before = feedRef.current.posts.find(p => p.id === postId);
     setFeed(s => ({
       ...s,
       posts: s.posts.map(p => {
@@ -291,7 +308,18 @@ export function useCommunity(currentUserId: string, currentUserTrack?: string) {
         return { ...p, reactions: updated, myReaction: removing ? undefined : reaction };
       }),
     }));
-    await offlineWrite('/api/posts/react', 'POST', { postId, reaction }, 'normal');
+    const result = await offlineWrite('/api/posts/react', 'POST', { postId, reaction }, 'normal');
+    if (!result.queued) {
+      if (before) {
+        setFeed(s => ({
+          ...s,
+          posts: s.posts.map(p => p.id === postId
+            ? { ...p, reactions: before.reactions, myReaction: before.myReaction }
+            : p),
+        }));
+      }
+      assertQueued(result, 'Could not save your reaction. Please sign in again and retry.');
+    }
   }, []);
 
   const submitPost = useCallback(async (params: {
@@ -332,6 +360,7 @@ export function useCommunity(currentUserId: string, currentUserTrack?: string) {
   }, [currentUserId, currentUserTrack]);
 
   const votePoll = useCallback(async (postId: string, optionId: string) => {
+    const before = feedRef.current.posts.find(p => p.id === postId)?.poll;
     setFeed(s => ({
       ...s,
       posts: s.posts.map(p => {
@@ -340,43 +369,87 @@ export function useCommunity(currentUserId: string, currentUserTrack?: string) {
         return { ...p, poll: { ...p.poll, options: opts, totalVotes: p.poll.totalVotes + 1, votedId: optionId } };
       }),
     }));
-    await offlineWrite('/api/posts/vote', 'POST', { postId, optionId }, 'high');
+    const result = await offlineWrite('/api/posts/vote', 'POST', { postId, optionId }, 'high');
+    if (!result.queued) {
+      if (before) {
+        setFeed(s => ({ ...s, posts: s.posts.map(p => p.id === postId ? { ...p, poll: before } : p) }));
+      }
+      assertQueued(result, 'Could not save your vote. Please sign in again and retry.');
+    }
   }, []);
 
   const bookmark = useCallback(async (postId: string, folderId?: string) => {
+    const before = feedRef.current.posts.find(p => p.id === postId)?.isBookmarked;
     setFeed(s => ({
       ...s,
       posts: s.posts.map(p => p.id === postId ? { ...p, isBookmarked: !p.isBookmarked } : p),
     }));
-    await offlineWrite('/api/posts/bookmark', 'POST', { postId, folderId }, 'normal');
+    const result = await offlineWrite('/api/posts/bookmark', 'POST', { postId, folderId }, 'normal');
+    if (!result.queued) {
+      if (before !== undefined) {
+        setFeed(s => ({ ...s, posts: s.posts.map(p => p.id === postId ? { ...p, isBookmarked: before } : p) }));
+      }
+      assertQueued(result, 'Could not save your bookmark. Please sign in again and retry.');
+    }
   }, []);
 
   const reportPost = useCallback(async (postId: string, reason: string) => {
-    await offlineWrite('/api/moderation/report', 'POST', { postId, reason, reporterId: currentUserId }, 'high');
+    const result = await offlineWrite('/api/moderation/report', 'POST', { postId, reason, reporterId: currentUserId }, 'high');
+    // A report that was not stored must never look sent.
+    assertQueued(result, 'Your report could not be saved. Please sign in again and retry.');
   }, [currentUserId]);
 
   const blockUser = useCallback(async (userId: string) => {
+    const hadBlocked = blockedIds.has(userId);
+    const removed = feedRef.current.posts;
     setBlockedIds(prev => new Set([...prev, userId]));
     setFeed(s => ({ ...s, posts: s.posts.filter(p => p.author.id !== userId) }));
-    await offlineWrite('/api/users/block', 'POST', { targetId: userId }, 'high');
-  }, []);
+    const result = await offlineWrite('/api/users/block', 'POST', { targetId: userId }, 'high');
+    if (!result.queued) {
+      if (!hadBlocked) setBlockedIds(prev => { const n = new Set(prev); n.delete(userId); return n; });
+      setFeed(s => {
+        const have = new Set(s.posts.map(p => p.id));
+        const restored = removed.filter(p => p.author.id === userId && !have.has(p.id));
+        return { ...s, posts: [...s.posts, ...restored] };
+      });
+      assertQueued(result, 'Could not block this user. Please sign in again and retry.');
+    }
+  }, [blockedIds]);
 
   const muteUser = useCallback(async (userId: string) => {
+    const hadMuted = mutedIds.has(userId);
+    const removed = feedRef.current.posts;
     setMutedIds(prev => new Set([...prev, userId]));
     setFeed(s => ({ ...s, posts: s.posts.filter(p => p.author.id !== userId) }));
-    await offlineWrite('/api/users/mute', 'POST', { targetId: userId }, 'normal');
-  }, []);
+    const result = await offlineWrite('/api/users/mute', 'POST', { targetId: userId }, 'normal');
+    if (!result.queued) {
+      if (!hadMuted) setMutedIds(prev => { const n = new Set(prev); n.delete(userId); return n; });
+      setFeed(s => {
+        const have = new Set(s.posts.map(p => p.id));
+        const restored = removed.filter(p => p.author.id === userId && !have.has(p.id));
+        return { ...s, posts: [...s.posts, ...restored] };
+      });
+      assertQueued(result, 'Could not mute this user. Please sign in again and retry.');
+    }
+  }, [mutedIds]);
 
   const followUser = useCallback(async (userId: string, isPrivate: boolean) => {
     // Private accounts get a follow REQUEST — public accounts get instant follow
     const action = isPrivate ? 'follow-request' : 'follow';
-    await offlineWrite(`/api/users/${action}`, 'POST', { targetId: userId }, 'normal');
+    const result = await offlineWrite(`/api/users/${action}`, 'POST', { targetId: userId }, 'normal');
+    assertQueued(result, 'Could not follow this user. Please sign in again and retry.');
   }, []);
 
   const markNotificationsRead = useCallback(async () => {
+    const before = notificationsRef.current;
     setUnreadCount(0);
     setNotifications(prev => prev.map(n => ({ ...n, isRead: true })));
-    await offlineWrite('/api/notifications/read-all', 'POST', {}, 'normal');
+    const result = await offlineWrite('/api/notifications/read-all', 'POST', {}, 'normal');
+    if (!result.queued) {
+      setNotifications(before.notifications);
+      setUnreadCount(before.unreadCount);
+      assertQueued(result, 'Could not mark notifications as read. Please sign in again and retry.');
+    }
   }, []);
 
   // ── Search ──────────────────────────────────────────────────────────────────
@@ -466,11 +539,14 @@ export function useDMs(currentUserId: string) {
   }, []);
 
   const sendMessage = useCallback(async (recipientId: string, content: string) => {
-    await offlineWrite('/api/dms/send', 'POST', {
+    const result = await offlineWrite('/api/dms/send', 'POST', {
       senderId: currentUserId,
       recipientId,
       content,
     }, 'high');
+    // A message that was not stored was not sent: tell the caller so it keeps
+    // the text in the composer instead of showing it as delivered.
+    assertQueued(result, 'Your message could not be saved. Please sign in again and retry.');
   }, [currentUserId]);
 
   // Realtime for DMs
