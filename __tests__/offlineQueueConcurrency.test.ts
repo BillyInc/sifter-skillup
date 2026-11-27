@@ -242,8 +242,13 @@ describe("10. request timeout, poison items and statuses", () => {
 
     // Next failure is the one that reaches the cap.
     (q as any).queue[0].networkFailures = NETWORK_FAILURE_CAP - 1;
-    delete (q as any).queue[0].nextAttemptAt;
-    await q.sync();
+    const realNow = Date.now;
+    Date.now = () => realNow() + BACKOFF_MAX_MS; // the backoff has expired
+    try {
+      await q.sync();
+    } finally {
+      Date.now = realNow;
+    }
     expect(q.pendingCount).toBe(0);
     item = undefined as any;
   });
@@ -257,8 +262,13 @@ describe("10. request timeout, poison items and statuses", () => {
     expect(q.getItems()[0].attempts).toBe(1);
 
     (q as any).queue[0].attempts = 4;
-    delete (q as any).queue[0].nextAttemptAt;
-    await q.sync();
+    const realNow = Date.now;
+    Date.now = () => realNow() + BACKOFF_MAX_MS; // the backoff has expired
+    try {
+      await q.sync();
+    } finally {
+      Date.now = realNow;
+    }
     expect(q.pendingCount).toBe(0); // 5th attempt reaches maxAttempts
   });
 

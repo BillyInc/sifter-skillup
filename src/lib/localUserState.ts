@@ -75,13 +75,18 @@ export { DEVICE_OWNER_KEY };
  *
  * Queued writes: they carry their own ownerId and are only ever sent with that
  * account's token, so they are never visible to the incoming account. A normal
- * account that replaces the previous owner drops the previous owner's unsent
- * writes (they must not carry over). A GUEST session is the exception: it
- * clears the shared, unscoped data above (guest data must not mix with the
- * previous learner's) but keeps the previous owner's queued writes, so trying
- * the app as a guest after "continue later" cannot destroy that learner's
- * unsent work. Those writes still expire after FOREIGN_OWNER_MAX_AGE_MS, and
- * are dropped when a different non-guest account signs in.
+ * (non-guest) account that signs in drops EVERY queued write it does not own
+ * (not just the previous owner's), so the guest-then-account chain (A queues,
+ * "continue later", a guest signs in, then B signs in) cannot leave A's text on
+ * disk. A GUEST session is the exception: it clears the shared, unscoped data
+ * above (guest data must not mix with the previous learner's) but keeps other
+ * owners' queued writes, so trying the app as a guest after "continue later"
+ * cannot destroy that learner's unsent work. Those writes still expire after
+ * FOREIGN_OWNER_MAX_AGE_MS, and are dropped when any non-guest account signs in
+ * (A returning keeps their own).
+ *
+ * The offline-storage progress queue is a separate, unowned queue and follows
+ * a stricter rule: see completeSignIn in sessionLifecycle.
  */
 export async function reconcileDeviceOwner(
   userId: string,
@@ -104,9 +109,10 @@ export async function reconcileDeviceOwner(
       // A different account signed in after a "continue later" sign-out: the
       // previous learner's unscoped data must not carry over.
       await clearUnscopedUserKeys();
-      if (!options.guest) await OfflineQueue.dropOwner(previous);
     }
   }
+  // Keep only this account's own queued writes (a guest keeps everyone's).
+  if (!options.guest) await OfflineQueue.dropForeign(userId);
   await recordDeviceOwner(userId);
 }
 

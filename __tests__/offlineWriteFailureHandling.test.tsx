@@ -174,6 +174,41 @@ describe("ReviewModal", () => {
     await waitFor(() => expect(screen.getByText("Thank you!")).toBeTruthy());
     expect(mockOfflineWrite).toHaveBeenCalledTimes(2); // review + team copy
   });
+
+  it("does not stay stuck on 'Sending…' when offlineWrite itself throws, and allows a retry", async () => {
+    mockOfflineWrite.mockRejectedValueOnce(new Error("boom"));
+    renderModal();
+    fireEvent.press(screen.getAllByText("☆")[0]);
+    fireEvent.press(screen.getByText("Send Feedback"));
+    await waitFor(() => expect(screen.getByRole("alert")).toBeTruthy());
+    expect(screen.queryByText("Sending…")).toBeNull();
+    expect(screen.getByText("Send Feedback")).toBeTruthy();
+
+    mockOfflineWrite.mockResolvedValue(QUEUED);
+    fireEvent.press(screen.getByText("Send Feedback"));
+    await waitFor(() => expect(screen.getByText("Thank you!")).toBeTruthy());
+  });
+
+  it("a failing team copy does not undo the stored review", async () => {
+    mockOfflineWrite.mockResolvedValueOnce(QUEUED).mockRejectedValueOnce(new Error("boom"));
+    renderModal();
+    fireEvent.press(screen.getAllByText("☆")[0]);
+    fireEvent.press(screen.getByText("Send Feedback"));
+    await waitFor(() => expect(screen.getByText("Thank you!")).toBeTruthy());
+  });
+});
+
+describe("FlagModal", () => {
+  it("resets 'Submitting…' and shows the error when offlineWrite throws", async () => {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const FlagModal = require("../src/components/FlagModal").default;
+    mockOfflineWrite.mockRejectedValueOnce(new Error("boom"));
+    render(<FlagModal visible lessonId="l1" lessonTitle="Lesson" userId="u1" onClose={jest.fn()} />);
+    fireEvent.press(screen.getByText("Something else"));
+    fireEvent.press(screen.getByText("Submit Report"));
+    await waitFor(() => expect(screen.queryByText("Submitting…")).toBeNull());
+    expect(screen.getByText("Submit Report")).toBeTruthy();
+  });
 });
 
 describe("shareEngine", () => {

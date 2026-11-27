@@ -53,6 +53,8 @@ jest.mock('../src/lib/resumeNavigation', () => ({ resolvePostAuthHref: jest.fn()
 jest.mock('../src/lib/logoutState', () => ({
   clearExplicitLogout: jest.fn().mockResolvedValue(undefined),
   markExplicitLogout: jest.fn().mockResolvedValue(undefined),
+  markPreserveLocalState: jest.fn().mockResolvedValue(undefined),
+  hasPreserveLocalState: jest.fn().mockResolvedValue(false),
   hasExplicitLogout: jest.fn().mockResolvedValue(true),
 }));
 jest.mock('../src/lib/localUserState', () => ({

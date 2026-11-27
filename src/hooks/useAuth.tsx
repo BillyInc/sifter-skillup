@@ -19,7 +19,7 @@ import { OfflineQueue } from '../lib/offlineQueue';
 import { reconcileDeviceOwner, clearLocalUserState } from '../lib/localUserState';
 import { clearSessionProfile, getSavedSessionProfile, saveSessionProfile } from '../lib/sessionProfile';
 import { recordDeviceOwner } from '../lib/deviceOwner';
-import { completeSignIn, completeSignOut, prepareSignIn } from '../lib/sessionLifecycle';
+import { beginSignOut, completeSignIn, completeSignOut, isNetworkFailure, prepareSignIn } from '../lib/sessionLifecycle';
 import { useBrowserSessionWatch } from './useBrowserSessionWatch';
 import type { StarkzapWallet } from '../lib/starkzap';
 import {
@@ -241,7 +241,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const stale = await getSavedSessionProfile<UserProfile>();
         await API.clearToken();
         await completeSignOut({ userId: stale?.id });
-      } else if (e instanceof TypeError || /failed to fetch|network request failed|network error|request took too long|timed out/i.test(message)) {
+      } else if (isNetworkFailure(e)) {
         // Keep the current route and local onboarding draft available during a
         // temporary API outage. A real 401 still falls through to sign-in.
         const cached = await getSavedSessionProfile<UserProfile>();
@@ -438,6 +438,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   async function signOut(options: { preserveLocalUserState?: boolean } = {}) {
     sessionEpoch.current++;
+    await beginSignOut(options);
     await API.clearToken();
     await completeSignOut({
       userId: user?.id,

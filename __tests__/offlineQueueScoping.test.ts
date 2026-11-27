@@ -15,6 +15,7 @@ import {
   clearOfflineData,
   tokenSubject,
   AUTH_HOLD_MAX_AGE_MS,
+  BACKOFF_MAX_MS,
 } from "../src/lib/offlineQueue";
 import {
   saveAdminProvisioningDrafts,
@@ -234,16 +235,42 @@ describe("offline queue error handling", () => {
     expect(pending()).toBe(0);
   });
 
-  it("drops a 403 and keeps draining the writes behind it", async () => {
+  it("retries a 403 (consent guards answer it temporarily) with backoff instead of dropping it", async () => {
     await enqueueOffline({ n: 1 });
-    await enqueueOffline({ n: 2 });
-    fetchMock
-      .mockResolvedValueOnce({ ok: false, status: 403 })
-      .mockResolvedValueOnce({ ok: true, status: 200 });
+    fetchMock.mockResolvedValueOnce({ ok: false, status: 403 });
     await drain();
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(pending()).toBe(1);
+    const [item] = JSON.parse((await AsyncStorage.getItem("sifter_offline_queue")) ?? "[]");
+    expect(item.attempts).toBe(1);
+    expect(item.nextAttemptAt).toBeDefined();
 
-    expect(fetchMock).toHaveBeenCalledTimes(2);
+    // Consent granted later: the same write goes through.
+    fetchMock.mockResolvedValue({ ok: true, status: 200 });
+    const realNow = Date.now;
+    Date.now = () => realNow() + BACKOFF_MAX_MS;
+    try {
+      await drain();
+    } finally {
+      Date.now = realNow;
+    }
     expect(pending()).toBe(0);
+  });
+
+  it("gives up on a 403 that never clears once maxAttempts is reached", async () => {
+    await enqueueOffline({ n: 1 });
+    fetchMock.mockResolvedValue({ ok: false, status: 403 });
+    const realNow = Date.now;
+    try {
+      for (let i = 0; i < 10 && pending() > 0; i++) {
+        Date.now = () => realNow() + (i + 1) * BACKOFF_MAX_MS * 2;
+        await drain();
+      }
+    } finally {
+      Date.now = realNow;
+    }
+    expect(pending()).toBe(0);
+    expect(fetchMock.mock.calls.length).toBe(5); // maxAttempts of the item
   });
 
   it("a permanent 4xx does not block later items", async () => {

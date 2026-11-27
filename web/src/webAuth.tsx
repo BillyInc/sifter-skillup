@@ -1,8 +1,9 @@
 import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { API } from "../../src/lib/api";
 import { OfflineQueue } from "../../src/lib/offlineQueue";
-import { saveSessionProfile } from "../../src/lib/sessionProfile";
-import { completeSignIn, completeSignOut, prepareSignIn } from "../../src/lib/sessionLifecycle";
+import { getSavedSessionProfile, saveSessionProfile } from "../../src/lib/sessionProfile";
+import { beginSignOut, completeSignIn, completeSignOut, isNetworkFailure, prepareSignIn } from "../../src/lib/sessionLifecycle";
+import { recordDeviceOwner } from "../../src/lib/deviceOwner";
 import { setCareerCacheIdentity } from "../../src/lib/careerCache";
 import { useBrowserSessionWatch } from "../../src/hooks/useBrowserSessionWatch";
 
@@ -46,22 +47,28 @@ type WebAuth = {
 
 const TOKEN_KEY = "sifter_auth_token_v2";
 const AuthContext = createContext<WebAuth | null>(null);
-let restorePromise: Promise<unknown> | null = null;
+let restoreRequest: { token: string; promise: Promise<unknown> } | null = null;
 
 function normalize(user: unknown): WebUser {
   return (user && typeof user === "object" ? user : {}) as WebUser;
 }
 
-function restoreProfileOnce() {
+function restoreProfileOnce(token: string) {
   // React StrictMode mounts the provider twice in development. Share the
   // same restore request so a slow /users/me call cannot hold two sessions
-  // open or make the initial route appear to hang.
-  if (!restorePromise) {
-    restorePromise = API.getMe().finally(() => {
-      restorePromise = null;
-    });
+  // open or make the initial route appear to hang. It is shared only between
+  // callers holding the SAME token: a restore started after another account
+  // signed in must not receive the previous token's still-pending profile.
+  if (!restoreRequest || restoreRequest.token !== token) {
+    const entry: { token: string; promise: Promise<unknown> } = {
+      token,
+      promise: API.getMe().finally(() => {
+        if (restoreRequest === entry) restoreRequest = null;
+      }),
+    };
+    restoreRequest = entry;
   }
-  return restorePromise;
+  return restoreRequest.promise;
 }
 
 /**
@@ -89,15 +96,36 @@ export function WebAuthProvider({ children }: { children: ReactNode }) {
     const token = await API.getToken();
     if (!token) return;
     try {
-      const profile = normalize(await restoreProfileOnce());
+      const profile = normalize(await restoreProfileOnce(token));
       if (epoch !== sessionEpoch.current) return;
       await saveSessionProfile(profile); // also records the device owner
       if (epoch !== sessionEpoch.current) return;
       await setCareerCacheIdentity(profile.id);
       if (epoch !== sessionEpoch.current) return;
       setUser(profile);
-    } catch {
-      if (epoch === sessionEpoch.current) await API.clearToken();
+    } catch (e) {
+      if (epoch !== sessionEpoch.current) return;
+      const message = (e as Error)?.message ?? "";
+      if (message === "device_mismatch" || message === "device_required") {
+        // The session was taken over by another device: a forced logout, so
+        // the previous learner's data goes too (same as native).
+        const stale = await getSavedSessionProfile<WebUser>();
+        await API.clearToken();
+        await completeSignOut({ userId: stale?.id });
+      } else if (isNetworkFailure(e)) {
+        // Offline or a timeout: keep the token and show the cached session
+        // rather than signing the learner out because the network is down.
+        const cached = await getSavedSessionProfile<WebUser>();
+        if (cached?.id && epoch === sessionEpoch.current) {
+          await recordDeviceOwner(cached.id); // sessions saved before the owner key
+          await setCareerCacheIdentity(cached.id);
+          setUser(normalize(cached));
+        }
+      } else if ((e as { status?: number })?.status === 401) {
+        // The server rejected the token itself: it is dead. Anything else
+        // (5xx, unknown) is transient and must not discard a valid session.
+        await API.clearToken();
+      }
     }
   }
 
@@ -131,6 +159,7 @@ export function WebAuthProvider({ children }: { children: ReactNode }) {
     signUpEmail: async (email, password, profile = {}) => { const data = await API.authSignup(email, password, profile); sessionEpoch.current++; await persistAuth(data, setUser); },
     signOut: async (options = {}) => {
       sessionEpoch.current++;
+      await beginSignOut(options);
       await API.clearToken();
       await completeSignOut({ userId: user?.id, preserveLocalUserState: options.preserveLocalUserState });
       setUser(null);

@@ -213,3 +213,75 @@ describe("web forced logout", () => {
     }
   });
 });
+
+describe("web restore failures (match native)", () => {
+  const apiError = (message: string, status: number) => Object.assign(new Error(message), { status });
+  async function withCachedSession() {
+    mockTokenValue = "stored-token";
+    await AsyncStorage.setItem(PROFILE_KEY, JSON.stringify({ id: "u7", email: "u7@x.y" }));
+    await AsyncStorage.setItem(DEVICE_OWNER_KEY, "u7");
+    await AsyncStorage.setItem("@sifter_xp_v1", "u7-xp");
+  }
+
+  it("offline: keeps the token and shows the cached session", async () => {
+    await withCachedSession();
+    mockGetMe.mockRejectedValue(new TypeError("Failed to fetch"));
+    await mount();
+    await waitFor(() => expect(auth.user?.id).toBe("u7"));
+    expect(mockTokenValue).toBe("stored-token");
+    expect(mockCalls).not.toContain("clearToken");
+    expect(await AsyncStorage.getItem("@sifter_xp_v1")).toBe("u7-xp");
+  });
+
+  it("a timeout is treated as offline too", async () => {
+    await withCachedSession();
+    mockGetMe.mockRejectedValue(new Error("The request took too long. Please try again."));
+    await mount();
+    await waitFor(() => expect(auth.user?.id).toBe("u7"));
+    expect(mockTokenValue).toBe("stored-token");
+  });
+
+  it("a transient 5xx keeps the token and the stored data (no cached user, no sign-out)", async () => {
+    await withCachedSession();
+    mockGetMe.mockRejectedValue(apiError("Service unavailable", 503));
+    await mount();
+    expect(auth.user).toBeNull();
+    expect(mockTokenValue).toBe("stored-token");
+    expect(mockCalls).not.toContain("clearToken");
+    expect(await AsyncStorage.getItem("@sifter_xp_v1")).toBe("u7-xp");
+    expect(await AsyncStorage.getItem(DEVICE_OWNER_KEY)).toBe("u7");
+  });
+
+  it("a 401 on the token itself clears the token", async () => {
+    await withCachedSession();
+    mockGetMe.mockRejectedValue(apiError("Unauthorized", 401));
+    await mount();
+    expect(auth.user).toBeNull();
+    expect(mockCalls).toContain("clearToken");
+  });
+
+  it.each(["device_mismatch", "device_required"])("%s is a forced logout that clears the previous learner's data", async (message) => {
+    await withCachedSession();
+    mockGetMe.mockRejectedValue(apiError(message, 401));
+    await mount();
+    expect(auth.user).toBeNull();
+    expect(mockCalls).toContain("clearToken");
+    expect(await AsyncStorage.getItem("@sifter_xp_v1")).toBeNull();
+    expect(await AsyncStorage.getItem(DEVICE_OWNER_KEY)).toBeNull();
+    expect(await AsyncStorage.getItem(PROFILE_KEY)).toBeNull();
+  });
+
+  it("signOut with preserveLocalUserState writes the preserve marker before the token is cleared", async () => {
+    await mount();
+    await login("u1");
+    const { hasPreserveLocalState } = jest.requireActual("../src/lib/logoutState");
+    const { API } = jest.requireMock("../src/lib/api");
+    let markerAtClear: boolean | null = null;
+    API.clearToken.mockImplementationOnce(async () => {
+      markerAtClear = await hasPreserveLocalState();
+      mockTokenValue = null;
+    });
+    await act(async () => { await auth.signOut({ preserveLocalUserState: true }); });
+    expect(markerAtClear).toBe(true);
+  });
+});

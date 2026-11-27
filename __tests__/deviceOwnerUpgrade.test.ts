@@ -127,6 +127,42 @@ describe("guest sessions (item 8)", () => {
   });
 });
 
+describe("guest-then-account chain", () => {
+  it("dave queues, signs out with continue-later, a guest signs in, then erin signs in: dave's write is gone", async () => {
+    await saveSessionProfile({ id: "dave" });
+    await offlineWrite("/api/flags", "POST", { text: "dave's private note" }, "normal");
+    await flush();
+    await clearSessionProfile(); // continue later: owner key stays
+    expect(await AsyncStorage.getItem(DEVICE_OWNER_KEY)).toBe("dave");
+
+    await reconcileDeviceOwner("guest-1", { guest: true });
+    await saveSessionProfile({ id: "guest-1" });
+    await offlineWrite("/api/flags", "POST", { n: 2 }, "normal");
+    await flush();
+    expect(OfflineQueue.getItems().map((i) => i.ownerId).sort()).toEqual(["dave", "guest-1"]);
+    await clearSessionProfile(); // the guest session ends with continue later too
+
+    await reconcileDeviceOwner("erin"); // previous owner is only the guest
+
+    expect(OfflineQueue.pendingCount).toBe(0);
+    const raw = (await AsyncStorage.getItem("sifter_offline_queue")) ?? "[]";
+    expect(raw).not.toContain("dave");
+    expect(JSON.parse(raw)).toEqual([]);
+  });
+
+  it("erin keeps only her own writes when others are on disk", async () => {
+    await saveSessionProfile({ id: "dave" });
+    await offlineWrite("/api/flags", "POST", { n: 1 }, "normal");
+    await flush();
+    await saveSessionProfile({ id: "erin" });
+    await offlineWrite("/api/flags", "POST", { n: 2 }, "normal");
+    await flush();
+    await reconcileDeviceOwner("erin");
+    expect(OfflineQueue.getItems().map((i) => i.ownerId)).toEqual(["erin"]);
+    expect(JSON.parse((await AsyncStorage.getItem("sifter_offline_queue")) ?? "[]")).toHaveLength(1);
+  });
+});
+
 describe("clearing", () => {
   it("clears pending_rewards and the per-track setup flags", async () => {
     expect(DEVICE_USER_DATA_KEYS).toContain("pending_rewards");

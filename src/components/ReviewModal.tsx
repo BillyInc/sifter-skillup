@@ -43,7 +43,8 @@ export default function ReviewModal({ visible, userId, context, onClose }: Props
     // The store rating itself is the user's action. This write only records
     // that they were sent there; when nothing was queued, still move on, but
     // the thank-you below does not claim feedback was received.
-    const result = await offlineWrite('/api/reviews', 'POST', { userId, rating, context, redirectedToStore: true }, 'normal');
+    const result = await offlineWrite('/api/reviews', 'POST', { userId, rating, context, redirectedToStore: true }, 'normal')
+      .catch(() => ({ queued: false as const }));
     setRecorded(result.queued);
     setPhase('done');
   };
@@ -52,39 +53,44 @@ export default function ReviewModal({ visible, userId, context, onClose }: Props
     if (submitting) return;
     setSubmitting(true);
     setSubmitError(false);
-    const reviewResult = await offlineWrite('/api/reviews', 'POST', { userId, rating, review, context, redirectedToStore: false }, 'normal');
-    if (!reviewResult.queued) {
-      // Nothing was stored (no signed-in profile): keep the text and say so
-      // rather than thanking the user for feedback that was never saved.
+    try {
+      const reviewResult = await offlineWrite('/api/reviews', 'POST', { userId, rating, review, context, redirectedToStore: false }, 'normal');
+      if (!reviewResult.queued) {
+        // Nothing was stored (no signed-in profile): keep the text and say so
+        // rather than thanking the user for feedback that was never saved.
+        setSubmitError(true);
+        return;
+      }
+      // Also route written feedback to the Sifter team so it is triaged
+      // alongside bug/idea/content reports (Phase 12; outbound-only per §6A.1 —
+      // this is not an inbox any institution admin can read).
+      const feedbackResult = await offlineWrite(
+        '/api/feedback',
+        'POST',
+        {
+          type: 'review',
+          rating,
+          message: review,
+          entityType: 'app',
+          entityId: context,
+          // Required for student submissions (§6A.3/§6A.4). This flow IS the
+          // app-rating channel — the spec's own wording for the category is
+          // "App rating / general praise" — so it maps here regardless of star
+          // count; the star rating carries the sentiment, the category carries
+          // the topic. Without this the submission is refused.
+          studentCategory: 'praise',
+        },
+        'normal',
+      ).catch(() => ({ queued: false as const }));
+      // The review itself was stored; the team copy is best effort.
+      setRecorded(reviewResult.queued || feedbackResult.queued);
+      setPhase('done');
+    } catch {
+      // offlineWrite itself threw: nothing was stored, keep the text.
       setSubmitError(true);
+    } finally {
       setSubmitting(false);
-      return;
     }
-    // Also route written feedback to the Sifter team so it is triaged
-    // alongside bug/idea/content reports (Phase 12; outbound-only per §6A.1 —
-    // this is not an inbox any institution admin can read).
-    const feedbackResult = await offlineWrite(
-      '/api/feedback',
-      'POST',
-      {
-        type: 'review',
-        rating,
-        message: review,
-        entityType: 'app',
-        entityId: context,
-        // Required for student submissions (§6A.3/§6A.4). This flow IS the
-        // app-rating channel — the spec's own wording for the category is
-        // "App rating / general praise" — so it maps here regardless of star
-        // count; the star rating carries the sentiment, the category carries
-        // the topic. Without this the submission is refused.
-        studentCategory: 'praise',
-      },
-      'normal',
-    );
-    // The review itself was stored; the team copy is best effort.
-    setRecorded(reviewResult.queued || feedbackResult.queued);
-    setSubmitting(false);
-    setPhase('done');
   };
 
   const handleClose = () => {

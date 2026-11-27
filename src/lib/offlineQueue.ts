@@ -15,7 +15,9 @@
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
+import { AppState } from 'react-native';
 import { getSavedSessionProfile } from './sessionProfile';
+import { tokenSubject } from './tokenSubject';
 
 const QUEUE_KEY = 'sifter_offline_queue';
 const AUTH_HOLD_KEY = 'sifter_offline_queue_auth_hold';
@@ -24,6 +26,12 @@ const DRAIN_LOCK = 'sifter_offline_queue_drain';
 const STORE_LOCK = 'sifter_offline_queue_store';
 const LEASE_KEY = 'sifter_offline_queue_lease';
 const LEASE_TTL_MS = 60 * 1000;
+/**
+ * While another tab holds the drain this tab looks again every LOCK_RETRY_MS
+ * (a bounded 5 s poll, one timer): it cannot be notified when the other tab
+ * finishes, and if that tab finished before seeing this tab's latest write
+ * nothing else would trigger a drain here.
+ */
 const LOCK_RETRY_MS = 5 * 1000;
 
 export type QueuePriority = 'critical' | 'high' | 'normal';
@@ -68,7 +76,7 @@ type SyncListener = (status: 'syncing' | 'idle' | 'failed') => void;
 
 export type EnqueueResult =
   | { queued: true; id: string }
-  | { queued: false; reason: 'no_profile' | 'invalid_body' };
+  | { queued: false; reason: 'no_profile' | 'invalid_body' | 'storage_failed' };
 
 /** How long a write may sit waiting for a fresh sign-in after a 401. */
 export const AUTH_HOLD_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
@@ -86,14 +94,27 @@ const AUTH_HOLD_AFTER_CONSECUTIVE_401 = 2;
 /**
  * Statuses worth retrying later even though they are 4xx. 404 is here because
  * a deploy that has not finished (or a client ahead of the API) answers 404 for
- * a route that exists a minute later; it is bounded by maxAttempts.
+ * a route that exists a minute later. 403 is here because the backend's
+ * consent guards answer 403 (for example while parental consent is pending),
+ * which clears later; dropping it at once would silently discard a minor's
+ * write. All are bounded by maxAttempts and backed off.
  */
-const RETRYABLE_STATUS = new Set([404, 408, 425, 429]);
+const RETRYABLE_STATUS = new Set([403, 404, 408, 425, 429]);
 
 /** A request that has not answered by now is abandoned (and counted). */
 export const REQUEST_TIMEOUT_MS = 30 * 1000;
 
-/** Transport failures after which a write that never gets through is dropped. */
+/**
+ * Transport failures after which a write that never gets through is dropped.
+ *
+ * Known limitation: a timeout or dropped connection is ambiguous. The server
+ * may have applied the write before the response was lost, and these endpoints
+ * take no idempotency key, so every retry of such a write can create a
+ * duplicate. 50 is generous for plain offline periods (those are not counted:
+ * the drain does not start without connectivity); if duplicates matter more
+ * than delivery, lower the cap used for timeouts (for example to 10) once the
+ * API honours an Idempotency-Key.
+ */
 export const NETWORK_FAILURE_CAP = 50;
 
 type LocksApi = { request: (...args: any[]) => Promise<any> };
@@ -128,19 +149,7 @@ async function withStoreLock<T>(fn: () => Promise<T>): Promise<T> {
   }
 }
 
-/** The user id a JWT was issued for, or null when it cannot be read. */
-export function tokenSubject(token: string): string | null {
-  try {
-    const part = token.split('.')[1];
-    if (!part) return null;
-    const b64 = part.replace(/-/g, '+').replace(/_/g, '/');
-    const padded = b64 + '='.repeat((4 - (b64.length % 4)) % 4);
-    const claims = JSON.parse(globalThis.atob(padded));
-    return claims?.sub != null ? String(claims.sub) : null;
-  } catch {
-    return null;
-  }
-}
+export { tokenSubject };
 
 /**
  * Short non-reversible fingerprint of a token, so the queue can remember
@@ -173,6 +182,35 @@ export function retryDelayMs(
   }
   const exp = BACKOFF_BASE_MS * 2 ** Math.max(0, attempts - 1);
   return Math.min(exp, BACKOFF_MAX_MS);
+}
+
+/**
+ * Combine two copies of the same queued write (this tab's and storage's).
+ * Counters only move forward, flags only turn on, and a wait is kept if either
+ * copy has one, so a stale tab cannot reset progress another tab recorded.
+ * Identity fields (endpoint, body, owner, priority) come from this tab.
+ */
+function mergeItemCopies(m: QueueItem, s: QueueItem): QueueItem {
+  const out: QueueItem = { ...m };
+  out.attempts = Math.max(m.attempts ?? 0, s.attempts ?? 0);
+  const nf = Math.max(m.networkFailures ?? 0, s.networkFailures ?? 0);
+  if (nf > 0) out.networkFailures = nf;
+  if (m.conflictRetried || s.conflictRetried) out.conflictRetried = true;
+  const times = [m.nextAttemptAt, s.nextAttemptAt]
+    .filter((t): t is string => !!t && !Number.isNaN(Date.parse(t)))
+    .sort((a, b) => Date.parse(b) - Date.parse(a));
+  if (times.length) out.nextAttemptAt = times[0];
+  // Held since the earliest 401; the fingerprint comes from the copy that saw
+  // more attempts (ties: this tab's), falling back to whichever has one.
+  const held = [m.authHeldSince, s.authHeldSince]
+    .filter((t): t is string => !!t && !Number.isNaN(Date.parse(t)))
+    .sort((a, b) => Date.parse(a) - Date.parse(b));
+  if (held.length) out.authHeldSince = held[0];
+  const newer = (s.attempts ?? 0) > (m.attempts ?? 0) ? s : m;
+  const other = newer === m ? s : m;
+  const failedFor = newer.authFailedFor ?? other.authFailedFor;
+  if (failedFor) out.authFailedFor = failedFor;
+  return out;
 }
 
 export class OfflineQueueManager {
@@ -208,6 +246,9 @@ export class OfflineQueueManager {
   /** Ids this tab removed since its last save; never resurrected by a merge. */
   private removedIds = new Set<string>();
   private lockRetryTimer: ReturnType<typeof setTimeout> | null = null;
+  /** Single timer that wakes the drain when the earliest backoff expires. */
+  private wakeTimer: ReturnType<typeof setTimeout> | null = null;
+  private unsubscribeForeground: (() => void) | null = null;
   private readonly tabId = `t_${Date.now().toString(36)}_${Math.random().toString(36).slice(2)}`;
 
   /**
@@ -218,6 +259,7 @@ export class OfflineQueueManager {
   async init() {
     await this._ensureLoaded();
     if (!this.unsubscribeNetInfo) this._startNetworkWatcher();
+    if (!this.unsubscribeForeground) this._startForegroundWatcher();
     void this._trySync();
   }
 
@@ -265,7 +307,19 @@ export class OfflineQueueManager {
       this._remove(victim);
     }
 
-    await this._saveQueue(epoch);
+    const saved = await this._saveQueue(epoch);
+    // clear() ran while the write was being persisted: the user signed out.
+    if (epoch !== this.epoch) return { queued: false, reason: 'no_profile' };
+    if (!saved) {
+      // The write could not be persisted (quota, private mode). Promising
+      // delivery would be false: it would be lost on the next restart. Take it
+      // back out of memory so a caller that retries does not send it twice.
+      // If a drain already sent it, it is gone from the queue and was queued.
+      if (this.queue.some(i => i.id === entry.id)) {
+        this._remove(entry);
+        return { queued: false, reason: 'storage_failed' };
+      }
+    }
     void this._trySync();
     return { queued: true, id: entry.id };
   }
@@ -312,6 +366,61 @@ export class OfflineQueueManager {
   }
 
   /**
+   * Drain when the app returns to the foreground (native AppState 'active') or
+   * the tab becomes visible / the browser reports it is online (web). A
+   * backed-off or failed drain otherwise waits for the next NetInfo change.
+   */
+  private _startForegroundWatcher() {
+    const unsubs: (() => void)[] = [];
+    const wake = () => { void this._trySync(); };
+    try {
+      const sub = AppState?.addEventListener?.('change', (next: string) => {
+        if (next === 'active') wake();
+      });
+      if (sub && typeof sub.remove === 'function') unsubs.push(() => sub.remove());
+    } catch { /* AppState unavailable */ }
+    if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
+      window.addEventListener('online', wake);
+      unsubs.push(() => window.removeEventListener('online', wake));
+    }
+    if (typeof document !== 'undefined' && typeof document.addEventListener === 'function') {
+      const onVisible = () => { if (document.visibilityState === 'visible') wake(); };
+      document.addEventListener('visibilitychange', onVisible);
+      unsubs.push(() => document.removeEventListener('visibilitychange', onVisible));
+    }
+    this.unsubscribeForeground = () => unsubs.forEach(u => u());
+  }
+
+  /**
+   * Arm one timer for the earliest future nextAttemptAt in the queue, so a
+   * backed-off write is retried without waiting for a connectivity change. It
+   * is only armed for waits still in the future (a past time that the drain
+   * could not act on, for example with no signed-in account, must not re-arm
+   * it, or it would spin), is single, and is cleared by clear()/destroy().
+   */
+  private _scheduleWake() {
+    if (this.wakeTimer) {
+      clearTimeout(this.wakeTimer);
+      this.wakeTimer = null;
+    }
+    const now = Date.now();
+    let earliest = Infinity;
+    for (const i of this.queue) {
+      if (!i.nextAttemptAt) continue;
+      const at = Date.parse(i.nextAttemptAt);
+      if (Number.isNaN(at) || at <= now || at - now > BACKOFF_MAX_MS) continue;
+      if (at < earliest) earliest = at;
+    }
+    if (earliest === Infinity) return;
+    const timer = setTimeout(() => {
+      this.wakeTimer = null;
+      void this._trySync();
+    }, earliest - now + 25);
+    (timer as { unref?: () => void }).unref?.();
+    this.wakeTimer = timer;
+  }
+
+  /**
    * Start a drain, or join the one already running. Concurrent callers all
    * wait on the same promise; a caller that arrives mid-drain makes the drain
    * run one more pass at the end so a write enqueued late is not stranded.
@@ -327,11 +436,20 @@ export class OfflineQueueManager {
       try {
         do {
           this.resyncRequested = false;
-          await this._drainOnce();
+          try {
+            await this._drainOnce();
+          } catch {
+            // A failed pass (for example the API module failed to load) must
+            // not reject the promise every `void this._trySync()` caller
+            // ignores, nor skip the resync pass for a trigger that arrived
+            // meanwhile. The writes stay queued for the next trigger.
+            this._notify('failed');
+          }
         } while (this.resyncRequested);
       } finally {
         this.syncing = false;
         this.drainPromise = null;
+        this._scheduleWake();
       }
     })();
     this.drainPromise = run;
@@ -490,8 +608,9 @@ export class OfflineQueueManager {
             await this._saveQueue(epoch);
             break; // back off, try next sync window
           } else if (res.status >= 400 && res.status < 500) {
-            // Permanent client error (including 403) — it will not succeed on
-            // retry, and must not block the writes behind it.
+            // Permanent client error — it will not succeed on retry, and must
+            // not block the writes behind it. (403 is retried above: consent
+            // guards answer it temporarily.)
             this._remove(item);
             await this._saveQueue(epoch);
           } else {
@@ -587,6 +706,31 @@ export class OfflineQueueManager {
     await this._saveAuthHold(epoch);
   }
 
+  /**
+   * Remove every queued write (and 401 hold) NOT owned by `ownerId`. Used when
+   * a non-guest account signs in: only that account's own writes may remain.
+   */
+  async dropForeign(ownerId: string) {
+    await this._ensureLoaded();
+    const epoch = this.epoch;
+    // Pick up other tabs' items first so they are tombstoned too and cannot be
+    // merged back from storage by the save below.
+    await this._mergeFromStorage(epoch);
+    const keep: QueueItem[] = [];
+    let dropped = false;
+    for (const i of this.queue) {
+      if (i.ownerId === ownerId) keep.push(i);
+      else { this.removedIds.add(i.id); dropped = true; }
+    }
+    this.queue = keep;
+    let holdChanged = false;
+    for (const owner of [...this.authHold.keys()]) {
+      if (owner !== ownerId) { this.authHold.delete(owner); holdChanged = true; }
+    }
+    await this._saveQueue(epoch);
+    if (dropped || holdChanged) await this._saveAuthHold(epoch);
+  }
+
   private _saveAuthHold(epoch: number = this.epoch): Promise<void> {
     this.saveChain = this.saveChain.then(async () => {
       if (epoch !== this.epoch) return;
@@ -630,7 +774,7 @@ export class OfflineQueueManager {
       if (this.removedIds.has(s.id) || seen.has(s.id)) continue;
       seen.add(s.id);
       const m = mem.get(s.id);
-      merged.push(m ? (s.attempts > m.attempts ? { ...m, ...s } : m) : s);
+      merged.push(m ? mergeItemCopies(m, s) : s);
     }
     for (const m of this.queue) {
       if (seen.has(m.id)) continue;
@@ -646,7 +790,10 @@ export class OfflineQueueManager {
       const stored = await withStoreLock(() => this._readStored());
       if (epoch !== this.epoch) return;
       this._mergeStored(stored);
-      this.persistedIds = new Set(this.queue.map(i => i.id));
+      // What storage holds, not what memory holds: an item still waiting for
+      // its own save is not in storage and must not be treated as persisted
+      // (it would then look "removed by another tab" at the next merge).
+      this.persistedIds = new Set(stored.map(i => i.id));
     } catch { /* keep the in-memory queue */ }
   }
 
@@ -682,6 +829,10 @@ export class OfflineQueueManager {
       clearTimeout(this.lockRetryTimer);
       this.lockRetryTimer = null;
     }
+    if (this.wakeTimer) {
+      clearTimeout(this.wakeTimer);
+      this.wakeTimer = null;
+    }
     // Nothing left to hydrate: the stored queue is removed just below.
     this.hydration = Promise.resolve();
     try {
@@ -692,12 +843,18 @@ export class OfflineQueueManager {
 
   /**
    * Writes are serialised and dropped if clear() ran after they were requested.
+   * Cost note: every save re-reads and re-stringifies the whole queue (up to
+   * MAX_QUEUE_SIZE items), and the drain saves after each sent item, so
+   * draining n items is O(n^2) JSON work (not measured; bounded by the cap
+   * and spread over a drain, so left alone for now). Batching (one save per N sends) would widen the window in which a crash
+   * re-sends already-delivered writes, so it is deliberately not done.
    * Each write re-reads storage and merges by item id first (under a Web Lock
    * where available), so two tabs cannot overwrite each other's items. The
    * queue is one JSON value in which every item carries its ownerId, so an
    * item and its owner are always persisted together.
    */
-  private _saveQueue(epoch: number = this.epoch): Promise<void> {
+  private _saveQueue(epoch: number = this.epoch): Promise<boolean> {
+    let ok = false;
     this.saveChain = this.saveChain.then(async () => {
       if (epoch !== this.epoch) return;
       try {
@@ -710,13 +867,30 @@ export class OfflineQueueManager {
           }
           if (epoch !== this.epoch) return;
           if (stored) this._mergeStored(stored);
-          await AsyncStorage.setItem(QUEUE_KEY, JSON.stringify(this.queue));
-          this.persistedIds = new Set(this.queue.map(i => i.id));
-          this.removedIds.clear();
+          // The exact array that is written. Everything below is derived from
+          // it, never from `this.queue` after the await: an item pushed or
+          // removed while setItem is pending is NOT in this snapshot.
+          const snapshot = this.queue.slice();
+          const written = new Set(snapshot.map(i => i.id));
+          await AsyncStorage.setItem(QUEUE_KEY, JSON.stringify(snapshot));
+          ok = true;
+          // Only what was written is now persisted. An item enqueued during
+          // the write is still unsaved and must stay out of this set, or the
+          // next save would read storage without it and treat it as removed
+          // by another tab.
+          this.persistedIds = written;
+          // A tombstone stays until a save that EXCLUDES the item has landed:
+          // one removed while this snapshot (which still held it) was being
+          // written must keep blocking a re-merge from storage.
+          for (const id of [...this.removedIds]) {
+            if (!written.has(id)) this.removedIds.delete(id);
+          }
         });
-      } catch {}
+      } catch {
+        ok = false;
+      }
     });
-    return this.saveChain;
+    return this.saveChain.then(() => ok);
   }
 
   /**
@@ -752,6 +926,10 @@ export class OfflineQueueManager {
   /**
    * Fallback cross-tab guard for browsers without the Web Locks API: a lease
    * key in localStorage with a short TTL. Not used on native (one process).
+   * Known limitation: write-then-read-back on localStorage is not atomic, so
+   * two tabs acquiring in the same instant can both believe they hold it and
+   * drain concurrently (duplicate sends are possible). Every browser this app
+   * targets ships Web Locks, which is the real guard; this is best effort.
    */
   private _acquireLease(): { renew: () => void; release: () => void } | null {
     const none = { renew: () => undefined, release: () => undefined };
@@ -783,6 +961,12 @@ export class OfflineQueueManager {
   destroy() {
     this.unsubscribeNetInfo?.();
     this.unsubscribeNetInfo = null;
+    this.unsubscribeForeground?.();
+    this.unsubscribeForeground = null;
+    if (this.wakeTimer) {
+      clearTimeout(this.wakeTimer);
+      this.wakeTimer = null;
+    }
     if (this.lockRetryTimer) {
       clearTimeout(this.lockRetryTimer);
       this.lockRetryTimer = null;

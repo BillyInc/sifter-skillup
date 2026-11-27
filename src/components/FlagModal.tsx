@@ -51,14 +51,20 @@ export default function FlagModal({ visible, lessonId, lessonTitle, questionId, 
     if (!flagType) return;
     setSubmitting(true);
     setSubmitError(false);
-    const result = await offlineWrite('/api/flags', 'POST', {
-      userId, lessonId, lessonTitle, questionId,
-      flagType, details,
-      submittedAt: new Date().toISOString(),
-    }, 'normal');
-    if (result.queued) setSubmitted(true);
-    else setSubmitError(true); // keep the form so nothing the user typed is lost
-    setSubmitting(false);
+    try {
+      const result = await offlineWrite('/api/flags', 'POST', {
+        userId, lessonId, lessonTitle, questionId,
+        flagType, details,
+        submittedAt: new Date().toISOString(),
+      }, 'normal');
+      if (result.queued) setSubmitted(true);
+      else setSubmitError(true); // keep the form so nothing the user typed is lost
+    } catch {
+      // offlineWrite itself threw: the report was not stored.
+      setSubmitError(true);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleClose = () => {
