@@ -669,7 +669,9 @@ CREATE POLICY dm_participant_read  ON skillup_dev.dm_messages FOR SELECT USING (
 -- No client INSERT policy: DMs are written only by the backend (service_role),
 -- which enforces the mutual-follow, block and frozen-thread rules. Re-running
 -- this file must not bring the old sender_id = auth.uid() policy back.
-REVOKE INSERT, UPDATE, DELETE ON skillup_dev.dm_messages FROM anon, authenticated;
+REVOKE ALL ON skillup_dev.dm_messages FROM anon, authenticated;
+-- Re-grant SELECT only because a SELECT policy (dm_participant_read) exists.
+GRANT SELECT ON skillup_dev.dm_messages TO anon, authenticated;
 
 -- Users can only read/write their own seen scenarios
 CREATE POLICY seen_scenarios_own ON skillup_dev.user_seen_scenarios FOR ALL USING (user_id = auth.uid());

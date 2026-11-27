@@ -110,7 +110,10 @@ community_v2_router = APIRouter(tags=["community-v2"])
 _follow_limiter = UploadRateLimiter(limits=((60, 30, "minute"), (3600, 200, "hour")))
 _follow_request_limiter = UploadRateLimiter(limits=((3600, 20, "hour"), (86400, 50, "day")))
 _respond_limiter = UploadRateLimiter(limits=((60, 60, "minute"), (3600, 300, "hour")))
-_block_limiter = UploadRateLimiter(limits=((60, 30, "minute"), (3600, 200, "hour")))
+# Block is a safety action and the offline queue replays queued blocks in a
+# burst, so its limits are far higher than follow's: a replayed batch must not
+# be dropped. The limiter stays only as a backstop against a runaway client.
+_block_limiter = UploadRateLimiter(limits=((60, 120, "minute"), (3600, 600, "hour")))
 
 # A rejected follow request stays rejected for this long: the requester cannot
 # reopen it, and the target is not notified again, until the cooldown passes.
@@ -638,8 +641,10 @@ async def request_follow(body: FollowAction, current_user: dict = Depends(Auth.g
         already = svc.table("follows").select("id").eq("follower_id", user_id).eq("following_id", target_id).limit(1).execute()
         if already.data:
             return ResponseModel(data={"status": row["status"]})
-        if row["status"] == "reject":
-            # A rejection holds for the cooldown: return it as is, without
+        if row["status"] != "approve":
+            # Fail closed: any decided status other than 'approve' counts as a
+            # rejection (legacy rows from the old respond endpoint stored
+            # free-text actions such as 'rejected'). A rejection holds for the cooldown: return it as is, without
             # reopening the request or notifying the target. A timestamp that
             # cannot be read is treated as recent (fail closed).
             decided = _decision_time(row)
@@ -781,7 +786,8 @@ async def block_user(body: BlockAction, current_user: dict = Depends(Auth.get_cu
     user_id = _norm_id(current_user["id"])
     target_id = _norm_id(body.targetId)
     _throttle(_block_limiter, user_id)
-    if not _is_uuid(target_id) or _active_user(target_id) is None:
+    # Blocking yourself gets the same refusal as an unknown target.
+    if target_id == user_id or not _is_uuid(target_id) or _active_user(target_id) is None:
         raise HTTPException(404, "User not found")
     svc = db.get_service_client()
     # UNIQUE(user_id, target_id): a repeated block (e.g. an offline-queue replay)
@@ -790,12 +796,14 @@ async def block_user(body: BlockAction, current_user: dict = Depends(Auth.get_cu
         "id": str(uuid.uuid4()), "user_id": user_id, "target_id": target_id,
         "created_at": datetime.now(timezone.utc).isoformat(),
     }, on_conflict="user_id,target_id", ignore_duplicates=True).execute()
-    # Also remove any follow relationship and any follow request (pending or
-    # decided), in both directions. Plain eq() filters keep the id out of a
-    # PostgREST filter string.
+    # Also remove any follow relationship and any pending or approved follow
+    # request, in both directions. Rejected rows (and any legacy non-standard
+    # status, which is read as a rejection) are KEPT in both directions: they
+    # carry the re-request cooldown, so block then unblock must not reset it.
+    # Plain eq()/in_() filters keep the id out of a PostgREST filter string.
     for a, b in ((user_id, target_id), (target_id, user_id)):
         svc.table("follows").delete().eq("follower_id", a).eq("following_id", b).execute()
-        svc.table("follow_requests").delete().eq("requester_id", a).eq("target_id", b).execute()
+        svc.table("follow_requests").delete().eq("requester_id", a).eq("target_id", b).in_("status", ["pending", "approve"]).execute()
     return ResponseModel(data={"blocked": True})
 
 
@@ -972,6 +980,8 @@ async def send_dm(body: DMSend, current_user: dict = Depends(Auth.get_current_us
             _delete_dm_thread(thread_id)
             raise HTTPException(503, "Temporarily unavailable. Please try again.")
         if winner and winner != thread_id:
+            # _delete_dm_thread refuses to delete a thread that already has
+            # messages; the winner is then still the deterministic choice.
             _delete_dm_thread(thread_id)
             thread_id = winner
 
@@ -1060,7 +1070,10 @@ def _mutual_follow(user_a: str, user_b: str) -> bool:
 
 
 def _find_dm_thread(user_a: str, user_b: str) -> Optional[str]:
-    """The (oldest) DM thread between exactly two users, never a group.
+    """The DM thread between exactly two users, never a group.
+
+    With duplicates, the oldest thread that already has messages wins (so a
+    thread holding messages is never orphaned), else the oldest thread.
 
     Raises on a database error: the caller must not read a failed lookup as
     "no thread" and create a duplicate.
@@ -1080,20 +1093,38 @@ def _find_dm_thread(user_a: str, user_b: str) -> Optional[str]:
     # Two threads for the same pair (a simultaneous first send): the older wins,
     # ties broken by id, so both racing requests converge on the same thread.
     created = {}
+    with_messages = []
     for thread_id in matches:
         row = svc.table("dm_threads").select("created_at").eq("id", thread_id).limit(1).execute()
         created[thread_id] = (row.data[0].get("created_at") or "") if row.data else ""
-    return min(matches, key=lambda t: (created[t], t))
+        if _dm_thread_has_messages(thread_id):
+            with_messages.append(thread_id)
+    pool = with_messages or matches
+    return min(pool, key=lambda t: (created[t], t))
 
 
-def _delete_dm_thread(thread_id: str) -> None:
-    """Best-effort removal of a thread this request created and then lost."""
+def _dm_thread_has_messages(thread_id: str) -> bool:
+    """True when the thread holds a message. Raises on a database error."""
+    res = db.get_service_client().table("dm_messages").select("id").eq("thread_id", thread_id).limit(1).execute()
+    return bool(res.data)
+
+
+def _delete_dm_thread(thread_id: str) -> bool:
+    """Best-effort removal of a thread this request created and then lost.
+
+    dm_messages.thread_id is ON DELETE CASCADE, so a thread that holds any
+    message is never deleted (a concurrent request may have sent into it). If
+    that cannot be checked, the thread is kept. Returns True if it was deleted.
+    """
     try:
         svc = db.get_service_client()
+        if _dm_thread_has_messages(thread_id):
+            return False
         svc.table("thread_participants").delete().eq("thread_id", thread_id).execute()
         svc.table("dm_threads").delete().eq("id", thread_id).execute()
+        return True
     except Exception:
-        pass
+        return False
 
 
 # ─────────────────────────────────────────────────────────────

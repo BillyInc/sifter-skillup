@@ -43,6 +43,10 @@ class _Query:
         self.filters.append(lambda r, c=col, v=val: r.get(c) == v)
         return self
 
+    def in_(self, col, vals):
+        self.filters.append(lambda r, c=col, v=list(vals): r.get(c) in v)
+        return self
+
     def neq(self, col, val):
         self.filters.append(lambda r, c=col, v=val: r.get(c) != v)
         return self
@@ -69,8 +73,10 @@ class _Query:
             dup = any(all(r.get(c) == self.payload.get(c) for c in cols) for r in rows)
             if dup and not self.upsert_opts["ignore"]:
                 raise RuntimeError("duplicate key value violates unique constraint")
-            if not dup:
-                rows.append(dict(self.payload))
+            if dup:
+                # Real PostgREST returns no rows when ignore_duplicates skips one.
+                return _Result([])
+            rows.append(dict(self.payload))
             return _Result([self.payload])
         match = [r for r in rows if all(f(r) for f in self.filters)]
         if self.op == "update":
@@ -304,6 +310,50 @@ def test_block_clears_follows_and_requests_both_directions(fake):
     assert fake.tables["follow_requests"] == []
 
 
+def test_block_keeps_rejected_rows_in_both_directions(fake):
+    other = "00000000-0000-4000-8000-000000000008"
+    fake.tables["follow_requests"] = [
+        {"id": "1", "requester_id": ME["id"], "target_id": other, "status": "reject"},
+        {"id": "2", "requester_id": other, "target_id": ME["id"], "status": "rejected"},
+        {"id": "3", "requester_id": other, "target_id": ME["id"], "status": "pending"},
+    ]
+    # (unique pair is not enforced by the fake; rows 2 and 3 only exercise filters)
+    assert _post(_client(ME), "block", targetId=other).status_code == 200
+    assert {r["id"] for r in fake.tables["follow_requests"]} == {"1", "2"}
+
+
+def test_block_unblock_does_not_reset_the_rejection_cooldown(fake):
+    c = _client(ME)
+    _post(c, "follow-request", targetId=PRIV)
+    _approve(fake, ME["id"], PRIV, "reject")
+    notes = len(fake.tables["notes"])
+    assert _post(c, "block", targetId=PRIV).status_code == 200
+    assert _post(c, "unblock", targetId=PRIV).status_code == 200
+    assert _post(c, "follow-request", targetId=PRIV).json()["data"]["status"] == "reject"
+    assert _req_status(fake, ME["id"], PRIV) == "reject"
+    assert len(fake.tables["notes"]) == notes
+    assert _client({"id": PRIV, "auth_provider": "email"}).get("/api/users/follow-requests").json()["data"] == []
+    # The target blocking and unblocking changes nothing either.
+    assert _client({"id": PRIV, "auth_provider": "email"}).post("/api/users/block", json={"targetId": ME["id"]}).status_code == 200
+    assert _req_status(fake, ME["id"], PRIV) == "reject"
+
+
+def test_legacy_free_text_rejection_is_treated_as_a_rejection(fake):
+    fake.tables["follow_requests"] = [
+        {"id": "r1", "requester_id": ME["id"], "target_id": PRIV, "status": "rejected", "created_at": _ago(1)}
+    ]
+    assert _post(_client(ME), "follow-request", targetId=PRIV).json()["data"]["status"] == "reject"
+    assert fake.tables["follow_requests"][0]["status"] == "rejected"
+    assert fake.tables.get("notes", []) == []
+
+
+def test_blocking_yourself_is_refused_like_an_unknown_target(fake):
+    me = _post(_client(ME), "block", targetId=ME["id"])
+    unknown = _post(_client(ME), "block", targetId="00000000-0000-4000-8000-0000000000ff")
+    assert me.status_code == 404 and me.json() == unknown.json()
+    assert fake.tables.get("user_blocks", []) == []
+
+
 def test_unknown_follow_targets_are_indistinguishable(fake):
     c = _client(ME)
     responses = [_post(c, p, targetId=t) for p in ("follow", "follow-request") for t in ("00000000-0000-4000-8000-000000000009", "nobody")]
@@ -350,7 +400,8 @@ def test_base_schema_no_longer_recreates_the_insert_policy():
 
     schema = (Path(__file__).resolve().parents[2] / "supabase-schema.sql").read_text(encoding="utf-8")
     assert "CREATE POLICY dm_participant_insert" not in schema
-    assert "REVOKE INSERT, UPDATE, DELETE ON skillup_dev.dm_messages FROM anon, authenticated" in schema
+    assert "REVOKE ALL ON skillup_dev.dm_messages FROM anon, authenticated" in schema
+    assert "GRANT SELECT ON skillup_dev.dm_messages TO anon, authenticated" in schema
 
 
 # ---------------- guests, rate limits, validation, races ----------------
@@ -376,10 +427,10 @@ def test_follow_endpoints_are_rate_limited(fake):
     assert codes[:20] == [200] * 20 and codes[20:] == [429] * 5
     codes = [_post(c, "follow", targetId="00000000-0000-4000-8000-000000000008").status_code for _ in range(35)]
     assert codes[-1] == 429 and codes[0] == 200
-    assert _post(c, "block", targetId="00000000-0000-4000-8000-000000000008").status_code == 200
-    r = None
-    for _ in range(40):
-        r = _post(c, "block", targetId="00000000-0000-4000-8000-000000000008")
+    # Block has far higher limits so a replayed offline queue is not dropped.
+    codes = [_post(c, "block", targetId="00000000-0000-4000-8000-000000000008").status_code for _ in range(120)]
+    assert codes == [200] * 120
+    r = _post(c, "block", targetId="00000000-0000-4000-8000-000000000008")
     assert r.status_code == 429 and "Retry-After" in r.headers
 
 
@@ -452,17 +503,22 @@ def test_repeat_block_is_idempotent_and_uses_on_conflict(fake):
 
 def test_duplicate_follow_race_is_not_a_500(fake, monkeypatch):
     target = "00000000-0000-4000-8000-000000000008"
-    orig = cr._blocked_either_way
+    orig = _Query.upsert
 
-    def racing(a, b):
-        out = orig(a, b)
-        fake.tables.setdefault("follows", []).append({"id": "x", "follower_id": a, "following_id": b})
-        return out
+    def racing(self, payload, on_conflict=None, ignore_duplicates=False):
+        # A concurrent follow lands its row after this request's existence check
+        # but before its upsert, so the upsert hits the conflict path (no rows).
+        if self.name == "follows":
+            fake.tables.setdefault("follows", []).append(
+                {"id": "x", "follower_id": payload["follower_id"], "following_id": payload["following_id"]})
+        return orig(self, payload, on_conflict, ignore_duplicates)
 
-    monkeypatch.setattr(cr, "_blocked_either_way", racing)
+    monkeypatch.setattr(_Query, "upsert", racing)
     r = _post(_client(ME), "follow", targetId=target)
     assert r.status_code == 200
     assert len(fake.tables["follows"]) == 1
+    assert r.json()["data"]["status"] == "already_following"
+    assert fake.tables.get("notes", []) == []
 
 
 def test_active_user_distinguishes_missing_column_from_outage(fake, monkeypatch):

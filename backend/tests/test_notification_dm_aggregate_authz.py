@@ -66,8 +66,10 @@ class _Query:
             return _Result(items)
         if self.op == "upsert":
             cols, ignore = self.conflict
-            if not any(all(r.get(c) == self.payload.get(c) for c in cols) for r in rows):
-                rows.append(dict(self.payload))
+            if any(all(r.get(c) == self.payload.get(c) for c in cols) for r in rows):
+                # Real PostgREST returns no rows when ignore_duplicates skips one.
+                return _Result([])
+            rows.append(dict(self.payload))
             return _Result([self.payload])
         match = [r for r in rows if all(f(r) for f in self.filters)]
         if self.op == "update":
@@ -360,6 +362,47 @@ def test_dm_simultaneous_first_threads_converge_on_the_older_one(fake, monkeypat
     assert [t["id"] for t in fake.tables["dm_threads"]] == ["older"]
     assert {p["thread_id"] for p in fake.tables["thread_participants"]} == {"older"}
     assert fake.tables["dm_messages"][0]["thread_id"] == "older"
+
+
+def test_dm_loser_thread_with_messages_is_never_deleted(fake, monkeypatch):
+    # Req1 created T1; Req2 found T1 and inserted a message; Req3's older empty
+    # thread exists. Req1's re-lookup must not pick the empty one and cascade-
+    # delete T1 (and the message): the oldest thread WITH messages wins.
+    A, B = "00000000-0000-4000-8000-000000000001", "00000000-0000-4000-8000-000000000002"
+    _mutual(fake, A, B)
+    real = cr._find_dm_thread
+    calls = {"n": 0}
+
+    def racing(a, b):
+        calls["n"] += 1
+        if calls["n"] == 2:
+            t1 = fake.tables["dm_threads"][0]["id"]
+            fake.tables.setdefault("dm_messages", []).append({"id": "m0", "thread_id": t1, "sender_id": B, "content": "hello"})
+            fake.tables["dm_threads"].append({"id": "older", "created_at": "2000-01-01T00:00:00+00:00"})
+            _thread(fake, "older", A, B)
+        return real(a, b)
+
+    monkeypatch.setattr(cr, "_find_dm_thread", racing)
+    r = _dm(_client(ME), B)
+    assert r.status_code == 200
+    t1 = fake.tables["dm_threads"][0]["id"]
+    assert t1 != "older" and r.json()["data"]["threadId"] == t1
+    assert {t["id"] for t in fake.tables["dm_threads"]} == {t1, "older"}
+    assert {m["id"] for m in fake.tables["dm_messages"] if m["thread_id"] == t1} >= {"m0"}
+    assert len(fake.tables["dm_messages"]) == 2
+    # Later sends keep choosing the same (oldest-with-messages) thread.
+    assert cr._find_dm_thread(A, B) == t1
+
+
+def test_delete_dm_thread_skips_a_thread_with_messages_and_deletes_an_empty_one(fake):
+    fake.tables["dm_threads"] = [{"id": "full"}, {"id": "empty"}]
+    _thread(fake, "full", "u1", "u2")
+    _thread(fake, "empty", "u1", "u2")
+    fake.tables["dm_messages"] = [{"id": "m", "thread_id": "full"}]
+    assert cr._delete_dm_thread("full") is False
+    assert cr._delete_dm_thread("empty") is True
+    assert [t["id"] for t in fake.tables["dm_threads"]] == ["full"]
+    assert {p["thread_id"] for p in fake.tables["thread_participants"]} == {"full"}
 
 
 # ---------------- follow flow (cannot mint someone else's follow) ----------------
