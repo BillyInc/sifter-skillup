@@ -21,10 +21,15 @@
 --           pgrst.jwt_secret and any other setting are never selected),
 --           function bodies, function settings other than search_path,
 --           column defaults, connection strings or table data. It is NOT
---           guaranteed secret-free: section 2 prints every policy
---           expression verbatim, and an expression can embed a literal
---           (an e-mail address, a UUID, a token). Skim section 2 (and the
---           section 7 detail column) before sharing the output.
+--           guaranteed secret-free: section 2 and section 6c print every
+--           policy expression verbatim, and an expression can embed a
+--           literal (an e-mail address, a UUID, a token, a bucket id).
+--           Section 6a prints bucket ids and names (and section 7 prints
+--           bucket names), and section 1d prints column names. Section 7
+--           replaces quoted string literals in policy text by '?' and cuts
+--           each expression at 300 characters, but object names are still
+--           printed. Skim sections 2, 6a and 6c (and 3d, 7) before sharing
+--           the output; review_literals marks likely literal-bearing rows.
 -- How     : the SQL editor shows only the LAST statement's result, so run
 --           each numbered section on its own (select the section, Run), or
 --           run section 7 first for the one-screen summary. See
@@ -418,6 +423,8 @@ ORDER BY c.relname;
 --     role is itself subject to RLS on storage.buckets (or there are no
 --     buckets) an extra first row with a `note` explains that the list may
 --     be incomplete, so an empty result is never read as "no buckets".
+--     Bucket ids and names are printed as stored; a name can be sensitive,
+--     so skim this section before sharing the output.
 -- ---------------------------------------------------------------------
 WITH b AS (
   SELECT id, name, public, file_size_limit, allowed_mime_types, created_at, updated_at
@@ -454,10 +461,17 @@ ORDER BY c.relname;
 
 
 -- ---------------------------------------------------------------------
--- 6c. storage schema policies (run on its own)
+-- 6c. storage schema policies (run on its own). Printed verbatim, like
+--     section 2: a policy often names a bucket (bucket_id = '...') or embeds
+--     another literal. review_literals marks UUID / e-mail / long token-like
+--     text (a hint only); skim every row before sharing.
 -- ---------------------------------------------------------------------
 SELECT schemaname, tablename, policyname, permissive,
        roles::text AS roles, cmd,
+       ((coalesce(qual, '') || ' ' || coalesce(with_check, ''))
+         ~* '([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}|(?=[a-z0-9_=+/-]{32})[a-z_=+/-]*[0-9])'
+        OR (coalesce(qual, '') || ' ' || coalesce(with_check, ''))
+         ~ '(?=[A-Za-z0-9_=+/-]{32})[a-z_=+/-]*[A-Z]')            AS review_literals,
        qual        AS using_expr,
        with_check  AS with_check_expr
 FROM pg_policies
@@ -507,7 +521,7 @@ ORDER BY e.extname;
 --    section 2 is mandatory.
 --    SIZE / ORDER: the SQL editor shows at most 1000 rows and silently drops
 --    the rest. Rows are ordered SUMMARY, G0 scan rows, HIGH, MEDIUM, REVIEW,
---    INFO (inside a severity, checks with fewer rows first), so the most
+--    INFO (inside a severity, checks with fewer rows of that severity first), so the most
 --    serious rows are the last to be cut. If the SUMMARY row warns, run the
 --    section once per check: at the very end of this section edit the line
 --    marked EDIT POINT 1 (for example check_id IN ('G3')), Run, repeat for
@@ -669,13 +683,29 @@ expr AS (  -- one row per USING / WITH CHECK expression, normalised
   SELECT o.nspname, o.tablename, o.policyname, k.kind, k.raw,
          -- lower-case; drop "AS alias" and ::type casts; drop the word
          -- "select" (initplan wrapper); drop parentheses and whitespace
+         -- then drop always-true AND arms ("x AND true", "true AND x") so that
+         -- "auth.role()='authenticated' AND true" reads as the bare role test
          regexp_replace(
            regexp_replace(
              regexp_replace(
-               regexp_replace(lower(k.raw), '\s+as\s+[a-z_][a-z0-9_]*', '', 'g'),
-               '::(text|character varying|varchar|name|bpchar|uuid|boolean|bool|integer|int4|bigint|int8|jsonb|json|regclass|regrole)(\[\])?', '', 'g'),
-             '\mselect\M', '', 'g'),
-           '[()\s]', '', 'g') AS n
+               regexp_replace(
+                 regexp_replace(
+                   regexp_replace(lower(k.raw), '\s+as\s+[a-z_][a-z0-9_]*', '', 'g'),
+                   '::(text|character varying|varchar|name|bpchar|uuid|boolean|bool|integer|int4|bigint|int8|jsonb|json|regclass|regrole)(\[\])?', '', 'g'),
+                 '\mselect\M', '', 'g'),
+               '[()\s]', '', 'g'),
+             'and(true|1=1)(?=and|or|$)', '', 'g'),
+           '(^|or)(true|1=1)and', '\1', 'g') AS n,
+         -- display form for section 7: quoted string literals replaced by '?'
+         -- (the role names and JWT claim keys the patterns look for are kept),
+         -- then truncated. The full text is printed only in section 2.
+         left(translate(
+                regexp_replace(
+                  regexp_replace(k.raw,   -- 1) mark the whitelisted literals with control characters
+                    '''(anon|authenticated|service_role|role|email|sub|app_metadata|user_metadata)''',
+                    chr(1) || '\1' || chr(2), 'g'),
+                  '''([^'']|'''')*''', '''?''', 'g'),   -- 2) every other quoted literal becomes '?'
+                chr(1) || chr(2), ''''''), 300) AS raw_red   -- 3) restore the marked ones
   FROM pol o
   CROSS JOIN LATERAL (VALUES ('USING', o.qual), ('WITH CHECK', o.with_check)) AS k(kind, raw)
   WHERE k.raw IS NOT NULL
@@ -691,7 +721,7 @@ pat2 AS (   -- A = one OR arm that is open to an API role (used by the "possibly
   FROM pat
 ),
 exprflag AS (
-  SELECT e.nspname, e.tablename, e.policyname, e.kind, e.raw,
+  SELECT e.nspname, e.tablename, e.policyname, e.kind, e.raw, e.raw_red,
          -- true for every caller
          (e.n ~ '^(true|1=1|true=true|notfalse|nottrue=false)$'
           OR e.n ~ '^(true|1=1)(and(true|1=1))+$') AS p_all,
@@ -708,10 +738,11 @@ exprflag AS (
           OR e.n ~ '^(auth\.(uid|jwt|role)isnotnull|notauth\.(uid|jwt|role)isnull)$') AS p_auth,
          -- cheap "possibly open" flag (reported as REVIEW/MEDIUM, never HIGH):
          -- an OR arm that is open to an API role (auth.role()='authenticated'
-         -- OR auth.uid()=id), "... OR true", the request.jwt.claims form with
-         -- an API role literal, or "<column> IS NOT NULL"
+         -- OR auth.uid()=id), an always-true OR arm in any position ("true OR x",
+         -- "x OR true"), the request.jwt.claims form with an API role literal,
+         -- or "<column> IS NOT NULL"
          (e.n ~ ('(^|or)' || pat2.arm || '(or|$)')
-          OR e.n ~ 'or(true|1=1)(or|$)'
+          OR e.n ~ '(^|or)(true|1=1)(or|$)'
           OR (e.n ~ 'request\.jwt\.claims' AND e.n ~ '''(anon|authenticated)''')
           OR e.n ~ '^[a-z_][a-z0-9_.]*isnotnull$') AS p_rev
   FROM expr e CROSS JOIN pat2
@@ -721,7 +752,7 @@ openpol AS (  -- policies that are always-true for an API role they apply to
          bool_or(f.p_all OR f.p_anon) OVER w AS pass_anon,
          bool_or(f.p_all OR f.p_auth) OVER w AS pass_auth,
          bool_or(f.p_rev) OVER w AS pass_rev,
-         string_agg(f.kind || ' ' || f.raw, ' / ') FILTER (WHERE f.p_all OR f.p_anon OR f.p_auth OR f.p_rev) OVER w AS matched_expr
+         string_agg(f.kind || ' ' || f.raw_red, ' / ') FILTER (WHERE f.p_all OR f.p_anon OR f.p_auth OR f.p_rev) OVER w AS matched_expr
   FROM pol o
   JOIN exprflag f ON f.nspname = o.nspname AND f.tablename = o.tablename AND f.policyname = o.policyname
   WINDOW w AS (PARTITION BY o.nspname, o.tablename, o.policyname)
@@ -1031,7 +1062,8 @@ summary AS (   -- always-present first row: how many flag rows exist per check
                           || 'Rows are ordered HIGH first, but re-run per check: edit the line marked EDIT POINT 1 '
                           || '(for example check_id IN (''G3'')), then Run, once per check_id with rows. '
                           || 'If one check alone exceeds 900 rows, also narrow EDIT POINT 2 to one severity.'
-                     ELSE '. All rows fit within the 1000-row editor cap.' END) AS detail
+                     ELSE '. All rows fit within the 1000-row editor cap.' END,
+                ' Heuristic; read section 2; not a verdict.') AS detail
   FROM totals t
 ),
 shown AS (
@@ -1042,7 +1074,7 @@ shown AS (
               WHEN severity = 'MEDIUM' THEN 3
               WHEN severity = 'REVIEW' THEN 4
               ELSE 5 END AS sev_rank,
-         count(*) OVER (PARTITION BY check_id) AS check_rows
+         count(*) OVER (PARTITION BY check_id, severity) AS check_rows
   FROM (SELECT * FROM flags UNION ALL SELECT * FROM summary) u
 )
 SELECT count(*) OVER ()                                          AS result_rows,
@@ -1055,6 +1087,6 @@ WHERE sev_rank = 0                                               -- the SUMMARY 
    OR ( check_id IN ('G0', 'G1', 'G2', 'G3', 'G4', 'G5', 'G6', 'G7', 'G8', 'G9', 'G10')   -- EDIT POINT 1: keep only the checks you want, e.g. check_id IN ('G3')
         AND severity IN ('HIGH', 'MEDIUM', 'REVIEW', 'INFO') )                            -- EDIT POINT 2: keep only some severities, e.g. severity IN ('HIGH')
 -- Order: SUMMARY row, what was scanned, then HIGH, MEDIUM, REVIEW, INFO; inside a
--- severity the checks with FEWER rows come first, so a rare finding (for
+-- severity the checks with FEWER rows (of that severity) come first, so a rare finding (for
 -- example a HIGH G3 function) is not pushed behind thousands of G9 rows.
 ORDER BY sev_rank, check_rows, substr(check_id, 2)::int, object;
