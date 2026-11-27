@@ -818,3 +818,30 @@ def test_a_persistent_failure_is_retried_then_abandoned_with_pii_intact(monkeypa
     svc.storage = _Storage()
     svc.tables["users"][0]["purge_attempts"] = 0
     assert ahd.hard_delete_expired_accounts(NOW + timedelta(days=100))["deleted"] == 1
+
+
+# --- hard-delete foreign-key migrations (PR #326) ------------------------------
+
+def test_hard_delete_fk_migrations_add_not_valid_then_validate_separately():
+    from pathlib import Path
+
+    from migrate import manifest as mf
+
+    backend = Path(__file__).resolve().parents[1]
+    first = (backend / "migration_hard_delete_fk_2026-11-27.sql").read_text()
+    second = (backend / "migration_hard_delete_fk_validate_2026-11-27.sql").read_text()
+
+    # the first file must not scan tables while it holds the DROP CONSTRAINT lock
+    assert "ON DELETE SET NULL NOT VALID" in first
+    assert "VALIDATE CONSTRAINT" not in first.split("BEGIN;", 1)[1]
+
+    # the second exists, is prepared not applied, and only validates unvalidated keys
+    assert second.lstrip().startswith("-- PROPOSED, NOT APPLIED")
+    body = second.split("BEGIN;", 1)[1]
+    assert "VALIDATE CONSTRAINT" in body and "NOT c.convalidated" in body
+    assert "DROP " not in body and "DELETE " not in body
+
+    entries = {e.id: e for e in mf.load_manifest(backend / "migrate" / "manifest.toml").entries}
+    entry = entries["migration_hard_delete_fk_validate_2026-11-27"]
+    assert entry.path == "migration_hard_delete_fk_validate_2026-11-27.sql"
+    assert "migration_hard_delete_fk_2026-11-27" in entry.requires

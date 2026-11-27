@@ -21,9 +21,18 @@
 -- already SET NULL are replaced, in one transaction, with the same column and
 -- target; no rows are changed. Skips a table or column that is absent.
 --
+-- Lock safety: the replacement constraints are added NOT VALID, so this
+-- transaction does not scan notifications or guilds while it holds the lock
+-- taken by DROP CONSTRAINT. A NOT VALID foreign key already enforces every new
+-- write and already applies ON DELETE SET NULL; only the check of rows that
+-- existed before is deferred. Run migration_hard_delete_fk_validate_2026-11-27.sql
+-- afterwards, as its own transaction, to validate them (it takes only a
+-- SHARE UPDATE EXCLUSIVE lock, so reads and writes continue).
+--
 -- Verify after applying (expects confdeltype 'n' = SET NULL for both rows;
--- a table or column that is absent simply returns no row):
---   SELECT c.conrelid::regclass AS tbl, a.attname AS col, c.confdeltype
+-- convalidated is false until the validate migration has run; a table or
+-- column that is absent simply returns no row):
+--   SELECT c.conrelid::regclass AS tbl, a.attname AS col, c.confdeltype, c.convalidated
 --     FROM pg_constraint c
 --     JOIN pg_attribute a ON a.attrelid = c.conrelid AND a.attnum = ANY (c.conkey)
 --    WHERE c.contype = 'f'
@@ -64,7 +73,7 @@ BEGIN
     LOOP
       EXECUTE format('ALTER TABLE skillup_dev.%I DROP CONSTRAINT %I', target.tbl, fk.conname);
       EXECUTE format(
-        'ALTER TABLE skillup_dev.%I ADD CONSTRAINT %I FOREIGN KEY (%I) REFERENCES skillup_dev.users(id) ON DELETE SET NULL',
+        'ALTER TABLE skillup_dev.%I ADD CONSTRAINT %I FOREIGN KEY (%I) REFERENCES skillup_dev.users(id) ON DELETE SET NULL NOT VALID',
         target.tbl, fk.conname, target.col
       );
     END LOOP;
