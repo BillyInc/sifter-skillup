@@ -96,7 +96,7 @@ class FakeDB:
         return self
 
 
-ME = {"id": "u-me", "auth_provider": "email", "account_type": "student"}
+ME = {"id": "00000000-0000-4000-8000-000000000001", "auth_provider": "email", "account_type": "student"}
 
 
 @pytest.fixture
@@ -105,6 +105,8 @@ def fake(monkeypatch):
     for mod in (cr, er, mr):
         monkeypatch.setattr(mod.db, "get_service_client", lambda f=f: f, raising=False)
     monkeypatch.setattr(mr.db, "get_client", lambda f=f: f, raising=False)
+    for lim in (cr._follow_limiter, cr._follow_request_limiter, cr._respond_limiter, cr._block_limiter):
+        lim.reset()
     return f
 
 
@@ -127,15 +129,15 @@ def _trigger(client, uid, **extra):
 
 def test_trigger_self_allowed(fake):
     fake.tables["push_tokens"] = []
-    r = _trigger(_client(ME), "u-me")
+    r = _trigger(_client(ME), "00000000-0000-4000-8000-000000000001")
     assert r.status_code == 200
-    assert fake.tables["notifications"][0]["user_id"] == "u-me"
+    assert fake.tables["notifications"][0]["user_id"] == "00000000-0000-4000-8000-000000000001"
 
 
 def test_trigger_other_user_denied_and_uniform(fake):
-    fake.tables["users"] = [{"id": "u-other"}]
+    fake.tables["users"] = [{"id": "00000000-0000-4000-8000-00000000000a"}]
     c = _client(ME)
-    a = _trigger(c, "u-other")
+    a = _trigger(c, "00000000-0000-4000-8000-00000000000a")
     b = _trigger(c, "does-not-exist")
     assert a.status_code == b.status_code == 403
     assert a.json() == b.json()
@@ -143,15 +145,61 @@ def test_trigger_other_user_denied_and_uniform(fake):
 
 
 def test_trigger_guest_cannot_target_others(fake):
-    guest = {"id": "g1", "auth_provider": "guest", "account_type": "student"}
-    assert _trigger(_client(guest), "u-me").status_code == 403
+    guest = {"id": "00000000-0000-4000-8000-00000000000c", "auth_provider": "guest", "account_type": "student"}
+    assert _trigger(_client(guest), "00000000-0000-4000-8000-000000000001").status_code == 403
 
 
-def test_trigger_text_is_sanitised(fake):
-    fake.tables["push_tokens"] = []
-    r = _trigger(_client(ME), "u-me", userName="x" * 500 + "\n\x00", channels=["push", "bogus"])
+class _Resp:
+    status_code = 200
+
+
+def _capture_push(monkeypatch):
+    sent = {}
+
+    class _HC:
+        def __init__(self, *a, **k): pass
+        async def __aenter__(self): return self
+        async def __aexit__(self, *a): return False
+        async def post(self, url, json=None, headers=None):
+            sent["json"] = json
+            return _Resp()
+
+    monkeypatch.setattr(mr.httpx, "AsyncClient", _HC)
+    return sent
+
+
+def test_trigger_text_is_sanitised(fake, monkeypatch):
+    fake.tables["push_tokens"] = [{"user_id": ME["id"], "token": "ExponentPushToken[x]", "platform": "expo"}]
+    sent = _capture_push(monkeypatch)
+    name = "Ada\nLovelace\u00a0\u202eX\U0001F525\u2705" + "y" * 500 + "\x00"
+    r = _trigger(_client(ME), ME["id"], type="streak_reminder", userName=name, channels=["push", "bogus"])
     assert r.status_code == 200
     assert r.json()["data"]["channels"] == ["push"]
+    title = sent["json"][0]["title"]
+    expected = "Ada Lovelace X" + "y" * 26  # cleaned and capped at 40 characters
+    assert title == f"\u26a1 Keep your streak alive, {expected}!"
+    assert "\n" not in title and "\u00a0" not in title and "\u202e" not in title
+
+
+def test_trigger_padded_user_id_uses_authenticated_id_in_every_query(fake, monkeypatch):
+    fake.tables["push_tokens"] = [{"user_id": ME["id"], "token": "ExponentPushToken[x]", "platform": "expo"}]
+    _capture_push(monkeypatch)
+    r = _trigger(_client(ME), "  " + ME["id"].upper() + " ")
+    assert r.status_code == 200
+    assert fake.tables["notifications"][0]["user_id"] == ME["id"]
+
+
+def test_clean_text_keeps_words_apart_and_persian_joiners():
+    assert mr._clean_notification_text("Ada\nLovelace\tX\u00a0Y\u2028Z  W", 50) == "Ada Lovelace X Y Z W"
+    assert mr._clean_notification_text("\u0645\u06cc\u200c\u062e\u0648\u0627\u0647\u0645", 50) == "\u0645\u06cc\u200c\u062e\u0648\u0627\u0647\u0645"
+    assert mr._clean_notification_text("\u0645\u06cc\u200d\u062e", 50) == "\u0645\u06cc\u200d\u062e"
+    # Joiners inside an emoji sequence go with the emoji.
+    assert mr._clean_notification_text("a\U0001F468\u200d\U0001F469\u200d\U0001F467b\u2764\ufe0f", 50) == "ab"
+
+
+def test_clean_data_rejects_unsafe_integers():
+    out = mr._clean_notification_data({"ok": 2 ** 53, "big": 2 ** 53 + 1, "neg": -(2 ** 53) - 1, "f": 1.5})
+    assert out == {"ok": 2 ** 53, "f": 1.5}
 
 
 # ---------------- dms/send ----------------
@@ -183,18 +231,18 @@ def _thread(fake, tid, *members):
 
 
 def test_dm_mutual_follow_allowed(fake):
-    _mutual(fake, "u-me", "u-b")
-    r = _dm(_client(ME), "u-b")
+    _mutual(fake, "00000000-0000-4000-8000-000000000001", "00000000-0000-4000-8000-000000000002")
+    r = _dm(_client(ME), "00000000-0000-4000-8000-000000000002")
     assert r.status_code == 200
-    assert fake.tables["dm_messages"][0]["sender_id"] == "u-me"
+    assert fake.tables["dm_messages"][0]["sender_id"] == "00000000-0000-4000-8000-000000000001"
 
 
 def test_dm_stranger_and_one_way_follow_denied_uniformly(fake):
-    _users(fake, "u-me", "u-b", "u-c")
-    _follow(fake, "u-me", "u-b")  # one way only
+    _users(fake, "00000000-0000-4000-8000-000000000001", "00000000-0000-4000-8000-000000000002", "00000000-0000-4000-8000-000000000003")
+    _follow(fake, "00000000-0000-4000-8000-000000000001", "00000000-0000-4000-8000-000000000002")  # one way only
     c = _client(ME)
-    one_way = _dm(c, "u-b")
-    stranger = _dm(c, "u-c")
+    one_way = _dm(c, "00000000-0000-4000-8000-000000000002")
+    stranger = _dm(c, "00000000-0000-4000-8000-000000000003")
     unknown = _dm(c, "no-such-user")
     assert one_way.status_code == stranger.status_code == unknown.status_code == 403
     assert one_way.json() == stranger.json() == unknown.json()
@@ -202,60 +250,60 @@ def test_dm_stranger_and_one_way_follow_denied_uniformly(fake):
 
 
 def test_dm_guest_cannot_initiate_even_with_mutual_follow(fake):
-    guest = {"id": "g1", "auth_provider": "guest", "account_type": "student"}
-    _mutual(fake, "g1", "u-b")
-    assert _dm(_client(guest), "u-b").status_code == 403
+    guest = {"id": "00000000-0000-4000-8000-00000000000c", "auth_provider": "guest", "account_type": "student"}
+    _mutual(fake, "00000000-0000-4000-8000-00000000000c", "00000000-0000-4000-8000-000000000002")
+    assert _dm(_client(guest), "00000000-0000-4000-8000-000000000002").status_code == 403
     assert "dm_messages" not in fake.tables
 
 
 def test_dm_existing_thread_between_mutual_followers_works_even_for_guest(fake):
     # Changed from the first revision: an existing thread is no longer exempt
     # from the follow rule, so the pair must still be mutual followers.
-    guest = {"id": "g1", "auth_provider": "guest", "account_type": "student"}
-    _mutual(fake, "g1", "u-b")
-    _thread(fake, "t1", "g1", "u-b")
-    r = _dm(_client(guest), "u-b")
+    guest = {"id": "00000000-0000-4000-8000-00000000000c", "auth_provider": "guest", "account_type": "student"}
+    _mutual(fake, "00000000-0000-4000-8000-00000000000c", "00000000-0000-4000-8000-000000000002")
+    _thread(fake, "t1", "00000000-0000-4000-8000-00000000000c", "00000000-0000-4000-8000-000000000002")
+    r = _dm(_client(guest), "00000000-0000-4000-8000-000000000002")
     assert r.status_code == 200
     assert r.json()["data"]["threadId"] == "t1"
 
 
 def test_dm_blocked_either_direction_denied(fake):
-    _mutual(fake, "u-me", "u-b")
-    fake.tables["user_blocks"] = [{"user_id": "u-b", "target_id": "u-me"}]
-    r1 = _dm(_client(ME), "u-b")
-    fake.tables["user_blocks"] = [{"user_id": "u-me", "target_id": "u-b"}]
-    r2 = _dm(_client(ME), "u-b")
+    _mutual(fake, "00000000-0000-4000-8000-000000000001", "00000000-0000-4000-8000-000000000002")
+    fake.tables["user_blocks"] = [{"user_id": "00000000-0000-4000-8000-000000000002", "target_id": "00000000-0000-4000-8000-000000000001"}]
+    r1 = _dm(_client(ME), "00000000-0000-4000-8000-000000000002")
+    fake.tables["user_blocks"] = [{"user_id": "00000000-0000-4000-8000-000000000001", "target_id": "00000000-0000-4000-8000-000000000002"}]
+    r2 = _dm(_client(ME), "00000000-0000-4000-8000-000000000002")
     assert r1.status_code == r2.status_code == 403
     assert r1.json() == r2.json()
 
 
 def test_dm_lapsed_follow_freezes_existing_thread(fake):
-    _mutual(fake, "u-me", "u-b")
-    _thread(fake, "t1", "u-me", "u-b")
-    assert _dm(_client(ME), "u-b").status_code == 200
+    _mutual(fake, "00000000-0000-4000-8000-000000000001", "00000000-0000-4000-8000-000000000002")
+    _thread(fake, "t1", "00000000-0000-4000-8000-000000000001", "00000000-0000-4000-8000-000000000002")
+    assert _dm(_client(ME), "00000000-0000-4000-8000-000000000002").status_code == 200
     # Recipient unfollows the sender: the thread is frozen.
-    fake.tables["follows"] = [f for f in fake.tables["follows"] if f["follower_id"] != "u-b"]
-    assert _dm(_client(ME), "u-b").status_code == 403
+    fake.tables["follows"] = [f for f in fake.tables["follows"] if f["follower_id"] != "00000000-0000-4000-8000-000000000002"]
+    assert _dm(_client(ME), "00000000-0000-4000-8000-000000000002").status_code == 403
     assert len(fake.tables["dm_messages"]) == 1
 
 
 def test_dm_group_thread_is_not_a_dm_thread(fake):
-    _mutual(fake, "u-me", "u-b")
-    _thread(fake, "grp", "u-me", "u-b", "u-x")
-    r = _dm(_client(ME), "u-b")
+    _mutual(fake, "00000000-0000-4000-8000-000000000001", "00000000-0000-4000-8000-000000000002")
+    _thread(fake, "grp", "00000000-0000-4000-8000-000000000001", "00000000-0000-4000-8000-000000000002", "00000000-0000-4000-8000-000000000004")
+    r = _dm(_client(ME), "00000000-0000-4000-8000-000000000002")
     assert r.status_code == 200
     assert r.json()["data"]["threadId"] != "grp"
     assert all(m["thread_id"] != "grp" for m in fake.tables["dm_messages"])
 
 
 def test_dm_deleted_or_missing_recipient_uniform_403_and_no_thread(fake):
-    _users(fake, "u-me")
-    fake.tables["users"].append({"id": "u-del", "is_deleted": True})
-    _follow(fake, "u-me", "u-del")
-    _follow(fake, "u-del", "u-me")
+    _users(fake, "00000000-0000-4000-8000-000000000001")
+    fake.tables["users"].append({"id": "00000000-0000-4000-8000-000000000005", "is_deleted": True})
+    _follow(fake, "00000000-0000-4000-8000-000000000001", "00000000-0000-4000-8000-000000000005")
+    _follow(fake, "00000000-0000-4000-8000-000000000005", "00000000-0000-4000-8000-000000000001")
     c = _client(ME)
-    deleted = _dm(c, "u-del")
-    missing = _dm(c, "u-none")
+    deleted = _dm(c, "00000000-0000-4000-8000-000000000005")
+    missing = _dm(c, "00000000-0000-4000-8000-000000000006")
     assert deleted.status_code == missing.status_code == 403
     assert deleted.json() == missing.json()
     assert "dm_threads" not in fake.tables and "dm_messages" not in fake.tables
@@ -268,8 +316,50 @@ def test_dm_uppercase_self_id_cannot_bypass_self_check(fake):
 
 
 def test_dm_uppercase_recipient_id_normalised(fake):
-    _mutual(fake, "u-me", "u-b")
-    assert _dm(_client(ME), "U-B").status_code == 200
+    _mutual(fake, "00000000-0000-4000-8000-000000000001", "00000000-0000-4000-8000-000000000002")
+    assert _dm(_client(ME), "00000000-0000-4000-8000-000000000002").status_code == 200
+
+
+def test_dm_thread_lookup_failure_fails_send_and_creates_nothing(fake, monkeypatch):
+    _mutual(fake, "00000000-0000-4000-8000-000000000001", "00000000-0000-4000-8000-000000000002")
+
+    def boom(*_a):
+        raise RuntimeError("db down")
+
+    monkeypatch.setattr(cr, "_find_dm_thread", boom)
+    r = _dm(_client(ME), "00000000-0000-4000-8000-000000000002")
+    assert r.status_code == 503
+    assert "dm_threads" not in fake.tables and "dm_messages" not in fake.tables
+
+
+def test_dm_user_lookup_outage_is_503_not_a_refusal(fake, monkeypatch):
+    def boom(_id):
+        raise cr.HTTPException(503, "Temporarily unavailable. Please try again.")
+
+    monkeypatch.setattr(cr, "_active_user", boom)
+    assert _dm(_client(ME), "00000000-0000-4000-8000-000000000002").status_code == 503
+
+
+def test_dm_simultaneous_first_threads_converge_on_the_older_one(fake, monkeypatch):
+    A, B = "00000000-0000-4000-8000-000000000001", "00000000-0000-4000-8000-000000000002"
+    _mutual(fake, A, B)
+    real = cr._find_dm_thread
+    calls = {"n": 0}
+
+    def racing(a, b):
+        calls["n"] += 1
+        if calls["n"] == 2:
+            # The other direction's request created an older thread meanwhile.
+            fake.tables.setdefault("dm_threads", []).append({"id": "older", "created_at": "2000-01-01T00:00:00+00:00"})
+            _thread(fake, "older", A, B)
+        return real(a, b)
+
+    monkeypatch.setattr(cr, "_find_dm_thread", racing)
+    r = _dm(_client(ME), B)
+    assert r.status_code == 200 and r.json()["data"]["threadId"] == "older"
+    assert [t["id"] for t in fake.tables["dm_threads"]] == ["older"]
+    assert {p["thread_id"] for p in fake.tables["thread_participants"]} == {"older"}
+    assert fake.tables["dm_messages"][0]["thread_id"] == "older"
 
 
 # ---------------- follow flow (cannot mint someone else's follow) ----------------
@@ -280,48 +370,48 @@ def _respond(client, requester, action="approve"):
 
 def test_forged_approve_creates_no_follow_and_dm_stays_blocked(fake):
     # Attacker X (u-me) follows victim V, then tries to approve a request V never made.
-    _users(fake, "u-me", "victim")
+    _users(fake, "00000000-0000-4000-8000-000000000001", "00000000-0000-4000-8000-00000000000b")
     c = _client(ME)
-    assert c.post("/api/users/follow", json={"targetId": "victim"}).status_code == 200
-    r = _respond(c, "victim")
+    assert c.post("/api/users/follow", json={"targetId": "00000000-0000-4000-8000-00000000000b"}).status_code == 200
+    r = _respond(c, "00000000-0000-4000-8000-00000000000b")
     assert r.status_code == 404
     follows = fake.tables["follows"]
-    assert {"follower_id": "victim", "following_id": "u-me"} not in [
+    assert {"follower_id": "00000000-0000-4000-8000-00000000000b", "following_id": "00000000-0000-4000-8000-000000000001"} not in [
         {"follower_id": f["follower_id"], "following_id": f["following_id"]} for f in follows
     ]
-    assert all(f["follower_id"] == "u-me" for f in follows)
-    assert _dm(c, "victim").status_code == 403
+    assert all(f["follower_id"] == "00000000-0000-4000-8000-000000000001" for f in follows)
+    assert _dm(c, "00000000-0000-4000-8000-00000000000b").status_code == 403
     assert "dm_messages" not in fake.tables
 
 
 def test_respond_ignores_non_pending_request(fake):
-    _users(fake, "u-me", "u-b")
+    _users(fake, "00000000-0000-4000-8000-000000000001", "00000000-0000-4000-8000-000000000002")
     fake.tables["follow_requests"] = [
-        {"id": "r1", "requester_id": "u-b", "target_id": "u-me", "status": "reject"},
+        {"id": "r1", "requester_id": "00000000-0000-4000-8000-000000000002", "target_id": "00000000-0000-4000-8000-000000000001", "status": "reject"},
     ]
-    assert _respond(_client(ME), "u-b").status_code == 404
+    assert _respond(_client(ME), "00000000-0000-4000-8000-000000000002").status_code == 404
     assert "follows" not in fake.tables
 
 
 def test_respond_invalid_action_422(fake):
     fake.tables["follow_requests"] = [
-        {"id": "r1", "requester_id": "u-b", "target_id": "u-me", "status": "pending"},
+        {"id": "r1", "requester_id": "00000000-0000-4000-8000-000000000002", "target_id": "00000000-0000-4000-8000-000000000001", "status": "pending"},
     ]
-    assert _respond(_client(ME), "u-b", "block").status_code == 422
+    assert _respond(_client(ME), "00000000-0000-4000-8000-000000000002", "block").status_code == 422
     assert fake.tables["follow_requests"][0]["status"] == "pending"
     assert "follows" not in fake.tables
 
 
 def test_respond_genuine_pending_approve_creates_one_follow(fake):
-    _users(fake, "u-me", "u-b")
+    _users(fake, "00000000-0000-4000-8000-000000000001", "00000000-0000-4000-8000-000000000002")
     fake.tables["follow_requests"] = [
-        {"id": "r1", "requester_id": "u-b", "target_id": "u-me", "status": "pending"},
-        {"id": "r2", "requester_id": "u-c", "target_id": "u-me", "status": "pending"},
+        {"id": "r1", "requester_id": "00000000-0000-4000-8000-000000000002", "target_id": "00000000-0000-4000-8000-000000000001", "status": "pending"},
+        {"id": "r2", "requester_id": "00000000-0000-4000-8000-000000000003", "target_id": "00000000-0000-4000-8000-000000000001", "status": "pending"},
     ]
-    r = _respond(_client(ME), "u-b")
+    r = _respond(_client(ME), "00000000-0000-4000-8000-000000000002")
     assert r.status_code == 200
     assert fake.tables["follows"] == [
-        {"id": fake.tables["follows"][0]["id"], "follower_id": "u-b", "following_id": "u-me",
+        {"id": fake.tables["follows"][0]["id"], "follower_id": "00000000-0000-4000-8000-000000000002", "following_id": "00000000-0000-4000-8000-000000000001",
          "created_at": fake.tables["follows"][0]["created_at"]}
     ]
     statuses = {q["id"]: q["status"] for q in fake.tables["follow_requests"]}
@@ -329,26 +419,27 @@ def test_respond_genuine_pending_approve_creates_one_follow(fake):
 
 
 def test_respond_genuine_reject_creates_no_follow(fake):
+    _users(fake, "00000000-0000-4000-8000-000000000002")
     fake.tables["follow_requests"] = [
-        {"id": "r1", "requester_id": "u-b", "target_id": "u-me", "status": "pending"},
+        {"id": "r1", "requester_id": "00000000-0000-4000-8000-000000000002", "target_id": "00000000-0000-4000-8000-000000000001", "status": "pending"},
     ]
-    assert _respond(_client(ME), "u-b", "reject").status_code == 200
+    assert _respond(_client(ME), "00000000-0000-4000-8000-000000000002", "reject").status_code == 200
     assert "follows" not in fake.tables
     assert fake.tables["follow_requests"][0]["status"] == "reject"
 
 
 def test_follow_private_account_requires_request(fake):
-    _users(fake, "u-me")
-    fake.tables["users"].append({"id": "u-priv", "is_deleted": False, "is_private": True})
-    r = _client(ME).post("/api/users/follow", json={"targetId": "u-priv"})
+    _users(fake, "00000000-0000-4000-8000-000000000001")
+    fake.tables["users"].append({"id": "00000000-0000-4000-8000-000000000007", "is_deleted": False, "is_private": True})
+    r = _client(ME).post("/api/users/follow", json={"targetId": "00000000-0000-4000-8000-000000000007"})
     assert r.status_code == 403
     assert "follows" not in fake.tables
 
 
 def test_follow_unknown_or_deleted_target_404(fake):
-    fake.tables["users"] = [{"id": "u-del", "is_deleted": True}]
+    fake.tables["users"] = [{"id": "00000000-0000-4000-8000-000000000005", "is_deleted": True}]
     c = _client(ME)
-    assert c.post("/api/users/follow", json={"targetId": "u-del"}).status_code == 404
+    assert c.post("/api/users/follow", json={"targetId": "00000000-0000-4000-8000-000000000005"}).status_code == 404
     assert c.post("/api/users/follow", json={"targetId": "nope"}).status_code == 404
     assert "follows" not in fake.tables
 
@@ -369,7 +460,7 @@ def test_clean_data_drops_nan_inf_and_empty_or_colliding_keys():
 
 
 def test_trigger_user_data_cannot_override_type_or_track(fake, monkeypatch):
-    fake.tables["push_tokens"] = [{"user_id": "u-me", "token": "ExponentPushToken[x]", "platform": "expo"}]
+    fake.tables["push_tokens"] = [{"user_id": "00000000-0000-4000-8000-000000000001", "token": "ExponentPushToken[x]", "platform": "expo"}]
     sent = {}
 
     class _Resp:
@@ -384,7 +475,7 @@ def test_trigger_user_data_cannot_override_type_or_track(fake, monkeypatch):
             return _Resp()
 
     monkeypatch.setattr(mr.httpx, "AsyncClient", _HC)
-    r = _trigger(_client(ME), "u-me", data={"type": "evil", "trackId": "evil", "rank": 3})
+    r = _trigger(_client(ME), "00000000-0000-4000-8000-000000000001", data={"type": "evil", "trackId": "evil", "rank": 3})
     assert r.status_code == 200
     d = sent["json"][0]["data"]
     assert d["type"] == "streak_urgent" and d["trackId"] == "t" and d["rank"] == 3

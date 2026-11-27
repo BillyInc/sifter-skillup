@@ -666,7 +666,10 @@ DROP POLICY IF EXISTS artifacts_own ON skillup_dev.portfolio_artifacts;
 CREATE POLICY dm_participant_read  ON skillup_dev.dm_messages FOR SELECT USING (
     EXISTS (SELECT 1 FROM skillup_dev.thread_participants WHERE thread_id = dm_messages.thread_id AND user_id = auth.uid())
 );
-CREATE POLICY dm_participant_insert ON skillup_dev.dm_messages FOR INSERT WITH CHECK (sender_id = auth.uid());
+-- No client INSERT policy: DMs are written only by the backend (service_role),
+-- which enforces the mutual-follow, block and frozen-thread rules. Re-running
+-- this file must not bring the old sender_id = auth.uid() policy back.
+REVOKE INSERT, UPDATE, DELETE ON skillup_dev.dm_messages FROM anon, authenticated;
 
 -- Users can only read/write their own seen scenarios
 CREATE POLICY seen_scenarios_own ON skillup_dev.user_seen_scenarios FOR ALL USING (user_id = auth.uid());
