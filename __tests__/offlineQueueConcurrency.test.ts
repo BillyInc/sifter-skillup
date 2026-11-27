@@ -70,10 +70,41 @@ function installWebStorage() {
   return store;
 }
 
+/**
+ * CI runs Node 20, which has no global `navigator` (Node 21+ does), so the
+ * suite cannot assume one. Remember what was there, provide a stand-in when it
+ * is absent, and put the original descriptors back after every test.
+ */
+const G = globalThis as any;
+let originalNavigator: PropertyDescriptor | undefined;
+let originalLocalStorage: PropertyDescriptor | undefined;
+
+function setupGlobals() {
+  originalNavigator = Object.getOwnPropertyDescriptor(G, "navigator");
+  originalLocalStorage = Object.getOwnPropertyDescriptor(G, "localStorage");
+  if (typeof G.navigator === "undefined") {
+    Object.defineProperty(G, "navigator", { value: {}, configurable: true, writable: true });
+  }
+}
+function restoreGlobals() {
+  const restore = (key: string, original: PropertyDescriptor | undefined) => {
+    if (original) Object.defineProperty(G, key, original);
+    else delete G[key];
+  };
+  // Web Locks stub installed by a test lives on the navigator object itself.
+  if (G.navigator && Object.prototype.hasOwnProperty.call(G.navigator, "locks")) delete G.navigator.locks;
+  restore("navigator", originalNavigator);
+  restore("localStorage", originalLocalStorage);
+}
+function installWebLocks(locks: unknown) {
+  Object.defineProperty(G.navigator, "locks", { value: locks, configurable: true, writable: true });
+}
+
 const managers: OfflineQueueManager[] = [];
 const make = () => { const q = new OfflineQueueManager(); managers.push(q); return q; };
 
 beforeEach(async () => {
+  setupGlobals();
   mockProfile = { id: "user-a" };
   mockToken = "token-a";
   fetchMock.mockReset();
@@ -85,8 +116,7 @@ beforeEach(async () => {
 afterEach(() => {
   while (managers.length) managers.pop()!.destroy();
   jest.useRealTimers();
-  delete (global.navigator as any).locks;
-  delete (globalThis as any).localStorage;
+  restoreGlobals();
 });
 
 describe("1. one in-flight drain", () => {
@@ -338,7 +368,7 @@ describe("5. two tabs sharing one queue", () => {
 
   it("with Web Locks only one tab drains; the same write is not sent twice", async () => {
     const held = new Set<string>();
-    (global.navigator as any).locks = {
+    installWebLocks({
       request: async (name: string, opts: any, cb?: any) => {
         const fn = cb ?? opts;
         const options = cb ? opts : {};
@@ -347,7 +377,7 @@ describe("5. two tabs sharing one queue", () => {
         held.add(name);
         try { return await fn({ name }); } finally { held.delete(name); }
       },
-    };
+    });
     const tabA = make();
     const tabB = make();
     await tabA.init();

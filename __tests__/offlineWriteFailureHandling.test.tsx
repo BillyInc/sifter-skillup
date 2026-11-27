@@ -206,7 +206,11 @@ describe("FlagModal", () => {
     render(<FlagModal visible lessonId="l1" lessonTitle="Lesson" userId="u1" onClose={jest.fn()} />);
     fireEvent.press(screen.getByText("Something else"));
     fireEvent.press(screen.getByText("Submit Report"));
-    await waitFor(() => expect(screen.queryByText("Submitting…")).toBeNull());
+    // Wait for the failure to be surfaced (the end state), not just for the
+    // spinner label to go away. The default 1s budget is too tight on a loaded
+    // CI worker, where this is the first render of the lazily-required modal.
+    await waitFor(() => expect(screen.getByRole("alert")).toBeTruthy(), { timeout: 5000 });
+    expect(screen.queryByText("Submitting…")).toBeNull();
     expect(screen.getByText("Submit Report")).toBeTruthy();
   });
 });
