@@ -131,9 +131,9 @@ def _users(d):
     return {r["id"]: r for r in d.tables["users"]}
 
 
-def _redeem(code="ACME-SS1-ABCDEF12", uid="guest-1"):
+def _redeem(code="ACME-SS1-ABCDEF12", uid="guest-1", **extra):
     return asyncio.run(claim_account(
-        payload=ClaimRequest(code=code), request=None, current_user={"id": uid}))
+        payload=ClaimRequest(code=code, **extra), request=None, current_user={"id": uid}))
 
 
 def _regen(d, uid="prov-1"):
@@ -440,3 +440,100 @@ def test_regenerate_keeps_the_old_code_live_if_the_insert_fails(db):
         _regen(db)
     assert err.value.status_code == 500
     assert [c["id"] for c in _live(db)] == ["cc-1"]  # the student still has a code
+
+
+# -- merge vs in-place claim --------------------------------------------------
+def test_admin_merge_refuses_a_shell_with_a_fresh_redeem_stamp(db):
+    db.tables["claim_codes"][0]["redeemed_at"] = pr._now()  # in-place claim mid-flight
+    db.tables["users"].append({"id": "real-1", "claim_state": None})
+    with pytest.raises(rec.MergeRefused):
+        rec.merge_provisioned_into_student(
+            provisioned_student_id="prov-1", real_student_id="real-1", school_id="school-1")
+    assert "prov-1" in _users(db)
+    assert "student_class" not in _users(db)["real-1"]  # nothing written to the real user
+
+
+def test_a_stale_redeem_stamp_does_not_block_an_admin_merge(db):
+    db.tables["claim_codes"][0]["redeemed_at"] = "2000-01-01T00:00:00+00:00"
+    rec.merge_provisioned_into_student(
+        provisioned_student_id="prov-1", real_student_id="guest-1", school_id="school-1")
+    assert "prov-1" not in _users(db)
+
+
+def test_a_merges_own_redeem_stamp_does_not_block_it(db):
+    db.tables["claim_codes"][0]["redeemed_at"] = pr._now()
+    rec.merge_provisioned_into_student(
+        provisioned_student_id="prov-1", real_student_id="guest-1", school_id="school-1",
+        own_claim_code_id="cc-1")
+    assert "prov-1" not in _users(db)
+
+
+def test_in_place_claim_never_says_claimed_when_the_shell_vanished(db):
+    # An admin merge deletes the shell between the stamp and the claim update.
+    def merge_lands(_q):
+        db.tables["users"][:] = [u for u in db.tables["users"] if u["id"] != "prov-1"]
+        db.hooks.pop(("users", "update"))
+
+    db.hooks[("users", "update")] = merge_lands
+    with pytest.raises(HTTPException) as err:
+        _redeem(uid="prov-1", phone="0801")
+    assert (err.value.status_code, err.value.detail) == (404, pr._CLAIM_REJECTED)
+    assert db.tables["claim_codes"][0]["redeemed_at"] is None  # code reopened
+
+
+def test_in_place_claim_still_succeeds_for_a_present_shell(db):
+    res = _redeem(uid="prov-1", phone="0801")
+    assert res.data == {"claimed": True, "school_id": "school-1"}
+    assert _users(db)["prov-1"]["claim_state"] == "claimed"
+
+
+# -- concurrent regenerates ---------------------------------------------------
+def _live(db):
+    return [c for c in db.tables["claim_codes"] if not c.get("redeemed_at") and not c.get("revoked_at")]
+
+
+def test_concurrent_regenerates_leave_the_newest_code_live(db):
+    # Another admin's regenerate inserts a NEWER code right after ours.
+    def rival_inserts(q):
+        if q.values and q.values.get("id") == "pending":
+            return
+        db.hooks.pop(("claim_codes", "insert"))
+        db.tables["claim_codes"].append(_code(
+            id="cc-rival", code="ACME-SS1-RIVAL000",
+            created_at="2999-01-01T00:00:00+00:00"))
+
+    db.hooks[("claim_codes", "insert")] = rival_inserts
+    res = _regen(db)
+    live = _live(db)
+    assert {c["id"] for c in live} == {"cc-rival", next(
+        c["id"] for c in db.tables["claim_codes"] if c["code"] == res.data["claim_code"])}
+    # the original code is retired; neither new code was revoked by the other
+    assert db.tables["claim_codes"][0]["revoked_at"] is not None
+
+
+def test_retire_does_not_revoke_a_newer_code(db):
+    db.tables["claim_codes"] = [
+        _code(id="old", created_at="2026-01-01T00:00:00+00:00"),
+        _code(id="mine", code="MINE", created_at="2026-01-02T00:00:00+00:00"),
+        _code(id="newer", code="NEWER", created_at="2026-01-03T00:00:00+00:00"),
+    ]
+    pr._retire_superseded_codes("prov-1", "mine")
+    assert {c["id"] for c in _live(db)} == {"mine", "newer"}
+
+
+# -- affiliation rollback -------------------------------------------------------
+def test_rollback_restores_a_pre_existing_affiliations_fields(db):
+    db.tables["student_affiliations"] = [
+        {"id": "a-real", "student_id": "guest-1", "school_id": "school-1",
+         "source": "school_code", "self_reported": True}]
+
+    def claim_now(_q):
+        _users(db)["prov-1"]["claim_state"] = "claimed"
+
+    db.hooks[("users", "delete")] = claim_now
+    with pytest.raises(rec.MergeRefused):
+        rec.merge_provisioned_into_student(
+            provisioned_student_id="prov-1", real_student_id="guest-1", school_id="school-1")
+    aff = [a for a in db.tables["student_affiliations"] if a["student_id"] == "guest-1"]
+    assert len(aff) == 1
+    assert (aff[0]["source"], aff[0]["self_reported"]) == ("school_code", True)

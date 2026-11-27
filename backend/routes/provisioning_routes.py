@@ -47,6 +47,7 @@ from services.report_gen import (
 from services.guidance_report import resolve_guidance_report_context
 from services.provisioning_reconcile import (
     MergeRefused,
+    _stamp_is_fresh,
     merge_provisioned_into_student,
     normalize_stream,
     reconcile_school_merge_candidates,
@@ -875,35 +876,22 @@ async def generate_accounts(
     )
 
 
-# A redeem stamp is the first step of a claim that finishes within moments. A
-# stamp older than this on a still-'unclaimed' shell means the worker died (or
-# a merge failed and the reopen could not run): the stamp is stale, the code is
-# dead weight, and an admin must be able to reissue instead of getting a
-# permanent 409.
-_REDEEM_STAMP_TTL = timedelta(minutes=2)
-
-
-def _stamp_is_fresh(stamp: Any) -> bool:
-    """True when a redeem stamp is recent enough that a claim may still be running.
-
-    An unparseable stamp is treated as fresh (fail closed: never reissue over
-    a claim we cannot reason about); it ages out only once it parses.
-    """
-    try:
-        text = str(stamp).replace("Z", "+00:00")
-        parsed = datetime.fromisoformat(text)
-        if parsed.tzinfo is None:
-            parsed = parsed.replace(tzinfo=timezone.utc)
-    except (TypeError, ValueError):
-        return True
-    return datetime.now(timezone.utc) - parsed < _REDEEM_STAMP_TTL
-
-
 def _student_codes(user_id: str) -> list:
-    res = _svc().table("claim_codes").select("id, redeemed_at, revoked_at").eq(
+    res = _svc().table("claim_codes").select("id, redeemed_at, revoked_at, created_at").eq(
         "student_id", user_id
     ).limit(50).execute()
     return list(res.data or [])
+
+
+def _code_order_key(row: dict) -> tuple:
+    """(created_at, id) ordering key; a missing/unparseable created_at sorts oldest."""
+    try:
+        created = datetime.fromisoformat(str(row.get("created_at")).replace("Z", "+00:00"))
+        if created.tzinfo is None:
+            created = created.replace(tzinfo=timezone.utc)
+    except (TypeError, ValueError):
+        created = datetime.min.replace(tzinfo=timezone.utc)
+    return (created, str(row.get("id")))
 
 
 def _redeem_in_progress(user_id: str) -> bool:
@@ -922,15 +910,25 @@ def _redeem_in_progress(user_id: str) -> bool:
 
 
 def _retire_superseded_codes(user_id: str, keep_id: str) -> None:
-    """Revoke every other live code of the student, including stale redeem stamps.
+    """Revoke the live codes of the student that are OLDER than keep_id.
+
+    Includes stale redeem stamps. Only codes ordered before the one this request
+    inserted (created_at, then id) are revoked: two simultaneous regenerates
+    each retire the older code but never each other's, so the newest wins and at
+    least one live code always remains.
 
     Run only AFTER the replacement code was inserted, so a failed insert never
     leaves the student without a live code. A stale-stamped code is guarded on
     its own stamp value so a concurrent reopen/redeem is not clobbered.
     """
-    for row in _student_codes(user_id):
+    rows = _student_codes(user_id)
+    keep = next((r for r in rows if r.get("id") == keep_id), None)
+    keep_key = _code_order_key(keep) if keep else None
+    for row in rows:
         if row.get("id") == keep_id or row.get("revoked_at"):
             continue
+        if keep_key is not None and _code_order_key(row) > keep_key:
+            continue  # a newer code from a concurrent regenerate: leave it live
         stamp = row.get("redeemed_at")
         if stamp and _stamp_is_fresh(stamp):
             continue
@@ -969,7 +967,7 @@ async def regenerate_code(
         _svc().table("claim_codes").insert({
             "id": new_id,
             "code": code, "student_id": user_id, "school_id": school_id,
-            "expires_at": expires,
+            "expires_at": expires, "created_at": _now(),
         }).execute()
         _retire_superseded_codes(user_id, new_id)
         # A redeem may have stamped the old code (or the student may have
@@ -1398,6 +1396,10 @@ def _claim_scopes(request: Optional[Request], current_user: dict) -> list:
     return scopes
 
 
+class _ClaimNotApplied(Exception):
+    """The claim_state update touched no row: the account is gone."""
+
+
 def _claim_rejected(scopes: list) -> HTTPException:
     for limiter, key in scopes:
         limiter.record(key)
@@ -1521,7 +1523,12 @@ async def claim_account(
                 updates["phone"] = payload.phone.strip()
             if payload.email:
                 updates["email"] = payload.email.strip().lower()
-            _users().update(updates).eq("id", provisioned_id).execute()
+            claimed_rows = _users().update(updates).eq("id", provisioned_id).execute()
+            if not (getattr(claimed_rows, "data", None) or []):
+                # The shell was removed (e.g. merged away by an admin) between
+                # the redeem stamp and this update: nothing was claimed. Never
+                # answer claimed:true; the except path reopens the code.
+                raise _ClaimNotApplied("claim_state update matched no row")
         else:
             # MERGE: an existing self-account redeems the provisioned code. Move the
             # provisioned row's school context onto the caller, retire the provisioned row.
@@ -1530,6 +1537,7 @@ async def claim_account(
                     provisioned_student_id=provisioned_id,
                     real_student_id=caller_id,
                     school_id=school_id,
+                    own_claim_code_id=claim_id,
                     phone=payload.phone,
                     email=payload.email,
                 )
@@ -1547,6 +1555,7 @@ async def claim_account(
         raise
     except Exception as exc:  # noqa: BLE001
         log.error("provisioning: claim failed", error=str(exc))
+        not_applied = isinstance(exc, _ClaimNotApplied)
         if claim_id and redeemed_stamp:
             # The merge did not complete (or the redeem UPDATE raised after the
             # database applied it): reopen the code so the student can retry.
@@ -1591,6 +1600,8 @@ async def claim_account(
                     "provisioning: claim reopen failed; code stays closed until the stamp goes stale",
                     student_id=claim_student_id, error=str(release_exc),
                 )
+        if not_applied:
+            raise _claim_rejected(scopes)
         raise HTTPException(status_code=500, detail="Could not claim the account.")
 
 

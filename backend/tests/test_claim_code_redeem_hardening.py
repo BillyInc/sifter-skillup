@@ -96,7 +96,7 @@ def env(monkeypatch):
 
             def _eq(_col, uid):
                 claim_state[uid] = values.get("claim_state", claim_state.get(uid))
-                return SimpleNamespace(execute=lambda: None)
+                return SimpleNamespace(execute=lambda: SimpleNamespace(data=[{"id": uid}]))
 
             return SimpleNamespace(eq=_eq)
 
