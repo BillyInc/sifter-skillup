@@ -875,17 +875,70 @@ async def generate_accounts(
     )
 
 
-def _redeem_in_progress(user_id: str) -> bool:
-    """True when a code of this student has been stamped redeemed and not revoked.
+# A redeem stamp is the first step of a claim that finishes within moments. A
+# stamp older than this on a still-'unclaimed' shell means the worker died (or
+# a merge failed and the reopen could not run): the stamp is stale, the code is
+# dead weight, and an admin must be able to reissue instead of getting a
+# permanent 409.
+_REDEEM_STAMP_TTL = timedelta(minutes=2)
 
-    Between the redeem stamp and the user's claim_state='claimed' update the
-    account still reads 'unclaimed'; reissuing then would leave a live code on
-    an account that ends up claimed.
+
+def _stamp_is_fresh(stamp: Any) -> bool:
+    """True when a redeem stamp is recent enough that a claim may still be running.
+
+    An unparseable stamp is treated as fresh (fail closed: never reissue over
+    a claim we cannot reason about); it ages out only once it parses.
     """
+    try:
+        text = str(stamp).replace("Z", "+00:00")
+        parsed = datetime.fromisoformat(text)
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+    except (TypeError, ValueError):
+        return True
+    return datetime.now(timezone.utc) - parsed < _REDEEM_STAMP_TTL
+
+
+def _student_codes(user_id: str) -> list:
     res = _svc().table("claim_codes").select("id, redeemed_at, revoked_at").eq(
         "student_id", user_id
     ).limit(50).execute()
-    return any(r.get("redeemed_at") and not r.get("revoked_at") for r in (res.data or []))
+    return list(res.data or [])
+
+
+def _redeem_in_progress(user_id: str) -> bool:
+    """True when a code of this student was stamped redeemed within the last
+    two minutes and not revoked.
+
+    Between the redeem stamp and the user's claim_state='claimed' update the
+    account still reads 'unclaimed'; reissuing then would leave a live code on
+    an account that ends up claimed. Older stamps are stale (see
+    _REDEEM_STAMP_TTL) and do not block a reissue.
+    """
+    return any(
+        r.get("redeemed_at") and not r.get("revoked_at") and _stamp_is_fresh(r["redeemed_at"])
+        for r in _student_codes(user_id)
+    )
+
+
+def _retire_superseded_codes(user_id: str, keep_id: str) -> None:
+    """Revoke every other live code of the student, including stale redeem stamps.
+
+    Run only AFTER the replacement code was inserted, so a failed insert never
+    leaves the student without a live code. A stale-stamped code is guarded on
+    its own stamp value so a concurrent reopen/redeem is not clobbered.
+    """
+    for row in _student_codes(user_id):
+        if row.get("id") == keep_id or row.get("revoked_at"):
+            continue
+        stamp = row.get("redeemed_at")
+        if stamp and _stamp_is_fresh(stamp):
+            continue
+        q = _svc().table("claim_codes").update({"revoked_at": _now()}).eq("id", row["id"]).is_(
+            "revoked_at", "null"
+        )
+        q = q.eq("redeemed_at", stamp) if stamp else q.is_("redeemed_at", "null")
+        q.execute()
 
 
 @router.post("/students/{user_id}/regenerate-code", response_model=ResponseModel)
@@ -907,27 +960,30 @@ async def regenerate_code(
             raise HTTPException(status_code=409, detail="Account already claimed — code cannot be reissued.")
         if _redeem_in_progress(user_id):
             raise HTTPException(status_code=409, detail="A claim is in progress for this account — code cannot be reissued.")
-        # Revoke live codes, issue a fresh one.
-        _svc().table("claim_codes").update({"revoked_at": _now()}).eq(
-            "student_id", user_id
-        ).is_("redeemed_at", "null").is_("revoked_at", "null").execute()
+        # Issue the new code FIRST, then retire the older ones, so a failed
+        # insert never leaves the student with no live code.
         school_row = (_svc().table("schools").select("name").eq("id", school_id).limit(1).execute().data or [None])[0]
         code = _gen_claim_code((school_row or {}).get("name"), _stored_provisioned_type(u) or "Student")
         expires = (datetime.now(timezone.utc) + timedelta(days=_CLAIM_CODE_TTL_DAYS)).isoformat()
+        new_id = str(uuid.uuid4())
         _svc().table("claim_codes").insert({
-            "id": str(uuid.uuid4()),
+            "id": new_id,
             "code": code, "student_id": user_id, "school_id": school_id,
             "expires_at": expires,
         }).execute()
+        _retire_superseded_codes(user_id, new_id)
         # A redeem may have stamped the old code (or the student may have
         # claimed) between the checks above and the insert. Re-check and take
-        # the new code back so a claimed account never keeps a live code.
+        # the new code back so a claimed account never keeps a live code. If the
+        # stamped redeem then fails its merge, the stamp turns stale after
+        # _REDEEM_STAMP_TTL and the admin can reissue (the failed claim also
+        # tries to reopen its code, which succeeds once no newer code is live).
         recheck = _users().select("claim_state").eq("id", user_id).limit(1).execute()
         now_state = ((recheck.data or [{}])[0]).get("claim_state")
         if now_state != "unclaimed" or _redeem_in_progress(user_id):
             _svc().table("claim_codes").update({"revoked_at": _now()}).eq(
-                "student_id", user_id
-            ).eq("code", code).is_("redeemed_at", "null").is_("revoked_at", "null").execute()
+                "id", new_id
+            ).is_("redeemed_at", "null").is_("revoked_at", "null").execute()
             raise HTTPException(status_code=409, detail="A claim is in progress for this account — code cannot be reissued.")
         return ResponseModel(data={"user_id": user_id, "claim_code": code, "claim_expires_at": expires})
     except HTTPException:
@@ -1215,6 +1271,17 @@ async def confirm_merge_candidate(
                 school_id=school_id,
             )
         except MergeRefused:
+            # The shell can never be merged: retire the candidate so admins
+            # stop retrying it ('dismissed' also stops sweeps recreating it).
+            try:
+                _svc().table("student_merge_candidates").update({
+                    "status": "dismissed",
+                    "dismissed_by": current_user["id"],
+                    "dismissed_at": _now(),
+                    "updated_at": _now(),
+                }).eq("id", candidate_id).eq("status", "pending").execute()
+            except Exception as exc:  # noqa: BLE001
+                log.error("provisioning: could not retire refused merge candidate", error=str(exc))
             raise HTTPException(
                 status_code=409,
                 detail="The provisioned account is already claimed or no longer exists.",
@@ -1389,6 +1456,7 @@ async def claim_account(
     scopes = _claim_scopes(request, current_user)
     waits = [w for w in (limiter.check(key) for limiter, key in scopes) if w]
     if waits:
+        log.warning("provisioning: claim attempt throttled", scopes=len(scopes))
         raise HTTPException(
             status_code=429,
             detail="Too many incorrect codes. Try again later.",
@@ -1502,6 +1570,11 @@ async def claim_account(
                     # guarded so only our own still-open reopen is touched. A
                     # SQL-level conditional update (NOT EXISTS, via an RPC) would
                     # close this window entirely; that needs a migration.
+                    if not reopened.data:
+                        log.error(
+                            "provisioning: claim reopen matched no row; code stays closed until the stamp goes stale",
+                            student_id=claim_student_id,
+                        )
                     if reopened.data:
                         again = _svc().table("claim_codes").select("id").eq(
                             "student_id", claim_student_id
@@ -1512,7 +1585,12 @@ async def claim_account(
                             ).is_("redeemed_at", "null").is_("revoked_at", "null").execute()
                             log.warning("provisioning: reopened claim revoked, newer live code appeared")
             except Exception as release_exc:  # noqa: BLE001
-                log.error("provisioning: claim release failed", error=str(release_exc))
+                # The code stays stamped; it turns stale after _REDEEM_STAMP_TTL
+                # and an admin can then reissue.
+                log.error(
+                    "provisioning: claim reopen failed; code stays closed until the stamp goes stale",
+                    student_id=claim_student_id, error=str(release_exc),
+                )
         raise HTTPException(status_code=500, detail="Could not claim the account.")
 
 

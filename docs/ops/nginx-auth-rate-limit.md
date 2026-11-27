@@ -47,10 +47,13 @@ must hold in production:
 - **Set both** `TRUST_PROXY_HEADERS=true` and `TRUSTED_PROXY_HOPS=<n>` where `<n>` is
   exactly the number of trusted proxies in front of the app (normally **one**: nginx).
   The defaults (`false`, `1`) are unchanged, so a default deploy behind a proxy has
-  **no** address limits: they fail open, silently apart from one WARNING per process
-  (`auth rate limits: ... per-address limits are inactive`) and
-  `"address_limits": "inactive"` on `/health` once it has fired. A wrong hop count has
-  the same effect.
+  **no** address limits: they fail open, silently apart from log lines (`/health` deliberately
+  reports nothing about this; it is unauthenticated). After five requests within five
+  minutes with no usable public client address, a WARNING
+  (`auth rate limits: ... per-address limits are inactive`) is logged, at most once an
+  hour while it persists. A loopback peer that carries `X-Forwarded-For` while
+  `TRUST_PROXY_HEADERS` is off (a local nginx with trust not enabled) logs one ERROR
+  per process. A wrong hop count has the same effect.
 - **Never expose the app port directly.** The container listens on `0.0.0.0:8000`
   and `docker-compose.yml` publishes it; bind it to localhost or a private network
   (or firewall it) so only the proxy can reach it. With `TRUST_PROXY_HEADERS=true`

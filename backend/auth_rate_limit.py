@@ -234,7 +234,27 @@ def _normalise(host: str) -> str:
     return str(ip)
 
 
-_warned_no_client_ip = False
+# A single request from a private address (VPN, intranet, a health probe on the
+# LAN) must not condemn the whole process, so the warning needs a run of
+# unresolvable requests with no successfully resolved public client in between,
+# and it repeats at most once per cooldown instead of latching for the process
+# life. Deliberately not exposed on /health: it would tell an unauthenticated
+# caller when per-address limits are off.
+_BLIND_WINDOW_SECONDS = 300.0
+_BLIND_THRESHOLD = 5
+_BLIND_REWARN_SECONDS = 3600.0
+_blind_hits: list = []
+_last_resolved_at: Optional[float] = None
+_last_blind_warning_at: Optional[float] = None
+_warned_loopback_forwarded = False
+
+
+def _reset_warning_state() -> None:
+    global _last_resolved_at, _last_blind_warning_at, _warned_loopback_forwarded
+    _blind_hits.clear()
+    _last_resolved_at = None
+    _last_blind_warning_at = None
+    _warned_loopback_forwarded = False
 
 
 def _is_loopback(host: str) -> bool:
@@ -244,15 +264,54 @@ def _is_loopback(host: str) -> bool:
         return False
 
 
-def _warn_no_client_ip(peer: str) -> None:
-    """One loud warning per process: per-address limits are silently inactive.
+def _note_resolved() -> None:
+    global _last_resolved_at
+    _last_resolved_at = time.monotonic()
 
-    Surfaced in the logs the first time a production request arrives without a
-    usable client address. Address limits (claim-code address bucket, guest and
-    wallet creation) all fail open in that state.
+
+def _warn_loopback_forwarded(peer: str, headers) -> None:
+    """One ERROR when a loopback peer carries X-Forwarded-For with trust off.
+
+    That is the signature of the most common misconfiguration: a local proxy
+    (nginx on the same host) forwards real client addresses but the app is not
+    told to read them, so every request looks like one loopback client.
     """
-    global _warned_no_client_ip
-    if _warned_no_client_ip or settings.DEBUG:
+    global _warned_loopback_forwarded
+    if _warned_loopback_forwarded or settings.DEBUG or settings.TRUST_PROXY_HEADERS:
+        return
+    if not _is_loopback(peer) or not headers or not headers.get("x-forwarded-for"):
+        return
+    _warned_loopback_forwarded = True
+    log.error(
+        "auth rate limits: requests arrive from a loopback peer with X-Forwarded-For set "
+        "while TRUST_PROXY_HEADERS is off, so per-address limits are inactive (claim-code "
+        "address bucket, guest and wallet creation limits). Set TRUST_PROXY_HEADERS=true "
+        "and TRUSTED_PROXY_HOPS to the number of proxies in front of the app; see "
+        "docs/ops/nginx-auth-rate-limit.md (Deployment requirement for address limits)."
+    )
+
+
+def _warn_no_client_ip(peer: str) -> None:
+    """Warn (rate limited) that per-address limits look inactive.
+
+    Address limits (claim-code address bucket, guest and wallet creation) all
+    fail open without a usable client address. A warning is logged only after
+    several such requests inside a window with no resolvable public client in
+    that window, and at most once per cooldown.
+    """
+    global _last_blind_warning_at
+    if settings.DEBUG:
+        return
+    now = time.monotonic()
+    _blind_hits.append(now)
+    del _blind_hits[: max(0, len(_blind_hits) - 100)]
+    recent = [t for t in _blind_hits if now - t <= _BLIND_WINDOW_SECONDS]
+    _blind_hits[:] = recent
+    if len(recent) < _BLIND_THRESHOLD:
+        return
+    if _last_resolved_at is not None and now - _last_resolved_at <= _BLIND_WINDOW_SECONDS:
+        return
+    if _last_blind_warning_at is not None and now - _last_blind_warning_at < _BLIND_REWARN_SECONDS:
         return
     if settings.TRUST_PROXY_HEADERS:
         # A trusted proxy was configured but the entry it should have appended is
@@ -267,7 +326,7 @@ def _warn_no_client_ip(peer: str) -> None:
         )
     else:
         reason = "only private/loopback peers are visible and TRUST_PROXY_HEADERS is off"
-    _warned_no_client_ip = True
+    _last_blind_warning_at = now
     log.warning(
         "auth rate limits: %s, so per-address limits are inactive (claim-code address "
         "bucket, guest and wallet creation limits). Behind exactly one trusted proxy set "
@@ -275,15 +334,6 @@ def _warn_no_client_ip(peer: str) -> None:
         "port directly; see docs/ops/nginx-auth-rate-limit.md (Deployment requirement "
         "for address limits).", reason,
     )
-
-
-def address_limits_blind() -> bool:
-    """True once a production request arrived without a usable client address.
-
-    Reported by /health so operators can see misconfigured proxy settings
-    without reading logs. Process-local, like the limits themselves.
-    """
-    return _warned_no_client_ip
 
 
 def client_ip(request: Request) -> Optional[str]:
@@ -308,11 +358,14 @@ def client_ip(request: Request) -> Optional[str]:
         if len(parts) >= hops:
             candidate = parts[-hops]
             if _is_public(candidate):
+                _note_resolved()
                 return _normalise(candidate)
             _warn_no_client_ip(peer)
             return None
     if _is_public(peer):
+        _note_resolved()
         return _normalise(peer)
+    _warn_loopback_forwarded(peer, getattr(request, "headers", None))
     _warn_no_client_ip(peer)
     return None
 

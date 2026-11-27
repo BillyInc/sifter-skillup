@@ -35,7 +35,7 @@ class _Q:
         return self
 
     def upsert(self, values, **_kw):
-        self.op, self.values = "noop", values
+        self.op, self.values = "upsert", values
         return self
 
     def eq(self, col, val):
@@ -65,6 +65,14 @@ class _Q:
             hook(self)
         if self.op == "insert":
             rows.append(dict(self.values))
+            return SimpleNamespace(data=[dict(self.values)])
+        if self.op == "upsert":
+            same = [r for r in rows if r.get("student_id") == self.values.get("student_id")
+                    and r.get("school_id") == self.values.get("school_id")]
+            if same:
+                same[0].update(self.values)
+            else:
+                rows.append(dict(self.values))
             return SimpleNamespace(data=[dict(self.values)])
         hit = [r for r in rows if self._match(r)]
         if self.op == "update":
@@ -147,16 +155,73 @@ def test_merge_refuses_a_claimed_target_and_deletes_nothing(db):
     assert "prov-1" in _users(db)
 
 
-def test_merge_rechecks_claim_state_right_before_deleting(db):
-    # The student claims between the first read and the destructive step.
+def test_merge_refused_after_writes_rolls_the_real_user_back(db):
+    # The shell is claimed AFTER the pre-write checks, while the real user's
+    # writes are being applied: the guarded delete then removes nothing.
+    _users(db)["prov-1"].update(student_class="SS2", stream="Science",
+                                guardian_consent_at="2026-02-02T00:00:00+00:00")
+    _users(db)["guest-1"].update(student_class="JSS3", stream=None, phone="0700")
+    db.tables["student_affiliations"] = [
+        {"id": "a-shell", "student_id": "prov-1", "school_id": "school-1", "source": "provisioned"}]
+
+    def claim_now(_q):
+        _users(db)["prov-1"]["claim_state"] = "claimed"
+        db.hooks.pop(("student_affiliations", "upsert"))
+
+    db.hooks[("student_affiliations", "upsert")] = claim_now  # the affiliation upsert
+    with pytest.raises(rec.MergeRefused):
+        rec.merge_provisioned_into_student(
+            provisioned_student_id="prov-1", real_student_id="guest-1",
+            school_id="school-1", phone="0801")
+    assert "prov-1" in _users(db)
+    guest = _users(db)["guest-1"]
+    assert (guest["student_class"], guest["stream"], guest["phone"]) == ("JSS3", None, "0700")
+    assert guest.get("guardian_consent_at") is None
+    # the shell keeps its own affiliation; nothing was left on the guest
+    assert [a["student_id"] for a in db.tables["student_affiliations"]] == ["prov-1"]
+
+
+def test_merge_does_not_write_the_real_user_when_the_shell_is_already_claimed(db):
+    _users(db)["prov-1"].update(student_class="SS2")
+    _users(db)["prov-1"]["claim_state"] = "claimed"
+    with pytest.raises(rec.MergeRefused):
+        rec.merge_provisioned_into_student(
+            provisioned_student_id="prov-1", real_student_id="guest-1", school_id="school-1")
+    assert "student_class" not in _users(db)["guest-1"]
+    assert db.tables["student_affiliations"] == []
+
+
+def test_merge_refuses_when_the_conditional_delete_removes_zero_rows(db):
+    # Claimed between the last read and the delete: the delete matches nothing.
     def claim_now(_q):
         _users(db)["prov-1"]["claim_state"] = "claimed"
 
-    db.hooks[("student_affiliations", "delete")] = claim_now
+    db.hooks[("users", "delete")] = claim_now
     with pytest.raises(rec.MergeRefused):
         rec.merge_provisioned_into_student(
             provisioned_student_id="prov-1", real_student_id="guest-1", school_id="school-1")
     assert "prov-1" in _users(db)
+
+
+def test_claim_route_does_not_say_claimed_when_the_shell_survives(db):
+    def claim_now(_q):
+        _users(db)["prov-1"]["claim_state"] = "claimed"
+
+    db.hooks[("users", "delete")] = claim_now
+    with pytest.raises(HTTPException) as err:
+        _redeem()
+    assert (err.value.status_code, err.value.detail) == (404, pr._CLAIM_REJECTED)
+    assert "prov-1" in _users(db)
+
+
+def test_merge_retires_the_shell_affiliation_and_codes_only_after_the_delete(db):
+    db.tables["student_affiliations"] = [
+        {"id": "a-shell", "student_id": "prov-1", "school_id": "school-1", "source": "provisioned"}]
+    rec.merge_provisioned_into_student(
+        provisioned_student_id="prov-1", real_student_id="guest-1", school_id="school-1")
+    assert "prov-1" not in _users(db)
+    assert [a["student_id"] for a in db.tables["student_affiliations"]] == ["guest-1"]
+    assert db.tables["claim_codes"][0]["revoked_at"] is not None
 
 
 def test_merge_still_works_for_an_unclaimed_shell(db):
@@ -177,7 +242,7 @@ def test_redeem_of_a_claimed_accounts_code_by_another_user_is_the_uniform_404(db
     assert db.tables["claim_codes"][0]["redeemed_at"] is not None  # code stays closed
 
 
-def test_admin_confirm_of_a_claimed_shell_is_a_409(db):
+def test_admin_confirm_of_a_claimed_shell_is_a_409_and_retires_the_candidate(db):
     _users(db)["prov-1"]["claim_state"] = "claimed"
     db.tables["student_merge_candidates"] = [{
         "id": "m1", "school_id": "school-1", "status": "pending",
@@ -187,11 +252,12 @@ def test_admin_confirm_of_a_claimed_shell_is_a_409(db):
             candidate_id="m1", current_user={"id": "admin"}))
     assert err.value.status_code == 409
     assert "prov-1" in _users(db)
+    assert db.tables["student_merge_candidates"][0]["status"] == "dismissed"
 
 
 # -- regenerate during a redeem -----------------------------------------------
 def test_regenerate_refuses_while_a_redeem_is_stamped(db):
-    db.tables["claim_codes"][0]["redeemed_at"] = "2026-01-01"  # stamped, not yet claimed
+    db.tables["claim_codes"][0]["redeemed_at"] = pr._now()  # stamped just now, not yet claimed
     with pytest.raises(HTTPException) as err:
         _regen(db)
     assert err.value.status_code == 409
@@ -209,7 +275,7 @@ def test_regenerate_takes_the_new_code_back_if_a_redeem_lands_mid_flight(db):
     def redeem_lands(_q):
         # The student's redeem stamps the old code after our pre-check, just
         # before our revoke (so the revoke skips it) and the insert.
-        db.tables["claim_codes"][0]["redeemed_at"] = "2026-01-01"
+        db.tables["claim_codes"][0]["redeemed_at"] = pr._now()
         db.hooks.pop(("claim_codes", "update"))
 
     db.hooks[("claim_codes", "update")] = redeem_lands
@@ -260,3 +326,117 @@ def test_reopen_without_interleaving_leaves_the_code_live(db, monkeypatch):
         _redeem()
     c = db.tables["claim_codes"][0]
     assert c["redeemed_at"] is None and c["revoked_at"] is None
+
+
+# -- stale stamps --------------------------------------------------------------
+def _old_stamp(minutes=5):
+    from datetime import datetime, timedelta, timezone
+    return (datetime.now(timezone.utc) - timedelta(minutes=minutes)).isoformat()
+
+
+def _live(d):
+    return [c for c in d.tables["claim_codes"] if not c.get("revoked_at") and not c.get("redeemed_at")]
+
+
+def test_a_stale_stamp_on_an_unclaimed_shell_is_not_a_claim_in_progress(db):
+    # Worker killed between the stamp and the claim_state update.
+    db.tables["claim_codes"][0]["redeemed_at"] = _old_stamp()
+    assert pr._redeem_in_progress("prov-1") is False
+    res = _regen(db)
+    old = db.tables["claim_codes"][0]
+    assert old["revoked_at"] is not None  # the dead stamped code is revoked
+    assert [c["code"] for c in _live(db)] == [res.data["claim_code"]]
+
+
+def test_a_stamp_just_inside_the_window_still_blocks_regenerate(db):
+    db.tables["claim_codes"][0]["redeemed_at"] = _old_stamp(minutes=1)
+    assert pr._redeem_in_progress("prov-1") is True
+    with pytest.raises(HTTPException) as err:
+        _regen(db)
+    assert err.value.status_code == 409
+
+
+def test_an_unparseable_stamp_fails_closed(db):
+    db.tables["claim_codes"][0]["redeemed_at"] = "not-a-date"
+    assert pr._redeem_in_progress("prov-1") is True
+
+
+def test_crash_after_stamp_is_healed_by_regenerate_once_the_stamp_ages(db):
+    db.tables["claim_codes"][0]["redeemed_at"] = pr._now()  # crash right after the stamp
+    with pytest.raises(HTTPException):
+        _regen(db)  # inside the window: 409, no new code
+    assert len(db.tables["claim_codes"]) == 1
+    db.tables["claim_codes"][0]["redeemed_at"] = _old_stamp()  # time passes
+    _regen(db)
+    assert len(_live(db)) == 1
+
+
+def test_stamp_regenerate_then_merge_failure_ends_with_one_live_code(db, monkeypatch):
+    """Scenario B: redeem stamps A, regenerate inserts B, the merge raises."""
+    def merge_raises_after_regenerate(**_kw):
+        db.tables["claim_codes"].append(_code(id="cc-2", code="ACME-SS1-NEWCODE12345"))
+        # regenerate's recheck revokes B because the stamp is fresh
+        db.tables["claim_codes"][1]["revoked_at"] = pr._now()
+        raise RuntimeError("merge failed")
+
+    monkeypatch.setattr(pr, "merge_provisioned_into_student", merge_raises_after_regenerate)
+    with pytest.raises(HTTPException) as err:
+        _redeem()
+    assert err.value.status_code == 500
+    # No newer LIVE code existed at reopen time, so A is reopened: one live code.
+    assert [c["id"] for c in _live(db)] == ["cc-1"]
+
+
+def test_stamp_regenerate_merge_failure_where_the_reopen_was_skipped_heals_after_the_window(db, monkeypatch):
+    """The reopen saw B live and skipped; B was then revoked by regenerate's
+    recheck: no live code and a stamped A. After the window it is reissuable."""
+    def merge_raises(**_kw):
+        db.tables["claim_codes"].append(_code(id="cc-2", code="ACME-SS1-NEWCODE12345"))
+        raise RuntimeError("merge failed")
+
+    monkeypatch.setattr(pr, "merge_provisioned_into_student", merge_raises)
+    with pytest.raises(HTTPException):
+        _redeem()
+    old, new = db.tables["claim_codes"]
+    new["revoked_at"] = pr._now()  # regenerate's recheck revokes B afterwards
+    assert _live(db) == []
+    with pytest.raises(HTTPException):
+        _regen(db)  # stamp still fresh
+    old["redeemed_at"] = _old_stamp()
+    res = _regen(db)
+    assert [c["code"] for c in _live(db)] == [res.data["claim_code"]]
+
+
+def test_a_failed_reopen_update_is_logged_at_error_with_the_student_and_heals(db, monkeypatch):
+    _failing_merge(monkeypatch)
+    errors = []
+    monkeypatch.setattr(pr, "log", SimpleNamespace(
+        error=lambda msg, *a, **kw: errors.append((msg, kw)),
+        warning=lambda *a, **kw: None, info=lambda *a, **kw: None))
+
+    def reopen_fails(q):
+        if q.values == {"redeemed_at": None}:
+            raise RuntimeError("db down")
+
+    db.hooks[("claim_codes", "update")] = reopen_fails
+    with pytest.raises(HTTPException):
+        _redeem()
+    db.hooks.clear()
+    assert db.tables["claim_codes"][0]["redeemed_at"] is not None
+    reopen_logs = [kw for msg, kw in errors if "reopen failed" in msg]
+    assert reopen_logs and reopen_logs[0]["student_id"] == "prov-1"
+    db.tables["claim_codes"][0]["redeemed_at"] = _old_stamp()
+    _regen(db)
+    assert len(_live(db)) == 1
+
+
+# -- regenerate ordering --------------------------------------------------------
+def test_regenerate_keeps_the_old_code_live_if_the_insert_fails(db):
+    def insert_fails(_q):
+        raise RuntimeError("insert failed")
+
+    db.hooks[("claim_codes", "insert")] = insert_fails
+    with pytest.raises(HTTPException) as err:
+        _regen(db)
+    assert err.value.status_code == 500
+    assert [c["id"] for c in _live(db)] == ["cc-1"]  # the student still has a code

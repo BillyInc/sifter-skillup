@@ -269,6 +269,34 @@ def _require_unclaimed_shell(provisioned_student_id: str) -> dict:
     return row
 
 
+_MERGE_FIELDS = ("student_class", "stream", "chosen_direction", "guardian_consent_at")
+
+
+def _rollback_merge_writes(
+    *, real_student_id: str, school_id: str, prior_user: dict, updates: dict,
+    affiliation_existed: bool,
+) -> None:
+    """Best-effort undo of the real user's writes after the shell delete refused.
+
+    Restores only the columns this merge changed to their previous values and
+    removes the affiliation row only if this merge created it. Failures are
+    logged loudly; the caller still reports the merge as refused.
+    """
+    try:
+        restore = {k: prior_user.get(k) for k in updates}
+        if restore:
+            _users().update(restore).eq("id", real_student_id).execute()
+        if not affiliation_existed:
+            _svc().table("student_affiliations").delete().eq(
+                "student_id", real_student_id
+            ).eq("school_id", school_id).eq("source", "provisioned").execute()
+    except Exception as exc:  # noqa: BLE001
+        log.error(
+            "provisioning: merge refused after writes and rollback failed",
+            real_student_id=real_student_id, school_id=school_id, error=str(exc),
+        )
+
+
 def merge_provisioned_into_student(
     *,
     provisioned_student_id: str,
@@ -277,13 +305,37 @@ def merge_provisioned_into_student(
     phone: Optional[str] = None,
     email: Optional[str] = None,
 ) -> dict:
-    """Move useful provisioned data to the real student, then retire the shell."""
+    """Move useful provisioned data to the real student, then retire the shell.
+
+    Ordering (no SQL RPC/transaction is available without a migration):
+
+    1. Every read and check happens BEFORE any write (the shell must be
+       unclaimed; the real user's prior values and affiliation are captured).
+    2. The real user's writes are idempotent (update, upsert), so a failed run
+       can simply be retried by the claim route.
+    3. The destructive step is last and conditional on claim_state='unclaimed'.
+       Its returned rows are inspected: zero rows means the shell was claimed
+       or removed meanwhile, so the merge is refused AND the writes from step 2
+       are rolled back (best effort, logged on failure) so the caller does not
+       keep half-merged class/stream/consent/affiliation data while being told
+       the claim failed. The shell's own affiliation and live codes are only
+       touched after the shell was actually deleted.
+    """
     # Only an unclaimed shell may be merged away: a claimed account belongs to
     # its student and must never be deleted by a code redeemed elsewhere.
     provisioned = _require_unclaimed_shell(provisioned_student_id)
 
+    prior_res = _users().select(
+        ", ".join(_MERGE_FIELDS + ("phone", "email", "last_login"))
+    ).eq("id", real_student_id).limit(1).execute()
+    prior_user = (prior_res.data or [{}])[0] or {}
+    aff_res = _svc().table("student_affiliations").select("id").eq(
+        "student_id", real_student_id
+    ).eq("school_id", school_id).limit(1).execute()
+    affiliation_existed = bool(aff_res.data)
+
     updates = {"last_login": _now()}
-    for field in ("student_class", "stream", "chosen_direction", "guardian_consent_at"):
+    for field in _MERGE_FIELDS:
         if provisioned.get(field):
             updates[field] = provisioned[field]
     if phone:
@@ -291,8 +343,11 @@ def merge_provisioned_into_student(
     if email:
         updates["email"] = email.strip().lower()
 
-    _users().update(updates).eq("id", real_student_id).execute()
+    # Re-read immediately before the first write: the student may have claimed
+    # the shell since the first read.
+    _require_unclaimed_shell(provisioned_student_id)
 
+    _users().update(updates).eq("id", real_student_id).execute()
     _svc().table("student_affiliations").upsert({
         "id": str(uuid.uuid4()),
         "student_id": real_student_id,
@@ -300,20 +355,24 @@ def merge_provisioned_into_student(
         "source": "provisioned",
         "self_reported": False,
     }, on_conflict="student_id,school_id").execute()
+
+    deleted = _users().delete().eq("id", provisioned_student_id).eq(
+        "claim_state", "unclaimed"
+    ).execute()
+    if not (getattr(deleted, "data", None) or []):
+        _rollback_merge_writes(
+            real_student_id=real_student_id, school_id=school_id,
+            prior_user=prior_user, updates=updates, affiliation_existed=affiliation_existed,
+        )
+        raise MergeRefused("provisioned account was claimed or removed before it could be retired")
+
+    # The shell is gone: now retire what belonged to it.
     _svc().table("student_affiliations").delete().eq(
         "student_id", provisioned_student_id
     ).eq("school_id", school_id).execute()
-
-    # Re-read immediately before the destructive step: the student may have
-    # claimed the shell since the first read. The delete itself is also guarded
-    # on claim_state so a claim landing after this read still cannot be erased.
-    _require_unclaimed_shell(provisioned_student_id)
     _svc().table("claim_codes").update({"revoked_at": _now()}).eq(
         "student_id", provisioned_student_id
     ).is_("redeemed_at", "null").is_("revoked_at", "null").execute()
-    _users().delete().eq("id", provisioned_student_id).eq(
-        "claim_state", "unclaimed"
-    ).execute()
 
     return {
         "provisioned_student_id": provisioned_student_id,
