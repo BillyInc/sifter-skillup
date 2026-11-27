@@ -211,7 +211,9 @@ def test_finding3_a_racers_code_inserted_before_our_snapshot_may_be_reopened(db_
 
 
 def test_finding4_stamps_are_unique_and_monotonic_even_on_a_frozen_clock(monkeypatch):
-    frozen = datetime(2026, 11, 27, 12, 0, 0, 123456, tzinfo=UTC)
+    # Relative to now so the frozen instant is always ahead of any real stamp
+    # handed out earlier in the process, whatever day the suite runs.
+    frozen = (datetime.now(UTC) + timedelta(hours=1)).replace(microsecond=123456)
 
     class _Frozen(datetime):
         @classmethod
@@ -219,7 +221,10 @@ def test_finding4_stamps_are_unique_and_monotonic_even_on_a_frozen_clock(monkeyp
             return frozen
 
     monkeypatch.setattr(pr, "datetime", _Frozen)
-    pr._LAST_STAMP[0] = datetime.min.replace(tzinfo=UTC)
+    # _LAST_STAMP is a list (monkeypatch.setitem needs a mapping): swap the
+    # module attribute for a fresh list so the real one is restored afterwards
+    # and a frozen/future value never leaks into later tests.
+    monkeypatch.setattr(pr, "_LAST_STAMP", [datetime.min.replace(tzinfo=UTC)])
     stamps = [pr._unique_stamp() for _ in range(50)]
     assert len(set(stamps)) == 50
     parsed = [datetime.fromisoformat(s) for s in stamps]
@@ -247,9 +252,113 @@ def test_same_instant_ignores_string_form():
     assert not pr._same_instant("2026-11-27T10:00:00.000001+00:00", "2026-11-27T10:00:00+00:00")
 
 
-def test_regenerate_200_carries_a_refresh_note():
-    import inspect
-    assert '"note"' in inspect.getsource(pr.regenerate_code)
+@pytest.fixture
+def regen_db(db_plain, monkeypatch):
+    db_plain.tables.update({
+        "users": [{"id": "prov-1", "claim_state": "unclaimed", "provisioning_school_id": "school-1",
+                   "student_class": "SS1", "settings": {}}],
+        "claim_codes": [_code(id="old", code="OLD", created_at=_ts(days=-9))],
+        "schools": [{"id": "school-1", "name": "Acme"}],
+    })
+    monkeypatch.setattr(pr, "_users", lambda: db_plain.table("users"))
+    monkeypatch.setattr(pr, "_require_school_role", lambda *_a, **_k: "school-1")
+    return db_plain
+
+
+def _regen(db):
+    import asyncio
+    return asyncio.run(pr.regenerate_code(
+        user_id="prov-1", current_user={"id": "admin", "school_id": "school-1"}))
+
+
+def test_regenerate_200_carries_a_refresh_note(regen_db):
+    out = _regen(regen_db)
+    assert out.data["note"]
+    assert out.data["claim_code"]
+    assert len(_live_ids(regen_db)) == 1
+
+
+def test_regenerate_409_when_the_racers_code_lost_and_another_code_is_live(regen_db, monkeypatch):
+    def lose(user_id, keep_id, known_older=None):
+        for r in regen_db.tables["claim_codes"]:
+            if r["id"] == keep_id:
+                r["revoked_at"] = _ts()
+        regen_db.tables["claim_codes"].append(_code(id="other", code="OTH", created_at=_ts(seconds=5)))
+        return False
+    monkeypatch.setattr(pr, "_retire_superseded_codes", lose)
+    with pytest.raises(pr.HTTPException) as err:
+        _regen(regen_db)
+    assert err.value.status_code == 409
+    assert "reissued at the same time by someone else" in err.value.detail
+
+
+def test_regenerate_409_names_the_no_live_code_case_differently(regen_db, monkeypatch):
+    def lose_everything(user_id, keep_id, known_older=None):
+        for r in regen_db.tables["claim_codes"]:
+            r["revoked_at"] = r.get("revoked_at") or _ts()
+        return False
+    monkeypatch.setattr(pr, "_retire_superseded_codes", lose_everything)
+    with pytest.raises(pr.HTTPException) as err:
+        _regen(regen_db)
+    assert err.value.status_code == 409
+    assert "No active code could be issued" in err.value.detail
+    assert "reissued at the same time" not in err.value.detail
+    assert _live_ids(regen_db) == []
+
+
+class _AdversaryQ(_Q):
+    """After every revoke, a NEW live code appears (a racer reissuing again)."""
+
+    def execute(self):
+        res = super().execute()
+        if (self.name == "claim_codes" and self.op == "update"
+                and self.values.get("revoked_at") and res.data):
+            self.db.revokes += 1
+            assert self.db.last_live >= 2, "revoked on a read showing fewer than 2 live codes"
+            n = self.db.revokes
+            self.db.tables["claim_codes"].append(
+                _code(id=f"adv{n}", code=f"ADV{n}", created_at=_ts(seconds=n)))
+        elif self.op == "select" and self.name == "claim_codes":
+            self.db.last_live = sum(1 for r in res.data if not r.get('revoked_at') and not r.get('redeemed_at'))
+        return res
+
+
+class _AdversaryDB(_DB):
+    revokes = 0
+    last_live = 0
+
+    def table(self, name):
+        return _AdversaryQ(self, name)
+
+
+def test_adversary_that_adds_a_live_code_after_every_revoke_is_bounded(monkeypatch):
+    db = _AdversaryDB()
+    stamped = _code(id="stamped", code="S", created_at=_ts(minutes=-5), redeemed_at=_ts(seconds=-3))
+    db.tables = {"claim_codes": [
+        _code(id="old", code="O", created_at=_ts(days=-1)),
+        _code(id="keep", code="K", created_at=_ts()),
+        stamped,
+    ]}
+    monkeypatch.setattr(pr, "_svc", lambda: db)
+    live_calls = []
+    real_live = pr._live_codes
+
+    def counting(rows):
+        live_calls.append(1)
+        return real_live(rows)
+    monkeypatch.setattr(pr, "_live_codes", counting)
+
+    result = pr._retire_superseded_codes("prov-1", "keep", {"old"})
+
+    assert isinstance(result, bool)
+    # first pass (1 revoke of "old") + at most _MAX_CONVERGE_STEPS convergence revokes
+    assert 1 <= db.revokes <= pr._MAX_CONVERGE_STEPS + 1
+    stamped_row = next(r for r in db.tables["claim_codes"] if r["id"] == "stamped")
+    assert stamped_row["revoked_at"] is None and stamped_row["redeemed_at"] == stamped["redeemed_at"]
+    # Each loop iteration checks _live_codes twice (reopen guard and convergence
+    # test), the loop's else branch makes one final reopen attempt, and the
+    # return computes liveness of keep_id once more.
+    assert len(live_calls) == 2 * pr._MAX_CONVERGE_STEPS + 2
 
 
 @pytest.mark.parametrize("seed", range(int(__import__("os").environ.get("SEEDS","40"))))

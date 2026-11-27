@@ -1121,10 +1121,15 @@ async def regenerate_code(
         if not _retire_superseded_codes(user_id, new_id, older_live):
             # A concurrent reissue produced the code that stays live; ours was
             # revoked so exactly one live code remains. Do not return it.
-            raise HTTPException(
-                status_code=409,
-                detail="The code was reissued at the same time by someone else. Refresh to see the current code.",
-            )
+            if _live_codes(_student_codes(user_id)):
+                detail = "The code was reissued at the same time by someone else. Refresh to see the current code."
+            else:
+                # Our code lost AND nothing is live (it was revoked while being
+                # reissued; the lost old card is never reopened). Say so rather
+                # than blaming a concurrent reissue that left no code behind.
+                detail = ("No active code could be issued (it was revoked while being reissued). "
+                          "Refresh and issue a new code.")
+            raise HTTPException(status_code=409, detail=detail)
         # A redeem may have stamped the old code (or the student may have
         # claimed) between the checks above and the insert. Re-check and take
         # the new code back so a claimed account never keeps a live code. If the
