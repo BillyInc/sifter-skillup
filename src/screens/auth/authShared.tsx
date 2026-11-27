@@ -7,7 +7,7 @@
  *   - Hairline borders, one accent per screen (Brand.primary for CTA only)
  *   - 4px grid spacing
  */
-import React, { useEffect, useRef, useState, type ReactNode } from "react";
+import React, { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import {
   View,
   Text,
@@ -34,6 +34,7 @@ import {
   CompassFonts,
 } from "../../theme";
 import { LevelUpLogo } from "../../components/brand/LevelUpLogo";
+import { TOUCH_TARGET_MIN } from "../../components/ui";
 import TermsScreen from "../TermsScreen";
 import PrivacyScreen from "../PrivacyScreen";
 
@@ -188,10 +189,17 @@ export function AuthField({
   const { colors } = useTheme();
   const [hidden, setHidden] = useState(!!secure);
   const [focused, setFocused] = useState(false);
+  const hintId = `${useId()}-hint`;
 
   return (
     <View style={styles.fieldGroup}>
       <Text
+        // The input carries this text as its accessible name; reading the
+        // visible label too would announce "Password" twice.
+        // react-native-web ignores the native props, so aria-hidden is set too.
+        accessibilityElementsHidden
+        importantForAccessibility="no-hide-descendants"
+        aria-hidden
         style={[
           styles.label,
           { color: focused ? colors.accentRole.action : colors.textRole.secondary },
@@ -216,6 +224,12 @@ export function AuthField({
             { color: colors.textRole.primary },
             CompassFonts.body,
           ]}
+          accessibilityLabel={label}
+          // The visible hint is the input's description (screen readers read it
+          // after the name). react-native-web maps aria-describedby to the hint
+          // element's nativeID; native uses accessibilityHint.
+          accessibilityHint={hint}
+          aria-describedby={hint ? hintId : undefined}
           value={value}
           onChangeText={onChangeText}
           placeholder={placeholder}
@@ -242,20 +256,27 @@ export function AuthField({
         ) : null}
         {secure ? (
           <TouchableOpacity
+            // A switch whose name does not flip: the state ("on"/"off") says
+            // whether the value is shown. The name carries the field label so
+            // Password and Confirm password are told apart.
+            accessibilityRole="switch"
+            accessibilityLabel={`Show ${label.toLowerCase()}`}
+            accessibilityState={{ checked: !hidden }}
+            // react-native-web does not map accessibilityState.checked.
+            aria-checked={!hidden}
             onPress={() => setHidden((h) => !h)}
             hitSlop={10}
             style={styles.eyeBtn}
           >
-            <Text style={styles.eye}>{hidden ? "👁️" : "🙈"}</Text>
+            <Text style={styles.eye} accessibilityElementsHidden importantForAccessibility="no" aria-hidden>{hidden ? "👁️" : "🙈"}</Text>
           </TouchableOpacity>
         ) : null}
       </View>
-      {focused ? (
-        <Text style={[styles.readyHint, { color: colors.accentRole.action }, CompassFonts.bodyMedium]}>
-          Ready to type
-        </Text>
-      ) : hint ? (
+      {hint ? (
+        // The hint stays visible while the field is focused: it is the
+        // description the input points at, so it is never swapped for filler.
         <Text
+          nativeID={hintId}
           style={[
             styles.hint,
             { color: colors.textRole.muted },
@@ -263,6 +284,10 @@ export function AuthField({
           ]}
         >
           {hint}
+        </Text>
+      ) : focused ? (
+        <Text style={[styles.readyHint, { color: colors.accentRole.action }, CompassFonts.bodyMedium]}>
+          Ready to type
         </Text>
       ) : null}
     </View>
@@ -394,10 +419,24 @@ const styles = StyleSheet.create({
     borderRadius: Radius.md,
     paddingHorizontal: Spacing.md,
   },
-  input: { flex: 1, paddingVertical: 13, fontSize: FontSize.md },
-  eyeBtn: { paddingLeft: Spacing.sm, paddingVertical: 8 },
+  input: { flex: 1, minWidth: 0, paddingVertical: 13, fontSize: FontSize.md },
+  eyeBtn: {
+    // Fixed 44px square, no extra padding, so the input keeps its width.
+    flexShrink: 0,
+    minWidth: TOUCH_TARGET_MIN,
+    minHeight: TOUCH_TARGET_MIN,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   eye: { fontSize: 18 },
-  clearBtn: { paddingHorizontal: Spacing.xs, paddingVertical: 8 },
+  clearBtn: {
+    // A true 44px target (not a hitSlop that web ignores); never grows the row.
+    flexShrink: 0,
+    minWidth: TOUCH_TARGET_MIN,
+    minHeight: TOUCH_TARGET_MIN,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   clearText: { fontSize: FontSize.xs, fontWeight: "700" },
   hint: { fontSize: FontSize.xs, marginTop: 2 },
   readyHint: { fontSize: FontSize.xs, marginTop: 2, fontWeight: "700" },

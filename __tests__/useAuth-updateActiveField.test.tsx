@@ -57,10 +57,15 @@ jest.mock('../src/lib/resumeNavigation', () => ({
 jest.mock('../src/lib/logoutState', () => ({
   clearExplicitLogout: jest.fn().mockResolvedValue(undefined),
   markExplicitLogout: jest.fn().mockResolvedValue(undefined),
+  markPreserveLocalState: jest.fn().mockResolvedValue(undefined),
+  hasPreserveLocalState: jest.fn().mockResolvedValue(false),
+  hasExplicitLogout: jest.fn().mockResolvedValue(false),
 }));
 
 jest.mock('../src/lib/localUserState', () => ({
   clearLocalUserState: jest.fn().mockResolvedValue(undefined),
+  clearAllDeviceUserData: jest.fn().mockResolvedValue(undefined),
+  reconcileDeviceOwner: jest.fn().mockResolvedValue(undefined),
 }));
 
 jest.mock('../src/lib/sessionProfile', () => ({

@@ -10,7 +10,7 @@
  */
 
 import { Share } from 'react-native';
-import { offlineWrite } from './offlineQueue';
+import { offlineWrite, type EnqueueResult } from './offlineQueue';
 
 export interface SharePayload {
   type: 'level_complete' | 'portfolio_artifact';
@@ -42,7 +42,13 @@ function fill(template: string, vars: Record<string, string>) {
   return template.replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? '');
 }
 
-export async function shareOnLevelComplete(payload: SharePayload) {
+/**
+ * Both helpers open the native share sheet and then record the share through
+ * the offline queue. They return that queue result: `{ queued: false }` means
+ * the share was NOT recorded (no signed-in profile), so a caller must not
+ * report it as logged or auto-posted.
+ */
+export async function shareOnLevelComplete(payload: SharePayload): Promise<EnqueueResult> {
   const profileUrl = `https://sifter.app/u/${payload.userId}`;
   const message = fill(pick(LEVEL_SHARE_MESSAGES), {
     level: payload.levelName ?? 'a level',
@@ -55,14 +61,14 @@ export async function shareOnLevelComplete(payload: SharePayload) {
   } catch {}
 
   // Log share event (queued for offline)
-  await offlineWrite('/api/analytics/share', 'POST', {
+  return offlineWrite('/api/analytics/share', 'POST', {
     userId: payload.userId,
     type: 'level_complete',
     trackId: payload.trackName,
   }, 'normal');
 }
 
-export async function shareOnPortfolioArtifact(payload: SharePayload) {
+export async function shareOnPortfolioArtifact(payload: SharePayload): Promise<EnqueueResult> {
   const portfolioUrl = payload.portfolioUrl ?? `https://sifter.app/u/${payload.userId}/portfolio`;
   const message = fill(pick(PORTFOLIO_SHARE_MESSAGES), {
     track: payload.trackName,
@@ -76,7 +82,7 @@ export async function shareOnPortfolioArtifact(payload: SharePayload) {
   } catch {}
 
   // 2. Backend posts to all connected socials automatically
-  await offlineWrite('/api/portfolio/social-blast', 'POST', {
+  return offlineWrite('/api/portfolio/social-blast', 'POST', {
     userId: payload.userId,
     artifactName: payload.artifactName,
     portfolioUrl,

@@ -18,6 +18,10 @@ import { render, waitFor, act } from '@testing-library/react-native';
 const mockAuthGuest = jest.fn();
 const mockSaveToken = jest.fn();
 const mockGetMe = jest.fn();
+const mockClearToken = jest.fn().mockResolvedValue(undefined);
+const mockReconcile = jest.fn().mockResolvedValue(undefined);
+const mockSaveProfile = jest.fn().mockResolvedValue(undefined);
+const mockClearProfile = jest.fn().mockResolvedValue(undefined);
 
 jest.mock('../src/lib/api', () => ({
   API_BASE: 'http://test',
@@ -26,6 +30,7 @@ jest.mock('../src/lib/api', () => ({
     saveToken: (...a: unknown[]) => mockSaveToken(...a),
     getMe: (...a: unknown[]) => mockGetMe(...a),
     getToken: jest.fn().mockResolvedValue('tok'),
+    clearToken: (...a: unknown[]) => mockClearToken(...a),
     checkStreak: jest.fn().mockResolvedValue(undefined),
     updateMe: jest.fn().mockResolvedValue(undefined),
   },
@@ -53,16 +58,21 @@ jest.mock('../src/lib/resumeNavigation', () => ({
 jest.mock('../src/lib/logoutState', () => ({
   clearExplicitLogout: jest.fn().mockResolvedValue(undefined),
   markExplicitLogout: jest.fn().mockResolvedValue(undefined),
+  markPreserveLocalState: jest.fn().mockResolvedValue(undefined),
+  hasPreserveLocalState: jest.fn().mockResolvedValue(false),
+  hasExplicitLogout: jest.fn().mockResolvedValue(false),
 }));
 
 jest.mock('../src/lib/localUserState', () => ({
   clearLocalUserState: jest.fn().mockResolvedValue(undefined),
+  clearAllDeviceUserData: jest.fn().mockResolvedValue(undefined),
+  reconcileDeviceOwner: (...a: unknown[]) => mockReconcile(...a),
 }));
 
 jest.mock('../src/lib/sessionProfile', () => ({
-  clearSessionProfile: jest.fn().mockResolvedValue(undefined),
+  clearSessionProfile: (...a: unknown[]) => mockClearProfile(...a),
   getSavedSessionProfile: jest.fn().mockResolvedValue(null),
-  saveSessionProfile: jest.fn().mockResolvedValue(undefined),
+  saveSessionProfile: (...a: unknown[]) => mockSaveProfile(...a),
 }));
 
 jest.mock('../src/components/auth/StarknetWalletBridge', () => ({
@@ -138,5 +148,24 @@ describe('authGuest', () => {
     expect(mockSaveToken).not.toHaveBeenCalled();
     expect(currentUser?.auth_provider).toBe('guest');
     expect(currentUser?.id).toMatch(/^guest_/);
+  });
+
+  it('offline guest does not inherit the previous account: it reconciles as a guest, drops the old session and owns no profile', async () => {
+    mockAuthGuest.mockRejectedValue(new Error('Network request failed'));
+
+    renderAuth();
+    await waitFor(() => expect(mockGetMe).toHaveBeenCalled());
+    await act(async () => {
+      await signInGuest();
+    });
+
+    // Previous owner's unscoped data goes, but their unsent writes are kept.
+    expect(mockReconcile).toHaveBeenCalledWith(expect.stringMatching(/^guest_/), { guest: true });
+    // The old token/profile no longer stand in for the guest...
+    expect(mockClearToken).toHaveBeenCalled();
+    expect(mockClearProfile).toHaveBeenCalled();
+    // ...and the guest has no owner, so its writes are refused rather than
+    // queued under (and later sent as) the previous account.
+    expect(mockSaveProfile).not.toHaveBeenCalled();
   });
 });

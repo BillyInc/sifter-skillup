@@ -6,18 +6,21 @@
  * device registration, xp_stage, merch_credits.
  */
 
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useRef, useState, ReactNode } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
 import { API, API_BASE } from '../lib/api';
-import { getOrCreateDeviceId, onLoginSync, switchLocalUser } from '../lib/offlineStorage';
+import { getOrCreateDeviceId, onLoginSync } from '../lib/offlineStorage';
 import { flushQueue, setCareerCacheIdentity } from '../lib/careerCache';
 import { logger } from '../lib/logger';
 import { setPendingPostAuthRedirect } from '../lib/postAuthRedirect';
 import { resolvePostAuthHref } from '../lib/resumeNavigation';
-import { clearExplicitLogout, hasExplicitLogout, markExplicitLogout } from '../lib/logoutState';
-import { clearLocalUserState } from '../lib/localUserState';
+import { OfflineQueue } from '../lib/offlineQueue';
+import { reconcileDeviceOwner, clearLocalUserState } from '../lib/localUserState';
 import { clearSessionProfile, getSavedSessionProfile, saveSessionProfile } from '../lib/sessionProfile';
+import { recordDeviceOwner } from '../lib/deviceOwner';
+import { beginSignOut, completeSignIn, completeSignOut, isNetworkFailure, prepareSignIn, startSessionGuard } from '../lib/sessionLifecycle';
+import { useBrowserSessionWatch } from './useBrowserSessionWatch';
 import type { StarkzapWallet } from '../lib/starkzap';
 import {
   StarknetWalletBridgeProvider,
@@ -166,6 +169,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
   const [starknetLoading, setStarknetLoading] = useState(false);
   const [bridgeState, setBridgeState] = useState<BridgeState>(EMPTY_BRIDGE_STATE);
+  // Bumped by every sign-in, sign-out and deletion. A restore or refresh that
+  // was already waiting on getMe() when one of those happened must not save
+  // its (now stale) profile or publish its user afterwards.
+  const sessionEpoch = useRef(0);
 
   useEffect(() => {
     void _tryLoadSavedSession();
@@ -190,98 +197,59 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [user?.id]);
 
   useEffect(() => {
-    // Feature-detect, don't infer from `typeof window`. React Native defines a
-    // `window` global WITHOUT addEventListener, so a bare existence check
-    // passes on native and then throws
-    // "window.addEventListener is not a function" for every signed-in user.
-    // The same is true under the jest react-native environment.
-    if (
-      !user ||
-      typeof window === "undefined" ||
-      typeof window.addEventListener !== "function" ||
-      typeof document === "undefined" ||
-      typeof document.addEventListener !== "function"
-    ) {
-      return;
-    }
+    // Hydrate the offline write queue and start its connectivity watcher once a
+    // profile is available (init is idempotent; enqueue also hydrates lazily).
+    if (user?.id) void OfflineQueue.init().catch(() => {});
+  }, [user?.id]);
 
-    let active = true;
-    let reconciling = false;
-    const reconcileBrowserRestore = async () => {
-      // A Back/Forward navigation can restore an authenticated React tree
-      // from browser cache after sign-out. Re-check storage whenever that
-      // happens; the token, not the restored in-memory profile, is authoritative.
-      if (!active || reconciling) return;
-      const stored = API.hasStoredToken();
-      const token = stored === false ? null : await API.getToken();
-      if (!active || token) return;
-
-      // Offline guest mode intentionally has no token. It is only invalidated
-      // here when the user explicitly signed out; real guest sessions have a
-      // token and therefore still pass the authoritative check above.
-      if (user.auth_provider === "guest" && !(await hasExplicitLogout())) return;
-
-      reconciling = true;
-      const userId = user.id;
-      // Clear React state before awaiting storage cleanup so a restored screen
-      // cannot remain visible during the browser-history transition.
+  useBrowserSessionWatch(user, {
+    onSignedOut: () => {
+      sessionEpoch.current++;
       setUser(null);
-      try {
-        await Promise.all([
-          clearSessionProfile(),
-          markExplicitLogout(),
-          clearLocalUserState(userId),
-        ]);
-        await switchLocalUser('__signed_out__');
-      } finally {
-        reconciling = false;
-      }
-    };
-
-    const onStorage = (event: StorageEvent) => {
-      if (event.key === "sifter_auth_token_v2") void reconcileBrowserRestore();
-    };
-    const onVisible = () => {
-      if (document.visibilityState === "visible") void reconcileBrowserRestore();
-    };
-
-    window.addEventListener("pageshow", reconcileBrowserRestore);
-    window.addEventListener("popstate", reconcileBrowserRestore);
-    window.addEventListener("storage", onStorage);
-    document.addEventListener("visibilitychange", onVisible);
-    return () => {
-      active = false;
-      window.removeEventListener("pageshow", reconcileBrowserRestore);
-      window.removeEventListener("popstate", reconcileBrowserRestore);
-      window.removeEventListener("storage", onStorage);
-      document.removeEventListener("visibilitychange", onVisible);
-    };
-  }, [user]);
+    },
+    onForeignSession: () => {
+      void _tryLoadSavedSession();
+    },
+  });
 
   async function _tryLoadSavedSession() {
+    const epoch = sessionEpoch.current;
     const token = await API.getToken();
     if (!token) {
       setLoading(false);
       return;
     }
+    const stillCurrent = await startSessionGuard(token, () => API.getToken());
     try {
       const profile = await API.getMe() as UserProfile;
+      // Signed out, deleted or signed in as someone else while getMe() was in
+      // flight (here or in another browser tab): this profile is stale.
+      if (epoch !== sessionEpoch.current || !(await stillCurrent())) return;
       const normalized = _normalise(profile);
-      await saveSessionProfile(normalized);
+      await saveSessionProfile(normalized); // also records the device owner
+      if (epoch !== sessionEpoch.current || !(await stillCurrent())) return;
       await setCareerCacheIdentity(normalized.id);
+      if (epoch !== sessionEpoch.current || !(await stillCurrent())) return;
       setUser(normalized);
       API.checkStreak().catch(() => {});
       onLoginSync(profile.id, API_BASE, () => Promise.resolve(token)).catch(() => {});
     } catch (e) {
+      if (epoch !== sessionEpoch.current) return;
       const message = (e as Error)?.message ?? "";
       if (message === "device_mismatch" || message === "device_required") {
+        // The session was taken over by another device: this is a forced
+        // logout like any other, so the previous learner's data goes too.
+        const stale = await getSavedSessionProfile<UserProfile>();
+        await beginSignOut(); // flag first: other tabs react to the token's removal
         await API.clearToken();
-        await markExplicitLogout();
-      } else if (e instanceof TypeError || /failed to fetch|network request failed|network error|request took too long|timed out/i.test(message)) {
+        await completeSignOut({ userId: stale?.id });
+      } else if (isNetworkFailure(e)) {
         // Keep the current route and local onboarding draft available during a
         // temporary API outage. A real 401 still falls through to sign-in.
         const cached = await getSavedSessionProfile<UserProfile>();
-        if (cached?.id) {
+        if (cached?.id && epoch === sessionEpoch.current && (await stillCurrent())) {
+          // Sessions saved before the owner key existed get one now.
+          await recordDeviceOwner(cached.id);
           await setCareerCacheIdentity(cached.id);
           setUser(_normalise(cached));
           onLoginSync(cached.id, API_BASE, () => Promise.resolve(token)).catch(() => {});
@@ -294,13 +262,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   async function _handleAuthResponse(data: { token: string; user: any }) {
-    await API.saveToken(data.token);
-    await clearLocalUserState();
-    await clearExplicitLogout();
+    sessionEpoch.current++;
     const profile = _normalise(data.user);
-    await saveSessionProfile(profile);
-    await switchLocalUser(profile.id);
-    await setCareerCacheIdentity(profile.id);
+    // Profile first, token second: queued writes are owned by the stored
+    // profile's id, so the new token must never be live while the previous
+    // account's profile is still stored (the drain also checks the token's
+    // subject against the item owner). prepareSignIn also reconciles the
+    // device owner (see reconcileDeviceOwner for the guest rule).
+    await prepareSignIn(profile);
+    await API.saveToken(data.token);
+    await completeSignIn(profile);
     setPendingPostAuthRedirect(
       profile.onboarding_completed ? resolvePostAuthHref(profile) : null,
       profile.id,
@@ -358,6 +329,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       email: '',
       onboarding_completed: true,
     });
+    // The previous account's session (an expired token, or a "continue later"
+    // profile) must not become the guest's: its profile would own the guest's
+    // queued writes (later sent with that account's token) and its cached
+    // data would stay on screen. Reconcile as a guest (clears the unscoped
+    // data, keeps that account's unsent writes), drop the old token and
+    // profile, and save no profile for the guest: with no owner, writes are
+    // refused instead of being queued where nothing could ever send them.
+    sessionEpoch.current++;
+    await clearLocalUserState();
+    await reconcileDeviceOwner(guestProfile.id, { guest: true });
+    await API.clearToken();
+    await clearSessionProfile();
+    await completeSignIn(guestProfile);
     setUser(guestProfile);
   }
 
@@ -390,6 +374,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Record the acceptance before publishing the new user to React state. That
     // prevents the authenticated legal gate from flashing over a just-created
     // account while the server record is still being written.
+    // Profile first, as in _handleAuthResponse: the token is not stored while
+    // the previous account's profile still is.
+    await prepareSignIn(_normalise(data.user));
     try {
       await API.saveToken(data.token);
       await API.recordLegalAcceptance(acceptance);
@@ -452,14 +439,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   async function signOut(options: { preserveLocalUserState?: boolean } = {}) {
+    sessionEpoch.current++;
+    await beginSignOut(options);
     await API.clearToken();
-    await clearSessionProfile();
-    await markExplicitLogout();
-    if (!options.preserveLocalUserState) {
-      await clearLocalUserState(user?.id);
-    }
-    await setCareerCacheIdentity(null);
-    await switchLocalUser('__signed_out__');
+    await completeSignOut({
+      userId: user?.id,
+      preserveLocalUserState: options.preserveLocalUserState,
+    });
     setUser(null);
   }
 
@@ -467,20 +453,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       await API.deleteMe();
     } finally {
+      sessionEpoch.current++;
+      await beginSignOut();
       await API.clearToken();
-      await clearSessionProfile();
-      await markExplicitLogout();
-      await clearLocalUserState(user?.id);
-      await setCareerCacheIdentity(null);
+      await completeSignOut({ userId: user?.id });
       setUser(null);
     }
   }
 
   async function refreshUser() {
+    const epoch = sessionEpoch.current;
     try {
+      const stillCurrent = await startSessionGuard(await API.getToken(), () => API.getToken());
       const profile = await API.getMe() as UserProfile;
+      // A sign-out/sign-in finished while this was in flight (here or in
+      // another tab): do not bring the old account's profile back.
+      if (epoch !== sessionEpoch.current || !(await stillCurrent())) return;
       const normalized = _normalise(profile);
-      await saveSessionProfile(normalized);
+      await saveSessionProfile(normalized); // also records the device owner
+      if (epoch !== sessionEpoch.current || !(await stillCurrent())) return;
       setUser(normalized);
     } catch {
       // Ignore transient refresh failures.

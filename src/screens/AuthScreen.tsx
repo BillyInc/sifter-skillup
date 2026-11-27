@@ -32,7 +32,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { studentAccountApi } from "@/lib/provisioningData";
 import { friendlyLoginError, isValidEmail } from "@/lib/authMessages";
 import { useResponsive } from "@/hooks/useResponsive";
-import { SifterButton } from "@/components/ui";
+import { SifterButton, TOUCH_TARGET_MIN } from "@/components/ui";
 import { LevelUpLogo } from "@/components/brand/LevelUpLogo";
 import {
   AuthField,
@@ -419,6 +419,7 @@ export default function AuthScreen({ initialMode = "login" }: { initialMode?: Ex
               ]}
             >
               <TouchableOpacity
+                accessibilityRole="button"
                 onPress={goToWelcome}
                 style={styles.backBtn}
                 hitSlop={8}
@@ -489,7 +490,8 @@ export default function AuthScreen({ initialMode = "login" }: { initialMode?: Ex
               />
 
               <TouchableOpacity
-                style={{ alignSelf: "flex-end", paddingVertical: Spacing.xs }}
+                accessibilityRole="link"
+                style={{ alignSelf: "flex-end", minHeight: TOUCH_TARGET_MIN, justifyContent: "center" }}
                 onPress={() =>
                   router.replace("/(auth)/forgot-password?intent=reset" as any)
                 }
@@ -519,7 +521,8 @@ export default function AuthScreen({ initialMode = "login" }: { initialMode?: Ex
               />
 
               <TouchableOpacity
-                style={{ alignSelf: "center", paddingVertical: Spacing.sm }}
+                accessibilityRole="button"
+                style={{ alignSelf: "center", minHeight: TOUCH_TARGET_MIN, justifyContent: "center" }}
                 onPress={requestSignup}
                 hitSlop={8}
               >
@@ -671,7 +674,12 @@ const styles = StyleSheet.create({
   },
   authDividerText: { fontSize: FontSize.xs },
   connectingText: { marginTop: Spacing.md, fontSize: FontSize.md },
-  backBtn: { alignSelf: "flex-start", paddingVertical: Spacing.xs },
+  backBtn: {
+    alignSelf: "flex-start",
+    minHeight: TOUCH_TARGET_MIN,
+    minWidth: TOUCH_TARGET_MIN,
+    justifyContent: "center",
+  },
   backText: { fontSize: FontSize.sm },
   formTitle: { fontSize: FontSize.xxl, lineHeight: FontSize.xxl * 1.15 },
   formSub: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },

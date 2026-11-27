@@ -45,21 +45,30 @@ export default function FlagModal({ visible, lessonId, lessonTitle, questionId, 
   const [details, setDetails] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
 
   const handleSubmit = async () => {
     if (!flagType) return;
     setSubmitting(true);
-    await offlineWrite('/api/flags', 'POST', {
-      userId, lessonId, lessonTitle, questionId,
-      flagType, details,
-      submittedAt: new Date().toISOString(),
-    }, 'normal');
-    setSubmitted(true);
-    setSubmitting(false);
+    setSubmitError(false);
+    try {
+      const result = await offlineWrite('/api/flags', 'POST', {
+        userId, lessonId, lessonTitle, questionId,
+        flagType, details,
+        submittedAt: new Date().toISOString(),
+      }, 'normal');
+      if (result.queued) setSubmitted(true);
+      else setSubmitError(true); // keep the form so nothing the user typed is lost
+    } catch {
+      // offlineWrite itself threw: the report was not stored.
+      setSubmitError(true);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleClose = () => {
-    setFlagType(null); setDetails(''); setSubmitted(false);
+    setFlagType(null); setDetails(''); setSubmitted(false); setSubmitError(false);
     onClose();
   };
 
@@ -118,6 +127,12 @@ export default function FlagModal({ visible, lessonId, lessonTitle, questionId, 
               numberOfLines={4}
               textAlignVertical="top"
             />
+
+            {submitError ? (
+              <Text accessibilityRole="alert" style={[styles.sectionLabel, { color: colors.danger }]}>
+                Your report could not be saved. Please sign in again and retry.
+              </Text>
+            ) : null}
 
             <TouchableOpacity
               style={[styles.submitBtn, { backgroundColor: colors.accent }, (!flagType || submitting) && styles.submitBtnDisabled]}
