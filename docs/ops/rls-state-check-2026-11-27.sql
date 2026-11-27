@@ -21,20 +21,24 @@
 --           pgrst.jwt_secret and any other setting are never selected),
 --           function bodies, function settings other than search_path,
 --           column defaults, connection strings or table data. It is NOT
---           guaranteed secret-free: section 2 and section 6c print every
+--           guaranteed secret-free: sections 2, 2b and 6c print every
 --           policy expression verbatim, and an expression can embed a
 --           literal (an e-mail address, a UUID, a token, a bucket id).
+--           Section 2b does the same for the other scanned schemas (public,
+--           exposed schemas, realtime schemas; storage is in 6c).
 --           Section 6a prints bucket ids and names (and section 7 prints
 --           bucket names), and section 1d prints column names. Section 7
---           replaces quoted string literals in policy text by '?' and cuts
---           each expression at 300 characters, but object names are still
---           printed. Skim sections 2, 6a and 6c (and 3d, 7) before sharing
+--           replaces quoted string literals in policy text by '?' and every
+--           double-quoted identifier by "?", and shows at most about 300
+--           characters of each expression (around the part that triggered the
+--           flag, with ... where text was cut), but object names are still
+--           printed. Skim sections 2, 2b, 6a and 6c (and 3d, 7) before sharing
 --           the output; review_literals marks likely literal-bearing rows.
 -- How     : the SQL editor shows only the LAST statement's result, so run
 --           each numbered section on its own (select the section, Run), or
 --           run section 7 first for the one-screen summary. See
 --           docs/ops/rls-state-check-README.md. Section 7 is a heuristic
---           summary: reading section 2 is mandatory, not optional.
+--           summary: reading sections 2 and 2b is mandatory, not optional.
 -- Schema  : edit nothing; the schema name 'skillup_dev' is spelled out in
 --           each section. Sections look the schema up by name in
 --           pg_namespace, so a missing schema yields empty results rather
@@ -264,6 +268,49 @@ WHERE schemaname = 'skillup_dev'
   -- EDIT POINT (optional): remove the leading "--" and set a table name
   -- AND tablename = 'users'
 ORDER BY tablename, cmd, policyname;
+
+
+-- ---------------------------------------------------------------------
+-- 2b. Policies on the OTHER schemas that section 7 scans (public, every
+--     schema in pgrst.db_schemas, every schema with a table in the
+--     supabase_realtime publication), verbatim, same columns as section 2.
+--     skillup_dev is section 2 and storage is section 6c, so they are not
+--     repeated here. Section 7 shows only a redacted, cut copy of a policy
+--     expression; the full text of a G2 row on one of these schemas is here.
+--     Run it on its own. Same size rules and review_literals hint as section 2.
+-- ---------------------------------------------------------------------
+WITH exposed_cfg AS (   -- ONLY the exposed-schema names; no other role setting is read
+  SELECT btrim(s) AS nspname
+  FROM pg_db_role_setting st
+  CROSS JOIN LATERAL unnest(st.setconfig) AS c
+  CROSS JOIN LATERAL unnest(string_to_array(regexp_replace(c, '^[^=]*=', ''), ',')) AS s
+  WHERE c ~* '^pgrst\.db_schemas='
+),
+other_schemas AS (
+  SELECT n.nspname
+  FROM pg_namespace n
+  WHERE n.nspname !~ '^pg_' AND n.nspname NOT IN ('information_schema', 'skillup_dev', 'storage')
+    AND ( n.nspname = 'public'
+       OR n.nspname IN (SELECT nspname FROM exposed_cfg)
+       OR n.nspname IN (SELECT schemaname FROM pg_publication_tables WHERE pubname = 'supabase_realtime') )
+)
+SELECT count(*) OVER ()                                           AS result_rows,
+       CASE WHEN count(*) OVER () >= 900
+            THEN 'WARNING: near/over the 1000-row editor cap; rows may be cut. Filter by schema or table (see the marked lines) and re-run'
+       END                                                        AS warning,
+       schemaname, tablename, policyname, permissive,
+       roles::text AS roles, cmd,
+       ((coalesce(qual, '') || ' ' || coalesce(with_check, ''))
+         ~* '([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}|(?=[a-z0-9_=+/-]{32})[a-z_=+/-]*[0-9])'
+        OR (coalesce(qual, '') || ' ' || coalesce(with_check, ''))
+         ~ '(?=[A-Za-z0-9_=+/-]{32})[a-z_=+/-]*[A-Z]')            AS review_literals,
+       qual        AS using_expr,
+       with_check  AS with_check_expr
+FROM pg_policies
+WHERE schemaname IN (SELECT nspname FROM other_schemas)
+  -- EDIT POINT (optional): remove the leading "--" and set a schema and/or table name
+  -- AND schemaname = 'public' AND tablename = 'users'
+ORDER BY schemaname, tablename, cmd, policyname;
 
 
 -- ---------------------------------------------------------------------
@@ -517,8 +564,8 @@ ORDER BY e.extname;
 --    followed by G0 rows saying what was scanned. A result with only G0
 --    INFO rows means "nothing matched these patterns", not "clean": the
 --    flags are heuristics over catalog data that point at things to read,
---    they are not proof. Sections 1a, 2 and 4 are the evidence, and reading
---    section 2 is mandatory.
+--    they are not proof. Sections 1a, 2, 2b and 4 are the evidence, and reading
+--    sections 2 and 2b is mandatory.
 --    SIZE / ORDER: the SQL editor shows at most 1000 rows and silently drops
 --    the rest. Rows are ordered SUMMARY, G0 scan rows, HIGH, MEDIUM, REVIEW,
 --    INFO (inside a severity, checks with fewer rows of that severity first), so the most
@@ -546,8 +593,9 @@ ORDER BY e.extname;
 --      G2  PERMISSIVE policy that applies to public/anon/authenticated and
 --          whose USING or WITH CHECK is always true for that role:
 --          literally true, true AND true, 1=1, auth.role()/auth.jwt()->>'role'
---          /current_setting('request.jwt.claims')->>'role' equal to or IN a
---          list containing anon/authenticated, auth.uid()/auth.jwt()
+--          /current_setting('request.jwt.claims')->>'role' equal to, or IN /
+--          = ANY (list, ARRAY[...] or '{a,b}' literal) CONTAINING,
+--          anon/authenticated, auth.uid()/auth.jwt()
 --          IS NOT NULL, including the Supabase "(select auth.uid())"
 --          initplan style. A cheap secondary flag marks policies that are
 --          POSSIBLY open (MEDIUM when anon holds the privilege or
@@ -563,7 +611,7 @@ ORDER BY e.extname;
 --          count is shown), so a permissive true policy neutralised by a
 --          restrictive one is still flagged. Policies limited to
 --          service_role are not flagged. Anything cleverer is caught only
---          by reading section 2. Also applies to storage.objects.
+--          by reading sections 2, 2b and 6c. Also applies to storage.objects.
 --      G3  SECURITY DEFINER function (not a trigger function) executable
 --          by PUBLIC/anon (HIGH) or by authenticated only (MEDIUM, raised
 --          to HIGH when search_path is not pinned).
@@ -696,28 +744,53 @@ expr AS (  -- one row per USING / WITH CHECK expression, normalised
                '[()\s]', '', 'g'),
              'and(true|1=1)(?=and|or|$)', '', 'g'),
            '(^|or)(true|1=1)and', '\1', 'g') AS n,
-         -- display form for section 7: quoted string literals replaced by '?'
-         -- (the role names and JWT claim keys the patterns look for are kept),
-         -- then truncated. The full text is printed only in section 2.
-         left(translate(
-                regexp_replace(
-                  regexp_replace(k.raw,   -- 1) mark the whitelisted literals with control characters
-                    '''(anon|authenticated|service_role|role|email|sub|app_metadata|user_metadata)''',
-                    chr(1) || '\1' || chr(2), 'g'),
-                  '''([^'']|'''')*''', '''?''', 'g'),   -- 2) every other quoted literal becomes '?'
-                chr(1) || chr(2), ''''''), 300) AS raw_red   -- 3) restore the marked ones
+         -- display form for section 7 (see the rd / win laterals below)
+         CASE WHEN length(rd.full) <= 300 THEN rd.full
+              ELSE CASE WHEN win.st > 1 THEN '...' ELSE '' END
+                   || substr(rd.full, win.st, 300)
+                   || CASE WHEN win.st + 299 < length(rd.full) THEN '...' ELSE '' END END AS raw_red
   FROM pol o
   CROSS JOIN LATERAL (VALUES ('USING', o.qual), ('WITH CHECK', o.with_check)) AS k(kind, raw)
+  -- rd.full = display text with secrets masked. The text is split into tokens in
+  -- ONE left-to-right pass, so a quote of one kind inside a token of the other
+  -- kind cannot desynchronise the quote pairing: a '...' string literal becomes
+  -- '?' (a literal that is exactly a role name or JWT claim key the patterns use
+  -- is kept); a "..." identifier (any name, including one that holds an
+  -- apostrophe, a space or a doubled quote) becomes "?". Everything else is kept.
+  CROSS JOIN LATERAL (
+    SELECT coalesce(string_agg(
+             CASE WHEN m.g[1] IS NOT NULL THEN
+                    CASE WHEN m.g[1] ~ '^''(anon|authenticated|service_role|role|email|sub|app_metadata|user_metadata|request\.jwt\.claims|request\.jwt\.claim\.role)''$'
+                         THEN m.g[1] ELSE '''?''' END
+                  WHEN m.g[2] IS NOT NULL THEN '"?"'
+                  ELSE coalesce(m.g[3], m.g[4]) END,
+             '' ORDER BY m.ord), '') AS full
+    FROM regexp_matches(k.raw, '(''(?:[^'']|'''')*'')|("(?:[^"]|"")*")|([^''"]+)|([''"])', 'g')
+         WITH ORDINALITY AS m(g, ord)
+  ) rd
+  -- win.st = start of the 300-character window: it is placed so the first token
+  -- that can trigger a flag (true, 1=1, auth.*, request.jwt, IS NOT NULL, an API
+  -- role name) sits about a third into it, so a long expression is not cut
+  -- before the arm that matched.
+  CROSS JOIN LATERAL (
+    SELECT greatest(1, coalesce(length(substring(rd.full from
+             '(?i)^(.*?)(?:\mtrue\M|1\s*=\s*1|auth\.|request\.jwt|is\s+not\s+null|''(?:anon|authenticated)'')')), 0) + 1 - 100) AS st
+  ) win
   WHERE k.raw IS NOT NULL
 ),
 pat AS (   -- R = an expression that yields the caller's role
   SELECT '(auth\.role|auth\.jwt->>''role''|current_setting''request\.jwt\.claim\.role''(,(true|false))?|current_setting''request\.jwt\.claims''(,(true|false))?->>''role'')' AS r,
-         '(''(anon|authenticated|service_role)'',?)+' AS lst
+         -- IN-list / array-literal tails that CONTAIN the role W among any elements
+         -- (W is replaced by anon, authenticated or the (anon|authenticated) group)
+         'in(''[^'']*'',)*''W''(,''[^'']*'')*' AS in_tpl,
+         '=any(array\[(''[^'']*'',)*''W''(,''[^'']*'')*\]|''\{([^''}]*,)?"?W"?(,[^''}]*)?\}'')' AS any_tpl
 ),
 pat2 AS (   -- A = one OR arm that is open to an API role (used by the "possibly open" review flag)
   SELECT pat.*,
          '(' || pat.r || '=''(anon|authenticated)''|''(anon|authenticated)''=' || pat.r
-             || '|' || pat.r || 'in' || pat.lst || '|auth\.(uid|jwt|role)isnotnull)' AS arm
+             || '|' || pat.r || replace(pat.in_tpl, 'W', '(anon|authenticated)')
+             || '|' || pat.r || replace(pat.any_tpl, 'W', '(anon|authenticated)')
+             || '|auth\.(uid|jwt|role)isnotnull)' AS arm
   FROM pat
 ),
 exprflag AS (
@@ -727,13 +800,13 @@ exprflag AS (
           OR e.n ~ '^(true|1=1)(and(true|1=1))+$') AS p_all,
          -- true for anon
          (e.n ~ ('^' || pat2.r || '=''anon''$') OR e.n ~ ('^''anon''=' || pat2.r || '$')
-          OR (e.n ~ ('^' || pat2.r || 'in' || pat2.lst || '$') AND e.n LIKE '%''anon''%')
-          OR (e.n ~ ('^' || pat2.r || '=anyarray\[' || pat2.lst || '\]$') AND e.n LIKE '%''anon''%')
+          OR e.n ~ ('^' || pat2.r || replace(pat2.in_tpl, 'W', 'anon') || '$')
+          OR e.n ~ ('^' || pat2.r || replace(pat2.any_tpl, 'W', 'anon') || '$')
           OR e.n ~ ('^' || pat2.r || '(<>|!=)''authenticated''$')) AS p_anon,
          -- true for authenticated
          (e.n ~ ('^' || pat2.r || '=''authenticated''$') OR e.n ~ ('^''authenticated''=' || pat2.r || '$')
-          OR (e.n ~ ('^' || pat2.r || 'in' || pat2.lst || '$') AND e.n LIKE '%''authenticated''%')
-          OR (e.n ~ ('^' || pat2.r || '=anyarray\[' || pat2.lst || '\]$') AND e.n LIKE '%''authenticated''%')
+          OR e.n ~ ('^' || pat2.r || replace(pat2.in_tpl, 'W', 'authenticated') || '$')
+          OR e.n ~ ('^' || pat2.r || replace(pat2.any_tpl, 'W', 'authenticated') || '$')
           OR e.n ~ ('^' || pat2.r || '(<>|!=)''anon''$')
           OR e.n ~ '^(auth\.(uid|jwt|role)isnotnull|notauth\.(uid|jwt|role)isnull)$') AS p_auth,
          -- cheap "possibly open" flag (reported as REVIEW/MEDIUM, never HIGH):
@@ -873,7 +946,7 @@ flags AS (
          o.nspname || '.' || o.tablename,
          concat('policy ', o.policyname, ' (', o.cmd, ', roles ', o.roles::text, '): ',
                 CASE WHEN o.maybe_open
-                     THEN '[POSSIBLY open: an OR arm or always-true form that the patterns only partly recognise (heuristic, not proof); read section 2] '
+                     THEN '[POSSIBLY open: an OR arm or always-true form that the patterns only partly recognise (heuristic, not proof); read sections 2/2b/6c] '
                      ELSE '' END,
                 o.matched_expr,
                 '; open to anon=', o.anon_open, ' and anon holds matching privilege=', (o.anon_open AND o.anon_holds),
@@ -1063,7 +1136,7 @@ summary AS (   -- always-present first row: how many flag rows exist per check
                           || '(for example check_id IN (''G3'')), then Run, once per check_id with rows. '
                           || 'If one check alone exceeds 900 rows, also narrow EDIT POINT 2 to one severity.'
                      ELSE '. All rows fit within the 1000-row editor cap.' END,
-                ' Heuristic; read section 2; not a verdict.') AS detail
+                ' Heuristic; read sections 2/2b/6c; not a verdict.') AS detail
   FROM totals t
 ),
 shown AS (
