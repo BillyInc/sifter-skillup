@@ -558,9 +558,11 @@ PII (email, name, school, phone) never in URLs, query strings, or logs.
 effect). Content cache expires weekly on Sunday via
 `expire_old_sync_log`.
 
-Soft delete keeps `privy_did` so a returning user stays locked out; that means
-an identifier remains on the row for the whole retention window and is removed
-only at hard delete. When an account fails its purge repeatedly it is abandoned
+Soft delete keeps `privy_did` so the Privy sign-in can recognise the deleted
+row: the login matches it by DID and refuses it with 401 before any write (no
+wallet, email or `last_login` is written back, and no new account is created
+for that DID). That means an identifier remains on the row for the whole
+retention window and is removed only at hard delete. When an account fails its purge repeatedly it is abandoned
 with its data intact and an ERROR log line that carries the user id, so log
 retention should be no longer than the deletion promise made to users.
 

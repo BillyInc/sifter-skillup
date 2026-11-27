@@ -636,7 +636,7 @@ def test_a_proof_object_with_no_row_is_found_by_prefix_and_removed(monkeypatch):
     assert out["institution_verification_submissions"] == "deleted"
     # never another user's prefix, and never a school the user was merely affiliated with
     assert storage.removed == ["org/u1/orphan.pdf"]
-    assert storage.list_calls == ["org/u1"]
+    assert set(storage.list_calls) == {"org/u1"}  # paged until an empty page, one prefix only
     assert ap.hard_delete_learner_content("u1")["institution_verification_submissions"] == "clear"
 
 
@@ -1172,7 +1172,7 @@ def test_a_seat_that_could_upload_is_listed_and_a_listing_failure_blocks(monkeyp
         {"id": "im1", "user_id": "u1", "school_id": "org", **member}]})
     storage = _with_storage(svc, _Storage(objects=["org/u1/p.pdf"])).storage
     assert ap.hard_delete_learner_content("u1")["institution_verification_submissions"] == "deleted"
-    assert storage.list_calls == ["org/u1"]
+    assert set(storage.list_calls) == {"org/u1"}
     storage.fail_list = "503 Service Unavailable"
     assert ap.hard_delete_learner_content("u1")["institution_verification_submissions"] == "error"
 
@@ -1193,12 +1193,99 @@ def test_the_proof_roles_match_the_route_that_accepts_uploads():
 
 
 @pytest.mark.parametrize("message", [
-    "Bucket not found", "The related resource does not exist", "404 Not Found", "No such bucket", "not_found",
+    "Bucket not found", "No such bucket", "bucket does not exist",
+    "{'statusCode': '404', 'error': 'Bucket not found'}", "404 The bucket was not found",
 ])
 def test_bucket_missing_variants_are_recognised(message):
     assert ap._is_bucket_missing(RuntimeError(message))
     assert not ap._is_bucket_missing(RuntimeError("403 Forbidden"))
     assert not ap._is_bucket_missing(RuntimeError("503 Service Unavailable"))
+
+
+@pytest.mark.parametrize("message", [
+    "404 Not Found", "not_found", "The related resource does not exist", "404 page not found (proxy)",
+])
+def test_a_bare_404_style_error_is_not_read_as_a_missing_bucket(message):
+    assert not ap._is_bucket_missing(RuntimeError(message))
+
+
+def test_a_proxy_404_on_listing_fails_closed(monkeypatch):
+    svc = _purge_db(monkeypatch, tables={"institution_verification_submissions": [
+        {"id": "v1", "school_id": "org", "submitted_by": "u1", "storage_path": None}]})
+    _with_storage(svc, _Storage(fail_list="404 Not Found"))
+    assert ap.hard_delete_learner_content("u1")["institution_verification_submissions"] == "error"
+
+
+def test_a_proxy_404_on_avatar_listing_fails_closed(monkeypatch):
+    import avatar_storage
+
+    _purge_db(monkeypatch, tables={})
+    store = avatar_storage.InMemoryAvatarStorage()
+    store.list_keys = lambda uid: (_ for _ in ()).throw(RuntimeError("404 Not Found"))
+    avatar_storage.set_storage(store)
+    assert ap.hard_delete_learner_content("u1")["avatars"] == "error"
+
+
+@pytest.mark.parametrize("name", ["Scan..final.pdf", "cert..pdf", "..hidden", "a...b", "a..", "x.y.z"])
+def test_double_dot_inside_a_file_name_is_a_safe_path(name):
+    assert ap._safe_object_path(f"sid/uid/abc_{name}")
+    assert ap._safe_object_path(f"sid/uid/{name}")
+    assert ap._valid_id(name) is (name not in (".", ".."))
+
+
+@pytest.mark.parametrize("path", [
+    "sid/uid/../other/x", "sid/uid//x", "sid\\uid\\x", "sid/uid/./x", "sid/uid/x/..", "../sid/uid/x",
+    "sid/uid/x\x00y", "sid/uid/x\ny", "", "/sid/uid/x", "sid/uid/",
+])
+def test_traversal_empty_and_control_paths_are_unsafe(path):
+    assert not ap._safe_object_path(path)
+
+
+@pytest.mark.parametrize("value", [".", "..", "a/b", "a\\b", "", " a", "a\x00b", None, 5])
+def test_ids_must_be_one_plain_segment(value):
+    assert not ap._valid_id(value)
+
+
+def test_a_proof_file_with_a_double_dot_name_is_removed_and_the_row_deleted(monkeypatch):
+    svc = _purge_db(monkeypatch, tables={"institution_verification_submissions": [
+        {"id": "v1", "school_id": "org", "submitted_by": "u1", "storage_path": "org/u1/abc_Scan..final.pdf"}]})
+    storage = _with_storage(svc, _Storage(objects=["org/u1/abc_Scan..final.pdf"])).storage
+    assert ap.hard_delete_learner_content("u1")["institution_verification_submissions"] == "deleted"
+    assert storage.removed == ["org/u1/abc_Scan..final.pdf"]
+    assert svc.tables["institution_verification_submissions"] == []
+
+
+class _CappedListStorage:
+    """Returns at most ``cap`` entries per call whatever limit is asked for."""
+
+    def __init__(self, names, cap):
+        self.names, self.cap, self.calls = names, cap, []
+
+    def list(self, prefix, options=None):
+        o = options or {}
+        self.calls.append(dict(o))
+        off = o.get("offset", 0)
+        return [{"name": n, "id": "i" + n} for n in self.names[off:off + self.cap]]
+
+
+def test_listing_continues_past_a_server_that_caps_below_the_requested_limit():
+    names = [f"f{i}.pdf" for i in range(250)]
+    store = _CappedListStorage(names, cap=100)
+    out = ap._list_prefix(store, "org/u1")
+    assert out == [f"org/u1/{n}" for n in names]
+    assert all(c["limit"] == ap._MEMBER_PAGE for c in store.calls)
+    assert [c["offset"] for c in store.calls][:3] == [0, 100, 200]
+
+
+def test_listing_that_never_runs_dry_raises_at_the_page_cap(monkeypatch):
+    monkeypatch.setattr(ap, "_MAX_GUILD_PAGES", 3)
+
+    class Endless:
+        def list(self, prefix, options=None):
+            return [{"name": "x", "id": "i"}]
+
+    with pytest.raises(RuntimeError):
+        ap._list_prefix(Endless(), "org/u1")
 
 
 def test_folders_in_a_proof_prefix_are_followed_and_never_reported_as_removed_objects(monkeypatch):

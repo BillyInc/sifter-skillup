@@ -122,6 +122,95 @@ def auth_client():
     app.dependency_overrides.clear()
 
 
+def _privy_patches(monkeypatch, service, did, email="alice@example.com"):
+    monkeypatch.setattr(starknet_routes.settings, "PRIVY_APP_ID", "app", raising=False)
+    monkeypatch.setattr(starknet_routes.settings, "PRIVY_APP_SECRET", "secret", raising=False)
+    monkeypatch.setattr(starknet_routes.db, "get_service_client", lambda: service)
+    monkeypatch.setattr(starknet_routes, "_verify_privy_token", lambda _token: {"sub": did})
+    monkeypatch.setattr(starknet_routes, "get_user_email", lambda _did: _async_result(email))
+    monkeypatch.setattr(
+        starknet_routes,
+        "_ensure_privy_starknet_wallet",
+        lambda _did: _async_result(({"address": "0xnew", "id": "w-new", "public_key": "p"}, False)),
+    )
+    monkeypatch.setattr(starknet_routes.Auth, "create_jwt", lambda user_id, *a, **kw: f"jwt-{user_id}")
+
+
+class TestPrivyLoginRefusesDeletedAccounts:
+    @pytest.mark.parametrize("marker", [{"is_deleted": True}, {"deletion_cooldown_until": "2099-01-01T00:00:00"}])
+    def test_deleted_row_matched_by_did_is_refused_and_untouched(self, monkeypatch, marker):
+        row = {"id": "gone", "email": None, "username": "x", "auth_provider": "guest",
+               "privy_did": "did:privy:gone", **marker}
+        before = dict(row)
+        users = [row]
+        _privy_patches(monkeypatch, _FakeService(users), "did:privy:gone")
+
+        with pytest.raises(starknet_routes.HTTPException) as exc_info:
+            asyncio.run(starknet_routes.starknet_auth_email(
+                StarknetAuthRequest(email="alice@example.com", privy_token=VALID_PRIVY_TOKEN),
+                BackgroundTasks(),
+                None,
+            ))
+
+        assert exc_info.value.status_code == 401
+        assert users == [before]  # no wallet/email/last_login write-back, no new account
+
+    def test_deleted_row_matched_by_email_is_refused(self, monkeypatch):
+        users = [{"id": "gone", "email": "alice@example.com", "auth_provider": "email", "is_deleted": True}]
+        _privy_patches(monkeypatch, _FakeService(users), "did:privy:other")
+
+        with pytest.raises(starknet_routes.HTTPException) as exc_info:
+            asyncio.run(starknet_routes.starknet_auth_email(
+                StarknetAuthRequest(email="alice@example.com", privy_token=VALID_PRIVY_TOKEN),
+                BackgroundTasks(),
+                None,
+            ))
+
+        assert exc_info.value.status_code == 401
+        assert len(users) == 1 and "starknet_address" not in users[0]
+
+    def test_row_without_is_deleted_column_still_signs_in(self, monkeypatch):
+        users = [{"id": "live", "email": "alice@example.com", "auth_provider": "guest",
+                  "privy_did": "did:privy:live"}]
+        _privy_patches(monkeypatch, _FakeService(users), "did:privy:live")
+
+        result = asyncio.run(starknet_routes.starknet_auth_email(
+            StarknetAuthRequest(email="alice@example.com", privy_token=VALID_PRIVY_TOKEN),
+            BackgroundTasks(),
+            None,
+        ))
+
+        assert result.success is True
+        assert users[0]["starknet_wallet_id"] == "w-new"
+
+    def test_duplicate_insert_fallback_onto_a_deleted_row_is_refused(self, monkeypatch):
+        users = [{"id": "gone", "email": "alice@example.com", "auth_provider": "email", "is_deleted": True}]
+        service = _FakeService(users, duplicate_insert=True)
+        _privy_patches(monkeypatch, service, "did:privy:fresh")
+        # the pre-insert email lookup misses (e.g. a race); the fallback finds the deleted row
+        calls = {"n": 0}
+        real = _FakeService.execute
+
+        def flaky(self_, table, action, payload, filters):
+            if table == "users" and action == "select" and "email" in filters:
+                calls["n"] += 1
+                if calls["n"] == 1:
+                    return _FakeExecuteResult([])
+            return real(self_, table, action, payload, filters)
+
+        monkeypatch.setattr(_FakeService, "execute", flaky)
+
+        with pytest.raises(starknet_routes.HTTPException) as exc_info:
+            asyncio.run(starknet_routes.starknet_auth_email(
+                StarknetAuthRequest(email="alice@example.com", privy_token=VALID_PRIVY_TOKEN),
+                BackgroundTasks(),
+                None,
+            ))
+
+        assert exc_info.value.status_code == 401
+        assert "starknet_address" not in users[0]
+
+
 # ─────────────────────────────────────────────────────────────
 # /auth/email
 # ─────────────────────────────────────────────────────────────

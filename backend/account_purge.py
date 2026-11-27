@@ -300,6 +300,10 @@ _PROOF_SUBMIT_ROLES = frozenset({"owner", "institution_admin", "admin"})
 _PENDING_SEAT = "invited"
 
 
+def _has_control_chars(value: str) -> bool:
+    return any(ord(c) < 32 or ord(c) == 127 for c in value)
+
+
 def _valid_id(value) -> bool:
     """A non-empty id that is safe to use as one storage path segment."""
     return (
@@ -308,7 +312,8 @@ def _valid_id(value) -> bool:
         and value == value.strip()
         and "/" not in value
         and "\\" not in value
-        and ".." not in value
+        and value not in (".", "..")
+        and not _has_control_chars(value)
     )
 
 
@@ -340,17 +345,28 @@ def _proof_school_ids_for_user(svc, user_id: str) -> set[str]:
 
 
 def _safe_object_path(path: str) -> bool:
-    """A storage path with no traversal, empty segment or backslash."""
-    return ".." not in path and "//" not in path and "\\" not in path
+    """A storage path whose every segment is a plain name.
+
+    Segments are tested, not substrings: a legitimate file name such as
+    ``Scan..final.pdf`` is fine, while a segment that is exactly ``.`` or
+    ``..``, an empty segment, a backslash, or a control/NUL character is not.
+    """
+    if not isinstance(path, str) or not path or "\\" in path or _has_control_chars(path):
+        return False
+    return all(seg and seg not in (".", "..") for seg in path.split("/"))
 
 
 def _is_bucket_missing(exc: Exception) -> bool:
-    """The bucket itself is absent, so it holds nothing (variants across versions)."""
+    """The bucket itself is absent, so it holds nothing.
+
+    Deliberately narrow: only a bucket-specific message counts. A bare
+    404/"not found" (proxy, wrong storage URL, missing object) is an error,
+    never "empty", so the purge fails closed.
+    """
     text = f"{type(exc).__name__} {exc} {getattr(exc, 'status', '')} {getattr(exc, 'code', '')}".lower()
-    return any(
-        m in text
-        for m in ("bucket not found", "bucket does not exist", "no such bucket", "not found", "not_found", "does not exist", "404")
-    )
+    if any(m in text for m in ("bucket not found", "bucket does not exist", "no such bucket", "bucket_not_found")):
+        return True
+    return "bucket" in text and any(m in text for m in ("not found", "not_found", "does not exist", "404"))
 
 
 _MAX_PREFIX_DEPTH = 3  # folders below the ``<school>/<user>`` prefix that are followed
@@ -371,13 +387,17 @@ def _list_prefix(storage, prefix: str, _depth: int = 0) -> list[str]:
     if not prefix or not all(_valid_id(seg) for seg in prefix.split("/")):
         raise ValueError("invalid storage prefix")
     found: list[str] = []
-    for page in range(_MAX_GUILD_PAGES):
+    offset = 0
+    for _ in range(_MAX_GUILD_PAGES):
         try:
-            items = storage.list(prefix, {"limit": _MEMBER_PAGE, "offset": page * _MEMBER_PAGE}) or []
+            items = storage.list(prefix, {"limit": _MEMBER_PAGE, "offset": offset}) or []
         except Exception as exc:  # noqa: BLE001
             if _is_bucket_missing(exc):
                 return found
             raise
+        if not items:  # only an empty page ends the scan; a server may cap the limit below ours
+            return found
+        offset += len(items)  # advance by what was returned: a server may cap below our limit
         for i in items:
             name = i.get("name")
             if not name:
@@ -388,8 +408,6 @@ def _list_prefix(storage, prefix: str, _depth: int = 0) -> list[str]:
                 found += _list_prefix(storage, f"{prefix}/{name}", _depth + 1)
             else:
                 found.append(f"{prefix}/{name}")
-        if len(items) < _MEMBER_PAGE:
-            return found
     raise RuntimeError("proof prefix scan limit reached")
 
 

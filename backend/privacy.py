@@ -144,10 +144,10 @@ def deletion_user_fields(user_id: str, device_id: str, deleted_at: str, availabl
     ``guardian_consent_at`` (a school-provisioned minor's consent timestamp)
     is personal data and is cleared; it is nullable. ``privy_did`` is
     deliberately KEPT through the soft delete: the Privy/Starknet sign-in
-    matches a returning user by it and auth rejects ``is_deleted`` rows, so
-    the DID keeps a returning learner locked out for the cooldown instead of
-    minting a fresh account (that route has no device-cooldown check). It is
-    released only when the row is hard deleted. Columns
+    matches a returning user by it and, seeing ``is_deleted`` (or a deletion
+    cooldown), refuses with 401 before writing anything, instead of minting a
+    fresh account (that route has no device-cooldown check). It is released
+    only when the row is hard deleted. Columns
     that an older schema lacks are dropped by the caller's compatibility
     retry, so listing them here is safe. ``settings`` is reset to an empty
     object, which also withdraws analytics consent stored there.
