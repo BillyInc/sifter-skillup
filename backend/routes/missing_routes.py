@@ -19,6 +19,7 @@
 #   POST   /api/projects/join             — join a guild project
 # ============================================================
 
+import math
 import uuid
 from datetime import datetime
 from typing import Optional, List
@@ -100,6 +101,82 @@ class NotificationTrigger(BaseModel):
     userName: str
     data: Optional[dict] = None
     channels: Optional[List[str]] = None  # ['push', 'sms', 'email']
+
+_NOTIFICATION_CHANNELS = {"push", "sms", "email"}
+
+
+# Unicode bidi controls can visually reorder or spoof push text.
+_BIDI_CONTROLS = {chr(c) for c in (*range(0x202A, 0x202F), *range(0x2066, 0x206A), 0x200E, 0x200F)}
+
+
+def _is_emoji(ch: str) -> bool:
+    cp = ord(ch)
+    return (
+        0x1F000 <= cp <= 0x1FAFF or 0x2600 <= cp <= 0x27BF or 0xFE0E <= cp <= 0xFE0F
+        or 0x1F1E6 <= cp <= 0x1F1FF
+    )
+
+
+_ZWJ, _ZWNJ = "\u200d", "\u200c"
+_MAX_SAFE_INT = 2 ** 53
+
+
+def _clean_notification_text(value, limit: int) -> str:
+    """Strip unsafe characters and cap length of text that reaches a push body.
+
+    Removed: control/unprintable characters, bidi controls, emoji (and the
+    joiners and variation selectors inside emoji sequences). Kept: ZWNJ/ZWJ
+    between non-emoji characters, which carry meaning in scripts such as
+    Persian. Every whitespace character (newline, tab, NBSP, line separator...)
+    becomes a single space, so "Ada\nLovelace" stays two words.
+    """
+    text = str(value or "")
+    out = []
+    for i, ch in enumerate(text):
+        if ch in _BIDI_CONTROLS:
+            continue
+        if ch == _ZWJ:
+            # Only a joiner inside an emoji sequence is dropped.
+            prev_emoji = i > 0 and _is_emoji(text[i - 1])
+            next_emoji = i + 1 < len(text) and _is_emoji(text[i + 1])
+            if prev_emoji or next_emoji:
+                continue
+            out.append(ch)
+        elif ch == _ZWNJ:
+            out.append(ch)
+        elif _is_emoji(ch):
+            continue
+        elif ch.isspace():
+            out.append(" ")
+        elif ch.isprintable():
+            out.append(ch)
+    return " ".join("".join(out).split())[:limit].rstrip()
+
+
+def _clean_notification_data(data) -> dict:
+    """Keep only short scalar values so free text cannot be smuggled into pushes."""
+    if not isinstance(data, dict):
+        return {}
+    cleaned = {}
+    for key, val in list(data.items())[:10]:
+        clean_key = _clean_notification_text(key, 40)
+        # A key that cleans to '' or collides with an earlier one is dropped.
+        if not clean_key or clean_key in cleaned:
+            continue
+        if isinstance(val, bool):
+            cleaned[clean_key] = val
+        elif isinstance(val, (int, float)):
+            if isinstance(val, float) and not math.isfinite(val):
+                continue
+            # Beyond 2**53 an integer is no longer exactly representable by JS
+            # clients; reject rather than send a silently rounded value.
+            if isinstance(val, int) and abs(val) > _MAX_SAFE_INT:
+                continue
+            cleaned[clean_key] = val
+        elif isinstance(val, str):
+            cleaned[clean_key] = _clean_notification_text(val, 80)
+    return cleaned
+
 
 class PostCreate(BaseModel):
     content: str
@@ -542,13 +619,31 @@ async def trigger_notification(
       portfolio_earned   — portfolio artifact awarded
       weekly_progress    — Sunday weekly summary
       monthly_leaderboard — monthly rank update
+
+    A caller may only trigger notifications for their own account. There is no
+    caller in the repository that notifies another user, so no admin/system
+    path exists here; a cross-user dispatch must be a separate, reviewed
+    server-side job, not a client-callable route.
     """
+    # Same response for every other id, existing or not (no account probing).
+    if str(body.userId or "").strip().lower() != str(current_user["id"] or "").strip().lower():
+        raise HTTPException(status_code=403, detail="You can only send notifications to yourself.")
+    # The check above is whitespace/case-insensitive, so every query below uses
+    # the authenticated id, never the raw (possibly padded) body value.
+    user_id = str(current_user["id"])
+
+    body.userName = _clean_notification_text(body.userName, 40)
+    body.trackId = _clean_notification_text(body.trackId, 60)
+    body.type = _clean_notification_text(body.type, 40)
+    body.data = _clean_notification_data(body.data)
+    body.channels = [c for c in (body.channels or ["push"]) if c in _NOTIFICATION_CHANNELS] or ["push"]
+
     # Fetch target user's push tokens
     tokens_result = (
         db.get_service_client()
         .table("push_tokens")
         .select("token, platform")
-        .eq("user_id", body.userId)
+        .eq("user_id", user_id)
         .execute()
     )
 
@@ -557,7 +652,7 @@ async def trigger_notification(
         db.get_service_client()
         .table("notification_prefs")
         .select("*")
-        .eq("user_id", body.userId)
+        .eq("user_id", user_id)
         .execute()
     )
     prefs = prefs_result.data[0] if prefs_result.data else {"push": True, "sms": False, "email": False}
@@ -608,7 +703,7 @@ async def trigger_notification(
                 "to": t["token"],
                 "title": msg["title"],
                 "body": msg["body"],
-                "data": {"type": body.type, "trackId": body.trackId, **(body.data or {})},
+                "data": {**(body.data or {}), "type": body.type, "trackId": body.trackId},
                 "sound": "default",
                 "badge": 1,
             }
@@ -631,7 +726,7 @@ async def trigger_notification(
     # Log notification dispatch
     db.get_service_client().table("notifications").insert({
         "id": str(uuid.uuid4()),
-        "user_id": body.userId,
+        "user_id": user_id,
         "type": body.type,
         "title": f"{body.type} notification",
         "body": str(body.data or {}),

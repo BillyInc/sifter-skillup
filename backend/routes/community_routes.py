@@ -24,7 +24,7 @@
 #   POST   /api/users/unmute            — unmute user
 #   GET    /api/dms/threads             — DM inbox (current user only)
 #   GET    /api/dms/thread/{id}         — single thread messages
-#   POST   /api/dms/send                — send DM (you must initiate)
+#   POST   /api/dms/send                — send DM (mutual follow on every send; not guests)
 #   POST   /api/dms/read                — mark thread read
 #   POST   /api/ai/score                — AI simulator scoring proxy (key never in client)
 #   GET    /api/notifications           — get notifications for current user
@@ -36,14 +36,15 @@
 import uuid
 import json
 from datetime import datetime, timedelta, timezone
-from typing import Optional, List
+from typing import Literal, Optional, List
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel
 
 from auth import Auth
 from database import db
-from avatar_storage import public_avatar_url, scrub_embedded_avatars
+from auth import _error_code
+from avatar_storage import UploadRateLimiter, public_avatar_url, scrub_embedded_avatars
 from models import ResponseModel
 from public_name import public_name, publicize_user_row, run_with_public_name_columns
 
@@ -71,7 +72,7 @@ class FollowAction(BaseModel):
 
 class FollowRequestRespond(BaseModel):
     requesterId: str
-    action: str  # 'approve' | 'reject'
+    action: Literal['approve', 'reject']
 
 class BlockAction(BaseModel):
     targetId: str
@@ -100,6 +101,60 @@ VALID_REACTIONS = {'❤️', '🔥', '💡', '🏆', '😂', '👀'}
 # ─────────────────────────────────────────────────────────────
 
 community_v2_router = APIRouter(tags=["community-v2"])
+
+# --- Social-action throttles --------------------------------------------------
+# Per-user, in memory (per worker process), bounded by UploadRateLimiter's key
+# cap. They stop a single account from hammering the follow/block endpoints or
+# pinging a target repeatedly; they are not a substitute for the notification
+# de-duplication below, which holds across workers.
+_follow_limiter = UploadRateLimiter(limits=((60, 30, "minute"), (3600, 200, "hour")))
+_follow_request_limiter = UploadRateLimiter(limits=((3600, 20, "hour"), (86400, 50, "day")))
+_respond_limiter = UploadRateLimiter(limits=((60, 60, "minute"), (3600, 300, "hour")))
+# Block is a safety action and the offline queue replays queued blocks in a
+# burst, so its limits are far higher than follow's: a replayed batch must not
+# be dropped. The limiter stays only as a backstop against a runaway client.
+_block_limiter = UploadRateLimiter(limits=((60, 120, "minute"), (3600, 600, "hour")))
+
+# A rejected follow request stays rejected for this long: the requester cannot
+# reopen it, and the target is not notified again, until the cooldown passes.
+FOLLOW_REQUEST_COOLDOWN = timedelta(days=7)
+
+
+def _throttle(limiter: UploadRateLimiter, user_id: str) -> None:
+    """429 when the caller is over the limit; otherwise count this attempt."""
+    wait = limiter.check(user_id)
+    if wait:
+        raise HTTPException(429, "Too many requests. Try again shortly.", headers={"Retry-After": str(wait)})
+    limiter.record(user_id)
+
+
+def _is_guest(current_user: dict) -> bool:
+    return current_user.get("auth_provider") == "guest"
+
+
+def _parse_ts(value) -> Optional[datetime]:
+    if not value:
+        return None
+    try:
+        parsed = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    return parsed if parsed.tzinfo else parsed.replace(tzinfo=timezone.utc)
+
+
+def _decision_time(row: dict) -> Optional[datetime]:
+    """When a follow request was decided.
+
+    follow_requests has no decided_at/updated_at column. The respond endpoint
+    therefore stamps created_at with the decision time when it rejects, and this
+    reads whichever of the three columns is present (a dedicated column is the
+    cleaner fix and needs a separate, approved migration).
+    """
+    for col in ("decided_at", "updated_at", "created_at"):
+        ts = _parse_ts(row.get(col))
+        if ts:
+            return ts
+    return None
 
 # ─────────────────────────────────────────────────────────────
 # FEED — cursor-based pagination, scales to millions
@@ -521,43 +576,124 @@ async def update_privacy(body: PrivacyUpdate, current_user: dict = Depends(Auth.
 @community_v2_router.post("/api/users/follow", response_model=ResponseModel)
 async def follow_user(body: FollowAction, current_user: dict = Depends(Auth.get_current_user)):
     """Follow a public account. Use /follow-request for private accounts."""
-    user_id = current_user["id"]
-    if body.targetId == user_id:
+    user_id = _norm_id(current_user["id"])
+    target_id = _norm_id(body.targetId)
+    _throttle(_follow_limiter, user_id)
+    if target_id == user_id:
         raise HTTPException(400, "Cannot follow yourself")
+    # Guests can follow nobody (they could otherwise ping any account). Same
+    # refusal as a missing target so it reveals nothing.
+    if _is_guest(current_user):
+        raise HTTPException(404, "User not found")
 
-    existing = db.get_service_client().table("follows").select("id").eq("follower_id", user_id).eq("following_id", body.targetId).execute()
+    # The only follow row this endpoint ever creates is caller -> target. A
+    # private account can only be followed through an approved request.
+    # Missing, deleted and blocked (either direction) targets all get the same
+    # 404. This does NOT hide a block: a private target answers a blocked caller
+    # 404 but an unblocked one 403, and a public target answers a blocked caller
+    # 404 but an unblocked one succeeds, so a blocked user can detect the block
+    # by probing. The 404 only avoids saying whether the account exists. The
+    # private-account 403 is distinct on purpose: it tells the caller to use
+    # /follow-request.
+    target = _active_user(target_id)
+    if target is None or _blocked_either_way(user_id, target_id):
+        raise HTTPException(404, "User not found")
+    if target.get("is_private"):
+        raise HTTPException(403, "This account is private. Send a follow request instead.")
+
+    existing = db.get_service_client().table("follows").select("id").eq("follower_id", user_id).eq("following_id", target_id).execute()
     if existing.data:
         return ResponseModel(data={"status": "already_following"})
 
-    db.get_service_client().table("follows").insert({
+    # UNIQUE(follower_id, following_id): two concurrent follows must not 500.
+    # Notify only when this call really created the row.
+    created = db.get_service_client().table("follows").upsert({
         "id": str(uuid.uuid4()),
         "follower_id": user_id,
-        "following_id": body.targetId,
+        "following_id": target_id,
         "created_at": datetime.now(timezone.utc).isoformat(),
-    }).execute()
+    }, on_conflict="follower_id,following_id", ignore_duplicates=True).execute()
+    if not created.data:
+        return ResponseModel(data={"status": "already_following"})
 
-    _create_notification(body.targetId, user_id, "follow")
+    # At most one 'follow' notification per (actor, recipient) per cooldown, so
+    # follow/unfollow cycles cannot spam the target. The follow itself still
+    # succeeds; a failed history lookup sends no notification.
+    if not _follow_request_recently_notified(user_id, target_id, datetime.now(timezone.utc), "follow"):
+        _create_notification(target_id, user_id, "follow")
     return ResponseModel(data={"status": "following"})
 
 
 @community_v2_router.post("/api/users/follow-request", response_model=ResponseModel)
 async def request_follow(body: FollowAction, current_user: dict = Depends(Auth.get_current_user)):
     """Send a follow request to a private account."""
-    user_id = current_user["id"]
-    existing = db.get_service_client().table("follow_requests").select("id, status").eq("requester_id", user_id).eq("target_id", body.targetId).execute()
+    user_id = _norm_id(current_user["id"])
+    target_id = _norm_id(body.targetId)
+    _throttle(_follow_request_limiter, user_id)
+    if target_id == user_id:
+        raise HTTPException(400, "Cannot follow yourself")
+    # Guests cannot ping accounts; same refusal as a missing target.
+    if _is_guest(current_user):
+        raise HTTPException(404, "User not found")
+    # Same 404 as /follow for a missing, deleted or blocked (either way) target.
+    if _active_user(target_id) is None or _blocked_either_way(user_id, target_id):
+        raise HTTPException(404, "User not found")
+    svc = db.get_service_client()
+    now_dt = datetime.now(timezone.utc)
+    now = now_dt.isoformat()
+    existing = svc.table("follow_requests").select("*").eq("requester_id", user_id).eq("target_id", target_id).execute()
     if existing.data:
-        return ResponseModel(data={"status": existing.data[0]["status"]})
+        row = existing.data[0]
+        if row["status"] == "pending":
+            return ResponseModel(data={"status": "pending"})
+        already = svc.table("follows").select("id").eq("follower_id", user_id).eq("following_id", target_id).limit(1).execute()
+        if already.data:
+            return ResponseModel(data={"status": row["status"]})
+        if row["status"] != "approve":
+            # Fail closed: any decided status other than 'approve' counts as a
+            # rejection (legacy rows from the old respond endpoint stored
+            # free-text actions such as 'rejected'). A rejection holds for the cooldown: return it as is, without
+            # reopening the request or notifying the target. A timestamp that
+            # cannot be read is treated as recent (fail closed).
+            decided = _decision_time(row)
+            if decided is None or now_dt - decided < FOLLOW_REQUEST_COOLDOWN:
+                return ResponseModel(data={"status": "reject"})
+        # A decided request (approved then unfollowed, or a rejection past its
+        # cooldown) must not lock the pair out forever: reopen it as pending.
+        svc.table("follow_requests").update({"status": "pending", "created_at": now}).eq("id", row["id"]).execute()
+    else:
+        # UNIQUE(requester_id, target_id): a concurrent duplicate must not 500.
+        svc.table("follow_requests").upsert({
+            "id": str(uuid.uuid4()),
+            "requester_id": user_id,
+            "target_id": target_id,
+            "status": "pending",
+            "created_at": now,
+        }, on_conflict="requester_id,target_id", ignore_duplicates=True).execute()
 
-    db.get_service_client().table("follow_requests").insert({
-        "id": str(uuid.uuid4()),
-        "requester_id": user_id,
-        "target_id": body.targetId,
-        "status": "pending",
-        "created_at": datetime.now(timezone.utc).isoformat(),
-    }).execute()
-
-    _create_notification(body.targetId, user_id, "follow_request")
+    # At most one notification per (requester, target) within the cooldown, even
+    # when the request is cancelled (unfollow) and sent again. The check is not
+    # atomic across workers; the per-user limiter bounds the residual race.
+    if not _follow_request_recently_notified(user_id, target_id, now_dt):
+        _create_notification(target_id, user_id, "follow_request")
     return ResponseModel(data={"status": "pending"})
+
+
+def _follow_request_recently_notified(requester_id: str, target_id: str, now: datetime, notif_type: str = "follow_request") -> bool:
+    """True when this actor already sent this recipient a `notif_type` notification inside the cooldown.
+
+    Fails closed: if the history cannot be read, no notification is sent.
+    """
+    try:
+        cutoff = (now - FOLLOW_REQUEST_COOLDOWN).isoformat()
+        res = (
+            db.get_service_client().table("notifications").select("id")
+            .eq("recipient_id", target_id).eq("actor_id", requester_id).eq("type", notif_type)
+            .gte("created_at", cutoff).limit(1).execute()
+        )
+        return bool(res.data)
+    except Exception:
+        return True
 
 
 @community_v2_router.get("/api/users/follow-requests", response_model=ResponseModel)
@@ -582,25 +718,70 @@ async def get_follow_requests(current_user: dict = Depends(Auth.get_current_user
 
 @community_v2_router.post("/api/users/follow-request/respond", response_model=ResponseModel)
 async def respond_follow_request(body: FollowRequestRespond, current_user: dict = Depends(Auth.get_current_user)):
-    user_id = current_user["id"]
+    user_id = _norm_id(current_user["id"])
+    requester_id = _norm_id(body.requesterId)
+    _throttle(_respond_limiter, user_id)
+    svc = db.get_service_client()
+    no_request = HTTPException(404, "No pending follow request from this user.")
 
-    db.get_service_client().table("follow_requests").update({"status": body.action}).eq("requester_id", body.requesterId).eq("target_id", user_id).execute()
+    # A malformed, unknown or deleted requester gets the same answer as a
+    # missing request (and a bad id never reaches a uuid cast in the database).
+    if not _is_uuid(requester_id) or _active_user(requester_id) is None:
+        raise no_request
+
+    # Same refusal as a missing request when either side has blocked the other.
+    if _blocked_either_way(user_id, requester_id):
+        raise no_request
+
+    # A follow can only be created from a request the requester really made to
+    # the caller and that is still pending. Without this a caller could mint a
+    # follow row for any user, which also satisfies the mutual-follow DM rule.
+    pending = (
+        svc.table("follow_requests").select("id")
+        .eq("requester_id", requester_id).eq("target_id", user_id).eq("status", "pending")
+        .limit(1).execute()
+    )
+    if not pending.data:
+        raise no_request
+
+    # Stored values follow the schema comment: 'approve' | 'reject'. The update
+    # is conditional on status='pending', so of two concurrent decisions only
+    # one wins; the loser sees no row updated and creates nothing. A rejection
+    # also stamps created_at with the decision time (there is no decided_at
+    # column) so the re-request cooldown runs from the decision.
+    changes = {"status": body.action}
+    if body.action == "reject":
+        changes["created_at"] = datetime.now(timezone.utc).isoformat()
+    won = svc.table("follow_requests").update(changes).eq("id", pending.data[0]["id"]).eq("status", "pending").execute()
+    if not won.data:
+        raise no_request
 
     if body.action == "approve":
-        db.get_service_client().table("follows").insert({
+        # UNIQUE(follower_id, following_id): an upsert that ignores duplicates
+        # keeps two concurrent approvals from failing with a unique violation.
+        svc.table("follows").upsert({
             "id": str(uuid.uuid4()),
-            "follower_id": body.requesterId,
+            "follower_id": requester_id,
             "following_id": user_id,
             "created_at": datetime.now(timezone.utc).isoformat(),
-        }).execute()
-        _create_notification(body.requesterId, user_id, "follow")
+        }, on_conflict="follower_id,following_id", ignore_duplicates=True).execute()
+        _create_notification(requester_id, user_id, "follow")
 
     return ResponseModel(data={"status": body.action})
 
 
 @community_v2_router.post("/api/users/unfollow", response_model=ResponseModel)
 async def unfollow_user(body: FollowAction, current_user: dict = Depends(Auth.get_current_user)):
-    db.get_service_client().table("follows").delete().eq("follower_id", current_user["id"]).eq("following_id", body.targetId).execute()
+    user_id = _norm_id(current_user["id"])
+    target_id = _norm_id(body.targetId)
+    if not _is_uuid(target_id):
+        raise HTTPException(404, "User not found")
+    svc = db.get_service_client()
+    svc.table("follows").delete().eq("follower_id", user_id).eq("following_id", target_id).execute()
+    # Cancel only the caller's own PENDING request. A decided row stays: a
+    # rejection must keep holding its cooldown (unfollowing must not wipe it),
+    # and an approved-then-unfollowed row is reopened by /follow-request.
+    svc.table("follow_requests").delete().eq("requester_id", user_id).eq("target_id", target_id).eq("status", "pending").execute()
     return ResponseModel(data={"status": "unfollowed"})
 
 
@@ -610,37 +791,66 @@ async def unfollow_user(body: FollowAction, current_user: dict = Depends(Auth.ge
 
 @community_v2_router.post("/api/users/block", response_model=ResponseModel)
 async def block_user(body: BlockAction, current_user: dict = Depends(Auth.get_current_user)):
-    user_id = current_user["id"]
-    db.get_service_client().table("user_blocks").upsert({
-        "id": str(uuid.uuid4()), "user_id": user_id, "target_id": body.targetId,
+    user_id = _norm_id(current_user["id"])
+    target_id = _norm_id(body.targetId)
+    _throttle(_block_limiter, user_id)
+    # Blocking yourself gets the same refusal as an unknown target.
+    if target_id == user_id or not _is_uuid(target_id) or _active_user(target_id) is None:
+        raise HTTPException(404, "User not found")
+    svc = db.get_service_client()
+    # UNIQUE(user_id, target_id): a repeated block (e.g. an offline-queue replay)
+    # is a no-op rather than a unique-violation 500.
+    svc.table("user_blocks").upsert({
+        "id": str(uuid.uuid4()), "user_id": user_id, "target_id": target_id,
         "created_at": datetime.now(timezone.utc).isoformat(),
-    }).execute()
-    # Also remove any follow relationship
-    db.get_service_client().table("follows").delete().or_(
-        f"and(follower_id.eq.{user_id},following_id.eq.{body.targetId})",
-        f"and(follower_id.eq.{body.targetId},following_id.eq.{user_id})"
-    ).execute()
+    }, on_conflict="user_id,target_id", ignore_duplicates=True).execute()
+    # Also remove any follow relationship and any pending or approved follow
+    # request, in both directions. Rejected rows (and any legacy non-standard
+    # status, which is read as a rejection) are KEPT in both directions: they
+    # carry the re-request cooldown, so block then unblock must not reset it.
+    # Plain eq()/in_() filters keep the id out of a PostgREST filter string.
+    for a, b in ((user_id, target_id), (target_id, user_id)):
+        svc.table("follows").delete().eq("follower_id", a).eq("following_id", b).execute()
+        svc.table("follow_requests").delete().eq("requester_id", a).eq("target_id", b).in_("status", ["pending", "approve"]).execute()
     return ResponseModel(data={"blocked": True})
 
 
+# unblock / unmute undo a relationship the caller created, so they are
+# deliberately more lenient than block / mute: yourself or a malformed id gets
+# the same uniform 404, but a well-formed id with no active user is a no-op 200
+# (so a stale row for a since-deleted account can still be cleaned up).
 @community_v2_router.post("/api/users/unblock", response_model=ResponseModel)
 async def unblock_user(body: BlockAction, current_user: dict = Depends(Auth.get_current_user)):
-    db.get_service_client().table("user_blocks").delete().eq("user_id", current_user["id"]).eq("target_id", body.targetId).execute()
+    user_id = _norm_id(current_user["id"])
+    target_id = _norm_id(body.targetId)
+    if target_id == user_id or not _is_uuid(target_id):
+        raise HTTPException(404, "User not found")
+    db.get_service_client().table("user_blocks").delete().eq("user_id", user_id).eq("target_id", target_id).execute()
     return ResponseModel(data={"blocked": False})
 
 
 @community_v2_router.post("/api/users/mute", response_model=ResponseModel)
 async def mute_user(body: BlockAction, current_user: dict = Depends(Auth.get_current_user)):
+    user_id = _norm_id(current_user["id"])
+    target_id = _norm_id(body.targetId)
+    # Same uniform refusal as block: yourself, a malformed id, or a missing or
+    # deleted account (which would otherwise hit the user_mutes FK as a 500).
+    if target_id == user_id or not _is_uuid(target_id) or _active_user(target_id) is None:
+        raise HTTPException(404, "User not found")
     db.get_service_client().table("user_mutes").upsert({
-        "id": str(uuid.uuid4()), "user_id": current_user["id"], "target_id": body.targetId,
+        "id": str(uuid.uuid4()), "user_id": user_id, "target_id": target_id,
         "created_at": datetime.now(timezone.utc).isoformat(),
-    }).execute()
+    }, on_conflict="user_id,target_id", ignore_duplicates=True).execute()
     return ResponseModel(data={"muted": True})
 
 
 @community_v2_router.post("/api/users/unmute", response_model=ResponseModel)
 async def unmute_user(body: BlockAction, current_user: dict = Depends(Auth.get_current_user)):
-    db.get_service_client().table("user_mutes").delete().eq("user_id", current_user["id"]).eq("target_id", body.targetId).execute()
+    user_id = _norm_id(current_user["id"])
+    target_id = _norm_id(body.targetId)
+    if target_id == user_id or not _is_uuid(target_id):
+        raise HTTPException(404, "User not found")
+    db.get_service_client().table("user_mutes").delete().eq("user_id", user_id).eq("target_id", target_id).execute()
     return ResponseModel(data={"muted": False})
 
 
@@ -728,31 +938,78 @@ async def send_dm(body: DMSend, current_user: dict = Depends(Auth.get_current_us
     Send a DM. Only the sender can initiate.
     Creates thread if one doesn't exist between these two users.
     """
-    sender_id = current_user["id"]
-    recipient_id = body.recipientId
+    # Normalise before comparing so an upper-case or padded UUID cannot slip
+    # past the self-message check or the follow/block lookups.
+    sender_id = _norm_id(current_user["id"])
+    recipient_id = _norm_id(body.recipientId)
+    content = (body.content or "").strip()
 
     if sender_id == recipient_id:
         raise HTTPException(400, "Cannot message yourself")
+    if not content:
+        raise HTTPException(400, "Message cannot be empty")
 
-    # Check if recipient has blocked sender
-    blocked = db.get_service_client().table("user_blocks").select("id").eq("user_id", recipient_id).eq("target_id", sender_id).execute()
+    # One error for every refusal (blocked, no relationship, guest, unknown or
+    # deleted id) so the response never reveals whether a target exists or why
+    # it refused.
+    refused = HTTPException(403, "You can't message this user.")
+
+    svc = db.get_service_client()
+
+    # The recipient must exist and not be deleted, before any thread is made.
+    if _active_user(recipient_id) is None:
+        raise refused
+
+    # Blocks apply in both directions, to new and existing threads alike.
+    blocked = svc.table("user_blocks").select("id").eq("user_id", recipient_id).eq("target_id", sender_id).execute()
     if blocked.data:
-        raise HTTPException(403, "Cannot send message to this user")
+        raise refused
+    blocked_by_sender = svc.table("user_blocks").select("id").eq("user_id", sender_id).eq("target_id", recipient_id).execute()
+    if blocked_by_sender.data:
+        raise refused
 
-    # Find or create thread
-    existing_thread = _find_dm_thread(sender_id, recipient_id)
+    # The mutual follow is re-checked on EVERY send, not only when a thread is
+    # created: an existing thread is no longer an exemption. If either side
+    # unfollows, the thread is frozen until the follow is mutual again; a
+    # thread between mutual followers keeps working.
+    if not _mutual_follow(sender_id, recipient_id):
+        raise refused
+
+    # Find or create thread (a two-person thread only). A failed lookup fails
+    # the send: it must never be read as "no thread" and create a duplicate.
+    try:
+        existing_thread = _find_dm_thread(sender_id, recipient_id)
+    except Exception:
+        raise HTTPException(503, "Temporarily unavailable. Please try again.")
     if existing_thread:
         thread_id = existing_thread
     else:
+        # Guest accounts cannot start conversations.
+        if current_user.get("auth_provider") == "guest":
+            raise refused
         thread_id = str(uuid.uuid4())
-        db.get_service_client().table("dm_threads").insert({
-            "id": thread_id, "created_at": datetime.now(timezone.utc).isoformat(),
-            "updated_at": datetime.now(timezone.utc).isoformat(),
-        }).execute()
-        db.get_service_client().table("thread_participants").insert([
-            {"id": str(uuid.uuid4()), "thread_id": thread_id, "user_id": sender_id},
-            {"id": str(uuid.uuid4()), "thread_id": thread_id, "user_id": recipient_id},
-        ]).execute()
+        try:
+            db.get_service_client().table("dm_threads").insert({
+                "id": thread_id, "created_at": datetime.now(timezone.utc).isoformat(),
+                "updated_at": datetime.now(timezone.utc).isoformat(),
+            }).execute()
+            db.get_service_client().table("thread_participants").insert([
+                {"id": str(uuid.uuid4()), "thread_id": thread_id, "user_id": sender_id},
+                {"id": str(uuid.uuid4()), "thread_id": thread_id, "user_id": recipient_id},
+            ]).execute()
+            # A->B and B->A can both create a first thread at the same moment.
+            # Re-check and keep the older one (a unique constraint on the user
+            # pair would be the real fix; the schema has none, so this narrows
+            # the race but cannot close it).
+            winner = _find_dm_thread(sender_id, recipient_id)
+        except Exception:
+            _delete_dm_thread(thread_id)
+            raise HTTPException(503, "Temporarily unavailable. Please try again.")
+        if winner and winner != thread_id:
+            # _delete_dm_thread refuses to delete a thread that already has
+            # messages; the winner is then still the deterministic choice.
+            _delete_dm_thread(thread_id)
+            thread_id = winner
 
     # Insert message
     msg_id = str(uuid.uuid4())
@@ -760,7 +1017,7 @@ async def send_dm(body: DMSend, current_user: dict = Depends(Auth.get_current_us
         "id": msg_id,
         "thread_id": thread_id,
         "sender_id": sender_id,
-        "content": body.content[:2000],
+        "content": content[:2000],
         "is_read": False,
         "created_at": datetime.now(timezone.utc).isoformat(),
     }
@@ -770,17 +1027,135 @@ async def send_dm(body: DMSend, current_user: dict = Depends(Auth.get_current_us
     return ResponseModel(data={"messageId": msg_id, "threadId": thread_id})
 
 
-def _find_dm_thread(user_a: str, user_b: str) -> Optional[str]:
-    """Find an existing DM thread between exactly two users."""
+def _norm_id(value) -> str:
+    """Canonical form of a user id for comparisons (trimmed, lower-case)."""
+    return str(value or "").strip().lower()
+
+
+def _blocked_either_way(user_a: str, user_b: str) -> bool:
+    """True when a user_blocks row exists between the two users in either direction."""
+    svc = db.get_service_client()
+    for blocker, target in ((user_a, user_b), (user_b, user_a)):
+        res = svc.table("user_blocks").select("id").eq("user_id", blocker).eq("target_id", target).limit(1).execute()
+        if res.data:
+            return True
+    return False
+
+
+def _is_uuid(value) -> bool:
+    """True only for the canonical hyphenated form (so {..}/urn:/unhyphenated
+    spellings cannot dodge the self-check or the id comparisons)."""
+    text = str(value or "").strip().lower()
     try:
-        a_threads = db.get_service_client().table("thread_participants").select("thread_id").eq("user_id", user_a).execute()
-        b_threads = db.get_service_client().table("thread_participants").select("thread_id").eq("user_id", user_b).execute()
-        a_ids = {r["thread_id"] for r in (a_threads.data or [])}
-        b_ids = {r["thread_id"] for r in (b_threads.data or [])}
-        shared = a_ids & b_ids
-        return next(iter(shared)) if shared else None
-    except Exception:
+        return str(uuid.UUID(text)) == text
+    except (ValueError, AttributeError, TypeError):
+        return False
+
+
+# PostgREST/Postgres codes for an absent column (undefined_column / schema cache).
+_MISSING_COLUMN_CODES = {"42703", "PGRST204"}
+
+
+def _active_user(user_id: str) -> Optional[dict]:
+    """The users row for a non-deleted account, else None.
+
+    None means "no such active user": an empty/malformed id, a missing row, or a
+    deleted account. A database failure is NOT that answer: it raises 503, so an
+    outage never reads as "user not found" (or, for DMs, as a refusal). A
+    database without users.is_deleted yet is read as not deleted, as
+    Auth.get_current_user does.
+    """
+    if not user_id or not _is_uuid(user_id):
         return None
+    table = db.get_service_client().table("users")
+    try:
+        try:
+            res = table.select("id, is_private").eq("id", user_id).eq("is_deleted", False).limit(1).execute()
+        except Exception as exc:
+            if _error_code(exc) not in _MISSING_COLUMN_CODES:
+                raise
+            res = db.get_service_client().table("users").select("id, is_private").eq("id", user_id).limit(1).execute()
+    except HTTPException:
+        raise
+    except Exception:
+        raise HTTPException(503, "Temporarily unavailable. Please try again.")
+    return res.data[0] if res.data else None
+
+
+def _mutual_follow(user_a: str, user_b: str) -> bool:
+    """True when each user follows the other (the recipient has opted in).
+
+    A database error raises 503 (like _active_user / _find_dm_thread) instead of
+    reading as "not mutual": the uniform 403 would be a permanent 4xx that the
+    offline queue drops, losing the queued message.
+    """
+    try:
+        svc = db.get_service_client()
+        a_to_b = svc.table("follows").select("id").eq("follower_id", user_a).eq("following_id", user_b).limit(1).execute()
+        if not a_to_b.data:
+            return False
+        b_to_a = svc.table("follows").select("id").eq("follower_id", user_b).eq("following_id", user_a).limit(1).execute()
+        return bool(b_to_a.data)
+    except Exception:
+        raise HTTPException(503, "Temporarily unavailable. Please try again.")
+
+
+def _find_dm_thread(user_a: str, user_b: str) -> Optional[str]:
+    """The DM thread between exactly two users, never a group.
+
+    With duplicates, the oldest thread that already has messages wins (so a
+    thread holding messages is never orphaned), else the oldest thread.
+
+    Raises on a database error: the caller must not read a failed lookup as
+    "no thread" and create a duplicate.
+    """
+    svc = db.get_service_client()
+    a_threads = svc.table("thread_participants").select("thread_id").eq("user_id", user_a).execute()
+    b_threads = svc.table("thread_participants").select("thread_id").eq("user_id", user_b).execute()
+    a_ids = {r["thread_id"] for r in (a_threads.data or [])}
+    b_ids = {r["thread_id"] for r in (b_threads.data or [])}
+    matches = []
+    for thread_id in sorted(a_ids & b_ids):
+        members = svc.table("thread_participants").select("user_id").eq("thread_id", thread_id).execute()
+        if {r["user_id"] for r in (members.data or [])} == {user_a, user_b} and len(members.data) == 2:
+            matches.append(thread_id)
+    if len(matches) <= 1:
+        return matches[0] if matches else None
+    # Two threads for the same pair (a simultaneous first send): the older wins,
+    # ties broken by id, so both racing requests converge on the same thread.
+    created = {}
+    with_messages = []
+    for thread_id in matches:
+        row = svc.table("dm_threads").select("created_at").eq("id", thread_id).limit(1).execute()
+        created[thread_id] = (row.data[0].get("created_at") or "") if row.data else ""
+        if _dm_thread_has_messages(thread_id):
+            with_messages.append(thread_id)
+    pool = with_messages or matches
+    return min(pool, key=lambda t: (created[t], t))
+
+
+def _dm_thread_has_messages(thread_id: str) -> bool:
+    """True when the thread holds a message. Raises on a database error."""
+    res = db.get_service_client().table("dm_messages").select("id").eq("thread_id", thread_id).limit(1).execute()
+    return bool(res.data)
+
+
+def _delete_dm_thread(thread_id: str) -> bool:
+    """Best-effort removal of a thread this request created and then lost.
+
+    dm_messages.thread_id is ON DELETE CASCADE, so a thread that holds any
+    message is never deleted (a concurrent request may have sent into it). If
+    that cannot be checked, the thread is kept. Returns True if it was deleted.
+    """
+    try:
+        svc = db.get_service_client()
+        if _dm_thread_has_messages(thread_id):
+            return False
+        svc.table("thread_participants").delete().eq("thread_id", thread_id).execute()
+        svc.table("dm_threads").delete().eq("id", thread_id).execute()
+        return True
+    except Exception:
+        return False
 
 
 # ─────────────────────────────────────────────────────────────

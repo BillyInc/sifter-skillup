@@ -885,6 +885,16 @@ verify = []
 note = "Validates the NOT VALID foreign keys added by migration_hard_delete_fk_2026-11-27 (notifications.actor_id, guilds.owner_id), only those not yet validated. Own transaction (one per entry) so the table scan holds only SHARE UPDATE EXCLUSIVE, not the ACCESS EXCLUSIVE lock of the DROP CONSTRAINT. Idempotent, no row changes; optional for the app, which works without it."
 source = "Header of migration_hard_delete_fk_validate_2026-11-27.sql (PROPOSED, NOT APPLIED); CodeRabbit review of PR 326"
 
+[[entry]]
+id = "migration_dm_messages_service_write_only_2026-11-27"
+kind = "schema"
+path = "migration_dm_messages_service_write_only_2026-11-27.sql"
+requires = []
+allow_destructive_reason = "DROP POLICY IF EXISTS dm_participant_insert deliberately removes the client INSERT policy so only the backend service role can write DMs; REVOKE ALL (incl. TRUNCATE, REFERENCES, TRIGGER) removes client privileges only and SELECT is re-granted when a SELECT policy exists. No table or row data is removed"
+verify = []
+note = "Defence in depth against a direct-PostgREST write to dm_messages (probably unreachable from the app: anon key, no Supabase session). Needs skillup_dev.dm_messages, created by supabase-schema.sql (not a migration_ file), so there is no ordered edge. Safe any time: no src/ or web/ code inserts into dm_messages."
+source = "Header of migration_dm_messages_service_write_only_2026-11-27.sql (PROPOSED, NOT APPLIED); PR #328 review"
+
 # ======================================================================
 # UNORDERED: order not stated unambiguously in the docs. Never applied automatically.
 # ======================================================================
