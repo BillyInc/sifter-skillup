@@ -390,6 +390,18 @@ async def starknet_rpc(
     raise HTTPException(503, f"Starknet RPC unavailable: {last_error}")
 
 
+def _refuse_soft_deleted(row: dict | None) -> None:
+    """Refuse sign-in to a soft-deleted account before anything is written.
+
+    Mirrors ``Auth.get_current_user`` (401 "User not found"). The row matched
+    by DID or email is neither updated (no wallet/email/last_login write-back
+    during retention) nor replaced by a fresh account. A row without the
+    ``is_deleted`` column reads as not deleted.
+    """
+    if row and (row.get("is_deleted") is True or row.get("deletion_cooldown_until")):
+        raise HTTPException(401, "User not found")
+
+
 @starknet_router.post("/auth/email", response_model=ResponseModel)
 async def starknet_auth_email(
     body: StarknetAuthRequest,
@@ -478,6 +490,9 @@ async def starknet_auth_email(
         if wallet_lookup.data:
             user_row = wallet_lookup.data[0]
 
+    # One check after every lookup (DID, email, wallet) and before any write.
+    _refuse_soft_deleted(user_row)
+
     if user_row is None and not email:
         raise HTTPException(400, "Could not determine email from Privy or the request")
 
@@ -547,6 +562,7 @@ async def starknet_auth_email(
 
             user_row = fallback_row
             is_new_user = False
+            _refuse_soft_deleted(user_row)
 
         _update_user_wallet_fields(service, user_row["id"], wallet, email, privy_did=privy_did)
     else:
