@@ -6,14 +6,23 @@ such accounts for good once ``deletion_cooldown_until`` plus the retention
 window has passed, after purging their content (see ``account_purge``).
 
 Safety:
-- Dry run unless ``ACCOUNT_HARD_DELETE_ENABLED`` is true; a dry run only counts.
+- Dry run unless ``ACCOUNT_HARD_DELETE_ENABLED`` is true; a dry run purges and
+  deletes no account (it only counts), apart from the expired cooldown rows below.
 - Only rows with ``is_deleted = true`` and an elapsed retention window. The
   window is never shorter than ``MIN_RETENTION_DAYS``: a configured 0 or a
   negative value would otherwise delete right after the 24 h cooldown.
-- Rows that belong to a school's provisioning flow (``provisioning_school_id``
-  or ``claim_state`` set) are never touched; those follow the school's own
-  deletion gate. The filter runs in the database query, so those rows cannot
-  fill the batch and starve every other account.
+- A school-provisioned shell that nobody has claimed (``claim_state`` =
+  ``unclaimed``) is never touched here; it follows the school's own deletion
+  gate. A provisioned learner who CLAIMED the account and then deleted it
+  (``claim_state`` = ``claimed``, ``provisioning_school_id`` still set) is
+  eligible on the same retention window as everyone else: the school can no
+  longer delete a claimed account, so without this those learners, often
+  minors, would never be purged. The filter runs in the database query, so
+  unclaimed shells cannot fill the batch and starve every other account.
+- Expired ``account_deletion_cooldowns`` rows are deleted on every run, also
+  while the job is a dry run. This is a deliberate write side effect of a dry
+  run: an expired cooldown has no effect and holds only a hashed device id, so
+  keeping it would only retain data. Nothing else is written in a dry run.
 - At most ``ACCOUNT_HARD_DELETE_BATCH_SIZE`` accounts per run.
 - One account failing never stops the run.
 - The user row is deleted ONLY if every purge step succeeded. An ``error``,
@@ -28,7 +37,9 @@ Starvation: an account that keeps failing must not hold up newer ones.
   rotating slice of a larger window chosen by the run date, so a block of
   permanently failing rows cannot occupy every run.
 
-Logs counts only, never ids, emails or names.
+Logs counts only, never emails or names. The one exception is an ERROR line
+when an account uses its last attempt: it carries the user id and the names of
+the failing steps (no other personal data), once per run.
 """
 from datetime import datetime, timedelta, timezone
 
@@ -53,16 +64,16 @@ def _query(svc, cutoff_iso: str, *, db_filters: bool, backoff: bool):
         .lt("deletion_cooldown_until", cutoff_iso)
     )
     if db_filters:
-        q = q.is_("provisioning_school_id", "null").is_("claim_state", "null")
+        q = q.or_("claim_state.is.null,claim_state.neq.unclaimed")
     if backoff:
         q = q.lt("purge_attempts", MAX_PURGE_ATTEMPTS).order("last_purge_attempt_at", nullsfirst=True)
     return q.order("deletion_cooldown_until")
 
 
 def _guard(rows: list[dict]) -> list[dict]:
-    # Re-check in code so a provisioned/claimed record is never removed even if
-    # a query filter is dropped on an older schema or a fake.
-    return [r for r in rows if not r.get("provisioning_school_id") and not r.get("claim_state")]
+    # Re-check in code so a school-owned, unclaimed shell is never removed even
+    # if a query filter is dropped on an older schema or a fake.
+    return [r for r in rows if r.get("claim_state") != "unclaimed"]
 
 
 def _eligible_batch(svc, cutoff_iso: str, limit: int, today: int) -> tuple[list[dict], bool]:
@@ -90,7 +101,15 @@ def _eligible_batch(svc, cutoff_iso: str, limit: int, today: int) -> tuple[list[
     return window[start : start + limit], False
 
 
-def _record_failure(svc, row: dict, now_iso: str) -> None:
+def _record_failure(svc, row: dict, now_iso: str, steps: list[str] | None = None, abandoned: list | None = None) -> None:
+    """Record a failed attempt; note a row that has just used its last attempt.
+
+    The ID of an account that reaches ``MAX_PURGE_ATTEMPTS`` (and the names of
+    the steps that failed, never any personal data) is appended to
+    ``abandoned`` so the run can log it once at ERROR.
+    """
+    if abandoned is not None and int(row.get("purge_attempts") or 0) + 1 >= MAX_PURGE_ATTEMPTS:
+        abandoned.append((row["id"], list(steps or [])))
     try:
         svc.table("users").update(
             {"purge_attempts": int(row.get("purge_attempts") or 0) + 1, "last_purge_attempt_at": now_iso}
@@ -123,11 +142,14 @@ def hard_delete_expired_accounts(now: datetime | None = None) -> dict:
 
     batch, backoff = _eligible_batch(svc, cutoff, batch_size, now.toordinal())
     result = {"dry_run": not enabled, "eligible": len(batch), "deleted": 0, "failed": 0, "blocked": {}, "abandoned": 0}
+    # Independent of the flag: expired cooldowns are inert and hold a hashed device id.
+    cooldowns_purged = purge_expired_cooldowns(svc, now.isoformat())
     if not enabled:
-        log.info("Account hard delete dry run", **result)
+        log.info("Account hard delete dry run", cooldowns_purged=cooldowns_purged, **result)
         return result
 
     incomplete = 0
+    just_abandoned: list = []
     for row in batch:
         try:
             outcome = hard_delete_learner_content(row["id"])
@@ -139,15 +161,18 @@ def hard_delete_expired_accounts(now: datetime | None = None) -> dict:
                 for table, state in outcome.items():
                     if state == "blocked":
                         result["blocked"][table] = result["blocked"].get(table, 0) + 1
-                _record_failure(svc, row, now.isoformat())
+                steps = sorted(t for t, v in outcome.items() if v in _BLOCKING_OUTCOMES)
+                _record_failure(svc, row, now.isoformat(), steps, just_abandoned)
                 continue
             svc.table("users").delete().eq("id", row["id"]).eq("is_deleted", True).execute()
             result["deleted"] += 1
         except Exception as exc:  # noqa: BLE001
             result["failed"] += 1
-            _record_failure(svc, row, now.isoformat())
+            _record_failure(svc, row, now.isoformat(), ["exception:" + type(exc).__name__], just_abandoned)
             log.warning("Account hard delete failed", error=type(exc).__name__)
-    cooldowns_purged = purge_expired_cooldowns(svc, now.isoformat())
+    if backoff:
+        for uid, steps in just_abandoned:
+            log.error("Account hard delete abandoned after repeated failures", user_id=uid, failing_steps=steps)
     if backoff:
         abandoned = _abandoned_count(svc)
         result["abandoned"] = abandoned

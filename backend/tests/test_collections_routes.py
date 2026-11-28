@@ -26,6 +26,7 @@ class _Query:
         self.filters = []
         self.order_by = []
         self.limit_n = None
+        self.offset = 0
 
     def select(self, *_a, **_k):
         self.op = "select"
@@ -63,6 +64,10 @@ class _Query:
         self.limit_n = n
         return self
 
+    def range(self, lo, hi):
+        self.offset, self.limit_n = lo, hi - lo + 1
+        return self
+
     def execute(self):
         if self.name not in self.db.tables:
             raise Exception(
@@ -88,7 +93,7 @@ class _Query:
         for col in reversed(self.order_by):
             match.sort(key=lambda r: (r.get(col) is None, r.get(col) or 0))
         if self.limit_n:
-            match = match[: self.limit_n]
+            match = match[self.offset : self.offset + self.limit_n]
         return _Result([dict(r) for r in match])
 
 

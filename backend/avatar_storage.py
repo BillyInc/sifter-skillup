@@ -58,8 +58,11 @@ class SupabaseAvatarStorage:
             self._bucket().remove(keys)
 
     def list_keys(self, user_id: str) -> list[str]:
+        if not isinstance(user_id, str) or not user_id.strip() or "/" in user_id:
+            raise ValueError("invalid user id")  # '' would list the bucket root
         items = self._bucket().list(user_id) or []
-        return [f"{user_id}/{i['name']}" for i in items if i.get("name")]
+        # list() also returns sub-folders (id null); a folder key cannot be removed.
+        return [f"{user_id}/{i['name']}" for i in items if i.get("name") and not ("id" in i and i["id"] is None)]
 
     def signed_url(self, key: str, expires_in: int) -> Optional[str]:
         res = self._bucket().create_signed_url(key, expires_in)

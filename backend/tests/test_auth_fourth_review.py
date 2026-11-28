@@ -22,10 +22,10 @@ REPO = Path(__file__).resolve().parents[2]
 @pytest.fixture(autouse=True)
 def _fresh_limiters():
     auth_rate_limit.reset_all()
-    auth_rate_limit._warned_no_client_ip = False
+    auth_rate_limit._reset_warning_state()
     yield
     auth_rate_limit.reset_all()
-    auth_rate_limit._warned_no_client_ip = False
+    auth_rate_limit._reset_warning_state()
 
 
 @pytest.fixture
@@ -119,30 +119,63 @@ class TestPerEmailMailCeilingNeverThrows:
 # 3. A loud, one-time warning when the app cannot see client addresses
 # --------------------------------------------------------------------------
 class TestProxyWarning:
-    def _request(self, host="127.0.0.1"):
-        return SimpleNamespace(client=SimpleNamespace(host=host), headers={})
+    def _request(self, host="127.0.0.1", xff=None):
+        headers = {"x-forwarded-for": xff} if xff else {}
+        return SimpleNamespace(client=SimpleNamespace(host=host), headers=headers)
 
-    def test_warns_once_when_only_private_peers_are_seen_in_production(self, monkeypatch, caplog):
+    def _burst(self, host="10.0.0.5", n=None, xff=None):
+        for _ in range(n or auth_rate_limit._BLIND_THRESHOLD):
+            assert auth_rate_limit.client_ip(self._request(host, xff)) is None
+
+    def test_one_private_request_does_not_warn(self, monkeypatch, caplog):
         from config import settings
         monkeypatch.setattr(settings, "DEBUG", False, raising=False)
         monkeypatch.setattr(settings, "TRUST_PROXY_HEADERS", False, raising=False)
         with caplog.at_level(logging.WARNING):
-            assert auth_rate_limit.client_ip(self._request()) is None
             assert auth_rate_limit.client_ip(self._request("10.0.0.5")) is None
+        assert not [r for r in caplog.records if "inactive" in r.getMessage()]
+
+    def test_warns_once_for_a_run_of_private_peers_then_rate_limits_it(self, monkeypatch, caplog):
+        from config import settings
+        monkeypatch.setattr(settings, "DEBUG", False, raising=False)
+        monkeypatch.setattr(settings, "TRUST_PROXY_HEADERS", False, raising=False)
+        with caplog.at_level(logging.WARNING):
+            self._burst("10.0.0.5", auth_rate_limit._BLIND_THRESHOLD + 3)
         hits = [r for r in caplog.records if "TRUST_PROXY_HEADERS" in r.getMessage()]
         assert len(hits) == 1
         assert "inactive" in hits[0].getMessage()
 
-    def test_no_warning_in_debug_or_when_proxy_headers_are_trusted(self, monkeypatch, caplog):
+    def test_a_resolved_public_client_in_the_window_suppresses_the_warning(self, monkeypatch, caplog):
+        from config import settings
+        monkeypatch.setattr(settings, "DEBUG", False, raising=False)
+        monkeypatch.setattr(settings, "TRUST_PROXY_HEADERS", False, raising=False)
+        with caplog.at_level(logging.WARNING):
+            assert auth_rate_limit.client_ip(self._request("8.8.8.8")) == "8.8.8.8"
+            self._burst("10.0.0.5", auth_rate_limit._BLIND_THRESHOLD + 2)
+        assert not [r for r in caplog.records if "inactive" in r.getMessage()]
+
+    def test_the_warning_does_not_latch_for_the_process_life(self, monkeypatch, caplog):
+        from config import settings
+        monkeypatch.setattr(settings, "DEBUG", False, raising=False)
+        monkeypatch.setattr(settings, "TRUST_PROXY_HEADERS", False, raising=False)
+        clock = [1000.0]
+        monkeypatch.setattr(auth_rate_limit.time, "monotonic", lambda: clock[0])
+        with caplog.at_level(logging.WARNING):
+            self._burst()
+            clock[0] += auth_rate_limit._BLIND_REWARN_SECONDS + 1
+            self._burst()
+        assert len([r for r in caplog.records if "inactive" in r.getMessage()]) == 2
+
+    def test_no_warning_in_debug_or_when_proxy_headers_are_trusted_with_loopback(self, monkeypatch, caplog):
         from config import settings
         with caplog.at_level(logging.WARNING):
             monkeypatch.setattr(settings, "DEBUG", True, raising=False)
             monkeypatch.setattr(settings, "TRUST_PROXY_HEADERS", False, raising=False)
-            auth_rate_limit.client_ip(self._request())
+            self._burst("10.0.0.5", 10)
             monkeypatch.setattr(settings, "DEBUG", False, raising=False)
             monkeypatch.setattr(settings, "TRUST_PROXY_HEADERS", True, raising=False)
-            auth_rate_limit.client_ip(self._request())
-        assert not [r for r in caplog.records if "TRUST_PROXY_HEADERS" in r.getMessage()]
+            self._burst("127.0.0.1", 10)
+        assert not [r for r in caplog.records if "inactive" in r.getMessage()]
 
     def test_a_public_peer_never_warns(self, monkeypatch, caplog):
         from config import settings
@@ -151,6 +184,55 @@ class TestProxyWarning:
         with caplog.at_level(logging.WARNING):
             assert auth_rate_limit.client_ip(self._request("8.8.8.8")) == "8.8.8.8"
         assert not [r for r in caplog.records if "TRUST_PROXY_HEADERS" in r.getMessage()]
+
+    def _xff_request(self, xff, peer="10.0.0.5"):
+        return SimpleNamespace(client=SimpleNamespace(host=peer),
+                               headers={"x-forwarded-for": xff})
+
+    def test_warns_when_trusted_proxy_headers_yield_no_public_address(self, monkeypatch, caplog):
+        from config import settings
+        monkeypatch.setattr(settings, "DEBUG", False, raising=False)
+        monkeypatch.setattr(settings, "TRUST_PROXY_HEADERS", True, raising=False)
+        monkeypatch.setattr(settings, "TRUSTED_PROXY_HOPS", 2, raising=False)
+        with caplog.at_level(logging.WARNING):
+            for _ in range(auth_rate_limit._BLIND_THRESHOLD):
+                # wrong hop count: only one entry for two hops
+                assert auth_rate_limit.client_ip(self._xff_request("8.8.8.8")) is None
+        hits = [r for r in caplog.records if "inactive" in r.getMessage()]
+        assert len(hits) == 1
+        text = hits[0].getMessage()
+        assert "TRUSTED_PROXY_HOPS=2" in text and "docs/ops/nginx-auth-rate-limit.md" in text
+
+    def test_loopback_with_forwarded_header_and_trust_off_logs_one_error(self, monkeypatch, caplog):
+        from config import settings
+        monkeypatch.setattr(settings, "DEBUG", False, raising=False)
+        monkeypatch.setattr(settings, "TRUST_PROXY_HEADERS", False, raising=False)
+        with caplog.at_level(logging.WARNING):
+            for _ in range(3):
+                assert auth_rate_limit.client_ip(self._request("127.0.0.1", xff="8.8.8.8")) is None
+        errors = [r for r in caplog.records if r.levelno >= logging.ERROR]
+        assert len(errors) == 1
+        assert "TRUST_PROXY_HEADERS" in errors[0].getMessage()
+
+    def test_loopback_without_forwarded_header_does_not_log_the_error(self, monkeypatch, caplog):
+        from config import settings
+        monkeypatch.setattr(settings, "DEBUG", False, raising=False)
+        monkeypatch.setattr(settings, "TRUST_PROXY_HEADERS", False, raising=False)
+        with caplog.at_level(logging.WARNING):
+            auth_rate_limit.client_ip(self._request("127.0.0.1"))
+        assert not [r for r in caplog.records if r.levelno >= logging.ERROR]
+
+    def test_health_never_exposes_address_limit_state(self, monkeypatch):
+        from config import settings
+        monkeypatch.setattr(settings, "DEBUG", False, raising=False)
+        monkeypatch.setattr(settings, "TRUST_PROXY_HEADERS", False, raising=False)
+        before = asyncio.run(main.health())
+        self._burst("10.0.0.5", auth_rate_limit._BLIND_THRESHOLD + 1)
+        after = asyncio.run(main.health())
+        for body in (before, after):
+            assert "address_limits" not in body
+            assert set(body) == {"status", "version", "timestamp"}
+        assert not hasattr(auth_rate_limit, "address_limits_blind")
 
 
 # --------------------------------------------------------------------------

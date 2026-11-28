@@ -38,6 +38,31 @@ real_ip_header X-Forwarded-For;
 Then set `TRUST_PROXY_HEADERS=true` and `TRUSTED_PROXY_HOPS=<number of trusted hops>`
 in the backend environment (see `backend/.env.example`).
 
+## Deployment requirement for address limits
+
+The per-address limits in the app (claim-code address bucket, guest and wallet
+creation) only work when the app can see the real client address. Both of these
+must hold in production:
+
+- **Set both** `TRUST_PROXY_HEADERS=true` and `TRUSTED_PROXY_HOPS=<n>` where `<n>` is
+  exactly the number of trusted proxies in front of the app (normally **one**: nginx).
+  The defaults (`false`, `1`) are unchanged, so a default deploy behind a proxy has
+  **no** address limits: they fail open, silently apart from log lines (`/health` deliberately
+  reports nothing about this; it is unauthenticated). After five requests within five
+  minutes with no usable public client address, a WARNING
+  (`auth rate limits: ... per-address limits are inactive`) is logged, at most once an
+  hour while it persists. A loopback peer that carries `X-Forwarded-For` while
+  `TRUST_PROXY_HEADERS` is off (a local nginx with trust not enabled) logs one ERROR
+  per process. A wrong hop count has the same effect.
+- **Never expose the app port directly.** The container listens on `0.0.0.0:8000`
+  and `docker-compose.yml` publishes it; bind it to localhost or a private network
+  (or firewall it) so only the proxy can reach it. With `TRUST_PROXY_HEADERS=true`
+  and a reachable app port, any client can send its own `X-Forwarded-For`: it can
+  mint a fresh address key per request (defeating the limits) or fill a victim
+  school's shared NAT address bucket from anywhere. The proxy must **overwrite or
+  append** the header (`proxy_set_header X-Forwarded-For $remote_addr;` or
+  `$proxy_add_x_forwarded_for` for a single hop), never pass a client value through.
+
 ## 4. Apply
 
 ```bash

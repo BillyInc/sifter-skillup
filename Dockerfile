@@ -23,4 +23,8 @@ USER appuser
 HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
   CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"
 
+# Proxy settings are deliberately NOT baked in. Behind exactly one trusted proxy, set
+# TRUST_PROXY_HEADERS=true and TRUSTED_PROXY_HOPS=1 in the environment, and never publish
+# this port directly: otherwise per-address auth/claim limits are off (unset) or
+# spoofable via X-Forwarded-For. See docs/ops/nginx-auth-rate-limit.md.
 CMD ["uv", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

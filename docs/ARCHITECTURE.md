@@ -552,8 +552,19 @@ CLAUDE.md.
 
 PII (email, name, school, phone) never in URLs, query strings, or logs.
 `DELETE /api/users/me` triggers a cooldown; hard delete after via
-`cleanup_expired_sessions`. Content cache expires weekly on Sunday via
+`cleanup_expired_sessions`. The hard-delete job is a dry run unless
+`ACCOUNT_HARD_DELETE_ENABLED` is true, but even a dry run deletes expired
+`account_deletion_cooldowns` rows (they hold only a hashed device id and have no
+effect). Content cache expires weekly on Sunday via
 `expire_old_sync_log`.
+
+Soft delete keeps `privy_did` so the Privy sign-in can recognise the deleted
+row: the login matches it by DID and refuses it with 401 before any write (no
+wallet, email or `last_login` is written back, and no new account is created
+for that DID). That means an identifier remains on the row for the whole
+retention window and is removed only at hard delete. A Privy user who deletes the account is therefore refused (401 "User not found") until hard delete, which is longer than the 24h device cooldown that applies to the email/password path; whether that difference is acceptable is a product decision. When an account fails its purge repeatedly it is abandoned
+with its data intact and an ERROR log line that carries the user id, so log
+retention should be no longer than the deletion promise made to users.
 
 ## 10. API design & response envelope
 
